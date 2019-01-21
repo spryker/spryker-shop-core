@@ -10,10 +10,12 @@ namespace SprykerShop\Yves\ShopRouter;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
+use SprykerShop\Yves\ShopRouter\Dependency\Client\ShopRouterToUrlClientBridge;
 use SprykerShop\Yves\ShopRouter\Dependency\Client\ShopRouterToUrlStorageClientBridge;
 
 class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const CLIENT_URL = 'CLIENT_URL';
     public const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGIN_RESOURCE_CREATORS = 'PLUGIN_RESOURCE_CREATORS';
@@ -26,6 +28,7 @@ class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addUrlStorageClient($container);
+        $container = $this->addUrlClient($container);
         $container = $this->addApplicationPlugin($container);
         $container = $this->addResourceCreatorPlugins($container);
 
@@ -57,6 +60,20 @@ class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::CLIENT_URL_STORAGE] = function (Container $container) {
             return new ShopRouterToUrlStorageClientBridge($container->getLocator()->urlStorage()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addUrlClient(Container $container): Container
+    {
+        $container[self::CLIENT_URL] = function (Container $container) {
+            return new ShopRouterToUrlClientBridge($container->getLocator()->url()->client());
         };
 
         return $container;

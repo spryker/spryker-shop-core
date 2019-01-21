@@ -52,6 +52,14 @@ class ShopRouterFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\ShopRouter\Dependency\Client\ShopRouterToUrlStorageClientInterface
+     */
+    public function getUrlClient(): ShopRouterToUrlStorageClientInterface
+    {
+        return $this->getProvidedDependency(ShopRouterDependencyProvider::CLIENT_URL);
+    }
+
+    /**
      * @return \Silex\Application
      */
     public function getApplication()
