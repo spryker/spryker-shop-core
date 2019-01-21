@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\CheckoutPage;
 
-use phpDocumentor\Reflection\Types\This;
-use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface;
