@@ -55,6 +55,11 @@ interface QuoteApprovalWidgetToQuoteApprovalClientInterface
     public function calculatePlaceOrderPermissionLimit(QuoteTransfer $quoteTransfer, CompanyUserTransfer $companyUserTransfer): ?int;
 
     /**
+     * @return bool
+     */
+    public function isCustomerHasPlaceOrderPermission(): bool;
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
@@ -67,6 +72,13 @@ interface QuoteApprovalWidgetToQuoteApprovalClientInterface
      * @return bool
      */
     public function isQuoteWaitingForApproval(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteApproved(QuoteTransfer $quoteTransfer): bool;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
