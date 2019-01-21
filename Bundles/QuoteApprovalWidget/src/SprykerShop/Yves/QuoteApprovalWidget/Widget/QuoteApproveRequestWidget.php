@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuoteApprovalWidget\Widget;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientInterface;
 use Symfony\Component\Form\FormInterface;
@@ -22,7 +23,10 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     public function __construct(QuoteTransfer $quoteTransfer)
     {
-        $isVisible = $this->getQuoteApprovalClient()->isQuoteRequireApproval($quoteTransfer);
+        $quoteStatus = $this->getQuoteApprovalClient()->calculateQuoteStatus($quoteTransfer);
+        $isApproved = $quoteStatus === QuoteApprovalConfig::STATUS_APPROVED;
+        $isVisible = $this->getQuoteApprovalClient()->isQuoteRequireApproval($quoteTransfer)
+            || $isApproved;
 
         $this->addParameter('isVisible', $isVisible);
 
@@ -31,10 +35,10 @@ class QuoteApproveRequestWidget extends AbstractWidget
         }
 
         $this->addParameter('limit', $this->getLimitForQuote($quoteTransfer));
-        $this->addParameter('canSendApprovalRequest', !$this->getQuoteApprovalClient()->isQuoteWaitingForApproval($quoteTransfer));
+        $this->addParameter('canSendApprovalRequest', !$isApproved && !$this->getQuoteApprovalClient()->isQuoteWaitingForApproval($quoteTransfer));
         $this->addParameter('quoteApprovalRequestForm', $this->createQuoteApprovalRequestForm($quoteTransfer)->createView());
         $this->addParameter('quote', $quoteTransfer);
-        $this->addParameter('quoteStatus', $this->getQuoteApprovalClient()->calculateQuoteStatus($quoteTransfer));
+        $this->addParameter('quoteStatus', $quoteStatus);
     }
 
     /**
