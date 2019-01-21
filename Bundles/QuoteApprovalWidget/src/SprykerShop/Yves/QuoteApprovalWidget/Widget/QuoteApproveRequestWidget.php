@@ -23,22 +23,12 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     public function __construct(QuoteTransfer $quoteTransfer)
     {
-        $quoteStatus = $this->getQuoteApprovalClient()->calculateQuoteStatus($quoteTransfer);
-        $isApproved = $quoteStatus === QuoteApprovalConfig::STATUS_APPROVED;
-        $isVisible = $this->getQuoteApprovalClient()->isQuoteRequireApproval($quoteTransfer)
-            || $isApproved;
-
-        $this->addParameter('isVisible', $isVisible);
-
-        if (!$isVisible) {
-            return;
-        }
-
-        $this->addParameter('limit', $this->getLimitForQuote($quoteTransfer));
-        $this->addParameter('canSendApprovalRequest', !$isApproved && !$this->getQuoteApprovalClient()->isQuoteWaitingForApproval($quoteTransfer));
-        $this->addParameter('quoteApprovalRequestForm', $this->createQuoteApprovalRequestForm($quoteTransfer)->createView());
-        $this->addParameter('quote', $quoteTransfer);
-        $this->addParameter('quoteStatus', $quoteStatus);
+        $this->addQuoteParameter($quoteTransfer);
+        $this->addQuoteStatusParameter($quoteTransfer);
+        $this->addLimitParameter($quoteTransfer);
+        $this->addIsVisibleParameter($quoteTransfer);
+        $this->addCanSendApprovalRequestParameter($quoteTransfer);
+        $this->addQuoteApprovalRequestFormParameter($quoteTransfer);
     }
 
     /**
@@ -55,6 +45,67 @@ class QuoteApproveRequestWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@QuoteApprovalWidget/views/quote-approve-request/quote-approve-request.twig';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addQuoteParameter(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addParameter('quote', $quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addQuoteStatusParameter(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addParameter('quoteStatus', $this->getQuoteApprovalClient()->calculateQuoteStatus($quoteTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addQuoteApprovalRequestFormParameter(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addParameter('quoteApprovalRequestForm', $this->createQuoteApprovalRequestForm($quoteTransfer)->createView());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addCanSendApprovalRequestParameter(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addParameter('canSendApprovalRequest',
+            !$this->getQuoteApprovalClient()->isQuoteApproved($quoteTransfer)
+            && !$this->getQuoteApprovalClient()->isQuoteWaitingForApproval($quoteTransfer)
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addLimitParameter(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addParameter('limit', $this->getLimitForQuote($quoteTransfer));
+    }
+
+    /**
+     * @return void
+     */
+    protected function addIsVisibleParameter(): void
+    {
+        $this->addParameter('isVisible', $this->getQuoteApprovalClient()->isCustomerHasPlaceOrderPermission());
     }
 
     /**
