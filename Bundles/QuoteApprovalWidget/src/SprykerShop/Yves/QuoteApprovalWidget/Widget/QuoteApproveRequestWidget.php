@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\QuoteApprovalWidget\Widget;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientInterface;
 use Symfony\Component\Form\FormInterface;
@@ -84,7 +83,8 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     protected function addCanSendApprovalRequestParameter(QuoteTransfer $quoteTransfer): void
     {
-        $this->addParameter('canSendApprovalRequest',
+        $this->addParameter(
+            'canSendApprovalRequest',
             !$this->getQuoteApprovalClient()->isQuoteApproved($quoteTransfer)
             && !$this->getQuoteApprovalClient()->isQuoteWaitingForApproval($quoteTransfer)
         );
