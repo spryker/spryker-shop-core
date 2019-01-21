@@ -54,7 +54,7 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
     /**
      * @return \Symfony\Component\Form\CallbackTransformer
      */
-    protected function createDateTimeModelTransformer()
+    protected function createDateTimeModelTransformer(): CallbackTransformer
     {
         return new CallbackTransformer(
             function ($value) {
