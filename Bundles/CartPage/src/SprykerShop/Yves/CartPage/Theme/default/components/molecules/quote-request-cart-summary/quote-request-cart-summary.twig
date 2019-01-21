@@ -14,20 +14,14 @@
     <h6>{{ 'cart.your-order' | trans }}</h6>
     <hr />
 
-    {% if widgetExists('DiscountSummaryWidgetPlugin') %}
-        <ul class="list spacing-y">
-            {{ widget('DiscountSummaryWidgetPlugin', data.cart) }} {# @deprecated Use molecule('cart-discount-summary', 'DiscountWidget') instead. #}
-        </ul>
-    {% else %}
-        {% include molecule('cart-discount-summary', 'DiscountWidget') ignore missing with {
-            class: 'list spacing-y',
-            data: {
-                voucherDiscounts: data.cart.voucherDiscounts,
-                ruleDiscounts: data.cart.cartRuleDiscounts,
-                discountTotal: data.cart.totals.discounttotal
-            }
-        } only %}
-    {% endif %}
+    {% include molecule('cart-discount-summary', 'DiscountWidget') ignore missing with {
+        class: 'list spacing-y',
+        data: {
+            voucherDiscounts: data.cart.voucherDiscounts,
+            ruleDiscounts: data.cart.cartRuleDiscounts,
+            discountTotal: data.cart.totals.discounttotal
+        }
+    } only %}
 
     <ul class="list spacing-y">
 
