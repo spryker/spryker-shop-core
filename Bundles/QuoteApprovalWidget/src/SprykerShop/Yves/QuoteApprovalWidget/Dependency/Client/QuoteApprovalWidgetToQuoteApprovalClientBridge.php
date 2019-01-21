@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -22,7 +23,7 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
     protected $quoteApprovalClient;
 
     /**
-     * @param \SprykerShop\Client\QuoteApproval\QuoteApprovalClientInterface $quoteApprovalClient
+     * @param \Spryker\Client\QuoteApproval\QuoteApprovalClientInterface $quoteApprovalClient
      */
     public function __construct($quoteApprovalClient)
     {
@@ -30,7 +31,7 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
@@ -40,7 +41,7 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer $quoteApprovalRemoveRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
@@ -72,6 +73,7 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return int|null
      */
@@ -108,5 +110,25 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
     public function calculateQuoteStatus(QuoteTransfer $quoteTransfer): ?string
     {
         return $this->quoteApprovalClient->calculateQuoteStatus($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function approveQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        return $this->quoteApprovalClient->approveQuoteApproval($quoteApprovalRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
+     */
+    public function declineQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
+    {
+        return $this->quoteApprovalClient->declineQuoteApproval($quoteApprovalRequestTransfer);
     }
 }

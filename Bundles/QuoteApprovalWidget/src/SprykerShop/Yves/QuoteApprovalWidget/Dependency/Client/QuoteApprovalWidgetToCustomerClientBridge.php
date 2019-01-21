@@ -15,7 +15,7 @@ class QuoteApprovalWidgetToCustomerClientBridge implements QuoteApprovalWidgetTo
     protected $customerClient;
 
     /**
-     * @param \SprykerShop\Client\Customer\CustomerClientInterface $customerClient
+     * @param \Spryker\Client\Customer\CustomerClientInterface $customerClient
      */
     public function __construct($customerClient)
     {
