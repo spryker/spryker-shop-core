@@ -17,6 +17,7 @@ class UploadOrderFormatConstraint extends SymfonyConstraint
     protected const ERROR_MESSAGE_INVALID_MIME_TYPE = 'quick-order.upload-order.errors.upload-order-invalid-mime-type';
     protected const ERROR_MESSAGE_INVALID_AMOUNT_OF_ROWS = 'quick-order.upload-order.errors.upload-order-invalid-amount-of-rows';
     protected const ERROR_MESSAGE_INVALID_FORMAT = 'quick-order.upload-order.errors.upload-order-invalid-format';
+    protected const ERROR_MESSAGE_NO_FILE = 'quick-order.upload-order.errors.upload-order-no-file';
 
     /**
      * @var \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig
@@ -71,6 +72,14 @@ class UploadOrderFormatConstraint extends SymfonyConstraint
     public function getInvalidMimeTypeMessage(): string
     {
         return static::ERROR_MESSAGE_INVALID_MIME_TYPE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNoFileMessage(): string
+    {
+        return static::ERROR_MESSAGE_NO_FILE;
     }
 
     /**

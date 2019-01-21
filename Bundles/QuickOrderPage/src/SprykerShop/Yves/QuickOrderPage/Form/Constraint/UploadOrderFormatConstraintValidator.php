@@ -32,6 +32,14 @@ class UploadOrderFormatConstraintValidator extends ConstraintValidator
             ));
         }
 
+        if (!$file) {
+            $this->context
+                ->buildViolation($constraint->getNoFileMessage())
+                ->addViolation();
+
+            return;
+        }
+
         if (!$this->isValidMimeType($file, $constraint->getFileProcessorPlugins())) {
             $this->context
                 ->buildViolation($constraint->getInvalidMimeTypeMessage())

@@ -36,10 +36,6 @@ class FileValidator implements FileValidatorInterface
     {
         $uploadedOrder = $this->utilCsvService->readUploadedFile($file);
 
-        if (count($uploadedOrder) === 1) {
-            return false;
-        }
-
         if (count($uploadedOrder) > $maxAllowedLines) {
             return false;
         }
@@ -56,11 +52,11 @@ class FileValidator implements FileValidatorInterface
     {
         $uploadedOrder = $this->utilCsvService->readUploadedFile($file);
 
-        if (in_array(QuickOrderPageConfig::CSV_SKU_COLUMN_NAME, $uploadedOrder[0])
-            && in_array(QuickOrderPageConfig::CSV_QTY_COLUMN_NAME, $uploadedOrder[0])) {
-            return true;
+        if (!in_array(QuickOrderPageConfig::CSV_SKU_COLUMN_NAME, $uploadedOrder[0])
+            || !in_array(QuickOrderPageConfig::CSV_QTY_COLUMN_NAME, $uploadedOrder[0])) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 }
