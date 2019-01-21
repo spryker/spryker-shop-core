@@ -56,7 +56,7 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
             }
         }
 
-        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+        $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
         $cartItems = $quoteTransfer->getItems()->getArrayCopy();
 
         return [

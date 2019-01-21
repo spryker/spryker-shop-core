@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Dependency\Client;
 
-interface QuoteRequestPageToQuoteClientInterface
+interface QuoteRequestPageToCartClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -18,4 +18,9 @@ interface QuoteRequestPageToQuoteClientInterface
      * @return void
      */
     public function clearQuote();
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function validateQuote();
 }

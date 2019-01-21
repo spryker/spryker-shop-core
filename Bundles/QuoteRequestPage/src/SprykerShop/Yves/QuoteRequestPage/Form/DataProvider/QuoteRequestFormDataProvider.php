@@ -10,8 +10,8 @@ namespace SprykerShop\Yves\QuoteRequestPage\Form\DataProvider;
 use DateTime;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompanyUserClientInterface;
-use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageConfig;
 
 class QuoteRequestFormDataProvider
@@ -22,9 +22,9 @@ class QuoteRequestFormDataProvider
     protected $companyUserClient;
 
     /**
-     * @var \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface
+     * @var \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface
      */
-    protected $quoteClient;
+    protected $cartClient;
 
     /**
      * @var \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageConfig
@@ -33,16 +33,16 @@ class QuoteRequestFormDataProvider
 
     /**
      * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompanyUserClientInterface $companyUserClient
-     * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface $quoteClient
+     * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageConfig $config
      */
     public function __construct(
         QuoteRequestPageToCompanyUserClientInterface $companyUserClient,
-        QuoteRequestPageToQuoteClientInterface $quoteClient,
+        QuoteRequestPageToCartClientInterface $cartClient,
         QuoteRequestPageConfig $config
     ) {
         $this->companyUserClient = $companyUserClient;
-        $this->quoteClient = $quoteClient;
+        $this->cartClient = $cartClient;
         $this->config = $config;
     }
 
@@ -52,7 +52,7 @@ class QuoteRequestFormDataProvider
     public function getData(): QuoteRequestTransfer
     {
         $quoteRequestVersionTransfer = (new QuoteRequestVersionTransfer())
-            ->setQuote($this->quoteClient->getQuote())
+            ->setQuote($this->cartClient->getQuote())
             ->setVersion($this->config->getInitialVersion());
 
         $quoteRequestTransfer = (new QuoteRequestTransfer())

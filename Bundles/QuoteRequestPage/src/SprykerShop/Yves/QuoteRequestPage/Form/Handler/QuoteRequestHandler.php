@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\QuoteRequestPage\Form\Handler;
 
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
-use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface;
 
 class QuoteRequestHandler implements QuoteRequestHandlerInterface
@@ -20,20 +20,20 @@ class QuoteRequestHandler implements QuoteRequestHandlerInterface
     protected $quoteRequestClient;
 
     /**
-     * @var \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface
+     * @var \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface
      */
-    protected $quoteClient;
+    protected $cartClient;
 
     /**
      * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface $quoteRequestClient
-     * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface $quoteClient
+     * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface $cartClient
      */
     public function __construct(
         QuoteRequestPageToQuoteRequestClientInterface $quoteRequestClient,
-        QuoteRequestPageToQuoteClientInterface $quoteClient
+        QuoteRequestPageToCartClientInterface $cartClient
     ) {
         $this->quoteRequestClient = $quoteRequestClient;
-        $this->quoteClient = $quoteClient;
+        $this->cartClient = $cartClient;
     }
 
     /**
@@ -47,10 +47,18 @@ class QuoteRequestHandler implements QuoteRequestHandlerInterface
             ->create($quoteRequestTransfer);
 
         if ($quoteRequestResponseTransfer->getIsSuccess()) {
-//             TODO: throws exception after ::cleanQuote(), how I should clear quote?
-//            $this->quoteClient->clearQuote();
+            $this->clearQuote();
         }
 
         return $quoteRequestResponseTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function clearQuote(): void
+    {
+        $this->cartClient->clearQuote();
+        $this->cartClient->validateQuote();
     }
 }

@@ -9,15 +9,15 @@ namespace SprykerShop\Yves\QuoteRequestPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientBridge;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompanyUserClientBridge;
-use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientBridge;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientBridge;
 
 class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
     public const CLIENT_QUOTE_REQUEST = 'CLIENT_QUOTE_REQUEST';
-    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const CLIENT_CART = 'CLIENT_CART';
 
     public const PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELDS = 'PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELDS';
 
@@ -32,7 +32,7 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
 
         $container = $this->addCompanyUserClient($container);
         $container = $this->addQuoteRequestClient($container);
-        $container = $this->addQuoteClient($container);
+        $container = $this->addCartClient($container);
 
         $container = $this->addQuoteRequestFormMetadataFieldPlugins($container);
 
@@ -72,10 +72,10 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addQuoteClient(Container $container): Container
+    protected function addCartClient(Container $container): Container
     {
-        $container[self::CLIENT_QUOTE] = function (Container $container) {
-            return new QuoteRequestPageToQuoteClientBridge($container->getLocator()->quote()->client());
+        $container[self::CLIENT_CART] = function (Container $container) {
+            return new QuoteRequestPageToCartClientBridge($container->getLocator()->cart()->client());
         };
 
         return $container;

@@ -9,8 +9,8 @@ namespace SprykerShop\Yves\QuoteRequestPage;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompanyUserClientInterface;
-use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Form\DataProvider\QuoteRequestFormDataProvider;
 use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandler;
@@ -44,7 +44,7 @@ class QuoteRequestPageFactory extends AbstractFactory
     {
         return new QuoteRequestFormDataProvider(
             $this->getCompanyUserClient(),
-            $this->getQuoteClient(),
+            $this->getCartClient(),
             $this->getConfig()
         );
     }
@@ -56,7 +56,7 @@ class QuoteRequestPageFactory extends AbstractFactory
     {
         return new QuoteRequestHandler(
             $this->getQuoteRequestClient(),
-            $this->getQuoteClient()
+            $this->getCartClient()
         );
     }
 
@@ -85,11 +85,11 @@ class QuoteRequestPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface
+     * @return \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface
      */
-    public function getQuoteClient(): QuoteRequestPageToQuoteClientInterface
+    public function getCartClient(): QuoteRequestPageToCartClientInterface
     {
-        return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::CLIENT_QUOTE);
+        return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::CLIENT_CART);
     }
 
     /**

@@ -9,9 +9,9 @@
     "spryker-shop/shop-application": "*",
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/application": "*",
+    "spryker/cart": "*",
     "spryker/company-user": "*",
     "spryker/kernel": "*",
-    "spryker/quote": "*",
     "spryker/quote-request": "*",
     "spryker/symfony": "*"
   },
