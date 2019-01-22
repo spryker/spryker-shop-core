@@ -29,7 +29,6 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-
         $container = $this->addCompanyUserClient($container);
         $container = $this->addQuoteRequestClient($container);
         $container = $this->addCartClient($container);
@@ -46,7 +45,7 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCompanyUserClient(Container $container): Container
     {
-        $container[self::CLIENT_COMPANY_USER] = function (Container $container) {
+        $container[static::CLIENT_COMPANY_USER] = function (Container $container) {
             return new QuoteRequestPageToCompanyUserClientBridge($container->getLocator()->companyUser()->client());
         };
 
@@ -60,7 +59,7 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addQuoteRequestClient(Container $container): Container
     {
-        $container[self::CLIENT_QUOTE_REQUEST] = function (Container $container) {
+        $container[static::CLIENT_QUOTE_REQUEST] = function (Container $container) {
             return new QuoteRequestPageToQuoteRequestClientBridge($container->getLocator()->quoteRequest()->client());
         };
 
@@ -74,7 +73,7 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCartClient(Container $container): Container
     {
-        $container[self::CLIENT_CART] = function (Container $container) {
+        $container[static::CLIENT_CART] = function (Container $container) {
             return new QuoteRequestPageToCartClientBridge($container->getLocator()->cart()->client());
         };
 

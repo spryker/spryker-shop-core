@@ -17,9 +17,9 @@ class QuoteRequestPageConfig extends AbstractBundleConfig
     public const STATUS_WAITING = 'Waiting';
 
     /**
-     * @see \Spryker\Shared\QuoteRequest\QuoteRequestConfig::DEFAULT_VERSION
+     * @see \Spryker\Shared\QuoteRequest\QuoteRequestConfig::INITIAL_VERSION_NUMBER
      */
-    public const DEFAULT_VERSION = 1;
+    public const INITIAL_VERSION_NUMBER = 1;
 
     /**
      * @return string
@@ -34,6 +34,6 @@ class QuoteRequestPageConfig extends AbstractBundleConfig
      */
     public function getInitialVersion(): int
     {
-        return static::DEFAULT_VERSION;
+        return static::INITIAL_VERSION_NUMBER;
     }
 }
