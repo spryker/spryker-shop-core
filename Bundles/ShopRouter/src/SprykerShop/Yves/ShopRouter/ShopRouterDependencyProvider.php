@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\ShopRouter;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
-use SprykerShop\Yves\ShopRouter\Dependency\Client\ShopRouterToUrlClientBridge;
 use SprykerShop\Yves\ShopRouter\Dependency\Client\ShopRouterToUrlStorageClientBridge;
 
 class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
