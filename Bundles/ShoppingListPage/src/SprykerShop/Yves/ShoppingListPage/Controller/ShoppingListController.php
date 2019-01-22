@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ShoppingListTransfer;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageFactory getFactory()
