@@ -167,7 +167,7 @@ class CheckoutAddressCollectionForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIsAddressSavingSkippedField(FormBuilderInterface $builder): self
+    protected function addIsAddressSavingSkippedField(FormBuilderInterface $builder)
     {
         $isLoggedIn = $this->getFactory()
             ->getCustomerClient()
