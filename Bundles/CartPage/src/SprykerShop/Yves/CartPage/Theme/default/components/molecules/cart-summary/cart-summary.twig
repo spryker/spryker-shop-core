@@ -7,7 +7,8 @@
 
 {% define data = {
     cart: required,
-    isQuoteValid: required
+    isQuoteValid: required,
+    isQuoteEditable: required,
 } %}
 
 {% set canProceedToCheckout = data.cart.items is not empty
@@ -20,9 +21,7 @@
     <h6>{{ 'cart.your-order' | trans }}</h6>
     <hr />
 
-    {% if widgetGlobalExists('QuoteApprovalStatusWidget') %}
-        {% widget 'QuoteApprovalStatusWidget' args [data.cart] only %}{% endwidget %}
-    {% endif %}
+    {% widget 'QuoteApprovalWidget' args [data.cart] only %}{% endwidget %}
 
     {% if widgetExists('DiscountSummaryWidgetPlugin') %}
         <ul class="list spacing-y">
@@ -84,8 +83,7 @@
 
     {% if canProceedToCheckout %}
         <hr />
-        <a class="button button--expand button--success" href="{{ url('checkout-index') }}" {{qa('cart-go-to-checkout')}}>
-            {{ 'cart.checkout' | trans }}
-        </a>
+        {% widget 'QuoteApproveRequestWidget' args [data.cart] %}{% endwidget %}
+        {% widget 'ProcceedToCheckoutButtonWidget' args [data.cart] %}{% endwidget %}
     {% endif %}
 {% endblock %}

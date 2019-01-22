@@ -1,12 +1,14 @@
 {% extends template('widget') %}
 
 {% define data = {
-    quoteApprovalStatus: _widget.quoteApprovalStatus
+    quoteStatus: _widget.quoteStatus
 } %}
 
 {% block body %}
-    {% if data.quoteApprovalStatus is not null %}
-        {% set quoteApprovalStatus = 'quote_approval_widget.cart.status.' ~ data.quoteApprovalStatus %}
-        {{ quoteApprovalStatus | trans }}
-    {% endif %}
+    {% include molecule('approve-request-status', 'QuoteApprovalWidget') with {
+        modifiers: [data.quoteStatus | lower],
+        data: {
+            quoteStatus: data.quoteStatus
+        }
+    } only %}
 {% endblock %}

@@ -1,0 +1,31 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'approve-request-form',
+} %}
+
+{% define data = {
+    quoteApprovalRequestForm: required,
+    quoteApprovalRequestFormOptions: required,
+    quote: required,
+    limit: required,
+} %}
+
+{% block body %}
+    <p>
+        <b>{{ 'quote_approval_widget.shared_cart_warning' | trans }}</b>
+    </p>
+    <hr>
+    <p>
+        {{ 'quote_approval_widget.limit_text' | trans({'%amount%': data.limit / 100 ~ data.quote.currency.symbol}) }}
+    </p>
+    {{ form_start(data.quoteApprovalRequestForm, data.quoteApprovalRequestFormOptions) }}
+        {{ form_widget(data.quoteApprovalRequestForm.approverCompanyUserId) }}
+
+        <button type="submit" class="button button--expand button--success spacing-top">
+            {{ 'quote_approval.request.send' | trans }}
+        </button>
+
+        {{ form_errors(data.quoteApprovalRequestForm) }}
+    {{ form_end(data.quoteApprovalRequestForm) }}
+{% endblock %}

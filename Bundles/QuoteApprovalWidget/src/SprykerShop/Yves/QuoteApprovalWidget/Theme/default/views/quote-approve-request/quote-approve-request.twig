@@ -1,0 +1,58 @@
+{% extends template('widget') %}
+
+{% define data = {
+    quoteApprovalRequestForm: _widget.quoteApprovalRequestForm|default,
+    hasApprovers: _widget.quoteApprovalRequestForm ? _widget.quoteApprovalRequestForm.approverCompanyUserId.vars.choices is not empty : false,
+    quote: _widget.quote,
+    limit: _widget.limit,
+    isVisible: _widget.isVisible,
+    isQuoteWaitingForApproval: _widget.isQuoteWaitingForApproval,
+    quoteStatus: _widget.quoteStatus,
+    canSendApprovalRequest: _widget.canSendApprovalRequest,
+    quoteApprovalRequestFormOptions: {
+        action: path('quote-approval-create')
+    }
+} %}
+
+{% block body %}
+    {% if data.isVisible and (data.hasApprovers or data.isQuoteWaitingForApproval) %}
+        {% set approval = data.quote.approvals | length > 0 ? data.quote.approvals | last : null %}
+        {% set customer = approval ? approval.approver.customer : null %}
+
+        <div class="grid grid--justify grid--middle">
+            <div class="col">
+                <h6>{{ 'quote_approval_widget.title' | trans }}</h6>
+            </div>
+            <div class="col">
+                {% if widgetGlobalExists('QuoteApprovalStatusWidget') %}
+                    <td>
+                        {% widget 'QuoteApprovalStatusWidget' args [data.quote] only %}{% endwidget %}
+                    </td>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if approval %}
+            {% include molecule('approve-request-info', 'QuoteApprovalWidget') with {
+                data: {
+                    approval: approval,
+                    customer: customer,
+                    quoteStatus: data.quoteStatus
+                }
+            } only %}
+        {% endif %}
+
+        {% if data.canSendApprovalRequest and data.hasApprovers %}
+            {% include molecule('approve-request-form', 'QuoteApprovalWidget') with {
+                data: {
+                    quoteApprovalRequestForm: data.quoteApprovalRequestForm,
+                    quoteApprovalRequestFormOptions: data.quoteApprovalRequestFormOptions,
+                    quote: data.quote,
+                    limit: data.limit
+                }
+            } only %}
+        {% endif %}
+        <hr/>
+    {% endif %}
+{% endblock %}
+

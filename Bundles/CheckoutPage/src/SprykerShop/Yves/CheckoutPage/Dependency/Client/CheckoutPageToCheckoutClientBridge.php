@@ -33,4 +33,14 @@ class CheckoutPageToCheckoutClientBridge implements CheckoutPageToCheckoutClient
     {
         return $this->checkoutClient->placeOrder($quoteTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->checkoutClient->isQuoteApplicableForCheckout($quoteTransfer);
+    }
 }

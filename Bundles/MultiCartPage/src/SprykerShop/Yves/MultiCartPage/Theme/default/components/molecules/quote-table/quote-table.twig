@@ -82,7 +82,7 @@
                             } only %}
                         {% endif %}
                     </td>
-                    <td>{{ quote.totals.subtotal | default(0) | money }}</td>
+                    <td>{{ quote.totals.subtotal | default(0) | money(true, quote.currency.code) }}</td>
                     {% if widgetGlobalExists('QuoteApprovalStatusWidget') %}
                         <td>
                             {% widget 'QuoteApprovalStatusWidget' args [quote] only %}{% endwidget %}
