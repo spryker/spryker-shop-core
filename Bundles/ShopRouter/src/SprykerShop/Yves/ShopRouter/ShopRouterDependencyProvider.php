@@ -28,7 +28,6 @@ class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addUrlStorageClient($container);
-        $container = $this->addUrlClient($container);
         $container = $this->addApplicationPlugin($container);
         $container = $this->addResourceCreatorPlugins($container);
 
@@ -60,20 +59,6 @@ class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::CLIENT_URL_STORAGE] = function (Container $container) {
             return new ShopRouterToUrlStorageClientBridge($container->getLocator()->urlStorage()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addUrlClient(Container $container): Container
-    {
-        $container[self::CLIENT_URL] = function (Container $container) {
-            return new ShopRouterToUrlClientBridge($container->getLocator()->url()->client());
         };
 
         return $container;

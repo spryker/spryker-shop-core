@@ -64,9 +64,7 @@ class StorageRouter extends AbstractRouter
         }
 
         if ($pathinfo !== '/') {
-            $urlMatcher = $this
-                ->getFactory()
-                ->getUrlClient();
+            $urlMatcher = $this->getFactory()->getUrlMatcher();
             $localeName = $this->getLocale();
 
             $urlDetails = $urlMatcher->matchUrl($pathinfo, $localeName);
