@@ -117,21 +117,13 @@ class ShareShoppingListDataProvider
         ShoppingListTransfer $shoppingListTransfer,
         CustomerTransfer $customerTransfer
     ): ShoppingListTransfer {
-        $shoppingListCompanyUsers = $this->indexShoppingListCompanyUsers($shoppingListTransfer);
+        $shoppingListCompanyUsers = [];
         $companyUsers = $this->getCompanyUserCollection($customerTransfer)->getCompanyUsers();
 
         foreach ($companyUsers as $companyUserTransfer) {
             $idCompanyUser = $companyUserTransfer->getIdCompanyUser();
 
             if (strcmp($companyUserTransfer->getCustomer()->getCustomerReference(), $shoppingListTransfer->getCustomerReference()) === 0) {
-                continue;
-            }
-
-            if (isset($shoppingListCompanyUsers[$idCompanyUser])) {
-                $shoppingListCompanyUser = $shoppingListCompanyUsers[$idCompanyUser];
-                $shoppingListCompanyUser->setCompanyUser($companyUserTransfer);
-
-                $shoppingListCompanyUsers[$idCompanyUser] = $shoppingListCompanyUser;
                 continue;
             }
 
@@ -144,22 +136,6 @@ class ShareShoppingListDataProvider
         $shoppingListTransfer->setSharedCompanyUsers(new ArrayObject($shoppingListCompanyUsers));
 
         return $shoppingListTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer[]
-     */
-    protected function indexShoppingListCompanyUsers(ShoppingListTransfer $shoppingListTransfer): array
-    {
-        $sharedCompanyUsers = [];
-
-        foreach ($shoppingListTransfer->getSharedCompanyUsers() as $shoppingListCompanyUserTransfer) {
-            $sharedCompanyUsers[$shoppingListCompanyUserTransfer->getIdCompanyUser()] = $shoppingListCompanyUserTransfer;
-        }
-
-        return $sharedCompanyUsers;
     }
 
     /**

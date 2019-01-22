@@ -44,11 +44,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     {
         $viewData = $this->executeIndexAction($request);
 
-        return $this->view(
-            $viewData,
-            $this->getFactory()->getShoppingListOverviewWidgetPlugins(),
-            '@ShoppingListPage/views/shopping-list-overview/shopping-list-overview.twig'
-        );
+        return $this->view($viewData, [], '@ShoppingListPage/views/shopping-list-overview/shopping-list-overview.twig');
     }
 
     /**
@@ -99,11 +95,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             return $response;
         }
 
-        return $this->view(
-            $response,
-            $this->getFactory()->getShoppingListEditWidgetPlugins(),
-            '@ShoppingListPage/views/shopping-list-overview-update/shopping-list-overview-update.twig'
-        );
+        return $this->view($response, [], '@ShoppingListPage/views/shopping-list-overview-update/shopping-list-overview-update.twig');
     }
 
     /**

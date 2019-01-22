@@ -278,24 +278,4 @@ class ShoppingListPageFactory extends AbstractFactory
     {
         return new CreateFromCartHandler($this->getShoppingListClient(), $this->getCustomerClient());
     }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return string[]
-     */
-    public function getShoppingListEditWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_EDIT_WIDGETS);
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return string[]
-     */
-    public function getShoppingListOverviewWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_OVERVIEW_WIDGETS);
-    }
 }
