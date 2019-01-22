@@ -347,7 +347,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplatePluginInterface[]
+     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplateStrategyPluginInterface[]
      */
     protected function getQuickOrderFileTemplatePlugins(): array
     {

@@ -9,12 +9,12 @@ namespace SprykerShop\Yves\QuickOrderPage\Plugin\QuickOrderPage;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Shared\QuickOrderPage\QuickOrderPageConfig;
-use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplatePluginInterface;
+use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplateStrategyPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageFactory getFactory()
  */
-class QuickOrderCsvFileTemplatePlugin extends AbstractPlugin implements QuickOrderFileTemplatePluginInterface
+class QuickOrderCsvFileTemplateStrategyPlugin extends AbstractPlugin implements QuickOrderFileTemplateStrategyPluginInterface
 {
     /**
      * @param string $fileExtension

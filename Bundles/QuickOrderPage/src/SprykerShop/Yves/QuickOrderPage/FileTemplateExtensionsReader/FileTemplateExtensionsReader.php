@@ -10,12 +10,12 @@ namespace SprykerShop\Yves\QuickOrderPage\FileTemplateExtensionsReader;
 class FileTemplateExtensionsReader implements FileTemplateExtensionsReaderInterface
 {
     /**
-     * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplatePluginInterface[]
+     * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplateStrategyPluginInterface[]
      */
     protected $quickOrderFileTemplatePlugins;
 
     /**
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplatePluginInterface[] $quickOrderFileTemplatePlugins
+     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplateStrategyPluginInterface[] $quickOrderFileTemplatePlugins
      */
     public function __construct(array $quickOrderFileTemplatePlugins)
     {

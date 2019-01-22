@@ -240,7 +240,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplatePluginInterface[]
+     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplateStrategyPluginInterface[]
      */
     public function getQuickOrderFileTemplatePlugins(): array
     {

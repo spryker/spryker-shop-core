@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin;
 
-interface QuickOrderFileTemplatePluginInterface
+interface QuickOrderFileTemplateStrategyPluginInterface
 {
     /**
      * Specification:
