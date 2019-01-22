@@ -26,7 +26,7 @@ export default class AjaxProvider extends Component {
         debug(this.method, this.url, 'fetching...');
         this.isFetchingRequest = true;
         this.dispatchCustomEvent(EVENT_FETCHING);
-
+        
         return new Promise<T>((resolve, reject) => {
             this.xhr.open(this.method, this.url);
             this.xhr.responseType = this.responseType;
@@ -71,10 +71,10 @@ export default class AjaxProvider extends Component {
 
         const queryStringParams = [];
 
-        this.queryParams.forEach((value: String, key: String) => {
-            queryStringParams.push(`${key}=${value}`);
+        this.queryParams.forEach((value: string, key: String) => {
+            const encodeValue = encodeURIComponent(value);
+            queryStringParams.push(`${key}=${encodeValue}`);
         });
-
         return url + '?' + queryStringParams.join('&');
     }
 
