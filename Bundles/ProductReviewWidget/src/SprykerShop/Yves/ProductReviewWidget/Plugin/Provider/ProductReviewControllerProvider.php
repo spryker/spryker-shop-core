@@ -31,7 +31,7 @@ class ProductReviewControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addProductReviewRoute(): self
+    protected function addProductReviewRoute()
     {
         $this->createController('/{productReview}/index/{idProductAbstract}', static::ROUTE_PRODUCT_REVIEW_INDEX, 'ProductReviewWidget', 'Index', 'index')
             ->assert('productReview', $this->getAllowedLocalesPattern() . 'product-review|product-review')
@@ -44,7 +44,7 @@ class ProductReviewControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addProductReviewSubmitRoute(): self
+    protected function addProductReviewSubmitRoute()
     {
         $this->createController('/{productReview}/submit/{idProductAbstract}', static::ROUTE_PRODUCT_REVIEW_SUBMIT, 'ProductReviewWidget', 'Submit', 'index')
             ->assert('productReview', $this->getAllowedLocalesPattern() . 'product-review|product-review')
