@@ -2,7 +2,7 @@
 
 {% define data = {
     quoteApprovalRequestForm: _widget.quoteApprovalRequestForm|default,
-    hasApprovers: _widget.quoteApprovalRequestForm ? _widget.quoteApprovalRequestForm.idCompanyUser.vars.choices is not empty : false,
+    hasApprovers: _widget.quoteApprovalRequestForm ? _widget.quoteApprovalRequestForm.approverCompanyUserId.vars.choices is not empty : false,
     quote: _widget.quote,
     limit: _widget.limit,
     isVisible: _widget.isVisible,

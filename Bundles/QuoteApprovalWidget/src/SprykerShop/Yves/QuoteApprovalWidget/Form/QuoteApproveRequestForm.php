@@ -16,7 +16,7 @@ class QuoteApproveRequestForm extends AbstractType
 {
     public const OPTION_APPROVERS_LIST = 'OPTION_APPROVERS_LIST';
 
-    protected const FILED_APPROVER = 'idCompanyUser';
+    protected const FILED_APPROVER = 'approverCompanyUserId';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

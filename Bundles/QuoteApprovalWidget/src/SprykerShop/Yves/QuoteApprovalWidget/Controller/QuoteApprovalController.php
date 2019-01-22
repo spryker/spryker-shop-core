@@ -60,10 +60,12 @@ class QuoteApprovalController extends AbstractController
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
         if ($customerTransfer) {
+            $customerTransfer->requireCompanyUserTransfer();
+
             $quoteApprovalRemoveRequestTransfer = new QuoteApprovalRemoveRequestTransfer();
 
             $quoteApprovalRemoveRequestTransfer->setIdQuoteApproval($idQuoteApproval)
-                ->setCustomerReference($customerTransfer->getCustomerReference());
+                ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
             $quoteApprovalResponseTransfer = $this->getFactory()
                 ->getQuoteApprovalClient()
