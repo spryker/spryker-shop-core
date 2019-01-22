@@ -44,18 +44,24 @@ class UploadOrderFormatConstraintValidator extends ConstraintValidator
             $this->context
                 ->buildViolation($constraint->getInvalidMimeTypeMessage())
                 ->addViolation();
-        }
 
-        if (!$this->isValidAmountOfRows($file, $constraint->getUploadOrderMaxAllowedLines(), $constraint->getFileProcessorPlugins())) {
-            $this->context
-                ->buildViolation($constraint->getInvalidAmountOfRowsMessage())
-                ->addViolation();
+            return;
         }
 
         if (!$this->isValidFormat($file, $constraint->getFileProcessorPlugins())) {
             $this->context
                 ->buildViolation($constraint->getInvalidFormatMessage())
                 ->addViolation();
+
+            return;
+        }
+
+        if (!$this->isValidAmountOfRows($file, $constraint->getUploadOrderMaxAllowedLines(), $constraint->getFileProcessorPlugins())) {
+            $this->context
+                ->buildViolation($constraint->getInvalidAmountOfRowsMessage())
+                ->addViolation();
+
+            return;
         }
     }
 
