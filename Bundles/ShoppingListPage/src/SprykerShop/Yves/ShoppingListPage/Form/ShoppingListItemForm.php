@@ -57,7 +57,7 @@ class ShoppingListItemForm extends AbstractType
      *
      * @return $this
      */
-    protected function addQuantityField(FormBuilderInterface $builder): self
+    protected function addQuantityField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_QUANTITY, HiddenType::class, [
             'constraints' => [
