@@ -228,6 +228,6 @@ class CheckoutController extends AbstractController
      */
     protected function isMultiShipmentEnabled(): bool
     {
-        return defined(ItemTransfer::SHIPMENT);
+        return defined('\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer::FK_SALES_SHIPMENT');
     }
 }

@@ -38,7 +38,7 @@ class ShipmentStepStrategyResolver implements ShipmentStepStrategyResolverInterf
      */
     public function resolvePostCondition(): PostConditionCheckerInterface
     {
-        if (!defined(ItemTransfer::SHIPMENT)) {
+        if (!defined('\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer::FK_SALES_SHIPMENT')) {
             $this->assertRequiredStrategyPostConditionCheckerWithoutMultiShipmentContainerItems();
 
             return call_user_func($this->strategyContainer[static::STRATEGY_KEY_POST_CONDITION_CHECKER_WITHOUT_MULTI_SHIPMENT]);
