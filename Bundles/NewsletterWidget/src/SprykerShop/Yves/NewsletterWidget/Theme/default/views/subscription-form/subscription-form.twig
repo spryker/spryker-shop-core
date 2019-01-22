@@ -3,3 +3,17 @@
 {% define data = {
     form: _view.newsletterSubscriptionForm,
 } %}
+
+{% block form %}
+    {% include molecule('form') with {
+        class: 'col col--sm-12 col--lg-4',
+        modifiers: ['inline'],
+        data: {
+            form: data.form,
+            submit: {
+                enable: true,
+                text: 'newsletter.form.subscribe' | trans
+            }
+        }
+    } only %}
+{% endblock %}

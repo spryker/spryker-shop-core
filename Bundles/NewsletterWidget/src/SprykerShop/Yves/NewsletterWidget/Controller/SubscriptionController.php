@@ -7,34 +7,48 @@
 
 namespace SprykerShop\Yves\NewsletterWidget\Controller;
 
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
+use Generated\Shared\Transfer\NewsletterTypeTransfer;
+use Spryker\Shared\Newsletter\NewsletterConstants;
 use SprykerShop\Yves\NewsletterWidget\Form\NewsletterSubscriptionForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Use SubscriptionWidgetController instead
  * @method \SprykerShop\Yves\NewsletterWidget\NewsletterWidgetFactory getFactory()
  */
 class SubscriptionController extends AbstractController
 {
-    protected const MESSAGE_SUBSCRIPTION_SUCCESS = 'newsletter.subscription.success';
-    protected const MESSAGE_SUBSCRIPTION_ERROR = 'newsletter.subscription.error';
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function subscribeAction(Request $request)
+    {
+        $viewData = $this->executeSubscribeAction($request);
 
-    protected const REQUEST_HEADER_REFERER = 'referer';
+        return $this->view($viewData, [], '@NewsletterWidget/views/subscription-form/subscription-form.twig');
+    }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Spryker\Yves\Kernel\View\View
+     * @return array
      */
-    public function subscribeAction(Request $request)
+    protected function executeSubscribeAction(Request $request): array
     {
+        $success = false;
+        $error = false;
+
         $subscriptionForm = $this
             ->getFactory()
             ->getNewsletterSubscriptionForm();
 
         $parentRequest = $this->getApplication()['request_stack']->getParentRequest();
-        $redirectUrl = $this->getRefererUrl($request);
 
         if ($parentRequest !== null) {
             $request = $parentRequest;
@@ -42,60 +56,55 @@ class SubscriptionController extends AbstractController
 
         $subscriptionForm->handleRequest($request);
 
-        if (!$subscriptionForm->isSubmitted()) {
-            return $this->view(
-                [
-                    'newsletterSubscriptionForm' => $subscriptionForm->createView(),
-                ],
-                [],
-                '@NewsletterWidget/views/subscription-form/subscription-form.twig'
-            );
-        }
+        if ($subscriptionForm->isSubmitted() && $subscriptionForm->isValid()) {
+            $customerTransfer = (new CustomerTransfer())
+                ->setEmail($subscriptionForm->get(NewsletterSubscriptionForm::FIELD_SUBSCRIBE)->getData());
 
-        if (!$subscriptionForm->isValid()) {
-            foreach ($subscriptionForm->getErrors(true) as $errorObject) {
-                $this->addErrorMessage($errorObject->getMessage());
+            $request = $this->createNewsletterSubscriptionRequest($customerTransfer);
+            $subscriptionResponse = $this->getFactory()
+                ->getNewsletterClient()
+                ->subscribeWithDoubleOptIn($request);
+
+            $subscriptionResult = current($subscriptionResponse->getSubscriptionResults());
+
+            if ($subscriptionResult->getIsSuccess()) {
+                $subscriptionForm = $this
+                    ->getFactory()
+                    ->getNewsletterSubscriptionForm();
+                $success = 'newsletter.subscription.success';
             }
 
-            return $this->redirectResponseExternal($redirectUrl);
+            if (!$subscriptionResult->getIsSuccess()) {
+                $error = $subscriptionResult->getErrorMessage();
+            }
         }
 
-        $emailValue = $subscriptionForm
-            ->get(NewsletterSubscriptionForm::FIELD_SUBSCRIBE)
-            ->getData();
-        $subscriptionResult = $this->getFactory()
-            ->createDoubleOptInSubscriptionRequestHandler()
-            ->subscribe($emailValue);
-
-        if (!$subscriptionResult) {
-            $this->addErrorMessage(static::MESSAGE_SUBSCRIPTION_ERROR);
-
-            return $this->redirectResponseExternal($redirectUrl);
-        }
-
-        if (!$subscriptionResult->getIsSuccess()) {
-            $error = $subscriptionResult->getErrorMessage();
-            $this->addErrorMessage($error);
-
-            return $this->redirectResponseExternal($redirectUrl);
-        }
-
-        $this->addSuccessMessage(static::MESSAGE_SUBSCRIPTION_SUCCESS);
-
-        return $this->redirectResponseExternal($redirectUrl);
+        return [
+            'newsletterSubscriptionForm' => $subscriptionForm->createView(),
+            'error' => $error,
+            'success' => $success,
+        ];
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param string|null $subscriberKey
      *
-     * @return array|string
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer
      */
-    protected function getRefererUrl(Request $request)
+    protected function createNewsletterSubscriptionRequest(CustomerTransfer $customerTransfer, $subscriberKey = null)
     {
-        if ($request->headers->has(static::REQUEST_HEADER_REFERER)) {
-            return $request->headers->get(static::REQUEST_HEADER_REFERER);
-        }
+        $subscriptionRequest = new NewsletterSubscriptionRequestTransfer();
 
-        return CustomerPageControllerProvider::ROUTE_CUSTOMER_OVERVIEW;
+        $subscriber = new NewsletterSubscriberTransfer();
+        $subscriber->setFkCustomer($customerTransfer->getIdCustomer());
+        $subscriber->setEmail($customerTransfer->getEmail());
+        $subscriber->setSubscriberKey($subscriberKey);
+
+        $subscriptionRequest->setNewsletterSubscriber($subscriber);
+        $subscriptionRequest->addSubscriptionType((new NewsletterTypeTransfer())
+            ->setName(NewsletterConstants::DEFAULT_NEWSLETTER_TYPE));
+
+        return $subscriptionRequest;
     }
 }
