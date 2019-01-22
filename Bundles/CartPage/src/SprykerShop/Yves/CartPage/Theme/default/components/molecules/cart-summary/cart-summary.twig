@@ -85,11 +85,12 @@
         </a>
     {% endif %}
 
-
-    {% widget 'CreateQuoteRequestWidget' only %}
-        {% block body %}
-            <hr />
-            {{ parent() }}
-        {% endblock %}
-    {% endwidget %}
+    {% if is_granted('ROLE_USER') %}
+        {% widget 'CreateQuoteRequestWidget' only %}
+            {% block body %}
+                <hr />
+                {{ parent() }}
+            {% endblock %}
+        {% endwidget %}
+    {% endif %}
 {% endblock %}
