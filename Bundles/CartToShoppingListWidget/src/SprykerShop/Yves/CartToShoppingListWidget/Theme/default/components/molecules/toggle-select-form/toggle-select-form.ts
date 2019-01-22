@@ -17,6 +17,7 @@ export default class ToggleSelectForm extends Component {
 
     /**
      * Makes the trigger element a listener of the change event.
+     * @remarks That visibility will be changes next release.
      */
     mapEvents(): void {
         this.trigger.addEventListener('change', (event: Event) => this.onTriggerClick(event));
@@ -25,6 +26,7 @@ export default class ToggleSelectForm extends Component {
     /**
      * Disables the default behavior of the change event and invokes the toggle method.
      * @param event Event name.
+     * @remarks That visibility will be changes next release.
      */
     onTriggerClick(event: Event): void { 
         event.preventDefault();
