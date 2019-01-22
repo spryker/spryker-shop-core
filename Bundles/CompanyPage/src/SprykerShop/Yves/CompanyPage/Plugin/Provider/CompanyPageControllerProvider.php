@@ -77,7 +77,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCompanyRoutes(): self
+    protected function addCompanyRoutes()
     {
         $this->createController('/{company}/login', static::ROUTE_COMPANY_LOGIN, 'CompanyPage', 'Auth', 'login')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
@@ -95,7 +95,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCompanyAddressRoutes(): self
+    protected function addCompanyAddressRoutes()
     {
         $this->createController('/{company}/address', static::ROUTE_COMPANY_ADDRESS, 'CompanyPage', 'Address', 'index')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
@@ -119,7 +119,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCompanyBusinessUnitRoutes(): self
+    protected function addCompanyBusinessUnitRoutes()
     {
         $this->createController('/{company}/business-unit', static::ROUTE_COMPANY_BUSINESS_UNIT, 'CompanyPage', 'BusinessUnit', 'index')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
@@ -161,7 +161,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCompanyRoleRoutes(): self
+    protected function addCompanyRoleRoutes()
     {
         $this->createController('/{company}/company-role', static::ROUTE_COMPANY_ROLE, 'CompanyPage', 'CompanyRole', 'index')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
@@ -188,7 +188,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addPermissionRoutes(): self
+    protected function addPermissionRoutes()
     {
         $this->createController('/{company}/company-role-permission/configure', static::ROUTE_COMPANY_ROLE_PERMISSION_CONFIGURE, 'CompanyPage', 'CompanyRolePermission', 'configure')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
@@ -206,7 +206,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCompanyUserRoutes(): self
+    protected function addCompanyUserRoutes()
     {
         $this->createController('/{company}/user', static::ROUTE_COMPANY_USER, 'CompanyPage', 'User', 'index')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
@@ -233,7 +233,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCompanyRoleUserRoutes(): self
+    protected function addCompanyRoleUserRoutes()
     {
         $this->createController('/{company}/company-role/user/manage', static::ROUTE_COMPANY_ROLE_USER_MANAGE, 'CompanyPage', 'CompanyRoleUser', 'manage')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
@@ -251,7 +251,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCompanyUserStatusRoutes(): self
+    protected function addCompanyUserStatusRoutes()
     {
         $this->createController('/{company}/company-user-status/enable', static::ROUTE_COMPANY_USER_STATUS_ENABLE, 'CompanyPage', 'CompanyUserStatus', 'enable')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')

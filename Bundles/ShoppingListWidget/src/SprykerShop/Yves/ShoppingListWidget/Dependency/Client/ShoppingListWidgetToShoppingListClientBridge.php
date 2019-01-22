@@ -9,6 +9,8 @@ namespace SprykerShop\Yves\ShoppingListWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
 
 class ShoppingListWidgetToShoppingListClientBridge implements ShoppingListWidgetToShoppingListClientInterface
 {
@@ -42,5 +44,15 @@ class ShoppingListWidgetToShoppingListClientBridge implements ShoppingListWidget
     public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer, array $params = []): ShoppingListItemTransfer
     {
         return $this->shoppingListClient->addItem($shoppingListItemTransfer, $params);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function addItems(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->shoppingListClient->addItems($shoppingListTransfer);
     }
 }
