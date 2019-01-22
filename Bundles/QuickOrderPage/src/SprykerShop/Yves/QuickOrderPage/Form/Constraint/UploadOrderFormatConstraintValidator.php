@@ -61,7 +61,7 @@ class UploadOrderFormatConstraintValidator extends ConstraintValidator
 
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorPluginInterface[] $fileProcessorPlugins
+     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorStrategyPluginInterface[] $fileProcessorPlugins
      *
      * @return bool
      */
@@ -80,7 +80,7 @@ class UploadOrderFormatConstraintValidator extends ConstraintValidator
 
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorPluginInterface[] $fileProcessorPlugins
+     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorStrategyPluginInterface[] $fileProcessorPlugins
      *
      * @return bool
      */
@@ -98,7 +98,7 @@ class UploadOrderFormatConstraintValidator extends ConstraintValidator
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      * @param int $maxAllowedLines
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorPluginInterface[] $fileProcessorPlugins
+     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorStrategyPluginInterface[] $fileProcessorPlugins
      *
      * @return bool
      */

@@ -12,12 +12,12 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class UploadedOrderParser implements UploadedOrderParserInterface
 {
     /**
-     * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorPluginInterface[]
+     * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorStrategyPluginInterface[]
      */
     protected $quickOrderFileProcessorPlugins;
 
     /**
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorPluginInterface[] $quickOrderFileProcessorPlugins
+     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorStrategyPluginInterface[] $quickOrderFileProcessorPlugins
      */
     public function __construct(array $quickOrderFileProcessorPlugins)
     {

@@ -9,13 +9,13 @@ namespace SprykerShop\Yves\QuickOrderPage\Plugin\QuickOrderPage;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Shared\QuickOrderPage\QuickOrderPageConfig;
-use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorPluginInterface;
+use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorStrategyPluginInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageFactory getFactory()
  */
-class QuickOrderCsvFileProcessorPlugin extends AbstractPlugin implements QuickOrderFileProcessorPluginInterface
+class QuickOrderCsvFileProcessorStrategyPlugin extends AbstractPlugin implements QuickOrderFileProcessorStrategyPluginInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file

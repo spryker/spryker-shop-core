@@ -25,7 +25,7 @@ class UploadOrderFormatConstraint extends SymfonyConstraint
     protected $config;
 
     /**
-     * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorPluginInterface[]
+     * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorStrategyPluginInterface[]
      */
     protected $quickOrderFileProcessorPlugins;
 
@@ -43,7 +43,7 @@ class UploadOrderFormatConstraint extends SymfonyConstraint
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorPluginInterface[]
+     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorStrategyPluginInterface[]
      */
     public function getFileProcessorPlugins(): array
     {
