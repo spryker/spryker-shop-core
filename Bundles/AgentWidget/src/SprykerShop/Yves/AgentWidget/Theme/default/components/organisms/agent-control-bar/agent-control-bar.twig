@@ -19,11 +19,14 @@
                         <div class="grid">
                             <div class="col col--sm-9 col--lg-10">
                                 {% include molecule('autocomplete-form') with {
+                                    data: {
+                                        id: 'agent',
+                                        suggestionsUrl: path('agent-widget/customer-autocomplete'),
+                                        name: '_switch_user',
+                                    },
                                     attributes: {
-                                        'suggestion-url': path('agent-widget/customer-autocomplete'),
-                                        'selected-value-key': '_switch_user',
+                                        'suggested-item-selector': '.customer-list__container-item',
                                         'value-data-attribute': 'data-value',
-                                        'item-selector': '.customer-list__container-item',
                                         'show-clean-button': true
                                     }
                                 } only %}
@@ -43,7 +46,7 @@
                     {{ 'agent.control_bar.username' | trans({
                         '%username%': "#{data.agent.firstName} #{data.agent.lastName}"
                     }) }}
-                    <a href="{{ path('agent/logout') }}" class="button">{{ 'agent.control_bar.logout' | trans }}</a>
+                    <a href="{{ path('agent_logout') }}" class="button">{{ 'agent.control_bar.logout' | trans }}</a>
                 </div>
                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                     <div class="spacing-top spacing-top--big">

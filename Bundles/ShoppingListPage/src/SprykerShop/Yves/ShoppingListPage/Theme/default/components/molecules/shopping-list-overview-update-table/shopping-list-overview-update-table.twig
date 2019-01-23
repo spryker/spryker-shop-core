@@ -19,7 +19,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for key, shoppingListItem in data.shoppingListItems %}}
+        {% for key, shoppingListItem in data.shoppingListItems %}
             {% set product = data.shoppingListItemProducts[shoppingListItem.idShoppingListItem] %}
             {% set isProductAvailable = product.available is defined and product.available and product.price is defined and product.price is not null %}
             {% set productDiscontinuedWidget = findWidget('ProductDiscontinuedWidget', [product.sku]) %}
@@ -64,7 +64,7 @@
                             }
                         } only %}
                     {% else %}
-                        {{ 'product_alternative_widget.not_applicable' | trans }}
+                        {{ 'shopping_list.not_applicable' | trans }}
                     {% endif %}
                 </td>
                 <td class="{{ config.name }}__cell text-center">

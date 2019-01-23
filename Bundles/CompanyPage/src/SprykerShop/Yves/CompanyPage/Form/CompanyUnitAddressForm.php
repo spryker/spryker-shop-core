@@ -33,6 +33,11 @@ class CompanyUnitAddressForm extends AbstractType
 
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+    protected const VALIDATION_MIN_LENGTH_MESSAGE = 'validation.min_length';
+    protected const VALIDATION_ADDRESS_NUMBER_MESSAGE = 'validation.address_number';
+    protected const VALIDATION_ZIP_CODE_MESSAGE = 'validation.zip_code';
+
     /**
      * @return string
      */
@@ -83,7 +88,7 @@ class CompanyUnitAddressForm extends AbstractType
         $builder->add(static::FIELD_FK_COMPANY, HiddenType::class, [
             'required' => true,
             'constraints' => [
-                $this->createNotBlankConstraint($options),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -132,7 +137,7 @@ class CompanyUnitAddressForm extends AbstractType
             'label' => 'company.account.address.address1',
             'required' => true,
             'constraints' => [
-                $this->createNotBlankConstraint($options),
+                $this->createNotBlankConstraint(),
                 $this->createMinLengthConstraint($options),
             ],
         ]);
@@ -152,7 +157,7 @@ class CompanyUnitAddressForm extends AbstractType
             'label' => 'company.account.address.number',
             'required' => true,
             'constraints' => [
-                $this->createNotBlankConstraint($options),
+                $this->createNotBlankConstraint(),
                 $this->createAddressNumberConstraint($options),
             ],
         ]);
@@ -188,7 +193,8 @@ class CompanyUnitAddressForm extends AbstractType
             'label' => 'company.account.address.zip_code',
             'required' => true,
             'constraints' => [
-                $this->createNotBlankConstraint($options),
+                $this->createNotBlankConstraint(),
+                $this->createZipCodeConstraint($options),
             ],
         ]);
 
@@ -207,7 +213,7 @@ class CompanyUnitAddressForm extends AbstractType
             'label' => 'company.account.address.city',
             'required' => true,
             'constraints' => [
-                $this->createNotBlankConstraint($options),
+                $this->createNotBlankConstraint(),
                 $this->createMinLengthConstraint($options),
             ],
         ]);
@@ -228,7 +234,7 @@ class CompanyUnitAddressForm extends AbstractType
             'required' => true,
             'choices' => array_flip($options[static::OPTION_COUNTRY_CHOICES]),
             'constraints' => [
-                $this->createNotBlankConstraint($options),
+                $this->createNotBlankConstraint(),
             ],
         ]);
 
@@ -252,13 +258,11 @@ class CompanyUnitAddressForm extends AbstractType
     }
 
     /**
-     * @param array $options
-     *
      * @return \Symfony\Component\Validator\Constraints\NotBlank
      */
-    protected function createNotBlankConstraint(array $options)
+    protected function createNotBlankConstraint()
     {
-        return new NotBlank();
+        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 
     /**
@@ -273,7 +277,23 @@ class CompanyUnitAddressForm extends AbstractType
         return new Length([
             'min' => 3,
             'groups' => $validationGroup,
-            'minMessage' => 'This field must be at least {{ limit }} characters long.',
+            'minMessage' => static::VALIDATION_MIN_LENGTH_MESSAGE,
+        ]);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createZipCodeConstraint(array $options): Regex
+    {
+        $validationGroup = $this->getValidationGroup($options);
+
+        return new Regex([
+            'pattern' => '/^\d{5}$/',
+            'message' => static::VALIDATION_ZIP_CODE_MESSAGE,
+            'groups' => $validationGroup,
         ]);
     }
 
@@ -288,7 +308,7 @@ class CompanyUnitAddressForm extends AbstractType
 
         return new Regex([
             'pattern' => '/^\d+[a-zA-Z]*$/',
-            'message' => 'This value is not valid (accepted format e.g.: 12c).',
+            'message' => static::VALIDATION_ADDRESS_NUMBER_MESSAGE,
             'groups' => $validationGroup,
         ]);
     }

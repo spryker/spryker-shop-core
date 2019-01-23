@@ -1,1 +1,3 @@
-@include shop-ui-table;
+@include helper-import(atom, table) {
+    @include shop-ui-table;
+}

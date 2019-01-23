@@ -11,12 +11,14 @@
     cartItem: required
 } %}
 
-{% block class %}{{parent()}} list{% endblock %}
+{% block class %}{{ parent() }} list{% endblock %}
 
 {% block body %}
     <li class="list__item spacing-y">
-        {{ 'cart.item.item_price' | trans }}
-        <span class="float-right">{{ data.unitPrice }}</span>
+        {% if can('SeePricePermissionPlugin') %}
+            {{ 'cart.item.item_price' | trans }}
+            <span class="float-right">{{ data.unitPrice }}</span>
+        {% endif %}
     </li>
 
     {% if data.cartItem.productOptions | length > 0 %}
@@ -33,8 +35,14 @@
         </li>
     {% endif %}
 
+
     <li class="list__item spacing-y">
-        <strong>{{ 'cart.item.item_total' | trans }}</strong>
-        <strong class="float-right">{{ data.subtotalPrice }}</strong>
+        {% if can('SeePricePermissionPlugin') %}
+            <strong>{{ 'cart.item.item_total' | trans }}</strong>
+            <strong class="float-right">{{ data.subtotalPrice }}</strong>
+        {% else %}
+            {{ 'customer.access.cannot_see_price' | trans }}
+        {% endif %}
     </li>
+
 {% endblock %}

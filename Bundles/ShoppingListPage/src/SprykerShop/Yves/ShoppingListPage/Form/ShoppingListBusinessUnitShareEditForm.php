@@ -14,6 +14,9 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig getConfig()
+ */
 class ShoppingListBusinessUnitShareEditForm extends AbstractType
 {
     protected const FIELD_ID_SHOPPING_LIST_COMPANY_BUSINESS_UNIT = 'idShoppingListCompanyBusinessUnit';
@@ -55,7 +58,7 @@ class ShoppingListBusinessUnitShareEditForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdShoppingListCompanyBusinessUnitField(FormBuilderInterface $builder): self
+    protected function addIdShoppingListCompanyBusinessUnitField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_SHOPPING_LIST_COMPANY_BUSINESS_UNIT, HiddenType::class);
 
@@ -67,7 +70,7 @@ class ShoppingListBusinessUnitShareEditForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdCompanyBusinessUnitField(FormBuilderInterface $builder): self
+    protected function addIdCompanyBusinessUnitField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_COMPANY_BUSINESS_UNIT, HiddenType::class);
 
@@ -79,7 +82,7 @@ class ShoppingListBusinessUnitShareEditForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdShoppingListField(FormBuilderInterface $builder): self
+    protected function addIdShoppingListField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_SHOPPING_LIST, HiddenType::class);
 
@@ -92,7 +95,7 @@ class ShoppingListBusinessUnitShareEditForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdShoppingListPermissionGroupField(FormBuilderInterface $builder, array $options): self
+    protected function addIdShoppingListPermissionGroupField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_ID_SHOPPING_LIST_PERMISSION_GROUP, ChoiceType::class, [
             'choices' => $options[ShareShoppingListForm::OPTION_PERMISSION_GROUPS],

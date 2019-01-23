@@ -12,7 +12,11 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
+ */
 class RestorePasswordForm extends AbstractType
 {
     public const FIELD_RESTORE_PASSWORD_KEY = 'restore_password_key';
@@ -70,8 +74,19 @@ class RestorePasswordForm extends AbstractType
             'second_options' => [
                 'label' => 'forms.confirm-password',
             ],
+            'constraints' => [
+                $this->createNotBlankConstraint(),
+            ],
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank();
     }
 }

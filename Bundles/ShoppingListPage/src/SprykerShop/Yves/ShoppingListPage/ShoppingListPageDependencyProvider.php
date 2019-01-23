@@ -15,7 +15,7 @@ use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustom
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToMultiCartClientBridge;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToProductStorageClientBridge;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientBridge;
-use SprykerShop\Yves\ShoppingListPage\Plugin\ShoppingListDismissWidgetPlugin;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToZedRequestClientBridge;
 
 class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -32,6 +32,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     public const PLUGIN_SHOPPING_LIST_EDIT_WIDGETS = 'PLUGIN_SHOPPING_LIST_EDIT_WIDGETS';
     public const PLUGIN_SHOPPING_LIST_OVERVIEW_WIDGETS = 'PLUGIN_SHOPPING_LIST_OVERVIEW_WIDGETS';
     public const CLIENT_MULTI_CART = 'CLIENT_MULTI_CART';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -53,6 +54,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addShoppingListOverviewWidgetPlugins($container);
         $container = $this->addShoppingListItemFormExpanderPlugins($container);
         $container = $this->addShoppingListFormDataProviderMapperPlugins($container);
+        $container = $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -66,6 +68,20 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container[self::CLIENT_CUSTOMER] = function (Container $container) {
             return new ShoppingListPageToCustomerClientBridge($container->getLocator()->customer()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addZedRequestClient(Container $container): Container
+    {
+        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+            return new ShoppingListPageToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
         };
 
         return $container;
@@ -150,6 +166,8 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -164,6 +182,8 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -178,6 +198,8 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -206,6 +228,8 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -248,6 +272,8 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * Returns a list of widget plugin class names that implement
      * Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
@@ -259,6 +285,8 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * Returns a list of widget plugin class names that implement
      * Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
@@ -270,6 +298,8 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * Returns a list of widget plugin class names that implement
      * Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
@@ -289,6 +319,8 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * Returns a list of widget plugin class names that implement
      * \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface.
      *
@@ -296,9 +328,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function getShoppingListOverviewWidgetPlugins(): array
     {
-        return [
-            ShoppingListDismissWidgetPlugin::class,
-        ];
+        return [];
     }
 
     /**

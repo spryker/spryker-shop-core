@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints\Range;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageFactory getFactory()
+ * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig getConfig()
  */
 class ShoppingListItemForm extends AbstractType
 {
@@ -56,7 +57,7 @@ class ShoppingListItemForm extends AbstractType
      *
      * @return $this
      */
-    protected function addQuantityField(FormBuilderInterface $builder): self
+    protected function addQuantityField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_QUANTITY, HiddenType::class, [
             'constraints' => [
