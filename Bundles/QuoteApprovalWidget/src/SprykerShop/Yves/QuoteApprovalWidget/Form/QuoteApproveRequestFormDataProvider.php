@@ -78,7 +78,7 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
         $customerTransfer->requireCompanyUserTransfer();
 
         return $quoteApprovalCreateRequestTransfer
-            ->setRequestSenderCompanyUserId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser())
+            ->setRequesterCompanyUserId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser())
             ->setIdQuote($quoteTransfer->getIdQuote());
     }
 
