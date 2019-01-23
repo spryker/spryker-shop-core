@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -25,6 +26,12 @@ class ProductQuickAddForm extends AbstractType
     public const FIELD_ADDITIONAL_REDIRECT_PARAMETERS = 'additional-redirect-parameters';
 
     protected const FORM_NAME = 'productQuickAddForm';
+    protected const MAX_QUANTITY_VALUE = 2147483647; // 32 bit integer
+
+    protected const ERROR_MESSAGE_QUANTITY_REQUIRED = 'product_quick_add_widget.form.error.quantity.required';
+    protected const ERROR_MESSAGE_QUANTITY_MAX_VALUE_CONSTRAINT = 'product_quick_add_widget.form.error.quantity.max_value_constraint';
+    protected const ERROR_MESSAGE_REDIRECT_ROUTE_EMPTY = 'product_quick_add_widget.form.error.redirect_route_empty';
+    protected const ERROR_MESSAGE_REDIRECT_SKU_EMPTY = 'product_quick_add_widget.form.error.sku.empty';
 
     /**
      * @return string|null
@@ -59,7 +66,7 @@ class ProductQuickAddForm extends AbstractType
             'required' => true,
             'label' => false,
             'constraints' => [
-                $this->createNotBlankConstraint(),
+                $this->createNotBlankConstraint(static::ERROR_MESSAGE_REDIRECT_SKU_EMPTY),
             ],
         ]);
 
@@ -77,7 +84,7 @@ class ProductQuickAddForm extends AbstractType
             'required' => true,
             'label' => false,
             'constraints' => [
-                $this->createNotBlankConstraint(),
+                $this->createNotBlankConstraint(static::ERROR_MESSAGE_REDIRECT_ROUTE_EMPTY),
             ],
         ]);
 
@@ -96,8 +103,12 @@ class ProductQuickAddForm extends AbstractType
                 'label' => false,
                 'attr' => ['min' => 1],
                 'constraints' => [
-                    $this->createNotBlankConstraint(),
-                    $this->createMinLengthConstraint(),
+                    $this->createNotBlankConstraint(static::ERROR_MESSAGE_QUANTITY_REQUIRED),
+                    $this->createMinLengthConstraint(static::ERROR_MESSAGE_QUANTITY_REQUIRED),
+                    $this->createLessThanOrEqualConstraint(
+                        static::MAX_QUANTITY_VALUE,
+                        static::ERROR_MESSAGE_QUANTITY_MAX_VALUE_CONSTRAINT
+                    )
                 ],
             ]);
 
@@ -120,18 +131,41 @@ class ProductQuickAddForm extends AbstractType
     }
 
     /**
+     * @param string $message
+     *
      * @return \Symfony\Component\Validator\Constraints\Length
      */
-    protected function createMinLengthConstraint(): Length
+    protected function createMinLengthConstraint(string $message): Length
     {
-        return new Length(['min' => 1]);
+        return new Length([
+            'min' => 1,
+            'minMessage' => $message
+        ]);
     }
 
     /**
+     * @param string $message
+     *
      * @return \Symfony\Component\Validator\Constraints\NotBlank
      */
-    protected function createNotBlankConstraint(): NotBlank
+    protected function createNotBlankConstraint(string $message): NotBlank
     {
-        return new NotBlank();
+        return new NotBlank([
+            'message' => $message
+        ]);
+    }
+
+    /**
+     * @param int $maxValue
+     * @param string $message
+     *
+     * @return \Symfony\Component\Validator\Constraints\LessThanOrEqual
+     */
+    protected function createLessThanOrEqualConstraint(int $maxValue, string $message): LessThanOrEqual
+    {
+        return new LessThanOrEqual([
+            'value' => $maxValue,
+            'message' => $message
+        ]);
     }
 }
