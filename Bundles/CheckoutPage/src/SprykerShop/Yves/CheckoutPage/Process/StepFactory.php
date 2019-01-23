@@ -51,6 +51,9 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\PostConditionChecke
  */
 class StepFactory extends AbstractFactory
 {
+    protected const ERROR_CODE_GENERAL_FAILURE = 399;
+    protected const ROUTE_CART = 'cart';
+
     /**
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection
      */
@@ -218,6 +221,7 @@ class StepFactory extends AbstractFactory
             CheckoutPageControllerProvider::CHECKOUT_PLACE_ORDER,
             HomePageControllerProvider::ROUTE_HOME,
             [
+                static::ERROR_CODE_GENERAL_FAILURE => self::ROUTE_CART,
                 'payment failed' => CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
                 'shipment failed' => CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
             ]
