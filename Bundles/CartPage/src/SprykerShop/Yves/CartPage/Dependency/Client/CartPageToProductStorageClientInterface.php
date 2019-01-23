@@ -35,4 +35,12 @@ interface CartPageToProductStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = []);
+
+    /**
+     * @param string $mappingType
+     * @param string $identifier
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array;
 }

@@ -7,8 +7,10 @@
 
 namespace SprykerShop\Yves\CartPage\Controller;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
@@ -107,6 +109,75 @@ class CartController extends AbstractController
         $this->getFactory()
             ->getZedRequestClient()
             ->addFlashMessagesFromLastZedRequest();
+
+        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function quickAddAction($sku, $quantity, Request $request)
+    {
+        if (!$this->canAddCartItem()) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
+        return $this->executeQuickAddAction($sku, $quantity, $request);
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function executeQuickAddAction($sku, $quantity, Request $request)
+    {
+        $productConcreteTransfer = $this->getFactory()
+            ->createProductResolver()
+            ->getProductConcreteTransferBySku($sku);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer
+            ->setSku($sku)
+            ->setQuantity($quantity)
+            ->setProductConcrete($productConcreteTransfer);
+
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->setItems(new ArrayObject([$itemTransfer]));
+        $cartChangeTransfer = $this->getFactory()
+            ->getCartClient()
+            ->buildCartChangeTransfer($cartChangeTransfer);
+
+        if (array_key_exists(0, $cartChangeTransfer->getItems())) {
+            $itemTransfer = $cartChangeTransfer->getItems()[0];
+        }
+
+        $this->getFactory()
+            ->getCartClient()
+            ->addItem($itemTransfer, $request->request->all());
+
+        $this->getFactory()
+            ->getZedRequestClient()
+            ->addFlashMessagesFromLastZedRequest();
+
+        $quoteResponseTransfer = $this->getFactory()
+            ->getZedRequestClient()
+            ->getLastResponseTransfer();
+
+        if ($quoteResponseTransfer instanceof QuoteResponseTransfer
+            && $quoteResponseTransfer->getIsSuccessful()
+            && count($itemTransfer->getWarningMessages()) > 0
+        ) {
+            $this->addWarningMessages($itemTransfer->getWarningMessages());
+        }
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -323,5 +394,25 @@ class CartController extends AbstractController
         }
 
         return false;
+    }
+
+    /**
+     * @param \ArrayObject $warningMessages
+     *
+     * @return void
+     */
+    protected function addWarningMessages(ArrayObject $warningMessages): void
+    {
+        $glossaryClient = $this->getFactory()->getGlossaryClient();
+
+        foreach ($warningMessages as $warningMessage) {
+            $errorMessageText = $glossaryClient->translate(
+                $warningMessage->getValue(),
+                $this->getLocale(),
+                $warningMessage->getParameters()
+            );
+
+            $this->addInfoMessage($errorMessageText);
+        }
     }
 }

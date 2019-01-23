@@ -15,6 +15,7 @@ class CartControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_CART = 'cart';
     public const ROUTE_CART_ADD = 'cart/add';
+    public const ROUTE_CART_QUICK_ADD = 'cart/quick-add';
     public const ROUTE_CART_REMOVE = 'cart/remove';
     public const ROUTE_CART_CHANGE = 'cart/change';
     public const ROUTE_CART_UPDATE = 'cart/update';
@@ -34,7 +35,8 @@ class CartControllerProvider extends AbstractYvesControllerProvider
             ->addCartAddRoute()
             ->addCartRemoveRoute()
             ->addCartChangeQuantityRoute()
-            ->addCartUpdateRoute();
+            ->addCartUpdateRoute()
+            ->addCartQuickAddRoute();
     }
 
     /**
@@ -73,6 +75,20 @@ class CartControllerProvider extends AbstractYvesControllerProvider
             ->assert('sku', self::SKU_PATTERN)
             ->convert('quantity', [$this, 'getQuantityFromRequest'])
             ->convert('optionValueIds', [$this, 'getProductOptionsFromRequest']);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addCartQuickAddRoute(): self
+    {
+        $this->createController('/{cart}/quick-add/{sku}', self::ROUTE_CART_QUICK_ADD, 'CartPage', 'Cart', 'quickAdd')
+            ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
+            ->value('cart', 'cart')
+            ->assert('sku', self::SKU_PATTERN)
+            ->convert('quantity', [$this, 'getQuantityFromRequest']);
 
         return $this;
     }
