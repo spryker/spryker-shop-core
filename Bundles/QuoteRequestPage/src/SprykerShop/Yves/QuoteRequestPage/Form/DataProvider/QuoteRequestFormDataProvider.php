@@ -52,8 +52,7 @@ class QuoteRequestFormDataProvider
     public function getData(): QuoteRequestTransfer
     {
         $quoteRequestVersionTransfer = (new QuoteRequestVersionTransfer())
-            ->setQuote($this->cartClient->getQuote())
-            ->setVersion($this->config->getInitialVersion());
+            ->setQuote($this->cartClient->getQuote());
 
         $quoteRequestTransfer = (new QuoteRequestTransfer())
             ->setCompanyUser($this->companyUserClient->findCompanyUser())
