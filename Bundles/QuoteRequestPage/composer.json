@@ -23,8 +23,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/cart-page": "If you want to use cart page molecules.",
-    "spryker-shop/customer-page": "If you want to use customer layout templates.",
+    "spryker-shop/cart-page": "If you want to use cart page molecules: ^1.5.0",
+    "spryker-shop/customer-page": "If you want to use customer layout templates: ^1.0.0",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
