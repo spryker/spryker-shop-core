@@ -75,6 +75,7 @@ export default class AjaxProvider extends Component {
             const encodeValue = encodeURIComponent(value);
             queryStringParams.push(`${key}=${encodeValue}`);
         });
+
         return url + '?' + queryStringParams.join('&');
     }
 
