@@ -2,18 +2,20 @@
 
 {% define data = {
     quoteApprovalRequestForm: _widget.quoteApprovalRequestForm|default,
+    hasApprovers: _widget.quoteApprovalRequestForm ? _widget.quoteApprovalRequestForm.approverCompanyUserId.vars.choices is not empty : false,
     quote: _widget.quote,
     limit: _widget.limit,
     isVisible: _widget.isVisible,
+    isQuoteWaitingForApproval: _widget.isQuoteWaitingForApproval,
     quoteStatus: _widget.quoteStatus,
     canSendApprovalRequest: _widget.canSendApprovalRequest,
     quoteApprovalRequestFormOptions: {
-        action: path('quote-approval/create')
+        action: path('quote-approval-create')
     }
 } %}
 
 {% block body %}
-    {% if data.isVisible and data.quoteApprovalRequestForm.idCompanyUser.vars.choices | length %}
+    {% if data.isVisible and (data.hasApprovers or data.isQuoteWaitingForApproval) %}
         {% set approval = data.quote.approvals | length > 0 ? data.quote.approvals | last : null %}
         {% set customer = approval ? approval.approver.customer : null %}
 
@@ -41,7 +43,7 @@
             } only %}
         {% endif %}
 
-        {% if data.canSendApprovalRequest %}
+        {% if data.canSendApprovalRequest and data.hasApprovers %}
             {% include molecule('approve-request-form', 'QuoteApprovalWidget') with {
                 data: {
                     quoteApprovalRequestForm: data.quoteApprovalRequestForm,

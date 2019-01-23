@@ -31,9 +31,9 @@
         </div>
         {% if data.quoteStatus == 'waiting' %}
             <div class="col col--sm-12">
-                <a class="button button--expand button--hollow button--alert" href="{{ path('quote-approval/remove', {'idQuoteApproval': data.approval.idQuoteApproval }) }}">
-                    {{ 'quote_approval.remove'|trans }}
-                </a>
+                <form method="POST" action="{{ path('quote-approval-remove', {'idQuoteApproval': data.approval.idQuoteApproval}) }}">
+                    <button type="submit" class="button button--expand button--hollow button--alert">{{ 'quote_approval.remove' | trans }}</button>
+                </form>
             </div>
         {% endif %}
     </div>

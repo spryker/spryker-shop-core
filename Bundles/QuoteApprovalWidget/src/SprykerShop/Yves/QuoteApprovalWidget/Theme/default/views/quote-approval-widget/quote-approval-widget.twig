@@ -39,7 +39,7 @@
                             </div>
                         {% else %}
                             <div class="col">
-                                <form method="POST" action="{{ path('quote-approval-cancel', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}">
+                                <form method="POST" action="{{ path('quote-approval-remove', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}">
                                     <button type="submit" class="button button--alert">{{ 'quote_approval_widget.cart.cancel' | trans }}</button>
                                 </form>
                             </div>
