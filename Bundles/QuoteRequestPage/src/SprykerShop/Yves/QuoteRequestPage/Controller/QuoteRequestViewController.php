@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -38,7 +39,16 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
      */
     protected function executeIndexAction(Request $request): array
     {
-        // TODO: implement in next story
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->findCompanyUser();
+
+        $quoteRequestCollectionTransfer = $this->getFactory()
+            ->getQuoteRequestClient()
+            ->findQuoteRequestCollectionByFilter((new QuoteRequestFilterTransfer())->setCompanyUser($companyUserTransfer));
+
+        dump($quoteRequestCollectionTransfer);
+        die;
 
         return [];
     }
