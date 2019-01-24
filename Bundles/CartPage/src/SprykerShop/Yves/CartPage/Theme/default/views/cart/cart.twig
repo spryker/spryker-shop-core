@@ -102,14 +102,12 @@
                         <hr />
                     {% endif %}
 
-                    {% if can('SeePricePermissionPlugin') %}
-                        {% include molecule('cart-summary', 'CartPage') with {
-                            data: {
-                                cart: data.cart,
-                                isQuoteValid: data.isQuoteValid
-                            }
-                        } only %}
-                     {% endif %}
+                    {% include molecule('cart-summary', 'CartPage') with {
+                        data: {
+                            cart: data.cart,
+                            isQuoteValid: data.isQuoteValid
+                        }
+                    } only %}
                 </div>
             </div>
         </div>
