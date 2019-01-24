@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteApprovalController extends AbstractController
 {
-    protected const ROUTE_CART = 'cart';
     protected const PARAM_REFERER = 'referer';
     protected const MESSAGE_QUOTE_APPROVAL_APPROVE_ERROR = 'quote_approval_widget.cart.error_approve_message';
     protected const MESSAGE_QUOTE_APPROVAL_DECLINE_ERROR = 'quote_approval_widget.cart.error_decline_message';
@@ -47,15 +46,16 @@ class QuoteApprovalController extends AbstractController
             $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
         }
 
-        return $this->redirectResponseInternal(static::ROUTE_CART);
+        return $this->redirectBack($request);
     }
 
     /**
      * @param int $idQuoteApproval
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function removeQuoteApprovalAction(int $idQuoteApproval): RedirectResponse
+    public function removeQuoteApprovalAction(int $idQuoteApproval, Request $request): RedirectResponse
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
@@ -74,7 +74,7 @@ class QuoteApprovalController extends AbstractController
             $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
         }
 
-        return $this->redirectResponseInternal(static::ROUTE_CART);
+        return $this->redirectBack($request);
     }
 
     /**

@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\MultiCartWidget\Widget;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
@@ -50,16 +51,26 @@ class QuickOrderPageWidget extends AbstractWidget
 
         $quoteTransferCollection = [];
         $defaultQuoteTransfer = $this->getFactory()->getMultiCartClient()->getDefaultCart();
-        if ($this->can('WriteSharedCartPermissionPlugin', $defaultQuoteTransfer->getIdQuote())) {
+        if ($this->canEditCart($defaultQuoteTransfer)) {
             $quoteTransferCollection[] = $defaultQuoteTransfer;
         }
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if (!$quoteTransfer->getIsDefault() && $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote())) {
+            if (!$quoteTransfer->getIsDefault() && $this->canEditCart($quoteTransfer)) {
                 $quoteTransferCollection[] = $quoteTransfer;
             }
         }
 
         return $quoteTransferCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function canEditCart(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote()) && !$quoteTransfer->getIsLocked();
     }
 
     /**

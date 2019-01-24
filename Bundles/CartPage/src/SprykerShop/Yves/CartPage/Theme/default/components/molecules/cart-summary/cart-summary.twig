@@ -83,7 +83,11 @@
 
     {% if canProceedToCheckout %}
         <hr />
-        {% widget 'QuoteApproveRequestWidget' args [data.cart] %}{% endwidget %}
+
+        {% if is_granted('ROLE_USER') %}
+            {% widget 'QuoteApproveRequestWidget' args [data.cart] %}{% endwidget %}
+        {% endif %}
+
         {% widget 'ProcceedToCheckoutButtonWidget' args [data.cart] %}{% endwidget %}
     {% endif %}
 {% endblock %}
