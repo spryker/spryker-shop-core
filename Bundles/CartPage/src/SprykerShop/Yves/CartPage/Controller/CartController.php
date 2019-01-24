@@ -7,8 +7,10 @@
 
 namespace SprykerShop\Yves\CartPage\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
@@ -17,6 +19,7 @@ use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -120,7 +123,7 @@ class CartController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function quickAddAction($sku, $quantity, Request $request)
+    public function quickAddAction($sku, $quantity, Request $request): RedirectResponse
     {
         if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
@@ -138,12 +141,45 @@ class CartController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executeQuickAddAction($sku, $quantity, Request $request)
+    public function executeQuickAddAction($sku, $quantity, Request $request): RedirectResponse
     {
         $productConcreteTransfer = $this->getFactory()
-            ->createProductResolver()
+            ->createProductConcreteReader()
             ->getProductConcreteTransferBySku($sku);
 
+        $itemTransfer = $this->buildCartChangeItemTransfer($sku, $quantity, $productConcreteTransfer);
+
+        $this->getFactory()
+            ->getCartClient()
+            ->addItem($itemTransfer, $request->request->all());
+
+        $this->getFactory()
+            ->getZedRequestClient()
+            ->addFlashMessagesFromLastZedRequest();
+
+        $quoteResponseTransfer = $this->getFactory()
+            ->getZedRequestClient()
+            ->findLastResponseTransfer();
+
+        if ($quoteResponseTransfer instanceof QuoteResponseTransfer
+            && $quoteResponseTransfer->getIsSuccessful()
+            && count($itemTransfer->getWarningMessages()) > 0
+        ) {
+            $this->addWarningMessages($itemTransfer->getWarningMessages());
+        }
+
+        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function buildCartChangeItemTransfer(string $sku, int $quantity, ProductConcreteTransfer $productConcreteTransfer): ItemTransfer
+    {
         $itemTransfer = new ItemTransfer();
         $itemTransfer
             ->setSku($sku)
@@ -156,30 +192,11 @@ class CartController extends AbstractController
             ->getCartClient()
             ->buildCartChangeTransfer($cartChangeTransfer);
 
-        if (array_key_exists(0, $cartChangeTransfer->getItems())) {
-            $itemTransfer = $cartChangeTransfer->getItems()[0];
+        if (isset($cartChangeTransfer->getItems()[0])) {
+            return $cartChangeTransfer->getItems()[0];
         }
 
-        $this->getFactory()
-            ->getCartClient()
-            ->addItem($itemTransfer, $request->request->all());
-
-        $this->getFactory()
-            ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
-
-        $quoteResponseTransfer = $this->getFactory()
-            ->getZedRequestClient()
-            ->getLastResponseTransfer();
-
-        if ($quoteResponseTransfer instanceof QuoteResponseTransfer
-            && $quoteResponseTransfer->getIsSuccessful()
-            && count($itemTransfer->getWarningMessages()) > 0
-        ) {
-            $this->addWarningMessages($itemTransfer->getWarningMessages());
-        }
-
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $itemTransfer;
     }
 
     /**
@@ -397,7 +414,7 @@ class CartController extends AbstractController
     }
 
     /**
-     * @param \ArrayObject $warningMessages
+     * @param Generated\Shared\Transfer\MessageTransfer[] $warningMessages
      *
      * @return void
      */

@@ -17,9 +17,9 @@ use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAvailabilityMapper;
 use SprykerShop\Yves\CartPage\Model\CartItemReader;
+use SprykerShop\Yves\CartPage\Model\ProductConcreteReader;
+use SprykerShop\Yves\CartPage\Model\ProductConcreteReaderInterface;
 use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
-use SprykerShop\Yves\CartPage\ProductResolver\ProductResolver;
-use SprykerShop\Yves\CartPage\ProductResolver\ProductResolverInterface;
 
 class CartPageFactory extends AbstractFactory
 {
@@ -170,11 +170,11 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CartPage\ProductResolver\ProductResolverInterface
+     * @return \SprykerShop\Yves\CartPage\Model\ProductConcreteReaderInterface
      */
-    public function createProductResolver(): ProductResolverInterface
+    public function createProductConcreteReader(): ProductConcreteReaderInterface
     {
-        return new ProductResolver(
+        return new ProductConcreteReader(
             $this->getProductStorageClient()
         );
     }

@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CartPage\ProductResolver;
+namespace SprykerShop\Yves\CartPage\Model;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-interface ProductResolverInterface
+interface ProductConcreteReaderInterface
 {
     /**
      * @param string $sku

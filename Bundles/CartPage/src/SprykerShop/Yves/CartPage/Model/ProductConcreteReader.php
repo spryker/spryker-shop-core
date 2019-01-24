@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CartPage\ProductResolver;
+namespace SprykerShop\Yves\CartPage\Model;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
 
-class ProductResolver implements ProductResolverInterface
+class ProductConcreteReader implements ProductConcreteReaderInterface
 {
     protected const MAPPING_TYPE_SKU = 'sku';
 

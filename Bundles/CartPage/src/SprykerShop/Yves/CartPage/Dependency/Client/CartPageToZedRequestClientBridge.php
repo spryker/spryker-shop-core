@@ -43,8 +43,8 @@ class CartPageToZedRequestClientBridge implements CartPageToZedRequestClientInte
     /**
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
      */
-    public function getLastResponseTransfer(): ?TransferInterface
+    public function findLastResponseTransfer(): ?TransferInterface
     {
-        return $this->zedRequestClient->getLastResponseTransfer();
+        return $this->zedRequestClient->findLastResponseTransfer();
     }
 }

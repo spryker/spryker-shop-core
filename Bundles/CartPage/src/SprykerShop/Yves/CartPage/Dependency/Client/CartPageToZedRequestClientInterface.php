@@ -24,5 +24,5 @@ interface CartPageToZedRequestClientInterface
     /**
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
      */
-    public function getLastResponseTransfer(): ?TransferInterface;
+    public function findLastResponseTransfer(): ?TransferInterface;
 }
