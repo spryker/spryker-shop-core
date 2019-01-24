@@ -21,7 +21,8 @@ class CheckoutController extends AbstractController
     use PermissionAwareTrait;
 
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
-    public const MESSAGE_CART_REQUITE_APPROVAL = 'quote_approval.cart.require_approval';
+    
+    protected const MESSAGE_CART_REQUIRE_APPROVAL = 'quote_approval.cart.require_approval';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
@@ -36,7 +37,7 @@ class CheckoutController extends AbstractController
     public function indexAction(Request $request)
     {
         if (!$this->isQuoteAvailableForCheckout()) {
-            $this->addErrorMessage(static::MESSAGE_CART_REQUITE_APPROVAL);
+            $this->addErrorMessage(static::MESSAGE_CART_REQUIRE_APPROVAL);
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -54,7 +55,7 @@ class CheckoutController extends AbstractController
     public function customerAction(Request $request)
     {
         if (!$this->isQuoteAvailableForCheckout()) {
-            $this->addErrorMessage(static::MESSAGE_CART_REQUITE_APPROVAL);
+            $this->addErrorMessage(static::MESSAGE_CART_REQUIRE_APPROVAL);
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -85,7 +86,7 @@ class CheckoutController extends AbstractController
     public function addressAction(Request $request)
     {
         if (!$this->isQuoteAvailableForCheckout()) {
-            $this->addErrorMessage(static::MESSAGE_CART_REQUITE_APPROVAL);
+            $this->addErrorMessage(static::MESSAGE_CART_REQUIRE_APPROVAL);
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -116,7 +117,7 @@ class CheckoutController extends AbstractController
     public function shipmentAction(Request $request)
     {
         if (!$this->isQuoteAvailableForCheckout()) {
-            $this->addErrorMessage(static::MESSAGE_CART_REQUITE_APPROVAL);
+            $this->addErrorMessage(static::MESSAGE_CART_REQUIRE_APPROVAL);
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -147,7 +148,7 @@ class CheckoutController extends AbstractController
     public function paymentAction(Request $request)
     {
         if (!$this->isQuoteAvailableForCheckout()) {
-            $this->addErrorMessage(static::MESSAGE_CART_REQUITE_APPROVAL);
+            $this->addErrorMessage(static::MESSAGE_CART_REQUIRE_APPROVAL);
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -178,7 +179,7 @@ class CheckoutController extends AbstractController
     public function summaryAction(Request $request)
     {
         if (!$this->isQuoteAvailableForCheckout()) {
-            $this->addErrorMessage(static::MESSAGE_CART_REQUITE_APPROVAL);
+            $this->addErrorMessage(static::MESSAGE_CART_REQUIRE_APPROVAL);
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -209,7 +210,7 @@ class CheckoutController extends AbstractController
     public function placeOrderAction(Request $request)
     {
         if (!$this->isQuoteAvailableForCheckout()) {
-            $this->addErrorMessage(static::MESSAGE_CART_REQUITE_APPROVAL);
+            $this->addErrorMessage(static::MESSAGE_CART_REQUIRE_APPROVAL);
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }

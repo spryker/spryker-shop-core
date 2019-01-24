@@ -97,23 +97,17 @@ class QuoteApprovalController extends AbstractController
      */
     protected function addMessagesFromQuoteApprovalResponse(QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer)
     {
-        $messageTransfer = $quoteApprovalResponseTransfer->getMessage();
+        foreach ($quoteApprovalResponseTransfer->getMessages() as $messageTransfer) {
+            $translatedMessage = $this->getTranslatedMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
 
-        if ($quoteApprovalResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage($this->getTranslatedMessage(
-                $messageTransfer->getValue(),
-                $messageTransfer->getParameters()
-            ));
+            if ($quoteApprovalResponseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessage($translatedMessage);
 
-            return;
+                continue;
+            }
+
+            $this->addErrorMessage($translatedMessage);
         }
-
-        $this->addErrorMessage(
-            $this->getTranslatedMessage(
-                $messageTransfer->getValue(),
-                $messageTransfer->getParameters()
-            )
-        );
     }
 
     /**
@@ -144,7 +138,7 @@ class QuoteApprovalController extends AbstractController
             return $this->redirectBack($request);
         }
 
-        $this->addTranslatedSuccessMessage($quoteApprovalResponseTransfer->getMessage());
+        $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectBack($request);
     }
@@ -177,7 +171,7 @@ class QuoteApprovalController extends AbstractController
             return $this->redirectBack($request);
         }
 
-        $this->addTranslatedSuccessMessage($quoteApprovalResponseTransfer->getMessage());
+        $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectBack($request);
     }
@@ -192,17 +186,5 @@ class QuoteApprovalController extends AbstractController
         $referer = $request->headers->get(static::PARAM_REFERER);
 
         return $this->redirectResponseExternal($referer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
-     *
-     * @return void
-     */
-    protected function addTranslatedSuccessMessage(MessageTransfer $messageTransfer): void
-    {
-        $message = $this->getTranslatedMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
-
-        $this->addSuccessMessage($message);
     }
 }
