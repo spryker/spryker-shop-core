@@ -13,7 +13,7 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionChecker
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\SaverInterface;
 
 /**
- * @deprecated Remove strategy resolver after multiple shipment will be released.
+ * @deprecated Will be removed in next major version after multiple shipment release.
  */
 class AddressStepStrategyResolver implements AddressStepStrategyResolverInterface
 {

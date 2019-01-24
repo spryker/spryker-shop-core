@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CheckoutPage\StrategyResolver;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PreConditionCheckerInterface;
 
 /**
- * @deprecated Remove strategy resolver after multiple shipment will be released.
+ * @deprecated Will be removed in next major version after multiple shipment release.
  */
 interface StepPreConditionCheckerStrategyResolverInterface
 {

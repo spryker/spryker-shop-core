@@ -152,7 +152,7 @@ class CheckoutController extends AbstractController
         }
 
         /**
-         * @deprecated Remove this code after multiple shipment release.
+         * @deprecated Will be removed in next major version after multiple shipment release.
          */
         $template = $this->isMultiShipmentEnabled()
             ? '@CheckoutPage/views/summary-multi-shipment/summary-multi-shipment.twig'
