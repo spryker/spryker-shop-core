@@ -66,7 +66,7 @@
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
                     <p>Date: <b>{{ data.quoteRequestForm.vars.value.createdAt }}</b></p>
-                    <p>Status: <b>{{ data.quoteRequestForm.vars.value.status }}</b></p>
+                    <p>Status: <b>{{ ('quote_request.status.' ~ data.quoteRequestForm.vars.value.status) | trans }}</b></p>
                     <p>Valid till:</p>
                     <p>History:</p>
                 </div>

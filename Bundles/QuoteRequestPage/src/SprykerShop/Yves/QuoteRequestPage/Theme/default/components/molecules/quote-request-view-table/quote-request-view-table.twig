@@ -1,0 +1,53 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-request-view-table',
+} %}
+
+{% define data = {
+    quoteRequests: required,
+} %}
+
+{% block body %}
+    <table class="table table--expand">
+        <thead>
+        <tr>
+            <th class="text-left">#RfQ</th>
+            <th>Owner</th>
+            <th>Total</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for quoteRequest in data.quoteRequests %}
+            <tr>
+                <td>
+                    <strong>{{ quoteRequest.quoteRequestReference }}</strong>
+                </td>
+                <td>
+                    {{ quoteRequest.companyUser.customer.firstName ~ ' ' ~ quoteRequest.companyUser.customer.lastName }}
+                </td>
+                <td class="text-center">
+                    <strong>{{ quoteRequest.latestVersion.quote.totals.subtotal | default(0) | money(true, quoteRequest.latestVersion.quote.currency.code) }}</strong>
+                </td>
+                <td class="text-center">{{ quoteRequest.createdAt | date('d.m.Y H:i:s') }}</td>
+                <td class="text-center">{{ ('quote_request.status.' ~ quoteRequest.status) | trans }}</td>
+                <td>
+                    <ul class="nested vertical menu">
+                        <li class="menu__item"><a
+                                    href="{{ path('quote-request/details', { idQuoteRequest: (quoteRequest.idQuoteRequest) }) }}">View</a>
+                        </li>
+                        {% if(quoteRequest.status == 'waiting') %}
+                            <li class="menu__item"><a
+                                        href="{{ path('quote-request/cancel', { idQuoteRequest: (quoteRequest.idQuoteRequest) }) }}">Cancel</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

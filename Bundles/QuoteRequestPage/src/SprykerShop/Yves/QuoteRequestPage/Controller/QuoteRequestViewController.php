@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Spryker\Yves\Kernel\View\View;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
@@ -17,13 +16,11 @@ use Symfony\Component\HttpFoundation\Request;
 class QuoteRequestViewController extends QuoteRequestAbstractController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function indexAction(Request $request): View
+    public function indexAction(): View
     {
-        $viewData = $this->executeIndexAction($request);
+        $viewData = $this->executeIndexAction();
 
         return $this->view(
             $viewData,
@@ -33,11 +30,9 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return array
      */
-    protected function executeIndexAction(Request $request): array
+    protected function executeIndexAction(): array
     {
         $companyUserTransfer = $this->getFactory()
             ->getCompanyUserClient()
@@ -47,9 +42,8 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
             ->getQuoteRequestClient()
             ->findQuoteRequestCollectionByFilter((new QuoteRequestFilterTransfer())->setCompanyUser($companyUserTransfer));
 
-        dump($quoteRequestCollectionTransfer);
-        die;
-
-        return [];
+        return [
+            'quoteRequests' => $quoteRequestCollectionTransfer->getQuoteRequests(),
+        ];
     }
 }
