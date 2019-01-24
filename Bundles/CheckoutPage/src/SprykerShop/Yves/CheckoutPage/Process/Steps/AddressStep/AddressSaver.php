@@ -52,9 +52,6 @@ class AddressSaver implements SaverInterface
                 $shippingAddressTransfer,
                 $customerTransfer
             );
-
-            // todo: Split Delivery. Get rid of it, before release
-            $quoteTransfer->setShippingAddress($shippingAddressTransfer);
         }
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
