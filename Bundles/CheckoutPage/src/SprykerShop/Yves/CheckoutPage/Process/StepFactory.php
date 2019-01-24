@@ -21,15 +21,21 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClient
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\AddressSaverWithoutMultiShipment;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\AddressSaver;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\AddressSaverWithoutMultiShipment;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\PostConditionChecker as AddressStepPostConditionChecker;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\PostConditionCheckerWithoutMultiShipment as AddressStepPostConditionCheckerWithoutMultiShipment;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\SaverInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\CustomerStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\EntryStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PaymentStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PlaceOrderStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\PostConditionChecker as ShipmentStepPostConditionChecker;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\PostConditionCheckerWithoutMultiShipment as ShipmentStepPostConditionCheckerWithoutMultiShipment;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\SuccessStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\SummaryStep;
 use SprykerShop\Yves\CheckoutPage\StrategyResolver\AddressStep\AddressStepStrategyResolver;
@@ -38,13 +44,6 @@ use SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep\ShipmentStepStra
 use SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep\ShipmentStepStrategyResolverInterface;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 use SprykerShop\Yves\HomePage\Plugin\Provider\HomePageControllerProvider;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\SaverInterface;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\AddressSaver;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\PostConditionChecker as AddressStepPostConditionChecker;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\PostConditionCheckerWithoutMultiShipment as AddressStepPostConditionCheckerWithoutMultiShipment;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\PostConditionChecker as ShipmentStepPostConditionChecker;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\PostConditionCheckerWithoutMultiShipment as ShipmentStepPostConditionCheckerWithoutMultiShipment;
 
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
@@ -137,8 +136,6 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep
      */
     public function createAddressStep(): AddressStep

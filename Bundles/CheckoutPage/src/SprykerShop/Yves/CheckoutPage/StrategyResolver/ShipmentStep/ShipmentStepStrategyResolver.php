@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -6,9 +7,8 @@
 
 namespace SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Closure;
+use Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
 
 /**
@@ -17,14 +17,12 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionChecker
 class ShipmentStepStrategyResolver implements ShipmentStepStrategyResolverInterface
 {
     /**
-     * @var array|Closure[]
+     * @var array|\Closure[]
      */
     protected $strategyContainer;
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
-     * @param array|Closure[] $strategyContainer
+     * @param \Closure[] $strategyContainer
      */
     public function __construct(array $strategyContainer)
     {
@@ -32,8 +30,6 @@ class ShipmentStepStrategyResolver implements ShipmentStepStrategyResolverInterf
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface
      */
     public function resolvePostCondition(): PostConditionCheckerInterface
@@ -50,7 +46,9 @@ class ShipmentStepStrategyResolver implements ShipmentStepStrategyResolverInterf
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return void
      */
     protected function assertRequiredStrategyPostConditionCheckerWithoutMultiShipmentContainerItems(): void
     {
@@ -62,7 +60,9 @@ class ShipmentStepStrategyResolver implements ShipmentStepStrategyResolverInterf
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return void
      */
     protected function assertRequiredStrategyPostConditionCheckerWithMultiShipmentContainerItems(): void
     {

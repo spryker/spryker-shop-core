@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -6,11 +7,10 @@
 
 namespace SprykerShop\Yves\CheckoutPage\StrategyResolver\AddressStep;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Closure;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\SaverInterface;
+use Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\SaverInterface;
 
 /**
  * @deprecated Remove strategy resolver after multiple shipment will be released.
@@ -18,14 +18,12 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionChecker
 class AddressStepStrategyResolver implements AddressStepStrategyResolverInterface
 {
     /**
-     * @var array|Closure[]
+     * @var array|\Closure[]
      */
     protected $strategyContainer;
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
-     * @param array|Closure[] $strategyContainer
+     * @param \Closure[] $strategyContainer
      */
     public function __construct(array $strategyContainer)
     {
@@ -33,8 +31,6 @@ class AddressStepStrategyResolver implements AddressStepStrategyResolverInterfac
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\SaverInterface
      */
     public function resolveSaver(): SaverInterface
@@ -51,8 +47,6 @@ class AddressStepStrategyResolver implements AddressStepStrategyResolverInterfac
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
      * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface
      */
     public function resolvePostCondition(): PostConditionCheckerInterface
@@ -69,7 +63,9 @@ class AddressStepStrategyResolver implements AddressStepStrategyResolverInterfac
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return void
      */
     protected function assertRequiredStrategySaverWithoutMultiShipmentContainerItems(): void
     {
@@ -81,7 +77,9 @@ class AddressStepStrategyResolver implements AddressStepStrategyResolverInterfac
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return void
      */
     protected function assertRequiredStrategySaverWithMultiShipmentContainerItems(): void
     {
@@ -93,7 +91,9 @@ class AddressStepStrategyResolver implements AddressStepStrategyResolverInterfac
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return void
      */
     protected function assertRequiredStrategyPostConditionCheckerWithoutMultiShipmentContainerItems(): void
     {
@@ -105,7 +105,9 @@ class AddressStepStrategyResolver implements AddressStepStrategyResolverInterfac
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return void
      */
     protected function assertRequiredStrategyPostConditionCheckerWithMultiShipmentContainerItems(): void
     {

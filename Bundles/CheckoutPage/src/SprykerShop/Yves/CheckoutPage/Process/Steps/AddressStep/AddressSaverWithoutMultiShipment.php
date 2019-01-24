@@ -27,7 +27,8 @@ class AddressSaverWithoutMultiShipment implements SaverInterface
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
      */
-    public function __construct(CheckoutPageToCustomerClientInterface $customerClient) {
+    public function __construct(CheckoutPageToCustomerClientInterface $customerClient)
+    {
         $this->customerClient = $customerClient;
     }
 

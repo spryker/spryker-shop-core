@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -6,9 +7,8 @@
 
 namespace SprykerShop\Yves\CheckoutPage\StrategyResolver\Shipment;
 
-use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Closure;
+use Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface;
 
 /**
@@ -17,14 +17,12 @@ use SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface;
 class ShipmentCreatorStrategyResolver implements ShipmentCreatorStrategyResolverInterface
 {
     /**
-     * @var array|Closure[]
+     * @var array|\Closure[]
      */
     protected $strategyContainer;
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
-     * @param array|Closure[] $strategyContainer
+     * @param \Closure[] $strategyContainer
      */
     public function __construct(array $strategyContainer)
     {
@@ -48,7 +46,9 @@ class ShipmentCreatorStrategyResolver implements ShipmentCreatorStrategyResolver
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return void
      */
     protected function assertRequiredStrategyWithoutMultiShipmentContainerItems(): void
     {
@@ -60,7 +60,9 @@ class ShipmentCreatorStrategyResolver implements ShipmentCreatorStrategyResolver
     }
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return void
      */
     protected function assertRequiredStrategyWithMultiShipmentContainerItems(): void
     {

@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Controller;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;

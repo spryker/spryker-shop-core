@@ -40,7 +40,7 @@ class AddressSaver implements SaverInterface
     {
         $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
 
-        if($shippingAddressTransfer === null) {
+        if ($shippingAddressTransfer === null) {
             return $quoteTransfer;
         }
 

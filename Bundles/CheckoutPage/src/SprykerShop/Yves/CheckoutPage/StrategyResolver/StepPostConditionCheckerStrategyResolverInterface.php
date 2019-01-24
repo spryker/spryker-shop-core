@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -17,7 +18,7 @@ interface StepPostConditionCheckerStrategyResolverInterface
     public const STRATEGY_KEY_POST_CONDITION_CHECKER_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_POST_CONDITION_CHECKER_WITH_MULTI_SHIPMENT';
 
     /**
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface
      */
