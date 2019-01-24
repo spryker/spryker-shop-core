@@ -1,16 +1,18 @@
 {
-  "name": "spryker-shop/quote-request-widget",
+  "name": "spryker-shop/quote-request-page-extension",
   "type": "library",
-  "description": "QuoteRequestWidget module",
+  "description": "QuoteRequestPageExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker-shop/shop-ui": "^1.7.0",
-    "spryker/kernel": "^3.0.0"
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/symfony": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/symfony": "If you want to use QuoteRequestPage form expander plugins."
   },
   "autoload": {
     "psr-4": {

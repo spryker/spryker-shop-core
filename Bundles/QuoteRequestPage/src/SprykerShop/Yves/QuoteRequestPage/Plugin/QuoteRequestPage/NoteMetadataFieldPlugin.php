@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerShop\Yves\QuoteRequestPage\Plugin\QuoteRequestPage;
+
+use Spryker\Yves\Kernel\AbstractPlugin;
+use SprykerShop\Yves\QuoteRequestPageExtension\Dependency\Plugin\QuoteRequestFormMetadataFieldPluginInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\FormBuilderInterface;
+
+/**
+ * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
+ */
+class NoteMetadataFieldPlugin extends AbstractPlugin implements QuoteRequestFormMetadataFieldPluginInterface
+{
+    protected const FIELD_METADATA_NOTE = 'note';
+    protected const LABEL_METADATA_NOTE = 'quote_request_page.quote_request.metadata.label.note';
+
+    /**
+     * {@inheritdoc}
+     * - Adds note to metadata for QuoteRequest form.
+     *
+     * @api
+     *
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options): FormBuilderInterface
+    {
+        $builder->add(static::FIELD_METADATA_NOTE, TextareaType::class, [
+            'label' => static::LABEL_METADATA_NOTE,
+            'required' => false,
+        ]);
+
+        return $builder;
+    }
+}

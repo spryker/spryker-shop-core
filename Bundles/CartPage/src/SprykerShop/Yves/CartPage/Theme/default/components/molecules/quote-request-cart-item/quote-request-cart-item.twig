@@ -1,0 +1,46 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-request-cart-item',
+    tag: 'article'
+} %}
+
+{% define data = {
+    cartItem: required
+} %}
+
+{% block body %}
+    <div class="grid grid--stretch grid--justify">
+        <div class="col col--sm-12 col--lg-2">
+            {% include molecule('cart-image', 'CartPage') with {
+                data: {
+                    name: data.cartItem.name | default(''),
+                    image: data.cartItem.images is empty ? null : (data.cartItem.images | first)
+                }
+            } only %}
+        </div>
+
+        <div class="col col--sm-12 col--lg-5">
+            <h6>{{ data.cartItem.name }}</h6>
+
+            <small class="text-secondary">
+                {{ 'cart.item.sku' | trans }}
+                {{ data.cartItem.sku }}
+            </small>
+
+            {% include molecule('cart-item-summary', 'CartPage') with {
+                data: {
+                    unitPrice: data.cartItem.unitPrice | money,
+                    subtotalPrice: data.cartItem.sumSubtotalAggregation | money,
+                    cartItem: data.cartItem
+                }
+            } only %}
+
+        </div>
+
+        <div class="col col--sm-12 col--lg-4">
+            {{ 'cart.item_quantity' | trans }}:
+            <strong>{{ data.cartItem.quantity }}</strong>
+        </div>
+    </div>
+{% endblock %}

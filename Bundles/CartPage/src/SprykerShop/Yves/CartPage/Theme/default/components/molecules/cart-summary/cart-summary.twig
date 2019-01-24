@@ -84,4 +84,13 @@
             {{ 'cart.checkout' | trans }}
         </a>
     {% endif %}
+
+    {% if is_granted('ROLE_USER') %}
+        {% widget 'CreateQuoteRequestWidget' only %}
+            {% block body %}
+                <hr />
+                {{ parent() }}
+            {% endblock %}
+        {% endwidget %}
+    {% endif %}
 {% endblock %}

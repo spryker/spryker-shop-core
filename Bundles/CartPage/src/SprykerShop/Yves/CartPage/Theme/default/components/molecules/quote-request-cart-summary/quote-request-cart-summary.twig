@@ -1,0 +1,42 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-request-cart-summary',
+} %}
+
+{% define data = {
+    cart: required
+} %}
+
+{% block body %}
+    <h6 class="text-secondary float-right">{{ app['cart.quantity'] }} {{ 'item' | trans }}</h6>
+    <h6>{{ 'cart.your-order' | trans }}</h6>
+    <hr />
+
+    {% include molecule('cart-discount-summary', 'DiscountWidget') ignore missing with {
+        class: 'list spacing-y',
+        data: {
+            voucherDiscounts: data.cart.voucherDiscounts,
+            ruleDiscounts: data.cart.cartRuleDiscounts,
+            discountTotal: data.cart.totals.discounttotal
+        }
+    } only %}
+
+    <ul class="list spacing-y">
+
+        <li class="list__item spacing-y">
+            {{ 'cart.price.subtotal' | trans }}
+            <span class="float-right">{{ data.cart.totals.subtotal | money }}</span>
+        </li>
+
+        <li class="list__item spacing-y">
+            {{ 'cart.total.tax_total' | trans }}
+            <span class="float-right">{{ data.cart.totals.taxTotal.amount | money }}</span>
+        </li>
+        <li class="list__item spacing-y">
+            {{ 'cart.price.grand.total' | trans }}
+            <strong class="float-right">{{ data.cart.totals.grandTotal | money }}</strong>
+        </li>
+    </ul>
+
+{% endblock %}
