@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerShop\Yves\QuickOrderPage\FileOutputter;
+
+use Symfony\Component\HttpFoundation\Response;
+
+interface FileOutputterInterface
+{
+    /**
+     * @param string $fileType
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function outputFile(string $fileType): Response;
+}

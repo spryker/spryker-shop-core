@@ -11,10 +11,25 @@
         <property name="sku" type="string" />
         <property name="quantity" type="int" />
         <property name="sumPrice" type="int" />
+        <property name="productConcrete" type="ProductConcrete" />
+        <property name="errorMessages" type="Message[]" singular="errorMessage" />
+        <property name="warningMessages" type="Message[]" singular="warningMessage" />
+    </transfer>
+
+    <transfer name="QuickOrderValidationResponse">
+        <property name="errorMessages" type="Message[]" singular="errorMessage" />
+        <property name="warningMessages" type="Message[]" singular="warningMessage" />
+        <property name="correctValues" type="array"  singular="correctValue" />
     </transfer>
 
     <transfer name="ProductConcrete">
         <property name="fkProductAbstract" type="int" />
         <property name="sku" type="string" />
     </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array"/>
+    </transfer>
+
 </transfers>

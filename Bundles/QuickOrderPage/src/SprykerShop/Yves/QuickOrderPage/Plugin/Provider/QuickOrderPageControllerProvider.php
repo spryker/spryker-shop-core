@@ -16,6 +16,7 @@ class QuickOrderPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_QUICK_ORDER_ADD_ROWS = 'quick-order/add-rows';
     public const ROUTE_QUICK_ORDER_DELETE_ROW = 'quick-order/delete-row';
     public const ROUTE_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA = 'quick-order/product-additional-data';
+    public const ROUTE_QUICK_ORDER_DOWNLOAD_TEMPLATE = 'quick-order/download-template';
 
     /**
      * @param \Silex\Application $app
@@ -27,7 +28,8 @@ class QuickOrderPageControllerProvider extends AbstractYvesControllerProvider
         $this->addQuickOrderRoute()
             ->addQuickOrderAddRowsRoute()
             ->addQuickOrderDeleteRowRoute()
-            ->addQuickOrderProductAdditionalDataRoute();
+            ->addQuickOrderProductAdditionalDataRoute()
+            ->addQuickOrderDownloadTemplateRoute();
     }
 
     /**
@@ -82,6 +84,20 @@ class QuickOrderPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{quickOrder}/product-additional-data', static::ROUTE_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA, 'QuickOrderPage', 'QuickOrder', 'productAdditionalData')
             ->assert('quickOrder', $this->getAllowedLocalesPattern() . 'quick-order|quick-order')
             ->value('quickOrder', 'quick-order');
+
+        return $this;
+    }
+
+    /**
+     * @uses QuickOrderController::downloadTemplateAction()
+     *
+     * @return $this
+     */
+    protected function addQuickOrderDownloadTemplateRoute()
+    {
+        $this->createController('/{quickOrder}/download-template', static::ROUTE_QUICK_ORDER_DOWNLOAD_TEMPLATE, 'QuickOrderPage', 'QuickOrder', 'downloadTemplate')
+             ->assert('quickOrder', $this->getAllowedLocalesPattern() . 'quick-order|quick-order')
+             ->value('quickOrder', 'quick-order');
 
         return $this;
     }

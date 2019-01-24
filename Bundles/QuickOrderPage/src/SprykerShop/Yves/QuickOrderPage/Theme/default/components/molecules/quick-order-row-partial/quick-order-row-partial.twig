@@ -11,7 +11,8 @@
     customQuantityFieldName: null,
     price: null,
     additionalColumns: [],
-    isQuantityAdjusted: false
+    errorMessages: null,
+    warningMessages: null
 } %}
 
 {% block body %}
@@ -50,12 +51,6 @@
                 {% endif %}
 
                 {{ form_widget(data.quantityField, options) }}
-
-                {% if (data.isQuantityAdjusted) %}
-                    <span class="{{ config.name }}__error {{ config.name }}__error--show">
-                        {{ 'quick-order.input-quantity.message.error' | trans }}
-                    </span>
-                {% endif %}
             {% endblock %}
         </div>
 
@@ -69,4 +64,22 @@
             {% endblock %}
         </div>
     </div>
+
+    {% if data.errorMessages %}
+        <div class="col col--sm-12">
+            {% for errorMessage in data.errorMessages %}
+                {{ errorMessage.value | trans }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if data.warningMessages %}
+        <div class="col col--sm-12">
+            {% for warningMessage in data.warningMessages %}
+                {{ warningMessage.value | trans(
+                    warningMessage.parameters
+                ) }}
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
