@@ -38,7 +38,7 @@ class ProductQuickAddWidgetController extends AbstractController
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             $this->addErrorFlashMessagesFromForm($form);
-            $referer = $this->getRefferWithAnchor($request->headers);
+            $referer = $this->getReferWithAnchor($request->headers);
 
             return $this->redirectResponseExternal($referer);
         }
@@ -52,7 +52,7 @@ class ProductQuickAddWidgetController extends AbstractController
      *
      * @return string
      */
-    protected function getRefferWithAnchor(HeaderBag $headers): string
+    protected function getReferWithAnchor(HeaderBag $headers): string
     {
         return $headers->get(static::REFERER_PARAM) . static::PRODUCT_QUICK_ADD_FORM_ANCHOR;
     }

@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class ProductQuickAddWidgetControllerProvider extends AbstractYvesControllerProvider
 {
-    public const ROUTE_PRODUCT_QUICK_ADD = 'product-quick-add';
+    protected const ROUTE_PRODUCT_QUICK_ADD = 'product-quick-add';
 
     /**
      * @param \Silex\Application $app
@@ -25,6 +25,8 @@ class ProductQuickAddWidgetControllerProvider extends AbstractYvesControllerProv
     }
 
     /**
+     * @uses ProductQuickAddWidgetController::indexAction()
+     *
      * @return $this
      */
     protected function addCartQuickAddRoute()

@@ -27,7 +27,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_CART_TO_SHOPPING_LIST = 'shopping-list/create-from-exist-cart';
     public const ROUTE_SHOPPING_LIST_DISMISS = 'shopping-list/dismiss';
     public const ROUTE_SHOPPING_LIST_DISMISS_CONFIRM = 'shopping-list/dismiss-confirm';
-    public const ROUTE_SHOPPING_LIST_QUICK_ADD_ITEM = 'shopping-list/quick-add-item';
+    protected const ROUTE_SHOPPING_LIST_QUICK_ADD_ITEM = 'shopping-list/quick-add-item';
 
     protected const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
 
@@ -236,6 +236,8 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses ShoppingListController::quickAddToShoppingListAction()
+     *
      * @return $this
      */
     protected function addShoppingListQuickAddItemRoute(): AbstractYvesControllerProvider

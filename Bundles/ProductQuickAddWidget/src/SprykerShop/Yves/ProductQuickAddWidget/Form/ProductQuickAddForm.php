@@ -20,8 +20,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProductQuickAddForm extends AbstractType
 {
-    public const FIELD_SKU = 'sku';
-    public const FIELD_QUANTITY = 'quantity';
+    protected const FIELD_SKU = 'sku';
+    protected const FIELD_QUANTITY = 'quantity';
     public const FIELD_REDIRECT_ROUTE_NAME = 'redirect-route-name';
     public const FIELD_ADDITIONAL_REDIRECT_PARAMETERS = 'additional-redirect-parameters';
 
