@@ -31,7 +31,7 @@
             </div>
         {% endif %}
 
-        <div class="col col--sm-5 spacing spacing--inner {{ config.name }}__holder-quantity">
+        <div class="col col--sm-5 spacing spacing--inner">
             {% block quantity %}
                 {% set options = {
                     required: true,
@@ -65,16 +65,16 @@
         </div>
     </div>
 
-    {% if data.errorMessages %}
-        <div class="col col--sm-12">
+    {% if data.errorMessages is not empty %}
+        <div class="{{ config.name }}__error spacing-bottom spacing-bottom--big">
             {% for errorMessage in data.errorMessages %}
                 {{ errorMessage.value | trans }}
             {% endfor %}
         </div>
     {% endif %}
 
-    {% if data.warningMessages %}
-        <div class="col col--sm-12">
+    {% if data.warningMessages is not empty %}
+        <div class="{{ config.name }}__warning spacing-bottom spacing-bottom--big">
             {% for warningMessage in data.warningMessages %}
                 {{ warningMessage.value | trans(
                     warningMessage.parameters
