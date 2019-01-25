@@ -20,9 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
 class QuoteApprovalController extends AbstractController
 {
     protected const PARAM_REFERER = 'referer';
-    protected const MESSAGE_QUOTE_APPROVAL_APPROVE_ERROR = 'quote_approval_widget.cart.error_approve_message';
-    protected const MESSAGE_QUOTE_APPROVAL_DECLINE_ERROR = 'quote_approval_widget.cart.error_decline_message';
-    protected const MESSAGE_QUOTE_APPROVAL_CANCEL_ERROR = 'quote_approval_widget.cart.error_cancel_message';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -131,12 +128,6 @@ class QuoteApprovalController extends AbstractController
             ->getQuoteApprovalClient()
             ->approveQuoteApproval($quoteApprovalRequestTransfer);
 
-        if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
-            $this->addErrorMessage(static::MESSAGE_QUOTE_APPROVAL_APPROVE_ERROR);
-
-            return $this->redirectBack($request);
-        }
-
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectBack($request);
@@ -163,12 +154,6 @@ class QuoteApprovalController extends AbstractController
         $quoteApprovalResponseTransfer = $this->getFactory()
             ->getQuoteApprovalClient()
             ->declineQuoteApproval($quoteApprovalRequestTransfer);
-
-        if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
-            $this->addErrorMessage(static::MESSAGE_QUOTE_APPROVAL_DECLINE_ERROR);
-
-            return $this->redirectBack($request);
-        }
 
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
