@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\QuoteApprovalWidget\Controller;
 
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;

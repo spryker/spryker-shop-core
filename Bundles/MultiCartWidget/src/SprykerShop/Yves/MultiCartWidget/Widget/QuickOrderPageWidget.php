@@ -64,13 +64,25 @@ class QuickOrderPageWidget extends AbstractWidget
     }
 
     /**
+     * @see \Spryker\Client\Cart\CartClient::isQuoteEditable()
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
+    {
+        return !$quoteTransfer->getIsLocked();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
     protected function canEditCart(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote()) && !$quoteTransfer->getIsLocked();
+        return $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote()) && $this->isQuoteEditable($quoteTransfer);
     }
 
     /**

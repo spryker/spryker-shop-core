@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Controller;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CanProceedCheckoutResponseTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -21,8 +23,6 @@ class CheckoutController extends AbstractController
     use PermissionAwareTrait;
 
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
-    
-    protected const MESSAGE_CART_REQUIRE_APPROVAL = 'quote_approval.cart.require_approval';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
@@ -36,8 +36,10 @@ class CheckoutController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        if (!$this->isQuoteAvailableForCheckout()) {
-            $this->addErrorMessage(static::MESSAGE_CART_REQUIRE_APPROVAL);
+        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+
+        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
+            $this->showErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -54,8 +56,10 @@ class CheckoutController extends AbstractController
      */
     public function customerAction(Request $request)
     {
-        if (!$this->isQuoteAvailableForCheckout()) {
-            $this->addErrorMessage(static::MESSAGE_CART_REQUIRE_APPROVAL);
+        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+
+        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
+            $this->showErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -85,8 +89,10 @@ class CheckoutController extends AbstractController
      */
     public function addressAction(Request $request)
     {
-        if (!$this->isQuoteAvailableForCheckout()) {
-            $this->addErrorMessage(static::MESSAGE_CART_REQUIRE_APPROVAL);
+        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+
+        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
+            $this->showErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -116,8 +122,10 @@ class CheckoutController extends AbstractController
      */
     public function shipmentAction(Request $request)
     {
-        if (!$this->isQuoteAvailableForCheckout()) {
-            $this->addErrorMessage(static::MESSAGE_CART_REQUIRE_APPROVAL);
+        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+
+        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
+            $this->showErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -147,8 +155,10 @@ class CheckoutController extends AbstractController
      */
     public function paymentAction(Request $request)
     {
-        if (!$this->isQuoteAvailableForCheckout()) {
-            $this->addErrorMessage(static::MESSAGE_CART_REQUIRE_APPROVAL);
+        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+
+        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
+            $this->showErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -178,8 +188,10 @@ class CheckoutController extends AbstractController
      */
     public function summaryAction(Request $request)
     {
-        if (!$this->isQuoteAvailableForCheckout()) {
-            $this->addErrorMessage(static::MESSAGE_CART_REQUIRE_APPROVAL);
+        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+
+        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
+            $this->showErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -209,8 +221,10 @@ class CheckoutController extends AbstractController
      */
     public function placeOrderAction(Request $request)
     {
-        if (!$this->isQuoteAvailableForCheckout()) {
-            $this->addErrorMessage(static::MESSAGE_CART_REQUIRE_APPROVAL);
+        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+
+        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
+            $this->showErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -258,13 +272,43 @@ class CheckoutController extends AbstractController
     }
 
     /**
-     * @return bool
+     * @return \Generated\Shared\Transfer\CanProceedCheckoutResponseTransfer
      */
-    protected function isQuoteAvailableForCheckout(): bool
+    protected function canProceedCheckout(): CanProceedCheckoutResponseTransfer
     {
-        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+        $quoteTransfer = $this->getFactory()
+            ->getQuoteClient()
+            ->getQuote();
 
-        return $this->getFactory()->getCheckoutClient()->isQuoteApplicableForCheckout($quoteTransfer);
+        return $this->getFactory()
+            ->getCheckoutClient()
+            ->isQuoteApplicableForCheckout($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     */
+    protected function showErrorMessages(ArrayObject $messageTransfers): void
+    {
+
+        foreach ($messageTransfers as $messageTransfers) {
+            $this->addErrorMessage(
+                $this->getTranslatedMessage($messageTransfers->getValue(), $messageTransfers->getParameters())
+            );
+        }
+    }
+
+    /**
+     * @param string $key
+     * @param array $params
+     *
+     * @return string
+     */
+    protected function getTranslatedMessage(string $key, array $params = []): string
+    {
+        return $this->getFactory()
+            ->getGlossaryClient()
+            ->translate($key, $this->getLocale(), $params);
     }
 
     /**
