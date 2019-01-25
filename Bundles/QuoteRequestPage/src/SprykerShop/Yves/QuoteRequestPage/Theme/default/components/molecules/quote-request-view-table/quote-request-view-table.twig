@@ -12,12 +12,12 @@
     <table class="table table--expand">
         <thead>
         <tr>
-            <th class="text-left">#RfQ</th>
-            <th>Owner</th>
-            <th>Total</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Actions</th>
+            <th class="text-left">#{{ 'quote_request_page.quote_request.list.reference' | trans }}</th>
+            <th>{{ 'quote_request_page.quote_request.list.owner' | trans }}</th>
+            <th>{{ 'quote_request_page.quote_request.list.total' | trans }}</th>
+            <th>{{ 'quote_request_page.quote_request.list.date' | trans }}</th>
+            <th>{{ 'quote_request_page.quote_request.list.status' | trans }}</th>
+            <th>{{ 'quote_request_page.quote_request.list.actions' | trans }}</th>
         </tr>
         </thead>
         <tbody>
@@ -36,12 +36,16 @@
                 <td class="text-center">{{ ('quote_request.status.' ~ quoteRequest.status) | trans }}</td>
                 <td>
                     <ul class="nested vertical menu">
-                        <li class="menu__item"><a
-                                    href="{{ path('quote-request/details', { idQuoteRequest: (quoteRequest.idQuoteRequest) }) }}">View</a>
+                        <li class="menu__item">
+                            <a href="{{ path('quote-request/details', { quoteRequestReference: (quoteRequest.quoteRequestReference) }) }}">
+                                {{ 'quote_request_page.quote_request.actions.view' | trans }}
+                            </a>
                         </li>
                         {% if(quoteRequest.status == 'waiting') %}
-                            <li class="menu__item"><a
-                                        href="{{ path('quote-request/cancel', { idQuoteRequest: (quoteRequest.idQuoteRequest) }) }}">Cancel</a>
+                            <li class="menu__item">
+                                <a href="{{ path('quote-request/cancel', { quoteRequestReference: (quoteRequest.quoteRequestReference) }) }}">
+                                    {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
+                                </a>
                             </li>
                         {% endif %}
                     </ul>

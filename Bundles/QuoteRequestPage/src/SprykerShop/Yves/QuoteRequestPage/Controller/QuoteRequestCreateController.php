@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteRequestCreateController extends QuoteRequestAbstractController
 {
-    protected const GLOSSARY_KEY_QUOTE_REQUEST_CREATED_SUCCESS = 'quote_request_page.quote_request.created';
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_CREATED = 'quote_request_page.quote_request.created';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -50,7 +50,7 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
                 ->createQuoteRequest($quoteRequestForm->getData());
 
             if ($quoteRequestResponseTransfer->getIsSuccess()) {
-                $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CREATED_SUCCESS);
+                $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CREATED);
 
                 return $this->redirectResponseInternal(QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST);
             }
