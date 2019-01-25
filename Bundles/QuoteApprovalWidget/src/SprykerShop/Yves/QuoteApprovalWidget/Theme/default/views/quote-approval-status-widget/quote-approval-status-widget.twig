@@ -5,7 +5,7 @@
 } %}
 
 {% block body %}
-    {% include molecule('approve-request-status', 'QuoteApprovalWidget') with {
+    {% include molecule('quote-status') with {
         modifiers: [data.quoteStatus | lower],
         data: {
             quoteStatus: data.quoteStatus

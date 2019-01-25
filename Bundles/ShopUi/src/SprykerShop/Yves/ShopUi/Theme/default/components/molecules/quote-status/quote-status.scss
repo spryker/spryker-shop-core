@@ -3,7 +3,7 @@
     color: map-get($setting-color-actions, $action-color);
 }
 
-@mixin quote-approval-widget-approve-request-status($name: '.approve-request-status') {
+@mixin shop-ui-quote-status($name: '.quote-status') {
     #{$name} {
         border-radius: 1rem;
         padding: 0.25rem map-get($setting-spacing, 'big');
@@ -18,6 +18,10 @@
 
         &--declined {
             @include status-color('alert', 0.3);
+        }
+
+        &--small {
+            padding: 0.15rem map-get($setting-spacing, 'default');
         }
     }
 }
