@@ -58,7 +58,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addShoppingListRoute(): self
+    protected function addShoppingListRoute()
     {
         $this->createController('/{shoppingList}', static::ROUTE_SHOPPING_LIST, 'ShoppingListPage', 'ShoppingListOverview')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
@@ -70,7 +70,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addShoppingListUpdateRoute(): self
+    protected function addShoppingListUpdateRoute()
     {
         $this->createController('/{shoppingList}/update/{idShoppingList}', static::ROUTE_SHOPPING_LIST_UPDATE, 'ShoppingListPage', 'ShoppingListOverview', 'update')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
@@ -83,7 +83,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addShoppingListDeleteRoute(): self
+    protected function addShoppingListDeleteRoute()
     {
         $this->createGetController('/{shoppingList}/delete/{idShoppingList}', static::ROUTE_SHOPPING_LIST_DELETE, 'ShoppingListPage', 'ShoppingListDelete', 'delete')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
@@ -96,7 +96,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addShoppingListDeleteConfirmRoute(): self
+    protected function addShoppingListDeleteConfirmRoute()
     {
         $this->createController('/{shoppingList}/delete/{idShoppingList}/confirm', static::ROUTE_SHOPPING_LIST_DELETE_CONFIRM, 'ShoppingListPage', 'ShoppingListDelete', 'deleteConfirm')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
@@ -109,7 +109,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addShoppingListAddListsToCartRoute(): self
+    protected function addShoppingListAddListsToCartRoute()
     {
         $this->createPostController('/{shoppingList}/add-shopping-list-to-cart', static::ROUTE_ADD_SHOPPING_LIST_TO_CART, 'ShoppingListPage', 'ShoppingListOverview', 'addShoppingListToCart')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
@@ -121,7 +121,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addShoppingListDetailsRoute(): self
+    protected function addShoppingListDetailsRoute()
     {
         $this->createGetController('/{shoppingList}/details/{idShoppingList}', static::ROUTE_SHOPPING_LIST_DETAILS, 'ShoppingListPage', 'ShoppingList')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
@@ -134,7 +134,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addShoppingListClearRoute(): self
+    protected function addShoppingListClearRoute()
     {
         $this->createGetController('/{shoppingList}/clear/{idShoppingList}', static::ROUTE_SHOPPING_LIST_CLEAR, 'ShoppingListPage', 'ShoppingListOverview', 'clear')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
@@ -147,7 +147,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addShoppingListRemoveItemRoute(): self
+    protected function addShoppingListRemoveItemRoute()
     {
         $this->createGetController('/{shoppingList}/remove-item/{idShoppingList}/{idShoppingListItem}', static::ROUTE_REMOVE_ITEM, 'ShoppingListPage', 'ShoppingList', 'removeItem')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
@@ -161,7 +161,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addShoppingListAddToCartRoute(): self
+    protected function addShoppingListAddToCartRoute()
     {
         $this->createController('/{shoppingList}/add-to-cart', static::ROUTE_ADD_TO_CART, 'ShoppingListPage', 'ShoppingList', 'addToCart')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
@@ -173,7 +173,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addShoppingListShareRoute(): self
+    protected function addShoppingListShareRoute()
     {
         $this->createController('/{shoppingList}/share/{idShoppingList}', static::ROUTE_SHOPPING_LIST_SHARE, 'ShoppingListPage', 'ShoppingListOverview', 'shareShoppingList')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
@@ -186,7 +186,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addShoppingListPrintRoute(): self
+    protected function addShoppingListPrintRoute()
     {
         $this->createController('/{shoppingList}/print/{idShoppingList}', static::ROUTE_SHOPPING_LIST_PRINT, 'ShoppingListPage', 'ShoppingList', 'printShoppingList')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
@@ -199,7 +199,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCreateShoppingListFromCartRoute(): self
+    protected function addCreateShoppingListFromCartRoute()
     {
         $this->createController('/{shoppingList}/create-from-exist-cart/{idQuote}', static::ROUTE_CART_TO_SHOPPING_LIST, 'ShoppingListPage', 'CartToShoppingList', 'createFromCart')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
@@ -212,7 +212,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addShoppingListDismissRoute(): self
+    protected function addShoppingListDismissRoute()
     {
         $this->createController('/{shoppingList}/dismiss/{idShoppingList}', static::ROUTE_SHOPPING_LIST_DISMISS, 'ShoppingListPage', 'ShoppingListDismiss', 'Dismiss')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
@@ -225,7 +225,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addShoppingListDismissConfirmRoute(): self
+    protected function addShoppingListDismissConfirmRoute()
     {
         $this->createController('/{shoppingList}/dismiss-confirm/{idShoppingList}', static::ROUTE_SHOPPING_LIST_DISMISS_CONFIRM, 'ShoppingListPage', 'ShoppingListDismiss', 'DismissConfirm')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')
