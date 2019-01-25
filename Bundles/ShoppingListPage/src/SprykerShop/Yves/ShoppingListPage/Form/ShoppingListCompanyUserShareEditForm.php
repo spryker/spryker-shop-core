@@ -58,7 +58,7 @@ class ShoppingListCompanyUserShareEditForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdShoppingListCompanyUserField(FormBuilderInterface $builder): self
+    protected function addIdShoppingListCompanyUserField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_SHOPPING_LIST_COMPANY_USER, HiddenType::class);
 
@@ -70,7 +70,7 @@ class ShoppingListCompanyUserShareEditForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdCompanyUserField(FormBuilderInterface $builder): self
+    protected function addIdCompanyUserField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_COMPANY_USER, HiddenType::class);
 
@@ -82,7 +82,7 @@ class ShoppingListCompanyUserShareEditForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdShoppingListField(FormBuilderInterface $builder): self
+    protected function addIdShoppingListField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_SHOPPING_LIST, HiddenType::class);
 
@@ -95,7 +95,7 @@ class ShoppingListCompanyUserShareEditForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdShoppingListPermissionGroupField(FormBuilderInterface $builder, array $options): self
+    protected function addIdShoppingListPermissionGroupField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_ID_SHOPPING_LIST_PERMISSION_GROUP, ChoiceType::class, [
             'choices' => $options[ShareShoppingListForm::OPTION_PERMISSION_GROUPS],

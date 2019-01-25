@@ -46,7 +46,7 @@
                 {% if showActions %}
                     <td>
                         <ul class="menu menu--inline">
-                            {% if data.actions.configure and permission.configurationSignature %}
+                            {% if isAssigned and data.actions.configure and permission.configurationSignature %}
                                 <li class="menu__item">
                                     <a href="{{ path('company/company-role-permission/configure', {
                                         'id-permission': permission.idPermission,
