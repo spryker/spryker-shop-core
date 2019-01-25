@@ -207,7 +207,9 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addGlossaryStorageClient(Container $container): Container
     {
         $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
-            return new CartPageToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
+            return new CartPageToGlossaryStorageClientBridge(
+                $container->getLocator()->glossaryStorage()->client()
+            );
         };
 
         return $container;

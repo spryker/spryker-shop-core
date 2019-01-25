@@ -181,13 +181,13 @@ class CartController extends AbstractController
     protected function buildCartChangeItemTransfer(string $sku, int $quantity, ProductConcreteTransfer $productConcreteTransfer): ItemTransfer
     {
         $itemTransfer = new ItemTransfer();
-        $itemTransfer
-            ->setSku($sku)
+        $itemTransfer->setSku($sku)
             ->setQuantity($quantity)
             ->setProductConcrete($productConcreteTransfer);
 
         $cartChangeTransfer = new CartChangeTransfer();
-        $cartChangeTransfer->setItems(new ArrayObject([$itemTransfer]));
+        $cartChangeTransfer->addItem($itemTransfer);
+
         $cartChangeTransfer = $this->getFactory()
             ->getCartClient()
             ->buildCartChangeTransfer($cartChangeTransfer);
