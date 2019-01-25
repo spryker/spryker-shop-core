@@ -43,7 +43,7 @@ class CheckoutPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCheckoutIndexRoute(): self
+    protected function addCheckoutIndexRoute()
     {
         $this->createController('/{checkout}', self::CHECKOUT_INDEX, 'CheckoutPage', 'Checkout', 'index')
             ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
@@ -56,7 +56,7 @@ class CheckoutPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCustomerStepRoute(): self
+    protected function addCustomerStepRoute()
     {
         $this->createController('/{checkout}/customer', self::CHECKOUT_CUSTOMER, 'CheckoutPage', 'Checkout', 'customer')
             ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
@@ -69,7 +69,7 @@ class CheckoutPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addAddressStepRoute(): self
+    protected function addAddressStepRoute()
     {
         $this->createController('/{checkout}/address', self::CHECKOUT_ADDRESS, 'CheckoutPage', 'Checkout', 'address')
             ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
@@ -82,7 +82,7 @@ class CheckoutPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addShipmentStepRoute(): self
+    protected function addShipmentStepRoute()
     {
         $this->createController('/{checkout}/shipment', self::CHECKOUT_SHIPMENT, 'CheckoutPage', 'Checkout', 'shipment')
             ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
@@ -95,7 +95,7 @@ class CheckoutPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addPaymentStepRoute(): self
+    protected function addPaymentStepRoute()
     {
         $this->createController('/{checkout}/payment', self::CHECKOUT_PAYMENT, 'CheckoutPage', 'Checkout', 'payment')
             ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
@@ -108,7 +108,7 @@ class CheckoutPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCheckoutSummaryStepRoute(): self
+    protected function addCheckoutSummaryStepRoute()
     {
         $this->createController('/{checkout}/summary', self::CHECKOUT_SUMMARY, 'CheckoutPage', 'Checkout', 'summary')
             ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
@@ -121,7 +121,7 @@ class CheckoutPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addPlaceOrderStepRoute(): self
+    protected function addPlaceOrderStepRoute()
     {
         $this->createController('/{checkout}/place-order', self::CHECKOUT_PLACE_ORDER, 'CheckoutPage', 'Checkout', 'placeOrder')
             ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
@@ -134,7 +134,7 @@ class CheckoutPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCheckoutErrorRoute(): self
+    protected function addCheckoutErrorRoute()
     {
         $this->createController('/{checkout}/error', self::CHECKOUT_ERROR, 'CheckoutPage', 'Checkout', 'error')
             ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
@@ -147,7 +147,7 @@ class CheckoutPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCheckoutSuccessRoute(): self
+    protected function addCheckoutSuccessRoute()
     {
         $this->createController('/{checkout}/success', self::CHECKOUT_SUCCESS, 'CheckoutPage', 'Checkout', 'success')
             ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')
