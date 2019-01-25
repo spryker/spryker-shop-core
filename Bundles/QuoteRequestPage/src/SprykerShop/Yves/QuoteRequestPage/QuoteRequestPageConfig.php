@@ -17,6 +17,8 @@ class QuoteRequestPageConfig extends AbstractBundleConfig
     public const STATUS_WAITING = 'waiting';
 
     /**
+     * @see \Spryker\Zed\QuoteRequest\QuoteRequestConfig::getInitialStatus()
+     *
      * @return string
      */
     public function getInitialStatus(): string
