@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \SprykerShop\Yves\ProductQuickAddWidget\CartPageFactory getFactory()
+ * @method \SprykerShop\Yves\ProductQuickAddWidget\ProductQuickAddWidgetFactory getFactory()
  */
 class ProductQuickAddWidgetController extends AbstractController
 {

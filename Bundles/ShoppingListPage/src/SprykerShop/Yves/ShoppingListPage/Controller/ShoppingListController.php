@@ -311,7 +311,7 @@ class ShoppingListController extends AbstractShoppingListController
      * @param string $sku
      * @param int $quantity
      * @param int $idShoppingList
-     * @param \Symfony\Component\HttpFoundation\Reques $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
