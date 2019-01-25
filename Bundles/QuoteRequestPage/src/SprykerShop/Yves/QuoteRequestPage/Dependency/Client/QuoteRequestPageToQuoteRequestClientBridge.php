@@ -42,8 +42,18 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
      */
-    public function findQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer
+    public function getQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer
     {
-        return $this->quoteRequestClient->findQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
+        return $this->quoteRequestClient->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->quoteRequestClient->cancelByReference($quoteRequestFilterTransfer);
     }
 }
