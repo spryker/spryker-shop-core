@@ -18,6 +18,8 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_QUOTE_REQUEST_VIEW = 'quote-request/view';
     public const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
 
+    protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-]+';
+
     /**
      * @param \Silex\Application $app
      *
@@ -63,7 +65,7 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{quoteRequest}/cancel/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_CANCEL, 'QuoteRequestPage', 'QuoteRequestDelete', 'cancel')
             ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
             ->value('quoteRequest', 'quote-request')
-            ->assert('quoteRequestReference', '.+');
+            ->assert('quoteRequestReference', static::QUOTE_REQUEST_REFERENCE_REGEX);
 
         return $this;
     }
@@ -76,7 +78,7 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{quoteRequest}/details/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_DETAILS, 'QuoteRequestPage', 'QuoteRequestView', 'details')
             ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
             ->value('quoteRequest', 'quote-request')
-            ->assert('quoteRequestReference', '.+');
+            ->assert('quoteRequestReference', static::QUOTE_REQUEST_REFERENCE_REGEX);
 
         return $this;
     }

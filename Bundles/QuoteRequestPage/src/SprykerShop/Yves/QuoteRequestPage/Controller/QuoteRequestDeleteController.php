@@ -17,8 +17,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class QuoteRequestDeleteController extends QuoteRequestAbstractController
 {
-    protected const GLOSSARY_KEY_QUOTE_REQUEST_CANCEL = 'quote_request_page.quote_request.cancel';
-    protected const GLOSSARY_KEY_QUOTE_REQUEST_CANCEL_FAILED = 'quote_request_page.quote_request.cancel.failed';
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_SUCCESS_CANCELED = 'quote_request.validation.success.canceled';
 
     /**
      * @param string $quoteRequestReference
@@ -48,11 +47,11 @@ class QuoteRequestDeleteController extends QuoteRequestAbstractController
     protected function processResponseMessages(QuoteRequestResponseTransfer $quoteRequestResponseTransfer): void
     {
         if ($quoteRequestResponseTransfer->getIsSuccess()) {
-            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CANCEL);
+            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SUCCESS_CANCELED);
 
             return;
         }
 
-        $this->addErrorMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CANCEL_FAILED);
+        $this->handleResponseErrors($quoteRequestResponseTransfer);
     }
 }
