@@ -65,23 +65,21 @@
         </div>
     </div>
 
-    <div class="spacing-bottom spacing-bottom--big">
-        {% if data.errorMessages is not empty %}
-            <div class="{{ config.name }}__error">
-                {% for errorMessage in data.errorMessages %}
-                    {{ errorMessage.value | trans }}
-                {% endfor %}
-            </div>
-        {% endif %}
+    {% if data.errorMessages is not empty %}
+        <div class="{{ config.name }}__error spacing-bottom spacing-bottom--big">
+            {% for errorMessage in data.errorMessages %}
+                {{ errorMessage.value | trans }}
+            {% endfor %}
+        </div>
+    {% endif %}
 
-        {% if data.warningMessages is not empty %}
-            <div class="{{ config.name }}__warning">
-                {% for warningMessage in data.warningMessages %}
-                    {{ warningMessage.value | trans(
-                        warningMessage.parameters
-                    ) }}
-                {% endfor %}
-            </div>
-        {% endif %}
-    </div>
+    {% if data.warningMessages is not empty %}
+        <div class="{{ config.name }}__warning spacing-bottom spacing-bottom--big">
+            {% for warningMessage in data.warningMessages %}
+                {{ warningMessage.value | trans(
+                    warningMessage.parameters
+                ) }}
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
