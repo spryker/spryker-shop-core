@@ -39,7 +39,7 @@ class CheckoutController extends AbstractController
         $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
 
         if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
-            $this->showErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -59,7 +59,7 @@ class CheckoutController extends AbstractController
         $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
 
         if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
-            $this->showErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -92,7 +92,7 @@ class CheckoutController extends AbstractController
         $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
 
         if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
-            $this->showErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -125,7 +125,7 @@ class CheckoutController extends AbstractController
         $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
 
         if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
-            $this->showErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -158,7 +158,7 @@ class CheckoutController extends AbstractController
         $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
 
         if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
-            $this->showErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -191,7 +191,7 @@ class CheckoutController extends AbstractController
         $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
 
         if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
-            $this->showErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -224,7 +224,7 @@ class CheckoutController extends AbstractController
         $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
 
         if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
-            $this->showErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -288,27 +288,11 @@ class CheckoutController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
      */
-    protected function showErrorMessages(ArrayObject $messageTransfers): void
+    protected function processErrorMessages(ArrayObject $messageTransfers): void
     {
-
         foreach ($messageTransfers as $messageTransfers) {
-            $this->addErrorMessage(
-                $this->getTranslatedMessage($messageTransfers->getValue(), $messageTransfers->getParameters())
-            );
+            $this->addErrorMessage($messageTransfers->getValue());
         }
-    }
-
-    /**
-     * @param string $key
-     * @param array $params
-     *
-     * @return string
-     */
-    protected function getTranslatedMessage(string $key, array $params = []): string
-    {
-        return $this->getFactory()
-            ->getGlossaryClient()
-            ->translate($key, $this->getLocale(), $params);
     }
 
     /**
