@@ -92,5 +92,5 @@ interface CartPageToCartClientInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function buildCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+    public function expandCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }
