@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker-shop/customer-page": "^1.0.0",
+    "spryker-shop/customer-page": "^1.15.0",
     "spryker-shop/home-page": "^1.0.0",
     "spryker-shop/money-widget": "^1.0.0",
     "spryker-shop/shop-application": "^1.0.0",
@@ -14,7 +14,7 @@
     "spryker/calculation": "^4.2.0",
     "spryker/cart": "^4.3.0 || ^5.0.0",
     "spryker/checkout": "^4.0.0",
-    "spryker/customer": "^7.4.0",
+    "spryker/customer": "^7.16.0",
     "spryker/glossary": "^3.3.0",
     "spryker/glossary-storage": "^1.0.0",
     "spryker/kernel": "^3.24.0",

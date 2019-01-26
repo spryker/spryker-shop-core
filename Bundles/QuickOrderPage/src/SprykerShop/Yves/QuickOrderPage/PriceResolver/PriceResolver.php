@@ -11,11 +11,14 @@ use ArrayObject;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToPriceProductStorageClientInterface;
 use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface;
 
 class PriceResolver implements PriceResolverInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * @var \SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface
      */
@@ -43,6 +46,10 @@ class PriceResolver implements PriceResolverInterface
      */
     public function setSumPriceForQuickOrderTransfer(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
     {
+        if (!$this->can('SeePricePermissionPlugin')) {
+            return $quickOrderTransfer;
+        }
+
         $items = [];
         foreach ($quickOrderTransfer->getItems() as $quickOrderItemTransfer) {
             $items[] = $this->setSumPriceForQuickOrderItemTransfer($quickOrderItemTransfer);
@@ -58,7 +65,7 @@ class PriceResolver implements PriceResolverInterface
      */
     public function setSumPriceForQuickOrderItemTransfer(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
-        if (!$quickOrderItemTransfer->getSku() || !$quickOrderItemTransfer->getQuantity()) {
+        if (!$this->can('SeePricePermissionPlugin') || !$quickOrderItemTransfer->getSku() || !$quickOrderItemTransfer->getQuantity()) {
             return $quickOrderItemTransfer;
         }
 
