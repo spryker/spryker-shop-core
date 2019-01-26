@@ -40,12 +40,11 @@
         <div class="col col--sm-4 spacing spacing--inner">
             {% block search %}
                 {% set skuFieldValue = (data.autocomplete.skuFieldValue | length > 1) ? data.autocomplete.skuFieldValue : data.skuField.vars.value %}
-                {% set searchFieldValue = (data.autocomplete.searchFieldValue | length > 1) ? data.autocomplete.searchFieldValue ~ ' (' ~ skuFieldValue ~ ')' : '' %}
                 {% widget 'ProductConcreteSearchWidget' args [
                     'ajax-provider' ~ data.index,
                     data.autocomplete.skuFieldName ~ '[sku]',
                     skuFieldValue,
-                    searchFieldValue,
+                    data.autocomplete.searchFieldValue,
                 ] only %}
                 {% endwidget %}
             {% endblock %}
