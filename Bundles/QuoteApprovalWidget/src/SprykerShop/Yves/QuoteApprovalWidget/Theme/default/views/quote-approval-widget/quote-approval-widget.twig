@@ -46,15 +46,9 @@
                         {% endif %}
                     </div>
                 {% else %}
-                    {% set quoteStatus = 'quote_approval_widget.cart.status.' ~ quoteApproval.status %}
-
-                    {% include molecule('quote-info-row', 'QuoteApprovalWidget') with {
-                        data: {
-                            title: 'quote_approval_widget.cart.status' | trans,
-                            value: quoteStatus | trans,
-                            status: quoteApproval.status | lower
-                        }
-                    } only %}
+                    <td>
+                        {% widget 'QuoteApprovalStatusWidget' args [data.quoteTransfer] only %}{% endwidget %}
+                    </td>
                 {% endif %}
                 <hr />
             </div>

@@ -37,6 +37,11 @@
             {% if data.cart.isDefault %}
                 ({{ 'multi_cart_widget.cart.default' | trans }})
             {% endif %}
+            {% if widgetGlobalExists('QuoteApprovalStatusWidget') %}
+                <td>
+                    {% widget 'QuoteApprovalStatusWidget' args [data.cart] only %}{% endwidget %}
+                </td>
+            {% endif %}
             <div>
                 {% widget 'ProductBundleItemCounterWidget' args [data.cart] only %}
                 {% elsewidget 'ProductBundleItemCounterWidgetPlugin' args [data.cart] only %} {# @deprecated Use ProductBundleItemCounterWidget instead. #}
