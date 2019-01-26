@@ -47,9 +47,16 @@ class FileParser implements FileParserInterface
 
         unset($rows[0]);
         foreach ($rows as $row) {
-            if (isset($row[$skuKey]) && isset($row[$qtyKey])) {
-                $quickOrderItemTransfers[] = $this->createQuickOrderItemTransfer($row[$skuKey], (int)$row[$qtyKey]);
+
+            if (!isset($row[$skuKey])) {
+                continue;
             }
+
+            if (!isset($row[$qtyKey]) || $row[$qtyKey] <= 0 ) {
+                $row[$qtyKey] = 1;
+            }
+
+            $quickOrderItemTransfers[] = $this->createQuickOrderItemTransfer($row[$skuKey], (int)$row[$qtyKey]);
         }
 
         return $quickOrderItemTransfers;
