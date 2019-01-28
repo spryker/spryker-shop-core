@@ -214,14 +214,14 @@ class QuickOrderController extends AbstractController
      */
     protected function getProductsFromQuickOrderItems(QuickOrderTransfer $quickOrderTransfer): array
     {
-        $concreteProductsTransfers = [];
+        $productConcreteTransfers = [];
         foreach ($quickOrderTransfer->getItems() as $orderItem) {
             if ($orderItem->getProductConcrete()) {
-                $concreteProductsTransfers[] = $orderItem->getProductConcrete();
+                $productConcreteTransfers[] = $orderItem->getProductConcrete();
             }
         }
 
-        return $concreteProductsTransfers;
+        return $productConcreteTransfers;
     }
 
     /**
