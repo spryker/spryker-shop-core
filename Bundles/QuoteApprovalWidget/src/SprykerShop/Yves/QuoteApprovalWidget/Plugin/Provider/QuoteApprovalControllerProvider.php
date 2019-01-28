@@ -37,7 +37,9 @@ class QuoteApprovalControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addQuoteApprovalApproveRoute()
     {
-        $this->createPostController('/quote-approval/approve/{idQuoteApproval}', static::ROUTE_QUOTE_APPROVAL_APPROVE, 'QuoteApprovalWidget', 'QuoteApproval', 'approve')
+        $this->createPostController('/{quoteApproval}/approve/{idQuoteApproval}', static::ROUTE_QUOTE_APPROVAL_APPROVE, 'QuoteApprovalWidget', 'QuoteApproval', 'approve')
+            ->value('quoteApproval', 'quote-approval')
+            ->assert('quoteApproval', $this->getAllowedLocalesPattern() . 'quote-approval|quote-approval')
             ->assert('idQuoteApproval', static::PATTERN_ID);
 
         return $this;
@@ -48,7 +50,9 @@ class QuoteApprovalControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addQuoteApprovalDeclineRoute()
     {
-        $this->createPostController('/quote-approval/decline/{idQuoteApproval}', static::ROUTE_QUOTE_APPROVAL_DECLINE, 'QuoteApprovalWidget', 'QuoteApproval', 'decline')
+        $this->createPostController('/{quoteApproval}/decline/{idQuoteApproval}', static::ROUTE_QUOTE_APPROVAL_DECLINE, 'QuoteApprovalWidget', 'QuoteApproval', 'decline')
+            ->value('quoteApproval', 'quote-approval')
+            ->assert('quoteApproval', $this->getAllowedLocalesPattern() . 'quote-approval|quote-approval')
             ->assert('idQuoteApproval', static::PATTERN_ID);
 
         return $this;
@@ -59,8 +63,10 @@ class QuoteApprovalControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addCreateQuoteApprovalRoute()
     {
-        $this->createController('/quote-approval/create', static::ROUTE_QUOTE_APPROVAL_CREATE, 'QuoteApprovalWidget', 'QuoteApproval', 'createQuoteApproval')
-            ->method('POST');
+        $this->createController('/{quoteApproval}/create', static::ROUTE_QUOTE_APPROVAL_CREATE, 'QuoteApprovalWidget', 'QuoteApproval', 'createQuoteApproval')
+            ->method('POST')
+            ->value('quoteApproval', 'quote-approval')
+            ->assert('quoteApproval', $this->getAllowedLocalesPattern() . 'quote-approval|quote-approval');
 
         return $this;
     }
@@ -70,7 +76,9 @@ class QuoteApprovalControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addRemoveQuoteApprovalRoute()
     {
-        $this->createController('/quote-approval/{idQuoteApproval}/remove', static::ROUTE_QUOTE_APPROVAL_REMOVE, 'QuoteApprovalWidget', 'QuoteApproval', 'removeQuoteApproval')
+        $this->createController('/{quoteApproval}/{idQuoteApproval}/remove', static::ROUTE_QUOTE_APPROVAL_REMOVE, 'QuoteApprovalWidget', 'QuoteApproval', 'removeQuoteApproval')
+            ->value('quoteApproval', 'quote-approval')
+            ->assert('quoteApproval', $this->getAllowedLocalesPattern() . 'quote-approval|quote-approval')
             ->assert('idQuoteApproval', static::PATTERN_ID)
             ->method('POST');
 
