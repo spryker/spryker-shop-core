@@ -7,7 +7,7 @@
 } %}
 
 {% block body %}
-    {% if data.quoteApprovalCollection.quoteApprovals is not null %}
+    {% if data.quoteApprovalCollection.quoteApprovals is not empty %}
         {% set quoteApproval = data.quoteApprovalCollection.quoteApprovals | last %}
         <div>
             {% include molecule('quote-approval', 'QuoteApprovalWidget') with {

@@ -24,12 +24,14 @@
     {% if data.approval %}
         <div class="grid">
             <div class="col col--sm-6 spacing-y spacing-y--big">
-                {% if data.approval.status == 'waiting' %}
-                    {{ 'quote_approval.request.waiting_for_approval_from' | trans }}
-                {% elseif data.approval.status == 'approved' %}
-                    {{ 'quote_approval.request.approved_by' | trans }}
-                {% elseif data.approval.status == 'declined' %}
-                    {{ 'quote_approval.request.declined_by' | trans }}
+                {% if data.approval.status is defined %}
+                    {% if data.approval.status == 'waiting' %}
+                        {{ 'quote_approval.request.waiting_for_approval_from' | trans }}
+                    {% elseif data.approval.status == 'approved' %}
+                        {{ 'quote_approval.request.approved_by' | trans }}
+                    {% elseif data.approval.status == 'declined' %}
+                        {{ 'quote_approval.request.declined_by' | trans }}
+                    {% endif %}
                 {% endif %}
                 {{ data.customer.firstName }} {{ data.customer.lastName }}
             </div>
@@ -39,7 +41,9 @@
                         name: 'clock'
                     }
                 } only %}
-                {{ data.approval.updatedAt | date }}
+                {% if data.approval.updatedAt is defined %}
+                    {{ data.approval.updatedAt | date }}
+                {% endif %}
             </div>
             {% if data.quoteStatus == 'waiting' %}
                 <div class="col col--sm-12">
