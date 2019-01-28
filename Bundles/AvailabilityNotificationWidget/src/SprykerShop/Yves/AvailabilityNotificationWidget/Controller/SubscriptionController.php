@@ -69,7 +69,6 @@ class SubscriptionController extends AbstractController
             ->setEmail($formData[AvailabilityUnsubscribeForm::FIELD_EMAIL])
             ->setSku($formData[AvailabilityUnsubscribeForm::FIELD_SKU]);
 
-
         $subscriptionTransfer = $this->getFactory()
             ->getAvailabilityNotificationClient()
             ->checkExistence($availabilitySubscriptionExistenceRequestTransfer)
