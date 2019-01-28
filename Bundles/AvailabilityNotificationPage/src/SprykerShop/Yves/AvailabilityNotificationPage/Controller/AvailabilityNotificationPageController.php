@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationPage\Controller;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Yves\Kernel\View\View;
@@ -36,15 +36,17 @@ class AvailabilityNotificationPageController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array
      */
     protected function executeUnsubscribeAction(Request $request): array
     {
         $subscriptionKey = $request->query->get(AvailabilityNotificationPageControllerProvider::PARAM_SUBSCRIPTION_KEY);
 
-        $availabilitySubscriptionExistenceRequestTransfer = (new AvailabilitySubscriptionExistenceRequestTransfer())->setSubscriptionKey($subscriptionKey);
+        $availabilitySubscriptionExistenceRequestTransfer = (new AvailabilitySubscriptionRequestTransfer())->setSubscriptionKey($subscriptionKey);
 
-        $availabilitySubscriptionExistenceResponseTransfer = $this->getFactory()->getAvailabilityNotificationClient()->checkExistence($availabilitySubscriptionExistenceRequestTransfer);
+        $availabilitySubscriptionExistenceResponseTransfer = $this->getFactory()->getAvailabilityNotificationClient()->findAvailabilitySubscription($availabilitySubscriptionExistenceRequestTransfer);
 
         if ($availabilitySubscriptionExistenceResponseTransfer->getAvailabilitySubscription() === null) {
             throw new NotFoundHttpException('Subscription doesn\'t exist');

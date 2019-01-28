@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesControllerProvider
 {
-    public const ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'notification-availability/unsubscribe';
+    public const ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'availability-notification/unsubscribe';
     public const ROUTE_AVAILABILITY_NOTIFICATION_SUBSCRIBE = 'availability-notification/subscribe';
 
     /**
@@ -22,18 +22,19 @@ class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesContr
      */
     protected function defineControllers(Application $app): void
     {
-        $this->addAvailabilityNotificationSubscribeRoute()
+        $this
+            ->addAvailabilityNotificationSubscribeRoute()
             ->addAvailabilityNotificationUnsubscribeRoute();
     }
 
     /**
      * @return $this
      */
-    protected function addAvailabilityNotificationSubscribeRoute(): self
+    protected function addAvailabilityNotificationSubscribeRoute()
     {
-        $this->createPostController('/{notificationAvailability}/subscribe', static::ROUTE_AVAILABILITY_NOTIFICATION_SUBSCRIBE, 'AvailabilityNotificationWidget', 'Subscription', 'subscribe')
-            ->assert('notificationAvailability', $this->getAllowedLocalesPattern() . 'availability-notification|availability-notification')
-            ->value('notificationAvailability', 'availability-notification');
+        $this->createPostController('/{availabilityNotification}/subscribe', static::ROUTE_AVAILABILITY_NOTIFICATION_SUBSCRIBE, 'AvailabilityNotificationWidget', 'Subscription', 'subscribe')
+            ->assert('availabilityNotification', $this->getAllowedLocalesPattern() . 'availability-notification|availability-notification')
+            ->value('availabilityNotification', 'availability-notification');
 
         return $this;
     }
@@ -41,11 +42,11 @@ class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesContr
     /**
      * @return $this
      */
-    protected function addAvailabilityNotificationUnsubscribeRoute(): self
+    protected function addAvailabilityNotificationUnsubscribeRoute()
     {
-        $this->createPostController('/{notificationAvailability}/unsubscribe', self::ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE, 'AvailabilityNotificationWidget', 'Subscription', 'unsubscribe')
-            ->assert('notificationAvailability', $this->getAllowedLocalesPattern() . 'availability-notification|availability-notification')
-            ->value('notificationAvailability', 'availability-notification');
+        $this->createPostController('/{availabilityNotification}/unsubscribe', self::ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE, 'AvailabilityNotificationWidget', 'Subscription', 'unsubscribe')
+            ->assert('availabilityNotification', $this->getAllowedLocalesPattern() . 'availability-notification|availability-notification')
+            ->value('availabilityNotification', 'availability-notification');
 
         return $this;
     }

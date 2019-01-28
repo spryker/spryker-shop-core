@@ -66,7 +66,7 @@ class AvailabilityUnsubscribeForm extends AbstractType
      *
      * @return $this
      */
-    protected function addEmailField(FormBuilderInterface $builder): self
+    protected function addEmailField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_EMAIL, HiddenType::class, [
             'required' => true,
@@ -85,7 +85,7 @@ class AvailabilityUnsubscribeForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSkuField(FormBuilderInterface $builder): self
+    protected function addSkuField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_SKU, HiddenType::class, [
             'required' => true,
