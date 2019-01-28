@@ -1,4 +1,4 @@
-Shows unordered list with optional label as first item and text note as second.
+Shows unordered list with an optional label as the first item and a text note as the second.
 
 ## Code sample
 
