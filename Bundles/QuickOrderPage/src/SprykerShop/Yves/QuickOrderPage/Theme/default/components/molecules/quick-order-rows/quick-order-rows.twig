@@ -62,7 +62,7 @@
                 autocomplete: {
                     skuFieldName: row.vars.full_name,
                     skuFieldValue: product is null ? null : product.sku,
-                    searchFieldValue: product is null ? null : product.localizedAttributes[0] is defined ? product.localizedAttributes[0].name : '' ~ ' (' ~ product.sku ~ ')'
+                    searchFieldValue: product is null ? null : product.localizedAttributes[0] is defined ? product.localizedAttributes[0].name ~ ' (' ~ product.sku ~ ')': '' ~ ' (' ~ product.sku ~ ')'
                 }
             },
             embed: {
