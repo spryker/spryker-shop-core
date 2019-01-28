@@ -1,0 +1,10 @@
+@mixin shopping-list-page-shopping-list-navigation($name: '.shopping-list-navigation') {
+    #{$name} {
+        &__item {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @content;
+    }
+}
