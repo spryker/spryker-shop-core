@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
+use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -30,6 +31,18 @@ class QuoteRequestAbstractController extends AbstractController
 
         if ($companyUserTransfer === null) {
             throw new NotFoundHttpException("Only company users are allowed to access this page");
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer
+     *
+     * @return void
+     */
+    protected function handleResponseErrors(QuoteRequestResponseTransfer $quoteRequestResponseTransfer): void
+    {
+        foreach ($quoteRequestResponseTransfer->getErrors() as $errorTransfer) {
+            $this->addErrorMessage($errorTransfer);
         }
     }
 }

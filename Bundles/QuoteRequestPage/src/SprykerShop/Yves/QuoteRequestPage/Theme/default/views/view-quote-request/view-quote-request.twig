@@ -1,5 +1,19 @@
 {% extends template('page-layout-quote-request', 'QuoteRequestPage') %}
 
-{% block content %}
-    {#// TODO: implement in next story#}
+{% define data = {
+    quoteRequests: _view.quoteRequests
+} %}
+
+{% block customerContent %}
+    <div class="box">
+        {% if data.quoteRequests | length %}
+            {% include molecule('quote-request-view-table', 'QuoteRequestPage') with {
+                data: {
+                    quoteRequests: data.quoteRequests,
+                }
+            } only %}
+        {% else %}
+            {{ 'customer.account.shopping_list.overview.empty' | trans }}
+        {% endif %}
+    </div>
 {% endblock %}

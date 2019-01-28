@@ -7,8 +7,9 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Spryker\Yves\Kernel\View\View;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
@@ -16,30 +17,76 @@ use Symfony\Component\HttpFoundation\Request;
 class QuoteRequestViewController extends QuoteRequestAbstractController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function indexAction(Request $request): View
+    public function indexAction(): View
     {
-        $viewData = $this->executeIndexAction($request);
+        $viewData = $this->executeIndexAction();
 
-        return $this->view(
-            $viewData,
-            [],
-            '@QuoteRequestPage/views/view-quote-request/view-quote-request.twig'
-        );
+        return $this->view($viewData, [], '@QuoteRequestPage/views/view-quote-request/view-quote-request.twig');
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $quoteRequestReference
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function detailsAction(string $quoteRequestReference): View
+    {
+        $viewData = $this->executeDetailsAction($quoteRequestReference);
+
+        return $this->view($viewData, [], '@QuoteRequestPage/views/details-quote-request/details-quote-request.twig');
+    }
+
+    /**
+     * @return array
+     */
+    protected function executeIndexAction(): array
+    {
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->findCompanyUser();
+
+        $quoteRequestCollectionTransfer = $this->getFactory()
+            ->getQuoteRequestClient()
+            ->getQuoteRequestCollectionByFilter((new QuoteRequestFilterTransfer())->setCompanyUser($companyUserTransfer));
+
+        return [
+            'quoteRequests' => $quoteRequestCollectionTransfer->getQuoteRequests(),
+        ];
+    }
+
+    /**
+     * @param string $quoteRequestReference
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return array
      */
-    protected function executeIndexAction(Request $request): array
+    protected function executeDetailsAction(string $quoteRequestReference): array
     {
-        // TODO: implement in next story
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->findCompanyUser();
 
-        return [];
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setQuoteRequestReference($quoteRequestReference)
+            ->setCompanyUser($companyUserTransfer);
+
+        $quoteRequests = $this->getFactory()
+            ->getQuoteRequestClient()
+            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
+            ->getQuoteRequests()
+            ->getArrayCopy();
+
+        $quoteRequestTransfer = array_shift($quoteRequests);
+
+        if (!$quoteRequestTransfer) {
+            throw new NotFoundHttpException();
+        }
+
+        return [
+            'quoteRequest' => $quoteRequestTransfer,
+        ];
     }
 }

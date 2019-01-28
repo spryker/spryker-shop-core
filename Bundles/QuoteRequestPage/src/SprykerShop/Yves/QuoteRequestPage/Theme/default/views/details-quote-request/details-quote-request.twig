@@ -2,12 +2,8 @@
 
 {% define data = {
     title: 'quote_request_page.quote_request' | trans,
-    activePage: 'quoteRequest'
+    quoteRequest: _view.quoteRequest
 } %}
-
-{% block title %}
-    <h3>{{ data.title }}</h3>
-{% endblock %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -19,8 +15,18 @@
                 },
                 {
                     label: 'quote_request_page.quote_request' | trans,
+                    url: url('quote-request')
+                },
+                {
+                    label: '#' ~ data.quoteRequest.quoteRequestReference,
                 }
             ]
         }
     } only %}
+{% endblock %}
+
+{% block content %}
+    <div class="box">
+        {#TODO implement in next story#}
+    </div>
 {% endblock %}
