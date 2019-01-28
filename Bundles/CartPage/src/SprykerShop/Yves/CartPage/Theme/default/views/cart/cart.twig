@@ -65,9 +65,11 @@
                     } only %}
                 {% endfor %}
 
-                {% widget 'CartDiscountPromotionProductListWidget' args [data.cart, data.request] only %}
-                {% elsewidget 'DiscountPromotionItemListWidgetPlugin' args [data.cart, data.request] only %} {# @deprecated Use CartDiscountPromotionProductListWidget instead. #}
-                {% endwidget %}
+                {% if canEditCart %}
+                    {% widget 'CartDiscountPromotionProductListWidget' args [data.cart, data.request] only %}
+                    {% elsewidget 'DiscountPromotionItemListWidgetPlugin' args [data.cart, data.request] only %} {# @deprecated Use CartDiscountPromotionProductListWidget instead. #}
+                    {% endwidget %}
+                {% endif %}
 
                 {% if canEditCart and data.cart.idQuote is not empty %}
                     {% widget 'CartOperationsWidget' args [data.cart] use view('cart-operations-actions', 'MultiCartWidget') only %}
@@ -79,9 +81,11 @@
 
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
-                    {% widget 'CartNoteFormWidget' args [data.cart] only %}
-                    {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartNoteFormWidget instead. #}
-                    {% endwidget %}
+                    {% if canEditCart %}
+                        {% widget 'CartNoteFormWidget' args [data.cart] only %}
+                        {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartNoteFormWidget instead. #}
+                        {% endwidget %}
+                    {% endif %}
 
                     {% if (not is_granted('ROLE_USER') or canEditCart) and can('SeePricePermissionPlugin') %}
                         {% widget 'DiscountVoucherFormWidget' only %}

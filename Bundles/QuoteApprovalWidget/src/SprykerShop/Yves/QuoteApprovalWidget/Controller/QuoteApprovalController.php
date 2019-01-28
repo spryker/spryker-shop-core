@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\QuoteApprovalWidget\Controller;
 
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
@@ -20,11 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteApprovalController extends AbstractController
 {
-    protected const ROUTE_CART = 'cart';
     protected const PARAM_REFERER = 'referer';
-    protected const MESSAGE_QUOTE_APPROVAL_APPROVE_ERROR = 'quote_approval_widget.cart.error_approve_message';
-    protected const MESSAGE_QUOTE_APPROVAL_DECLINE_ERROR = 'quote_approval_widget.cart.error_decline_message';
-    protected const MESSAGE_QUOTE_APPROVAL_CANCEL_ERROR = 'quote_approval_widget.cart.error_cancel_message';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -47,15 +42,16 @@ class QuoteApprovalController extends AbstractController
             $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
         }
 
-        return $this->redirectResponseInternal(static::ROUTE_CART);
+        return $this->redirectBack($request);
     }
 
     /**
      * @param int $idQuoteApproval
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function removeQuoteApprovalAction(int $idQuoteApproval): RedirectResponse
+    public function removeQuoteApprovalAction(int $idQuoteApproval, Request $request): RedirectResponse
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
@@ -74,7 +70,7 @@ class QuoteApprovalController extends AbstractController
             $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
         }
 
-        return $this->redirectResponseInternal(static::ROUTE_CART);
+        return $this->redirectBack($request);
     }
 
     /**
@@ -97,23 +93,17 @@ class QuoteApprovalController extends AbstractController
      */
     protected function addMessagesFromQuoteApprovalResponse(QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer)
     {
-        $messageTransfer = $quoteApprovalResponseTransfer->getMessage();
+        foreach ($quoteApprovalResponseTransfer->getMessages() as $messageTransfer) {
+            $translatedMessage = $this->getTranslatedMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
 
-        if ($quoteApprovalResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage($this->getTranslatedMessage(
-                $messageTransfer->getValue(),
-                $messageTransfer->getParameters()
-            ));
+            if ($quoteApprovalResponseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessage($translatedMessage);
 
-            return;
+                continue;
+            }
+
+            $this->addErrorMessage($translatedMessage);
         }
-
-        $this->addErrorMessage(
-            $this->getTranslatedMessage(
-                $messageTransfer->getValue(),
-                $messageTransfer->getParameters()
-            )
-        );
     }
 
     /**
@@ -138,13 +128,7 @@ class QuoteApprovalController extends AbstractController
             ->getQuoteApprovalClient()
             ->approveQuoteApproval($quoteApprovalRequestTransfer);
 
-        if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
-            $this->addErrorMessage(static::MESSAGE_QUOTE_APPROVAL_APPROVE_ERROR);
-
-            return $this->redirectBack($request);
-        }
-
-        $this->addTranslatedSuccessMessage($quoteApprovalResponseTransfer->getMessage());
+        $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectBack($request);
     }
@@ -171,13 +155,7 @@ class QuoteApprovalController extends AbstractController
             ->getQuoteApprovalClient()
             ->declineQuoteApproval($quoteApprovalRequestTransfer);
 
-        if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
-            $this->addErrorMessage(static::MESSAGE_QUOTE_APPROVAL_DECLINE_ERROR);
-
-            return $this->redirectBack($request);
-        }
-
-        $this->addTranslatedSuccessMessage($quoteApprovalResponseTransfer->getMessage());
+        $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectBack($request);
     }
@@ -192,17 +170,5 @@ class QuoteApprovalController extends AbstractController
         $referer = $request->headers->get(static::PARAM_REFERER);
 
         return $this->redirectResponseExternal($referer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
-     *
-     * @return void
-     */
-    protected function addTranslatedSuccessMessage(MessageTransfer $messageTransfer): void
-    {
-        $message = $this->getTranslatedMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
-
-        $this->addSuccessMessage($message);
     }
 }
