@@ -8,7 +8,7 @@
 
 {% block body %}
     {% if data.quoteApprovalCollection.quoteApprovals is not empty %}
-        {% set quoteApproval = data.quoteApprovalCollection.quoteApprovals | last %}
+        {% set quoteApproval = data.quoteApprovalCollection.quoteApprovals | first %}
         <div>
             {% include molecule('quote-approval', 'QuoteApprovalWidget') with {
                 data: {
