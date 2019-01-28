@@ -1,5 +1,3 @@
-# wishlist-detail-table (molecule)
-
 Displays a list of products in wishlist as a table which includes product details, price, availability, and action links.
 
 ## Code sample 

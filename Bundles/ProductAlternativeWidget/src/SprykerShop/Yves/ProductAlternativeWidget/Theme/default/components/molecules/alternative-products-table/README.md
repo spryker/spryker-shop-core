@@ -1,5 +1,3 @@
-# alternative-products-table (molecule)
-
 Displays a table with alternative products limited by maxShownItems option.
 
 ## Code sample

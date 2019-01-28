@@ -1,5 +1,3 @@
-# flag (molecule)
-
 Displays a label with short text and icon.
 
 ## Code sample

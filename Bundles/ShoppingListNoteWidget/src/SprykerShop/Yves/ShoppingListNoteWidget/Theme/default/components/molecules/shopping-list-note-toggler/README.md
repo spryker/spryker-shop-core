@@ -1,5 +1,3 @@
-# shopping-list-note-toggler (molecule)
-
 Displays a simple link which toggles a text area field when clicked on.
 
 ## Code sample 

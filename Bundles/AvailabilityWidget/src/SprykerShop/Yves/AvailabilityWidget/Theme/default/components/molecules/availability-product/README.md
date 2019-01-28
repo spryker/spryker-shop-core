@@ -1,5 +1,3 @@
-# availability-product (molecule)
-
 Shows alert text message if product is not available.
 
 ## Code sample

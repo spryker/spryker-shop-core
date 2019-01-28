@@ -1,5 +1,3 @@
-# view-mode-switch (molecule)
-
 A layout switch menu with two view modes: grid and list.
 
 ## Code sample

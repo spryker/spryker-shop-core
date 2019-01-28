@@ -1,5 +1,3 @@
-# menu (molecule)
-
 Represents styles for the main navigation list.
 
 ## Code sample

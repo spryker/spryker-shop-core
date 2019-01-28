@@ -1,5 +1,3 @@
-# business-unit-address-list (molecule)
-
 Displays a list of business unit addresses in the current business unit.
 
 ## Code sample

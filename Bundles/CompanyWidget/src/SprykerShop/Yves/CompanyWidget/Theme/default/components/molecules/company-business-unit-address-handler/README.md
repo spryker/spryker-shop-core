@@ -1,5 +1,3 @@
-# company-business-unit-address-handler (molecule)
-
 Implements logic to fill form with customer or business address data.
 
 ## Code sample

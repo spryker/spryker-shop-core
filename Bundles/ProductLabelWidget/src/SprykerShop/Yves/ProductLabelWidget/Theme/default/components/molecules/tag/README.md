@@ -1,5 +1,3 @@
-# tag (molecule)
-
 Displays a label with short text.
 
 ## Code sample

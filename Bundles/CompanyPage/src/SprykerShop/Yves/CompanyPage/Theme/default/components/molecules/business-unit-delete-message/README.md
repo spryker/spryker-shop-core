@@ -1,5 +1,3 @@
-# business-unit-delete-message (molecule)
-
 Displays a business unit removal confirmation dialog box.
 
 ## Code sample

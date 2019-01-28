@@ -1,5 +1,3 @@
-# script-loader (molecule)
-
 Provides async loading scripts to the DOM.
 
 ## Code sample

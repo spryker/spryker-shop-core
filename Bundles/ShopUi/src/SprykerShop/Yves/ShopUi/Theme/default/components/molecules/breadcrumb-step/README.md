@@ -1,5 +1,3 @@
-# breadcrumb-step (molecule)
-
 A simple list of items that displays a hierarchical structure of breadcrumbs.
 
 ## Code sample

@@ -1,5 +1,3 @@
-# outside-widgets (molecule)
-
 Creates a container for widgets.
 
 ## Code sample

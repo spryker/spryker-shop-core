@@ -1,5 +1,3 @@
-# role-table (molecule)
-
 Displays company roles as a table with action links (view, update, delete).
 
 ## Code sample

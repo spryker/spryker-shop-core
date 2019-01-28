@@ -1,5 +1,3 @@
-# pagination (molecule)
-
 Creates a customizable pagination.
 
 ## Code sample

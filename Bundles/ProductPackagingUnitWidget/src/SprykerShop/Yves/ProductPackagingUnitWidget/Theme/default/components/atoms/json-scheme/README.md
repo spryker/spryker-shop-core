@@ -1,5 +1,3 @@
-# json-scheme (atom)
-
 Renders json data as an attribute into html tag.
 
 ## Code sample 

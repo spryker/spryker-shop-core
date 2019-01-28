@@ -1,5 +1,3 @@
-# cart-table (molecule)
-
 Displays shopping cart as a table with action links (view, update, delete).
 
 ## Code sample

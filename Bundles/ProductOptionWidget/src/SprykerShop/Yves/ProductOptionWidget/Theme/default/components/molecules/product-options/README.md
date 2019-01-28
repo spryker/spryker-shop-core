@@ -1,5 +1,3 @@
-# product-options (molecule)
-
 Shows a list of product options in a "value: price" format.
 
 ## Code sample

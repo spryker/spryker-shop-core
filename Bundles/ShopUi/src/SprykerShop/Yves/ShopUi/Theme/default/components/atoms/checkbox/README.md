@@ -1,5 +1,3 @@
-# checkbox (atom)
-
 Creates a simple checkbox element with a non-native design.
 
 ## Code sample 

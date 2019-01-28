@@ -1,5 +1,3 @@
-# volume-price (molecule)
-
 Displays a product price.
 
 ## Code sample 

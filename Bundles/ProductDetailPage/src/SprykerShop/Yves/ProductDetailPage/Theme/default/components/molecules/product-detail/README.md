@@ -1,5 +1,3 @@
-# product-detail (molecule)
-
 Shows a list of product attributes.
 
 ## Code sample 

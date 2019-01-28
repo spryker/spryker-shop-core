@@ -1,5 +1,3 @@
-# cart-item-variant-selector (molecule)
-
 Displays a list of product variants as drop-down menu options.
 
 ## Code sample

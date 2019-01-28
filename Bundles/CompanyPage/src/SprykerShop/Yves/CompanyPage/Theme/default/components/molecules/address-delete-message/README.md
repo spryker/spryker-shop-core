@@ -1,5 +1,3 @@
-# address-delete-message (molecule)
-
 Displays a business unit address removal confirmation dialog box.
 
 ## Code sample

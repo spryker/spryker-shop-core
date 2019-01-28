@@ -1,5 +1,3 @@
-# packaging-unit-quantity-selector (molecule)
-
 Shows html tag element, which includes json data as an html attribute.
 
 ## Code sample 

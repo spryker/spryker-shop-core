@@ -1,5 +1,3 @@
-# note-list (molecule)
-
 Shows unordered list with optional label as first item and text note as second.
 
 ## Code sample

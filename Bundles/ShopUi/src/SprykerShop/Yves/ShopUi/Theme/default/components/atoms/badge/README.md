@@ -1,5 +1,3 @@
-# badge (atom)
-
 Creates a simple, colored label element.
 
 ## Code sample 

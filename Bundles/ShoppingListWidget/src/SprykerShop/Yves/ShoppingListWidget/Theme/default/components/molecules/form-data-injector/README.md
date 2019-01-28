@@ -1,5 +1,3 @@
-# form-data-injector (molecule)
-
 Copies form data to hidden form fields on submit.
 
 ## Code sample 

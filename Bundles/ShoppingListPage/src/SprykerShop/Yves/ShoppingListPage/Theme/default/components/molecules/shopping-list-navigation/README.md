@@ -1,5 +1,3 @@
-# shopping-list-navigation (molecule)
-
 Displays a navigation list of shopping lists as links.
 
 ## Code sample 

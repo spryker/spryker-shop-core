@@ -1,5 +1,3 @@
-# filter-range (molecule)
-
 Enables manual filtering by the price range with minimum and maximum values.
 
 ## Code sample

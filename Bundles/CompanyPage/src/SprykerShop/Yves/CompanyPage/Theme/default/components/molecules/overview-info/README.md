@@ -1,5 +1,3 @@
-# overview-info (molecule)
-
 Displays company overview information.
 
 ## Code sample

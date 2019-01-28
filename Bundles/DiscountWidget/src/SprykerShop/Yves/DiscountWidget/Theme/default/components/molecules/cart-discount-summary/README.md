@@ -1,5 +1,3 @@
-# cart-discount-summary (molecule)
-
 Displays a list of vouchers with remove link and discount rules.
 
 ## Code sample

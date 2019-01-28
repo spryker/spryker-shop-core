@@ -1,5 +1,3 @@
-# cart-table-detail (molecule)
-
 Displays shopping cart details as a table row.
 
 ## Code sample

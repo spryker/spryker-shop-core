@@ -1,5 +1,3 @@
-# add-to-cart-selector (molecule)
-
 Displays a drop-down menu with a list of shopping carts.
 
 ## Code sample

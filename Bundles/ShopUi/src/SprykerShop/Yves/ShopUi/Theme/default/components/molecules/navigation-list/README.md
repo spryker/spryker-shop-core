@@ -1,5 +1,3 @@
-# navigation-list (molecule)
-
 Creates a list of links or text items.
 
 ## Code sample

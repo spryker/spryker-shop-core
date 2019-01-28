@@ -1,5 +1,3 @@
-# price-mode (molecule)
-
 Displays a simple label with an icon.
 
 ## Code sample
