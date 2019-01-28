@@ -10,12 +10,15 @@ namespace SprykerShop\Yves\CartPage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientInterface;
 use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAvailabilityMapper;
 use SprykerShop\Yves\CartPage\Model\CartItemReader;
+use SprykerShop\Yves\CartPage\Model\ProductConcreteReader;
+use SprykerShop\Yves\CartPage\Model\ProductConcreteReaderInterface;
 use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
 
 class CartPageFactory extends AbstractFactory
@@ -164,5 +167,23 @@ class CartPageFactory extends AbstractFactory
     public function createCartItemsAvailabilityMapper()
     {
         return new CartItemsAvailabilityMapper($this->getAvailabilityStorageClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Model\ProductConcreteReaderInterface
+     */
+    public function createProductConcreteReader(): ProductConcreteReaderInterface
+    {
+        return new ProductConcreteReader(
+            $this->getProductStorageClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToGlossaryStorageClientInterface
+     */
+    public function getGlossaryClient(): CartPageToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }

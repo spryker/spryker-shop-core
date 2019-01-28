@@ -57,4 +57,15 @@ class CartPageToProductStorageClientBridge implements CartPageToProductStorageCl
     {
         return $this->productStorageClient->findProductAbstractStorageData($idProductAbstract, $localeName);
     }
+
+    /**
+     * @param string $mappingType
+     * @param string $identifier
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array
+    {
+        return $this->productStorageClient->findProductConcreteStorageDataByMappingForCurrentLocale($mappingType, $identifier);
+    }
 }

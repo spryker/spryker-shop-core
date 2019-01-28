@@ -7,14 +7,18 @@
 
 namespace SprykerShop\Yves\CartPage\Controller;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -109,6 +113,84 @@ class CartController extends AbstractController
             ->addFlashMessagesFromLastZedRequest();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function quickAddAction($sku, $quantity, Request $request): RedirectResponse
+    {
+        if (!$this->canAddCartItem()) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
+        return $this->executeQuickAddAction($sku, $quantity, $request);
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function executeQuickAddAction($sku, $quantity, Request $request): RedirectResponse
+    {
+        $itemTransfer = $this->buildCartChangeItemTransfer($sku, $quantity);
+
+        $this->getFactory()
+            ->getCartClient()
+            ->addItem($itemTransfer, $request->request->all());
+
+        $this->getFactory()
+            ->getZedRequestClient()
+            ->addFlashMessagesFromLastZedRequest();
+
+        $quoteResponseTransfer = $this->getFactory()
+            ->getZedRequestClient()
+            ->findLastResponseTransfer();
+
+        if ($quoteResponseTransfer instanceof QuoteResponseTransfer
+            && $quoteResponseTransfer->getIsSuccessful()
+            && $itemTransfer->getNotificationMessages()->count() > 0
+        ) {
+            $this->addFlashNotificationMessages($itemTransfer->getNotificationMessages());
+        }
+
+        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function buildCartChangeItemTransfer(string $sku, int $quantity): ItemTransfer
+    {
+        $productConcreteTransfer = $this->getFactory()
+            ->createProductConcreteReader()
+            ->getProductConcreteTransferBySku($sku);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku($sku)
+            ->setQuantity($quantity)
+            ->setProductConcrete($productConcreteTransfer);
+
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->addItem($itemTransfer);
+
+        $cartChangeTransfer = $this->getFactory()
+            ->getCartClient()
+            ->expandCartChangeTransfer($cartChangeTransfer);
+
+        return $cartChangeTransfer->getItems()[0];
     }
 
     /**
@@ -323,5 +405,25 @@ class CartController extends AbstractController
         }
 
         return false;
+    }
+
+    /**
+     * @param Generated\Shared\Transfer\MessageTransfer[] $notificationMessages
+     *
+     * @return void
+     */
+    protected function addFlashNotificationMessages(ArrayObject $notificationMessages): void
+    {
+        $glossaryClient = $this->getFactory()->getGlossaryClient();
+
+        foreach ($notificationMessages as $notificationMessage) {
+            $errorMessageText = $glossaryClient->translate(
+                $notificationMessage->getValue(),
+                $this->getLocale(),
+                $notificationMessage->getParameters()
+            );
+
+            $this->addInfoMessage($errorMessageText);
+        }
     }
 }

@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CartPage\Dependency\Client;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
@@ -127,5 +128,15 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     public function validateQuote(): QuoteResponseTransfer
     {
         return $this->cartClient->validateQuote();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->cartClient->expandCartChangeTransfer($cartChangeTransfer);
     }
 }
