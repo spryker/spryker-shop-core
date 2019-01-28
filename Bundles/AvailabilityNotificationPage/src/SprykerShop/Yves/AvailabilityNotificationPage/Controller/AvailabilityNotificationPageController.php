@@ -37,6 +37,8 @@ class AvailabilityNotificationPageController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     protected function executeUnsubscribeAction(Request $request): array
     {

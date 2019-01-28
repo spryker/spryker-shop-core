@@ -75,7 +75,7 @@ class SubscriptionController extends AbstractController
             ->checkExistence($availabilitySubscriptionExistenceRequestTransfer)
             ->getAvailabilitySubscription();
 
-        if($subscriptionTransfer === null){
+        if ($subscriptionTransfer === null) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_SUCCESSFULLY_UNSUBSCRIBED);
 
             return;
@@ -111,7 +111,7 @@ class SubscriptionController extends AbstractController
         if ($subscriptionForm->isSubmitted() === false || $subscriptionForm->isValid() === false) {
             $errors = $subscriptionForm->getErrors(true);
 
-            foreach ($errors as $error){
+            foreach ($errors as $error) {
                 $this->addErrorMessage($error->getMessage());
             }
 

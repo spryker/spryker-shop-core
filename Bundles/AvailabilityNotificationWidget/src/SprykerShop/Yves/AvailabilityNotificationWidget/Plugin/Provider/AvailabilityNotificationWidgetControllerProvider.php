@@ -30,7 +30,7 @@ class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesContr
     /**
      * @return $this
      */
-    protected function addAvailabilityNotificationSubscribeRoute(): self
+    protected function addAvailabilityNotificationSubscribeRoute()
     {
         $this->createPostController('/{availabilityNotification}/subscribe', static::ROUTE_AVAILABILITY_NOTIFICATION_SUBSCRIBE, 'AvailabilityNotificationWidget', 'Subscription', 'subscribe')
             ->assert('availabilityNotification', $this->getAllowedLocalesPattern() . 'availability-notification|availability-notification')
@@ -42,7 +42,7 @@ class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesContr
     /**
      * @return $this
      */
-    protected function addAvailabilityNotificationUnsubscribeRoute(): self
+    protected function addAvailabilityNotificationUnsubscribeRoute()
     {
         $this->createPostController('/{availabilityNotification}/unsubscribe', self::ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE, 'AvailabilityNotificationWidget', 'Subscription', 'unsubscribe')
             ->assert('availabilityNotification', $this->getAllowedLocalesPattern() . 'availability-notification|availability-notification')

@@ -29,7 +29,7 @@ class AvailabilityNotificationPageControllerProvider extends AbstractYvesControl
     /**
      * @return $this
      */
-    protected function addAvailabilityNotificationUnsubscribeRoute(): self
+    protected function addAvailabilityNotificationUnsubscribeRoute()
     {
         $this->createGetController('/{notificationAvailability}/unsubscribe-by-key', static::ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE, 'AvailabilityNotificationPage', 'AvailabilityNotificationPage', 'unsubscribe')
             ->assert('notificationAvailability', $this->getAllowedLocalesPattern() . 'availability-notification|availability-notification')
