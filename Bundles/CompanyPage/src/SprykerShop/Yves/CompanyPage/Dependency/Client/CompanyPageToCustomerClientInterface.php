@@ -14,7 +14,7 @@ interface CompanyPageToCustomerClientInterface
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer(): ?CustomerTransfer;
+    public function getCustomer();
 
     /**
      * @return bool
