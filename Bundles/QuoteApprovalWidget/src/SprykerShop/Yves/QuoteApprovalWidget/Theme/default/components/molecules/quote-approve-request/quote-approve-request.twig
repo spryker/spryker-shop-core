@@ -17,9 +17,7 @@
             <h6>{{ 'quote_approval_widget.title' | trans }}</h6>
         </div>
         <div class="col">
-            {% if widgetGlobalExists('QuoteApprovalStatusWidget') %}
-                {% widget 'QuoteApprovalStatusWidget' args [data.quote] only %}{% endwidget %}
-            {% endif %}
+            {% widget 'QuoteApprovalStatusWidget' args [data.quote] only %}{% endwidget %}
         </div>
     </div>
 

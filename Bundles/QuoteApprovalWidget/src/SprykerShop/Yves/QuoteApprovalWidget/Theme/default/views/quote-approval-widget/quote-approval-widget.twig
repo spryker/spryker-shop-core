@@ -8,39 +8,39 @@
 
 {% block body %}
     {% if data.quoteApprovalCollection.quoteApprovals is not null %}
-        {% for quoteApproval in data.quoteApprovalCollection.quoteApprovals %}
-            <div>
-                {% include molecule('quote-approval', 'QuoteApprovalWidget') with {
-                    data: {
-                        customerName: data.quoteTransfer.customer.firstName ~ ' ' ~ data.quoteTransfer.customer.lastName,
-                        requestDate: quoteApproval.createdAt | date
-                    }
-                } only %}
+        {% set quoteApproval = data.quoteApprovalCollection.quoteApprovals | last %}
+        <div>
+            {% include molecule('quote-approval', 'QuoteApprovalWidget') with {
+                data: {
+                    customerName: data.quoteTransfer.customer.firstName ~ ' ' ~ data.quoteTransfer.customer.lastName,
+                    requestDate: quoteApproval.createdAt | date,
+                    quoteTransfer: data.quoteTransfer
+                }
+            } only %}
 
-                {% if quoteApproval.status == data.waitingStatus %}
-                    <div class="grid grid--right">
-                        {% if can('ApproveQuotePermissionPlugin', data.quoteTransfer) %}
-                            <div class="col col--sm-6 spacing-right spacing-right--inner">
-                                <form method="POST" action="{{ path('quote-approval-decline', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}">
-                                    <button type="submit" class="button button--alert button--expand button--hollow">{{ 'quote_approval_widget.cart.decline' | trans }}</button>
-                                </form>
-                            </div>
-                            <div class="col col--sm-6 spacing-left spacing-left--inner">
-                                <form method="POST" action="{{ path('quote-approval-approve', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}">
-                                    <button type="submit" class="button button--success button--expand">{{ 'quote_approval_widget.cart.approve' | trans }}</button>
-                                </form>
-                            </div>
-                        {% else %}
-                            <div class="col">
-                                <form method="POST" action="{{ path('quote-approval-remove', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}">
-                                    <button type="submit" class="button button--alert button--expand">{{ 'quote_approval_widget.cart.cancel' | trans }}</button>
-                                </form>
-                            </div>
-                        {% endif %}
-                    </div>
-                {% endif %}
-                <hr>
-            </div>
-        {% endfor %}
+            {% if quoteApproval.status == data.waitingStatus %}
+                <div class="grid grid--right">
+                    {% if can('ApproveQuotePermissionPlugin', data.quoteTransfer) %}
+                        <div class="col col--sm-6 spacing-right spacing-right--inner">
+                            <form method="POST" action="{{ path('quote-approval-decline', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}">
+                                <button type="submit" class="button button--alert button--expand button--hollow">{{ 'quote_approval_widget.cart.decline' | trans }}</button>
+                            </form>
+                        </div>
+                        <div class="col col--sm-6 spacing-left spacing-left--inner">
+                            <form method="POST" action="{{ path('quote-approval-approve', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}">
+                                <button type="submit" class="button button--success button--expand">{{ 'quote_approval_widget.cart.approve' | trans }}</button>
+                            </form>
+                        </div>
+                    {% else %}
+                        <div class="col">
+                            <form method="POST" action="{{ path('quote-approval-remove', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}">
+                                <button type="submit" class="button button--alert button--expand">{{ 'quote_approval_widget.cart.cancel' | trans }}</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+            <hr>
+        </div>
     {% endif %}
 {% endblock %}

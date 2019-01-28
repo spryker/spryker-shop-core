@@ -6,14 +6,20 @@
 
 {% define data = {
     customerName: required,
-    requestDate: required
+    requestDate: required,
+    quoteTransfer: required
 } %}
 
 {% block body %}
-    <div class="grid">
-        <div class="col col--sm-12">
+    <div class="grid grid--justify grid--middle">
+        <div class="col">
             <h6>{{ 'quote_approval_widget.title' | trans }}</h6>
         </div>
+        <div class="col">
+            {% widget 'QuoteApprovalStatusWidget' args [data.quoteTransfer] only %}{% endwidget %}
+        </div>
+    </div>
+    <div class="grid">
         <div class="col col--sm-6 spacing-y spacing-y--big">
             {{ 'quote_approval.request.approval_by' | trans }} {{ data.customerName }}
         </div>
