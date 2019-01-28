@@ -364,7 +364,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
+     * @deprecated Will be removed in next major release. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
      *
      * @return \SprykerShop\Yves\CheckoutPage\StrategyResolver\AddressStep\AddressStepStrategyResolverInterface
      */
@@ -382,7 +382,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param array $strategyContainer
      *
@@ -398,7 +398,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param array $strategyContainer
      *
@@ -414,7 +414,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param array $strategyContainer
      *
@@ -430,7 +430,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param array $strategyContainer
      *
@@ -464,7 +464,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
+     * @deprecated Will be removed in next major release. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
      *
      * @return \SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep\ShipmentStepStrategyResolverInterface
      */
@@ -479,7 +479,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param array $strategyContainer
      *
@@ -495,7 +495,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in next major version after multiple shipment release.
+     * @deprecated Will be removed in next major release.
      *
      * @param array $strategyContainer
      *

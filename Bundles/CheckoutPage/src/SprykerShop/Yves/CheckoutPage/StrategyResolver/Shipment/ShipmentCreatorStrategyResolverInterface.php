@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CheckoutPage\StrategyResolver\Shipment;
 use SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface;
 
 /**
- * @deprecated Will be removed in next major version after multiple shipment release.
+ * @deprecated Will be removed in next major release.
  */
 interface ShipmentCreatorStrategyResolverInterface
 {

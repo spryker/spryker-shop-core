@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface;
 
 /**
- * @deprecated Will be removed in next major version after multiple shipment release.
+ * @deprecated Will be removed in next major release.
  */
 class ShipmentCreatorStrategyResolver implements ShipmentCreatorStrategyResolverInterface
 {
