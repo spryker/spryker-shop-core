@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationWidget\Widget;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionExistenceRequestTransfer;
+use Generated\Shared\Transfer\FindAvailabilitySubscriptionRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -100,13 +100,13 @@ class AvailabilitySubscriptionWidget extends AbstractWidget
             return false;
         }
 
-        $availabilitySubscriptionExistenceRequestTransfer = (new AvailabilitySubscriptionExistenceRequestTransfer())
+        $availabilitySubscriptionExistenceRequestTransfer = (new FindAvailabilitySubscriptionRequestTransfer())
             ->setEmail($subscriptionTransfer->getEmail())
             ->setSku($productViewTransfer->getSku());
 
         $availabilitySubscriptionExistenceResponseTransfer = $this->getFactory()
             ->getAvailabilityNotificationClient()
-            ->checkExistence($availabilitySubscriptionExistenceRequestTransfer);
+            ->findAvailabilitySubscription($availabilitySubscriptionExistenceRequestTransfer);
 
         return $availabilitySubscriptionExistenceResponseTransfer->getAvailabilitySubscription() !== null;
     }
