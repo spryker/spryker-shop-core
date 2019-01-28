@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Controller;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CanProceedCheckoutResponseTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -34,7 +36,11 @@ class CheckoutController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        if (!$this->isQuoteAvailableForCheckout()) {
+        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+
+        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
@@ -50,7 +56,11 @@ class CheckoutController extends AbstractController
      */
     public function customerAction(Request $request)
     {
-        if (!$this->isQuoteAvailableForCheckout()) {
+        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+
+        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
@@ -79,7 +89,11 @@ class CheckoutController extends AbstractController
      */
     public function addressAction(Request $request)
     {
-        if (!$this->isQuoteAvailableForCheckout()) {
+        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+
+        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
@@ -108,7 +122,11 @@ class CheckoutController extends AbstractController
      */
     public function shipmentAction(Request $request)
     {
-        if (!$this->isQuoteAvailableForCheckout()) {
+        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+
+        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
@@ -137,7 +155,11 @@ class CheckoutController extends AbstractController
      */
     public function paymentAction(Request $request)
     {
-        if (!$this->isQuoteAvailableForCheckout()) {
+        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+
+        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
@@ -166,7 +188,11 @@ class CheckoutController extends AbstractController
      */
     public function summaryAction(Request $request)
     {
-        if (!$this->isQuoteAvailableForCheckout()) {
+        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+
+        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
@@ -195,7 +221,11 @@ class CheckoutController extends AbstractController
      */
     public function placeOrderAction(Request $request)
     {
-        if (!$this->isQuoteAvailableForCheckout()) {
+        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+
+        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
@@ -242,13 +272,27 @@ class CheckoutController extends AbstractController
     }
 
     /**
-     * @return bool
+     * @return \Generated\Shared\Transfer\CanProceedCheckoutResponseTransfer
      */
-    protected function isQuoteAvailableForCheckout(): bool
+    protected function canProceedCheckout(): CanProceedCheckoutResponseTransfer
     {
-        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+        $quoteTransfer = $this->getFactory()
+            ->getQuoteClient()
+            ->getQuote();
 
-        return $this->getFactory()->getCheckoutClient()->isQuoteApplicableForCheckout($quoteTransfer);
+        return $this->getFactory()
+            ->getCheckoutClient()
+            ->isQuoteApplicableForCheckout($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     */
+    protected function processErrorMessages(ArrayObject $messageTransfers): void
+    {
+        foreach ($messageTransfers as $messageTransfers) {
+            $this->addErrorMessage($messageTransfers->getValue());
+        }
     }
 
     /**

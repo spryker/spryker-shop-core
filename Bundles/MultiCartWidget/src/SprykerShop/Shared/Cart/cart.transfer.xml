@@ -6,4 +6,5 @@
     <transfer name="Quote">
         <property name="isLocked" type="bool"/>
     </transfer>
+
 </transfers>

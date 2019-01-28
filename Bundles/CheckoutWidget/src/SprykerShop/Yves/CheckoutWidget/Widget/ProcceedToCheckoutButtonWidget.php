@@ -46,6 +46,10 @@ class ProcceedToCheckoutButtonWidget extends AbstractWidget
      */
     protected function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->getFactory()->getCheckoutClient()->isQuoteApplicableForCheckout($quoteTransfer);
+        $canProceedCheckoutCheckResponseTransfer = $this->getFactory()
+            ->getCheckoutClient()
+            ->isQuoteApplicableForCheckout($quoteTransfer);
+
+        return $canProceedCheckoutCheckResponseTransfer->getIsSuccessful();
     }
 }
