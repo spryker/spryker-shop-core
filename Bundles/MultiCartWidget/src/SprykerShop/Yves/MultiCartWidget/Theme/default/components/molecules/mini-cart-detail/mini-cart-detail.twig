@@ -37,11 +37,7 @@
             {% if data.cart.isDefault %}
                 ({{ 'multi_cart_widget.cart.default' | trans }})
             {% endif %}
-            {% if widgetGlobalExists('QuoteApprovalStatusWidget') %}
-                <td>
-                    {% widget 'QuoteApprovalStatusWidget' args [data.cart] only %}{% endwidget %}
-                </td>
-            {% endif %}
+
             <div>
                 {% widget 'ProductBundleItemCounterWidget' args [data.cart] only %}
                 {% elsewidget 'ProductBundleItemCounterWidgetPlugin' args [data.cart] only %} {# @deprecated Use ProductBundleItemCounterWidget instead. #}
@@ -70,11 +66,25 @@
             </div>
         </div>
 
-        <div class="col col--sm-3 text-right">
-            <span>
-               {{ data.total | money(true, data.cart.currency.code) }}<br>
-            </span>
+        <div class="col col--sm-3">
+            <div class="grid grid--right">
+                {% if widgetGlobalExists('QuoteApprovalStatusWidget') %}
+                    {% widget 'QuoteApprovalStatusWidget' args [data.cart] only %}
+                        {% block body %}
+                            {% include molecule('quote-status') with {
+                                class: 'col',
+                                modifiers: [_widget.quoteStatus | lower, 'small'],
+                                data: {
+                                    quoteStatus: _widget.quoteStatus
+                                }
+                            } only %}
+                        {% endblock %}
+                    {% endwidget %}
+                {% endif %}
+                <span class="col">
+                   {{ data.total | money(true, data.cart.currency.code) }}<br>
+                </span>
+            </div>
         </div>
-
     </div>
 {% endblock %}

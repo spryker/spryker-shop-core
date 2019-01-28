@@ -1,0 +1,57 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-approve-request',
+} %}
+
+{% define data = {
+    quote: required,
+    customer: required,
+    approval: required,
+    quoteStatus: required
+} %}
+
+{% block body %}
+    <div class="grid grid--justify grid--middle">
+        <div class="col">
+            <h6>{{ 'quote_approval_widget.title' | trans }}</h6>
+        </div>
+        <div class="col">
+            {% widget 'QuoteApprovalStatusWidget' args [data.quote] only %}{% endwidget %}
+        </div>
+    </div>
+
+    {% if data.approval %}
+        <div class="grid">
+            <div class="col col--sm-6 spacing-y spacing-y--big">
+                {% if data.approval.status is defined %}
+                    {% if data.approval.status == 'waiting' %}
+                        {{ 'quote_approval.request.waiting_for_approval_from' | trans }}
+                    {% elseif data.approval.status == 'approved' %}
+                        {{ 'quote_approval.request.approved_by' | trans }}
+                    {% elseif data.approval.status == 'declined' %}
+                        {{ 'quote_approval.request.declined_by' | trans }}
+                    {% endif %}
+                {% endif %}
+                {{ data.customer.firstName }} {{ data.customer.lastName }}
+            </div>
+            <div class="col col--sm-6 spacing-y spacing-y--big text-right">
+                {% include atom('icon') with {
+                    data: {
+                        name: 'clock'
+                    }
+                } only %}
+                {% if data.approval.updatedAt is defined %}
+                    {{ data.approval.updatedAt | date }}
+                {% endif %}
+            </div>
+            {% if data.quoteStatus == 'waiting' %}
+                <div class="col col--sm-12">
+                    <form method="POST" action="{{ path('quote-approval-remove', {'idQuoteApproval': data.approval.idQuoteApproval}) }}">
+                        <button type="submit" class="button button--expand button--hollow button--alert">{{ 'quote_approval.remove' | trans }}</button>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}
