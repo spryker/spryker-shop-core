@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationWidget\Controller;
 
-use Generated\Shared\Transfer\FindAvailabilitySubscriptionRequestTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Form\AvailabilitySubscriptionForm;
@@ -65,7 +65,7 @@ class SubscriptionController extends AbstractController
 
         $formData = $unsubscribeForm->getData();
 
-        $availabilitySubscriptionExistenceRequestTransfer = (new FindAvailabilitySubscriptionRequestTransfer())
+        $availabilitySubscriptionExistenceRequestTransfer = (new AvailabilitySubscriptionRequestTransfer())
             ->setEmail($formData[AvailabilityUnsubscribeForm::FIELD_EMAIL])
             ->setSku($formData[AvailabilityUnsubscribeForm::FIELD_SKU]);
 

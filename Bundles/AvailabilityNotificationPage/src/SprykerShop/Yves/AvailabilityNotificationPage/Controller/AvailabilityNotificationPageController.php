@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationPage\Controller;
 
-use Generated\Shared\Transfer\FindAvailabilitySubscriptionRequestTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Yves\Kernel\View\View;
@@ -44,7 +44,7 @@ class AvailabilityNotificationPageController extends AbstractController
     {
         $subscriptionKey = $request->query->get(AvailabilityNotificationPageControllerProvider::PARAM_SUBSCRIPTION_KEY);
 
-        $availabilitySubscriptionExistenceRequestTransfer = (new FindAvailabilitySubscriptionRequestTransfer())->setSubscriptionKey($subscriptionKey);
+        $availabilitySubscriptionExistenceRequestTransfer = (new AvailabilitySubscriptionRequestTransfer())->setSubscriptionKey($subscriptionKey);
 
         $availabilitySubscriptionExistenceResponseTransfer = $this->getFactory()->getAvailabilityNotificationClient()->findAvailabilitySubscription($availabilitySubscriptionExistenceRequestTransfer);
 
