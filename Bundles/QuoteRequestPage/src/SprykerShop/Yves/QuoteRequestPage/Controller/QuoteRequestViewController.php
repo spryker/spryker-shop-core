@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Spryker\Yves\Kernel\View\View;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
@@ -59,34 +58,22 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
     /**
      * @param string $quoteRequestReference
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return array
      */
     protected function executeDetailsAction(string $quoteRequestReference): array
     {
-        $companyUserTransfer = $this->getFactory()
-            ->getCompanyUserClient()
-            ->findCompanyUser();
+        $quoteRequestForm = $this->getFactory()->getQuoteRequestForm($quoteRequestReference);
 
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($quoteRequestReference)
-            ->setCompanyUser($companyUserTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
+        $quoteRequestTransfer = $quoteRequestForm->getData();
 
-        $quoteRequests = $this->getFactory()
-            ->getQuoteRequestClient()
-            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
-            ->getQuoteRequests()
-            ->getArrayCopy();
-
-        $quoteRequestTransfer = array_shift($quoteRequests);
-
-        if (!$quoteRequestTransfer) {
-            throw new NotFoundHttpException();
-        }
+        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
+        $cartItems = $quoteTransfer->getItems()->getArrayCopy();
 
         return [
-            'quoteRequest' => $quoteRequestTransfer,
+            'quoteRequestForm' => $quoteRequestForm->createView(),
+            'cart' => $quoteTransfer,
+            'cartItems' => $cartItems,
         ];
     }
 }

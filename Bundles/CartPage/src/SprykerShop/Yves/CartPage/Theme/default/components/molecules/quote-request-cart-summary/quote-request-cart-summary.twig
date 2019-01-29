@@ -9,7 +9,7 @@
 } %}
 
 {% block body %}
-    <h6 class="text-secondary float-right">{{ app['cart.quantity'] }} {{ 'item' | trans }}</h6>
+    <h6 class="text-secondary float-right">{{ data.cart.items|length }} {{ 'item' | trans }}</h6>
     <h6>{{ 'cart.your-order' | trans }}</h6>
     <hr />
 
@@ -18,7 +18,7 @@
         data: {
             voucherDiscounts: data.cart.voucherDiscounts,
             ruleDiscounts: data.cart.cartRuleDiscounts,
-            discountTotal: data.cart.totals.discounttotal
+            discountTotal: data.cart.totals.discountTotal
         }
     } only %}
 

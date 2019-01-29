@@ -65,7 +65,7 @@
 
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
-                    <p>Date: <b>{{ data.quoteRequestForm.vars.value.createdAt }}</b></p>
+                    <p>Date: <b>{{ data.quoteRequestForm.vars.value.createdAt | date('d.m.Y H:i') }}</b></p>
                     <p>Status: <b>{{ ('quote_request.status.' ~ data.quoteRequestForm.vars.value.status) | trans }}</b></p>
                     <p>Valid till:</p>
                     <p>History:</p>
@@ -94,7 +94,7 @@
                 </div>
                 <div class="box">
                     <a class="button button--expand button--cancel" href="{{ url('cart') }}">
-                        {{ "label.button.cancel" | trans }}
+                        {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
                     </a>
                     <hr/>
                     <button type="submit" class="button button--expand button--success">
