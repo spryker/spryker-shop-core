@@ -98,7 +98,7 @@
                                 {% include subForm.vars.template_path with {
                                     attributes: {'data-product-available': not isProductAvailable},
                                     'form': subForm,
-                                    'rowClass': config.name ~ '__row ' ~ config.name ~ '__row--borderless ' ~ (not isProductAvailable ? config.name ~ '__row--disable' : '')
+                                    'rowClass': config.name ~ '__row ' ~ config.name ~ '__row--borderless ' ~ (not isProductAvailable ? config.name ~ '__row--disable' : null)
                                 } %}
                             {% endif %}
                         {% endif %}
