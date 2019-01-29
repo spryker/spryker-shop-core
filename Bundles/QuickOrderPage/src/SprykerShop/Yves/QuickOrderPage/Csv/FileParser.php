@@ -46,13 +46,13 @@ class FileParser implements FileParserInterface
         $qtyKey = array_search(QuickOrderPageConfigShared::CSV_QTY_COLUMN_NAME, array_keys($csvHeader));
 
         unset($rows[0]);
-        
+
         foreach ($rows as $row) {
             if (!isset($row[$skuKey])) {
                 continue;
             }
 
-            if (!isset($row[$qtyKey]) || $row[$qtyKey] <= 0 ) {
+            if (!isset($row[$qtyKey]) || $row[$qtyKey] < 1 ) {
                 $row[$qtyKey] = 1;
             }
 

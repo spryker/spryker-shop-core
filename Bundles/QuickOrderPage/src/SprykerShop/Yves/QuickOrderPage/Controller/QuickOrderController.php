@@ -379,13 +379,13 @@ class QuickOrderController extends AbstractController
      */
     public function productAdditionalDataAction(Request $request)
     {
-        $quantity = $request->get('quantity');
+        $quantity = $request->get('quantity', 1);
         $sku = $request->query->get('sku');
         $index = $request->query->get('index');
 
         $quickOrderItemTransfer = (new QuickOrderItemTransfer())->setSku($sku);
 
-        if ($quantity <= 0 || !$quantity) {
+        if ($quantity < 1) {
             $quantity = 1;
             $quickOrderItemTransfer->addErrorMessage((new MessageTransfer())
                 ->setValue(static::ERROR_MESSAGE_QTY_INVALID)
