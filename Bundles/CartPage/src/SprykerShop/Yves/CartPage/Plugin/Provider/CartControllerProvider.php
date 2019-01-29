@@ -135,10 +135,10 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     public function getQuantityFromRequest($unusedParameter, Request $request)
     {
         if ($request->isMethod('POST')) {
-            return (float)$request->request->get('quantity', 1);
+            return (float)$request->request->get('quantity', 1.0);
         }
 
-        return (float)$request->query->get('quantity', 1);
+        return (float)$request->query->get('quantity', 1.0);
     }
 
     /**
