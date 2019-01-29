@@ -7,18 +7,9 @@
 {% define data = {
     quoteApprovalRequestForm: required,
     quoteApprovalRequestFormOptions: required,
-    quote: required,
-    limit: required,
 } %}
 
 {% block body %}
-    <p>
-        <b>{{ 'quote_approval_widget.shared_cart_warning' | trans }}</b>
-    </p>
-    <hr>
-    <p>
-        {{ 'quote_approval_widget.limit_text' | trans({'%amount%': data.limit / 100 ~ data.quote.currency.symbol}) }}
-    </p>
     {{ form_start(data.quoteApprovalRequestForm, data.quoteApprovalRequestFormOptions) }}
         {{ form_widget(data.quoteApprovalRequestForm.approverCompanyUserId) }}
 
