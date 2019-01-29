@@ -95,7 +95,11 @@
                     {% for subForm in data.form.items[key].children  %}
                         {% if not subForm.rendered %}
                             {% if subForm.vars.template_path is defined %}
-                                {% include subForm.vars.template_path with {'form': subForm, 'rowClass': config.name ~ '__options-row'} %}
+                                {% include subForm.vars.template_path with {
+                                    attributes: {'data-product-available': not isProductAvailable},
+                                    'form': subForm,
+                                    'rowClass': config.name ~ '__row ' ~ config.name ~ '__row--borderless ' ~ (not isProductAvailable ? config.name ~ '__row--disable' : '')
+                                } %}
                             {% endif %}
                         {% endif %}
                     {% endfor %}

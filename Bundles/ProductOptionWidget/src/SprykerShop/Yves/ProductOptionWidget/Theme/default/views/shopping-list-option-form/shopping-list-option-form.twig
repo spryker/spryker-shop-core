@@ -11,6 +11,7 @@
             <td>&nbsp;</td>
             <td colspan="5">
                 {% include molecule('shopping-list-product-option-list', 'ProductOptionWidget') with {
+                    attributes: attributes,
                     data: {
                         options: data.options
                     }
