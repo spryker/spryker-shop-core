@@ -81,11 +81,9 @@
 
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
-                    {% if canEditCart %}
-                        {% widget 'CartNoteFormWidget' args [data.cart] only %}
-                        {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartNoteFormWidget instead. #}
-                        {% endwidget %}
-                    {% endif %}
+                    {% widget 'CartNoteFormWidget' args [data.cart] only %}
+                    {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartNoteFormWidget instead. #}
+                    {% endwidget %}
 
                     {% if (not is_granted('ROLE_USER') or canEditCart) and can('SeePricePermissionPlugin') %}
                         {% widget 'DiscountVoucherFormWidget' only %}
