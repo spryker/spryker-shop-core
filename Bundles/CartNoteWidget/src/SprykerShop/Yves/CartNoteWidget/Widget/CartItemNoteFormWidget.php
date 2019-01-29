@@ -24,7 +24,6 @@ class CartItemNoteFormWidget extends AbstractWidget
     public function __construct(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer)
     {
         $this->addParameter('cartNoteForm', $this->getCartNoteForm($itemTransfer)->createView())
-            ->addParameter('isQuoteEditable', $this->isQuoteEditable($quoteTransfer))
             ->addParameter('cart', $quoteTransfer);
     }
 
@@ -42,18 +41,6 @@ class CartItemNoteFormWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@CartNoteWidget/views/cart-item-note-form/cart-item-note-form.twig';
-    }
-
-    /**
-     * @see \Spryker\Client\Cart\CartClient::isQuoteEditable()
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
-    {
-        return !$quoteTransfer->getIsLocked();
     }
 
     /**
