@@ -57,7 +57,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addShoppingListItemFormExpanderPlugins($container);
         $container = $this->addShoppingListFormDataProviderMapperPlugins($container);
         $container = $this->addZedRequestClient($container);
-        $container = $this->addEncodeService($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -265,7 +265,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addEncodeService(Container $container): Container
+    protected function addUtilEncodingService(Container $container): Container
     {
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new ShoppingListPageToUtilEncodingServiceBridge(

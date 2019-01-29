@@ -295,7 +295,7 @@ class ShoppingListController extends AbstractShoppingListController
     {
         $additionalRequestParams = $this->getFactory()->getUtilEncodingService()->decodeJson(
             urldecode(
-                $request->get(self::PARAM_ADDITIONAL_REDIRECT_PARAMETERS)
+                $request->get(static::PARAM_ADDITIONAL_REDIRECT_PARAMETERS)
             ),
             true
         );
