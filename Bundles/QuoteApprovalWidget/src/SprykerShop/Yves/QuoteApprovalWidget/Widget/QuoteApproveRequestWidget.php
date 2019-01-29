@@ -28,7 +28,6 @@ class QuoteApproveRequestWidget extends AbstractWidget
         $this->addIsVisibleParameter($quoteTransfer);
         $this->addCanSendApprovalRequestParameter($quoteTransfer);
         $this->addQuoteApprovalRequestFormParameter($quoteTransfer);
-        $this->addIsQuoteWaitingForApprovalParameter($quoteTransfer);
     }
 
     /**
@@ -88,19 +87,6 @@ class QuoteApproveRequestWidget extends AbstractWidget
             'canSendApprovalRequest',
             !$this->getQuoteApprovalClient()->isQuoteApproved($quoteTransfer)
             && !$this->getQuoteApprovalClient()->isQuoteWaitingForApproval($quoteTransfer)
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    protected function addIsQuoteWaitingForApprovalParameter(QuoteTransfer $quoteTransfer): void
-    {
-        $this->addParameter(
-            'isQuoteWaitingForApproval',
-            $this->getQuoteApprovalClient()->isQuoteWaitingForApproval($quoteTransfer)
         );
     }
 
