@@ -2,11 +2,10 @@
 
 {% define data = {
     idQuote: _view.cart.idQuote,
-    form: _widget.cartNoteForm,
-    isQuoteEditable: _widget.isQuoteEditable
+    form: _widget.cartNoteForm
 } %}
 
-{% set canWrite = data.isQuoteEditable and (not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.idQuote)) %}
+{% set canWrite = (not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.idQuote)) %}
 
 {% block body %}
     {% if canWrite %}
