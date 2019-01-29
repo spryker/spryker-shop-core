@@ -5,36 +5,50 @@ export default class SimpleCarousel extends Component {
      * Switches a slide to a previous one.
      */
     triggerPrev: HTMLElement
+
     /**
      * Switches a slide to a next one.
      */
     triggerNext: HTMLElement
+
     /**
      * The current slider.
      */
     slider: HTMLElement
+
     /**
      * The number of the slides.
      */
     slidesCount: number
+
     /**
      * The slider width.
      */
     slideWidth: number
+
     /**
      * Thr dots elements switches the slides.
      */
     dots: HTMLElement[]
+
     /**
      * The number of the views.
      */
     viewsCount: number
+
     /**
      * The index of the active slide.
      */
     viewCurrentIndex: number = 0
 
+    /**
+     * Dot element selector.
+     */
     readonly dotSelector: string
+
+    /**
+     * Dot element "is current" modifier.
+     */
     readonly dotCurrentModifier: string
 
     constructor() {

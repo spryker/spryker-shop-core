@@ -4,7 +4,14 @@ import Component from '../../../models/component';
  * @event toggle An event which is triggered when the trigger element is changed.
  */
 export default class TogglerCheckbox extends Component {
+    /**
+     * Element triggering the toggle action.
+     */
     readonly trigger: HTMLInputElement
+
+    /**
+     * Elements targeted by the toggle action.
+     */
     readonly targets: HTMLElement[]
 
     constructor() {

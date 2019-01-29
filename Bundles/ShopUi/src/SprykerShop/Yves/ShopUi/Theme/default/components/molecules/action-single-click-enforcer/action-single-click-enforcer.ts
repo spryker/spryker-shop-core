@@ -1,6 +1,9 @@
 import Component from '../../../models/component';
 
 export default class ActionSingleClickEnforcer extends Component {
+    /**
+     * Elements on which the single action check is enforced.
+     */
     readonly targets: HTMLElement[]
 
     constructor() {

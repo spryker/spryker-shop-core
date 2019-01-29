@@ -10,9 +10,26 @@ const EVENT_FETCHED = 'fetched';
  */
 export default class AjaxProvider extends Component {
     protected isFetchingRequest: boolean = false
+
+    /**
+     * Defines the key/value pairs which are send with the request as query parameters.
+     *
+     * @remarks
+     * Use it to add/remove query parameters from the request.
+     */
     readonly queryParams: Map<String, String> = new Map<String, String>()
+
+    /**
+     * Defines the key/value pairs which are send with the request as headers.
+     *
+     * @remarks
+     * Use it to add/remove headers from the request.
+     */
     readonly headers: Map<String, String> = new Map<String, String>()
 
+    /**
+     * Represents the request object used by the component to perform the fetch operation.
+     */
     readonly xhr: XMLHttpRequest
 
     constructor() {

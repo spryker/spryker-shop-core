@@ -1,7 +1,14 @@
 import Component from '../../../models/component';
 
 export default class TogglerClick extends Component {
+    /**
+     * Elements triggering the toggle action.
+     */
     readonly triggers: HTMLElement[]
+
+    /**
+     * Elements targeted by the toggle action.
+     */
     readonly targets: HTMLElement[]
 
     constructor() {

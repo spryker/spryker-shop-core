@@ -8,6 +8,11 @@ interface keyCodes {
 }
 
 export default class SuggestSearch extends Component {
+    /**
+     * Keyborad codes map:
+     * - key: keybord button code;
+     * - value: keybord button string representation.
+     */
     readonly keyboardCodes: keyCodes
 
     /**

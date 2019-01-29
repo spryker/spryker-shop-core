@@ -1,10 +1,17 @@
 import Component from 'ShopUi/models/component';
 
 export default class ToggleSelectForm extends Component {
+    /**
+     * Element triggering the toggle action.
+     */
     readonly trigger: HTMLSelectElement
+
+    /**
+     * Elements targeted by the toggle action.
+     */
     readonly targets: HTMLElement[]
 
-    constructor() { 
+    constructor() {
         super();
         this.trigger = <HTMLSelectElement>this.querySelector('[data-select-trigger]');
         this.targets = <HTMLElement[]>Array.from(document.getElementsByClassName(this.target));
@@ -28,7 +35,7 @@ export default class ToggleSelectForm extends Component {
      * @param event Event name.
      * @remarks That visibility will be changes next release.
      */
-    onTriggerClick(event: Event): void { 
+    onTriggerClick(event: Event): void {
         event.preventDefault();
         this.toggle();
     }

@@ -1,6 +1,9 @@
 import Component from '../../../models/component';
 
 export default class TogglerHash extends Component {
+    /**
+     * Elements targeted by the toggle action.
+     */
     readonly targets: HTMLElement[]
 
     constructor() {

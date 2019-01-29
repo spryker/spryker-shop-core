@@ -1,7 +1,14 @@
 import Component from 'ShopUi/models/component';
 
 export default class CustomerReorder extends Component {
+    /**
+     * Elements enabling/disabling the trigger.
+     */
     readonly selections: HTMLInputElement[]
+
+    /**
+     * Element enabled/disabled by selections changes.
+     */
     readonly trigger: HTMLElement
 
     constructor() {
