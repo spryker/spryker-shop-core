@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
@@ -30,6 +31,7 @@ class QuickOrderController extends AbstractController
     public const PARAM_ROW_INDEX = 'row-index';
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
     public const PARAM_QUICK_ORDER_FILE_TYPE = 'file-type';
+    public const ERROR_MESSAGE_QTY_INVALID = 'quick-order.errors.quantity-invalid';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -377,14 +379,20 @@ class QuickOrderController extends AbstractController
      */
     public function productAdditionalDataAction(Request $request)
     {
-        $quantity = $request->get('quantity');
+        $quantity = $request->get('quantity', 1);
         $sku = $request->query->get('sku');
         $index = $request->query->get('index');
 
-        $quickOrderItemTransfer = (new QuickOrderItemTransfer())
-            ->setQuantity($quantity ?: 1)
-            ->setSku($sku);
+        $quickOrderItemTransfer = (new QuickOrderItemTransfer())->setSku($sku);
 
+        if ($quantity < 1) {
+            $quantity = 1;
+            $quickOrderItemTransfer->addErrorMessage((new MessageTransfer())
+                ->setValue(static::ERROR_MESSAGE_QTY_INVALID)
+            );
+        }
+
+        $quickOrderItemTransfer->setQuantity($quantity);
         $quickOrderTransfer = $this->getQuickOrderTransfer([$quickOrderItemTransfer]);
         $quickOrderItemTransfer = $quickOrderTransfer->getItems()->offsetGet(0);
         $form = $this->getFactory()
