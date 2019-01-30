@@ -1,6 +1,9 @@
 import Component from '../../../models/component';
 
 export default class ActionSingleClickEnforcer extends Component {
+    /**
+     * Elements on which the single action check is enforced.
+     */
     readonly targets: HTMLElement[]
 
     constructor() {
@@ -30,6 +33,9 @@ export default class ActionSingleClickEnforcer extends Component {
         targetElement.setAttribute('disabled', 'disabled');
     }
 
+    /**
+     * Gets a querySelector name of the target element.
+     */
     get targetSelector(): string {
         return this.getAttribute('target-selector') || '';
     }

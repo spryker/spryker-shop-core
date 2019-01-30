@@ -24,6 +24,9 @@ export default class AjaxLoader extends Component {
         this.classList.add('is-invisible');
     }
 
+    /**
+     * Gets a querySelector name of the provider element.
+     */
     get providerSelector(): string {
         return this.getAttribute('provider-selector');
     }

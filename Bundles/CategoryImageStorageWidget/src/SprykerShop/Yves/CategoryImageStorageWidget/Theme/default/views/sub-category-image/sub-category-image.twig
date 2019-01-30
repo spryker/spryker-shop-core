@@ -1,0 +1,16 @@
+{% extends template('widget') %}
+
+{% define data = {
+    name: _widget.categoryName,
+    imageUrl: _widget.imageUrl
+} %}
+
+{% block body %}
+    {% include atom('thumbnail') with {
+        attributes: {
+            alt: data.name,
+            src: data.imageUrl,
+            title: data.name
+        }
+    } only %}
+{% endblock %}

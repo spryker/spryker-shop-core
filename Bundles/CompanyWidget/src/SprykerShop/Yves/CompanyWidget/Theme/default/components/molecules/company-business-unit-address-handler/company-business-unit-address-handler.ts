@@ -2,23 +2,62 @@ import Component from 'ShopUi/models/component';
 import FormClear from 'ShopUi/components/molecules/form-clear/form-clear';
 
 export default class CompanyBusinessUnitAddressHandler extends Component {
+    /**
+     * Collection of the triggers elements.
+     */
     triggers: HTMLElement[];
-    form: HTMLElement;
+    /**
+     * The current form.
+     */
+    form: HTMLFormElement;
+    /**
+     * Collection of the form elements.
+     */
     targets: HTMLElement[];
+    /**
+     * Collection of the targets elements which should be ignored while collection the filters.
+     */
     ignoreElements: HTMLElement[];
+    /**
+     * Collection of the filter elements.
+     */
     filterElements: HTMLElement[];
+    /**
+     * Imported component clears the form.
+     */
     formClear: FormClear;
+    /**
+     * Data object of the address list.
+     */
     addressesDataObject: any;
+    /**
+     * Collection of the address select elements.
+     */
     addressesSelects: HTMLSelectElement[];
+    /**
+     * The selected address.
+     */
     currentAddress: String;
+    /**
+     * The hidden customer id input.
+     */
     hiddenCustomerIdInput: HTMLInputElement;
+    /**
+     * The hidden input with selected address by default.
+     */
     hiddenDefaultAddressInput: HTMLInputElement;
+    /**
+     * The input address element which triggers toggling of the disabled attribute.
+     */
     customAddressTriggerInput: HTMLFormElement;
+    resetSelectEvent: CustomEvent;
+
+    readonly resetSelectEventName: string = 'reset-select';
 
     protected readyCallback(): void {
         const formElements = 'select, input[type="text"], input[type="radio"], input[type="checkbox"]';
 
-        this.form = <HTMLElement>document.querySelector(this.formSelector);
+        this.form = <HTMLFormElement>document.querySelector(this.formSelector);
         this.triggers = <HTMLElement[]>Array.from(this.form.querySelectorAll(this.triggerSelector));
         this.addressesSelects = <HTMLSelectElement[]>Array.from(this.form.querySelectorAll(this.dataSelector));
         this.targets = <HTMLElement[]>Array.from(this.form.querySelectorAll(formElements));
@@ -38,15 +77,23 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         this.formClear.addEventListener('form-fields-clear-after', () => {
             this.toggleFormFieldsReadonly(false);
             this.toggleReadonlyForCustomAddressTrigger();
+            this.resetAddressesSelect();
         });
+
         this.triggers.forEach((triggerElement) => {
             triggerElement.addEventListener('click', () => {
                 this.addressesSelects.forEach((selectElement) => {
                     this.setCurrentAddress(selectElement);
+                    this.initResetSelectEvent();
                 });
                 this.onClick(triggerElement);
             });
         });
+    }
+
+    protected initResetSelectEvent(): void {
+        this.resetSelectEvent = new CustomEvent(this.resetSelectEventName);
+        this.resetSelectEvent.initEvent('change', true, true);
     }
 
     protected onClick(triggerElement: HTMLElement): void {
@@ -57,12 +104,21 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         }
     }
 
+    /**
+     * Toggles an array of the filter elements.
+     * @param isEnabled A boolean value for checking if the element is available for toggling.
+     */
     toggleFormFieldsReadonly(isEnabled: boolean = true): void {
         this.filterElements.forEach((formElement: HTMLFormElement) => {
             this.toggleFormFieldReadOnly(formElement, isEnabled);
         });
     }
 
+    /**
+     * Toggles the form element.
+     * @param formElement HTMLFormElement for toggling.
+     * @param isEnabled A boolean value for checking if the element is available for toggling.
+     */
     toggleFormFieldReadOnly(formElement: HTMLFormElement, isEnabled: boolean = true): void {
         const isSelect = this.formClear.getTagName(formElement) == 'SELECT';
 
@@ -104,16 +160,27 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         this.toggleReadonlyForCustomAddressTrigger();
     }
 
+    /**
+     * Clears the filter elements.
+     */
     clearFormFields(): void {
         this.filterElements.forEach((element) => {
             this.clearFormField(<HTMLFormElement>element);
         });
     }
 
+    /**
+     * Invokes the clearFormField method of the imported FormClear component on the current element.
+     * @param element HTMLFormElement.
+     */
     clearFormField(element: HTMLFormElement): void {
         this.formClear.clearFormField(element);
     }
 
+    /**
+     * Fills the form element's value with an address value.
+     * @param address A data object for filling the fields.
+     */
     fillFormFields(address: object): void {
         for (let key in address) {
             const formElement = this.form.querySelector(`[data-key="${key}"]`);
@@ -122,6 +189,19 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
                 (<HTMLFormElement>formElement).value = address[key];
             }
         }
+    }
+
+    resetAddressesSelect(): void {
+        const addressSelect = <HTMLSelectElement>this.form.querySelector(this.dataSelector);
+        const addressSelectOptions = <HTMLOptionElement[]>Array.from(addressSelect.options);
+
+        addressSelectOptions.some((item, index) => {
+            if(!item.value.length) {
+                addressSelect.selectedIndex = index;
+                addressSelect.dispatchEvent(this.resetSelectEvent);
+                return true;
+            }
+        });
     }
 
     protected toggleReadonlyForCustomAddressTrigger() {
@@ -137,30 +217,51 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         this.addressesDataObject = JSON.parse(data);
     }
 
+    /**
+     * Gets a querySelector name of the form element.
+     */
     get formSelector(): string {
         return this.getAttribute('form-selector');
     }
 
+    /**
+     * Gets a querySelector name of the trigger elements.
+     */
     get triggerSelector(): string {
         return this.getAttribute('trigger-selector');
     }
 
+    /**
+     * Gets a querySelector name of the address select elements.
+     */
     get dataSelector(): string {
         return this.getAttribute('data-selector');
     }
 
+    /**
+     * Gets a querySelector name of the ignore elements.
+     */
     get ignoreSelector(): string {
         return this.getAttribute('ignore-selector');
     }
 
+    /**
+     * Gets a querySelector name of a hidden customer id input.
+     */
     get customerAddressIdSelector(): string {
         return this.getAttribute('customer-address-id-selector');
     }
 
+    /**
+     * Gets a querySelector name of a hidden default address input.
+     */
     get defaultAddressSelector(): string {
         return this.getAttribute('default-address-selector');
     }
 
+    /**
+     * Gets a querySelector name of a custom address trigger input.
+     */
     get customAddressTrigger(): string {
         return this.getAttribute('custom-address-trigger');
     }
