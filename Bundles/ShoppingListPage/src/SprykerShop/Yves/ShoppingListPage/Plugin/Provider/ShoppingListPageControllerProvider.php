@@ -257,7 +257,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
      *
      * @return int
      */
-    protected function getQuantityFromRequest($postRequestQuantityValue, Request $request): int
+    public function getQuantityFromRequest($postRequestQuantityValue, Request $request): int
     {
         $quantity = $request->get('quantity');
 

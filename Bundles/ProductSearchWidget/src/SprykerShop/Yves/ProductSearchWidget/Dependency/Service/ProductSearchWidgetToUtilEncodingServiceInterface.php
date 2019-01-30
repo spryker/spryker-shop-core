@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductQuickAddWidget\Dependency\Service;
+namespace SprykerShop\Yves\ProductSearchWidget\Dependency\Service;
 
-interface ProductQuickAddWidgetToUtilEncodingServiceInterface
+interface ProductSearchWidgetToUtilEncodingServiceInterface
 {
     /**
      * @param array $value

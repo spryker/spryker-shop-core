@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductQuickAddWidget\Widget;
+namespace SprykerShop\Yves\ProductSearchWidget\Widget;
 
 use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
-use SprykerShop\Yves\ProductQuickAddWidget\Form\ProductQuickAddForm;
+use SprykerShop\Yves\ProductSearchWidget\Form\ProductQuickAddForm;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * @method \SprykerShop\Yves\ProductQuickAddWidget\ProductQuickAddWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\ProductSearchWidget\ProductSearchWidgetFactory getFactory()
  */
-class ProductQuickAddWidget extends AbstractWidget implements WidgetInterface
+class ProductConcreteAddWidget extends AbstractWidget implements WidgetInterface
 {
-    protected const NAME = 'ProductQuickAddWidget';
+    protected const NAME = 'ProductConcreteAddWidget';
 
     /**
      * @param string $title
@@ -67,7 +67,7 @@ class ProductQuickAddWidget extends AbstractWidget implements WidgetInterface
      */
     public static function getTemplate(): string
     {
-        return '@ProductQuickAddWidget/views/product-quick-add/product-quick-add.twig';
+        return '@ProductSearchWidget/views/product-quick-add/product-quick-add.twig';
     }
 
     /**

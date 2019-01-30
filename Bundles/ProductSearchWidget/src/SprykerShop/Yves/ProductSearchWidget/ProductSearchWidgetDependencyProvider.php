@@ -10,10 +10,12 @@ namespace SprykerShop\Yves\ProductSearchWidget;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientBridge;
+use SprykerShop\Yves\ProductSearchWidget\Dependency\Service\ProductSearchWidgetToUtilEncodingServiceBridge;
 
 class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CATALOG = 'CLIENT_CATALOG';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -24,6 +26,7 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = parent::provideDependencies($container);
         $container = $this->addCatalogClient($container);
+        $container = $this->addEncodeService($container);
 
         return $container;
     }
@@ -38,6 +41,22 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
         $container[static::CLIENT_CATALOG] = function (Container $container) {
             return new ProductSearchWidgetToCatalogClientBridge(
                 $container->getLocator()->catalog()->client()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addEncodeService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new ProductSearchWidgetToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
             );
         };
 

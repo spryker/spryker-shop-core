@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductQuickAddWidget\Form;
+namespace SprykerShop\Yves\ProductSearchWidget\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * @method \SprykerShop\Yves\ProductQuickAddWidget\ProductQuickAddWidgetConfig getConfig()
+ * @method \SprykerShop\Yves\ProductSearchWidget\ProductSearchWidgetConfig getConfig()
  */
 class ProductQuickAddForm extends AbstractType
 {
@@ -108,7 +108,7 @@ class ProductQuickAddForm extends AbstractType
                     $this->createLessThanOrEqualConstraint(
                         static::MAX_QUANTITY_VALUE,
                         static::ERROR_MESSAGE_QUANTITY_MAX_VALUE_CONSTRAINT
-                    )
+                    ),
                 ],
             ]);
 
@@ -139,7 +139,7 @@ class ProductQuickAddForm extends AbstractType
     {
         return new Length([
             'min' => 1,
-            'minMessage' => $message
+            'minMessage' => $message,
         ]);
     }
 
@@ -151,7 +151,7 @@ class ProductQuickAddForm extends AbstractType
     protected function createNotBlankConstraint(string $message): NotBlank
     {
         return new NotBlank([
-            'message' => $message
+            'message' => $message,
         ]);
     }
 
@@ -165,7 +165,7 @@ class ProductQuickAddForm extends AbstractType
     {
         return new LessThanOrEqual([
             'value' => $maxValue,
-            'message' => $message
+            'message' => $message,
         ]);
     }
 }

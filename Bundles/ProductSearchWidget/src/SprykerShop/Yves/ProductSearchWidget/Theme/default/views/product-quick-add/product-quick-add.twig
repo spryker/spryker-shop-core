@@ -12,7 +12,7 @@
 
 {% block body %}
     {% set formModifiers = data.verticalLayout ? [] : ["row"] %}
-    {% include molecule('product-quick-add-form', 'ProductQuickAddWidget') with {
+    {% include molecule('product-quick-add-form', 'ProductSearchWidget') with {
         class: "grid grid--middle",
         modifiers: formModifiers,
         data: {

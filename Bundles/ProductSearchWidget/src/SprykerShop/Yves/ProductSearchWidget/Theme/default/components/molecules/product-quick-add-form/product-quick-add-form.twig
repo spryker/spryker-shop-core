@@ -25,7 +25,7 @@
             {% block fields %}
                 {% set fieldsAlignment = data.verticalLayout ? '' : "col--md-10" %}
 
-                {% include molecule('product-quick-add-fields', 'ProductQuickAddWidget') with {
+                {% include molecule('product-quick-add-fields', 'ProductSearchWidget') with {
                     class: "grid col col--sm-12 " ~ fieldsAlignment,
                     data: {
                         form: data.form,
