@@ -36,8 +36,8 @@ export default class ActionSingleClickEnforcer extends Component {
     }
 
     /**
-    * Gets a querySelector name of the target element.
-    */
+     * Gets a querySelector name of the target element.
+     */
     get targetSelector(): string {
         return this.getAttribute('target-selector') || '';
     }
