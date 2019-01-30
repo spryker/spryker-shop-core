@@ -3,7 +3,8 @@
 {% define data = {
     quoteTransfer: _widget.quoteTransfer,
     quoteApprovalCollection: _widget.quoteApprovalCollection,
-    waitingStatus: _widget.waitingStatus,
+    isQuoteWaitingForApproval: _widget.isQuoteWaitingForApproval,
+    quoteOwner: _widget.quoteOwner
 } %}
 
 {% block body %}
@@ -12,13 +13,13 @@
         <div>
             {% include molecule('quote-approval', 'QuoteApprovalWidget') with {
                 data: {
-                    customerName: data.quoteTransfer.customer.firstName ~ ' ' ~ data.quoteTransfer.customer.lastName,
-                    requestDate: quoteApproval.createdAt | date,
+                    customerName: data.quoteOwner.firstName ~ ' ' ~ data.quoteOwner.lastName,
+                    requestDate: data.isQuoteWaitingForApproval ? quoteApproval.createdAt | date : quoteApproval.updatedAt | date,
                     quoteTransfer: data.quoteTransfer
                 }
             } only %}
 
-            {% if quoteApproval.status == data.waitingStatus %}
+            {% if data.isQuoteWaitingForApproval %}
                 <div class="grid grid--right">
                     {% if can('ApproveQuotePermissionPlugin', data.quoteTransfer) %}
                         <div class="col col--sm-6 spacing-right spacing-right--inner">
