@@ -46,7 +46,7 @@
 
     {% for row in data.rows %}
         {% set product = data.products[row.sku.vars.value] ?? null %}
-        {% embed molecule('quick-order-row', 'QuickOrderPage') with {
+        {% include molecule('quick-order-row', 'QuickOrderPage') with {
             class: config.name ~ '__row',
             data: {
                 index: loop.index0,
@@ -61,12 +61,7 @@
                     skuFieldValue: product is null ? null : product.sku,
                     searchFieldValue: product is null ? null : product.localizedAttributes[0].name ~ ' (' ~ product.sku ~ ')'
                 }
-            },
-            embed: {
-                isFirstRow: loop.first
             }
         } only %}
-            {% block delete %}{% if not embed.isFirstRow %}{{parent()}}{% endif %}{% endblock %}
-        {% endembed %}
     {% endfor %}
 {% endblock %}
