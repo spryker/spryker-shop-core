@@ -182,8 +182,8 @@
                         {% set hasCompanyBusinessUnitAddress =  companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
 
                         {% if not hasCompanyBusinessUnitAddress %}
-                            {% set existingShippingAddressSelectSelector = '[name="' ~ embed.forms.shipping.id_customer_address.vars.full_name ~ '"]' %}
-                            {% set existingBillingAddressSelectSelector = '[name="' ~ embed.forms.billing.id_customer_address.vars.full_name ~ '"]' %}
+                            {% set existingShippingAddressSelectSelector = embed.forms.shipping.id_customer_address is defined ? '[name="' ~ embed.forms.shipping.id_customer_address.vars.full_name ~ '"]' : '' %}
+                            {% set existingBillingAddressSelectSelector = embed.forms.shipping.id_customer_address is defined ? '[name="' ~ embed.forms.billing.id_customer_address.vars.full_name ~ '"]' : '' %}
                         {% else %}
                             {% set existingShippingAddressSelectSelector = '.js-form-select-address__shippingAddress' %}
                             {% set existingBillingAddressSelectSelector = '.js-form-select-address__billingAddress' %}

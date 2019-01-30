@@ -3,6 +3,9 @@ import FormClear from 'ShopUi/components/molecules/form-clear/form-clear';
 
 const EVENT_ADD_NEW_ADDRESS = 'add-new-address';
 
+/**
+ * @event add-new-address An event which is triggered after the form fields are filled.
+ */
 export default class CompanyBusinessUnitAddressHandler extends Component {
     /**
      * Collection of the triggers elements.
@@ -48,7 +51,13 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
      * The input address element which triggers toggling of the disabled attribute.
      */
     customAddressTriggerInput: HTMLFormElement;
+    /**
+     * The custom event.
+     */
     resetSelectEvent: CustomEvent;
+    /**
+     * The custom event.
+     */
     addNewAddressEvent: CustomEvent;
 
     readonly resetSelectEventName: string = 'reset-select';
@@ -195,7 +204,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         }
     }
 
-    resetAddressesSelect(): void {
+    protected resetAddressesSelect(): void {
         const addressSelect = <HTMLSelectElement>this.form.querySelector(this.dataSelector);
         const addressSelectOptions = <HTMLOptionElement[]>Array.from(addressSelect.options);
         const addressHiddenInput = <HTMLInputElement>this.form.querySelector(`[name="${this.addressHiddenInputSelector}"]`);
@@ -257,6 +266,9 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         return this.getAttribute('default-address-selector');
     }
 
+    /**
+     * Gets a querySelector name of a hidden customer id input.
+     */
     get addressHiddenInputSelector(): string {
         return this.getAttribute('address-hidden-input-selector');
     }

@@ -5,11 +5,13 @@ export default class AddressFormToggler extends Component {
     form: HTMLFormElement;
 
     protected readyCallback(): void {
-        this.toggler = <HTMLSelectElement>document.querySelector(this.triggerSelector);
-        this.form = <HTMLFormElement>document.querySelector(this.targetSelector);
+        if(this.triggerSelector) {
+            this.toggler = <HTMLSelectElement>document.querySelector(this.triggerSelector);
+            this.form = <HTMLFormElement>document.querySelector(this.targetSelector);
 
-        this.onTogglerChange();
-        this.mapEvents();
+            this.onTogglerChange();
+            this.mapEvents();
+        }
     }
 
     protected mapEvents(): void {
