@@ -20,7 +20,7 @@ class PermissionTwigExtensionPlugin extends AbstractTwigExtensionPlugin
      */
     public function getName(): string
     {
-        return get_class($this);
+        return static::class;
     }
 
     /**
