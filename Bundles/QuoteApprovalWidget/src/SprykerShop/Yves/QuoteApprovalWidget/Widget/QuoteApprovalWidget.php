@@ -26,7 +26,7 @@ class QuoteApprovalWidget extends AbstractWidget
         $this->addParameter('quoteTransfer', $quoteTransfer);
         $this->addParameter('quoteApprovalCollection', $this->getQuoteApprovalCollectionByCurrentCustomer($quoteTransfer));
         $this->addParameter('isQuoteWaitingForApproval', $this->isQuoteWaitingForApproval($quoteTransfer));
-        $this->addParameter('quoteOwner', $this->getCustomerByReference($quoteTransfer->getCustomerReference()));
+        $this->addParameter('quoteOwner', $this->getQuoteOwner($quoteTransfer));
     }
 
     /**
@@ -65,16 +65,19 @@ class QuoteApprovalWidget extends AbstractWidget
     }
 
     /**
-     * @param string $customerReference
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function getCustomerByReference(string $customerReference): CustomerTransfer
+    protected function getQuoteOwner(QuoteTransfer $quoteTransfer): CustomerTransfer
     {
         $customerTransfer = (new CustomerTransfer())
-            ->setCustomerReference($customerReference);
+            ->setCustomerReference($quoteTransfer->getCustomerReference());
 
-        $customerResponseTransfer = $this->getFactory()->getCustomerClient()->findCustomerByReference($customerTransfer);
+        $customerResponseTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->findCustomerByReference($customerTransfer);
+
         $customerResponseTransfer->requireCustomerTransfer();
 
         return $customerResponseTransfer->getCustomerTransfer();
@@ -87,6 +90,8 @@ class QuoteApprovalWidget extends AbstractWidget
      */
     protected function isQuoteWaitingForApproval(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->getFactory()->getQuoteApprovalClient()->isQuoteWaitingForApproval($quoteTransfer);
+        return $this->getFactory()
+            ->getQuoteApprovalClient()
+            ->isQuoteWaitingForApproval($quoteTransfer);
     }
 }

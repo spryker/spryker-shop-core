@@ -10,11 +10,14 @@
 {% block body %}
     {% if data.quoteApprovalCollection.quoteApprovals is not empty %}
         {% set quoteApproval = data.quoteApprovalCollection.quoteApprovals | first %}
+        {% set customerName = data.quoteOwner.firstName ~ ' ' ~ data.quoteOwner.lastName %}
+        {% set updateDate = data.isQuoteWaitingForApproval ? quoteApproval.createdAt : quoteApproval.updatedAt %}
+
         <div>
             {% include molecule('quote-approval', 'QuoteApprovalWidget') with {
                 data: {
-                    customerName: data.quoteOwner.firstName ~ ' ' ~ data.quoteOwner.lastName,
-                    requestDate: data.isQuoteWaitingForApproval ? quoteApproval.createdAt | date : quoteApproval.updatedAt | date,
+                    customerName: customerName,
+                    updateDate: updateDate,
                     quoteTransfer: data.quoteTransfer
                 }
             } only %}
