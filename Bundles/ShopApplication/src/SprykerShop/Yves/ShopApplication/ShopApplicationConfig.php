@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ShopApplication;
 
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class ShopApplicationConfig extends AbstractBundleConfig
@@ -27,5 +28,13 @@ class ShopApplicationConfig extends AbstractBundleConfig
     public function useViewParametersToRenderTwig(): bool
     {
         return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSslEnabled(): bool
+    {
+        return $this->get(ApplicationConstants::YVES_SSL_ENABLED, true);
     }
 }
