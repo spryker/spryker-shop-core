@@ -59,10 +59,14 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
         return new CallbackTransformer(
             function ($value) {
                 if ($value !== null) {
-                    return new DateTime($value);
+                    $value = new DateTime($value);
                 }
+                return $value;
             },
             function ($value) {
+                if ($value instanceof DateTime) {
+                    $value = $value->format('Y-m-d');
+                }
                 return $value;
             }
         );

@@ -2,7 +2,9 @@
 
 {% define data = {
     title: 'quote_request_page.quote_request' | trans,
-    quoteRequest: _view.quoteRequest
+    quoteRequestForm: _view.quoteRequestForm,
+    cart: _view.cart,
+    cartItems: _view.cartItems
 } %}
 
 {% block breadcrumbs %}
@@ -18,15 +20,93 @@
                     url: url('quote-request')
                 },
                 {
-                    label: '#' ~ data.quoteRequest.quoteRequestReference,
+                    label: '#' ~ data.quoteRequestForm.vars.value.quoteRequestReference,
                 }
             ]
         }
     } only %}
 {% endblock %}
 
+
 {% block content %}
-    <div class="box">
-        {#TODO implement in next story#}
-    </div>
+
+    {% if data.cart.items is empty %}
+        <div class="box text-center">
+            {% include atom('icon') with {
+                modifiers: ['biggest'],
+                class: 'text-alt',
+                data: {
+                    name: 'shopping-cart'
+                }
+            } only %}
+            <h6>{{ 'cart.empty' | trans }}</h6>
+        </div>
+    {% else %}
+
+        {{ form_start(data.quoteRequestForm) }}
+
+        <div class="grid">
+            <div class="col col--sm-12 col--xl-8">
+                <div class="box">
+
+                    <div class="col col--sm-12 col--xl-6">
+                        <div class="box">
+                            {{ form_row(data.quoteRequestForm.metadata.purchase_order_number, { 'attr': { 'readonly': 'true' } }) }}
+                            {{ form_row(data.quoteRequestForm.metadata.delivery_date, { 'attr': { 'readonly': 'true' } }) }}
+                        </div>
+                    </div>
+                    <div class="col col--sm-12 col--xl-6">
+                        <div class="box">
+                            {{ form_row(data.quoteRequestForm.metadata.note, { 'attr': { 'readonly': 'true' } }) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col col--sm-12 col--xl-4">
+                <div class="box">
+                    <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}: <b>{{ data.quoteRequestForm.vars.value.createdAt | date('d.m.Y H:i') }}</b></p>
+                    <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}: <b>{{ ('quote_request.status.' ~ data.quoteRequestForm.vars.value.status) | trans }}</b></p>
+                    <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:</p>
+                    <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="col col--sm-12 col--xl-8">
+                {% for cartItem in data.cartItems %}
+                    {% include molecule('quote-request-cart-item', 'CartPage') with {
+                        class: 'box',
+                        data: {
+                            cartItem: cartItem
+                        }
+                    } only %}
+                {% endfor %}
+            </div>
+
+            <div class="col col--sm-12 col--xl-4">
+                <div class="box">
+                    {% include molecule('quote-request-cart-summary', 'CartPage') with {
+                        data: {
+                            cart: data.cart
+                        }
+                    } only %}
+                </div>
+                <div class="box">
+                    <a class="button button--expand button--hollow" href="{{ url('quote-request') }}">
+                        {{ 'quote_request_page.quote_request.actions.back_to_list' | trans }}
+                    </a>
+                    {% if(data.quoteRequestForm.vars.value.status == 'waiting') %}
+                        <hr/>
+                        <a class="button button--expand button--cancel" href="{{ path('quote-request/cancel', { quoteRequestReference: (data.quoteRequestForm.vars.value.quoteRequestReference) }) }}">
+                            {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {{ form_end(data.quoteRequestForm) }}
+
+    {% endif %}
 {% endblock %}
