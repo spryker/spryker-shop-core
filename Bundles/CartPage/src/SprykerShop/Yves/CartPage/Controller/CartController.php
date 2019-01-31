@@ -30,7 +30,6 @@ class CartController extends AbstractController
     public const PARAM_ITEMS = 'items';
 
     protected const PARAM_SEPARATE_PRODUCT = 'separate_product';
-
     protected const PARAM_SEPARATE_PRODUCT_DEFAULT_VALUE = 1;
 
     protected const QUICK_ADD_ACTION_NORMALIZE_FIELD = 'quantity';
