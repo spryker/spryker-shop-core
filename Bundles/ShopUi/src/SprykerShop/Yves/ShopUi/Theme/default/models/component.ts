@@ -1,5 +1,8 @@
 import { get as config } from '../app/config';
 
+/**
+ * @event customEvent A custom event.
+ */
 export default abstract class Component extends HTMLElement {
     readonly name: string
     readonly jsName: string
@@ -17,16 +20,25 @@ export default abstract class Component extends HTMLElement {
         this.dispatchEvent(customEvent);
     }
 
+    /**
+     * Marks the component as mounted.
+     */
     markAsMounted(): void {
         this.isComponentMounted = true;
     }
 
+    /**
+     * Invokes the readyCallback method.
+     */
     mountCallback(): void {
         this.readyCallback();
     }
 
     protected abstract readyCallback(): void
 
+    /**
+     * Gets if the component is mounted.
+     */
     get isMounted(): boolean {
         return this.isComponentMounted;
     }
