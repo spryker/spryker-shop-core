@@ -94,9 +94,14 @@ class AddressSaver implements SaverInterface
     protected function setShippingAddresses(AbstractTransfer $quoteTransfer): void
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $itemShippingAddress = $itemTransfer->getShipment()->getShippingAddress();
+            $shipment = $itemTransfer->getShipment();
+
+            if ($shipment === null) {
+                continue;
+            }
+
             $itemTransfer->setShipment(
-                $this->getItemShipment($itemShippingAddress)
+                $this->getItemShipment($shipment->getShippingAddress())
             );
         }
     }
