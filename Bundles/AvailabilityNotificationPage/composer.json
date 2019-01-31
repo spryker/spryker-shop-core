@@ -16,6 +16,9 @@
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/silex": "If you want to use silex"
+  },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
@@ -30,8 +33,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/silex": "If you want to use silex"
   }
 }
