@@ -29,10 +29,7 @@ class CartController extends AbstractController
 
     public const PARAM_ITEMS = 'items';
 
-    protected const PARAM_SEPARATE_PRODUCT = 'separate_product';
-    protected const PARAM_SEPARATE_PRODUCT_DEFAULT_VALUE = 1;
-
-    protected const QUICK_ADD_ACTION_NORMALIZE_FIELD = 'quantity';
+    protected const FIELD_TO_NORMALIZE_QUICK_ADD_ACTION = 'quantity';
 
     /**
      * @param array|null $selectedAttributes
@@ -144,17 +141,15 @@ class CartController extends AbstractController
      */
     public function executeQuickAddAction($sku, $quantity, Request $request): RedirectResponse
     {
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku($sku)
-            ->setQuantity($quantity);
-        $itemTransfer->addNormalizableField(static::QUICK_ADD_ACTION_NORMALIZE_FIELD);
-
-        $params = $request->request->all();
-        $params[static::PARAM_SEPARATE_PRODUCT] = static::PARAM_SEPARATE_PRODUCT_DEFAULT_VALUE;
+        $itemTransfer = (new ItemTransfer())
+            ->setSku($sku)
+            ->setQuantity($quantity)
+            ->addNormalizableField(static::FIELD_TO_NORMALIZE_QUICK_ADD_ACTION)
+            ->setGroupKeyPrefix(uniqid('', true));
 
         $this->getFactory()
             ->getCartClient()
-            ->addItem($itemTransfer, $params);
+            ->addItem($itemTransfer, $request->request->all());
 
         $this->getFactory()
             ->getZedRequestClient()
