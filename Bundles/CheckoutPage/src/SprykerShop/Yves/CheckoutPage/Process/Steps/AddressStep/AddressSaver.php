@@ -25,7 +25,7 @@ class AddressSaver implements SaverInterface
     /**
      * @var \Generated\Shared\Transfer\ShipmentTransfer[]
      */
-    protected $existingShipments;
+    protected $existingShipments = [];
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
