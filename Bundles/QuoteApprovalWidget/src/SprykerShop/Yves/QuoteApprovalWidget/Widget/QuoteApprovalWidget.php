@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteApprovalWidget\Widget;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteApprovalCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
@@ -24,7 +25,8 @@ class QuoteApprovalWidget extends AbstractWidget
     {
         $this->addParameter('quoteTransfer', $quoteTransfer);
         $this->addParameter('quoteApprovalCollection', $this->getQuoteApprovalCollectionByCurrentCustomer($quoteTransfer));
-        $this->addParameter('waitingStatus', QuoteApprovalConfig::STATUS_WAITING);
+        $this->addParameter('isQuoteWaitingForApproval', $this->getIsQuoteWaitingForApproval($quoteTransfer));
+        $this->addParameter('quoteOwner', $this->getQuoteOwner($quoteTransfer));
     }
 
     /**
@@ -60,5 +62,36 @@ class QuoteApprovalWidget extends AbstractWidget
         }
 
         return $quoteApprovalCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function getQuoteOwner(QuoteTransfer $quoteTransfer): CustomerTransfer
+    {
+        $customerTransfer = (new CustomerTransfer())
+            ->setCustomerReference($quoteTransfer->getCustomerReference());
+
+        $customerResponseTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->findCustomerByReference($customerTransfer);
+
+        $customerResponseTransfer->requireCustomerTransfer();
+
+        return $customerResponseTransfer->getCustomerTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function getIsQuoteWaitingForApproval(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->getQuoteApprovalClient()
+            ->isQuoteWaitingForApproval($quoteTransfer);
     }
 }

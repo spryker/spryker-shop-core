@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+
 class QuoteApprovalWidgetToCustomerClientBridge implements QuoteApprovalWidgetToCustomerClientInterface
 {
     /**
@@ -28,5 +31,15 @@ class QuoteApprovalWidgetToCustomerClientBridge implements QuoteApprovalWidgetTo
     public function getCustomer()
     {
         return $this->customerClient->getCustomer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function findCustomerByReference(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        return $this->customerClient->findCustomerByReference($customerTransfer);
     }
 }

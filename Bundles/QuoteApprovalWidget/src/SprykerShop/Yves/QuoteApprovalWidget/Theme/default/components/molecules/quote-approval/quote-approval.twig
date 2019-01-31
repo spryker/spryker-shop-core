@@ -6,7 +6,7 @@
 
 {% define data = {
     customerName: required,
-    requestDate: required,
+    updateDate: required,
     quoteTransfer: required
 } %}
 
@@ -29,7 +29,8 @@
                     name: 'clock'
                 }
             } only %}
-            {{ data.requestDate }}
+
+            {{ data.updateDate | date }}
         </div>
     </div>
 {% endblock %}

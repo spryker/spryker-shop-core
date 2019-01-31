@@ -3,22 +3,26 @@
 {% define data = {
     quoteTransfer: _widget.quoteTransfer,
     quoteApprovalCollection: _widget.quoteApprovalCollection,
-    waitingStatus: _widget.waitingStatus,
+    isQuoteWaitingForApproval: _widget.isQuoteWaitingForApproval,
+    quoteOwner: _widget.quoteOwner
 } %}
 
 {% block body %}
     {% if data.quoteApprovalCollection.quoteApprovals is not empty %}
         {% set quoteApproval = data.quoteApprovalCollection.quoteApprovals | first %}
+        {% set customerName = data.quoteOwner.firstName ~ ' ' ~ data.quoteOwner.lastName %}
+        {% set updateDate = data.isQuoteWaitingForApproval ? quoteApproval.createdAt : quoteApproval.updatedAt %}
+
         <div>
             {% include molecule('quote-approval', 'QuoteApprovalWidget') with {
                 data: {
-                    customerName: data.quoteTransfer.customer.firstName ~ ' ' ~ data.quoteTransfer.customer.lastName,
-                    requestDate: quoteApproval.createdAt | date,
+                    customerName: customerName,
+                    updateDate: updateDate,
                     quoteTransfer: data.quoteTransfer
                 }
             } only %}
 
-            {% if quoteApproval.status == data.waitingStatus %}
+            {% if data.isQuoteWaitingForApproval %}
                 <div class="grid grid--right">
                     {% if can('ApproveQuotePermissionPlugin', data.quoteTransfer) %}
                         <div class="col col--sm-6 spacing-right spacing-right--inner">
