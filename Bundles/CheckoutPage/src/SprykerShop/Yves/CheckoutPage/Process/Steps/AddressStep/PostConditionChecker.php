@@ -10,21 +10,29 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
+use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressForm;
 
 class PostConditionChecker implements PostConditionCheckerInterface
 {
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
     public function check(AbstractTransfer $quoteTransfer): bool
     {
-        if (!$this->isShipmentSet($quoteTransfer) || !$this->isItemShipmentSet($quoteTransfer)) {
+        if ($quoteTransfer->getBillingAddress() === null) {
             return false;
         }
 
-        // todo: Split Delivery check multiple addresses flag in case billing address is the same as Shipping address
+        if ($this->hasItemsWithEmptyShippingAddresses($quoteTransfer)) {
+            return false;
+        }
+
+        if ($this->isSplitDelivery($quoteTransfer) && $quoteTransfer->getBillingSameAsShipping()) {
+            return false;
+        }
+
         $shippingIsEmpty = $this->isAddressEmpty($quoteTransfer->getShippingAddress());
         $billingIsEmpty = $quoteTransfer->getBillingSameAsShipping() === false && $this->isAddressEmpty($quoteTransfer->getBillingAddress());
 
@@ -36,41 +44,11 @@ class PostConditionChecker implements PostConditionCheckerInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isShipmentSet(AbstractTransfer $quoteTransfer): bool
-    {
-        if ($quoteTransfer->getShippingAddress() === null || $quoteTransfer->getBillingAddress() === null) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isItemShipmentSet(AbstractTransfer $quoteTransfer): bool
-    {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getShippingAddress() === null) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
      *
      * @return bool
      */
-    protected function isAddressEmpty(?AddressTransfer $addressTransfer = null): bool
+    protected function isAddressEmpty(?AddressTransfer $addressTransfer = null)
     {
         if ($addressTransfer === null) {
             return true;
@@ -79,6 +57,33 @@ class PostConditionChecker implements PostConditionCheckerInterface
         $hasName = (!empty($addressTransfer->getFirstName()) && !empty($addressTransfer->getLastName()));
         if (!$addressTransfer->getIdCustomerAddress() && !$hasName) {
             return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isSplitDelivery(AbstractTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->getShippingAddress()->getIdCustomerAddress() === CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function hasItemsWithEmptyShippingAddresses(AbstractTransfer $quoteTransfer): bool
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null
+                || $this->isAddressEmpty($itemTransfer->getShipment()->getShippingAddress())) {
+                return true;
+            }
         }
 
         return false;
