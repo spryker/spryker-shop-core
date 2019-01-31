@@ -151,10 +151,17 @@ class CheckoutController extends AbstractController
             return $viewData;
         }
 
+        /**
+         * @deprecated Will be removed in next major release.
+         */
+        $template = $this->isMultiShipmentEnabled()
+            ? '@CheckoutPage/views/summary-multi-shipment/summary-multi-shipment.twig'
+            : '@CheckoutPage/views/summary/summary.twig';
+
         return $this->view(
             $viewData,
             $this->getFactory()->getSummaryPageWidgetPlugins(),
-            '@CheckoutPage/views/summary/summary.twig'
+            $template
         );
     }
 
@@ -213,5 +220,13 @@ class CheckoutController extends AbstractController
     protected function createStepProcess()
     {
         return $this->getFactory()->createCheckoutProcess();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isMultiShipmentEnabled(): bool
+    {
+        return defined('\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer::FK_SALES_SHIPMENT');
     }
 }

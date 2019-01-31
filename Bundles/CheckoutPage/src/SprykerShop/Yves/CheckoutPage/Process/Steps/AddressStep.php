@@ -7,13 +7,11 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
-use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\AddressStep\AddressStepStrategyResolverInterface;
 use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressForm;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -35,21 +33,29 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $existingShipments;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\StrategyResolver\AddressStep\AddressStepStrategyResolverInterface
+     */
+    protected $stepResolver;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
      * @param string $stepRoute
      * @param string $escapeRoute
+     * @param \SprykerShop\Yves\CheckoutPage\StrategyResolver\AddressStep\AddressStepStrategyResolverInterface $stepResolver
      */
     public function __construct(
         CheckoutPageToCustomerClientInterface $customerClient,
         CheckoutPageToCalculationClientInterface $calculationClient,
         $stepRoute,
-        $escapeRoute
+        $escapeRoute,
+        AddressStepStrategyResolverInterface $stepResolver
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->calculationClient = $calculationClient;
         $this->customerClient = $customerClient;
+        $this->stepResolver = $stepResolver;
     }
 
     /**
@@ -75,8 +81,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
-        $this->setShippingAddresses($quoteTransfer);
-        $this->setBillingAddress($quoteTransfer);
+        $quoteTransfer = $this->stepResolver->resolveSaver()->save($request, $quoteTransfer);
 
         return $this->calculationClient->recalculate($quoteTransfer);
     }
@@ -88,67 +93,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
-        if ($quoteTransfer->getBillingAddress() === null) {
-            return false;
-        }
-
-        if ($this->hasItemsWithEmptyShippingAddresses($quoteTransfer)) {
-            return false;
-        }
-
-        if ($this->isSplitDelivery($quoteTransfer) && $quoteTransfer->getBillingSameAsShipping()) {
-            return false;
-        }
-
-        $shippingIsEmpty = $this->isAddressEmpty($quoteTransfer->getShippingAddress());
-        $billingIsEmpty = $quoteTransfer->getBillingSameAsShipping() === false && $this->isAddressEmpty($quoteTransfer->getBillingAddress());
-
-        if ($shippingIsEmpty || $billingIsEmpty) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    protected function hydrateCustomerAddress(AddressTransfer $addressTransfer, CustomerTransfer $customerTransfer)
-    {
-        if ($customerTransfer->getAddresses() === null) {
-            return $addressTransfer;
-        }
-
-        foreach ($customerTransfer->getAddresses()->getAddresses() as $customerAddressTransfer) {
-            if ($addressTransfer->getIdCustomerAddress() === $customerAddressTransfer->getIdCustomerAddress()) {
-                $addressTransfer->fromArray($customerAddressTransfer->toArray());
-                break;
-            }
-        }
-
-        return $addressTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
-     *
-     * @return bool
-     */
-    protected function isAddressEmpty(?AddressTransfer $addressTransfer = null)
-    {
-        if ($addressTransfer === null) {
-            return true;
-        }
-
-        $hasName = (!empty($addressTransfer->getFirstName()) && !empty($addressTransfer->getLastName()));
-        if (!$addressTransfer->getIdCustomerAddress() && !$hasName) {
-            return true;
-        }
-
-        return false;
+        return $this->stepResolver->resolvePostCondition()->check($quoteTransfer);
     }
 
     /**
