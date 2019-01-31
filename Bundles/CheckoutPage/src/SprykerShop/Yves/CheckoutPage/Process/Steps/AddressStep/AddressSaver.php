@@ -59,7 +59,7 @@ class AddressSaver implements SaverInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function hydrateCustomerAddress(AddressTransfer $addressTransfer, CustomerTransfer $customerTransfer)
+    protected function hydrateCustomerAddress(AddressTransfer $addressTransfer, CustomerTransfer $customerTransfer): AddressTransfer
     {
         if ($customerTransfer->getAddresses() === null) {
             return $addressTransfer;
