@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\CartPage\Dependency\Client;
 
-use Spryker\Shared\Kernel\Transfer\TransferInterface;
-
 class CartPageToZedRequestClientBridge implements CartPageToZedRequestClientInterface
 {
     /**
@@ -38,13 +36,5 @@ class CartPageToZedRequestClientBridge implements CartPageToZedRequestClientInte
     public function getLastResponseErrorMessages()
     {
         return $this->zedRequestClient->getLastResponseErrorMessages();
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
-     */
-    public function findLastResponseTransfer(): ?TransferInterface
-    {
-        return $this->zedRequestClient->findLastResponseTransfer();
     }
 }
