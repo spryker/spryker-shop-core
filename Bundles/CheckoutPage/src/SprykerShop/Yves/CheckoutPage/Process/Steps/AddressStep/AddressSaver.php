@@ -171,7 +171,7 @@ class AddressSaver implements SaverInterface
      *
      * @return string
      */
-    public function getAddressHash(AddressTransfer $addressTransfer): string
+    protected function getAddressHash(AddressTransfer $addressTransfer): string
     {
         return md5($addressTransfer->serialize());
     }
