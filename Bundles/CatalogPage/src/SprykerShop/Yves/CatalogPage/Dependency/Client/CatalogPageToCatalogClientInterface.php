@@ -42,4 +42,12 @@ interface CatalogPageToCatalogClientInterface
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function setCatalogViewMode($mode, Response $response);
+
+    /**
+     * @param string $searchString
+     * @param array $requestParameters
+     *
+     * @return int
+     */
+    public function catalogSearchCount(string $searchString, array $requestParameters = []): int;
 }
