@@ -237,6 +237,7 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
 
     /**
      * @uses ShoppingListController::quickAddToShoppingListAction()
+     * @uses ShoppingListPageControllerProvider::getQuantityFromRequest()
      *
      * @return $this
      */
