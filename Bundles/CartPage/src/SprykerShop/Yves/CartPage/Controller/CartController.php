@@ -32,6 +32,12 @@ class CartController extends AbstractController
 
     public const PARAM_ITEMS = 'items';
 
+    protected const PARAM_SEPARATE_PRODUCT = 'separate_product';
+
+    protected const PARAM_SEPARATE_PRODUCT_DEFAULT_VALUE = 1;
+
+    protected const QUICK_ADD_ACTION_NORMALIZE_FIELD = 'quantity';
+
     /**
      * @param array|null $selectedAttributes
      *
@@ -144,9 +150,13 @@ class CartController extends AbstractController
     {
         $itemTransfer = $this->buildCartChangeItemTransfer($sku, $quantity);
 
+        $params = $request->request->all();
+        $params[static::PARAM_SEPARATE_PRODUCT]= static::PARAM_SEPARATE_PRODUCT_DEFAULT_VALUE;
+
+        $itemTransfer->addNormalizableField(static::QUICK_ADD_ACTION_NORMALIZE_FIELD);
         $this->getFactory()
             ->getCartClient()
-            ->addItem($itemTransfer, $request->request->all());
+            ->addItem($itemTransfer, $params);
 
         $this->getFactory()
             ->getZedRequestClient()
