@@ -25,7 +25,7 @@ class QuoteApprovalWidget extends AbstractWidget
     {
         $this->addParameter('quoteTransfer', $quoteTransfer);
         $this->addParameter('quoteOwner', $this->getQuoteOwner($quoteTransfer));
-        $this->addParameter('waitingQuoteApproval', $this->getQuoteApprovalWaitingForApproveByCurrentCompanyUser($quoteTransfer));
+        $this->addParameter('waitingQuoteApproval', $this->getWaitingQuoteApprovalByCurrentCompanyUser($quoteTransfer));
     }
 
     /**
