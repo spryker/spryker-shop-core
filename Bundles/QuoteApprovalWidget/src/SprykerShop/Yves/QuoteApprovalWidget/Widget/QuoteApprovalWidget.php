@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\QuoteApprovalWidget\Widget;
 
-use Generated\Shared\Transfer\QuoteApprovalCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteApprovalCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
