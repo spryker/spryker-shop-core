@@ -1,11 +1,16 @@
 {% extends template('widget') %}
 
+{% define data = {
+    availability: _widget.availability,
+    idSalesOrderItem: _widget.item.idSalesOrderItem
+} %}
+
 {% block body %}
     {% embed atom('checkbox') with {
         attributes: {
             name: 'items[]',
-            disabled: not _widget.availability,
-            value: _widget.item.idSalesOrderItem
+            disabled: not data.availability,
+            value: data.idSalesOrderItem
         }
     } only %}
         {%- block inputClass -%}
