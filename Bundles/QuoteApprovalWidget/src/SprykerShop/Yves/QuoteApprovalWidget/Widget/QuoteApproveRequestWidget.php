@@ -61,12 +61,6 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     protected function addQuoteParameter(QuoteTransfer $quoteTransfer): void
     {
-        if (!$this->isVisible()) {
-            $this->addParameter(static::PARAMETER_QUOTE, null);
-
-            return;
-        }
-
         $this->addParameter(static::PARAMETER_QUOTE, $quoteTransfer);
     }
 
