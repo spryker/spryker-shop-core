@@ -16,7 +16,7 @@
     "spryker/price-product-storage": "^2.9.0",
     "spryker/product-quantity-storage": "^1.2.0",
     "spryker/product-storage": "^1.7.0",
-    "spryker/quick-order": "^1.0.0",
+    "spryker/quick-order": "^1.0.1",
     "spryker/quote": "^1.0.0 || ^2.0.0",
     "spryker/symfony": "^3.1.0",
     "spryker/zed-request": "^3.6.0"
