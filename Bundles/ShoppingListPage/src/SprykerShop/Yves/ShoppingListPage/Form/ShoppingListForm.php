@@ -22,6 +22,7 @@ class ShoppingListForm extends AbstractType
 {
     public const FIELD_NAME = 'name';
     public const FIELD_ID = 'idShoppingList';
+    public const VALIDATION_MAX_LENGTH_MESSAGE = 'validation.max_length.singular|validation.max_length.plural';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -59,7 +60,10 @@ class ShoppingListForm extends AbstractType
             'required' => true,
             'constraints' => [
                 new NotBlank(),
-                new Length(['max' => 255]),
+                new Length([
+                    'max' => 255,
+                    'maxMessage' => static::VALIDATION_MAX_LENGTH_MESSAGE,
+                ]),
             ],
         ]);
     }
