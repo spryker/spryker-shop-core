@@ -1,0 +1,44 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'address-item-form',
+    tag: 'address-item-form'
+} %}
+
+{% define data = {
+    form: required
+} %}
+
+{% block body %}
+    <div class="text-right">
+        <a href="{{url('customer/address')}}">{{ 'page.checkout.address.manage_your_addresses' | trans }}</a>
+    </div>
+    {% embed molecule('form') with {
+        data: {
+            form: data.form,
+            enableStart: false,
+            enableEnd: false,
+            options: {
+                attr: {
+                    class: config.jsName ~ '__form'
+                }
+            }
+        },
+        embed: {
+            selector: config.jsName
+        }
+    } only %}
+        {% block fields %}
+            <div class="{{embed.selector}}__list">
+                {% embed molecule('address-item-form-field-list', 'CheckoutPage') with {
+                    data: {
+                        items: data.form
+                    },
+                    embed: embed
+                } only %}
+                    {% block removeActionClass %}{{embed.selector}}__remove-row-trigger{% endblock %}
+                {% endembed %}
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
