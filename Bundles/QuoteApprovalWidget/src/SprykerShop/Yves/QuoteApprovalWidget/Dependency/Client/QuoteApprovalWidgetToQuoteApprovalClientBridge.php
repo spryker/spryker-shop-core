@@ -35,7 +35,18 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $idCompanyUser
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer
+     * @return bool
+     */
+    public function hasQuoteApprovalsForCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): bool
+    {
+        return $this->quoteApprovalClient->hasQuoteApprovalsForCompanyUser($quoteTransfer, $idCompanyUser);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer|null
      */
     public function getWaitingQuoteApprovalByIdCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): ?QuoteApprovalTransfer
     {

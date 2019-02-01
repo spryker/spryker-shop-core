@@ -3,22 +3,26 @@
 {% define data = {
     voucherDiscounts: _widget.cart.voucherDiscounts,
     ruleDiscounts: _widget.cart.cartRuleDiscounts,
-    discountTotal: _widget.cart.totals.discounttotal
+    discountTotal: _widget.cart.totals.discounttotal,
+    isQuoteLocked: _widget.cart.isLocked
 } %}
 
 {% block body %}
     {% if data.discountTotal %}
         {% if data.voucherDiscounts is not empty %}
             <li>
-                <a class="float-right text-small" href="{{ url('discount/voucher/clear') }}">
-                    {% include atom('icon') with {
-                        modifiers: ['smaller'],
-                        data: {
-                            name: 'times'
-                        }
-                    } only %}
-                    {{ 'cart.vouchers.clear-all' | trans }}
-                </a>
+                {% if not isQuoteLocked %}
+                    <a class="float-right text-small" href="{{ url('discount/voucher/clear') }}">
+                        {% include atom('icon') with {
+                            modifiers: ['smaller'],
+                            data: {
+                                name: 'times'
+                            }
+                        } only %}
+                        {{ 'cart.vouchers.clear-all' | trans }}
+                    </a>
+                {% endif %}
+
                 <strong>{{ 'cart.vouchers' | trans }}</strong>
 
                 <ul>
@@ -26,16 +30,18 @@
                         <li class="grid grid--justify">
                             <span class="col col--sm-8">
                                 {{ voucherDiscount.displayName }}
-                                <br/>
-                                <a class="text-small" href="{{ url('discount/voucher/remove', {'code': voucherDiscount.voucherCode}) }}">
-                                    {% include atom('icon') with {
-                                        modifiers: ['smaller'],
-                                        data: {
-                                            name: 'times'
-                                        }
-                                    } only %}
-                                    {{ 'cart.voucher.remove' | trans }}
-                                </a>
+                                {% if not isQuoteLocked %}
+                                    <br/>
+                                    <a class="text-small" href="{{ url('discount/voucher/remove', {'code': voucherDiscount.voucherCode}) }}">
+                                        {% include atom('icon') with {
+                                            modifiers: ['smaller'],
+                                            data: {
+                                                name: 'times'
+                                            }
+                                        } only %}
+                                        {{ 'cart.voucher.remove' | trans }}
+                                    </a>
+                                {% endif %}
                             </span>
                             <span class="col col--expand text-right">- {{ voucherDiscount.amount | money }}</span>
                         </li>

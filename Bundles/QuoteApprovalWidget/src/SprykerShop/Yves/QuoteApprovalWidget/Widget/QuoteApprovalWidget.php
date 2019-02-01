@@ -25,6 +25,7 @@ class QuoteApprovalWidget extends AbstractWidget
     {
         $this->addParameter('quoteTransfer', $quoteTransfer);
         $this->addParameter('quoteOwner', $this->getQuoteOwner($quoteTransfer));
+        $this->addParameter('isVisible', $this->hasQuoteApprovalsForCurrentCompanyUser($quoteTransfer));
         $this->addParameter('waitingQuoteApproval', $this->getWaitingQuoteApprovalByCurrentCompanyUser($quoteTransfer));
     }
 
@@ -47,10 +48,14 @@ class QuoteApprovalWidget extends AbstractWidget
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    protected function getQuoteOwner(QuoteTransfer $quoteTransfer): CustomerTransfer
+    protected function getQuoteOwner(QuoteTransfer $quoteTransfer): ?CustomerTransfer
     {
+        if (!$quoteTransfer->getCustomerReference()) {
+            return null;
+        }
+
         $customerTransfer = (new CustomerTransfer())
             ->setCustomerReference($quoteTransfer->getCustomerReference());
 
@@ -93,6 +98,26 @@ class QuoteApprovalWidget extends AbstractWidget
         return $this->getFactory()
             ->getQuoteApprovalClient()
             ->getWaitingQuoteApprovalByIdCompanyUser(
+                $quoteTransfer,
+                $this->getCurrentCompanyUser()
+                    ->getIdCompanyUser()
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function hasQuoteApprovalsForCurrentCompanyUser(QuoteTransfer $quoteTransfer): bool
+    {
+        if (!$this->getCurrentCompanyUser()) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->getQuoteApprovalClient()
+            ->hasQuoteApprovalsForCompanyUser(
                 $quoteTransfer,
                 $this->getCurrentCompanyUser()
                     ->getIdCompanyUser()

@@ -33,7 +33,8 @@
             data: {
                 voucherDiscounts: data.cart.voucherDiscounts,
                 ruleDiscounts: data.cart.cartRuleDiscounts,
-                discountTotal: data.cart.totals.discounttotal
+                discountTotal: data.cart.totals.discounttotal,
+                isQuoteLocked: data.cart.isLocked
             }
         } only %}
     {% endif %}
