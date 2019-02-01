@@ -29,7 +29,7 @@ class CartController extends AbstractController
 
     public const PARAM_ITEMS = 'items';
 
-    protected const FIELD_TO_NORMALIZE_QUICK_ADD_ACTION = 'quantity';
+    protected const FIELD_QUANTITY_TO_NORMALIZE = 'quantity';
 
     /**
      * @param array|null $selectedAttributes
@@ -144,7 +144,7 @@ class CartController extends AbstractController
         $itemTransfer = (new ItemTransfer())
             ->setSku($sku)
             ->setQuantity($quantity)
-            ->addNormalizableField(static::FIELD_TO_NORMALIZE_QUICK_ADD_ACTION)
+            ->addNormalizableField(static::FIELD_QUANTITY_TO_NORMALIZE)
             ->setGroupKeyPrefix(uniqid('', true));
 
         $this->getFactory()
