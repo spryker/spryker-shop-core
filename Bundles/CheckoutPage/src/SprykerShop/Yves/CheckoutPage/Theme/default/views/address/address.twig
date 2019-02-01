@@ -211,7 +211,7 @@
                     {% if data.form.isAddressSavingSkipped is defined %}
                         {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', embed.forms.shipping.vars.data]) %}
                         {% set optionValueAddNewAddress = '' %}
-                        {% set optionValueDeliverToMultipleAddresses = '-1' %}
+                        {% set optionValueDeliverToMultipleAddresses = constant('SprykerShop\\Yves\\CustomerPage\\Form\\CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES') %}
 
                         {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
                             attributes: {
