@@ -7,16 +7,18 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Handler;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\CheckoutPage\Model\Shipment\Creator instead.
+ */
 class ShipmentHandler implements ShipmentHandlerInterface
 {
     /**
@@ -47,32 +49,28 @@ class ShipmentHandler implements ShipmentHandlerInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addShipmentToItems(Request $request, QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function addShipmentToQuote(Request $request, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $shipmentMethodsTransfer = $this->getAvailableShipmentMethods($quoteTransfer);
+        $shipmentTransfer = $quoteTransfer->getShipment();
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $shipmentTransfer = $itemTransfer->getShipment();
-            $shipmentTransfer->setShipmentSelection($quoteTransfer->getShipment()->getShipmentSelection());
-            $shipmentMethodTransfer = $this->getShipmentMethodById($shipmentMethodsTransfer, $itemTransfer);
-            $shipmentTransfer->setMethod($shipmentMethodTransfer);
-            $shipmentTransfer->setExpense(
-                $this->createShippingExpenseTransfer($shipmentMethodTransfer, $quoteTransfer->getPriceMode())
-            );
-        }
+        $shipmentMethodTransfer = $this->getShipmentMethodById($quoteTransfer);
+        $shipmentTransfer->setMethod($shipmentMethodTransfer);
+
+        $shipmentExpenseTransfer = $this->createShippingExpenseTransfer($shipmentMethodTransfer, $quoteTransfer->getPriceMode());
+        $this->replaceShipmentExpenseInQuote($quoteTransfer, $shipmentExpenseTransfer);
 
         return $quoteTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function getShipmentMethodById(ShipmentMethodsTransfer $shipmentMethodsTransfer, ItemTransfer $itemTransfer): ?ShipmentMethodTransfer
+    protected function getShipmentMethodById(QuoteTransfer $quoteTransfer)
     {
-        $idShipmentMethod = $itemTransfer->getShipment()->getShipmentSelection();
+        $shipmentMethodsTransfer = $this->getAvailableShipmentMethods($quoteTransfer);
+        $idShipmentMethod = $quoteTransfer->getShipment()->getShipmentSelection();
 
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodsTransfer) {
             if ($shipmentMethodsTransfer->getIdShipmentMethod() === $idShipmentMethod) {
@@ -129,6 +127,25 @@ class ShipmentHandler implements ShipmentHandlerInterface
         $shipmentExpenseTransfer->setUnitNetPrice(0);
         $shipmentExpenseTransfer->setSumNetPrice(0);
         $shipmentExpenseTransfer->setUnitGrossPrice($price);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return void
+     */
+    protected function replaceShipmentExpenseInQuote(QuoteTransfer $quoteTransfer, ExpenseTransfer $expenseTransfer)
+    {
+        $otherExpenseCollection = new ArrayObject();
+        foreach ($quoteTransfer->getExpenses() as $expense) {
+            if ($expense->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+                $otherExpenseCollection->append($expense);
+            }
+        }
+
+        $quoteTransfer->setExpenses($otherExpenseCollection);
+        $quoteTransfer->addExpense($expenseTransfer);
     }
 
     /**

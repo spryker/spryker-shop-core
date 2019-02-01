@@ -18,7 +18,11 @@ use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilter;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilterInterface;
 use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
 use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
+use SprykerShop\Yves\CheckoutPage\Model\Shipment\Creator;
+use SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\Shipment\ShipmentCreatorStrategyResolver;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\Shipment\ShipmentCreatorStrategyResolverInterface;
 
 class CheckoutPageFactory extends AbstractFactory
 {
@@ -150,11 +154,21 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use createShipmentHandlerWithMultipleShipment() instead.
+     *
      * @return \SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandlerInterface
      */
     public function createShipmentHandler()
     {
         return new ShipmentHandler($this->getShipmentClient(), $this->getPriceClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface
+     */
+    public function createShipmentHandlerWithMultipleShipment(): CreatorInterface
+    {
+        return new Creator($this->getShipmentClient(), $this->getPriceClient());
     }
 
     /**
@@ -230,5 +244,46 @@ class CheckoutPageFactory extends AbstractFactory
     protected function getSubFormFilterPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_SUB_FORM_FILTERS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\StrategyResolver\Shipment\ShipmentCreatorStrategyResolverInterface
+     */
+    public function createShipmentCreatorStrategyResolver(): ShipmentCreatorStrategyResolverInterface
+    {
+        $strategyContainer = [];
+
+        $strategyContainer = $this->addShipmentCreatorWithoutMultipleShipment($strategyContainer);
+        $strategyContainer = $this->addShipmentCreatorWithMultipleShipment($strategyContainer);
+
+        return new ShipmentCreatorStrategyResolver($strategyContainer);
+    }
+
+    /**
+     * @param array $strategyContainer
+     *
+     * @return array
+     */
+    protected function addShipmentCreatorWithoutMultipleShipment(array $strategyContainer): array
+    {
+        $strategyContainer[ShipmentCreatorStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+            return $this->createShipmentHandler();
+        };
+
+        return $strategyContainer;
+    }
+
+    /**
+     * @param array $strategyContainer
+     *
+     * @return array
+     */
+    protected function addShipmentCreatorWithMultipleShipment(array $strategyContainer): array
+    {
+        $strategyContainer[ShipmentCreatorStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+            return $this->createShipmentHandlerWithMultipleShipment();
+        };
+
+        return $strategyContainer;
     }
 }

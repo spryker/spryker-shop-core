@@ -25,6 +25,9 @@ class ShipmentHandlerPlugin extends AbstractPlugin implements StepHandlerPluginI
      */
     public function addToDataClass(Request $request, AbstractTransfer $quoteTransfer)
     {
-        return $this->getFactory()->createShipmentHandler()->addShipmentToItems($request, $quoteTransfer);
+        return $this->getFactory()
+            ->createShipmentCreatorStrategyResolver()
+            ->resolve()
+            ->addShipmentToQuote($request, $quoteTransfer);
     }
 }

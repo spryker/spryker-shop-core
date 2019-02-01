@@ -28,6 +28,7 @@
     {% block separator %}
         <li><hr /></li>
     {% endblock %}
+    {% if can('SeePricePermissionPlugin') %}
     <li>
         {{ 'checkout.step.summary.sub_total' | trans }}
         <strong class="float-right">{{ data.prices.subTotal | money }}</strong>
@@ -98,4 +99,7 @@
         <h6 class="float-right">{{ data.prices.grandTotal | money }}</h6>
         <h6>{{ 'checkout.step.summary.grand_total' | trans }}</h6>
     </li>
+    {% else %}
+    <li>{{ 'customer.access.cannot_see_price' | trans }}</li>
+    {% endif %}
 {% endblock %}
