@@ -48,7 +48,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
      *
      * @return bool
      */
-    protected function isAddressEmpty(?AddressTransfer $addressTransfer = null)
+    protected function isAddressEmpty(?AddressTransfer $addressTransfer = null): bool
     {
         if ($addressTransfer === null) {
             return true;
