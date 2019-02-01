@@ -1,16 +1,14 @@
-{% extends template('page-layout-customer', 'CustomerPage') %}
+{% extends model('component') %}
 
-{% define data = {
-    order: _view.order,
-    orderItems: _view.items,
-
-    title: 'customer.account.order_history' | trans,
-    activePage: 'order'
+{% define config = {
+    name: 'order-detail'
 } %}
 
-{% block customerContent %}
-    {#{{ widgetBlock('CustomerReorderWidgetPlugin', 'formStart', data.order) }}#}
+{% define data = {
+    idSalesOrder: required
+} %}
 
+{% block body %}
     <div class="box">
         <a href="{{url('customer/order')}}" class="link float-right">{{ 'general.back.button' | trans }}</a>
         <h5>{{ 'customer.profile.order_details' | trans }}</h5>
@@ -89,7 +87,4 @@
             {% endif %}
         </div>
     {% endif %}
-
-    {#{{ widgetBlock('CustomerReorderWidgetPlugin', 'formActions', data.order) }}#}
-    {#{{ widgetBlock('CustomerReorderWidgetPlugin', 'formEnd', data.order) }}#}
 {% endblock %}

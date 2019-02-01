@@ -1,0 +1,18 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'customer-reorder-link',
+    tag: 'li'
+} %}
+
+{% define data = {
+    idSalesOrder: required
+} %}
+
+{% block class %}{{ parent() }} menu__item{% endblock %}
+
+{% block body %}
+    <a href="{{ path('customer/order/reorder', {'idSalesOrder': data.idSalesOrder}) }}">
+        {{ 'customer.order.reorder' | trans }}
+    </a>
+{% endblock %}
