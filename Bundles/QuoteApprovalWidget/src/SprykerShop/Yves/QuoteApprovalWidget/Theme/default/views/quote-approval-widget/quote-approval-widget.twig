@@ -2,16 +2,15 @@
 
 {% define data = {
     quoteTransfer: _widget.quoteTransfer,
-    quoteApprovalCollection: _widget.quoteApprovalCollection,
-    isQuoteWaitingForApproval: _widget.isQuoteWaitingForApproval,
+    waitingQuoteApproval: _widget.waitingQuoteApproval,
     quoteOwner: _widget.quoteOwner
 } %}
 
 {% block body %}
-    {% if data.quoteApprovalCollection.quoteApprovals is not empty %}
-        {% set quoteApproval = data.quoteApprovalCollection.quoteApprovals | last %}
+    {% if data.quoteTransfer.quoteApprovals is not empty %}
+        {% set latestQuoteApproval = data.quoteTransfer.quoteApprovals | last %}
         {% set customerName = data.quoteOwner.firstName ~ ' ' ~ data.quoteOwner.lastName %}
-        {% set updateDate = data.isQuoteWaitingForApproval ? quoteApproval.createdAt : quoteApproval.updatedAt %}
+        {% set updateDate = data.waitingQuoteApproval ? data.waitingQuoteApproval.createdAt : latestQuoteApproval.updatedAt %}
 
         <div>
             {% include molecule('quote-approval', 'QuoteApprovalWidget') with {
@@ -22,22 +21,22 @@
                 }
             } only %}
 
-            {% if data.isQuoteWaitingForApproval %}
+            {% if data.waitingQuoteApproval %}
                 <div class="grid grid--right">
                     {% if can('ApproveQuotePermissionPlugin', data.quoteTransfer) %}
                         <div class="col col--sm-6 spacing-right spacing-right--inner">
-                            <form method="POST" action="{{ path('quote-approval-decline', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}">
+                            <form method="POST" action="{{ path('quote-approval-decline', {'idQuoteApproval': data.waitingQuoteApproval.idQuoteApproval}) }}">
                                 <button type="submit" class="button button--alert button--expand button--hollow">{{ 'quote_approval_widget.cart.decline' | trans }}</button>
                             </form>
                         </div>
                         <div class="col col--sm-6 spacing-left spacing-left--inner">
-                            <form method="POST" action="{{ path('quote-approval-approve', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}">
+                            <form method="POST" action="{{ path('quote-approval-approve', {'idQuoteApproval': data.waitingQuoteApproval.idQuoteApproval}) }}">
                                 <button type="submit" class="button button--success button--expand">{{ 'quote_approval_widget.cart.approve' | trans }}</button>
                             </form>
                         </div>
                     {% else %}
                         <div class="col">
-                            <form method="POST" action="{{ path('quote-approval-remove', {'idQuoteApproval': quoteApproval.idQuoteApproval}) }}">
+                            <form method="POST" action="{{ path('quote-approval-remove', {'idQuoteApproval': data.waitingQuoteApproval.idQuoteApproval}) }}">
                                 <button type="submit" class="button button--alert button--expand">{{ 'quote_approval_widget.cart.cancel' | trans }}</button>
                             </form>
                         </div>

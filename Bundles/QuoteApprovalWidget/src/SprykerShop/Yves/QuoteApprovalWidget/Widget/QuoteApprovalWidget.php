@@ -7,8 +7,9 @@
 
 namespace SprykerShop\Yves\QuoteApprovalWidget\Widget;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteApprovalCollectionTransfer;
+use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
@@ -23,9 +24,8 @@ class QuoteApprovalWidget extends AbstractWidget
     public function __construct(QuoteTransfer $quoteTransfer)
     {
         $this->addParameter('quoteTransfer', $quoteTransfer);
-        $this->addParameter('isQuoteWaitingForApproval', $this->getIsQuoteWaitingForApproval($quoteTransfer));
         $this->addParameter('quoteOwner', $this->getQuoteOwner($quoteTransfer));
-        $this->addParameter('quoteApprovalCollection', $this->getQuoteApprovalCollectionByCurrentCustomer($quoteTransfer));
+        $this->addParameter('waitingQuoteApproval', $this->getQuoteApprovalWaitingForApproveByCurrentCompanyUser($quoteTransfer));
     }
 
     /**
@@ -64,33 +64,38 @@ class QuoteApprovalWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
-    protected function getIsQuoteWaitingForApproval(QuoteTransfer $quoteTransfer): bool
+    protected function getCurrentCompanyUser(): ?CompanyUserTransfer
     {
-        return $this->getFactory()
-            ->getQuoteApprovalClient()
-            ->isQuoteWaitingForApproval($quoteTransfer);
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        if (!$customerTransfer) {
+            return null;
+        }
+
+        return $customerTransfer->getCompanyUserTransfer();
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalCollectionTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer|null
      */
-    protected function getQuoteApprovalCollectionByCurrentCustomer(QuoteTransfer $quoteTransfer): QuoteApprovalCollectionTransfer
+    protected function getWaitingQuoteApprovalByCurrentCompanyUser(QuoteTransfer $quoteTransfer): ?QuoteApprovalTransfer
     {
-        $quoteApprovalCollection = new QuoteApprovalCollectionTransfer();
-
-        $customer = $this->getFactory()->getCustomerClient()->getCustomer();
-        foreach ($quoteTransfer->getQuoteApprovals() as $quoteApprovalTransfer) {
-            if ($quoteApprovalTransfer->getApprover()->getIdCompanyUser() === $customer->getCompanyUserTransfer()->getIdCompanyUser()) {
-                $quoteApprovalCollection->addQuoteApproval($quoteApprovalTransfer);
-            }
+        if (!$this->getCurrentCompanyUser()) {
+            return null;
         }
 
-        return $quoteApprovalCollection;
+        return $this->getFactory()
+            ->getQuoteApprovalClient()
+            ->getWaitingQuoteApprovalByIdCompanyUser(
+                $quoteTransfer,
+                $this->getCurrentCompanyUser()
+                    ->getIdCompanyUser()
+            );
     }
 }
