@@ -7,11 +7,8 @@
 
 namespace SprykerShop\Yves\CartPage\Controller;
 
-use ArrayObject;
-use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
@@ -31,6 +28,8 @@ class CartController extends AbstractController
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
     public const PARAM_ITEMS = 'items';
+
+    protected const FIELD_QUANTITY_TO_NORMALIZE = 'quantity';
 
     /**
      * @param array|null $selectedAttributes
@@ -142,7 +141,11 @@ class CartController extends AbstractController
      */
     public function executeQuickAddAction($sku, $quantity, Request $request): RedirectResponse
     {
-        $itemTransfer = $this->buildCartChangeItemTransfer($sku, $quantity);
+        $itemTransfer = (new ItemTransfer())
+            ->setSku($sku)
+            ->setQuantity($quantity)
+            ->addNormalizableField(static::FIELD_QUANTITY_TO_NORMALIZE)
+            ->setGroupKeyPrefix(uniqid('', true));
 
         $this->getFactory()
             ->getCartClient()
@@ -152,45 +155,7 @@ class CartController extends AbstractController
             ->getZedRequestClient()
             ->addFlashMessagesFromLastZedRequest();
 
-        $quoteResponseTransfer = $this->getFactory()
-            ->getZedRequestClient()
-            ->findLastResponseTransfer();
-
-        if ($quoteResponseTransfer instanceof QuoteResponseTransfer
-            && $quoteResponseTransfer->getIsSuccessful()
-            && $itemTransfer->getNotificationMessages()->count() > 0
-        ) {
-            $this->addFlashNotificationMessages($itemTransfer->getNotificationMessages());
-        }
-
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
-    }
-
-    /**
-     * @param string $sku
-     * @param int $quantity
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function buildCartChangeItemTransfer(string $sku, int $quantity): ItemTransfer
-    {
-        $productConcreteTransfer = $this->getFactory()
-            ->createProductConcreteReader()
-            ->getProductConcreteTransferBySku($sku);
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku($sku)
-            ->setQuantity($quantity)
-            ->setProductConcrete($productConcreteTransfer);
-
-        $cartChangeTransfer = new CartChangeTransfer();
-        $cartChangeTransfer->addItem($itemTransfer);
-
-        $cartChangeTransfer = $this->getFactory()
-            ->getCartClient()
-            ->expandCartChangeTransfer($cartChangeTransfer);
-
-        return $cartChangeTransfer->getItems()[0];
     }
 
     /**
@@ -405,25 +370,5 @@ class CartController extends AbstractController
         }
 
         return false;
-    }
-
-    /**
-     * @param Generated\Shared\Transfer\MessageTransfer[] $notificationMessages
-     *
-     * @return void
-     */
-    protected function addFlashNotificationMessages(ArrayObject $notificationMessages): void
-    {
-        $glossaryClient = $this->getFactory()->getGlossaryClient();
-
-        foreach ($notificationMessages as $notificationMessage) {
-            $errorMessageText = $glossaryClient->translate(
-                $notificationMessage->getValue(),
-                $this->getLocale(),
-                $notificationMessage->getParameters()
-            );
-
-            $this->addInfoMessage($errorMessageText);
-        }
     }
 }

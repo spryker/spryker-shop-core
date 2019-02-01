@@ -13,7 +13,6 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientBridge;
-use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToGlossaryStorageClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientBridge;
 use SprykerShop\Yves\CartPage\Plugin\CartVariantAttributeMapperPlugin;
@@ -29,7 +28,6 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_CART_ITEM_TRANSFORMERS = 'PLUGIN_CART_ITEM_TRANSFORMERS';
     public const PLUGIN_CART_PAGE_WIDGETS = 'PLUGIN_CART_PAGE_WIDGETS';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
-    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -47,7 +45,6 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartPageWidgetPlugins($container);
         $container = $this->addCartItemTransformerPlugins($container);
         $container = $this->addZedRequestClient($container);
-        $container = $this->addGlossaryStorageClient($container);
 
         return $container;
     }
@@ -197,21 +194,5 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getCartItemTransformerPlugins(): array
     {
         return [];
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addGlossaryStorageClient(Container $container): Container
-    {
-        $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
-            return new CartPageToGlossaryStorageClientBridge(
-                $container->getLocator()->glossaryStorage()->client()
-            );
-        };
-
-        return $container;
     }
 }
