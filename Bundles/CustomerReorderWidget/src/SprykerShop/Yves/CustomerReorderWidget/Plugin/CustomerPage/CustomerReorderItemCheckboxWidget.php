@@ -44,7 +44,7 @@ class CustomerReorderItemCheckboxWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@CustomerReorderWidget/views/customer-reorder/customer-reorder-item-check-box.twig';
+        return '@CustomerReorderWidget/views/customer-reorder/customer-reorder-item-checkbox.twig';
     }
 
     /**
