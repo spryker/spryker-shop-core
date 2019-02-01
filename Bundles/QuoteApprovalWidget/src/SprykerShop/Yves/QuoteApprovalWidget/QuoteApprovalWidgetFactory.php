@@ -12,6 +12,7 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientInterface;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToGlossaryStorageClientInterface;
+use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToMoneyClientInterface;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientInterface;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteClientInterface;
 use SprykerShop\Yves\QuoteApprovalWidget\Form\QuoteApproveRequestForm;
@@ -58,7 +59,8 @@ class QuoteApprovalWidgetFactory extends AbstractFactory
         return new QuoteApproveRequestFormDataProvider(
             $this->getQuoteApprovalClient(),
             $this->getCustomerClient(),
-            $this->getGlossaryStorageClient()
+            $this->getGlossaryStorageClient(),
+            $this->getMoneyClient()
         );
     }
 
@@ -84,6 +86,14 @@ class QuoteApprovalWidgetFactory extends AbstractFactory
     public function getCustomerClient(): QuoteApprovalWidgetToCustomerClientInterface
     {
         return $this->getProvidedDependency(QuoteApprovalWidgetDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToMoneyClientInterface
+     */
+    public function getMoneyClient(): QuoteApprovalWidgetToMoneyClientInterface
+    {
+        return $this->getProvidedDependency(QuoteApprovalWidgetDependencyProvider::CLIENT_MONEY);
     }
 
     /**

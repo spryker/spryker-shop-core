@@ -25,7 +25,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
         $this->addQuoteParameter($quoteTransfer);
         $this->addQuoteStatusParameter($quoteTransfer);
         $this->addLimitParameter($quoteTransfer);
-        $this->addIsVisibleParameter($quoteTransfer);
+        $this->addIsVisibleParameter();
         $this->addCanSendApprovalRequestParameter($quoteTransfer);
         $this->addQuoteApprovalRequestFormParameter($quoteTransfer);
     }

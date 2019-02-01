@@ -9,7 +9,7 @@
 
 {% block body %}
     {% if data.quoteApprovalCollection.quoteApprovals is not empty %}
-        {% set quoteApproval = data.quoteApprovalCollection.quoteApprovals | first %}
+        {% set quoteApproval = data.quoteApprovalCollection.quoteApprovals | last %}
         {% set customerName = data.quoteOwner.firstName ~ ' ' ~ data.quoteOwner.lastName %}
         {% set updateDate = data.isQuoteWaitingForApproval ? quoteApproval.createdAt : quoteApproval.updatedAt %}
 

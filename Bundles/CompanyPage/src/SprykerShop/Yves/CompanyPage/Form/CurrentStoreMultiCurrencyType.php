@@ -7,15 +7,17 @@
 
 namespace SprykerShop\Yves\CompanyPage\Form;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
  */
-class MultiCurrencyType extends AbstractType
+class CurrentStoreMultiCurrencyType extends AbstractType
 {
     protected const MIN_MONEY_INT = 0;
 
@@ -35,9 +37,10 @@ class MultiCurrencyType extends AbstractType
      *
      * @return $this
      */
-    protected function addAmountPerCurrencyFields(FormBuilderInterface $builder): self
+    protected function addAmountPerCurrencyFields(FormBuilderInterface $builder)
     {
-        $currencyIsoCodes = $this->getFactory()->getStore()->getCurrencyIsoCodes();
+        $currencyIsoCodes = $this->getCurrentStore()
+            ->getAvailableCurrencyIsoCodes();
 
         foreach ($currencyIsoCodes as $currencyIsoCode) {
             $this->addAmountPerCurrencyField($builder, $currencyIsoCode);
@@ -52,8 +55,11 @@ class MultiCurrencyType extends AbstractType
      *
      * @return $this
      */
-    protected function addAmountPerCurrencyField(FormBuilderInterface $builder, string $currencyIsoCode): self
+    protected function addAmountPerCurrencyField(FormBuilderInterface $builder, string $currencyIsoCode)
     {
+        $currentStoreName = $this->getCurrentStore()
+            ->getName();
+
         $options = [
             'attr' => ['placeholder' => 'company_page.multi_currency_type.name.cent_amount.' . $currencyIsoCode],
             'label' => strtoupper($currencyIsoCode),
@@ -62,10 +68,25 @@ class MultiCurrencyType extends AbstractType
                     'value' => static::MIN_MONEY_INT,
                 ]),
             ],
+            'property_path' => sprintf(
+                '[%s][%s]',
+                $currentStoreName,
+                $currencyIsoCode
+            ),
         ];
 
         $builder->add($currencyIsoCode, NumberType::class, $options);
 
         return $this;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function getCurrentStore(): StoreTransfer
+    {
+        return $this->getFactory()
+            ->getStoreClient()
+            ->getCurrentStore();
     }
 }

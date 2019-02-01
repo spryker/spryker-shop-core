@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientInterface;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToGlossaryStorageClientInterface;
+use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToMoneyClientInterface;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientInterface;
 
 class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormDataProviderInterface
@@ -32,18 +33,26 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
     protected $glossaryStorageClient;
 
     /**
+     * @var \SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToMoneyClientInterface
+     */
+    protected $moneyClient;
+
+    /**
      * @param \SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientInterface $quoteApprovalClient
      * @param \SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToGlossaryStorageClientInterface $glossaryStorageClient
+     * @param \SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToMoneyClientInterface $moneyClient
      */
     public function __construct(
         QuoteApprovalWidgetToQuoteApprovalClientInterface $quoteApprovalClient,
         QuoteApprovalWidgetToCustomerClientInterface $customerClient,
-        QuoteApprovalWidgetToGlossaryStorageClientInterface $glossaryStorageClient
+        QuoteApprovalWidgetToGlossaryStorageClientInterface $glossaryStorageClient,
+        QuoteApprovalWidgetToMoneyClientInterface $moneyClient
     ) {
         $this->quoteApprovalClient = $quoteApprovalClient;
         $this->customerClient = $customerClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
+        $this->moneyClient = $moneyClient;
     }
 
     /**
@@ -154,6 +163,8 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
             );
         }
 
-        return ($approverLimit / 100) . $quoteTransfer->getCurrency()->getSymbol();
+        return $this->moneyClient->formatWithSymbol(
+            $this->moneyClient->fromInteger($approverLimit, $quoteTransfer->getCurrency()->getCode())
+        );
     }
 }

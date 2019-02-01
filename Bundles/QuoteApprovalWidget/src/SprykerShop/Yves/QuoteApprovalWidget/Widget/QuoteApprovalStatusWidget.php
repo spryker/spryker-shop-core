@@ -20,7 +20,7 @@ class QuoteApprovalStatusWidget extends AbstractWidget
      */
     public function __construct(QuoteTransfer $quoteTransfer)
     {
-        $this->addParameter('quoteStatus', $this->caclulateQuoteStatus($quoteTransfer));
+        $this->addParameter('quoteStatus', $this->calculateQuoteStatus($quoteTransfer));
     }
 
     /**
@@ -44,7 +44,7 @@ class QuoteApprovalStatusWidget extends AbstractWidget
      *
      * @return string|null
      */
-    protected function caclulateQuoteStatus(QuoteTransfer $quoteTransfer): ?string
+    protected function calculateQuoteStatus(QuoteTransfer $quoteTransfer): ?string
     {
         return $this->getFactory()
             ->getQuoteApprovalClient()

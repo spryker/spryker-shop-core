@@ -38,7 +38,7 @@ class CheckoutPageToCheckoutClientBridge implements CheckoutPageToCheckoutClient
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return Generated\Shared\Transfer\CanProceedCheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CanProceedCheckoutResponseTransfer
      */
     public function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): CanProceedCheckoutResponseTransfer
     {

@@ -42,7 +42,7 @@ class QuoteApprovalController extends AbstractController
             $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
         }
 
-        return $this->redirectBack($request);
+        return $this->redirectToReferer($request);
     }
 
     /**
@@ -55,22 +55,24 @@ class QuoteApprovalController extends AbstractController
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        if ($customerTransfer) {
-            $customerTransfer->requireCompanyUserTransfer();
-
-            $quoteApprovalRemoveRequestTransfer = new QuoteApprovalRemoveRequestTransfer();
-
-            $quoteApprovalRemoveRequestTransfer->setIdQuoteApproval($idQuoteApproval)
-                ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
-
-            $quoteApprovalResponseTransfer = $this->getFactory()
-                ->getQuoteApprovalClient()
-                ->removeQuoteApproval($quoteApprovalRemoveRequestTransfer);
-
-            $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
+        if (!$customerTransfer) {
+            return $this->redirectToReferer($request);
         }
 
-        return $this->redirectBack($request);
+        $customerTransfer->requireCompanyUserTransfer();
+
+        $quoteApprovalRemoveRequestTransfer = new QuoteApprovalRemoveRequestTransfer();
+
+        $quoteApprovalRemoveRequestTransfer->setIdQuoteApproval($idQuoteApproval)
+            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+
+        $quoteApprovalResponseTransfer = $this->getFactory()
+            ->getQuoteApprovalClient()
+            ->removeQuoteApproval($quoteApprovalRemoveRequestTransfer);
+
+        $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
+
+        return $this->redirectToReferer($request);
     }
 
     /**
@@ -117,7 +119,7 @@ class QuoteApprovalController extends AbstractController
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
         if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
-            return $this->redirectBack($request);
+            return $this->redirectToReferer($request);
         }
 
         $quoteApprovalRequestTransfer = (new QuoteApprovalRequestTransfer())
@@ -130,7 +132,7 @@ class QuoteApprovalController extends AbstractController
 
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
-        return $this->redirectBack($request);
+        return $this->redirectToReferer($request);
     }
 
     /**
@@ -144,7 +146,7 @@ class QuoteApprovalController extends AbstractController
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
         if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
-            return $this->redirectBack($request);
+            return $this->redirectToReferer($request);
         }
 
         $quoteApprovalRequestTransfer = (new QuoteApprovalRequestTransfer())
@@ -157,7 +159,7 @@ class QuoteApprovalController extends AbstractController
 
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
-        return $this->redirectBack($request);
+        return $this->redirectToReferer($request);
     }
 
     /**
@@ -165,7 +167,7 @@ class QuoteApprovalController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function redirectBack(Request $request): RedirectResponse
+    protected function redirectToReferer(Request $request): RedirectResponse
     {
         $referer = $request->headers->get(static::PARAM_REFERER);
 

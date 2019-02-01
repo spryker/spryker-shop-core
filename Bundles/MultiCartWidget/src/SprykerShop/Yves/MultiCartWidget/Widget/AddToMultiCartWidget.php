@@ -71,15 +71,15 @@ class AddToMultiCartWidget extends AbstractWidget
     }
 
     /**
-     * @see \Spryker\Client\Cart\CartClient::isQuoteEditable()
+     * @see \Spryker\Client\Cart\CartClient::isQuoteLocked()
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
+    protected function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
     {
-        return !$quoteTransfer->getIsLocked();
+        return (bool)$quoteTransfer->getIsLocked();
     }
 
     /**
@@ -89,7 +89,7 @@ class AddToMultiCartWidget extends AbstractWidget
      */
     protected function canEditCart(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote()) && $this->isQuoteEditable($quoteTransfer);
+        return $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote()) && $this->isQuoteLocked($quoteTransfer);
     }
 
     /**

@@ -7,7 +7,7 @@
 {% define data = {
     quote: required,
     customer: required,
-    approval: required,
+    quoteApproval: required,
     quoteStatus: required
 } %}
 
@@ -21,15 +21,15 @@
         </div>
     </div>
 
-    {% if data.approval %}
+    {% if data.quoteApproval %}
         <div class="grid">
             <div class="col col--sm-6 spacing-y spacing-y--big">
-                {% if data.approval.status is defined %}
-                    {% if data.approval.status == 'waiting' %}
+                {% if data.quoteApproval.status is defined %}
+                    {% if data.quoteApproval.status == 'waiting' %}
                         {{ 'quote_approval.request.waiting_for_approval_from' | trans }}
-                    {% elseif data.approval.status == 'approved' %}
+                    {% elseif data.quoteApproval.status == 'approved' %}
                         {{ 'quote_approval.request.approved_by' | trans }}
-                    {% elseif data.approval.status == 'declined' %}
+                    {% elseif data.quoteApproval.status == 'declined' %}
                         {{ 'quote_approval.request.declined_by' | trans }}
                     {% endif %}
                 {% endif %}
@@ -41,13 +41,13 @@
                         name: 'clock'
                     }
                 } only %}
-                {% if data.approval.updatedAt is defined %}
-                    {{ data.approval.updatedAt | date }}
+                {% if data.quoteApproval.updatedAt is defined %}
+                    {{ data.quoteApproval.updatedAt | date }}
                 {% endif %}
             </div>
             {% if data.quoteStatus == 'waiting' %}
                 <div class="col col--sm-12">
-                    <form method="POST" action="{{ path('quote-approval-remove', {'idQuoteApproval': data.approval.idQuoteApproval}) }}">
+                    <form method="POST" action="{{ path('quote-approval-remove', {'idQuoteApproval': data.quoteApproval.idQuoteApproval}) }}">
                         <button type="submit" class="button button--expand button--hollow button--alert">{{ 'quote_approval.remove' | trans }}</button>
                     </form>
                 </div>

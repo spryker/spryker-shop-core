@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientBridge;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToGlossaryStorageClientBridge;
+use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToMoneyClientBridge;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientBridge;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteClientBridge;
 
@@ -18,6 +19,7 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
 {
     public const CLIENT_QUOTE_APPROVAL = 'CLIENT_QUOTE_APPROVAL';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_MONEY = 'CLIENT_MONEY';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
@@ -32,6 +34,7 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addQuoteApprovalClient($container);
         $container = $this->addQuoteClient($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addMoneyClient($container);
         $container = $this->addGlossaryStorageClient($container);
 
         return $container;
@@ -74,6 +77,20 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new QuoteApprovalWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addMoneyClient($container): Container
+    {
+        $container[static::CLIENT_MONEY] = function (Container $container) {
+            return new QuoteApprovalWidgetToMoneyClientBridge($container->getLocator()->money()->client());
         };
 
         return $container;

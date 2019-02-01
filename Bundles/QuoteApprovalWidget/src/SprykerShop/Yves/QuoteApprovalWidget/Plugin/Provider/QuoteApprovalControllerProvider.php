@@ -12,10 +12,10 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class QuoteApprovalControllerProvider extends AbstractYvesControllerProvider
 {
-    public const ROUTE_QUOTE_APPROVAL_APPROVE = 'quote-approval-approve';
-    public const ROUTE_QUOTE_APPROVAL_DECLINE = 'quote-approval-decline';
-    public const ROUTE_QUOTE_APPROVAL_CREATE = 'quote-approval-create';
-    public const ROUTE_QUOTE_APPROVAL_REMOVE = 'quote-approval-remove';
+    protected const ROUTE_QUOTE_APPROVAL_APPROVE = 'quote-approval-approve';
+    protected const ROUTE_QUOTE_APPROVAL_DECLINE = 'quote-approval-decline';
+    protected const ROUTE_QUOTE_APPROVAL_CREATE = 'quote-approval-create';
+    protected const ROUTE_QUOTE_APPROVAL_REMOVE = 'quote-approval-remove';
 
     protected const PATTERN_ID = '\d+';
 
@@ -33,6 +33,8 @@ class QuoteApprovalControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses \SprykerShop\Yves\QuoteApprovalWidget\Controller\QuoteApprovalController::approveAction()
+     *
      * @return $this
      */
     protected function addQuoteApprovalApproveRoute()
@@ -46,6 +48,8 @@ class QuoteApprovalControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses \SprykerShop\Yves\QuoteApprovalWidget\Controller\QuoteApprovalController::declineAction()
+     *
      * @return $this
      */
     protected function addQuoteApprovalDeclineRoute()
@@ -59,6 +63,8 @@ class QuoteApprovalControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses \SprykerShop\Yves\QuoteApprovalWidget\Controller\QuoteApprovalController::addCreateQuoteApprovalRoute()
+     *
      * @return $this
      */
     protected function addCreateQuoteApprovalRoute()
@@ -71,6 +77,8 @@ class QuoteApprovalControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses \SprykerShop\Yves\QuoteApprovalWidget\Controller\QuoteApprovalController::removeQuoteApprovalAction()
+     *
      * @return $this
      */
     protected function addRemoveQuoteApprovalRoute()

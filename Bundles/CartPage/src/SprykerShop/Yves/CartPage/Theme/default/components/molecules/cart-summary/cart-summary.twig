@@ -8,7 +8,7 @@
 {% define data = {
     cart: required,
     isQuoteValid: required,
-    isQuoteEditable: required,
+    isQuoteLocked: required,
 } %}
 
 {% set canProceedToCheckout = data.cart.items is not empty

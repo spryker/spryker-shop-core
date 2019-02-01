@@ -132,8 +132,8 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     /**
      * @return bool
      */
-    public function isQuoteEditable(): bool
+    public function isQuoteLocked(): bool
     {
-        return $this->cartClient->isQuoteEditable();
+        return $this->cartClient->isQuoteLocked();
     }
 }

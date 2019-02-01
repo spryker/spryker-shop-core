@@ -7,10 +7,9 @@
 
 namespace SprykerShop\Yves\QuoteApprovalWidget\Widget;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteApprovalCollectionTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -24,9 +23,9 @@ class QuoteApprovalWidget extends AbstractWidget
     public function __construct(QuoteTransfer $quoteTransfer)
     {
         $this->addParameter('quoteTransfer', $quoteTransfer);
-        $this->addParameter('quoteApprovalCollection', $this->getQuoteApprovalCollectionByCurrentCustomer($quoteTransfer));
         $this->addParameter('isQuoteWaitingForApproval', $this->getIsQuoteWaitingForApproval($quoteTransfer));
         $this->addParameter('quoteOwner', $this->getQuoteOwner($quoteTransfer));
+        $this->addParameter('quoteApprovalCollection', $this->getQuoteApprovalCollectionByCurrentCustomer($quoteTransfer));
     }
 
     /**
@@ -43,25 +42,6 @@ class QuoteApprovalWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@QuoteApprovalWidget/views/quote-approval-widget/quote-approval-widget.twig';
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteApprovalCollectionTransfer
-     */
-    protected function getQuoteApprovalCollectionByCurrentCustomer(QuoteTransfer $quoteTransfer): QuoteApprovalCollectionTransfer
-    {
-        $quoteApprovalCollection = new QuoteApprovalCollectionTransfer();
-
-        $customer = $this->getFactory()->getCustomerClient()->getCustomer();
-        foreach ($quoteTransfer->getApprovals() as $quoteApprovalTransfer) {
-            if ($quoteApprovalTransfer->getApprover()->getIdCompanyUser() === $customer->getCompanyUserTransfer()->getIdCompanyUser()) {
-                $quoteApprovalCollection->addQuoteApproval($quoteApprovalTransfer);
-            }
-        }
-
-        return $quoteApprovalCollection;
     }
 
     /**
@@ -93,5 +73,24 @@ class QuoteApprovalWidget extends AbstractWidget
         return $this->getFactory()
             ->getQuoteApprovalClient()
             ->isQuoteWaitingForApproval($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalCollectionTransfer
+     */
+    protected function getQuoteApprovalCollectionByCurrentCustomer(QuoteTransfer $quoteTransfer): QuoteApprovalCollectionTransfer
+    {
+        $quoteApprovalCollection = new QuoteApprovalCollectionTransfer();
+
+        $customer = $this->getFactory()->getCustomerClient()->getCustomer();
+        foreach ($quoteTransfer->getQuoteApprovals() as $quoteApprovalTransfer) {
+            if ($quoteApprovalTransfer->getApprover()->getIdCompanyUser() === $customer->getCompanyUserTransfer()->getIdCompanyUser()) {
+                $quoteApprovalCollection->addQuoteApproval($quoteApprovalTransfer);
+            }
+        }
+
+        return $quoteApprovalCollection;
     }
 }

@@ -89,5 +89,5 @@ interface CartPageToCartClientInterface
     /**
      * @return bool
      */
-    public function isQuoteEditable(): bool;
+    public function isQuoteLocked(): bool;
 }

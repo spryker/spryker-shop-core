@@ -15,14 +15,14 @@
 
 {% block body %}
     {% if data.isVisible %}
-        {% set approval = data.quote.approvals | length > 0 ? data.quote.approvals | first : null %}
-        {% set customer = approval ? approval.approver.customer : null %}
+        {% set quoteApproval = data.quote.quoteApprovals | length > 0 ? data.quote.quoteApprovals | last : null %}
+        {% set customer = quoteApproval ? quoteApproval.approver.customer : null %}
 
         {% include molecule('quote-approve-request', 'QuoteApprovalWidget') with {
             data: {
                 customer: customer,
                 quoteStatus: data.quoteStatus,
-                approval: approval,
+                quoteApproval: quoteApproval,
                 quote: data.quote
             }
         } only %}

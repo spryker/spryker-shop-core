@@ -2,7 +2,7 @@
 
 {% define data = {
     cart: _view.cart,
-    isQuoteEditable: _view.isQuoteEditable,
+    isQuoteLocked: _view.isQuoteLocked,
     cartItems: _view.cartItems,
     isQuoteValid: _view.isQuoteValid,
     attributes: _view.attributes,
@@ -29,7 +29,7 @@
 {% endblock %}
 
 {% block content %}
-    {% set canEditCart = data.isQuoteEditable and can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
+    {% set canEditCart = not data.isQuoteLocked and can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
     {% if data.cart.items is empty %}
         <div class="box text-center">
             {% include atom('icon') with {
@@ -58,7 +58,7 @@
                         class: 'box',
                         data: {
                             cart: data.cart,
-                            isQuoteEditable: data.isQuoteEditable,
+                            isQuoteLocked: data.isQuoteLocked,
                             cartItem: cartItem,
                             attributes: data.attributes[cartItem.sku] | default([])
                         }
@@ -111,7 +111,7 @@
                             data: {
                                 cart: data.cart,
                                 isQuoteValid: data.isQuoteValid,
-                                isQuoteEditable: data.isQuoteEditable,
+                                isQuoteLocked: data.isQuoteLocked,
                             }
                         } only %}
                      {% endif %}
