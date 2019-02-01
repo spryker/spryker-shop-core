@@ -1,0 +1,15 @@
+{% extends template('widget') %}
+
+{% block body %}
+    {% embed atom('checkbox') with {
+        attributes: {
+            name: 'items[]',
+            disabled: not _widget.availability,
+            value: _widget.item.idSalesOrderItem
+        }
+    } only %}
+        {%- block inputClass -%}
+            js-customer-reorder__selection
+        {%- endblock -%}
+    {% endembed %}
+{% endblock %}
