@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationWidget\Controller;
 
+use Generated\Shared\Transfer\AvailabilitySubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -64,14 +65,15 @@ class SubscriptionController extends AbstractController
         }
 
         $formData = $unsubscribeForm->getData();
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        $availabilitySubscriptionExistenceRequestTransfer = (new AvailabilitySubscriptionRequestTransfer())
-            ->setEmail($formData[AvailabilityUnsubscribeForm::FIELD_EMAIL])
+        $availabilitySubscriptionRequestTransfer = (new AvailabilitySubscriptionRequestTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
             ->setSku($formData[AvailabilityUnsubscribeForm::FIELD_SKU]);
 
         $subscriptionTransfer = $this->getFactory()
             ->getAvailabilityNotificationClient()
-            ->findAvailabilitySubscription($availabilitySubscriptionExistenceRequestTransfer)
+            ->findAvailabilitySubscription($availabilitySubscriptionRequestTransfer)
             ->getAvailabilitySubscription();
 
         if ($subscriptionTransfer === null) {
@@ -90,7 +92,16 @@ class SubscriptionController extends AbstractController
             return;
         }
 
-        $this->removeAvailabilityNotificationEmailFromSession();
+        $availabilitySubscriptionCollection = new AvailabilitySubscriptionCollectionTransfer();
+
+        foreach ($customerTransfer->getAvailabilitySubscriptionCollection()->getAvailabilitySubscriptions() as $availabilitySubscriptionTransfer) {
+            if ($availabilitySubscriptionTransfer->getSku() !== $subscriptionTransfer->getSku()) {
+                $availabilitySubscriptionCollection->addAvailabilitySubscription($availabilitySubscriptionTransfer);
+            }
+        }
+
+        $customerTransfer->setAvailabilitySubscriptionCollection($availabilitySubscriptionCollection);
+
         $this->addSuccessMessage(static::GLOSSARY_KEY_SUCCESSFULLY_UNSUBSCRIBED);
     }
 
@@ -120,12 +131,6 @@ class SubscriptionController extends AbstractController
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
         $formData = $subscriptionForm->getData();
 
-        $email = $formData[AvailabilitySubscriptionForm::FIELD_EMAIL];
-
-        if ($customerTransfer === null) {
-            $this->addAvailabilityNotificationEmailToSession($email);
-        }
-
         $availabilitySubscriptionTransfer = $this->setAvailabilitySubscriptionTransferFromSubscriptionForm($customerTransfer, $formData);
 
         $responseTransfer = $this->getFactory()
@@ -135,33 +140,14 @@ class SubscriptionController extends AbstractController
         if ($responseTransfer->getIsSuccess() === true) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_SUCCESSFULLY_SUBSCRIBED);
 
+            if ($customerTransfer !== null) {
+                $customerTransfer->getAvailabilitySubscriptionCollection()->addAvailabilitySubscription($responseTransfer->getAvailabilitySubscription());
+            }
+
             return;
         }
 
         $this->addErrorMessage($responseTransfer->getErrorMessage());
-    }
-
-    /**
-     * @param string $email
-     *
-     * @return void
-     */
-    protected function addAvailabilityNotificationEmailToSession(string $email): void
-    {
-        $sessionClient = $this->getFactory()->getSessionClient();
-        $sessionClient->set('availabilityNotificationEmail', $email);
-
-        $sessionClient->save();
-    }
-
-    /**
-     * @return void
-     */
-    protected function removeAvailabilityNotificationEmailFromSession(): void
-    {
-        $sessionClient = $this->getFactory()->getSessionClient();
-        $sessionClient->set('availabilityNotificationEmail', null);
-        $sessionClient->save();
     }
 
     /**

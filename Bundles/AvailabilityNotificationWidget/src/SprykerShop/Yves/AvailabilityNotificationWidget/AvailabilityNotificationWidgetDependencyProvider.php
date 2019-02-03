@@ -30,23 +30,6 @@ class AvailabilityNotificationWidgetDependencyProvider extends AbstractBundleDep
 
         $container = $this->addAvailabilityNotificationClient($container);
         $container = $this->addCustomerClient($container);
-        $container = $this->addSessionClient($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addSessionClient(Container $container): Container
-    {
-        $container[static::CLIENT_SESSION] = function (Container $container) {
-            return new AvailabilityNotificationWidgetToSessionClientBridge(
-                $container->getLocator()->session()->client()
-            );
-        };
 
         return $container;
     }

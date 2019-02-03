@@ -58,12 +58,4 @@ class AvailabilityNotificationWidgetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(AvailabilityNotificationWidgetDependencyProvider::CLIENT_CUSTOMER);
     }
-
-    /**
-     * @return \SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\AvailabilityNotificationWidgetToSessionClientInterface
-     */
-    public function getSessionClient(): AvailabilityNotificationWidgetToSessionClientInterface
-    {
-        return $this->getProvidedDependency(AvailabilityNotificationWidgetDependencyProvider::CLIENT_SESSION);
-    }
 }

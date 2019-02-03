@@ -44,19 +44,19 @@ class AvailabilityNotificationPageController extends AbstractController
     {
         $subscriptionKey = $request->query->get(AvailabilityNotificationPageControllerProvider::PARAM_SUBSCRIPTION_KEY);
 
-        $availabilitySubscriptionExistenceRequestTransfer = (new AvailabilitySubscriptionRequestTransfer())->setSubscriptionKey($subscriptionKey);
+        $availabilitySubscriptionRequestTransfer = (new AvailabilitySubscriptionRequestTransfer())->setSubscriptionKey($subscriptionKey);
 
-        $availabilitySubscriptionExistenceResponseTransfer = $this->getFactory()->getAvailabilityNotificationClient()->findAvailabilitySubscription($availabilitySubscriptionExistenceRequestTransfer);
+        $availabilitySubscriptionResponseTransfer = $this->getFactory()->getAvailabilityNotificationClient()->findAvailabilitySubscription($availabilitySubscriptionRequestTransfer);
 
-        if ($availabilitySubscriptionExistenceResponseTransfer->getAvailabilitySubscription() === null) {
+        if ($availabilitySubscriptionResponseTransfer->getAvailabilitySubscription() === null) {
             throw new NotFoundHttpException('Subscription doesn\'t exist');
         }
 
-        $locale = $availabilitySubscriptionExistenceResponseTransfer->getAvailabilitySubscription()->getLocale();
+        $locale = $availabilitySubscriptionResponseTransfer->getAvailabilitySubscription()->getLocale();
 
         $availabilitySubscriptionResponseTransfer = $this->getFactory()
             ->getAvailabilityNotificationClient()
-            ->unsubscribe($availabilitySubscriptionExistenceResponseTransfer->getAvailabilitySubscription());
+            ->unsubscribe($availabilitySubscriptionResponseTransfer->getAvailabilitySubscription());
 
         if ($availabilitySubscriptionResponseTransfer->getIsSuccess() === false) {
             throw new NotFoundHttpException($availabilitySubscriptionResponseTransfer->getErrorMessage());
