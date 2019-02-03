@@ -137,17 +137,17 @@ class SubscriptionController extends AbstractController
             ->getAvailabilityNotificationClient()
             ->subscribe($availabilitySubscriptionTransfer);
 
-        if ($responseTransfer->getIsSuccess() === true) {
-            $this->addSuccessMessage(static::GLOSSARY_KEY_SUCCESSFULLY_SUBSCRIBED);
-
-            if ($customerTransfer !== null) {
-                $customerTransfer->getAvailabilitySubscriptionCollection()->addAvailabilitySubscription($responseTransfer->getAvailabilitySubscription());
-            }
+        if ($responseTransfer->getIsSuccess() === false) {
+            $this->addErrorMessage($responseTransfer->getErrorMessage());
 
             return;
         }
 
-        $this->addErrorMessage($responseTransfer->getErrorMessage());
+        $this->addSuccessMessage(static::GLOSSARY_KEY_SUCCESSFULLY_SUBSCRIBED);
+
+        if ($customerTransfer !== null) {
+            $customerTransfer->getAvailabilitySubscriptionCollection()->addAvailabilitySubscription($responseTransfer->getAvailabilitySubscription());
+        }
     }
 
     /**
