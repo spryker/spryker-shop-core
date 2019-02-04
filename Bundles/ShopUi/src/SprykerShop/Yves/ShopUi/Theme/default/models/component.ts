@@ -1,13 +1,23 @@
-import { get as config } from '../app/config';
-
 /**
- * @event customEvent A custom event.
+ * A Component is an extension of an HTMLElement.
+ * It is used in Spryker Shop as base class for every components.
  */
 export default abstract class Component extends HTMLElement {
-    readonly name: string
-    readonly jsName: string
     private isComponentMounted: boolean
 
+    /**
+     * The name of the component.
+     */
+    readonly name: string
+
+    /**
+     * The js-safe name of the component.
+     */
+    readonly jsName: string
+
+    /**
+     * Creates an instance of Component.
+     */
     constructor() {
         super();
         this.name = this.tagName.toLowerCase();
@@ -21,23 +31,34 @@ export default abstract class Component extends HTMLElement {
     }
 
     /**
-     * Marks the component as mounted.
+     * Same as mountCallback().
+     *
+     * @deprecated Use mountCallback() instead.
+     */
+    protected abstract readyCallback(): void
+
+    /**
+     * Used by the application to mark the current component as mounted and avoid multiple initialisations.
      */
     markAsMounted(): void {
         this.isComponentMounted = true;
     }
 
     /**
-     * Invokes the readyCallback method.
+     * Invoked when DOM is loaded and every webcomponent in the page is defined.
+     *
+     * @remarks
+     * Use this method as initial point for your component if you intend to query the DOM for other webcomponents.
+     * If this is not needed, you can use connectedCallback() intead for a faster execution,
+     * as described by official documentation for Web Components:
+     * {@link https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#Using_the_lifecycle_callbacks}
      */
     mountCallback(): void {
         this.readyCallback();
     }
 
-    protected abstract readyCallback(): void
-
     /**
-     * Gets if the component is mounted.
+     * Gets if the component has beed mounted already.
      */
     get isMounted(): boolean {
         return this.isComponentMounted;
