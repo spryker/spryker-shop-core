@@ -3,12 +3,15 @@ import Component from 'ShopUi/models/component';
 export default class AddressFormToggler extends Component {
     protected toggler: HTMLSelectElement;
     protected targetElementCache: Map<String, HTMLElement> = new Map<String, HTMLElement>();
+    form: HTMLFormElement;
 
     protected readyCallback(): void {
-        if(this.triggerSelector !== ''){
+        if(this.triggerSelector) {
             this.toggler = <HTMLSelectElement>document.querySelector(this.triggerSelector);
+            this.form = <HTMLFormElement>document.querySelector(this.targetSelector);
 
             this.prepareTargetElementCache();
+            this.onTogglerChange();
             this.mapEvents();
         }
     }
@@ -66,6 +69,10 @@ export default class AddressFormToggler extends Component {
 
     get classToToggle(): string {
         return this.getAttribute('class-to-toggle');
+    }
+
+    get hasCompanyBusinessUnitAddress(): string {
+        return this.getAttribute('has-company-business-unit-address');
     }
 
     get triggerOptionToTargetMap(): object {
