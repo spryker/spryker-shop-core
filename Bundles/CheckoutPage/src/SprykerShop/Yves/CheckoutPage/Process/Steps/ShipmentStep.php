@@ -7,21 +7,13 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
-use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\ItemCollectionTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientBridge;
-use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep\ShipmentStepStrategyResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
-use \ArrayObject;
 
 class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
 {
@@ -36,29 +28,29 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     protected $shipmentPlugins;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
+     * @var \SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep\ShipmentStepStrategyResolverInterface
      */
-    protected $shipmentService;
+    protected $stepResolver;
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
-     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection            $shipmentPlugins
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface  $shipmentService
-     * @param $stepRoute
-     * @param $escapeRoute
+     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection $shipmentPlugins
+     * @param string $stepRoute
+     * @param string $escapeRoute
+     * @param \SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep\ShipmentStepStrategyResolverInterface $stepResolver
      */
     public function __construct(
         CheckoutPageToCalculationClientInterface $calculationClient,
         StepHandlerPluginCollection $shipmentPlugins,
-        CheckoutPageToShipmentServiceInterface $shipmentService,
         $stepRoute,
-        $escapeRoute
+        $escapeRoute,
+        ShipmentStepStrategyResolverInterface $stepResolver
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->calculationClient = $calculationClient;
         $this->shipmentPlugins = $shipmentPlugins;
-        $this->shipmentService = $shipmentService;
+        $this->stepResolver = $stepResolver;
     }
 
     /**
@@ -68,26 +60,12 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function requireInput(AbstractTransfer $quoteTransfer)
     {
-        /**
-         * This is stub, remove when address step is ready
-         */
-        foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
-            $shipment = new ShipmentTransfer();
-            $address = new AddressTransfer();
-            $address->setAddress1('address ' . $key);
-            $address->setIso2Code('DE');
-            $shipment->setShippingAddress($address);
-            $itemTransfer->setShipment($shipment);
-        }
-
-        $quoteTransfer->setShipmentGroups($this->getShipmentGroupCollection($quoteTransfer));
-
         return true;
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer  $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -106,23 +84,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
-        return $this->isShipmentSet($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isShipmentSet(QuoteTransfer $quoteTransfer): bool
-    {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getExpense() === null) {
-                return false;
-            }
-        }
-
-        return true;
+        return $this->stepResolver->resolvePostCondition()->check($quoteTransfer);
     }
 
     /**
@@ -151,15 +113,5 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer)
     {
         return !$this->requireInput($dataTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
-     */
-    protected function getShipmentGroupCollection(QuoteTransfer $quoteTransfer): ArrayObject
-    {
-        return $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
     }
 }
