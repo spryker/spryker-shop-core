@@ -7,16 +7,41 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Model\Shipment;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
 use Symfony\Component\HttpFoundation\Request;
 
 class Creator extends ShipmentHandler
 {
+    /**
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
+     */
+    protected $shipmentService;
+
+    /**
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface $priceClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
+     */
+    public function __construct(
+        CheckoutPageToShipmentClientInterface $shipmentClient,
+        CheckoutPageToPriceClientInterface $priceClient,
+        CheckoutPageToShipmentServiceInterface $shipmentService
+    ) {
+        parent::__construct($shipmentClient, $priceClient);
+
+        $this->shipmentService = $shipmentService;
+    }
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -25,20 +50,80 @@ class Creator extends ShipmentHandler
      */
     public function addShipmentToQuote(Request $request, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $shipmentMethodsTransfer = $this->getAvailableShipmentMethods($quoteTransfer);
+        $quoteTransfer->setShipmentGroups($this->getAvailableMethodsByShipment($quoteTransfer)->getGroups());
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $idSelectedShipmentMethod = $quoteTransfer->getShipment()->getShipmentSelection();
-            $shipmentTransfer = $itemTransfer->getShipment();
-            $shipmentTransfer->setShipmentSelection($idSelectedShipmentMethod);
-            $shipmentMethodTransfer = $this->getAvailableShipmentMethodById($shipmentMethodsTransfer, $idSelectedShipmentMethod);
-            $shipmentTransfer->setMethod($shipmentMethodTransfer);
-            $shipmentTransfer->setExpense(
-                $this->createShippingExpenseTransfer($shipmentMethodTransfer, $quoteTransfer->getPriceMode())
+        $quoteTransfer = $this->groupShipmentGroupTransfersItemsByHash($quoteTransfer);
+        $quoteShipmentGroups = $quoteTransfer->getShipmentGroups();
+        $quoteShipmentGroups = $this->setShipmentGroupsSelectedMethodTransfer($quoteShipmentGroups);
+        $quoteShipmentGroups = $this->setShipmentGroupsExpenseTransfer($quoteShipmentGroups, $quoteTransfer->getPriceMode());
+
+        foreach ($quoteShipmentGroups as $shipmentGroupTransfer) {
+            foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
+                $itemTransfer->setShipment($shipmentGroupTransfer->getShipment());
+            }
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    protected function groupItemsByShipment(ArrayObject $itemTransfers): ArrayObject
+    {
+        return $this->shipmentService->groupItemsByShipment($itemTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     */
+    protected function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
+    {
+        return $this->shipmentClient->getAvailableMethodsByShipment($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function groupShipmentGroupTransfersItemsByHash(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $shipmentGroupsCollection = $this->groupItemsByShipment($quoteTransfer->getItems());
+
+        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
+            if (!$shipmentGroupsCollection->offsetExists($shipmentGroupTransfer->getHash())) {
+                continue;
+            }
+
+            $shipmentGroupTransfer->setItems(
+                $shipmentGroupsCollection[$shipmentGroupTransfer->getHash()]->getItems()
             );
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    protected function setShipmentGroupsSelectedMethodTransfer(ArrayObject $shipmentGroupCollection): ArrayObject
+    {
+        foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
+            $shipmentMethodTransfer = $this->findShipmentMethodById(
+                $shipmentGroupTransfer->getAvailableShipmentMethods(),
+                $shipmentGroupTransfer->getShipment()->getShipmentSelection()
+            );
+            $shipmentGroupTransfer->getShipment()->setMethod($shipmentMethodTransfer);
+        }
+
+        return $shipmentGroupCollection;
     }
 
     /**
@@ -47,7 +132,7 @@ class Creator extends ShipmentHandler
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function getAvailableShipmentMethodById(ShipmentMethodsTransfer $shipmentMethodsTransfer, int $idShipmentMethod): ?ShipmentMethodTransfer
+    protected function findShipmentMethodById(ShipmentMethodsTransfer $shipmentMethodsTransfer, int $idShipmentMethod): ?ShipmentMethodTransfer
     {
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodsTransfer) {
             if ($shipmentMethodsTransfer->getIdShipmentMethod() === $idShipmentMethod) {
@@ -59,13 +144,25 @@ class Creator extends ShipmentHandler
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param string|null $priceMode
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    protected function getAvailableShipmentMethods(QuoteTransfer $quoteTransfer)
+    protected function setShipmentGroupsExpenseTransfer(ArrayObject $shipmentGroupCollection, ?string $priceMode): ArrayObject
     {
-        return $this->shipmentClient->getAvailableMethods($quoteTransfer);
+        foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
+            $shipmentGroupTransfer->requireShipment();
+            $shipmentGroupTransfer->getShipment()->requireMethod();
+
+            $shippingExpenseTransfer = $this->createShippingExpenseTransfer(
+                $shipmentGroupTransfer->getShipment()->getMethod(),
+                $priceMode
+            );
+            $shipmentGroupTransfer->getShipment()->setExpense($shippingExpenseTransfer);
+        }
+
+        return $shipmentGroupCollection;
     }
 
     /**
@@ -74,7 +171,7 @@ class Creator extends ShipmentHandler
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    protected function createShippingExpenseTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, $priceMode)
+    protected function createShippingExpenseTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, $priceMode): ExpenseTransfer
     {
         $shipmentExpenseTransfer = $this->createExpenseTransfer();
         $shipmentExpenseTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
@@ -92,7 +189,7 @@ class Creator extends ShipmentHandler
      *
      * @return void
      */
-    protected function setPrice(ExpenseTransfer $shipmentExpenseTransfer, $price, $priceMode)
+    protected function setPrice(ExpenseTransfer $shipmentExpenseTransfer, $price, $priceMode): void
     {
         if ($priceMode === $this->priceClient->getNetPriceModeIdentifier()) {
             $shipmentExpenseTransfer->setUnitGrossPrice(0);
@@ -109,7 +206,7 @@ class Creator extends ShipmentHandler
     /**
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    protected function createExpenseTransfer()
+    protected function createExpenseTransfer(): ExpenseTransfer
     {
         return new ExpenseTransfer();
     }

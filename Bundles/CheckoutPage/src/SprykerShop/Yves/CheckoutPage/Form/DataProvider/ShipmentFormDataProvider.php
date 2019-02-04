@@ -83,6 +83,9 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
+        /**
+         * @todo: Add BC
+         */
         return [
             ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP => $this->createAvailableMethodsByShipmentChoiceList($quoteTransfer),
         ];
@@ -122,10 +125,28 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     {
         $shipmentMethods = [];
 
-        $shipmentGroupsTransfer = $this->getAvailableMethodsByShipment($quoteTransfer);
+        /**
+         * Add quote bc adapter
+         */
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                $itemTransfer->setShipment(new ShipmentTransfer());
+            }
 
-        foreach ($shipmentGroupsTransfer->getGroups() as $shipmentGroupTransfer) {
-            foreach ($shipmentGroupTransfer->getAvailableShipmentMethods()->getMethods() as $shipmentMethodTransfer) {
+            if ($itemTransfer->getShipment()->getMethod() === null) {
+                $itemTransfer->getShipment()->setMethod(new ShipmentMethodTransfer());
+            }
+        }
+
+        $shipmentGroupCollectionTransfer = $this->getAvailableMethodsByShipment($quoteTransfer);
+
+        foreach ($shipmentGroupCollectionTransfer->getGroups() as $shipmentGroupTransfer) {
+            $shipmentMethodsTransfer = $shipmentGroupTransfer->getAvailableShipmentMethods();
+            if ($shipmentMethodsTransfer === null) {
+                continue;
+            }
+
+            foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
                 if (!isset($shipmentMethods[$shipmentGroupTransfer->getHash()][$shipmentMethodTransfer->getCarrierName()])) {
                     $shipmentMethods[$shipmentGroupTransfer->getHash()][$shipmentMethodTransfer->getCarrierName()] = [];
                 }
