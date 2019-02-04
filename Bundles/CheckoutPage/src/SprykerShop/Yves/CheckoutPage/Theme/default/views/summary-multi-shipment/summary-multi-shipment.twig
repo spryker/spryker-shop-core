@@ -18,6 +18,7 @@
         expenses: _view.quoteTransfer.expenses,
         voucherDiscounts: _view.quoteTransfer.voucherDiscounts,
         cartRuleDiscounts: _view.quoteTransfer.cartRuleDiscounts,
+        shipmentData: _view.shipmentData,
 
         prices: {
             subTotal: _view.quoteTransfer.totals.subtotal,
@@ -74,7 +75,10 @@
                             bundleItems: item.bundleItems | default([]),
                             quantitySalesUnit: item.quantitySalesUnit,
                             amountSalesUnit: item.amountSalesUnit,
-                            amount: item.amount
+                            amount: item.amount,
+                            groupKey: item.groupKey,
+                            images: item.images,
+                            sku: item.sku
                         },
                         embed: {
                             isLast: not loop.last,
