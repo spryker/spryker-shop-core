@@ -33,10 +33,9 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return false;
         }
 
-        $shippingIsEmpty = $this->isAddressEmpty($quoteTransfer->getShippingAddress());
         $billingIsEmpty = $quoteTransfer->getBillingSameAsShipping() === false && $this->isAddressEmpty($quoteTransfer->getBillingAddress());
 
-        if ($shippingIsEmpty || $billingIsEmpty) {
+        if ($billingIsEmpty) {
             return false;
         }
 
