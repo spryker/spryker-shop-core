@@ -82,7 +82,7 @@ class QuickOrderPageWidget extends AbstractWidget
      */
     protected function canEditCart(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote()) && $this->isQuoteLocked($quoteTransfer);
+        return $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote()) && !$this->isQuoteLocked($quoteTransfer);
     }
 
     /**

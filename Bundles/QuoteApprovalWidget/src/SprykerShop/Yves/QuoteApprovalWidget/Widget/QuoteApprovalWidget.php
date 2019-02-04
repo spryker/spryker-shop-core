@@ -112,7 +112,7 @@ class QuoteApprovalWidget extends AbstractWidget
     protected function hasQuoteApprovalsForCurrentCompanyUser(QuoteTransfer $quoteTransfer): bool
     {
         if (!$this->getCurrentCompanyUser()) {
-            return null;
+            return false;
         }
 
         return $this->getFactory()
