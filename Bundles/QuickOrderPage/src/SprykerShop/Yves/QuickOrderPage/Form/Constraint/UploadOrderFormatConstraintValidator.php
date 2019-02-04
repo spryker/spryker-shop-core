@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\QuickOrderPage\Form\Constraint;
 
 use InvalidArgumentException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -32,7 +31,7 @@ class UploadOrderFormatConstraintValidator extends ConstraintValidator
             ));
         }
 
-        if (!$file) {
+        if ($file === null) {
             $this->context
                 ->buildViolation($constraint->getNoFileMessage())
                 ->addViolation();
@@ -40,7 +39,7 @@ class UploadOrderFormatConstraintValidator extends ConstraintValidator
             return;
         }
 
-        if (!$this->isValidMimeType($file, $constraint->getFileProcessorPlugins())) {
+        if (!$constraint->getUploadedFileValidator()->isValidMimeType($file)) {
             $this->context
                 ->buildViolation($constraint->getInvalidMimeTypeMessage())
                 ->addViolation();
@@ -48,7 +47,7 @@ class UploadOrderFormatConstraintValidator extends ConstraintValidator
             return;
         }
 
-        if (!$this->isValidFormat($file, $constraint->getFileProcessorPlugins())) {
+        if (!$constraint->getUploadedFileValidator()->isValidFormat($file)) {
             $this->context
                 ->buildViolation($constraint->getInvalidFormatMessage())
                 ->addViolation();
@@ -56,66 +55,12 @@ class UploadOrderFormatConstraintValidator extends ConstraintValidator
             return;
         }
 
-        if (!$this->isValidAmountOfRows($file, $constraint->getUploadOrderMaxAllowedLines(), $constraint->getFileProcessorPlugins())) {
+        if (!$constraint->getUploadedFileValidator()->isValidAmountOfRows($file, $constraint->getAllowedUploadRowCount())) {
             $this->context
                 ->buildViolation($constraint->getInvalidAmountOfRowsMessage())
                 ->addViolation();
 
             return;
         }
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorStrategyPluginInterface[] $fileProcessorPlugins
-     *
-     * @return bool
-     */
-    protected function isValidMimeType(UploadedFile $file, array $fileProcessorPlugins): bool
-    {
-        foreach ($fileProcessorPlugins as $fileProcessorPlugin) {
-            if ($fileProcessorPlugin->isApplicable($file)) {
-                if (in_array($file->getClientMimeType(), $fileProcessorPlugin->getAllowedMimeTypes())) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorStrategyPluginInterface[] $fileProcessorPlugins
-     *
-     * @return bool
-     */
-    protected function isValidFormat(UploadedFile $file, array $fileProcessorPlugins): bool
-    {
-        foreach ($fileProcessorPlugins as $fileProcessorPlugin) {
-            if ($fileProcessorPlugin->isApplicable($file)) {
-                return $fileProcessorPlugin->isValidFormat($file);
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
-     * @param int $maxAllowedLines
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorStrategyPluginInterface[] $fileProcessorPlugins
-     *
-     * @return bool
-     */
-    protected function isValidAmountOfRows(UploadedFile $file, int $maxAllowedLines, array $fileProcessorPlugins): bool
-    {
-        foreach ($fileProcessorPlugins as $fileProcessorPlugin) {
-            if ($fileProcessorPlugin->isApplicable($file)) {
-                return $fileProcessorPlugin->isValidAmountOfRows($file, $maxAllowedLines);
-            }
-        }
-
-        return false;
     }
 }

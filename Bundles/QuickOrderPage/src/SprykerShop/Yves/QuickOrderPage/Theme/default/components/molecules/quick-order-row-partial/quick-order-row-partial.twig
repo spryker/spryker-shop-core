@@ -11,8 +11,7 @@
     customQuantityFieldName: null,
     price: null,
     additionalColumns: [],
-    errorMessages: null,
-    warningMessages: null
+    messages: null
 } %}
 
 {% block body %}
@@ -65,20 +64,10 @@
         </div>
     </div>
 
-    {% if data.errorMessages is not empty %}
+    {% if data.messages is not empty %}
         <div class="{{ config.name }}__error spacing-bottom spacing-bottom--big">
-            {% for errorMessage in data.errorMessages %}
-                {{ errorMessage.value | trans }}
-            {% endfor %}
-        </div>
-    {% endif %}
-
-    {% if data.warningMessages is not empty %}
-        <div class="{{ config.name }}__warning spacing-bottom spacing-bottom--big">
-            {% for warningMessage in data.warningMessages %}
-                {{ warningMessage.value | trans(
-                    warningMessage.parameters
-                ) }}
+            {% for message in data.messages %}
+                {{ message.value | trans }}
             {% endfor %}
         </div>
     {% endif %}

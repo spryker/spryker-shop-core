@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\Csv;
+namespace SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-interface FileValidatorInterface
+interface UploadedFileTypeValidatorInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile
-     * @param int $maxAllowedLines
+     * @param int $maxAllowedRows
      *
      * @return bool
      */
-    public function validateAmountOfRows(UploadedFile $uploadedFile, int $maxAllowedLines): bool;
+    public function validateAmountOfRows(UploadedFile $uploadedFile, int $maxAllowedRows): bool;
 
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file

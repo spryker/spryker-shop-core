@@ -32,6 +32,7 @@ class QuickOrderController extends AbstractController
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
     public const PARAM_QUICK_ORDER_FILE_TYPE = 'file-type';
     public const ERROR_MESSAGE_QTY_INVALID = 'quick-order.errors.quantity-invalid';
+    public const MESSAGE_TYPE_WARNING = 'warning';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -205,8 +206,8 @@ class QuickOrderController extends AbstractController
     protected function executeDownloadTemplateAction(Request $request): Response
     {
         return $this->getFactory()
-            ->createFileOutputter()
-            ->outputFile($request->get(static::PARAM_QUICK_ORDER_FILE_TYPE, ''));
+            ->createFileDownloadRenderer()
+            ->render($request->get(static::PARAM_QUICK_ORDER_FILE_TYPE, ''));
     }
 
     /**
@@ -387,9 +388,9 @@ class QuickOrderController extends AbstractController
 
         if ($quantity < 1) {
             $quantity = 1;
-            $quickOrderItemTransfer->addErrorMessage((new MessageTransfer())
-                ->setValue(static::ERROR_MESSAGE_QTY_INVALID)
-            );
+            $quickOrderItemTransfer->addMessage((new MessageTransfer())
+                ->setType(static::MESSAGE_TYPE_WARNING)
+                ->setValue(static::ERROR_MESSAGE_QTY_INVALID));
         }
 
         $quickOrderItemTransfer->setQuantity($quantity);
@@ -411,8 +412,7 @@ class QuickOrderController extends AbstractController
             'additionalColumns' => $additionalColumns,
             'product' => reset($products),
             'form' => $form->createView(),
-            'errorMessages' => $quickOrderItemTransfer->getErrorMessages(),
-            'warningMessages' => $quickOrderItemTransfer->getWarningMessages(),
+            'messages' => $quickOrderItemTransfer->getMessages(),
             'index' => $index,
         ];
 
@@ -467,8 +467,8 @@ class QuickOrderController extends AbstractController
         if ($uploadOrderForm->isSubmitted() && $uploadOrderForm->isValid()) {
             $data = $uploadOrderForm->getData();
             $quickOrderItems = $this->getFactory()
-                ->createUploadOrderParser()
-                ->parseFile($data[UploadOrderForm::FIELD_FILE_UPLOAD_ORDER]);
+                ->createUploadedFileParser()
+                ->parse($data[UploadOrderForm::FIELD_FILE_UPLOAD_ORDER]);
         }
 
         return $quickOrderItems;

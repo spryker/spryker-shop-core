@@ -12,14 +12,16 @@
         <property name="quantity" type="int" />
         <property name="sumPrice" type="int" />
         <property name="productConcrete" type="ProductConcrete" />
-        <property name="errorMessages" type="Message[]" singular="errorMessage" />
-        <property name="warningMessages" type="Message[]" singular="warningMessage" />
+        <property name="messages" type="Message[]" singular="Message" />
     </transfer>
 
-    <transfer name="QuickOrderValidationResponse">
-        <property name="errorMessages" type="Message[]" singular="errorMessage" />
-        <property name="warningMessages" type="Message[]" singular="warningMessage" />
-        <property name="correctValues" type="array"  singular="correctValue" />
+    <transfer name="ItemValidationResponse">
+        <property name="messages" type="Message[]" singular="Message" />
+        <property name="recommendedValues" type="Item" />
+    </transfer>
+
+    <transfer name="Item">
+        <property name="messages" type="Message[]" singular="Message" />
     </transfer>
 
     <transfer name="ProductConcrete">
@@ -28,6 +30,7 @@
     </transfer>
 
     <transfer name="Message">
+        <property name="type" type="string"/>
         <property name="value" type="string"/>
         <property name="parameters" type="array"/>
     </transfer>

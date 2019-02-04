@@ -7,12 +7,13 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Form\Constraint;
 
+use SprykerShop\Yves\QuickOrderPage\File\Parser\FileValidatorInterface;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UploadOrderFormatConstraint extends SymfonyConstraint
 {
     public const OPTION_BUNDLE_CONFIG = 'config';
-    public const OPTION_FILE_PROCESSOR_PLUGINS = 'quickOrderFileProcessorPlugins';
+    public const OPTION_UPLOADED_FILE_VALIDATOR = 'uploadedFileValidator';
 
     protected const ERROR_MESSAGE_INVALID_MIME_TYPE = 'quick-order.upload-order.errors.upload-order-invalid-mime-type';
     protected const ERROR_MESSAGE_INVALID_AMOUNT_OF_ROWS = 'quick-order.upload-order.errors.upload-order-invalid-amount-of-rows';
@@ -25,37 +26,24 @@ class UploadOrderFormatConstraint extends SymfonyConstraint
     protected $config;
 
     /**
-     * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorStrategyPluginInterface[]
+     * @var \SprykerShop\Yves\QuickOrderPage\File\Parser\FileValidatorInterface
      */
-    protected $quickOrderFileProcessorPlugins;
+    protected $uploadedFileValidator;
 
     /**
-     * @return string[]
+     * @return \SprykerShop\Yves\QuickOrderPage\File\Parser\FileValidatorInterface
      */
-    public function getAllowedMimeTypes(): array
+    public function getUploadedFileValidator(): FileValidatorInterface
     {
-        $mimeTypes = [];
-        foreach ($this->quickOrderFileProcessorPlugins as $quickOrderFileProcessorPlugin) {
-            $mimeTypes = array_merge($mimeTypes, $quickOrderFileProcessorPlugin->getAllowedMimeTypes());
-        }
-
-        return $mimeTypes;
-    }
-
-    /**
-     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorStrategyPluginInterface[]
-     */
-    public function getFileProcessorPlugins(): array
-    {
-        return $this->quickOrderFileProcessorPlugins;
+        return $this->uploadedFileValidator;
     }
 
     /**
      * @return int
      */
-    public function getUploadOrderMaxAllowedLines(): int
+    public function getAllowedUploadRowCount(): int
     {
-        return $this->config->getUploadOrderMaxAllowedLines();
+        return $this->config->getAllowedUploadRowCount();
     }
 
     /**

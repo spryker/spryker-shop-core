@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\FileTemplateExtensionsReader;
+namespace SprykerShop\Yves\QuickOrderPage\File\ExtensionReader;
 
-class FileTemplateExtensionsReader implements FileTemplateExtensionsReaderInterface
+class FileTemplateExtensionReader implements FileTemplateExtensionReaderInterface
 {
     /**
      * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplateStrategyPluginInterface[]

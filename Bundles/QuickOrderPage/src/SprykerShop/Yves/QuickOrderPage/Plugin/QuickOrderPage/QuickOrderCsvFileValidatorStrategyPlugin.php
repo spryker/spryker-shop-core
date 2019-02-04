@@ -8,16 +8,21 @@
 namespace SprykerShop\Yves\QuickOrderPage\Plugin\QuickOrderPage;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Shared\QuickOrderPage\QuickOrderPageConfig;
-use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileProcessorStrategyPluginInterface;
+use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileValidatorStrategyPluginInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageFactory getFactory()
  */
-class QuickOrderCsvFileProcessorStrategyPlugin extends AbstractPlugin implements QuickOrderFileProcessorStrategyPluginInterface
+class QuickOrderCsvFileValidatorStrategyPlugin extends AbstractPlugin implements QuickOrderFileValidatorStrategyPluginInterface
 {
+    public const CSV_FILE_MIME_TYPE = 'text/csv';
+
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
      * @return bool
@@ -28,14 +33,10 @@ class QuickOrderCsvFileProcessorStrategyPlugin extends AbstractPlugin implements
     }
 
     /**
-     * @return string[]
-     */
-    public function getAllowedMimeTypes(): array
-    {
-        return [QuickOrderPageConfig::CSV_FILE_MIME_TYPE];
-    }
-
-    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
      * @return bool
@@ -43,32 +44,36 @@ class QuickOrderCsvFileProcessorStrategyPlugin extends AbstractPlugin implements
     public function isValidFormat(UploadedFile $file): bool
     {
         return $this->getFactory()
-            ->createCsvFileValidator()
+            ->createUploadedFileCsvTypeValidator()
             ->validateFormat($file);
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
-     * @param int $maxAllowedLines
+     * @param int $maxAllowedRows
      *
      * @return bool
      */
-    public function isValidAmountOfRows(UploadedFile $file, int $maxAllowedLines): bool
+    public function isValidAmountOfRows(UploadedFile $file, int $maxAllowedRows): bool
     {
         return $this->getFactory()
-            ->createCsvFileValidator()
-            ->validateAmountOfRows($file, $maxAllowedLines);
+            ->createUploadedFileCsvTypeValidator()
+            ->validateAmountOfRows($file, $maxAllowedRows);
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
+     * {@inheritdoc}
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     * @api
+     *
+     * @return string[]
      */
-    public function parseFile(UploadedFile $file): array
+    public function getAllowedMimeTypes(): array
     {
-        return $this->getFactory()
-            ->createCsvFileParser()
-            ->parse($file);
+        return [static::CSV_FILE_MIME_TYPE];
     }
 }

@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\FileOutputter;
+namespace SprykerShop\Yves\QuickOrderPage\File\Renderer;
 
 use Symfony\Component\HttpFoundation\Response;
 
-interface FileOutputterInterface
+interface FileRendererInterface
 {
     /**
      * @param string $fileType
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function outputFile(string $fileType): Response;
+    public function render(string $fileType): Response;
 }

@@ -4,8 +4,7 @@
     price: _view.price,
     additionalColumns: _view.additionalColumns,
     product: _view.product,
-    errorMessages: _view.errorMessages,
-    warningMessages: _view.warningMessages,
+    messages: _view.messages,
     form: _view.form,
     index: _view.index | default(0)
 } %}
@@ -17,8 +16,7 @@
             customQuantityFieldName: 'quick_order_form[items][' ~ data.index ~ '][quantity]',
             price: data.price,
             additionalColumns: data.additionalColumns,
-            errorMessages: data.errorMessages,
-            warningMessages: data.warningMessages,
+            messages: data.messages,
             product: data.product
         }
     } only %}

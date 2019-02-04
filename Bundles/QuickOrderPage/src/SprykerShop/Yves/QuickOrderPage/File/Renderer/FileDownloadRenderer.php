@@ -5,14 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\FileOutputter;
+namespace SprykerShop\Yves\QuickOrderPage\File\Renderer;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-class FileOutputter implements FileOutputterInterface
+class FileDownloadRenderer implements FileRendererInterface
 {
     protected const FILE_TEMPLATE_NAME = 'quick-order-template';
+    protected const RESPONSE_CODE_NOT_FOUND = 404;
 
     /**
      * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplateStrategyPluginInterface[]
@@ -32,7 +33,7 @@ class FileOutputter implements FileOutputterInterface
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function outputFile(string $fileType): Response
+    public function render(string $fileType): Response
     {
         foreach ($this->quickOrderFileTemplatePlugins as $fileTemplatePlugin) {
             if ($fileTemplatePlugin->isApplicable($fileType)) {
@@ -48,5 +49,7 @@ class FileOutputter implements FileOutputterInterface
                 return $response;
             }
         }
+
+        return new Response('', static::RESPONSE_CODE_NOT_FOUND);
     }
 }

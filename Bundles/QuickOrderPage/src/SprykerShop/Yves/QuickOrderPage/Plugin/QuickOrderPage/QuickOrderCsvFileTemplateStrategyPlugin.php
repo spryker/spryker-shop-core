@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\QuickOrderPage\Plugin\QuickOrderPage;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Shared\QuickOrderPage\QuickOrderPageConfig;
 use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplateStrategyPluginInterface;
 
 /**
@@ -16,25 +15,43 @@ use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTem
  */
 class QuickOrderCsvFileTemplateStrategyPlugin extends AbstractPlugin implements QuickOrderFileTemplateStrategyPluginInterface
 {
+    public const CSV_SKU_COLUMN_NAME = 'concrete_sku';
+    public const CSV_QTY_COLUMN_NAME = 'quantity';
+    public const CSV_COLUMN_SEPARATOR = ',';
+    public const CSV_FILE_MIME_TYPE = 'text/csv';
+    public const CSV_FILE_EXTENSION = 'csv';
+
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $fileExtension
      *
      * @return bool
      */
     public function isApplicable(string $fileExtension): bool
     {
-        return $fileExtension == $this->getFileExtension();
+        return $fileExtension === $this->getFileExtension();
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getFileExtension(): string
     {
-        return QuickOrderPageConfig::CSV_FILE_EXTENSION;
+        return static::CSV_FILE_EXTENSION;
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function generateTemplate(): string
@@ -43,11 +60,15 @@ class QuickOrderCsvFileTemplateStrategyPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getTemplateMimeType(): string
     {
-        return QuickOrderPageConfig::CSV_FILE_MIME_TYPE;
+        return static::CSV_FILE_MIME_TYPE;
     }
 
     /**
@@ -55,9 +76,9 @@ class QuickOrderCsvFileTemplateStrategyPlugin extends AbstractPlugin implements 
      */
     protected function getExampleTemplateHeader(): string
     {
-        return QuickOrderPageConfig::CSV_SKU_COLUMN_NAME
-            . QuickOrderPageConfig::CSV_COLUMN_SEPARATOR
-            . QuickOrderPageConfig::CSV_QTY_COLUMN_NAME
+        return static::CSV_SKU_COLUMN_NAME
+            . static::CSV_COLUMN_SEPARATOR
+            . static::CSV_QTY_COLUMN_NAME
             . PHP_EOL;
     }
 
@@ -66,7 +87,7 @@ class QuickOrderCsvFileTemplateStrategyPlugin extends AbstractPlugin implements 
      */
     protected function getExampleTemplateBody(): string
     {
-        return 'example_sku_1' . QuickOrderPageConfig::CSV_COLUMN_SEPARATOR . '1' . PHP_EOL
-            . 'example_sku_2' . QuickOrderPageConfig::CSV_COLUMN_SEPARATOR . '2';
+        return 'example_sku_1' . static::CSV_COLUMN_SEPARATOR . '1' . PHP_EOL
+            . 'example_sku_2' . static::CSV_COLUMN_SEPARATOR . '2';
     }
 }

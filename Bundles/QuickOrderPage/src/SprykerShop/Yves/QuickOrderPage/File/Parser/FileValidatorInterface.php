@@ -5,12 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin;
+namespace SprykerShop\Yves\QuickOrderPage\File\Parser;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-interface QuickOrderFileProcessorStrategyPluginInterface
+interface FileValidatorInterface
 {
+    /**
+     * Specification:
+     * - Return allowed mime types of plugin.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getAllowedMimeTypes();
+
     /**
      * Specification:
      * - Check if file applicable or not.
@@ -25,17 +35,7 @@ interface QuickOrderFileProcessorStrategyPluginInterface
 
     /**
      * Specification:
-     * - Return allowed mime types of plugin.
-     *
-     * @api
-     *
-     * @return string[]
-     */
-    public function getAllowedMimeTypes();
-
-    /**
-     * Specification:
-     * - Check if file format valid.
+     * - Check if the file format is valid.
      *
      * @api
      *
@@ -47,26 +47,26 @@ interface QuickOrderFileProcessorStrategyPluginInterface
 
     /**
      * Specification:
-     * - Check if amount of rows are valid.
+     * - Check if amount of rows is valid.
      *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
-     * @param int $maxAllowedLines
+     * @param int $maxAllowedRows
      *
      * @return bool
      */
-    public function isValidAmountOfRows(UploadedFile $file, int $maxAllowedLines): bool;
+    public function isValidAmountOfRows(UploadedFile $file, int $maxAllowedRows): bool;
 
     /**
      * Specification:
-     * - Parse file and return array of QuickOrderItemTransfers.
+     * - Check if the file mime-type is valid.
      *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     * @return bool
      */
-    public function parseFile(UploadedFile $file): array;
+    public function isValidMimeType(UploadedFile $file): bool;
 }

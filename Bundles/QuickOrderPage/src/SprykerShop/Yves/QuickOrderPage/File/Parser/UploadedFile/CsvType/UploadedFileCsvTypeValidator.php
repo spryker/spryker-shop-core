@@ -5,14 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\Csv;
+namespace SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\CsvType;
 
-use SprykerShop\Shared\QuickOrderPage\QuickOrderPageConfig;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface;
+use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileTypeValidatorInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class FileValidator implements FileValidatorInterface
+class UploadedFileCsvTypeValidator implements UploadedFileTypeValidatorInterface
 {
+    public const CSV_SKU_COLUMN_NAME = 'concrete_sku';
+    public const CSV_QTY_COLUMN_NAME = 'quantity';
+
     /**
      * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface
      */
@@ -28,15 +31,15 @@ class FileValidator implements FileValidatorInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
-     * @param int $maxAllowedLines
+     * @param int $maxAllowedRows
      *
      * @return bool
      */
-    public function validateAmountOfRows(UploadedFile $file, int $maxAllowedLines): bool
+    public function validateAmountOfRows(UploadedFile $file, int $maxAllowedRows): bool
     {
         $uploadedOrder = $this->utilCsvService->readUploadedFile($file);
 
-        if (count($uploadedOrder) > $maxAllowedLines) {
+        if (count($uploadedOrder) > $maxAllowedRows) {
             return false;
         }
 
@@ -52,8 +55,8 @@ class FileValidator implements FileValidatorInterface
     {
         $uploadedOrder = $this->utilCsvService->readUploadedFile($file);
 
-        if (!in_array(QuickOrderPageConfig::CSV_SKU_COLUMN_NAME, $uploadedOrder[0])
-            || !in_array(QuickOrderPageConfig::CSV_QTY_COLUMN_NAME, $uploadedOrder[0])) {
+        if (!in_array(static::CSV_SKU_COLUMN_NAME, $uploadedOrder[0])
+            || !in_array(static::CSV_QTY_COLUMN_NAME, $uploadedOrder[0])) {
             return false;
         }
 
