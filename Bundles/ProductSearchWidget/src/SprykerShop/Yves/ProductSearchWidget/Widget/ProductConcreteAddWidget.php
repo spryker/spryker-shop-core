@@ -38,7 +38,7 @@ class ProductConcreteAddWidget extends AbstractWidget implements WidgetInterface
         $preparedAdditionalRedirectData = $this->encodeAdditionalData($additionalRedirectData);
 
         $productQuickAddForm->get(ProductQuickAddForm::FIELD_REDIRECT_ROUTE_NAME)->setData($redirectRouteName);
-        $productQuickAddForm->get(ProductQuickAddForm::FIELD_ADDITIONAL_REDIRECT_PARAMETERS)->setData($preparedAdditionalRedirectData);
+        $productQuickAddForm->get(ProductQuickAddForm::FIELD_REDIRECT_ROUTE_PARAMETERS)->setData($preparedAdditionalRedirectData);
 
         $this->addParameter('title', $title)
             ->addParameter('submitButtonTitle', $submitButtonTitle)

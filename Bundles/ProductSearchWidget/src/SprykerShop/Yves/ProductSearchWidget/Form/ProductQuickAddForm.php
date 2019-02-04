@@ -23,7 +23,7 @@ class ProductQuickAddForm extends AbstractType
     protected const FIELD_SKU = 'sku';
     protected const FIELD_QUANTITY = 'quantity';
     public const FIELD_REDIRECT_ROUTE_NAME = 'redirect-route-name';
-    public const FIELD_ADDITIONAL_REDIRECT_PARAMETERS = 'additional-redirect-parameters';
+    public const FIELD_REDIRECT_ROUTE_PARAMETERS = 'redirect-route-parameters';
 
     protected const FORM_NAME = 'productQuickAddForm';
     protected const MAX_QUANTITY_VALUE = 2147483647; // 32 bit integer
@@ -122,7 +122,7 @@ class ProductQuickAddForm extends AbstractType
      */
     protected function addAdditionalRedirectParameters(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_ADDITIONAL_REDIRECT_PARAMETERS, HiddenType::class, [
+        $builder->add(static::FIELD_REDIRECT_ROUTE_PARAMETERS, HiddenType::class, [
             'required' => false,
             'label' => false,
         ]);

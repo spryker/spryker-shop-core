@@ -26,7 +26,7 @@ class ShoppingListController extends AbstractShoppingListController
     protected const PARAM_ID_SHOPPING_LIST_ITEM = 'idShoppingListItem';
     protected const PARAM_SHOPPING_LIST_ITEM = 'shoppingListItem';
     protected const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
-    protected const PARAM_ADDITIONAL_REDIRECT_PARAMETERS = 'additional-redirect-parameters';
+    protected const PARAM_REDIRECT_ROUTE_PARAMETERS = 'redirect-route-parameters';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_REMOVE_FAILED = 'customer.account.shopping_list.item.remove.failed';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_REMOVE_SUCCESS = 'customer.account.shopping_list.item.remove.success';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_TO_CART_FAILED = 'customer.account.shopping_list.item.added_to_cart.failed';
@@ -295,7 +295,7 @@ class ShoppingListController extends AbstractShoppingListController
     {
         $additionalRequestParams = $this->getFactory()->getUtilEncodingService()->decodeJson(
             urldecode(
-                $request->get(static::PARAM_ADDITIONAL_REDIRECT_PARAMETERS)
+                $request->get(static::PARAM_REDIRECT_ROUTE_PARAMETERS)
             ),
             true
         );
@@ -315,15 +315,20 @@ class ShoppingListController extends AbstractShoppingListController
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function executeQuickAddToShoppingListAction(string $sku, int $quantity, int $idShoppingList, Request $request): ShoppingListItemTransfer
+    protected function executeQuickAddToShoppingListAction(string $sku, int $quantity, int $idShoppingList, Request $request): ShoppingListItemTransfer
     {
         $customerTransfer = $this->getCustomer();
 
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setSku($sku)
             ->setQuantity($quantity)
-            ->setFkShoppingList($idShoppingList)
-            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setFkShoppingList($idShoppingList);
+
+        if ($customerTransfer === null || $customerTransfer->getCompanyUserTransfer() === null) {
+            return $shoppingListItemTransfer;
+        }
+
+        $shoppingListItemTransfer->setCustomerReference($customerTransfer->getCustomerReference())
             ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
         return $this->getFactory()

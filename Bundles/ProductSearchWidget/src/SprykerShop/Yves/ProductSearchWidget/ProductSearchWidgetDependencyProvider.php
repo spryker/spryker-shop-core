@@ -26,7 +26,7 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = parent::provideDependencies($container);
         $container = $this->addCatalogClient($container);
-        $container = $this->addEncodeService($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -52,7 +52,7 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addEncodeService(Container $container): Container
+    protected function addUtilEncodingService(Container $container): Container
     {
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new ProductSearchWidgetToUtilEncodingServiceBridge(

@@ -80,6 +80,8 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses CartControllerProvider::getQuantityFromRequest()
+     *
      * @return $this
      */
     protected function addCartQuickAddRoute()

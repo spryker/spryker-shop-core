@@ -41,15 +41,15 @@ class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvid
     }
 
     /**
-     * @uses ProductConcreteSearchController::addAction()
+     * @uses ProductConcreteAddController::indexAction()
      *
      * @return $this
      */
     protected function addCartQuickAddRoute()
     {
-        $this->createPostController('/{productSearch}', static::ROUTE_PRODUCT_QUICK_ADD, 'ProductSearchWidget', 'ProductConcreteSearch', 'add')
-            ->assert('productSearch', $this->getAllowedLocalesPattern() . 'product-quick-add|product-quick-add')
-            ->value('productSearch', 'product-quick-add');
+        $this->createPostController('/{productSearch}/product-quick-add', static::ROUTE_PRODUCT_QUICK_ADD, 'ProductSearchWidget', 'ProductConcreteAdd')
+            ->assert('productSearch', $this->allowedLocalesPattern . 'product-search|product-search')
+            ->value('productSearch', 'product-search');
 
         return $this;
     }
