@@ -8,7 +8,9 @@
 namespace SprykerShop\Yves\CustomerPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
@@ -45,6 +47,10 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
 
         if ($quoteTransfer->getBillingAddress()->toArray() == $quoteTransfer->getShippingAddress()->toArray()) {
             $quoteTransfer->setBillingSameAsShipping(true);
+        }
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setShipment($this->getItemShipment($itemTransfer));
         }
 
         return $quoteTransfer;
@@ -141,5 +147,41 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         }
 
         return $choices;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    protected function getItemShipment(ItemTransfer $itemTransfer): ShipmentTransfer
+    {
+        $shipmentTransfer = $itemTransfer->getShipment();
+        if (!$shipmentTransfer) {
+            $shipmentTransfer = new ShipmentTransfer();
+        }
+
+        $shipmentTransfer->setShippingAddress($this->getShipmentShippingAddress($shipmentTransfer));
+
+        return $shipmentTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function getShipmentShippingAddress(ShipmentTransfer $shipmentTransfer): AddressTransfer
+    {
+        $addressTransfer = new AddressTransfer();
+        if ($shipmentTransfer->getShippingAddress() !== null) {
+            $addressTransfer = $shipmentTransfer->getShippingAddress();
+        }
+
+        if ($this->customerTransfer !== null && $shipmentTransfer->getShippingAddress() === null) {
+            $addressTransfer->setIdCustomerAddress($this->customerTransfer->getDefaultShippingAddress());
+        }
+
+        return $addressTransfer;
     }
 }

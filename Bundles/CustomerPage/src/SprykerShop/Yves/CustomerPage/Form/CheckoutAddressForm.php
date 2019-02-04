@@ -17,6 +17,8 @@ class CheckoutAddressForm extends AddressForm
     public const OPTION_VALIDATION_GROUP = 'validation_group';
     public const OPTION_ADDRESS_CHOICES = 'addresses_choices';
 
+    public const VALUE_DELIVER_TO_MULTIPLE_ADDRESSES = -1;
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *

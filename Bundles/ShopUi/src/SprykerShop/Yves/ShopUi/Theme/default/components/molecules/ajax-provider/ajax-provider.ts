@@ -4,11 +4,32 @@ import Component from '../../../models/component';
 const EVENT_FETCHING = 'fetching';
 const EVENT_FETCHED = 'fetched';
 
+/**
+ * @event fetching An event which is triggered when an ajax request is sent to the server.
+ * @event fetched An event which is triggered when an ajax request is closed.
+ */
 export default class AjaxProvider extends Component {
     protected isFetchingRequest: boolean = false
+
+    /**
+     * Defines the key/value pairs which are send with the request as query parameters.
+     *
+     * @remarks
+     * Use it to add/remove query parameters from the request.
+     */
     readonly queryParams: Map<String, String> = new Map<String, String>()
+
+    /**
+     * Defines the key/value pairs which are send with the request as headers.
+     *
+     * @remarks
+     * Use it to add/remove headers from the request.
+     */
     readonly headers: Map<String, String> = new Map<String, String>()
 
+    /**
+     * Represents the request object used by the component to perform the fetch operation.
+     */
     readonly xhr: XMLHttpRequest
 
     constructor() {
@@ -22,6 +43,12 @@ export default class AjaxProvider extends Component {
         }
     }
 
+    /**
+     * Sends an ajax request to the server.
+     * @template T The argument type returned by a successful promise.
+     * @param data Optional data sent to the server in the request body.
+     * @returns A generic typed promise connected to the ajax request.
+     */
     async fetch<T = string>(data?: any): Promise<T> {
         debug(this.method, this.url, 'fetching...');
         this.isFetchingRequest = true;
@@ -62,6 +89,9 @@ export default class AjaxProvider extends Component {
         reject(new Error(`${this.method} ${this.url} request aborted`));
     }
 
+    /**
+     * Gets the url endpoint used to perform the ajax call to.
+     */
     get url(): string {
         const url = this.getAttribute('url');
 
@@ -78,18 +108,30 @@ export default class AjaxProvider extends Component {
         return url + '?' + queryStringParams.join('&');
     }
 
+    /**
+     * Gets the request method.
+     */
     get method(): string {
         return this.getAttribute('method').toUpperCase();
     }
 
+    /**
+     * Gets the response type.
+     */
     get responseType(): XMLHttpRequestResponseType {
         return <XMLHttpRequestResponseType>this.getAttribute('response-type');
     }
 
+    /**
+     * Gets if the component performs the fetch operation after loading.
+     */
     get fetchOnLoad(): boolean {
         return this.hasAttribute('fetch-on-load');
     }
 
+    /**
+     * Gets if the component is currently fetching.
+     */
     get isFetching(): boolean {
         return this.isFetchingRequest;
     }
