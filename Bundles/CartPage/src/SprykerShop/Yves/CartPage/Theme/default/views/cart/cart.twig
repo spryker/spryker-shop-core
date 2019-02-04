@@ -29,6 +29,7 @@
 
 {% block content %}
     {% set canEditCart = can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
+    {% set canWriteToCart = (not is_granted('ROLE_USER') or canEditCart) %}
     {% if data.cart.items is empty %}
         <div class="box text-center">
             {% include atom('icon') with {
@@ -102,7 +103,7 @@
                         <hr />
                     {% endif %}
 
-                    {% if canEditCart %}
+                    {% if canWriteToCart %}
                         {% widget 'ProductConcreteAddWidget' args [
                             'cart.quick_add_to_cart' | trans,
                             'cart.quick_add_to_cart.submit' | trans,
