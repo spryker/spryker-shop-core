@@ -28,12 +28,11 @@ export default class AddressFormToggler extends Component {
     }
 
     protected mapEvents(): void {
-        this.toggler.addEventListener('change', (event: Event) => this.onTogglerChange(event));
+        this.toggler.addEventListener('change', () => this.onTogglerChange());
     }
 
-    protected onTogglerChange(event: Event): void {
-        const togglerElement = <HTMLSelectElement>event.srcElement;
-        const selectedOptionValue = <string>togglerElement.options[togglerElement.selectedIndex].value;
+    protected onTogglerChange(): void {
+        const selectedOptionValue = <string>this.toggler.options[this.toggler.selectedIndex].value;
 
         this.toggle(selectedOptionValue);
     }
@@ -53,6 +52,9 @@ export default class AddressFormToggler extends Component {
 
     protected toggleElement(targetSelector: string, isShown: boolean): void {
         const targetElement = this.targetElementCache.get(targetSelector);
+        const hasCompanyBusinessUnitAddress = (this.hasCompanyBusinessUnitAddress == 'true');
+
+        this.form.classList.toggle(this.classToToggle, hasCompanyBusinessUnitAddress ? false : isShown);
 
         if (targetElement) {
             targetElement.classList.toggle(this.classToToggle, isShown);
