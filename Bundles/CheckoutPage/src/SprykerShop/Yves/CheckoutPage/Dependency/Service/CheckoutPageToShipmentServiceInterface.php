@@ -12,9 +12,9 @@ use ArrayObject;
 interface CheckoutPageToShipmentServiceInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfersCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShipment(ArrayObject $itemTransfersCollection): ArrayObject;
+    public function groupItemsByShipment(ArrayObject $itemTransfers): ArrayObject;
 }

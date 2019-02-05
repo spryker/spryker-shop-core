@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process;
 
-use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\StepEngine\Process\StepBreadcrumbGenerator;
 use Spryker\Yves\StepEngine\Process\StepCollection;
@@ -22,8 +21,6 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClient
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
@@ -209,14 +206,6 @@ class StepFactory extends AbstractFactory
             CheckoutPageControllerProvider::CHECKOUT_SUMMARY,
             HomePageControllerProvider::ROUTE_HOME
         );
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
-     */
-    public function getShipmentService(): CheckoutPageToShipmentServiceInterface
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_SHIPMENT);
     }
 
     /**
@@ -522,5 +511,13 @@ class StepFactory extends AbstractFactory
         };
 
         return $strategyContainer;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
+     */
+    public function getShipmentService(): CheckoutPageToShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_SHIPMENT);
     }
 }

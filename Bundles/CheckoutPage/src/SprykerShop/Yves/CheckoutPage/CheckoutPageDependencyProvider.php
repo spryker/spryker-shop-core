@@ -48,7 +48,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const STORE = 'STORE';
 
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
-    public const SERVICE_SHIPMENT  = 'SERVICE_SHIPMENT';
+    public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGIN_CUSTOMER_STEP_HANDLER = 'PLUGIN_CUSTOMER_STEP_HANDLER';
@@ -94,7 +94,6 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addApplication($container);
         $container = $this->provideStore($container);
         $container = $this->addUtilValidateService($container);
-        $container = $this->addShipmentService($container);
 
         $container = $this->addSubFormPluginCollection($container);
         $container = $this->addPaymentMethodHandlerPluginCollection($container);
@@ -115,6 +114,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addAddressStepSubForms($container);
         $container = $this->addAddressStepFormDataProvider($container);
         $container = $this->addGlossaryStorageClient($container);
+        $container = $this->addShipmentService($container);
 
         return $container;
     }
@@ -226,20 +226,6 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::CLIENT_CART] = function (Container $container) {
             return new CheckoutPageToCartClientBridge($container->getLocator()->cart()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addShipmentService(Container $container): Container
-    {
-        $container[self::SERVICE_SHIPMENT] = function (Container $container) {
-            return new CheckoutPageToShipmentServiceBridge($container->getLocator()->shipment()->service());
         };
 
         return $container;
@@ -657,5 +643,21 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getSubFormFilterPlugins()
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addShipmentService(Container $container): Container
+    {
+        $container[static::SERVICE_SHIPMENT] = function (Container $container) {
+            return new CheckoutPageToShipmentServiceBridge(
+                $container->getLocator()->shipment()->service()
+            );
+        };
+
+        return $container;
     }
 }
