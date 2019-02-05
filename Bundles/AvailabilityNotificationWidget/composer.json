@@ -10,7 +10,7 @@
     "spryker/availability-notification": "^4.3.0",
     "spryker/customer": "^7.16.0",
     "spryker/kernel": "^3.24.0",
-    "spryker/session": "^4.0.0",
+    "spryker/product-management": "*",
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
