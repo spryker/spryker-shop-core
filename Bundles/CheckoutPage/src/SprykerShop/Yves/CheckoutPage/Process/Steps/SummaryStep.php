@@ -17,9 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
 {
-    public const KEY_TOTAL_COSTS = 'totalCosts';
-    public const KEY_SHIPMENTS = 'shipments';
-
     /**
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface
      */
@@ -105,7 +102,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
                 $quoteTransfer->getBundleItems()
             ),
             'shipmentGroups' => $shipmentGroups,
-            'shipmentData' => $this->getShipmentData($shipmentGroups),
+            'totalCosts' => $this->getTotalCosts($shipmentGroups),
         ];
     }
 
@@ -155,7 +152,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return array
      */
-    protected function getShipmentData(ArrayObject $shipmentGroups): array
+    protected function getTotalCosts(ArrayObject $shipmentGroups): int
     {
         $totalCosts = 0;
 
@@ -163,8 +160,6 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
             $totalCosts += $shipmentGroup->getShipment()->getMethod()->getStoreCurrencyPrice();
         }
 
-        return [
-            static::KEY_TOTAL_COSTS => $totalCosts,
-        ];
+        return $totalCosts;
     }
 }

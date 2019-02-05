@@ -6,7 +6,7 @@
 } %}
 
 {% define data = {
-    shipmentData: required,
+    totalCosts: required,
     expenses: [],
     voucherDiscounts: [],
     cartRuleDiscounts: [],
@@ -65,7 +65,7 @@
     {% endif %}
 
     <li>
-        <span class="float-right">{{ data.shipmentData.totalCosts | money  }}</span>
+        <span class="float-right">{{ data.totalCosts | money  }}</span>
         <strong>{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
         {% for shipmentGroup in data.shipmentGroups %}
             <div class="grid grid--justify">
