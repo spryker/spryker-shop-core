@@ -41,7 +41,7 @@ class AvailabilityNotificationPageController extends AbstractController
 
         $availabilitySubscriptionResponseTransfer = $this->getFactory()
             ->getAvailabilityNotificationClient()
-            ->unsubscribe($availabilitySubscriptionTransfer);
+            ->unsubscribeBySubscriptionKey($availabilitySubscriptionTransfer);
 
         if ($availabilitySubscriptionResponseTransfer->getIsSuccess() === false) {
             throw new NotFoundHttpException($availabilitySubscriptionResponseTransfer->getErrorMessage());
@@ -58,16 +58,19 @@ class AvailabilityNotificationPageController extends AbstractController
     protected function removeAvailabilitySubscriptionFromCustomer(string $sku): void
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-        $availabilitySubscriptions = $customerTransfer->getAvailabilitySubscriptions();
 
-        foreach ($availabilitySubscriptions as $key => $availabilitySubscription) {
-            if ($availabilitySubscription->getSku() === $sku) {
-                unset($availabilitySubscriptions[$key]);
-
-                break;
-            }
+        if ($customerTransfer === null) {
+            return;
         }
 
-        $customerTransfer->setAvailabilitySubscriptions($availabilitySubscriptions);
+        $availabilitySubscriptionSkus = $customerTransfer->getAvailabilitySubscriptionSkus();
+
+        $key = array_search($sku, $availabilitySubscriptionSkus);
+
+        if ($key !== false) {
+            unset($availabilitySubscriptionSkus[$key]);
+        }
+
+        $customerTransfer->setAvailabilitySubscriptionSkus($availabilitySubscriptionSkus);
     }
 }

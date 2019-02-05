@@ -73,7 +73,7 @@ class AvailabilityNotificationSubscriptionController extends AbstractController
         $this->addSuccessMessage(static::GLOSSARY_KEY_SUCCESSFULLY_SUBSCRIBED);
 
         if ($customerTransfer !== null) {
-            $customerTransfer->addAvailabilitySubscription($responseTransfer->getAvailabilitySubscription());
+            $customerTransfer->addAvailabilitySubscriptionSku($responseTransfer->getAvailabilitySubscription()->getSku());
         }
     }
 
@@ -104,11 +104,19 @@ class AvailabilityNotificationSubscriptionController extends AbstractController
             return;
         }
 
+        /** @var \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $subscriptionTransfer */
         $subscriptionTransfer = $unsubscribeForm->getData();
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        if ($customerTransfer === null) {
+            return;
+        }
+
+        $subscriptionTransfer->setCustomerReference($customerTransfer->getCustomerReference());
 
         $responseTransfer = $this->getFactory()
             ->getAvailabilityNotificationClient()
-            ->unsubscribe($subscriptionTransfer);
+            ->unsubscribeByCustomerReferenceAndSku($subscriptionTransfer);
 
         if ($responseTransfer->getIsSuccess() === false) {
             $this->addErrorMessage($responseTransfer->getErrorMessage());
@@ -129,15 +137,19 @@ class AvailabilityNotificationSubscriptionController extends AbstractController
     protected function removeAvailabilitySubscriptionFromCustomer(string $sku): void
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-        $availabilitySubscriptions = $customerTransfer->getAvailabilitySubscriptions();
 
-        foreach ($availabilitySubscriptions as $key => $availabilitySubscription) {
-            if ($availabilitySubscription->getSku() === $sku) {
-                unset($availabilitySubscriptions[$key]);
-                break;
-            }
+        if ($customerTransfer === null) {
+            return;
         }
 
-        $customerTransfer->setAvailabilitySubscriptions($availabilitySubscriptions);
+        $availabilitySubscriptionSkus = $customerTransfer->getAvailabilitySubscriptionSkus();
+
+        $key = array_search($sku, $availabilitySubscriptionSkus);
+
+        if ($key !== false) {
+            unset($availabilitySubscriptionSkus[$key]);
+        }
+
+        $customerTransfer->setAvailabilitySubscriptionSkus($availabilitySubscriptionSkus);
     }
 }

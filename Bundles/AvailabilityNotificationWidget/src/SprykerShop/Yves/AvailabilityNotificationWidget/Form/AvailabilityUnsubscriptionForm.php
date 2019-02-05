@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AvailabilityUnsubscriptionForm extends AbstractType
 {
-    public const FIELD_SUBSCRIPTION_KEY = 'subscriptionKey';
+    public const FIELD_SKU = 'sku';
 
     public const FORM_ID = 'availability_unsubscribe';
 
@@ -64,11 +64,11 @@ class AvailabilityUnsubscriptionForm extends AbstractType
      */
     protected function addSkuField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_SUBSCRIPTION_KEY, HiddenType::class, [
+        $builder->add(static::FIELD_SKU, HiddenType::class, [
             'required' => true,
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 1, 'max' => 150]),
+                new Length(['min' => 1, 'max' => 255]),
             ],
         ]);
 

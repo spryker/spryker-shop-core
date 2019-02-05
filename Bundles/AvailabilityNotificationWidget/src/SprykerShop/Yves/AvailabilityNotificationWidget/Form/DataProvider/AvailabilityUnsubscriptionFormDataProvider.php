@@ -33,19 +33,6 @@ class AvailabilityUnsubscriptionFormDataProvider implements AvailabilityUnsubscr
      */
     public function getData(ProductViewTransfer $productViewTransfer): AvailabilitySubscriptionTransfer
     {
-        $subscription = new AvailabilitySubscriptionTransfer();
-        $customerTransfer = $this->customerClient->getCustomer();
-
-        if ($customerTransfer === null) {
-            return $subscription;
-        }
-
-        foreach ($customerTransfer->getAvailabilitySubscriptions() as $availabilitySubscriptionTransfer) {
-            if ($availabilitySubscriptionTransfer->getSku() === $productViewTransfer->getSku()) {
-                return $subscription->setSubscriptionKey($availabilitySubscriptionTransfer->getSubscriptionKey());
-            }
-        }
-
-        return $subscription;
+        return (new AvailabilitySubscriptionTransfer())->setSku($productViewTransfer->getSku());
     }
 }

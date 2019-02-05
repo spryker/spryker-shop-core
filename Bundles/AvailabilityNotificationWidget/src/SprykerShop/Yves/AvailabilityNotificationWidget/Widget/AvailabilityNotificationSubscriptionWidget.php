@@ -56,13 +56,7 @@ class AvailabilityNotificationSubscriptionWidget extends AbstractWidget
             return false;
         }
 
-        foreach ($customerTransfer->getAvailabilitySubscriptions() as $availabilitySubscriptionTransfer) {
-            if ($availabilitySubscriptionTransfer->getSku() === $productViewTransfer->getSku()) {
-                return true;
-            }
-        }
-
-        return false;
+        return in_array($productViewTransfer->getSku(), $customerTransfer->getAvailabilitySubscriptionSkus());
     }
 
     /**
