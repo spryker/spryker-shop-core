@@ -16,6 +16,7 @@ use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider
 use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderForm;
 use SprykerShop\Yves\QuickOrderPage\Form\TextOrderForm;
 use SprykerShop\Yves\QuickOrderPage\Form\UploadOrderForm;
+use SprykerShop\Yves\QuickOrderPage\Plugin\Provider\QuickOrderPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -33,6 +34,7 @@ class QuickOrderController extends AbstractController
     public const PARAM_QUICK_ORDER_FILE_TYPE = 'file-type';
     public const ERROR_MESSAGE_QTY_INVALID = 'quick-order.errors.quantity-invalid';
     public const MESSAGE_TYPE_WARNING = 'warning';
+    protected const MESSAGE_CLEAR_ALL_ROWS_SUCCESS = 'quick-order.message.success.the-form-items-have-been-successfully-cleared';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -371,6 +373,16 @@ class QuickOrderController extends AbstractController
             'products' => $this->transformProductsViewData($products),
             'prices' => $prices,
         ];
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function clearAllRowsAction()
+    {
+        $this->addSuccessMessage(static::MESSAGE_CLEAR_ALL_ROWS_SUCCESS);
+
+        return $this->redirectResponseInternal(QuickOrderPageControllerProvider::ROUTE_QUICK_ORDER);
     }
 
     /**
