@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\AvailabilityNotificationPage\Controller;
 
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -32,9 +31,9 @@ class AvailabilityNotificationPageController extends AbstractController
     /**
      * @param string $subscriptionKey
      *
-     * @return void
-     *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return void
      */
     protected function executeUnsubscribeByKeyAction(string $subscriptionKey): void
     {
