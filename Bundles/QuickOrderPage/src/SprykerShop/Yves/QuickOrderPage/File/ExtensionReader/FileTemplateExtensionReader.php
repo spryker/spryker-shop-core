@@ -29,9 +29,9 @@ class FileTemplateExtensionReader implements FileTemplateExtensionReaderInterfac
     {
         $fileTemplateExtensions = [];
         foreach ($this->quickOrderFileTemplatePlugins as $fileTemplatePlugin) {
-            $fileTemplateExtensions[$fileTemplatePlugin->getFileExtension()] = $fileTemplatePlugin->getFileExtension();
+            $fileTemplateExtensions[] = $fileTemplatePlugin->getFileExtension();
         }
 
-        return $fileTemplateExtensions;
+        return array_unique($fileTemplateExtensions);
     }
 }
