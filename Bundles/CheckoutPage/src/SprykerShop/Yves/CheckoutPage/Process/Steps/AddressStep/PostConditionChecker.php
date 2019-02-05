@@ -40,8 +40,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return false;
         }
 
-        $shippingIsEmpty = $this->isAddressEmpty($quoteTransfer->getShippingAddress());
-        if($shippingIsEmpty && $isSplitDelivery === false) {
+        if($this->isAddressEmpty($quoteTransfer->getShippingAddress()) && $isSplitDelivery === false) {
             return false;
         }
 
