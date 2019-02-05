@@ -32,7 +32,7 @@ class AvailabilityNotificationSubscriptionWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'AvailabilitySubscriptionWidget';
+        return 'AvailabilityNotificationSubscriptionWidget';
     }
 
     /**
