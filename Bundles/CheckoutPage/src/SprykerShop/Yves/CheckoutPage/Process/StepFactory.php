@@ -21,6 +21,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClient
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\AddressSaver;
@@ -200,6 +201,7 @@ class StepFactory extends AbstractFactory
     {
         return new SummaryStep(
             $this->getProductBundleClient(),
+            $this->getShipmentService(),
             CheckoutPageControllerProvider::CHECKOUT_SUMMARY,
             HomePageControllerProvider::ROUTE_HOME
         );
@@ -508,5 +510,13 @@ class StepFactory extends AbstractFactory
         };
 
         return $strategyContainer;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
+     */
+    public function getShipmentService(): CheckoutPageToShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_SHIPMENT);
     }
 }
