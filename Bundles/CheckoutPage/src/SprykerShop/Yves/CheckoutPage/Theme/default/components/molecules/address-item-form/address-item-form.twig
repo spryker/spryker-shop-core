@@ -1,8 +1,7 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'address-item-form',
-    tag: 'address-item-form'
+    name: 'address-item-form'
 } %}
 
 {% define data = {
@@ -10,8 +9,10 @@
 } %}
 
 {% block body %}
-    <div class="text-right">
+    <div class="text-right spacing spacing--inner">
+        <hr>
         <a href="{{url('customer/address')}}">{{ 'page.checkout.address.manage_your_addresses' | trans }}</a>
+        <hr>
     </div>
     {% embed molecule('form') with {
         data: {
@@ -25,19 +26,16 @@
             }
         },
         embed: {
-            selector: config.jsName
+            jsName: config.jsName
         }
     } only %}
         {% block fields %}
-            <div class="{{embed.selector}}__list">
-                {% embed molecule('address-item-form-field-list', 'CheckoutPage') with {
+            <div class="{{ embed.jsName }}__list col col--sm-12">
+                {% include molecule('address-item-form-field-list', 'CheckoutPage') with {
                     data: {
                         items: data.form
-                    },
-                    embed: embed
+                    }
                 } only %}
-                    {% block removeActionClass %}{{embed.selector}}__remove-row-trigger{% endblock %}
-                {% endembed %}
             </div>
         {% endblock %}
     {% endembed %}

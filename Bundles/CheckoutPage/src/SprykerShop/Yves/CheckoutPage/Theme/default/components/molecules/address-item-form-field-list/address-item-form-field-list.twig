@@ -6,14 +6,15 @@
 } %}
 
 {% block body %}
-    <div class="grid grid--top grid--justify">
+    <div class="grid grid--middle">
         {% for item in data.items %}
             {% set itemName = item.vars.data.name | default %}
             {% set itemQuantity = item.vars.data.quantity | default %}
             {% set imageUrl = item.vars.data.images is not empty ? item.vars.data.images[0].externalUrlSmall : '' %}
             {% set formItemShippingAddressId = 'form-item-shipping-address-' ~ loop.index %}
+            {% set hiddenClass = '' %}
 
-            <div class="col col--sm-3 spacing spacing--inner">
+            <div class="col col--sm-1 spacing spacing--inner">
                 {% include atom('thumbnail') with {
                     modifiers: ['small'],
                     attributes: {
@@ -23,13 +24,12 @@
                     }
                 } only %}
             </div>
-            <div class="col col--sm-3 spacing spacing--inner">
+            <div class="col col--sm-2 spacing spacing--inner">
                 <p><strong>{{ itemName }}</strong></p>
                 <p>{{ ('customer.order.item_quantity' | trans) }} {{ itemQuantity }}</p>
             </div>
-            {% set hiddenClass = '' %}
             {% if item.shippingAddress.id_customer_address is defined %}
-                <div class="col col--sm-6 spacing spacing--inner">
+                <div class="col col--sm-3 spacing spacing--inner">
                     {{ form_widget(item.shippingAddress.id_customer_address) }}
                 </div>
                 {% set hiddenClass = 'is-hidden' %}
@@ -50,12 +50,6 @@
                             zip_code: 'col col--sm-6 col--lg-4',
                             city: 'col col--sm-6 col--lg-4',
                             iso2_code: 'col col--sm-12 col--lg-4'
-                        },
-                        submit: {
-                            enable: false
-                        },
-                        cancel: {
-                            enable: false
                         }
                     },
                     attributes: {
