@@ -10,6 +10,7 @@
     expenses: [],
     voucherDiscounts: [],
     cartRuleDiscounts: [],
+    shipmentGroups: required,
 
     prices: {
         subTotal: required,
@@ -66,10 +67,10 @@
     <li>
         <span class="float-right">{{ data.shipmentData.totalCosts | money  }}</span>
         <strong>{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
-        {% for shipment in data.shipmentData.shipments %}
+        {% for shipmentGroup in data.shipmentGroups %}
             <div class="grid grid--justify">
-                <span class="col col--sm-10">{{ shipment.method.carrierName }} - {{ shipment.method.name }}</span>
-                <span class="col col--expand text-right">{{ shipment.method.storeCurrencyPrice | money }}</span>
+                <span class="col col--sm-10">{{ shipmentGroup.shipment.method.carrierName }} - {{ shipmentGroup.shipment.method.name }}</span>
+                <span class="col col--expand text-right">{{ shipmentGroup.shipment.method.storeCurrencyPrice | money }}</span>
             </div>
         {% endfor %}
     </li>

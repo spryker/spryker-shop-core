@@ -9,10 +9,10 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
@@ -32,13 +32,13 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface $productBundleClient
-     * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
      * @param string $stepRoute
      * @param string $escapeRoute
      */
     public function __construct(
         CheckoutPageToProductBundleClientInterface $productBundleClient,
-        ShipmentServiceInterface $shipmentService,
+        CheckoutPageToShipmentServiceInterface $shipmentService,
         $stepRoute,
         $escapeRoute
     ) {
@@ -157,16 +157,13 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     protected function getShipmentData(ArrayObject $shipmentGroups): array
     {
-        $shipments = [];
         $totalCosts = 0;
 
         foreach ($shipmentGroups as $shipmentGroup) {
-            $shipments[] = $shipmentGroup->getShipment();
             $totalCosts += $shipmentGroup->getShipment()->getMethod()->getStoreCurrencyPrice();
         }
 
         return [
-            static::KEY_SHIPMENTS => $shipments,
             static::KEY_TOTAL_COSTS => $totalCosts,
         ];
     }
