@@ -51,6 +51,10 @@ class UploadedFileCsvTypeValidator implements UploadedFileTypeValidatorInterface
     {
         $uploadedOrder = $this->utilCsvService->readUploadedFile($file);
 
+        if (count($uploadedOrder) <= 1) {
+            return false;
+        }
+
         if (!in_array(static::CSV_SKU_COLUMN_NAME, $uploadedOrder[0], true)
             || !in_array(static::CSV_QTY_COLUMN_NAME, $uploadedOrder[0], true)) {
             return false;
