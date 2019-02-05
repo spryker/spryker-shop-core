@@ -15,11 +15,6 @@
         <property name="messages" type="Message[]" singular="Message" />
     </transfer>
 
-    <transfer name="ItemValidationResponse">
-        <property name="messages" type="Message[]" singular="Message" />
-        <property name="recommendedValues" type="Item" />
-    </transfer>
-
     <transfer name="ProductConcrete">
         <property name="fkProductAbstract" type="int" />
         <property name="sku" type="string" />

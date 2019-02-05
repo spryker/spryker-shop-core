@@ -12,27 +12,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 interface FileValidatorInterface
 {
     /**
-     * Specification:
-     * - Return allowed mime types of plugin.
-     *
-     * @return string[]
-     */
-    public function getAllowedMimeTypes();
-
-    /**
-     * Specification:
-     * - Check if file applicable or not.
-     *
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
-     *
-     * @return bool
-     */
-    public function isApplicable(UploadedFile $file): bool;
-
-    /**
-     * Specification:
-     * - Check if the file format is valid.
-     *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
      * @return bool
@@ -40,9 +19,6 @@ interface FileValidatorInterface
     public function isValidFormat(UploadedFile $file): bool;
 
     /**
-     * Specification:
-     * - Check if amount of rows is valid.
-     *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      * @param int $maxAllowedRows
      *
@@ -51,9 +27,6 @@ interface FileValidatorInterface
     public function isValidAmountOfRows(UploadedFile $file, int $maxAllowedRows): bool;
 
     /**
-     * Specification:
-     * - Check if the file mime-type is valid.
-     *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
      * @return bool

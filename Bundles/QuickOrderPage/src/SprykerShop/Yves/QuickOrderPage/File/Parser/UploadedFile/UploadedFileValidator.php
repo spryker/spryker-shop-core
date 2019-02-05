@@ -18,30 +18,11 @@ class UploadedFileValidator implements FileValidatorInterface
     protected $quickOrderFileValidatorPlugins;
 
     /**
-     * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileParserStrategyPluginInterface[]
-     */
-    protected $quickOrderFileParserPlugins;
-
-    /**
      * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileValidatorStrategyPluginInterface[] $quickOrderFileValidatorPlugins
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileParserStrategyPluginInterface[] $quickOrderFileParserPlugins
      */
-    public function __construct(array $quickOrderFileValidatorPlugins, array $quickOrderFileParserPlugins)
+    public function __construct(array $quickOrderFileValidatorPlugins)
     {
         $this->quickOrderFileValidatorPlugins = $quickOrderFileValidatorPlugins;
-        $this->quickOrderFileParserPlugins = $quickOrderFileParserPlugins;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
-     *
-     * @return bool
-     */
-    public function isApplicable(UploadedFile $file): bool
-    {
-        return in_array($file->getClientMimeType(), $this->getAllowedMimeTypes());
     }
 
     /**
@@ -55,9 +36,7 @@ class UploadedFileValidator implements FileValidatorInterface
     {
         foreach ($this->quickOrderFileValidatorPlugins as $quickOrderFileValidatorPlugin) {
             if ($quickOrderFileValidatorPlugin->isApplicable($file)) {
-                if (in_array($file->getClientMimeType(), $this->getAllowedMimeTypes())) {
-                    return true;
-                }
+                return true;
             }
         }
 
@@ -99,20 +78,5 @@ class UploadedFileValidator implements FileValidatorInterface
         }
 
         return false;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @return string[]
-     */
-    public function getAllowedMimeTypes(): array
-    {
-        $mimeTypes = [];
-        foreach ($this->quickOrderFileValidatorPlugins as $quickOrderFileValidatorPlugin) {
-            $mimeTypes = array_merge($mimeTypes, $quickOrderFileValidatorPlugin->getAllowedMimeTypes());
-        }
-
-        return $mimeTypes;
     }
 }

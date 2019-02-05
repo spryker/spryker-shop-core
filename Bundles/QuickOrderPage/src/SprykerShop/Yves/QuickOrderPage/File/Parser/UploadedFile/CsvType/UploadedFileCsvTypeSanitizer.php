@@ -16,7 +16,7 @@ class UploadedFileCsvTypeSanitizer implements UploadedFileTypeSanitizerInterface
      *
      * @return mixed
      */
-    public function sanitizeValue($value)
+    public function sanitizeQuantity($value)
     {
         if (!isset($value) || $value < 1) {
             return 1;

@@ -14,5 +14,5 @@ interface UploadedFileTypeSanitizerInterface
      *
      * @return mixed
      */
-    public function sanitizeValue($value);
+    public function sanitizeQuantity($value);
 }

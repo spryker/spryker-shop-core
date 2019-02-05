@@ -29,7 +29,7 @@ class QuickOrderCsvFileValidatorStrategyPlugin extends AbstractPlugin implements
      */
     public function isApplicable(UploadedFile $file): bool
     {
-        return in_array($file->getClientMimeType(), $this->getAllowedMimeTypes());
+        return $file->getClientMimeType() === static::CSV_FILE_MIME_TYPE;
     }
 
     /**
@@ -63,17 +63,5 @@ class QuickOrderCsvFileValidatorStrategyPlugin extends AbstractPlugin implements
         return $this->getFactory()
             ->createUploadedFileCsvTypeValidator()
             ->validateAmountOfRows($file, $maxAllowedRows);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return string[]
-     */
-    public function getAllowedMimeTypes(): array
-    {
-        return [static::CSV_FILE_MIME_TYPE];
     }
 }

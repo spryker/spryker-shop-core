@@ -124,8 +124,7 @@ class QuickOrderPageFactory extends AbstractFactory
     public function createUploadedFileValidator(): FileValidatorInterface
     {
         return new UploadedFileValidator(
-            $this->getQuickOrderFileValidatorPlugins(),
-            $this->getQuickOrderFileParserPlugins()
+            $this->getQuickOrderFileValidatorPlugins()
         );
     }
 

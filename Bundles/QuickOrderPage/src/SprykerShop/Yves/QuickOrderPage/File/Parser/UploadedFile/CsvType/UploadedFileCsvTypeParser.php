@@ -58,8 +58,8 @@ class UploadedFileCsvTypeParser implements UploadedFileTypeParserInterface
         }
 
         $csvHeader = array_flip($rows[0]);
-        $skuKey = array_search(static::CSV_SKU_COLUMN_NAME, array_keys($csvHeader));
-        $qtyKey = array_search(static::CSV_QTY_COLUMN_NAME, array_keys($csvHeader));
+        $skuKey = array_search(static::CSV_SKU_COLUMN_NAME, array_keys($csvHeader), true);
+        $quantityKey = array_search(static::CSV_QTY_COLUMN_NAME, array_keys($csvHeader), true);
 
         unset($rows[0]);
 
@@ -69,30 +69,20 @@ class UploadedFileCsvTypeParser implements UploadedFileTypeParserInterface
             }
 
             $quickOrderItemTransfer = (new QuickOrderItemTransfer())->setSku($row[$skuKey]);
-            $sanitizedQty = $this->sanitizeValue($row[$qtyKey]);
+            $sanitizeQuantity = $this->uploadedFileCsvTypeSanitizer->sanitizeQuantity($row[$quantityKey]);
 
-            if ($sanitizedQty != $row[$qtyKey]) {
-                $row[$qtyKey] = $sanitizedQty;
+            if ($sanitizeQuantity != $row[$quantityKey]) {
+                $row[$quantityKey] = $sanitizeQuantity;
                 $quickOrderItemTransfer->addMessage((new MessageTransfer())
                     ->setType(static::MESSAGE_TYPE_ERROR)
                     ->setValue(static::ERROR_MESSAGE_QTY_INVALID));
             }
 
-            $quickOrderItemTransfer->setQuantity($row[$qtyKey]);
+            $quickOrderItemTransfer->setQuantity($row[$quantityKey]);
             $quickOrderItemTransfers[] = $quickOrderItemTransfer;
         }
 
         return $quickOrderItemTransfers;
-    }
-
-    /**
-     * @param mixed $value
-     *
-     * @return mixed
-     */
-    protected function sanitizeValue($value)
-    {
-        return $this->uploadedFileCsvTypeSanitizer->sanitizeValue($value);
     }
 
     /**

@@ -13,16 +13,6 @@ interface QuickOrderFileValidatorStrategyPluginInterface
 {
     /**
      * Specification:
-     * - Return allowed mime types of plugin.
-     *
-     * @api
-     *
-     * @return string[]
-     */
-    public function getAllowedMimeTypes(): array;
-
-    /**
-     * Specification:
      * - Checks if this plugin is applicable to work with provided file.
      *
      * @api
