@@ -29,14 +29,18 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return false;
         }
 
-        if ($this->isSplitDelivery($quoteTransfer) && $quoteTransfer->getBillingSameAsShipping()) {
+        $isSplitDelivery = $this->isSplitDelivery($quoteTransfer);
+        if ($isSplitDelivery && $quoteTransfer->getBillingSameAsShipping()) {
             return false;
         }
 
-        $shippingIsEmpty = $this->isAddressEmpty($quoteTransfer->getShippingAddress());
         $billingIsEmpty = $quoteTransfer->getBillingSameAsShipping() === false && $this->isAddressEmpty($quoteTransfer->getBillingAddress());
 
-        if ($shippingIsEmpty || $billingIsEmpty) {
+        if ($billingIsEmpty) {
+            return false;
+        }
+
+        if($this->isAddressEmpty($quoteTransfer->getShippingAddress()) && $isSplitDelivery === false) {
             return false;
         }
 
