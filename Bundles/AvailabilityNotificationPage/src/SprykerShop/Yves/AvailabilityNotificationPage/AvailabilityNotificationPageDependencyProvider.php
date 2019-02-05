@@ -10,12 +10,12 @@ namespace SprykerShop\Yves\AvailabilityNotificationPage;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\AvailabilityNotificationPage\Dependency\Client\AvailabilityNotificationPageToAvailabilityNotificationClientBridge;
-use SprykerShop\Yves\AvailabilityNotificationPage\Dependency\Client\AvailabilityNotificationPageToLocaleClientBridge;
+use SprykerShop\Yves\AvailabilityNotificationPage\Dependency\Client\AvailabilityNotificationPageToCustomerClientBridge;
 
 class AvailabilityNotificationPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_AVAILABILITY_NOTIFICATION = 'CLIENT_AVAILABILITY_NOTIFICATION';
-    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -25,7 +25,7 @@ class AvailabilityNotificationPageDependencyProvider extends AbstractBundleDepen
     public function provideDependencies(Container $container): Container
     {
         $container = $this->addAvailabilityNotificationClient($container);
-        $container = $this->addLocaleClient($container);
+        $container = $this->addCustomerClient($container);
 
         return $container;
     }
@@ -49,10 +49,10 @@ class AvailabilityNotificationPageDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addLocaleClient(Container $container): Container
+    protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_LOCALE] = function (Container $container) {
-            return new AvailabilityNotificationPageToLocaleClientBridge($container->getLocator()->locale()->client());
+        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+            return new AvailabilityNotificationPageToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 
         return $container;

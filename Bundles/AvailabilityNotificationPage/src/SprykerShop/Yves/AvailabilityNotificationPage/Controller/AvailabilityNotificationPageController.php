@@ -7,13 +7,9 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationPage\Controller;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Yves\Kernel\View\View;
-use SprykerShop\Yves\AvailabilityNotificationPage\Plugin\Provider\AvailabilityNotificationPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -22,67 +18,75 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class AvailabilityNotificationPageController extends AbstractController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $subscriptionKey
      *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function unsubscribeAction(Request $request): View
+    public function unsubscribeByKeyAction(string $subscriptionKey)
     {
-        $data = $this->executeUnsubscribeAction($request);
+        $data = $this->executeUnsubscribeByKeyAction($subscriptionKey);
 
         return $this->view($data, [], '@AvailabilityNotificationPage/views/availability-notification/unsubscribe.twig');
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @param string $subscriptionKey
      *
      * @return array
      */
-    protected function executeUnsubscribeAction(Request $request): array
+    protected function executeUnsubscribeByKeyAction(string $subscriptionKey): array
     {
-        $subscriptionKey = $request->query->get(AvailabilityNotificationPageControllerProvider::PARAM_SUBSCRIPTION_KEY);
-
-        $availabilitySubscriptionRequestTransfer = (new AvailabilitySubscriptionRequestTransfer())->setSubscriptionKey($subscriptionKey);
-
-        $availabilitySubscriptionResponseTransfer = $this->getFactory()->getAvailabilityNotificationClient()->findAvailabilitySubscription($availabilitySubscriptionRequestTransfer);
-
-        if ($availabilitySubscriptionResponseTransfer->getAvailabilitySubscription() === null) {
-            throw new NotFoundHttpException('Subscription doesn\'t exist');
-        }
-
-        $locale = $availabilitySubscriptionResponseTransfer->getAvailabilitySubscription()->getLocale();
+        $availabilitySubscriptionTransfer = (new AvailabilitySubscriptionTransfer())->setSubscriptionKey($subscriptionKey);
 
         $availabilitySubscriptionResponseTransfer = $this->getFactory()
             ->getAvailabilityNotificationClient()
-            ->unsubscribe($availabilitySubscriptionResponseTransfer->getAvailabilitySubscription());
+            ->unsubscribe($availabilitySubscriptionTransfer);
 
         if ($availabilitySubscriptionResponseTransfer->getIsSuccess() === false) {
             throw new NotFoundHttpException($availabilitySubscriptionResponseTransfer->getErrorMessage());
         }
 
-        $productAttributes = $this->getProductAttributes($availabilitySubscriptionResponseTransfer->getProduct(), $locale);
+        $this->removeAvailabilitySubscriptionFromCustomer($availabilitySubscriptionResponseTransfer->getProduct()->getSku());
 
-        return ['productName' => $productAttributes['name'] ?? ''];
+        return ['productName' => $this->getProductName($availabilitySubscriptionResponseTransfer->getProduct())];
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array
+     * @return string
      */
-    protected function getProductAttributes(
-        ProductConcreteTransfer $productConcreteTransfer,
-        LocaleTransfer $localeTransfer
-    ): array {
+    protected function getProductName(ProductConcreteTransfer $productConcreteTransfer): string
+    {
+        $locale = $this->getLocale();
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
-            if ($localizedAttributes->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()) {
-                return $localizedAttributes->toArray();
+            if ($localizedAttributes->getLocale()->getLocaleName() === $locale) {
+                $attributes = $localizedAttributes->toArray();
+                return $attributes['name'] ?? '';
             }
         }
 
-        return [];
+        return '';
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return void
+     */
+    protected function removeAvailabilitySubscriptionFromCustomer(string $sku): void
+    {
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+        $availabilitySubscriptions = $customerTransfer->getAvailabilitySubscriptions();
+
+        foreach ($availabilitySubscriptions as $key => $availabilitySubscription) {
+            if ($availabilitySubscription->getSku() === $sku) {
+                unset($availabilitySubscriptions[$key]);
+                break;
+            }
+        }
+
+        $customerTransfer->setAvailabilitySubscriptions($availabilitySubscriptions);
     }
 }

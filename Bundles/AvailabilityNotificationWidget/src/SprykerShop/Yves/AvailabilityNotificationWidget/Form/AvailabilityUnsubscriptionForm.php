@@ -7,22 +7,19 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationWidget\Form;
 
+use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
-use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class AvailabilityUnsubscribeForm extends AbstractType
+class AvailabilityUnsubscriptionForm extends AbstractType
 {
-    public const FIELD_SKU = 'sku';
+    public const FIELD_SUBSCRIPTION_KEY = 'subscriptionKey';
 
     public const FORM_ID = 'availability_unsubscribe';
-
-    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
     /**
      * @return string
@@ -40,6 +37,7 @@ class AvailabilityUnsubscribeForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'data_class' => AvailabilitySubscriptionTransfer::class,
             'attr' => [
                 'id' => static::FORM_ID,
             ],
@@ -66,12 +64,11 @@ class AvailabilityUnsubscribeForm extends AbstractType
      */
     protected function addSkuField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_SKU, HiddenType::class, [
+        $builder->add(static::FIELD_SUBSCRIPTION_KEY, HiddenType::class, [
             'required' => true,
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 1, 'max' => 255]),
-                new SkuRegex(),
+                new Length(['min' => 1, 'max' => 150]),
             ],
         ]);
 

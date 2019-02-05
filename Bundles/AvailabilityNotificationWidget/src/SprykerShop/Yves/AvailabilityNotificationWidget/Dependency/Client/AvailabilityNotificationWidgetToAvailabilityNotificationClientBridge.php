@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 
@@ -44,15 +43,5 @@ class AvailabilityNotificationWidgetToAvailabilityNotificationClientBridge imple
     public function unsubscribe(AvailabilitySubscriptionTransfer $availabilitySubscriptionTransfer): AvailabilitySubscriptionResponseTransfer
     {
         return $this->availabilityNotificationClient->unsubscribe($availabilitySubscriptionTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionResponseTransfer
-     */
-    public function findAvailabilitySubscription(AvailabilitySubscriptionRequestTransfer $availabilitySubscriptionRequestTransfer): AvailabilitySubscriptionResponseTransfer
-    {
-        return $this->availabilityNotificationClient->findAvailabilitySubscription($availabilitySubscriptionRequestTransfer);
     }
 }

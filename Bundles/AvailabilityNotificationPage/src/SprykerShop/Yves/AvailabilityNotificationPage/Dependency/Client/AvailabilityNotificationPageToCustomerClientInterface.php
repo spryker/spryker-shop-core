@@ -7,10 +7,10 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationPage\Dependency\Client;
 
-interface AvailabilityNotificationPageToLocaleClientInterface
+interface AvailabilityNotificationPageToCustomerClientInterface
 {
     /**
-     * @return string
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCurrentLocale();
+    public function getCustomer();
 }

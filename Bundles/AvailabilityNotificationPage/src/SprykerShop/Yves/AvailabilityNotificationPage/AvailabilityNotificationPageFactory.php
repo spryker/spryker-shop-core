@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\AvailabilityNotificationPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\AvailabilityNotificationPage\Dependency\Client\AvailabilityNotificationPageToAvailabilityNotificationClientInterface;
-use SprykerShop\Yves\AvailabilityNotificationPage\Dependency\Client\AvailabilityNotificationPageToLocaleClientInterface;
+use SprykerShop\Yves\AvailabilityNotificationPage\Dependency\Client\AvailabilityNotificationPageToCustomerClientInterface;
 
 class AvailabilityNotificationPageFactory extends AbstractFactory
 {
@@ -22,10 +22,10 @@ class AvailabilityNotificationPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\AvailabilityNotificationPage\Dependency\Client\AvailabilityNotificationPageToLocaleClientInterface
+     * @return \SprykerShop\Yves\AvailabilityNotificationPage\Dependency\Client\AvailabilityNotificationPageToCustomerClientInterface
      */
-    public function getLocaleClient(): AvailabilityNotificationPageToLocaleClientInterface
+    public function getCustomerClient(): AvailabilityNotificationPageToCustomerClientInterface
     {
-        return $this->getProvidedDependency(AvailabilityNotificationPageDependencyProvider::CLIENT_LOCALE);
+        return $this->getProvidedDependency(AvailabilityNotificationPageDependencyProvider::CLIENT_CUSTOMER);
     }
 }
