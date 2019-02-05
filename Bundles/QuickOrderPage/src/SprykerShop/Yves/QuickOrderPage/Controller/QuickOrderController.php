@@ -7,11 +7,14 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderForm;
 use SprykerShop\Yves\QuickOrderPage\Form\TextOrderForm;
+use SprykerShop\Yves\QuickOrderPage\Plugin\Provider\QuickOrderPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -25,6 +28,7 @@ class QuickOrderController extends AbstractController
 {
     public const PARAM_ROW_INDEX = 'row-index';
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
+    protected const MESSAGE_CLEAR_ALL_ROWS_SUCCESS = 'quick-order.message.success.the-form-items-have-been-successfully-cleared';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -58,23 +62,100 @@ class QuickOrderController extends AbstractController
             ->getTextOrderForm()
             ->handleRequest($request);
 
-        $textOrderParsedItems = $this->handleTextOrderForm($textOrderForm);
-        $quickOrder = $this->getQuickOrderTransfer($textOrderParsedItems);
+        $quickOrderTransfer = $this->handleTextOrderForm($textOrderForm);
+        $quickOrderForm = $this->getFactory()
+            ->createQuickOrderFormFactory()
+            ->getQuickOrderForm($quickOrderTransfer)
+            ->handleRequest($request);
+
+        if ($quickOrderForm->isSubmitted() && $quickOrderForm->isValid()) {
+            $response = $this->handleQuickOrderForm($quickOrderForm, $request);
+
+            if ($response !== null) {
+                return $response;
+            }
+        }
+
+        /** @var \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer */
+        $quickOrderTransfer = $quickOrderForm->getData();
+        $products = $this->getProductsByQuickOrder($quickOrderTransfer);
+
+        $quickOrderTransfer = $this->getFactory()
+            ->createQuickOrderItemPluginExecutor()
+            ->applyQuickOrderItemFilterPluginsOnQuickOrder($quickOrderTransfer, $products);
+        $quickOrderTransfer = $this->getFactory()
+            ->createPriceResolver()
+            ->setSumPriceForQuickOrderTransfer($quickOrderTransfer);
 
         $quickOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
-            ->getQuickOrderForm($quickOrder)
-            ->handleRequest($request);
+            ->getQuickOrderForm($quickOrderTransfer);
 
-        $response = $this->handleQuickOrderForm($quickOrderForm, $request);
-        if ($response !== null) {
-            return $response;
-        }
+        $prices = $this->getProductPricesFromQuickOrderTransfer($quickOrderTransfer);
 
         return [
-            'itemsForm' => $quickOrderForm->createView(),
+            'quickOrderForm' => $quickOrderForm->createView(),
             'textOrderForm' => $textOrderForm->createView(),
+            'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
+            'products' => $this->transformProductsViewData($products),
+            'prices' => $prices,
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
+     * @return array
+     */
+    protected function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array
+    {
+        $productConcreteTransfers = $this->getFactory()
+            ->getQuickOrderClient()
+            ->getProductsByQuickOrder($quickOrderTransfer);
+
+        $productConcreteTransfers = $this->getFactory()
+            ->getQuickOrderClient()
+            ->expandProductConcreteTransfers($productConcreteTransfers);
+
+        return $this->indexProductsBySku($productConcreteTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    protected function getProductByQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): ?ProductConcreteTransfer
+    {
+        if (!$quickOrderItemTransfer->getSku()) {
+            return null;
+        }
+
+        $productConcreteTransfer = $this->getFactory()
+            ->createProductResolver()
+            ->getProductBySku($quickOrderItemTransfer->getSku());
+
+        [$productConcreteTransfer] = $this->getFactory()
+            ->getQuickOrderClient()
+            ->expandProductConcreteTransfers([$productConcreteTransfer]);
+
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @return array
+     */
+    protected function mapAdditionalQuickOrderFormColumnPluginsToArray(): array
+    {
+        $additionalColumns = [];
+        foreach ($this->getFactory()->getQuickOrderFormColumnPlugins() as $additionalColumnPlugin) {
+            $additionalColumns[] = [
+                'title' => $additionalColumnPlugin->getColumnTitle(),
+                'dataPath' => $additionalColumnPlugin->getDataPath(),
+            ];
+        }
+
+        return $additionalColumns;
     }
 
     /**
@@ -93,7 +174,7 @@ class QuickOrderController extends AbstractController
         return $this->view(
             $viewData,
             $this->getFactory()->getQuickOrderPageWidgetPlugins(),
-            '@QuickOrderPage/views/quick-order-async-render/quick-order-async-render.twig'
+            '@QuickOrderPage/views/quick-order-rows-async/quick-order-rows-async.twig'
         );
     }
 
@@ -107,24 +188,24 @@ class QuickOrderController extends AbstractController
         $formData = $request->get(static::PARAM_QUICK_ORDER_FORM);
         $formDataItems = $formData['items'] ?? [];
 
-        $dataProvider = $this->getFactory()
+        $quickOrderFormDataProvider = $this->getFactory()
             ->createQuickOrderFormDataProvider();
 
-        $orderItems = $dataProvider->getOrderItemsFromFormData($formDataItems);
-        $quickOrder = $this->getQuickOrderTransfer($orderItems);
-
-        $emptyProductsNumber = $this->getFactory()
-            ->getBundleConfig()
-            ->getProductRowsNumber();
-
-        $dataProvider->appendEmptyOrderItems($quickOrder, $emptyProductsNumber);
+        $quickOrderTransfer = $quickOrderFormDataProvider->mapFormDataToQuickOrderItems($formDataItems);
+        $quickOrderTransfer = $quickOrderFormDataProvider->appendEmptyQuickOrderItems($quickOrderTransfer);
 
         $quickOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
-            ->getQuickOrderForm($quickOrder);
+            ->getQuickOrderForm($quickOrderTransfer);
+
+        $products = $this->getProductsByQuickOrder($quickOrderTransfer);
+        $prices = $this->getProductPricesFromQuickOrderTransfer($quickOrderTransfer);
 
         return [
             'form' => $quickOrderForm->createView(),
+            'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
+            'products' => $this->transformProductsViewData($products),
+            'prices' => $prices,
         ];
     }
 
@@ -144,7 +225,7 @@ class QuickOrderController extends AbstractController
         return $this->view(
             $viewData,
             $this->getFactory()->getQuickOrderPageWidgetPlugins(),
-            '@QuickOrderPage/views/quick-order-async-render/quick-order-async-render.twig'
+            '@QuickOrderPage/views/quick-order-rows-async/quick-order-rows-async.twig'
         );
     }
 
@@ -166,39 +247,103 @@ class QuickOrderController extends AbstractController
         }
         unset($formDataItems[$rowIndex]);
 
-        $orderItems = $this->getFactory()
+        $quickOrderTransfer = $this->getFactory()
             ->createQuickOrderFormDataProvider()
-            ->getOrderItemsFromFormData($formDataItems);
-
-        $quickOrder = $this->getQuickOrderTransfer($orderItems);
+            ->mapFormDataToQuickOrderItems($formDataItems);
 
         $quickOrderForm = $this->getFactory()
             ->createQuickOrderFormFactory()
-            ->getQuickOrderForm($quickOrder);
+            ->getQuickOrderForm($quickOrderTransfer);
+
+        $products = $this->getProductsByQuickOrder($quickOrderTransfer);
+        $prices = $this->getProductPricesFromQuickOrderTransfer($quickOrderTransfer);
 
         return [
             'form' => $quickOrderForm->createView(),
+            'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
+            'products' => $this->transformProductsViewData($products),
+            'prices' => $prices,
         ];
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function clearAllRowsAction()
+    {
+        $this->addSuccessMessage(static::MESSAGE_CLEAR_ALL_ROWS_SUCCESS);
+
+        return $this->redirectResponseInternal(QuickOrderPageControllerProvider::ROUTE_QUICK_ORDER);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function productAdditionalDataAction(Request $request)
+    {
+        $quantity = $request->get('quantity');
+        $sku = $request->query->get('sku');
+        $index = $request->query->get('index');
+
+        $quickOrderItemTransfer = (new QuickOrderItemTransfer())
+            ->setQuantity($quantity ?: 1)
+            ->setSku($sku);
+
+        $product = $this->getProductByQuickOrderItem($quickOrderItemTransfer);
+
+        $quickOrderItemTransfer = $this->getFactory()
+            ->createQuickOrderItemPluginExecutor()
+            ->applyQuickOrderItemFilterPluginsOnQuickOrderItem($quickOrderItemTransfer, $product);
+
+        $quickOrderItemTransfer = $this->getFactory()
+            ->createPriceResolver()
+            ->setSumPriceForQuickOrderItemTransfer($quickOrderItemTransfer);
+
+        $form = $this->getFactory()
+            ->createQuickOrderFormFactory()
+            ->getQuickOrderItemEmbeddedForm($quickOrderItemTransfer);
+
+        $product = $this->transformProductsViewData([$product])[$sku] ?? null;
+
+        $viewData = [
+            'price' => $quickOrderItemTransfer->getSumPrice(),
+            'additionalColumns' => $this->mapAdditionalQuickOrderFormColumnPluginsToArray(),
+            'product' => $product,
+            'form' => $form->createView(),
+            'index' => $index,
+            'isQuantityAdjusted' => $this->getIsQuantityAdjusted($quantity, $quickOrderItemTransfer->getQuantity()),
+        ];
+
+        return $this->view(
+            $viewData,
+            $this->getFactory()->getQuickOrderPageWidgetPlugins(),
+            '@QuickOrderPage/views/quick-order-row-async/quick-order-row-async.twig'
+        );
     }
 
     /**
      * @param \Symfony\Component\Form\FormInterface $textOrderForm
      *
-     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
+     * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    protected function handleTextOrderForm(FormInterface $textOrderForm): array
+    protected function handleTextOrderForm(FormInterface $textOrderForm): QuickOrderTransfer
     {
+        $quickOrderItems = [];
         if ($textOrderForm->isSubmitted() && $textOrderForm->isValid()) {
             $data = $textOrderForm->getData();
 
-            $textOrderParser = $this->getFactory()
-                ->createTextOrderParser($data[TextOrderForm::FIELD_TEXT_ORDER])
-                ->parse();
-
-            return $textOrderParser->getParsedTextOrderItems();
+            $quickOrderItems = $this->getFactory()
+                ->createTextOrderParser()
+                ->parse($data[TextOrderForm::FIELD_TEXT_ORDER]);
         }
 
-        return [];
+        $quickOrderTransfer = $this->getFactory()
+            ->createQuickOrderFormDataProvider()
+            ->getQuickOrderTransfer($quickOrderItems);
+
+        return $quickOrderTransfer;
     }
 
     /**
@@ -209,56 +354,120 @@ class QuickOrderController extends AbstractController
      */
     protected function handleQuickOrderForm(FormInterface $quickOrderForm, Request $request): ?RedirectResponse
     {
-        if ($quickOrderForm->isSubmitted() && $quickOrderForm->isValid()) {
-            $quickOrder = $quickOrderForm->getData();
+        $quickOrder = $quickOrderForm->getData();
 
-            if ($request->get(QuickOrderForm::SUBMIT_BUTTON_ADD_TO_CART) !== null) {
-                $result = $this->getFactory()
-                    ->createFormOperationHandler()
-                    ->addToCart($quickOrder);
+        if ($request->get(QuickOrderForm::SUBMIT_BUTTON_ADD_TO_CART) !== null) {
+            $result = $this->getFactory()
+                ->createFormOperationHandler()
+                ->addToCart($quickOrder);
 
-                if (!$result) {
-                    return null;
-                }
-
-                return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            if (!$result) {
+                return null;
             }
 
-            if ($request->get(QuickOrderForm::SUBMIT_BUTTON_CREATE_ORDER) !== null) {
-                $result = $this->getFactory()
-                    ->createFormOperationHandler()
-                    ->createOrder($quickOrder);
-
-                if (!$result) {
-                    return null;
-                }
-
-                return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_INDEX);
-            }
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
-        return null;
+        if ($request->get(QuickOrderForm::SUBMIT_BUTTON_CREATE_ORDER) !== null) {
+            $result = $this->getFactory()
+                ->createFormOperationHandler()
+                ->addToEmptyCart($quickOrder);
+
+            if (!$result) {
+                return null;
+            }
+
+            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_INDEX);
+        }
+
+        return $this->executeQuickOrderFormHandlerStrategyPlugin($quickOrderForm, $request);
     }
 
     /**
-     * @param array $orderItems
+     * @param \Symfony\Component\Form\FormInterface $quickOrderForm
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\QuickOrderTransfer
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
      */
-    protected function getQuickOrderTransfer(array $orderItems = []): QuickOrderTransfer
+    protected function executeQuickOrderFormHandlerStrategyPlugin(FormInterface $quickOrderForm, Request $request): ?RedirectResponse
     {
-        $dataProvider = $this->getFactory()
-            ->createQuickOrderFormDataProvider();
-
-        $quickOrderTransfer = $dataProvider->getQuickOrderTransfer($orderItems);
-        if ($quickOrderTransfer->getItems()->count() === 0) {
-            $emptyProductsNumber = $this->getFactory()
-                ->getBundleConfig()
-                ->getProductRowsNumber();
-
-            $dataProvider->appendEmptyOrderItems($quickOrderTransfer, $emptyProductsNumber);
+        $response = null;
+        foreach ($this->getFactory()->getQuickOrderFormHandlerStrategyPlugins() as $quickOrderFormHandlerStrategyPlugin) {
+            if (!$quickOrderFormHandlerStrategyPlugin->isApplicable($quickOrderForm->getData(), $request->request->all())) {
+                continue;
+            }
+            $response = $quickOrderFormHandlerStrategyPlugin->execute($quickOrderForm->getData(), $request->request->all());
+            break;
         }
 
-        return $quickOrderTransfer;
+        if ($response === null) {
+            return null;
+        }
+
+        $route = $response->getRoute();
+
+        return new RedirectResponse($this->getApplication()->path($route->getRoute(), $route->getParameters()));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
+     * @return int[]
+     */
+    protected function getProductPricesFromQuickOrderTransfer(QuickOrderTransfer $quickOrderTransfer): array
+    {
+        $prices = [];
+        $quickOrderTransfer = $this->getFactory()
+            ->createPriceResolver()
+            ->setSumPriceForQuickOrderTransfer($quickOrderTransfer);
+
+        foreach ($quickOrderTransfer->getItems() as $quickOrderItemTransfer) {
+            $sku = $quickOrderItemTransfer->getSku();
+
+            if ($sku !== null) {
+                $prices[$sku] = $quickOrderItemTransfer->getSumPrice();
+            }
+        }
+
+        return $prices;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return array
+     */
+    protected function indexProductsBySku(array $productConcreteTransfers): array
+    {
+        $products = [];
+
+        foreach ($productConcreteTransfers as $product) {
+            $products[$product->getSku()] = $product;
+        }
+
+        return $products;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return array
+     */
+    protected function transformProductsViewData(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createViewDataTransformer()
+            ->transformProductData($productConcreteTransfers, $this->getFactory()->getQuickOrderFormColumnPlugins());
+    }
+
+    /**
+     * @param mixed $before
+     * @param mixed $after
+     *
+     * @return bool
+     */
+    protected function getIsQuantityAdjusted($before, $after): bool
+    {
+        return $before !== null && (int)$before !== (int)$after;
     }
 }
