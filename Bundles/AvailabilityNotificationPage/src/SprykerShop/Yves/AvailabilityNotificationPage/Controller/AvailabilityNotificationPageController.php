@@ -33,6 +33,8 @@ class AvailabilityNotificationPageController extends AbstractController
      * @param string $subscriptionKey
      *
      * @return array
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     protected function executeUnsubscribeByKeyAction(string $subscriptionKey): array
     {
@@ -53,7 +55,6 @@ class AvailabilityNotificationPageController extends AbstractController
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string
      */

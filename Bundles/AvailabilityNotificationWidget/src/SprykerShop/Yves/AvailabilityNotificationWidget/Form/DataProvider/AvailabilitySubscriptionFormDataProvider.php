@@ -21,7 +21,8 @@ class AvailabilitySubscriptionFormDataProvider implements AvailabilitySubscripti
     /**
      * @param \SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\AvailabilityNotificationWidgetToCustomerClientInterface $customerClient
      */
-    public function __construct( AvailabilityNotificationWidgetToCustomerClientInterface $customerClient) {
+    public function __construct( AvailabilityNotificationWidgetToCustomerClientInterface $customerClient)
+    {
         $this->customerClient = $customerClient;
     }
 
