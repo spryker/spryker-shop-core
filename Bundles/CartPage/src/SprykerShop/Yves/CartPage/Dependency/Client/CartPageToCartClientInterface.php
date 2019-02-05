@@ -14,6 +14,11 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 interface CartPageToCartClientInterface
 {
     /**
+     * @return bool
+     */
+    public function isCartEditable(): bool;
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param array $params
      *
@@ -85,9 +90,4 @@ interface CartPageToCartClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote(): QuoteResponseTransfer;
-
-    /**
-     * @return bool
-     */
-    public function isQuoteLocked(): bool;
 }

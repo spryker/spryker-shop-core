@@ -12,6 +12,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface DiscountWidgetToQuoteClientInterface
 {
     /**
+     * @return bool
+     */
+    public function isQuoteLocked(): bool;
+
+    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function getQuote();

@@ -2,7 +2,7 @@
 
 {% define data = {
     cart: _view.cart,
-    isQuoteLocked: _view.isQuoteLocked,
+    isCartEditable: _view.isCartEditable,
     cartItems: _view.cartItems,
     isQuoteValid: _view.isQuoteValid,
     attributes: _view.attributes,
@@ -29,7 +29,6 @@
 {% endblock %}
 
 {% block content %}
-    {% set canEditCart = not data.isQuoteLocked and can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
     {% if data.cart.items is empty %}
         <div class="box text-center">
             {% include atom('icon') with {
@@ -58,20 +57,20 @@
                         class: 'box',
                         data: {
                             cart: data.cart,
-                            isQuoteLocked: data.isQuoteLocked,
+                            isCartEditable: data.isCartEditable,
                             cartItem: cartItem,
                             attributes: data.attributes[cartItem.sku] | default([])
                         }
                     } only %}
                 {% endfor %}
 
-                {% if canEditCart %}
+                {% if data.isCartEditable %}
                     {% widget 'CartDiscountPromotionProductListWidget' args [data.cart, data.request] only %}
                     {% elsewidget 'DiscountPromotionItemListWidgetPlugin' args [data.cart, data.request] only %} {# @deprecated Use CartDiscountPromotionProductListWidget instead. #}
                     {% endwidget %}
                 {% endif %}
 
-                {% if canEditCart and data.cart.idQuote is not empty %}
+                {% if data.isCartEditable and data.cart.idQuote is not empty %}
                     {% widget 'CartOperationsWidget' args [data.cart] use view('cart-operations-actions', 'MultiCartWidget') only %}
                     {% nowidget %}
                         {{ widgetBlock('CartOperationsWidgetPlugin', 'actions', data.cart) }} {# @deprecated Use CartOperationsWidget instead. #}
@@ -85,7 +84,7 @@
                     {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartNoteFormWidget instead. #}
                     {% endwidget %}
 
-                    {% if (not is_granted('ROLE_USER') or canEditCart) and can('SeePricePermissionPlugin') %}
+                    {% if (not is_granted('ROLE_USER') or data.isCartEditable) and can('SeePricePermissionPlugin') %}
                         {% widget 'DiscountVoucherFormWidget' only %}
                             {% block body %}
                                 {{ parent() }}
@@ -99,7 +98,7 @@
                         {% endwidget %}
                     {% endif %}
 
-                    {% if canEditCart and data.cart.idQuote is not empty %}
+                    {% if data.isCartEditable and data.cart.idQuote is not empty %}
                         {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] only %}
                         {% elsewidget 'CartToShoppingListWidgetPlugin' args [data.cart.idQuote] only %} {# @deprecated Use CreateShoppingListFromCartWidget instead. #}
                         {% endwidget %}
@@ -111,7 +110,7 @@
                             data: {
                                 cart: data.cart,
                                 isQuoteValid: data.isQuoteValid,
-                                isQuoteLocked: data.isQuoteLocked,
+                                isCartEditable: data.isCartEditable,
                             }
                         } only %}
                      {% endif %}

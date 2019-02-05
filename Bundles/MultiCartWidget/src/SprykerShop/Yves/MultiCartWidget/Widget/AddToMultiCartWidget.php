@@ -71,7 +71,7 @@ class AddToMultiCartWidget extends AbstractWidget
     }
 
     /**
-     * @see \Spryker\Client\Cart\CartClient::isQuoteLocked()
+     * @see \Spryker\Client\Quote\QuoteClient::isQuoteLocked()
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

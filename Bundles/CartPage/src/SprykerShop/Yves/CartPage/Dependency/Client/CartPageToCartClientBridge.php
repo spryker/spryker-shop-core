@@ -27,6 +27,14 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isCartEditable(): bool
+    {
+        return $this->cartClient->isCartEditable();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param array $params
      *
@@ -127,13 +135,5 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     public function validateQuote(): QuoteResponseTransfer
     {
         return $this->cartClient->validateQuote();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isQuoteLocked(): bool
-    {
-        return $this->cartClient->isQuoteLocked();
     }
 }
