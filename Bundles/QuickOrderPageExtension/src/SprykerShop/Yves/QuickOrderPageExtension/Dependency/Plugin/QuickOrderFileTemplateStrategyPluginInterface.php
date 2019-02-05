@@ -11,7 +11,7 @@ interface QuickOrderFileTemplateStrategyPluginInterface
 {
     /**
      * Specification:
-     * - Check if file applicable or not.
+     * - Checks if this plugin is applicable to work with provided file type.
      *
      * @api
      *
@@ -23,7 +23,7 @@ interface QuickOrderFileTemplateStrategyPluginInterface
 
     /**
      * Specification:
-     * - Return file extension.
+     * - Returns file extension.
      *
      * @api
      *
@@ -33,7 +33,7 @@ interface QuickOrderFileTemplateStrategyPluginInterface
 
     /**
      * Specification:
-     * - Return example template structure.
+     * - Returns example template structure.
      *
      * @api
      *
@@ -43,7 +43,7 @@ interface QuickOrderFileTemplateStrategyPluginInterface
 
     /**
      * Specification:
-     * - Return template mime type.
+     * - Returns template mime type.
      *
      * @api
      *

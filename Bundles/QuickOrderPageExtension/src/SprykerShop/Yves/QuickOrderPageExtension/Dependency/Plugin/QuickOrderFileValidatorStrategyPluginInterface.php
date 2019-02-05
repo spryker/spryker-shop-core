@@ -19,11 +19,11 @@ interface QuickOrderFileValidatorStrategyPluginInterface
      *
      * @return string[]
      */
-    public function getAllowedMimeTypes();
+    public function getAllowedMimeTypes(): array;
 
     /**
      * Specification:
-     * - Check if file applicable or not.
+     * - Checks if this plugin is applicable to work with provided file.
      *
      * @api
      *
@@ -35,7 +35,7 @@ interface QuickOrderFileValidatorStrategyPluginInterface
 
     /**
      * Specification:
-     * - Check if file format valid.
+     * - Checks if file format valid.
      *
      * @api
      *
@@ -47,7 +47,7 @@ interface QuickOrderFileValidatorStrategyPluginInterface
 
     /**
      * Specification:
-     * - Check if amount of rows are valid.
+     * - Checks if amount of rows are valid.
      *
      * @api
      *

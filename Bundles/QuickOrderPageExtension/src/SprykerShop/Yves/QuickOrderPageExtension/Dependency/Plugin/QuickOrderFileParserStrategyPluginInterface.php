@@ -13,7 +13,7 @@ interface QuickOrderFileParserStrategyPluginInterface
 {
     /**
      * Specification:
-     * - Check if file applicable or not.
+     * - Checks if this plugin is applicable to work with provided file.
      *
      * @api
      *
@@ -25,7 +25,7 @@ interface QuickOrderFileParserStrategyPluginInterface
 
     /**
      * Specification:
-     * - Parse file and return array of QuickOrderItemTransfers.
+     * - Parses provided file and returns array of QuickOrderItemTransfers.
      *
      * @api
      *
