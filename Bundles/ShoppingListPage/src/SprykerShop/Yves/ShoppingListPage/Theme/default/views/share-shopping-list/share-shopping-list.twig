@@ -37,7 +37,9 @@
 
 {% block customerContent %}
     <div class="form box" data-qa="component form">
-        <h5 class="spacing-bottom spacing-bottom--big">{{ 'customer.account.shopping_list.share.from.share_with' | trans }}</h5>
+        <h5 class="spacing-bottom spacing-bottom--big">{{ 'customer.account.shopping_list.share.from.share.title' | trans({
+            '%name%': data.title
+        })}}</h5>
 
         {{ form_start(data.shareShoppingListForm) }}
 
