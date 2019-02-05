@@ -39,11 +39,7 @@ class UploadedFileCsvTypeValidator implements UploadedFileTypeValidatorInterface
     {
         $uploadedOrder = $this->utilCsvService->readUploadedFile($file);
 
-        if (count($uploadedOrder) > $maxAllowedRows) {
-            return false;
-        }
-
-        return true;
+        return $maxAllowedRows >= count($uploadedOrder);
     }
 
     /**

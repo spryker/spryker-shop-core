@@ -35,8 +35,6 @@ class UploadedFileValidator implements FileValidatorInterface
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
      * @return bool
@@ -48,8 +46,6 @@ class UploadedFileValidator implements FileValidatorInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
@@ -71,8 +67,6 @@ class UploadedFileValidator implements FileValidatorInterface
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
      * @return bool
@@ -90,8 +84,6 @@ class UploadedFileValidator implements FileValidatorInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      * @param int $maxAllowedRows
@@ -111,8 +103,6 @@ class UploadedFileValidator implements FileValidatorInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @return string[]
      */

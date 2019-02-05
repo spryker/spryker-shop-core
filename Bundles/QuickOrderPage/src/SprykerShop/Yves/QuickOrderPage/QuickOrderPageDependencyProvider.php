@@ -18,6 +18,7 @@ use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrder
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceBridge;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface;
 
 class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -90,7 +91,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuickOrderUtilCsvService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_CSV] = function (Container $container) {
+        $container[static::SERVICE_UTIL_CSV] = function (Container $container): QuickOrderPageToUtilCsvServiceInterface {
             return new QuickOrderPageToUtilCsvServiceBridge(
                 $container->getLocator()->utilCsv()->service()
             );
@@ -276,7 +277,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuickOrderFileParserPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUICK_ORDER_FILE_PARSER] = function () {
+        $container[static::PLUGINS_QUICK_ORDER_FILE_PARSER] = function (): array {
             return $this->getQuickOrderFileParserPlugins();
         };
 
@@ -290,7 +291,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuickOrderFileValidatorPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUICK_ORDER_FILE_VALIDATOR] = function () {
+        $container[static::PLUGINS_QUICK_ORDER_FILE_VALIDATOR] = function (): array {
             return $this->getQuickOrderFileValidatorPlugins();
         };
 
@@ -304,7 +305,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuickOrderFileTemplatePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUICK_ORDER_FILE_TEMPLATE] = function () {
+        $container[static::PLUGINS_QUICK_ORDER_FILE_TEMPLATE] = function (): array {
             return $this->getQuickOrderFileTemplatePlugins();
         };
 

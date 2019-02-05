@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class FileDownloadRenderer implements FileRendererInterface
 {
     protected const FILE_TEMPLATE_NAME = 'quick-order-template';
-    protected const RESPONSE_CODE_NOT_FOUND = 404;
 
     /**
      * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTemplateStrategyPluginInterface[]
@@ -50,6 +49,6 @@ class FileDownloadRenderer implements FileRendererInterface
             }
         }
 
-        return new Response('', static::RESPONSE_CODE_NOT_FOUND);
+        return new Response('', Response::HTTP_NOT_FOUND);
     }
 }

@@ -15,8 +15,6 @@ interface FileValidatorInterface
      * Specification:
      * - Return allowed mime types of plugin.
      *
-     * @api
-     *
      * @return string[]
      */
     public function getAllowedMimeTypes();
@@ -24,8 +22,6 @@ interface FileValidatorInterface
     /**
      * Specification:
      * - Check if file applicable or not.
-     *
-     * @api
      *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
@@ -37,8 +33,6 @@ interface FileValidatorInterface
      * Specification:
      * - Check if the file format is valid.
      *
-     * @api
-     *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
      * @return bool
@@ -48,8 +42,6 @@ interface FileValidatorInterface
     /**
      * Specification:
      * - Check if amount of rows is valid.
-     *
-     * @api
      *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      * @param int $maxAllowedRows
@@ -61,8 +53,6 @@ interface FileValidatorInterface
     /**
      * Specification:
      * - Check if the file mime-type is valid.
-     *
-     * @api
      *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
