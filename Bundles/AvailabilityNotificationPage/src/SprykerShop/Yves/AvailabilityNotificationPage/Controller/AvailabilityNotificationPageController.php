@@ -24,19 +24,19 @@ class AvailabilityNotificationPageController extends AbstractController
      */
     public function unsubscribeByKeyAction(string $subscriptionKey)
     {
-        $data = $this->executeUnsubscribeByKeyAction($subscriptionKey);
+        $this->executeUnsubscribeByKeyAction($subscriptionKey);
 
-        return $this->view($data, [], '@AvailabilityNotificationPage/views/availability-notification/unsubscribe.twig');
+        return $this->view([], [], '@AvailabilityNotificationPage/views/availability-notification/unsubscribe.twig');
     }
 
     /**
      * @param string $subscriptionKey
      *
-     * @return array
+     * @return void
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    protected function executeUnsubscribeByKeyAction(string $subscriptionKey): array
+    protected function executeUnsubscribeByKeyAction(string $subscriptionKey): void
     {
         $availabilitySubscriptionTransfer = (new AvailabilitySubscriptionTransfer())->setSubscriptionKey($subscriptionKey);
 
@@ -48,27 +48,7 @@ class AvailabilityNotificationPageController extends AbstractController
             throw new NotFoundHttpException($availabilitySubscriptionResponseTransfer->getErrorMessage());
         }
 
-        $this->removeAvailabilitySubscriptionFromCustomer($availabilitySubscriptionResponseTransfer->getProduct()->getSku());
-
-        return ['productName' => $this->getProductName($availabilitySubscriptionResponseTransfer->getProduct())];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return string
-     */
-    protected function getProductName(ProductConcreteTransfer $productConcreteTransfer): string
-    {
-        $locale = $this->getLocale();
-        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
-            if ($localizedAttributes->getLocale()->getLocaleName() === $locale) {
-                $attributes = $localizedAttributes->toArray();
-                return $attributes['name'] ?? '';
-            }
-        }
-
-        return '';
+        $this->removeAvailabilitySubscriptionFromCustomer($availabilitySubscriptionResponseTransfer->getAvailabilitySubscription()->getSku());
     }
 
     /**
@@ -84,6 +64,7 @@ class AvailabilityNotificationPageController extends AbstractController
         foreach ($availabilitySubscriptions as $key => $availabilitySubscription) {
             if ($availabilitySubscription->getSku() === $sku) {
                 unset($availabilitySubscriptions[$key]);
+
                 break;
             }
         }

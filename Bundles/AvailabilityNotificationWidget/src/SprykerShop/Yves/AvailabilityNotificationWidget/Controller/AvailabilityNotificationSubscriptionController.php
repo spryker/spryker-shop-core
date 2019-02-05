@@ -116,7 +116,7 @@ class AvailabilityNotificationSubscriptionController extends AbstractController
             return;
         }
 
-        $this->removeAvailabilitySubscriptionFromCustomer($responseTransfer->getProduct()->getSku());
+        $this->removeAvailabilitySubscriptionFromCustomer($responseTransfer->getAvailabilitySubscription()->getSku());
 
         $this->addSuccessMessage(static::GLOSSARY_KEY_SUCCESSFULLY_UNSUBSCRIBED);
     }

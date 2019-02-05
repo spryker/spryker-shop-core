@@ -2,12 +2,11 @@
 
 {% define data = {
     title: 'availability_notification.successfully_unsubscribed'|trans,
-    activePage: 'availabilityNotification',
-    productName:  _view.productName
+    activePage: 'availabilityNotification'
 } %}
 
 {% block content %}
     <div class="box">
-        <p>{{ 'availability_notification.successfully_unsubscribed_text'|trans({'%name%': data.productName})|raw }}</p>
+        <p>{{ 'availability_notification.successfully_unsubscribed_text'|trans }}</p>
     </div>
 {% endblock %}
