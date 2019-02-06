@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadedFileCsvTypeValidator implements UploadedFileTypeValidatorInterface
 {
-    public const CSV_SKU_COLUMN_NAME = 'concrete_sku';
-    public const CSV_QTY_COLUMN_NAME = 'quantity';
+    protected const CSV_SKU_COLUMN_NAME = 'concrete_sku';
+    protected const CSV_QTY_COLUMN_NAME = 'quantity';
 
     /**
      * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface
