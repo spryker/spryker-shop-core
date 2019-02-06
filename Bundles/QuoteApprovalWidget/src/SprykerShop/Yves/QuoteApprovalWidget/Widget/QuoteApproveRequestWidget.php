@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuoteApprovalWidget\Widget;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientInterface;
@@ -30,7 +31,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     public function __construct(QuoteTransfer $quoteTransfer)
     {
-        $this->addIsVisibleParameter();
+        $this->addIsVisibleParameter($quoteTransfer);
         $this->addQuoteParameter($quoteTransfer);
         $this->addQuoteStatusParameter($quoteTransfer);
         $this->addLimitParameter($quoteTransfer);
@@ -71,7 +72,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     protected function addQuoteStatusParameter(QuoteTransfer $quoteTransfer): void
     {
-        if (!$this->isVisible()) {
+        if (!$this->isWidgetVisible($quoteTransfer)) {
             $this->addParameter(static::PARAMETER_QUOTE_STATUS, null);
 
             return;
@@ -87,7 +88,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     protected function addQuoteApprovalRequestFormParameter(QuoteTransfer $quoteTransfer): void
     {
-        if (!$this->isVisible()) {
+        if (!$this->isWidgetVisible($quoteTransfer)) {
             $this->addParameter(static::PARAMETER_QUOTE_APPROVAL_REQUEST_FROM, null);
 
             return;
@@ -103,7 +104,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     protected function addCanSendApprovalRequestParameter(QuoteTransfer $quoteTransfer): void
     {
-        if (!$this->isVisible()) {
+        if (!$this->isWidgetVisible($quoteTransfer)) {
             $this->addParameter(static::PARAMETER_CAN_SEND_APPROVAL_REQUEST, null);
 
             return;
@@ -123,7 +124,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     protected function addLimitParameter(QuoteTransfer $quoteTransfer): void
     {
-        if (!$this->isVisible()) {
+        if (!$this->isWidgetVisible($quoteTransfer)) {
             $this->addParameter(static::PARAMETER_LIMIT, null);
 
             return;
@@ -133,19 +134,33 @@ class QuoteApproveRequestWidget extends AbstractWidget
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return void
      */
-    protected function addIsVisibleParameter(): void
+    protected function addIsVisibleParameter(QuoteTransfer $quoteTransfer): void
     {
-        $this->addParameter(static::PARAMETER_IS_VISIBLE, $this->isVisible());
+        $this->addParameter(static::PARAMETER_IS_VISIBLE, $this->isWidgetVisible($quoteTransfer));
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return bool
      */
-    protected function isVisible(): bool
+    protected function isWidgetVisible(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->getCurrentCompanyUser() && $this->getQuoteApprovalClient()->isCustomerHasPlaceOrderPermission();
+        $customerTransfer = $this->getCurrentCustomer();
+
+        if ($customerTransfer === null) {
+            return false;
+        }
+
+        if ($quoteTransfer->getCustomerReference() !== $customerTransfer->getCustomerReference()) {
+            return false;
+        }
+
+        return $this->getQuoteApprovalClient()->isCustomerHasPlaceOrderPermission();
     }
 
     /**
@@ -166,15 +181,23 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     protected function getCurrentCompanyUser(): ?CompanyUserTransfer
     {
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
+        $customerTransfer = $this->getCurrentCustomer();
 
         if (!$customerTransfer) {
             return null;
         }
 
         return $customerTransfer->getCompanyUserTransfer();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected function getCurrentCustomer(): ?CustomerTransfer
+    {
+        return $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
     }
 
     /**
