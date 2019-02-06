@@ -79,15 +79,16 @@ class CheckoutAddressItemForm extends AbstractType
                     ->get(CheckoutAddressCollectionForm::FIELD_SHIPPING_ADDRESS)
                     ->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
                     ->getData();
+
                 if ($idCustomerAddress && $idCustomerAddress !== CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES) {
                     return false;
                 }
-                
-                if ($form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS) === false || !$form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData()) {
-                    return [CheckoutAddressCollectionForm::GROUP_SHIPPING_ADDRESS];
+
+                if (!$idCustomerAddress) {
+                    return false;
                 }
 
-                return false;
+                return [CheckoutAddressCollectionForm::GROUP_SHIPPING_ADDRESS];
             },
             CheckoutAddressForm::OPTION_VALIDATION_GROUP => CheckoutAddressCollectionForm::GROUP_SHIPPING_ADDRESS,
             CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],

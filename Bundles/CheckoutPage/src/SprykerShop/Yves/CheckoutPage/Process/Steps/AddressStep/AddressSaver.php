@@ -31,7 +31,8 @@ class AddressSaver implements SaverInterface
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
      */
-    public function __construct(CheckoutPageToCustomerClientInterface $customerClient) {
+    public function __construct(CheckoutPageToCustomerClientInterface $customerClient)
+    {
         $this->customerClient = $customerClient;
     }
 
@@ -48,8 +49,8 @@ class AddressSaver implements SaverInterface
      */
     public function save(Request $request, AbstractTransfer $quoteTransfer): AbstractTransfer
     {
-        $this->setItemsShippingAddress($quoteTransfer);
         $this->setQuoteShippingAddress($quoteTransfer);
+        $this->setItemsShippingAddress($quoteTransfer);
         $this->setBillingAddress($quoteTransfer);
 
         return $quoteTransfer;
@@ -96,14 +97,18 @@ class AddressSaver implements SaverInterface
     protected function setItemsShippingAddress(QuoteTransfer $quoteTransfer): void
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $shipment = $itemTransfer->getShipment();
+            $shipmentTransfer = $itemTransfer->getShipment();
 
-            if ($shipment === null) {
+            if ($shipmentTransfer === null) {
                 continue;
             }
 
+            if($quoteTransfer->getShippingAddress()->getIdCustomerAddress() === null) {
+                $shipmentTransfer->setShippingAddress($quoteTransfer->getShippingAddress());
+            }
+
             $itemTransfer->setShipment(
-                $this->getItemShipment($shipment->getShippingAddress())
+                $this->getItemShipment($shipmentTransfer->getShippingAddress())
             );
         }
     }
