@@ -14,9 +14,7 @@ use SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\Availabili
 use SprykerShop\Yves\AvailabilityNotificationWidget\Form\AvailabilitySubscriptionForm;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Form\AvailabilityUnsubscriptionForm;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Form\DataProvider\AvailabilitySubscriptionFormDataProvider;
-use SprykerShop\Yves\AvailabilityNotificationWidget\Form\DataProvider\AvailabilitySubscriptionFormDataProviderInterface;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Form\DataProvider\AvailabilityUnsubscriptionFormDataProvider;
-use SprykerShop\Yves\AvailabilityNotificationWidget\Form\DataProvider\AvailabilityUnsubscriptionFormDataProviderInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -39,17 +37,17 @@ class AvailabilityNotificationWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\AvailabilityNotificationWidget\Form\DataProvider\AvailabilitySubscriptionFormDataProviderInterface
+     * @return \SprykerShop\Yves\AvailabilityNotificationWidget\Form\DataProvider\AvailabilitySubscriptionFormDataProvider
      */
-    public function createAvailabilitySubscriptionFormDataProvider(): AvailabilitySubscriptionFormDataProviderInterface
+    public function createAvailabilitySubscriptionFormDataProvider(): AvailabilitySubscriptionFormDataProvider
     {
         return new AvailabilitySubscriptionFormDataProvider($this->getCustomerClient());
     }
 
     /**
-     * @return \SprykerShop\Yves\AvailabilityNotificationWidget\Form\DataProvider\AvailabilityUnsubscriptionFormDataProviderInterface
+     * @return \SprykerShop\Yves\AvailabilityNotificationWidget\Form\DataProvider\AvailabilityUnsubscriptionFormDataProvider
      */
-    public function createAvailabilityUnsubscribeFormDataProvider(): AvailabilityUnsubscriptionFormDataProviderInterface
+    public function createAvailabilityUnsubscribeFormDataProvider(): AvailabilitySubscriptionFormDataProvider
     {
         return new AvailabilityUnsubscriptionFormDataProvider($this->getCustomerClient());
     }

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\AvailabilityNotificationWidgetToCustomerClientInterface;
 
-class AvailabilityUnsubscriptionFormDataProvider implements AvailabilityUnsubscriptionFormDataProviderInterface
+class AvailabilityUnsubscriptionFormDataProvider
 {
     /**
      * @var \SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\AvailabilityNotificationWidgetToCustomerClientInterface
