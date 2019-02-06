@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
@@ -47,7 +48,8 @@ class AddressSaver implements SaverInterface
      */
     public function save(Request $request, AbstractTransfer $quoteTransfer): AbstractTransfer
     {
-        $this->setShippingAddresses($quoteTransfer);
+        $this->setItemsShippingAddress($quoteTransfer);
+        $this->setQuoteShippingAddress($quoteTransfer);
         $this->setBillingAddress($quoteTransfer);
 
         return $quoteTransfer;
@@ -91,7 +93,7 @@ class AddressSaver implements SaverInterface
      *
      * @return void
      */
-    protected function setShippingAddresses(AbstractTransfer $quoteTransfer): void
+    protected function setItemsShippingAddress(QuoteTransfer $quoteTransfer): void
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $shipment = $itemTransfer->getShipment();
@@ -111,7 +113,21 @@ class AddressSaver implements SaverInterface
      *
      * @return void
      */
-    protected function setBillingAddress(AbstractTransfer $quoteTransfer): void
+    protected function setQuoteShippingAddress(QuoteTransfer $quoteTransfer): void
+    {
+        $addressTransfer = $quoteTransfer->getShippingAddress();
+
+        if ($addressTransfer !== null) {
+            $this->prepareShippingAddress($addressTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function setBillingAddress(QuoteTransfer $quoteTransfer): void
     {
         $billingAddressTransfer = $quoteTransfer->getBillingAddress();
 
