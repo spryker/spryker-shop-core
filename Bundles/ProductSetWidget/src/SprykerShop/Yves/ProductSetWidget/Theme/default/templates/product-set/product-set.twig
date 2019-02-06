@@ -43,7 +43,7 @@
             {% endfor %}
 
             {% if can('SeeAddToCartPermissionPlugin') %}
-                <button type="submit" class="button float-right" {% if isDisabled %}disabled{% endif %}>
+                <button type="submit" class="button float-right" data-init-single-click {% if isDisabled %}disabled{% endif %}>
                     {{ 'product.set.detail.add-all-to-cart' | trans }}
                 </button>
             {% endif %}
@@ -119,24 +119,32 @@
                             {% block actions %}
                                 {% set isDisabled = not embed.product.idProductConcrete or not embed.product.available %}
 
-                                {% if can('SeeAddToCartPermissionPlugin') %}<a href="{{ path('cart/add', {sku: embed.product.sku}) }}" class="button button--expand js-product-set__add-to-cart" {% if isDisabled %}disabled{% endif %}>
-                                    {% include atom('icon') with {
-                                        data: {
-                                            name: 'cart-plus'
-                                        }
-                                    } only %}
-                                    {{ 'page.detail.add-to-cart' | trans }}
-                                </a>{% endif %}
+                                {% if can('SeeAddToCartPermissionPlugin') %}
+                                    {% if isDisabled %}
+                                        <button type="button" class="button button--expand" disabled>
+                                            {% include atom('icon') with {
+                                                data: {
+                                                    name: 'cart-plus'
+                                                }
+                                            } only %}
+                                            {{ 'page.detail.add-to-cart' | trans }}
+                                        </button>
+                                    {% else %}
+                                        <a href="{{ path('cart/add', {sku: embed.product.sku}) }}" class="button button--expand" data-init-single-click>
+                                            {% include atom('icon') with {
+                                                data: {
+                                                    name: 'cart-plus'
+                                                }
+                                            } only %}
+                                            {{ 'page.detail.add-to-cart' | trans }}
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
                             {% endblock %}
                         {% endembed %}
                     </div>
                 {% endfor %}
             </div>
         </form>
-        {% include molecule('action-single-click-enforcer') with {
-            attributes: {
-                'target-selector': '.js-product-set__add-to-cart'
-            }
-        } only %}
     {% endblock %}
 {% endblock %}

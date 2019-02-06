@@ -1,6 +1,11 @@
 import Component from 'ShopUi/models/component';
 import FormClear from 'ShopUi/components/molecules/form-clear/form-clear';
 
+const EVENT_ADD_NEW_ADDRESS = 'add-new-address';
+
+/**
+ * @event add-new-address An event which is triggered after the form fields are filled.
+ */
 export default class CompanyBusinessUnitAddressHandler extends Component {
     /**
      * Collection of the triggers elements.
@@ -39,10 +44,6 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
      */
     currentAddress: String;
     /**
-     * The hidden customer id input.
-     */
-    hiddenCustomerIdInput: HTMLInputElement;
-    /**
      * The hidden input with selected address by default.
      */
     hiddenDefaultAddressInput: HTMLInputElement;
@@ -50,7 +51,14 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
      * The input address element which triggers toggling of the disabled attribute.
      */
     customAddressTriggerInput: HTMLFormElement;
+    /**
+     * The custom event.
+     */
     resetSelectEvent: CustomEvent;
+    /**
+     * The custom event.
+     */
+    addNewAddressEvent: CustomEvent;
 
     readonly resetSelectEventName: string = 'reset-select';
 
@@ -64,13 +72,14 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         this.ignoreElements = <HTMLElement[]>Array.from(this.form.querySelectorAll(this.ignoreSelector));
         this.filterElements = this.targets.filter((element) => !this.ignoreElements.includes(element));
         this.formClear = <FormClear>this.form.querySelector('.js-form-clear');
-        this.hiddenCustomerIdInput = <HTMLInputElement>this.form.querySelector(this.customerAddressIdSelector);
         this.hiddenDefaultAddressInput = <HTMLInputElement>this.form.querySelector(this.defaultAddressSelector);
         this.customAddressTriggerInput = <HTMLFormElement>this.form.querySelector(this.customAddressTrigger);
 
         this.initAddressesData();
         this.mapEvents();
         this.fillDefaultAddress();
+        this.initResetSelectEvent();
+        this.initAddNewAddressSelector();
     }
 
     protected mapEvents(): void {
@@ -84,9 +93,9 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
             triggerElement.addEventListener('click', () => {
                 this.addressesSelects.forEach((selectElement) => {
                     this.setCurrentAddress(selectElement);
-                    this.initResetSelectEvent();
                 });
                 this.onClick(triggerElement);
+                triggerElement.dispatchEvent(this.addNewAddressEvent);
             });
         });
     }
@@ -94,6 +103,10 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     protected initResetSelectEvent(): void {
         this.resetSelectEvent = new CustomEvent(this.resetSelectEventName);
         this.resetSelectEvent.initEvent('change', true, true);
+    }
+
+    protected initAddNewAddressSelector(): void {
+        this.addNewAddressEvent = <CustomEvent>new CustomEvent(EVENT_ADD_NEW_ADDRESS);
     }
 
     protected onClick(triggerElement: HTMLElement): void {
@@ -191,14 +204,15 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         }
     }
 
-    resetAddressesSelect(): void {
+    protected resetAddressesSelect(): void {
         const addressSelect = <HTMLSelectElement>this.form.querySelector(this.dataSelector);
         const addressSelectOptions = <HTMLOptionElement[]>Array.from(addressSelect.options);
+        const addressHiddenInput = <HTMLInputElement>this.form.querySelector(`[name="${this.addressHiddenInputSelector}"]`);
 
         addressSelectOptions.some((item, index) => {
             if(!item.value.length) {
                 addressSelect.selectedIndex = index;
-                addressSelect.dispatchEvent(this.resetSelectEvent);
+                addressHiddenInput.dispatchEvent(this.resetSelectEvent);
                 return true;
             }
         });
@@ -246,17 +260,17 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     }
 
     /**
-     * Gets a querySelector name of a hidden customer id input.
-     */
-    get customerAddressIdSelector(): string {
-        return this.getAttribute('customer-address-id-selector');
-    }
-
-    /**
      * Gets a querySelector name of a hidden default address input.
      */
     get defaultAddressSelector(): string {
         return this.getAttribute('default-address-selector');
+    }
+
+    /**
+     * Gets a querySelector name of a hidden customer id input.
+     */
+    get addressHiddenInputSelector(): string {
+        return this.getAttribute('address-hidden-input-selector');
     }
 
     /**
