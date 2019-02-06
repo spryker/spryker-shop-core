@@ -29,4 +29,12 @@ class CustomerReorderWidgetToZedRequestClientBridge implements CustomerReorderWi
     {
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
     }
+
+    /**
+     * @return void
+     */
+    public function addResponseMessagesToMessenger(): void
+    {
+        $this->zedRequestClient->addResponseMessagesToMessenger();
+    }
 }
