@@ -49,7 +49,7 @@
                 {% block other %}
                     {% include atom('icon') with {
                         modifiers: ['big'],
-                        class: embed.name ~ '__icon',
+                        class: embed.name ~ '__icon ' ~ data.node.cssClass,
                         data: {
                             name: data.node.cssClass
                         }
