@@ -9,7 +9,7 @@
     voucherDiscounts: null,
     ruleDiscounts: null,
     discountTotal: null,
-    isCartEditable: false
+    isQuoteEditable: false
 } %}
 
 {% block component %}
@@ -21,7 +21,7 @@
 {% block body %}
     {% if data.voucherDiscounts is not empty %}
         <li class="list__item">
-            {% if data.isCartEditable %}
+            {% if data.isQuoteEditable %}
                 <a class="float-right text-small" href="{{ url('discount/voucher/clear') }}">
                     {% include atom('icon') with {
                         modifiers: ['smaller'],
@@ -39,7 +39,7 @@
                     <li class="grid grid--justify">
                         <span class="col col--sm-8">
                             {{ voucherDiscount.displayName }}
-                            {% if data.isCartEditable %}
+                            {% if data.isQuoteEditable %}
                                 <br/>
                                 <a class="text-small" href="{{ url('discount/voucher/remove', {'code': voucherDiscount.voucherCode}) }}">
                                     {% include atom('icon') with {

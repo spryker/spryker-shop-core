@@ -7,12 +7,12 @@
 
 {% define data = {
     cart: required,
-    isCartEditable: required,
+    isQuoteEditable: required,
     cartItem: required,
     attributes: required
 } %}
 
-{% set canEditCart = not is_granted('ROLE_USER') or data.isCartEditable %}
+{% set canEditCart = not is_granted('ROLE_USER') or data.isQuoteEditable %}
 
 {% block body %}
     <div class="grid grid--stretch grid--justify">

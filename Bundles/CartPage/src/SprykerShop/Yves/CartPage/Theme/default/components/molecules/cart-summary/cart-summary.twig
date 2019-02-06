@@ -8,7 +8,7 @@
 {% define data = {
     cart: required,
     isQuoteValid: required,
-    isCartEditable: required,
+    isQuoteEditable: required,
 } %}
 
 {% set canProceedToCheckout = data.cart.items is not empty
@@ -34,7 +34,7 @@
                 voucherDiscounts: data.cart.voucherDiscounts,
                 ruleDiscounts: data.cart.cartRuleDiscounts,
                 discountTotal: data.cart.totals.discounttotal,
-                isCartEditable: data.isCartEditable
+                isQuoteEditable: data.isQuoteEditable
             }
         } only %}
     {% endif %}

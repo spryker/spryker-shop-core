@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CartPage\Dependency\Client;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class CartPageToCartClientBridge implements CartPageToCartClientInterface
 {
@@ -27,11 +28,13 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return bool
      */
-    public function isCartEditable(): bool
+    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->cartClient->isCartEditable();
+        return $this->cartClient->isQuoteEditable($quoteTransfer);
     }
 
     /**

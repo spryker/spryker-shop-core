@@ -50,7 +50,9 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
      */
     public function add($voucherCode)
     {
-        if ($this->quoteClient->isQuoteLocked()) {
+        $quoteTransfer = $this->quoteClient->getQuote();
+
+        if ($this->quoteClient->isQuoteLocked($quoteTransfer)) {
              $this->flashMessenger->addErrorMessage(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED);
 
              return;
@@ -59,7 +61,6 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
         $voucherDiscount = new DiscountTransfer();
         $voucherDiscount->setVoucherCode($voucherCode);
 
-        $quoteTransfer = $this->quoteClient->getQuote();
         $quoteTransfer->addVoucherDiscount($voucherDiscount);
 
         $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
@@ -95,13 +96,14 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
      */
     public function remove($voucherCode)
     {
-        if ($this->quoteClient->isQuoteLocked()) {
+        $quoteTransfer = $this->quoteClient->getQuote();
+
+        if ($this->quoteClient->isQuoteLocked($quoteTransfer)) {
             $this->flashMessenger->addErrorMessage(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED);
 
             return;
         }
 
-        $quoteTransfer = $this->quoteClient->getQuote();
         $voucherDiscounts = $quoteTransfer->getVoucherDiscounts();
         $this->unsetVoucherCode($voucherCode, $voucherDiscounts);
         $this->unsetNotAppliedVoucherCode($voucherCode, $quoteTransfer);
@@ -117,13 +119,14 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
      */
     public function clear()
     {
-        if ($this->quoteClient->isQuoteLocked()) {
+        $quoteTransfer = $this->quoteClient->getQuote();
+
+        if ($this->quoteClient->isQuoteLocked($quoteTransfer)) {
             $this->flashMessenger->addErrorMessage(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED);
 
             return;
         }
 
-        $quoteTransfer = $this->quoteClient->getQuote();
         $quoteTransfer->setVoucherDiscounts(new ArrayObject());
         $quoteTransfer->setUsedNotAppliedVoucherCodes([]);
 

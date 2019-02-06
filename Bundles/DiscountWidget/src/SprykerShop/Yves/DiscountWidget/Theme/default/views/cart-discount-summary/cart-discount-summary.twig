@@ -4,14 +4,14 @@
     voucherDiscounts: _widget.cart.voucherDiscounts,
     ruleDiscounts: _widget.cart.cartRuleDiscounts,
     discountTotal: _widget.cart.totals.discounttotal,
-    isCartEditable: _widget.cart.isLocked
+    isQuoteEditable: _widget.cart.isLocked
 } %}
 
 {% block body %}
     {% if data.discountTotal %}
         {% if data.voucherDiscounts is not empty %}
             <li>
-                {% if isCartEditable %}
+                {% if isQuoteEditable %}
                     <a class="float-right text-small" href="{{ url('discount/voucher/clear') }}">
                         {% include atom('icon') with {
                             modifiers: ['smaller'],
@@ -30,7 +30,7 @@
                         <li class="grid grid--justify">
                             <span class="col col--sm-8">
                                 {{ voucherDiscount.displayName }}
-                                {% if isCartEditable %}
+                                {% if isQuoteEditable %}
                                     <br/>
                                     <a class="text-small" href="{{ url('discount/voucher/remove', {'code': voucherDiscount.voucherCode}) }}">
                                         {% include atom('icon') with {

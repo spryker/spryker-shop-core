@@ -2,7 +2,7 @@
 
 {% define data = {
     cart: _view.cart,
-    isCartEditable: _view.isCartEditable,
+    isQuoteEditable: _view.isQuoteEditable,
     cartItems: _view.cartItems,
     isQuoteValid: _view.isQuoteValid,
     attributes: _view.attributes,
@@ -57,20 +57,20 @@
                         class: 'box',
                         data: {
                             cart: data.cart,
-                            isCartEditable: data.isCartEditable,
+                            isQuoteEditable: data.isQuoteEditable,
                             cartItem: cartItem,
                             attributes: data.attributes[cartItem.sku] | default([])
                         }
                     } only %}
                 {% endfor %}
 
-                {% if data.isCartEditable %}
+                {% if data.isQuoteEditable %}
                     {% widget 'CartDiscountPromotionProductListWidget' args [data.cart, data.request] only %}
                     {% elsewidget 'DiscountPromotionItemListWidgetPlugin' args [data.cart, data.request] only %} {# @deprecated Use CartDiscountPromotionProductListWidget instead. #}
                     {% endwidget %}
                 {% endif %}
 
-                {% if data.isCartEditable and data.cart.idQuote is not empty %}
+                {% if data.isQuoteEditable and data.cart.idQuote is not empty %}
                     {% widget 'CartOperationsWidget' args [data.cart] use view('cart-operations-actions', 'MultiCartWidget') only %}
                     {% nowidget %}
                         {{ widgetBlock('CartOperationsWidgetPlugin', 'actions', data.cart) }} {# @deprecated Use CartOperationsWidget instead. #}
@@ -84,7 +84,7 @@
                     {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartNoteFormWidget instead. #}
                     {% endwidget %}
 
-                    {% if (not is_granted('ROLE_USER') or data.isCartEditable) and can('SeePricePermissionPlugin') %}
+                    {% if (not is_granted('ROLE_USER') or data.isQuoteEditable) and can('SeePricePermissionPlugin') %}
                         {% widget 'DiscountVoucherFormWidget' only %}
                             {% block body %}
                                 {{ parent() }}
@@ -98,7 +98,7 @@
                         {% endwidget %}
                     {% endif %}
 
-                    {% if data.isCartEditable and data.cart.idQuote is not empty %}
+                    {% if data.isQuoteEditable and data.cart.idQuote is not empty %}
                         {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] only %}
                         {% elsewidget 'CartToShoppingListWidgetPlugin' args [data.cart.idQuote] only %} {# @deprecated Use CreateShoppingListFromCartWidget instead. #}
                         {% endwidget %}
@@ -110,7 +110,7 @@
                             data: {
                                 cart: data.cart,
                                 isQuoteValid: data.isQuoteValid,
-                                isCartEditable: data.isCartEditable,
+                                isQuoteEditable: data.isQuoteEditable,
                             }
                         } only %}
                      {% endif %}
