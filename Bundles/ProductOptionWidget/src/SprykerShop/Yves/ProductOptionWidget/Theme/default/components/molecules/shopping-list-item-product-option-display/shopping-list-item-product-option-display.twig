@@ -1,0 +1,23 @@
+{% extends model('component') %}
+{% define config = {
+    name: 'shopping-list-item-product-option-display',
+    tag: 'ul'
+} %}
+{% define data = {
+    options: null
+} %}
+
+{% block template %}
+    {% if data.options is not empty %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% for option in data.options %}
+        <li class="list__item">
+            <strong>{{ option.groupName | trans }}:</strong> {{ option.value | trans }}
+            <span>{{ option.unitGrossPrice | money }}</span>
+        </li>
+    {% endfor %}
+{% endblock %}

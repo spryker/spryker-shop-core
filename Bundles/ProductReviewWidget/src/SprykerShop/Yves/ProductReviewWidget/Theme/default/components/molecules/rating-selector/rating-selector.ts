@@ -1,7 +1,13 @@
 import Component from 'ShopUi/models/component';
 
 export default class RatingSelector extends Component {
+    /**
+     * The input element.
+     */
     input: HTMLInputElement
+    /**
+     * Collection of the elements which toggle the steps of the product review.
+     */
     steps: HTMLElement[]
 
     protected readyCallback(): void {
@@ -28,6 +34,10 @@ export default class RatingSelector extends Component {
         this.updateRating(newValue);
     }
 
+    /**
+     * Toggles the disabled attribute of the input element.
+     * @param value A number for checking if the attribute is to be set or removed from the input element.
+     */
     checkInput(value: number): void {
         if (!this.disableIfEmptyValue) {
             return;
@@ -41,6 +51,11 @@ export default class RatingSelector extends Component {
         this.input.removeAttribute('disabled');
     }
 
+
+    /**
+     * Sets the value attribute and toggles the special class name.
+     * @param value A number for setting the attribute.
+     */
     updateRating(value: number): void {
         this.input.setAttribute('value', `${value}`);
 
@@ -56,14 +71,23 @@ export default class RatingSelector extends Component {
         });
     }
 
+    /**
+     * Gets an input value.
+     */
     get value(): number {
         return parseFloat(this.input.value);
     }
 
+    /**
+     * Gets if the element is read-only.
+     */
     get readOnly(): boolean {
         return this.hasAttribute('readonly');
     }
 
+    /**
+     * Gets if the element has an empty value.
+     */
     get disableIfEmptyValue(): boolean {
         return this.hasAttribute('disable-if-empty-value');
     }
