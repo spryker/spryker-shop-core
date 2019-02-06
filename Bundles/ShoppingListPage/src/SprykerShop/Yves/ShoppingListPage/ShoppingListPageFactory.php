@@ -217,26 +217,6 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return string[]
-     */
-    public function getPrintShoppingListWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_WIDGETS);
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return string[]
-     */
-    public function getShoppingListViewWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_VIEW_WIDGETS);
-    }
-
-    /**
      * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListFormDataProviderMapperPluginInterface[]
      */
     public function getShoppingListFormDataProviderMapperPlugins(): array
