@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationPage\Controller;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -37,17 +37,17 @@ class AvailabilityNotificationPageController extends AbstractController
      */
     protected function executeUnsubscribeByKeyAction(string $subscriptionKey): void
     {
-        $availabilitySubscriptionTransfer = (new AvailabilitySubscriptionTransfer())->setSubscriptionKey($subscriptionKey);
+        $availabilityNotificationSubscriptionTransfer = (new AvailabilityNotificationSubscriptionTransfer())->setSubscriptionKey($subscriptionKey);
 
-        $availabilitySubscriptionResponseTransfer = $this->getFactory()
+        $availabilityNotificationSubscriptionResponseTransfer = $this->getFactory()
             ->getAvailabilityNotificationClient()
-            ->unsubscribeBySubscriptionKey($availabilitySubscriptionTransfer);
+            ->unsubscribeBySubscriptionKey($availabilityNotificationSubscriptionTransfer);
 
-        if ($availabilitySubscriptionResponseTransfer->getIsSuccess() === false) {
-            throw new NotFoundHttpException($availabilitySubscriptionResponseTransfer->getErrorMessage());
+        if ($availabilityNotificationSubscriptionResponseTransfer->getIsSuccess() === false) {
+            throw new NotFoundHttpException($availabilityNotificationSubscriptionResponseTransfer->getErrorMessage());
         }
 
-        $this->removeAvailabilitySubscriptionFromCustomer($availabilitySubscriptionResponseTransfer->getAvailabilitySubscription()->getSku());
+        $this->removeAvailabilityNotificationSubscriptionFromCustomer($availabilityNotificationSubscriptionResponseTransfer->getAvailabilityNotificationSubscription()->getSku());
     }
 
     /**
@@ -55,7 +55,7 @@ class AvailabilityNotificationPageController extends AbstractController
      *
      * @return void
      */
-    protected function removeAvailabilitySubscriptionFromCustomer(string $sku): void
+    protected function removeAvailabilityNotificationSubscriptionFromCustomer(string $sku): void
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
@@ -63,14 +63,14 @@ class AvailabilityNotificationPageController extends AbstractController
             return;
         }
 
-        $availabilitySubscriptionSkus = $customerTransfer->getAvailabilitySubscriptionSkus();
+        $availabilityNotificationSubscriptionSkus = $customerTransfer->getAvailabilityNotificationSubscriptionSkus();
 
-        $key = array_search($sku, $availabilitySubscriptionSkus);
+        $key = array_search($sku, $availabilityNotificationSubscriptionSkus);
 
         if ($key !== false) {
-            unset($availabilitySubscriptionSkus[$key]);
+            unset($availabilityNotificationSubscriptionSkus[$key]);
         }
 
-        $customerTransfer->setAvailabilitySubscriptionSkus($availabilitySubscriptionSkus);
+        $customerTransfer->setAvailabilityNotificationSubscriptionSkus($availabilityNotificationSubscriptionSkus);
     }
 }

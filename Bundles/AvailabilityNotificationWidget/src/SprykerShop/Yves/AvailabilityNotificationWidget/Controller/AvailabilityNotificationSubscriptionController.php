@@ -39,7 +39,7 @@ class AvailabilityNotificationSubscriptionController extends AbstractController
     {
         $subscriptionForm = $this
             ->getFactory()
-            ->createAvailabilitySubscriptionForm();
+            ->createAvailabilityNotificationSubscriptionForm();
 
         $subscriptionForm->handleRequest($request);
 
@@ -53,16 +53,16 @@ class AvailabilityNotificationSubscriptionController extends AbstractController
             return;
         }
 
-        $availabilitySubscriptionTransfer = $subscriptionForm->getData();
+        $availabilityNotificationSubscriptionTransfer = $subscriptionForm->getData();
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
         if ($customerTransfer !== null) {
-            $availabilitySubscriptionTransfer->setCustomerReference($customerTransfer->getCustomerReference());
+            $availabilityNotificationSubscriptionTransfer->setCustomerReference($customerTransfer->getCustomerReference());
         }
 
         $responseTransfer = $this->getFactory()
             ->getAvailabilityNotificationClient()
-            ->subscribe($availabilitySubscriptionTransfer);
+            ->subscribe($availabilityNotificationSubscriptionTransfer);
 
         if ($responseTransfer->getIsSuccess() === false) {
             $this->addErrorMessage($responseTransfer->getErrorMessage());
@@ -73,7 +73,7 @@ class AvailabilityNotificationSubscriptionController extends AbstractController
         $this->addSuccessMessage(static::GLOSSARY_KEY_SUCCESSFULLY_SUBSCRIBED);
 
         if ($customerTransfer !== null) {
-            $customerTransfer->addAvailabilitySubscriptionSku($responseTransfer->getAvailabilitySubscription()->getSku());
+            $customerTransfer->addAvailabilityNotificationSubscriptionSku($responseTransfer->getAvailabilityNotificationSubscription()->getSku());
         }
     }
 
@@ -104,7 +104,7 @@ class AvailabilityNotificationSubscriptionController extends AbstractController
             return;
         }
 
-        /** @var \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer $subscriptionTransfer */
+        /** @var \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $subscriptionTransfer */
         $subscriptionTransfer = $unsubscribeForm->getData();
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
@@ -124,7 +124,7 @@ class AvailabilityNotificationSubscriptionController extends AbstractController
             return;
         }
 
-        $this->removeAvailabilitySubscriptionFromCustomer($responseTransfer->getAvailabilitySubscription()->getSku());
+        $this->removeAvailabilityNotificationSubscriptionFromCustomer($responseTransfer->getAvailabilityNotificationSubscription()->getSku());
 
         $this->addSuccessMessage(static::GLOSSARY_KEY_SUCCESSFULLY_UNSUBSCRIBED);
     }
@@ -134,7 +134,7 @@ class AvailabilityNotificationSubscriptionController extends AbstractController
      *
      * @return void
      */
-    protected function removeAvailabilitySubscriptionFromCustomer(string $sku): void
+    protected function removeAvailabilityNotificationSubscriptionFromCustomer(string $sku): void
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
@@ -142,14 +142,14 @@ class AvailabilityNotificationSubscriptionController extends AbstractController
             return;
         }
 
-        $availabilitySubscriptionSkus = $customerTransfer->getAvailabilitySubscriptionSkus();
+        $availabilityNotificationSubscriptionSkus = $customerTransfer->getAvailabilityNotificationSubscriptionSkus();
 
-        $key = array_search($sku, $availabilitySubscriptionSkus);
+        $key = array_search($sku, $availabilityNotificationSubscriptionSkus);
 
         if ($key !== false) {
-            unset($availabilitySubscriptionSkus[$key]);
+            unset($availabilityNotificationSubscriptionSkus[$key]);
         }
 
-        $customerTransfer->setAvailabilitySubscriptionSkus($availabilitySubscriptionSkus);
+        $customerTransfer->setAvailabilityNotificationSubscriptionSkus($availabilityNotificationSubscriptionSkus);
     }
 }

@@ -11,10 +11,10 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\AvailabilityNotificationWidgetToAvailabilityNotificationClientInterface;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\AvailabilityNotificationWidgetToCustomerClientInterface;
-use SprykerShop\Yves\AvailabilityNotificationWidget\Form\AvailabilitySubscriptionForm;
-use SprykerShop\Yves\AvailabilityNotificationWidget\Form\AvailabilityUnsubscriptionForm;
-use SprykerShop\Yves\AvailabilityNotificationWidget\Form\DataProvider\AvailabilitySubscriptionFormDataProvider;
-use SprykerShop\Yves\AvailabilityNotificationWidget\Form\DataProvider\AvailabilityUnsubscriptionFormDataProvider;
+use SprykerShop\Yves\AvailabilityNotificationWidget\Form\AvailabilityNotificationSubscriptionForm;
+use SprykerShop\Yves\AvailabilityNotificationWidget\Form\AvailabilityNotificationUnsubscriptionForm;
+use SprykerShop\Yves\AvailabilityNotificationWidget\Form\DataProvider\AvailabilityNotificationSubscriptionFormDataProvider;
+use SprykerShop\Yves\AvailabilityNotificationWidget\Form\DataProvider\AvailabilityNotificationUnsubscriptionFormDataProvider;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -23,9 +23,9 @@ class AvailabilityNotificationWidgetFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createAvailabilitySubscriptionForm(): FormInterface
+    public function createAvailabilityNotificationSubscriptionForm(): FormInterface
     {
-        return $this->getFormFactory()->create(AvailabilitySubscriptionForm::class);
+        return $this->getFormFactory()->create(AvailabilityNotificationSubscriptionForm::class);
     }
 
     /**
@@ -33,23 +33,23 @@ class AvailabilityNotificationWidgetFactory extends AbstractFactory
      */
     public function createAvailabilityUnsubscribeForm(): FormInterface
     {
-        return $this->getFormFactory()->create(AvailabilityUnsubscriptionForm::class);
+        return $this->getFormFactory()->create(AvailabilityNotificationUnsubscriptionForm::class);
     }
 
     /**
-     * @return \SprykerShop\Yves\AvailabilityNotificationWidget\Form\DataProvider\AvailabilitySubscriptionFormDataProvider
+     * @return \SprykerShop\Yves\AvailabilityNotificationWidget\Form\DataProvider\AvailabilityNotificationSubscriptionFormDataProvider
      */
-    public function createAvailabilitySubscriptionFormDataProvider(): AvailabilitySubscriptionFormDataProvider
+    public function createAvailabilityNotificationSubscriptionFormDataProvider(): AvailabilityNotificationSubscriptionFormDataProvider
     {
-        return new AvailabilitySubscriptionFormDataProvider($this->getCustomerClient());
+        return new AvailabilityNotificationSubscriptionFormDataProvider($this->getCustomerClient());
     }
 
     /**
-     * @return \SprykerShop\Yves\AvailabilityNotificationWidget\Form\DataProvider\AvailabilityUnsubscriptionFormDataProvider
+     * @return \SprykerShop\Yves\AvailabilityNotificationWidget\Form\DataProvider\AvailabilityNotificationUnsubscriptionFormDataProvider
      */
-    public function createAvailabilityUnsubscribeFormDataProvider(): AvailabilitySubscriptionFormDataProvider
+    public function createAvailabilityUnsubscribeFormDataProvider(): AvailabilityNotificationUnsubscriptionFormDataProvider
     {
-        return new AvailabilityUnsubscriptionFormDataProvider($this->getCustomerClient());
+        return new AvailabilityNotificationUnsubscriptionFormDataProvider($this->getCustomerClient());
     }
 
     /**

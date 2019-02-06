@@ -56,7 +56,7 @@ class AvailabilityNotificationSubscriptionWidget extends AbstractWidget
             return false;
         }
 
-        return in_array($productViewTransfer->getSku(), $customerTransfer->getAvailabilitySubscriptionSkus());
+        return in_array($productViewTransfer->getSku(), $customerTransfer->getAvailabilityNotificationSubscriptionSkus());
     }
 
     /**
@@ -67,11 +67,11 @@ class AvailabilityNotificationSubscriptionWidget extends AbstractWidget
     protected function getSubscriptionForm(ProductViewTransfer $productViewTransfer)
     {
         $formData = $this->getFactory()
-            ->createAvailabilitySubscriptionFormDataProvider()
+            ->createAvailabilityNotificationSubscriptionFormDataProvider()
             ->getData($productViewTransfer);
 
         return $this->getFactory()
-            ->createAvailabilitySubscriptionForm()
+            ->createAvailabilityNotificationSubscriptionForm()
             ->setData($formData)
             ->createView();
     }

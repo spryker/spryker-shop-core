@@ -7,11 +7,11 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationWidget\Form\DataProvider;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\AvailabilityNotificationWidgetToCustomerClientInterface;
 
-class AvailabilitySubscriptionFormDataProvider
+class AvailabilityNotificationSubscriptionFormDataProvider
 {
     /**
      * @var \SprykerShop\Yves\AvailabilityNotificationWidget\Dependency\Client\AvailabilityNotificationWidgetToCustomerClientInterface
@@ -29,11 +29,11 @@ class AvailabilitySubscriptionFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilitySubscriptionTransfer
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer
      */
-    public function getData(ProductViewTransfer $productViewTransfer): AvailabilitySubscriptionTransfer
+    public function getData(ProductViewTransfer $productViewTransfer): AvailabilityNotificationSubscriptionTransfer
     {
-        $subscription = new AvailabilitySubscriptionTransfer();
+        $subscription = new AvailabilityNotificationSubscriptionTransfer();
         $subscription->setSku($productViewTransfer->getSku());
 
         $customerTransfer = $this->customerClient->getCustomer();

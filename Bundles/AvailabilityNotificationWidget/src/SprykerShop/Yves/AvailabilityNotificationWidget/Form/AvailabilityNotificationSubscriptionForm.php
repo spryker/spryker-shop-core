@@ -7,26 +7,29 @@
 
 namespace SprykerShop\Yves\AvailabilityNotificationWidget\Form;
 
-use Generated\Shared\Transfer\AvailabilitySubscriptionTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class AvailabilityUnsubscriptionForm extends AbstractType
+class AvailabilityNotificationSubscriptionForm extends AbstractType
 {
+    public const FIELD_EMAIL = 'email';
     public const FIELD_SKU = 'sku';
 
-    public const FORM_ID = 'availability_unsubscribe';
+    public const FORM_ID = 'availability_notification_subscription';
 
     /**
      * @return string
      */
     public function getBlockPrefix(): string
     {
-        return 'availabilityNotificationUnsubscribeForm';
+        return 'availabilityNotificationSubscriptionForm';
     }
 
     /**
@@ -37,7 +40,7 @@ class AvailabilityUnsubscriptionForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => AvailabilitySubscriptionTransfer::class,
+            'data_class' => AvailabilityNotificationSubscriptionTransfer::class,
             'attr' => [
                 'id' => static::FORM_ID,
             ],
@@ -54,7 +57,28 @@ class AvailabilityUnsubscriptionForm extends AbstractType
     {
         $builder->setAction('#' . static::FORM_ID);
 
+        $this->addEmailField($builder);
         $this->addSkuField($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addEmailField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_EMAIL, EmailType::class, [
+            'label' => 'availability_notification.notify_me',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+                new Email(),
+                new Length(['min' => 1, 'max' => 255]),
+            ],
+        ]);
+
+        return $this;
     }
 
     /**
