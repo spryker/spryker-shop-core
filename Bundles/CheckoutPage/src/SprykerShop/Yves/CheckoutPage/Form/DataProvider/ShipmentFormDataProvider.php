@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Form\DataProvider;
 
+use ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -17,6 +18,7 @@ use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentCollectionForm;
 
 class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
@@ -44,21 +46,29 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected $moneyPlugin;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
+     */
+    protected $shipmentService;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface $glossaryClient
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
      */
     public function __construct(
         CheckoutPageToShipmentClientInterface $shipmentClient,
         CheckoutPageToGlossaryClientInterface $glossaryClient,
         Store $store,
-        MoneyPluginInterface $moneyPlugin
+        MoneyPluginInterface $moneyPlugin,
+        CheckoutPageToShipmentServiceInterface $shipmentService
     ) {
         $this->shipmentClient = $shipmentClient;
         $this->glossaryClient = $glossaryClient;
         $this->store = $store;
         $this->moneyPlugin = $moneyPlugin;
+        $this->shipmentService = $shipmentService;
     }
 
     /**
@@ -68,10 +78,11 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     public function getData(AbstractTransfer $quoteTransfer)
     {
-        if ($quoteTransfer->getShipment() === null) {
-            $shipmentTransfer = new ShipmentTransfer();
-            $quoteTransfer->setShipment($shipmentTransfer);
-        }
+        /**
+         * @todo Add BC quote adapter.
+         */
+
+        $quoteTransfer->setShipmentGroups($this->shipmentService->groupItemsByShipment($quoteTransfer->getItems()));
 
         return $quoteTransfer;
     }

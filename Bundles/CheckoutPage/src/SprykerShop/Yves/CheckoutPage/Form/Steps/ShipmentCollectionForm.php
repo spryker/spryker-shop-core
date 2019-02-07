@@ -49,7 +49,7 @@ class ShipmentCollectionForm extends AbstractType
      *
      * @return $this
      */
-    protected function addShipmentGroups(FormBuilderInterface $builder, array $options)
+    protected function addShipmentGroups(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_SHIPMENT_COLLECTION_GROUP, CollectionType::class, [
             'entry_type' => ShipmentGroupForm::class,
@@ -57,7 +57,7 @@ class ShipmentCollectionForm extends AbstractType
             'allow_delete' => false,
             'entry_options' => [
                 'data_class' => ShipmentGroupTransfer::class,
-                static::OPTION_SHIPMENT_METHODS_BY_GROUP => $options[static::OPTION_SHIPMENT_METHODS_BY_GROUP],
+                static::OPTION_SHIPMENT_METHODS_BY_GROUP => $options[static::OPTION_SHIPMENT_METHODS_BY_GROUP] ?? [],
             ],
         ]);
 
@@ -71,10 +71,12 @@ class ShipmentCollectionForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver
-            ->setDefaults([
-                'data_class' => QuoteTransfer::class,
-            ])
+//            ->setDefaults([
+//                'data_class' => QuoteTransfer::class,
+//            ])
             ->setRequired(ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP);
     }
 }

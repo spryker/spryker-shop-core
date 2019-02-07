@@ -100,7 +100,7 @@ class CheckoutController extends AbstractController
         if (!is_array($response)) {
             return $response;
         }
-
+//dd($response);
         return $this->view(
             $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),

@@ -150,7 +150,8 @@ class CheckoutPageFactory extends AbstractFactory
             $this->getShipmentClient(),
             $this->getGlossaryClient(),
             $this->getStore(),
-            $this->getMoneyPlugin()
+            $this->getMoneyPlugin(),
+            $this->getShippingService()
         );
     }
 
