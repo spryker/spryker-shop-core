@@ -287,6 +287,8 @@ class CheckoutController extends AbstractController
 
     /**
      * @param \Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     *
+     * @return void
      */
     protected function processErrorMessages(ArrayObject $messageTransfers): void
     {
