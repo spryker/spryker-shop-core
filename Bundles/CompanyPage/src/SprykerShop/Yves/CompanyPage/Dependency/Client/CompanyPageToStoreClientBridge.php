@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\CompanyPage\Dependency\Client;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 class CompanyPageToStoreClientBridge implements CompanyPageToStoreClientInterface
 {
     /**

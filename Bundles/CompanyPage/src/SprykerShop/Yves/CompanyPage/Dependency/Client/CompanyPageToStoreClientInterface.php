@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CompanyPage\Dependency\Client;
 
-
 interface CompanyPageToStoreClientInterface
 {
     /**
