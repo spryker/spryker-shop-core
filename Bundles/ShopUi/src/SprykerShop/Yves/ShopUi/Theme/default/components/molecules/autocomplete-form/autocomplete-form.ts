@@ -18,13 +18,41 @@ const keyCodes: {
     enter: 13
 };
 
+/**
+ * @event fetching An event which is triggered when an ajax request is sent to the server.
+ * @event fetched An event which is triggered when an ajax request is closed.
+ * @event change An event which is triggered when the search field is changed.
+ * @event set An event which is triggered when the element of an autocomplete suggestion is selected.
+ * @event unset An event which is triggered when the element of an autocomplete suggestion is removed.
+ */
 export default class AutocompleteForm extends Component {
+    /**
+     * Performs the Ajax operations.
+     */
     ajaxProvider: AjaxProvider
+    /**
+     * The text input element.
+     */
     textInput: HTMLInputElement;
+    /**
+     * The value input element.
+     */
     valueInput: HTMLInputElement;
+    /**
+     * The contains of the suggestions.
+     */
     suggestionsContainer: HTMLElement;
+    /**
+     * Collection of the suggestions items.
+     */
     suggestionItems: HTMLElement[];
+    /**
+     * The trigger of the form clearing.
+     */
     cleanButton: HTMLButtonElement;
+    /**
+     * The last selected saggestion item.
+     */
     lastSelectedItem: HTMLElement;
 
     protected readyCallback(): void {
@@ -90,6 +118,9 @@ export default class AutocompleteForm extends Component {
         this.suggestionsContainer.classList.add('is-hidden');
     }
 
+    /**
+     * Sends a request to the server and triggers the custom fetching and fetched events.
+     */
     async loadSuggestions(): Promise<void> {
         this.dispatchCustomEvent(Events.FETCHING);
         this.showSuggestions();
@@ -177,47 +208,81 @@ export default class AutocompleteForm extends Component {
         this.lastSelectedItem.click();
     }
 
+    /**
+     * Clears the input value and the typed text.
+     */
     clean(): void {
         this.inputText = '';
         this.inputValue = '';
     }
 
+    /**
+     * Gets the css query selector of the selected suggestion items.
+     */
     get selectedInputClass(): string {
         return `${this.suggestedItemSelector}--selected`.substr(1);
     }
 
+    /**
+     * Gets the typed text from the form field.
+     */
     get inputText(): string {
         return this.textInput.value.trim();
     }
 
+    /**
+     * Sets an input text.
+     * @param value A typed text in the input field.
+     */
     set inputText(value: string) {
         this.textInput.value = value;
     }
 
+    /**
+     * Gets the value attribute from the input form field.
+     */
     get inputValue(): string {
         return this.valueInput.value;
     }
 
+    /**
+     * Sets an input value.
+     */
     set inputValue(value: string) {
         this.valueInput.value = value;
     }
 
+    /**
+     * Gets the css query selector for the ajaxProvider configuration.
+     */
     get queryString(): string {
         return this.getAttribute('query-string');
     }
 
+    /**
+     * Gets the value attribute name for the input element configuration.
+     */
     get valueAttributeName(): string {
         return this.getAttribute('value-attribute-name');
     }
 
+    /**
+     * Gets the css query selector of the suggestion items.
+     */
     get suggestedItemSelector(): string {
         return this.getAttribute('suggested-item-selector');
     }
 
+    /**
+     * Gets a time delay for the blur and input events.
+     */
     get debounceDelay(): number {
         return Number(this.getAttribute('debounce-delay'));
     }
 
+    /**
+     * Gets the number of letters which, upon entering in form field, is sufficient to show, hide or load the suggestions.
+     */
     get minLetters(): number {
         return Number(this.getAttribute('min-letters'));
     }
