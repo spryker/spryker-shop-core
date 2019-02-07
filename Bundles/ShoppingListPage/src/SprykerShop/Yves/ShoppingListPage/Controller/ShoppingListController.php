@@ -331,6 +331,7 @@ class ShoppingListController extends AbstractShoppingListController
         $shoppingListItemTransfer->setCustomerReference($customerTransfer->getCustomerReference())
             ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
+        // Does not pass request parameters because they are not validated.
         return $this->getFactory()
             ->getShoppingListClient()
             ->addItem($shoppingListItemTransfer);
