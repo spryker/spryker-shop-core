@@ -73,19 +73,19 @@ class CheckoutAddressItemForm extends AbstractType
             'data_class' => AddressTransfer::class,
             'required' => true,
             'validation_groups' => function (FormInterface $form) {
-                $orderIdCustomerAddress = $form->getParent()
+                $quoteIdCustomerAddress = $form->getParent()
                     ->getParent()
                     ->getParent()
                     ->get(CheckoutAddressCollectionForm::FIELD_SHIPPING_ADDRESS)
                     ->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
                     ->getData();
 
-                if ($orderIdCustomerAddress && $orderIdCustomerAddress !== CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES) {
+                if ($quoteIdCustomerAddress && $quoteIdCustomerAddress !== CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES) {
                     return false;
                 }
 
                 $itemIdCustomerAddress = $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
-                if (!$orderIdCustomerAddress || $itemIdCustomerAddress) {
+                if (!$quoteIdCustomerAddress || $itemIdCustomerAddress) {
                     return false;
                 }
 
