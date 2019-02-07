@@ -286,7 +286,7 @@ class CheckoutController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[]|ArrayObject $messageTransfers
+     * @param \Generated\Shared\Transfer\MessageTransfer[]|\ArrayObject $messageTransfers
      *
      * @return void
      */
