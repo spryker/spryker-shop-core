@@ -103,7 +103,7 @@ class AddressSaver implements SaverInterface
                 continue;
             }
 
-            if($quoteTransfer->getShippingAddress()->getIdCustomerAddress() === null ||
+            if ($quoteTransfer->getShippingAddress()->getIdCustomerAddress() === null ||
                 $this->isAddressEmpty($shipmentTransfer->getShippingAddress())) {
                 $shipmentTransfer->setShippingAddress($quoteTransfer->getShippingAddress());
             }
