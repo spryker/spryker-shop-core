@@ -80,12 +80,12 @@ class CheckoutAddressItemForm extends AbstractType
                     ->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
                     ->getData();
 
-                if ($quoteIdCustomerAddress && $quoteIdCustomerAddress !== CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES) {
+                if ($quoteIdCustomerAddress !== CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES) {
                     return false;
                 }
 
                 $itemIdCustomerAddress = $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
-                if (!$quoteIdCustomerAddress || $itemIdCustomerAddress) {
+                if ($itemIdCustomerAddress) {
                     return false;
                 }
 
