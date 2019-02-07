@@ -10,9 +10,17 @@ namespace SprykerShop\Yves\CartPage\Dependency\Client;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CartPageToCartClientInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool;
+
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param array $params
@@ -85,9 +93,4 @@ interface CartPageToCartClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote(): QuoteResponseTransfer;
-
-    /**
-     * @return bool
-     */
-    public function isQuoteLocked(): bool;
 }

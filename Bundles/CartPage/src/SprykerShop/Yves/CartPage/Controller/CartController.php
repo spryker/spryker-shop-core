@@ -70,11 +70,13 @@ class CartController extends AbstractController
             ->createCartItemsAttributeProvider()
             ->getItemsAttributes($quoteTransfer, $this->getLocale(), $selectedAttributes);
 
-        $isQuoteLocked = $this->getFactory()->getCartClient()->isQuoteLocked();
+        $isQuoteEditable = $this->getFactory()
+            ->getCartClient()
+            ->isQuoteEditable($quoteTransfer);
 
         return [
             'cart' => $quoteTransfer,
-            'isQuoteLocked' => $isQuoteLocked,
+            'isQuoteEditable' => $isQuoteEditable,
             'cartItems' => $cartItems,
             'attributes' => $itemAttributesBySku,
             'isQuoteValid' => $validateQuoteResponseTransfer->getIsSuccessful(),

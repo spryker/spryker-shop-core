@@ -22,13 +22,13 @@
     </transfer>
 
     <transfer name="QuoteApprovalCreateRequest">
-        <property name="customerReference" type="string"/>
+        <property name="requesterCompanyUserId" type="int"/>
         <property name="idQuote" type="int"/>
-        <property name="idCompanyUser" type="int"/>
+        <property name="approverCompanyUserId" type="int"/>
     </transfer>
 
     <transfer name="QuoteApprovalRemoveRequest">
-        <property name="customerReference" type="string"/>
+        <property name="idCompanyUser" type="int"/>
         <property name="idQuoteApproval" type="int"/>
     </transfer>
 

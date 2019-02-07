@@ -8,7 +8,7 @@
 {% define data = {
     cart: required,
     isQuoteValid: required,
-    isQuoteLocked: required,
+    isQuoteEditable: required,
 } %}
 
 {% set canProceedToCheckout = data.cart.items is not empty
@@ -33,7 +33,8 @@
             data: {
                 voucherDiscounts: data.cart.voucherDiscounts,
                 ruleDiscounts: data.cart.cartRuleDiscounts,
-                discountTotal: data.cart.totals.discounttotal
+                discountTotal: data.cart.totals.discounttotal,
+                isQuoteEditable: data.isQuoteEditable
             }
         } only %}
     {% endif %}
@@ -81,13 +82,10 @@
         </li>
     </ul>
 
+    <hr />
+    {% widget 'QuoteApproveRequestWidget' args [data.cart] %}{% endwidget %}
+
     {% if canProceedToCheckout %}
-        <hr />
-
-        {% if is_granted('ROLE_USER') %}
-            {% widget 'QuoteApproveRequestWidget' args [data.cart] %}{% endwidget %}
-        {% endif %}
-
         {% widget 'ProcceedToCheckoutButtonWidget' args [data.cart] %}{% endwidget %}
     {% endif %}
 {% endblock %}

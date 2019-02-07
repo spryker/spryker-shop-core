@@ -3,11 +3,12 @@
 {% define data = {
     quoteTransfer: _widget.quoteTransfer,
     waitingQuoteApproval: _widget.waitingQuoteApproval,
-    quoteOwner: _widget.quoteOwner
+    quoteOwner: _widget.quoteOwner,
+    isVisible: _widget.isVisible
 } %}
 
 {% block body %}
-    {% if data.quoteTransfer.quoteApprovals is not empty %}
+    {% if data.isVisible %}
         {% set latestQuoteApproval = data.quoteTransfer.quoteApprovals | last %}
         {% set customerName = data.quoteOwner.firstName ~ ' ' ~ data.quoteOwner.lastName %}
         {% set updateDate = data.waitingQuoteApproval ? data.waitingQuoteApproval.createdAt : latestQuoteApproval.updatedAt %}
