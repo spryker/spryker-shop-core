@@ -104,7 +104,7 @@ class AddressSaver implements SaverInterface
             }
 
             if ($quoteTransfer->getShippingAddress()->getIdCustomerAddress() === null ||
-                $this->addressValidate($shipmentTransfer->getShippingAddress())) {
+                $this->validateAddress($shipmentTransfer->getShippingAddress())) {
                 $shipmentTransfer->setShippingAddress($quoteTransfer->getShippingAddress());
             }
 
@@ -208,7 +208,7 @@ class AddressSaver implements SaverInterface
      *
      * @return bool
      */
-    protected function addressValidate(?AddressTransfer $addressTransfer = null): bool
+    protected function validateAddress(?AddressTransfer $addressTransfer = null): bool
     {
         if ($addressTransfer === null) {
             return true;
