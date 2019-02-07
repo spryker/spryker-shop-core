@@ -149,7 +149,7 @@ class CartController extends AbstractController
 
         $this->getFactory()
             ->getCartClient()
-            ->addItem($itemTransfer, $request->request->all());
+            ->addItem($itemTransfer);
 
         $this->getFactory()
             ->getZedRequestClient()
