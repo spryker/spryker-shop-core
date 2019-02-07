@@ -34,13 +34,14 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return false;
         }
 
-        $billingIsEmpty = $quoteTransfer->getBillingSameAsShipping() === false && $this->isAddressEmpty($quoteTransfer->getBillingAddress());
+        $billingIsEmpty = $quoteTransfer->getBillingSameAsShipping() === false &&
+            $this->addressValidate($quoteTransfer->getBillingAddress());
 
         if ($billingIsEmpty) {
             return false;
         }
 
-        if($this->isAddressEmpty($quoteTransfer->getShippingAddress()) && $isSplitDelivery === false) {
+        if($this->addressValidate($quoteTransfer->getShippingAddress()) && $isSplitDelivery === false) {
             return false;
         }
 
@@ -52,14 +53,14 @@ class PostConditionChecker implements PostConditionCheckerInterface
      *
      * @return bool
      */
-    protected function isAddressEmpty(?AddressTransfer $addressTransfer = null): bool
+    protected function addressValidate(?AddressTransfer $addressTransfer = null): bool
     {
         if ($addressTransfer === null) {
             return true;
         }
 
-        $hasName = (!empty($addressTransfer->getFirstName()) && !empty($addressTransfer->getLastName()));
-        if (!$addressTransfer->getIdCustomerAddress() && !$hasName) {
+        $hasNoName = empty($addressTransfer->getFirstName()) && empty($addressTransfer->getLastName());
+        if ($addressTransfer->getIdCustomerAddress() === null && $hasNoName) {
             return true;
         }
 
@@ -85,7 +86,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() === null
-                || $this->isAddressEmpty($itemTransfer->getShipment()->getShippingAddress())) {
+                || $this->addressValidate($itemTransfer->getShipment()->getShippingAddress())) {
                 return true;
             }
         }
