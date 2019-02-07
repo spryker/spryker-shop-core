@@ -14,8 +14,65 @@
     {% for shipmentGroup in data.shipmentGroups %}
         <h4>{{ 'customer.order.shipment' | trans }} #{{ loop.index }}</h4>
 
-        <h5>{{ 'customer.order.products' | trans }}</h5>
-        <div class="box">
+        <div class="box grid grid--justify">
+            <div class="col col--sm-6 grid">
+                <h5>{{ 'customer.order.products' | trans }}</h5>
+
+                {% for item in shipmentGroup.items %}
+                    {% set isBundle = item.bundleItems is defined %}
+                    {% set concreteItem = item.bundleProduct | default(item) %}
+
+                    <div class="{{ config.name }}__item col col--sm-12 grid grid--justify spacing-y spacing-y--inner">
+                        <div class="col col--sm-1 spacing">
+                            {{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', data.order, concreteItem) }}
+                        </div>
+
+                        <div class="col col--sm-11">
+                            <div class="grid grid--justify">
+                                <span class="spacing-right col col--sm-9">{{ concreteItem.name }}</span>
+                                <strong class="col col--sm-3 text-right">{{ concreteItem.unitPrice | money(true, data.currencyIsoCode) }}</strong>
+                            </div>
+
+                            {{ 'customer.order.item_quantity' | trans }}: {{ concreteItem.quantity }}
+                        </div>
+                    </div>
+                    <hr>
+                {% endfor %}
+            </div>
+
+            <div class="col col--sm-5 spacing-left spacing-left--inner">
+                <div class="spacing-bottom spacing-bottom--big">
+                    <h5>{{ 'customer.order.shipping_address' | trans }}</h5>
+                    <div class="spacing-y spacing-y--inner">
+                        {% include molecule('display-address') with {
+                            data: {
+                                address: shipmentGroup.shipment.shippingAddress
+                            }
+                        } only %}
+                    </div>
+                </div>
+
+                {% if shipmentGroup.shipment.expense is not empty %}
+                    <div class="spacing-bottom spacing-bottom--big">
+                        <h5>{{ 'customer.order.delivery_method' | trans }}</h5>
+                        <div class="spacing-y spacing-y--inner">
+                            {{ shipmentGroup.shipment.expense.name | trans }}:
+                            {{ shipmentGroup.shipment.expense.sumPrice | money(true, data.currencyIsoCode) }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if shipmentGroup.shipment.requestedDeliveryDate is not empty %}
+                    <div class="spacing-bottom spacing-bottom--big">
+                        <h5>{{ 'customer.order.requested_delivery_date' | trans }}</h5>
+                        <div class="spacing-y spacing-y--inner">
+                            {{ shipmentGroup.shipment.requestedDeliveryDate }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+
             <table class="table table--expand">
                 <thead>
                 <tr>
