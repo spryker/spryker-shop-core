@@ -103,7 +103,8 @@ class AddressSaver implements SaverInterface
                 continue;
             }
 
-            if($quoteTransfer->getShippingAddress()->getIdCustomerAddress() === null) {
+            if($quoteTransfer->getShippingAddress()->getIdCustomerAddress() === null ||
+                $this->isAddressEmpty($shipmentTransfer->getShippingAddress())) {
                 $shipmentTransfer->setShippingAddress($quoteTransfer->getShippingAddress());
             }
 
@@ -200,5 +201,24 @@ class AddressSaver implements SaverInterface
     protected function getAddressHash(AddressTransfer $addressTransfer): string
     {
         return md5($addressTransfer->serialize());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
+     *
+     * @return bool
+     */
+    protected function isAddressEmpty(?AddressTransfer $addressTransfer = null): bool
+    {
+        if ($addressTransfer === null) {
+            return true;
+        }
+
+        $hasNoName = empty($addressTransfer->getFirstName()) && empty($addressTransfer->getLastName());
+        if ($addressTransfer->getIdCustomerAddress() === null && $hasNoName) {
+            return true;
+        }
+
+        return false;
     }
 }
