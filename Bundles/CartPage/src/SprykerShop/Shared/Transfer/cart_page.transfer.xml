@@ -7,23 +7,15 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
-    <transfer name="CartChangeQuantity">
-        <property name="item" type="Item"/>
-        <property name="quote" type="Quote"/>
-    </transfer>
-
     <transfer name="Item">
-        <property name="id" type="int"/>
         <property name="sku" type="string"/>
-        <property name="groupKeyPrefix" type="string"/>
         <property name="quantity" type="int"/>
-        <property name="normalizableFields" type="string[]" singular="normalizableField"/>
+        <property name="productOptions" type="ProductOption[]" singular="productOption" />
     </transfer>
 
     <transfer name="QuoteResponse">
         <property name="quoteTransfer" type="Quote"/>
         <property name="isSuccessful" type="bool" />
-        <property name="customerQuotes" type="QuoteCollection"/>
     </transfer>
 
     <transfer name="ProductOption">
@@ -40,8 +32,6 @@
         <property name="sku" type="string" />
     </transfer>
 
-    <transfer name="ProductConcreteAvailabilityRequest">
-        <property name="sku" type="string" />
-    </transfer>
+    <transfer name="ProductConcreteAvailabilityRequest"/>
 
 </transfers>

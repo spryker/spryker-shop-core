@@ -333,6 +333,6 @@ class ShoppingListController extends AbstractShoppingListController
 
         return $this->getFactory()
             ->getShoppingListClient()
-            ->addItem($shoppingListItemTransfer, $request->request->all());
+            ->addItem($shoppingListItemTransfer);
     }
 }
