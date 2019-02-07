@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class ShoppingListDismissController extends AbstractShoppingListController
 {
+    protected const GLOSSARY_KEY_SHOPPING_LIST_PAGE_DISMISS_SUCCESS = 'shopping_list_page.dismiss.success';
+    protected const GLOSSARY_KEY_SHOPPING_LIST_PAGE_DISMISS_FAILED = 'shopping_list_page.dismiss.failed';
+
     /**
      * @param int $idShoppingList
      *
@@ -33,12 +36,12 @@ class ShoppingListDismissController extends AbstractShoppingListController
             ->dismissShoppingListSharing($shoppingListDismissRequest);
 
         if ($shoppingListShareResponseTransfer->getIsSuccess()) {
-            $this->addSuccessMessage('shopping_list_page.dismiss.success');
+            $this->addSuccessMessage(static::GLOSSARY_KEY_SHOPPING_LIST_PAGE_DISMISS_SUCCESS);
 
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
         }
 
-        $this->addErrorMessage('shopping_list_page.dismiss.failed');
+        $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_PAGE_DISMISS_FAILED);
 
         return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
     }
