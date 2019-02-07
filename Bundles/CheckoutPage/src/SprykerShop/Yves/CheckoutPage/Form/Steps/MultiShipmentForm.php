@@ -7,8 +7,10 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Form\Steps;
 
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -16,33 +18,19 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
  */
-class ShipmentForm extends AbstractType
+class MultiShipmentForm extends AbstractType
 {
-    public const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
+    public const BLOCK_PREFIX = 'shipmentGroupForm';
     public const OPTION_SHIPMENT_METHODS = 'shipmentMethods';
-
-    public const SHIPMENT_PROPERTY_PATH = 'shipment';
-    public const SHIPMENT_SELECTION = 'shipmentSelection';
-    public const SHIPMENT_SELECTION_PROPERTY_PATH = self::SHIPMENT_PROPERTY_PATH . '.' . self::SHIPMENT_SELECTION;
 
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
-        return 'shipmentForm';
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setRequired(static::OPTION_SHIPMENT_METHODS);
+        return static::BLOCK_PREFIX;
     }
 
     /**
@@ -53,7 +41,9 @@ class ShipmentForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addShipmentMethods($builder, $options);
+        $this
+            ->addShipmentMethods($builder, $options)
+            ->addRequestedDeliveryDate($builder, $options);
     }
 
     /**
@@ -64,12 +54,11 @@ class ShipmentForm extends AbstractType
      */
     protected function addShipmentMethods(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_ID_SHIPMENT_METHOD, ChoiceType::class, [
-            'choices' => $options[self::OPTION_SHIPMENT_METHODS],
+        $builder->add(ShipmentTransfer::SHIPMENT_SELECTION, ChoiceType::class, [
+            'choices' => $options[static::OPTION_SHIPMENT_METHODS],
             'expanded' => true,
             'multiple' => false,
             'required' => true,
-            'property_path' => static::SHIPMENT_SELECTION_PROPERTY_PATH,
             'placeholder' => false,
             'constraints' => [
                 $this->createNotBlankConstraint(),
@@ -81,10 +70,43 @@ class ShipmentForm extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addRequestedDeliveryDate(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(ShipmentTransfer::REQUESTED_DELIVERY_DATE, DateType::class, [
+            'label' => 'page.checkout.shipment.requested_delivery_date.label',
+            'widget' => 'single_text',
+            'placeholder' => 'checkout.shipment.requested_delivery_date.placeholder',
+        ]);
+
+        return $this;
+    }
+
+    /**
      * @return \Symfony\Component\Validator\Constraints\NotBlank
      */
     protected function createNotBlankConstraint(): NotBlank
     {
         return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver
+            ->setDefaults([
+                'data_class' => ShipmentTransfer::class,
+            ])
+            ->setRequired(static::OPTION_SHIPMENT_METHODS);
     }
 }

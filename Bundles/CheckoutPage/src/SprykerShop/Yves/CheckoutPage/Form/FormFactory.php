@@ -20,9 +20,12 @@ use SprykerShop\Yves\CheckoutPage\Form\Steps\PaymentForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentCollectionForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\SummaryForm;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\MultiShipmentResolverTrait;
 
 class FormFactory extends AbstractFactory
 {
+    use MultiShipmentResolverTrait;
+
     /**
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
      */
@@ -61,8 +64,14 @@ class FormFactory extends AbstractFactory
     public function getShipmentFormTypes()
     {
         /**
-         * @todo Add BC
+         * @deprecated Will be removed in next major release.
          */
+        if (!$this->isMultiShipmentEnabled()) {
+            return [
+                $this->getShipmentForm(),
+            ];
+        }
+
         return [
             $this->getShipmentCollectionForm(),
         ];

@@ -10,12 +10,15 @@ namespace SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep;
 use Closure;
 use Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\MultiShipmentResolverTrait;
 
 /**
  * @deprecated Will be removed in next major release.
  */
 class ShipmentStepStrategyResolver implements ShipmentStepStrategyResolverInterface
 {
+    use MultiShipmentResolverTrait;
+
     /**
      * @var array|\Closure[]
      */
@@ -34,7 +37,7 @@ class ShipmentStepStrategyResolver implements ShipmentStepStrategyResolverInterf
      */
     public function resolvePostCondition(): PostConditionCheckerInterface
     {
-        if (!defined('\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer::FK_SALES_SHIPMENT')) {
+        if (!$this->isMultiShipmentEnabled()) {
             $this->assertRequiredStrategyPostConditionCheckerWithoutMultiShipmentContainerItems();
 
             return call_user_func($this->strategyContainer[static::STRATEGY_KEY_POST_CONDITION_CHECKER_WITHOUT_MULTI_SHIPMENT]);

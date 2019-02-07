@@ -19,13 +19,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ShipmentGroupForm extends AbstractType
 {
+    public const BLOCK_PREFIX = 'shipmentGroupForm';
 
     /**
      * @return string
      */
     public function getBlockPrefix(): string
     {
-        return 'shipmentGroupForm';
+        return static::BLOCK_PREFIX;
     }
 
     /**
@@ -55,12 +56,13 @@ class ShipmentGroupForm extends AbstractType
             $form = $event->getForm();
             $options = $form->getConfig()->getOptions();
             if ($shipmentGroupTransfer instanceof ShipmentGroupTransfer) {
-                if (isset($options[ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP][$shipmentGroupTransfer->getHash()])) {
-                    $availableShipmentMethods = $options[ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP][$shipmentGroupTransfer->getHash()];
-                }
-                $form->add('shipment', ShipmentForm::class, [
-                    ShipmentForm::OPTION_SHIPMENT_METHODS => $availableShipmentMethods ?? [],
+                $availableShipmentMethods = $options[ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP][$shipmentGroupTransfer->getHash()] ?? [];
+                $shipmentAddressLabel = $options[ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST][$shipmentGroupTransfer->getHash()] ?? 'fff';
+
+                $form->add('shipment', MultiShipmentForm::class, [
+                    MultiShipmentForm::OPTION_SHIPMENT_METHODS => $availableShipmentMethods,
                     'required' => true,
+                    'label' => $shipmentAddressLabel,
                 ]);
             }
         });
@@ -79,6 +81,7 @@ class ShipmentGroupForm extends AbstractType
             ->setDefaults([
                 'data_class' => ShipmentGroupTransfer::class,
             ])
-            ->setRequired(ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP);
+            ->setRequired(ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP)
+            ->setRequired(ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST);
     }
 }

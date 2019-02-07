@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CheckoutPage\Form\DataProvider;
 
 use ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -20,9 +21,13 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClient
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentCollectionForm;
+use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\MultiShipmentResolverTrait;
 
 class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
 {
+    use MultiShipmentResolverTrait;
+
     public const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
 
     /**
@@ -79,8 +84,18 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     public function getData(AbstractTransfer $quoteTransfer)
     {
         /**
-         * @todo Add BC quote adapter.
+         * @deprecated Will be removed in next major release.
          */
+        if (!$this->isMultiShipmentEnabled()) {
+            if ($quoteTransfer->getShipment() === null) {
+                $shipmentTransfer = new ShipmentTransfer();
+                $quoteTransfer->setShipment($shipmentTransfer);
+            }
+
+            return $quoteTransfer;
+        }
+
+
 
         $quoteTransfer->setShipmentGroups($this->shipmentService->groupItemsByShipment($quoteTransfer->getItems()));
 
@@ -95,11 +110,51 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
         /**
-         * @todo: Add BC
+         * @deprecated Will be removed in next major release.
          */
+        if (!$this->isMultiShipmentEnabled()) {
+            return [
+                ShipmentForm::OPTION_SHIPMENT_METHODS => $this->createAvailableShipmentChoiceList($quoteTransfer),
+            ];
+        }
+
         return [
             ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP => $this->createAvailableMethodsByShipmentChoiceList($quoteTransfer),
+            ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST => $this->getShipmentAddressLabelList($quoteTransfer),
         ];
+    }
+
+    protected function getShipmentAddressLabelList(QuoteTransfer $quoteTransfer): array
+    {
+        $shipmentAddressLabelList = [];
+
+        $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+
+        foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
+            if ($shipmentGroupTransfer->getShipment() === null
+                || $shipmentGroupTransfer->getShipment()->getShippingAddress() === null
+            ) {
+                continue;
+            }
+
+            $shipmentAddressLabelList[$shipmentGroupTransfer->getHash()] = $this->getShipmentAddressLabel($shipmentGroupTransfer->getShipment()->getShippingAddress());
+        }
+
+        return $shipmentAddressLabelList;
+    }
+
+    protected function getShipmentAddressLabel(AddressTransfer $addressTransfer): string
+    {
+        return sprintf(
+            '%s %s %s, %s %s, %s %s',
+            $addressTransfer->getSalutation(),
+            $addressTransfer->getFirstName(),
+            $addressTransfer->getLastName(),
+            $addressTransfer->getAddress1(),
+            $addressTransfer->getAddress2(),
+            $addressTransfer->getZipCode(),
+            $addressTransfer->getCity()
+        );
     }
 
     /**
@@ -137,7 +192,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         $shipmentMethods = [];
 
         /**
-         * Add quote bc adapter
+         * @todo Add quote bc adapter
          */
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() === null) {

@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CheckoutPage\Controller;
 
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\MultiShipmentResolverTrait;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CheckoutController extends AbstractController
 {
     use PermissionAwareTrait;
+    use MultiShipmentResolverTrait;
 
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
@@ -76,10 +78,17 @@ class CheckoutController extends AbstractController
             return $response;
         }
 
+        /**
+         * @deprecated Will be removed in next major release.
+         */
+        $template = $this->isMultiShipmentEnabled()
+            ? '@CheckoutPage/views/address-multi-shipment/address-multi-shipment.twig'
+            : '@CheckoutPage/views/address/address.twig';
+
         return $this->view(
             $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),
-            '@CheckoutPage/views/address/address.twig'
+            $template
         );
     }
 
@@ -100,11 +109,18 @@ class CheckoutController extends AbstractController
         if (!is_array($response)) {
             return $response;
         }
-//dd($response);
+
+        /**
+         * @deprecated Will be removed in next major release.
+         */
+        $template = $this->isMultiShipmentEnabled()
+            ? '@CheckoutPage/views/shipment-multi-shipment/shipment-multi-shipment.twig'
+            : '@CheckoutPage/views/shipment/shipment.twig';
+
         return $this->view(
             $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),
-            '@CheckoutPage/views/shipment/shipment.twig'
+            $template
         );
     }
 
@@ -220,13 +236,5 @@ class CheckoutController extends AbstractController
     protected function createStepProcess()
     {
         return $this->getFactory()->createCheckoutProcess();
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isMultiShipmentEnabled(): bool
-    {
-        return defined('\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer::FK_SALES_SHIPMENT');
     }
 }

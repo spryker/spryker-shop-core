@@ -42,6 +42,10 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     public function getData(AbstractTransfer $quoteTransfer)
     {
+        /**
+         * @todo Add BC
+         */
+
         $quoteTransfer->setShippingAddress($this->getShippingAddress($quoteTransfer));
         $quoteTransfer->setBillingAddress($this->getBillingAddress($quoteTransfer));
 

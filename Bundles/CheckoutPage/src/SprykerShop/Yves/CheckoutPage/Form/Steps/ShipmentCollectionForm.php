@@ -23,6 +23,7 @@ class ShipmentCollectionForm extends AbstractType
     public const BLOCK_PREFIX = 'shipmentCollectionForm';
     public const FIELD_SHIPMENT_COLLECTION_GROUP = 'shipmentGroups';
     public const OPTION_SHIPMENT_METHODS_BY_GROUP = 'shipmentMethodsByGroup';
+    public const OPTION_SHIPMENT_ADDRESS_LABEL_LIST = 'shipmentAddressLabelList';
 
     /**
      * @return string
@@ -58,6 +59,7 @@ class ShipmentCollectionForm extends AbstractType
             'entry_options' => [
                 'data_class' => ShipmentGroupTransfer::class,
                 static::OPTION_SHIPMENT_METHODS_BY_GROUP => $options[static::OPTION_SHIPMENT_METHODS_BY_GROUP] ?? [],
+                static::OPTION_SHIPMENT_ADDRESS_LABEL_LIST => $options[static::OPTION_SHIPMENT_ADDRESS_LABEL_LIST] ?? [],
             ],
         ]);
 
@@ -74,9 +76,10 @@ class ShipmentCollectionForm extends AbstractType
         parent::configureOptions($resolver);
 
         $resolver
-//            ->setDefaults([
-//                'data_class' => QuoteTransfer::class,
-//            ])
-            ->setRequired(ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP);
+            ->setDefaults([
+                'data_class' => QuoteTransfer::class,
+            ])
+            ->setRequired(ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP)
+            ->setRequired(ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST);
     }
 }

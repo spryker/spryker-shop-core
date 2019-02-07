@@ -1,0 +1,105 @@
+{% extends template('page-layout-checkout', 'CheckoutPage') %}
+
+{% define data = {
+    backUrl: _view.previousStepUrl,
+    forms: {
+        shipment: _view.shipmentCollectionForm
+    },
+
+    title: 'checkout.step.shipment.title' | trans
+} %}
+
+{% block content %}
+    {% embed molecule('form') with {
+        class: 'box',
+        data: {
+            form: data.forms.shipment,
+            options: {
+                attr: {
+                    id: 'payment-form'
+                }
+            },
+            submit: {
+                enable: true,
+                text: 'checkout.step.payment' | trans
+            },
+            cancel: {
+                enable: true,
+                url: data.backUrl,
+                text: 'general.back.button' | trans
+            }
+        }
+    } only %}
+        {% block fields %}
+            {% set shipmentGroupCollectionForm = data.form.shipmentGroups | default %}
+            {% for shipmentGroupForm in shipmentGroupCollectionForm %}
+                <article class="grid grid--stretch grid--justify box col--sm-12">
+                    <div class="col col--sm-12">
+                        <div class="col col--sm-12">
+                            <h3>{{ 'page.checkout.shipment.shipping_address.title'|trans }}:
+                                {{ shipmentGroupForm.shipment.vars.label }}
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="col col--sm-12">
+                        <div class="col col--sm-6">
+                            {% for item in shipmentGroupForm.vars.data.items %}
+                            <div class="col">
+                                <div class="col col--sm-3">
+                                    {% include molecule('cart-image', 'CartPage') with {
+                                        data: {
+                                            name: item.name | default(''),
+                                            image: item.images is empty ? null : (item.images | first)
+                                        }
+                                    } only %}
+                                </div>
+                                <div class="col col--sm-3">
+                                    <div class="col">
+                                        <h5>{{ item.name }}</h5>
+                                    </div>
+                                    <div class="col">
+                                        {{ 'page.checkout.shipment.item.quantity'|trans }}:&nbsp;{{ item.quantity }}
+                                    </div>
+                                    <div class="col">
+                                        {{ 'page.checkout.shipment.item.price'|trans }}:&nbsp;{{ item.sumPrice|money }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="col col--sm-6">
+                            {{ form_errors(shipmentGroupForm.shipment.shipmentSelection) }}
+                            {% for name, choices in shipmentGroupForm.shipment.shipmentSelection.vars.choices %}
+                                <div class="form__field col col--sm-12">
+                                    <h5>{{ name }}</h5>
+                                    <ul class="list spacing-y">
+                                        {% for key, choice in choices %}
+                                            <li class="list__item spacing-y">
+                                                {{ form_row(shipmentGroupForm.shipment.shipmentSelection[key], {
+                                                    label: shipmentGroupForm.shipment.shipmentSelection[key].vars.label,
+                                                    required: false
+                                                }) }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% if not loop.last %}
+                                    <div class="form__field col col--sm-12">
+                                        <hr/>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            <h3>{{ 'page.checkout.shipment.requested_delivery_date.title'|trans }}</h3>
+                            {{ form_row(shipmentGroupForm.shipment.requestedDeliveryDate) }}
+                        </div>
+                    </div>
+                </article>
+                {% if not loop.last %}
+                    <div class="form__field col col--sm-12">
+                        <hr/>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
