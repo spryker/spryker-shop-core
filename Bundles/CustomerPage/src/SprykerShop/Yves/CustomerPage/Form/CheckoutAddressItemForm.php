@@ -64,27 +64,28 @@ class CheckoutAddressItemForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return $this
+     * @return \SprykerShop\Yves\CustomerPage\Form\CheckoutAddressItemForm
      */
-    protected function addShipmentField(FormBuilderInterface $builder, array $options): self
+    protected function addShipmentField(FormBuilderInterface $builder, array $options): CheckoutAddressItemForm
     {
         $builder->add(static::FIELD_SHIPMENT_SHIPPING_ADDRESS, CheckoutAddressForm::class, [
             'property_path' => 'shipment.shippingAddress',
             'data_class' => AddressTransfer::class,
             'required' => true,
             'validation_groups' => function (FormInterface $form) {
-                $idCustomerAddress = $form->getParent()
+                $quoteIdCustomerAddress = $form->getParent()
                     ->getParent()
                     ->getParent()
                     ->get(CheckoutAddressCollectionForm::FIELD_SHIPPING_ADDRESS)
                     ->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
                     ->getData();
 
-                if ($idCustomerAddress && $idCustomerAddress !== CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES) {
+                if ($quoteIdCustomerAddress !== CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES) {
                     return false;
                 }
 
-                if (!$idCustomerAddress) {
+                $itemIdCustomerAddress = $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
+                if ($itemIdCustomerAddress) {
                     return false;
                 }
 
