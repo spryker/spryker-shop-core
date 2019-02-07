@@ -8,9 +8,11 @@
     </transfer>
 
     <transfer name="Item">
+        <property name="id" type="int"/>
         <property name="sku" type="string"/>
+        <property name="groupKeyPrefix" type="string"/>
         <property name="quantity" type="int"/>
-        <property name="productOptions" type="ProductOption[]" singular="productOption" />
+        <property name="normalizableFields" type="string[]" singular="normalizableField"/>
     </transfer>
 
     <transfer name="QuoteResponse">
