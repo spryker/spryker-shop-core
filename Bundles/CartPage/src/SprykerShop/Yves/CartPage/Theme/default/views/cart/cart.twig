@@ -104,16 +104,14 @@
                         {% endwidget %}
                         <hr />
                     {% endif %}
-
-                    {% if can('SeePricePermissionPlugin') %}
-                        {% include molecule('cart-summary', 'CartPage') with {
-                            data: {
-                                cart: data.cart,
-                                isQuoteValid: data.isQuoteValid,
-                                isQuoteEditable: data.isQuoteEditable,
-                            }
-                        } only %}
-                     {% endif %}
+                    
+                    {% include molecule('cart-summary', 'CartPage') with {
+                        data: {
+                            cart: data.cart,
+                            isQuoteValid: data.isQuoteValid,
+                            isQuoteEditable: data.isQuoteEditable,
+                        }
+                    } only %}
                 </div>
             </div>
         </div>

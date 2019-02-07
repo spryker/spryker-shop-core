@@ -22,7 +22,11 @@
     {% endif %}
     {% set amountPerQuantity = data.amount / data.quantity %}
 
-    <strong class="float-right">{{data.price}}</strong>
+    {% if can('SeePricePermissionPlugin') %}
+        <strong class="float-right">{{data.price}}</strong>
+    {% else %}
+        <strong class="float-right">{{ 'customer.access.cannot_see_price' | trans }}</strong>
+    {% endif %}
     {{data.quantity}} <span class="text-secondary">&times;</span> {{data.name}} {% if salesUnitSummary is not empty %}(={{ salesUnitSummary }}){% endif %}
     <br/>
     {% if data.amountSalesUnit is defined and data.amountSalesUnit is not empty %}
