@@ -21,9 +21,6 @@ use SprykerShop\Yves\QuoteApprovalWidget\Form\QuoteApproveRequestFormDataProvide
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
-/**
- * @method \SprykerShop\Yves\QuoteApprovalWidget\QuoteApprovalWidgetConfig getConfig()
- */
 class QuoteApprovalWidgetFactory extends AbstractFactory
 {
     /**

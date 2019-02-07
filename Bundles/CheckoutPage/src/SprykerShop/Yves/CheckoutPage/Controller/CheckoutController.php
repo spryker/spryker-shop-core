@@ -286,14 +286,14 @@ class CheckoutController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     * @param \Generated\Shared\Transfer\MessageTransfer[]|ArrayObject $messageTransfers
      *
      * @return void
      */
     protected function processErrorMessages(ArrayObject $messageTransfers): void
     {
-        foreach ($messageTransfers as $messageTransfers) {
-            $this->addErrorMessage($messageTransfers->getValue());
+        foreach ($messageTransfers as $messageTransfer) {
+            $this->addErrorMessage($messageTransfer->getValue());
         }
     }
 
