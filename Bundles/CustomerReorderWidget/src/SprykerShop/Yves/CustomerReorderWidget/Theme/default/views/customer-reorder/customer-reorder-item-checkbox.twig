@@ -2,7 +2,8 @@
 
 {% define data = {
     availability: _widget.availability,
-    idSalesOrderItem: _widget.item.idSalesOrderItem
+    idSalesOrderItem: _widget.item.idSalesOrderItem,
+    checkboxClasses: 'js-customer-reorder-form__selection'
 } %}
 
 {% block body %}
@@ -11,10 +12,13 @@
             name: 'items[]',
             disabled: not data.availability,
             value: data.idSalesOrderItem
+        },
+        embed: {
+            checkboxClasses: data.checkboxClasses
         }
     } only %}
         {%- block inputClass -%}
-            js-customer-reorder-form__selection
+            {{ embed.checkboxClasses }}
         {%- endblock -%}
     {% endembed %}
 {% endblock %}
