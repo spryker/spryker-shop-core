@@ -170,7 +170,11 @@ class CheckoutPageFactory extends AbstractFactory
      */
     public function createShipmentHandlerWithMultipleShipment(): CreatorInterface
     {
-        return new Creator($this->getShipmentClient(), $this->getPriceClient());
+        return new Creator(
+            $this->getShipmentClient(),
+            $this->getPriceClient(),
+            $this->getShippingService()
+        );
     }
 
     /**

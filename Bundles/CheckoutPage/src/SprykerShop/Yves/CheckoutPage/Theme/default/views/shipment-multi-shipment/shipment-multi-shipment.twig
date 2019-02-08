@@ -14,6 +14,8 @@
         class: 'box',
         data: {
             form: data.forms.shipment,
+            cart: data.forms.shipment.vars.data,
+            attributes: [],
             options: {
                 attr: {
                     id: 'payment-form'
@@ -45,25 +47,7 @@
                         <div class="col col--sm-6">
                             {% for item in shipmentGroupForm.vars.data.items %}
                             <div class="col">
-                                <div class="col col--sm-3">
-                                    {% include molecule('cart-image', 'CartPage') with {
-                                        data: {
-                                            name: item.name | default(''),
-                                            image: item.images is empty ? null : (item.images | first)
-                                        }
-                                    } only %}
-                                </div>
-                                <div class="col col--sm-3">
-                                    <div class="col">
-                                        <h5>{{ item.name }}</h5>
-                                    </div>
-                                    <div class="col">
-                                        {{ 'page.checkout.shipment.item.quantity'|trans }}:&nbsp;{{ item.quantity }}
-                                    </div>
-                                    <div class="col">
-                                        {{ 'page.checkout.shipment.item.price'|trans }}:&nbsp;{{ item.sumPrice|money }}
-                                    </div>
-                                </div>
+                  {{ item.sku }}
                             </div>
                             {% endfor %}
                         </div>

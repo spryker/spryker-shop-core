@@ -54,7 +54,7 @@ class ShipmentCollectionForm extends AbstractType
     {
         $builder->add(static::FIELD_SHIPMENT_COLLECTION_GROUP, CollectionType::class, [
             'entry_type' => ShipmentGroupForm::class,
-            'allow_add' => false,
+            'allow_add' => true,
             'allow_delete' => false,
             'entry_options' => [
                 'data_class' => ShipmentGroupTransfer::class,

@@ -50,7 +50,7 @@ class Creator extends ShipmentHandler
      */
     public function addShipmentToQuote(Request $request, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $quoteTransfer->setShipmentGroups($this->getAvailableMethodsByShipment($quoteTransfer)->getGroups());
+//        $quoteTransfer->setShipmentGroups($this->getAvailableMethodsByShipment($quoteTransfer)->getGroups());
 
         $quoteTransfer = $this->groupShipmentGroupTransfersItemsByHash($quoteTransfer);
         $quoteShipmentGroups = $quoteTransfer->getShipmentGroups();

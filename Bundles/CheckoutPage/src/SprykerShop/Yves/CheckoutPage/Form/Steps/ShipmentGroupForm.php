@@ -57,7 +57,7 @@ class ShipmentGroupForm extends AbstractType
             $options = $form->getConfig()->getOptions();
             if ($shipmentGroupTransfer instanceof ShipmentGroupTransfer) {
                 $availableShipmentMethods = $options[ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP][$shipmentGroupTransfer->getHash()] ?? [];
-                $shipmentAddressLabel = $options[ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST][$shipmentGroupTransfer->getHash()] ?? 'fff';
+                $shipmentAddressLabel = $options[ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST][$shipmentGroupTransfer->getHash()] ?? '';
 
                 $form->add('shipment', MultiShipmentForm::class, [
                     MultiShipmentForm::OPTION_SHIPMENT_METHODS => $availableShipmentMethods,

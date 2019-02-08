@@ -116,7 +116,7 @@ class CheckoutController extends AbstractController
         $template = $this->isMultiShipmentEnabled()
             ? '@CheckoutPage/views/shipment-multi-shipment/shipment-multi-shipment.twig'
             : '@CheckoutPage/views/shipment/shipment.twig';
-
+dd($response['shipmentCollectionForm']->children['shipmentGroups']->children);
         return $this->view(
             $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),
@@ -173,7 +173,7 @@ class CheckoutController extends AbstractController
         $template = $this->isMultiShipmentEnabled()
             ? '@CheckoutPage/views/summary-multi-shipment/summary-multi-shipment.twig'
             : '@CheckoutPage/views/summary/summary.twig';
-
+dd($viewData);
         return $this->view(
             $viewData,
             $this->getFactory()->getSummaryPageWidgetPlugins(),

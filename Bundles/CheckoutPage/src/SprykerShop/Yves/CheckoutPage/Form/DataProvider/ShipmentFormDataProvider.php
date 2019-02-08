@@ -95,9 +95,9 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
             return $quoteTransfer;
         }
 
-
-
-        $quoteTransfer->setShipmentGroups($this->shipmentService->groupItemsByShipment($quoteTransfer->getItems()));
+        if (count($quoteTransfer->getShipmentGroups()) === 0) {
+            $quoteTransfer->setShipmentGroups($this->shipmentService->groupItemsByShipment($quoteTransfer->getItems()));
+        }
 
         return $quoteTransfer;
     }
@@ -124,6 +124,11 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         ];
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
     protected function getShipmentAddressLabelList(QuoteTransfer $quoteTransfer): array
     {
         $shipmentAddressLabelList = [];
@@ -143,6 +148,11 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         return $shipmentAddressLabelList;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return string
+     */
     protected function getShipmentAddressLabel(AddressTransfer $addressTransfer): string
     {
         return sprintf(
