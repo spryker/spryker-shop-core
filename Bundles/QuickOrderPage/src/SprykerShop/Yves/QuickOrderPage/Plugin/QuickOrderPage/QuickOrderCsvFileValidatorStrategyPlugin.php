@@ -35,6 +35,8 @@ class QuickOrderCsvFileValidatorStrategyPlugin extends AbstractPlugin implements
 
     /**
      * {@inheritdoc}
+     * - Returns false if less than 1 row was provided (header row).
+     * - Returns false if mandatory columns are not present based by header row.
      *
      * @api
      *
