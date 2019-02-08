@@ -37,14 +37,14 @@ interface QuickOrderFileValidatorStrategyPluginInterface
 
     /**
      * Specification:
-     * - Checks if amount of rows are valid.
+     * - Checks if amount of rows is valid.
      *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
-     * @param int $maxAllowedRows
+     * @param int $rowCountLimit
      *
      * @return bool
      */
-    public function isValidAmountOfRows(UploadedFile $file, int $maxAllowedRows): bool;
+    public function isValidRowCount(UploadedFile $file, int $rowCountLimit): bool;
 }

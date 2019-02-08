@@ -31,15 +31,15 @@ class UploadedFileCsvTypeValidator implements UploadedFileTypeValidatorInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
-     * @param int $maxAllowedRows
+     * @param int $rowCountLimit
      *
      * @return bool
      */
-    public function validateAmountOfRows(UploadedFile $file, int $maxAllowedRows): bool
+    public function isValidRowCount(UploadedFile $file, int $rowCountLimit): bool
     {
         $uploadedOrder = $this->utilCsvService->readUploadedFile($file);
 
-        return $maxAllowedRows > count($uploadedOrder);
+        return $rowCountLimit >= count($uploadedOrder);
     }
 
     /**

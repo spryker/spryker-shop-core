@@ -41,9 +41,9 @@ class UploadOrderFormatConstraint extends SymfonyConstraint
     /**
      * @return int
      */
-    public function getAllowedUploadRowCount(): int
+    public function getUploadRowCountLimit(): int
     {
-        return $this->config->getAllowedUploadRowCount();
+        return $this->config->getUploadRowCountLimit();
     }
 
     /**
