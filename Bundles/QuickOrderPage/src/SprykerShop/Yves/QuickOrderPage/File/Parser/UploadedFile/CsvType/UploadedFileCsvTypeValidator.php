@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class UploadedFileCsvTypeValidator implements UploadedFileTypeValidatorInterface
 {
     protected const CSV_SKU_COLUMN_NAME = 'concrete_sku';
-    protected const CSV_QTY_COLUMN_NAME = 'quantity';
+    protected const CSV_QUANTITY_COLUMN_NAME = 'quantity';
 
     /**
      * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface
@@ -56,7 +56,7 @@ class UploadedFileCsvTypeValidator implements UploadedFileTypeValidatorInterface
         }
 
         if (!in_array(static::CSV_SKU_COLUMN_NAME, $uploadedOrder[0], true)
-            || !in_array(static::CSV_QTY_COLUMN_NAME, $uploadedOrder[0], true)) {
+            || !in_array(static::CSV_QUANTITY_COLUMN_NAME, $uploadedOrder[0], true)) {
             return false;
         }
 
