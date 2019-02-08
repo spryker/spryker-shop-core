@@ -41,7 +41,7 @@ class NewsletterWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\NewsletterWidget\Subscriber\SubscriptionRequestHandlerInterface
+     * @return \SprykerShop\Yves\NewsletterWidget\Handler\SubscriptionRequestHandlerInterface
      */
     public function createDoubleOptInSubscriptionRequestHandler(): SubscriptionRequestHandlerInterface
     {
