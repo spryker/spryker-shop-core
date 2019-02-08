@@ -16,10 +16,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class QuickOrderCsvFileParserStrategyPlugin extends AbstractPlugin implements QuickOrderFileParserStrategyPluginInterface
 {
-    public const MIME_TYPE_CSV = 'text/csv';
+    protected const CSV_FILE_MIME_TYPE = 'text/csv';
 
     /**
      * {@inheritdoc}
+     * - Returns true if the provided mime type matches the expected mime type.
      *
      * @api
      *
@@ -29,11 +30,12 @@ class QuickOrderCsvFileParserStrategyPlugin extends AbstractPlugin implements Qu
      */
     public function isApplicable(UploadedFile $file): bool
     {
-        return $file->getClientMimeType() === static::MIME_TYPE_CSV;
+        return $file->getClientMimeType() === static::CSV_FILE_MIME_TYPE;
     }
 
     /**
      * {@inheritdoc}
+     * - Expects first row to contain the header.
      *
      * @api
      *

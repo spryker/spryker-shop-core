@@ -16,10 +16,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class QuickOrderCsvFileValidatorStrategyPlugin extends AbstractPlugin implements QuickOrderFileValidatorStrategyPluginInterface
 {
-    public const CSV_FILE_MIME_TYPE = 'text/csv';
+    protected const CSV_FILE_MIME_TYPE = 'text/csv';
 
     /**
      * {@inheritdoc}
+     * - Returns true if the provided mime type matches the expected mime type.
      *
      * @api
      *

@@ -25,7 +25,7 @@ interface QuickOrderFileValidatorStrategyPluginInterface
 
     /**
      * Specification:
-     * - Checks if file format valid.
+     * - Returns true when file format is valid.
      *
      * @api
      *
@@ -37,7 +37,7 @@ interface QuickOrderFileValidatorStrategyPluginInterface
 
     /**
      * Specification:
-     * - Checks if amount of rows is valid.
+     * - Returns true if row count matches expectations.
      *
      * @api
      *

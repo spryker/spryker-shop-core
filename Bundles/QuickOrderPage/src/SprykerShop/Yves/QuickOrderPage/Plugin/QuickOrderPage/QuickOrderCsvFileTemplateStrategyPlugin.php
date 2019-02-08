@@ -23,6 +23,7 @@ class QuickOrderCsvFileTemplateStrategyPlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritdoc}
+     * - Returns true if provided file extension matches the expected file extension.
      *
      * @api
      *
@@ -49,6 +50,7 @@ class QuickOrderCsvFileTemplateStrategyPlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritdoc}
+     * - Returns template with header row and example rows.
      *
      * @api
      *
