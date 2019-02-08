@@ -34,6 +34,8 @@
         <property name="sku" type="string" />
     </transfer>
 
-    <transfer name="ProductConcreteAvailabilityRequest"/>
+    <transfer name="ProductConcreteAvailabilityRequest">
+        <property name="sku" type="string" />
+    </transfer>
 
 </transfers>

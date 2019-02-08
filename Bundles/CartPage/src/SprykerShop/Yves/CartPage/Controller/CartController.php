@@ -121,7 +121,7 @@ class CartController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function quickAddAction($sku, $quantity, Request $request): RedirectResponse
+    public function quickAddAction(string $sku, int $quantity, Request $request): RedirectResponse
     {
         if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
@@ -139,7 +139,7 @@ class CartController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executeQuickAddAction($sku, $quantity, Request $request): RedirectResponse
+    public function executeQuickAddAction(string $sku, int $quantity, Request $request): RedirectResponse
     {
         $itemTransfer = (new ItemTransfer())
             ->setSku($sku)
