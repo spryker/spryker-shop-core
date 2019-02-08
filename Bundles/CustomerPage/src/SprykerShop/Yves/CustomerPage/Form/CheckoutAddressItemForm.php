@@ -88,7 +88,7 @@ class CheckoutAddressItemForm extends AbstractType
                     return false;
                 }
 
-                if ($form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS) === null) {
+                if ($form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS) === false) {
                     return [CheckoutAddressCollectionForm::GROUP_SHIPPING_ADDRESS];
                 }
 
