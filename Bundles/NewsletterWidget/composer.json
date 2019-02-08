@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/customer-page": "1.16.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/application": "^3.8.0",
@@ -13,13 +14,11 @@
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
-    "spryker-shop/customer-page": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/customer-page": "Widget plugins are available for this module.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
