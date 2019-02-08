@@ -88,7 +88,7 @@ class CheckoutAddressItemForm extends AbstractType
                     return [CheckoutAddressCollectionForm::GROUP_SHIPPING_ADDRESS];
                 }
 
-                return true;
+                return false;
             },
             CheckoutAddressForm::OPTION_VALIDATION_GROUP => CheckoutAddressCollectionForm::GROUP_SHIPPING_ADDRESS,
             CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
