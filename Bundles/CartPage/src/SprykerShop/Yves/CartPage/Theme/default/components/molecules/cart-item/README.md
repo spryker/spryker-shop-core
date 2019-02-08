@@ -6,6 +6,7 @@ Displays detailed product information: product image, product name, product SKU,
 {% include molecule('cart-item', 'CartPage') with {
     data: {
         cart: cart,
+        isQuoteEditable: isQuoteEditable,
         cartItem: cartItem,
         attributes: attributes
     }
