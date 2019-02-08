@@ -139,7 +139,7 @@ class CartController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executeQuickAddAction(string $sku, int $quantity, Request $request): RedirectResponse
+    protected function executeQuickAddAction(string $sku, int $quantity, Request $request): RedirectResponse
     {
         $itemTransfer = (new ItemTransfer())
             ->setSku($sku)
