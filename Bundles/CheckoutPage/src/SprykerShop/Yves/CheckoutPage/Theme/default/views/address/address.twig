@@ -98,7 +98,8 @@
             {% include molecule('address-item-form', 'CheckoutPage') with {
                 class: 'js-address__items-target col col--sm-12 is-hidden',
                 data: {
-                    form: embed.forms.items
+                    form: embed.forms.items,
+                    isAddressSavingSkipped: data.form.isAddressSavingSkipped is defined ? data.form.isAddressSavingSkipped : ''
                 }
             } only %}
 
@@ -203,13 +204,16 @@
                         {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
                             attributes: {
                                 'trigger-selector': existingShippingAddressSelectSelector | default(''),
-                                'target-selector': '.js-address__items-target',
+                                'target-selector': '.js-address__shipping',
+                                'sub-target-selector': '.js-address__items-target',
+                                'form-clear-selector': '.js-form-clear__shippingAddress',
+                                'form-add-new-address-selector': '.js-form-add-new-address__shippingAddress',
+                                'form-billing-address-selector': '.js-address__billing-same-as-shipping',
+                                'billing-same-as-shipping-selector': '.js-address__billingSameAsShipping',
+                                'billing-same-as-shipping-toggler-selector': '[name="addressesForm[billingSameAsShipping]"]',
                                 'class-to-toggle': 'is-hidden',
                                 'has-company-business-unit-address': hasCompanyBusinessUnitAddress ? 'true' : 'false',
-                                'trigger-option-to-target-map': {
-                                    (optionValueAddNewAddress): '.js-address__shipping',
-                                    (optionValueDeliverToMultipleAddresses): '.js-address__items-target'
-                                } | json_encode
+                                'toggle-option-value': optionValueDeliverToMultipleAddresses
                             }
                         } only %}
 
@@ -219,15 +223,6 @@
                                 'target-selector': '.js-address__billing',
                                 'class-to-toggle': 'is-hidden',
                                 'has-company-business-unit-address': hasCompanyBusinessUnitAddress ? 'true' : 'false'
-                            }
-                        } only %}
-
-                        {% include molecule('same-billing-toggler', 'CustomerPage') ignore missing with {
-                            attributes: {
-                                'trigger-selector': existingShippingAddressSelectSelector | default(''),
-                                'target-container-selector': '.js-address__billingSameAsShipping',
-                                'class-to-toggle': 'is-hidden',
-                                'toggle-option-value': optionValueDeliverToMultipleAddresses
                             }
                         } only %}
 

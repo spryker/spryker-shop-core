@@ -79,6 +79,10 @@
                     {% endfor %}
                 </optgroup>
             {% endif %}
+
+            {% if embed.formType == 'shippingAddress' %}
+                <option value="-1">{{ 'customer.account.deliver_to_multiple_addresses' | trans }}</option>
+            {% endif %}
         {% endblock %}
     {% endembed %}
 
@@ -101,7 +105,7 @@
     </div>
 
     <div>
-        <label>
+        <label class="js-form-clear__{{ data.formType }}">
             <input type="checkbox" name="customAddress[{{ data.formType }}]" {% if data.isCustomAddress %}checked{% endif %} class="js-form-clear__{{ data.formType }}-toggler js-form-clear__ignore-element" value="1" data-show-save-new-address>
             {% if data.formType == 'shippingAddress' %}
                 {{ 'page.checkout.address.different_delivery_address' | trans }}
