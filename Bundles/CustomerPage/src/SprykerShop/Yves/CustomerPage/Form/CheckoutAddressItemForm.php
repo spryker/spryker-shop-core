@@ -10,19 +10,25 @@ namespace SprykerShop\Yves\CustomerPage\Form;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
 class CheckoutAddressItemForm extends AbstractType
 {
+    public const FIELD_IS_ADDRESS_SAVING_SKIPPED = 'isAddressSavingSkipped';
     public const FIELD_SHIPMENT_SHIPPING_ADDRESS = 'shippingAddress';
 
     public const OPTION_ADDRESS_CHOICES = 'address_choices';
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
+
+    protected const GLOSSARY_KEY_SAVE_NEW_ADDRESS = 'customer.address.save_new_address';
 
     /**
      * @return string|null
@@ -57,7 +63,8 @@ class CheckoutAddressItemForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addShipmentField($builder, $options);
+        $this->addShipmentField($builder, $options)
+            ->addIsAddressSavingSkippedField($builder);
     }
 
     /**
@@ -97,5 +104,50 @@ class CheckoutAddressItemForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIsAddressSavingSkippedField(FormBuilderInterface $builder)
+    {
+        $isLoggedIn = $this->getFactory()
+            ->getCustomerClient()
+            ->isLoggedIn();
+
+        if (!$isLoggedIn) {
+            return $this;
+        }
+
+        $builder->add(static::FIELD_IS_ADDRESS_SAVING_SKIPPED, CheckboxType::class, [
+            'label' => static::GLOSSARY_KEY_SAVE_NEW_ADDRESS,
+            'required' => false,
+        ]);
+
+        $callbackTransformer = new CallbackTransformer(
+            $this->getInvertedBooleanValueCallbackTransformer(),
+            $this->getInvertedBooleanValueCallbackTransformer()
+        );
+
+        $builder->get(static::FIELD_IS_ADDRESS_SAVING_SKIPPED)
+            ->addModelTransformer($callbackTransformer);
+
+        return $this;
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function getInvertedBooleanValueCallbackTransformer(): \Closure
+    {
+        return function (?bool $value): bool {
+            if ($value === null) {
+                return true;
+            }
+
+            return !$value;
+        };
     }
 }
