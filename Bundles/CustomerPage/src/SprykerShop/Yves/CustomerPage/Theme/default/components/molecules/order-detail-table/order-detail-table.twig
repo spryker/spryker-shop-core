@@ -14,7 +14,7 @@
         <h4>{{ 'customer.order.shipment' | trans }} #{{ loop.index }}</h4>
 
         <div class="box grid grid--justify spacing-bottom spacing-bottom--big">
-            <div class="col col--sm-6 grid">
+            <div class="col col--sm-12 col--lg-6 grid">
                 <h5>{{ 'customer.order.products' | trans }}</h5>
 
                 {% for item in shipmentGroup.items %}
@@ -96,7 +96,7 @@
                 {% endfor %}
             </div>
 
-            <div class="col col--sm-5 spacing-left spacing-left--inner">
+            <div class="col col--sm-12 col--lg-5 spacing-left spacing-left--inner">
                 <div class="spacing-bottom spacing-bottom--big">
                     <h5>{{ 'customer.order.shipping_address' | trans }}</h5>
                     <div class="spacing-y spacing-y--inner">
