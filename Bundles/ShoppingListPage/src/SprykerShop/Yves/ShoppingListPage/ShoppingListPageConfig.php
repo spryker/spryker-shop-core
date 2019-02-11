@@ -11,6 +11,5 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class ShoppingListPageConfig extends AbstractBundleConfig
 {
-    public const DEFAULT_NAME = 'My shopping list';
     public const CART_REDIRECT_URL = 'cart';
 }
