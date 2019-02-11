@@ -46,8 +46,32 @@
                     <div class="col col--sm-12">
                         <div class="col col--sm-6">
                             {% for item in shipmentGroupForm.vars.data.items %}
-                            <div class="col">
-                  {{ item.sku }}
+                            <div class="col--sm-6">
+                                {% set item = item.bundleProduct is defined ? item.bundleProduct : item %}
+                                {% embed molecule('summary-item', 'CheckoutPage') with {
+                                    data: {
+                                        name: item.name,
+                                        quantity: item.quantity,
+                                        price: item.sumPrice | money,
+                                        options: item.productOptions | default({}),
+                                        bundleItems: item.bundleItems | default([]),
+                                        quantitySalesUnit: item.quantitySalesUnit,
+                                        amountSalesUnit: item.amountSalesUnit,
+                                        amount: item.amount,
+                                        groupKey: item.groupKey,
+                                        images: item.images,
+                                        sku: item.sku
+                                    },
+                                    embed: {
+                                        isLast: not loop.last,
+                                        item: item
+                                    }
+                                } only %}
+                                    {% block body %}
+                                        {{parent()}}
+                                        {% if embed.isLast %}<hr/>{% endif %}
+                                    {% endblock %}
+                                {% endembed %}
                             </div>
                             {% endfor %}
                         </div>

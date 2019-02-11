@@ -95,10 +95,6 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
             return $quoteTransfer;
         }
 
-        if (count($quoteTransfer->getShipmentGroups()) === 0) {
-            $quoteTransfer->setShipmentGroups($this->shipmentService->groupItemsByShipment($quoteTransfer->getItems()));
-        }
-
         return $quoteTransfer;
     }
 
@@ -117,6 +113,21 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
                 ShipmentForm::OPTION_SHIPMENT_METHODS => $this->createAvailableShipmentChoiceList($quoteTransfer),
             ];
         }
+
+        /**
+         * @todo Add quote bc adapter
+         */
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                $itemTransfer->setShipment(new ShipmentTransfer());
+            }
+
+            if ($itemTransfer->getShipment()->getMethod() === null) {
+                $itemTransfer->getShipment()->setMethod(new ShipmentMethodTransfer());
+            }
+        }
+
+        $quoteTransfer = $this->setQuoteShipmentGroups($quoteTransfer);
 
         return [
             ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP => $this->createAvailableMethodsByShipmentChoiceList($quoteTransfer),
@@ -200,19 +211,6 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected function createAvailableMethodsByShipmentChoiceList(QuoteTransfer $quoteTransfer): array
     {
         $shipmentMethods = [];
-
-        /**
-         * @todo Add quote bc adapter
-         */
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null) {
-                $itemTransfer->setShipment(new ShipmentTransfer());
-            }
-
-            if ($itemTransfer->getShipment()->getMethod() === null) {
-                $itemTransfer->getShipment()->setMethod(new ShipmentMethodTransfer());
-            }
-        }
 
         $shipmentGroupCollectionTransfer = $this->getAvailableMethodsByShipment($quoteTransfer);
 
@@ -345,5 +343,38 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected function translate($translationKey)
     {
         return $this->glossaryClient->translate($translationKey, $this->store->getCurrentLocale());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setQuoteShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+        $quoteShipmentGroupTransfers = $quoteTransfer->getShipmentGroups();
+
+        if (count($quoteShipmentGroupTransfers) === 0) {
+            $quoteTransfer->setShipmentGroups($shipmentGroupTransfers);
+
+            return $quoteTransfer;
+        }
+
+        foreach ($shipmentGroupTransfers as $key => $shipmentGroupTransfer) {
+            foreach ($quoteShipmentGroupTransfers as $quoteKey => $quoteShipmentGroupTransfer) {
+                if ($shipmentGroupTransfer->getHash() !== $quoteShipmentGroupTransfer->getHash()) {
+                    continue;
+                }
+                if ($quoteKey === $quoteShipmentGroupTransfer->getHash()) {
+                    continue;
+                }
+
+                $quoteShipmentGroupTransfers[$shipmentGroupTransfer->getHash()] = $quoteShipmentGroupTransfer->fromArray($shipmentGroupTransfer->toArray(), true);
+                unset($quoteShipmentGroupTransfers[$quoteKey]);
+            }
+        }
+
+        return $quoteTransfer;
     }
 }

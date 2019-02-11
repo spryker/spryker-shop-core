@@ -50,9 +50,11 @@ class Creator extends ShipmentHandler
      */
     public function addShipmentToQuote(Request $request, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-//        $quoteTransfer->setShipmentGroups($this->getAvailableMethodsByShipment($quoteTransfer)->getGroups());
+        $quoteTransfer = $this->groupQuoteShipmentGroupTransferItemsByHash($quoteTransfer);
 
-        $quoteTransfer = $this->groupShipmentGroupTransfersItemsByHash($quoteTransfer);
+        $availableShipmentMethodsGroupedByShipment = $this->getAvailableMethodsByShipment($quoteTransfer)->getGroups();
+        $quoteTransfer = $this->setShipmentMethodsToQuoteShipmentGroups($quoteTransfer, $availableShipmentMethodsGroupedByShipment);
+
         $quoteShipmentGroups = $quoteTransfer->getShipmentGroups();
         $quoteShipmentGroups = $this->setShipmentGroupsSelectedMethodTransfer($quoteShipmentGroups);
         $quoteShipmentGroups = $this->setShipmentGroupsExpenseTransfer($quoteShipmentGroups, $quoteTransfer->getPriceMode());
@@ -91,19 +93,22 @@ class Creator extends ShipmentHandler
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function groupShipmentGroupTransfersItemsByHash(QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function groupQuoteShipmentGroupTransferItemsByHash(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $shipmentGroupsCollection = $this->groupItemsByShipment($quoteTransfer->getItems());
+        $quoteShipmentGroupCollection = $quoteTransfer->getShipmentGroups();
 
-        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
-            if (!$shipmentGroupsCollection->offsetExists($shipmentGroupTransfer->getHash())) {
-                continue;
+        foreach ($shipmentGroupsCollection as $shipmentGroupTransfer) {
+            foreach ($quoteShipmentGroupCollection as $quoteShipmentGroupTransfer) {
+                if ($shipmentGroupTransfer->getHash() !== $quoteShipmentGroupTransfer->getHash()) {
+                    continue;
+                }
+
+                $shipmentGroupTransfer->setShipment($quoteShipmentGroupTransfer->getShipment());
             }
-
-            $shipmentGroupTransfer->setItems(
-                $shipmentGroupsCollection[$shipmentGroupTransfer->getHash()]->getItems()
-            );
         }
+
+        $quoteTransfer->setShipmentGroups($shipmentGroupsCollection);
 
         return $quoteTransfer;
     }
@@ -173,7 +178,7 @@ class Creator extends ShipmentHandler
      */
     protected function createShippingExpenseTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, $priceMode): ExpenseTransfer
     {
-        $shipmentExpenseTransfer = $this->createExpenseTransfer();
+        $shipmentExpenseTransfer = new ExpenseTransfer();
         $shipmentExpenseTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
         $shipmentExpenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
         $this->setPrice($shipmentExpenseTransfer, $shipmentMethodTransfer->getStoreCurrencyPrice(), $priceMode);
@@ -204,10 +209,25 @@ class Creator extends ShipmentHandler
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $availableShippingMethodsGroupedByShipment
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createExpenseTransfer(): ExpenseTransfer
-    {
-        return new ExpenseTransfer();
+    protected function setShipmentMethodsToQuoteShipmentGroups(
+        QuoteTransfer $quoteTransfer,
+        ArrayObject $availableShippingMethodsGroupedByShipment
+    ): QuoteTransfer {
+        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
+            foreach ($availableShippingMethodsGroupedByShipment as $availableShipmentMethodsShipmentGroupTransfer) {
+                if ($shipmentGroupTransfer->getHash() !== $availableShipmentMethodsShipmentGroupTransfer->getHash()) {
+                    continue;
+                }
+
+                $shipmentGroupTransfer->setAvailableShipmentMethods($availableShipmentMethodsShipmentGroupTransfer->getAvailableShipmentMethods());
+            }
+        }
+
+        return $quoteTransfer;
     }
 }
