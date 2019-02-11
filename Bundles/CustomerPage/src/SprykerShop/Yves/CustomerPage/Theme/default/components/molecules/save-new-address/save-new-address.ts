@@ -27,7 +27,6 @@ export default class SaveNewAddress extends Component {
 
         this.saveNewAddressToggler = <HTMLInputElement>document.querySelector(this.saveAddressTogglerSelector);
         if (this.billingSameAsShippingAddressTogglerSelector) {
-
             this.sameAsShippingToggler = <HTMLInputElement>document.querySelector(this.billingSameAsShippingAddressTogglerSelector);
         }
 
