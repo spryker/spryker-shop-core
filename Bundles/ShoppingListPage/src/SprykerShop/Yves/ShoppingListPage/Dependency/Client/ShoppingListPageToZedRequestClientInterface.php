@@ -10,11 +10,6 @@ namespace SprykerShop\Yves\ShoppingListPage\Dependency\Client;
 interface ShoppingListPageToZedRequestClientInterface
 {
     /**
-     * @return void
-     */
-    public function addFlashMessagesFromLastZedRequest();
-
-    /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseErrorMessages();
