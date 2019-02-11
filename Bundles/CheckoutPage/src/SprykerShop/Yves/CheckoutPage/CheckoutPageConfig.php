@@ -37,13 +37,13 @@ class CheckoutPageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param bool $isMultiShipmentFullEnabled
+     * @param bool $isMultiShipmentEnabled
      *
      * @return string
      */
-    public function getTemplateAddressStep(bool $isMultiShipmentFullEnabled): string
+    public function getTemplateAddressStep(bool $isMultiShipmentEnabled): string
     {
-        if ($isMultiShipmentFullEnabled) {
+        if ($isMultiShipmentEnabled) {
             return self::TEMPLATE_MULTI_SHIPMENT_ADDRESS_STEP;
         }
 
@@ -51,13 +51,13 @@ class CheckoutPageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param bool $isMultiShipmentFullEnabled
+     * @param bool $isMultiShipmentEnabled
      *
      * @return string
      */
-    public function getTemplateShipmentStep(bool $isMultiShipmentFullEnabled): string
+    public function getTemplateShipmentStep(bool $isMultiShipmentEnabled): string
     {
-        if ($isMultiShipmentFullEnabled) {
+        if ($isMultiShipmentEnabled) {
             return self::TEMPLATE_MULTI_SHIPMENT_SHIPMENT_STEP;
         }
 
@@ -65,13 +65,13 @@ class CheckoutPageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param bool $isMultiShipmentFullEnabled
+     * @param bool $isMultiShipmentEnabled
      *
      * @return string
      */
-    public function getTemplateSummaryStep(bool $isMultiShipmentFullEnabled): string
+    public function getTemplateSummaryStep(bool $isMultiShipmentEnabled): string
     {
-        if ($isMultiShipmentFullEnabled) {
+        if ($isMultiShipmentEnabled) {
             return self::TEMPLATE_MULTI_SHIPMENT_SUMMARY_STEP;
         }
 
