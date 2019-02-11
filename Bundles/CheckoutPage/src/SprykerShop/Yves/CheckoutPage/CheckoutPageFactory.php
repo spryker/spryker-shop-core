@@ -22,6 +22,8 @@ use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
 use SprykerShop\Yves\CheckoutPage\Model\Shipment\Creator;
 use SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\CheckoutStep\CheckoutStepTemplateResolver;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\CheckoutStep\CheckoutStepTemplateResolverInterface;
 use SprykerShop\Yves\CheckoutPage\StrategyResolver\Shipment\ShipmentCreatorStrategyResolver;
 use SprykerShop\Yves\CheckoutPage\StrategyResolver\Shipment\ShipmentCreatorStrategyResolverInterface;
 
@@ -250,6 +252,14 @@ class CheckoutPageFactory extends AbstractFactory
             $this->getSubFormFilterPlugins(),
             $this->getQuoteClient()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\StrategyResolver\CheckoutStep\CheckoutStepTemplateResolverInterface
+     */
+    public function creatStepFormResolver(): CheckoutStepTemplateResolverInterface
+    {
+        return new CheckoutStepTemplateResolver();
     }
 
     /**
