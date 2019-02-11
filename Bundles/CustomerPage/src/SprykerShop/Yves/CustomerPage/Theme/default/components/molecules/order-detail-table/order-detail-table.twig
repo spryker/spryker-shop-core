@@ -37,21 +37,21 @@
                             {% if isBundle %}
                                 <div class="spacing-bottom">
                                     {% block bundleDetailRow %}
-                                        <p>{{ "customer.order.bundled_items" | trans }}</p><br/>
+                                        <p>{{ "customer.order.bundled_items" | trans }}</p>
                                         <ul>
                                             {% for bundledItem in item.bundleItems %}
                                                 <li>
-                                                    &nbsp; - {{ bundledItem.quantity }} x {{ bundledItem.name }}<br/>
+                                                    &nbsp; - {{ bundledItem.quantity }} x {{ bundledItem.name }}
                                                 </li>
                                             {% endfor %}
                                         </ul>
 
                                         {% if concreteItem.productOptions is not empty %}
-                                            <p>{{ "customer.order.options" | trans }}</p><br/>
+                                            <p>{{ "customer.order.options" | trans }}</p>
                                             <ul>
                                                 {% for productOption in concreteItem.productOptions %}
                                                     <li>
-                                                        &nbsp; - {{ productOption.value | trans }} {{ productOption.sumPrice | money(true, data.currencyIsoCode) }}<br/>
+                                                        &nbsp; - {{ productOption.value | trans }} {{ productOption.sumPrice | money(true, data.currencyIsoCode) }}
                                                     </li>
                                                 {% endfor %}
                                             </ul>
