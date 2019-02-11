@@ -81,9 +81,7 @@ class CheckoutController extends AbstractController
         /**
          * @deprecated Will be removed in next major release.
          */
-        $template = $this->isMultiShipmentEnabled()
-            ? '@CheckoutPage/views/address-multi-shipment/address-multi-shipment.twig'
-            : '@CheckoutPage/views/address/address.twig';
+        $template = $this->getFactory()->creatStepFormResolver()->getTemplateAddressStep();
 
         return $this->view(
             $response,
@@ -113,10 +111,8 @@ class CheckoutController extends AbstractController
         /**
          * @deprecated Will be removed in next major release.
          */
-        $template = $this->isMultiShipmentEnabled()
-            ? '@CheckoutPage/views/shipment-multi-shipment/shipment-multi-shipment.twig'
-            : '@CheckoutPage/views/shipment/shipment.twig';
-dd($response['shipmentCollectionForm']->children['shipmentGroups']->children);
+        $template = $this->getFactory()->creatStepFormResolver()->getTemplateShipmentStep();
+
         return $this->view(
             $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),
@@ -170,10 +166,8 @@ dd($response['shipmentCollectionForm']->children['shipmentGroups']->children);
         /**
          * @deprecated Will be removed in next major release.
          */
-        $template = $this->isMultiShipmentEnabled()
-            ? '@CheckoutPage/views/summary-multi-shipment/summary-multi-shipment.twig'
-            : '@CheckoutPage/views/summary/summary.twig';
-dd($viewData);
+        $template = $this->getFactory()->creatStepFormResolver()->getTemplateSummaryStep();
+
         return $this->view(
             $viewData,
             $this->getFactory()->getSummaryPageWidgetPlugins(),
