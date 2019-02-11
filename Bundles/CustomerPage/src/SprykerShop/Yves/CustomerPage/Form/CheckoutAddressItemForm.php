@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerPage\Form;
 
+use Closure;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
@@ -109,9 +110,9 @@ class CheckoutAddressItemForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return $this
+     * @return \SprykerShop\Yves\CustomerPage\Form\CheckoutAddressItemForm
      */
-    protected function addIsAddressSavingSkippedField(FormBuilderInterface $builder)
+    protected function addIsAddressSavingSkippedField(FormBuilderInterface $builder): CheckoutAddressItemForm
     {
         $isLoggedIn = $this->getFactory()
             ->getCustomerClient()
@@ -138,15 +139,11 @@ class CheckoutAddressItemForm extends AbstractType
     }
 
     /**
-     * @return \Closure
+     * @return Closure
      */
-    protected function getInvertedBooleanValueCallbackTransformer(): \Closure
+    protected function getInvertedBooleanValueCallbackTransformer(): Closure
     {
         return function (?bool $value): bool {
-            if ($value === null) {
-                return true;
-            }
-
             return !$value;
         };
     }
