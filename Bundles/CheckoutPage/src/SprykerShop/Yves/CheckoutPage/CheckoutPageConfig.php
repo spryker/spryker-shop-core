@@ -41,7 +41,7 @@ class CheckoutPageConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getTemplateAddressStep(bool $isMultiShipmentEnabled): string
+    public function getTemplateForAddressStep(bool $isMultiShipmentEnabled): string
     {
         if ($isMultiShipmentEnabled) {
             return self::TEMPLATE_MULTI_SHIPMENT_ADDRESS_STEP;
@@ -55,7 +55,7 @@ class CheckoutPageConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getTemplateShipmentStep(bool $isMultiShipmentEnabled): string
+    public function getTemplateForShipmentStep(bool $isMultiShipmentEnabled): string
     {
         if ($isMultiShipmentEnabled) {
             return self::TEMPLATE_MULTI_SHIPMENT_SHIPMENT_STEP;
@@ -69,7 +69,7 @@ class CheckoutPageConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getTemplateSummaryStep(bool $isMultiShipmentEnabled): string
+    public function getTemplateForSummaryStep(bool $isMultiShipmentEnabled): string
     {
         if ($isMultiShipmentEnabled) {
             return self::TEMPLATE_MULTI_SHIPMENT_SUMMARY_STEP;

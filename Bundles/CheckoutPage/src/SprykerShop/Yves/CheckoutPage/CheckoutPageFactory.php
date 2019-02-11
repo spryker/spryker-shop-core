@@ -22,10 +22,10 @@ use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
 use SprykerShop\Yves\CheckoutPage\Model\Shipment\Creator;
 use SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\CheckoutStep\CheckoutStepTemplateResolver;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\CheckoutStep\CheckoutStepTemplateResolverInterface;
 use SprykerShop\Yves\CheckoutPage\StrategyResolver\Shipment\ShipmentCreatorStrategyResolver;
 use SprykerShop\Yves\CheckoutPage\StrategyResolver\Shipment\ShipmentCreatorStrategyResolverInterface;
-use SprykerShop\Yves\CheckoutPage\StrategyResolver\StepForm\StepFormResolver;
-use SprykerShop\Yves\CheckoutPage\StrategyResolver\StepForm\StepFormResolverInterface;
 
 class CheckoutPageFactory extends AbstractFactory
 {
@@ -255,11 +255,11 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPage\StrategyResolver\StepForm\StepFormResolverInterface
+     * @return \SprykerShop\Yves\CheckoutPage\StrategyResolver\CheckoutStep\CheckoutStepTemplateResolverInterface
      */
-    public function creatStepFormResolver(): StepFormResolverInterface
+    public function creatStepFormResolver(): CheckoutStepTemplateResolverInterface
     {
-        return new StepFormResolver();
+        return new CheckoutStepTemplateResolver();
     }
 
     /**

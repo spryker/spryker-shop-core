@@ -5,25 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CheckoutPage\StrategyResolver\StepForm;
+namespace SprykerShop\Yves\CheckoutPage\StrategyResolver\CheckoutStep;
 
 /**
  * @deprecated Will be removed in next major release.
  */
-interface StepFormResolverInterface
+interface CheckoutStepTemplateResolverInterface
 {
     /**
      * @return string
      */
-    public function getTemplateAddressStep(): string;
+    public function getTemplateForAddressStep(): string;
 
     /**
      * @return string
      */
-    public function getTemplateShipmentStep(): string;
+    public function getTemplateForShipmentStep(): string;
 
     /**
      * @return string
      */
-    public function getTemplateSummaryStep(): string;
+    public function getTemplateForSummaryStep(): string;
 }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CheckoutPage\StrategyResolver\StepForm;
+namespace SprykerShop\Yves\CheckoutPage\StrategyResolver\CheckoutStep;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
 use SprykerShop\Yves\CheckoutPage\StrategyResolver\MultiShipmentResolverTrait;
@@ -15,16 +15,16 @@ use SprykerShop\Yves\CheckoutPage\StrategyResolver\MultiShipmentResolverTrait;
  *
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
  */
-class StepFormResolver extends AbstractType implements StepFormResolverInterface
+class CheckoutStepTemplateResolver extends AbstractType implements CheckoutStepTemplateResolverInterface
 {
     use MultiShipmentResolverTrait;
 
     /**
      * @return string
      */
-    public function getTemplateAddressStep(): string
+    public function getTemplateForAddressStep(): string
     {
-        return $this->getConfig()->getTemplateAddressStep(
+        return $this->getConfig()->getTemplateForAddressStep(
             $this->isMultiShipmentFullEnabled()
         );
     }
@@ -32,9 +32,9 @@ class StepFormResolver extends AbstractType implements StepFormResolverInterface
     /**
      * @return string
      */
-    public function getTemplateShipmentStep(): string
+    public function getTemplateForShipmentStep(): string
     {
-        return $this->getConfig()->getTemplateShipmentStep(
+        return $this->getConfig()->getTemplateForShipmentStep(
             $this->isMultiShipmentFullEnabled()
         );
     }
@@ -42,9 +42,9 @@ class StepFormResolver extends AbstractType implements StepFormResolverInterface
     /**
      * @return string
      */
-    public function getTemplateSummaryStep(): string
+    public function getTemplateForSummaryStep(): string
     {
-        return $this->getConfig()->getTemplateSummaryStep(
+        return $this->getConfig()->getTemplateForSummaryStep(
             $this->isMultiShipmentFullEnabled()
         );
     }
