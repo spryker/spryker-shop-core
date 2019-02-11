@@ -5,8 +5,7 @@
 } %}
 
 {% define data = {
-    form: required,
-    isAddressSavingSkipped: ''
+    form: required
 } %}
 
 {% block body %}
@@ -27,16 +26,14 @@
             }
         },
         embed: {
-            jsName: config.jsName,
-            isAddressSavingSkipped: data.isAddressSavingSkipped
+            jsName: config.jsName
         }
     } only %}
         {% block fields %}
             <div class="{{ embed.jsName }}__list col col--sm-12">
                 {% include molecule('address-item-form-field-list', 'CheckoutPage') with {
                     data: {
-                        items: data.form,
-                        isAddressSavingSkipped: embed.isAddressSavingSkipped
+                        items: data.form
                     }
                 } only %}
             </div>

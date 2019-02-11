@@ -7,7 +7,8 @@
     addresses: _widget.addresses,
     customerAddresses: _widget.customerAddresses,
     companyBusinessUnitAddresses: _widget.companyBusinessUnitAddresses,
-    isCustomAddress: app.request.get('customAddress')[_widget.formType]  | default(not _widget.formAddressTransfer.idCustomerAddress)
+    isCustomAddress: app.request.get('customAddress')[_widget.formType]  | default(not _widget.formAddressTransfer.idCustomerAddress),
+    isMultipleShipmentEnabled: false
 } %}
 
 {% block template %}
@@ -39,7 +40,8 @@
             companyBusinessUnitAddresses: data.companyBusinessUnitAddresses,
             formType: data.formType,
             defaultAddressKey: defaultAddressKey,
-            currentAddressId: data.currentAddressId
+            currentAddressId: data.currentAddressId,
+            isMultipleShipmentEnabled: data.isMultipleShipmentEnabled
         }
     } only %}
         {% block selectClass %}js-form-clear__ignore-element js-form-select-address__{{ embed.formType }}{% endblock %}
@@ -80,7 +82,7 @@
                 </optgroup>
             {% endif %}
 
-            {% if embed.formType == 'shippingAddress' %}
+            {% if embed.formType == 'shippingAddress' and embed.isMultipleShipmentEnabled %}
                 <option value="-1">{{ 'customer.account.deliver_to_multiple_addresses' | trans }}</option>
             {% endif %}
         {% endblock %}

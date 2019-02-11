@@ -46,7 +46,12 @@
                     <div class="form__field col col--sm-6">
                         <ul class="list spacing-y">
                             {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
-                                {% widget companyBusinessUnitAddressWidget %}{% endwidget %}
+                                {% widget companyBusinessUnitAddressWidget with {
+                                    data: {
+                                        isMultipleShipmentEnabled: true
+                                    }
+                                } only %}
+                                {% endwidget %}
 
                                 {% if existingShippingAddresses %}
                                     {% do data.form.shippingAddress.id_customer_address.setRendered %}
@@ -98,8 +103,7 @@
             {% include molecule('address-item-form', 'CheckoutPage') with {
                 class: 'js-address__items-target col col--sm-12 is-hidden',
                 data: {
-                    form: embed.forms.items,
-                    isAddressSavingSkipped: data.form.isAddressSavingSkipped is defined ? data.form.isAddressSavingSkipped : ''
+                    form: embed.forms.items
                 }
             } only %}
 

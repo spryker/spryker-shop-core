@@ -76,18 +76,16 @@
                     } only %}
                 {% endif %}
 
-                {% embed molecule('save-new-address', 'CustomerPage') ignore missing with {
-                    class: 'is-hidden',
-                    data: {
-                        form: item
-                    },
-                    attributes: {
-                        'shipping-address-toggler-selector': item.shippingAddress.id_customer_address is defined ? '[name="' ~ item.shippingAddress.id_customer_address.vars.full_name ~ '"]' : '',
-                        'save-address-toggler-selector': data.isAddressSavingSkipped is not empty ? '[name="' ~ data.isAddressSavingSkipped.vars.full_name ~ '"]' : ''
-                    }
-                } only %}
-
-                {% endembed %}
+                {#{% include molecule('save-new-address', 'CustomerPage') ignore missing with {#}
+                    {#class: 'spacing-x is-hidden',#}
+                    {#data: {#}
+                        {#form: item#}
+                    {#},#}
+                    {#attributes: {#}
+                        {#'shipping-address-toggler-selector': item.shippingAddress.id_customer_address is defined ? '[name="' ~ item.shippingAddress.id_customer_address.vars.full_name ~ '"]' : '',#}
+                        {#'save-address-toggler-selector': '[name="' ~ item.isAddressSavingSkipped.vars.full_name ~ '"]',#}
+                    {#}#}
+                {#} only %}#}
             </div>
         {% endfor %}
     </div>
