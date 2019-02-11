@@ -11,13 +11,13 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class CheckoutPageConfig extends AbstractBundleConfig
 {
-    public const TEMPLATE_SINGE_SHIPMENT_ADDRESS_STEP = '@CheckoutPage/views/address/address.twig';
+    public const TEMPLATE_SINGLE_SHIPMENT_ADDRESS_STEP = '@CheckoutPage/views/address/address.twig';
     public const TEMPLATE_MULTI_SHIPMENT_ADDRESS_STEP = '@CheckoutPage/views/address-multi-shipment/address-multi-shipment.twig';
 
-    public const TEMPLATE_SINGE_SHIPMENT_SHIPMENT_STEP = '@CheckoutPage/views/shipment/shipment.twig';
+    public const TEMPLATE_SINGLE_SHIPMENT_SHIPMENT_STEP = '@CheckoutPage/views/shipment/shipment.twig';
     public const TEMPLATE_MULTI_SHIPMENT_SHIPMENT_STEP = '@CheckoutPage/views/shipment-multi-shipment/shipment-multi-shipment.twig';
 
-    public const TEMPLATE_SINGE_SHIPMENT_SUMMARY_STEP = '@CheckoutPage/views/summary/summary.twig';
+    public const TEMPLATE_SINGLE_SHIPMENT_SUMMARY_STEP = '@CheckoutPage/views/summary/summary.twig';
     public const TEMPLATE_MULTI_SHIPMENT_SUMMARY_STEP = '@CheckoutPage/views/summary-multi-shipment/summary-multi-shipment.twig';
 
     /**
@@ -47,7 +47,7 @@ class CheckoutPageConfig extends AbstractBundleConfig
             return self::TEMPLATE_MULTI_SHIPMENT_ADDRESS_STEP;
         }
 
-        return self::TEMPLATE_SINGE_SHIPMENT_ADDRESS_STEP;
+        return self::TEMPLATE_SINGLE_SHIPMENT_ADDRESS_STEP;
     }
 
     /**
@@ -61,7 +61,7 @@ class CheckoutPageConfig extends AbstractBundleConfig
             return self::TEMPLATE_MULTI_SHIPMENT_SHIPMENT_STEP;
         }
 
-        return self::TEMPLATE_SINGE_SHIPMENT_SHIPMENT_STEP;
+        return self::TEMPLATE_SINGLE_SHIPMENT_SHIPMENT_STEP;
     }
 
     /**
@@ -75,6 +75,6 @@ class CheckoutPageConfig extends AbstractBundleConfig
             return self::TEMPLATE_MULTI_SHIPMENT_SUMMARY_STEP;
         }
 
-        return self::TEMPLATE_SINGE_SHIPMENT_SUMMARY_STEP;
+        return self::TEMPLATE_SINGLE_SHIPMENT_SUMMARY_STEP;
     }
 }
