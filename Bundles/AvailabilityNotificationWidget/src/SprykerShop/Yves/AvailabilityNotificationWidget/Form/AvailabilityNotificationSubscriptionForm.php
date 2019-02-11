@@ -24,6 +24,9 @@ class AvailabilityNotificationSubscriptionForm extends AbstractType
 
     public const FORM_ID = 'availability_notification_subscription';
 
+    public const PLACEHOLDER_EMAIL_ADDRESS = 'availability_notification.email_address';
+    public const LABEL_NOTIFY_ME = 'availability_notification.notify_me';
+
     /**
      * @return string
      */
@@ -69,7 +72,8 @@ class AvailabilityNotificationSubscriptionForm extends AbstractType
     protected function addEmailField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_EMAIL, EmailType::class, [
-            'label' => 'availability_notification.notify_me',
+            'label' => static::LABEL_NOTIFY_ME,
+            'attr' => ['placeholder' => static::PLACEHOLDER_EMAIL_ADDRESS],
             'required' => true,
             'constraints' => [
                 new NotBlank(),
