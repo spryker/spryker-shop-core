@@ -7,7 +7,7 @@
     "php": ">=7.1",
     "spryker-shop/shop-application": "^1.3.0",
     "spryker/application": "^3.8.0",
-    "spryker/availability-notification": "^4.3.0",
+    "spryker/availability-notification": "^1.0.0",
     "spryker/customer": "^7.16.0",
     "spryker/kernel": "^3.24.0",
     "spryker/symfony": "^3.1.0"
