@@ -11,5 +11,11 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class ShoppingListPageConfig extends AbstractBundleConfig
 {
+    /**
+     * Specification:
+     * - holds the Cart Redirect Url.
+     *
+     * @api
+     */
     public const CART_REDIRECT_URL = 'cart';
 }
