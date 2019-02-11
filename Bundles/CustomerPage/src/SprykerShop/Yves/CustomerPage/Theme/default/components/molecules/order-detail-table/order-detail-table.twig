@@ -32,22 +32,29 @@
                                 <strong class="col col--sm-3 text-right">{{ concreteItem.unitPrice | money(true, data.currencyIsoCode) }}</strong>
                             </div>
 
-                            {{ 'customer.order.item_quantity' | trans }}: {{ concreteItem.quantity }}
+                            <p>{{ 'customer.order.item_quantity' | trans }}: {{ concreteItem.quantity }}</p>
 
                             {% if isBundle %}
                                 <div class="spacing-bottom">
                                     {% block bundleDetailRow %}
-                                        {{ "customer.order.bundled_items" | trans }} <br/>
-                                        {% for bundledItem in item.bundleItems %}
-                                            - {{ bundledItem.quantity }} x {{ bundledItem.name }} <br/>
-                                        {% endfor %}
+                                        <p>{{ "customer.order.bundled_items" | trans }}</p><br/>
+                                        <ul>
+                                            {% for bundledItem in item.bundleItems %}
+                                                <li>
+                                                    &nbsp; - {{ bundledItem.quantity }} x {{ bundledItem.name }}<br/>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
 
                                         {% if concreteItem.productOptions is not empty %}
-                                            {{ "customer.order.options" | trans }} <br/>
-                                            {% for productOption in concreteItem.productOptions %}
-                                                &nbsp; - {{ productOption.value | trans }} {{ productOption.sumPrice | money(true, data.currencyIsoCode) }}
-                                                <br/>
-                                            {% endfor %}
+                                            <p>{{ "customer.order.options" | trans }}</p><br/>
+                                            <ul>
+                                                {% for productOption in concreteItem.productOptions %}
+                                                    <li>
+                                                        &nbsp; - {{ productOption.value | trans }} {{ productOption.sumPrice | money(true, data.currencyIsoCode) }}<br/>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
                                         {% endif %}
                                     {% endblock %}
                                 </div>
@@ -61,8 +68,7 @@
                                         <div class="spacing-bottom">
                                             {% block detailRow %}
                                                 <div>
-                                                    &nbsp; +
-                                                    <small>{{ productOption.sku }}</small>
+                                                    &nbsp; + <small>{{ productOption.sku }}</small>
                                                 </div>
                                                 <div>
                                                     <small>{{ productOption.value | trans }}</small>
