@@ -20,7 +20,6 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageC
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToStoreClientInterface;
-use SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface;
 use SprykerShop\Yves\CompanyPage\Form\FormFactory;
 use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAddressReader;
 use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAddressReaderInterface;
@@ -168,14 +167,6 @@ class CompanyPageFactory extends AbstractFactory
     public function getApplication(): Application
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::PLUGIN_APPLICATION);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface
-     */
-    public function getStore(): CompanyPageToKernelStoreInterface
-    {
-        return $this->getProvidedDependency(CompanyPageDependencyProvider::STORE);
     }
 
     /**

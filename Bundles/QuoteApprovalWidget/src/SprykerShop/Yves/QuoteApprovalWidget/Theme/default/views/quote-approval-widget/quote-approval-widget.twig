@@ -3,6 +3,7 @@
 {% define data = {
     quoteTransfer: _widget.quoteTransfer,
     waitingQuoteApproval: _widget.waitingQuoteApproval,
+    isQuoteCanBeApprovedByCurrentCustomer: _widget.isQuoteCanBeApprovedByCurrentCustomer,
     quoteOwner: _widget.quoteOwner,
     isVisible: _widget.isVisible
 } %}
@@ -24,7 +25,7 @@
 
             {% if data.waitingQuoteApproval %}
                 <div class="grid grid--right">
-                    {% if can('ApproveQuotePermissionPlugin', data.quoteTransfer) %}
+                    {% if data.isQuoteCanBeApprovedByCurrentCustomer %}
                         <div class="col col--sm-6 spacing-right spacing-right--inner">
                             <form method="POST" action="{{ path('quote-approval-decline', {'idQuoteApproval': data.waitingQuoteApproval.idQuoteApproval}) }}">
                                 <button type="submit" class="button button--alert button--expand button--hollow">{{ 'quote_approval_widget.cart.decline' | trans }}</button>
