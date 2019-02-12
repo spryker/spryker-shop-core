@@ -77,7 +77,7 @@ class QuickOrderPageWidget extends AbstractWidget
 
     /**
      * @uses \Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin
-     *     
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
