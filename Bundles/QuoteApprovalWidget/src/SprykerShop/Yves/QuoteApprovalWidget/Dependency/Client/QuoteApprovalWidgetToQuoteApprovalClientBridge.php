@@ -33,6 +33,16 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteCanBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteApprovalClient->isQuoteCanBeApprovedByCurrentCustomer($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $idCompanyUser
      *
      * @return bool
@@ -48,9 +58,9 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalTransfer|null
      */
-    public function getWaitingQuoteApprovalByIdCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): ?QuoteApprovalTransfer
+    public function findWaitingQuoteApprovalByIdCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): ?QuoteApprovalTransfer
     {
-        return $this->quoteApprovalClient->getWaitingQuoteApprovalByIdCompanyUser($quoteTransfer, $idCompanyUser);
+        return $this->quoteApprovalClient->findWaitingQuoteApprovalByIdCompanyUser($quoteTransfer, $idCompanyUser);
     }
 
     /**

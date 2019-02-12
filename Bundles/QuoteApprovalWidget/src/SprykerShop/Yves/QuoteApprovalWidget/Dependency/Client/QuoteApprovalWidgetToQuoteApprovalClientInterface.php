@@ -20,6 +20,13 @@ interface QuoteApprovalWidgetToQuoteApprovalClientInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteCanBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $idCompanyUser
      *
      * @return bool
@@ -32,7 +39,7 @@ interface QuoteApprovalWidgetToQuoteApprovalClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalTransfer|null
      */
-    public function getWaitingQuoteApprovalByIdCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): ?QuoteApprovalTransfer;
+    public function findWaitingQuoteApprovalByIdCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): ?QuoteApprovalTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer $quoteApprovalCreateRequestTransfer

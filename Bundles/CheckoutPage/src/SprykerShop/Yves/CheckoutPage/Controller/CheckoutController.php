@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\CheckoutPage\Controller;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CanProceedCheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -36,10 +36,10 @@ class CheckoutController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+        $quoteValidationResponseTransfer = $this->canProceedCheckout();
 
-        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
-            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+        if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($quoteValidationResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -56,10 +56,10 @@ class CheckoutController extends AbstractController
      */
     public function customerAction(Request $request)
     {
-        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+        $quoteValidationResponseTransfer = $this->canProceedCheckout();
 
-        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
-            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+        if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($quoteValidationResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -89,10 +89,10 @@ class CheckoutController extends AbstractController
      */
     public function addressAction(Request $request)
     {
-        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+        $quoteValidationResponseTransfer = $this->canProceedCheckout();
 
-        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
-            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+        if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($quoteValidationResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -122,10 +122,10 @@ class CheckoutController extends AbstractController
      */
     public function shipmentAction(Request $request)
     {
-        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+        $quoteValidationResponseTransfer = $this->canProceedCheckout();
 
-        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
-            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+        if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($quoteValidationResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -155,10 +155,10 @@ class CheckoutController extends AbstractController
      */
     public function paymentAction(Request $request)
     {
-        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+        $quoteValidationResponseTransfer = $this->canProceedCheckout();
 
-        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
-            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+        if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($quoteValidationResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -188,10 +188,10 @@ class CheckoutController extends AbstractController
      */
     public function summaryAction(Request $request)
     {
-        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+        $quoteValidationResponseTransfer = $this->canProceedCheckout();
 
-        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
-            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+        if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($quoteValidationResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -221,10 +221,10 @@ class CheckoutController extends AbstractController
      */
     public function placeOrderAction(Request $request)
     {
-        $canProceedCheckoutResponseTransfer = $this->canProceedCheckout();
+        $quoteValidationResponseTransfer = $this->canProceedCheckout();
 
-        if (!$canProceedCheckoutResponseTransfer->getIsSuccessful()) {
-            $this->processErrorMessages($canProceedCheckoutResponseTransfer->getMessages());
+        if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($quoteValidationResponseTransfer->getMessages());
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
@@ -272,9 +272,9 @@ class CheckoutController extends AbstractController
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CanProceedCheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    protected function canProceedCheckout(): CanProceedCheckoutResponseTransfer
+    protected function canProceedCheckout(): QuoteValidationResponseTransfer
     {
         $quoteTransfer = $this->getFactory()
             ->getQuoteClient()

@@ -12,7 +12,7 @@
         <property name="errorType" type="string"/>
     </transfer>
 
-    <transfer name="CanProceedCheckoutResponseTransfer">
+    <transfer name="QuoteValidationResponseTransfer">
         <property name="isSuccessful" type="bool" />
         <property name="messages" type="Message[]"  singular="message" />
     </transfer>
