@@ -13,6 +13,7 @@ class QuickOrderPageConfig extends AbstractBundleConfig
 {
     protected const TEXT_ORDER_ROW_SPLITTER_PATTERN = '/\r\n|\r|\n/';
     protected const TEXT_ORDER_SEPARATORS = [',', ';', ' '];
+    protected const UPLOAD_ROW_COUNT_LIMIT = 1000;
     protected const DEFAULT_DISPLAYED_ROW_COUNT = 8;
 
     /**
@@ -37,5 +38,13 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     public function getDefaultDisplayedRowCount(): int
     {
         return static::DEFAULT_DISPLAYED_ROW_COUNT;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUploadRowCountLimit(): int
+    {
+        return static::UPLOAD_ROW_COUNT_LIMIT;
     }
 }
