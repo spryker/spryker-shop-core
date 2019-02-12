@@ -1,4 +1,5 @@
 import Component from 'ShopUi/models/component';
+import FormClear from 'ShopUi/components/molecules/form-clear/form-clear';
 
 const EVENT_ADD_NEW_ADDRESS = 'add-new-address';
 
@@ -37,6 +38,11 @@ export default class SaveNewAddress extends Component {
     addNewBillingAddress: HTMLButtonElement;
 
     /**
+     * The select business unit address element which toggling the shipping addresses.
+     */
+    businessUnitShippingAddressToggler: HTMLSelectElement;
+
+    /**
      * Checks if the shipping adress is selected.
      */
     newShippingAddressChecked: boolean = false;
@@ -47,13 +53,21 @@ export default class SaveNewAddress extends Component {
     newBillingAddressChecked: boolean = false;
 
     /**
+     * Imported component clears the form.
+     */
+    formClearShippingAddress: FormClear;
+
+    /**
      * Html class for hides element.
      */
     readonly hideClass: string = 'is-hidden';
 
     protected readyCallback(): void {
-        if (this.shippingAddressTogglerSelector && this.billingAddressTogglerSelector) {
+        if (this.shippingAddressTogglerSelector) {
             this.customerShippingAddresses = <HTMLFormElement>document.querySelector(this.shippingAddressTogglerSelector);
+        }
+
+        if (this.billingAddressTogglerSelector) {
             this.customerBillingAddresses = <HTMLFormElement>document.querySelector(this.billingAddressTogglerSelector);
         }
 
@@ -64,6 +78,14 @@ export default class SaveNewAddress extends Component {
 
         if (this.billingSameAsShippingAddressTogglerSelector) {
             this.sameAsShippingToggler = <HTMLInputElement>document.querySelector(this.billingSameAsShippingAddressTogglerSelector);
+        }
+
+        if (this.businessUnitShippingAddressTogglerSelector) {
+            this.businessUnitShippingAddressToggler = <HTMLSelectElement>document.querySelector(this.businessUnitShippingAddressTogglerSelector);
+        }
+
+        if (this.formClearShippingAddressSelector) {
+            this.formClearShippingAddress = <FormClear>document.querySelector(this.formClearShippingAddressSelector);
         }
 
         this.saveNewAddressToggler = <HTMLInputElement>document.querySelector(this.saveAddressTogglerSelector);
@@ -83,13 +105,44 @@ export default class SaveNewAddress extends Component {
 
     protected mapEvents(): void {
         if (this.addNewShippingAddress && this.addNewBillingAddress) {
-            this.addNewShippingAddress.addEventListener(EVENT_ADD_NEW_ADDRESS, () => this.shippingTogglerOnChange());
+            this.addNewShippingAddress.addEventListener(EVENT_ADD_NEW_ADDRESS, () => {
+                this.shippingTogglerOnChange();
+                this.isSplitDeliveryAddressChecked();
+            });
             this.addNewBillingAddress.addEventListener(EVENT_ADD_NEW_ADDRESS, () => this.billingTogglerOnChange());
         }
 
+        if (this.formClearShippingAddress) {
+            this.formClearShippingAddress.addEventListener('form-fields-clear-after', () => this.isSplitDeliveryAddressChecked());
+        }
+
         this.customerShippingAddresses.addEventListener('change', () => this.shippingTogglerOnChange());
-        this.customerBillingAddresses.addEventListener('change', () => this.billingTogglerOnChange());
-        this.sameAsShippingToggler.addEventListener('change', () => this.toggleSaveNewAddress());
+
+        if (this.customerBillingAddresses) {
+            this.customerBillingAddresses.addEventListener('change', () => this.billingTogglerOnChange());
+        }
+
+        if (this.sameAsShippingToggler) {
+            this.sameAsShippingToggler.addEventListener('change', () => this.toggleSaveNewAddress());
+        }
+
+        if (this.businessUnitShippingAddressToggler) {
+            this.businessUnitShippingAddressToggler.addEventListener('change', () => this.isSplitDeliveryAddressChecked());
+        }
+    }
+
+    protected isSplitDeliveryAddressChecked(): void {
+        const selectedValue = this.businessUnitShippingAddressToggler.value;
+
+        if (selectedValue === this.optionValueDeliverToMultipleAddresses) {
+            this.newShippingAddressChecked = !selectedValue;
+            this.toggleSaveNewAddress();
+
+            return;
+        }
+
+        this.newShippingAddressChecked = this.isSaveNewAddressOptionSelected(this.customerShippingAddresses);
+        this.toggleSaveNewAddress();
     }
 
     protected shippingTogglerOnChange(): void {
@@ -104,7 +157,11 @@ export default class SaveNewAddress extends Component {
 
     protected initSaveNewAddressState(): void {
         this.newShippingAddressChecked = this.isSaveNewAddressOptionSelected(this.customerShippingAddresses);
-        this.newBillingAddressChecked = this.isSaveNewAddressOptionSelected(this.customerBillingAddresses);
+
+        if (this.customerBillingAddresses) {
+            this.newBillingAddressChecked = this.isSaveNewAddressOptionSelected(this.customerBillingAddresses);
+        }
+
         this.toggleSaveNewAddress();
     }
 
@@ -191,5 +248,26 @@ export default class SaveNewAddress extends Component {
      */
     get saveAddressTogglerSelector(): string {
         return this.getAttribute('save-address-toggler-selector');
+    }
+
+    /**
+     * Gets a querySelector of the business unit shipping address toggler element.
+     */
+    get businessUnitShippingAddressTogglerSelector(): string {
+        return this.getAttribute('business-unit-shipping-address-toggler-selector');
+    }
+
+    /**
+     * Gets if the split delivery form is defined.
+     */
+    get optionValueDeliverToMultipleAddresses(): string {
+        return this.getAttribute('toggle-option-value');
+    }
+
+    /**
+     * Gets a querySelector of the clear shipping address form element.
+     */
+    get formClearShippingAddressSelector(): string {
+        return this.getAttribute('form-clear-shipping-address-selector');
     }
 }

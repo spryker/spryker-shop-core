@@ -241,7 +241,10 @@
                                 'billing-same-as-shipping-toggler-selector': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]',
                                 'save-address-toggler-selector': '[name="' ~ data.form.isAddressSavingSkipped.vars.full_name ~ '"]',
                                 'add-new-shipping-address-selector': '.js-form-add-new-address__shippingAddress' | default (''),
-                                'add-new-billing-address-selector': '.js-form-add-new-address__billingAddress' | default ('')
+                                'add-new-billing-address-selector': '.js-form-add-new-address__billingAddress' | default (''),
+                                'business-unit-shipping-address-toggler-selector': '.js-form-select-address__shippingAddress',
+                                'form-clear-shipping-address-selector': '.js-form-clear__shippingAddress',
+                                'toggle-option-value': optionValueDeliverToMultipleAddresses
                             }
                         } only %}
                     {% endif %}

@@ -157,6 +157,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     protected fillFormWithNewAddress(): void {
         const currentAddressList = this.addressesDataObject[this.currentAddress.toString()];
         this.hiddenDefaultAddressInput.value = this.currentAddress.toString();
+        console.log(this.hiddenDefaultAddressInput.value);
 
         this.clearFormFields();
         this.fillFormFields(currentAddressList);

@@ -117,6 +117,7 @@
             {% endif %}
         </label>
         {% include molecule('form-clear') with {
+            class: 'js-form-clear__' ~ data.formType,
             attributes: {
                 'form-selector': '.js-form-clear__' ~ data.formType ~ '-form',
                 'trigger-selector': '.js-form-clear__' ~ data.formType ~ '-toggler',
