@@ -63,7 +63,7 @@ class QuoteApprovalControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
-     * @uses \SprykerShop\Yves\QuoteApprovalWidget\Controller\QuoteApprovalController::addCreateQuoteApprovalRoute()
+     * @uses \SprykerShop\Yves\QuoteApprovalWidget\Controller\QuoteApprovalController::createQuoteApprovalAction()
      *
      * @return $this
      */
