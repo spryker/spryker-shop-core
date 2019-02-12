@@ -8,13 +8,13 @@
 namespace SprykerShop\Yves\QuickOrderPage\Plugin\QuickOrderPage;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileParserStrategyPluginInterface;
+use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderUploadedFileParserStrategyPluginInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageFactory getFactory()
  */
-class QuickOrderCsvFileParserStrategyPlugin extends AbstractPlugin implements QuickOrderFileParserStrategyPluginInterface
+class QuickOrderCsvUploadedFileParserStrategyPlugin extends AbstractPlugin implements QuickOrderUploadedFileParserStrategyPluginInterface
 {
     public const MIME_TYPE_CSV = 'text/csv';
 

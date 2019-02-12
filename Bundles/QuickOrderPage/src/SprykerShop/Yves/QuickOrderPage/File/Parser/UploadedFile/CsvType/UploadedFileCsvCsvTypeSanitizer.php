@@ -7,9 +7,9 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\CsvType;
 
-use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileTypeSanitizerInterface;
+use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileCsvTypeSanitizerInterface;
 
-class UploadedFileCsvTypeSanitizer implements UploadedFileTypeSanitizerInterface
+class UploadedFileCsvCsvTypeSanitizer implements UploadedFileCsvTypeSanitizerInterface
 {
     /**
      * @param mixed $value

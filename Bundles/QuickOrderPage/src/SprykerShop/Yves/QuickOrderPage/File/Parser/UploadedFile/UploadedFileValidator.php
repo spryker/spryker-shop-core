@@ -13,12 +13,12 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class UploadedFileValidator implements FileValidatorInterface
 {
     /**
-     * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileValidatorStrategyPluginInterface[]
+     * @var \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderUploadedFileValidatorStrategyPluginInterface[]
      */
     protected $quickOrderFileValidatorPlugins;
 
     /**
-     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileValidatorStrategyPluginInterface[] $quickOrderFileValidatorPlugins
+     * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderUploadedFileValidatorStrategyPluginInterface[] $quickOrderFileValidatorPlugins
      */
     public function __construct(array $quickOrderFileValidatorPlugins)
     {

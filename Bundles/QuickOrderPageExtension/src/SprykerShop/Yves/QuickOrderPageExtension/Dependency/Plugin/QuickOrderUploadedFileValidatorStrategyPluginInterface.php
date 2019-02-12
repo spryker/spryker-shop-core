@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-interface QuickOrderFileValidatorStrategyPluginInterface
+interface QuickOrderUploadedFileValidatorStrategyPluginInterface
 {
     /**
      * Specification:

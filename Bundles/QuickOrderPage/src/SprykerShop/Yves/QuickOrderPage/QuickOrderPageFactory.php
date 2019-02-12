@@ -24,11 +24,11 @@ use SprykerShop\Yves\QuickOrderPage\File\ExtensionReader\FileTemplateExtensionRe
 use SprykerShop\Yves\QuickOrderPage\File\Parser\FileParserInterface;
 use SprykerShop\Yves\QuickOrderPage\File\Parser\FileValidatorInterface;
 use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\CsvType\UploadedFileCsvTypeParser;
-use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\CsvType\UploadedFileCsvTypeSanitizer;
+use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\CsvType\UploadedFileCsvCsvTypeSanitizer;
 use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\CsvType\UploadedFileCsvTypeValidator;
 use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileParser;
 use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileTypeParserInterface;
-use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileTypeSanitizerInterface;
+use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileCsvTypeSanitizerInterface;
 use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileTypeValidatorInterface;
 use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileValidator;
 use SprykerShop\Yves\QuickOrderPage\File\Renderer\FileDownloadRenderer;
@@ -148,11 +148,11 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileTypeSanitizerInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileCsvTypeSanitizerInterface
      */
-    public function createUploadedFileCsvTypeSanitizer(): UploadedFileTypeSanitizerInterface
+    public function createUploadedFileCsvTypeSanitizer(): UploadedFileCsvTypeSanitizerInterface
     {
-        return new UploadedFileCsvTypeSanitizer();
+        return new UploadedFileCsvCsvTypeSanitizer();
     }
 
     /**
@@ -263,7 +263,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileParserStrategyPluginInterface[]
+     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderUploadedFileParserStrategyPluginInterface[]
      */
     public function getQuickOrderFileParserPlugins(): array
     {
@@ -271,7 +271,7 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileValidatorStrategyPluginInterface[]
+     * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderUploadedFileValidatorStrategyPluginInterface[]
      */
     public function getQuickOrderFileValidatorPlugins(): array
     {

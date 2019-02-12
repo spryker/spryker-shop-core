@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile;
 
-interface UploadedFileTypeSanitizerInterface
+interface UploadedFileCsvTypeSanitizerInterface
 {
     /**
      * @param mixed $value

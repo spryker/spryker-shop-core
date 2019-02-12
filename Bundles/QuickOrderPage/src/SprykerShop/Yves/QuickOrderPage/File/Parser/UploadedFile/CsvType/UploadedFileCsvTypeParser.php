@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface;
 use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileTypeParserInterface;
-use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileTypeSanitizerInterface;
+use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileCsvTypeSanitizerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadedFileCsvTypeParser implements UploadedFileTypeParserInterface
@@ -27,17 +27,17 @@ class UploadedFileCsvTypeParser implements UploadedFileTypeParserInterface
     protected $utilCsvService;
 
     /**
-     * @var \SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileTypeSanitizerInterface
+     * @var \SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileCsvTypeSanitizerInterface
      */
     protected $uploadedFileCsvTypeSanitizer;
 
     /**
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface $utilCsvService
-     * @param \SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileTypeSanitizerInterface $uploadedFileCsvTypeSanitizer
+     * @param \SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileCsvTypeSanitizerInterface $uploadedFileCsvTypeSanitizer
      */
     public function __construct(
         QuickOrderPageToUtilCsvServiceInterface $utilCsvService,
-        UploadedFileTypeSanitizerInterface $uploadedFileCsvTypeSanitizer
+        UploadedFileCsvTypeSanitizerInterface $uploadedFileCsvTypeSanitizer
     ) {
         $this->utilCsvService = $utilCsvService;
         $this->uploadedFileCsvTypeSanitizer = $uploadedFileCsvTypeSanitizer;
