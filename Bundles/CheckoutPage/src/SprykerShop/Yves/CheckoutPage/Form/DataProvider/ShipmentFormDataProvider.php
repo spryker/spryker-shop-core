@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Form\DataProvider;
 
-use ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
@@ -56,24 +55,34 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected $shipmentService;
 
     /**
+     * @deprecated Will be removed in next major release.
+     *
+     * @var \SprykerShop\Yves\CheckoutPage\Form\DataProvider\QuoteDataBCForMultiShipmentAdapterInterface
+     */
+    protected $quoteDataBCForMultiShipmentAdapter;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface $glossaryClient
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
+     * @param \SprykerShop\Yves\CheckoutPage\Form\DataProvider\QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
      */
     public function __construct(
         CheckoutPageToShipmentClientInterface $shipmentClient,
         CheckoutPageToGlossaryClientInterface $glossaryClient,
         Store $store,
         MoneyPluginInterface $moneyPlugin,
-        CheckoutPageToShipmentServiceInterface $shipmentService
+        CheckoutPageToShipmentServiceInterface $shipmentService,
+        QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
     ) {
         $this->shipmentClient = $shipmentClient;
         $this->glossaryClient = $glossaryClient;
         $this->store = $store;
         $this->moneyPlugin = $moneyPlugin;
         $this->shipmentService = $shipmentService;
+        $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
     }
 
     /**
@@ -86,12 +95,12 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         /**
          * @deprecated Will be removed in next major release.
          */
-        if (!$this->isMultiShipmentEnabled()) {
-            if ($quoteTransfer->getShipment() === null) {
-                $shipmentTransfer = new ShipmentTransfer();
-                $quoteTransfer->setShipment($shipmentTransfer);
-            }
+        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 
+        /**
+         * @deprecated Will be removed in next major release.
+         */
+        if (!$this->isMultiShipmentEnabled()) {
             return $quoteTransfer;
         }
 
@@ -105,6 +114,11 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
+        /**
+         * @deprecated Will be removed in next major release.
+         */
+        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
+
         /**
          * @deprecated Will be removed in next major release.
          */
@@ -353,27 +367,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected function setQuoteShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
-        $quoteShipmentGroupTransfers = $quoteTransfer->getShipmentGroups();
-
-        if (count($quoteShipmentGroupTransfers) === 0) {
-            $quoteTransfer->setShipmentGroups($shipmentGroupTransfers);
-
-            return $quoteTransfer;
-        }
-
-        foreach ($shipmentGroupTransfers as $key => $shipmentGroupTransfer) {
-            foreach ($quoteShipmentGroupTransfers as $quoteKey => $quoteShipmentGroupTransfer) {
-                if ($shipmentGroupTransfer->getHash() !== $quoteShipmentGroupTransfer->getHash()) {
-                    continue;
-                }
-                if ($quoteKey === $quoteShipmentGroupTransfer->getHash()) {
-                    continue;
-                }
-
-                $quoteShipmentGroupTransfers[$shipmentGroupTransfer->getHash()] = $quoteShipmentGroupTransfer->fromArray($shipmentGroupTransfer->toArray(), true);
-                unset($quoteShipmentGroupTransfers[$quoteKey]);
-            }
-        }
+        $quoteTransfer->setShipmentGroups($shipmentGroupTransfers);
 
         return $quoteTransfer;
     }

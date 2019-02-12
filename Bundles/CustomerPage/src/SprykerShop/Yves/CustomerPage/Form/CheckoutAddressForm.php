@@ -45,10 +45,6 @@ class CheckoutAddressForm extends AddressForm
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /**
-         * @todo Add BC
-         */
-
         $this
             ->addAddressSelectField($builder, $options)
             ->addSalutationField($builder, $options)

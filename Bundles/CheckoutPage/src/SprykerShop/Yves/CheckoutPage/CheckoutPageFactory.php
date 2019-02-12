@@ -14,6 +14,8 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInt
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
+use SprykerShop\Yves\CheckoutPage\Form\DataProvider\QuoteDataBCForMultiShipmentAdapter;
+use SprykerShop\Yves\CheckoutPage\Form\DataProvider\QuoteDataBCForMultiShipmentAdapterInterface;
 use SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilter;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilterInterface;
@@ -153,7 +155,8 @@ class CheckoutPageFactory extends AbstractFactory
             $this->getGlossaryClient(),
             $this->getStore(),
             $this->getMoneyPlugin(),
-            $this->getShippingService()
+            $this->getShippingService(),
+            $this->createShipmentFormDataToQuoteDataBCForMultiShipmentAdapter()
         );
     }
 
@@ -164,7 +167,7 @@ class CheckoutPageFactory extends AbstractFactory
      */
     public function createShipmentHandler()
     {
-        return new ShipmentHandler($this->getShipmentClient(), $this->getPriceClient(), $this->getShippingService());
+        return new ShipmentHandler($this->getShipmentClient(), $this->getPriceClient());
     }
 
     /**
@@ -309,5 +312,15 @@ class CheckoutPageFactory extends AbstractFactory
         };
 
         return $strategyContainer;
+    }
+
+    /**
+     * @deprecated Will be removed in next major release.
+     *
+     * @return \SprykerShop\Yves\CheckoutPage\Form\DataProvider\QuoteDataBCForMultiShipmentAdapterInterface
+     */
+    protected function createShipmentFormDataToQuoteDataBCForMultiShipmentAdapter(): QuoteDataBCForMultiShipmentAdapterInterface
+    {
+        return new QuoteDataBCForMultiShipmentAdapter();
     }
 }

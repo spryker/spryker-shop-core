@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Shipment\Business\Checkout;
+namespace SprykerShop\Yves\CheckoutPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
