@@ -75,6 +75,16 @@
                             'class-to-toggle': 'is-hidden',
                         }
                     } only %}
+                    {% include molecule('save-new-address', 'CustomerPage') ignore missing with {
+                        class: 'col is-hidden',
+                        data: {
+                            form: item
+                        },
+                        attributes: {
+                            'shipping-address-toggler-selector': item.shippingAddress.id_customer_address is defined ? '[name="' ~ item.shippingAddress.id_customer_address.vars.full_name ~ '"]' : '',
+                            'save-address-toggler-selector': '[name="' ~ item.isAddressSavingSkipped.vars.full_name ~ '"]',
+                        }
+                    } only %}
                 {% endif %}
             </div>
         {% endfor %}

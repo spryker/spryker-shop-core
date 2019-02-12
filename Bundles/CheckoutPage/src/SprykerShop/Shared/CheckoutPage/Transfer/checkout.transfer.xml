@@ -78,6 +78,7 @@
         <property name="taxRate" type="float" />
         <property name="quantity" type="int" />
         <property name="shipment" type="Shipment" />
+        <property name="isAddressSavingSkipped" type="bool"/>
     </transfer>
 
     <transfer name="Expense">
