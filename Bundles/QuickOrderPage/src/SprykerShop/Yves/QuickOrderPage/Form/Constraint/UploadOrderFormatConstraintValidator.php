@@ -55,7 +55,7 @@ class UploadOrderFormatConstraintValidator extends ConstraintValidator
             return;
         }
 
-        if (!$constraint->getUploadedFileValidator()->isValidAmountOfRows($file, $constraint->getAllowedUploadRowCount())) {
+        if (!$constraint->getUploadedFileValidator()->isValidRowCount($file, $constraint->getUploadRowCountLimit())) {
             $this->context
                 ->buildViolation($constraint->getInvalidAmountOfRowsMessage())
                 ->addViolation();

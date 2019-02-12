@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadedFileCsvTypeValidator implements UploadedFileTypeValidatorInterface
 {
-    public const CSV_SKU_COLUMN_NAME = 'concrete_sku';
-    public const CSV_QTY_COLUMN_NAME = 'quantity';
+    protected const CSV_SKU_COLUMN_NAME = 'concrete_sku';
+    protected const CSV_QUANTITY_COLUMN_NAME = 'quantity';
 
     /**
      * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface
@@ -31,15 +31,15 @@ class UploadedFileCsvTypeValidator implements UploadedFileTypeValidatorInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
-     * @param int $maxAllowedRows
+     * @param int $rowCountLimit
      *
      * @return bool
      */
-    public function validateAmountOfRows(UploadedFile $file, int $maxAllowedRows): bool
+    public function isValidRowCount(UploadedFile $file, int $rowCountLimit): bool
     {
         $uploadedOrder = $this->utilCsvService->readUploadedFile($file);
 
-        return $maxAllowedRows > count($uploadedOrder);
+        return $rowCountLimit >= count($uploadedOrder);
     }
 
     /**
@@ -56,7 +56,7 @@ class UploadedFileCsvTypeValidator implements UploadedFileTypeValidatorInterface
         }
 
         if (!in_array(static::CSV_SKU_COLUMN_NAME, $uploadedOrder[0], true)
-            || !in_array(static::CSV_QTY_COLUMN_NAME, $uploadedOrder[0], true)) {
+            || !in_array(static::CSV_QUANTITY_COLUMN_NAME, $uploadedOrder[0], true)) {
             return false;
         }
 

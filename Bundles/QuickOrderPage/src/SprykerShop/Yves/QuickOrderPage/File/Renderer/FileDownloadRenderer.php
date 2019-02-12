@@ -35,18 +35,20 @@ class FileDownloadRenderer implements FileRendererInterface
     public function render(string $fileType): Response
     {
         foreach ($this->quickOrderFileTemplatePlugins as $fileTemplatePlugin) {
-            if ($fileTemplatePlugin->isApplicable($fileType)) {
-                $fileName = static::FILE_TEMPLATE_NAME . '.' . $fileTemplatePlugin->getFileExtension();
-                $response = new Response($fileTemplatePlugin->generateTemplate());
-                $disposition = $response->headers->makeDisposition(
-                    ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-                    $fileName
-                );
-                $response->headers->set('Content-Disposition', $disposition);
-                $response->headers->set('Content-Type', $fileTemplatePlugin->getTemplateMimeType());
-
-                return $response;
+            if (!$fileTemplatePlugin->isApplicable($fileType)) {
+                continue;
             }
+
+            $fileName = static::FILE_TEMPLATE_NAME . '.' . $fileTemplatePlugin->getFileExtension();
+            $response = new Response($fileTemplatePlugin->generateTemplate());
+            $disposition = $response->headers->makeDisposition(
+                ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                $fileName
+            );
+            $response->headers->set('Content-Disposition', $disposition);
+            $response->headers->set('Content-Type', $fileTemplatePlugin->getTemplateMimeType());
+
+            return $response;
         }
 
         return new Response('', Response::HTTP_NOT_FOUND);

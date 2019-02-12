@@ -16,10 +16,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class QuickOrderCsvUploadedFileValidatorStrategyPlugin extends AbstractPlugin implements QuickOrderUploadedFileValidatorStrategyPluginInterface
 {
-    public const CSV_FILE_MIME_TYPE = 'text/csv';
+    protected const CSV_FILE_MIME_TYPE = 'text/csv';
 
     /**
      * {@inheritdoc}
+     * - Returns true if the provided mime type matches the expected mime type.
      *
      * @api
      *
@@ -34,6 +35,8 @@ class QuickOrderCsvUploadedFileValidatorStrategyPlugin extends AbstractPlugin im
 
     /**
      * {@inheritdoc}
+     * - Returns false if less than 1 row was provided (header row).
+     * - Returns false if mandatory columns are not present based by header row.
      *
      * @api
      *
@@ -54,14 +57,14 @@ class QuickOrderCsvUploadedFileValidatorStrategyPlugin extends AbstractPlugin im
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
-     * @param int $maxAllowedRows
+     * @param int $rowCountLimit
      *
      * @return bool
      */
-    public function isValidAmountOfRows(UploadedFile $file, int $maxAllowedRows): bool
+    public function isValidRowCount(UploadedFile $file, int $rowCountLimit): bool
     {
         return $this->getFactory()
             ->createUploadedFileCsvTypeValidator()
-            ->validateAmountOfRows($file, $maxAllowedRows);
+            ->isValidRowCount($file, $rowCountLimit);
     }
 }

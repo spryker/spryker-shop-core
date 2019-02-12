@@ -16,10 +16,10 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadedFileCsvTypeParser implements UploadedFileTypeParserInterface
 {
-    public const CSV_SKU_COLUMN_NAME = 'concrete_sku';
-    public const CSV_QTY_COLUMN_NAME = 'quantity';
+    protected const CSV_SKU_COLUMN_NAME = 'concrete_sku';
+    protected const CSV_QUANTITY_COLUMN_NAME = 'quantity';
     protected const MESSAGE_TYPE_ERROR = 'error';
-    protected const ERROR_MESSAGE_QTY_INVALID = 'quick-order.errors.quantity-invalid';
+    protected const ERROR_MESSAGE_QUANTITY_INVALID = 'quick-order.errors.quantity-invalid';
 
     /**
      * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface
@@ -59,7 +59,7 @@ class UploadedFileCsvTypeParser implements UploadedFileTypeParserInterface
 
         $csvHeader = array_flip($rows[0]);
         $skuKey = array_search(static::CSV_SKU_COLUMN_NAME, array_keys($csvHeader), true);
-        $quantityKey = array_search(static::CSV_QTY_COLUMN_NAME, array_keys($csvHeader), true);
+        $quantityKey = array_search(static::CSV_QUANTITY_COLUMN_NAME, array_keys($csvHeader), true);
 
         unset($rows[0]);
 
@@ -75,7 +75,7 @@ class UploadedFileCsvTypeParser implements UploadedFileTypeParserInterface
                 $row[$quantityKey] = $sanitizeQuantity;
                 $quickOrderItemTransfer->addMessage((new MessageTransfer())
                     ->setType(static::MESSAGE_TYPE_ERROR)
-                    ->setValue(static::ERROR_MESSAGE_QTY_INVALID));
+                    ->setValue(static::ERROR_MESSAGE_QUANTITY_INVALID));
             }
 
             $quickOrderItemTransfer->setQuantity($row[$quantityKey]);

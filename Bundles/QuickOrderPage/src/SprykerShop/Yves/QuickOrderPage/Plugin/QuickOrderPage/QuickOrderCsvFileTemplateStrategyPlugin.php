@@ -16,13 +16,14 @@ use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFileTem
 class QuickOrderCsvFileTemplateStrategyPlugin extends AbstractPlugin implements QuickOrderFileTemplateStrategyPluginInterface
 {
     public const CSV_SKU_COLUMN_NAME = 'concrete_sku';
-    public const CSV_QTY_COLUMN_NAME = 'quantity';
+    public const CSV_QUANTITY_COLUMN_NAME = 'quantity';
     public const CSV_COLUMN_SEPARATOR = ',';
     public const CSV_FILE_MIME_TYPE = 'text/csv';
     public const CSV_FILE_EXTENSION = 'csv';
 
     /**
      * {@inheritdoc}
+     * - Returns true if provided file extension matches the expected file extension.
      *
      * @api
      *
@@ -49,6 +50,7 @@ class QuickOrderCsvFileTemplateStrategyPlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritdoc}
+     * - Returns template with header row and example rows.
      *
      * @api
      *
@@ -78,7 +80,7 @@ class QuickOrderCsvFileTemplateStrategyPlugin extends AbstractPlugin implements 
     {
         return static::CSV_SKU_COLUMN_NAME
             . static::CSV_COLUMN_SEPARATOR
-            . static::CSV_QTY_COLUMN_NAME
+            . static::CSV_QUANTITY_COLUMN_NAME
             . PHP_EOL;
     }
 

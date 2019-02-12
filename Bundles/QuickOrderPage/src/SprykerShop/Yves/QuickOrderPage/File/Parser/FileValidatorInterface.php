@@ -20,11 +20,11 @@ interface FileValidatorInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
-     * @param int $maxAllowedRows
+     * @param int $rowCountLimit
      *
      * @return bool
      */
-    public function isValidAmountOfRows(UploadedFile $file, int $maxAllowedRows): bool;
+    public function isValidRowCount(UploadedFile $file, int $rowCountLimit): bool;
 
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
