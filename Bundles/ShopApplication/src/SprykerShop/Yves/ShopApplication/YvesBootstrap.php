@@ -7,37 +7,115 @@
 
 namespace SprykerShop\Yves\ShopApplication;
 
-use Spryker\Yves\Application\ApplicationConfig;
-use Spryker\Yves\Kernel\Application;
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Application\Application;
+use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Yves\Kernel\Application as SilexApplication;
+use Spryker\Yves\Kernel\BundleDependencyProviderResolverAwareTrait;
+use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface;
 
 abstract class YvesBootstrap
 {
+    use BundleDependencyProviderResolverAwareTrait;
+
     /**
      * @var \Spryker\Yves\Kernel\Application
      */
     protected $application;
 
     /**
-     * @var \Spryker\Yves\Application\ApplicationConfig
+     * @var \SprykerShop\Yves\ShopApplication\ShopApplicationConfig
      */
     protected $config;
 
+    /**
+     * @var \Spryker\Shared\Application\Application|null
+     */
+    protected $sprykerApplication;
+
     public function __construct()
     {
-        $this->application = new Application();
-        $this->config = new ApplicationConfig();
+        $this->application = new SilexApplication();
+
+        if ($this->application instanceof ContainerInterface) {
+            $this->sprykerApplication = new Application($this->application);
+        }
+
+        $this->config = new ShopApplicationConfig();
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\Application
+     * @return \Spryker\Shared\Application\Application|\Spryker\Yves\Kernel\Application
      */
     public function boot()
     {
         $this->registerServiceProviders();
+
+        if ($this->sprykerApplication !== null) {
+            $this->setupApplication();
+        }
+
         $this->registerRouters();
+
         $this->registerControllerProviders();
 
-        return $this->application;
+        $this->application->boot();
+
+        if ($this->sprykerApplication === null) {
+            return $this->application;
+        }
+
+        $this->sprykerApplication->boot();
+
+        return $this->sprykerApplication;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupApplication(): void
+    {
+        foreach ($this->getApplicationPlugins() as $applicationPlugin) {
+            $this->sprykerApplication->registerApplicationPlugin($applicationPlugin);
+        }
+    }
+
+    /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    protected function getApplicationPlugins(): array
+    {
+        return $this->getProvidedDependency(ShopApplicationDependencyProvider::PLUGINS_APPLICATION);
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\AbstractBundleDependencyProvider $dependencyProvider
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function provideExternalDependencies(AbstractBundleDependencyProvider $dependencyProvider, Container $container): Container
+    {
+        $container = $dependencyProvider->provideDependencies($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface $dependencyInjector
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function injectExternalDependencies(DependencyInjectorInterface $dependencyInjector, Container $container): Container
+    {
+        /**
+         * @var \Spryker\Yves\Kernel\Container
+         */
+        $container = $dependencyInjector->inject($container);
+
+        return $container;
     }
 
     /**
