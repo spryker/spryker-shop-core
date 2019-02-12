@@ -11,7 +11,7 @@
 
 {% block body %}
     {% for shipmentGroup in data.shipmentGroups %}
-        <h4>{{ 'customer.order.shipment' | trans }} #{{ loop.index }}</h4>
+        <h4>{{ 'customer.order.shipment' | trans }} n°{{ loop.index }}</h4>
 
         <div class="box grid grid--justify spacing-bottom spacing-bottom--big">
             <div class="col col--sm-12 col--lg-6 grid">
@@ -104,7 +104,7 @@
 
             <div class="col col--sm-12 col--lg-5 spacing-left spacing-left--inner">
                 <div class="spacing-bottom spacing-bottom--big">
-                    <h5>{{ 'customer.order.shipping_address' | trans }}</h5>
+                    <h5>{{ 'customer.order.delivery_address' | trans }}</h5>
                     <div class="spacing-y spacing-y--inner">
                         {% include molecule('display-address') with {
                             data: {
