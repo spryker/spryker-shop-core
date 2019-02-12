@@ -8,12 +8,12 @@
 {% define data = {
     name: required,
     url: required,
-    imageUrl: required,
+    imageUrl: '',
     description: ''
 } %}
 
 {% block body %}
-    <div class="{{config.name}}__container box box--stretch">
+    <div class="{% block cardClass %}{{config.name}}__container box box--stretch{% endblock %}">
         {% block image %}
             <a href="{{data.url}}">
                 {% include atom('thumbnail') with {

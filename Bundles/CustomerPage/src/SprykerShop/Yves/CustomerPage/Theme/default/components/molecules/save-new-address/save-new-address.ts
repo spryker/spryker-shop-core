@@ -1,19 +1,28 @@
 import Component from 'ShopUi/models/component';
 
+const EVENT_ADD_NEW_ADDRESS = 'add-new-address';
+
 export default class SaveNewAddress extends Component {
-    customerShippingAddresses: HTMLSelectElement;
-    customerBillingAddresses: HTMLSelectElement;
+    customerShippingAddresses: HTMLFormElement;
+    customerBillingAddresses: HTMLFormElement;
     saveNewAddressToggler: HTMLInputElement;
     sameAsShippingToggler: HTMLInputElement;
+    addNewShippingAddress: HTMLButtonElement;
+    addNewBillingAddress: HTMLButtonElement;
 
     newShippingAddressChecked: boolean = false;
     newBillingAddressChecked: boolean = false;
     readonly hideClass: string = 'is-hidden';
 
     protected readyCallback(): void {
-        if(this.shippingAddressTogglerSelector && this.billingAddressTogglerSelector) {
-            this.customerShippingAddresses = <HTMLSelectElement>document.querySelector(this.shippingAddressTogglerSelector);
-            this.customerBillingAddresses = <HTMLSelectElement>document.querySelector(this.billingAddressTogglerSelector);
+        if (this.shippingAddressTogglerSelector && this.billingAddressTogglerSelector) {
+            this.customerShippingAddresses = <HTMLFormElement>document.querySelector(this.shippingAddressTogglerSelector);
+            this.customerBillingAddresses = <HTMLFormElement>document.querySelector(this.billingAddressTogglerSelector);
+        }
+
+        if (this.addNewShippingAddressSelector && this.addNewBillingAddressSelector) {
+            this.addNewShippingAddress = <HTMLButtonElement>document.querySelector(this.addNewShippingAddressSelector);
+            this.addNewBillingAddress = <HTMLButtonElement>document.querySelector(this.addNewBillingAddressSelector);
         }
 
         this.saveNewAddressToggler = <HTMLInputElement>document.querySelector(this.saveAddressTogglerSelector);
@@ -33,18 +42,23 @@ export default class SaveNewAddress extends Component {
     }
 
     protected mapEvents(): void {
-        this.customerShippingAddresses.addEventListener('change', (event: Event) => this.shippingTogglerOnChange(event));
-        this.customerBillingAddresses.addEventListener('change', (event: Event) => this.billingTogglerOnChange(event));
+        if (this.addNewShippingAddress && this.addNewBillingAddress) {
+            this.addNewShippingAddress.addEventListener(EVENT_ADD_NEW_ADDRESS, () => this.shippingTogglerOnChange());
+            this.addNewBillingAddress.addEventListener(EVENT_ADD_NEW_ADDRESS, () => this.billingTogglerOnChange());
+        }
+
+        this.customerShippingAddresses.addEventListener('change', () => this.shippingTogglerOnChange());
+        this.customerBillingAddresses.addEventListener('change', () => this.billingTogglerOnChange());
         this.sameAsShippingToggler.addEventListener('change', () => this.toggleSaveNewAddress());
     }
 
-    protected shippingTogglerOnChange(event: Event): void {
-        this.newShippingAddressChecked = this.addressTogglerChange(event);
+    protected shippingTogglerOnChange(): void {
+        this.newShippingAddressChecked = this.addressTogglerChange(this.customerShippingAddresses);
         this.toggleSaveNewAddress();
     }
 
-    protected billingTogglerOnChange(event: Event): void {
-        this.newBillingAddressChecked = this.addressTogglerChange(event);
+    protected billingTogglerOnChange(): void {
+        this.newBillingAddressChecked = this.addressTogglerChange(this.customerBillingAddresses);
         this.toggleSaveNewAddress();
     }
 
@@ -54,14 +68,12 @@ export default class SaveNewAddress extends Component {
         this.toggleSaveNewAddress();
     }
 
-    protected addressTogglerChange(event: Event): boolean {
-        const toggler = <HTMLSelectElement>event.srcElement;
-
+    protected addressTogglerChange(toggler): boolean {
         return this.isSaveNewAddressOptionSelected(toggler);
     }
 
-    protected isSaveNewAddressOptionSelected(toggler: HTMLSelectElement): boolean {
-        return !toggler.options[toggler.selectedIndex].value;
+    protected isSaveNewAddressOptionSelected(toggler: HTMLFormElement): boolean {
+        return !toggler.value;
     }
 
     toggleSaveNewAddress(): void {
@@ -93,6 +105,14 @@ export default class SaveNewAddress extends Component {
 
     get billingAddressTogglerSelector(): string {
         return this.getAttribute('billing-address-toggler-selector');
+    }
+
+    get addNewShippingAddressSelector(): string {
+        return this.getAttribute('add-new-shipping-address-selector');
+    }
+
+    get addNewBillingAddressSelector(): string {
+        return this.getAttribute('add-new-billing-address-selector');
     }
 
     get billingSameAsShippingAddressTogglerSelector(): string {
