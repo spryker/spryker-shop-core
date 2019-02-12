@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
@@ -30,7 +31,8 @@ class AddressSaver implements SaverInterface
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
      */
-    public function __construct(CheckoutPageToCustomerClientInterface $customerClient) {
+    public function __construct(CheckoutPageToCustomerClientInterface $customerClient)
+    {
         $this->customerClient = $customerClient;
     }
 
@@ -47,7 +49,8 @@ class AddressSaver implements SaverInterface
      */
     public function save(Request $request, AbstractTransfer $quoteTransfer): AbstractTransfer
     {
-        $this->setShippingAddresses($quoteTransfer);
+        $this->setQuoteShippingAddress($quoteTransfer);
+        $this->setItemsShippingAddress($quoteTransfer);
         $this->setBillingAddress($quoteTransfer);
 
         return $quoteTransfer;
@@ -91,17 +94,22 @@ class AddressSaver implements SaverInterface
      *
      * @return void
      */
-    protected function setShippingAddresses(AbstractTransfer $quoteTransfer): void
+    protected function setItemsShippingAddress(QuoteTransfer $quoteTransfer): void
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $shipment = $itemTransfer->getShipment();
+            $shipmentTransfer = $itemTransfer->getShipment();
 
-            if ($shipment === null) {
+            if ($shipmentTransfer === null) {
                 continue;
             }
 
+            if ($quoteTransfer->getShippingAddress()->getIdCustomerAddress() === null ||
+                $this->validateAddress($shipmentTransfer->getShippingAddress())) {
+                $shipmentTransfer->setShippingAddress($quoteTransfer->getShippingAddress());
+            }
+
             $itemTransfer->setShipment(
-                $this->getItemShipment($shipment->getShippingAddress())
+                $this->getItemShipment($shipmentTransfer->getShippingAddress())
             );
         }
     }
@@ -111,7 +119,21 @@ class AddressSaver implements SaverInterface
      *
      * @return void
      */
-    protected function setBillingAddress(AbstractTransfer $quoteTransfer): void
+    protected function setQuoteShippingAddress(QuoteTransfer $quoteTransfer): void
+    {
+        $addressTransfer = $quoteTransfer->getShippingAddress();
+
+        if ($addressTransfer !== null) {
+            $this->prepareShippingAddress($addressTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function setBillingAddress(QuoteTransfer $quoteTransfer): void
     {
         $billingAddressTransfer = $quoteTransfer->getBillingAddress();
 
@@ -179,5 +201,24 @@ class AddressSaver implements SaverInterface
     protected function getAddressHash(AddressTransfer $addressTransfer): string
     {
         return md5($addressTransfer->serialize());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
+     *
+     * @return bool
+     */
+    protected function validateAddress(?AddressTransfer $addressTransfer = null): bool
+    {
+        if ($addressTransfer === null) {
+            return true;
+        }
+
+        $hasNoName = empty($addressTransfer->getFirstName()) && empty($addressTransfer->getLastName());
+        if ($addressTransfer->getIdCustomerAddress() === null && $hasNoName) {
+            return true;
+        }
+
+        return false;
     }
 }

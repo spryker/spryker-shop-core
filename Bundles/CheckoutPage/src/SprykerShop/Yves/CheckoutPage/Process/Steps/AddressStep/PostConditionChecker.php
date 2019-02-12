@@ -29,14 +29,19 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return false;
         }
 
-        if ($this->isSplitDelivery($quoteTransfer) && $quoteTransfer->getBillingSameAsShipping()) {
+        $isSplitDelivery = $this->isSplitDelivery($quoteTransfer);
+        if ($isSplitDelivery && $quoteTransfer->getBillingSameAsShipping()) {
             return false;
         }
 
-        $shippingIsEmpty = $this->isAddressEmpty($quoteTransfer->getShippingAddress());
-        $billingIsEmpty = $quoteTransfer->getBillingSameAsShipping() === false && $this->isAddressEmpty($quoteTransfer->getBillingAddress());
+        $billingIsEmpty = $quoteTransfer->getBillingSameAsShipping() === false &&
+            $this->validateAddress($quoteTransfer->getBillingAddress());
 
-        if ($shippingIsEmpty || $billingIsEmpty) {
+        if ($billingIsEmpty) {
+            return false;
+        }
+
+        if($this->validateAddress($quoteTransfer->getShippingAddress()) && $isSplitDelivery === false) {
             return false;
         }
 
@@ -48,14 +53,14 @@ class PostConditionChecker implements PostConditionCheckerInterface
      *
      * @return bool
      */
-    protected function isAddressEmpty(?AddressTransfer $addressTransfer = null): bool
+    protected function validateAddress(?AddressTransfer $addressTransfer = null): bool
     {
         if ($addressTransfer === null) {
             return true;
         }
 
-        $hasName = (!empty($addressTransfer->getFirstName()) && !empty($addressTransfer->getLastName()));
-        if (!$addressTransfer->getIdCustomerAddress() && !$hasName) {
+        $hasNoName = empty($addressTransfer->getFirstName()) && empty($addressTransfer->getLastName());
+        if ($addressTransfer->getIdCustomerAddress() === null && $hasNoName) {
             return true;
         }
 
@@ -81,7 +86,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() === null
-                || $this->isAddressEmpty($itemTransfer->getShipment()->getShippingAddress())) {
+                || $this->validateAddress($itemTransfer->getShipment()->getShippingAddress())) {
                 return true;
             }
         }

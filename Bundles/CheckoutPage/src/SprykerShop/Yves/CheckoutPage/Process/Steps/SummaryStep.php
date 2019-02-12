@@ -7,10 +7,12 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
@@ -21,18 +23,26 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $productBundleClient;
 
     /**
+     * @var \Spryker\Service\Shipment\ShipmentServiceInterface
+     */
+    protected $shipmentService;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface $productBundleClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
      * @param string $stepRoute
      * @param string $escapeRoute
      */
     public function __construct(
         CheckoutPageToProductBundleClientInterface $productBundleClient,
+        CheckoutPageToShipmentServiceInterface $shipmentService,
         $stepRoute,
         $escapeRoute
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->productBundleClient = $productBundleClient;
+        $this->shipmentService = $shipmentService;
     }
 
     /**
@@ -83,12 +93,16 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function getTemplateVariables(AbstractTransfer $quoteTransfer)
     {
+        $shipmentGroups = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+
         return [
             'quoteTransfer' => $quoteTransfer,
             'cartItems' => $this->productBundleClient->getGroupedBundleItems(
                 $quoteTransfer->getItems(),
                 $quoteTransfer->getBundleItems()
             ),
+            'shipmentGroups' => $shipmentGroups,
+            'totalCosts' => $this->getTotalCosts($shipmentGroups),
         ];
     }
 
@@ -131,5 +145,21 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         if ($request->isMethod('POST')) {
             $quoteTransfer->setCheckoutConfirmed(true);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer[]|\ArrayObject $shipmentGroups
+     *
+     * @return array
+     */
+    protected function getTotalCosts(ArrayObject $shipmentGroups): int
+    {
+        $totalCosts = 0;
+
+        foreach ($shipmentGroups as $shipmentGroup) {
+            $totalCosts += $shipmentGroup->getShipment()->getMethod()->getStoreCurrencyPrice();
+        }
+
+        return $totalCosts;
     }
 }
