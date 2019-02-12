@@ -24,7 +24,7 @@ use SprykerShop\Yves\QuickOrderPage\File\ExtensionReader\FileTemplateExtensionRe
 use SprykerShop\Yves\QuickOrderPage\File\Parser\FileParserInterface;
 use SprykerShop\Yves\QuickOrderPage\File\Parser\FileValidatorInterface;
 use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\CsvType\UploadedFileCsvTypeParser;
-use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\CsvType\UploadedFileCsvCsvTypeSanitizer;
+use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\CsvType\UploadedFileCsvTypeSanitizer;
 use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\CsvType\UploadedFileCsvTypeValidator;
 use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileParser;
 use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileTypeParserInterface;
@@ -152,7 +152,7 @@ class QuickOrderPageFactory extends AbstractFactory
      */
     public function createUploadedFileCsvTypeSanitizer(): UploadedFileCsvTypeSanitizerInterface
     {
-        return new UploadedFileCsvCsvTypeSanitizer();
+        return new UploadedFileCsvTypeSanitizer();
     }
 
     /**
