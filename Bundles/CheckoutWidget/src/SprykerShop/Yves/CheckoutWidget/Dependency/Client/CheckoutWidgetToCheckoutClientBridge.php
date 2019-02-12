@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CheckoutWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 
 class CheckoutWidgetToCheckoutClientBridge implements CheckoutWidgetToCheckoutClientInterface
 {
