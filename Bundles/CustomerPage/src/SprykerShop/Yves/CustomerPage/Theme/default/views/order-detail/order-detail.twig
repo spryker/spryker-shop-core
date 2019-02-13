@@ -56,7 +56,9 @@
                     address: data.order.billingAddress
                 }
             } only %}
-
+        </div>
+        <div class="box">
+            <h4>{{ 'customer.order.complete_checkout' | trans }}</h4>
             <hr/>
             {% include molecule('order-summary', 'CustomerPage') with {
                 class: 'text-right',
