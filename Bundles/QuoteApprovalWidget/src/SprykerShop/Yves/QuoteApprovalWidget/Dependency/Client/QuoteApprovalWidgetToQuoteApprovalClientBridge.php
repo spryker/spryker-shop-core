@@ -116,24 +116,6 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
     }
 
     /**
-     * @return bool
-     */
-    public function isCustomerHasPlaceOrderPermission(): bool
-    {
-        return $this->quoteApprovalClient->isCustomerHasPlaceOrderPermission();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isQuoteRequireApproval(QuoteTransfer $quoteTransfer): bool
-    {
-        return $this->quoteApprovalClient->isQuoteRequireApproval($quoteTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool

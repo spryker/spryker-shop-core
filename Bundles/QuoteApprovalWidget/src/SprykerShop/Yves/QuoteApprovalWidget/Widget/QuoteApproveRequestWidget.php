@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\QuoteApprovalWidget\Widget;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToQuoteApprovalClientInterface;
 use Symfony\Component\Form\FormInterface;
@@ -19,6 +20,8 @@ use Symfony\Component\Form\FormInterface;
  */
 class QuoteApproveRequestWidget extends AbstractWidget
 {
+    use PermissionAwareTrait;
+
     protected const PARAMETER_QUOTE = 'quote';
     protected const PARAMETER_QUOTE_STATUS = 'quoteStatus';
     protected const PARAMETER_QUOTE_APPROVAL_REQUEST_FROM = 'quoteApprovalRequestForm';
@@ -144,6 +147,8 @@ class QuoteApproveRequestWidget extends AbstractWidget
     }
 
     /**
+     * @uses \Spryker\Shared\QuoteApproval\Plugin\RequestQuoteApprovalPermissionPlugin
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
@@ -160,7 +165,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
             return false;
         }
 
-        return $this->getQuoteApprovalClient()->isCustomerHasPlaceOrderPermission();
+        return $this->can('RequestQuoteApprovalPermissionPlugin');
     }
 
     /**
