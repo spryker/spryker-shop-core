@@ -10,8 +10,8 @@ namespace SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\CsvType;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface;
-use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileTypeParserInterface;
 use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileCsvTypeSanitizerInterface;
+use SprykerShop\Yves\QuickOrderPage\File\Parser\UploadedFile\UploadedFileTypeParserInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadedFileCsvTypeParser implements UploadedFileTypeParserInterface
