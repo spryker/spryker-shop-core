@@ -147,9 +147,8 @@ dd($responseData);
 
         $groupedOrderItems = $this->getFactory()
             ->getSalesClient()
-            ->getUniqueOrderItems($orderTransfer->getItems())
-            ->getItems();
-dd($orderTransfer);
+            ->getUniqueOrderItems($orderTransfer->getItems());
+
         if ($orderTransfer->getIdSalesOrder() === null) {
             throw new NotFoundHttpException(sprintf(
                 "Order with provided ID %s doesn't exist",
