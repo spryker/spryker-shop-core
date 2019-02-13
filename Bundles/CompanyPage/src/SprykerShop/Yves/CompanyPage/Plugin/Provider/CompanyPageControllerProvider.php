@@ -66,7 +66,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
         $this->addCompanyRoutes()
             ->addCompanyAddressRoutes()
             ->addCompanyBusinessUnitRoutes()
-            ->addCompanyBusinessUnitAddressRouts()
+            ->addCompanyBusinessUnitAddressRoutes()
             ->addCompanyRoleRoutes()
             ->addPermissionRoutes()
             ->addCompanyUserRoutes()
@@ -146,7 +146,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCompanyBusinessUnitAddressRouts(): self
+    protected function addCompanyBusinessUnitAddressRoutes()
     {
         $this->createController('/{company}/business-unit/address/create', static::ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE, 'CompanyPage', 'BusinessUnitAddress', 'create')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')

@@ -122,7 +122,7 @@ class BusinessUnitAddressController extends AbstractCompanyController
         $idCompanyUnitAddress = $request->query->getInt(static::REQUEST_COMPANY_BUSINESS_UNIT_ID);
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
 
-        if (!$idCompanyBusinessUnit) {
+        if (!$idCompanyBusinessUnit || !$idCompanyUnitAddress) {
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
         }
 

@@ -32,7 +32,7 @@ class CompanyUnitAddressFormDataProvider
     /**
      * @var \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface
      */
-    protected $businessUnitClient;
+    protected $companyBusinessUnitClient;
 
     /**
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface $businessUnitClient
@@ -40,11 +40,11 @@ class CompanyUnitAddressFormDataProvider
      * @param \SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreInterface $store
      */
     public function __construct(
-        CompanyPageToCompanyBusinessUnitClientInterface $businessUnitClient,
+        CompanyPageToCompanyBusinessUnitClientInterface $companyBusinessUnitClient,
         CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient,
         CompanyPageToKernelStoreInterface $store
     ) {
-        $this->businessUnitClient = $businessUnitClient;
+        $this->companyBusinessUnitClient = $companyBusinessUnitClient;
         $this->companyUnitAddressClient = $companyUnitAddressClient;
         $this->store = $store;
     }
@@ -136,9 +136,9 @@ class CompanyUnitAddressFormDataProvider
      */
     protected function setDefaultBillingAddress(CompanyUnitAddressTransfer $addressTransfer): CompanyUnitAddressTransfer
     {
-        $businessUnit = $this->getBusinessUnit($addressTransfer->getFkCompanyBusinessUnit());
+        $businessUnitTransfer = $this->getBusinessUnit($addressTransfer->getFkCompanyBusinessUnit());
 
-        if ($businessUnit->getDefaultBillingAddress() === $addressTransfer->getIdCompanyUnitAddress()) {
+        if ($businessUnitTransfer->getDefaultBillingAddress() === $addressTransfer->getIdCompanyUnitAddress()) {
             $addressTransfer->setIsDefaultBilling(true);
         }
 
@@ -152,10 +152,9 @@ class CompanyUnitAddressFormDataProvider
      */
     protected function getBusinessUnit(int $idCompanyBusinessUnit): CompanyBusinessUnitTransfer
     {
-        $businessUnit = new CompanyBusinessUnitTransfer();
-        $businessUnit->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
-        $businessUnit = $this->businessUnitClient->getCompanyBusinessUnitById($businessUnit);
+        $businessUnitTransfer = (new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
+        $businessUnitTransfer = $this->companyBusinessUnitClient->getCompanyBusinessUnitById($businessUnitTransfer);
 
-        return $businessUnit;
+        return $businessUnitTransfer;
     }
 }
