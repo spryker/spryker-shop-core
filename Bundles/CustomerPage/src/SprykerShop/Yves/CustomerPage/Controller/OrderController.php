@@ -70,7 +70,7 @@ class OrderController extends AbstractCustomerController
     public function detailsAction(Request $request)
     {
         $responseData = $this->getOrderDetailsResponseData($request->query->getInt('id'));
-dd($responseData);
+
         return $this->view(
             $responseData,
             $this->getFactory()->getCustomerOrderViewWidgetPlugins(),
