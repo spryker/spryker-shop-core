@@ -14,7 +14,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class UploadOrderFormatConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile|null $file
      * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\QuickOrderPage\Form\Constraint\UploadOrderFormatConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
