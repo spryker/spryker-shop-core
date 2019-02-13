@@ -3,8 +3,8 @@
 {% define data = {
     title: 'quote_request_page.quote_request' | trans,
     quoteRequestForm: _view.quoteRequestForm,
-    cart: _view.cart,
-    cartItems: _view.cartItems
+    cart: _view.cart | default,
+    cartItems: _view.cartItems | default
 } %}
 
 {% block breadcrumbs %}
@@ -29,19 +29,6 @@
 
 
 {% block content %}
-
-    {% if data.cart.items is empty %}
-        <div class="box text-center">
-            {% include atom('icon') with {
-                modifiers: ['biggest'],
-                class: 'text-alt',
-                data: {
-                    name: 'shopping-cart'
-                }
-            } only %}
-            <h6>{{ 'cart.empty' | trans }}</h6>
-        </div>
-    {% else %}
 
         {{ form_start(data.quoteRequestForm) }}
 
@@ -74,23 +61,27 @@
         </div>
         <div class="grid">
             <div class="col col--sm-12 col--xl-8">
-                {% for cartItem in data.cartItems %}
-                    {% include molecule('quote-request-cart-item', 'CartPage') with {
-                        class: 'box',
-                        data: {
-                            cartItem: cartItem
-                        }
-                    } only %}
-                {% endfor %}
+                {% if data.cart is not empty %}
+                    {% for cartItem in data.cartItems %}
+                        {% include molecule('quote-request-cart-item', 'CartPage') with {
+                            class: 'box',
+                            data: {
+                                cartItem: cartItem
+                            }
+                        } only %}
+                    {% endfor %}
+                {% endif %}
             </div>
 
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
-                    {% include molecule('quote-request-cart-summary', 'CartPage') with {
-                        data: {
-                            cart: data.cart
-                        }
-                    } only %}
+                    {% if data.cart is not empty %}
+                        {% include molecule('quote-request-cart-summary', 'CartPage') with {
+                            data: {
+                                cart: data.cart
+                            }
+                        } only %}
+                    {% endif %}
                 </div>
                 <div class="box">
                     <a class="button button--expand button--hollow" href="{{ url('quote-request') }}">
@@ -108,5 +99,4 @@
 
         {{ form_end(data.quoteRequestForm) }}
 
-    {% endif %}
 {% endblock %}
