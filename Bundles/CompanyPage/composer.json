@@ -14,7 +14,7 @@
     "spryker/company": "^1.0.0",
     "spryker/company-business-unit": "^2.3.0",
     "spryker/company-role": "^1.1.0",
-    "spryker/company-unit-address": "^2.0.0",
+    "spryker/company-unit-address": "^1.4.0",
     "spryker/company-user": "^2.0.0",
     "spryker/customer": "^7.4.0",
     "spryker/glossary-storage": "^1.0.0",
