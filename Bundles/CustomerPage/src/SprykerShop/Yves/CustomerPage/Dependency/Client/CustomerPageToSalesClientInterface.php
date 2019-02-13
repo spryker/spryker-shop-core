@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerPage\Dependency\Client;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
@@ -32,4 +33,11 @@ interface CustomerPageToSalesClientInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderDetails(OrderTransfer $orderTransfer);
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \ArrayObject
+     */
+    public function getUniqueOrderItems(ArrayObject $itemTransfers): ArrayObject;
 }

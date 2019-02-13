@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerPage\Dependency\Client;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
@@ -53,5 +54,15 @@ class CustomerPageToSalesClientBridge implements CustomerPageToSalesClientInterf
     public function getOrderDetails(OrderTransfer $orderTransfer)
     {
         return $this->salesClient->getOrderDetails($orderTransfer);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \ArrayObject
+     */
+    public function getUniqueOrderItems(ArrayObject $itemTransfers): ArrayObject
+    {
+        return $this->salesClient->getUniqueOrderItems($itemTransfers);
     }
 }

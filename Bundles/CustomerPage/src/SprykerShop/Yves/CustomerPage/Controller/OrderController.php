@@ -70,7 +70,7 @@ class OrderController extends AbstractCustomerController
     public function detailsAction(Request $request)
     {
         $responseData = $this->getOrderDetailsResponseData($request->query->getInt('id'));
-
+dd($responseData);
         return $this->view(
             $responseData,
             $this->getFactory()->getCustomerOrderViewWidgetPlugins(),
@@ -145,6 +145,11 @@ class OrderController extends AbstractCustomerController
             ->getSalesClient()
             ->getOrderDetails($orderTransfer);
 
+        $groupedOrderItems = $this->getFactory()
+            ->getSalesClient()
+            ->getUniqueOrderItems($orderTransfer->getItems())
+            ->getItems();
+dd($orderTransfer);
         if ($orderTransfer->getIdSalesOrder() === null) {
             throw new NotFoundHttpException(sprintf(
                 "Order with provided ID %s doesn't exist",
@@ -155,7 +160,11 @@ class OrderController extends AbstractCustomerController
         if ($orderTransfer->getShippingAddress() === null) {
             return [
                 'order' => $orderTransfer,
-                'shipmentGroups' => $this->getFactory()->getShipmentService()->groupItemsByShipment($orderTransfer->getItems()),
+                'groupedOrderItems' => $groupedOrderItems,
+                'shipmentGroups' => $this
+                    ->getFactory()
+                    ->getShipmentService()
+                    ->groupItemsByShipment($orderTransfer->getItems()),
             ];
         }
 
@@ -169,6 +178,7 @@ class OrderController extends AbstractCustomerController
         return [
             'order' => $orderTransfer,
             'shipmentGroups' => [$shipmentGroupTransfer],
+            'groupedOrderItems' => $groupedOrderItems,
         ];
     }
 }
