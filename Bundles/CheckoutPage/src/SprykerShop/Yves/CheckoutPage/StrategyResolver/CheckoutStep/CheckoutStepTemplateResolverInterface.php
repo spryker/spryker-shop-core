@@ -30,5 +30,5 @@ interface CheckoutStepTemplateResolverInterface
     /**
      * @return bool
      */
-    public function isMultiShipmentFullEnabled(): bool;
+    public function isMultiShipmentEnabled(): bool;
 }
