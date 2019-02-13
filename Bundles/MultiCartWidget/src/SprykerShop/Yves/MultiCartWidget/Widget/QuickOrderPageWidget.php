@@ -51,11 +51,11 @@ class QuickOrderPageWidget extends AbstractWidget
 
         $quoteTransferCollection = [];
         $defaultQuoteTransfer = $this->getFactory()->getMultiCartClient()->getDefaultCart();
-        if ($this->canEditCart($defaultQuoteTransfer)) {
+        if ($this->isQuoteEditable($defaultQuoteTransfer)) {
             $quoteTransferCollection[] = $defaultQuoteTransfer;
         }
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if (!$quoteTransfer->getIsDefault() && $this->canEditCart($quoteTransfer)) {
+            if (!$quoteTransfer->getIsDefault() && $this->isQuoteEditable($quoteTransfer)) {
                 $quoteTransferCollection[] = $quoteTransfer;
             }
         }
@@ -76,15 +76,15 @@ class QuickOrderPageWidget extends AbstractWidget
     }
 
     /**
-     * @uses \Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function canEditCart(QuoteTransfer $quoteTransfer): bool
+    protected function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote()) && !$this->isQuoteLocked($quoteTransfer);
+        return $this->getFactory()
+            ->getQuoteClient()
+            ->isQuoteEditable($quoteTransfer);
     }
 
     /**
