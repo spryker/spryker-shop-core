@@ -58,7 +58,7 @@ class ProductGroupWidget extends AbstractWidget
                 ->getProductStorageClient()
                 ->findProductAbstractViewTransfer($idProductAbstract, $this->getLocale());
 
-            if (!$productViewTransfer === null) {
+            if ($productViewTransfer === null) {
                 continue;
             }
 
