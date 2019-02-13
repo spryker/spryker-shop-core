@@ -15,13 +15,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface CartPageToCartClientInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool;
-
-    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param array $params
      *

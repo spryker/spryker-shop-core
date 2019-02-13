@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToQuoteClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientInterface;
 use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper;
@@ -26,6 +27,14 @@ class CartPageFactory extends AbstractFactory
     public function getCartClient()
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_CART);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToQuoteClientInterface
+     */
+    public function getQuoteClient(): CartPageToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_QUOTE);
     }
 
     /**

@@ -28,16 +28,6 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
-    {
-        return $this->cartClient->isQuoteEditable($quoteTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param array $params
      *
