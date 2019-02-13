@@ -26,4 +26,9 @@ interface CheckoutStepTemplateResolverInterface
      * @return string
      */
     public function getTemplateForSummaryStep(): string;
+
+    /**
+     * @return bool
+     */
+    public function isMultiShipmentEnabled(): bool;
 }

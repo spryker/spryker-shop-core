@@ -29,6 +29,8 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateS
 use SprykerShop\Yves\CheckoutPage\Plugin\CheckoutBreadcrumbPlugin;
 use SprykerShop\Yves\CheckoutPage\Plugin\ShipmentFormDataProviderPlugin;
 use SprykerShop\Yves\CheckoutPage\Plugin\ShipmentHandlerPlugin;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\CheckoutStep\CheckoutStepTemplateResolver;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\CheckoutStep\CheckoutStepTemplateResolverInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientBridge;
 use SprykerShop\Yves\CustomerPage\Plugin\CustomerStepHandler;
 use SprykerShop\Yves\MoneyWidget\Plugin\MoneyPlugin;
@@ -659,5 +661,13 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\StrategyResolver\CheckoutStep\CheckoutStepTemplateResolverInterface
+     */
+    protected function getCheckoutStepTemplateResolver(): CheckoutStepTemplateResolverInterface
+    {
+        return new CheckoutStepTemplateResolver();
     }
 }
