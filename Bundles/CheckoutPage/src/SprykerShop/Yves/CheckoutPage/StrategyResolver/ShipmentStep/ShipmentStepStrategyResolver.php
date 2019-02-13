@@ -37,7 +37,7 @@ class ShipmentStepStrategyResolver implements ShipmentStepStrategyResolverInterf
      */
     public function resolvePostCondition(): PostConditionCheckerInterface
     {
-        if (!$this->isMultiShipmentEnabled()) {
+        if (!$this->isMultiShipmentModuleEnabled()) {
             $this->assertRequiredStrategyPostConditionCheckerWithoutMultiShipmentContainerItems();
 
             return call_user_func($this->strategyContainer[static::STRATEGY_KEY_POST_CONDITION_CHECKER_WITHOUT_MULTI_SHIPMENT]);

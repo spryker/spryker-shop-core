@@ -66,7 +66,7 @@ class FormFactory extends AbstractFactory
         /**
          * @deprecated Will be removed in next major release.
          */
-        if (!$this->isMultiShipmentEnabled()) {
+        if (!$this->isMultiShipmentModuleEnabled()) {
             return [
                 $this->getShipmentForm(),
             ];

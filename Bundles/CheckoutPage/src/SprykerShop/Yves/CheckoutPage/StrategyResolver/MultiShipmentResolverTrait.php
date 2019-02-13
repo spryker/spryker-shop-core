@@ -14,7 +14,7 @@ trait MultiShipmentResolverTrait
      *
      * @return bool
      */
-    protected function isMultiShipmentEnabled(): bool
+    protected function isMultiShipmentModuleEnabled(): bool
     {
         return defined('\Generated\Shared\Transfer\ItemTransfer::SHIPMENT');
     }

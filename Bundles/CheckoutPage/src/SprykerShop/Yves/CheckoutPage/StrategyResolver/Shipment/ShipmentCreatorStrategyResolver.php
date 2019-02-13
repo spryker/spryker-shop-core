@@ -37,7 +37,7 @@ class ShipmentCreatorStrategyResolver implements ShipmentCreatorStrategyResolver
      */
     public function resolve(): CreatorInterface
     {
-        if (!$this->isMultiShipmentEnabled()) {
+        if (!$this->isMultiShipmentModuleEnabled()) {
             $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
 
             return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
