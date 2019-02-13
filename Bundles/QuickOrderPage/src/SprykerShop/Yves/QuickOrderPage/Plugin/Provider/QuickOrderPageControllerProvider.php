@@ -17,7 +17,7 @@ class QuickOrderPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_QUICK_ORDER_DELETE_ROW = 'quick-order/delete-row';
     public const ROUTE_QUICK_ORDER_CLEAR_ALL_ROWS = 'quick-order/clear-all-rows';
     public const ROUTE_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA = 'quick-order/product-additional-data';
-    public const ROUTE_QUICK_ORDER_DOWNLOAD_TEMPLATE = 'quick-order/download-template';
+    protected const ROUTE_QUICK_ORDER_DOWNLOAD_TEMPLATE = 'quick-order/download-template';
 
     /**
      * @param \Silex\Application $app

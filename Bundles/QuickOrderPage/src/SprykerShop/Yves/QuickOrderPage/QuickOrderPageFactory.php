@@ -114,7 +114,7 @@ class QuickOrderPageFactory extends AbstractFactory
     public function createUploadedFileParser(): FileParserInterface
     {
         return new UploadedFileParser(
-            $this->getQuickOrderFileParserPlugins()
+            $this->getQuickOrderUploadedFileParserPlugins()
         );
     }
 
@@ -124,7 +124,7 @@ class QuickOrderPageFactory extends AbstractFactory
     public function createUploadedFileValidator(): FileValidatorInterface
     {
         return new UploadedFileValidator(
-            $this->getQuickOrderFileValidatorPlugins()
+            $this->getQuickOrderUploadedFileValidatorPlugins()
         );
     }
 
@@ -265,17 +265,17 @@ class QuickOrderPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderUploadedFileParserStrategyPluginInterface[]
      */
-    public function getQuickOrderFileParserPlugins(): array
+    public function getQuickOrderUploadedFileParserPlugins(): array
     {
-        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_FILE_PARSER);
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_UPLOADED_FILE_PARSER);
     }
 
     /**
      * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderUploadedFileValidatorStrategyPluginInterface[]
      */
-    public function getQuickOrderFileValidatorPlugins(): array
+    public function getQuickOrderUploadedFileValidatorPlugins(): array
     {
-        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_FILE_VALIDATOR);
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::PLUGINS_QUICK_ORDER_UPLOADED_FILE_VALIDATOR);
     }
 
     /**

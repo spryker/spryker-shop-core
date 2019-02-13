@@ -35,8 +35,8 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY = 'PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY';
     public const PLUGINS_QUICK_ORDER_FORM_COLUMN = 'PLUGINS_QUICK_ORDER_FORM_ADDITIONAL_DATA_COLUMN_PROVIDER';
     public const PLUGINS_QUICK_ORDER_ITEM_FILTER = 'PLUGINS_QUICK_ORDER_ITEM_FILTER';
-    public const PLUGINS_QUICK_ORDER_FILE_PARSER = 'PLUGINS_QUICK_ORDER_FILE_PARSER';
-    public const PLUGINS_QUICK_ORDER_FILE_VALIDATOR = 'PLUGINS_QUICK_ORDER_FILE_VALIDATOR';
+    public const PLUGINS_QUICK_ORDER_UPLOADED_FILE_PARSER = 'PLUGINS_QUICK_ORDER_UPLOADED_FILE_PARSER';
+    public const PLUGINS_QUICK_ORDER_UPLOADED_FILE_VALIDATOR = 'PLUGINS_QUICK_ORDER_UPLOADED_FILE_VALIDATOR';
     public const PLUGINS_QUICK_ORDER_FILE_TEMPLATE = 'PLUGINS_QUICK_ORDER_FILE_TEMPLATE';
     public const SERVICE_UTIL_CSV = 'SERVICE_UTIL_CSV';
 
@@ -61,9 +61,9 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductStorageClient($container);
         $container = $this->addPriceProductStorageClient($container);
         $container = $this->addProductQuantityStorageClient($container);
-        $container = $this->addQuickOrderFileParserPlugins($container);
-        $container = $this->addQuickOrderFileValidatorPlugins($container);
         $container = $this->addQuickOrderFileTemplatePlugins($container);
+        $container = $this->addQuickOrderUploadedFileParserPlugins($container);
+        $container = $this->addQuickOrderUploadedFileValidatorPlugins($container);
 
         return $container;
     }
@@ -275,10 +275,10 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addQuickOrderFileParserPlugins(Container $container): Container
+    protected function addQuickOrderUploadedFileParserPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUICK_ORDER_FILE_PARSER] = function (): array {
-            return $this->getQuickOrderFileParserPlugins();
+        $container[static::PLUGINS_QUICK_ORDER_UPLOADED_FILE_PARSER] = function (): array {
+            return $this->getQuickOrderUploadedFileParserPlugins();
         };
 
         return $container;
@@ -289,10 +289,10 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addQuickOrderFileValidatorPlugins(Container $container): Container
+    protected function addQuickOrderUploadedFileValidatorPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUICK_ORDER_FILE_VALIDATOR] = function (): array {
-            return $this->getQuickOrderFileValidatorPlugins();
+        $container[static::PLUGINS_QUICK_ORDER_UPLOADED_FILE_VALIDATOR] = function (): array {
+            return $this->getQuickOrderUploadedFileValidatorPlugins();
         };
 
         return $container;
@@ -358,7 +358,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderUploadedFileParserStrategyPluginInterface[]
      */
-    protected function getQuickOrderFileParserPlugins(): array
+    protected function getQuickOrderUploadedFileParserPlugins(): array
     {
         return [];
     }
@@ -374,7 +374,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderUploadedFileValidatorStrategyPluginInterface[]
      */
-    protected function getQuickOrderFileValidatorPlugins(): array
+    protected function getQuickOrderUploadedFileValidatorPlugins(): array
     {
         return [];
     }
