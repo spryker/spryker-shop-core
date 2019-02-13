@@ -52,7 +52,7 @@ class CheckoutStepTemplateResolver extends AbstractType implements CheckoutStepT
     /**
      * @return bool
      */
-    protected function isMultiShipmentFullEnabled(): bool
+    public function isMultiShipmentFullEnabled(): bool
     {
         return $this->isMultiShipmentEnabled() && $this->getConfig()->isMultiShipmentManuallyEnabled();
     }

@@ -25,14 +25,24 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     protected $customerTransfer;
 
     /**
+     * @var bool
+     */
+    protected $isMultipleShipmentEnabled;
+
+    /**
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface $customerClient
      * @param \Spryker\Shared\Kernel\Store $store
+     * @param bool $isMultipleShipmentEnabled
      */
-    public function __construct(CustomerPageToCustomerClientInterface $customerClient, Store $store)
-    {
+    public function __construct(
+        CustomerPageToCustomerClientInterface $customerClient,
+        Store $store,
+        bool $isMultipleShipmentEnabled
+    ) {
         parent::__construct($customerClient, $store);
 
         $this->customerTransfer = $this->getCustomer();
+        $this->isMultipleShipmentEnabled = $isMultipleShipmentEnabled;
     }
 
     /**
@@ -56,6 +66,8 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->setShipment($this->getItemShipment($itemTransfer));
         }
+
+        $quoteTransfer->setIsMultipleShipmentEnabled($this->isMultipleShipmentEnabled);
 
         return $quoteTransfer;
     }
