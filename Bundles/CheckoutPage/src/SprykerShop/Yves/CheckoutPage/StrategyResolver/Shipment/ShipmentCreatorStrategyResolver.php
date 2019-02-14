@@ -10,12 +10,15 @@ namespace SprykerShop\Yves\CheckoutPage\StrategyResolver\Shipment;
 use Closure;
 use Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\MultiShipmentResolverTrait;
 
 /**
  * @deprecated Will be removed in next major release.
  */
 class ShipmentCreatorStrategyResolver implements ShipmentCreatorStrategyResolverInterface
 {
+    use MultiShipmentResolverTrait;
+
     /**
      * @var array|\Closure[]
      */
@@ -34,7 +37,7 @@ class ShipmentCreatorStrategyResolver implements ShipmentCreatorStrategyResolver
      */
     public function resolve(): CreatorInterface
     {
-        if (!defined('\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer::FK_SALES_SHIPMENT')) {
+        if (!$this->isMultiShipmentModuleEnabled()) {
             $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
 
             return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);

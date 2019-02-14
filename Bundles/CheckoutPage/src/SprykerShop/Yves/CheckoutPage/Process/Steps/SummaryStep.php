@@ -23,7 +23,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $productBundleClient;
 
     /**
-     * @var \Spryker\Service\Shipment\ShipmentServiceInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
      */
     protected $shipmentService;
 

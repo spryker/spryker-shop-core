@@ -13,6 +13,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClient
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilter;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilterInterface;
@@ -21,6 +22,8 @@ use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
 use SprykerShop\Yves\CheckoutPage\Model\Shipment\Creator;
 use SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\CheckoutStep\CheckoutStepTemplateResolver;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\CheckoutStep\CheckoutStepTemplateResolverInterface;
 use SprykerShop\Yves\CheckoutPage\StrategyResolver\Shipment\ShipmentCreatorStrategyResolver;
 use SprykerShop\Yves\CheckoutPage\StrategyResolver\Shipment\ShipmentCreatorStrategyResolverInterface;
 
@@ -149,7 +152,8 @@ class CheckoutPageFactory extends AbstractFactory
             $this->getShipmentClient(),
             $this->getGlossaryClient(),
             $this->getStore(),
-            $this->getMoneyPlugin()
+            $this->getMoneyPlugin(),
+            $this->getShippingService()
         );
     }
 
@@ -160,7 +164,7 @@ class CheckoutPageFactory extends AbstractFactory
      */
     public function createShipmentHandler()
     {
-        return new ShipmentHandler($this->getShipmentClient(), $this->getPriceClient());
+        return new ShipmentHandler($this->getShipmentClient(), $this->getPriceClient(), $this->getShippingService());
     }
 
     /**
@@ -168,7 +172,11 @@ class CheckoutPageFactory extends AbstractFactory
      */
     public function createShipmentHandlerWithMultipleShipment(): CreatorInterface
     {
-        return new Creator($this->getShipmentClient(), $this->getPriceClient());
+        return new Creator(
+            $this->getShipmentClient(),
+            $this->getPriceClient(),
+            $this->getShippingService()
+        );
     }
 
     /**
@@ -212,6 +220,14 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
+     */
+    public function getShippingService(): CheckoutPageToShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_SHIPMENT);
+    }
+
+    /**
      * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface
      */
     public function getPriceClient(): CheckoutPageToPriceClientInterface
@@ -236,6 +252,14 @@ class CheckoutPageFactory extends AbstractFactory
             $this->getSubFormFilterPlugins(),
             $this->getQuoteClient()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\StrategyResolver\CheckoutStep\CheckoutStepTemplateResolverInterface
+     */
+    public function creatStepFormResolver(): CheckoutStepTemplateResolverInterface
+    {
+        return new CheckoutStepTemplateResolver();
     }
 
     /**

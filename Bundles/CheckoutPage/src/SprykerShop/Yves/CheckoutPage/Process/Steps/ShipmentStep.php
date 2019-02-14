@@ -12,6 +12,7 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollectio
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep\ShipmentStepStrategyResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -28,6 +29,11 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     protected $shipmentPlugins;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
+     */
+    protected $shipmentService;
+
+    /**
      * @var \SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep\ShipmentStepStrategyResolverInterface
      */
     protected $stepResolver;
@@ -35,6 +41,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection $shipmentPlugins
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface  $shipmentService
      * @param string $stepRoute
      * @param string $escapeRoute
      * @param \SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep\ShipmentStepStrategyResolverInterface $stepResolver
@@ -42,6 +49,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     public function __construct(
         CheckoutPageToCalculationClientInterface $calculationClient,
         StepHandlerPluginCollection $shipmentPlugins,
+        CheckoutPageToShipmentServiceInterface $shipmentService,
         $stepRoute,
         $escapeRoute,
         ShipmentStepStrategyResolverInterface $stepResolver
@@ -51,6 +59,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
         $this->calculationClient = $calculationClient;
         $this->shipmentPlugins = $shipmentPlugins;
         $this->stepResolver = $stepResolver;
+        $this->shipmentService = $shipmentService;
     }
 
     /**

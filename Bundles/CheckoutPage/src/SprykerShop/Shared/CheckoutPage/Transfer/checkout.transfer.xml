@@ -12,8 +12,94 @@
         <property name="errorType" type="string"/>
     </transfer>
 
+    <transfer name="ShipmentMethods">
+        <property name="methods" type="ShipmentMethod[]" singular="method" />
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="idShipmentMethod" type="int" />
+        <property name="fkSalesExpense" type="int" />
+        <property name="fkShipmentCarrier" type="int" />
+        <property name="fkTaxSet" type="int" />
+        <property name="availabilityPlugin" type="string" />
+        <property name="pricePlugin" type="string" />
+        <property name="deliveryTimePlugin" type="string" />
+        <property name="name" type="string" />
+        <property name="carrierName" type="string" />
+        <property name="taxRate" type="float" />
+        <property name="isActive" type="bool" />
+        <property name="deliveryTime" type="int" />
+        <property name="prices" type="MoneyValue[]" singular="price" />
+        <property name="storeCurrencyPrice" type="int" />
+        <property name="currencyIsoCode" type="string" />
+    </transfer>
+
+    <transfer name="Address">
+        <property name="idCustomerAddress" type="int" />
+        <property name="customerId" type="string" />
+        <property name="fkCustomer" type="int" />
+        <property name="email" type="string" />
+        <property name="salutation" type="string" />
+        <property name="firstName" type="string" />
+        <property name="lastName" type="string" />
+        <property name="address1" type="string" />
+        <property name="address2" type="string" />
+        <property name="address3" type="string" />
+        <property name="company" type="string" />
+        <property name="city" type="string" />
+        <property name="zipCode" type="string" />
+        <property name="phone" type="string" />
+        <property name="state" type="string" />
+        <property name="fkCountry" type="int" />
+        <property name="fkRegion" type="int" />
+        <property name="iso2Code" type="string" />
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="carrier" type="ShipmentCarrier"/>
+        <property name="method" type="ShipmentMethod"/>
+        <property name="shipmentSelection" type="string"/>
+        <property name="shippingAddress" type="Address" />
+        <property name="requestedDeliveryDate" type="string" />
+        <property name="expense" type="Expense" />
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="isMultipleShipmentEnabled" type="bool" deprecated="Will be removed in next major release."/>
+    </transfer>
+
     <transfer name="Item">
+        <property name="name" type="string" />
+        <property name="sku" type="string" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="sumGrossPrice" type="int" />
+        <property name="taxRate" type="float" />
+        <property name="quantity" type="int" />
+        <property name="shipment" type="Shipment" />
         <property name="isAddressSavingSkipped" type="bool"/>
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="idSalesExpense" type="int" />
+        <property name="name" type="string" />
+        <property name="type" type="string" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="sumGrossPrice" type="int" />
+        <property name="unitTaxAmount" type="int" />
+        <property name="sumTaxAmount" type="int" />
+        <property name="taxRate" type="float" />
+    </transfer>
+
+    <transfer name="ShipmentGroup">
+        <property name="shipment" type="Shipment" />
+        <property name="items" type="Item[]" singular="item" />
+    </transfer>
+
+    <transfer name="ShipmentGroupCollection">
+        <property name="groups" type="ShipmentGroup[]" singular="group" />
     </transfer>
 
 </transfers>

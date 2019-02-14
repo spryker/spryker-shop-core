@@ -158,6 +158,7 @@ class StepFactory extends AbstractFactory
         return new ShipmentStep(
             $this->getCalculationClient(),
             $this->getShipmentPlugins(),
+            $this->getShipmentService(),
             CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
             HomePageControllerProvider::ROUTE_HOME,
             $this->createShipmentStepStrategyResolver()
