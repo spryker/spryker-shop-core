@@ -85,10 +85,6 @@ class CheckoutAddressCollectionForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /**
-         * @todo Add BC
-         */
-
         $this
             ->addShippingAddressSubForm($builder, $options)
             ->addItemShippingAddressSubForm($builder, $options)
