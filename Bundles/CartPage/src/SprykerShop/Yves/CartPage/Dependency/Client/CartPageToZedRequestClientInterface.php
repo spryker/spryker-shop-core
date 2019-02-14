@@ -18,4 +18,14 @@ interface CartPageToZedRequestClientInterface
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseErrorMessages();
+
+    /**
+     * @return void
+     */
+    public function addResponseMessagesToMessenger(): void;
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesErrorMessages(): array;
 }

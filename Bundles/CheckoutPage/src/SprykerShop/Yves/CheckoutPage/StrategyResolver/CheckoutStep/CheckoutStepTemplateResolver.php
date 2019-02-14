@@ -25,7 +25,7 @@ class CheckoutStepTemplateResolver extends AbstractType implements CheckoutStepT
     public function getTemplateForAddressStep(): string
     {
         return $this->getConfig()->getTemplateForAddressStep(
-            $this->isMultiShipmentFullEnabled()
+            $this->isMultiShipmentEnabled()
         );
     }
 
@@ -35,7 +35,7 @@ class CheckoutStepTemplateResolver extends AbstractType implements CheckoutStepT
     public function getTemplateForShipmentStep(): string
     {
         return $this->getConfig()->getTemplateForShipmentStep(
-            $this->isMultiShipmentFullEnabled()
+            $this->isMultiShipmentEnabled()
         );
     }
 
@@ -45,15 +45,15 @@ class CheckoutStepTemplateResolver extends AbstractType implements CheckoutStepT
     public function getTemplateForSummaryStep(): string
     {
         return $this->getConfig()->getTemplateForSummaryStep(
-            $this->isMultiShipmentFullEnabled()
+            $this->isMultiShipmentEnabled()
         );
     }
 
     /**
      * @return bool
      */
-    protected function isMultiShipmentFullEnabled(): bool
+    public function isMultiShipmentEnabled(): bool
     {
-        return $this->isMultiShipmentEnabled() && $this->getConfig()->isMultiShipmentManuallyEnabled();
+        return $this->isMultiShipmentModuleEnabled() && $this->getConfig()->isMultiShipmentEnabled();
     }
 }

@@ -38,7 +38,7 @@ class AddressStepStrategyResolver implements AddressStepStrategyResolverInterfac
      */
     public function resolveSaver(): SaverInterface
     {
-        if (!$this->isMultiShipmentEnabled()) {
+        if (!$this->isMultiShipmentModuleEnabled()) {
             $this->assertRequiredStrategySaverWithoutMultiShipmentContainerItems();
 
             return call_user_func($this->strategyContainer[static::STRATEGY_KEY_SAVER_WITHOUT_MULTI_SHIPMENT]);
@@ -54,7 +54,7 @@ class AddressStepStrategyResolver implements AddressStepStrategyResolverInterfac
      */
     public function resolvePostCondition(): PostConditionCheckerInterface
     {
-        if (!$this->isMultiShipmentEnabled()) {
+        if (!$this->isMultiShipmentModuleEnabled()) {
             $this->assertRequiredStrategyPostConditionCheckerWithoutMultiShipmentContainerItems();
 
             return call_user_func($this->strategyContainer[static::STRATEGY_KEY_POST_CONDITION_CHECKER_WITHOUT_MULTI_SHIPMENT]);

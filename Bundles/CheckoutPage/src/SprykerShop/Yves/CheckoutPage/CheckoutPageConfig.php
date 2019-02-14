@@ -31,7 +31,7 @@ class CheckoutPageConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isMultiShipmentManuallyEnabled(): bool
+    public function isMultiShipmentEnabled(): bool
     {
         return true;
     }

@@ -40,7 +40,7 @@
                 <div class="box">
                     <h4>{{ 'checkout.step.shipment.title' | trans }} n°{{ loop.index }}</h4>
                     <hr/>
-                    <h6><strong>{{ 'page.checkout.summary.products' | trans }}</strong></h6>
+                    <h6><strong>{{ 'checkout.step.summary.products' | trans }}</strong></h6>
                     {% for item in shipmentGroup.items %}
                         {% set item = item.bundleProduct is defined ? item.bundleProduct : item %}
                         {% embed molecule('summary-item', 'CheckoutPage') with {
@@ -170,7 +170,7 @@
     </div>
 
     <div class="grid">
-        <div class="col col--sm-12 col--lg-8">
+        <div class="col col--sm-12 col--lg-12">
             {% if data.transfer.cartNote is not empty %}
                 {% if widgetExists('CartNoteQuoteNoteWidgetPlugin') %}
                     <div class="box">
