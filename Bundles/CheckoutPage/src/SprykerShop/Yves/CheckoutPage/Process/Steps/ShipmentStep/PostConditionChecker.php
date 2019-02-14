@@ -30,6 +30,10 @@ class PostConditionChecker implements PostConditionCheckerInterface
      */
     protected function isShipmentSet(QuoteTransfer $quoteTransfer): bool
     {
+        if ($quoteTransfer->getItems()->count() === 0) {
+            return false;
+        }
+
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() === null || $itemTransfer->getShipment()->getExpense() === null) {
                 return false;
