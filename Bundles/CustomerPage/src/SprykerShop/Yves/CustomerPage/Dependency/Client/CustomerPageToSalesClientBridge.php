@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerPage\Dependency\Client;
 
-use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
