@@ -58,16 +58,6 @@ class CustomerPageToSalesClientBridge implements CustomerPageToSalesClientInterf
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return \ArrayObject
-     */
-    public function getUniqueOrderItems(ArrayObject $itemTransfers): ArrayObject
-    {
-        return $this->salesClient->getUniqueOrderItems($itemTransfers);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer

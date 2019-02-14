@@ -36,13 +36,6 @@ interface CustomerPageToSalesClientInterface
     public function getOrderDetails(OrderTransfer $orderTransfer);
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return \ArrayObject
-     */
-    public function getUniqueOrderItems(ArrayObject $itemTransfers): ArrayObject;
-
-    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
