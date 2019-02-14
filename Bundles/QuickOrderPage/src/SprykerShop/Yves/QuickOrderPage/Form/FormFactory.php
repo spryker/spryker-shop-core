@@ -54,4 +54,15 @@ class FormFactory extends AbstractFactory
     {
         return $this->getFormFactory()->create(TextOrderForm::class, $data, $formOptions);
     }
+
+    /**
+     * @param mixed $data
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getUploadOrderForm($data = null, array $formOptions = []): FormInterface
+    {
+        return $this->getFormFactory()->create(UploadOrderForm::class, $data, $formOptions);
+    }
 }
