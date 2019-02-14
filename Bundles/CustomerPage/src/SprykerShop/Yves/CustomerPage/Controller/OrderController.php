@@ -145,10 +145,6 @@ class OrderController extends AbstractCustomerController
             ->getSalesClient()
             ->getOrderDetails($orderTransfer);
 
-        $groupedOrderItems = $this->getFactory()
-            ->getSalesClient()
-            ->getUniqueOrderItems($orderTransfer->getItems());
-
         if ($orderTransfer->getIdSalesOrder() === null) {
             throw new NotFoundHttpException(sprintf(
                 "Order with provided ID %s doesn't exist",
@@ -156,14 +152,14 @@ class OrderController extends AbstractCustomerController
             ));
         }
 
+        $shipmentGroups = $this->getFactory()
+            ->getSalesClient()
+            ->getUniqueOrderItemsForShipmentGroups($orderTransfer);
+
         if ($orderTransfer->getShippingAddress() === null) {
             return [
                 'order' => $orderTransfer,
-                'groupedOrderItems' => $groupedOrderItems,
-                'shipmentGroups' => $this
-                    ->getFactory()
-                    ->getShipmentService()
-                    ->groupItemsByShipment($orderTransfer->getItems()),
+                'shipmentGroups' => $shipmentGroups->getShipmentGroups(),
             ];
         }
 
@@ -177,7 +173,6 @@ class OrderController extends AbstractCustomerController
         return [
             'order' => $orderTransfer,
             'shipmentGroups' => [$shipmentGroupTransfer],
-            'groupedOrderItems' => $groupedOrderItems,
         ];
     }
 }
