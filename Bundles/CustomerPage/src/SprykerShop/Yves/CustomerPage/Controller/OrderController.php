@@ -152,10 +152,14 @@ class OrderController extends AbstractCustomerController
             ));
         }
 
+        $shipmentGroups = $this->getFactory()
+            ->getSalesClient()
+            ->getUniqueOrderItemsForShipmentGroups($orderTransfer);
+
         if ($orderTransfer->getShippingAddress() === null) {
             return [
                 'order' => $orderTransfer,
-                'shipmentGroups' => $this->getFactory()->getShipmentService()->groupItemsByShipment($orderTransfer->getItems()),
+                'shipmentGroups' => $shipmentGroups->getShipmentGroups(),
             ];
         }
 

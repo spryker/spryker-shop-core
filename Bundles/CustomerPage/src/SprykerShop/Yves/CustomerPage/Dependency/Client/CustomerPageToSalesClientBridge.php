@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CustomerPage\Dependency\Client;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 
 class CustomerPageToSalesClientBridge implements CustomerPageToSalesClientInterface
 {
@@ -53,5 +54,15 @@ class CustomerPageToSalesClientBridge implements CustomerPageToSalesClientInterf
     public function getOrderDetails(OrderTransfer $orderTransfer)
     {
         return $this->salesClient->getOrderDetails($orderTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     */
+    public function getUniqueOrderItemsForShipmentGroups(OrderTransfer $orderTransfer): ShipmentGroupCollectionTransfer
+    {
+        return $this->salesClient->getUniqueOrderItemsForShipmentGroups($orderTransfer);
     }
 }
