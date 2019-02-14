@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
- * @method \Spryker\Client\Cart\CartClient getClient()()
  */
 class CartController extends AbstractController
 {
