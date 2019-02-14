@@ -51,7 +51,7 @@ class AgentQuoteRequestOverviewWidget extends AbstractWidget
             ->getQuote();
 
         $quoteRequestOverviewFilterTransfer = (new QuoteRequestOverviewFilterTransfer())
-            ->setQuoteRequestReference($quoteTransfer ? $quoteTransfer->getQuoteRequestReference() : null)
+            ->setQuoteRequestReference($quoteTransfer->getQuoteRequestReference())
             ->setPagination((new PaginationTransfer())->setMaxPerPage(static::PAGINATION_MAX_PER_PAGE)->setPage(static::PAGINATION_PAGE));
 
         return $this->getFactory()

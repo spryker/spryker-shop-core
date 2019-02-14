@@ -1,12 +1,14 @@
 {
-  "name": "spryker-shop/quote-request-widget",
+  "name": "spryker-shop/agent-quote-request-widget",
   "type": "library",
-  "description": "QuoteRequestWidget module",
+  "description": "AgentQuoteRequestWidget module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker-shop/shop-ui": "^1.7.0",
-    "spryker/kernel": "^3.0.0"
+    "spryker/agent-quote-request": "^1.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/quote": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

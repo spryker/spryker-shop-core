@@ -1,3 +1,3 @@
-# QuoteRequestWidget Changelog
+# AgentQuoteRequestWidget Changelog
 
-[Release Changelog](https://github.com/spryker-shop/quote-request-widget/releases)
+[Release Changelog](https://github.com/spryker-shop/agent-quote-request-widget/releases)

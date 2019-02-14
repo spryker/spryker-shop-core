@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\AgentQuoteRequestWidget;
 
-use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToAgentQuoteRequestClientBridge;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToQuoteClientBridge;
 

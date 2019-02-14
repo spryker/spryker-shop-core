@@ -33,6 +33,6 @@ class AgentQuoteRequestWidgetToAgentQuoteRequestClientBridge implements AgentQuo
     public function getQuoteRequestOverviewCollection(
         QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer
     ): QuoteRequestOverviewCollectionTransfer {
-        return $this->agentQuoteRequestClient->getAgentQuoteRequestOverviewCollection($quoteRequestOverviewFilterTransfer);
+        return $this->agentQuoteRequestClient->getQuoteRequestOverviewCollection($quoteRequestOverviewFilterTransfer);
     }
 }
