@@ -147,7 +147,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
     }
 
     /**
-     * @uses \Spryker\Shared\QuoteApproval\Plugin\RequestQuoteApprovalPermissionPlugin
+     * @uses \Spryker\Client\QuoteApproval\Plugin\Permission\RequestQuoteApprovalPermissionPlugin
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
