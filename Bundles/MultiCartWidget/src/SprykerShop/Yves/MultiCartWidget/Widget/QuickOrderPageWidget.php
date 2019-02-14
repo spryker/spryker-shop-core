@@ -64,18 +64,6 @@ class QuickOrderPageWidget extends AbstractWidget
     }
 
     /**
-     * @see \Spryker\Client\Quote\QuoteClient::isQuoteLocked()
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
-    {
-        return (bool)$quoteTransfer->getIsLocked();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool

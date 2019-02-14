@@ -85,11 +85,23 @@ class ShareController extends AbstractController
      */
     protected function canShareQuote(?QuoteTransfer $quoteTransfer = null): bool
     {
-        if (!$quoteTransfer || $quoteTransfer->getIsLocked()) {
+        if (!$quoteTransfer || $this->isQuoteLocked($quoteTransfer)) {
             return false;
         }
 
         return $this->isQuoteAccessOwner($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->getQuoteClient()
+            ->isQuoteLocked($quoteTransfer);
     }
 
     /**
