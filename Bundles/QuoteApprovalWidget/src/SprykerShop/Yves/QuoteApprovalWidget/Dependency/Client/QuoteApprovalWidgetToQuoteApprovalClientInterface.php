@@ -60,7 +60,7 @@ interface QuoteApprovalWidgetToQuoteApprovalClientInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer;
+    public function getQuoteApprovers(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

@@ -65,7 +65,7 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
     {
         return [
             'data_class' => QuoteApprovalCreateRequestTransfer::class,
-            QuoteApproveRequestForm::OPTION_APPROVERS_LIST => $this->getApproversList($quoteTransfer, $localeName),
+            QuoteApproveRequestForm::OPTION_APPROVERS_LIST => $this->getApprovers($quoteTransfer, $localeName),
         ];
     }
 
@@ -97,10 +97,10 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
      *
      * @return array
      */
-    protected function getApproversList(QuoteTransfer $quoteTransfer, string $localeName): array
+    protected function getApprovers(QuoteTransfer $quoteTransfer, string $localeName): array
     {
         $quoteApproverCollection = $this->quoteApprovalClient
-            ->getQuoteApproversList($quoteTransfer);
+            ->getQuoteApprovers($quoteTransfer);
 
         $quoteApproverList = [];
 
