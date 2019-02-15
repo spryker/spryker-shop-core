@@ -14,6 +14,7 @@ class AgentPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_LOGIN = 'agent/login';
     public const ROUTE_LOGOUT = 'agent/logout';
+    public const ROUTE_AGENT_OVERVIEW = 'agent/overview';
 
     /**
      * @param \Silex\Application $app
@@ -24,7 +25,8 @@ class AgentPageControllerProvider extends AbstractYvesControllerProvider
     {
         $this
             ->addLoginRoute()
-            ->addLogoutRoute();
+            ->addLogoutRoute()
+            ->addOverviewRoute();
     }
 
     /**
@@ -47,6 +49,18 @@ class AgentPageControllerProvider extends AbstractYvesControllerProvider
     protected function addLogoutRoute()
     {
         $this->createController('/{agent}/logout/deprecated', static::ROUTE_LOGOUT, 'AgentPage', 'Auth', 'logout')
+            ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
+            ->value('agent', 'agent');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addOverviewRoute()
+    {
+        $this->createController('/{agent}/overview', static::ROUTE_AGENT_OVERVIEW, 'AgentPage', 'Agent', 'index')
             ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
             ->value('agent', 'agent');
 

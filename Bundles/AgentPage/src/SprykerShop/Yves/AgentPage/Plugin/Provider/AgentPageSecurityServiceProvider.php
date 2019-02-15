@@ -99,7 +99,10 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
         $app['security.access_rules'] = array_merge([
             [
                 $this->getConfig()->getAgentFirewallRegex(),
-                static::ROLE_AGENT,
+                [
+                    static::ROLE_AGENT,
+                    static::ROLE_PREVIOUS_ADMIN,
+                ],
             ],
         ], $app['security.access_rules']);
     }

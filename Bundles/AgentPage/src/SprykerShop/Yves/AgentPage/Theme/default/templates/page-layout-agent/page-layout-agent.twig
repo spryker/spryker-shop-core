@@ -1,0 +1,43 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    activePage: 'overview',
+    currentBreadcrumb: 'agent.account.overview'
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'agent.account.page_title' | trans,
+                    url: url('agent/overview')
+                },
+                {
+                    label: data.currentBreadcrumb | trans
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
+{% block content %}
+    <div class="grid">
+        <div class="col col--sm-12 col--md-3">
+            {% block agentNavigation %}
+                {% include molecule('agent-navigation', 'AgentPage') with {
+                    class: 'box',
+                    data: {
+                        activePage: data.activePage
+                    }
+                } only %}
+            {% endblock %}
+        </div>
+
+        <div class="col col--sm-12 col--md-9">
+            {% block agentContent %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}{% endblock %}
