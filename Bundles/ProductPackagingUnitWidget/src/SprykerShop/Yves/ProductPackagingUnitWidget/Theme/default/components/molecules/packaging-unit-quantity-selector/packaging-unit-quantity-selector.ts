@@ -506,7 +506,6 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.amountInputChange();
     }
 
-
     private leadSalesUnitSelectChange(event: Event) {
         let salesUnitId = parseInt((event.srcElement as HTMLSelectElement).value);
         let salesUnit = this.getLeadSalesUnitById(salesUnitId);

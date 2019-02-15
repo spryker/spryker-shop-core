@@ -15,6 +15,7 @@ use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
 use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -27,6 +28,8 @@ class CartController extends AbstractController
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
     public const PARAM_ITEMS = 'items';
+
+    protected const FIELD_QUANTITY_TO_NORMALIZE = 'quantity';
 
     /**
      * @param array|null $selectedAttributes
@@ -57,7 +60,7 @@ class CartController extends AbstractController
 
         $this->getFactory()
             ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
+            ->addResponseMessagesToMessenger();
 
         $quoteTransfer = $validateQuoteResponseTransfer->getQuoteTransfer();
 
@@ -106,6 +109,50 @@ class CartController extends AbstractController
 
         $this->getFactory()
             ->getZedRequestClient()
+            ->addResponseMessagesToMessenger();
+
+        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function quickAddAction(string $sku, int $quantity, Request $request): RedirectResponse
+    {
+        if (!$this->canAddCartItem()) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
+        return $this->executeQuickAddAction($sku, $quantity, $request);
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeQuickAddAction(string $sku, int $quantity, Request $request): RedirectResponse
+    {
+        $itemTransfer = (new ItemTransfer())
+            ->setSku($sku)
+            ->setQuantity($quantity)
+            ->addNormalizableField(static::FIELD_QUANTITY_TO_NORMALIZE)
+            ->setGroupKeyPrefix(uniqid('', true));
+
+        $this->getFactory()
+            ->getCartClient()
+            ->addItem($itemTransfer);
+
+        $this->getFactory()
+            ->getZedRequestClient()
             ->addFlashMessagesFromLastZedRequest();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
@@ -131,7 +178,7 @@ class CartController extends AbstractController
 
         $this->getFactory()
             ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
+            ->addResponseMessagesToMessenger();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -157,7 +204,7 @@ class CartController extends AbstractController
 
         $this->getFactory()
             ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
+            ->addResponseMessagesToMessenger();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -184,7 +231,7 @@ class CartController extends AbstractController
 
         $this->getFactory()
             ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
+            ->addResponseMessagesToMessenger();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
