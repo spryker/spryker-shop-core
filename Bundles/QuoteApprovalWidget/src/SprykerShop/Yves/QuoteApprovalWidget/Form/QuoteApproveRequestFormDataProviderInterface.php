@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteApprovalWidget\Form;
 
-use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteApproveRequestFormDataProviderInterface
@@ -23,7 +23,7 @@ interface QuoteApproveRequestFormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalRequestTransfer
      */
-    public function getData(QuoteTransfer $quoteTransfer): QuoteApprovalCreateRequestTransfer;
+    public function getData(QuoteTransfer $quoteTransfer): QuoteApprovalRequestTransfer;
 }

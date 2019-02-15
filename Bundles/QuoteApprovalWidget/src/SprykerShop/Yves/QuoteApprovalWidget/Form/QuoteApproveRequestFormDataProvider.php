@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\QuoteApprovalWidget\Form;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToCustomerClientInterface;
 use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetToGlossaryStorageClientInterface;
@@ -64,7 +64,7 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
     public function getOptions(QuoteTransfer $quoteTransfer, string $localeName): array
     {
         return [
-            'data_class' => QuoteApprovalCreateRequestTransfer::class,
+            'data_class' => QuoteApprovalRequestTransfer::class,
             QuoteApproveRequestForm::OPTION_APPROVERS_LIST => $this->getApproversList($quoteTransfer, $localeName),
         ];
     }
@@ -72,21 +72,21 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalCreateRequestTransfer
+     * @return \Generated\Shared\Transfer\QuoteApprovalRequestTransfer
      */
-    public function getData(QuoteTransfer $quoteTransfer): QuoteApprovalCreateRequestTransfer
+    public function getData(QuoteTransfer $quoteTransfer): QuoteApprovalRequestTransfer
     {
-        $quoteApprovalCreateRequestTransfer = new QuoteApprovalCreateRequestTransfer();
+        $quoteApprovalRequestTransfer = new QuoteApprovalRequestTransfer();
 
         $customerTransfer = $this->customerClient->getCustomer();
 
         if (!$customerTransfer) {
-            return $quoteApprovalCreateRequestTransfer;
+            return $quoteApprovalRequestTransfer;
         }
 
         $customerTransfer->requireCompanyUserTransfer();
 
-        return $quoteApprovalCreateRequestTransfer
+        return $quoteApprovalRequestTransfer
             ->setRequesterCompanyUserId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser())
             ->setIdQuote($quoteTransfer->getIdQuote());
     }

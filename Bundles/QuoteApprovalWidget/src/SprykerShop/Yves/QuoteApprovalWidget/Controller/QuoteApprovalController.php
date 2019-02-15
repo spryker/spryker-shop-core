@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\QuoteApprovalWidget\Controller;
 
-use Generated\Shared\Transfer\QuoteApprovalRemoveRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -61,14 +60,14 @@ class QuoteApprovalController extends AbstractController
 
         $customerTransfer->requireCompanyUserTransfer();
 
-        $quoteApprovalRemoveRequestTransfer = new QuoteApprovalRemoveRequestTransfer();
+        $quoteApprovalRequestTransfer = new QuoteApprovalRequestTransfer();
 
-        $quoteApprovalRemoveRequestTransfer->setIdQuoteApproval($idQuoteApproval)
-            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+        $quoteApprovalRequestTransfer->setIdQuoteApproval($idQuoteApproval)
+            ->setRequesterCompanyUserId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
         $quoteApprovalResponseTransfer = $this->getFactory()
             ->getQuoteApprovalClient()
-            ->removeQuoteApproval($quoteApprovalRemoveRequestTransfer);
+            ->removeQuoteApproval($quoteApprovalRequestTransfer);
 
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
@@ -124,7 +123,7 @@ class QuoteApprovalController extends AbstractController
 
         $quoteApprovalRequestTransfer = (new QuoteApprovalRequestTransfer())
             ->setIdQuoteApproval($idQuoteApproval)
-            ->setFkCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+            ->setApproverCompanyUserId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
         $quoteApprovalResponseTransfer = $this->getFactory()
             ->getQuoteApprovalClient()
@@ -151,7 +150,7 @@ class QuoteApprovalController extends AbstractController
 
         $quoteApprovalRequestTransfer = (new QuoteApprovalRequestTransfer())
             ->setIdQuoteApproval($idQuoteApproval)
-            ->setFkCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+            ->setApproverCompanyUserId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
         $quoteApprovalResponseTransfer = $this->getFactory()
             ->getQuoteApprovalClient()
