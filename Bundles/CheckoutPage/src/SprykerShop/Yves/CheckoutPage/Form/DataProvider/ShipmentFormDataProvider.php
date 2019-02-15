@@ -100,7 +100,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         /**
          * @deprecated Will be removed in next major release.
          */
-        if (!$this->isMultiShipmentEnabled()) {
+        if (!$this->isMultiShipmentModuleEnabled()) {
             return $quoteTransfer;
         }
 
