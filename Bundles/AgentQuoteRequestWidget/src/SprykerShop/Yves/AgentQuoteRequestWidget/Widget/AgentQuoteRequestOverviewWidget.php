@@ -14,10 +14,10 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
  * @method \SprykerShop\Yves\AgentQuoteRequestWidget\AgentQuoteRequestWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\AgentQuoteRequestWidget\AgentQuoteRequestWidgetConfig getConfig()
  */
 class AgentQuoteRequestOverviewWidget extends AbstractWidget
 {
-    protected const PAGINATION_MAX_PER_PAGE = 5;
     protected const PAGINATION_PAGE = 1;
 
     public function __construct()
@@ -50,9 +50,13 @@ class AgentQuoteRequestOverviewWidget extends AbstractWidget
             ->getQuoteClient()
             ->getQuote();
 
+        $paginationTransfer = (new PaginationTransfer())
+            ->setMaxPerPage($this->getConfig()->getPaginationDefaultQuoteRequestsPerPage())
+            ->setPage(static::PAGINATION_PAGE);
+
         $quoteRequestOverviewFilterTransfer = (new QuoteRequestOverviewFilterTransfer())
             ->setQuoteRequestReference($quoteTransfer->getQuoteRequestReference())
-            ->setPagination((new PaginationTransfer())->setMaxPerPage(static::PAGINATION_MAX_PER_PAGE)->setPage(static::PAGINATION_PAGE));
+            ->setPagination($paginationTransfer);
 
         return $this->getFactory()
             ->getAgentQuoteRequestClient()

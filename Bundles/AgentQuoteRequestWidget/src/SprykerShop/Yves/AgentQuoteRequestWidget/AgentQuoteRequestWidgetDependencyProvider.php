@@ -38,7 +38,7 @@ class AgentQuoteRequestWidgetDependencyProvider extends AbstractBundleDependency
      */
     protected function addAgentQuoteRequestClient(Container $container): Container
     {
-        $container[self::CLIENT_AGENT_QUOTE_REQUEST] = function (Container $container) {
+        $container[static::CLIENT_AGENT_QUOTE_REQUEST] = function (Container $container) {
             return new AgentQuoteRequestWidgetToAgentQuoteRequestClientBridge($container->getLocator()->agentQuoteRequest()->client());
         };
 
@@ -52,7 +52,7 @@ class AgentQuoteRequestWidgetDependencyProvider extends AbstractBundleDependency
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container[self::CLIENT_QUOTE] = function (Container $container) {
+        $container[static::CLIENT_QUOTE] = function (Container $container) {
             return new AgentQuoteRequestWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
         };
 
