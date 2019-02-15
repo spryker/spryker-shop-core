@@ -36,7 +36,9 @@ class QuoteApprovalController extends AbstractController
         $quoteApproveRequestForm->handleRequest($request);
 
         if ($quoteApproveRequestForm->isSubmitted() && $quoteApproveRequestForm->isValid()) {
-            $quoteApprovalResponseTransfer = $this->getFactory()->getQuoteApprovalClient()->createQuoteApproval($quoteApproveRequestForm->getData());
+            $quoteApprovalResponseTransfer = $this->getFactory()
+                ->getQuoteApprovalClient()
+                ->createQuoteApproval($quoteApproveRequestForm->getData());
 
             $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
         }
@@ -72,39 +74,6 @@ class QuoteApprovalController extends AbstractController
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectToReferer($request);
-    }
-
-    /**
-     * @param string $key
-     * @param array $params
-     *
-     * @return string
-     */
-    protected function getTranslatedMessage(string $key, array $params = []): string
-    {
-        return $this->getFactory()
-            ->getGlossaryStorageClient()
-            ->translate($key, $this->getLocale(), $params);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer
-     *
-     * @return void
-     */
-    protected function addMessagesFromQuoteApprovalResponse(QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer)
-    {
-        foreach ($quoteApprovalResponseTransfer->getMessages() as $messageTransfer) {
-            $translatedMessage = $this->getTranslatedMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
-
-            if ($quoteApprovalResponseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessage($translatedMessage);
-
-                continue;
-            }
-
-            $this->addErrorMessage($translatedMessage);
-        }
     }
 
     /**
@@ -159,6 +128,39 @@ class QuoteApprovalController extends AbstractController
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectToReferer($request);
+    }
+
+    /**
+     * @param string $key
+     * @param array $params
+     *
+     * @return string
+     */
+    protected function getTranslatedMessage(string $key, array $params = []): string
+    {
+        return $this->getFactory()
+            ->getGlossaryStorageClient()
+            ->translate($key, $this->getLocale(), $params);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer
+     *
+     * @return void
+     */
+    protected function addMessagesFromQuoteApprovalResponse(QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer): void
+    {
+        foreach ($quoteApprovalResponseTransfer->getMessages() as $messageTransfer) {
+            $translatedMessage = $this->getTranslatedMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
+
+            if ($quoteApprovalResponseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessage($translatedMessage);
+
+                continue;
+            }
+
+            $this->addErrorMessage($translatedMessage);
+        }
     }
 
     /**
