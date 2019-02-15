@@ -86,9 +86,9 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getQuoteApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
+    public function getQuoteApproverList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
     {
-        return $this->quoteApprovalClient->getQuoteApproversList($quoteTransfer);
+        return $this->quoteApprovalClient->getQuoteApproverList($quoteTransfer);
     }
 
     /**
