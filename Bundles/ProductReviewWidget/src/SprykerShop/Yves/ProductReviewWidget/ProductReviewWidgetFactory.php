@@ -13,7 +13,6 @@ use SprykerShop\Yves\ProductReviewWidget\Controller\Calculator\ProductReviewSumm
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToCustomerClientInterface;
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewClientInterface;
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewStorageClientInterface;
-use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductStorageClientInterface;
 use SprykerShop\Yves\ProductReviewWidget\Form\DataProvider\ProductReviewFormDataProvider;
 use SprykerShop\Yves\ProductReviewWidget\Form\ProductReviewForm;
 
@@ -25,14 +24,6 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
     public function getCustomerClient(): ProductReviewWidgetToCustomerClientInterface
     {
         return $this->getProvidedDependency(ProductReviewWidgetDependencyProvider::CLIENT_CUSTOMER);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductStorageClientInterface
-     */
-    public function getProductStorageClient(): ProductReviewWidgetToProductStorageClientInterface
-    {
-        return $this->getProvidedDependency(ProductReviewWidgetDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }
 
     /**

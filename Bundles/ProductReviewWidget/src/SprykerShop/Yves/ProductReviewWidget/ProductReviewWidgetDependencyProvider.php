@@ -12,7 +12,6 @@ use Spryker\Yves\ProductReview\ProductReviewDependencyProvider as SprykerProduct
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToCustomerClientBridge;
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewClientBridge;
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewStorageClientBridge;
-use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductStorageClientBridge;
 
 class ProductReviewWidgetDependencyProvider extends SprykerProductReviewDependencyProvider
 {
@@ -20,7 +19,6 @@ class ProductReviewWidgetDependencyProvider extends SprykerProductReviewDependen
     public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
     public const CLIENT_PRODUCT_REVIEW = 'CLIENT_PRODUCT_REVIEW';
     public const CLIENT_PRODUCT_REVIEW_STORAGE = 'CLIENT_PRODUCT_REVIEW_STORAGE';
-    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -34,23 +32,6 @@ class ProductReviewWidgetDependencyProvider extends SprykerProductReviewDependen
         $container = $this->addCustomerClient($container);
         $container = $this->addProductReviewClient($container);
         $container = $this->addProductReviewStorageClient($container);
-        $container = $this->addProductStorageClient($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addProductStorageClient(Container $container): Container
-    {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
-            return new ProductReviewWidgetToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
-            );
-        };
 
         return $container;
     }

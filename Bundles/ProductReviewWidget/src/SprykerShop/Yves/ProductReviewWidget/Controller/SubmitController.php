@@ -23,6 +23,7 @@ class SubmitController extends AbstractController
     protected const SUCCESS_MESSAGE = 'Review was submitted';
 
     protected const REQUEST_HEADER_REFERER = 'referer';
+    protected const URL_REDIRECT_MAIN = '/';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -115,12 +116,7 @@ class SubmitController extends AbstractController
         if ($request->headers->has(static::REQUEST_HEADER_REFERER)) {
             return $request->headers->get(static::REQUEST_HEADER_REFERER);
         }
-        $abstractProductData = $this->getFactory()
-            ->getProductStorageClient()
-            ->findProductAbstractStorageData(
-                $idProductAbstract,
-                $this->getLocale()
-            );
-        return $abstractProductData['url'];
+
+        return static::URL_REDIRECT_MAIN;
     }
 }
