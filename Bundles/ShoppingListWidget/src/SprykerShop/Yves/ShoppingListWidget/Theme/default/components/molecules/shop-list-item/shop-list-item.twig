@@ -11,7 +11,7 @@
 {% block body %}
     {% set hasWriteAccess =  can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
 
-    <div class="spacing-bottom spacing-bottom--small">
+    <div class="{{ config.name }}__title spacing-bottom spacing-bottom--small">
         <a href="{{ path('shopping-list/details', { idShoppingList: (data.shoppingList.idShoppingList)}) }}" class="{{ config.name }}__name">
             <strong>{{ data.shoppingList.name }}</strong>
         </a>

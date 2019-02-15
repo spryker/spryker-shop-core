@@ -3,6 +3,10 @@
         background-color: $setting-color-lighter;
         padding: map-get($setting-spacing, default);
 
+        &__name {
+            word-break: break-word;
+        }
+
         @content;
     }
 }
