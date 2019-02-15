@@ -22,10 +22,6 @@
 } %}
 
 {% block body %}
-    <li>
-        <span class="float-right">{{ app['cart.quantity'] }} {{ 'checkout.step.summary.items' | trans }}</span>
-        <h6>{{ 'checkout.step.summary.overview' | trans }}</h6>
-    </li>
     {% block separator %}
         <li><hr /></li>
     {% endblock %}

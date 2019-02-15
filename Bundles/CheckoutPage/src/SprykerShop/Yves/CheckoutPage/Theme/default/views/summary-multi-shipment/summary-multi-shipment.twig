@@ -154,6 +154,11 @@
                         <b>Expiry Date: </b>{{ data.transfer.payment.dummyPayment.cardExpiresMonth ~ '.' ~ data.transfer.payment.dummyPayment.cardExpiresYear }}
                     </div>
                 {% endif %}
+                <div class="box">
+                    <a href="{{ url('checkout-payment') }}" {{qa('cart-go-to-payment')}}>
+                        {{ 'general.edit.button' | trans }}
+                    </a>
+                </div>
             </div>
 
             <div class="col col--sm-12 col--lg-4">
@@ -187,6 +192,9 @@
                     </div>
                 {% endif %}
             {% endif %}
+            <div class="box">
+                <h6>{{ 'Complete checkout' | trans }}</h6>
+            </div>
 
             <div class="box">
                 {% widget 'CheckoutVoucherFormWidget' args [data.transfer] only %}
