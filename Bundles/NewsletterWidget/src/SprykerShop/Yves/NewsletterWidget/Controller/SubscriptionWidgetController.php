@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\NewsletterWidget\Controller;
 
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 use SprykerShop\Yves\NewsletterWidget\Form\NewsletterSubscriptionForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +20,7 @@ class SubscriptionWidgetController extends AbstractController
     protected const MESSAGE_SUBSCRIPTION_ERROR = 'newsletter.subscription.error';
 
     protected const REQUEST_HEADER_REFERER = 'referer';
+    protected const URL_CUSTOMER_OVERVIEW = 'customer/overview';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -96,6 +96,6 @@ class SubscriptionWidgetController extends AbstractController
             return $request->headers->get(static::REQUEST_HEADER_REFERER);
         }
 
-        return CustomerPageControllerProvider::ROUTE_CUSTOMER_OVERVIEW;
+        return static::URL_CUSTOMER_OVERVIEW;
     }
 }

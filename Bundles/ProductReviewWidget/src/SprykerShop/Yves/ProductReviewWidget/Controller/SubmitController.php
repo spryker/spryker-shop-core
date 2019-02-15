@@ -23,7 +23,7 @@ class SubmitController extends AbstractController
     protected const SUCCESS_MESSAGE = 'Review was submitted';
 
     protected const REQUEST_HEADER_REFERER = 'referer';
-    protected const URL_REDIRECT_MAIN = '/';
+    protected const URL_MAIN = '/';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -39,7 +39,7 @@ class SubmitController extends AbstractController
             ->handleRequest($request);
         $this->processProductReviewForm($productReviewForm, $customer);
 
-        return $this->redirectResponseExternal($this->getRefererUrl($request, $idProductAbstract));
+        return $this->redirectResponseExternal($this->getRefererUrl($request));
     }
 
     /**
@@ -111,12 +111,12 @@ class SubmitController extends AbstractController
      *
      * @return array|string
      */
-    protected function getRefererUrl(Request $request, int $idProductAbstract)
+    protected function getRefererUrl(Request $request)
     {
         if ($request->headers->has(static::REQUEST_HEADER_REFERER)) {
             return $request->headers->get(static::REQUEST_HEADER_REFERER);
         }
 
-        return static::URL_REDIRECT_MAIN;
+        return static::URL_MAIN;
     }
 }
