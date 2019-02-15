@@ -107,7 +107,6 @@ class SubmitController extends AbstractController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int $idProductAbstract
      *
      * @return array|string
      */
