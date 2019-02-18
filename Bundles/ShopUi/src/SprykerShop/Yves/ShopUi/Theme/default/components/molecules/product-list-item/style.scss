@@ -1,1 +1,3 @@
-@include shop-ui-product-list-item;
+@include helper-import(molecule, product-list-item) {
+    @include shop-ui-product-list-item;
+}

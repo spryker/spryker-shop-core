@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\ShopUi\Dependency\Plugin\PriceWidget;
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\PriceWidget\Widget\PriceModeSwitcherWidget instead.
+ */
 interface PriceModeSwitcherWidgetPluginInterface extends WidgetPluginInterface
 {
     public const NAME = 'PriceModeSwitcherWidgetPlugin';

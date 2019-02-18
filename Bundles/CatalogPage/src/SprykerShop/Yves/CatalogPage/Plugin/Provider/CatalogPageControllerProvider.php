@@ -12,9 +12,9 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class CatalogPageControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_SEARCH = 'search';
-    const ROUTE_SUGGESTION = 'search/suggestion';
-    const ROUTER_CHANGE_VIEW_MODE = 'change-view-mode';
+    public const ROUTE_SEARCH = 'search';
+    public const ROUTE_SUGGESTION = 'search/suggestion';
+    public const ROUTER_CHANGE_VIEW_MODE = 'change-view-mode';
 
     /**
      * @param \Silex\Application $app
@@ -31,7 +31,7 @@ class CatalogPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addFulltextSearchRoute(): self
+    protected function addFulltextSearchRoute()
     {
         $this->createController('/{search}', self::ROUTE_SEARCH, 'CatalogPage', 'Catalog', 'fulltextSearch')
             ->assert('search', $this->getAllowedLocalesPattern() . 'search|search')
@@ -43,7 +43,7 @@ class CatalogPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addSuggestionRoute(): self
+    protected function addSuggestionRoute()
     {
         $this->createController('/{search}/suggestion', self::ROUTE_SUGGESTION, 'CatalogPage', 'Suggestion', 'index')
             ->assert('search', $this->getAllowedLocalesPattern() . 'search|search')
@@ -55,7 +55,7 @@ class CatalogPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addChangeViewRoute(): self
+    protected function addChangeViewRoute()
     {
         $this->createController('/{catalog}/change-view-mode', static::ROUTER_CHANGE_VIEW_MODE, 'CatalogPage', 'Catalog', 'changeViewMode')
             ->assert('catalog', $this->getAllowedLocalesPattern() . 'catalog|catalog')

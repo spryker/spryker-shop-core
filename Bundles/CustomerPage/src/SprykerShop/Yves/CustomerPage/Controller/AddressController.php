@@ -16,9 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AddressController extends AbstractCustomerController
 {
-    const KEY_DEFAULT_BILLING_ADDRESS = 'default_billing_address';
-    const KEY_DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
-    const KEY_ADDRESSES = 'addresses';
+    public const KEY_DEFAULT_BILLING_ADDRESS = 'default_billing_address';
+    public const KEY_DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
+    public const KEY_ADDRESSES = 'addresses';
 
     /**
      * @return \Spryker\Yves\Kernel\View\View
@@ -125,6 +125,8 @@ class AddressController extends AbstractCustomerController
      */
     protected function executeUpdateAction(Request $request)
     {
+        $customerTransfer = $this->getLoggedInCustomerTransfer();
+
         $dataProvider = $this
             ->getFactory()
             ->createCustomerFormFactory()
@@ -139,7 +141,7 @@ class AddressController extends AbstractCustomerController
         if (!$addressForm->isSubmitted()) {
             $addressForm->setData($dataProvider->getData($idCustomerAddress));
         } elseif ($addressForm->isValid()) {
-            $customerTransfer = $this->processAddressUpdate($addressForm->getData());
+            $customerTransfer = $this->processAddressUpdate($customerTransfer, $addressForm->getData());
 
             if ($customerTransfer !== null) {
                 $this->addSuccessMessage(Messages::CUSTOMER_ADDRESS_UPDATED);
@@ -255,14 +257,17 @@ class AddressController extends AbstractCustomerController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param array $addressData
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function processAddressUpdate(array $addressData)
+    protected function processAddressUpdate(CustomerTransfer $customerTransfer, array $addressData)
     {
         $addressTransfer = new AddressTransfer();
         $addressTransfer->fromArray($addressData);
+
+        $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
 
         $customerTransfer = $this
             ->getFactory()

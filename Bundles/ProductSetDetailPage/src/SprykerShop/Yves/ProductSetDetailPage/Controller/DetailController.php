@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ProductSetDetailPage\Controller;
 
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
+use SprykerShop\Yves\ProductSetDetailPage\Exception\ProductSetAccessDeniedException;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 
 /**
@@ -15,7 +16,8 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
  */
 class DetailController extends AbstractController
 {
-    const PARAM_ATTRIBUTE = 'attributes';
+    public const PARAM_ATTRIBUTE = 'attributes';
+    protected const GLOSSARY_KEY_PRODUCT_ACCESS_DENIED = 'product.access.denied';
 
     /**
      * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
@@ -25,6 +27,8 @@ class DetailController extends AbstractController
      */
     public function indexAction(ProductSetDataStorageTransfer $productSetDataStorageTransfer, array $productViewTransfers)
     {
+        $this->assertProductRestrictions($productSetDataStorageTransfer, $productViewTransfers);
+
         $data = [
             'productSet' => $productSetDataStorageTransfer,
             'productViews' => $productViewTransfers,
@@ -35,5 +39,27 @@ class DetailController extends AbstractController
             $this->getFactory()->getProductSetDetailPageWidgetPlugins(),
             '@ProductSetDetailPage/views/set-detail/set-detail.twig'
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
+     * @param array $productViewTransfers
+     *
+     * @throws \SprykerShop\Yves\ProductSetDetailPage\Exception\ProductSetAccessDeniedException
+     *
+     * @return void
+     */
+    protected function assertProductRestrictions(ProductSetDataStorageTransfer $productSetDataStorageTransfer, array $productViewTransfers): void
+    {
+        if (empty($productSetDataStorageTransfer->getProductAbstractIds())) {
+            return;
+        }
+
+        // Abstract IDs are available, but all are restricted
+        if (!empty($productViewTransfers)) {
+            return;
+        }
+
+        throw new ProductSetAccessDeniedException(static::GLOSSARY_KEY_PRODUCT_ACCESS_DENIED);
     }
 }

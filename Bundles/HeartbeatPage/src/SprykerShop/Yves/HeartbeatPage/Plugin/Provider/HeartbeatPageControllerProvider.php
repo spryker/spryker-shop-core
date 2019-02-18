@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class HeartbeatPageControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_HEARTBEAT = 'heartbeat';
+    public const ROUTE_HEARTBEAT = 'heartbeat';
 
     /**
      * @param \Silex\Application $app
@@ -27,7 +27,7 @@ class HeartbeatPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addHeartbeatRoute(): self
+    protected function addHeartbeatRoute()
     {
         $this->createController('/{heartbeat}', self::ROUTE_HEARTBEAT, 'HeartbeatPage', 'Heartbeat', 'index')
             ->assert('heartbeat', $this->getAllowedLocalesPattern() . 'heartbeat|heartbeat');

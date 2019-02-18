@@ -12,10 +12,10 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class ProductReviewControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_PRODUCT_REVIEW_INDEX = 'product-review/index';
-    const ROUTE_PRODUCT_REVIEW_SUBMIT = 'product-review/submit';
+    public const ROUTE_PRODUCT_REVIEW_INDEX = 'product-review/index';
+    public const ROUTE_PRODUCT_REVIEW_SUBMIT = 'product-review/submit';
 
-    const ID_ABSTRACT_PRODUCT_REGEX = '[1-9][0-9]*';
+    public const ID_ABSTRACT_PRODUCT_REGEX = '[1-9][0-9]*';
 
     /**
      * @param \Silex\Application $app
@@ -31,7 +31,7 @@ class ProductReviewControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addProductReviewRoute(): self
+    protected function addProductReviewRoute()
     {
         $this->createController('/{productReview}/index/{idProductAbstract}', static::ROUTE_PRODUCT_REVIEW_INDEX, 'ProductReviewWidget', 'Index', 'index')
             ->assert('productReview', $this->getAllowedLocalesPattern() . 'product-review|product-review')
@@ -44,7 +44,7 @@ class ProductReviewControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addProductReviewSubmitRoute(): self
+    protected function addProductReviewSubmitRoute()
     {
         $this->createController('/{productReview}/submit/{idProductAbstract}', static::ROUTE_PRODUCT_REVIEW_SUBMIT, 'ProductReviewWidget', 'Submit', 'index')
             ->assert('productReview', $this->getAllowedLocalesPattern() . 'product-review|product-review')

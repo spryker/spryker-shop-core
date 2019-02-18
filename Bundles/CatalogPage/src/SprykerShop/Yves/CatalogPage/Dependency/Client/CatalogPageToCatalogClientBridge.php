@@ -67,4 +67,15 @@ class CatalogPageToCatalogClientBridge implements CatalogPageToCatalogClientInte
     {
         return $this->catalogClient->setCatalogViewMode($mode, $response);
     }
+
+    /**
+     * @param string $searchString
+     * @param array $requestParameters
+     *
+     * @return int
+     */
+    public function catalogSearchCount(string $searchString, array $requestParameters = []): int
+    {
+        return $this->catalogClient->catalogSearchCount($searchString, $requestParameters);
+    }
 }

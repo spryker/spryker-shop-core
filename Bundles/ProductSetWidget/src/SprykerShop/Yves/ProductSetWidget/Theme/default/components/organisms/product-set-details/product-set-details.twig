@@ -1,0 +1,158 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'product-set-details',
+    tag: 'div'
+} %}
+
+{% define data = {
+    name: '',
+    products: required,
+    description: '',
+    images: []
+} %}
+
+{% block body %}
+    <div class="box">
+        {% block carousel %}
+            {% embed molecule('simple-carousel') with {
+                data: {
+                    slides: data.images
+                }
+            } only %}
+                {% block slide %}
+                    <div class="text-center">
+                        {% include atom('thumbnail') with {
+                            modifiers: ['bigger'],
+                            attributes: {
+                                itemprop: 'image',
+                                src: slide.externalUrlLarge
+                            }
+                        } only %}
+                    </div>
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    </div>
+
+    <div class="box">
+        {% block header %}
+            <form method="POST" action="{{ path('cart/add-items') }}">
+                {% set isDisabled = false %}
+
+                {% for product in data.products %}
+                    {% if product.idProductConcrete is not empty %}
+                        {% if product.available %}
+                            <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ product.sku }}" />
+                            <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1" />
+                        {% endif %}
+                    {% else %}
+                        {% set isDisabled = true %}
+                    {% endif %}
+                {% endfor %}
+
+                <button type="submit" class="button float-right" data-init-single-click {% if isDisabled %}disabled{% endif %}>
+                    {{ 'product.set.detail.add-all-to-cart' | trans }}
+                </button>
+
+                {% block title %}
+                    <h5>{{ 'product.set.detail.set-contents' | trans }}</h5>
+                {% endblock %}
+            </form>
+
+            <hr />
+            {% block description %}
+                {% if data.description is not empty %}
+                    <h6>{{ 'product.attribute.long_description' | trans }}</h6>
+                    <p>{{ data.description }}</p>
+                {% endif %}
+            {% endblock %}
+        {% endblock %}
+    </div>
+
+    {% block productSet %}
+        <form method="GET">
+            <div class="grid grid--stretch">
+                {% for product in data.products %}
+                    <div class="col col--sm-12 col--lg-4">
+                        {% embed molecule('product-card') with {
+                            modifiers: ['stretch'],
+                            data: {
+                                name: product.name,
+                                abstractId: product.idProductAbstract,
+                                url: product.url,
+                                imageUrl: product.images.0.externalUrlSmall | default,
+                                price: product.price,
+                                originalPrice: product.prices['ORIGINAL'] | default
+                            },
+                            embed: {
+                                product: product
+                            }
+                        } only %}
+                            {% block content %}
+                                {{parent()}}
+                                {% set isNotAvailable = embed.product.idProductConcrete and not embed.product.available %}
+
+                                {% embed molecule('variant-configurator', 'ProductDetailPage') with {
+                                    data: {
+                                        superAttributes: embed.product.attributeMap.superAttributes,
+                                        selectedAttributes: embed.product.selectedAttributes,
+                                        availableAttributes: embed.product.availableAttributes,
+                                        useExternalForm: true
+                                    },
+                                    embed: embed
+                                } only %}
+                                    {% block variant %}
+                                        <li class="list__item">
+                                            {% include molecule('variant', 'ProductDetailPage') with {
+                                                data: {
+                                                    name: name,
+                                                    formName: 'attributes[' ~ embed.product.idProductAbstract ~ '][' ~ name ~ ']',
+                                                    values: values,
+                                                    selectedValue: selectedValue,
+                                                    label: ('product.attribute.' ~ name) | trans,
+                                                    isAvailable: isAvailable
+                                                }
+                                            } only %}
+                                        </li>
+                                    {% endblock %}
+                                {% endembed %}
+
+                                {% if isNotAvailable %}
+                                    <p>
+                                        <strong>{{ "product.detail.out_of_stock" | trans }}</strong>
+                                    </p>
+                                {% endif %}
+                            {% endblock %}
+
+                            {% block actions %}
+                                {% set isDisabled = not embed.product.idProductConcrete or not embed.product.available %}
+
+                                {% if isDisabled %}
+                                    <button type="button" class="button button--expand" disabled>
+                                        {% include atom('icon') with {
+                                            data: {
+                                                name: 'cart-plus'
+                                            }
+                                        } only %}
+                                        {{ 'page.detail.add-to-cart' | trans }}
+                                    </button>
+                                {% else %}
+                                    <a href="{{ path('cart/add', {sku: embed.product.sku}) }}" class="button button--expand" data-init-single-click>
+                                        {% include atom('icon') with {
+                                            data: {
+                                                name: 'cart-plus'
+                                            }
+                                        } only %}
+                                        {{ 'page.detail.add-to-cart' | trans }}
+                                    </a>
+                                {% endif %}
+
+                            {% endblock %}
+                        {% endembed %}
+                    </div>
+                {% endfor %}
+            </div>
+        </form>
+    {% endblock %}
+{% endblock %}

@@ -1,6 +1,6 @@
 # SharedCartWidget Module
 
-Prodides YVES shared cart widget to display and share carts
+Provides widgets to display and share carts.
 
 ## Installation
 

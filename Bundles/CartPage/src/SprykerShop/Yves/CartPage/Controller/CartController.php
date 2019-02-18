@@ -9,8 +9,13 @@ namespace SprykerShop\Yves\CartPage\Controller;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
+use SprykerShop\Shared\CartPage\Plugin\AddCartItemPermissionPlugin;
+use SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin;
+use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -18,7 +23,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CartController extends AbstractController
 {
-    const PARAM_ITEMS = 'items';
+    use PermissionAwareTrait;
+
+    public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
+
+    public const PARAM_ITEMS = 'items';
+
+    protected const FIELD_QUANTITY_TO_NORMALIZE = 'quantity';
 
     /**
      * @param array|null $selectedAttributes
@@ -49,7 +60,7 @@ class CartController extends AbstractController
 
         $this->getFactory()
             ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
+            ->addResponseMessagesToMessenger();
 
         $quoteTransfer = $validateQuoteResponseTransfer->getQuoteTransfer();
 
@@ -79,6 +90,12 @@ class CartController extends AbstractController
      */
     public function addAction($sku, $quantity, array $optionValueIds, Request $request)
     {
+        if (!$this->canAddCartItem()) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
         $itemTransfer = new ItemTransfer();
         $itemTransfer
             ->setSku($sku)
@@ -89,6 +106,50 @@ class CartController extends AbstractController
         $this->getFactory()
             ->getCartClient()
             ->addItem($itemTransfer, $request->request->all());
+
+        $this->getFactory()
+            ->getZedRequestClient()
+            ->addResponseMessagesToMessenger();
+
+        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function quickAddAction(string $sku, int $quantity, Request $request): RedirectResponse
+    {
+        if (!$this->canAddCartItem()) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
+        return $this->executeQuickAddAction($sku, $quantity, $request);
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeQuickAddAction(string $sku, int $quantity, Request $request): RedirectResponse
+    {
+        $itemTransfer = (new ItemTransfer())
+            ->setSku($sku)
+            ->setQuantity($quantity)
+            ->addNormalizableField(static::FIELD_QUANTITY_TO_NORMALIZE)
+            ->setGroupKeyPrefix(uniqid('', true));
+
+        $this->getFactory()
+            ->getCartClient()
+            ->addItem($itemTransfer);
 
         $this->getFactory()
             ->getZedRequestClient()
@@ -105,13 +166,19 @@ class CartController extends AbstractController
      */
     public function removeAction($sku, $groupKey = null)
     {
+        if (!$this->canRemoveCartItem()) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
         $this->getFactory()
             ->getCartClient()
             ->removeItem($sku, $groupKey);
 
         $this->getFactory()
             ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
+            ->addResponseMessagesToMessenger();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -125,13 +192,19 @@ class CartController extends AbstractController
      */
     public function changeAction($sku, $quantity, $groupKey = null)
     {
+        if (!$this->canChangeCartItem()) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
         $this->getFactory()
             ->getCartClient()
             ->changeItemQuantity($sku, $groupKey, $quantity);
 
         $this->getFactory()
             ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
+            ->addResponseMessagesToMessenger();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -143,6 +216,12 @@ class CartController extends AbstractController
      */
     public function addItemsAction(Request $request)
     {
+        if (!$this->canAddCartItem()) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
         $items = (array)$request->request->get(self::PARAM_ITEMS);
         $itemTransfers = $this->mapItems($items);
 
@@ -152,7 +231,7 @@ class CartController extends AbstractController
 
         $this->getFactory()
             ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
+            ->addResponseMessagesToMessenger();
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
     }
@@ -169,6 +248,12 @@ class CartController extends AbstractController
      */
     public function updateAction($sku, $quantity, array $selectedAttributes, array $preselectedAttributes, $groupKey = null, array $optionValueIds = [])
     {
+        if (!$this->canChangeCartItem()) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        }
+
         $quoteTransfer = $this->getFactory()
             ->getCartClient()
             ->getQuote();
@@ -235,5 +320,55 @@ class CartController extends AbstractController
 
             $itemTransfer->addProductOption($productOptionTransfer);
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function canAddCartItem(): bool
+    {
+        return $this->canPerformCartItemAction(AddCartItemPermissionPlugin::KEY);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function canChangeCartItem(): bool
+    {
+        return $this->canPerformCartItemAction(ChangeCartItemPermissionPlugin::KEY);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function canRemoveCartItem(): bool
+    {
+        return $this->canPerformCartItemAction(RemoveCartItemPermissionPlugin::KEY);
+    }
+
+    /**
+     * @param string $permissionPluginKey
+     *
+     * @return bool
+     */
+    protected function canPerformCartItemAction(string $permissionPluginKey): bool
+    {
+        $quoteTransfer = $this->getFactory()
+            ->getCartClient()
+            ->getQuote();
+
+        if ($quoteTransfer->getCustomer() === null) {
+            return true;
+        }
+
+        if ($quoteTransfer->getCustomer()->getCompanyUserTransfer() === null) {
+            return true;
+        }
+
+        if ($this->can($permissionPluginKey)) {
+            return true;
+        }
+
+        return false;
     }
 }

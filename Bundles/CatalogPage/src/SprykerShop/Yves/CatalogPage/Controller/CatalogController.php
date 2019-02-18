@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CatalogPage\Controller;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
 use Spryker\Shared\Storage\StorageConstants;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,10 +20,16 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CatalogController extends AbstractController
 {
-    const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
+    use PermissionAwareTrait;
 
-    const URL_PARAM_VIEW_MODE = 'mode';
-    const URL_PARAM_REFERER_URL = 'referer-url';
+    public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
+
+    public const URL_PARAM_VIEW_MODE = 'mode';
+    public const URL_PARAM_REFERER_URL = 'referer-url';
+
+    protected const URL_PARAM_FILTER_BY_PRICE = 'price';
+    protected const URL_PARAM_SORTING = 'sort';
+    protected const PRICE_SORTING_DIRECTIONS = ['price_desc', 'price_asc'];
 
     /**
      * @param array $categoryNode
@@ -58,7 +65,7 @@ class CatalogController extends AbstractController
             ->getModuleConfig()
             ->isEmptyCategoryFilterValueVisible();
 
-        $parameters = $request->query->all();
+        $parameters = $this->getAllowedRequestParameters($request);
         $parameters[PageIndexMap::CATEGORY] = $idCategoryNode;
 
         $searchResults = $this
@@ -66,6 +73,7 @@ class CatalogController extends AbstractController
             ->getCatalogClient()
             ->catalogSearch($searchString, $parameters);
 
+        $searchResults = $this->reduceRestrictedSortingOptions($searchResults);
         $searchResults = $this->updateFacetFiltersByCategory($searchResults, $idCategory);
         $metaTitle = isset($categoryNode['meta_title']) ? $categoryNode['meta_title'] : '';
         $metaDescription = isset($categoryNode['meta_description']) ? $categoryNode['meta_description'] : '';
@@ -110,13 +118,14 @@ class CatalogController extends AbstractController
      */
     protected function executeFulltextSearchAction(Request $request): array
     {
-        $searchString = $request->query->get('q');
+        $searchString = $request->query->get('q', '');
 
         $searchResults = $this
             ->getFactory()
             ->getCatalogClient()
-            ->catalogSearch($searchString, $request->query->all());
+            ->catalogSearch($searchString, $this->getAllowedRequestParameters($request));
 
+        $searchResults = $this->reduceRestrictedSortingOptions($searchResults);
         $isEmptyCategoryFilterValueVisible = $this->getFactory()
             ->getModuleConfig()
             ->isEmptyCategoryFilterValueVisible();
@@ -183,13 +192,89 @@ class CatalogController extends AbstractController
             return $searchResults;
         }
 
+        $categoryFilters = [];
+        $categoryFiltersData = $productCategoryFilters->getFilterData();
+        foreach ($categoryFiltersData['filters'] as $filterData) {
+            $categoryFilters[$filterData['key']] = $filterData['isActive'];
+        }
+
         $searchResults[FacetResultFormatterPlugin::NAME] = $this->getFactory()->getProductCategoryFilterClient()
-            ->updateCategoryFacets(
+            ->updateFacetsByCategory(
                 $searchResults[FacetResultFormatterPlugin::NAME],
-                $idCategory,
-                $this->getLocale()
+                $categoryFilters
             );
 
         return $searchResults;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function getAllowedRequestParameters(Request $request): array
+    {
+        $parameters = $request->query->all();
+        $parameters = $this->reduceRestrictedParameters($parameters);
+
+        return $parameters;
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return array
+     */
+    protected function reduceRestrictedParameters(array $parameters): array
+    {
+        if ($this->can('SeePricePermissionPlugin')) {
+            return $parameters;
+        }
+
+        if ($this->isPriceFilteringParametersExist($parameters)) {
+            unset($parameters[static::URL_PARAM_FILTER_BY_PRICE]);
+        }
+
+        if ($this->isPriceSortingParametersExist($parameters)) {
+            unset($parameters[static::URL_PARAM_SORTING]);
+        }
+
+        return $parameters;
+    }
+
+    /**
+     * @param array $searchResults
+     *
+     * @return array
+     */
+    protected function reduceRestrictedSortingOptions(array $searchResults): array
+    {
+        if (!$this->can('SeePricePermissionPlugin') && isset($searchResults[static::URL_PARAM_SORTING])) {
+            $sortParamNames = $searchResults[static::URL_PARAM_SORTING]->getSortParamNames();
+            $grantedSortParamNames = array_diff($sortParamNames, static::PRICE_SORTING_DIRECTIONS);
+            $searchResults[static::URL_PARAM_SORTING]->setSortParamNames($grantedSortParamNames);
+        }
+
+        return $searchResults;
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return bool
+     */
+    protected function isPriceFilteringParametersExist(array $parameters): bool
+    {
+        return isset($parameters[static::URL_PARAM_FILTER_BY_PRICE]);
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return bool
+     */
+    protected function isPriceSortingParametersExist(array $parameters): bool
+    {
+        return isset($parameters[static::URL_PARAM_SORTING]) && in_array($parameters[static::URL_PARAM_SORTING], static::PRICE_SORTING_DIRECTIONS);
     }
 }

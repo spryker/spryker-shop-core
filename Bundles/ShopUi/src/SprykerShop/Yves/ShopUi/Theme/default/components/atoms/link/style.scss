@@ -1,1 +1,3 @@
-@include shop-ui-link;
+@include helper-import(atom, link) {
+    @include shop-ui-link;
+}

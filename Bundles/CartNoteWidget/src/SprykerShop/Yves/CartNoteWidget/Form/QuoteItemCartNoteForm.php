@@ -14,10 +14,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class QuoteItemCartNoteForm extends AbstractType
 {
-    const FORM_NAME = 'quoteItemCartNote';
-    const FIELD_CART_NOTE = 'cartNote';
-    const FIELD_SKU = 'sku';
-    const FIELD_GROUP_KEY = 'groupKey';
+    public const FORM_NAME = 'quoteItemCartNote';
+    public const FIELD_CART_NOTE = 'cartNote';
+    public const FIELD_SKU = 'sku';
+    public const FIELD_GROUP_KEY = 'groupKey';
 
     /**
      * @return string
@@ -45,7 +45,7 @@ class QuoteItemCartNoteForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCartNoteField(FormBuilderInterface $builder): self
+    protected function addCartNoteField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_CART_NOTE, TextareaType::class, [
             'label' => 'cart_note.item_form.enter_note',
@@ -60,7 +60,7 @@ class QuoteItemCartNoteForm extends AbstractType
      *
      * @return $this
      */
-    protected function addItemSkuField(FormBuilderInterface $builder): self
+    protected function addItemSkuField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_SKU, HiddenType::class);
 
@@ -72,7 +72,7 @@ class QuoteItemCartNoteForm extends AbstractType
      *
      * @return $this
      */
-    protected function addGroupKeyField(FormBuilderInterface $builder): self
+    protected function addGroupKeyField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_GROUP_KEY, HiddenType::class);
 

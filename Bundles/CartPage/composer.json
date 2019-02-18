@@ -1,28 +1,37 @@
 {
   "name": "spryker-shop/cart-page",
+  "type": "library",
   "description": "CartPage module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker-shop/shop-application": "^1.0.0",
-    "spryker-shop/shop-ui": "^1.0.0",
+    "spryker-shop/shop-ui": "^1.6.0",
     "spryker/availability": "^5.4.0 || ^6.0.0",
     "spryker/availability-storage": "^1.0.0",
-    "spryker/cart": "^5.0.0",
+    "spryker/cart": "^5.6.0",
     "spryker/cart-variant": "^1.0.0",
-    "spryker/kernel": "^3.19.0",
+    "spryker/kernel": "^3.24.0",
     "spryker/permission-extension": "^1.0.0",
     "spryker/product-storage": "^1.1.0",
     "spryker/symfony": "^3.1.0",
-    "spryker/zed-request": "^3.4.0"
+    "spryker/zed-request": "^3.6.0"
   },
   "require-dev": {
+    "spryker-shop/discount-widget": "*",
+    "spryker-shop/multi-cart-widget": "*",
+    "spryker-shop/product-option-widget": "*",
+    "spryker-shop/product-packaging-unit-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker-shop/discount-widget": "If you want to use components from module DiscountWidget or DiscountSummaryWidgetPlugin",
+    "spryker-shop/multi-cart-widget": "If you want to use components from module MultiCartWidget or CartOperationsWidgetPlugin",
     "spryker/permission": "If you want to use permissions plugins",
+    "spryker-shop/product-option-widget": "If you want to use components from module ProductOptionWidget or CartItemProductOptionWidgetPlugin",
+    "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or CartProductPackagingUnitWidgetPlugin",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

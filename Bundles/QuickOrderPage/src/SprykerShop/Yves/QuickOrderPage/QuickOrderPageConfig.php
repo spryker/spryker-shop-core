@@ -8,27 +8,43 @@
 namespace SprykerShop\Yves\QuickOrderPage;
 
 use Spryker\Yves\Kernel\AbstractBundleConfig;
-use SprykerShop\Shared\QuickOrderPage\QuickOrderPageConstants;
 
 class QuickOrderPageConfig extends AbstractBundleConfig
 {
+    protected const TEXT_ORDER_ROW_SPLITTER_PATTERN = '/\r\n|\r|\n/';
+    protected const TEXT_ORDER_SEPARATORS = [',', ';', ' '];
+    protected const UPLOAD_ROW_COUNT_LIMIT = 1000;
+    protected const DEFAULT_DISPLAYED_ROW_COUNT = 8;
+
     /**
-     * Deprecated: Do not use ENV config here.
-     *
-     * @return array
+     * @return string
      */
-    public function getAllowedSeparators(): array
+    public function getTextOrderRowSplitterPattern(): string
     {
-        return $this->get(QuickOrderPageConstants::ALLOWED_SEPARATORS, [',', ';', ' ']);
+        return static::TEXT_ORDER_ROW_SPLITTER_PATTERN;
     }
 
     /**
-     * Deprecated: Do not use ENV config here.
-     *
+     * @return string[]
+     */
+    public function getTextOrderSeparators(): array
+    {
+        return static::TEXT_ORDER_SEPARATORS;
+    }
+
+    /**
      * @return int
      */
-    public function getProductRowsNumber(): int
+    public function getDefaultDisplayedRowCount(): int
     {
-        return $this->get(QuickOrderPageConstants::PRODUCT_ROWS_NUMBER, 8);
+        return static::DEFAULT_DISPLAYED_ROW_COUNT;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUploadRowCountLimit(): int
+    {
+        return static::UPLOAD_ROW_COUNT_LIMIT;
     }
 }

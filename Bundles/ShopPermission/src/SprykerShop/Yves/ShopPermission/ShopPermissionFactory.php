@@ -26,4 +26,12 @@ class ShopPermissionFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ShopPermissionDependencyProvider::PERMISSION_TWIG_FUNCTION_PLUGINS);
     }
+
+    /**
+     * @return \SprykerShop\Yves\ShopApplication\Plugin\AbstractTwigExtensionPlugin[]|\Twig\Extension\ExtensionInterface[]
+     */
+    public function getPermissionTwigExtensionPlugins(): array
+    {
+        return $this->getProvidedDependency(ShopPermissionDependencyProvider::PERMISSION_TWIG_EXTENSION_PLUGINS);
+    }
 }

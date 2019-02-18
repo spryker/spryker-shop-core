@@ -1,0 +1,37 @@
+{% extends template('page-layout-company', 'CompanyPage') %}
+
+{% define data = {
+    title: 'company.account.address.delete_confimation_page' | trans,
+    activePage: 'business-unit',
+    companyBusinessUnit: _view.companyBusinessUnit,
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'company.account.page-title' | trans,
+                    url: url('company/overview')
+                },
+                {
+                    label: 'company.account.business_unit' | trans,
+                    url: url('company/business-unit')
+                },
+                {
+                    label: 'company.account.business_unit.delete.confirmation.warning' | trans
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
+{% block companyContent %}
+    <div class="box">
+        {% include molecule('business-unit-delete-message', 'CompanyPage') with {
+            data: {
+                companyBusinessUnit: data.companyBusinessUnit
+            }
+        } only %}
+    </div>
+{% endblock %}

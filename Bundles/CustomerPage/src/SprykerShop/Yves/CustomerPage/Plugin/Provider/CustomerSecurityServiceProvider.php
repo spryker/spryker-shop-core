@@ -23,8 +23,8 @@ use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationL
  */
 class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    const ROLE_USER = 'ROLE_USER';
-    const IS_AUTHENTICATED_ANONYMOUSLY = 'IS_AUTHENTICATED_ANONYMOUSLY';
+    public const ROLE_USER = 'ROLE_USER';
+    public const IS_AUTHENTICATED_ANONYMOUSLY = 'IS_AUTHENTICATED_ANONYMOUSLY';
 
     /**
      * @param \Silex\Application $app
@@ -87,9 +87,13 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
      */
     protected function setSecurityAccessRules(Application &$app)
     {
+        $customerSecuredPattern = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomerSecuredPattern();
+
         $app['security.access_rules'] = [
             [
-                Config::get(CustomerConstants::CUSTOMER_SECURED_PATTERN),
+                $customerSecuredPattern,
                 self::ROLE_USER,
             ],
             [

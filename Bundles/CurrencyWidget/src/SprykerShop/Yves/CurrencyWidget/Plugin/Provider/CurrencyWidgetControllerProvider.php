@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class CurrencyWidgetControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_CART = 'currency-switch';
+    public const ROUTE_CART = 'currency-switch';
 
     /**
      * @param \Silex\Application $app
@@ -27,7 +27,7 @@ class CurrencyWidgetControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCurrencySwitchRoute(): self
+    protected function addCurrencySwitchRoute()
     {
         $this->createController('/{currency}/switch', static::ROUTE_CART, 'CurrencyWidget', 'CurrencySwitch', 'index')
             ->assert('currency', $this->getAllowedLocalesPattern() . 'currency|currency')

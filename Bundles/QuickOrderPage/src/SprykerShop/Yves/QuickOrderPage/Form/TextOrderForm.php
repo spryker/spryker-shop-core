@@ -8,20 +8,18 @@
 namespace SprykerShop\Yves\QuickOrderPage\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
-use SprykerShop\Yves\QuickOrderPage\Form\Constraint\TextOrderCorrectConstraint;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageFactory getFactory()
+ * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig getConfig()
  */
 class TextOrderForm extends AbstractType
 {
     public const FIELD_TEXT_ORDER = 'textOrder';
-    public const SUBMIT_BUTTON_VERIFY = 'verifyTextOrder';
-    public const FIELD_TEXT_ORDER_PLACEHOLDER = 'quick-order.paste-order.input-placeholder.copy-paste-order';
+    public const SUBMIT_BUTTON_TEXT_ORDER = 'textOrder';
+    protected const FIELD_TEXT_ORDER_PLACEHOLDER = 'quick-order.paste-order.input-placeholder.copy-paste-order';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -40,18 +38,19 @@ class TextOrderForm extends AbstractType
      *
      * @return $this
      */
-    protected function addTextOrderField(FormBuilderInterface $builder): FormTypeInterface
+    protected function addTextOrderField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_TEXT_ORDER, TextareaType::class, [
-            'label' => false,
-            'attr' => ['placeholder' => static::FIELD_TEXT_ORDER_PLACEHOLDER],
-            'constraints' => [
-                new NotBlank(),
-                new TextOrderCorrectConstraint([
-                    TextOrderCorrectConstraint::OPTION_BUNDLE_CONFIG => $this->getFactory()->getBundleConfig(),
-                ]),
-            ],
-        ]);
+        $builder->add(
+            static::FIELD_TEXT_ORDER,
+            TextareaType::class,
+            [
+                'label' => false,
+                'attr' => ['placeholder' => static::FIELD_TEXT_ORDER_PLACEHOLDER],
+                'constraints' => [
+                    $this->getFactory()->createTextOrderCorrectConstraint(),
+                ],
+            ]
+        );
 
         return $this;
     }

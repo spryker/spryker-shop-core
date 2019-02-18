@@ -10,9 +10,12 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\WishlistWidget;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use molecule('wishlist-selector', 'WishlistWidget') instead.
+ */
 interface WishlistWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'WishlistWidgetPlugin';
+    public const NAME = 'WishlistWidgetPlugin';
 
     /**
      * @api

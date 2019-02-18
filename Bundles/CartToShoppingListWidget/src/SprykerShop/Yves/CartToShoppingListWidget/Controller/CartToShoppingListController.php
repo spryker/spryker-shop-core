@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CartToShoppingListWidget\Controller;
 use SprykerShop\Yves\CartToShoppingListWidget\CartToShoppingListWidgetConfig;
 use SprykerShop\Yves\CartToShoppingListWidget\Form\ShoppingListFromCartForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -30,13 +31,15 @@ class CartToShoppingListController extends AbstractController
         $cartToShoppingListForm = $this->getFactory()->getCartFromShoppingListForm(null)->handleRequest($request);
 
         if ($cartToShoppingListForm->isSubmitted() && $cartToShoppingListForm->isValid()) {
+            /** @var \Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer $shoppingListFromCartRequest */
             $shoppingListFromCartRequest = $cartToShoppingListForm->getData();
-            if (!$shoppingListFromCartRequest->getShoppingListName()) {
+            $shoppingListFromCartRequest->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
+
+            if (!$shoppingListFromCartRequest->getIdShoppingList()) {
                 $shoppingListFromCartRequest->setShoppingListName(
                     $cartToShoppingListForm->get(ShoppingListFromCartForm::FIELD_NEW_SHOPPING_LIST_NAME_INPUT)->getData()
                 );
             }
-            $shoppingListFromCartRequest->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
 
             $shoppingListTransfer = $this->getFactory()->getShoppingListClient()->createShoppingListFromQuote($shoppingListFromCartRequest);
 
@@ -47,8 +50,26 @@ class CartToShoppingListController extends AbstractController
             ]);
         }
 
-        $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_FAILED);
+        $this->addFormErrorMessage($cartToShoppingListForm->getErrors(true));
 
         return $this->redirectResponseInternal(CartToShoppingListWidgetConfig::CART_REDIRECT_URL);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormErrorIterator $formErrorIterator
+     *
+     * @return void
+     */
+    protected function addFormErrorMessage(FormErrorIterator $formErrorIterator): void
+    {
+        if ($formErrorIterator->count() === 0) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_FAILED);
+
+            return;
+        }
+
+        foreach ($formErrorIterator as $formError) {
+            $this->addErrorMessage($formError->getMessage());
+        }
     }
 }

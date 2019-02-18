@@ -13,14 +13,19 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
+ */
 class ShipmentForm extends AbstractType
 {
-    const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
-    const OPTION_SHIPMENT_METHODS = 'shipmentMethods';
+    public const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
+    public const OPTION_SHIPMENT_METHODS = 'shipmentMethods';
 
-    const SHIPMENT_PROPERTY_PATH = 'shipment';
-    const SHIPMENT_SELECTION = 'shipmentSelection';
-    const SHIPMENT_SELECTION_PROPERTY_PATH = self::SHIPMENT_PROPERTY_PATH . '.' . self::SHIPMENT_SELECTION;
+    public const SHIPMENT_PROPERTY_PATH = 'shipment';
+    public const SHIPMENT_SELECTION = 'shipmentSelection';
+    public const SHIPMENT_SELECTION_PROPERTY_PATH = self::SHIPMENT_PROPERTY_PATH . '.' . self::SHIPMENT_SELECTION;
+
+    protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
     /**
      * @return string
@@ -67,11 +72,19 @@ class ShipmentForm extends AbstractType
             'property_path' => static::SHIPMENT_SELECTION_PROPERTY_PATH,
             'placeholder' => false,
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
             ],
             'label' => false,
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 }

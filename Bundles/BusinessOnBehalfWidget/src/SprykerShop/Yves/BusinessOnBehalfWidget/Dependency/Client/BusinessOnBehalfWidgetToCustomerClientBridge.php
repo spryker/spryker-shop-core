@@ -23,7 +23,7 @@ class BusinessOnBehalfWidgetToCustomerClientBridge implements BusinessOnBehalfWi
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer()
     {

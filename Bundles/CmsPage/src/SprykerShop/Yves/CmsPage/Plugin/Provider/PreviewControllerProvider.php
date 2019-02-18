@@ -12,8 +12,8 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class PreviewControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_PREVIEW = 'cms-preview';
-    const PARAM_PAGE = 'page';
+    public const ROUTE_PREVIEW = 'cms-preview';
+    public const PARAM_PAGE = 'page';
 
     /**
      * @param \Silex\Application $app
@@ -28,7 +28,7 @@ class PreviewControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCmsPreviewRoute(): self
+    protected function addCmsPreviewRoute()
     {
         $this->createController(sprintf('/{cms}/preview/{%s}', static::PARAM_PAGE), self::ROUTE_PREVIEW, 'CmsPage', 'Preview', 'index')
             ->assert('cms', $this->getAllowedLocalesPattern() . 'cms|cms')

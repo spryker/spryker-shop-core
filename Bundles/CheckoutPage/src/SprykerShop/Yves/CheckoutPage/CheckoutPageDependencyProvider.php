@@ -34,41 +34,43 @@ use SprykerShop\Yves\MoneyWidget\Plugin\MoneyPlugin;
 
 class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CLIENT_QUOTE = 'CLIENT_QUOTE';
-    const CLIENT_CALCULATION = 'CLIENT_CALCULATION';
-    const CLIENT_CHECKOUT = 'CLIENT_CHECKOUT';
-    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    const CLIENT_CART = 'CLIENT_CART';
-    const CLIENT_SHIPMENT = 'CLIENT_SHIPMENT';
-    const CLIENT_GLOSSARY = 'CLIENT_GLOSSARY';
-    const CLIENT_PRICE = 'CLIENT_PRICE';
-    const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const CLIENT_CALCULATION = 'CLIENT_CALCULATION';
+    public const CLIENT_CHECKOUT = 'CLIENT_CHECKOUT';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_CART = 'CLIENT_CART';
+    public const CLIENT_SHIPMENT = 'CLIENT_SHIPMENT';
+    public const CLIENT_GLOSSARY = 'CLIENT_GLOSSARY';
+    public const CLIENT_PRICE = 'CLIENT_PRICE';
+    public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
 
-    const STORE = 'STORE';
+    public const STORE = 'STORE';
 
-    const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+    public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
 
-    const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
-    const PLUGIN_CUSTOMER_STEP_HANDLER = 'PLUGIN_CUSTOMER_STEP_HANDLER';
-    const PLUGIN_SHIPMENT_STEP_HANDLER = 'PLUGIN_SHIPMENT_STEP_HANDLER';
-    const PLUGIN_SHIPMENT_HANDLER = 'PLUGIN_SHIPMENT_HANDLER';
-    const PLUGIN_SHIPMENT_FORM_DATA_PROVIDER = 'PLUGIN_SHIPMENT_FORM_DATA_PROVIDER';
-    const PLUGIN_CHECKOUT_BREADCRUMB = 'PLUGIN_CHECKOUT_BREADCRUMB';
-    const PLUGIN_MONEY = 'PLUGIN_MONEY';
-    const PLUGIN_CUSTOMER_PAGE_WIDGETS = 'PLUGIN_CUSTOMER_PAGE_WIDGETS';
-    const PLUGIN_ADDRESS_PAGE_WIDGETS = 'PLUGIN_ADDRESS_PAGE_WIDGETS';
-    const PLUGIN_SHIPMENT_PAGE_WIDGETS = 'PLUGIN_SHIPMENT_PAGE_WIDGETS';
-    const PLUGIN_PAYMENT_PAGE_WIDGETS = 'PLUGIN_PAYMENT_PAGE_WIDGETS';
-    const PLUGIN_SUMMARY_PAGE_WIDGETS = 'PLUGIN_SUMMARY_PAGE_WIDGETS';
-    const PLUGIN_SUCCESS_PAGE_WIDGETS = 'PLUGIN_SUCCESS_PAGE_WIDGETS';
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+    public const PLUGIN_CUSTOMER_STEP_HANDLER = 'PLUGIN_CUSTOMER_STEP_HANDLER';
+    public const PLUGIN_SHIPMENT_STEP_HANDLER = 'PLUGIN_SHIPMENT_STEP_HANDLER';
+    public const PLUGIN_SHIPMENT_HANDLER = 'PLUGIN_SHIPMENT_HANDLER';
+    public const PLUGIN_SHIPMENT_FORM_DATA_PROVIDER = 'PLUGIN_SHIPMENT_FORM_DATA_PROVIDER';
+    public const PLUGIN_CHECKOUT_BREADCRUMB = 'PLUGIN_CHECKOUT_BREADCRUMB';
+    public const PLUGIN_MONEY = 'PLUGIN_MONEY';
+    public const PLUGIN_CUSTOMER_PAGE_WIDGETS = 'PLUGIN_CUSTOMER_PAGE_WIDGETS';
+    public const PLUGIN_ADDRESS_PAGE_WIDGETS = 'PLUGIN_ADDRESS_PAGE_WIDGETS';
+    public const PLUGIN_SHIPMENT_PAGE_WIDGETS = 'PLUGIN_SHIPMENT_PAGE_WIDGETS';
+    public const PLUGIN_PAYMENT_PAGE_WIDGETS = 'PLUGIN_PAYMENT_PAGE_WIDGETS';
+    public const PLUGIN_SUMMARY_PAGE_WIDGETS = 'PLUGIN_SUMMARY_PAGE_WIDGETS';
+    public const PLUGIN_SUCCESS_PAGE_WIDGETS = 'PLUGIN_SUCCESS_PAGE_WIDGETS';
 
-    const PAYMENT_METHOD_HANDLER = SprykerCheckoutDependencyProvider::PAYMENT_METHOD_HANDLER; // constant value must be BC because of dependency injector
-    const PAYMENT_SUB_FORMS = SprykerCheckoutDependencyProvider::PAYMENT_SUB_FORMS;  // constant value must be BC because of dependency injector
-    const CUSTOMER_STEP_SUB_FORMS = 'CUSTOMER_STEP_SUB_FORMS';
-    const ADDRESS_STEP_SUB_FORMS = 'ADDRESS_STEP_SUB_FORMS';
-    const ADDRESS_STEP_FORM_DATA_PROVIDER = 'ADDRESS_STEP_FORM_DATA_PROVIDER';
+    public const PAYMENT_METHOD_HANDLER = SprykerCheckoutDependencyProvider::PAYMENT_METHOD_HANDLER; // constant value must be BC because of dependency injector
+    public const PAYMENT_SUB_FORMS = SprykerCheckoutDependencyProvider::PAYMENT_SUB_FORMS;  // constant value must be BC because of dependency injector
+
+    public const CUSTOMER_STEP_SUB_FORMS = 'CUSTOMER_STEP_SUB_FORMS';
+    public const ADDRESS_STEP_SUB_FORMS = 'ADDRESS_STEP_SUB_FORMS';
+    public const ADDRESS_STEP_FORM_DATA_PROVIDER = 'ADDRESS_STEP_FORM_DATA_PROVIDER';
 
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+    public const PLUGIN_SUB_FORM_FILTERS = 'PLUGIN_SUB_FORM_FILTERS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -93,6 +95,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addSubFormPluginCollection($container);
         $container = $this->addPaymentMethodHandlerPluginCollection($container);
+        $container = $this->addSubFormFilterPlugins($container);
         $container = $this->addCustomerStepHandlerPlugin($container);
         $container = $this->addShipmentHandlerPluginCollection($container);
         $container = $this->addShipmentFormDataProviderPlugin($container);
@@ -615,5 +618,27 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSubFormFilterPlugins(Container $container)
+    {
+        $container[static::PLUGIN_SUB_FORM_FILTERS] = function () {
+            return $this->getSubFormFilterPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface[]
+     */
+    protected function getSubFormFilterPlugins()
+    {
+        return [];
     }
 }

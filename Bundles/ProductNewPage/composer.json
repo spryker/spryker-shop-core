@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/product-new-page",
+  "type": "library",
   "description": "ProductNewPage module",
   "license": "proprietary",
   "require": {

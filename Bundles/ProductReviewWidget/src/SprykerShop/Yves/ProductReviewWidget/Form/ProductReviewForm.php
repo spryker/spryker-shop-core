@@ -23,14 +23,16 @@ use Symfony\Component\Validator\Constraints\LessThanOrEqual;
  */
 class ProductReviewForm extends AbstractType
 {
-    const FIELD_RATING = ProductReviewRequestTransfer::RATING;
-    const FIELD_SUMMARY = ProductReviewRequestTransfer::SUMMARY;
-    const FIELD_DESCRIPTION = ProductReviewRequestTransfer::DESCRIPTION;
-    const FIELD_NICKNAME = ProductReviewRequestTransfer::NICKNAME;
-    const FIELD_PRODUCT = ProductReviewRequestTransfer::ID_PRODUCT_ABSTRACT;
+    public const FIELD_RATING = ProductReviewRequestTransfer::RATING;
+    public const FIELD_SUMMARY = ProductReviewRequestTransfer::SUMMARY;
+    public const FIELD_DESCRIPTION = ProductReviewRequestTransfer::DESCRIPTION;
+    public const FIELD_NICKNAME = ProductReviewRequestTransfer::NICKNAME;
+    public const FIELD_PRODUCT = ProductReviewRequestTransfer::ID_PRODUCT_ABSTRACT;
 
-    const UNSELECTED_RATING = -1;
-    const MINIMUM_RATING = 1;
+    public const UNSELECTED_RATING = -1;
+    public const MINIMUM_RATING = 1;
+
+    protected const VALIDATION_RATING_MESSAGE = 'validation.choice';
 
     /**
      * @return string
@@ -79,6 +81,7 @@ class ProductReviewForm extends AbstractType
                     new GreaterThanOrEqual(['value' => static::MINIMUM_RATING]),
                     new LessThanOrEqual(['value' => $this->getFactory()->getProductReviewClient()->getMaximumRating()]),
                 ],
+                'invalid_message' => static::VALIDATION_RATING_MESSAGE,
             ]
         );
 
@@ -100,9 +103,10 @@ class ProductReviewForm extends AbstractType
      */
     protected function getRatingFieldChoices()
     {
-        $unselectedChoice = [static::UNSELECTED_RATING => 'product_review.submit.rating.none'];
-        $choices = range(static::MINIMUM_RATING, $this->getFactory()->getProductReviewClient()->getMaximumRating());
-        $choices = $unselectedChoice + array_combine($choices, $choices);
+        $choiceKeys = $choiceValues = range(static::MINIMUM_RATING, $this->getFactory()->getProductReviewClient()->getMaximumRating());
+        array_unshift($choiceKeys, static::UNSELECTED_RATING);
+        array_unshift($choiceValues, 'product_review.submit.rating.none');
+        $choices = array_combine($choiceKeys, $choiceValues);
 
         return $choices;
     }

@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\StorageAvailabilityTransfer;
-
 class CustomerReorderWidgetToAvailabilityStorageClientBridge implements CustomerReorderWidgetToAvailabilityStorageClientInterface
 {
     /**
@@ -29,8 +27,18 @@ class CustomerReorderWidgetToAvailabilityStorageClientBridge implements Customer
      *
      * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer|null
      */
-    public function getProductAvailabilityByIdProductAbstract(int $idProductAbstract): ?StorageAvailabilityTransfer
+    public function getProductAvailabilityByIdProductAbstract($idProductAbstract)
     {
         return $this->availabilityClient->getProductAvailabilityByIdProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
+     */
+    public function getAvailabilityAbstract($idProductAbstract)
+    {
+        return $this->availabilityClient->getAvailabilityAbstract($idProductAbstract);
     }
 }

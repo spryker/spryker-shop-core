@@ -11,11 +11,17 @@ use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
+ */
 class PasswordForm extends AbstractType
 {
-    const FIELD_NEW_PASSWORD = 'new_password';
-    const FIELD_PASSWORD = 'password';
+    public const FIELD_NEW_PASSWORD = 'new_password';
+    public const FIELD_PASSWORD = 'password';
 
     /**
      * @return string
@@ -35,15 +41,16 @@ class PasswordForm extends AbstractType
     {
         $this
             ->addPasswordField($builder)
-            ->addNewPasswordField($builder);
+            ->addNewPasswordField($builder, $options);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addNewPasswordField(FormBuilderInterface $builder)
+    protected function addNewPasswordField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_NEW_PASSWORD, RepeatedType::class, [
             'first_name' => self::FIELD_PASSWORD,
@@ -58,6 +65,12 @@ class PasswordForm extends AbstractType
             'second_options' => [
                 'label' => 'customer.password.confirm.new_password',
                 'attr' => ['autocomplete' => 'off'],
+            ],
+            'constraints' => [
+                new NotBlank(),
+                new Length([
+                    'min' => $this->getConfig()->getCustomerPasswordMinLength(),
+                ]),
             ],
         ]);
 

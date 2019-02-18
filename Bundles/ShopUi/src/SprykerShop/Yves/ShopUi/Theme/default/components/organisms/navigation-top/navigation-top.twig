@@ -17,34 +17,47 @@
 
 {% block body %}
     <ul class="menu {{menuClass}}">
-        <li class="menu__item">{{ widgetGlobal('PriceModeSwitcherWidgetPlugin') }}</li>
-        {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
-        <li class="menu__item">{{ widgetGlobal('CurrencyWidgetPlugin') }}</li>
+        <li class="menu__item">
+            {% widget 'PriceModeSwitcherWidget' only %}
+            {% elsewidget 'PriceModeSwitcherWidgetPlugin' only %} {# @deprecated Use PriceModeSwitcherWidget instead. #}
+            {% endwidget %}
+        </li>
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
         <li class="menu__item">
-            {{ widgetGlobal(
-                'LanguageSwitcherWidgetPlugin',
+            {%- widget 'CurrencyWidget' only -%}
+            {%- elsewidget 'CurrencyWidgetPlugin' only -%} {# @deprecated Use CurrencyWidget instead. #}
+            {%- endwidget -%}
+        </li>
+        {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
+        <li class="menu__item">
+            {% widget 'LanguageSwitcherWidget' args [
                 app.request.pathInfo,
                 app.request.queryString,
                 app.request.requestUri
-            ) }}
+            ] only %}
+            {% elsewidget 'LanguageSwitcherWidgetPlugin' args [
+                app.request.pathInfo,
+                app.request.queryString,
+                app.request.requestUri
+            ] only %} {# @deprecated Use LanguageSwitcherWidget instead. #}
+            {% endwidget %}
         </li>
         <li class="menu__item">
-            {% if widgetGlobalExists('DisplayOnBehalfBusinessWidgetPlugin') %}
-                {{ widgetGlobal('DisplayOnBehalfBusinessWidgetPlugin') }}
-            {% endif %}
+            {% widget 'BusinessOnBehalfStatusWidget' only %}
+            {% elsewidget 'DisplayOnBehalfBusinessWidgetPlugin' only %} {# @deprecated Use BusinessOnBehalfStatusWidget instead. #}
+            {% endwidget %}
         </li>
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
         <li class="menu__item menu__item--has-children-dropdown">
-            {% if widgetGlobalExists('MiniCartWidgetPlugin') %}
-                {{ widgetGlobal('MiniCartWidgetPlugin', cartQuantity) }}
-            {% else %}
+            {% widget 'MiniCartWidget' args [cartQuantity] only %}
+            {% elsewidget 'MiniCartWidgetPlugin' args [cartQuantity] only %} {# @deprecated Use MiniCartWidget instead. #}
+            {% nowidget %}
                 {% include molecule('cart-items-counter') with {
                     data: {
                         quantity: data.cartQuantity
                     }
                 } only %}
-            {% endif %}
+            {% endwidget %}
         </li>
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
         <li class="menu__item"><a href="{{ url('quick-order') }}">{{ 'quick-order.page-title'|trans }}</a></li>
@@ -52,10 +65,33 @@
 
         {% if data.showUserMenu %}
             {% if is_granted('ROLE_USER') %}
+                {% widget 'ShoppingListNavigationMenuWidget' with {withSeparators: data.withSeparators} only %}
+                    {% block body %}
+                        <li class="menu__item menu__item--has-children-dropdown">
+                            {{ parent() }}
+                        </li>
+                        {% if withSeparators %}<li class="menu__separator"></li>{% endif %}
+                    {% endblock %}
+                {% elsewidget 'ShoppingListWidgetPlugin' with {withSeparators: data.withSeparators} only %} {# @deprecated Use ShoppingListNavigationMenuWidget instead. #}
+                    {% block body %}
+                        <li class="menu__item menu__item--has-children-dropdown">
+                            {{ parent() }}
+                        </li>
+                        {% if withSeparators %}<li class="menu__separator"></li>{% endif %}
+                    {% endblock %}
+                {% endwidget %}
                 <li class="menu__item"><a href="{{ url('customer/overview') }}">{{ 'customer.profile'|trans }}</a></li>
-                {% if widgetGlobalExists('MenuItemCompanyWidgetPlugin') %}
-                    <li class="menu__item">{% spaceless %}{{ widgetGlobal('MenuItemCompanyWidgetPlugin') }}{% endspaceless %}</li>
-                {% endif %}
+
+                {% widget 'CompanyMenuItemWidget' only %}
+                    {% block body %}
+                        <li class="menu__item">{% spaceless %}{{ parent() }}{% endspaceless %}</li>
+                    {% endblock %}
+                {% elsewidget 'MenuItemCompanyWidgetPlugin' only %} {# @deprecated Use CompanyMenuItemWidget instead. #}
+                    {% block body %}
+                        <li class="menu__item">{% spaceless %}{{ parent() }}{% endspaceless %}</li>
+                    {% endblock %}
+                {% endwidget %}
+
                 <li class="menu__item"><a href="{{ url('wishlist/overview') }}">{{ 'wishlist.wishlist'|trans }}</a></li>
                 <li class="menu__item"><a href="{{ url('logout') }}">{{ 'customer.logout'|trans }}</a></li>
             {% else %}

@@ -5,15 +5,13 @@
 } %}
 
 {% block body %}
-    <div class="box">
-        <a href="{{ url('customer/newsletter') }}" class="float-right">{{ 'general.edit.button' | trans }}</a>
-        <h5>{{ 'customer.account.newsletter' | trans }}</h5>
+    <a href="{{ url('customer/newsletter') }}" class="float-right">{{ 'general.edit.button' | trans }}</a>
+    <h5>{{ 'customer.account.newsletter' | trans }}</h5>
 
-        <hr />
-        {% if data.isSubscribed %}
-            {{ 'customer.newsletter.subscribed' | trans }}
-        {% else %}
-            {{ 'customer.newsletter.not_subscribed' | trans }}
-        {% endif %}
-    </div>
+    <hr/>
+    {% if data.isSubscribed %}
+        {{ 'customer.newsletter.subscribed' | trans }}
+    {% else %}
+        {{ 'customer.newsletter.not_subscribed' | trans }}
+    {% endif %}
 {% endblock %}

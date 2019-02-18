@@ -29,14 +29,13 @@
     {% if categoryPatrentNodes is not empty %}
         {{ self.renderBreadcrumbSteps(categoryPatrentNodes | first, false, filterPath) }}
 
-        {% if not isLastLeaf %}
-            {% include molecule('breadcrumb-step') with {
-                data: {
-                    url: categoryUrl,
-                    label: categoryLabel
-                }
-            } only %}
-        {% endif %}
+        {% include molecule('breadcrumb-step') with {
+            data: {
+                url: categoryUrl,
+                label: categoryLabel,
+                withChevron: not isLastLeaf
+            }
+        } only %}
     {% endif %}
 {% endmacro %}
 
@@ -55,15 +54,8 @@
 {% endblock %}
 
 {% block content %}
-    <form method="GET" class="grid js-form-input-default-value-disabler__catalog-form">
+    <form method="GET" class="grid" data-init-default-value-form>
         {% block form %}
-            {% include molecule('form-input-default-value-disabler') with {
-                attributes: {
-                    'form-selector': '.js-form-input-default-value-disabler__catalog-form',
-                    'input-selector': '.js-form-input-default-value-disabler__catalog-input'
-                }
-            } only %}
-
             <div class="col col--sm-12 col--lg-4 col--xl-3">
                 {% block filterBar %}
                     {% include molecule('view-mode-switch', 'CatalogPage') with {
@@ -113,7 +105,9 @@
 
                 <div class="grid grid--stretch">
                     {% for product in data.products %}
-                        {{ widget('ProductWidgetPlugin', product, data.viewMode) }}
+                        {% widget 'CatalogPageProductWidget' args [product, data.viewMode] only %}
+                        {% elsewidget 'ProductWidgetPlugin' args [product, data.viewMode] only %} {# @deprecated Use CatalogPageProductWidget instead. #}
+                        {% endwidget %}
                     {% endfor %}
                 </div>
 

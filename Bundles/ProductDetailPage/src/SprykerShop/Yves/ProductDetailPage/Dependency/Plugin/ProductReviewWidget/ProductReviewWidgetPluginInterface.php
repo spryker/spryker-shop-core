@@ -9,9 +9,12 @@ namespace SprykerShop\Yves\ProductDetailPage\Dependency\Plugin\ProductReviewWidg
 
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\ProductReviewWidget\Widget\ProductDetailPageReviewWidget instead.
+ */
 interface ProductReviewWidgetPluginInterface extends WidgetPluginInterface
 {
-    const NAME = 'ProductReviewWidgetPlugin';
+    public const NAME = 'ProductReviewWidgetPlugin';
 
     /**
      * @api

@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CmsContentWidgetProductSetConnector\Dependency\Plugin\ProductSetWidget\ProductSetWidgetPluginInterface;
 
+/**
+ * @deprecated Use molecule('product-set', 'ProductSetWidget') instead.
+ */
 class ProductSetWidgetPlugin extends AbstractWidgetPlugin implements ProductSetWidgetPluginInterface
 {
     /**

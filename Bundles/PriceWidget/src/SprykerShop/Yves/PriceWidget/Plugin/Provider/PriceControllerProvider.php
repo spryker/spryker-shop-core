@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class PriceControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_PRICE_SWITCH = 'price-mode-switch';
+    public const ROUTE_PRICE_SWITCH = 'price-mode-switch';
 
     /**
      * @param \Silex\Application $app
@@ -27,7 +27,7 @@ class PriceControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addPriceModeSwitchRoute(): self
+    protected function addPriceModeSwitchRoute()
     {
         $this->createController('/{price}/mode-switch', static::ROUTE_PRICE_SWITCH, 'PriceWidget', 'PriceModeSwitch', 'index')
             ->assert('price', $this->getAllowedLocalesPattern() . 'price|price')

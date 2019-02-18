@@ -9,16 +9,22 @@ namespace SprykerShop\Yves\ShoppingListPage\Form;
 
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig getConfig()
+ */
 class ShoppingListUpdateForm extends AbstractType
 {
     public const FIELD_NAME = 'name';
     public const FIELD_ID = 'idShoppingList';
+    public const FIELD_ITEMS = 'items';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -42,6 +48,7 @@ class ShoppingListUpdateForm extends AbstractType
     {
         $this->addNameField($builder);
         $this->addIdField($builder);
+        $this->addItemsField($builder);
     }
 
     /**
@@ -52,7 +59,7 @@ class ShoppingListUpdateForm extends AbstractType
     protected function addNameField(FormBuilderInterface $builder): void
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
-            'label' => 'customer.account.shopping_list.overview.name',
+            'label' => false,
             'required' => true,
             'constraints' => [
                 new NotBlank(),
@@ -68,5 +75,28 @@ class ShoppingListUpdateForm extends AbstractType
     protected function addIdField(FormBuilderInterface $builder): void
     {
         $builder->add(static::FIELD_ID, HiddenType::class);
+        $builder->get(static::FIELD_ID)
+            ->addModelTransformer(new CallbackTransformer(
+                function ($id) {
+                    return $id;
+                },
+                function ($idString) {
+                    return (int)$idString;
+                }
+            ));
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
+     */
+    protected function addItemsField(FormBuilderInterface $builder): void
+    {
+        $builder->add(static::FIELD_ITEMS, CollectionType::class, [
+            'required' => false,
+            'label' => false,
+            'entry_type' => ShoppingListItemForm::class,
+        ]);
     }
 }

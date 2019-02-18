@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class HomePageControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_HOME = 'home';
+    public const ROUTE_HOME = 'home';
 
     /**
      * @param \Silex\Application $app
@@ -27,7 +27,7 @@ class HomePageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addHomeRoute(): self
+    protected function addHomeRoute()
     {
         $this->createController('/{root}', self::ROUTE_HOME, 'HomePage', 'Index')
             ->assert('root', $this->getAllowedLocalesPattern())

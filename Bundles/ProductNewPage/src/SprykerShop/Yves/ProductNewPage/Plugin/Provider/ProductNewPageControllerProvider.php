@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class ProductNewPageControllerProvider extends AbstractYvesControllerProvider
 {
-    const ROUTE_NEW_PRODUCTS = 'new-products';
+    public const ROUTE_NEW_PRODUCTS = 'new-products';
 
     /**
      * @param \Silex\Application $app
@@ -27,7 +27,7 @@ class ProductNewPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addNewProductsRoute(): self
+    protected function addNewProductsRoute()
     {
         $this->createController('/{newProducts}{categoryPath}', self::ROUTE_NEW_PRODUCTS, 'ProductNewPage', 'NewProducts', 'index')
             ->assert('newProducts', $this->getAllowedLocalesPattern() . 'new|new')
