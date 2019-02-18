@@ -34,9 +34,9 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
      *
      * @return bool
      */
-    public function isQuoteCanBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool
+    public function canQuoteBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->quoteApprovalClient->isQuoteCanBeApprovedByCurrentCustomer($quoteTransfer);
+        return $this->quoteApprovalClient->canQuoteBeApprovedByCurrentCustomer($quoteTransfer);
     }
 
     /**
@@ -45,9 +45,9 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
      *
      * @return bool
      */
-    public function hasQuoteApprovalsForCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): bool
+    public function isCompanyUserInQuoteApproverList(QuoteTransfer $quoteTransfer, int $idCompanyUser): bool
     {
-        return $this->quoteApprovalClient->hasQuoteApprovalsForCompanyUser($quoteTransfer, $idCompanyUser);
+        return $this->quoteApprovalClient->isCompanyUserInQuoteApproverList($quoteTransfer, $idCompanyUser);
     }
 
     /**

@@ -21,7 +21,7 @@ interface QuoteApprovalWidgetToQuoteApprovalClientInterface
      *
      * @return bool
      */
-    public function isQuoteCanBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool;
+    public function canQuoteBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -29,7 +29,7 @@ interface QuoteApprovalWidgetToQuoteApprovalClientInterface
      *
      * @return bool
      */
-    public function hasQuoteApprovalsForCompanyUser(QuoteTransfer $quoteTransfer, int $idCompanyUser): bool;
+    public function isCompanyUserInQuoteApproverList(QuoteTransfer $quoteTransfer, int $idCompanyUser): bool;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
