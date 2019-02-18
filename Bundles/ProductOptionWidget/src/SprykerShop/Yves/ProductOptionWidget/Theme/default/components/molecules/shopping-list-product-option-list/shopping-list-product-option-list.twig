@@ -8,6 +8,10 @@
     options: required
 } %}
 
+{% define attributes = {
+    'data-product-available': false
+} %}
+
 {% block body %}
     <ul class="grid spacing-x spacing-x--small spacing-bottom spacing-bottom--big">
     {% for child in data.options %}

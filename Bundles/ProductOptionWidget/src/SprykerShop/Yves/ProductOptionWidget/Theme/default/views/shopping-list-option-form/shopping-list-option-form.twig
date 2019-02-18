@@ -5,6 +5,10 @@
     rowClass: rowClass
 } %}
 
+{% define attributes = {
+    'data-product-available': false
+} %}
+
 {% block body %}
     {% if data.options is not empty %}
         <tr class="{{ data.rowClass }}">
