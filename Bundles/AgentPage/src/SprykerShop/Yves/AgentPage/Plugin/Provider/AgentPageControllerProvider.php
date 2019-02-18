@@ -58,7 +58,7 @@ class AgentPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addOverviewRoute(): self
+    protected function addOverviewRoute()
     {
         $this->createController('/{agent}/overview', static::ROUTE_AGENT_OVERVIEW, 'AgentPage', 'Agent', 'index')
             ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
