@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\CheckoutWidget\CheckoutWidgetFactory getFactory()
  */
-class ProcceedToCheckoutButtonWidget extends AbstractWidget
+class ProceedToCheckoutButtonWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -28,7 +28,7 @@ class ProcceedToCheckoutButtonWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ProcceedToCheckoutButtonWidget';
+        return 'ProceedToCheckoutButtonWidget';
     }
 
     /**
