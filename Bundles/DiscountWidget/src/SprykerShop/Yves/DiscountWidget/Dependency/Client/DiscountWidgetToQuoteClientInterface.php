@@ -19,6 +19,13 @@ interface DiscountWidgetToQuoteClientInterface
     public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool;
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool;
+
+    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function getQuote();
