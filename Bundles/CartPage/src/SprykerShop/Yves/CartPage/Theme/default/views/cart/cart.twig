@@ -104,7 +104,17 @@
                         {% endwidget %}
                         <hr />
                     {% endif %}
-                    
+
+                    {% if data.isQuoteEditable %}
+                        {% widget 'ProductConcreteAddWidget' args [
+                            'cart.quick_add_to_cart' | trans,
+                            'cart.quick_add_to_cart.submit' | trans,
+                            'cart/quick-add',
+                            true
+                        ] only %}
+                        {% endwidget %}
+                    {% endif %}
+
                     {% include molecule('cart-summary', 'CartPage') with {
                         data: {
                             cart: data.cart,

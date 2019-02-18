@@ -101,8 +101,9 @@ export default class AjaxProvider extends Component {
 
         const queryStringParams = [];
 
-        this.queryParams.forEach((value: String, key: String) => {
-            queryStringParams.push(`${key}=${value}`);
+        this.queryParams.forEach((value: string, key: String) => {
+            const encodeValue = encodeURIComponent(value);
+            queryStringParams.push(`${key}=${encodeValue}`);
         });
 
         return url + '?' + queryStringParams.join('&');
