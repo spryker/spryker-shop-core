@@ -37,7 +37,11 @@
 
             {% if not can('PlaceOrderPermissionPlugin') %}
             <p>
-                {{ 'quote_approval_widget.limit_text' | trans({'%amount%': data.limit / 100 ~ data.quote.currency.symbol}) }}
+                {% if data.limit is null %}
+                    {{ 'quote_approval_widget.no_limit_text' }}
+                {% else %}
+                    {{ 'quote_approval_widget.limit_text' | trans({'%amount%': data.limit | money}) }}
+                {% endif %}
             </p>
             {% endif %}
 
