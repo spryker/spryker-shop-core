@@ -1,0 +1,37 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-request-detail',
+    tag: 'div',
+} %}
+
+{% define data = {
+    quoteRequest: required
+} %}
+
+{% block body %}
+    <div class="grid grid--middle text-small text-left">
+        <div class="col col--sm-3">
+            <p>
+                <a href="{{ path('agent-quote-request/details', { quoteRequestReference: (data.quoteRequest.quoteRequestReference)}) }}">
+                    #{{ data.quoteRequest.quoteRequestReference }}
+                </a>
+            </p>
+            <p>
+                {{ data.quoteRequest.latestVersion ? (data.quoteRequest.latestVersion.quote.items | length) : 0 }}
+                {{ 'agent_quote_request_widget.items' | trans }}
+            </p>
+        </div>
+        <div class="col col--sm-6">
+            <p>{{ data.quoteRequest.companyUser.company.name }}</p>
+            <p>{{ data.quoteRequest.companyUser.companyBusinessUnit.name }}</p>
+            <p>{{ data.quoteRequest.companyUser.customer.firstName ~ ' ' ~ data.quoteRequest.companyUser.customer.lastName }}</p>
+        </div>
+        <div class="col col--sm-3 text-right">
+            <p>{{ data.quoteRequest.status }}</p>
+            {% if (data.quoteRequest.latestVersion) %}
+                <strong>{{ data.quoteRequest.latestVersion.quote.totals.subtotal | default(0) | money(true, data.quoteRequest.latestVersion.quote.currency.code) }}</strong>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

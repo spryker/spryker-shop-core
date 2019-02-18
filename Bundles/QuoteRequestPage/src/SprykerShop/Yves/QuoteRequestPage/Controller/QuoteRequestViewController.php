@@ -67,6 +67,12 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
         /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
         $quoteRequestTransfer = $quoteRequestForm->getData();
 
+        if (!$quoteRequestTransfer->getLatestVersion()) {
+            return [
+                'quoteRequestForm' => $quoteRequestForm->createView(),
+            ];
+        }
+
         $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
         $cartItems = $quoteTransfer->getItems()->getArrayCopy();
 

@@ -30,7 +30,9 @@
                     {{ quoteRequest.companyUser.customer.firstName ~ ' ' ~ quoteRequest.companyUser.customer.lastName }}
                 </td>
                 <td class="text-center">
-                    <strong>{{ quoteRequest.latestVersion.quote.totals.subtotal | default(0) | money(true, quoteRequest.latestVersion.quote.currency.code) }}</strong>
+                    {% if (quoteRequest.latestVersion) %}
+                        <strong>{{ quoteRequest.latestVersion.quote.totals.subtotal | default(0) | money(true, quoteRequest.latestVersion.quote.currency.code) }}</strong>
+                    {% endif %}
                 </td>
                 <td class="text-center">{{ quoteRequest.createdAt | date('d.m.Y H:i:s') }}</td>
                 <td class="text-center">{{ ('quote_request.status.' ~ quoteRequest.status) | trans }}</td>

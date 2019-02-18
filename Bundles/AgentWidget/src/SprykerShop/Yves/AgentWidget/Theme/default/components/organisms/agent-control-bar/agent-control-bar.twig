@@ -40,6 +40,14 @@
                         </div>
                     </form>
                 {% endif %}
+
+                {% widget 'AgentQuoteRequestOverviewWidget' only %}
+                    {% block body %}
+                        <li class="menu__item menu__item--has-children-dropdown">
+                            {{ parent() }}
+                        </li>
+                    {% endblock %}
+                {% endwidget %}
             </div>
             <div class="col col--md-7 col--sm-12 text-right">
                 <div>
