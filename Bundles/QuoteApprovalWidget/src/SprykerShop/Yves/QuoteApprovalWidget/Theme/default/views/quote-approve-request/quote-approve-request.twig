@@ -38,7 +38,7 @@
             {% if not can('PlaceOrderPermissionPlugin') %}
             <p>
                 {% if data.limit is null %}
-                    {{ 'quote_approval_widget.no_limit_text' }}
+                    {{ 'quote_approval_widget.no_limit_text' | trans }}
                 {% else %}
                     {{ 'quote_approval_widget.limit_text' | trans({'%amount%': data.limit | money}) }}
                 {% endif %}
