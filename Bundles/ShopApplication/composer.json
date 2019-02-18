@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/shop-application",
+  "type": "library",
   "description": "ShopApplication module",
   "license": "proprietary",
   "require": {
@@ -28,6 +29,11 @@
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",
