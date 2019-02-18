@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CartPage\Dependency\Client;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CartPageToCartClientInterface
 {

@@ -100,7 +100,7 @@ class QuoteApproveRequestFormDataProvider implements QuoteApproveRequestFormData
     protected function getApproversList(QuoteTransfer $quoteTransfer, string $localeName): array
     {
         $quoteApproverCollection = $this->quoteApprovalClient
-            ->getQuoteApproversList($quoteTransfer);
+            ->getQuoteApproverList($quoteTransfer);
 
         $quoteApproverList = [];
 
