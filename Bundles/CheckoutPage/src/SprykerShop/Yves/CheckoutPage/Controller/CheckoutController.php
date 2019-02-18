@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CheckoutPage\Controller;
 
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\MultiShipmentResolverTrait;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CheckoutController extends AbstractController
 {
     use PermissionAwareTrait;
+    use MultiShipmentResolverTrait;
 
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
@@ -76,10 +78,15 @@ class CheckoutController extends AbstractController
             return $response;
         }
 
+        /**
+         * @deprecated Will be removed in next major release.
+         */
+        $template = $this->getFactory()->creatStepFormResolver()->getTemplateForAddressStep();
+
         return $this->view(
             $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),
-            '@CheckoutPage/views/address/address.twig'
+            $template
         );
     }
 
@@ -101,10 +108,15 @@ class CheckoutController extends AbstractController
             return $response;
         }
 
+        /**
+         * @deprecated Will be removed in next major release.
+         */
+        $template = $this->getFactory()->creatStepFormResolver()->getTemplateForShipmentStep();
+
         return $this->view(
             $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),
-            '@CheckoutPage/views/shipment/shipment.twig'
+            $template
         );
     }
 
@@ -154,9 +166,7 @@ class CheckoutController extends AbstractController
         /**
          * @deprecated Will be removed in next major release.
          */
-        $template = $this->isMultiShipmentEnabled()
-            ? '@CheckoutPage/views/summary-multi-shipment/summary-multi-shipment.twig'
-            : '@CheckoutPage/views/summary/summary.twig';
+        $template = $this->getFactory()->creatStepFormResolver()->getTemplateForSummaryStep();
 
         return $this->view(
             $viewData,
@@ -220,13 +230,5 @@ class CheckoutController extends AbstractController
     protected function createStepProcess()
     {
         return $this->getFactory()->createCheckoutProcess();
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isMultiShipmentEnabled(): bool
-    {
-        return defined('\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer::FK_SALES_SHIPMENT');
     }
 }

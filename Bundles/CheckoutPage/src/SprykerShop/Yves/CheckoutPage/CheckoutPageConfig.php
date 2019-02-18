@@ -11,11 +11,70 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class CheckoutPageConfig extends AbstractBundleConfig
 {
+    public const TEMPLATE_SINGLE_SHIPMENT_ADDRESS_STEP = '@CheckoutPage/views/address/address.twig';
+    public const TEMPLATE_MULTI_SHIPMENT_ADDRESS_STEP = '@CheckoutPage/views/address-multi-shipment/address-multi-shipment.twig';
+
+    public const TEMPLATE_SINGLE_SHIPMENT_SHIPMENT_STEP = '@CheckoutPage/views/shipment/shipment.twig';
+    public const TEMPLATE_MULTI_SHIPMENT_SHIPMENT_STEP = '@CheckoutPage/views/shipment-multi-shipment/shipment-multi-shipment.twig';
+
+    public const TEMPLATE_SINGLE_SHIPMENT_SUMMARY_STEP = '@CheckoutPage/views/summary/summary.twig';
+    public const TEMPLATE_MULTI_SHIPMENT_SUMMARY_STEP = '@CheckoutPage/views/summary-multi-shipment/summary-multi-shipment.twig';
+
     /**
      * @return bool
      */
     public function cleanCartAfterOrderCreation()
     {
         return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMultiShipmentEnabled(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @param bool $isMultiShipmentEnabled
+     *
+     * @return string
+     */
+    public function getTemplateForAddressStep(bool $isMultiShipmentEnabled): string
+    {
+        if ($isMultiShipmentEnabled) {
+            return self::TEMPLATE_MULTI_SHIPMENT_ADDRESS_STEP;
+        }
+
+        return self::TEMPLATE_SINGLE_SHIPMENT_ADDRESS_STEP;
+    }
+
+    /**
+     * @param bool $isMultiShipmentEnabled
+     *
+     * @return string
+     */
+    public function getTemplateForShipmentStep(bool $isMultiShipmentEnabled): string
+    {
+        if ($isMultiShipmentEnabled) {
+            return self::TEMPLATE_MULTI_SHIPMENT_SHIPMENT_STEP;
+        }
+
+        return self::TEMPLATE_SINGLE_SHIPMENT_SHIPMENT_STEP;
+    }
+
+    /**
+     * @param bool $isMultiShipmentEnabled
+     *
+     * @return string
+     */
+    public function getTemplateForSummaryStep(bool $isMultiShipmentEnabled): string
+    {
+        if ($isMultiShipmentEnabled) {
+            return self::TEMPLATE_MULTI_SHIPMENT_SUMMARY_STEP;
+        }
+
+        return self::TEMPLATE_SINGLE_SHIPMENT_SUMMARY_STEP;
     }
 }

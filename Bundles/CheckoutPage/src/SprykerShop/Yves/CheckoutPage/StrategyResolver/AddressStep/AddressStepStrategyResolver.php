@@ -11,12 +11,15 @@ use Closure;
 use Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\SaverInterface;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\MultiShipmentResolverTrait;
 
 /**
  * @deprecated Will be removed in next major release.
  */
 class AddressStepStrategyResolver implements AddressStepStrategyResolverInterface
 {
+    use MultiShipmentResolverTrait;
+
     /**
      * @var array|\Closure[]
      */
@@ -35,7 +38,7 @@ class AddressStepStrategyResolver implements AddressStepStrategyResolverInterfac
      */
     public function resolveSaver(): SaverInterface
     {
-        if (!defined('\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer::FK_SALES_SHIPMENT')) {
+        if (!$this->isMultiShipmentModuleEnabled()) {
             $this->assertRequiredStrategySaverWithoutMultiShipmentContainerItems();
 
             return call_user_func($this->strategyContainer[static::STRATEGY_KEY_SAVER_WITHOUT_MULTI_SHIPMENT]);
@@ -51,7 +54,7 @@ class AddressStepStrategyResolver implements AddressStepStrategyResolverInterfac
      */
     public function resolvePostCondition(): PostConditionCheckerInterface
     {
-        if (!defined('\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer::FK_SALES_SHIPMENT')) {
+        if (!$this->isMultiShipmentModuleEnabled()) {
             $this->assertRequiredStrategyPostConditionCheckerWithoutMultiShipmentContainerItems();
 
             return call_user_func($this->strategyContainer[static::STRATEGY_KEY_POST_CONDITION_CHECKER_WITHOUT_MULTI_SHIPMENT]);

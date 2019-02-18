@@ -7,7 +7,9 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Form\DataProvider;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Store;
@@ -16,10 +18,15 @@ use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
+use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentCollectionForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\MultiShipmentResolverTrait;
 
 class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
 {
+    use MultiShipmentResolverTrait;
+
     public const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
 
     /**
@@ -43,21 +50,39 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected $moneyPlugin;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
+     */
+    protected $shipmentService;
+
+    /**
+     * @deprecated Will be removed in next major release.
+     *
+     * @var \SprykerShop\Yves\CheckoutPage\Form\DataProvider\QuoteDataBCForMultiShipmentAdapterInterface
+     */
+    protected $quoteDataBCForMultiShipmentAdapter;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface $glossaryClient
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
+     * @param \SprykerShop\Yves\CheckoutPage\Form\DataProvider\QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
      */
     public function __construct(
         CheckoutPageToShipmentClientInterface $shipmentClient,
         CheckoutPageToGlossaryClientInterface $glossaryClient,
         Store $store,
-        MoneyPluginInterface $moneyPlugin
+        MoneyPluginInterface $moneyPlugin,
+        CheckoutPageToShipmentServiceInterface $shipmentService,
+        QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
     ) {
         $this->shipmentClient = $shipmentClient;
         $this->glossaryClient = $glossaryClient;
         $this->store = $store;
         $this->moneyPlugin = $moneyPlugin;
+        $this->shipmentService = $shipmentService;
+        $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
     }
 
     /**
@@ -67,9 +92,16 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     public function getData(AbstractTransfer $quoteTransfer)
     {
-        if ($quoteTransfer->getShipment() === null) {
-            $shipmentTransfer = new ShipmentTransfer();
-            $quoteTransfer->setShipment($shipmentTransfer);
+        /**
+         * @deprecated Will be removed in next major release.
+         */
+        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
+
+        /**
+         * @deprecated Will be removed in next major release.
+         */
+        if (!$this->isMultiShipmentModuleEnabled()) {
+            return $quoteTransfer;
         }
 
         return $quoteTransfer;
@@ -82,12 +114,87 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
+        /**
+         * @deprecated Will be removed in next major release.
+         */
+        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
+
+        /**
+         * @deprecated Will be removed in next major release.
+         */
+        if (!$this->isMultiShipmentModuleEnabled()) {
+            return [
+                ShipmentForm::OPTION_SHIPMENT_METHODS => $this->createAvailableShipmentChoiceList($quoteTransfer),
+            ];
+        }
+
+        /**
+         * @todo Add quote bc adapter
+         */
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                $itemTransfer->setShipment(new ShipmentTransfer());
+            }
+
+            if ($itemTransfer->getShipment()->getMethod() === null) {
+                $itemTransfer->getShipment()->setMethod(new ShipmentMethodTransfer());
+            }
+        }
+
+        $quoteTransfer = $this->setQuoteShipmentGroups($quoteTransfer);
+
         return [
-            ShipmentForm::OPTION_SHIPMENT_METHODS => $this->createAvailableShipmentChoiceList($quoteTransfer),
+            ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP => $this->createAvailableMethodsByShipmentChoiceList($quoteTransfer),
+            ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST => $this->getShipmentAddressLabelList($quoteTransfer),
         ];
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    protected function getShipmentAddressLabelList(QuoteTransfer $quoteTransfer): array
+    {
+        $shipmentAddressLabelList = [];
+
+        $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+
+        foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
+            if ($shipmentGroupTransfer->getShipment() === null
+                || $shipmentGroupTransfer->getShipment()->getShippingAddress() === null
+            ) {
+                continue;
+            }
+
+            $shipmentAddressLabelList[$shipmentGroupTransfer->getHash()] = $this->getShipmentAddressLabel($shipmentGroupTransfer->getShipment()->getShippingAddress());
+        }
+
+        return $shipmentAddressLabelList;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return string
+     */
+    protected function getShipmentAddressLabel(AddressTransfer $addressTransfer): string
+    {
+        return sprintf(
+            '%s %s %s, %s %s, %s %s',
+            $addressTransfer->getSalutation(),
+            $addressTransfer->getFirstName(),
+            $addressTransfer->getLastName(),
+            $addressTransfer->getAddress1(),
+            $addressTransfer->getAddress2(),
+            $addressTransfer->getZipCode(),
+            $addressTransfer->getCity()
+        );
+    }
+
+    /**
+     * @deprecated Use createAvailableMethodsByShipmentChoiceList() instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
@@ -113,11 +220,54 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
+     * @return array
+     */
+    protected function createAvailableMethodsByShipmentChoiceList(QuoteTransfer $quoteTransfer): array
+    {
+        $shipmentMethods = [];
+
+        $shipmentGroupCollectionTransfer = $this->getAvailableMethodsByShipment($quoteTransfer);
+
+        foreach ($shipmentGroupCollectionTransfer->getGroups() as $shipmentGroupTransfer) {
+            $shipmentMethodsTransfer = $shipmentGroupTransfer->getAvailableShipmentMethods();
+            if ($shipmentMethodsTransfer === null) {
+                continue;
+            }
+
+            foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
+                if (!isset($shipmentMethods[$shipmentGroupTransfer->getHash()][$shipmentMethodTransfer->getCarrierName()])) {
+                    $shipmentMethods[$shipmentGroupTransfer->getHash()][$shipmentMethodTransfer->getCarrierName()] = [];
+                }
+                $description = $this->getShipmentDescription(
+                    $shipmentMethodTransfer
+                );
+                $shipmentMethods[$shipmentGroupTransfer->getHash()][$shipmentMethodTransfer->getCarrierName()][$description] = $shipmentMethodTransfer->getIdShipmentMethod();
+            }
+        }
+
+        return $shipmentMethods;
+    }
+
+    /**
+     * @deprecated Use getAvailableMethodsByShipment() instead.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
     protected function getAvailableShipmentMethods(QuoteTransfer $quoteTransfer)
     {
         return $this->shipmentClient->getAvailableMethods($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
+     */
+    protected function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentGroupCollectionTransfer
+    {
+        return $this->shipmentClient->getAvailableMethodsByShipment($quoteTransfer);
     }
 
     /**
@@ -207,5 +357,18 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected function translate($translationKey)
     {
         return $this->glossaryClient->translate($translationKey, $this->store->getCurrentLocale());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setQuoteShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+        $quoteTransfer->setShipmentGroups($shipmentGroupTransfers);
+
+        return $quoteTransfer;
     }
 }
