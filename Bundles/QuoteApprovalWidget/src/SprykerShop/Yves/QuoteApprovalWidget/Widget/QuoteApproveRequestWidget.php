@@ -155,9 +155,9 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     protected function isWidgetVisible(QuoteTransfer $quoteTransfer): bool
     {
-        $customerTransfer = $this->getCurrentCustomer();
+        $customerTransfer = $this->findCurrentCustomer();
 
-        if ($customerTransfer === null) {
+        if (!$customerTransfer || !$this->findCurrentCompanyUser()) {
             return false;
         }
 
@@ -175,18 +175,24 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     protected function getLimitForQuote(QuoteTransfer $quoteTransfer): ?int
     {
+        $companyUser = $this->findCurrentCompanyUser();
+
+        if (!$companyUser) {
+            return null;
+        }
+
         return $this->getQuoteApprovalClient()->calculatePlaceOrderPermissionLimit(
             $quoteTransfer,
-            $this->getCurrentCompanyUser()
+            $this->findCurrentCompanyUser()
         );
     }
 
     /**
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
-    protected function getCurrentCompanyUser(): ?CompanyUserTransfer
+    protected function findCurrentCompanyUser(): ?CompanyUserTransfer
     {
-        $customerTransfer = $this->getCurrentCustomer();
+        $customerTransfer = $this->findCurrentCustomer();
 
         if (!$customerTransfer) {
             return null;
@@ -198,7 +204,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    protected function getCurrentCustomer(): ?CustomerTransfer
+    protected function findCurrentCustomer(): ?CustomerTransfer
     {
         return $this->getFactory()
             ->getCustomerClient()

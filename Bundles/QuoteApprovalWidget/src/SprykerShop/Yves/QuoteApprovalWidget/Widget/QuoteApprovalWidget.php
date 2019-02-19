@@ -70,29 +70,13 @@ class QuoteApprovalWidget extends AbstractWidget
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
-     */
-    protected function getCurrentCompanyUser(): ?CompanyUserTransfer
-    {
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
-
-        if (!$customerTransfer) {
-            return null;
-        }
-
-        return $customerTransfer->getCompanyUserTransfer();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalTransfer|null
      */
     protected function getWaitingQuoteApprovalByCurrentCompanyUser(QuoteTransfer $quoteTransfer): ?QuoteApprovalTransfer
     {
-        if (!$this->getCurrentCompanyUser()) {
+        if (!$this->findCurrentCompanyUser()) {
             return null;
         }
 
@@ -100,7 +84,7 @@ class QuoteApprovalWidget extends AbstractWidget
             ->getQuoteApprovalClient()
             ->findWaitingQuoteApprovalByIdCompanyUser(
                 $quoteTransfer,
-                $this->getCurrentCompanyUser()
+                $this->findCurrentCompanyUser()
                     ->getIdCompanyUser()
             );
     }
@@ -112,7 +96,7 @@ class QuoteApprovalWidget extends AbstractWidget
      */
     protected function hasQuoteApprovalsForCurrentCompanyUser(QuoteTransfer $quoteTransfer): bool
     {
-        if (!$this->getCurrentCompanyUser()) {
+        if (!$this->findCurrentCompanyUser()) {
             return false;
         }
 
@@ -120,9 +104,25 @@ class QuoteApprovalWidget extends AbstractWidget
             ->getQuoteApprovalClient()
             ->isCompanyUserInQuoteApproverList(
                 $quoteTransfer,
-                $this->getCurrentCompanyUser()
+                $this->findCurrentCompanyUser()
                     ->getIdCompanyUser()
             );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    protected function findCurrentCompanyUser(): ?CompanyUserTransfer
+    {
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        if (!$customerTransfer) {
+            return null;
+        }
+
+        return $customerTransfer->getCompanyUserTransfer();
     }
 
     /**
