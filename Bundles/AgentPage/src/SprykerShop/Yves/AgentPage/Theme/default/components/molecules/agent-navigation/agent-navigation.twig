@@ -20,5 +20,10 @@
         <li class="menu__item {{macros.isActive('overview', data.activePage)}}">
             <a href="{{ path('agent/overview') }}">{{ 'agent.account.overview' | trans }}</a>
         </li>
+        {% include molecule('quote-request-menu-item', 'AgentQuoteRequestWidget') ignore missing with {
+            data: {
+                isActivePage: data.activePage
+            }
+        } only %}
     </ul>
 {% endblock %}

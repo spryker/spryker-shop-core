@@ -1,0 +1,40 @@
+{
+  "name": "spryker-shop/agent-quote-request-page",
+  "type": "library",
+  "description": "AgentQuoteRequestPage module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker-shop/shop-application": "^1.2.0",
+    "spryker-shop/shop-ui": "^1.0.0",
+    "spryker/agent-quote-request": "^1.0.0",
+    "spryker/kernel": "^3.24.0",
+    "spryker/quote-request": "^1.0.0",
+    "spryker/symfony": "^3.1.0"
+  },
+  "require-dev": {
+    "spryker-shop/agent-page": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "suggest": {
+    "spryker-shop/agent-page": "If you want to use agent layout templates: ^1.2.0",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+  }
+}

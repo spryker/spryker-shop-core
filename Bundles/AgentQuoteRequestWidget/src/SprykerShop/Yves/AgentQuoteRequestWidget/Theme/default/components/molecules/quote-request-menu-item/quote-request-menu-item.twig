@@ -1,0 +1,17 @@
+{% extends model('component') %}
+
+{% define data = {
+    isActivePage: require | default()
+} %}
+
+{% define config = {
+    tag: 'li',
+    name: 'menu__item' ~ (data.isActivePage == 'quote-request' ? ' menu__item--active' : ''),
+} %}
+
+{% set itemClass = data.isActivePage ? ' menu__item--active' : '' %}
+
+{% block body %}
+    <a href="{{ url('agent/quote-request') }}"
+       data-id="sidebar-quote-request">{{ 'agent.account.quote_request' | trans }}</a>
+{% endblock %}

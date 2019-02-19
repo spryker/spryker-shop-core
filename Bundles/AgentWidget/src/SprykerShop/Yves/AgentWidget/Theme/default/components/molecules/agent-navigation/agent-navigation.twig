@@ -10,21 +10,24 @@
 } %}
 
 {% block body %}
-    <span>{{ 'agent.account.page_title' | trans }}:</span>
-    <label class="select" data-qa="component select">
-        <select class="select__select" onchange="location = this.value;">
-            <option selected="selected">
-                {{ data.agent.firstName ~ ' ' ~ data.agent.lastName }}
-            </option>
-            <option value="{{ path('agent/overview') }}">
-                {{ 'agent.account.overview' | trans }}
-            </option>
-            <option value="{{ path('agent_logout') }}">
-                {{ 'agent.control_bar.logout' | trans }}
-            </option>
-        </select>
-        <svg class="icon select__caret" data-qa="component icon">
-            <use xlink:href="#:caret-down"></use>
-        </svg>
-    </label>
+    <div class="box">
+        <ul class="menu menu--wide">
+            <li class="menu__item">
+                <span>
+                    {{ 'agent.account.page_title' | trans }}: {{ data.agent.firstName ~ ' ' ~ data.agent.lastName }}
+                </span>
+            </li>
+            <li class="menu__item">
+                <a href="{{ path('agent/overview') }}">
+                    {{ "agent.account.overview" | trans }}
+                </a>
+            </li>
+            {% include molecule('quote-request-menu-item', 'AgentQuoteRequestWidget') ignore missing only %}
+            <li class="menu__item">
+                <a href="{{ path('agent_logout') }}">
+                    {{ "agent.control_bar.logout" | trans }}
+                </a>
+            </li>
+        </ul>
+    </div>
 {% endblock %}

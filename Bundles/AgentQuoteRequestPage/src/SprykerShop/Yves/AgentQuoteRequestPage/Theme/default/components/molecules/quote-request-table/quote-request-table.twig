@@ -1,0 +1,68 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'agent-quote-request-table',
+    tag: 'div'
+} %}
+
+{% define data = {
+    quoteRequests: required
+} %}
+
+{% block body %}
+    <table class="table table--expand">
+        <thead>
+        <tr>
+            <th class="text-left">#{{ 'quote_request_page.quote_request.list.reference' | trans }}</th>
+            <th>{{ 'quote_request_page.quote_request.list.company' | trans }}</th>
+            <th>{{ 'quote_request_page.quote_request.list.business_unit' | trans }}</th>
+            <th>{{ 'quote_request_page.quote_request.list.owner' | trans }}</th>
+            <th>{{ 'quote_request_page.quote_request.list.total' | trans }}</th>
+            <th>{{ 'quote_request_page.quote_request.list.date' | trans }}</th>
+            <th>{{ 'quote_request_page.quote_request.list.status' | trans }}</th>
+            <th>{{ 'quote_request_page.quote_request.list.actions' | trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for quoteRequest in data.quoteRequests %}
+            <tr>
+                <td>
+                    <strong>{{ quoteRequest.quoteRequestReference }}</strong>
+                </td>
+                <td>
+                    {{ quoteRequest.companyUser.company.name }}
+                </td>
+                <td>
+                    {{ quoteRequest.companyUser.companyBusinessUnit.name }}
+                </td>
+                <td>
+                    {{ quoteRequest.companyUser.customer.firstName ~ ' ' ~ quoteRequest.companyUser.customer.lastName }}
+                </td>
+                <td class="text-center">
+                    {% if (quoteRequest.latestVersion) %}
+                        <strong>{{ quoteRequest.latestVersion.quote.totals.subtotal | default(0) | money(true, quoteRequest.latestVersion.quote.currency.code) }}</strong>
+                    {% endif %}
+                </td>
+                <td class="text-center">{{ quoteRequest.createdAt | date('d.m.Y H:i:s') }}</td>
+                <td class="text-center">{{ ('quote_request.status.' ~ quoteRequest.status) | trans }}</td>
+                <td>
+                    <ul class="nested vertical menu">
+                        <li class="menu__item">
+                            <a href="{{ path('agent/quote-request/details', { quoteRequestReference: (quoteRequest.quoteRequestReference) }) }}">
+                                {{ 'quote_request_page.quote_request.actions.view' | trans }}
+                            </a>
+                        </li>
+                        {% if(quoteRequest.status != 'canceled') %}
+                            <li class="menu__item">
+                                <a href="{{ path('agent/quote-request/cancel', { quoteRequestReference: (quoteRequest.quoteRequestReference) }) }}">
+                                    {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
