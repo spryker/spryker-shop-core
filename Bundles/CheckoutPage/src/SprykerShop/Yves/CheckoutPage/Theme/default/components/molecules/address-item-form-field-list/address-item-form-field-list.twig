@@ -71,7 +71,7 @@
                         attributes: {
                             'trigger-selector': '[name="' ~ item.shippingAddress.id_customer_address.vars.full_name ~ '"]' | default(''),
                             'target-selector': '.js-address__item-shipping--' ~ loop.index,
-                            'class-to-toggle': 'is-hidden',
+                            'class-to-toggle': 'is-hidden'
                         }
                     } only %}
                 {% endif %}
@@ -83,7 +83,7 @@
                     },
                     attributes: {
                         'shipping-address-toggler-selector': item.shippingAddress.id_customer_address is defined ? '[name="' ~ item.shippingAddress.id_customer_address.vars.full_name ~ '"]' : '',
-                        'save-address-toggler-selector': '[name="' ~ item.isAddressSavingSkipped.vars.full_name ~ '"]',
+                        'save-address-toggler-selector': item.isAddressSavingSkipped is defined ? '[name="' ~ item.isAddressSavingSkipped.vars.full_name ~ '"]' : ''
                     }
                 } only %}
             </div>

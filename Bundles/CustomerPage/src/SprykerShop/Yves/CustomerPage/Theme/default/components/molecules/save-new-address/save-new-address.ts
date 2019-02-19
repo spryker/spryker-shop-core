@@ -88,7 +88,9 @@ export default class SaveNewAddress extends Component {
             this.formClearShippingAddress = <FormClear>document.querySelector(this.formClearShippingAddressSelector);
         }
 
-        this.saveNewAddressToggler = <HTMLInputElement>document.querySelector(this.saveAddressTogglerSelector);
+        if (this.saveAddressTogglerSelector) {
+            this.saveNewAddressToggler = <HTMLInputElement>document.querySelector(this.saveAddressTogglerSelector);
+        }
 
         this.customerAddressesExists();
     }
@@ -107,13 +109,13 @@ export default class SaveNewAddress extends Component {
         if (this.addNewShippingAddress && this.addNewBillingAddress) {
             this.addNewShippingAddress.addEventListener(EVENT_ADD_NEW_ADDRESS, () => {
                 this.shippingTogglerOnChange();
-                this.isSplitDeliveryAddressChecked();
+                this.toggleSplitDeliveryAddressForm();
             });
             this.addNewBillingAddress.addEventListener(EVENT_ADD_NEW_ADDRESS, () => this.billingTogglerOnChange());
         }
 
         if (this.formClearShippingAddress) {
-            this.formClearShippingAddress.addEventListener('form-fields-clear-after', () => this.isSplitDeliveryAddressChecked());
+            this.formClearShippingAddress.addEventListener('form-fields-clear-after', () => this.toggleSplitDeliveryAddressForm());
         }
 
         this.customerShippingAddresses.addEventListener('change', () => this.shippingTogglerOnChange());
@@ -127,11 +129,11 @@ export default class SaveNewAddress extends Component {
         }
 
         if (this.businessUnitShippingAddressToggler) {
-            this.businessUnitShippingAddressToggler.addEventListener('change', () => this.isSplitDeliveryAddressChecked());
+            this.businessUnitShippingAddressToggler.addEventListener('change', () => this.toggleSplitDeliveryAddressForm());
         }
     }
 
-    protected isSplitDeliveryAddressChecked(): void {
+    protected toggleSplitDeliveryAddressForm(): void {
         const selectedValue = this.businessUnitShippingAddressToggler.value;
 
         if (selectedValue === this.optionValueDeliverToMultipleAddresses) {
@@ -163,6 +165,10 @@ export default class SaveNewAddress extends Component {
         }
 
         this.toggleSaveNewAddress();
+
+        if (this.businessUnitShippingAddressToggler) {
+            this.toggleSplitDeliveryAddressForm();
+        }
     }
 
     protected addressTogglerChange(toggler): boolean {
@@ -179,6 +185,7 @@ export default class SaveNewAddress extends Component {
     toggleSaveNewAddress(): void {
         if (this.newShippingAddressChecked || (this.newBillingAddressChecked && !this.sameAsShippingChecked)) {
             this.showSaveNewAddress();
+
             return;
         }
 
@@ -198,7 +205,9 @@ export default class SaveNewAddress extends Component {
      */
     showSaveNewAddress(): void {
         this.classList.remove(this.hideClass);
-        this.saveNewAddressToggler.disabled = false;
+        if (this.saveNewAddressToggler) {
+            this.saveNewAddressToggler.disabled = false;
+        }
     }
 
     /**

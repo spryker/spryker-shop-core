@@ -59,6 +59,10 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
      * The custom event.
      */
     addNewAddressEvent: CustomEvent;
+    /**
+     * The shipping address select element.
+     */
+    shippingAddressToggler: HTMLSelectElement;
 
     readonly resetSelectEventName: string = 'reset-select';
 
@@ -74,12 +78,14 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         this.formClear = <FormClear>this.form.querySelector('.js-form-clear');
         this.hiddenDefaultAddressInput = <HTMLInputElement>this.form.querySelector(this.defaultAddressSelector);
         this.customAddressTriggerInput = <HTMLFormElement>this.form.querySelector(this.customAddressTrigger);
+        this.shippingAddressToggler = <HTMLSelectElement>document.querySelector(this.shippingAddressTogglerSelector);
 
         this.initAddressesData();
         this.mapEvents();
         this.fillDefaultAddress();
         this.initResetSelectEvent();
         this.initAddNewAddressSelector();
+        this.toggleSplitDeliveryAddressFormValue();
     }
 
     protected mapEvents(): void {
@@ -98,6 +104,8 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
                 triggerElement.dispatchEvent(this.addNewAddressEvent);
             });
         });
+
+        this.shippingAddressToggler.addEventListener('change', () => this.toggleSplitDeliveryAddressFormValue());
     }
 
     protected initResetSelectEvent(): void {
@@ -115,6 +123,20 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
             this.toggleFormFieldsReadonly();
             this.toggleReadonlyForCustomAddressTrigger();
         }
+    }
+
+    protected toggleSplitDeliveryAddressFormValue(): void {
+        const addressHiddenInput = <HTMLInputElement>document.querySelector(`[name="${this.shippingAddressHiddenInputSelector}"]`);
+        const hiddenInputIdCustomerAddressSaver = <HTMLInputElement>document.querySelector(this.hiddenInputIdCustomerShippingAddressSaverSelector);
+
+
+        if (this.shippingAddressToggler.value === this.optionValueDeliverToMultipleAddresses) {
+            addressHiddenInput.value = this.optionValueDeliverToMultipleAddresses;
+
+            return;
+        }
+
+        addressHiddenInput.value = hiddenInputIdCustomerAddressSaver.value;
     }
 
     /**
@@ -157,7 +179,6 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     protected fillFormWithNewAddress(): void {
         const currentAddressList = this.addressesDataObject[this.currentAddress.toString()];
         this.hiddenDefaultAddressInput.value = this.currentAddress.toString();
-        console.log(this.hiddenDefaultAddressInput.value);
 
         this.clearFormFields();
         this.fillFormFields(currentAddressList);
@@ -166,10 +187,12 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
 
     protected fillDefaultAddress(): void {
         const hiddenDefaultAddressInputName = this.hiddenDefaultAddressInput.getAttribute('value');
+        const setFormFieldsReadonly = hiddenDefaultAddressInputName === this.optionValueDeliverToMultipleAddresses ? false : true;
+
         if (hiddenDefaultAddressInputName) {
             this.currentAddress = hiddenDefaultAddressInputName;
             this.fillFormWithNewAddress();
-            this.toggleFormFieldsReadonly();
+            this.toggleFormFieldsReadonly(setFormFieldsReadonly);
         }
         this.toggleReadonlyForCustomAddressTrigger();
     }
@@ -196,6 +219,9 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
      * @param address A data object for filling the fields.
      */
     fillFormFields(address: object): void {
+        const hiddenInputIdCustomerAddressSaver = <HTMLInputElement>this.form.querySelector(this.hiddenInputIdCustomerAddressSaverSelector);
+        hiddenInputIdCustomerAddressSaver.value = address ? address['id_customer_address'] : '';
+
         for (let key in address) {
             const formElement = this.form.querySelector(`[data-key="${key}"]`);
 
@@ -275,9 +301,44 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     }
 
     /**
+     * Gets a querySelector name of a hidden customer id input.
+     */
+    get hiddenInputIdCustomerAddressSaverSelector(): string {
+        return this.getAttribute('hidden-input-id-customer-address-saver-selector');
+    }
+
+    /**
+     * Gets a querySelector name of a hidden shipping customer id input.
+     */
+    get hiddenInputIdCustomerShippingAddressSaverSelector(): string {
+        return this.getAttribute('hidden-input-id-customer-shipping-address-saver-selector');
+    }
+
+    /**
+     * Gets a querySelector name of a hidden shipping customer id input.
+     */
+    get shippingAddressHiddenInputSelector(): string {
+        return this.getAttribute('shipping-address-hidden-input-selector');
+    }
+
+    /**
      * Gets a querySelector name of a custom address trigger input.
      */
     get customAddressTrigger(): string {
         return this.getAttribute('custom-address-trigger');
+    }
+
+    /**
+     * Gets if the split delivery form is defined.
+     */
+    get optionValueDeliverToMultipleAddresses(): string {
+        return this.getAttribute('toggle-option-value');
+    }
+
+    /**
+     * Gets a querySelector name of the shipping address select element.
+     */
+    get shippingAddressTogglerSelector(): string {
+        return this.getAttribute('shipping-address-toggler-selector');
     }
 }

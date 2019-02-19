@@ -13,6 +13,8 @@
 
 {% block template %}
     {% set defaultAddressKey = null %}
+    {% set optionValueDeliverToMultipleAddresses = constant('SprykerShop\\Yves\\CustomerPage\\Form\\CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES') %}
+
     {% if not data.isCustomAddress and (data.currentAddressId or not data.formAddressTransfer.firstName) %}
         {% for address in data.customerAddresses %}
             {% if not data.currentAddressId and data.formType == 'shippingAddress' and address.isDefaultShipping %}
@@ -23,6 +25,9 @@
             {% endif %}
             {% if data.currentAddressId == address.idCustomerAddress %}
                 {% set defaultAddressKey = address.key %}
+            {% endif %}
+            {% if data.currentAddressId == optionValueDeliverToMultipleAddresses %}
+                {% set defaultAddressKey = optionValueDeliverToMultipleAddresses %}
             {% endif %}
         {% endfor %}
     {% endif %}
@@ -41,7 +46,8 @@
             formType: data.formType,
             defaultAddressKey: defaultAddressKey,
             currentAddressId: data.currentAddressId,
-            isMultipleShipmentEnabled: data.isMultipleShipmentEnabled
+            isMultipleShipmentEnabled: data.isMultipleShipmentEnabled,
+            optionValueDeliverToMultipleAddresses: optionValueDeliverToMultipleAddresses
         }
     } only %}
         {% block selectClass %}js-form-clear__ignore-element js-form-select-address__{{ embed.formType }}{% endblock %}
@@ -83,7 +89,9 @@
             {% endif %}
 
             {% if embed.formType == 'shippingAddress' and embed.isMultipleShipmentEnabled %}
-                <option value="-1">{{ 'customer.account.deliver_to_multiple_addresses' | trans }}</option>
+                <option value="{{ embed.optionValueDeliverToMultipleAddresses }}" {% if embed.defaultAddressKey == embed.optionValueDeliverToMultipleAddresses %}selected{% endif %}>
+                    {{ 'customer.account.deliver_to_multiple_addresses' | trans }}
+                </option>
             {% endif %}
         {% endblock %}
     {% endembed %}
@@ -97,11 +105,16 @@
                 'form-selector': '.js-form-handler__' ~ data.formType,
                 'trigger-selector': '.js-form-add-new-address__' ~ data.formType,
                 'data-selector': '.js-form-select-address__' ~ data.formType,
+                'shipping-address-toggler-selector': '.js-form-select-address__shippingAddress',
                 'ignore-selector': '.js-form-clear__ignore-element',
                 'default-address-selector': '.js-form-default-address__' ~ data.formType,
                 'custom-address-trigger': '.js-form-clear__'~ data.formType ~'-toggler',
                 'address-hidden-input-selector': 'addressesForm[' ~ data.formType ~ '][id_customer_address]',
-                'addresses': data.addresses
+                'shipping-address-hidden-input-selector': 'addressesForm[shippingAddress][id_customer_address]',
+                'hidden-input-id-customer-address-saver-selector': '.js-hidden-input-id-customer-' ~ data.formType ~ '-saver',
+                'hidden-input-id-customer-shipping-address-saver-selector': '.js-hidden-input-id-customer-shippingAddress-saver',
+                'addresses': data.addresses,
+                'toggle-option-value': optionValueDeliverToMultipleAddresses
             }
         } only %}
     </div>
@@ -127,5 +140,6 @@
     </div>
 
     <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]" data-key="id_customer_address">
+    <input type="hidden" class="js-hidden-input-id-customer-{{ data.formType }}-saver">
     <input type="hidden" class="js-form-clear__ignore-element js-form-default-address__{{ data.formType }}" value="{{ defaultAddressKey }}">
 {% endblock %}
