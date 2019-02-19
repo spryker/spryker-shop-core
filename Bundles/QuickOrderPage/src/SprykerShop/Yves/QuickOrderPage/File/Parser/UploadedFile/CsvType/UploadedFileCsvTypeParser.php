@@ -64,7 +64,7 @@ class UploadedFileCsvTypeParser implements UploadedFileTypeParserInterface
         unset($rows[0]);
 
         foreach ($rows as $row) {
-            if (empty($row[$skuKey])) {
+            if (empty($row[$skuKey]) || !isset($row[$quantityKey])) {
                 continue;
             }
 
