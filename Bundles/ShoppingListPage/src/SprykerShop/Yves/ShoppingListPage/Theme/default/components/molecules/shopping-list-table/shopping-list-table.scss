@@ -20,7 +20,7 @@
                 border-top: 1px solid $setting-color-light;
             }
 
-            #{$name} &--borderless {
+            &--borderless:not(:first-child) {
                 border: none;
             }
         }
