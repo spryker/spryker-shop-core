@@ -13,9 +13,9 @@
     {% if data.products is not empty %}
         {% for product in data.products %}
             {% set selectedItem = loop.first ? config.name ~ '__item--selected' : '' %}
-            {% set productDiscontinued = product.productDiscontinued ? 'product_search_widget.search.product_discontinued_prefix' | trans : '' %}
+            {% set isProductDiscontinued = product.isProductDiscontinued ? 'product_search_widget.search.product_discontinued_prefix' | trans : '' %}
             <li class="list__item spacing-y spacing-y--inner {{ config.name }}__item {{ selectedItem }}" data-value="{{ product.sku }}">
-                {{ productDiscontinued }} {{ product.name }} ({{ product.sku }})
+                {{ isProductDiscontinued }} {{ product.name }} ({{ product.sku }})
             </li>
         {% endfor %}
     {% else %}
