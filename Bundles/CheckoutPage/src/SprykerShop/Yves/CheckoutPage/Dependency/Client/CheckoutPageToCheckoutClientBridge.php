@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CheckoutPage\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 
 class CheckoutPageToCheckoutClientBridge implements CheckoutPageToCheckoutClientInterface
 {
@@ -32,5 +33,15 @@ class CheckoutPageToCheckoutClientBridge implements CheckoutPageToCheckoutClient
     public function placeOrder(QuoteTransfer $quoteTransfer)
     {
         return $this->checkoutClient->placeOrder($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
+    {
+        return $this->checkoutClient->isQuoteApplicableForCheckout($quoteTransfer);
     }
 }
