@@ -7,32 +7,16 @@
 
 namespace SprykerShop\Yves\CmsContentWidgetProductSetConnector\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
+
 interface CmsContentWidgetProductSetConnectorToProductStorageClientInterface
 {
     /**
-     * @deprecated Use findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
-     *
      * @param int $idProductAbstract
-     * @param string $localeName
-     *
-     * @return array
-     */
-    public function getProductAbstractStorageData($idProductAbstract, $localeName);
-
-    /**
-     * @param int $idProductAbstract
-     * @param string $localeName
-     *
-     * @return array|null
-     */
-    public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array;
-
-    /**
-     * @param array $data
      * @param string $localeName
      * @param array $selectedAttributes
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = []);
+    public function findProductAbstractViewTransfer(int $idProductAbstract, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
 }
