@@ -21,11 +21,13 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientBr
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientBridge;
+use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToStoreClientBridge;
 use SprykerShop\Yves\CompanyPage\Dependency\Store\CompanyPageToKernelStoreBridge;
 
 class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_STORE = 'CLIENT_STORE';
     public const CLIENT_COMPANY = 'CLIENT_COMPANY';
     public const CLIENT_COMPANY_BUSINESS_UNIT = 'CLIENT_COMPANY_BUSINESS_UNIT';
     public const CLIENT_COMPANY_UNIT_ADDRESS = 'CLIENT_COMPANY_UNIT_ADDRESS';
@@ -51,6 +53,7 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideDependencies($container);
 
         $container = $this->addCustomerClient($container);
+        $container = $this->addStoreClient($container);
         $container = $this->addCompanyClient($container);
         $container = $this->addCompanyBusinessUnitClient($container);
         $container = $this->addCompanyUserClient($container);
@@ -106,6 +109,20 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new CompanyPageToCustomerClientBridge($container->getLocator()->customer()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container[static::CLIENT_STORE] = function (Container $container) {
+            return new CompanyPageToStoreClientBridge($container->getLocator()->store()->client());
         };
 
         return $container;
