@@ -90,17 +90,19 @@ class CmsProductSetContentWidgetPlugin extends SprykerCmsProductSetContentWidget
     {
         $productViewTransfers = [];
         foreach ($productSetDataStorageTransfer->getProductAbstractIds() as $idProductAbstract) {
-            $productAbstractData = $this->getFactory()->getProductStorageClient()->findProductAbstractStorageData($idProductAbstract, $this->getLocale());
+            $productViewTransfer = $this->getFactory()
+                ->getProductStorageClient()
+                ->findProductAbstractViewTransfer(
+                    $idProductAbstract,
+                    $this->getLocale(),
+                    $this->getSelectedAttributes($context, $idProductAbstract)
+                );
 
-            if ($productAbstractData === null) {
+            if ($productViewTransfer === null) {
                 continue;
             }
 
-            $productViewTransfers[] = $this->getFactory()->getProductStorageClient()->mapProductStorageData(
-                $productAbstractData,
-                $this->getLocale(),
-                $this->getSelectedAttributes($context, $idProductAbstract)
-            );
+            $productViewTransfers[] = $productViewTransfer;
         }
 
         return $productViewTransfers;
