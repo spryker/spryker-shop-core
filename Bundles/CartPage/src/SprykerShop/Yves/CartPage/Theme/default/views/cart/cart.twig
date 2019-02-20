@@ -30,15 +30,30 @@
 
 {% block content %}
     {% if data.cart.items is empty %}
-        <div class="box text-center">
-            {% include atom('icon') with {
-                modifiers: ['biggest'],
-                class: 'text-alt',
-                data: {
-                    name: 'shopping-cart'
-                }
-            } only %}
-            <h6>{{ 'cart.empty' | trans }}</h6>
+        <div class="grid">
+            <div class="col col--xl-9">
+                <div class="box text-center">
+                    {% include atom('icon') with {
+                        modifiers: ['biggest'],
+                        class: 'text-alt',
+                        data: {
+                            name: 'shopping-cart'
+                        }
+                    } only %}
+                    <h6>{{ 'cart.empty' | trans }}</h6>
+                </div>
+            </div>
+            <div class="col col--xl-3">
+                <div class="box">
+                    {% widget 'ProductConcreteAddWidget' args [
+                        'cart.quick_add_to_cart' | trans,
+                        'cart.quick_add_to_cart.submit' | trans,
+                        'cart/quick-add',
+                        true
+                    ] only %}
+                    {% endwidget %}
+                </div>
+            </div>
         </div>
     {% else %}
         <div class="grid">
@@ -88,12 +103,12 @@
                         {% widget 'DiscountVoucherFormWidget' only %}
                             {% block body %}
                                 {{ parent() }}
-                                <hr />
+                                <hr/>
                             {% endblock %}
                         {% elsewidget 'DiscountVoucherFormWidgetPlugin' only %} {# @deprecated Use VoucherFormWidget instead. #}
                             {% block body %}
                                 {{ parent() }}
-                                <hr />
+                                <hr/>
                             {% endblock %}
                         {% endwidget %}
                     {% endif %}
@@ -102,7 +117,7 @@
                         {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] only %}
                         {% elsewidget 'CartToShoppingListWidgetPlugin' args [data.cart.idQuote] only %} {# @deprecated Use CreateShoppingListFromCartWidget instead. #}
                         {% endwidget %}
-                        <hr />
+                        <hr/>
                     {% endif %}
 
                     {% if data.isQuoteEditable %}
