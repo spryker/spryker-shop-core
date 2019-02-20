@@ -87,12 +87,13 @@
                     <a class="button button--expand button--hollow" href="{{ url('quote-request') }}">
                         {{ 'quote_request_page.quote_request.actions.back_to_list' | trans }}
                     </a>
-                    {% if(data.quoteRequestForm.vars.value.status == 'waiting') %}
-                        <hr/>
-                        <a class="button button--expand button--cancel" href="{{ path('quote-request/cancel', { quoteRequestReference: (data.quoteRequestForm.vars.value.quoteRequestReference) }) }}">
-                            {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
-                        </a>
-                    {% endif %}
+
+                    {% widget 'QuoteRequestCancelWidget' args [data.quoteRequestForm.vars.value] only %}
+                        {% block body %}
+                            <hr/>
+                            {{ parent() }}
+                        {% endblock %}
+                    {% endwidget %}
                 </div>
             </div>
         </div>

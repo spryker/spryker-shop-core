@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 
 interface AgentQuoteRequestPageToAgentQuoteRequestClientInterface
 {
@@ -18,4 +19,11 @@ interface AgentQuoteRequestPageToAgentQuoteRequestClientInterface
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
     public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool;
 }

@@ -29,6 +29,8 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
     }
 
     /**
+     * @uses \SprykerShop\Yves\AgentQuoteRequestPage\Controller\AgentQuoteRequestViewController::indexAction()
+     *
      * @return $this
      */
     protected function addAgentQuoteRequestRoute()
@@ -41,6 +43,8 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
     }
 
     /**
+     * @uses \SprykerShop\Yves\AgentQuoteRequestPage\Controller\AgentQuoteRequestDeleteController::cancelAction()
+     *
      * @return $this
      */
     protected function addAgentQuoteRequestCancelRoute()

@@ -34,4 +34,11 @@ interface QuoteRequestPageToQuoteRequestClientInterface
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
     public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool;
 }

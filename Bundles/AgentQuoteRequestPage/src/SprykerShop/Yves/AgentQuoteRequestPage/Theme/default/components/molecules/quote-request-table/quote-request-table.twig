@@ -52,13 +52,14 @@
                                 {{ 'quote_request_page.quote_request.actions.view' | trans }}
                             </a>
                         </li>
-                        {% if(quoteRequest.status != 'canceled') %}
-                            <li class="menu__item">
-                                <a href="{{ path('agent/quote-request/cancel', { quoteRequestReference: (quoteRequest.quoteRequestReference) }) }}">
-                                    {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
-                                </a>
-                            </li>
-                        {% endif %}
+
+                        {% widget 'AgentQuoteRequestCancelWidget' args [quoteRequest] only %}
+                            {% block body %}
+                                <li class="menu__item">
+                                    {{ parent() }}
+                                </li>
+                            {% endblock %}
+                        {% endwidget %}
                     </ul>
                 </td>
             </tr>
