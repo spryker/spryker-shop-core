@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
@@ -155,6 +154,10 @@ class QuickOrderController extends AbstractController
         $quickOrderTransfer = $this->getFactory()
             ->createQuickOrderFormDataProvider()
             ->getQuickOrderTransfer($quickOrderItems);
+
+        $quickOrderTransfer = $this->getFactory()
+            ->createQuantityLimiter()
+            ->limitQuickOrderItemsQuantity($quickOrderTransfer);
 
         $quickOrderTransfer = $this->getFactory()
             ->getQuickOrderClient()
@@ -392,18 +395,11 @@ class QuickOrderController extends AbstractController
      */
     public function productAdditionalDataAction(Request $request)
     {
-        $quantity = $request->get('quantity', 1);
+        $quantity = $request->get('quantity', '1');
         $sku = $request->query->get('sku');
         $index = $request->query->get('index');
 
         $quickOrderItemTransfer = (new QuickOrderItemTransfer())->setSku($sku);
-
-        if ($quantity < 1) {
-            $quantity = 1;
-            $quickOrderItemTransfer->addMessage((new MessageTransfer())
-                ->setType(static::MESSAGE_TYPE_WARNING)
-                ->setValue(static::ERROR_MESSAGE_QUANTITY_INVALID));
-        }
 
         $quickOrderItemTransfer->setQuantity($quantity);
         $quickOrderTransfer = $this->getQuickOrderTransfer([$quickOrderItemTransfer]);
