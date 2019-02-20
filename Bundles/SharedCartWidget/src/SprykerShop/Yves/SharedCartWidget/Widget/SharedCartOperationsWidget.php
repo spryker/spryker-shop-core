@@ -9,8 +9,6 @@ namespace SprykerShop\Yves\SharedCartWidget\Widget;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\SharedCart\Plugin\ReadSharedCartPermissionPlugin;
-use Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
@@ -42,8 +40,8 @@ class SharedCartOperationsWidget extends AbstractWidget
      */
     protected function getCartActions(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): array
     {
-        $writeAllowed = $this->can(WriteSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote());
-        $viewAllowed = $this->can(ReadSharedCartPermissionPlugin::KEY, $quoteTransfer->getIdQuote()) || $writeAllowed;
+        $writeAllowed = $this->canWriteSharedCart($quoteTransfer->getIdQuote()) && !$this->isQuoteLocked($quoteTransfer);
+        $viewAllowed = $this->canReadSharedCart($quoteTransfer->getIdQuote()) || $writeAllowed;
 
         return [
             'view' => $viewAllowed,
@@ -53,6 +51,42 @@ class SharedCartOperationsWidget extends AbstractWidget
             'clear' => $writeAllowed,
             'delete' => $writeAllowed && $this->isDeleteCartAllowed($quoteTransfer, $customerTransfer),
         ];
+    }
+
+    /**
+     * @uses \Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin::KEY
+     *
+     * @param int $idQuote
+     *
+     * @return bool
+     */
+    protected function canWriteSharedCart(int $idQuote): bool
+    {
+        return $this->can('WriteSharedCartPermissionPlugin', $idQuote);
+    }
+
+    /**
+     * @uses \Spryker\Client\SharedCart\Plugin\ReadSharedCartPermissionPlugin::KEY
+     *
+     * @param int $idQuote
+     *
+     * @return bool
+     */
+    protected function canReadSharedCart(int $idQuote): bool
+    {
+        return $this->can('ReadSharedCartPermissionPlugin', $idQuote);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->getQuoteClient()
+            ->isQuoteLocked($quoteTransfer);
     }
 
     /**

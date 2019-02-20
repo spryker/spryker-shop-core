@@ -92,10 +92,15 @@ class CompanyRolePermissionConfigurationType extends AbstractType
      */
     protected function addFieldBySignature(FormBuilderInterface $builder, $fieldName, $fieldType)
     {
-        $builder->add($fieldName, $this->getSymfonyTypeByFieldType($fieldType), [
-            'property_path' => PermissionTransfer::CONFIGURATION . '[' . $fieldName . ']',
-            'required' => false,
-        ]);
+        $options = array_merge(
+            $this->getSymfonyTypeOptionsByFieldType($fieldType),
+            [
+                'property_path' => PermissionTransfer::CONFIGURATION . '[' . $fieldName . ']',
+                'required' => false,
+            ]
+        );
+
+        $builder->add($fieldName, $this->getSymfonyTypeByFieldType($fieldType), $options);
     }
 
     /**
@@ -110,6 +115,7 @@ class CompanyRolePermissionConfigurationType extends AbstractType
         $fieldTypes = [
             ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT => NumberType::class,
             ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_STRING => TextType::class,
+            ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_STORE_MULTI_CURRENCY => CurrentStoreMultiCurrencyType::class,
         ];
 
         if (!isset($fieldTypes[$fieldType])) {
@@ -117,5 +123,25 @@ class CompanyRolePermissionConfigurationType extends AbstractType
         }
 
         return $fieldTypes[$fieldType];
+    }
+
+    /**
+     * @param string $fieldType
+     *
+     * @return array
+     */
+    protected function getSymfonyTypeOptionsByFieldType(string $fieldType): array
+    {
+        $fieldTypeOptions = [
+            ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_STORE_MULTI_CURRENCY => [
+                'label' => 'company_page.multi_currency_type.label',
+            ],
+        ];
+
+        if (!isset($fieldTypeOptions[$fieldType])) {
+            return [];
+        }
+
+        return $fieldTypeOptions[$fieldType];
     }
 }

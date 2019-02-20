@@ -9,6 +9,7 @@
     "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.24.0",
     "spryker/multi-cart": "^1.3.0",
+    "spryker/quote": "^2.8.0",
     "spryker/shared-cart": "^1.2.0"
   },
   "require-dev": {
