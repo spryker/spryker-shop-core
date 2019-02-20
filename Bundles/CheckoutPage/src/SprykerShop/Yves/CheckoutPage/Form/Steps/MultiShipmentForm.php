@@ -80,7 +80,6 @@ class MultiShipmentForm extends AbstractType
         $builder->add(ShipmentTransfer::REQUESTED_DELIVERY_DATE, DateType::class, [
             'label' => 'page.checkout.shipment.requested_delivery_date.label',
             'widget' => 'single_text',
-//            'property_path' => ShipmentTransfer::REQUESTED_DELIVERY_DATE,
             'placeholder' => 'checkout.shipment.requested_delivery_date.placeholder',
             'required' => false,
             'input' => 'string',

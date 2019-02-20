@@ -27,6 +27,8 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
 {
     use MultiShipmentResolverTrait;
 
+    protected const SECONDS_IN_ONE_DAY = 86400;
+
     public const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
 
     /**
@@ -97,13 +99,6 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
          */
         $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 
-        /**
-         * @deprecated Will be removed in next major release.
-         */
-        if (!$this->isMultiShipmentModuleEnabled()) {
-            return $quoteTransfer;
-        }
-
         return $quoteTransfer;
     }
 
@@ -126,19 +121,6 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
             return [
                 ShipmentForm::OPTION_SHIPMENT_METHODS => $this->createAvailableShipmentChoiceList($quoteTransfer),
             ];
-        }
-
-        /**
-         * @todo Add quote bc adapter
-         */
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null) {
-                $itemTransfer->setShipment(new ShipmentTransfer());
-            }
-
-            if ($itemTransfer->getShipment()->getMethod() === null) {
-                $itemTransfer->getShipment()->setMethod(new ShipmentMethodTransfer());
-            }
         }
 
         $quoteTransfer = $this->setQuoteShipmentGroups($quoteTransfer);
@@ -333,7 +315,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
             return 0;
         }
 
-        return (int)($method->getDeliveryTime() / 86400);
+        return (int)($method->getDeliveryTime() / static::SECONDS_IN_ONE_DAY);
     }
 
     /**
