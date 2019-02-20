@@ -11,9 +11,9 @@ namespace SprykerShop\Yves\CheckoutPage\Dependency\Service;
 interface CheckoutPageToShipmentServiceInterface
 {
     /**
-     * @param \iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShipment(\iterable $itemTransfers): array;
+    public function groupItemsByShipment(iterable $itemTransfers): array;
 }

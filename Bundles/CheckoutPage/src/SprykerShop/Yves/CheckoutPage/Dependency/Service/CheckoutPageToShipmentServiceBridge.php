@@ -24,11 +24,11 @@ class CheckoutPageToShipmentServiceBridge implements CheckoutPageToShipmentServi
     }
 
     /**
-     * @param \iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShipment(\iterable $itemTransfers): array
+    public function groupItemsByShipment(iterable $itemTransfers): array
     {
         return $this->shipmentService->groupItemsByShipment($itemTransfers);
     }
