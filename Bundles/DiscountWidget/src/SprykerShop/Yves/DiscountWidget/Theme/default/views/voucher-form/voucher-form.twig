@@ -1,20 +1,23 @@
 {% extends template('widget') %}
 
 {% define data = {
-    form: _widget.voucherForm
+    form: _widget.voucherForm,
+    isQuoteEditable: _widget.isQuoteEditable
 } %}
 
 {% block body %}
-    {% include molecule('form') with {
-        modifiers: ['inline'],
-        data: {
-            form: data.form,
-            submit: {
-                enable: true,
-                text: 'cart.voucher.redeem' | trans,
-                icon: 'gift',
-                class: 'button'
+    {% if data.isQuoteEditable %}
+        {% include molecule('form') with {
+            modifiers: ['inline'],
+            data: {
+                form: data.form,
+                submit: {
+                    enable: true,
+                    text: 'cart.voucher.redeem' | trans,
+                    icon: 'gift',
+                    class: 'button'
+                }
             }
-        }
-    } only %}
+        } only %}
+    {% endif %}
 {% endblock %}

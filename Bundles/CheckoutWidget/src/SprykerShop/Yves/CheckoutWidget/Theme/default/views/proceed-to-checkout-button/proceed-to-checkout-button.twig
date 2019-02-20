@@ -1,0 +1,14 @@
+{% extends template('widget') %}
+
+{% define data = {
+    isVisible: _widget.isVisible
+} %}
+
+{% block body %}
+    {% if data.isVisible %}
+        <a class="button button--expand button--success" href="{{ url('checkout-index') }}" {{qa('cart-go-to-checkout')}}>
+            {{ 'cart.checkout' | trans }}
+        </a>
+    {% endif %}
+{% endblock %}
+
