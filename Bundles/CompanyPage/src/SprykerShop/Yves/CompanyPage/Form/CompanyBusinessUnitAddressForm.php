@@ -9,6 +9,8 @@ namespace SprykerShop\Yves\CompanyPage\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class CompanyBusinessUnitAddressForm extends CompanyUnitAddressForm
 {
@@ -43,10 +45,20 @@ class CompanyBusinessUnitAddressForm extends CompanyUnitAddressForm
      */
     protected function addIsDefaultBillingField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_IS_DEFAULT_BILLING, CheckboxType::class, [
-            'label' => 'company.account.address.is_default_billing',
-            'required' => false,
-        ]);
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $form = $event->getForm();
+            $data = $event->getData();
+            $fieldOptions = [
+                'label' => 'company.account.address.is_default_billing',
+                'required' => false,
+            ];
+
+            if ($data && isset($data[static::FIELD_IS_DEFAULT_BILLING])) {
+                $fieldOptions['disabled'] = true;
+            }
+
+            $form->add(static::FIELD_IS_DEFAULT_BILLING, CheckboxType::class, $fieldOptions);
+        });
 
         return $this;
     }
