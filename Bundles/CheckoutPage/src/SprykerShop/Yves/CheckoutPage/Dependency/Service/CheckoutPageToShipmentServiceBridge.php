@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Dependency\Service;
 
-use ArrayObject;
 
 class CheckoutPageToShipmentServiceBridge implements CheckoutPageToShipmentServiceInterface
 {
@@ -25,11 +24,11 @@ class CheckoutPageToShipmentServiceBridge implements CheckoutPageToShipmentServi
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShipment(ArrayObject $itemTransfers): ArrayObject
+    public function groupItemsByShipment(\iterable $itemTransfers): array
     {
         return $this->shipmentService->groupItemsByShipment($itemTransfers);
     }
