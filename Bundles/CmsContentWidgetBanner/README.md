@@ -7,7 +7,7 @@ CmsContentWidgetBanner is a plugin for CMS content widgets. This plugin provides
 ## Installation
 
 ```
-composer require spryker/cms-content-widget-banner
+composer require spryker-shop/cms-content-widget-banner
 ```
 
 ## Documentation
