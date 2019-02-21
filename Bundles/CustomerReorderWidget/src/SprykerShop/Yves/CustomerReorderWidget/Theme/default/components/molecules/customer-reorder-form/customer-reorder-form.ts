@@ -26,7 +26,7 @@ export default class CustomerReorderForm extends Component {
     }
 
     /**
-     * Sets or removes the disabled attribute from the trigger element.
+     * Sets/removes the disabled attribute from the trigger button element, which if not disabled, on click can reorder selected orders.
      * @param enable A boolean value for checking if the trigger is available for changing.
      */
     enableTrigger(enable: boolean): void {
