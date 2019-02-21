@@ -6,7 +6,7 @@
 } %}
 
 {% block body %}
-    {% if data.isQuoteRequestCancelable == true %}
+    {% if data.isQuoteRequestCancelable %}
         <a href="{{ path('quote-request/cancel', { quoteRequestReference: (data.quoteRequestReference) }) }}">
             {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
         </a>

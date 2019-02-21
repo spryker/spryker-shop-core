@@ -66,10 +66,14 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
 
         /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
         $quoteRequestTransfer = $quoteRequestForm->getData();
+        $isQuoteRequestCancelable = $this->getFactory()
+            ->getQuoteRequestClient()
+            ->isQuoteRequestCancelable($quoteRequestTransfer);
 
         if (!$quoteRequestTransfer->getLatestVersion()) {
             return [
                 'quoteRequestForm' => $quoteRequestForm->createView(),
+                'isQuoteRequestCancelable' => $isQuoteRequestCancelable,
             ];
         }
 
@@ -78,6 +82,7 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
 
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
+            'isQuoteRequestCancelable' => $isQuoteRequestCancelable,
             'cart' => $quoteTransfer,
             'cartItems' => $cartItems,
         ];

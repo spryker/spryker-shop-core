@@ -1,15 +1,15 @@
 {% extends model('component') %}
 
 {% define data = {
-    isActivePage: require | default()
+    activePage: null
 } %}
 
 {% define config = {
     tag: 'li',
-    name: 'menu__item' ~ (data.isActivePage == 'quote-request' ? ' menu__item--active' : ''),
+    name: 'menu__item' ~ (data.activePage == 'quote-request' ? ' menu__item--active' : ''),
 } %}
 
-{% set itemClass = data.isActivePage ? ' menu__item--active' : '' %}
+{% set itemClass = data.activePage ? ' menu__item--active' : '' %}
 
 {% block body %}
     <a href="{{ url('agent/quote-request') }}"

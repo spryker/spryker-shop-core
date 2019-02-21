@@ -22,7 +22,7 @@
         </li>
         {% include molecule('quote-request-menu-item', 'AgentQuoteRequestWidget') ignore missing with {
             data: {
-                isActivePage: data.activePage
+                activePage: data.activePage
             }
         } only %}
     </ul>

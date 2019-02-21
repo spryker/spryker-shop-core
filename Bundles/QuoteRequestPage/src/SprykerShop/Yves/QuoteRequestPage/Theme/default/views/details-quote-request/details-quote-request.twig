@@ -3,6 +3,7 @@
 {% define data = {
     title: 'quote_request_page.quote_request' | trans,
     quoteRequestForm: _view.quoteRequestForm,
+    isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
     cart: _view.cart | default,
     cartItems: _view.cartItems | default
 } %}
@@ -88,12 +89,12 @@
                         {{ 'quote_request_page.quote_request.actions.back_to_list' | trans }}
                     </a>
 
-                    {% widget 'QuoteRequestCancelWidget' args [data.quoteRequestForm.vars.value] only %}
-                        {% block body %}
-                            <hr/>
-                            {{ parent() }}
-                        {% endblock %}
-                    {% endwidget %}
+                    {% if data.isQuoteRequestCancelable %}
+                        <hr/>
+                        <a class="button button--expand button--cancel" href="{{ path('quote-request/cancel', { quoteRequestReference: (data.quoteRequestForm.vars.value.quoteRequestReference) }) }}">
+                            {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>

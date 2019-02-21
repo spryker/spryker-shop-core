@@ -1,12 +1,12 @@
 {% extends model('component') %}
 
 {% define data = {
-    isActivePage: required
+    activePage: required
 } %}
 
 {% define config = {
     tag: 'li',
-    name: 'menu__item' ~ (data.isActivePage == 'quoteRequest' ? ' menu__item--active' : ''),
+    name: 'menu__item' ~ (data.activePage == 'quoteRequest' ? ' menu__item--active' : ''),
 } %}
 
 {% block body %}

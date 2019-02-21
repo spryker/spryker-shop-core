@@ -20,9 +20,8 @@ class QuoteRequestCancelWidget extends AbstractWidget
      */
     public function __construct(QuoteRequestTransfer $quoteRequestTransfer)
     {
-        $this->addParameter('quoteRequest', $quoteRequestTransfer);
-
-        $this->addIsQuoteRequestCancelableParam($quoteRequestTransfer);
+        $this->addQuoteRequestParameter($quoteRequestTransfer);
+        $this->addIsQuoteRequestCancelableParameter($quoteRequestTransfer);
     }
 
     /**
@@ -46,7 +45,17 @@ class QuoteRequestCancelWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function addIsQuoteRequestCancelableParam(QuoteRequestTransfer $quoteRequestTransfer): void
+    protected function addQuoteRequestParameter(QuoteRequestTransfer $quoteRequestTransfer): void
+    {
+        $this->addParameter('quoteRequest', $quoteRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return void
+     */
+    protected function addIsQuoteRequestCancelableParameter(QuoteRequestTransfer $quoteRequestTransfer): void
     {
         $isQuoteRequestCancelable = $this->getFactory()
             ->getQuoteRequestClient()
