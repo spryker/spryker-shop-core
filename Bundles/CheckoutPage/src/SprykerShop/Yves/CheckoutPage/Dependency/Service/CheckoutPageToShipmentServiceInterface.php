@@ -7,13 +7,14 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Dependency\Service;
 
+use ArrayObject;
 
 interface CheckoutPageToShipmentServiceInterface
 {
     /**
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShipment(iterable $itemTransfers): array;
+    public function groupItemsByShipment(iterable $itemTransfers): ArrayObject;
 }
