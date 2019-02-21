@@ -2,6 +2,7 @@
 
 {% define data = {
     cart: _view.cart,
+    isQuoteEditable: _view.isQuoteEditable,
     cartItems: _view.cartItems,
     isQuoteValid: _view.isQuoteValid,
     attributes: _view.attributes,
@@ -28,7 +29,6 @@
 {% endblock %}
 
 {% block content %}
-    {% set canEditCart = can('WriteSharedCartPermissionPlugin', data.cart.idQuote) %}
     {% if data.cart.items is empty %}
         <div class="box text-center">
             {% include atom('icon') with {
@@ -57,17 +57,20 @@
                         class: 'box',
                         data: {
                             cart: data.cart,
+                            isQuoteEditable: data.isQuoteEditable,
                             cartItem: cartItem,
                             attributes: data.attributes[cartItem.sku] | default([])
                         }
                     } only %}
                 {% endfor %}
 
-                {% widget 'CartDiscountPromotionProductListWidget' args [data.cart, data.request] only %}
-                {% elsewidget 'DiscountPromotionItemListWidgetPlugin' args [data.cart, data.request] only %} {# @deprecated Use CartDiscountPromotionProductListWidget instead. #}
-                {% endwidget %}
+                {% if data.isQuoteEditable %}
+                    {% widget 'CartDiscountPromotionProductListWidget' args [data.cart, data.request] only %}
+                    {% elsewidget 'DiscountPromotionItemListWidgetPlugin' args [data.cart, data.request] only %} {# @deprecated Use CartDiscountPromotionProductListWidget instead. #}
+                    {% endwidget %}
+                {% endif %}
 
-                {% if canEditCart and data.cart.idQuote is not empty %}
+                {% if data.isQuoteEditable and data.cart.idQuote is not empty %}
                     {% widget 'CartOperationsWidget' args [data.cart] use view('cart-operations-actions', 'MultiCartWidget') only %}
                     {% nowidget %}
                         {{ widgetBlock('CartOperationsWidgetPlugin', 'actions', data.cart) }} {# @deprecated Use CartOperationsWidget instead. #}
@@ -81,7 +84,7 @@
                     {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartNoteFormWidget instead. #}
                     {% endwidget %}
 
-                    {% if (not is_granted('ROLE_USER') or canEditCart) and can('SeePricePermissionPlugin') %}
+                    {% if (not is_granted('ROLE_USER') or data.isQuoteEditable) and can('SeePricePermissionPlugin') %}
                         {% widget 'DiscountVoucherFormWidget' only %}
                             {% block body %}
                                 {{ parent() }}
@@ -95,17 +98,28 @@
                         {% endwidget %}
                     {% endif %}
 
-                    {% if canEditCart and data.cart.idQuote is not empty %}
+                    {% if data.isQuoteEditable and data.cart.idQuote is not empty %}
                         {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] only %}
                         {% elsewidget 'CartToShoppingListWidgetPlugin' args [data.cart.idQuote] only %} {# @deprecated Use CreateShoppingListFromCartWidget instead. #}
                         {% endwidget %}
                         <hr />
                     {% endif %}
 
+                    {% if data.isQuoteEditable %}
+                        {% widget 'ProductConcreteAddWidget' args [
+                            'cart.quick_add_to_cart' | trans,
+                            'cart.quick_add_to_cart.submit' | trans,
+                            'cart/quick-add',
+                            true
+                        ] only %}
+                        {% endwidget %}
+                    {% endif %}
+
                     {% include molecule('cart-summary', 'CartPage') with {
                         data: {
                             cart: data.cart,
-                            isQuoteValid: data.isQuoteValid
+                            isQuoteValid: data.isQuoteValid,
+                            isQuoteEditable: data.isQuoteEditable,
                         }
                     } only %}
                 </div>

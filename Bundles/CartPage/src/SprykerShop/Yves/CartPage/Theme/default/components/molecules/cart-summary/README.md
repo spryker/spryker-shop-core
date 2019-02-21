@@ -6,6 +6,7 @@ Displays the product quantity in shopping cart, cart subtotal, total, and grand 
 {% include molecule('cart-summary', 'CartPage') with {
     data: {
         cart: cart,
+        isQuoteEditable: isQuoteEditable,
         isQuoteValid: isQuoteValid
     }
 } only %}
