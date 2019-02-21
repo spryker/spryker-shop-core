@@ -1,15 +1,15 @@
 {% block content %}
     <div class="grid grid--stretch">
         <div class="col">
-            <div class="box box--stretch">
-                <a href="{{ banner.clickUrl | raw }}">
+            <a href="{{ banner.clickUrl | raw }}">
+                <div class="box box--stretch">
                     <span class="thumbnail thumbnail--bigger" data-qa="component thumbnail">
                         <img src="{{ banner.imageUrl | raw }}" alt="{{ banner.altText | raw }}" />
                     </span>
-                </a>
-                <h5>{{ banner.title | raw }}</h5>
-                <p>{{ banner.subTitle | raw }}</p>
-            </div>
+                    <h5>{{ banner.title | raw }}</h5>
+                    <p>{{ banner.subTitle | raw }}</p>
+                </div>
+            </a>
         </div>
     </div>
 {% endblock %}
