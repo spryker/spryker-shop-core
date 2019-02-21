@@ -128,9 +128,6 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
             ];
         }
 
-        /**
-         * @todo Add quote bc adapter
-         */
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() === null) {
                 $itemTransfer->setShipment(new ShipmentTransfer());

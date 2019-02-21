@@ -52,14 +52,10 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     public function getData(AbstractTransfer $quoteTransfer)
     {
-        /**
-         * @todo Add BC
-         */
-
         $quoteTransfer->setShippingAddress($this->getShippingAddress($quoteTransfer));
         $quoteTransfer->setBillingAddress($this->getBillingAddress($quoteTransfer));
 
-        if ($quoteTransfer->getBillingAddress()->toArray() == $quoteTransfer->getShippingAddress()->toArray()) {
+        if ($quoteTransfer->getBillingAddress()->toArray() === $quoteTransfer->getShippingAddress()->toArray()) {
             $quoteTransfer->setBillingSameAsShipping(true);
         }
 
