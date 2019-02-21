@@ -45,7 +45,7 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
 
         $quoteRequestCollectionTransfer = $this->getFactory()
             ->getQuoteRequestClient()
-            ->getQuoteRequestOverviewCollection($quoteRequestFilterTransfer);
+            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
 
         return [
             'quoteRequests' => $quoteRequestCollectionTransfer->getQuoteRequests(),

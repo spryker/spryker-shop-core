@@ -30,7 +30,7 @@ class AgentQuoteRequestPageToQuoteRequestClientBridge implements AgentQuoteReque
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
      */
-    public function getQuoteRequestOverviewCollection(
+    public function getQuoteRequestCollectionByFilter(
         QuoteRequestFilterTransfer $quoteRequestFilterTransfer
     ): QuoteRequestCollectionTransfer {
         return $this->quoteRequestClient->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
