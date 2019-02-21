@@ -11,8 +11,8 @@
 } %}
 
 {% block body %}
-    <td rowspan="2">{% block actions %}{% endblock %}</td>
     <td>
+        {% block actions %}{% endblock %}
         {{ data.concreteItemDefault.sku }}
     </td>
     <td>
