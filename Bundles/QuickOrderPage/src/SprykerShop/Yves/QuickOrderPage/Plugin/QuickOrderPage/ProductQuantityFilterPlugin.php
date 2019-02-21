@@ -13,6 +13,9 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemFilterPluginInterface;
 
 /**
+ * @deprecated Now OrderItemTransfer is adjusted in Spryker\Client\QuickOrder\QuickOrderClient::buildQuickOrderTransfer.
+ * Plugin will be removed in next module major release.
+ *
  * @method \SprykerShop\Yves\QuickOrderPage\QuickOrderPageFactory getFactory()
  */
 class ProductQuantityFilterPlugin extends AbstractPlugin implements QuickOrderItemFilterPluginInterface

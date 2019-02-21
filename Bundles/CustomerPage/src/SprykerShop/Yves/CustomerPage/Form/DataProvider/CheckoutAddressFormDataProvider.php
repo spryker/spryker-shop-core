@@ -78,14 +78,14 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function getShippingAddress(QuoteTransfer $quoteTransfer)
+    protected function getShippingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
     {
         $addressTransfer = new AddressTransfer();
-        if ($quoteTransfer->getShippingAddress() !== null) {
+        if ($this->isShippingAddressInQuote($quoteTransfer)) {
             $addressTransfer = $quoteTransfer->getShippingAddress();
         }
 
-        if ($this->customerTransfer !== null && $quoteTransfer->getShippingAddress() === null) {
+        if ($this->customerTransfer !== null) {
             $addressTransfer->setIdCustomerAddress($this->customerTransfer->getDefaultShippingAddress());
         }
 
@@ -95,20 +95,56 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
+     * @return bool
+     */
+    protected function isShippingAddressInQuote(QuoteTransfer $quoteTransfer): bool
+    {
+        if ($quoteTransfer->getShippingAddress() === null) {
+            return false;
+        }
+
+        if ($quoteTransfer->getShippingAddress()->getIdCustomerAddress() === null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function getBillingAddress(QuoteTransfer $quoteTransfer)
+    protected function getBillingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
     {
-        $billingAddressTransfer = new AddressTransfer();
-        if ($quoteTransfer->getBillingAddress() !== null) {
-            $billingAddressTransfer = $quoteTransfer->getBillingAddress();
+        $addressTransfer = new AddressTransfer();
+        if ($this->isBillingAddressInQuote($quoteTransfer)) {
+            $addressTransfer = $quoteTransfer->getBillingAddress();
         }
 
-        if ($this->customerTransfer !== null && $quoteTransfer->getBillingAddress() === null) {
-            $billingAddressTransfer->setIdCustomerAddress($this->customerTransfer->getDefaultBillingAddress());
+        if ($this->customerTransfer !== null) {
+            $addressTransfer->setIdCustomerAddress($this->customerTransfer->getDefaultBillingAddress());
         }
 
-        return $billingAddressTransfer;
+        return $addressTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isBillingAddressInQuote(QuoteTransfer $quoteTransfer): bool
+    {
+        if ($quoteTransfer->getBillingAddress() === null) {
+            return false;
+        }
+
+        if ($quoteTransfer->getBillingAddress()->getIdCustomerAddress() === null) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

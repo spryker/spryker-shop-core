@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\MultiCartPage\Controller;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -19,12 +20,15 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class MultiCartController extends AbstractController
 {
+    use PermissionAwareTrait;
+
     public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
 
     /**
      * @deprecated Will be removed without replacement.
      */
     public const GLOSSARY_KEY_CART_WAS_DELETED = 'multi_cart_widget.cart.was-deleted-before';
+    protected const GLOSSARY_KEY_CART_UPDATED_ERROR = 'multi_cart_widget.cart.updated.error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -95,6 +99,10 @@ class MultiCartController extends AbstractController
      */
     protected function executeUpdateAction(int $idQuote, Request $request)
     {
+        if (!$this->can('WriteSharedCartPermissionPlugin', $idQuote)) {
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        }
+
         $quoteForm = $this->getFactory()
             ->getQuoteForm($idQuote)
             ->handleRequest($request);
@@ -110,6 +118,10 @@ class MultiCartController extends AbstractController
 
                 return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
             }
+
+            $this->addErrorMessage(static::GLOSSARY_KEY_CART_UPDATED_ERROR);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
         }
 
         return [

@@ -3,33 +3,10 @@ import AutocompleteForm, {Events as AutocompleteEvents} from 'ShopUi/components/
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
 import debounce from 'lodash-es/debounce';
 
-const ERROR_MESSAGE_CLASS = 'quick-order-row__error--show';
-const ERROR_PARTIAL_MESSAGE_CLASS = 'quick-order-row-partial__error--show';
-
 export default class QuickOrderRow extends Component {
-    /**
-     * Imported component which provides the Ajax operations.
-     */
     ajaxProvider: AjaxProvider;
-    /**
-     * The form with an autocomplete ability.
-     */
     autocompleteInput: AutocompleteForm;
-    /**
-     * The input element for a quantity
-     */
     quantityInput: HTMLInputElement;
-    /**
-     * Elemnts which contains error messages.
-     */
-    errorMessage: HTMLElement;
-    /**
-     * TThe timer of the form fields reload.
-     */
-    timer: number;
-    /**
-     * A time is sufficient to reload form fields.
-     */
     timeout: number = 3000;
 
     protected readyCallback(): void {
@@ -41,7 +18,6 @@ export default class QuickOrderRow extends Component {
 
     protected registerQuantityInput(): void {
         this.quantityInput = <HTMLInputElement>this.querySelector(`.${this.jsName}__quantity, .${this.jsName}-partial__quantity`);
-        this.errorMessage = <HTMLElement>this.querySelector(`.${this.name}__error, .${this.name}-partial__error`);
     }
 
     protected mapEvents(): void {
@@ -66,20 +42,7 @@ export default class QuickOrderRow extends Component {
         this.reloadField(this.autocompleteInput.inputValue);
     }
 
-    protected hideErrorMessage(): void {
-        if (!this.errorMessage) {
-            return;
-        }
-
-        this.errorMessage.classList.remove(ERROR_MESSAGE_CLASS, ERROR_PARTIAL_MESSAGE_CLASS);
-    }
-
-    /**
-     * Configures the ajaxProvider and sends an ajax request to the server.
-     * @param sku A string value for the ajaxProvider configuration.
-     */
     async reloadField(sku: string = '') {
-        clearTimeout(this.timer);
         const quantityInputValue = parseInt(this.quantityValue);
 
         this.ajaxProvider.queryParams.set('sku', sku);
@@ -93,16 +56,11 @@ export default class QuickOrderRow extends Component {
         this.registerQuantityInput();
         this.mapQuantityInputChange();
 
-        this.timer = setTimeout(() => this.hideErrorMessage(), this.timeout);
-
         if (!!sku) {
             this.quantityInput.focus();
         }
     }
 
-    /**
-     * Gets a quantity value.
-     */
     get quantityValue(): string {
         return this.quantityInput.value;
     }

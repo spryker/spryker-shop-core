@@ -22,9 +22,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class CompanyRolePermissionController extends AbstractCompanyController
 {
-    protected const MESSAGE_ERROR_PERMISSION_NOT_FOUND = 'Permission was not found';
-    protected const MESSAGE_ERROR_PERMISSION_SAVE_FAILED = 'Permission configuration has not been updated';
-    protected const MESSAGE_SUCCESSFUL_PERMISSION_SAVED = 'Permission configuration has been updated';
+    protected const MESSAGE_ERROR_PERMISSION_NOT_FOUND = 'company_page.company_role_permission.permission_not_found_error';
+    protected const MESSAGE_ERROR_PERMISSION_SAVE_FAILED = 'company_page.company_role_permission.permission_save_error';
+    protected const MESSAGE_SUCCESSFUL_PERMISSION_SAVED = 'company_page.company_role_permission.permission_save_success';
     protected const PARAMETER_ID_COMPANY_ROLE = 'id';
 
     /**

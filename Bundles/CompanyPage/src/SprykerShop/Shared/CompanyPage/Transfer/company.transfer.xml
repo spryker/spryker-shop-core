@@ -7,4 +7,9 @@
         <property name="isOnBehalf" type="bool" />
     </transfer>
 
+    <transfer name="Store">
+        <property name="name" type="string" />
+        <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode" />
+    </transfer>
+
 </transfers>
