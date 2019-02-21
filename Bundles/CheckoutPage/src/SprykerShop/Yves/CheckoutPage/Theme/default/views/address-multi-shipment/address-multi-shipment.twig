@@ -7,7 +7,7 @@
         billing: _view.addressesForm.billingAddress,
         items: _view.addressesForm.items
     },
-
+    isMultipleShipmentEnabled: _view.addressesForm.vars.value.isMultipleShipmentEnabled,
     title: 'checkout.step.address.title' | trans
 } %}
 
@@ -27,7 +27,8 @@
                 shipping: data.forms.shipping,
                 billing: data.forms.billing,
                 items: data.forms.items
-            }
+            },
+            isMultipleShipmentEnabled: data.isMultipleShipmentEnabled
         }
     } only %}
         {% block fields %}
@@ -48,7 +49,7 @@
                             {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
                                 {% widget companyBusinessUnitAddressWidget with {
                                     data: {
-                                        isMultipleShipmentEnabled: true
+                                        isMultipleShipmentEnabled: embed.isMultipleShipmentEnabled
                                     }
                                 } only %}
                                 {% endwidget %}

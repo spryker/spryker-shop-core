@@ -98,6 +98,7 @@ export default class SaveNewAddress extends Component {
     protected customerAddressesExists(): void {
         if (!this.customerShippingAddresses) {
             this.showSaveNewAddress();
+
             return;
         }
 
@@ -148,6 +149,10 @@ export default class SaveNewAddress extends Component {
     }
 
     protected shippingTogglerOnChange(): void {
+        if (!this.customerBillingAddresses && this.customerShippingAddresses.value === this.optionValueDeliverToMultipleAddresses) {
+            this.newBillingAddressChecked = true;
+        }
+
         this.newShippingAddressChecked = this.addressTogglerChange(this.customerShippingAddresses);
         this.toggleSaveNewAddress();
     }
@@ -214,7 +219,9 @@ export default class SaveNewAddress extends Component {
      * Checks if 'billing same as shipping' checkbox is checked.
      */
     get sameAsShippingChecked(): boolean {
-        return this.sameAsShippingToggler.checked;
+        if (this.sameAsShippingToggler) {
+            return this.sameAsShippingToggler.checked;
+        }
     }
 
     /**
