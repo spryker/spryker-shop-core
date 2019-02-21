@@ -14,6 +14,7 @@ use SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig;
 
 class QuantityLimiter implements QuantityLimiterInterface
 {
+    protected const MIN_ALLOWED_QUANTITY = 1;
     protected const ERROR_MESSAGE_QUANTITY_INVALID = 'quick-order.errors.quantity-invalid';
     protected const MESSAGE_TYPE_WARNING = 'warning';
 
@@ -63,13 +64,13 @@ class QuantityLimiter implements QuantityLimiterInterface
         $maxAllowedQuantity = $this->quickOrderPageConfig->getMaxAllowedQuantity();
 
         if ($originalQuantity === null) {
-            $quickOrderItemTransfer->setQuantity(1);
+            $quickOrderItemTransfer->setQuantity(static::MIN_ALLOWED_QUANTITY);
 
             return;
         }
 
         if ($integerQuantiy < 1) {
-            $this->adjustQuantity($quickOrderItemTransfer, 1);
+            $this->adjustQuantity($quickOrderItemTransfer, static::MIN_ALLOWED_QUANTITY);
 
             return;
         }
