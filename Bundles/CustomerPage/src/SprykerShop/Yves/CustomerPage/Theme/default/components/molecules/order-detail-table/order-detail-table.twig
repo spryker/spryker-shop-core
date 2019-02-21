@@ -6,7 +6,8 @@
 
 {% define data = {
     currencyIsoCode: required,
-    shipmentGroups: required
+    shipmentGroups: required,
+    order: required
 } %}
 
 {% block body %}
@@ -123,15 +124,19 @@
                     </div>
                 </div>
 
-                {% if shipmentGroup.shipment.expense is not empty %}
-                    <div class="spacing-bottom spacing-bottom--big">
-                        <h5>{{ 'customer.order.delivery_method' | trans }}</h5>
-                        <div class="spacing-y spacing-y--inner">
-                            {{ shipmentGroup.shipment.expense.name | trans }}:
-                            {{ shipmentGroup.shipment.expense.sumPrice | money(true, data.currencyIsoCode) }}
+                {% for expense in data.order.expenses %}
+                    {% if expense.type == constant('\\Spryker\\Shared\\Shipment\\ShipmentConstants::SHIPMENT_EXPENSE_TYPE')
+                        and expense.shipment.idSalesShipment == shipmentGroup.shipment.idSalesShipment
+                    %}
+                        <div class="spacing-bottom spacing-bottom--big">
+                            <h5>{{ 'customer.order.delivery_method' | trans }}</h5>
+                            <div class="spacing-y spacing-y--inner">
+                                {{ expense.name | trans }}:
+                                {{ expense.sumPrice | money(true, data.currencyIsoCode) }}
+                            </div>
                         </div>
-                    </div>
-                {% endif %}
+                    {% endif %}
+                {% endfor %}
 
                 {% if shipmentGroup.shipment.requestedDeliveryDate is not empty %}
                     <div class="spacing-bottom spacing-bottom--big">
