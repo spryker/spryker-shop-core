@@ -4,6 +4,10 @@
     name: 'address-item-form-field-list'
 } %}
 
+{% define data = {
+    items: required
+} %}
+
 {% block body %}
     <div class="grid grid--middle">
         {% for item in data.items %}
