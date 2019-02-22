@@ -14,6 +14,7 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
 {
     public const ROUTE_AGENT_QUOTE_REQUEST = 'agent/quote-request';
     public const ROUTE_AGENT_QUOTE_REQUEST_CANCEL = 'agent/quote-request/cancel';
+    public const ROUTE_AGENT_QUOTE_REQUEST_DETAILS = 'quote-request/details';
 
     protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-]+';
 
@@ -50,6 +51,19 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
     protected function addAgentQuoteRequestCancelRoute()
     {
         $this->createController('/{agent}/quote-request/cancel/{quoteRequestReference}', static::ROUTE_AGENT_QUOTE_REQUEST_CANCEL, 'AgentQuoteRequestPage', 'AgentQuoteRequestDelete', 'cancel')
+            ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
+            ->value('agent', 'agent')
+            ->assert('quoteRequestReference', static::QUOTE_REQUEST_REFERENCE_REGEX);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addQuoteRequestDetailsRoute()
+    {
+        $this->createController('/{agent}/quote-request/details/{quoteRequestReference}', static::ROUTE_AGENT_QUOTE_REQUEST_DETAILS, 'AgentQuoteRequestPage', 'AgentQuoteRequestView', 'details')
             ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
             ->value('agent', 'agent')
             ->assert('quoteRequestReference', static::QUOTE_REQUEST_REFERENCE_REGEX);

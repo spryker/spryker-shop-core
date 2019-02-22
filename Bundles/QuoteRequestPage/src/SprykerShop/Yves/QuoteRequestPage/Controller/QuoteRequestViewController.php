@@ -22,7 +22,7 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
     {
         $viewData = $this->executeIndexAction();
 
-        return $this->view($viewData, [], '@QuoteRequestPage/views/view-quote-request/view-quote-request.twig');
+        return $this->view($viewData, [], '@QuoteRequestPage/views/quote-request-view/quote-request-view.twig');
     }
 
     /**
@@ -34,7 +34,7 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
     {
         $viewData = $this->executeDetailsAction($quoteRequestReference);
 
-        return $this->view($viewData, [], '@QuoteRequestPage/views/details-quote-request/details-quote-request.twig');
+        return $this->view($viewData, [], '@QuoteRequestPage/views/quote-request-details/quote-request-details.twig');
     }
 
     /**

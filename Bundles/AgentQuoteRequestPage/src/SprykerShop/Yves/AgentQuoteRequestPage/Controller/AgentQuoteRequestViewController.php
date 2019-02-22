@@ -34,6 +34,18 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
     }
 
     /**
+     * @param string $quoteRequestReference
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function detailsAction(string $quoteRequestReference): View
+    {
+        $viewData = $this->executeDetailsAction($quoteRequestReference);
+
+        return $this->view($viewData, [], '@QuoteRequestPage/views/quote-request-details/quote-request-details.twig');
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
@@ -51,6 +63,37 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
             'quoteRequests' => $quoteRequestCollectionTransfer->getQuoteRequests(),
             'pagination' => $quoteRequestCollectionTransfer->getPagination(),
         ];
+    }
+
+    /**
+     * @param string $quoteRequestReference
+     *
+     * @return array
+     */
+    protected function executeDetailsAction(string $quoteRequestReference): array
+    {
+        $quoteRequestForm = $this->getFactory()->getAgentQuoteRequestForm($quoteRequestReference);
+
+        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
+        $quoteRequestTransfer = $quoteRequestForm->getData();
+        $isQuoteRequestCancelable = $this->getFactory()
+            ->getAgentQuoteRequestClient()
+            ->isQuoteRequestCancelable($quoteRequestTransfer);
+
+        return [
+            'quoteRequestForm' => $quoteRequestForm->createView(),
+            'isQuoteRequestCancelable' => $isQuoteRequestCancelable,
+        ];
+
+//        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
+//        $cartItems = $quoteTransfer->getItems()->getArrayCopy();
+//
+//        return [
+//            'quoteRequestForm' => $quoteRequestForm->createView(),
+//            'isQuoteRequestCancelable' => $isQuoteRequestCancelable,
+//            'cart' => $quoteTransfer,
+//            'cartItems' => $cartItems,
+//        ];
     }
 
     /**

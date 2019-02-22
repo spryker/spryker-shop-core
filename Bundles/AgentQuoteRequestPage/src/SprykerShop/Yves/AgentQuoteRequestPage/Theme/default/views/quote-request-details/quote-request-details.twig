@@ -4,9 +4,15 @@
     title: 'quote_request_page.quote_request' | trans,
     quoteRequestForm: _view.quoteRequestForm,
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
-    cart: _view.cart | default,
-    cartItems: _view.cartItems | default
+    quoteRequest: _view.quoteRequestForm.vars.value,
+    cart: null,
+    cartItems: null
 } %}
+
+{% if data.quoteRequest.latestVersion %}
+    {% set data.cart = data.quoteRequest.latestVersion.quote %}
+    {% set data.artItems = data.quoteRequest.latestVersion.quote.items %}
+{% endif %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
