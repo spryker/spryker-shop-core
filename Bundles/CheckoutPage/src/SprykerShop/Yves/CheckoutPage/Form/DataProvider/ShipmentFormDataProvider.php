@@ -10,9 +10,11 @@ namespace SprykerShop\Yves\CheckoutPage\Form\DataProvider;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Client\CustomerAccessPermission\Plugin\SeePricePermissionPlugin;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
@@ -20,6 +22,8 @@ use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
 
 class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
 {
+    use PermissionAwareTrait;
+
     public const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
 
     /**
@@ -130,7 +134,9 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         $shipmentDescription = $this->translate($shipmentMethodTransfer->getName());
 
         $shipmentDescription = $this->appendDeliveryTime($shipmentMethodTransfer, $shipmentDescription);
-        $shipmentDescription = $this->appendShipmentPrice($shipmentMethodTransfer, $shipmentDescription);
+        if ($this->can(SeePricePermissionPlugin::KEY)) {
+            $shipmentDescription = $this->appendShipmentPrice($shipmentMethodTransfer, $shipmentDescription);
+        }
 
         return $shipmentDescription;
     }
