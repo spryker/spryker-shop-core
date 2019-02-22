@@ -110,13 +110,13 @@ export default class SaveNewAddress extends Component {
         if (this.addNewShippingAddress && this.addNewBillingAddress) {
             this.addNewShippingAddress.addEventListener(EVENT_ADD_NEW_ADDRESS, () => {
                 this.shippingTogglerOnChange();
-                this.toggleSplitDeliveryAddressForm();
+                this.splitDeliveryTogglerOnChange();
             });
             this.addNewBillingAddress.addEventListener(EVENT_ADD_NEW_ADDRESS, () => this.billingTogglerOnChange());
         }
 
         if (this.formClearShippingAddress) {
-            this.formClearShippingAddress.addEventListener('form-fields-clear-after', () => this.toggleSplitDeliveryAddressForm());
+            this.formClearShippingAddress.addEventListener('form-fields-clear-after', () => this.splitDeliveryTogglerOnChange());
         }
 
         this.customerShippingAddresses.addEventListener('change', () => this.shippingTogglerOnChange());
@@ -130,11 +130,11 @@ export default class SaveNewAddress extends Component {
         }
 
         if (this.businessUnitShippingAddressToggler) {
-            this.businessUnitShippingAddressToggler.addEventListener('change', () => this.toggleSplitDeliveryAddressForm());
+            this.businessUnitShippingAddressToggler.addEventListener('change', () => this.splitDeliveryTogglerOnChange());
         }
     }
 
-    protected toggleSplitDeliveryAddressForm(): void {
+    protected splitDeliveryTogglerOnChange(): void {
         const selectedValue = this.businessUnitShippingAddressToggler.value;
 
         if (selectedValue === this.optionValueDeliverToMultipleAddresses) {
@@ -148,10 +148,14 @@ export default class SaveNewAddress extends Component {
         this.toggleSaveNewAddress();
     }
 
-    protected shippingTogglerOnChange(): void {
+    protected initSplitDeliveryToggler(): void {
         if (!this.customerBillingAddresses && this.customerShippingAddresses.value === this.optionValueDeliverToMultipleAddresses) {
             this.newBillingAddressChecked = true;
         }
+    }
+
+    protected shippingTogglerOnChange(): void {
+        this.initSplitDeliveryToggler();
 
         this.newShippingAddressChecked = this.addressTogglerChange(this.customerShippingAddresses);
         this.toggleSaveNewAddress();
@@ -169,10 +173,11 @@ export default class SaveNewAddress extends Component {
             this.newBillingAddressChecked = this.isSaveNewAddressOptionSelected(this.customerBillingAddresses);
         }
 
+        this.initSplitDeliveryToggler();
         this.toggleSaveNewAddress();
 
         if (this.businessUnitShippingAddressToggler) {
-            this.toggleSplitDeliveryAddressForm();
+            this.splitDeliveryTogglerOnChange();
         }
     }
 
