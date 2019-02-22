@@ -56,4 +56,14 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
     {
         return $this->quoteRequestClient->cancelByReference($quoteRequestFilterTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $this->quoteRequestClient->isQuoteRequestCancelable($quoteRequestTransfer);
+    }
 }
