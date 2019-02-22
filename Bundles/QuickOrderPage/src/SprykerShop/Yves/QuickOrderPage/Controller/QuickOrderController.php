@@ -141,7 +141,7 @@ class QuickOrderController extends AbstractController
             'additionalColumns' => $additionalColumns,
             'products' => $this->transformProductsViewData($products),
             'fileTemplateExtensions' => $fileTemplateExtensions,
-            'prices' => $prices,
+            'prices' => $prices, // @deprecated quickOrderForm already contains this data per row at sumPrice property
         ];
     }
 
@@ -306,7 +306,7 @@ class QuickOrderController extends AbstractController
             'form' => $quickOrderForm->createView(),
             'additionalColumns' => $additionalColumns,
             'products' => $this->transformProductsViewData($products),
-            'prices' => $prices,
+            'prices' => $prices, // @deprecated quickOrderForm already contains this data per row at sumPrice property
         ];
     }
 
@@ -371,7 +371,7 @@ class QuickOrderController extends AbstractController
             'form' => $quickOrderForm->createView(),
             'additionalColumns' => $additionalColumns,
             'products' => $this->transformProductsViewData($products),
-            'prices' => $prices,
+            'prices' => $prices, // @deprecated quickOrderForm already contains this data per row at sumPrice property
         ];
     }
 
@@ -570,6 +570,8 @@ class QuickOrderController extends AbstractController
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
      * @return int[]
