@@ -34,15 +34,16 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $quoteRequestReference
      *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function detailsAction(string $quoteRequestReference): View
+    public function detailsAction(Request $request, string $quoteRequestReference): View
     {
-        $viewData = $this->executeDetailsAction($quoteRequestReference);
+        $viewData = $this->executeDetailsAction($request, $quoteRequestReference);
 
-        return $this->view($viewData, [], '@QuoteRequestPage/views/quote-request-details/quote-request-details.twig');
+        return $this->view($viewData, [], '@AgentQuoteRequestPage/views/quote-request-details/quote-request-details.twig');
     }
 
     /**
@@ -66,13 +67,14 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $quoteRequestReference
      *
      * @return array
      */
-    protected function executeDetailsAction(string $quoteRequestReference): array
+    protected function executeDetailsAction(Request $request, string $quoteRequestReference): array
     {
-        $quoteRequestForm = $this->getFactory()->getAgentQuoteRequestForm($quoteRequestReference);
+        $quoteRequestForm = $this->getFactory()->getAgentQuoteRequestForm($request, $quoteRequestReference);
 
         /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
         $quoteRequestTransfer = $quoteRequestForm->getData();
@@ -84,16 +86,6 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
             'quoteRequestForm' => $quoteRequestForm->createView(),
             'isQuoteRequestCancelable' => $isQuoteRequestCancelable,
         ];
-
-//        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
-//        $cartItems = $quoteTransfer->getItems()->getArrayCopy();
-//
-//        return [
-//            'quoteRequestForm' => $quoteRequestForm->createView(),
-//            'isQuoteRequestCancelable' => $isQuoteRequestCancelable,
-//            'cart' => $quoteTransfer,
-//            'cartItems' => $cartItems,
-//        ];
     }
 
     /**

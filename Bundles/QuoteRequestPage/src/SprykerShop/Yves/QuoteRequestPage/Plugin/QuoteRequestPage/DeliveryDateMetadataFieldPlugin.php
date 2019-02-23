@@ -35,7 +35,6 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
      */
     public function buildForm(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
-
         $builder->add(static::FIELD_METADATA_DELIVERY_DATE, DateType::class, [
             'label' => static::LABEL_METADATA_DELIVERY_DATE,
             'widget' => 'single_text',

@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuoteRequestPage\Form;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,6 +20,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class QuoteRequestForm extends AbstractType
 {
     public const FIELD_METADATA = 'metadata';
+    public const FIELD_QUOTE_REQUEST_VERSION_REFERENCE = 'quote-request-version-reference';
+
+    public const OPTION_VERSION_REFERENCE_CHOICES = 'version_reference_choices';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -30,6 +34,8 @@ class QuoteRequestForm extends AbstractType
         $resolver->setDefaults([
             'data_class' => QuoteRequestTransfer::class,
         ]);
+
+        $resolver->setRequired([static::OPTION_VERSION_REFERENCE_CHOICES]);
     }
 
     /**
@@ -40,7 +46,8 @@ class QuoteRequestForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addMetadataForm($builder);
+        $this->addMetadataForm($builder)
+            ->addVersionsForm($builder, $options);
     }
 
     /**
@@ -51,6 +58,27 @@ class QuoteRequestForm extends AbstractType
     protected function addMetadataForm(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_METADATA, QuoteRequestMetadataSubForm::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addVersionsForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(
+            QuoteRequestTransfer::LATEST_VERSION,
+            QuoteRequestVersionsSubForm::class,
+            [
+                'label' => false,
+                'data_class' => QuoteRequestVersionTransfer::class,
+                static::OPTION_VERSION_REFERENCE_CHOICES => $options[static::OPTION_VERSION_REFERENCE_CHOICES],
+            ]
+        );
 
         return $this;
     }

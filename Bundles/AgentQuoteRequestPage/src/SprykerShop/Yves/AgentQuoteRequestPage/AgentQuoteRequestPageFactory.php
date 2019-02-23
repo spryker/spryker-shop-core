@@ -15,6 +15,7 @@ use SprykerShop\Yves\AgentQuoteRequestPage\Form\AgentQuoteRequestForm;
 use SprykerShop\Yves\AgentQuoteRequestPage\Form\DataProvider\AgentQuoteRequestFormDataProvider;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageConfig getConfig()
@@ -22,27 +23,34 @@ use Symfony\Component\Form\FormInterface;
 class AgentQuoteRequestPageFactory extends AbstractFactory
 {
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $quoteRequestReference
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getAgentQuoteRequestForm(string $quoteRequestReference): FormInterface
+    public function getAgentQuoteRequestForm(Request $request, string $quoteRequestReference): FormInterface
     {
-        $agentQuoteRequestFormDataProvider = $this->createAgentQuoteRequestFormDataProvider();
+        $agentQuoteRequestFormDataProvider = $this->createAgentQuoteRequestFormDataProvider($request);
+        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
+        $quoteRequestTransfer = $agentQuoteRequestFormDataProvider->getData($quoteRequestReference);
 
         return $this->getFormFactory()->create(
             AgentQuoteRequestForm::class,
-            $agentQuoteRequestFormDataProvider->getData($quoteRequestReference)
+            $quoteRequestTransfer,
+            $agentQuoteRequestFormDataProvider->getOptions($quoteRequestTransfer)
         );
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \SprykerShop\Yves\AgentQuoteRequestPage\Form\DataProvider\AgentQuoteRequestFormDataProvider
      */
-    public function createAgentQuoteRequestFormDataProvider(): AgentQuoteRequestFormDataProvider
+    public function createAgentQuoteRequestFormDataProvider(Request $request): AgentQuoteRequestFormDataProvider
     {
         return new AgentQuoteRequestFormDataProvider(
-            $this->getQuoteRequestClient()
+            $this->getQuoteRequestClient(),
+            $request
         );
     }
 

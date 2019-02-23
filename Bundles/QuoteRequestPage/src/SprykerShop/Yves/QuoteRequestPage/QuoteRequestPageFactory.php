@@ -18,6 +18,7 @@ use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandlerInterface;
 use SprykerShop\Yves\QuoteRequestPage\Form\QuoteRequestForm;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageConfig getConfig()
@@ -25,30 +26,37 @@ use Symfony\Component\Form\FormInterface;
 class QuoteRequestPageFactory extends AbstractFactory
 {
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string|null $quoteRequestReference
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getQuoteRequestForm(?string $quoteRequestReference = null): FormInterface
+    public function getQuoteRequestForm(Request $request, ?string $quoteRequestReference = null): FormInterface
     {
-        $quoteRequestFormDataProvider = $this->createQuoteRequestFormDataProvider();
+        $quoteRequestFormDataProvider = $this->createQuoteRequestFormDataProvider($request);
+        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
+        $quoteRequestTransfer = $quoteRequestFormDataProvider->getData($quoteRequestReference);
 
         return $this->getFormFactory()->create(
             QuoteRequestForm::class,
-            $quoteRequestFormDataProvider->getData($quoteRequestReference)
+            $quoteRequestTransfer,
+            $quoteRequestFormDataProvider->getOptions($quoteRequestTransfer)
         );
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \SprykerShop\Yves\QuoteRequestPage\Form\DataProvider\QuoteRequestFormDataProvider
      */
-    public function createQuoteRequestFormDataProvider(): QuoteRequestFormDataProvider
+    public function createQuoteRequestFormDataProvider(Request $request): QuoteRequestFormDataProvider
     {
         return new QuoteRequestFormDataProvider(
             $this->getCompanyUserClient(),
             $this->getCartClient(),
             $this->getQuoteRequestClient(),
-            $this->getConfig()
+            $this->getConfig(),
+            $request
         );
     }
 

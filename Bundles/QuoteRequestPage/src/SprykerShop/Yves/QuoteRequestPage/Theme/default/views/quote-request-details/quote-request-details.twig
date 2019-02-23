@@ -4,15 +4,10 @@
     title: 'quote_request_page.quote_request' | trans,
     quoteRequestForm: _view.quoteRequestForm,
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
-    quoteRequest: _view.quoteRequestForm.vars.value,
-    cart: null,
-    cartItems: null
+    quoteRequest: _view.quoteRequestForm.vars.value
 } %}
 
-{% if data.quoteRequest.latestVersion %}
-    {% set data.cart = data.quoteRequest.latestVersion.quote %}
-    {% set data.artItems = data.quoteRequest.latestVersion.quote.items %}
-{% endif %}
+{% set cart = data.quoteRequest.latestVersion ? data.quoteRequest.latestVersion.quote : null %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -62,14 +57,16 @@
                     <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}: <b>{{ data.quoteRequest.createdAt | date('d.m.Y H:i') }}</b></p>
                     <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}: <b>{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</b></p>
                     <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:</p>
-                    <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:</p>
+                    <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
+                        {{ form_row(data.quoteRequestForm.latestVersion) }}
+                    </p>
                 </div>
             </div>
         </div>
         <div class="grid">
             <div class="col col--sm-12 col--xl-8">
-                {% if data.cart is not empty %}
-                    {% for cartItem in data.cartItems %}
+                {% if cart %}
+                    {% for cartItem in cart.items %}
                         {% include molecule('quote-request-cart-item', 'CartPage') with {
                             class: 'box',
                             data: {
@@ -82,10 +79,10 @@
 
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
-                    {% if data.cart is not empty %}
+                    {% if cart is not empty %}
                         {% include molecule('quote-request-cart-summary', 'CartPage') with {
                             data: {
-                                cart: data.cart
+                                cart: cart
                             }
                         } only %}
                     {% endif %}

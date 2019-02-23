@@ -9,6 +9,8 @@ namespace SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 
 class AgentQuoteRequestPageToQuoteRequestClientBridge implements AgentQuoteRequestPageToQuoteRequestClientInterface
 {
@@ -34,5 +36,16 @@ class AgentQuoteRequestPageToQuoteRequestClientBridge implements AgentQuoteReque
         QuoteRequestFilterTransfer $quoteRequestFilterTransfer
     ): QuoteRequestCollectionTransfer {
         return $this->quoteRequestClient->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer
+     */
+    public function getQuoteRequestVersionCollectionByFilter(
+        QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer
+    ): QuoteRequestVersionCollectionTransfer {
+        return $this->quoteRequestClient->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer);
     }
 }

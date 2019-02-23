@@ -14,7 +14,7 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
 {
     public const ROUTE_AGENT_QUOTE_REQUEST = 'agent/quote-request';
     public const ROUTE_AGENT_QUOTE_REQUEST_CANCEL = 'agent/quote-request/cancel';
-    public const ROUTE_AGENT_QUOTE_REQUEST_DETAILS = 'quote-request/details';
+    public const ROUTE_AGENT_QUOTE_REQUEST_DETAILS = 'agent/quote-request/details';
 
     protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-]+';
 
@@ -26,7 +26,8 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
     protected function defineControllers(Application $app): void
     {
         $this->addAgentQuoteRequestRoute()
-            ->addAgentQuoteRequestCancelRoute();
+            ->addAgentQuoteRequestCancelRoute()
+            ->addQuoteRequestDetailsRoute();
     }
 
     /**

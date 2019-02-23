@@ -66,9 +66,11 @@
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
                     <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}: <b>{{ data.quoteRequestForm.vars.value.createdAt | date('d.m.Y H:i') }}</b></p>
-                    <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}: <b>{{ ('quote_request.status.' ~ data.quoteRequestForm.vars.value.status) | trans }}</b></p>
+                    <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:</p>
                     <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:</p>
-                    <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:</p>
+                    <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
+                        {{ form_widget(data.quoteRequestForm.latestVersion) }}
+                    </p>
                 </div>
             </div>
         </div>

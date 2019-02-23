@@ -41,7 +41,7 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
     protected function executeCreateAction(Request $request)
     {
         $quoteRequestForm = $this->getFactory()
-            ->getQuoteRequestForm()
+            ->getQuoteRequestForm($request)
             ->handleRequest($request);
 
         if ($quoteRequestForm->isSubmitted() && $quoteRequestForm->isValid()) {
