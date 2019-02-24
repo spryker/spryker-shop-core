@@ -60,6 +60,8 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
     }
 
     /**
+     * @uses \SprykerShop\Yves\AgentQuoteRequestPage\Controller\AgentQuoteRequestViewController::detailsAction()
+     *
      * @return $this
      */
     protected function addQuoteRequestDetailsRoute()

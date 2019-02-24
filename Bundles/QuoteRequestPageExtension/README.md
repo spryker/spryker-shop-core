@@ -1,4 +1,4 @@
-# QuickOrderPageExtension Module
+# QuoteRequestPageExtension Module
 [![Build Status](https://travis-ci.org/spryker-shop/quote-request-page-extension.svg)](https://travis-ci.org/spryker-shop/quote-request-page-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/quote-request-page-extension/badge.svg)](https://coveralls.io/github/spryker-shop/quote-request-page-extension)
 

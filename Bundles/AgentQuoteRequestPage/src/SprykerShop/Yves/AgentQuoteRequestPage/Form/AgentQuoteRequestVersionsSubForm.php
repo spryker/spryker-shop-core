@@ -51,7 +51,6 @@ class AgentQuoteRequestVersionsSubForm extends AbstractType
         $builder->add(QuoteRequestVersionTransfer::VERSION_REFERENCE, ChoiceType::class, [
             'label' => false,
             'choices' => $options[AgentQuoteRequestForm::OPTION_VERSION_REFERENCE_CHOICES],
-            'choices_as_values' => true,
         ]);
 
         return $this;

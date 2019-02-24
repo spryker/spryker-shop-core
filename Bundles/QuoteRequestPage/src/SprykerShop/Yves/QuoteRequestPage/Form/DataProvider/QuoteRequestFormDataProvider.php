@@ -136,7 +136,7 @@ class QuoteRequestFormDataProvider
             throw new NotFoundHttpException();
         }
 
-        $quoteRequestTransfer->setLatestVersion($this->findCurrentQuoteRequestVersion($quoteRequestTransfer));
+        $quoteRequestTransfer->setActiveVersion($this->findActiveQuoteRequestVersion($quoteRequestTransfer));
 
         return $quoteRequestTransfer;
     }
@@ -146,7 +146,7 @@ class QuoteRequestFormDataProvider
      *
      * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer|null
      */
-    protected function findCurrentQuoteRequestVersion(QuoteRequestTransfer $quoteRequestTransfer): ?QuoteRequestVersionTransfer
+    protected function findActiveQuoteRequestVersion(QuoteRequestTransfer $quoteRequestTransfer): ?QuoteRequestVersionTransfer
     {
         $versionReference = $this->request->query->get(QuoteRequestForm::FIELD_QUOTE_REQUEST_VERSION_REFERENCE);
 

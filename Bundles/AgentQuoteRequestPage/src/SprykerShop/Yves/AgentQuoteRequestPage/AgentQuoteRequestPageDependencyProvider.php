@@ -77,7 +77,7 @@ class AgentQuoteRequestPageDependencyProvider extends AbstractBundleDependencyPr
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteRequestPageExtension\Dependency\Plugin\QuoteRequestFormMetadataFieldPluginInterface[]
+     * @return \SprykerShop\Yves\AgentQuoteRequestPageExtension\Dependency\Plugin\AgentQuoteRequestFormMetadataFieldPluginInterface[]
      */
     protected function getAgentQuoteRequestFormMetadataFieldPlugins(): array
     {

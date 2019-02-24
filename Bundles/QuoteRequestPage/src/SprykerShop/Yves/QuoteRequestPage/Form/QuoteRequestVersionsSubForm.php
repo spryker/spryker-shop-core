@@ -51,7 +51,6 @@ class QuoteRequestVersionsSubForm extends AbstractType
         $builder->add(QuoteRequestVersionTransfer::VERSION_REFERENCE, ChoiceType::class, [
             'label' => false,
             'choices' => $options[QuoteRequestForm::OPTION_VERSION_REFERENCE_CHOICES],
-            'choices_as_values' => true,
         ]);
 
         return $this;

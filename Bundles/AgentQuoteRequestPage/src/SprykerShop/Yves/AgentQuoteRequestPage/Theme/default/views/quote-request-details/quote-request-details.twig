@@ -5,10 +5,11 @@
     quoteRequestForm: _view.quoteRequestForm,
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
     quoteRequest: _view.quoteRequestForm.vars.value,
-    quoteRequestVersionReference: app.request.get('quote-request-version-reference')
+    activeVersion: _view.quoteRequestForm.vars.value.activeVersion,
+    latestVersion: _view.quoteRequestForm.vars.value.latestVersion
 } %}
 
-{% set cart = data.quoteRequest.latestVersion ? data.quoteRequest.latestVersion.quote : null %}
+{% set cart = data.activeVersion ? data.activeVersion.quote : null %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -61,7 +62,7 @@
                     <b>{{ ('quote_request.status.' ~ data.quoteRequestForm.vars.value.status) | trans }}</b></p>
                 <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:</p>
                 <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
-                    {{ form_row(data.quoteRequestForm.latestVersion) }}
+                    {{ form_row(data.quoteRequestForm.activeVersion) }}
                 </p>
             </div>
         </div>
@@ -95,41 +96,45 @@
                     {{ 'quote_request_page.quote_request.actions.back_to_list' | trans }}
                 </a>
 
-                {% if data.isQuoteRequestCancelable %}
-                    <hr/>
-                    <a class="button button--expand button--cancel"
-                       href="{{ path('agent/quote-request/cancel', { quoteRequestReference: (data.quoteRequestForm.vars.value.quoteRequestReference) }) }}">
-                        {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
-                    </a>
-                {% endif %}
+                {% if data.activeVersion and data.activeVersion.idQuoteRequestVersion == data.latestVersion.idQuoteRequestVersion %}
 
-                {% if data.quoteRequest.status == 'waiting' or data.quoteRequest.status == 'in-progress' %}
-                    <hr/>
-                    <a class="button button--expand button--success"
-                       href="{{ path('agent/quote-request/edit', { quoteRequestReference: (data.quoteRequestForm.vars.value.quoteRequestReference) }) }}">
-                        {{ 'quote_request_page.quote_request.actions.edit' | trans }}
-                    </a>
-                {% endif %}
+                    {% if data.isQuoteRequestCancelable %}
+                        <hr/>
+                        <a class="button button--expand button--cancel"
+                           href="{{ path('agent/quote-request/cancel', { quoteRequestReference: (data.quoteRequestForm.vars.value.quoteRequestReference) }) }}">
+                            {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
+                        </a>
+                    {% endif %}
 
-                {% if data.quoteRequest.status == 'in-progress' %}
-                    <hr/>
-                    <a class="button button--expand button--success"
-                       href="{{ path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequestForm.vars.value.quoteRequestReference) }) }}">
-                        {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
-                    </a>
-                {% endif %}
+                    {% if data.quoteRequest.status == 'waiting' or data.quoteRequest.status == 'in-progress' %}
+                        <hr/>
+                        <a class="button button--expand button--success"
+                           href="{{ path('agent/quote-request/edit', { quoteRequestReference: (data.quoteRequestForm.vars.value.quoteRequestReference) }) }}">
+                            {{ 'quote_request_page.quote_request.actions.edit' | trans }}
+                        </a>
+                    {% endif %}
 
-                {% if data.quoteRequest.status == 'ready' %}
-                    <hr/>
-                    <a class="button button--expand button--hollow"
-                       href="{{ path('agent/quote-request/revise', { quoteRequestReference: (data.quoteRequestForm.vars.value.quoteRequestReference) }) }}">
-                        {{ 'quote_request_page.quote_request.actions.revise' | trans }}
-                    </a>
-                    <hr/>
-                    <a class="button button--expand button--success"
-                       href="{{ path('agent/quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequestForm.vars.value.quoteRequestReference) }) }}">
-                        {{ 'quote_request_page.quote_request.actions.convert_to_cart' | trans }}
-                    </a>
+                    {% if data.quoteRequest.status == 'in-progress' %}
+                        <hr/>
+                        <a class="button button--expand button--success"
+                           href="{{ path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequestForm.vars.value.quoteRequestReference) }) }}">
+                            {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
+                        </a>
+                    {% endif %}
+
+                    {% if data.quoteRequest.status == 'ready' %}
+                        <hr/>
+                        <a class="button button--expand button--hollow"
+                           href="{{ path('agent/quote-request/revise', { quoteRequestReference: (data.quoteRequestForm.vars.value.quoteRequestReference) }) }}">
+                            {{ 'quote_request_page.quote_request.actions.revise' | trans }}
+                        </a>
+                        <hr/>
+                        <a class="button button--expand button--success"
+                           href="{{ path('agent/quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequestForm.vars.value.quoteRequestReference) }) }}">
+                            {{ 'quote_request_page.quote_request.actions.convert_to_cart' | trans }}
+                        </a>
+                    {% endif %}
+
                 {% endif %}
             </div>
         </div>

@@ -71,7 +71,7 @@ class AgentQuoteRequestForm extends AbstractType
     protected function addVersionsForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            QuoteRequestTransfer::LATEST_VERSION,
+            QuoteRequestTransfer::ACTIVE_VERSION,
             AgentQuoteRequestVersionsSubForm::class,
             [
                 'label' => false,

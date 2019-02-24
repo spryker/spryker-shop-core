@@ -71,7 +71,7 @@ class QuoteRequestForm extends AbstractType
     protected function addVersionsForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            QuoteRequestTransfer::LATEST_VERSION,
+            QuoteRequestTransfer::ACTIVE_VERSION,
             QuoteRequestVersionsSubForm::class,
             [
                 'label' => false,
