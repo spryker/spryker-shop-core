@@ -1,8 +1,11 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'address-item-form-field-list',
-    tag: 'div'
+    name: 'address-item-form-field-list'
+} %}
+
+{% define data = {
+    items: required
 } %}
 
 {% block body %}
@@ -11,7 +14,6 @@
             {% set itemName = item.vars.data.name | default %}
             {% set itemQuantity = item.vars.data.quantity | default %}
             {% set imageUrl = item.vars.data.images is not empty ? item.vars.data.images[0].externalUrlSmall : '' %}
-            {% set formItemShippingAddressId = 'form-item-shipping-address-' ~ loop.index %}
             {% set hiddenClass = '' %}
 
             <div class="col col--sm-1 spacing spacing--inner">
@@ -24,19 +26,22 @@
                     }
                 } only %}
             </div>
+
             <div class="col col--sm-2 spacing spacing--inner">
                 <p><strong>{{ itemName }}</strong></p>
-                <p>{{ ('customer.order.item_quantity' | trans) }} {{ itemQuantity }}</p>
+                <p>{{ ('customer.order.item_quantity' | trans) }}: {{ itemQuantity }}</p>
             </div>
+
             {% if item.shippingAddress.id_customer_address is defined %}
                 <div class="col col--sm-3 spacing spacing--inner">
                     {{ form_widget(item.shippingAddress.id_customer_address) }}
                 </div>
                 {% set hiddenClass = 'is-hidden' %}
             {% endif %}
+
             <div class="col col--sm-12">
                 {% embed molecule('form') with {
-                    class: 'js-address__item-shipping ' ~ hiddenClass,
+                    class: 'js-address__item-shipping ' ~ hiddenClass ~ ' js-address__item-shipping--' ~ loop.index,
                     data: {
                         form: item.shippingAddress,
                         enableStart: false,
@@ -51,9 +56,6 @@
                             city: 'col col--sm-6 col--lg-4',
                             iso2_code: 'col col--sm-12 col--lg-4'
                         }
-                    },
-                    attributes: {
-                        id: formItemShippingAddressId
                     }
                 } only %}
                     {% block field %}
@@ -67,22 +69,26 @@
                         }) }}
                     {% endblock %}
                 {% endembed %}
+
                 {% if item.shippingAddress.id_customer_address is defined %}
                     {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
                         attributes: {
                             'trigger-selector': '[name="' ~ item.shippingAddress.id_customer_address.vars.full_name ~ '"]' | default(''),
-                            'target-selector': '#' ~ formItemShippingAddressId,
-                            'class-to-toggle': 'is-hidden',
+                            'target-selector': '.js-address__item-shipping--' ~ loop.index,
+                            'class-to-toggle': 'is-hidden'
                         }
                     } only %}
+                {% endif %}
+
+                {% if item.isAddressSavingSkipped is defined %}
                     {% include molecule('save-new-address', 'CustomerPage') ignore missing with {
-                        class: 'col is-hidden',
+                        class: 'spacing is-hidden',
                         data: {
                             form: item
                         },
                         attributes: {
                             'shipping-address-toggler-selector': item.shippingAddress.id_customer_address is defined ? '[name="' ~ item.shippingAddress.id_customer_address.vars.full_name ~ '"]' : '',
-                            'save-address-toggler-selector': '[name="' ~ item.isAddressSavingSkipped.vars.full_name ~ '"]',
+                            'save-address-toggler-selector': '[name="' ~ item.isAddressSavingSkipped.vars.full_name ~ '"]'
                         }
                     } only %}
                 {% endif %}
