@@ -13,7 +13,7 @@ use SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface;
 use SprykerShop\Yves\CheckoutPage\StrategyResolver\MultiShipmentResolverTrait;
 
 /**
- * @deprecated Will be removed in next major release.
+ * @deprecated Exists for Backward Compatibility reasons only.
  */
 class ShipmentCreatorStrategyResolver implements ShipmentCreatorStrategyResolverInterface
 {

@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\CheckoutPage\StrategyResolver\CheckoutStep;
 
 /**
- * @deprecated Will be removed in next major release.
+ * @deprecated Exists for Backward Compatibility reasons only.
  */
 interface CheckoutStepTemplateResolverInterface
 {

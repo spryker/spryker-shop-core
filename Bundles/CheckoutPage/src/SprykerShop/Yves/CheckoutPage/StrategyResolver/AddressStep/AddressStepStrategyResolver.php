@@ -14,7 +14,7 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\SaverInterface;
 use SprykerShop\Yves\CheckoutPage\StrategyResolver\MultiShipmentResolverTrait;
 
 /**
- * @deprecated Will be removed in next major release.
+ * @deprecated Exists for Backward Compatibility reasons only.
  */
 class AddressStepStrategyResolver implements AddressStepStrategyResolverInterface
 {

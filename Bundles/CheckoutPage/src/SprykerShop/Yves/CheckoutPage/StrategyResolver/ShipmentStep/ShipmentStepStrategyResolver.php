@@ -13,7 +13,7 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionChecker
 use SprykerShop\Yves\CheckoutPage\StrategyResolver\MultiShipmentResolverTrait;
 
 /**
- * @deprecated Will be removed in next major release.
+ * @deprecated Exists for Backward Compatibility reasons only.
  */
 class ShipmentStepStrategyResolver implements ShipmentStepStrategyResolverInterface
 {

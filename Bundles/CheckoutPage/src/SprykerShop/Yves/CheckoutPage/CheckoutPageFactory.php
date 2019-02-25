@@ -315,7 +315,7 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @return \SprykerShop\Yves\CheckoutPage\Form\DataProvider\QuoteDataBCForMultiShipmentAdapterInterface
      */

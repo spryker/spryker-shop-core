@@ -11,7 +11,7 @@ use Spryker\Yves\Kernel\Form\AbstractType;
 use SprykerShop\Yves\CheckoutPage\StrategyResolver\MultiShipmentResolverTrait;
 
 /**
- * @deprecated Will be removed in next major release.
+ * @deprecated Exists for Backward Compatibility reasons only.
  *
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
  */

@@ -57,7 +57,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected $shipmentService;
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @var \SprykerShop\Yves\CheckoutPage\Form\DataProvider\QuoteDataBCForMultiShipmentAdapterInterface
      */
@@ -95,7 +95,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     public function getData(AbstractTransfer $quoteTransfer)
     {
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 
@@ -110,12 +110,12 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         if (!$this->isMultiShipmentModuleEnabled()) {
             return [

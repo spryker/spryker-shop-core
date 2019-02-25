@@ -79,7 +79,7 @@ class CheckoutController extends AbstractController
         }
 
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         $template = $this->getFactory()->creatStepFormResolver()->getTemplateForAddressStep();
 
@@ -109,7 +109,7 @@ class CheckoutController extends AbstractController
         }
 
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         $template = $this->getFactory()->creatStepFormResolver()->getTemplateForShipmentStep();
 
@@ -164,7 +164,7 @@ class CheckoutController extends AbstractController
         }
 
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         $template = $this->getFactory()->creatStepFormResolver()->getTemplateForSummaryStep();
 

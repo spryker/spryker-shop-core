@@ -367,7 +367,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
+     * @deprecated Exists for Backward Compatibility reasons only. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
      *
      * @return \SprykerShop\Yves\CheckoutPage\StrategyResolver\AddressStep\AddressStepStrategyResolverInterface
      */
@@ -385,7 +385,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param array $strategyContainer
      *
@@ -401,7 +401,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param array $strategyContainer
      *
@@ -417,7 +417,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param array $strategyContainer
      *
@@ -433,7 +433,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param array $strategyContainer
      *
@@ -467,7 +467,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
+     * @deprecated Exists for Backward Compatibility reasons only. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
      *
      * @return \SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep\ShipmentStepStrategyResolverInterface
      */
@@ -482,7 +482,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param array $strategyContainer
      *
@@ -498,7 +498,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param array $strategyContainer
      *

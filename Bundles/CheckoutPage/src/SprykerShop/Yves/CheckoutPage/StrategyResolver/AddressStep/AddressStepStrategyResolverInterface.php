@@ -11,7 +11,7 @@ use SprykerShop\Yves\CheckoutPage\StrategyResolver\StepPostConditionCheckerStrat
 use SprykerShop\Yves\CheckoutPage\StrategyResolver\StepSaverStrategyResolverInterface;
 
 /**
- * @deprecated Will be removed in next major release.
+ * @deprecated Exists for Backward Compatibility reasons only.
  */
 interface AddressStepStrategyResolverInterface extends
     StepSaverStrategyResolverInterface,

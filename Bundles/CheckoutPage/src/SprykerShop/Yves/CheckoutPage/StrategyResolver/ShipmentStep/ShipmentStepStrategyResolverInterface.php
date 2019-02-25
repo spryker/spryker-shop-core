@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep;
 use SprykerShop\Yves\CheckoutPage\StrategyResolver\StepPostConditionCheckerStrategyResolverInterface;
 
 /**
- * @deprecated Will be removed in next major release.
+ * @deprecated Exists for Backward Compatibility reasons only.
  */
 interface ShipmentStepStrategyResolverInterface extends StepPostConditionCheckerStrategyResolverInterface
 {
