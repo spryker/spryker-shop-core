@@ -127,7 +127,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
 
         return [
             ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP => $this->createAvailableMethodsByShipmentChoiceList($quoteTransfer),
-            ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST => $this->getShipmentAddressLabelList($quoteTransfer),
+            ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST => $this->getShippingAddressLabelList($quoteTransfer),
         ];
     }
 
@@ -136,9 +136,9 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      *
      * @return array
      */
-    protected function getShipmentAddressLabelList(QuoteTransfer $quoteTransfer): array
+    protected function getShippingAddressLabelList(QuoteTransfer $quoteTransfer): array
     {
-        $shipmentAddressLabelList = [];
+        $shippingAddressLabelList = [];
 
         $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
 
@@ -149,10 +149,10 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
                 continue;
             }
 
-            $shipmentAddressLabelList[$shipmentGroupTransfer->getHash()] = $this->getShipmentAddressLabel($shipmentGroupTransfer->getShipment()->getShippingAddress());
+            $shippingAddressLabelList[$shipmentGroupTransfer->getHash()] = $this->getShippingAddressLabel($shipmentGroupTransfer->getShipment()->getShippingAddress());
         }
 
-        return $shipmentAddressLabelList;
+        return $shippingAddressLabelList;
     }
 
     /**
@@ -160,7 +160,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      *
      * @return string
      */
-    protected function getShipmentAddressLabel(AddressTransfer $addressTransfer): string
+    protected function getShippingAddressLabel(AddressTransfer $addressTransfer): string
     {
         return sprintf(
             '%s %s %s, %s %s, %s %s',

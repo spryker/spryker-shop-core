@@ -23,7 +23,7 @@ class ShipmentCollectionForm extends AbstractType
     public const BLOCK_PREFIX = 'shipmentCollectionForm';
     public const FIELD_SHIPMENT_COLLECTION_GROUP = 'shipmentGroups';
     public const OPTION_SHIPMENT_METHODS_BY_GROUP = 'shipmentMethodsByGroup';
-    public const OPTION_SHIPMENT_ADDRESS_LABEL_LIST = 'shipmentAddressLabelList';
+    public const OPTION_SHIPMENT_ADDRESS_LABEL_LIST = 'shippingAddressLabelList';
 
     /**
      * @return string
