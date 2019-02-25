@@ -93,6 +93,12 @@
 
     {% if canProceedToCheckout %}
         <hr/>
-        {% widget 'ProceedToCheckoutButtonWidget' args [data.cart] %}{% endwidget %}
+        {% widget 'ProceedToCheckoutButtonWidget' args [data.cart] %}
+        {% nowidget %}
+            <a class="button button--expand button--success"
+               href="{{ url('checkout-index') }}" {{ qa('cart-go-to-checkout') }}>
+                {{ 'cart.checkout' | trans }}
+            </a>
+        {% endwidget %}
     {% endif %}
 {% endblock %}
