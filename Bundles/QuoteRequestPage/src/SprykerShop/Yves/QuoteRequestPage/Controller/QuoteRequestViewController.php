@@ -8,6 +8,9 @@
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -16,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteRequestViewController extends QuoteRequestAbstractController
 {
-    protected const URL_PARAM_VERSION_REFERENCE = 'version-reference';
+    protected const PARAM_QUOTE_REQUEST_VERSION_REFERENCE = 'quote-request-version-reference';
 
     /**
      * @return \Spryker\Yves\Kernel\View\View
@@ -67,7 +70,7 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
      */
     protected function executeDetailsAction(Request $request, string $quoteRequestReference): array
     {
-        $quoteRequestForm = $this->getFactory()->getQuoteRequestForm($request, $quoteRequestReference);
+        $quoteRequestForm = $this->getFactory()->getQuoteRequestForm($quoteRequestReference);
 
         /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
         $quoteRequestTransfer = $quoteRequestForm->getData();
@@ -79,6 +82,36 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
             'isQuoteRequestCancelable' => $isQuoteRequestCancelable,
+            'version' => $this->findQuoteRequestVersion($quoteRequestTransfer, $request->query->get(static::PARAM_QUOTE_REQUEST_VERSION_REFERENCE)),
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param string|null $versionReference
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer|null
+     */
+    protected function findQuoteRequestVersion(
+        QuoteRequestTransfer $quoteRequestTransfer,
+        ?string $versionReference = null
+    ): ?QuoteRequestVersionTransfer {
+        if (!$versionReference || $versionReference === $quoteRequestTransfer->getLatestVersion()->getVersionReference()) {
+            return $quoteRequestTransfer->getLatestVersion();
+        }
+
+        $quoteRequestVersionFilterTransfer = (new QuoteRequestVersionFilterTransfer())
+            ->setQuoteRequest($quoteRequestTransfer)
+            ->setQuoteRequestVersionReference($versionReference);
+
+        $quoteRequestVersionTransfers = $this->getFactory()
+            ->getQuoteRequestClient()
+            ->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer)
+            ->getQuoteRequestVersions()
+            ->getArrayCopy();
+
+        $quoteRequestVersionTransfer = array_shift($quoteRequestVersionTransfers);
+
+        return $quoteRequestVersionTransfer ?? $quoteRequestTransfer->getLatestVersion();
     }
 }

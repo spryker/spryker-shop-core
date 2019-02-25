@@ -41,7 +41,7 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
     protected function executeCreateAction(Request $request)
     {
         $quoteRequestForm = $this->getFactory()
-            ->getQuoteRequestForm($request)
+            ->getQuoteRequestForm()
             ->handleRequest($request);
 
         if ($quoteRequestForm->isSubmitted() && $quoteRequestForm->isValid()) {
@@ -56,13 +56,8 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
             }
         }
 
-        $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
-        $cartItems = $quoteTransfer->getItems()->getArrayCopy();
-
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
-            'cart' => $quoteTransfer,
-            'cartItems' => $cartItems,
         ];
     }
 }

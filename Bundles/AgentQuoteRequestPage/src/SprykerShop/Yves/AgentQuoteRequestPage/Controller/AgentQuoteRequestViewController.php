@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\AgentQuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,6 +23,7 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
     protected const PARAM_PAGE = 'page';
     protected const DEFAULT_PAGE = 1;
     protected const DEFAULT_MAX_PER_PAGE = 10;
+    protected const PARAM_QUOTE_REQUEST_VERSION_REFERENCE = 'quote-request-version-reference';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -74,7 +78,7 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
      */
     protected function executeDetailsAction(Request $request, string $quoteRequestReference): array
     {
-        $quoteRequestForm = $this->getFactory()->getAgentQuoteRequestForm($request, $quoteRequestReference);
+        $quoteRequestForm = $this->getFactory()->getAgentQuoteRequestForm($quoteRequestReference);
 
         /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
         $quoteRequestTransfer = $quoteRequestForm->getData();
@@ -85,6 +89,7 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
             'isQuoteRequestCancelable' => $isQuoteRequestCancelable,
+            'version' => $this->findQuoteRequestVersion($quoteRequestTransfer, $request->query->get(static::PARAM_QUOTE_REQUEST_VERSION_REFERENCE)),
         ];
     }
 
@@ -98,5 +103,34 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
         return (new PaginationTransfer())
             ->setPage($request->query->getInt(static::PARAM_PAGE, static::DEFAULT_PAGE))
             ->setMaxPerPage(static::DEFAULT_MAX_PER_PAGE);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param string|null $versionReference
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer|null
+     */
+    protected function findQuoteRequestVersion(
+        QuoteRequestTransfer $quoteRequestTransfer,
+        ?string $versionReference = null
+    ): ?QuoteRequestVersionTransfer {
+        if (!$versionReference || $versionReference === $quoteRequestTransfer->getLatestVersion()->getVersionReference()) {
+            return $quoteRequestTransfer->getLatestVersion();
+        }
+
+        $quoteRequestVersionFilterTransfer = (new QuoteRequestVersionFilterTransfer())
+            ->setQuoteRequest($quoteRequestTransfer)
+            ->setQuoteRequestVersionReference($versionReference);
+
+        $quoteRequestVersionTransfers = $this->getFactory()
+            ->getQuoteRequestClient()
+            ->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer)
+            ->getQuoteRequestVersions()
+            ->getArrayCopy();
+
+        $quoteRequestVersionTransfer = array_shift($quoteRequestVersionTransfers);
+
+        return $quoteRequestVersionTransfer ?? $quoteRequestTransfer->getLatestVersion();
     }
 }

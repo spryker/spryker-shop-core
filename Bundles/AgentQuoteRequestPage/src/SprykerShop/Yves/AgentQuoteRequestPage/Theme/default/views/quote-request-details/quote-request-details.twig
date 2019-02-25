@@ -5,11 +5,10 @@
     quoteRequestForm: _view.quoteRequestForm,
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
     quoteRequest: _view.quoteRequestForm.vars.value,
-    activeVersion: _view.quoteRequestForm.vars.value.activeVersion,
-    latestVersion: _view.quoteRequestForm.vars.value.latestVersion
+    version: _view.version
 } %}
 
-{% set cart = data.activeVersion ? data.activeVersion.quote : null %}
+{% set cart = data.version ? data.version.quote : null %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -17,14 +16,14 @@
             steps: [
                 {
                     label: 'agent.account.page_title' | trans,
-                    url: url('agent/overview'),
+                    url: path('agent/overview'),
                 },
                 {
                     label: 'quote_request_page.quote_request' | trans,
-                    url: url('agent/quote-request')
+                    url: path('agent/quote-request')
                 },
                 {
-                    label: '#' ~ data.quoteRequestForm.vars.value.quoteRequestReference,
+                    label: '#' ~ data.quoteRequest.quoteRequestReference,
                 }
             ]
         }
@@ -39,30 +38,40 @@
     <div class="grid">
         <div class="col col--sm-12 col--xl-8">
             <div class="box">
-
-                <div class="col col--sm-12 col--xl-6">
-                    <div class="box">
-                        {{ form_row(data.quoteRequestForm.metadata.purchase_order_number, { 'attr': { 'readonly': 'true' } }) }}
-                        {{ form_row(data.quoteRequestForm.metadata.delivery_date, { 'attr': { 'readonly': 'true' } }) }}
+                {% for child in data.quoteRequestForm.metadata %}
+                    <div class="col col--sm-12 col--xl-6">
+                        <div class="box">
+                            {{ form_row(child, { 'attr': { 'readonly': 'true' } }) }}
+                        </div>
                     </div>
-                </div>
-                <div class="col col--sm-12 col--xl-6">
-                    <div class="box">
-                        {{ form_row(data.quoteRequestForm.metadata.note, { 'attr': { 'readonly': 'true' } }) }}
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
 
         <div class="col col--sm-12 col--xl-4">
             <div class="box">
                 <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}:
-                    <b>{{ data.quoteRequestForm.vars.value.createdAt | date('d.m.Y H:i') }}</b></p>
+                    <b>{{ data.quoteRequest.createdAt | date('d.m.Y H:i') }}</b></p>
                 <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:
-                    <b>{{ ('quote_request.status.' ~ data.quoteRequestForm.vars.value.status) | trans }}</b></p>
+                    <b>{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</b></p>
                 <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:</p>
                 <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
-                    {{ form_row(data.quoteRequestForm.activeVersion) }}
+                    {% embed atom('select') with {
+                        attributes: {
+                            name: 'quote-request-versions',
+                            onchange: 'this.options[this.selectedIndex].value && (window.location.search = "quote-request-version-reference=" + this.options[this.selectedIndex].value);'
+                        },
+                        embed: {
+                            versionReferences: data.quoteRequest.versionReferences,
+                            currentVersionReference: data.version.versionReference
+                        }
+                    } only %}
+                        {% block options %}
+                            {% for versionReference in embed.versionReferences %}
+                                <option value="{{ versionReference }}" {{ (versionReference == embed.currentVersionReference) ? 'selected' : '' }}>{{ versionReference }}</option>
+                            {% endfor %}
+                        {% endblock %}
+                    {% endembed %}
                 </p>
             </div>
         </div>
@@ -82,26 +91,26 @@
         </div>
 
         <div class="col col--sm-12 col--xl-4">
-            <div class="box">
-                {% if cart is not empty %}
+            {% if cart is not empty %}
+                <div class="box">
                     {% include molecule('quote-request-cart-summary', 'CartPage') with {
                         data: {
                             cart: cart
                         }
                     } only %}
-                {% endif %}
-            </div>
+                </div>
+            {% endif %}
             <div class="box">
                 <a class="button button--expand button--hollow" href="{{ url('agent/quote-request') }}">
                     {{ 'quote_request_page.quote_request.actions.back_to_list' | trans }}
                 </a>
 
-                {% if data.activeVersion and data.activeVersion.idQuoteRequestVersion == data.latestVersion.idQuoteRequestVersion %}
+                {% if data.version and data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion %}
 
                     {% if data.isQuoteRequestCancelable %}
                         <hr/>
                         <a class="button button--expand button--cancel"
-                           href="{{ path('agent/quote-request/cancel', { quoteRequestReference: (data.quoteRequestForm.vars.value.quoteRequestReference) }) }}">
+                           href="{{ path('agent/quote-request/cancel', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
                         </a>
                     {% endif %}
@@ -109,7 +118,7 @@
                     {% if data.quoteRequest.status == 'waiting' or data.quoteRequest.status == 'in-progress' %}
                         <hr/>
                         <a class="button button--expand button--success"
-                           href="{{ path('agent/quote-request/edit', { quoteRequestReference: (data.quoteRequestForm.vars.value.quoteRequestReference) }) }}">
+                           href="{{ path('agent/quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.edit' | trans }}
                         </a>
                     {% endif %}
@@ -117,7 +126,7 @@
                     {% if data.quoteRequest.status == 'in-progress' %}
                         <hr/>
                         <a class="button button--expand button--success"
-                           href="{{ path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequestForm.vars.value.quoteRequestReference) }) }}">
+                           href="{{ path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
                         </a>
                     {% endif %}
@@ -125,12 +134,12 @@
                     {% if data.quoteRequest.status == 'ready' %}
                         <hr/>
                         <a class="button button--expand button--hollow"
-                           href="{{ path('agent/quote-request/revise', { quoteRequestReference: (data.quoteRequestForm.vars.value.quoteRequestReference) }) }}">
+                           href="{{ path('agent/quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.revise' | trans }}
                         </a>
                         <hr/>
                         <a class="button button--expand button--success"
-                           href="{{ path('agent/quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequestForm.vars.value.quoteRequestReference) }) }}">
+                           href="{{ path('agent/quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.convert_to_cart' | trans }}
                         </a>
                     {% endif %}

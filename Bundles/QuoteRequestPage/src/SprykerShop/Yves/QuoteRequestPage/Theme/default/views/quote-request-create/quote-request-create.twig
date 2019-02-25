@@ -6,11 +6,11 @@
             steps: [
                 {
                     label: 'customer.account' | trans,
-                    url: url('customer/overview'),
+                    url: path('customer/overview'),
                 },
                 {
                     label: 'quote_request_page.quote_request' | trans,
-                    url: url('quote-request')
+                    url: path('quote-request')
                 },
                 {
                     label: 'quote_request_page.quote_request.create' | trans,
@@ -23,14 +23,15 @@
 {% define data = {
     title: 'quote_request_page.quote_request' | trans,
     quoteRequestForm: _view.quoteRequestForm,
-    cart: _view.cart,
-    cartItems: _view.cartItems
+    quoteRequest: _view.quoteRequestForm.vars.value,
+    latestVersion: _view.quoteRequestForm.vars.value.latestVersion,
 } %}
 
+{% set cart = data.latestVersion ? data.latestVersion.quote : null %}
 
 {% block content %}
 
-    {% if data.cart.items is empty %}
+    {% if not cart or cart.items is empty %}
         <div class="box text-center">
             {% include atom('icon') with {
                 modifiers: ['biggest'],
@@ -48,18 +49,13 @@
         <div class="grid">
             <div class="col col--sm-12 col--xl-8">
                 <div class="box">
-
-                    <div class="col col--sm-12 col--xl-6">
-                        <div class="box">
-                            {{ form_row(data.quoteRequestForm.metadata.purchase_order_number) }}
-                            {{ form_row(data.quoteRequestForm.metadata.delivery_date) }}
+                    {% for child in data.quoteRequestForm.metadata %}
+                        <div class="col col--sm-12 col--xl-6">
+                            <div class="box">
+                                {{ form_row(child) }}
+                            </div>
                         </div>
-                    </div>
-                    <div class="col col--sm-12 col--xl-6">
-                        <div class="box">
-                            {{ form_row(data.quoteRequestForm.metadata.note) }}
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
 
@@ -69,14 +65,13 @@
                     <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:</p>
                     <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:</p>
                     <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
-                        {{ form_widget(data.quoteRequestForm.activeVersion) }}
                     </p>
                 </div>
             </div>
         </div>
         <div class="grid">
             <div class="col col--sm-12 col--xl-8">
-                {% for cartItem in data.cartItems %}
+                {% for cartItem in cart.items %}
                     {% include molecule('quote-request-cart-item', 'CartPage') with {
                         class: 'box',
                         data: {
@@ -90,7 +85,7 @@
                 <div class="box">
                     {% include molecule('quote-request-cart-summary', 'CartPage') with {
                         data: {
-                            cart: data.cart
+                            cart: cart
                         }
                     } only %}
                 </div>

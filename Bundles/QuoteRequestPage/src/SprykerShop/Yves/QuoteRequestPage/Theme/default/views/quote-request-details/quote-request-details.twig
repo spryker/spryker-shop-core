@@ -5,11 +5,10 @@
     quoteRequestForm: _view.quoteRequestForm,
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
     quoteRequest: _view.quoteRequestForm.vars.value,
-    activeVersion: _view.quoteRequestForm.vars.value.activeVersion,
-    latestVersion: _view.quoteRequestForm.vars.value.latestVersion
+    version: _view.version
 } %}
 
-{% set cart = data.activeVersion ? data.activeVersion.quote : null %}
+{% set cart = data.version ? data.version.quote : null %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -17,11 +16,11 @@
             steps: [
                 {
                     label: 'customer.account' | trans,
-                    url: url('customer/overview'),
+                    url: path('customer/overview'),
                 },
                 {
                     label: 'quote_request_page.quote_request' | trans,
-                    url: url('quote-request')
+                    url: path('quote-request')
                 },
                 {
                     label: '#' ~ data.quoteRequest.quoteRequestReference,
@@ -39,18 +38,13 @@
     <div class="grid">
         <div class="col col--sm-12 col--xl-8">
             <div class="box">
-
-                <div class="col col--sm-12 col--xl-6">
-                    <div class="box">
-                        {{ form_row(data.quoteRequestForm.metadata.purchase_order_number, { 'attr': { 'readonly': 'true' } }) }}
-                        {{ form_row(data.quoteRequestForm.metadata.delivery_date, { 'attr': { 'readonly': 'true' } }) }}
+                {% for child in data.quoteRequestForm.metadata %}
+                    <div class="col col--sm-12 col--xl-6">
+                        <div class="box">
+                            {{ form_row(child, { 'attr': { 'readonly': 'true' } }) }}
+                        </div>
                     </div>
-                </div>
-                <div class="col col--sm-12 col--xl-6">
-                    <div class="box">
-                        {{ form_row(data.quoteRequestForm.metadata.note, { 'attr': { 'readonly': 'true' } }) }}
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
 
@@ -62,7 +56,22 @@
                     <b>{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</b></p>
                 <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:</p>
                 <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
-                    {{ form_row(data.quoteRequestForm.activeVersion) }}
+                    {% embed atom('select') with {
+                        attributes: {
+                            name: 'quote-request-versions',
+                            onchange: 'this.options[this.selectedIndex].value && (window.location.search = "quote-request-version-reference=" + this.options[this.selectedIndex].value);'
+                        },
+                        embed: {
+                            versionReferences: data.quoteRequest.versionReferences,
+                            currentVersionReference: data.version.versionReference
+                        }
+                    } only %}
+                        {% block options %}
+                            {% for versionReference in embed.versionReferences %}
+                                <option value="{{ versionReference }}" {{ (versionReference == embed.currentVersionReference) ? 'selected' : '' }}>{{ versionReference }}</option>
+                            {% endfor %}
+                        {% endblock %}
+                    {% endembed %}
                 </p>
             </div>
         </div>
@@ -96,7 +105,7 @@
                     {{ 'quote_request_page.quote_request.actions.back_to_list' | trans }}
                 </a>
 
-                {% if data.activeVersion and data.activeVersion.idQuoteRequestVersion == data.latestVersion.idQuoteRequestVersion %}
+                {% if data.version and data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion %}
 
                     {% if data.isQuoteRequestCancelable %}
                         <hr/>
