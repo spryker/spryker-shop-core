@@ -30,7 +30,6 @@
     } only %}
 {% endblock %}
 
-
 {% block content %}
 
     {{ form_start(data.quoteRequestForm) }}
@@ -57,13 +56,14 @@
                 <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:</p>
                 <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
                     {% embed atom('select') with {
+                        modifiers: ['naked'],
                         attributes: {
                             name: 'quote-request-versions',
                             onchange: 'this.options[this.selectedIndex].value && (window.location.search = "quote-request-version-reference=" + this.options[this.selectedIndex].value);'
                         },
                         embed: {
                             versionReferences: data.quoteRequest.versionReferences,
-                            currentVersionReference: data.version.versionReference
+                            currentVersionReference: data.version ? data.version.versionReference : null
                         }
                     } only %}
                         {% block options %}

@@ -96,7 +96,7 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
         QuoteRequestTransfer $quoteRequestTransfer,
         ?string $versionReference = null
     ): ?QuoteRequestVersionTransfer {
-        if (!$versionReference || $versionReference === $quoteRequestTransfer->getLatestVersion()->getVersionReference()) {
+        if (!$quoteRequestTransfer->getLatestVersion() || $versionReference === $quoteRequestTransfer->getLatestVersion()->getVersionReference()) {
             return $quoteRequestTransfer->getLatestVersion();
         }
 
