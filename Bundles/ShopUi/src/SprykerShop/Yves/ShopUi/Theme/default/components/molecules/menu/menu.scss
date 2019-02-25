@@ -51,6 +51,13 @@
                 }
             }
 
+            &--revert {
+                & > #{$name} {
+                    right: 0;
+                    left: auto;
+                }
+            }
+
             &:empty {
                 display: none;
             }
