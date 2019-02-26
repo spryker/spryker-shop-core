@@ -50,7 +50,7 @@ class ShipmentCollectionForm extends AbstractType
      *
      * @return $this
      */
-    protected function addShipmentGroups(FormBuilderInterface $builder, array $options): self
+    protected function addShipmentGroups(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_SHIPMENT_COLLECTION_GROUP, CollectionType::class, [
             'entry_type' => ShipmentGroupForm::class,

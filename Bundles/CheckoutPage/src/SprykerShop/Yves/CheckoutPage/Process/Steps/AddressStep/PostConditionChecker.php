@@ -41,7 +41,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return false;
         }
 
-        if($this->validateAddress($quoteTransfer->getShippingAddress()) && $isSplitDelivery === false) {
+        if ($this->validateAddress($quoteTransfer->getShippingAddress()) && $isSplitDelivery === false) {
             return false;
         }
 

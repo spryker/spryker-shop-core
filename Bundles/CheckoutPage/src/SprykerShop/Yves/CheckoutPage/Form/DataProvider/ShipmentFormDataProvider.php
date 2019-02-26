@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
@@ -20,7 +19,6 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClient
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentCollectionForm;
-use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
 use SprykerShop\Yves\CheckoutPage\StrategyResolver\MultiShipmentResolverTrait;
 
 class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
@@ -113,15 +111,6 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
          * @deprecated Exists for Backward Compatibility reasons only.
          */
         $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
-
-        /**
-         * @deprecated Exists for Backward Compatibility reasons only.
-         */
-        if (!$this->isMultiShipmentModuleEnabled()) {
-            return [
-                ShipmentForm::OPTION_SHIPMENT_METHODS => $this->createAvailableShipmentChoiceList($quoteTransfer),
-            ];
-        }
 
         $quoteTransfer = $this->setQuoteShipmentGroups($quoteTransfer);
 

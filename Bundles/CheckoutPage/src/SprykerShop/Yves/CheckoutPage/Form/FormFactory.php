@@ -63,15 +63,6 @@ class FormFactory extends AbstractFactory
      */
     public function getShipmentFormTypes()
     {
-        /**
-         * @deprecated Exists for Backward Compatibility reasons only.
-         */
-        if (!$this->isMultiShipmentModuleEnabled()) {
-            return [
-                $this->getShipmentForm(),
-            ];
-        }
-
         return [
             $this->getShipmentCollectionForm(),
         ];
