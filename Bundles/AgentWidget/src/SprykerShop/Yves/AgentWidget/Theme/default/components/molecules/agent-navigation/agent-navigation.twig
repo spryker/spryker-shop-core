@@ -6,58 +6,27 @@
 } %}
 
 {% define data = {
-    agent: required,
-    nodes: [
-        {
-            title: 'agent.account.page_title' | trans ~ ': ' ~ data.agent.firstName ~ ' ' ~ data.agent.lastName,
-            url: null,
-            nodeType: 'label',
-            cssClass: 'menu__item--revert',
-            isActive: true,
-            validFrom: null,
-            validTo: null,
-            children: [
-                {
-                    title: 'agent.account.overview' | trans,
-                    url: path('agent/overview'),
-                    nodeType: 'category',
-                    isActive: true,
-                    validFrom: null,
-                    validTo: null,
-                    cssClass: null,
-                    children: null
-                },
-                {
-                    title: 'agent.account.quote_request' | trans,
-                    url: url('agent/quote-request'),
-                    nodeType: 'category',
-                    isActive: true,
-                    validFrom: null,
-                    validTo: null,
-                    cssClass: null,
-                    children: null
-                },
-                {
-                    title: 'agent.control_bar.logout' | trans,
-                    url: path('agent_logout'),
-                    nodeType: 'category',
-                    isActive: true,
-                    validFrom: null,
-                    validTo: null,
-                    cssClass: null,
-                    children: null
-                }
-            ]
-        }
-    ]
+    agent: required
 } %}
 
 {% block body %}
-    {% include molecule('navigation-multilevel') with {
-        data: {
-            nodes: data.nodes,
-            menuInline: true,
-            menuDropdown: true
-        }
-    } only %}
+    <ul class="menu menu--inline">
+        <li class="{{ config.name }}__dropdown menu__item menu__item--has-children-dropdown">
+            <span>{{ 'agent.account.page_title' | trans }}: {{ data.agent.firstName ~ ' ' ~ data.agent.lastName }}</span>
+
+            <ul class="{{ config.name }}__dropdown-item menu" position-right>
+                <li class="menu__item">
+                    <a href="{{ path('agent/overview') }}">{{ "agent.account.overview" | trans }}</a>
+                </li>
+
+                {% block additional %}
+                    {% include molecule('quote-request-menu-item', 'AgentQuoteRequestWidget') ignore missing only %}
+                {% endblock %}
+
+                <li class="menu__item">
+                    <a href="{{ path('agent_logout') }}">{{ "agent.control_bar.logout" | trans }}</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
 {% endblock %}
