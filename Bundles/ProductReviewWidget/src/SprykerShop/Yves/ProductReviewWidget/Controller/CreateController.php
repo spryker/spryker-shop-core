@@ -95,14 +95,6 @@ class CreateController extends AbstractController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
-    protected function getParentRequest(): Request
-    {
-        return $this->getApplication()['request_stack']->getParentRequest();
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
