@@ -27,6 +27,7 @@ class ShoppingListController extends AbstractShoppingListController
     protected const PARAM_ID_SHOPPING_LIST_ITEM = 'idShoppingListItem';
     protected const PARAM_SHOPPING_LIST_ITEM = 'shoppingListItem';
     protected const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+    protected const PARAM_REDIRECT_ROUTE_PARAMETERS = 'redirect-route-parameters';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_REMOVE_FAILED = 'customer.account.shopping_list.item.remove.failed';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_REMOVE_SUCCESS = 'customer.account.shopping_list.item.remove.success';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_TO_CART_FAILED = 'customer.account.shopping_list.item.added_to_cart.failed';
@@ -35,6 +36,9 @@ class ShoppingListController extends AbstractShoppingListController
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_ALL_AVAILABLE_TO_CART = 'customer.account.shopping_list.item.added_all_available_to_cart';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_SELECT_ITEM = 'customer.account.shopping_list.item.select_item';
     protected const GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND = 'shopping_list.not_found';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED = 'customer.account.shopping_list.item.not_added';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ADD_ITEM_SUCCESS = 'customer.account.shopping_list.add_item.success';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_SELECT_LIST = 'customer.account.shopping_list.items.added_to_cart.select_list';
 
     /**
      * @param int $idShoppingList
@@ -238,5 +242,99 @@ class ShoppingListController extends AbstractShoppingListController
             ->getShoppingListOverviewWithoutProductDetails($shoppingListOverviewRequest);
 
         return $shoppingListOverviewResponseTransfer;
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function quickAddToShoppingListAction(string $sku, int $quantity, Request $request): RedirectResponse
+    {
+        $idShoppingList = $this->getShoppingListIdFromRequest($request);
+        if ($idShoppingList === null) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_SELECT_LIST);
+
+            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+        }
+
+        $shoppingListItemTransfer = $this->executeQuickAddToShoppingListAction($sku, $quantity, $idShoppingList, $request);
+        if (!$shoppingListItemTransfer->getIdShoppingListItem()) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED);
+
+            return $this->getQuickAddToShoppingListRedirectResponse($shoppingListItemTransfer);
+        }
+        $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ADD_ITEM_SUCCESS);
+
+        return $this->getQuickAddToShoppingListRedirectResponse($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function getQuickAddToShoppingListRedirectResponse(ShoppingListItemTransfer $shoppingListItemTransfer): RedirectResponse
+    {
+        if (!$shoppingListItemTransfer->getFkShoppingList()) {
+            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+        }
+
+        return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
+            'idShoppingList' => $shoppingListItemTransfer->getFkShoppingList(),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return int|null
+     */
+    protected function getShoppingListIdFromRequest(Request $request): ?int
+    {
+        $additionalRequestParams = $this->getFactory()->getUtilEncodingService()->decodeJson(
+            urldecode(
+                $request->get(static::PARAM_REDIRECT_ROUTE_PARAMETERS)
+            ),
+            true
+        );
+
+        if (is_array($additionalRequestParams) && array_key_exists(static::PARAM_ID_SHOPPING_LIST, $additionalRequestParams)) {
+            return (int)$additionalRequestParams[static::PARAM_ID_SHOPPING_LIST];
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param int $idShoppingList
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    protected function executeQuickAddToShoppingListAction(string $sku, int $quantity, int $idShoppingList, Request $request): ShoppingListItemTransfer
+    {
+        $customerTransfer = $this->getCustomer();
+
+        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+            ->setSku($sku)
+            ->setQuantity($quantity)
+            ->setFkShoppingList($idShoppingList);
+
+        if ($customerTransfer === null || $customerTransfer->getCompanyUserTransfer() === null) {
+            return $shoppingListItemTransfer;
+        }
+
+        $shoppingListItemTransfer->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
+
+        // Does not pass request parameters because they are not validated.
+        return $this->getFactory()
+            ->getShoppingListClient()
+            ->addItem($shoppingListItemTransfer);
     }
 }

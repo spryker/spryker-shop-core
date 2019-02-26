@@ -25,6 +25,26 @@ class DiscountWidgetToQuoteClientBridge implements DiscountWidgetToQuoteClientIn
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteClient->isQuoteLocked($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteClient->isQuoteEditable($quoteTransfer);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function getQuote()

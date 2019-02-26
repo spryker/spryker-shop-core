@@ -16,6 +16,7 @@ use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToMultiC
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToProductStorageClientBridge;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientBridge;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToZedRequestClientBridge;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Service\ShoppingListPageToUtilEncodingServiceBridge;
 
 class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -29,6 +30,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     public const PLUGIN_SHOPPING_LIST_FORM_DATA_PROVIDER_MAPPERS = 'PLUGIN_SHOPPING_LIST_FORM_DATA_PROVIDER_MAPPERS';
     public const CLIENT_MULTI_CART = 'CLIENT_MULTI_CART';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -47,6 +49,7 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addShoppingListItemFormExpanderPlugins($container);
         $container = $this->addShoppingListFormDataProviderMapperPlugins($container);
         $container = $this->addZedRequestClient($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -180,6 +183,22 @@ class ShoppingListPageDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container[static::CLIENT_MULTI_CART] = function (Container $container) {
             return new ShoppingListPageToMultiCartClientBridge($container->getLocator()->multiCart()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new ShoppingListPageToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
         };
 
         return $container;

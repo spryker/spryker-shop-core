@@ -14,6 +14,8 @@ class NewsletterWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_NEWSLETTER_SUBSCRIBE = 'newsletter/subscribe';
 
+    public const ROUTE_NEWSLETTER_WIDGET_SUBSCRIBE = 'newsletter-widget/subscribe';
+
     /**
      * @param \Silex\Application $app
      *
@@ -21,7 +23,8 @@ class NewsletterWidgetControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $this->addNewsletterSubscribeRoute();
+        $this->addNewsletterSubscribeRoute()
+            ->addNewsletterWidgetSubscribeRoute();
     }
 
     /**
@@ -32,6 +35,18 @@ class NewsletterWidgetControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{newsletter}/subscribe', self::ROUTE_NEWSLETTER_SUBSCRIBE, 'NewsletterWidget', 'Subscription', 'subscribe')
             ->assert('newsletter', $this->getAllowedLocalesPattern() . 'newsletter|newsletter')
             ->value('newsletter', 'newsletter');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addNewsletterWidgetSubscribeRoute()
+    {
+        $this->createController('/{newsletter-widget}/subscribe', self::ROUTE_NEWSLETTER_WIDGET_SUBSCRIBE, 'NewsletterWidget', 'SubscriptionWidget', 'subscribe')
+            ->assert('newsletter-widget', $this->getAllowedLocalesPattern() . 'newsletter-widget|newsletter-widget')
+            ->value('newsletter-widget', 'newsletter-widget');
 
         return $this;
     }

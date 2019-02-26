@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\MultiCartWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToMultiCartClientInterface;
+use SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToQuoteClientInterface;
 
 class MultiCartWidgetFactory extends AbstractFactory
 {
@@ -18,6 +19,14 @@ class MultiCartWidgetFactory extends AbstractFactory
     public function getMultiCartClient(): MultiCartWidgetToMultiCartClientInterface
     {
         return $this->getProvidedDependency(MultiCartWidgetDependencyProvider::CLIENT_MULTI_CART);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToQuoteClientInterface
+     */
+    public function getQuoteClient(): MultiCartWidgetToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(MultiCartWidgetDependencyProvider::CLIENT_QUOTE);
     }
 
     /**
