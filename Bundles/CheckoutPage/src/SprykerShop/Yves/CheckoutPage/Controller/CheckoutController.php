@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\CheckoutPage\Controller;
 
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
-use SprykerShop\Yves\CheckoutPage\StrategyResolver\MultiShipmentResolverTrait;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 class CheckoutController extends AbstractController
 {
     use PermissionAwareTrait;
-    use MultiShipmentResolverTrait;
 
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 

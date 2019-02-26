@@ -19,12 +19,9 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClient
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentCollectionForm;
-use SprykerShop\Yves\CheckoutPage\StrategyResolver\MultiShipmentResolverTrait;
 
 class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
 {
-    use MultiShipmentResolverTrait;
-
     protected const SECONDS_IN_ONE_DAY = 86400;
 
     public const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
