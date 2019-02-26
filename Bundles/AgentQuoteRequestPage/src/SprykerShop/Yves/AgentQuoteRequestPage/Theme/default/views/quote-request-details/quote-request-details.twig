@@ -73,6 +73,9 @@
                         {% endblock %}
                     {% endembed %}
                 </p>
+                <p>{{ 'quote_request_page.quote_request.labels.visibility' | trans }}:
+                    {{ data.quoteRequest.isHidden ? 'Hidden' : '' }}
+                </p>
             </div>
         </div>
     </div>
@@ -115,15 +118,20 @@
                         </a>
                     {% endif %}
 
-                    {% if data.quoteRequest.status == 'waiting' or data.quoteRequest.status == 'in-progress' %}
+                    {% if data.quoteRequest.status == 'waiting' %}
                         <hr/>
                         <a class="button button--expand button--success"
-                           href="{{ path('agent/quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                           href="{{ path('agent/quote-request/start-edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.edit' | trans }}
                         </a>
                     {% endif %}
 
                     {% if data.quoteRequest.status == 'in-progress' %}
+                        <hr/>
+                        <a class="button button--expand button--success"
+                           href="{{ path('agent/quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                            {{ 'quote_request_page.quote_request.actions.edit' | trans }}
+                        </a>
                         <hr/>
                         <a class="button button--expand button--success"
                            href="{{ path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">

@@ -7,8 +7,13 @@
 
 namespace SprykerShop\Yves\AgentQuoteRequestPage\Form;
 
+use DateTime;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AgentQuoteRequestForm extends AbstractType
 {
-    public const FIELD_METADATA = 'metadata';
+    protected const VALIDITY_DATETIME_FORMAT = 'yyyy-MM-dd H:mm:ss';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -40,7 +45,9 @@ class AgentQuoteRequestForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addMetadataForm($builder);
+        $this->addMetadataForm($builder)
+            ->addValidUntilField($builder)
+            ->addIsHiddenField($builder);
     }
 
     /**
@@ -50,8 +57,67 @@ class AgentQuoteRequestForm extends AbstractType
      */
     protected function addMetadataForm(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_METADATA, AgentQuoteRequestMetadataSubForm::class);
+        $builder->add(QuoteRequestTransfer::METADATA, AgentQuoteRequestMetadataSubForm::class);
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addValidUntilField(FormBuilderInterface $builder)
+    {
+        $builder->add(QuoteRequestTransfer::VALID_UNTIL, DateTimeType::class, [
+            'format' => static::VALIDITY_DATETIME_FORMAT,
+            'label' => false,
+            'widget' => 'single_text',
+            'required' => false,
+            'attr' => [
+                'class' => 'datepicker js-to-datetime safe-datetime',
+            ],
+        ]);
+
+        $builder->get(QuoteRequestTransfer::VALID_UNTIL)
+            ->addModelTransformer($this->createDateTimeModelTransformer());
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIsHiddenField(FormBuilderInterface $builder)
+    {
+        $builder->add(QuoteRequestTransfer::IS_HIDDEN, CheckboxType::class, [
+            'label' => 'quote_request_page.quote_request.labels.hide_from_customer',
+            'required' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createDateTimeModelTransformer(): CallbackTransformer
+    {
+        return new CallbackTransformer(
+            function ($value) {
+                if ($value !== null) {
+                    $value = new DateTime($value);
+                }
+                return $value;
+            },
+            function ($value) {
+                if ($value instanceof DateTime) {
+                    $value = $value->format('Y-m-d H:i:s.u');
+                }
+                return $value;
+            }
+        );
     }
 }

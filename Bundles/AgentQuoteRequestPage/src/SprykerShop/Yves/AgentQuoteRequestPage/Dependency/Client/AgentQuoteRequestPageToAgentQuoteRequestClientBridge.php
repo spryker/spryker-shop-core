@@ -37,6 +37,16 @@ class AgentQuoteRequestPageToAgentQuoteRequestClientBridge implements AgentQuote
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function setQuoteRequestEditable(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->agentQuoteRequestClient->setQuoteRequestEditable($quoteRequestFilterTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return bool

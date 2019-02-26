@@ -1,0 +1,102 @@
+{% extends template('page-layout-agent', 'AgentPage') %}
+
+{% define data = {
+    title: 'quote_request_page.quote_request' | trans,
+    quoteRequestForm: _view.quoteRequestForm,
+    quoteRequest: _view.quoteRequestForm.vars.value
+} %}
+
+{% set cart = data.quoteRequest.quoteInProgress %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'agent.account.page_title' | trans,
+                    url: path('agent/overview'),
+                },
+                {
+                    label: 'quote_request_page.quote_request' | trans,
+                    url: path('agent/quote-request')
+                },
+                {
+                    label: '#' ~ data.quoteRequest.quoteRequestReference,
+                    url: path('agent/quote-request', {quoteRequestReference: data.quoteRequest.quoteRequestReference})
+                },
+                {
+                    label: 'quote_request_page.quote_request.actions.edit' | trans,
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
+{% block content %}
+
+    {{ form_start(data.quoteRequestForm) }}
+
+    <div class="grid">
+        <div class="col col--sm-12 col--xl-8">
+            <div class="box">
+                {% for child in data.quoteRequestForm.metadata %}
+                    <div class="col col--sm-12 col--xl-6">
+                        <div class="box">
+                            {{ form_row(child) }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col col--sm-12 col--xl-4">
+            <div class="box">
+                <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}:
+                    <b>{{ data.quoteRequest.createdAt | date('d.m.Y H:i') }}</b></p>
+                <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:
+                    <b>{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</b></p>
+                <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
+                    {{ form_row(data.quoteRequestForm.validUntil) }}</p>
+                <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:</p>
+                <p>{{ 'quote_request_page.quote_request.labels.visibility' | trans }}:
+                    {{ form_row(data.quoteRequestForm.isHidden) }}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="col col--sm-12 col--xl-8">
+            {% if cart is not empty %}
+                {% for cartItem in cart.items %}
+                    {% include molecule('quote-request-cart-item', 'CartPage') with {
+                        class: 'box',
+                        data: {
+                            cartItem: cartItem
+                        }
+                    } only %}
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="col col--sm-12 col--xl-4">
+            {% if cart is not empty %}
+                <div class="box">
+                    {% include molecule('quote-request-cart-summary', 'CartPage') with {
+                        data: {
+                            cart: cart
+                        }
+                    } only %}
+                </div>
+            {% endif %}
+            <div class="box">
+                <a class="button button--expand button--hollow"
+                   href="{{ url('agent/quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference}) }}">
+                    {{ 'quote_request_page.quote_request.actions.back_to_view' | trans }}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {{ form_end(data.quoteRequestForm) }}
+
+{% endblock %}
