@@ -15,6 +15,7 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_QUOTE_REQUEST = 'quote-request';
     public const ROUTE_QUOTE_REQUEST_CREATE = 'quote-request/create';
     public const ROUTE_QUOTE_REQUEST_CANCEL = 'quote-request/cancel';
+    public const ROUTE_QUOTE_REQUEST_ORDER = 'quote-request/order';
     public const ROUTE_QUOTE_REQUEST_VIEW = 'quote-request/view';
     public const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
 
@@ -30,6 +31,7 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
         $this->addQuoteRequestRoute()
             ->addQuoteRequestCreateRoute()
             ->addQuoteRequestCancelRoute()
+            ->addQuoteRequestOrderRoute()
             ->addQuoteRequestDetailsRoute();
     }
 
@@ -53,6 +55,19 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{quoteRequest}/create', static::ROUTE_QUOTE_REQUEST_CREATE, 'QuoteRequestPage', 'QuoteRequestCreate', 'create')
             ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
             ->value('quoteRequest', 'quote-request');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addQuoteRequestOrderRoute()
+    {
+        $this->createController('/{quoteRequest}/order/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_ORDER, 'QuoteRequestPage', 'QuoteRequestCheckout', 'order')
+            ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
+            ->value('quoteRequest', 'quote-request')
+            ->assert('quoteRequestReference', static::QUOTE_REQUEST_REFERENCE_REGEX);
 
         return $this;
     }

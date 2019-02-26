@@ -115,6 +115,14 @@
                         </a>
                     {% endif %}
 
+                    {% if data.quoteRequest.status == 'ready' %}
+                        <hr/>
+                        <a class="button button--expand button--cancel"
+                           href="{{ path('quote-request/order', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                            {{ 'quote_request_page.quote_request.actions.order' | trans }}
+                        </a>
+                    {% endif %}
+
                 {% endif %}
             </div>
         </div>
