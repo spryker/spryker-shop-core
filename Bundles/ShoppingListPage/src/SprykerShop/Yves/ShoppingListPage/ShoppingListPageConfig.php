@@ -15,6 +15,8 @@ class ShoppingListPageConfig extends AbstractBundleConfig
      * Specification:
      * - holds the Cart Redirect Url.
      *
+     * @use \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     *
      * @api
      */
     public const CART_REDIRECT_URL = 'cart';
