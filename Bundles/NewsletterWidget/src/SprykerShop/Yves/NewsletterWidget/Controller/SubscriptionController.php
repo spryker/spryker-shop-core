@@ -17,6 +17,7 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Use SubscriptionWidgetController instead
  * @method \SprykerShop\Yves\NewsletterWidget\NewsletterWidgetFactory getFactory()
  */
 class SubscriptionController extends AbstractController
@@ -102,7 +103,7 @@ class SubscriptionController extends AbstractController
 
         $subscriptionRequest->setNewsletterSubscriber($subscriber);
         $subscriptionRequest->addSubscriptionType((new NewsletterTypeTransfer())
-                ->setName(NewsletterConstants::DEFAULT_NEWSLETTER_TYPE));
+            ->setName(NewsletterConstants::DEFAULT_NEWSLETTER_TYPE));
 
         return $subscriptionRequest;
     }
