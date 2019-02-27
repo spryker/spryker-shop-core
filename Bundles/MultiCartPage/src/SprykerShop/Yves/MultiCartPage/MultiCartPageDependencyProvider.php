@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToCartClientBridge;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToMultiCartClientBridge;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToQuoteClientBridge;
+use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToQuoteClientInterface;
 
 class MultiCartPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -73,7 +74,7 @@ class MultiCartPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteClient($container): Container
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container[static::CLIENT_QUOTE] = function (Container $container): MultiCartPageToQuoteClientInterface {
             return new MultiCartPageToQuoteClientBridge($container->getLocator()->quote()->client());
         };
 

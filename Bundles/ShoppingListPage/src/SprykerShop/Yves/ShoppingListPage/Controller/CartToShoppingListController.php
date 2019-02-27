@@ -46,7 +46,7 @@ class CartToShoppingListController extends AbstractShoppingListController
             ->getCartFromShoppingListForm($idQuote)
             ->handleRequest($request);
 
-        $quoteTransfer = $this->findQuoteOrFail($idQuote);
+        $quoteTransfer = $this->getQuoteById($idQuote);
 
         if ($cartToShoppingListForm->isSubmitted() && $cartToShoppingListForm->isValid()) {
             $shoppingListTransfer = $this->getFactory()
@@ -72,7 +72,7 @@ class CartToShoppingListController extends AbstractShoppingListController
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function findQuoteOrFail(int $idQuote): QuoteTransfer
+    protected function getQuoteById(int $idQuote): QuoteTransfer
     {
         $quoteTransfer = $this->getFactory()
             ->getMultiCartClient()
