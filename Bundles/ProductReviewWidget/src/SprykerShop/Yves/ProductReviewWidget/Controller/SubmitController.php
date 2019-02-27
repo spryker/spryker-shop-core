@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\ProductReviewWidget\Controller;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Storage\StorageConstants;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,45 +19,27 @@ use Symfony\Component\HttpFoundation\Request;
 class SubmitController extends AbstractController
 {
     public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INACTIVE;
+    protected const ERROR_MESSAGE_NO_CUSTOMER = 'Only customers can use this feature. Please log in.';
+    protected const SUCCESS_MESSAGE = 'Review was submitted';
+
+    protected const REQUEST_HEADER_REFERER = 'referer';
+    protected const URL_MAIN = '/';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
-        $viewData = $this->executeIndexAction($request);
-
-        return $this->view($viewData, [], '@ProductReviewWidget/views/review-create/review-create.twig');
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    protected function executeIndexAction(Request $request): array
-    {
-        $parentRequest = $this->getParentRequest();
         $idProductAbstract = $request->attributes->get('idProductAbstract');
-
         $customer = $this->getFactory()->getCustomerClient()->getCustomer();
         $productReviewForm = $this->getFactory()
             ->createProductReviewForm($idProductAbstract)
-            ->handleRequest($parentRequest);
-        $isFormEmpty = !$productReviewForm->isSubmitted();
-        $isReviewPosted = $this->processProductReviewForm($productReviewForm, $customer);
+            ->handleRequest($request);
+        $this->processProductReviewForm($productReviewForm, $customer);
 
-        if ($isReviewPosted) {
-            $productReviewForm = $this->getFactory()->createProductReviewForm($idProductAbstract);
-        }
-
-        return [
-            'hideForm' => $isFormEmpty || $isReviewPosted,
-            'form' => $productReviewForm->createView(),
-            'showSuccess' => $isReviewPosted,
-        ];
+        return $this->redirectResponseExternal($this->getRefererUrl($request));
     }
 
     /**
@@ -76,24 +57,32 @@ class SubmitController extends AbstractController
         $customerReference = $customer === null ? null : $customer->getCustomerReference();
 
         if ($customerReference === null) {
-            $form->addError(new FormError('Only customers can use this feature. Please log in.'));
+            $this->addErrorMessage(static::ERROR_MESSAGE_NO_CUSTOMER);
+
+            return false;
         }
 
         if (!$form->isValid()) {
+            foreach ($form->getErrors(true) as $error) {
+                $this->addErrorMessage($error->getMessage());
+            }
+
             return false;
         }
 
         $productReviewResponseTransfer = $this->getFactory()->getProductReviewClient()->submitCustomerReview(
             $this->getProductReviewFormData($form)
-                    ->setCustomerReference($customerReference)
-                    ->setLocaleName($this->getLocale())
+                ->setCustomerReference($customerReference)
+                ->setLocaleName($this->getLocale())
         );
 
         if ($productReviewResponseTransfer->getIsSuccess()) {
+            $this->addSuccessMessage(static::SUCCESS_MESSAGE);
+
             return true;
         }
 
-        $form->addError(new FormError($productReviewResponseTransfer->getErrors()[0]->getMessage()));
+        $this->addErrorMessage($productReviewResponseTransfer->getErrors()[0]->getMessage());
 
         return false;
     }
@@ -114,5 +103,19 @@ class SubmitController extends AbstractController
     protected function getParentRequest()
     {
         return $this->getApplication()['request_stack']->getParentRequest();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|string
+     */
+    protected function getRefererUrl(Request $request)
+    {
+        if ($request->headers->has(static::REQUEST_HEADER_REFERER)) {
+            return $request->headers->get(static::REQUEST_HEADER_REFERER);
+        }
+
+        return static::URL_MAIN;
     }
 }
