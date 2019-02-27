@@ -100,6 +100,6 @@ class QuoteRequestPageFactory extends AbstractFactory
      */
     public function getQuoteRequestFormMetadataFieldPlugins(): array
     {
-        return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELD);
+        return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::PLUGINS_QUOTE_REQUEST_FORM_METADATA_FIELD);
     }
 }
