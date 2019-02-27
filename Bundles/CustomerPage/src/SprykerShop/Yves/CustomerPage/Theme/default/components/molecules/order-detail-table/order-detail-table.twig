@@ -126,6 +126,7 @@
 
                 {% for expense in data.order.expenses %}
                     {% if expense.type == constant('\\Spryker\\Shared\\Shipment\\ShipmentConstants::SHIPMENT_EXPENSE_TYPE')
+                        and expense.shipment is not empty
                         and expense.shipment.idSalesShipment == shipmentGroup.shipment.idSalesShipment
                     %}
                         <div class="spacing-bottom spacing-bottom--big">
