@@ -19,7 +19,7 @@ interface CompanyPageToCustomerClientInterface
     /**
      * @return bool
      */
-    public function isLoggedIn(): bool;
+    public function isLoggedIn();
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -33,5 +33,5 @@ interface CompanyPageToCustomerClientInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function getCustomerByEmail(CustomerTransfer $customerTransfer): CustomerTransfer;
+    public function getCustomerByEmail(CustomerTransfer $customerTransfer);
 }
