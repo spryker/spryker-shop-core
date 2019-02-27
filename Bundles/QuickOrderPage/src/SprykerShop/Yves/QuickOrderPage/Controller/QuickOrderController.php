@@ -32,6 +32,10 @@ class QuickOrderController extends AbstractController
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
     protected const PARAM_QUICK_ORDER_FILE_TYPE = 'file-type';
     protected const MESSAGE_CLEAR_ALL_ROWS_SUCCESS = 'quick-order.message.success.the-form-items-have-been-successfully-cleared';
+    /**
+     * @deprecated Will be removed without replacement.
+     */
+    protected const ERROR_MESSAGE_QUANTITY_INVALID = 'quick-order.errors.quantity-invalid';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
