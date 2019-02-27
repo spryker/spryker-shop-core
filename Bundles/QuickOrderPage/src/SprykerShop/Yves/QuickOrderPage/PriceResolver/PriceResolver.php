@@ -76,7 +76,7 @@ class PriceResolver implements PriceResolverInterface
         }
 
         $sumPrice = $this->getSumPriceForQuantity(
-            $quickOrderItemTransfer->getQuantity() ?? 0,
+            $quickOrderItemTransfer->getQuantity() ?? 0.0,
             $idProduct,
             $this->productResolver->getIdProductAbstractByIdProduct($idProduct)
         );

@@ -36,7 +36,9 @@ class QuantityFieldConstraintValidator extends ConstraintValidator
             return;
         }
 
-        if ($orderItemTransfer->getQuantity() > 0) {
+        $roundedQuantity = $constraint->round($orderItemTransfer->getQuantity());
+
+        if ($roundedQuantity > 0.0) {
             return;
         }
 

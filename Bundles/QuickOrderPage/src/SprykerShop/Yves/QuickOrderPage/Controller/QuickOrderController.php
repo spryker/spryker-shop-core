@@ -288,7 +288,7 @@ class QuickOrderController extends AbstractController
         $index = $request->query->get('index');
 
         $quickOrderItemTransfer = (new QuickOrderItemTransfer())
-            ->setQuantity($quantity ?: 1)
+            ->setQuantity($quantity ?: 1.0)
             ->setSku($sku);
 
         $product = $this->getProductByQuickOrderItem($quickOrderItemTransfer);
@@ -461,13 +461,16 @@ class QuickOrderController extends AbstractController
     }
 
     /**
-     * @param mixed $before
-     * @param mixed $after
+     * @param float $before
+     * @param float $after
      *
      * @return bool
      */
     protected function getIsQuantityAdjusted($before, $after): bool
     {
-        return $before !== null && (int)$before !== (int)$after;
+        $quickOrderService = $this->getFactory()
+            ->getQuickOrderService();
+
+        return $before !== null && $quickOrderService->round($before) !== $quickOrderService->round($after);
     }
 }
