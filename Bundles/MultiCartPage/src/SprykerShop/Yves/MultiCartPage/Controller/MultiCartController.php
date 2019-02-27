@@ -26,6 +26,8 @@ class MultiCartController extends AbstractController
      */
     public const GLOSSARY_KEY_CART_WAS_DELETED = 'multi_cart_widget.cart.was-deleted-before';
 
+    protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -100,6 +102,13 @@ class MultiCartController extends AbstractController
             ->handleRequest($request);
 
         $quoteTransfer = $quoteForm->getData();
+
+        if (!$quoteTransfer || !$this->isQuoteEditable($quoteTransfer)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        }
+
         if ($quoteForm->isSubmitted() && $quoteForm->isValid()) {
             $quoteResponseTransfer = $this->getFactory()
                 ->getMultiCartClient()
@@ -143,6 +152,12 @@ class MultiCartController extends AbstractController
     {
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
 
+        if (!$this->isQuoteEditable($quoteTransfer)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        }
+
         $idNewQuote = $this->getFactory()
             ->getMultiCartClient()
             ->duplicateQuote($quoteTransfer)
@@ -164,6 +179,12 @@ class MultiCartController extends AbstractController
     {
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
 
+        if (!$this->isQuoteEditable($quoteTransfer)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        }
+
         $quoteResponseTransfer = $this->getFactory()
             ->getMultiCartClient()
             ->clearQuote($quoteTransfer);
@@ -183,6 +204,12 @@ class MultiCartController extends AbstractController
     public function deleteAction(int $idQuote)
     {
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
+
+        if (!$this->isQuoteEditable($quoteTransfer)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        }
 
         $this->getFactory()->getMultiCartClient()->deleteQuote($quoteTransfer);
 
@@ -262,5 +289,17 @@ class MultiCartController extends AbstractController
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->getQuoteClient()
+            ->isQuoteEditable($quoteTransfer);
     }
 }

@@ -11,6 +11,7 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToCartClientInterface;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToMultiCartClientInterface;
+use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToQuoteClientInterface;
 use SprykerShop\Yves\MultiCartPage\Form\DataProvider\QuoteFormDataProvider;
 use SprykerShop\Yves\MultiCartPage\Form\DataProvider\QuoteFormDataProviderInterface;
 use SprykerShop\Yves\MultiCartPage\Form\QuoteForm;
@@ -56,6 +57,14 @@ class MultiCartPageFactory extends AbstractFactory
     public function getCartClient(): MultiCartPageToCartClientInterface
     {
         return $this->getProvidedDependency(MultiCartPageDependencyProvider::CLIENT_CART);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToQuoteClientInterface
+     */
+    public function getQuoteClient(): MultiCartPageToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(MultiCartPageDependencyProvider::CLIENT_QUOTE);
     }
 
     /**

@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CartToShoppingListController extends AbstractShoppingListController
 {
@@ -44,6 +45,8 @@ class CartToShoppingListController extends AbstractShoppingListController
             ->getCartFromShoppingListForm($idQuote)
             ->handleRequest($request);
 
+        $quoteTransfer = $this->findQuoteOrFail($idQuote);
+
         if ($cartToShoppingListForm->isSubmitted() && $cartToShoppingListForm->isValid()) {
             $shoppingListTransfer = $this->getFactory()
                 ->createCreateFromCartHandler()
@@ -55,11 +58,29 @@ class CartToShoppingListController extends AbstractShoppingListController
             ]);
         }
 
-        $cart = $this->getFactory()->getMultiCartClient()->findQuoteById($idQuote);
-
         return [
             'cartToShoppingListForm' => $cartToShoppingListForm->createView(),
-            'cart' => $cart,
+            'cart' => $quoteTransfer,
         ];
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function findQuoteOrFail(int $idQuote): QuoteTransfer
+    {
+        $quoteTransfer = $this->getFactory()
+            ->getMultiCartClient()
+            ->findQuoteById($idQuote);
+
+        if (!$quoteTransfer) {
+            throw new NotFoundHttpException();
+        }
+
+        return $quoteTransfer;
     }
 }
