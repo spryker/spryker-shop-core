@@ -22,6 +22,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AgentQuoteRequestForm extends AbstractType
 {
+    public const SUBMIT_BUTTON_SAVE = 'save';
+    public const SUBMIT_BUTTON_SEND_TO_CUSTOMER = 'sendToCustomer';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *

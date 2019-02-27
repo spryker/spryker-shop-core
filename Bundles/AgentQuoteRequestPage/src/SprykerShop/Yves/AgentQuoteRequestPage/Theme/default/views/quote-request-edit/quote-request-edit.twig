@@ -56,7 +56,7 @@
                 <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:
                     <b>{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</b></p>
                 <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
-                    <b>{{ form_row(data.quoteRequestForm.validUntil) }}</b>
+                    {{ form_row(data.quoteRequestForm.validUntil) }}
                 </p>
                 <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:</p>
                 <p>{{ 'quote_request_page.quote_request.labels.visibility' | trans }}:
@@ -95,8 +95,12 @@
                     {{ 'quote_request_page.quote_request.actions.back_to_view' | trans }}
                 </a>
                 <hr/>
-                <button type="submit" class="button button--expand button--success">
-                    {{ 'shared_cart.form.save_button' | trans }}
+                <button type="submit" name="save" class="button button--expand button--success">
+                    {{ 'quote_request_page.quote_request.actions.save' | trans }}
+                </button>
+                <hr/>
+                <button type="submit" name="sendToCustomer" class="button button--expand button--success">
+                    {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
                 </button>
             </div>
         </div>
