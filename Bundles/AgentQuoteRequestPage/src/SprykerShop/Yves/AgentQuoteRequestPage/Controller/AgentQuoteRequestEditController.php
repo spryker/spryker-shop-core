@@ -92,7 +92,7 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
         $quoteRequestForm->handleRequest($request);
 
         if ($quoteRequestForm->isSubmitted() && $quoteRequestForm->isValid()) {
-            return $this->processQuoteRequestForm($quoteRequestForm, $request);
+            return $this->processAgentQuoteRequestForm($quoteRequestForm, $request);
         }
 
         return [
@@ -106,7 +106,7 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function processQuoteRequestForm(FormInterface $quoteRequestForm, Request $request): RedirectResponse
+    protected function processAgentQuoteRequestForm(FormInterface $quoteRequestForm, Request $request): RedirectResponse
     {
         /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
         $quoteRequestTransfer = $quoteRequestForm->getData();
