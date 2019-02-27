@@ -59,7 +59,7 @@ class AgentQuoteRequestPageFactory extends AbstractFactory
      */
     public function getAgentQuoteRequestFormMetadataFieldPlugins(): array
     {
-        return $this->getProvidedDependency(AgentQuoteRequestPageDependencyProvider::PLUGIN_AGENT_QUOTE_REQUEST_FORM_METADATA_FIELDS);
+        return $this->getProvidedDependency(AgentQuoteRequestPageDependencyProvider::PLUGIN_AGENT_QUOTE_REQUEST_FORM_METADATA_FIELD);
     }
 
     /**

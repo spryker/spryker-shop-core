@@ -17,7 +17,7 @@ class AgentQuoteRequestPageDependencyProvider extends AbstractBundleDependencyPr
     public const CLIENT_QUOTE_REQUEST = 'CLIENT_QUOTE_REQUEST';
     public const CLIENT_AGENT_QUOTE_REQUEST = 'CLIENT_AGENT_QUOTE_REQUEST';
 
-    public const PLUGIN_AGENT_QUOTE_REQUEST_FORM_METADATA_FIELDS = 'PLUGIN_AGENT_QUOTE_REQUEST_FORM_METADATA_FIELDS';
+    public const PLUGIN_AGENT_QUOTE_REQUEST_FORM_METADATA_FIELD = 'PLUGIN_AGENT_QUOTE_REQUEST_FORM_METADATA_FIELD';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -69,7 +69,7 @@ class AgentQuoteRequestPageDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addAgentQuoteRequestFormMetadataFieldPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_AGENT_QUOTE_REQUEST_FORM_METADATA_FIELDS] = function () {
+        $container[static::PLUGIN_AGENT_QUOTE_REQUEST_FORM_METADATA_FIELD] = function () {
             return $this->getAgentQuoteRequestFormMetadataFieldPlugins();
         };
 
