@@ -19,7 +19,7 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
     public const CLIENT_QUOTE_REQUEST = 'CLIENT_QUOTE_REQUEST';
     public const CLIENT_CART = 'CLIENT_CART';
 
-    public const PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELDS = 'PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELDS';
+    public const PLUGINS_QUOTE_REQUEST_FORM_METADATA_FIELD = 'PLUGINS_QUOTE_REQUEST_FORM_METADATA_FIELD';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -87,7 +87,7 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addQuoteRequestFormMetadataFieldPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_QUOTE_REQUEST_FORM_METADATA_FIELDS] = function () {
+        $container[static::PLUGINS_QUOTE_REQUEST_FORM_METADATA_FIELD] = function () {
             return $this->getQuoteRequestFormMetadataFieldPlugins();
         };
 

@@ -1,0 +1,10 @@
+@mixin agent-navigation($name: '.agent-navigation') {
+    #{$name} {
+       &__dropdown > &__dropdown-item[position-right] {
+            left: auto;
+            right: 0;
+       }
+
+        @content;
+    }
+}

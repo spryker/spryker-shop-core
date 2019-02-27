@@ -101,12 +101,13 @@ class QuoteRequestFormDataProvider
             ->setQuoteRequestReference($quoteRequestReference)
             ->setCompanyUser($this->companyUserClient->findCompanyUser());
 
-        $quoteRequests = $this->quoteRequestClient
+        $quoteRequestTransfers = $this->quoteRequestClient
             ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
             ->getQuoteRequests()
             ->getArrayCopy();
 
-        $quoteRequestTransfer = array_shift($quoteRequests);
+        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer|null $quoteRequestTransfer */
+        $quoteRequestTransfer = array_shift($quoteRequestTransfers);
 
         if (!$quoteRequestTransfer) {
             throw new NotFoundHttpException();

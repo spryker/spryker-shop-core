@@ -5,26 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuoteRequestPage\Plugin\QuoteRequestPage;
+namespace SprykerShop\Yves\AgentQuoteRequestPage\Plugin\AgentQuoteRequestPage;
 
 use DateTime;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\QuoteRequestPageExtension\Dependency\Plugin\QuoteRequestFormMetadataFieldPluginInterface;
+use SprykerShop\Yves\AgentQuoteRequestPageExtension\Dependency\Plugin\AgentQuoteRequestFormMetadataFieldPluginInterface;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
+ * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageFactory getFactory()
  */
-class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteRequestFormMetadataFieldPluginInterface
+class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements AgentQuoteRequestFormMetadataFieldPluginInterface
 {
     protected const FIELD_METADATA_DELIVERY_DATE = 'delivery_date';
     protected const LABEL_METADATA_DELIVERY_DATE = 'quote_request_page.quote_request.metadata.label.delivery_date';
 
     /**
      * {@inheritdoc}
-     * - Adds delivery date to metadata for QuoteRequest form.
+     * - Adds delivery date to metadata for AgentQuoteRequest form.
      *
      * @api
      *

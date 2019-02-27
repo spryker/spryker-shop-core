@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\AgentQuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,6 +23,7 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
     protected const PARAM_PAGE = 'page';
     protected const DEFAULT_PAGE = 1;
     protected const DEFAULT_MAX_PER_PAGE = 10;
+    protected const PARAM_QUOTE_REQUEST_VERSION_REFERENCE = 'quote-request-version-reference';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -31,6 +35,19 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
         $viewData = $this->executeIndexAction($request);
 
         return $this->view($viewData, [], '@AgentQuoteRequestPage/views/quote-request-view/quote-request-view.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $quoteRequestReference
+     *
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function detailsAction(Request $request, string $quoteRequestReference): View
+    {
+        $viewData = $this->executeDetailsAction($request, $quoteRequestReference);
+
+        return $this->view($viewData, [], '@AgentQuoteRequestPage/views/quote-request-details/quote-request-details.twig');
     }
 
     /**
@@ -55,6 +72,29 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $quoteRequestReference
+     *
+     * @return array
+     */
+    protected function executeDetailsAction(Request $request, string $quoteRequestReference): array
+    {
+        $quoteRequestForm = $this->getFactory()->getAgentQuoteRequestForm($quoteRequestReference);
+
+        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
+        $quoteRequestTransfer = $quoteRequestForm->getData();
+        $isQuoteRequestCancelable = $this->getFactory()
+            ->getAgentQuoteRequestClient()
+            ->isQuoteRequestCancelable($quoteRequestTransfer);
+
+        return [
+            'quoteRequestForm' => $quoteRequestForm->createView(),
+            'isQuoteRequestCancelable' => $isQuoteRequestCancelable,
+            'version' => $this->findQuoteRequestVersion($quoteRequestTransfer, $request->query->get(static::PARAM_QUOTE_REQUEST_VERSION_REFERENCE)),
+        ];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\PaginationTransfer
      */
@@ -63,5 +103,34 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
         return (new PaginationTransfer())
             ->setPage($request->query->getInt(static::PARAM_PAGE, static::DEFAULT_PAGE))
             ->setMaxPerPage(static::DEFAULT_MAX_PER_PAGE);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param string|null $versionReference
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer|null
+     */
+    protected function findQuoteRequestVersion(
+        QuoteRequestTransfer $quoteRequestTransfer,
+        ?string $versionReference = null
+    ): ?QuoteRequestVersionTransfer {
+        if (!$quoteRequestTransfer->getLatestVersion() || $versionReference === $quoteRequestTransfer->getLatestVersion()->getVersionReference()) {
+            return $quoteRequestTransfer->getLatestVersion();
+        }
+
+        $quoteRequestVersionFilterTransfer = (new QuoteRequestVersionFilterTransfer())
+            ->setQuoteRequest($quoteRequestTransfer)
+            ->setQuoteRequestVersionReference($versionReference);
+
+        $quoteRequestVersionTransfers = $this->getFactory()
+            ->getQuoteRequestClient()
+            ->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer)
+            ->getQuoteRequestVersions()
+            ->getArrayCopy();
+
+        $quoteRequestVersionTransfer = array_shift($quoteRequestVersionTransfers);
+
+        return $quoteRequestVersionTransfer ?? $quoteRequestTransfer->getLatestVersion();
     }
 }

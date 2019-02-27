@@ -30,7 +30,7 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
             return $response;
         }
 
-        return $this->view($response, [], '@QuoteRequestPage/views/create-quote-request/create-quote-request.twig');
+        return $this->view($response, [], '@QuoteRequestPage/views/quote-request-create/quote-request-create.twig');
     }
 
     /**
@@ -56,13 +56,8 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
             }
         }
 
-        $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
-        $cartItems = $quoteTransfer->getItems()->getArrayCopy();
-
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
-            'cart' => $quoteTransfer,
-            'cartItems' => $cartItems,
         ];
     }
 }
