@@ -22,7 +22,7 @@
                 },
                 {
                     label: '#' ~ data.quoteRequest.quoteRequestReference,
-                    url: path('agent/quote-request', {quoteRequestReference: data.quoteRequest.quoteRequestReference})
+                    url: path('agent/quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference})
                 },
                 {
                     label: 'quote_request_page.quote_request.actions.edit' | trans,
@@ -56,7 +56,8 @@
                 <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:
                     <b>{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</b></p>
                 <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
-                    {{ form_row(data.quoteRequestForm.validUntil) }}</p>
+                    <b>{{ form_row(data.quoteRequestForm.validUntil) }}</b>
+                </p>
                 <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:</p>
                 <p>{{ 'quote_request_page.quote_request.labels.visibility' | trans }}:
                     {{ form_row(data.quoteRequestForm.isHidden) }}
@@ -93,6 +94,10 @@
                    href="{{ url('agent/quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference}) }}">
                     {{ 'quote_request_page.quote_request.actions.back_to_view' | trans }}
                 </a>
+                <hr/>
+                <button type="submit" class="button button--expand button--success">
+                    {{ 'shared_cart.form.save_button' | trans }}
+                </button>
             </div>
         </div>
     </div>

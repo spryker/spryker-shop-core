@@ -13,7 +13,6 @@ use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,8 +22,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AgentQuoteRequestForm extends AbstractType
 {
-    protected const VALIDITY_DATETIME_FORMAT = 'yyyy-MM-dd H:mm:ss';
-
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -70,12 +67,12 @@ class AgentQuoteRequestForm extends AbstractType
     protected function addValidUntilField(FormBuilderInterface $builder)
     {
         $builder->add(QuoteRequestTransfer::VALID_UNTIL, DateTimeType::class, [
-            'format' => static::VALIDITY_DATETIME_FORMAT,
+            'format' => 'yyyy-MM-dd HH:mm',
             'label' => false,
             'widget' => 'single_text',
             'required' => false,
             'attr' => [
-                'class' => 'datepicker js-to-datetime safe-datetime',
+                'class' => 'datepicker safe-datetime',
             ],
         ]);
 

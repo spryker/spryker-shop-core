@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\AgentQuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
-use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageConfig;
 use SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -19,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractController
 {
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_UPDATED = 'quote_request_page.quote_request.updated';
+
     /**
      * @param string $quoteRequestReference
      *
@@ -76,7 +77,6 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
     protected function executeEditAction(Request $request, string $quoteRequestReference)
     {
         $quoteRequestForm = $this->getFactory()->getAgentQuoteRequestForm($quoteRequestReference);
-
         /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
         $quoteRequestTransfer = $quoteRequestForm->getData();
 
@@ -86,21 +86,19 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
             ]);
         }
 
-//        if ($quoteRequestForm->isSubmitted() && $quoteRequestForm->isValid()) {
-//            $quoteRequestResponseTransfer = $this->getFactory()
-//                ->getShoppingListClient()
-//                ->updateShoppingList($quoteRequestForm->getData());
-//
-//            if ($quoteRequestResponseTransfer->getIsSuccess()) {
-//                $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_UPDATED);
-//
-//                return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_SHOPPING_LIST_UPDATE, [
-//                    static::ROUTE_PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
-//                ]);
-//            }
-//
-//            $this->handleResponseErrors($quoteRequestResponseTransfer);
-//        }
+        $quoteRequestForm->handleRequest($request);
+
+        if ($quoteRequestForm->isSubmitted() && $quoteRequestForm->isValid()) {
+            $quoteRequestResponseTransfer = $this->getFactory()
+                ->getQuoteRequestClient()
+                ->update($quoteRequestForm->getData());
+
+            if ($quoteRequestResponseTransfer->getIsSuccess()) {
+                $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_UPDATED);
+            }
+
+            $this->handleResponseErrors($quoteRequestResponseTransfer);
+        }
 
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),

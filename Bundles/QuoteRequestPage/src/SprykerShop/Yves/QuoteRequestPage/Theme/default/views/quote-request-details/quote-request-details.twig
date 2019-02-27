@@ -2,9 +2,8 @@
 
 {% define data = {
     title: 'quote_request_page.quote_request' | trans,
-    quoteRequestForm: _view.quoteRequestForm,
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
-    quoteRequest: _view.quoteRequestForm.vars.value,
+    quoteRequest: _view.quoteRequest,
     version: _view.version
 } %}
 
@@ -32,15 +31,15 @@
 
 {% block content %}
 
-    {{ form_start(data.quoteRequestForm) }}
-
     <div class="grid">
         <div class="col col--sm-12 col--xl-8">
             <div class="box">
-                {% for child in data.quoteRequestForm.metadata %}
+                {% for key, value in data.quoteRequest.metadata %}
                     <div class="col col--sm-12 col--xl-6">
                         <div class="box">
-                            {{ form_row(child, { 'attr': { 'readonly': 'true' } }) }}
+                            <label class="label">{{ ('quote_request_page.quote_request.metadata.label.' ~ key) | trans }}</label>
+                            <hr/>
+                            <p>{{ value }}</p>
                         </div>
                     </div>
                 {% endfor %}
@@ -50,10 +49,14 @@
         <div class="col col--sm-12 col--xl-4">
             <div class="box">
                 <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}:
-                    <b>{{ data.quoteRequest.createdAt | date('d.m.Y H:i') }}</b></p>
+                    <b>{{ data.quoteRequest.createdAt | date('d.m.Y H:i') }}</b>
+                </p>
                 <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:
-                    <b>{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</b></p>
-                <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:</p>
+                    <b>{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</b>
+                </p>
+                <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
+                    {{ data.quoteRequest.validUntil | date('d.m.Y H:i') }}
+                </p>
                 <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
                     {% embed atom('select') with {
                         modifiers: ['naked'],
@@ -119,7 +122,5 @@
             </div>
         </div>
     </div>
-
-    {{ form_end(data.quoteRequestForm) }}
 
 {% endblock %}

@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageFactory getFactory()
@@ -78,16 +79,14 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
      */
     protected function executeDetailsAction(Request $request, string $quoteRequestReference): array
     {
-        $quoteRequestForm = $this->getFactory()->getAgentQuoteRequestForm($quoteRequestReference);
+        $quoteRequestTransfer = $this->getQuoteRequestTransferByReference($quoteRequestReference);
 
-        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
-        $quoteRequestTransfer = $quoteRequestForm->getData();
         $isQuoteRequestCancelable = $this->getFactory()
             ->getAgentQuoteRequestClient()
             ->isQuoteRequestCancelable($quoteRequestTransfer);
 
         return [
-            'quoteRequestForm' => $quoteRequestForm->createView(),
+            'quoteRequest' => $quoteRequestTransfer,
             'isQuoteRequestCancelable' => $isQuoteRequestCancelable,
             'version' => $this->findQuoteRequestVersion($quoteRequestTransfer, $request->query->get(static::PARAM_QUOTE_REQUEST_VERSION_REFERENCE)),
         ];
@@ -132,5 +131,34 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
         $quoteRequestVersionTransfer = array_shift($quoteRequestVersionTransfers);
 
         return $quoteRequestVersionTransfer ?? $quoteRequestTransfer->getLatestVersion();
+    }
+
+    /**
+     * @param string $quoteRequestReference
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     */
+    protected function getQuoteRequestTransferByReference(string $quoteRequestReference): QuoteRequestTransfer
+    {
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setQuoteRequestReference($quoteRequestReference)
+            ->setWithHidden(true);
+
+        $quoteRequestTransfers = $this->getFactory()
+            ->getQuoteRequestClient()
+            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
+            ->getQuoteRequests()
+            ->getArrayCopy();
+
+        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer|null $quoteRequestTransfer */
+        $quoteRequestTransfer = array_shift($quoteRequestTransfers);
+
+        if (!$quoteRequestTransfer) {
+            throw new NotFoundHttpException();
+        }
+
+        return $quoteRequestTransfer;
     }
 }
