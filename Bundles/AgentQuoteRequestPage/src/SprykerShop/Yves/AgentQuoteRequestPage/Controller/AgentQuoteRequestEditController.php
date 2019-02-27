@@ -59,7 +59,8 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
      */
     protected function executeStartEditAction(string $quoteRequestReference): RedirectResponse
     {
-        $quoteRequestResponseTransfer = $this->getFactory()->getAgentQuoteRequestClient()
+        $quoteRequestResponseTransfer = $this->getFactory()
+            ->getAgentQuoteRequestClient()
             ->setQuoteRequestEditable((new QuoteRequestFilterTransfer())->setQuoteRequestReference($quoteRequestReference));
 
         if (!$quoteRequestResponseTransfer->getIsSuccess()) {
