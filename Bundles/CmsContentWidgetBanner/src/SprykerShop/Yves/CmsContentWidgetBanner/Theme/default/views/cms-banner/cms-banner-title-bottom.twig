@@ -1,9 +1,8 @@
 {% block content %}
-    <div class="grid grid--stretch">
         <div class="col">
             <a href="{{ banner.clickUrl | raw }}">
                 <div class="box box--stretch">
-                    <span class="thumbnail thumbnail--bigger" data-qa="component thumbnail">
+                    <span>
                         <img src="{{ banner.imageUrl | raw }}" alt="{{ banner.altText | raw }}" />
                     </span>
                     <h5>{{ banner.title | raw }}</h5>
@@ -11,6 +10,5 @@
                 </div>
             </a>
         </div>
-    </div>
 {% endblock %}
 
