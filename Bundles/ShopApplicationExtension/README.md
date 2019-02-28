@@ -1,6 +1,6 @@
 # ShopApplicationExtension Module
 
-{{ADD DESCRIPTION HERE}}
+ShopApplicationExtension module.
 
 ## Installation
 
