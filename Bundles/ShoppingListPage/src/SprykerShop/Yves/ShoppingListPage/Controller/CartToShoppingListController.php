@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
