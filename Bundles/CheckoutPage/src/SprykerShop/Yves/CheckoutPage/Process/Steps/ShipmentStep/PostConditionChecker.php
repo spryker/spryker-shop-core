@@ -11,11 +11,25 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
 
 class PostConditionChecker implements PostConditionCheckerInterface
 {
     protected const SHIPMENT_TRANSFER_KEY_PATTERN = '%s-%s-%s';
+
+    /**
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
+     */
+    protected $shipmentService;
+
+    /**
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
+     */
+    public function __construct(CheckoutPageToShipmentServiceInterface $shipmentService)
+    {
+        $this->shipmentService = $shipmentService;
+    }
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -57,9 +71,9 @@ class PostConditionChecker implements PostConditionCheckerInterface
      */
     protected function checkShipmentExpenseSetInQuote(QuoteTransfer $quoteTransfer, ShipmentTransfer $shipmentTransfer): bool
     {
-        $itemShipmentKey = $this->getItemShipmentKey($shipmentTransfer);
+        $itemShipmentKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            $expenseShipmentKey = $this->getItemShipmentKey($expenseTransfer->getShipment());
+            $expenseShipmentKey = $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment());
             if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
                 && $expenseShipmentKey === $itemShipmentKey
             ) {
@@ -68,20 +82,5 @@ class PostConditionChecker implements PostConditionCheckerInterface
         }
 
         return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     *
-     * @return string
-     */
-    protected function getItemShipmentKey(ShipmentTransfer $shipmentTransfer): string
-    {
-        return md5(sprintf(
-            static::SHIPMENT_TRANSFER_KEY_PATTERN,
-            $shipmentTransfer->getMethod() ? $shipmentTransfer->getMethod()->getIdShipmentMethod() : '',
-            $shipmentTransfer->getShippingAddress() ? $shipmentTransfer->getShippingAddress()->serialize() : '',
-            $shipmentTransfer->getRequestedDeliveryDate()
-        ));
     }
 }

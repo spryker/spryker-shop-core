@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CheckoutPage\Dependency\Service;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ShipmentTransfer;
 
 interface CheckoutPageToShipmentServiceInterface
 {
@@ -17,4 +18,11 @@ interface CheckoutPageToShipmentServiceInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
     public function groupItemsByShipment(iterable $itemTransfers): ArrayObject;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return string
+     */
+    public function getShipmentHashKey(ShipmentTransfer $shipmentTransfer): string;
 }
