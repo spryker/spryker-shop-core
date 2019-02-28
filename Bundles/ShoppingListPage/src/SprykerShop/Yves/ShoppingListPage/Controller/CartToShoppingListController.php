@@ -43,10 +43,6 @@ class CartToShoppingListController extends AbstractShoppingListController
      */
     protected function executeCreateFromCartAction(int $idQuote, Request $request)
     {
-        $cartToShoppingListForm = $this->getFactory()
-            ->getCartFromShoppingListForm($idQuote)
-            ->handleRequest($request);
-
         $quoteTransfer = $this->getFactory()
             ->getMultiCartClient()
             ->findQuoteById($idQuote);
@@ -56,6 +52,10 @@ class CartToShoppingListController extends AbstractShoppingListController
 
             return $this->redirectToReferer($request);
         }
+
+        $cartToShoppingListForm = $this->getFactory()
+            ->getCartFromShoppingListForm($idQuote)
+            ->handleRequest($request);
 
         if ($cartToShoppingListForm->isSubmitted() && $cartToShoppingListForm->isValid()) {
             $shoppingListTransfer = $this->getFactory()
