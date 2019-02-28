@@ -27,6 +27,7 @@ class MultiCartController extends AbstractController
     public const GLOSSARY_KEY_CART_WAS_DELETED = 'multi_cart_widget.cart.was-deleted-before';
 
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+    protected const GLOSSARY_KEY_CART_UPDATED_ERROR = 'multi_cart_widget.cart.updated.error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -119,6 +120,10 @@ class MultiCartController extends AbstractController
 
                 return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
             }
+
+            $this->addErrorMessage(static::GLOSSARY_KEY_CART_UPDATED_ERROR);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
         }
 
         return [
@@ -285,7 +290,10 @@ class MultiCartController extends AbstractController
             ->findQuoteById($idQuote);
 
         if (!$quoteTransfer) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException(sprintf(
+                "Cart with provided ID %s doesn't exist",
+                $idQuote
+            ));
         }
 
         return $quoteTransfer;
