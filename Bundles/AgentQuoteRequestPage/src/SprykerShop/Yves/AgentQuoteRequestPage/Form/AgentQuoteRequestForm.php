@@ -25,6 +25,8 @@ class AgentQuoteRequestForm extends AbstractType
     public const SUBMIT_BUTTON_SAVE = 'save';
     public const SUBMIT_BUTTON_SEND_TO_CUSTOMER = 'sendToCustomer';
 
+    protected const LABEL_QUOTE_REQUEST_IS_HIDDEN = 'quote_request_page.quote_request.labels.hide_from_customer';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -93,7 +95,7 @@ class AgentQuoteRequestForm extends AbstractType
     protected function addIsHiddenField(FormBuilderInterface $builder)
     {
         $builder->add(QuoteRequestTransfer::IS_HIDDEN, CheckboxType::class, [
-            'label' => 'quote_request_page.quote_request.labels.hide_from_customer',
+            'label' => static::LABEL_QUOTE_REQUEST_IS_HIDDEN,
             'required' => false,
         ]);
 
