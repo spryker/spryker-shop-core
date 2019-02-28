@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class CartToShoppingListController extends AbstractShoppingListController
