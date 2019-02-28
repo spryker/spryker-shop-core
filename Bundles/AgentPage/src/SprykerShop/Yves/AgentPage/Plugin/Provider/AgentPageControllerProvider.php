@@ -56,6 +56,8 @@ class AgentPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses AgentController::indexAction()
+     *
      * @return $this
      */
     protected function addOverviewRoute()
