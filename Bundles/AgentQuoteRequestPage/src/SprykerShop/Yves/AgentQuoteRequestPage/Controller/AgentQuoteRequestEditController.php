@@ -62,9 +62,7 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
             ->getAgentQuoteRequestClient()
             ->setQuoteRequestEditable((new QuoteRequestFilterTransfer())->setQuoteRequestReference($quoteRequestReference));
 
-        if (!$quoteRequestResponseTransfer->getIsSuccess()) {
-            $this->handleResponseErrors($quoteRequestResponseTransfer);
-        }
+        $this->handleResponseErrors($quoteRequestResponseTransfer);
 
         return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_EDIT, [
             static::ROUTE_PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
