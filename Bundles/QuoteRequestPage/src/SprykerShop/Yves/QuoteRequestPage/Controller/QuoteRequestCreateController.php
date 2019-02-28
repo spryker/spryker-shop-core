@@ -15,6 +15,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteRequestCreateController extends QuoteRequestAbstractController
 {
+    /**
+     * @see QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST
+     */
+    protected const ROUTE_QUOTE_REQUEST = 'quote-request';
+
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CREATED = 'quote_request_page.quote_request.created';
 
     /**
@@ -52,7 +57,7 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
             if ($quoteRequestResponseTransfer->getIsSuccess()) {
                 $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CREATED);
 
-                return $this->redirectResponseInternal(QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST);
+                return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST);
             }
         }
 

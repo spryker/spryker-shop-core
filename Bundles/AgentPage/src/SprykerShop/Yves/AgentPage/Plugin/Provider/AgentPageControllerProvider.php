@@ -56,7 +56,7 @@ class AgentPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
-     * @uses AgentController::indexAction()
+     * @uses \SprykerShop\Yves\AgentPage\Controller\AgentController::indexAction()
      *
      * @return $this
      */

@@ -17,6 +17,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class QuoteRequestDeleteController extends QuoteRequestAbstractController
 {
+    /**
+     * @see QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST
+     */
+    protected const ROUTE_QUOTE_REQUEST = 'quote-request';
+
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SUCCESS_CANCELED = 'quote_request.validation.success.canceled';
 
     /**
@@ -36,7 +41,7 @@ class QuoteRequestDeleteController extends QuoteRequestAbstractController
 
         $this->processResponseMessages($quoteRequestResponseTransfer);
 
-        return $this->redirectResponseInternal(QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST);
+        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST);
     }
 
     /**
