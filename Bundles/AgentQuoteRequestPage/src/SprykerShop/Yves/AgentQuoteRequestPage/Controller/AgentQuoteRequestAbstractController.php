@@ -15,8 +15,6 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
  */
 class AgentQuoteRequestAbstractController extends AbstractController
 {
-    protected const ROUTE_PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
-
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer
      *

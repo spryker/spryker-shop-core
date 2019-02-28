@@ -65,7 +65,7 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
         return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_EDIT, [
-            static::ROUTE_PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
+            AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
         ]);
     }
 
@@ -83,7 +83,7 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
 
         if ($this->getFactory()->getAgentQuoteRequestClient()->isQuoteRequestCanStartEditable($quoteRequestTransfer)) {
             return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_START_EDIT, [
-                static::ROUTE_PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
+                AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
             ]);
         }
 
@@ -122,7 +122,7 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
             $this->handleResponseErrors($quoteRequestResponseTransfer);
 
             return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_DETAILS, [
-                static::ROUTE_PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
+                AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
             ]);
         }
 
@@ -137,7 +137,7 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
         return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_EDIT, [
-            static::ROUTE_PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
+            AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
         ]);
     }
 }
