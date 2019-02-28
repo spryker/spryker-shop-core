@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CartToShoppingListController extends AbstractShoppingListController
 {
