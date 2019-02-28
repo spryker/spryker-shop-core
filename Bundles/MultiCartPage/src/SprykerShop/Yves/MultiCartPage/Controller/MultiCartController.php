@@ -157,12 +157,6 @@ class MultiCartController extends AbstractController
     {
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
 
-        if (!$this->isQuoteEditable($quoteTransfer)) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
-
-            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
-        }
-
         $idNewQuote = $this->getFactory()
             ->getMultiCartClient()
             ->duplicateQuote($quoteTransfer)
@@ -290,10 +284,7 @@ class MultiCartController extends AbstractController
             ->findQuoteById($idQuote);
 
         if (!$quoteTransfer) {
-            throw new NotFoundHttpException(sprintf(
-                "Cart with provided ID %s doesn't exist",
-                $idQuote
-            ));
+            throw new NotFoundHttpException();
         }
 
         return $quoteTransfer;

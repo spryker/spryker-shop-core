@@ -14,6 +14,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CartToShoppingListController extends AbstractShoppingListController
 {
+    protected const PARAM_REFERER = 'referer';
+    protected const GLOSSARY_KEY_CART_NOT_AVAILABLE = 'shopping_list.cart.not_available';
     protected const GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_SUCCESS = 'shopping_list.cart.items_add.success';
     protected const GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_FAILED = 'shopping_list.cart.items_add.failed';
 
@@ -46,7 +48,15 @@ class CartToShoppingListController extends AbstractShoppingListController
             ->getCartFromShoppingListForm($idQuote)
             ->handleRequest($request);
 
-        $quoteTransfer = $this->getQuoteById($idQuote);
+        $quoteTransfer = $this->getFactory()
+            ->getMultiCartClient()
+            ->findQuoteById($idQuote);
+
+        if (!$quoteTransfer) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_CART_NOT_AVAILABLE);
+
+            return $this->redirectToReferer($request);
+        }
 
         if ($cartToShoppingListForm->isSubmitted() && $cartToShoppingListForm->isValid()) {
             $shoppingListTransfer = $this->getFactory()
@@ -54,6 +64,7 @@ class CartToShoppingListController extends AbstractShoppingListController
                 ->createShoppingListFromCart($cartToShoppingListForm);
 
             $this->addSuccessMessage(static::GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_SUCCESS);
+
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
                 'idShoppingList' => $shoppingListTransfer->getIdShoppingList(),
             ]);
@@ -66,22 +77,14 @@ class CartToShoppingListController extends AbstractShoppingListController
     }
 
     /**
-     * @param int $idQuote
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function getQuoteById(int $idQuote): QuoteTransfer
+    protected function redirectToReferer(Request $request): RedirectResponse
     {
-        $quoteTransfer = $this->getFactory()
-            ->getMultiCartClient()
-            ->findQuoteById($idQuote);
+        $referer = $request->headers->get(static::PARAM_REFERER);
 
-        if (!$quoteTransfer) {
-            throw new NotFoundHttpException();
-        }
-
-        return $quoteTransfer;
+        return $this->redirectResponseExternal($referer);
     }
 }
