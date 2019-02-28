@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\AgentQuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
-use SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageConfig;
 use SprykerShop\Yves\AgentQuoteRequestPage\Form\AgentQuoteRequestForm;
 use SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider;
 use Symfony\Component\Form\FormInterface;
@@ -84,7 +83,7 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
         /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
         $quoteRequestTransfer = $quoteRequestForm->getData();
 
-        if ($quoteRequestTransfer->getStatus() !== AgentQuoteRequestPageConfig::STATUS_IN_PROGRESS) {
+        if ($this->getFactory()->getAgentQuoteRequestClient()->isQuoteRequestCanStartEditable($quoteRequestTransfer)) {
             return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_START_EDIT, [
                 static::ROUTE_PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
             ]);

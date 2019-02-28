@@ -33,4 +33,11 @@ interface AgentQuoteRequestPageToAgentQuoteRequestClientInterface
      * @return bool
      */
     public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestCanStartEditable(QuoteRequestTransfer $quoteRequestTransfer): bool;
 }

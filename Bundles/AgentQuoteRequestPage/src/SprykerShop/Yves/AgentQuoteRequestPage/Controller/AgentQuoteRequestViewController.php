@@ -59,6 +59,7 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
     protected function executeIndexAction(Request $request): array
     {
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setWithHidden(true)
             ->setPagination($this->getPaginationTransfer($request));
 
         $quoteRequestCollectionTransfer = $this->getFactory()
@@ -85,9 +86,14 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
             ->getAgentQuoteRequestClient()
             ->isQuoteRequestCancelable($quoteRequestTransfer);
 
+        $isQuoteRequestCanStartEditable = $this->getFactory()
+            ->getAgentQuoteRequestClient()
+            ->isQuoteRequestCanStartEditable($quoteRequestTransfer);
+
         return [
             'quoteRequest' => $quoteRequestTransfer,
             'isQuoteRequestCancelable' => $isQuoteRequestCancelable,
+            'isQuoteRequestCanStartEditable' => $isQuoteRequestCanStartEditable,
             'version' => $this->findQuoteRequestVersion($quoteRequestTransfer, $request->query->get(static::PARAM_QUOTE_REQUEST_VERSION_REFERENCE)),
         ];
     }
