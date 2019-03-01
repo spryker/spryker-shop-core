@@ -1,5 +1,5 @@
 {
-  "name": "spryker/cms-content-widget-banner",
+  "name": "spryker-shop/cms-content-widget-banner",
   "type": "library",
   "description": "CmsContentWidgetBanner module",
   "license": "proprietary",
@@ -13,12 +13,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
+      "SprykerShop\\": "src/SprykerShop/"
     }
   },
   "minimum-stability": "dev",
