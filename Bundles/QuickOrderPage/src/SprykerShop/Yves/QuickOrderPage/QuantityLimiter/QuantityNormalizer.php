@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig;
 
-class QuantityLimiter implements QuantityLimiterInterface
+class QuantityNormalizer implements QuantityNormalizerInterface
 {
     protected const MIN_ALLOWED_QUANTITY = 1;
     protected const ERROR_MESSAGE_QUANTITY_INVALID = 'quick-order.errors.quantity-invalid';
@@ -36,14 +36,14 @@ class QuantityLimiter implements QuantityLimiterInterface
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function limitQuickOrderItemsQuantity(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
+    public function normalizeQuickOrderItemsQuantity(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer
     {
         foreach ($quickOrderTransfer->getItems() as $quickOrderItemTransfer) {
             if (!$quickOrderItemTransfer->getSku()) {
                 continue;
             }
 
-            $this->limitQuickOrderItemTransferQuantity($quickOrderItemTransfer);
+            $this->normalizeQuickOrderItemTransferQuantity($quickOrderItemTransfer);
         }
 
         return $quickOrderTransfer;
@@ -54,34 +54,35 @@ class QuantityLimiter implements QuantityLimiterInterface
      *
      * @return void
      */
-    protected function limitQuickOrderItemTransferQuantity(QuickOrderItemTransfer $quickOrderItemTransfer): void
+    protected function normalizeQuickOrderItemTransferQuantity(QuickOrderItemTransfer $quickOrderItemTransfer): void
     {
         /**
-         * @var string|null $originalQuantity
+         * @var string|null $quantity
          */
-        $originalQuantity = $quickOrderItemTransfer->getQuantity();
-        $integerQuantiy = (int)$originalQuantity;
+        $quantity = $quickOrderItemTransfer->getQuantity();
         $maxAllowedQuantity = $this->quickOrderPageConfig->getMaxAllowedQuantity();
 
-        if ($originalQuantity === null) {
+        if ($quantity === null) {
             $quickOrderItemTransfer->setQuantity(static::MIN_ALLOWED_QUANTITY);
 
             return;
         }
 
-        if ($integerQuantiy < 1) {
+        $quantity = (int)$quantity;
+
+        if ($quantity < static::MIN_ALLOWED_QUANTITY) {
             $this->adjustQuantity($quickOrderItemTransfer, static::MIN_ALLOWED_QUANTITY);
 
             return;
         }
 
-        if ((string)$integerQuantiy !== $originalQuantity || $integerQuantiy > $maxAllowedQuantity) {
+        if ($quantity > $maxAllowedQuantity) {
             $this->adjustQuantity($quickOrderItemTransfer, $maxAllowedQuantity);
 
             return;
         }
 
-        $quickOrderItemTransfer->setQuantity($integerQuantiy);
+        $quickOrderItemTransfer->setQuantity($quantity);
     }
 
     /**

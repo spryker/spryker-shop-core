@@ -47,8 +47,8 @@ use SprykerShop\Yves\QuickOrderPage\PriceResolver\PriceResolver;
 use SprykerShop\Yves\QuickOrderPage\PriceResolver\PriceResolverInterface;
 use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolver;
 use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface;
-use SprykerShop\Yves\QuickOrderPage\QuantityLimiter\QuantityLimiter;
-use SprykerShop\Yves\QuickOrderPage\QuantityLimiter\QuantityLimiterInterface;
+use SprykerShop\Yves\QuickOrderPage\QuantityLimiter\QuantityNormalizer;
+use SprykerShop\Yves\QuickOrderPage\QuantityLimiter\QuantityNormalizerInterface;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParser;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParserInterface;
 use SprykerShop\Yves\QuickOrderPage\ViewDataTransformer\ViewDataTransformer;
@@ -158,11 +158,11 @@ class QuickOrderPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuickOrderPage\QuantityLimiter\QuantityLimiterInterface
+     * @return \SprykerShop\Yves\QuickOrderPage\QuantityLimiter\QuantityNormalizerInterface
      */
-    public function createQuantityLimiter(): QuantityLimiterInterface
+    public function createQuantityNormalizer(): QuantityNormalizerInterface
     {
-        return new QuantityLimiter(
+        return new QuantityNormalizer(
             $this->getConfig()
         );
     }

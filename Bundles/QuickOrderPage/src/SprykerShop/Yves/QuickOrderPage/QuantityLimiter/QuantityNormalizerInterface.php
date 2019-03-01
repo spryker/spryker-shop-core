@@ -9,12 +9,12 @@ namespace SprykerShop\Yves\QuickOrderPage\QuantityLimiter;
 
 use Generated\Shared\Transfer\QuickOrderTransfer;
 
-interface QuantityLimiterInterface
+interface QuantityNormalizerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
      * @return \Generated\Shared\Transfer\QuickOrderTransfer
      */
-    public function limitQuickOrderItemsQuantity(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
+    public function normalizeQuickOrderItemsQuantity(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
 }

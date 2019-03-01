@@ -40,6 +40,7 @@ class QuickOrderController extends AbstractController
      * @deprecated Will be removed without replacement.
      */
     protected const MESSAGE_TYPE_WARNING = 'warning';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -161,8 +162,8 @@ class QuickOrderController extends AbstractController
             ->getQuickOrderTransfer($quickOrderItems);
 
         $quickOrderTransfer = $this->getFactory()
-            ->createQuantityLimiter()
-            ->limitQuickOrderItemsQuantity($quickOrderTransfer);
+            ->createQuantityNormalizer()
+            ->normalizeQuickOrderItemsQuantity($quickOrderTransfer);
 
         $quickOrderTransfer = $this->getFactory()
             ->getQuickOrderClient()
@@ -352,7 +353,7 @@ class QuickOrderController extends AbstractController
         $formDataItems = $formData['items'] ?? [];
 
         if (!isset($formDataItems[$rowIndex])) {
-            throw new HttpException(400, '"row-index" is out of the bound.');
+            throw new HttpException(Response::HTTP_BAD_REQUEST, '"row-index" is out of the bound.');
         }
         unset($formDataItems[$rowIndex]);
 
