@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\QuantityLimiter;
+namespace SprykerShop\Yves\QuickOrderPage\QuantityNormalizer;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
@@ -62,7 +62,9 @@ class QuantityNormalizer implements QuantityNormalizerInterface
             return;
         }
 
-        $quantity = (int)$quickOrderItemTransfer->getQuantity();
+        /** @var string $quantity */
+        $quantity = $quickOrderItemTransfer->getQuantity();
+        $quantity = (int)$quantity;
 
         if ($quantity < static::MIN_ALLOWED_QUANTITY) {
             $this->adjustQuantity($quickOrderItemTransfer, static::MIN_ALLOWED_QUANTITY);
@@ -71,7 +73,7 @@ class QuantityNormalizer implements QuantityNormalizerInterface
         }
 
         $maxAllowedQuantity = $this->quickOrderPageConfig->getMaxAllowedQuantity();
-        
+
         if ($quantity > $maxAllowedQuantity) {
             $this->adjustQuantity($quickOrderItemTransfer, $maxAllowedQuantity);
 
