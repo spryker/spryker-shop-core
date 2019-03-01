@@ -65,4 +65,14 @@ class AgentQuoteRequestPageToAgentQuoteRequestClientBridge implements AgentQuote
     {
         return $this->agentQuoteRequestClient->isQuoteRequestCanStartEditable($quoteRequestTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $this->agentQuoteRequestClient->isQuoteRequestEditable($quoteRequestTransfer);
+    }
 }

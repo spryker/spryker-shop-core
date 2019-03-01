@@ -81,20 +81,19 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
     protected function executeDetailsAction(Request $request, string $quoteRequestReference): array
     {
         $quoteRequestTransfer = $this->getQuoteRequestTransferByReference($quoteRequestReference);
+        $agentQuoteRequestClient = $this->getFactory()->getAgentQuoteRequestClient();
 
-        $isQuoteRequestCancelable = $this->getFactory()
-            ->getAgentQuoteRequestClient()
-            ->isQuoteRequestCancelable($quoteRequestTransfer);
-
-        $isQuoteRequestCanStartEditable = $this->getFactory()
-            ->getAgentQuoteRequestClient()
-            ->isQuoteRequestCanStartEditable($quoteRequestTransfer);
+        $quoteRequestVersionTransfer = $this->findQuoteRequestVersion(
+            $quoteRequestTransfer,
+            $request->query->get(static::PARAM_QUOTE_REQUEST_VERSION_REFERENCE)
+        );
 
         return [
             'quoteRequest' => $quoteRequestTransfer,
-            'isQuoteRequestCancelable' => $isQuoteRequestCancelable,
-            'isQuoteRequestCanStartEditable' => $isQuoteRequestCanStartEditable,
-            'version' => $this->findQuoteRequestVersion($quoteRequestTransfer, $request->query->get(static::PARAM_QUOTE_REQUEST_VERSION_REFERENCE)),
+            'version' => $quoteRequestVersionTransfer,
+            'isQuoteRequestCancelable' => $agentQuoteRequestClient->isQuoteRequestCancelable($quoteRequestTransfer),
+            'isQuoteRequestCanStartEditable' => $agentQuoteRequestClient->isQuoteRequestCanStartEditable($quoteRequestTransfer),
+            'isQuoteRequestEditable' => $agentQuoteRequestClient->isQuoteRequestEditable($quoteRequestTransfer),
         ];
     }
 

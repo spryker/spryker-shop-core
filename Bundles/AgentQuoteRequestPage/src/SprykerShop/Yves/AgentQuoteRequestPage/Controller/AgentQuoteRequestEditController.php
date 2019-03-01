@@ -13,6 +13,7 @@ use SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPage
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageFactory getFactory()
@@ -56,6 +57,18 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
+    public function sendToCustomerAction(string $quoteRequestReference): RedirectResponse
+    {
+        $response = $this->executeSendToCustomerAction($quoteRequestReference);
+
+        return $response;
+    }
+
+    /**
+     * @param string $quoteRequestReference
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     protected function executeStartEditAction(string $quoteRequestReference): RedirectResponse
     {
         $quoteRequestResponseTransfer = $this->getFactory()
@@ -70,21 +83,54 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
     }
 
     /**
+     * @param string $quoteRequestReference
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeSendToCustomerAction(string $quoteRequestReference): RedirectResponse
+    {
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setQuoteRequestReference($quoteRequestReference)
+            ->setWithHidden(true);
+
+        $quoteRequestResponseTransfer = $this->getFactory()
+            ->getQuoteRequestClient()
+            ->sendQuoteRequestToCustomer($quoteRequestFilterTransfer);
+
+        if ($quoteRequestResponseTransfer->getIsSuccess()) {
+            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER);
+        }
+
+        $this->handleResponseErrors($quoteRequestResponseTransfer);
+
+        return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_DETAILS, [
+            AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $quoteRequestReference
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executeEditAction(Request $request, string $quoteRequestReference)
     {
+        $agentQuoteRequestClient = $this->getFactory()->getAgentQuoteRequestClient();
         $quoteRequestForm = $this->getFactory()->getAgentQuoteRequestForm($quoteRequestReference);
         /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
         $quoteRequestTransfer = $quoteRequestForm->getData();
 
-        if ($this->getFactory()->getAgentQuoteRequestClient()->isQuoteRequestCanStartEditable($quoteRequestTransfer)) {
+        if ($agentQuoteRequestClient->isQuoteRequestCanStartEditable($quoteRequestTransfer)) {
             return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_START_EDIT, [
                 AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
             ]);
+        }
+
+        if (!$agentQuoteRequestClient->isQuoteRequestEditable($quoteRequestTransfer)) {
+            throw new NotFoundHttpException();
         }
 
         $quoteRequestForm->handleRequest($request);
@@ -109,23 +155,6 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
         /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
         $quoteRequestTransfer = $quoteRequestForm->getData();
 
-        if ($request->get(AgentQuoteRequestForm::SUBMIT_BUTTON_SEND_TO_CUSTOMER) !== null) {
-            // TODO: "send to customer" RfQ business logic needed here.
-            $quoteRequestResponseTransfer = $this->getFactory()
-                ->getQuoteRequestClient()
-                ->update($quoteRequestTransfer);
-
-            if ($quoteRequestResponseTransfer->getIsSuccess()) {
-                $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER);
-            }
-
-            $this->handleResponseErrors($quoteRequestResponseTransfer);
-
-            return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_DETAILS, [
-                AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
-            ]);
-        }
-
         $quoteRequestResponseTransfer = $this->getFactory()
             ->getQuoteRequestClient()
             ->update($quoteRequestTransfer);
@@ -135,6 +164,12 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
         }
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
+
+        if ($request->get(AgentQuoteRequestForm::SUBMIT_BUTTON_SEND_TO_CUSTOMER) !== null && $quoteRequestResponseTransfer->getIsSuccess()) {
+            return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_SEND_TO_CUSTOMER, [
+                AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
+            ]);
+        }
 
         return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_EDIT, [
             AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),

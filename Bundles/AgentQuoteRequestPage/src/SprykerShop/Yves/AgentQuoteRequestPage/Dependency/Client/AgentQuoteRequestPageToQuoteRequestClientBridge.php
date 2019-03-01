@@ -60,4 +60,14 @@ class AgentQuoteRequestPageToQuoteRequestClientBridge implements AgentQuoteReque
     {
         return $this->quoteRequestClient->update($quoteRequestTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function sendQuoteRequestToCustomer(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->quoteRequestClient->sendQuoteRequestToCustomer($quoteRequestFilterTransfer);
+    }
 }
