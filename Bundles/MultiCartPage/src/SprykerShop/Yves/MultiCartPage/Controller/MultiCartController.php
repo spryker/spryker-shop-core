@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\MultiCartPage\Controller;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -19,6 +20,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class MultiCartController extends AbstractController
 {
+    use PermissionAwareTrait;
+
     public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
 
     /**
@@ -104,7 +107,7 @@ class MultiCartController extends AbstractController
 
         $quoteTransfer = $quoteForm->getData();
 
-        if (!$quoteTransfer || !$this->isQuoteEditable($quoteTransfer)) {
+        if (!$quoteTransfer || !$this->canWriteQuote($quoteTransfer)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
 
             return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
@@ -204,7 +207,7 @@ class MultiCartController extends AbstractController
     {
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
 
-        if (!$this->isQuoteEditable($quoteTransfer)) {
+        if (!$this->canWriteQuote($quoteTransfer)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
 
             return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
@@ -288,6 +291,17 @@ class MultiCartController extends AbstractController
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function canWriteQuote(QuoteTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->getCustomerReference() === $quoteTransfer->getCustomer()->getCustomerReference()
+            || $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote());
     }
 
     /**
