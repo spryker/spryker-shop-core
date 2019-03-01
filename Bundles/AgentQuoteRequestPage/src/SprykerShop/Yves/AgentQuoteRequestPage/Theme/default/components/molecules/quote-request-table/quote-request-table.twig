@@ -39,8 +39,12 @@
                     {{ quoteRequest.companyUser.customer.firstName ~ ' ' ~ quoteRequest.companyUser.customer.lastName }}
                 </td>
                 <td class="text-center">
-                    {% if (quoteRequest.latestVersion) %}
-                        <strong>{{ quoteRequest.latestVersion.quote.totals.grandTotal | default(0) | money }}</strong>
+                    {% if quoteRequest.latestVersion %}
+                        {% if quoteRequest.status == 'in-progress' %}
+                            <strong>{{ quoteRequest.quoteInProgress.totals.grandTotal | default(0) | money }}</strong>
+                        {% else %}
+                            <strong>{{ quoteRequest.latestVersion.quote.totals.grandTotal | default(0) | money }}</strong>
+                        {% endif %}
                     {% endif %}
                 </td>
                 <td class="text-center">{{ quoteRequest.createdAt | date('d.m.Y H:i:s') }}</td>

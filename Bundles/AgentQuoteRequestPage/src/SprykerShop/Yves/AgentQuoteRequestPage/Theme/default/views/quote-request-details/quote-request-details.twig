@@ -5,10 +5,15 @@
     quoteRequest: _view.quoteRequest,
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
     isQuoteRequestCanStartEditable: _view.isQuoteRequestCanStartEditable,
+    isQuoteRequestEditable: _view.isQuoteRequestEditable,
     version: _view.version
 } %}
 
 {% set cart = data.version ? data.version.quote : null %}
+{% if data.isQuoteRequestEditable and data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion %}
+    {% set cart = data.quoteRequest.quoteInProgress %}
+{% endif %}
+
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
