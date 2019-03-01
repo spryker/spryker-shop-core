@@ -36,7 +36,10 @@ class QuickOrderController extends AbstractController
      * @deprecated Will be removed without replacement.
      */
     protected const ERROR_MESSAGE_QUANTITY_INVALID = 'quick-order.errors.quantity-invalid';
-
+    /**
+     * @deprecated Will be removed without replacement.
+     */
+    protected const MESSAGE_TYPE_WARNING = 'warning';
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
