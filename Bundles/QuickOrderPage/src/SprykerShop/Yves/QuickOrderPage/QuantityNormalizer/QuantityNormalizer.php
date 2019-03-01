@@ -62,9 +62,7 @@ class QuantityNormalizer implements QuantityNormalizerInterface
             return;
         }
 
-        /** @var string $quantity */
-        $quantity = $quickOrderItemTransfer->getQuantity();
-        $quantity = (int)$quantity;
+        $quantity = (int)$quickOrderItemTransfer->getQuantity();
 
         if ($quantity < static::MIN_ALLOWED_QUANTITY) {
             $this->adjustQuantity($quickOrderItemTransfer, static::MIN_ALLOWED_QUANTITY);
