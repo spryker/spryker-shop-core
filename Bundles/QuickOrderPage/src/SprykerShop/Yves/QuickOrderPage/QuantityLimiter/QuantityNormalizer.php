@@ -56,19 +56,13 @@ class QuantityNormalizer implements QuantityNormalizerInterface
      */
     protected function normalizeQuickOrderItemTransferQuantity(QuickOrderItemTransfer $quickOrderItemTransfer): void
     {
-        /**
-         * @var string|null $quantity
-         */
-        $quantity = $quickOrderItemTransfer->getQuantity();
-        $maxAllowedQuantity = $this->quickOrderPageConfig->getMaxAllowedQuantity();
-
-        if ($quantity === null) {
+        if ($quickOrderItemTransfer->getQuantity() === null) {
             $quickOrderItemTransfer->setQuantity(static::MIN_ALLOWED_QUANTITY);
 
             return;
         }
 
-        $quantity = (int)$quantity;
+        $quantity = (int)$quickOrderItemTransfer->getQuantity();
 
         if ($quantity < static::MIN_ALLOWED_QUANTITY) {
             $this->adjustQuantity($quickOrderItemTransfer, static::MIN_ALLOWED_QUANTITY);
@@ -76,6 +70,8 @@ class QuantityNormalizer implements QuantityNormalizerInterface
             return;
         }
 
+        $maxAllowedQuantity = $this->quickOrderPageConfig->getMaxAllowedQuantity();
+        
         if ($quantity > $maxAllowedQuantity) {
             $this->adjustQuantity($quickOrderItemTransfer, $maxAllowedQuantity);
 
