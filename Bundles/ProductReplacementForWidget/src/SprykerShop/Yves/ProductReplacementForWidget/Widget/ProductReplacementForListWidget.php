@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ProductReplacementForWidget\Widget;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
-use SprykerShop\Yves\ProductReplacementForWidget\ProductReplacementForWidgetConfig;
 
 /**
  * @method \SprykerShop\Yves\ProductReplacementForWidget\ProductReplacementForWidgetFactory getFactory()
@@ -70,17 +69,8 @@ class ProductReplacementForListWidget extends AbstractWidget
      */
     protected function getProductViewTransfer(int $idProduct): ?ProductViewTransfer
     {
-        $productConcreteStorageData = $this->getFactory()
-            ->getProductStorageClient()
-            ->findProductConcreteStorageData($idProduct, $this->getLocale());
-        if (empty($productConcreteStorageData)) {
-            return null;
-        }
-
-        $productConcreteStorageData[ProductReplacementForWidgetConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = [];
-
         return $this->getFactory()
             ->getProductStorageClient()
-            ->mapProductStorageData($productConcreteStorageData, $this->getLocale());
+            ->findProductConcreteViewTransfer($idProduct, $this->getLocale());
     }
 }

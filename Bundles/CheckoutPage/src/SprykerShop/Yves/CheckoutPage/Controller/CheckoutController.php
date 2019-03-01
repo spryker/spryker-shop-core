@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Controller;
 
+use ArrayObject;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -14,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageFactory getFactory()
+ * @method \Spryker\Client\Checkout\CheckoutClientInterface getClient()
  */
 class CheckoutController extends AbstractController
 {
@@ -22,12 +25,25 @@ class CheckoutController extends AbstractController
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
     /**
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     */
+    protected const ROUTE_CART = 'cart';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return mixed
      */
     public function indexAction(Request $request)
     {
+        $quoteValidationResponseTransfer = $this->canProceedCheckout();
+
+        if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($quoteValidationResponseTransfer->getMessages());
+
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
         $response = $this->createStepProcess()->process($request);
 
         return $response;
@@ -40,6 +56,14 @@ class CheckoutController extends AbstractController
      */
     public function customerAction(Request $request)
     {
+        $quoteValidationResponseTransfer = $this->canProceedCheckout();
+
+        if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($quoteValidationResponseTransfer->getMessages());
+
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
         $response = $this->createStepProcess()->process(
             $request,
             $this->getFactory()
@@ -65,6 +89,14 @@ class CheckoutController extends AbstractController
      */
     public function addressAction(Request $request)
     {
+        $quoteValidationResponseTransfer = $this->canProceedCheckout();
+
+        if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($quoteValidationResponseTransfer->getMessages());
+
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
         $response = $this->createStepProcess()->process(
             $request,
             $this->getFactory()
@@ -90,6 +122,14 @@ class CheckoutController extends AbstractController
      */
     public function shipmentAction(Request $request)
     {
+        $quoteValidationResponseTransfer = $this->canProceedCheckout();
+
+        if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($quoteValidationResponseTransfer->getMessages());
+
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
         $response = $this->createStepProcess()->process(
             $request,
             $this->getFactory()
@@ -115,6 +155,14 @@ class CheckoutController extends AbstractController
      */
     public function paymentAction(Request $request)
     {
+        $quoteValidationResponseTransfer = $this->canProceedCheckout();
+
+        if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($quoteValidationResponseTransfer->getMessages());
+
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
         $response = $this->createStepProcess()->process(
             $request,
             $this->getFactory()
@@ -140,6 +188,14 @@ class CheckoutController extends AbstractController
      */
     public function summaryAction(Request $request)
     {
+        $quoteValidationResponseTransfer = $this->canProceedCheckout();
+
+        if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($quoteValidationResponseTransfer->getMessages());
+
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
         $viewData = $this->createStepProcess()->process(
             $request,
             $this->getFactory()
@@ -165,6 +221,14 @@ class CheckoutController extends AbstractController
      */
     public function placeOrderAction(Request $request)
     {
+        $quoteValidationResponseTransfer = $this->canProceedCheckout();
+
+        if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($quoteValidationResponseTransfer->getMessages());
+
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
         $grandTotal = $this->getFactory()
             ->getQuoteClient()
             ->getQuote()
@@ -205,6 +269,32 @@ class CheckoutController extends AbstractController
     public function errorAction()
     {
         return $this->view([], [], '@CheckoutPage/views/order-fail/order-fail.twig');
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    protected function canProceedCheckout(): QuoteValidationResponseTransfer
+    {
+        $quoteTransfer = $this->getFactory()
+            ->getQuoteClient()
+            ->getQuote();
+
+        return $this->getFactory()
+            ->getCheckoutClient()
+            ->isQuoteApplicableForCheckout($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer[]|\ArrayObject $messageTransfers
+     *
+     * @return void
+     */
+    protected function processErrorMessages(ArrayObject $messageTransfers): void
+    {
+        foreach ($messageTransfers as $messageTransfer) {
+            $this->addErrorMessage($messageTransfer->getValue());
+        }
     }
 
     /**
