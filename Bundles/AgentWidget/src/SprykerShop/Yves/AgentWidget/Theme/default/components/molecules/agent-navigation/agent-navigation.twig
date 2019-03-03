@@ -10,24 +10,23 @@
 } %}
 
 {% block body %}
-    <div class="box">
-        <ul class="menu menu--wide">
-            <li class="menu__item">
-                <span>
-                    {{ 'agent.account.page_title' | trans }}: {{ data.agent.firstName ~ ' ' ~ data.agent.lastName }}
-                </span>
-            </li>
-            <li class="menu__item">
-                <a href="{{ path('agent/overview') }}">
-                    {{ "agent.account.overview" | trans }}
-                </a>
-            </li>
-            {% include molecule('quote-request-menu-item', 'AgentQuoteRequestWidget') ignore missing only %}
-            <li class="menu__item">
-                <a href="{{ path('agent_logout') }}">
-                    {{ "agent.control_bar.logout" | trans }}
-                </a>
-            </li>
-        </ul>
-    </div>
+    <ul class="menu menu--inline">
+        <li class="{{ config.name }}__dropdown menu__item menu__item--has-children-dropdown">
+            <span>{{ 'agent.account.page_title' | trans }}: {{ data.agent.firstName ~ ' ' ~ data.agent.lastName }}</span>
+
+            <ul class="{{ config.name }}__dropdown-item menu" position-right>
+                <li class="menu__item">
+                    <a href="{{ path('agent/overview') }}">{{ "agent.account.overview" | trans }}</a>
+                </li>
+
+                {% block additional %}
+                    {% include molecule('quote-request-menu-item', 'AgentQuoteRequestWidget') ignore missing only %}
+                {% endblock %}
+
+                <li class="menu__item">
+                    <a href="{{ path('agent_logout') }}">{{ "agent.control_bar.logout" | trans }}</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
 {% endblock %}

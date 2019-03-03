@@ -11,7 +11,7 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class AgentQuoteRequestWidgetConfig extends AbstractBundleConfig
 {
-    public const PAGINATION_DEFAULT_QUOTE_REQUESTS_PER_PAGE = 5;
+    protected const PAGINATION_DEFAULT_QUOTE_REQUESTS_PER_PAGE = 5;
 
     /**
      * @return int

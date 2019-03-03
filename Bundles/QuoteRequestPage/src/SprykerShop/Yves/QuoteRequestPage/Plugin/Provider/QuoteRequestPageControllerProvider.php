@@ -36,6 +36,8 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestViewController::indexAction()
+     *
      * @return $this
      */
     protected function addQuoteRequestRoute()
@@ -48,6 +50,8 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestCreateController::createAction()
+     *
      * @return $this
      */
     protected function addQuoteRequestCreateRoute()
@@ -60,6 +64,8 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestDeleteController::cancelAction()
+     *
      * @return $this
      */
     protected function addQuoteRequestCancelRoute()
@@ -73,6 +79,8 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestViewController::detailsAction()
+     *
      * @return $this
      */
     protected function addQuoteRequestDetailsRoute()

@@ -56,6 +56,8 @@ class AgentPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses \SprykerShop\Yves\AgentPage\Controller\AgentController::indexAction()
+     *
      * @return $this
      */
     protected function addOverviewRoute()
