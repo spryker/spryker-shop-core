@@ -4,6 +4,7 @@
     title: 'quote_request_page.quote_request' | trans,
     quoteRequestForm: _view.quoteRequestForm,
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
+    isQuoteRequestConvertible: _view.isQuoteRequestConvertible,
     quoteRequest: _view.quoteRequestForm.vars.value,
     version: _view.version
 } %}
@@ -115,11 +116,11 @@
                         </a>
                     {% endif %}
 
-                    {% if data.quoteRequest.status == 'ready' %}
+                    {% if data.isQuoteRequestConvertible %}
                         <hr/>
-                        <a class="button button--expand button--cancel"
-                           href="{{ path('quote-request/order', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
-                            {{ 'quote_request_page.quote_request.actions.order' | trans }}
+                        <a class="button button--expand button--success"
+                           href="{{ path('quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                            {{ 'quote_request_page.quote_request.actions.convert_to_cart' | trans }}
                         </a>
                     {% endif %}
 

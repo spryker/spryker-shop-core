@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQuoteRequestClientInterface
 {
@@ -33,11 +33,11 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function convertToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteTransfer
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
-        return $this->quoteRequestClient->convertToQuote($quoteRequestTransfer);
+        return $this->quoteRequestClient->convertQuoteRequestToQuote($quoteRequestTransfer);
     }
 
     /**
@@ -88,5 +88,15 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
     public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $this->quoteRequestClient->isQuoteRequestCancelable($quoteRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestConvertible(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $this->quoteRequestClient->isQuoteRequestConvertible($quoteRequestTransfer);
     }
 }

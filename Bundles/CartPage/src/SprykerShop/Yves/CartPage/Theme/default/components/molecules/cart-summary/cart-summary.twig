@@ -96,7 +96,7 @@
         {% widget 'ProceedToCheckoutButtonWidget' args [data.cart] %}{% endwidget %}
     {% endif %}
 
-    {% if is_granted('ROLE_USER') %}
+    {% if is_granted('ROLE_USER') and not data.cart.quoteRequestVersionReference %}
         {% widget 'CreateQuoteRequestWidget' only %}
             {% block body %}
                 <hr />

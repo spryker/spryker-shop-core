@@ -75,13 +75,12 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
         /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
         $quoteRequestTransfer = $quoteRequestForm->getData();
 
-        $isQuoteRequestCancelable = $this->getFactory()
-            ->getQuoteRequestClient()
-            ->isQuoteRequestCancelable($quoteRequestTransfer);
+        $quoteRequestClient = $this->getFactory()->getQuoteRequestClient();
 
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
-            'isQuoteRequestCancelable' => $isQuoteRequestCancelable,
+            'isQuoteRequestCancelable' => $quoteRequestClient->isQuoteRequestCancelable($quoteRequestTransfer),
+            'isQuoteRequestConvertible' => $quoteRequestClient->isQuoteRequestConvertible($quoteRequestTransfer),
             'version' => $this->findQuoteRequestVersion($quoteRequestTransfer, $request->query->get(static::PARAM_QUOTE_REQUEST_VERSION_REFERENCE)),
         ];
     }

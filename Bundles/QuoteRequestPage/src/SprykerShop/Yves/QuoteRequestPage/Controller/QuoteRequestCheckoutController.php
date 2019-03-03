@@ -8,9 +8,6 @@
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
-use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
-use Spryker\Client\Kernel\Locator;
-use SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -25,9 +22,11 @@ class QuoteRequestCheckoutController extends QuoteRequestAbstractController
     protected const ROUTE_CART = 'cart';
 
     /**
+     * @param string $quoteRequestReference
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function orderAction(string $quoteRequestReference): RedirectResponse
+    public function convertToCartAction(string $quoteRequestReference): RedirectResponse
     {
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setQuoteRequestReference($quoteRequestReference)
@@ -43,7 +42,7 @@ class QuoteRequestCheckoutController extends QuoteRequestAbstractController
 
          $this->getFactory()
             ->getQuoteRequestClient()
-            ->convertToQuote($quoteRequestTransfer);
+            ->convertQuoteRequestToQuote($quoteRequestTransfer);
 
         return $this->redirectResponseInternal(static::ROUTE_CART);
     }
