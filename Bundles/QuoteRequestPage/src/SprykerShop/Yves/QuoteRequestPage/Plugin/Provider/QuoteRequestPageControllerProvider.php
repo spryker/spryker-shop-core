@@ -94,6 +94,8 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestCheckoutController::convertToCartAction()
+     *
      * @return $this
      */
     protected function addQuoteRequestConvertToCartRoute()
