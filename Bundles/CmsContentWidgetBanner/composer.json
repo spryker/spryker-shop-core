@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "*"
+    "spryker/kernel": "^3.24.0"
   },
   "require-dev": {
     "spryker/cms-content-widget": "*",
