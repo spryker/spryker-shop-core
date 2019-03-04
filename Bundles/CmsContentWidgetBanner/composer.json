@@ -5,11 +5,13 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/cms-content-widget": "^1.0.0"
+    "spryker/kernel": "*"
   },
   "require-dev": {
+    "spryker/cms-content-widget": "*",
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/twig": "*"
   },
   "autoload": {
     "psr-4": {
@@ -25,5 +27,9 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "suggest": {
+    "spryker/cms-content-widget": "ADD SUGGEST DESCRIPTION",
+    "spryker/twig": "ADD SUGGEST DESCRIPTION"
   }
 }
