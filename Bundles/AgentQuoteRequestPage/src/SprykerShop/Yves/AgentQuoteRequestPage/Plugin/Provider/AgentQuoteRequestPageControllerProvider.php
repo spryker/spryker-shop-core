@@ -18,6 +18,7 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
     public const ROUTE_AGENT_QUOTE_REQUEST_START_EDIT = 'agent/quote-request/start-edit';
     public const ROUTE_AGENT_QUOTE_REQUEST_EDIT = 'agent/quote-request/edit';
     public const ROUTE_AGENT_QUOTE_REQUEST_SEND_TO_CUSTOMER = 'agent/quote-request/send-to-customer';
+    public const ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS = 'agent/quote-request/edit-items';
 
     public const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
@@ -35,7 +36,8 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
             ->addQuoteRequestDetailsRoute()
             ->addQuoteRequestStartEditRoute()
             ->addQuoteRequestEditRoute()
-            ->addQuoteRequestSendToCustomerRoute();
+            ->addQuoteRequestSendToCustomerRoute()
+            ->addQuoteRequestEditItemsRoute();
     }
 
     /**
@@ -120,6 +122,21 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
     protected function addQuoteRequestSendToCustomerRoute()
     {
         $this->createController('/{agent}/quote-request/send-to-customer/{quoteRequestReference}', static::ROUTE_AGENT_QUOTE_REQUEST_SEND_TO_CUSTOMER, 'AgentQuoteRequestPage', 'AgentQuoteRequestEdit', 'sendToCustomer')
+            ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
+            ->value('agent', 'agent')
+            ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\AgentQuoteRequestPage\Controller\AgentQuoteRequestEditController::editAction()
+     *
+     * @return $this
+     */
+    protected function addQuoteRequestEditItemsRoute()
+    {
+        $this->createController('/{agent}/quote-request/edit-items/{quoteRequestReference}', static::ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS, 'AgentQuoteRequestPage', 'AgentQuoteRequestEdit', 'editItems')
             ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
             ->value('agent', 'agent')
             ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
