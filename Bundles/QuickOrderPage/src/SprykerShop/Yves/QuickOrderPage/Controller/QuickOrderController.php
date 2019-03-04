@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
@@ -36,10 +37,13 @@ class QuickOrderController extends AbstractController
      * @deprecated Will be removed without replacement.
      */
     protected const ERROR_MESSAGE_QUANTITY_INVALID = 'quick-order.errors.quantity-invalid';
+
     /**
-     * @deprecated Will be removed without replacement.
+     * @uses \Spryker\Client\ProductQuantityStorage\Validator\ProductQuantityItemValidator::MESSAGE_TYPE_WARNING
      */
     protected const MESSAGE_TYPE_WARNING = 'warning';
+
+    protected const MAX_ALLOWED_QUANTITY = 100000;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -161,9 +165,12 @@ class QuickOrderController extends AbstractController
             ->createQuickOrderFormDataProvider()
             ->getQuickOrderTransfer($quickOrderItems);
 
-        $quickOrderTransfer = $this->getFactory()
-            ->createQuantityNormalizer()
-            ->normalizeQuickOrderItemsQuantity($quickOrderTransfer);
+        foreach ($quickOrderItems as $quickOrderItem) {
+            if ((int)$quickOrderItem->getQuantity() > static::MAX_ALLOWED_QUANTITY) {
+                $quickOrderItem->setQuantity(static::MAX_ALLOWED_QUANTITY);
+                $this->addMessageToQuickOrderItemTransfer($quickOrderItem);
+            };
+        }
 
         $quickOrderTransfer = $this->getFactory()
             ->getQuickOrderClient()
@@ -401,11 +408,15 @@ class QuickOrderController extends AbstractController
      */
     public function productAdditionalDataAction(Request $request)
     {
-        $quantity = $request->get('quantity');
+        $quantity = $request->get('quantity', 1);
         $sku = $request->query->get('sku');
         $index = $request->query->get('index');
 
         $quickOrderItemTransfer = (new QuickOrderItemTransfer())->setSku($sku);
+        if ((int)$quantity < 1) {
+            $quantity = 1;
+            $this->addMessageToQuickOrderItemTransfer($quickOrderItemTransfer);
+        }
 
         $quickOrderItemTransfer->setQuantity($quantity);
         $quickOrderTransfer = $this->getQuickOrderTransfer([$quickOrderItemTransfer]);
@@ -435,6 +446,18 @@ class QuickOrderController extends AbstractController
             $this->getFactory()->getQuickOrderPageWidgetPlugins(),
             '@QuickOrderPage/views/quick-order-row-async/quick-order-row-async.twig'
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
+     */
+    protected function addMessageToQuickOrderItemTransfer(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
+    {
+        return $quickOrderItemTransfer->addMessage((new MessageTransfer())
+            ->setType(static::MESSAGE_TYPE_WARNING)
+            ->setValue(static::ERROR_MESSAGE_QUANTITY_INVALID));
     }
 
     /**

@@ -47,8 +47,6 @@ use SprykerShop\Yves\QuickOrderPage\PriceResolver\PriceResolver;
 use SprykerShop\Yves\QuickOrderPage\PriceResolver\PriceResolverInterface;
 use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolver;
 use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface;
-use SprykerShop\Yves\QuickOrderPage\QuantityNormalizer\QuantityNormalizer;
-use SprykerShop\Yves\QuickOrderPage\QuantityNormalizer\QuantityNormalizerInterface;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParser;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParserInterface;
 use SprykerShop\Yves\QuickOrderPage\ViewDataTransformer\ViewDataTransformer;
@@ -155,16 +153,6 @@ class QuickOrderPageFactory extends AbstractFactory
     public function createUploadedFileCsvTypeSanitizer(): UploadedFileCsvTypeSanitizerInterface
     {
         return new UploadedFileCsvTypeSanitizer();
-    }
-
-    /**
-     * @return \SprykerShop\Yves\QuickOrderPage\QuantityNormalizer\QuantityNormalizerInterface
-     */
-    public function createQuantityNormalizer(): QuantityNormalizerInterface
-    {
-        return new QuantityNormalizer(
-            $this->getConfig()
-        );
     }
 
     /**
