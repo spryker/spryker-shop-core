@@ -1,1 +1,1 @@
-Shows alert text message if product is not available.
+Shows alert text message if the product is not available.

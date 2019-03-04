@@ -1,1 +1,1 @@
-Displays a business unit chart item link.
+Displays a link to the business unit chart item.

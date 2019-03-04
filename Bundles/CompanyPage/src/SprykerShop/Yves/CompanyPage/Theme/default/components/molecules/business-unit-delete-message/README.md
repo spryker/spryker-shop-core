@@ -1,1 +1,1 @@
-Displays a business unit removal confirmation dialog box.
+Displays a confirmation dialog box for the business unit removal.

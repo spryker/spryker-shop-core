@@ -1,1 +1,1 @@
-Displays a list item of a business unit which shows company name and drop-down menu with access variants.
+Displays a list item of a business unit which shows company name and a drop-down menu with access variants.

@@ -1,1 +1,1 @@
-Displays a business unit address removal confirmation dialog box.
+Displays a confirmation dialog box for the business unit address removal.

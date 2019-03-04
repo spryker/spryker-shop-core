@@ -1,1 +1,1 @@
-Displays product summary information: price, price for different options, total and subtotal.
+Displays product summary information: price, the price for different options, total, and subtotal.

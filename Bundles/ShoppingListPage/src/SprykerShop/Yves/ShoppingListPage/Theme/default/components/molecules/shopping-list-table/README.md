@@ -1,1 +1,1 @@
-Displays a list of products in shopping list as a table which includes product name, price, quantity, availability, and action links.
+Displays a list of products in the shopping list as a table which includes the product name, price, quantity, availability, and action links.
