@@ -13,6 +13,10 @@
     "spryker/testify": "*",
     "spryker/twig": "*"
   },
+  "suggest": {
+    "spryker/cms-content-widget": "Use this module when using plugins that need CmsContentWidget dependencies.",
+    "spryker/twig": "Use this module when using plugins that need Twig dependencies."
+  },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
@@ -27,9 +31,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/cms-content-widget": "ADD SUGGEST DESCRIPTION",
-    "spryker/twig": "ADD SUGGEST DESCRIPTION"
   }
 }
