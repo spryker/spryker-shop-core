@@ -165,13 +165,6 @@ class QuickOrderController extends AbstractController
             ->createQuickOrderFormDataProvider()
             ->getQuickOrderTransfer($quickOrderItems);
 
-        foreach ($quickOrderItems as $quickOrderItem) {
-            if ((int)$quickOrderItem->getQuantity() > static::MAX_ALLOWED_QUANTITY) {
-                $quickOrderItem->setQuantity(static::MAX_ALLOWED_QUANTITY);
-                $this->addMessageToQuickOrderItemTransfer($quickOrderItem);
-            };
-        }
-
         $quickOrderTransfer = $this->getFactory()
             ->getQuickOrderClient()
             ->buildQuickOrderTransfer($quickOrderTransfer);
@@ -415,6 +408,11 @@ class QuickOrderController extends AbstractController
         $quickOrderItemTransfer = (new QuickOrderItemTransfer())->setSku($sku);
         if ((int)$quantity < 1) {
             $quantity = 1;
+            $this->addMessageToQuickOrderItemTransfer($quickOrderItemTransfer);
+        }
+
+        if ((int)$quantity > static::MAX_ALLOWED_QUANTITY) {
+            $quantity = static::MAX_ALLOWED_QUANTITY;
             $this->addMessageToQuickOrderItemTransfer($quickOrderItemTransfer);
         }
 
