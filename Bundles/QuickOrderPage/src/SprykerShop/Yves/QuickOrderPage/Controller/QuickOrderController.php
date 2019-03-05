@@ -450,9 +450,11 @@ class QuickOrderController extends AbstractController
      */
     protected function addMessageToQuickOrderItemTransfer(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
-        return $quickOrderItemTransfer->addMessage((new MessageTransfer())
-            ->setType(static::MESSAGE_TYPE_WARNING)
-            ->setValue(static::ERROR_MESSAGE_QUANTITY_INVALID));
+        return $quickOrderItemTransfer->addMessage(
+            (new MessageTransfer())
+                ->setType(static::MESSAGE_TYPE_WARNING)
+                ->setValue(static::ERROR_MESSAGE_QUANTITY_INVALID)
+        );
     }
 
     /**
