@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client;
+namespace SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client;
 
-class AgentQuoteRequestWidgetToQuoteClientBridge implements AgentQuoteRequestWidgetToQuoteClientInterface
+class AgentQuoteRequestPageToQuoteClientBridge implements AgentQuoteRequestPageToQuoteClientInterface
 {
     /**
      * @var \Spryker\Client\Quote\QuoteClientInterface

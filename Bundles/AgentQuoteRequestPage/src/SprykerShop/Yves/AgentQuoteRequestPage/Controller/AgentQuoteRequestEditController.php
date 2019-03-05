@@ -20,14 +20,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractController
 {
-    /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
-     */
-    protected const ROUTE_CART = 'cart';
-
     protected const GLOSSARY_KEY_QUOTE_REQUEST_UPDATED = 'quote_request_page.quote_request.updated';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER = 'quote_request_page.quote_request.sent_to_customer';
-    protected const GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART = 'quote_request_page.quote_request.converted_to_cart';
 
     /**
      * @param string $quoteRequestReference
@@ -66,18 +60,6 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
     public function sendToCustomerAction(string $quoteRequestReference): RedirectResponse
     {
         $response = $this->executeSendToCustomerAction($quoteRequestReference);
-
-        return $response;
-    }
-
-    /**
-     * @param string $quoteRequestReference
-     *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function editItemsAction(string $quoteRequestReference)
-    {
-        $response = $this->executeEditItemsAction($quoteRequestReference);
 
         return $response;
     }
@@ -160,28 +142,6 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
         ];
-    }
-
-    /**
-     * @param string $quoteRequestReference
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function executeEditItemsAction(string $quoteRequestReference): RedirectResponse
-    {
-        // TODO: check current session -> redirect to warning page
-
-        $quoteRequestTransfer = $this->getQuoteRequestTransferByReference($quoteRequestReference);
-
-        $quoteResponseTransfer = $this->getFactory()
-            ->getAgentQuoteRequestClient()
-            ->convertQuoteRequestToEditableQuote($quoteRequestTransfer);
-
-        if ($quoteResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART);
-        }
-
-        return $this->redirectResponseInternal(static::ROUTE_CART);
     }
 
     /**
