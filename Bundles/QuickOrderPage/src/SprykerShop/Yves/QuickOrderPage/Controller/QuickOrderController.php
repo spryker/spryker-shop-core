@@ -17,6 +17,7 @@ use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderForm;
 use SprykerShop\Yves\QuickOrderPage\Form\TextOrderForm;
 use SprykerShop\Yves\QuickOrderPage\Form\UploadOrderForm;
 use SprykerShop\Yves\QuickOrderPage\Plugin\Provider\QuickOrderPageControllerProvider;
+use SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -33,18 +34,8 @@ class QuickOrderController extends AbstractController
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
     protected const PARAM_QUICK_ORDER_FILE_TYPE = 'file-type';
     protected const MESSAGE_CLEAR_ALL_ROWS_SUCCESS = 'quick-order.message.success.the-form-items-have-been-successfully-cleared';
-    /**
-     * @deprecated Will be removed without replacement.
-     */
     protected const ERROR_MESSAGE_QUANTITY_INVALID = 'quick-order.errors.quantity-invalid';
-
-    /**
-     * @uses \Spryker\Client\ProductQuantityStorage\Validator\ProductQuantityItemValidator::MESSAGE_TYPE_WARNING
-     */
     protected const MESSAGE_TYPE_WARNING = 'warning';
-
-    protected const MAX_ALLOWED_QUANTITY = 100000;
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -94,6 +85,8 @@ class QuickOrderController extends AbstractController
                 return $response;
             }
         }
+
+        return [];
     }
 
     /**
@@ -401,18 +394,18 @@ class QuickOrderController extends AbstractController
      */
     public function productAdditionalDataAction(Request $request)
     {
-        $quantity = $request->get('quantity', 1);
+        $quantity = (int)$request->get('quantity', 1);
         $sku = $request->query->get('sku');
         $index = $request->query->get('index');
 
         $quickOrderItemTransfer = (new QuickOrderItemTransfer())->setSku($sku);
-        if ((int)$quantity < 1) {
+        if ($quantity < 1) {
             $quantity = 1;
             $this->addMessageToQuickOrderItemTransfer($quickOrderItemTransfer);
         }
 
-        if ((int)$quantity > static::MAX_ALLOWED_QUANTITY) {
-            $quantity = static::MAX_ALLOWED_QUANTITY;
+        if ($quantity > QuickOrderPageConfig::getMaxAllowedQuantity()) {
+            $quantity = QuickOrderPageConfig::getMaxAllowedQuantity();
             $this->addMessageToQuickOrderItemTransfer($quickOrderItemTransfer);
         }
 
