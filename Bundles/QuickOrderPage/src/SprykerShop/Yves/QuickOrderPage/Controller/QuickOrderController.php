@@ -43,11 +43,7 @@ class QuickOrderController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $response = null;
-        if ($request->get(QuickOrderForm::SUBMIT_BUTTON_CREATE_ORDER) !== null
-            || $request->get(QuickOrderForm::SUBMIT_BUTTON_ADD_TO_CART) !== null) {
-            $response = $this->executeQuickOrderFormSubmitAction($request);
-        }
+        $response = $this->executeQuickOrderFormSubmitAction($request);
 
         if ($response) {
             return $response;
