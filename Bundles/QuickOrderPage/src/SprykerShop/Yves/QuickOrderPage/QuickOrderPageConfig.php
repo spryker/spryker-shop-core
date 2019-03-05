@@ -52,7 +52,7 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     /**
      * @return int
      */
-    public static function getMaxAllowedQuantity(): int
+    public function getMaxAllowedQuantity(): int
     {
         return static::MAX_ALLOWED_QUANTITY;
     }

@@ -17,7 +17,6 @@ use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderForm;
 use SprykerShop\Yves\QuickOrderPage\Form\TextOrderForm;
 use SprykerShop\Yves\QuickOrderPage\Form\UploadOrderForm;
 use SprykerShop\Yves\QuickOrderPage\Plugin\Provider\QuickOrderPageControllerProvider;
-use SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -404,8 +403,12 @@ class QuickOrderController extends AbstractController
             $this->addMessageToQuickOrderItemTransfer($quickOrderItemTransfer);
         }
 
-        if ($quantity > QuickOrderPageConfig::getMaxAllowedQuantity()) {
-            $quantity = QuickOrderPageConfig::getMaxAllowedQuantity();
+        $maxAllowedQuantity = $this->getFactory()
+            ->getConfig()
+            ->getMaxAllowedQuantity();
+
+        if ($quantity > $maxAllowedQuantity) {
+            $quantity = $maxAllowedQuantity;
             $this->addMessageToQuickOrderItemTransfer($quickOrderItemTransfer);
         }
 
