@@ -35,6 +35,7 @@ class QuickOrderController extends AbstractController
     protected const MESSAGE_CLEAR_ALL_ROWS_SUCCESS = 'quick-order.message.success.the-form-items-have-been-successfully-cleared';
     protected const ERROR_MESSAGE_QUANTITY_INVALID = 'quick-order.errors.quantity-invalid';
     protected const MESSAGE_TYPE_WARNING = 'warning';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -398,15 +399,15 @@ class QuickOrderController extends AbstractController
         $index = $request->query->get('index');
 
         $quickOrderItemTransfer = (new QuickOrderItemTransfer())->setSku($sku);
+
         if ($quantity < 1) {
             $quantity = 1;
             $this->addMessageToQuickOrderItemTransfer($quickOrderItemTransfer);
         }
 
         $maxAllowedQuantity = $this->getFactory()
-            ->getConfig()
+            ->getModuleConfig()
             ->getMaxAllowedQuantity();
-
         if ($quantity > $maxAllowedQuantity) {
             $quantity = $maxAllowedQuantity;
             $this->addMessageToQuickOrderItemTransfer($quickOrderItemTransfer);

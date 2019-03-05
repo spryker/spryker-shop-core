@@ -405,4 +405,12 @@ class QuickOrderPageFactory extends AbstractFactory
     {
         return new QuickOrderFormAdditionalColumnProvider($this->getQuickOrderFormColumnPlugins());
     }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig
+     */
+    public function getModuleConfig(): QuickOrderPageConfig
+    {
+        return $this->getConfig();
+    }
 }
