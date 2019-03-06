@@ -50,6 +50,7 @@ class CartToShoppingListController extends AbstractShoppingListController
                 ->createShoppingListFromCart($cartToShoppingListForm);
 
             $this->addSuccessMessage(static::GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_SUCCESS);
+
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
                 'idShoppingList' => $shoppingListTransfer->getIdShoppingList(),
             ]);

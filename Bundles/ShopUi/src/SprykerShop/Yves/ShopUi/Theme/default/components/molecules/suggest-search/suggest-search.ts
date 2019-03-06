@@ -8,16 +8,48 @@ interface keyCodes {
 }
 
 export default class SuggestSearch extends Component {
+    /**
+     * Keyborad codes map:
+     * - key: keybord button code;
+     * - value: keybord button string representation.
+     */
     readonly keyboardCodes: keyCodes
 
+    /**
+     * The search input element.
+     */
     searchInput: HTMLInputElement
+    /**
+     * The hint input element.
+     */
     hintInput: HTMLInputElement
+    /**
+     * The container of the suggestions items.
+     */
     suggestionsContainer: HTMLElement
+    /**
+     * Performs the Ajax operations.
+     */
     ajaxProvider: AjaxProvider
+    /**
+     * The current value of the search input element.
+     */
     currentSearchValue: string
+    /**
+     * A content of the hint input element.
+     */
     hint: string
+    /**
+     * The list of the search suggestions.
+     */
     navigation: HTMLElement[]
+    /**
+     * The index of the active suggestion item.
+     */
     activeItemIndex: number
+    /**
+     * The class name of the active suggestion item.
+     */
     navigationActiveClass: string
 
 
@@ -175,9 +207,7 @@ export default class SuggestSearch extends Component {
     protected async getSuggestions(): Promise<void> {
         const suggestQuery = this.getSearchValue();
 
-        const urlParams = [['q', suggestQuery]];
-
-        this.addUrlParams(urlParams);
+        this.ajaxProvider.queryParams.set('q', suggestQuery);
 
         const response = await this.ajaxProvider.fetch(suggestQuery);
 
@@ -203,20 +233,16 @@ export default class SuggestSearch extends Component {
         this.updateNavigation();
     }
 
-    protected addUrlParams(params: Array<Array<string>>): void {
-        const baseSuggestUrl = this.getAttribute('base-suggest-url');
-        let paramsString = '?';
-        params.forEach( (element, index) => {
-            paramsString += index == 0 ? '' : '&';
-            paramsString += `${element[0]}=${element[1]}`;
-        });
-        this.ajaxProvider.setAttribute('url', `${baseSuggestUrl}${paramsString}`);
-    }
-
+    /**
+     * Shows search suggestion(s).
+     */
     showSugestions(): void {
         this.suggestionsContainer.classList.remove('is-hidden');
     }
 
+    /**
+     * Hides search suggestion(s).
+     */
     hideSugestions(): void {
         this.suggestionsContainer.classList.add('is-hidden');
     }
@@ -228,6 +254,10 @@ export default class SuggestSearch extends Component {
         this.searchInput.classList.add(`${this.name}__input--transparent`);
     }
 
+    /**
+     * Sets the search suggestion(s).
+     * @param value Optional data sets provided instead of the search suggestion.
+     */
     updateHintInput(value?: string): void {
         let hintValue = value ? value : this.hint;
         const inputValue = this.searchInput.value;
@@ -246,18 +276,30 @@ export default class SuggestSearch extends Component {
         this.currentSearchValue = suggestQuery;
     }
 
+    /**
+     * Gets a time delay for the keyup and blur events.
+     */
     get debounceDelay(): number {
         return Number(this.getAttribute('debounce-delay'));
     }
 
+    /**
+     * Gets a time delay for the keydown event.
+     */
     get throttleDelay(): number {
         return Number(this.getAttribute('throttle-delay'));
     }
 
+    /**
+     * Gets the number of letters which, upon entering in search field, is sufficient to send a request to the server.
+     */
     get lettersTrashold(): number {
         return Number(this.getAttribute('letters-trashold'));
     }
 
+    /**
+     * Gets a querySelector of the search input field.
+     */
     get searchInputSelector(): string {
         return <string> this.getAttribute('input-selector');
     }
