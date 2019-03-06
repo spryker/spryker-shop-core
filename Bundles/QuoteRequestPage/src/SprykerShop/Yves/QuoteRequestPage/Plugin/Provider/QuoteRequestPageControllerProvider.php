@@ -12,11 +12,10 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
 {
-    public const ROUTE_QUOTE_REQUEST = 'quote-request';
-    public const ROUTE_QUOTE_REQUEST_CREATE = 'quote-request/create';
-    public const ROUTE_QUOTE_REQUEST_CANCEL = 'quote-request/cancel';
-    public const ROUTE_QUOTE_REQUEST_VIEW = 'quote-request/view';
-    public const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
+    protected const ROUTE_QUOTE_REQUEST = 'quote-request';
+    protected const ROUTE_QUOTE_REQUEST_CREATE = 'quote-request/create';
+    protected const ROUTE_QUOTE_REQUEST_CANCEL = 'quote-request/cancel';
+    protected const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
 
     public const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
@@ -36,6 +35,8 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestViewController::indexAction()
+     *
      * @return $this
      */
     protected function addQuoteRequestRoute()
@@ -48,6 +49,8 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestCreateController::createAction()
+     *
      * @return $this
      */
     protected function addQuoteRequestCreateRoute()
@@ -60,6 +63,8 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestDeleteController::cancelAction()
+     *
      * @return $this
      */
     protected function addQuoteRequestCancelRoute()
@@ -73,6 +78,8 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestViewController::detailsAction()
+     *
      * @return $this
      */
     protected function addQuoteRequestDetailsRoute()
