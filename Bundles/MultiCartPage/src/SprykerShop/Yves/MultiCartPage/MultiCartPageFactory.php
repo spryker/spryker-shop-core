@@ -74,20 +74,4 @@ class MultiCartPageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }
-
-    /**
-     * @return string[]
-     */
-    public function getCartDeleteCompanyUsersListWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(MultiCartPageDependencyProvider::PLUGINS_CART_DELETE_COMPANY_USERS_LIST_WIDGET);
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getMultiCartListWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(MultiCartPageDependencyProvider::PLUGIN_MULTI_CART_LIST_WIDGETS);
-    }
 }
