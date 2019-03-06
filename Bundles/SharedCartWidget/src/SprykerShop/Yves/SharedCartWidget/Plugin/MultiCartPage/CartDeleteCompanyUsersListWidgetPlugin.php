@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductBundleWidget\Plugin\MultiCartPage;
+namespace SprykerShop\Yves\SharedCartWidget\Plugin\MultiCartPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleItemCounterWidget;
+use SprykerShop\Yves\SharedCartWidget\Widget\CartDeleteCompanyUsersListWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleItemCounterWidget instead.
+ * @deprecated Use \SprykerShop\Yves\SharedCartWidget\Widget\CartDeleteCompanyUsersListWidget instead.
  *
- * @method \SprykerShop\Yves\ProductBundleWidget\ProductBundleWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\SharedCartWidget\SharedCartWidgetFactory getFactory()
  */
-class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin
+class CartDeleteCompanyUsersListWidgetPlugin extends AbstractWidgetPlugin
 {
-    public const NAME = 'ProductBundleItemCounterWidgetPlugin';
+    public const NAME = 'CartDeleteCompanyUsersListWidgetPlugin';
 
     /**
      * {@inheritdoc}
@@ -31,7 +31,7 @@ class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin
      */
     public function initialize(QuoteTransfer $quoteTransfer): void
     {
-        $widget = new ProductBundleItemCounterWidget($quoteTransfer);
+        $widget = new CartDeleteCompanyUsersListWidget($quoteTransfer);
 
         $this->parameters = $widget->getParameters();
     }
@@ -43,7 +43,7 @@ class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::NAME;
     }
@@ -55,8 +55,8 @@ class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin
      *
      * @return string
      */
-    public static function getTemplate()
+    public static function getTemplate(): string
     {
-        return ProductBundleItemCounterWidget::getTemplate();
+        return CartDeleteCompanyUsersListWidget::getTemplate();
     }
 }

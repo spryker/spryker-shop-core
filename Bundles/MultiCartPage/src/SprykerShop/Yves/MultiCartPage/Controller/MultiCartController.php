@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\MultiCartPage\Controller;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +20,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class MultiCartController extends AbstractController
 {
     use PermissionAwareTrait;
+
+    /**
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     */
+    protected const ROUTE_CART = 'cart';
 
     public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
 
@@ -62,7 +66,7 @@ class MultiCartController extends AbstractController
                 ->createQuote($quoteTransfer);
 
             if ($quoteResponseTransfer->getIsSuccessful()) {
-                return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+                return $this->redirectResponseInternal(static::ROUTE_CART);
             }
         }
 
@@ -143,7 +147,7 @@ class MultiCartController extends AbstractController
             ->getMultiCartClient()
             ->setDefaultQuote($quoteTransfer);
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(static::ROUTE_CART);
     }
 
     /**
@@ -190,7 +194,7 @@ class MultiCartController extends AbstractController
             $this->addSuccessMessage('multi_cart_page.cart_clear.success');
         }
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(static::ROUTE_CART);
     }
 
     /**
