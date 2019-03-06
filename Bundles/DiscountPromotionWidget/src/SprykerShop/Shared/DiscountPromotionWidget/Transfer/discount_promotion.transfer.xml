@@ -10,10 +10,10 @@
     <transfer name="PromotionItem">
         <property name="idDiscountPromotion" type="int" />
         <property name="idProductAbstract" type="int" />
-        <property name="maxQuantity" type="int" />
+        <property name="maxQuantity" type="float" />
         <property name="sku" type="string" />
         <property name="abstractSku" type="string" />
-        <property name="maxQuantity" type="int" />
+        <property name="maxQuantity" type="float" />
         <property name="discount" type="Discount" />
     </transfer>
 
