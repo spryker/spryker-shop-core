@@ -73,7 +73,7 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
     {
         $quoteRequestTransfer = $this->getFactory()
             ->getQuoteRequestClient()
-            ->findQuoteRequest(
+            ->findCompanyUserQuoteRequestByReference(
                 $quoteRequestReference,
                 $this->getFactory()->getCompanyUserClient()->findCompanyUser()->getIdCompanyUser()
             );

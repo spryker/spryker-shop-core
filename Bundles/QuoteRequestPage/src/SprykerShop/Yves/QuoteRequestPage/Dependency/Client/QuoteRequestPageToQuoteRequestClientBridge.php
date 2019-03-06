@@ -85,8 +85,8 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    public function findQuoteRequest(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer
+    public function findCompanyUserQuoteRequestByReference(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer
     {
-        return $this->quoteRequestClient->findQuoteRequest($quoteRequestReference, $idCompanyUser);
+        return $this->quoteRequestClient->findCompanyUserQuoteRequestByReference($quoteRequestReference, $idCompanyUser);
     }
 }

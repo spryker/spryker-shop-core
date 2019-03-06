@@ -69,7 +69,7 @@ class QuoteRequestFormDataProvider
             return $this->createQuoteRequestTransfer();
         }
 
-        return $this->quoteRequestClient->findQuoteRequest(
+        return $this->quoteRequestClient->findCompanyUserQuoteRequestByReference(
             $quoteRequestReference,
             $this->companyUserClient->findCompanyUser()->getIdCompanyUser()
         );
