@@ -71,7 +71,12 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
      */
     protected function executeDetailsAction(Request $request, string $quoteRequestReference): array
     {
-        $quoteRequestTransfer = $this->getQuoteRequestTransferByReference($quoteRequestReference);
+        $quoteRequestTransfer = $this->getFactory()
+            ->getQuoteRequestClient()
+            ->findQuoteRequest(
+                $quoteRequestReference,
+                $this->getFactory()->getCompanyUserClient()->findCompanyUser()->getIdCompanyUser()
+            );
 
         $isQuoteRequestCancelable = $this->getFactory()
             ->getQuoteRequestClient()
@@ -111,34 +116,5 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
         $quoteRequestVersionTransfer = array_shift($quoteRequestVersionTransfers);
 
         return $quoteRequestVersionTransfer ?? $quoteRequestTransfer->getLatestVersion();
-    }
-
-    /**
-     * @param string $quoteRequestReference
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
-     */
-    protected function getQuoteRequestTransferByReference(string $quoteRequestReference): QuoteRequestTransfer
-    {
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($quoteRequestReference)
-            ->setCompanyUser($this->getFactory()->getCompanyUserClient()->findCompanyUser());
-
-        $quoteRequestTransfers = $this->getFactory()
-            ->getQuoteRequestClient()
-            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
-            ->getQuoteRequests()
-            ->getArrayCopy();
-
-        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer|null $quoteRequestTransfer */
-        $quoteRequestTransfer = array_shift($quoteRequestTransfers);
-
-        if (!$quoteRequestTransfer) {
-            throw new NotFoundHttpException();
-        }
-
-        return $quoteRequestTransfer;
     }
 }

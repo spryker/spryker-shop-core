@@ -13,7 +13,6 @@ use SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPage
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageFactory getFactory()
@@ -22,6 +21,7 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
 {
     protected const GLOSSARY_KEY_QUOTE_REQUEST_UPDATED = 'quote_request_page.quote_request.updated';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER = 'quote_request_page.quote_request.sent_to_customer';
+    protected const ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
 
     /**
      * @param string $quoteRequestReference
@@ -130,7 +130,11 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
         }
 
         if (!$agentQuoteRequestClient->isQuoteRequestEditable($quoteRequestTransfer)) {
-            throw new NotFoundHttpException();
+            $this->addErrorMessage(static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS);
+
+            return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_DETAILS, [
+                AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
+            ]);
         }
 
         $quoteRequestForm->handleRequest($request);

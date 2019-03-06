@@ -50,4 +50,12 @@ interface QuoteRequestPageToQuoteRequestClientInterface
      * @return bool
      */
     public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool;
+
+    /**
+     * @param string $quoteRequestReference
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequest(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer;
 }
