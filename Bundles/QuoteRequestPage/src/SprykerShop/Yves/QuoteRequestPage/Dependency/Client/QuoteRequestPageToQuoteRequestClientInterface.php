@@ -65,4 +65,12 @@ interface QuoteRequestPageToQuoteRequestClientInterface
      * @return bool
      */
     public function isQuoteRequestConvertible(QuoteRequestTransfer $quoteRequestTransfer): bool;
+
+    /**
+     * @param string $quoteRequestReference
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findCompanyUserQuoteRequestByReference(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer;
 }

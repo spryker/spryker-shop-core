@@ -2,13 +2,18 @@
 
 {% define data = {
     title: 'quote_request_page.quote_request' | trans,
-    quoteRequestForm: _view.quoteRequestForm,
+    quoteRequest: _view.quoteRequest,
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
-    quoteRequest: _view.quoteRequestForm.vars.value,
+    isQuoteRequestCanStartEditable: _view.isQuoteRequestCanStartEditable,
+    isQuoteRequestEditable: _view.isQuoteRequestEditable,
     version: _view.version
 } %}
 
 {% set cart = data.version ? data.version.quote : null %}
+{% if data.isQuoteRequestEditable and data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion %}
+    {% set cart = data.quoteRequest.quoteInProgress %}
+{% endif %}
+
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -32,15 +37,15 @@
 
 {% block content %}
 
-    {{ form_start(data.quoteRequestForm) }}
-
     <div class="grid">
         <div class="col col--sm-12 col--xl-8">
             <div class="box">
-                {% for child in data.quoteRequestForm.metadata %}
+                {% for key, value in data.quoteRequest.metadata %}
                     <div class="col col--sm-12 col--xl-6">
                         <div class="box">
-                            {{ form_row(child, { 'attr': { 'readonly': 'true' } }) }}
+                            <label class="label">{{ ('quote_request_page.quote_request.metadata.label.' ~ key) | trans }}</label>
+                            <hr/>
+                            <p>{{ value }}</p>
                         </div>
                     </div>
                 {% endfor %}
@@ -53,7 +58,9 @@
                     <b>{{ data.quoteRequest.createdAt | date('d.m.Y H:i') }}</b></p>
                 <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:
                     <b>{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</b></p>
-                <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:</p>
+                <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
+                    <b>{{ data.quoteRequest.validUntil ? (data.quoteRequest.validUntil | date('d.m.Y H:i')) : '' }}</b>
+                </p>
                 <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
                     {% embed atom('select') with {
                         modifiers: ['naked'],
@@ -72,6 +79,9 @@
                             {% endfor %}
                         {% endblock %}
                     {% endembed %}
+                </p>
+                <p>{{ 'quote_request_page.quote_request.labels.visibility' | trans }}:
+                    {{ data.quoteRequest.isHidden ? 'Hidden' : '' }}
                 </p>
             </div>
         </div>
@@ -115,15 +125,20 @@
                         </a>
                     {% endif %}
 
-                    {% if data.quoteRequest.status == 'waiting' or data.quoteRequest.status == 'in-progress' %}
+                    {% if data.isQuoteRequestCanStartEditable %}
+                        <hr/>
+                        <a class="button button--expand button--success"
+                           href="{{ path('agent/quote-request/start-edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                            {{ 'quote_request_page.quote_request.actions.edit' | trans }}
+                        </a>
+                    {% endif %}
+
+                    {% if data.isQuoteRequestEditable %}
                         <hr/>
                         <a class="button button--expand button--success"
                            href="{{ path('agent/quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.edit' | trans }}
                         </a>
-                    {% endif %}
-
-                    {% if data.quoteRequest.status == 'in-progress' %}
                         <hr/>
                         <a class="button button--expand button--success"
                            href="{{ path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
@@ -148,7 +163,5 @@
             </div>
         </div>
     </div>
-
-    {{ form_end(data.quoteRequestForm) }}
 
 {% endblock %}

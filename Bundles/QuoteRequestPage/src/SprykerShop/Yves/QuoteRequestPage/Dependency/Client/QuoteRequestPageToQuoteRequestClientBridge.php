@@ -99,4 +99,15 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
     {
         return $this->quoteRequestClient->isQuoteRequestConvertible($quoteRequestTransfer);
     }
+
+    /**
+     * @param string $quoteRequestReference
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findCompanyUserQuoteRequestByReference(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer
+    {
+        return $this->quoteRequestClient->findCompanyUserQuoteRequestByReference($quoteRequestReference, $idCompanyUser);
+    }
 }

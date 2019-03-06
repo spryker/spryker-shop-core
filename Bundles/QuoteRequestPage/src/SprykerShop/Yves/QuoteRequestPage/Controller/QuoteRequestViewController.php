@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
@@ -70,15 +71,17 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
      */
     protected function executeDetailsAction(Request $request, string $quoteRequestReference): array
     {
-        $quoteRequestForm = $this->getFactory()->getQuoteRequestForm($quoteRequestReference);
-
-        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
-        $quoteRequestTransfer = $quoteRequestForm->getData();
+        $quoteRequestTransfer = $this->getFactory()
+            ->getQuoteRequestClient()
+            ->findCompanyUserQuoteRequestByReference(
+                $quoteRequestReference,
+                $this->getFactory()->getCompanyUserClient()->findCompanyUser()->getIdCompanyUser()
+            );
 
         $quoteRequestClient = $this->getFactory()->getQuoteRequestClient();
 
         return [
-            'quoteRequestForm' => $quoteRequestForm->createView(),
+            'quoteRequest' => $quoteRequestTransfer,
             'isQuoteRequestCancelable' => $quoteRequestClient->isQuoteRequestCancelable($quoteRequestTransfer),
             'isQuoteRequestConvertible' => $quoteRequestClient->isQuoteRequestConvertible($quoteRequestTransfer),
             'version' => $this->findQuoteRequestVersion($quoteRequestTransfer, $request->query->get(static::PARAM_QUOTE_REQUEST_VERSION_REFERENCE)),
