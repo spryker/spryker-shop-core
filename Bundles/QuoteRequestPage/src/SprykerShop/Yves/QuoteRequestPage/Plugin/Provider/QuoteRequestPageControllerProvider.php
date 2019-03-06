@@ -17,6 +17,8 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
     protected const ROUTE_QUOTE_REQUEST_CANCEL = 'quote-request/cancel';
     protected const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
 
+    public const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
+
     protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-]+';
 
     /**
@@ -70,7 +72,7 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{quoteRequest}/cancel/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_CANCEL, 'QuoteRequestPage', 'QuoteRequestDelete', 'cancel')
             ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
             ->value('quoteRequest', 'quote-request')
-            ->assert('quoteRequestReference', static::QUOTE_REQUEST_REFERENCE_REGEX);
+            ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
 
         return $this;
     }
@@ -85,7 +87,7 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{quoteRequest}/details/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_DETAILS, 'QuoteRequestPage', 'QuoteRequestView', 'details')
             ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
             ->value('quoteRequest', 'quote-request')
-            ->assert('quoteRequestReference', static::QUOTE_REQUEST_REFERENCE_REGEX);
+            ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
 
         return $this;
     }

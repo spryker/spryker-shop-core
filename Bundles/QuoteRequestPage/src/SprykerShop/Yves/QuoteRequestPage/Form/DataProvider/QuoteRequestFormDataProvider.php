@@ -50,7 +50,8 @@ class QuoteRequestFormDataProvider
         QuoteRequestPageToCartClientInterface $cartClient,
         QuoteRequestPageToQuoteRequestClientInterface $quoteRequestClient,
         QuoteRequestPageConfig $config
-    ) {
+    )
+    {
         $this->companyUserClient = $companyUserClient;
         $this->cartClient = $cartClient;
         $this->quoteRequestClient = $quoteRequestClient;
@@ -68,7 +69,10 @@ class QuoteRequestFormDataProvider
             return $this->createQuoteRequestTransfer();
         }
 
-        return $this->getQuoteRequestTransferByReference($quoteRequestReference);
+        return $this->quoteRequestClient->findCompanyUserQuoteRequestByReference(
+            $quoteRequestReference,
+            $this->companyUserClient->findCompanyUser()->getIdCompanyUser()
+        );
     }
 
     /**
@@ -84,34 +88,6 @@ class QuoteRequestFormDataProvider
             ->setCreatedAt((new DateTime())->format('Y-m-d H:i:s'))
             ->setStatus($this->config->getInitialStatus())
             ->setLatestVersion($quoteRequestVersionTransfer);
-
-        return $quoteRequestTransfer;
-    }
-
-    /**
-     * @param string $quoteRequestReference
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
-     */
-    protected function getQuoteRequestTransferByReference(string $quoteRequestReference): QuoteRequestTransfer
-    {
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($quoteRequestReference)
-            ->setCompanyUser($this->companyUserClient->findCompanyUser());
-
-        $quoteRequestTransfers = $this->quoteRequestClient
-            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
-            ->getQuoteRequests()
-            ->getArrayCopy();
-
-        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer|null $quoteRequestTransfer */
-        $quoteRequestTransfer = array_shift($quoteRequestTransfers);
-
-        if (!$quoteRequestTransfer) {
-            throw new NotFoundHttpException();
-        }
 
         return $quoteRequestTransfer;
     }

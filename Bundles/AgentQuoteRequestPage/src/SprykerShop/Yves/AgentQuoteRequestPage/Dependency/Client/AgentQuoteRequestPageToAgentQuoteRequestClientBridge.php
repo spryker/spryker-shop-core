@@ -37,6 +37,16 @@ class AgentQuoteRequestPageToAgentQuoteRequestClientBridge implements AgentQuote
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function setQuoteRequestEditable(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->agentQuoteRequestClient->setQuoteRequestEditable($quoteRequestFilterTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return bool
@@ -44,5 +54,25 @@ class AgentQuoteRequestPageToAgentQuoteRequestClientBridge implements AgentQuote
     public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $this->agentQuoteRequestClient->isQuoteRequestCancelable($quoteRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestCanStartEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $this->agentQuoteRequestClient->isQuoteRequestCanStartEditable($quoteRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $this->agentQuoteRequestClient->isQuoteRequestEditable($quoteRequestTransfer);
     }
 }
