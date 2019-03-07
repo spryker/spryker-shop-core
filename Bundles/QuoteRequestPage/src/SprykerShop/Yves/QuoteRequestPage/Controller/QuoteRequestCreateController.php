@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
-use SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -16,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 class QuoteRequestCreateController extends QuoteRequestAbstractController
 {
     /**
-     * @see QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST
+     * @see \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST
      */
     protected const ROUTE_QUOTE_REQUEST = 'quote-request';
 
@@ -59,6 +58,8 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
 
                 return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST);
             }
+
+            $this->handleResponseErrors($quoteRequestResponseTransfer);
         }
 
         return [

@@ -12,14 +12,14 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
 {
-    public const ROUTE_QUOTE_REQUEST = 'quote-request';
-    public const ROUTE_QUOTE_REQUEST_CREATE = 'quote-request/create';
-    public const ROUTE_QUOTE_REQUEST_CANCEL = 'quote-request/cancel';
-    public const ROUTE_QUOTE_REQUEST_VIEW = 'quote-request/view';
-    public const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
-    public const ROUTE_QUOTE_REQUEST_CONVERT_TO_CART = 'quote-request/convert-to-cart';
+    protected const ROUTE_QUOTE_REQUEST = 'quote-request';
+    protected const ROUTE_QUOTE_REQUEST_CREATE = 'quote-request/create';
+    protected const ROUTE_QUOTE_REQUEST_CANCEL = 'quote-request/cancel';
+    protected const ROUTE_QUOTE_REQUEST_VIEW = 'quote-request/view';
+    protected const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
+    protected const ROUTE_QUOTE_REQUEST_CONVERT_TO_CART = 'quote-request/convert-to-cart';
 
-    public const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
+    protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
     protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-]+';
 
@@ -105,7 +105,7 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{quoteRequest}/convert-to-cart/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_CONVERT_TO_CART, 'QuoteRequestPage', 'QuoteRequestCheckout', 'convertToCart')
             ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
             ->value('quoteRequest', 'quote-request')
-            ->assert('quoteRequestReference', static::QUOTE_REQUEST_REFERENCE_REGEX);
+            ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
 
         return $this;
     }

@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\QuoteRequestPage\Form\DataProvider;
 
 use DateTime;
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface;
@@ -50,8 +49,7 @@ class QuoteRequestFormDataProvider
         QuoteRequestPageToCartClientInterface $cartClient,
         QuoteRequestPageToQuoteRequestClientInterface $quoteRequestClient,
         QuoteRequestPageConfig $config
-    )
-    {
+    ) {
         $this->companyUserClient = $companyUserClient;
         $this->cartClient = $cartClient;
         $this->quoteRequestClient = $quoteRequestClient;
@@ -69,10 +67,29 @@ class QuoteRequestFormDataProvider
             return $this->createQuoteRequestTransfer();
         }
 
-        return $this->quoteRequestClient->findCompanyUserQuoteRequestByReference(
-            $quoteRequestReference,
-            $this->companyUserClient->findCompanyUser()->getIdCompanyUser()
-        );
+        return $this->getQuoteRequestTransfer($quoteRequestReference);
+    }
+
+    /**
+     * @param string $quoteRequestReference
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     */
+    protected function getQuoteRequestTransfer(string $quoteRequestReference): QuoteRequestTransfer
+    {
+        $quoteRequestTransfer = $this->quoteRequestClient
+            ->findCompanyUserQuoteRequestByReference(
+                $quoteRequestReference,
+                $this->companyUserClient->findCompanyUser()->getIdCompanyUser()
+            );
+
+        if (!$quoteRequestTransfer) {
+            throw new NotFoundHttpException();
+        }
+
+        return $quoteRequestTransfer;
     }
 
     /**

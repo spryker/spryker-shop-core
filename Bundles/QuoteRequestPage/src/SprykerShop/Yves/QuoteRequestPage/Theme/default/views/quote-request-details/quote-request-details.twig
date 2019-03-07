@@ -2,10 +2,10 @@
 
 {% define data = {
     title: 'quote_request_page.quote_request' | trans,
+    quoteRequest: _view.quoteRequest,
+    version: _view.version,
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
     isQuoteRequestConvertible: _view.isQuoteRequestConvertible,
-    quoteRequest: _view.quoteRequest,
-    version: _view.version
 } %}
 
 {% set cart = data.version ? data.version.quote : null %}

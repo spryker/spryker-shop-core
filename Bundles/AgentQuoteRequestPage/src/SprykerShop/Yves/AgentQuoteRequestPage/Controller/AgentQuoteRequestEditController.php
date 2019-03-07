@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\AgentQuoteRequestPage\Controller;
 
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use SprykerShop\Yves\AgentQuoteRequestPage\Form\AgentQuoteRequestForm;
 use SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider;
 use Symfony\Component\Form\FormInterface;
@@ -73,7 +73,7 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
     {
         $quoteRequestResponseTransfer = $this->getFactory()
             ->getAgentQuoteRequestClient()
-            ->setQuoteRequestEditable((new QuoteRequestFilterTransfer())->setQuoteRequestReference($quoteRequestReference));
+            ->markQuoteRequestInProgress((new QuoteRequestCriteriaTransfer())->setQuoteRequestReference($quoteRequestReference));
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
@@ -89,13 +89,13 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
      */
     protected function executeSendToCustomerAction(string $quoteRequestReference): RedirectResponse
     {
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($quoteRequestReference)
-            ->setWithHidden(true);
+        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+            ->setWithHidden(true)
+            ->setQuoteRequestReference($quoteRequestReference);
 
         $quoteRequestResponseTransfer = $this->getFactory()
-            ->getQuoteRequestClient()
-            ->sendQuoteRequestToCustomer($quoteRequestFilterTransfer);
+            ->getAgentQuoteRequestClient()
+            ->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
 
         if ($quoteRequestResponseTransfer->getIsSuccess()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER);
@@ -111,8 +111,6 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $quoteRequestReference
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -161,7 +159,7 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
 
         $quoteRequestResponseTransfer = $this->getFactory()
             ->getQuoteRequestClient()
-            ->update($quoteRequestTransfer);
+            ->updateQuoteRequest($quoteRequestTransfer);
 
         if ($quoteRequestResponseTransfer->getIsSuccess()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_UPDATED);

@@ -7,9 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
-use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
-use SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider;
+use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -18,7 +16,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class QuoteRequestDeleteController extends QuoteRequestAbstractController
 {
     /**
-     * @see QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST
+     * @see \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST
      */
     protected const ROUTE_QUOTE_REQUEST = 'quote-request';
 
@@ -31,32 +29,20 @@ class QuoteRequestDeleteController extends QuoteRequestAbstractController
      */
     public function cancelAction(string $quoteRequestReference): RedirectResponse
     {
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
             ->setQuoteRequestReference($quoteRequestReference)
-            ->setCompanyUser($this->getFactory()->getCompanyUserClient()->findCompanyUser());
+            ->setIdCompanyUser($this->getFactory()->getCompanyUserClient()->findCompanyUser()->getIdCompanyUser());
 
         $quoteRequestResponseTransfer = $this->getFactory()
             ->getQuoteRequestClient()
-            ->cancelByReference($quoteRequestFilterTransfer);
+            ->cancelQuoteRequest($quoteRequestCriteriaTransfer);
 
-        $this->processResponseMessages($quoteRequestResponseTransfer);
-
-        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer
-     *
-     * @return void
-     */
-    protected function processResponseMessages(QuoteRequestResponseTransfer $quoteRequestResponseTransfer): void
-    {
         if ($quoteRequestResponseTransfer->getIsSuccess()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SUCCESS_CANCELED);
-
-            return;
         }
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
+
+        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST);
     }
 }

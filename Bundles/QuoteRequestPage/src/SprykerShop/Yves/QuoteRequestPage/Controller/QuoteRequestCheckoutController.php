@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -17,9 +17,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class QuoteRequestCheckoutController extends QuoteRequestAbstractController
 {
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     * @see \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
      */
     protected const ROUTE_CART = 'cart';
+
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART = 'quote_request.validation.success.converted_to_cart';
 
     /**
      * @param string $quoteRequestReference
@@ -28,22 +30,32 @@ class QuoteRequestCheckoutController extends QuoteRequestAbstractController
      */
     public function convertToCartAction(string $quoteRequestReference): RedirectResponse
     {
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($quoteRequestReference)
-            ->setCompanyUser($this->getFactory()->getCompanyUserClient()->findCompanyUser());
+        $quoteRequestTransfer = $this->getCompanyUserQuoteRequestByReference($quoteRequestReference);
 
-        $quoteRequestTransfers = $this->getFactory()
-            ->getQuoteRequestClient()
-            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
-            ->getQuoteRequests()
-            ->getArrayCopy();
-
-        $quoteRequestTransfer = array_shift($quoteRequestTransfers);
-
-         $this->getFactory()
+        $quoteResponseTransfer = $this->getFactory()
             ->getQuoteRequestClient()
             ->convertQuoteRequestToQuote($quoteRequestTransfer);
 
+        $this->processResponseMessages($quoteResponseTransfer);
+
         return $this->redirectResponseInternal(static::ROUTE_CART);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return void
+     */
+    protected function processResponseMessages(QuoteResponseTransfer $quoteResponseTransfer): void
+    {
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART);
+
+            return;
+        }
+
+        foreach ($quoteResponseTransfer->getErrors() as $errorTransfer) {
+            $this->addErrorMessage($errorTransfer->getMessage());
+        }
     }
 }
