@@ -86,7 +86,7 @@ class AgentQuoteRequestEditItemsController extends AgentQuoteRequestAbstractCont
 
         $quoteRequestTransfer = $this->getQuoteRequestTransferByReference($quoteRequestReference);
 
-        return $this->convertQuoteRequestToEditableQuote($quoteRequestTransfer, $quoteTransfer);
+        return $this->convertQuoteRequestToQuoteInProgress($quoteRequestTransfer, $quoteTransfer);
     }
 
     /**
@@ -110,7 +110,7 @@ class AgentQuoteRequestEditItemsController extends AgentQuoteRequestAbstractCont
             ->handleRequest($request);
 
         if ($agentQuoteRequestEditItemsConfirmForm->isSubmitted() && $agentQuoteRequestEditItemsConfirmForm->isValid()) {
-            return $this->convertQuoteRequestToEditableQuote($agentQuoteRequestEditItemsConfirmForm->getData(), $quoteTransfer);
+            return $this->convertQuoteRequestToQuoteInProgress($agentQuoteRequestEditItemsConfirmForm->getData(), $quoteTransfer);
         }
 
         return [
@@ -125,7 +125,7 @@ class AgentQuoteRequestEditItemsController extends AgentQuoteRequestAbstractCont
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function convertQuoteRequestToEditableQuote(QuoteRequestTransfer $quoteRequestTransfer, QuoteTransfer $quoteTransfer): RedirectResponse
+    protected function convertQuoteRequestToQuoteInProgress(QuoteRequestTransfer $quoteRequestTransfer, QuoteTransfer $quoteTransfer): RedirectResponse
     {
         $companyUserTransfer = $this->getFactory()
             ->getCompanyUserClient()
@@ -144,7 +144,7 @@ class AgentQuoteRequestEditItemsController extends AgentQuoteRequestAbstractCont
 
         $quoteResponseTransfer = $this->getFactory()
             ->getAgentQuoteRequestClient()
-            ->convertQuoteRequestToEditableQuote($quoteRequestTransfer);
+            ->convertQuoteRequestToQuoteInProgress($quoteRequestTransfer);
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART);
