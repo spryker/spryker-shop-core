@@ -13,12 +13,7 @@
 } %}
 
 {% set priceModeGross = 'GROSS_MODE' %}
-{% set sourceUnitPrice = (data.priceMode == priceModeGross) ? data.cartItem.sourceUnitGrossPrice : data.cartItem.sourceUnitNetPrice %}
-
-{% if sourceUnitPrice %}
-    {% set sourceSumPrice = sourceUnitPrice * data.cartItem.quantity %}
-{% endif %}
-
+{% set originUnitPrice = (data.priceMode == priceModeGross) ? data.cartItem.originUnitGrossPrice : data.cartItem.originNetGrossPrice %}
 
 {% block class %}{{ parent() }} list{% endblock %}
 
@@ -26,8 +21,8 @@
     <li class="list__item spacing-y">
         {% if can('SeePricePermissionPlugin') %}
             {{ 'cart.item.item_price' | trans }}
-            {% if sourceUnitPrice %}
-                <span class="float-right"><s>{{ data.unitPrice }}</s> {{ sourceUnitPrice | money }}</span>
+            {% if data.cartItem.sourceUnitGrossPrice or data.cartItem.sourceUnitNetPrice %}
+                <span class="float-right"><s>{{ originUnitPrice | money }}</s> {{ data.unitPrice }}</span>
             {% else %}
                 <span class="float-right">{{ data.unitPrice }}</span>
             {% endif %}
@@ -52,11 +47,7 @@
     <li class="list__item spacing-y">
         {% if can('SeePricePermissionPlugin') %}
             <strong>{{ 'cart.item.item_total' | trans }}</strong>
-            {% if sourceUnitPrice %}
-                <strong class="float-right"><s>{{ data.subtotalPrice }}</s> {{ sourceSumPrice | money }}</strong>
-            {% else %}
-                <strong class="float-right">{{ data.subtotalPrice }}</strong>
-            {% endif %}
+            <strong class="float-right">{{ data.subtotalPrice }}</strong>
         {% else %}
             {{ 'customer.access.cannot_see_price' | trans }}
         {% endif %}
