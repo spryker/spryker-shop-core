@@ -112,8 +112,6 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $quoteRequestReference
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executeEditAction(Request $request, string $quoteRequestReference)
