@@ -10,7 +10,9 @@
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/agent-quote-request": "^1.0.0",
     "spryker/application": "^3.8.0",
+    "spryker/company-user": "^2.9.0",
     "spryker/kernel": "^3.24.0",
+    "spryker/quote": "^2.8.0",
     "spryker/quote-request": "^1.0.0",
     "spryker/symfony": "^3.1.0"
   },
@@ -20,6 +22,11 @@
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker-shop/agent-page": "If you want to use agent layout templates: ^1.2.0",
+    "spryker-shop/cart-page": "If you want to use cart page molecules: ^1.5.0",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {
@@ -35,10 +42,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker-shop/agent-page": "If you want to use agent layout templates: ^1.2.0",
-    "spryker-shop/cart-page": "If you want to use cart page molecules: ^1.5.0",
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   }
 }
