@@ -75,7 +75,8 @@
                     {% include molecule('quote-request-cart-item', 'CartPage') with {
                         class: 'box',
                         data: {
-                            cartItem: cartItem
+                            priceMode: cart.priceMode,
+                            cartItem: cartItem,
                         }
                     } only %}
                 {% endfor %}

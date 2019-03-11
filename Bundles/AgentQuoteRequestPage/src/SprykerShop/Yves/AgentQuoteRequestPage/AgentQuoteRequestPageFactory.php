@@ -29,10 +29,13 @@ class AgentQuoteRequestPageFactory extends AbstractFactory
     public function getAgentQuoteRequestForm(string $quoteRequestReference): FormInterface
     {
         $agentQuoteRequestFormDataProvider = $this->createAgentQuoteRequestFormDataProvider();
+        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
+        $quoteRequestTransfer = $agentQuoteRequestFormDataProvider->getData($quoteRequestReference);
 
         return $this->getFormFactory()->create(
             AgentQuoteRequestForm::class,
-            $agentQuoteRequestFormDataProvider->getData($quoteRequestReference)
+            $quoteRequestTransfer,
+            $agentQuoteRequestFormDataProvider->getOptions($quoteRequestTransfer)
         );
     }
 
