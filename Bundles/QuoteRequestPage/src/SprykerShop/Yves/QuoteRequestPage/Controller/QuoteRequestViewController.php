@@ -82,7 +82,7 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
             'quoteRequest' => $quoteRequestTransfer,
             'version' => $version,
             'isQuoteRequestCancelable' => $quoteRequestClient->isQuoteRequestCancelable($quoteRequestTransfer),
-            'isQuoteRequestConvertible' => $quoteRequestClient->isQuoteRequestConvertible($quoteRequestTransfer),
+            'isQuoteRequestReady' => $quoteRequestClient->isQuoteRequestReady($quoteRequestTransfer),
         ];
     }
 
@@ -92,7 +92,7 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
      *
      * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer|null
      */
-    protected function findQuoteRequestVersion(QuoteRequestTransfer $quoteRequestTransfer, ?string $versionReference = null): ?QuoteRequestVersionTransfer
+    protected function findQuoteRequestVersion(QuoteRequestTransfer $quoteRequestTransfer, ?string $versionReference): ?QuoteRequestVersionTransfer
     {
         if (!$quoteRequestTransfer->getLatestVersion() || $versionReference === $quoteRequestTransfer->getLatestVersion()->getVersionReference()) {
             return $quoteRequestTransfer->getLatestVersion();

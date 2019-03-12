@@ -53,7 +53,7 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
                 ->createQuoteRequestHandler()
                 ->createQuoteRequest($quoteRequestForm->getData());
 
-            if ($quoteRequestResponseTransfer->getIsSuccess()) {
+            if ($quoteRequestResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CREATED);
 
                 return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST);

@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage;
 
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface;
@@ -25,17 +26,17 @@ use Symfony\Component\Form\FormInterface;
 class QuoteRequestPageFactory extends AbstractFactory
 {
     /**
-     * @param string|null $quoteRequestReference
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer|null $quoteRequestTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getQuoteRequestForm(?string $quoteRequestReference = null): FormInterface
+    public function getQuoteRequestForm(?QuoteRequestTransfer $quoteRequestTransfer = null): FormInterface
     {
         $quoteRequestFormDataProvider = $this->createQuoteRequestFormDataProvider();
 
         return $this->getFormFactory()->create(
             QuoteRequestForm::class,
-            $quoteRequestFormDataProvider->getData($quoteRequestReference)
+            $quoteRequestFormDataProvider->getData($quoteRequestTransfer)
         );
     }
 
@@ -47,7 +48,6 @@ class QuoteRequestPageFactory extends AbstractFactory
         return new QuoteRequestFormDataProvider(
             $this->getCompanyUserClient(),
             $this->getCartClient(),
-            $this->getQuoteRequestClient(),
             $this->getConfig()
         );
     }

@@ -90,14 +90,13 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
     protected function executeSendToCustomerAction(string $quoteRequestReference): RedirectResponse
     {
         $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
-            ->setWithHidden(true)
             ->setQuoteRequestReference($quoteRequestReference);
 
         $quoteRequestResponseTransfer = $this->getFactory()
             ->getAgentQuoteRequestClient()
             ->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
 
-        if ($quoteRequestResponseTransfer->getIsSuccess()) {
+        if ($quoteRequestResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER);
         }
 
@@ -117,9 +116,10 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
     protected function executeEditAction(Request $request, string $quoteRequestReference)
     {
         $agentQuoteRequestClient = $this->getFactory()->getAgentQuoteRequestClient();
-        $quoteRequestForm = $this->getFactory()->getAgentQuoteRequestForm($quoteRequestReference);
-        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
-        $quoteRequestTransfer = $quoteRequestForm->getData();
+
+        $quoteRequestTransfer = $this->getQuoteRequestTransferByReference($quoteRequestReference);
+        $quoteRequestForm = $this->getFactory()
+            ->getAgentQuoteRequestForm($quoteRequestTransfer);
 
         if ($agentQuoteRequestClient->isQuoteRequestCanStartEditable($quoteRequestTransfer)) {
             return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_START_EDIT, [
@@ -161,13 +161,13 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
             ->getQuoteRequestClient()
             ->updateQuoteRequest($quoteRequestTransfer);
 
-        if ($quoteRequestResponseTransfer->getIsSuccess()) {
+        if ($quoteRequestResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_UPDATED);
         }
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
-        if ($request->get(AgentQuoteRequestForm::SUBMIT_BUTTON_SEND_TO_CUSTOMER) !== null && $quoteRequestResponseTransfer->getIsSuccess()) {
+        if ($request->get(AgentQuoteRequestForm::SUBMIT_BUTTON_SEND_TO_CUSTOMER) !== null && $quoteRequestResponseTransfer->getIsSuccessful()) {
             return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_SEND_TO_CUSTOMER, [
                 AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
             ]);

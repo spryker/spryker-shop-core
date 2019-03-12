@@ -73,5 +73,5 @@ interface QuoteRequestPageToQuoteRequestClientInterface
      *
      * @return bool
      */
-    public function isQuoteRequestConvertible(QuoteRequestTransfer $quoteRequestTransfer): bool;
+    public function isQuoteRequestReady(QuoteRequestTransfer $quoteRequestTransfer): bool;
 }

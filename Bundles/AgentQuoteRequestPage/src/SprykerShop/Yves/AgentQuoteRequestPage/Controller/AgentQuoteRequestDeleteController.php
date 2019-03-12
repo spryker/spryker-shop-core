@@ -42,7 +42,7 @@ class AgentQuoteRequestDeleteController extends AgentQuoteRequestAbstractControl
      */
     protected function processResponseMessages(QuoteRequestResponseTransfer $quoteRequestResponseTransfer): void
     {
-        if ($quoteRequestResponseTransfer->getIsSuccess()) {
+        if ($quoteRequestResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SUCCESS_CANCELED);
 
             return;

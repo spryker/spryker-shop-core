@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\AgentQuoteRequestPage;
 
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client\AgentQuoteRequestPageToAgentQuoteRequestClientInterface;
@@ -22,17 +23,17 @@ use Symfony\Component\Form\FormInterface;
 class AgentQuoteRequestPageFactory extends AbstractFactory
 {
     /**
-     * @param string $quoteRequestReference
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getAgentQuoteRequestForm(string $quoteRequestReference): FormInterface
+    public function getAgentQuoteRequestForm(QuoteRequestTransfer $quoteRequestTransfer): FormInterface
     {
         $agentQuoteRequestFormDataProvider = $this->createAgentQuoteRequestFormDataProvider();
 
         return $this->getFormFactory()->create(
             AgentQuoteRequestForm::class,
-            $agentQuoteRequestFormDataProvider->getData($quoteRequestReference)
+            $agentQuoteRequestFormDataProvider->getData($quoteRequestTransfer)
         );
     }
 
@@ -41,9 +42,7 @@ class AgentQuoteRequestPageFactory extends AbstractFactory
      */
     public function createAgentQuoteRequestFormDataProvider(): AgentQuoteRequestFormDataProvider
     {
-        return new AgentQuoteRequestFormDataProvider(
-            $this->getQuoteRequestClient()
-        );
+        return new AgentQuoteRequestFormDataProvider();
     }
 
     /**

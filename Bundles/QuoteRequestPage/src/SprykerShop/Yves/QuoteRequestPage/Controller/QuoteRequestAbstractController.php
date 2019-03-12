@@ -65,8 +65,8 @@ class QuoteRequestAbstractController extends AbstractController
      */
     protected function handleResponseErrors(QuoteRequestResponseTransfer $quoteRequestResponseTransfer): void
     {
-        foreach ($quoteRequestResponseTransfer->getErrors() as $errorMessage) {
-            $this->addErrorMessage($errorMessage);
+        foreach ($quoteRequestResponseTransfer->getMessages() as $messageTransfer) {
+            $this->addErrorMessage($messageTransfer->getValue());
         }
     }
 }
