@@ -229,7 +229,7 @@ class ShareShoppingListDataProvider
 
         return $sharedCompanyUsers;
     }
-    
+
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
