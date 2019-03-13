@@ -117,7 +117,8 @@ class ShareShoppingListDataProvider
         ShoppingListTransfer $shoppingListTransfer,
         CustomerTransfer $customerTransfer
     ): ShoppingListTransfer {
-        $shoppingListCompanyUsers = [];
+        $shoppingListCompanyUsers = $this->indexShoppingListCompanyUsers($shoppingListTransfer);
+        $newShoppingListCompanyUsers = [];
         $companyUsers = $this->getCompanyUserCollection($customerTransfer)->getCompanyUsers();
 
         foreach ($companyUsers as $companyUserTransfer) {
@@ -127,13 +128,21 @@ class ShareShoppingListDataProvider
                 continue;
             }
 
-            $shoppingListCompanyUsers[$idCompanyUser] = $this->createShoppingListCompanyUser(
+            if (isset($shoppingListCompanyUsers[$idCompanyUser])) {
+                $shoppingListCompanyUser = $shoppingListCompanyUsers[$idCompanyUser];
+                $shoppingListCompanyUser->setCompanyUser($companyUserTransfer);
+
+                $newShoppingListCompanyUsers[$idCompanyUser] = $shoppingListCompanyUser;
+                continue;
+            }
+
+            $newShoppingListCompanyUsers[$idCompanyUser] = $this->createShoppingListCompanyUser(
                 $shoppingListTransfer,
                 $companyUserTransfer
             );
         }
 
-        $shoppingListTransfer->setSharedCompanyUsers(new ArrayObject($shoppingListCompanyUsers));
+        $shoppingListTransfer->setSharedCompanyUsers(new ArrayObject($newShoppingListCompanyUsers));
 
         return $shoppingListTransfer;
     }
@@ -205,6 +214,22 @@ class ShareShoppingListDataProvider
         return $shoppingListTransfer;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer[]
+     */
+    protected function indexShoppingListCompanyUsers(ShoppingListTransfer $shoppingListTransfer): array
+    {
+        $sharedCompanyUsers = [];
+
+        foreach ($shoppingListTransfer->getSharedCompanyUsers() as $shoppingListCompanyUserTransfer) {
+            $sharedCompanyUsers[$shoppingListCompanyUserTransfer->getIdCompanyUser()] = $shoppingListCompanyUserTransfer;
+        }
+
+        return $sharedCompanyUsers;
+    }
+    
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
