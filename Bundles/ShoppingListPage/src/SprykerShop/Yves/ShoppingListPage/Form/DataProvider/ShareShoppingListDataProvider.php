@@ -117,32 +117,32 @@ class ShareShoppingListDataProvider
         ShoppingListTransfer $shoppingListTransfer,
         CustomerTransfer $customerTransfer
     ): ShoppingListTransfer {
-        $shoppingListCompanyUsers = $this->indexShoppingListCompanyUsers($shoppingListTransfer);
-        $newShoppingListCompanyUsers = [];
-        $companyUsers = $this->getCompanyUserCollection($customerTransfer)->getCompanyUsers();
+        $indexedShoppingListCompanyUserTransfers = $this->indexShoppingListCompanyUsers($shoppingListTransfer);
+        $shoppingListCompanyUserTransfers = [];
+        $companyUserTransfers = $this->getCompanyUserCollection($customerTransfer)->getCompanyUsers();
 
-        foreach ($companyUsers as $companyUserTransfer) {
+        foreach ($companyUserTransfers as $companyUserTransfer) {
             $idCompanyUser = $companyUserTransfer->getIdCompanyUser();
 
-            if (strcmp($companyUserTransfer->getCustomer()->getCustomerReference(), $shoppingListTransfer->getCustomerReference()) === 0) {
+            if ($companyUserTransfer->getCustomer()->getCustomerReference() === $shoppingListTransfer->getCustomerReference()) {
                 continue;
             }
 
-            if (isset($shoppingListCompanyUsers[$idCompanyUser])) {
-                $shoppingListCompanyUser = $shoppingListCompanyUsers[$idCompanyUser];
-                $shoppingListCompanyUser->setCompanyUser($companyUserTransfer);
+            if (isset($indexedShoppingListCompanyUserTransfers[$idCompanyUser])) {
+                $shoppingListCompanyUserTransfer = $indexedShoppingListCompanyUserTransfers[$idCompanyUser];
+                $shoppingListCompanyUserTransfer->setCompanyUser($companyUserTransfer);
 
-                $newShoppingListCompanyUsers[$idCompanyUser] = $shoppingListCompanyUser;
+                $shoppingListCompanyUserTransfers[$idCompanyUser] = $shoppingListCompanyUserTransfer;
                 continue;
             }
 
-            $newShoppingListCompanyUsers[$idCompanyUser] = $this->createShoppingListCompanyUser(
+            $shoppingListCompanyUserTransfers[$idCompanyUser] = $this->createShoppingListCompanyUser(
                 $shoppingListTransfer,
                 $companyUserTransfer
             );
         }
 
-        $shoppingListTransfer->setSharedCompanyUsers(new ArrayObject($newShoppingListCompanyUsers));
+        $shoppingListTransfer->setSharedCompanyUsers(new ArrayObject($shoppingListCompanyUserTransfers));
 
         return $shoppingListTransfer;
     }
@@ -221,13 +221,13 @@ class ShareShoppingListDataProvider
      */
     protected function indexShoppingListCompanyUsers(ShoppingListTransfer $shoppingListTransfer): array
     {
-        $sharedCompanyUsers = [];
+        $indexedShoppingListCompanyUserTransfers = [];
 
         foreach ($shoppingListTransfer->getSharedCompanyUsers() as $shoppingListCompanyUserTransfer) {
-            $sharedCompanyUsers[$shoppingListCompanyUserTransfer->getIdCompanyUser()] = $shoppingListCompanyUserTransfer;
+            $indexedShoppingListCompanyUserTransfers[$shoppingListCompanyUserTransfer->getIdCompanyUser()] = $shoppingListCompanyUserTransfer;
         }
 
-        return $sharedCompanyUsers;
+        return $indexedShoppingListCompanyUserTransfers;
     }
 
     /**
