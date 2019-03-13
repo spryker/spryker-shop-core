@@ -1,0 +1,16 @@
+@mixin agent-widget-company-user-list($name: '.company-user-list') {
+    #{$name} {
+
+       &__container-item {
+           cursor: pointer;
+           padding: map-get($setting-spacing, 'default');
+
+           &:hover {
+               background-color: $setting-color-lightest;
+           }
+       }
+
+        @content;
+    }
+}
+

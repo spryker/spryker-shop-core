@@ -15,8 +15,12 @@ use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequest
 use SprykerShop\Yves\AgentQuoteRequestWidget\Form\AgentQuoteRequestCartForm;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Handler\AgentQuoteRequestCartHandler;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Handler\AgentQuoteRequestCartHandlerInterface;
+use SprykerShop\Yves\AgentQuoteRequestWidget\Validator\CompanyUserAutocompleteValidator;
+use SprykerShop\Yves\AgentQuoteRequestWidget\Validator\CompanyUserAutocompleteValidatorInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @method \SprykerShop\Yves\AgentQuoteRequestWidget\AgentQuoteRequestWidgetConfig getConfig()
@@ -40,6 +44,24 @@ class AgentQuoteRequestWidgetFactory extends AbstractFactory
             $this->getCartClient(),
             $this->getQuoteRequestClient()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentQuoteRequestWidget\Validator\CompanyUserAutocompleteValidatorInterface
+     */
+    public function createCompanyUserAutocompleteValidator(): CompanyUserAutocompleteValidatorInterface
+    {
+        return new CompanyUserAutocompleteValidator(
+            $this->getValidator()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Validator\ValidatorInterface
+     */
+    public function getValidator(): ValidatorInterface
+    {
+        return Validation::createValidator();
     }
 
     /**
