@@ -8,11 +8,13 @@
 namespace SprykerShop\Yves\QuoteRequestPage\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
+use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQuoteRequestClientInterface
 {
@@ -34,9 +36,19 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function create(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestClient->create($quoteRequestTransfer);
+        return $this->quoteRequestClient->createQuoteRequest($quoteRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->quoteRequestClient->cancelQuoteRequest($quoteRequestCriteriaTransfer);
     }
 
     /**
@@ -60,13 +72,24 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     * @param string $quoteRequestReference
+     * @param int $idCompanyUser
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    public function findCompanyUserQuoteRequestByReference(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer
     {
-        return $this->quoteRequestClient->cancelByReference($quoteRequestFilterTransfer);
+        return $this->quoteRequestClient->findCompanyUserQuoteRequestByReference($quoteRequestReference, $idCompanyUser);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->quoteRequestClient->convertQuoteRequestToQuote($quoteRequestTransfer);
     }
 
     /**
@@ -80,13 +103,12 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
     }
 
     /**
-     * @param string $quoteRequestReference
-     * @param int $idCompanyUser
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     * @return bool
      */
-    public function findCompanyUserQuoteRequestByReference(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer
+    public function isQuoteRequestReady(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        return $this->quoteRequestClient->findCompanyUserQuoteRequestByReference($quoteRequestReference, $idCompanyUser);
+        return $this->quoteRequestClient->isQuoteRequestReady($quoteRequestTransfer);
     }
 }

@@ -8,14 +8,11 @@
 namespace SprykerShop\Yves\QuoteRequestPage\Form\DataProvider;
 
 use DateTime;
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompanyUserClientInterface;
-use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageConfig;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class QuoteRequestFormDataProvider
 {
@@ -30,11 +27,6 @@ class QuoteRequestFormDataProvider
     protected $cartClient;
 
     /**
-     * @var \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface
-     */
-    protected $quoteRequestClient;
-
-    /**
      * @var \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageConfig
      */
     protected $config;
@@ -42,37 +34,30 @@ class QuoteRequestFormDataProvider
     /**
      * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompanyUserClientInterface $companyUserClient
      * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface $cartClient
-     * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface $quoteRequestClient
      * @param \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageConfig $config
      */
     public function __construct(
         QuoteRequestPageToCompanyUserClientInterface $companyUserClient,
         QuoteRequestPageToCartClientInterface $cartClient,
-        QuoteRequestPageToQuoteRequestClientInterface $quoteRequestClient,
         QuoteRequestPageConfig $config
-    )
-    {
+    ) {
         $this->companyUserClient = $companyUserClient;
         $this->cartClient = $cartClient;
-        $this->quoteRequestClient = $quoteRequestClient;
         $this->config = $config;
     }
 
     /**
-     * @param string|null $quoteRequestReference
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer|null $quoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
-    public function getData(?string $quoteRequestReference): QuoteRequestTransfer
+    public function getData(?QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer
     {
-        if (!$quoteRequestReference) {
+        if (!$quoteRequestTransfer) {
             return $this->createQuoteRequestTransfer();
         }
 
-        return $this->quoteRequestClient->findCompanyUserQuoteRequestByReference(
-            $quoteRequestReference,
-            $this->companyUserClient->findCompanyUser()->getIdCompanyUser()
-        );
+        return $quoteRequestTransfer;
     }
 
     /**

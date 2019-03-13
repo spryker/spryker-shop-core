@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -35,14 +36,37 @@ class QuoteRequestAbstractController extends AbstractController
     }
 
     /**
+     * @param string $quoteRequestReference
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     */
+    protected function getCompanyUserQuoteRequestByReference(string $quoteRequestReference): QuoteRequestTransfer
+    {
+        $quoteRequestTransfer = $this->getFactory()
+            ->getQuoteRequestClient()
+            ->findCompanyUserQuoteRequestByReference(
+                $quoteRequestReference,
+                $this->getFactory()->getCompanyUserClient()->findCompanyUser()->getIdCompanyUser()
+            );
+
+        if (!$quoteRequestTransfer) {
+            throw new NotFoundHttpException();
+        }
+
+        return $quoteRequestTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer
      *
      * @return void
      */
     protected function handleResponseErrors(QuoteRequestResponseTransfer $quoteRequestResponseTransfer): void
     {
-        foreach ($quoteRequestResponseTransfer->getErrors() as $errorTransfer) {
-            $this->addErrorMessage($errorTransfer);
+        foreach ($quoteRequestResponseTransfer->getMessages() as $messageTransfer) {
+            $this->addErrorMessage($messageTransfer->getValue());
         }
     }
 }

@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestWidget\Widget;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -14,6 +15,16 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class CreateQuoteRequestWidget extends AbstractWidget
 {
+    protected const PARAMETER_IS_VISIBLE = 'isVisible';
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function __construct(QuoteTransfer $quoteTransfer)
+    {
+        $this->addIsVisibleParameter($quoteTransfer);
+    }
+
     /**
      * @return string
      */
@@ -28,5 +39,15 @@ class CreateQuoteRequestWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@QuoteRequestWidget/views/quote-request/create-quote-request.twig';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addIsVisibleParameter(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_IS_VISIBLE, !(bool)$quoteTransfer->getQuoteRequestVersionReference());
     }
 }
