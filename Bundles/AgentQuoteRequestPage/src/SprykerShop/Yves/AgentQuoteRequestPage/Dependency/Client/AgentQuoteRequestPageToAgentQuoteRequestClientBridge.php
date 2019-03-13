@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client;
 
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -28,13 +28,13 @@ class AgentQuoteRequestPageToAgentQuoteRequestClientBridge implements AgentQuote
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->agentQuoteRequestClient->cancelByReference($quoteRequestFilterTransfer);
+        return $this->agentQuoteRequestClient->cancelQuoteRequest($quoteRequestCriteriaTransfer);
     }
 
     /**
@@ -48,13 +48,23 @@ class AgentQuoteRequestPageToAgentQuoteRequestClientBridge implements AgentQuote
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function setQuoteRequestEditable(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    public function markQuoteRequestInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->agentQuoteRequestClient->setQuoteRequestEditable($quoteRequestFilterTransfer);
+        return $this->agentQuoteRequestClient->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->agentQuoteRequestClient->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
     }
 
     /**

@@ -30,6 +30,16 @@ class AgentQuoteRequestPageToQuoteRequestClientBridge implements AgentQuoteReque
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->quoteRequestClient->updateQuoteRequest($quoteRequestTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
@@ -49,25 +59,5 @@ class AgentQuoteRequestPageToQuoteRequestClientBridge implements AgentQuoteReque
         QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer
     ): QuoteRequestVersionCollectionTransfer {
         return $this->quoteRequestClient->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
-    public function update(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
-    {
-        return $this->quoteRequestClient->update($quoteRequestTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
-    public function sendQuoteRequestToCustomer(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
-    {
-        return $this->quoteRequestClient->sendQuoteRequestToCustomer($quoteRequestFilterTransfer);
     }
 }

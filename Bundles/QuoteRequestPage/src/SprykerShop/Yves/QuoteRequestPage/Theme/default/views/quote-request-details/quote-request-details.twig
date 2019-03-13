@@ -2,9 +2,10 @@
 
 {% define data = {
     title: 'quote_request_page.quote_request' | trans,
-    isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
     quoteRequest: _view.quoteRequest,
-    version: _view.version
+    version: _view.version,
+    isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
+    isQuoteRequestReady: _view.isQuoteRequestReady,
 } %}
 
 {% set cart = data.version ? data.version.quote : null %}
@@ -115,6 +116,14 @@
                         <a class="button button--expand button--cancel"
                            href="{{ path('quote-request/cancel', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
+                        </a>
+                    {% endif %}
+
+                    {% if data.isQuoteRequestReady %}
+                        <hr/>
+                        <a class="button button--expand button--success"
+                           href="{{ path('quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                            {{ 'quote_request_page.quote_request.actions.convert_to_cart' | trans }}
                         </a>
                     {% endif %}
 

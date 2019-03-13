@@ -43,10 +43,9 @@ class QuoteRequestHandler implements QuoteRequestHandlerInterface
      */
     public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestResponseTransfer = $this->quoteRequestClient
-            ->create($quoteRequestTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestClient->createQuoteRequest($quoteRequestTransfer);
 
-        if ($quoteRequestResponseTransfer->getIsSuccess()) {
+        if ($quoteRequestResponseTransfer->getIsSuccessful()) {
             $this->clearQuote();
         }
 
