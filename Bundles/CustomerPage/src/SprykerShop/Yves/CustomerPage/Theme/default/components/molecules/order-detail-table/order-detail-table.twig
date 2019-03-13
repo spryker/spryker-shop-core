@@ -39,7 +39,7 @@
                         <div class="col col--sm-8">
                             <div class="grid grid--justify">
                                 <span class="spacing-right col col--sm-9">{{ concreteItem.name }}</span>
-                                <strong class="col col--sm-3 text-right">{{ concreteItem.unitPrice | money(true, data.currencyIsoCode) }}</strong>
+                                <strong class="col col--sm-3 text-right">{{ concreteItem.sumPrice | money(true, data.currencyIsoCode) }}</strong>
                             </div>
 
                             <p>{{ 'customer.order.item_quantity' | trans }}: {{ concreteItem.quantity }}</p>

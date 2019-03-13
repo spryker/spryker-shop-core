@@ -33,11 +33,4 @@ interface CustomerPageToSalesClientInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderDetails(OrderTransfer $orderTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
-     */
-    public function getUniqueOrderItemsForShipmentGroups(OrderTransfer $orderTransfer): ShipmentGroupCollectionTransfer;
 }

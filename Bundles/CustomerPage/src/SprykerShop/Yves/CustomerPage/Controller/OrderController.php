@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -152,27 +153,37 @@ class OrderController extends AbstractCustomerController
             ));
         }
 
-        $shipmentGroups = $this->getFactory()
-            ->getSalesClient()
-            ->getUniqueOrderItemsForShipmentGroups($orderTransfer);
-
         if ($orderTransfer->getShippingAddress() === null) {
             return [
                 'order' => $orderTransfer,
-                'shipmentGroups' => $shipmentGroups->getShipmentGroups(),
+                'shipmentGroups' => $orderTransfer->getShipmentGroups(),
             ];
         }
 
-        $shipmentTransfer = (new ShipmentTransfer())
-            ->setShippingAddress($orderTransfer->getShippingAddress());
-
-        $shipmentGroupTransfer = (new ShipmentGroupTransfer())
-            ->setShipment($shipmentTransfer)
-            ->setItems($orderTransfer->getItems());
+        $shipmentGroupTransfer = $this->createShipmentGroup($orderTransfer);
 
         return [
             'order' => $orderTransfer,
             'shipmentGroups' => [$shipmentGroupTransfer],
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
+     */
+    protected function createShipmentGroup(OrderTransfer $orderTransfer): ShipmentGroupTransfer
+    {
+        $shipmentMethodTransfer = (new ShipmentMethodTransfer())
+            ->setIdShipmentMethod($orderTransfer->getIdShipmentMethod());
+
+        $shipmentTransfer = (new ShipmentTransfer())
+            ->setShippingAddress($orderTransfer->getShippingAddress())
+            ->setMethod($shipmentMethodTransfer);
+
+        return (new ShipmentGroupTransfer())
+            ->setShipment($shipmentTransfer)
+            ->setItems($orderTransfer->getItems());
     }
 }

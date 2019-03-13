@@ -55,14 +55,4 @@ class CustomerPageToSalesClientBridge implements CustomerPageToSalesClientInterf
     {
         return $this->salesClient->getOrderDetails($orderTransfer);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
-     */
-    public function getUniqueOrderItemsForShipmentGroups(OrderTransfer $orderTransfer): ShipmentGroupCollectionTransfer
-    {
-        return $this->salesClient->getUniqueOrderItemsForShipmentGroups($orderTransfer);
-    }
 }

@@ -105,7 +105,8 @@ class CheckoutAddressCollectionForm extends AbstractType
             'data_class' => AddressTransfer::class,
             'required' => true,
             'validation_groups' => function (FormInterface $form) {
-                if (!$form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData()) {
+                if ($form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
+                    && !$form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData()) {
                     return [self::GROUP_SHIPPING_ADDRESS];
                 }
 
@@ -145,7 +146,8 @@ class CheckoutAddressCollectionForm extends AbstractType
                         return false;
                     }
 
-                    if ($shippingAddressForm->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData()
+                    if ($shippingAddressForm->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
+                        && $shippingAddressForm->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData()
                         == CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES
                     ) {
                         return static::GROUP_BILLING_SAME_AS_SHIPPING;
