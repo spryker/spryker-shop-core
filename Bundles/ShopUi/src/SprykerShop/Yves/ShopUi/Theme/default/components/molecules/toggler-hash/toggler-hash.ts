@@ -37,7 +37,7 @@ export default class TogglerHash extends Component {
     }
 
     /**
-     * Toggles the class names.
+     * Toggles the class names in the target elements.
      * @param addClass A boolean value for a more flexible toggling action.
      */
     toggle(addClass: boolean): void {
