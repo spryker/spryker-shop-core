@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
@@ -71,21 +70,19 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
      */
     protected function executeDetailsAction(Request $request, string $quoteRequestReference): array
     {
-        $quoteRequestTransfer = $this->getFactory()
-            ->getQuoteRequestClient()
-            ->findCompanyUserQuoteRequestByReference(
-                $quoteRequestReference,
-                $this->getFactory()->getCompanyUserClient()->findCompanyUser()->getIdCompanyUser()
-            );
+        $quoteRequestTransfer = $this->getCompanyUserQuoteRequestByReference($quoteRequestReference);
+        $quoteRequestClient = $this->getFactory()->getQuoteRequestClient();
 
-        $isQuoteRequestCancelable = $this->getFactory()
-            ->getQuoteRequestClient()
-            ->isQuoteRequestCancelable($quoteRequestTransfer);
+        $version = $this->findQuoteRequestVersion(
+            $quoteRequestTransfer,
+            $request->query->get(static::PARAM_QUOTE_REQUEST_VERSION_REFERENCE)
+        );
 
         return [
             'quoteRequest' => $quoteRequestTransfer,
-            'isQuoteRequestCancelable' => $isQuoteRequestCancelable,
-            'version' => $this->findQuoteRequestVersion($quoteRequestTransfer, $request->query->get(static::PARAM_QUOTE_REQUEST_VERSION_REFERENCE)),
+            'version' => $version,
+            'isQuoteRequestCancelable' => $quoteRequestClient->isQuoteRequestCancelable($quoteRequestTransfer),
+            'isQuoteRequestReady' => $quoteRequestClient->isQuoteRequestReady($quoteRequestTransfer),
         ];
     }
 
@@ -95,10 +92,8 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
      *
      * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer|null
      */
-    protected function findQuoteRequestVersion(
-        QuoteRequestTransfer $quoteRequestTransfer,
-        ?string $versionReference = null
-    ): ?QuoteRequestVersionTransfer {
+    protected function findQuoteRequestVersion(QuoteRequestTransfer $quoteRequestTransfer, ?string $versionReference): ?QuoteRequestVersionTransfer
+    {
         if (!$quoteRequestTransfer->getLatestVersion() || $versionReference === $quoteRequestTransfer->getLatestVersion()->getVersionReference()) {
             return $quoteRequestTransfer->getLatestVersion();
         }

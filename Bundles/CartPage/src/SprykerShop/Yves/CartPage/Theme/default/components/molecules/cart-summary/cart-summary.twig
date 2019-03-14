@@ -97,7 +97,7 @@
     {% endif %}
 
     {% if is_granted('ROLE_USER') %}
-        {% widget 'CreateQuoteRequestWidget' only %}
+        {% widget 'CreateQuoteRequestWidget' args [data.cart] only %}
             {% block body %}
                 <hr />
                 {{ parent() }}

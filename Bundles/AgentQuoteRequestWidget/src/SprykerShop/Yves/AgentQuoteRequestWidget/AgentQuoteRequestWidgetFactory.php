@@ -42,7 +42,8 @@ class AgentQuoteRequestWidgetFactory extends AbstractFactory
     {
         return new AgentQuoteRequestCartHandler(
             $this->getCartClient(),
-            $this->getQuoteRequestClient()
+            $this->getQuoteRequestClient(),
+            $this->getAgentQuoteRequestClient()
         );
     }
 

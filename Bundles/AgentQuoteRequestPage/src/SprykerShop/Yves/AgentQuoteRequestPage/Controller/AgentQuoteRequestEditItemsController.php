@@ -84,9 +84,9 @@ class AgentQuoteRequestEditItemsController extends AgentQuoteRequestAbstractCont
             ]);
         }
 
-        $quoteRequestTransfer = $this->getQuoteRequestTransferByReference($quoteRequestReference);
+        $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
 
-        return $this->convertQuoteRequestToQuoteInProgress($quoteRequestTransfer, $quoteTransfer);
+        return $this->convertQuoteRequest($quoteRequestTransfer, $quoteTransfer);
     }
 
     /**
@@ -105,12 +105,13 @@ class AgentQuoteRequestEditItemsController extends AgentQuoteRequestAbstractCont
             ]);
         }
 
+        $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
         $agentQuoteRequestEditItemsConfirmForm = $this->getFactory()
-            ->getAgentQuoteRequestEditItemsConfirmForm($quoteRequestReference)
+            ->getAgentQuoteRequestEditItemsConfirmForm($quoteRequestTransfer)
             ->handleRequest($request);
 
-        if ($agentQuoteRequestEditItemsConfirmForm->isSubmitted() && $agentQuoteRequestEditItemsConfirmForm->isValid()) {
-            return $this->convertQuoteRequestToQuoteInProgress($agentQuoteRequestEditItemsConfirmForm->getData(), $quoteTransfer);
+        if ($agentQuoteRequestEditItemsConfirmForm->isSubmitted()) {
+            return $this->convertQuoteRequest($agentQuoteRequestEditItemsConfirmForm->getData(), $quoteTransfer);
         }
 
         return [
@@ -125,7 +126,42 @@ class AgentQuoteRequestEditItemsController extends AgentQuoteRequestAbstractCont
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function convertQuoteRequestToQuoteInProgress(QuoteRequestTransfer $quoteRequestTransfer, QuoteTransfer $quoteTransfer): RedirectResponse
+    protected function convertQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer, QuoteTransfer $quoteTransfer): RedirectResponse
+    {
+        $redirectResponse = $this->checkCompanyUserImpersonation($quoteRequestTransfer, $quoteTransfer);
+
+        if ($redirectResponse) {
+            return $redirectResponse;
+        }
+
+        $quoteResponseTransfer = $this->getFactory()
+            ->getAgentQuoteRequestClient()
+            ->convertQuoteRequestToQuoteInProgress($quoteRequestTransfer);
+
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART);
+        }
+
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->findCompanyUser();
+
+        if (!$companyUserTransfer) {
+            return $this->redirectResponseInternal(static::ROUTE_CART, [
+                static::PARAM_SWITCH_USER => $quoteRequestTransfer->getCompanyUser()->getCustomer()->getEmail(),
+            ]);
+        }
+
+        return $this->redirectResponseInternal(static::ROUTE_CART);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
+     */
+    protected function checkCompanyUserImpersonation(QuoteRequestTransfer $quoteRequestTransfer, QuoteTransfer $quoteTransfer): ?RedirectResponse
     {
         $companyUserTransfer = $this->getFactory()
             ->getCompanyUserClient()
@@ -142,20 +178,6 @@ class AgentQuoteRequestEditItemsController extends AgentQuoteRequestAbstractCont
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
-        $quoteResponseTransfer = $this->getFactory()
-            ->getAgentQuoteRequestClient()
-            ->convertQuoteRequestToQuoteInProgress($quoteRequestTransfer);
-
-        if ($quoteResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART);
-        }
-
-        if (!$companyUserTransfer) {
-            return $this->redirectResponseInternal(static::ROUTE_CART, [
-                static::PARAM_SWITCH_USER => $quoteRequestTransfer->getCompanyUser()->getCustomer()->getEmail(),
-            ]);
-        }
-
-        return $this->redirectResponseInternal(static::ROUTE_CART);
+        return null;
     }
 }

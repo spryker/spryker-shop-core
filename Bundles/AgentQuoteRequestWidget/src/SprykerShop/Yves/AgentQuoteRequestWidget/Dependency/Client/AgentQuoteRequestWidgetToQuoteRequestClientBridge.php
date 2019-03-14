@@ -32,9 +32,9 @@ class AgentQuoteRequestWidgetToQuoteRequestClientBridge implements AgentQuoteReq
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function update(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestClient->update($quoteRequestTransfer);
+        return $this->quoteRequestClient->updateQuoteRequest($quoteRequestTransfer);
     }
 
     /**

@@ -7,9 +7,8 @@
 
 namespace SprykerShop\Yves\AgentQuoteRequestPage\Controller;
 
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use SprykerShop\Yves\AgentQuoteRequestPage\Form\AgentQuoteRequestForm;
-use SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +20,32 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
 {
     protected const GLOSSARY_KEY_QUOTE_REQUEST_UPDATED = 'quote_request_page.quote_request.updated';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER = 'quote_request_page.quote_request.sent_to_customer';
-    protected const ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
+
+    /**
+     * @see \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_DETAILS
+     */
+    protected const ROUTE_AGENT_QUOTE_REQUEST_DETAILS = 'agent/quote-request/details';
+
+    /**
+     * @see \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_EDIT
+     */
+    protected const ROUTE_AGENT_QUOTE_REQUEST_EDIT = 'agent/quote-request/edit';
+
+    /**
+     * @see \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_START_EDIT
+     */
+    protected const ROUTE_AGENT_QUOTE_REQUEST_START_EDIT = 'agent/quote-request/start-edit';
+
+    /**
+     * @see \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_SEND_TO_CUSTOMER
+     */
+    protected const ROUTE_AGENT_QUOTE_REQUEST_SEND_TO_CUSTOMER = 'agent/quote-request/send-to-customer';
+
+    /**
+     * @see \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE
+     */
+    protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
     /**
      * @param string $quoteRequestReference
@@ -73,12 +97,12 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
     {
         $quoteRequestResponseTransfer = $this->getFactory()
             ->getAgentQuoteRequestClient()
-            ->setQuoteRequestEditable((new QuoteRequestFilterTransfer())->setQuoteRequestReference($quoteRequestReference));
+            ->markQuoteRequestInProgress((new QuoteRequestCriteriaTransfer())->setQuoteRequestReference($quoteRequestReference));
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
-        return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_EDIT, [
-            AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
+        return $this->redirectResponseInternal(static::ROUTE_AGENT_QUOTE_REQUEST_EDIT, [
+            static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
         ]);
     }
 
@@ -89,22 +113,21 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
      */
     protected function executeSendToCustomerAction(string $quoteRequestReference): RedirectResponse
     {
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($quoteRequestReference)
-            ->setWithHidden(true);
+        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+            ->setQuoteRequestReference($quoteRequestReference);
 
         $quoteRequestResponseTransfer = $this->getFactory()
-            ->getQuoteRequestClient()
-            ->sendQuoteRequestToCustomer($quoteRequestFilterTransfer);
+            ->getAgentQuoteRequestClient()
+            ->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
 
-        if ($quoteRequestResponseTransfer->getIsSuccess()) {
+        if ($quoteRequestResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER);
         }
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
-        return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_DETAILS, [
-            AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
+        return $this->redirectResponseInternal(static::ROUTE_AGENT_QUOTE_REQUEST_DETAILS, [
+            static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
         ]);
     }
 
@@ -117,21 +140,22 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
     protected function executeEditAction(Request $request, string $quoteRequestReference)
     {
         $agentQuoteRequestClient = $this->getFactory()->getAgentQuoteRequestClient();
-        $quoteRequestForm = $this->getFactory()->getAgentQuoteRequestForm($quoteRequestReference);
-        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
-        $quoteRequestTransfer = $quoteRequestForm->getData();
+
+        $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
+        $quoteRequestForm = $this->getFactory()
+            ->getAgentQuoteRequestForm($quoteRequestTransfer);
 
         if ($agentQuoteRequestClient->isQuoteRequestCanStartEditable($quoteRequestTransfer)) {
-            return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_START_EDIT, [
-                AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
+            return $this->redirectResponseInternal(static::ROUTE_AGENT_QUOTE_REQUEST_START_EDIT, [
+                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
             ]);
         }
 
         if (!$agentQuoteRequestClient->isQuoteRequestEditable($quoteRequestTransfer)) {
-            $this->addErrorMessage(static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS);
+            $this->addErrorMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
 
-            return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_DETAILS, [
-                AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
+            return $this->redirectResponseInternal(static::ROUTE_AGENT_QUOTE_REQUEST_DETAILS, [
+                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
             ]);
         }
 
@@ -159,22 +183,22 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
 
         $quoteRequestResponseTransfer = $this->getFactory()
             ->getQuoteRequestClient()
-            ->update($quoteRequestTransfer);
+            ->updateQuoteRequest($quoteRequestTransfer);
 
-        if ($quoteRequestResponseTransfer->getIsSuccess()) {
+        if ($quoteRequestResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_UPDATED);
         }
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
-        if ($request->get(AgentQuoteRequestForm::SUBMIT_BUTTON_SEND_TO_CUSTOMER) !== null && $quoteRequestResponseTransfer->getIsSuccess()) {
-            return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_SEND_TO_CUSTOMER, [
-                AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
+        if ($request->get(AgentQuoteRequestForm::SUBMIT_BUTTON_SEND_TO_CUSTOMER) !== null && $quoteRequestResponseTransfer->getIsSuccessful()) {
+            return $this->redirectResponseInternal(static::ROUTE_AGENT_QUOTE_REQUEST_SEND_TO_CUSTOMER, [
+                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
             ]);
         }
 
-        return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_EDIT, [
-            AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
+        return $this->redirectResponseInternal(static::ROUTE_AGENT_QUOTE_REQUEST_EDIT, [
+            static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
         ]);
     }
 }

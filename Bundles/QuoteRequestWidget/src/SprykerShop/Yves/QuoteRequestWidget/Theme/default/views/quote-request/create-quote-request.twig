@@ -1,7 +1,13 @@
 {% extends template('widget') %}
 
+{% define data = {
+    isVisible: _widget.isVisible
+} %}
+
 {% block body %}
-    <a class="button button--expand" href="{{ url('quote-request/create') }}">
-        {{ 'quote_request_widget.request_for_quote' | trans }}
-    </a>
+    {% if data.isVisible %}
+        <a class="button button--expand" href="{{ url('quote-request/create') }}">
+            {{ 'quote_request_widget.request_for_quote' | trans }}
+        </a>
+    {% endif %}
 {% endblock %}
