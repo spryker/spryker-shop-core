@@ -56,6 +56,7 @@ class AgentQuoteRequestOverviewWidget extends AbstractWidget
 
         $quoteRequestOverviewFilterTransfer = (new QuoteRequestOverviewFilterTransfer())
             ->setQuoteRequestReference($quoteTransfer->getQuoteRequestReference())
+            ->setExcludedStatuses($this->getConfig()->getExcludedStatuses())
             ->setPagination($paginationTransfer);
 
         return $this->getFactory()
