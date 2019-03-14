@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CustomerReorderWidget\Plugin\CustomerPage;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -17,14 +16,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class CustomerReorderItemCheckboxWidget extends AbstractWidget
 {
     /**
-     * @var \Generated\Shared\Transfer\ItemTransfer
-     */
-    private $itemTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\ItemTransfer|null $itemTransfer
      */
-    public function __construct(ItemTransfer $itemTransfer = null)
+    public function __construct(?ItemTransfer $itemTransfer = null)
     {
         $this
             ->addParameter('item', $itemTransfer)
@@ -52,7 +46,7 @@ class CustomerReorderItemCheckboxWidget extends AbstractWidget
      *
      * @return bool
      */
-    protected function getItemAvailability(ItemTransfer $itemTransfer = null): bool
+    protected function getItemAvailability(?ItemTransfer $itemTransfer = null): bool
     {
         if (!$itemTransfer) {
             return false;
