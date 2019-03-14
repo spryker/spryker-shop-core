@@ -63,6 +63,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
+//        dd($quoteTransfer);
         $this->markCheckoutConfirmed($request, $quoteTransfer);
 
         return $quoteTransfer;
