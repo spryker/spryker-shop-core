@@ -7,11 +7,9 @@
 
 namespace SprykerShop\Yves\AgentQuoteRequestPage\Form\DataProvider;
 
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client\AgentQuoteRequestPageToQuoteRequestClientInterface;
 use SprykerShop\Yves\AgentQuoteRequestPage\Form\AgentQuoteRequestForm;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AgentQuoteRequestFormDataProvider
 {
@@ -43,44 +41,6 @@ class AgentQuoteRequestFormDataProvider
         return [
             AgentQuoteRequestForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS => $this->isDefaultPriceModeGross($quoteRequestTransfer),
         ];
-    }
-
-    /**
-     * @param string $agentQuoteRequestReference
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
-     */
-    public function getData(string $agentQuoteRequestReference): QuoteRequestTransfer
-    {
-        return $this->getQuoteRequestTransferByReference($agentQuoteRequestReference);
-    }
-
-    /**
-     * @param string $quoteRequestReference
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
-     */
-    protected function getQuoteRequestTransferByReference(string $quoteRequestReference): QuoteRequestTransfer
-    {
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($quoteRequestReference)
-            ->setWithHidden(true);
-
-        $quoteRequestTransfers = $this->quoteRequestClient
-            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
-            ->getQuoteRequests()
-            ->getArrayCopy();
-
-        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer|null $quoteRequestTransfer */
-        $quoteRequestTransfer = array_shift($quoteRequestTransfers);
-
-        if (!$quoteRequestTransfer) {
-            throw new NotFoundHttpException();
-        }
-
-        return $quoteRequestTransfer;
     }
 
     /**

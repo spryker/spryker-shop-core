@@ -16,6 +16,7 @@ use SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client\AgentQuoteRequestPa
 use SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client\AgentQuoteRequestPageToQuoteRequestClientInterface;
 use SprykerShop\Yves\AgentQuoteRequestPage\Form\AgentQuoteRequestEditItemsConfirmForm;
 use SprykerShop\Yves\AgentQuoteRequestPage\Form\AgentQuoteRequestForm;
+use SprykerShop\Yves\AgentQuoteRequestPage\Form\DataProvider\AgentQuoteRequestFormDataProvider;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -32,8 +33,6 @@ class AgentQuoteRequestPageFactory extends AbstractFactory
     public function getAgentQuoteRequestForm(QuoteRequestTransfer $quoteRequestTransfer): FormInterface
     {
         $agentQuoteRequestFormDataProvider = $this->createAgentQuoteRequestFormDataProvider();
-        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
-        $quoteRequestTransfer = $agentQuoteRequestFormDataProvider->getData($quoteRequestReference);
 
         return $this->getFormFactory()->create(
             AgentQuoteRequestForm::class,
@@ -52,6 +51,16 @@ class AgentQuoteRequestPageFactory extends AbstractFactory
         return $this->getFormFactory()->create(
             AgentQuoteRequestEditItemsConfirmForm::class,
             $quoteRequestTransfer
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentQuoteRequestPage\Form\DataProvider\AgentQuoteRequestFormDataProvider
+     */
+    public function createAgentQuoteRequestFormDataProvider(): AgentQuoteRequestFormDataProvider
+    {
+        return new AgentQuoteRequestFormDataProvider(
+            $this->getQuoteRequestClient()
         );
     }
 
