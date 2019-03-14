@@ -514,12 +514,16 @@ class QuickOrderController extends AbstractController
      */
     protected function processQuickOrderForm(FormInterface $quickOrderForm, Request $request): ?RedirectResponse
     {
-        $quickOrder = $quickOrderForm->getData();
+        $quickOrderTransfer = $quickOrderForm->getData();
+
+        $quickOrderTransfer = $this->getFactory()
+            ->getQuickOrderClient()
+            ->buildQuickOrderTransfer($quickOrderTransfer);
 
         if ($request->get(QuickOrderForm::SUBMIT_BUTTON_ADD_TO_CART) !== null) {
             $result = $this->getFactory()
                 ->createFormOperationHandler()
-                ->addToCart($quickOrder);
+                ->addToCart($quickOrderTransfer);
 
             if (!$result) {
                 return null;
@@ -531,7 +535,7 @@ class QuickOrderController extends AbstractController
         if ($request->get(QuickOrderForm::SUBMIT_BUTTON_CREATE_ORDER) !== null) {
             $result = $this->getFactory()
                 ->createFormOperationHandler()
-                ->addToEmptyCart($quickOrder);
+                ->addToEmptyCart($quickOrderTransfer);
 
             if (!$result) {
                 return null;
