@@ -167,7 +167,7 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
      *
      * @return string
      */
-    protected function buildPathWithLocalePrefix(string $path, string $prefixLocale = null): string
+    protected function buildPathWithLocalePrefix(string $path, ?string $prefixLocale = null): string
     {
         if ($prefixLocale !== null) {
             $path = '/' . $prefixLocale . $path;
