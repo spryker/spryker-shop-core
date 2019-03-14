@@ -7,15 +7,15 @@
 
 namespace SprykerShop\Yves\AgentQuoteRequestWidget\Handler;
 
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
-use Generated\Shared\Transfer\QuoteRequestTransfer;
+use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToAgentQuoteRequestClientInterface;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToCartClientInterface;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToQuoteRequestClientInterface;
 
 class AgentQuoteRequestCartHandler implements AgentQuoteRequestCartHandlerInterface
 {
-    protected const ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
 
     /**
      * @var \SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToCartClientInterface
@@ -28,15 +28,23 @@ class AgentQuoteRequestCartHandler implements AgentQuoteRequestCartHandlerInterf
     protected $quoteRequestClient;
 
     /**
+     * @var \SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToAgentQuoteRequestClientInterface
+     */
+    protected $agentQuoteRequestClient;
+
+    /**
      * @param \SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToQuoteRequestClientInterface $quoteRequestClient
+     * @param \SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToAgentQuoteRequestClientInterface $agentQuoteRequestClient
      */
     public function __construct(
         AgentQuoteRequestWidgetToCartClientInterface $cartClient,
-        AgentQuoteRequestWidgetToQuoteRequestClientInterface $quoteRequestClient
+        AgentQuoteRequestWidgetToQuoteRequestClientInterface $quoteRequestClient,
+        AgentQuoteRequestWidgetToAgentQuoteRequestClientInterface $agentQuoteRequestClient
     ) {
         $this->cartClient = $cartClient;
         $this->quoteRequestClient = $quoteRequestClient;
+        $this->agentQuoteRequestClient = $agentQuoteRequestClient;
     }
 
     /**
@@ -44,43 +52,31 @@ class AgentQuoteRequestCartHandler implements AgentQuoteRequestCartHandlerInterf
      */
     public function updateQuoteRequest(): QuoteRequestResponseTransfer
     {
-        $quoteRequestResponseTransfer = (new QuoteRequestResponseTransfer())
-            ->setIsSuccess(false)
-            ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS);
-
         $quoteTransfer = $this->cartClient->getQuote();
 
         if (!$quoteTransfer->getQuoteRequestReference()) {
-            return $quoteRequestResponseTransfer;
+            return $this->getErrorResponse();
         }
 
-        $quoteRequestTransfer = $this->findQuoteRequest($quoteTransfer->getQuoteRequestReference());
+        $quoteRequestTransfer = $this->agentQuoteRequestClient
+            ->findQuoteRequestByReference($quoteTransfer->getQuoteRequestReference());
 
         if (!$quoteRequestTransfer) {
-            return $quoteRequestResponseTransfer;
+            return $this->getErrorResponse();
         }
 
         $quoteRequestTransfer->setQuoteInProgress($quoteTransfer);
 
-        return $this->quoteRequestClient->update($quoteRequestTransfer);
+        return $this->quoteRequestClient->updateQuoteRequest($quoteRequestTransfer);
     }
 
     /**
-     * @param string $quoteRequestReference
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    protected function findQuoteRequest(string $quoteRequestReference): ?QuoteRequestTransfer
+    protected function getErrorResponse(): QuoteRequestResponseTransfer
     {
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($quoteRequestReference)
-            ->setWithHidden(true);
-
-        $quoteRequestTransfers = $this->quoteRequestClient
-            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
-            ->getQuoteRequests()
-            ->getArrayCopy();
-
-        return array_shift($quoteRequestTransfers);
+        return (new QuoteRequestResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addMessage((new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS));
     }
 }

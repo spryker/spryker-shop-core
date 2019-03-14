@@ -51,7 +51,7 @@ class AgentQuoteRequestCartController extends AbstractController
                 ->createAgentQuoteRequestCartHandler()
                 ->updateQuoteRequest();
 
-            if ($quoteRequestResponseTransfer->getIsSuccess()) {
+            if ($quoteRequestResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_UPDATED);
             }
 
@@ -76,8 +76,8 @@ class AgentQuoteRequestCartController extends AbstractController
      */
     protected function handleResponseErrors(QuoteRequestResponseTransfer $quoteRequestResponseTransfer): void
     {
-        foreach ($quoteRequestResponseTransfer->getErrors() as $errorTransfer) {
-            $this->addErrorMessage($errorTransfer);
+        foreach ($quoteRequestResponseTransfer->getMessages() as $messageTransfer) {
+            $this->addErrorMessage($messageTransfer->getValue());
         }
     }
 
