@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageFactory getFactory()
+ * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig getConfig()
  */
 class ShoppingListController extends AbstractShoppingListController
 {
@@ -54,7 +55,7 @@ class ShoppingListController extends AbstractShoppingListController
 
         return $this->view(
             $response,
-            $this->getFactory()->getShoppingListViewWidgetPlugins(),
+            [],
             '@ShoppingListPage/views/shopping-list/shopping-list.twig'
         );
     }
@@ -177,7 +178,7 @@ class ShoppingListController extends AbstractShoppingListController
 
         return $this->view(
             $response,
-            $this->getFactory()->getPrintShoppingListWidgetPlugins(),
+            [],
             '@ShoppingListPage/views/shopping-list/print-shopping-list.twig'
         );
     }

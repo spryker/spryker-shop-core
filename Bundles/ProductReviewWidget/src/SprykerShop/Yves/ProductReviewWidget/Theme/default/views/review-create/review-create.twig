@@ -14,7 +14,8 @@
 
     {% include molecule('new-review-form', 'ProductReviewWidget') with {
         data: {
-            form: data.form
+            form: data.form,
+            action: '#review',
         }
     } only %}
 {% endblock %}

@@ -23,14 +23,6 @@ class ShoppingListPageToZedRequestClientBridge implements ShoppingListPageToZedR
     }
 
     /**
-     * @return void
-     */
-    public function addFlashMessagesFromLastZedRequest()
-    {
-        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseErrorMessages()
