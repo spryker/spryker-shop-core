@@ -7,7 +7,8 @@ Displays a list of vouchers with remove link and discount rules.
     data: {
         voucherDiscounts: data.cart.voucherDiscounts,
         ruleDiscounts: data.cart.cartRuleDiscounts,
-        discountTotal: data.cart.totals.discounttotal
+        discountTotal: data.cart.totals.discounttotal,
+        isQuoteEditable: isQuoteEditable
     }
 } only %}
 ```

@@ -7,7 +7,8 @@
 
 {% define data = {
     cart: required,
-    isQuoteValid: required
+    isQuoteValid: required,
+    isQuoteEditable: required,
 } %}
 
 {% set canProceedToCheckout = data.cart.items is not empty
@@ -20,6 +21,8 @@
     <h6>{{ 'cart.your-order' | trans }}</h6>
     <hr/>
 
+    {% widget 'QuoteApprovalWidget' args [data.cart] only %}{% endwidget %}
+
     {% if can('SeePricePermissionPlugin') %}
         {% if widgetExists('DiscountSummaryWidgetPlugin') %}
             <ul class="list spacing-y">
@@ -31,7 +34,8 @@
                 data: {
                     voucherDiscounts: data.cart.voucherDiscounts,
                     ruleDiscounts: data.cart.cartRuleDiscounts,
-                    discountTotal: data.cart.totals.discounttotal
+                    discountTotal: data.cart.totals.discounttotal,
+                    isQuoteEditable: data.isQuoteEditable
                 }
             } only %}
         {% endif %}
@@ -82,11 +86,13 @@
         <li>{{ 'customer.access.cannot_see_price' | trans }}</li>
     {% endif %}
 
+    {% if data.isQuoteValid %}
+        <hr />
+        {% widget 'QuoteApproveRequestWidget' args [data.cart] %}{% endwidget %}
+    {% endif %}
+
     {% if canProceedToCheckout %}
         <hr/>
-        <a class="button button--expand button--success"
-           href="{{ url('checkout-index') }}" {{ qa('cart-go-to-checkout') }}>
-            {{ 'cart.checkout' | trans }}
-        </a>
+        {% widget 'ProceedToCheckoutButtonWidget' args [data.cart] %}{% endwidget %}
     {% endif %}
 {% endblock %}
