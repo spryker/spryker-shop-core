@@ -68,6 +68,16 @@ class AgentQuoteRequestPageToAgentQuoteRequestClientBridge implements AgentQuote
     }
 
     /**
+     * @param string $quoteRequestReference
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequestByReference(string $quoteRequestReference): ?QuoteRequestTransfer
+    {
+        return $this->agentQuoteRequestClient->findQuoteRequestByReference($quoteRequestReference);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return bool

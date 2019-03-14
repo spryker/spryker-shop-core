@@ -43,6 +43,13 @@ interface AgentQuoteRequestPageToAgentQuoteRequestClientInterface
     public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
 
     /**
+     * @param string $quoteRequestReference
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequestByReference(string $quoteRequestReference): ?QuoteRequestTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return bool

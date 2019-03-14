@@ -16,7 +16,6 @@ use SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client\AgentQuoteRequestPa
 use SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client\AgentQuoteRequestPageToQuoteRequestClientInterface;
 use SprykerShop\Yves\AgentQuoteRequestPage\Form\AgentQuoteRequestEditItemsConfirmForm;
 use SprykerShop\Yves\AgentQuoteRequestPage\Form\AgentQuoteRequestForm;
-use SprykerShop\Yves\AgentQuoteRequestPage\Form\DataProvider\AgentQuoteRequestFormDataProvider;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -32,35 +31,23 @@ class AgentQuoteRequestPageFactory extends AbstractFactory
      */
     public function getAgentQuoteRequestForm(QuoteRequestTransfer $quoteRequestTransfer): FormInterface
     {
-        $agentQuoteRequestFormDataProvider = $this->createAgentQuoteRequestFormDataProvider();
-
         return $this->getFormFactory()->create(
             AgentQuoteRequestForm::class,
-            $agentQuoteRequestFormDataProvider->getData($quoteRequestTransfer)
+            $quoteRequestTransfer
         );
     }
 
     /**
-     * @param string $quoteRequestReference
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getAgentQuoteRequestEditItemsConfirmForm(string $quoteRequestReference): FormInterface
+    public function getAgentQuoteRequestEditItemsConfirmForm(QuoteRequestTransfer $quoteRequestTransfer): FormInterface
     {
-        $agentQuoteRequestFormDataProvider = $this->createAgentQuoteRequestFormDataProvider();
-
         return $this->getFormFactory()->create(
             AgentQuoteRequestEditItemsConfirmForm::class,
-            $agentQuoteRequestFormDataProvider->getData($quoteRequestReference)
+            $quoteRequestTransfer
         );
-    }
-
-    /**
-     * @return \SprykerShop\Yves\AgentQuoteRequestPage\Form\DataProvider\AgentQuoteRequestFormDataProvider
-     */
-    public function createAgentQuoteRequestFormDataProvider(): AgentQuoteRequestFormDataProvider
-    {
-        return new AgentQuoteRequestFormDataProvider();
     }
 
     /**
