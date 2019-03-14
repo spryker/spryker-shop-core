@@ -12,14 +12,16 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
 {
-    public const ROUTE_AGENT_QUOTE_REQUEST = 'agent/quote-request';
-    public const ROUTE_AGENT_QUOTE_REQUEST_CANCEL = 'agent/quote-request/cancel';
-    public const ROUTE_AGENT_QUOTE_REQUEST_DETAILS = 'agent/quote-request/details';
-    public const ROUTE_AGENT_QUOTE_REQUEST_START_EDIT = 'agent/quote-request/start-edit';
-    public const ROUTE_AGENT_QUOTE_REQUEST_EDIT = 'agent/quote-request/edit';
-    public const ROUTE_AGENT_QUOTE_REQUEST_SEND_TO_CUSTOMER = 'agent/quote-request/send-to-customer';
+    protected const ROUTE_AGENT_QUOTE_REQUEST = 'agent/quote-request';
+    protected const ROUTE_AGENT_QUOTE_REQUEST_CANCEL = 'agent/quote-request/cancel';
+    protected const ROUTE_AGENT_QUOTE_REQUEST_DETAILS = 'agent/quote-request/details';
+    protected const ROUTE_AGENT_QUOTE_REQUEST_START_EDIT = 'agent/quote-request/start-edit';
+    protected const ROUTE_AGENT_QUOTE_REQUEST_EDIT = 'agent/quote-request/edit';
+    protected const ROUTE_AGENT_QUOTE_REQUEST_SEND_TO_CUSTOMER = 'agent/quote-request/send-to-customer';
+    protected const ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS = 'agent/quote-request/edit-items';
+    protected const ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM = 'agent/quote-request/edit-items-confirm';
 
-    public const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
+    protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
     protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-]+';
 
@@ -35,7 +37,9 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
             ->addQuoteRequestDetailsRoute()
             ->addQuoteRequestStartEditRoute()
             ->addQuoteRequestEditRoute()
-            ->addQuoteRequestSendToCustomerRoute();
+            ->addQuoteRequestSendToCustomerRoute()
+            ->addQuoteRequestEditItemsRoute()
+            ->addQuoteRequestEditItemsConfirmRoute();
     }
 
     /**
@@ -120,6 +124,36 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
     protected function addQuoteRequestSendToCustomerRoute()
     {
         $this->createController('/{agent}/quote-request/send-to-customer/{quoteRequestReference}', static::ROUTE_AGENT_QUOTE_REQUEST_SEND_TO_CUSTOMER, 'AgentQuoteRequestPage', 'AgentQuoteRequestEdit', 'sendToCustomer')
+            ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
+            ->value('agent', 'agent')
+            ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\AgentQuoteRequestPage\Controller\AgentQuoteRequestEditItemsController::indexAction()
+     *
+     * @return $this
+     */
+    protected function addQuoteRequestEditItemsRoute()
+    {
+        $this->createController('/{agent}/quote-request/edit-items/{quoteRequestReference}', static::ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS, 'AgentQuoteRequestPage', 'AgentQuoteRequestEditItems', 'index')
+            ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
+            ->value('agent', 'agent')
+            ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\AgentQuoteRequestPage\Controller\AgentQuoteRequestEditItemsController::indexAction()
+     *
+     * @return $this
+     */
+    protected function addQuoteRequestEditItemsConfirmRoute()
+    {
+        $this->createController('/{agent}/quote-request/edit-items-confirm/{quoteRequestReference}', static::ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM, 'AgentQuoteRequestPage', 'AgentQuoteRequestEditItems', 'confirm')
             ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
             ->value('agent', 'agent')
             ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);

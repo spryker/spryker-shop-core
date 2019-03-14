@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\AgentQuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
-use SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -18,6 +17,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class AgentQuoteRequestDeleteController extends AgentQuoteRequestAbstractController
 {
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SUCCESS_CANCELED = 'quote_request.validation.success.canceled';
+
+    /**
+     * @see \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST
+     */
+    protected const ROUTE_AGENT_QUOTE_REQUEST = 'agent/quote-request';
 
     /**
      * @param string $quoteRequestReference
@@ -32,7 +36,7 @@ class AgentQuoteRequestDeleteController extends AgentQuoteRequestAbstractControl
 
         $this->processResponseMessages($quoteRequestResponseTransfer);
 
-        return $this->redirectResponseInternal(AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST);
+        return $this->redirectResponseInternal(static::ROUTE_AGENT_QUOTE_REQUEST);
     }
 
     /**
@@ -42,7 +46,7 @@ class AgentQuoteRequestDeleteController extends AgentQuoteRequestAbstractControl
      */
     protected function processResponseMessages(QuoteRequestResponseTransfer $quoteRequestResponseTransfer): void
     {
-        if ($quoteRequestResponseTransfer->getIsSuccess()) {
+        if ($quoteRequestResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SUCCESS_CANCELED);
 
             return;

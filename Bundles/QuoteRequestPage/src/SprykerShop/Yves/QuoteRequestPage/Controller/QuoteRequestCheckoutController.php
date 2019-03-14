@@ -21,7 +21,7 @@ class QuoteRequestCheckoutController extends QuoteRequestAbstractController
      */
     protected const ROUTE_CART = 'cart';
 
-    protected const GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART = 'quote_request.validation.success.converted_to_cart';
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART_SUCCESS = 'quote_request.validation.converted_to_cart.success';
 
     /**
      * @param string $quoteRequestReference
@@ -36,7 +36,11 @@ class QuoteRequestCheckoutController extends QuoteRequestAbstractController
             ->getQuoteRequestClient()
             ->convertQuoteRequestToQuote($quoteRequestTransfer);
 
-        $this->processResponseMessages($quoteResponseTransfer);
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART_SUCCESS);
+        }
+
+        $this->handleQuoteResponseErrors($quoteResponseTransfer);
 
         return $this->redirectResponseInternal(static::ROUTE_CART);
     }
@@ -46,14 +50,8 @@ class QuoteRequestCheckoutController extends QuoteRequestAbstractController
      *
      * @return void
      */
-    protected function processResponseMessages(QuoteResponseTransfer $quoteResponseTransfer): void
+    protected function handleQuoteResponseErrors(QuoteResponseTransfer $quoteResponseTransfer): void
     {
-        if ($quoteResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART);
-
-            return;
-        }
-
         foreach ($quoteResponseTransfer->getErrors() as $errorTransfer) {
             $this->addErrorMessage($errorTransfer->getMessage());
         }

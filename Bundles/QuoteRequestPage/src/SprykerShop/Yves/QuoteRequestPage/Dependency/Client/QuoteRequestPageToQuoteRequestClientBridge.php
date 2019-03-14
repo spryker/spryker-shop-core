@@ -107,8 +107,8 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
      *
      * @return bool
      */
-    public function isQuoteRequestConvertible(QuoteRequestTransfer $quoteRequestTransfer): bool
+    public function isQuoteRequestReady(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        return $this->quoteRequestClient->isQuoteRequestConvertible($quoteRequestTransfer);
+        return $this->quoteRequestClient->isQuoteRequestReady($quoteRequestTransfer);
     }
 }

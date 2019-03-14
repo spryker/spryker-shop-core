@@ -7,10 +7,20 @@
 
 namespace SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client;
 
-interface AgentQuoteRequestWidgetToQuoteClientInterface
+interface AgentQuoteRequestWidgetToCartClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function getQuote();
+
+    /**
+     * @return void
+     */
+    public function clearQuote();
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function validateQuote();
 }
