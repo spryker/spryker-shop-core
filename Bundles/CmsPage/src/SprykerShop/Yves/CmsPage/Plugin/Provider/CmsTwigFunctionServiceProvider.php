@@ -14,6 +14,8 @@ use Twig_Environment;
 use Twig_SimpleFunction;
 
 /**
+ * @deprecated Use `SprykerShop\Yves\CmsPage\Plugin\Twig\CmsTwigPlugin` instead.
+ *
  * @method \SprykerShop\Yves\CmsPage\CmsPageFactory getFactory()
  */
 class CmsTwigFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface

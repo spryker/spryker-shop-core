@@ -12,7 +12,9 @@
   "require-dev": {
     "spryker-shop/catalog-page": "*",
     "spryker-shop/product-detail-page": "*",
+    "spryker-shop/shop-application": "*",
     "spryker/code-sniffer": "*",
+    "spryker/container": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/twig": "*"
@@ -21,6 +23,7 @@
     "spryker-shop/catalog-page": "Widget plugins are available for this module.",
     "spryker-shop/product-detail-page": "Widget plugins are available for this module.",
     "spryker-shop/shop-application": "^0.2.0 ShopApplicationServiceProvider plugin is required by TwigCmsBlock plugin",
+    "spryker/container": "If you want to use Twig Plugin",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
     "spryker/twig": "Use this module when using plugins that need Twig dependencies."
   },

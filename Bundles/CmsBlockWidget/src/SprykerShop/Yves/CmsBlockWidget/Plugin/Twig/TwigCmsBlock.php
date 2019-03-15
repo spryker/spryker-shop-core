@@ -18,6 +18,8 @@ use Twig_Environment;
 use Twig_SimpleFunction;
 
 /**
+ * @deprecated Use `SprykerShop\Yves\CmsBlockWidget\Plugin\Twig\TwigCmsBlockWidgetPlugin` instead.
+ *
  * @method \SprykerShop\Yves\CmsBlockWidget\CmsBlockWidgetFactory getFactory()
  */
 class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface

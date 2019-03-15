@@ -135,8 +135,12 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
      */
     protected function setSwitchUserEventSubscriber(Application $app): void
     {
-        $this->getDispatcher($app)->addSubscriber(
-            $this->getFactory()->createSwitchUserEventSubscriber()
+        $app['dispatcher'] = $app->share(
+            $app->extend('dispatcher', function (EventDispatcherInterface $eventDispatcher) {
+                $eventDispatcher->addSubscriber($this->getFactory()->createSwitchUserEventSubscriber());
+
+                return $eventDispatcher;
+            })
         );
     }
 
