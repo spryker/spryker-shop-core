@@ -5,15 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuoteRequestPage\Form\Handler;
+namespace SprykerShop\Yves\AgentQuoteRequestPage\Form\Handler;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client\AgentQuoteRequestPageToAgentQuoteRequestClientInterface;
 
 class AgentQuoteRequestCreateHandler implements AgentQuoteRequestCreateHandlerInterface
 {
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND = 'quote_request.validation.error.company_user_not_found';
+
     /**
      * @var \SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client\AgentQuoteRequestPageToAgentQuoteRequestClientInterface
      */
@@ -34,9 +37,25 @@ class AgentQuoteRequestCreateHandler implements AgentQuoteRequestCreateHandlerIn
      */
     public function createQuoteRequest(?int $idCompanyUser): QuoteRequestResponseTransfer
     {
+        if (!$idCompanyUser) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND);
+        }
+
         $quoteRequestTransfer = (new QuoteRequestTransfer())
             ->setCompanyUser((new CompanyUserTransfer())->setIdCompanyUser($idCompanyUser));
 
-        // TODO:: create quote request
+        return $this->agentQuoteRequestClient->createQuoteRequest($quoteRequestTransfer);
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    protected function getErrorResponse(string $message): QuoteRequestResponseTransfer
+    {
+        return (new QuoteRequestResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addMessage((new MessageTransfer())->setValue($message));
     }
 }

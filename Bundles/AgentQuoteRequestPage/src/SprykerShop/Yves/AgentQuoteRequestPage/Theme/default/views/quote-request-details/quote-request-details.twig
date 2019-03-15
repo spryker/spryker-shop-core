@@ -10,8 +10,10 @@
 } %}
 
 {% set cart = data.version ? data.version.quote : null %}
-{% if data.isQuoteRequestEditable and data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion %}
-    {% set cart = data.quoteRequest.quoteInProgress %}
+{% if data.isQuoteRequestEditable %}
+    {% if not data.version or (data.version and data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion) %}
+        {% set cart = data.quoteRequest.quoteInProgress %}
+    {% endif %}
 {% endif %}
 
 
@@ -115,7 +117,7 @@
                     {{ 'quote_request_page.quote_request.actions.back_to_list' | trans }}
                 </a>
 
-                {% if data.version and data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion %}
+                {% if not data.version or data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion %}
 
                     {% if data.isQuoteRequestCancelable %}
                         <hr/>
@@ -139,11 +141,13 @@
                            href="{{ path('agent/quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.edit' | trans }}
                         </a>
-                        <hr/>
-                        <a class="button button--expand button--success"
-                           href="{{ path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
-                            {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
-                        </a>
+                        {% if data.quoteRequest.quoteInProgress %}
+                            <hr/>
+                            <a class="button button--expand button--success"
+                               href="{{ path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                                {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
+                            </a>
+                        {% endif %}
                     {% endif %}
 
                     {% if data.quoteRequest.status == 'ready' %}

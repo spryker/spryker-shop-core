@@ -46,7 +46,7 @@ class AgentQuoteRequestCartController extends AbstractController
             ->getAgentQuoteRequestCartForm()
             ->handleRequest($request);
 
-        if ($agentQuoteRequestCartForm->isSubmitted() && $agentQuoteRequestCartForm->isValid()) {
+        if ($agentQuoteRequestCartForm->isSubmitted()) {
             $quoteRequestResponseTransfer = $this->getFactory()
                 ->createAgentQuoteRequestCartHandler()
                 ->updateQuoteRequest();

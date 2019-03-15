@@ -17,8 +17,8 @@ use SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client\AgentQuoteRequestPa
 use SprykerShop\Yves\AgentQuoteRequestPage\Form\AgentQuoteRequestCreateForm;
 use SprykerShop\Yves\AgentQuoteRequestPage\Form\AgentQuoteRequestEditItemsConfirmForm;
 use SprykerShop\Yves\AgentQuoteRequestPage\Form\AgentQuoteRequestForm;
-use SprykerShop\Yves\QuoteRequestPage\Form\Handler\AgentQuoteRequestCreateHandler;
-use SprykerShop\Yves\QuoteRequestPage\Form\Handler\AgentQuoteRequestCreateHandlerInterface;
+use SprykerShop\Yves\AgentQuoteRequestPage\Form\Handler\AgentQuoteRequestCreateHandler;
+use SprykerShop\Yves\AgentQuoteRequestPage\Form\Handler\AgentQuoteRequestCreateHandlerInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -62,7 +62,7 @@ class AgentQuoteRequestPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteRequestPage\Form\Handler\AgentQuoteRequestCreateHandlerInterface
+     * @return \SprykerShop\Yves\AgentQuoteRequestPage\Form\Handler\AgentQuoteRequestCreateHandlerInterface
      */
     public function createAgentQuoteRequestCreateHandler(): AgentQuoteRequestCreateHandlerInterface
     {

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuoteRequestPage\Form\Handler;
+namespace SprykerShop\Yves\AgentQuoteRequestPage\Form\Handler;
 
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 

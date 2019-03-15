@@ -23,7 +23,7 @@
                 </a>
             </p>
             <p>
-                {{ cart.items | default(0) | length }}
+                {{ cart ? (cart.items | length) : 0 }}
                 {{ 'agent_quote_request_widget.items' | trans }}
             </p>
         </div>

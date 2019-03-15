@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AgentQuoteRequestCreateController extends AgentQuoteRequestAbstractController
 {
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_CREATED = 'quote_request_page.quote_request.created';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -45,7 +47,17 @@ class AgentQuoteRequestCreateController extends AgentQuoteRequestAbstractControl
         if ($quoteRequestCreateForm->isSubmitted()) {
             $quoteRequestResponseTranasfer = $this->getFactory()
                 ->createAgentQuoteRequestCreateHandler()
-                ->createQuoteRequest($request->query->get(AgentQuoteRequestCreateForm::FILED_ID_COMPANY_USER));
+                ->createQuoteRequest((int)$request->get(AgentQuoteRequestCreateForm::FILED_ID_COMPANY_USER));
+
+            $this->handleResponseErrors($quoteRequestResponseTranasfer);
+
+            if ($quoteRequestResponseTranasfer->getIsSuccessful()) {
+                $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CREATED);
+
+                return $this->redirectResponseInternal(static::ROUTE_AGENT_QUOTE_REQUEST_EDIT, [
+                    static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTranasfer->getQuoteRequest()->getQuoteRequestReference(),
+                ]);
+            }
         }
 
         return [
