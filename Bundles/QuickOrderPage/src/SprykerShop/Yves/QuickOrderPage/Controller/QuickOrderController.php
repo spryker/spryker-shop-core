@@ -582,7 +582,7 @@ class QuickOrderController extends AbstractController
             break;
         }
 
-        if ($response === null) {
+        if ($response === null || !$response->getRoute()) {
             return null;
         }
 
