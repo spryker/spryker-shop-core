@@ -32,9 +32,9 @@ class QuickOrderController extends AbstractController
     public const PARAM_ROW_INDEX = 'row-index';
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
     protected const PARAM_QUICK_ORDER_FILE_TYPE = 'file-type';
+    protected const MESSAGE_CLEAR_ALL_ROWS_SUCCESS = 'quick-order.message.success.the-form-items-have-been-successfully-cleared';
     protected const ERROR_MESSAGE_QUANTITY_INVALID = 'quick-order.errors.quantity-invalid';
     protected const MESSAGE_TYPE_WARNING = 'warning';
-    protected const MESSAGE_CLEAR_ALL_ROWS_SUCCESS = 'quick-order.message.success.the-form-items-have-been-successfully-cleared';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -43,11 +43,7 @@ class QuickOrderController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $response = null;
-        if ($request->get(QuickOrderForm::SUBMIT_BUTTON_CREATE_ORDER) !== null
-            || $request->get(QuickOrderForm::SUBMIT_BUTTON_ADD_TO_CART) !== null) {
-            $response = $this->executeQuickOrderFormSubmitAction($request);
-        }
+        $response = $this->executeQuickOrderFormSubmitAction($request);
 
         if ($response) {
             return $response;
@@ -85,6 +81,8 @@ class QuickOrderController extends AbstractController
                 return $response;
             }
         }
+
+        return [];
     }
 
     /**
@@ -141,7 +139,7 @@ class QuickOrderController extends AbstractController
             'additionalColumns' => $additionalColumns,
             'products' => $this->transformProductsViewData($products),
             'fileTemplateExtensions' => $fileTemplateExtensions,
-            'prices' => $prices,
+            'prices' => $prices, // @deprecated quickOrderForm already contains this data per row at sumPrice property.
         ];
     }
 
@@ -306,7 +304,7 @@ class QuickOrderController extends AbstractController
             'form' => $quickOrderForm->createView(),
             'additionalColumns' => $additionalColumns,
             'products' => $this->transformProductsViewData($products),
-            'prices' => $prices,
+            'prices' => $prices, // @deprecated quickOrderForm already contains this data per row at sumPrice property.
         ];
     }
 
@@ -344,7 +342,7 @@ class QuickOrderController extends AbstractController
         $formDataItems = $formData['items'] ?? [];
 
         if (!isset($formDataItems[$rowIndex])) {
-            throw new HttpException(400, '"row-index" is out of the bound.');
+            throw new HttpException(Response::HTTP_BAD_REQUEST, '"row-index" is out of the bound.');
         }
         unset($formDataItems[$rowIndex]);
 
@@ -371,7 +369,7 @@ class QuickOrderController extends AbstractController
             'form' => $quickOrderForm->createView(),
             'additionalColumns' => $additionalColumns,
             'products' => $this->transformProductsViewData($products),
-            'prices' => $prices,
+            'prices' => $prices, // @deprecated quickOrderForm already contains this data per row at sumPrice property.
         ];
     }
 
@@ -392,7 +390,7 @@ class QuickOrderController extends AbstractController
      */
     public function productAdditionalDataAction(Request $request)
     {
-        $quantity = $request->get('quantity', 1);
+        $quantity = (int)$request->get('quantity', 1);
         $sku = $request->query->get('sku');
         $index = $request->query->get('index');
 
@@ -400,9 +398,15 @@ class QuickOrderController extends AbstractController
 
         if ($quantity < 1) {
             $quantity = 1;
-            $quickOrderItemTransfer->addMessage((new MessageTransfer())
-                ->setType(static::MESSAGE_TYPE_WARNING)
-                ->setValue(static::ERROR_MESSAGE_QUANTITY_INVALID));
+            $this->addMessageToQuickOrderItemTransfer($quickOrderItemTransfer);
+        }
+
+        $maxAllowedQuantity = $this->getFactory()
+            ->getModuleConfig()
+            ->getMaxAllowedQuantity();
+        if ($quantity > $maxAllowedQuantity) {
+            $quantity = $maxAllowedQuantity;
+            $this->addMessageToQuickOrderItemTransfer($quickOrderItemTransfer);
         }
 
         $quickOrderItemTransfer->setQuantity($quantity);
@@ -432,6 +436,20 @@ class QuickOrderController extends AbstractController
             $viewData,
             $this->getFactory()->getQuickOrderPageWidgetPlugins(),
             '@QuickOrderPage/views/quick-order-row-async/quick-order-row-async.twig'
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer $quickOrderItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
+     */
+    protected function addMessageToQuickOrderItemTransfer(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
+    {
+        return $quickOrderItemTransfer->addMessage(
+            (new MessageTransfer())
+                ->setType(static::MESSAGE_TYPE_WARNING)
+                ->setValue(static::ERROR_MESSAGE_QUANTITY_INVALID)
         );
     }
 
@@ -574,6 +592,8 @@ class QuickOrderController extends AbstractController
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
      * @return int[]
