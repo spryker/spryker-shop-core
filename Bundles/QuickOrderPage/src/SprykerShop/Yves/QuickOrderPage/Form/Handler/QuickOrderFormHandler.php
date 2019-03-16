@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuickOrderTransfer;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToQuickOrderServiceInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilQuantityServiceInterface;
 use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -49,9 +49,9 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
     protected $itemExpanderPlugins;
 
     /**
-     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToQuickOrderServiceInterface
+     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilQuantityServiceInterface
      */
-    protected $quickOrderService;
+    protected $utilQuantityService;
 
     /**
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface $cartClient
@@ -60,7 +60,7 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
      * @param \SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface $productResolver
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemExpanderPluginInterface[] $itemExpanderPlugins
-     * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToQuickOrderServiceInterface $quickOrderService
+     * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         QuickOrderPageToCartClientInterface $cartClient,
@@ -69,7 +69,7 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
         ProductResolverInterface $productResolver,
         Request $request,
         array $itemExpanderPlugins,
-        QuickOrderPageToQuickOrderServiceInterface $quickOrderService
+        QuickOrderPageToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->cartClient = $cartClient;
         $this->quoteClient = $quoteClient;
@@ -77,7 +77,7 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
         $this->productResolver = $productResolver;
         $this->request = $request;
         $this->itemExpanderPlugins = $itemExpanderPlugins;
-        $this->quickOrderService = $quickOrderService;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -169,10 +169,20 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
 
             $newQuantity = $quantity + $itemTransfers[$sku]->getQuantity();
 
-            $itemTransfers[$sku]->setQuantity($this->quickOrderService->round($newQuantity));
+            $itemTransfers[$sku]->setQuantity($this->roundQuantity($newQuantity));
         }
 
         return array_values($itemTransfers);
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
     }
 
     /**

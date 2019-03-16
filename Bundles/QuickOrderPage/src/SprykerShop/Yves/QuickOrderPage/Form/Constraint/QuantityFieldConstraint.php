@@ -13,12 +13,10 @@ class QuantityFieldConstraint extends SymfonyConstraint
 {
     protected const MESSAGE = 'quick-order.errors.quantity-required';
 
-    public const OPTION_QUICK_ORDER_SERVICE = 'quickOrderService';
-
     /**
-     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToQuickOrderServiceInterface
+     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilQuantityServiceInterface
      */
-    protected $quickOrderService;
+    protected $utilQuantityService;
 
     /**
      * @return string|array One or more constant values
@@ -34,15 +32,5 @@ class QuantityFieldConstraint extends SymfonyConstraint
     public function getMessage(): string
     {
         return static::MESSAGE;
-    }
-
-    /**
-     * @param float $value
-     *
-     * @return float
-     */
-    public function round(float $value): float
-    {
-        return $this->quickOrderService->round($value);
     }
 }

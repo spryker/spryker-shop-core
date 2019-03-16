@@ -468,9 +468,18 @@ class QuickOrderController extends AbstractController
      */
     protected function getIsQuantityAdjusted($before, $after): bool
     {
-        $quickOrderService = $this->getFactory()
-            ->getQuickOrderService();
+        return $before !== null && $this->roundQuantity($before) !== $this->roundQuantity($after);
+    }
 
-        return $before !== null && $quickOrderService->round($before) !== $quickOrderService->round($after);
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->getFactory()
+            ->getUtilQuantityService()
+            ->roundQuantity($quantity);
     }
 }
