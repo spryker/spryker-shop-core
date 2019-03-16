@@ -1,13 +1,11 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: kravchenko
- * Date: 2019-03-16
- * Time: 09:14
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\QuickOrderPage\Dependency\Service;
-
 
 class QuickOrderPageToUtilQuantityServiceBridge implements QuickOrderPageToUtilQuantityServiceInterface
 {
@@ -17,7 +15,6 @@ class QuickOrderPageToUtilQuantityServiceBridge implements QuickOrderPageToUtilQ
     protected $utilQuantityService;
 
     /**
-     * QuickOrderPageToUtilQuantityServiceBridge constructor.
      * @param \Spryker\Service\UtilQuantity\UtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct($utilQuantityService)
