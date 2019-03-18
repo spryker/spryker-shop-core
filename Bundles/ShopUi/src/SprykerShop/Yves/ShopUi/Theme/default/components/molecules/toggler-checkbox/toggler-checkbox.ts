@@ -37,7 +37,7 @@ export default class TogglerCheckbox extends Component {
     }
 
     /**
-     * Toggles the class names.
+     * Toggles the class names in the target elements.
      * @param addClass A boolean value which checks if the trigger is checked.
      */
     toggle(addClass: boolean = this.addClass): void {

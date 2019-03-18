@@ -246,7 +246,7 @@ export default class AutocompleteForm extends Component {
     }
 
     /**
-     * Sets an input value.
+     * Sets the input value.
      */
     set inputValue(value: string) {
         this.valueInput.value = value;
