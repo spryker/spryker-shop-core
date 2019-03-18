@@ -18,7 +18,10 @@
     {% if salesUnitName %}
         {% set salesUnitSummary = data.quantitySalesUnit.value / data.quantitySalesUnit.precision ~ ' ' ~ salesUnitName | trans %}
     {% endif %}
-
-    <strong class="float-right">{{data.price}}</strong>
+    {% if can('SeePricePermissionPlugin') %}
+        <strong class="float-right">{{data.price}}</strong>
+    {% else %}
+        <strong class="float-right">{{ 'customer.access.cannot_see_price' | trans }}</strong>
+    {% endif %}
     {{data.quantity}} <span class="text-secondary">&times;</span> {{data.name}} {% if salesUnitSummary is not empty %}(= {{ salesUnitSummary }}){% endif %}
 {% endblock body %}

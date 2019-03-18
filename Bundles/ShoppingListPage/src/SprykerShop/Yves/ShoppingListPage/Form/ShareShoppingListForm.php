@@ -58,7 +58,7 @@ class ShareShoppingListForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCompanyBusinessUnits(FormBuilderInterface $builder, array $options): self
+    protected function addCompanyBusinessUnits(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_COMPANY_BUSINESS_UNITS, CollectionType::class, [
             'entry_type' => ShoppingListBusinessUnitShareEditForm::class,
@@ -78,7 +78,7 @@ class ShareShoppingListForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCompanyUsers(FormBuilderInterface $builder, array $options): self
+    protected function addCompanyUsers(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_COMPANY_USERS, CollectionType::class, [
             'entry_type' => ShoppingListCompanyUserShareEditForm::class,

@@ -8,14 +8,14 @@
 namespace SprykerShop\Yves\QuickOrderPage\Form\Constraint;
 
 use InvalidArgumentException;
-use SprykerShop\Yves\QuickOrderPage\Form\OrderItemEmbeddedForm;
+use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderItemEmbeddedForm;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 class ItemsFieldConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param mixed $orderItemTransfers The value that should be validated
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[]|\ArrayObject $orderItemTransfers The value that should be validated
      * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\QuickOrderPage\Form\Constraint\ItemsFieldConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
@@ -32,13 +32,30 @@ class ItemsFieldConstraintValidator extends ConstraintValidator
             ));
         }
 
-        $firstOrderItemTransfer = $orderItemTransfers[0] ?? null;
-        if ($firstOrderItemTransfer && !$firstOrderItemTransfer->getSku()) {
-            $this->context
-                ->buildViolation($constraint->message)
-                ->atPath('[0]')
-                ->atPath(OrderItemEmbeddedForm::FIELD_SKU)
-                ->addViolation();
+        if ($this->hasSku($orderItemTransfers->getArrayCopy())) {
+            return;
         }
+
+        $this->context
+            ->buildViolation($constraint->getMessage())
+            ->atPath('[0]')
+            ->atPath(QuickOrderItemEmbeddedForm::FIELD_SKU)
+            ->addViolation();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $orderItemTransfers
+     *
+     * @return bool
+     */
+    protected function hasSku(array $orderItemTransfers): bool
+    {
+        foreach ($orderItemTransfers as $orderItemTransfer) {
+            if ($orderItemTransfer->getSku()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

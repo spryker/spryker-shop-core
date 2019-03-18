@@ -55,7 +55,7 @@
                         {% for attribute in item.superAttributesDefinition %}
                             {% if item.attributes[attribute] is defined %}
                                 <li class="list__item">
-                                    <strong>{{ ('product.attribute.' ~ attribute) | trans }}</strong>: {{ item.attributes[attribute] }}
+                                    {{ ('product.attribute.' ~ attribute) | trans }}: {{ item.attributes[attribute] }}
                                 </li>
                             {% endif %}
                         {% endfor %}
@@ -85,7 +85,7 @@
                             }
                         } only %}
                     {% else %}
-                        {{ 'product_alternative_widget.not_applicable' | trans }}
+                        {{ 'shopping_list.not_applicable' | trans }}
                     {% endif %}
                 </td>
                 <td class="{{ config.name }}__cell text-center">

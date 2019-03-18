@@ -84,9 +84,9 @@ class CartItemHandler implements CartItemHandlerInterface
         $this->addProductOptions($optionValueIds, $itemTransfer);
 
         $this->cartClient->addItem($itemTransfer);
-        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
+        $this->zedRequestClient->addResponseMessagesToMessenger();
 
-        if (count($this->zedRequestClient->getLastResponseErrorMessages()) === 0) {
+        if (count($this->zedRequestClient->getResponsesErrorMessages()) === 0) {
             $this->cartClient->removeItem($currentItemSku, $groupKey);
         }
     }
@@ -119,20 +119,17 @@ class CartItemHandler implements CartItemHandlerInterface
      */
     protected function getStorageProductForSelectedAttributes(array $selectedAttributes, $item, $localeName)
     {
-        $productData = $this->productClient->findProductAbstractStorageData(
+        $productViewTransfer = $this->productClient->findProductAbstractViewTransfer(
             $item->getIdProductAbstract(),
-            $localeName
-        );
-
-        if ($productData === null) {
-            return new ProductViewTransfer();
-        }
-
-        return $this->productClient->mapProductStorageData(
-            $productData,
             $localeName,
             $selectedAttributes
         );
+
+        if ($productViewTransfer === null) {
+            return new ProductViewTransfer();
+        }
+
+        return $productViewTransfer;
     }
 
     /**

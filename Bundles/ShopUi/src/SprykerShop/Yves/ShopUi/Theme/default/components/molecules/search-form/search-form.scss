@@ -2,6 +2,11 @@
     #{$name} {
         position: relative;
 
+        &__submit {
+            position: relative;
+            z-index: $setting-zi-navigation-top;
+        }
+
         @content;
     }
 }

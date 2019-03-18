@@ -23,6 +23,7 @@ use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToMultiC
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToProductStorageClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToZedRequestClientInterface;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Service\ShoppingListPageToUtilEncodingServiceInterface;
 use SprykerShop\Yves\ShoppingListPage\Form\Constraint\ShareShoppingListRequiredIdConstraint;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShareShoppingListDataProvider;
 use SprykerShop\Yves\ShoppingListPage\Form\DataProvider\ShoppingListFormDataProvider;
@@ -217,26 +218,6 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return string[]
-     */
-    public function getPrintShoppingListWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_WIDGETS);
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return string[]
-     */
-    public function getShoppingListViewWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_VIEW_WIDGETS);
-    }
-
-    /**
      * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListFormDataProviderMapperPluginInterface[]
      */
     public function getShoppingListFormDataProviderMapperPlugins(): array
@@ -280,22 +261,10 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return string[]
+     * @return \SprykerShop\Yves\ShoppingListPage\Dependency\Service\ShoppingListPageToUtilEncodingServiceInterface
      */
-    public function getShoppingListEditWidgetPlugins(): array
+    public function getUtilEncodingService(): ShoppingListPageToUtilEncodingServiceInterface
     {
-        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_EDIT_WIDGETS);
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return string[]
-     */
-    public function getShoppingListOverviewWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_OVERVIEW_WIDGETS);
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }
