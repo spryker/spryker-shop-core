@@ -168,13 +168,13 @@ class MultiCartController extends AbstractController
      */
     public function clearAction(int $idQuote)
     {
-        if (!$this->canRemoveCartItem()) {
+        $quoteTransfer = $this->findQuoteOrFail($idQuote);
+
+        if (!$this->canRemoveCartItem($quoteTransfer)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
-
-        $quoteTransfer = $this->findQuoteOrFail($idQuote);
 
         $quoteResponseTransfer = $this->getFactory()
             ->getMultiCartClient()
@@ -277,24 +277,23 @@ class MultiCartController extends AbstractController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return bool
      */
-    protected function canRemoveCartItem(): bool
+    protected function canRemoveCartItem(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->canPerformCartItemAction(RemoveCartItemPermissionPlugin::KEY);
+        return $this->canPerformCartItemAction(RemoveCartItemPermissionPlugin::KEY, $quoteTransfer);
     }
 
     /**
      * @param string $permissionPluginKey
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function canPerformCartItemAction(string $permissionPluginKey): bool
+    protected function canPerformCartItemAction(string $permissionPluginKey, QuoteTransfer $quoteTransfer): bool
     {
-        $quoteTransfer = $this->getFactory()
-            ->getCartClient()
-            ->getQuote();
-
         if ($quoteTransfer->getCustomer() === null) {
             return true;
         }
