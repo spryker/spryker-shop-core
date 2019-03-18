@@ -9,13 +9,14 @@ namespace SprykerShop\Yves\ShoppingListWidget\Plugin\MultiCartPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\MultiCartPage\Dependency\Plugin\CartToShoppingListWidget\CartToShoppingListWidgetPluginInterface;
 
 /**
  * @deprecated Use molecule('cart-to-shopping-list', 'ShoppingListWidget') instead.
  */
-class CartToShoppingListWidgetPlugin extends AbstractWidgetPlugin implements CartToShoppingListWidgetPluginInterface
+class CartToShoppingListWidgetPlugin extends AbstractWidgetPlugin
 {
+    public const NAME = 'CartToShoppingListWidgetPlugin';
+
     /**
      * {@inheritdoc}
      *

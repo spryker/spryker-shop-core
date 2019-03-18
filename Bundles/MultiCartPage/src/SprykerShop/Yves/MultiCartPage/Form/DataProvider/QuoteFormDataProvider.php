@@ -28,9 +28,9 @@ class QuoteFormDataProvider implements QuoteFormDataProviderInterface
     /**
      * @param int|null $idQuote
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function getData(?int $idQuote = null): QuoteTransfer
+    public function getData(?int $idQuote = null): ?QuoteTransfer
     {
         if ($idQuote) {
             return $this->multiCartClient->findQuoteById($idQuote);

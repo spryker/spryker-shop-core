@@ -19,7 +19,7 @@ before_install:
   - phpenv config-rm xdebug.ini
 
 install:
-  - composer install --no-interaction --prefer-dist --no-autoloader
+  - composer install --no-interaction --prefer-dist --optimize-autoloader
 
 script:
   - composer cs-check
