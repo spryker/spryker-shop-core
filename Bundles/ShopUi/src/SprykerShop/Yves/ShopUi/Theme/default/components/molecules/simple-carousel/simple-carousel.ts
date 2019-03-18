@@ -132,7 +132,7 @@ export default class SimpleCarousel extends Component {
     }
 
     /**
-     * Switches to the slide based on the rovided dot element.
+     * Switches to the slide based on the provided dot element.
      * @param dot HTMLElement corresponding to the new target slide that has to be loaded.
      */
     loadViewIndexFromDot(dot: HTMLElement): void {

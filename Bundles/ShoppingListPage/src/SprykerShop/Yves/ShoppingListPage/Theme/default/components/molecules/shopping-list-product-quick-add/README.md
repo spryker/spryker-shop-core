@@ -1,1 +1,1 @@
-Displays quick add to cart form with product autocomplete search on shopping-list page.
+Displays quick add to cart form with product autocomplete search on Shopping List page.

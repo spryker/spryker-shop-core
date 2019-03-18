@@ -1,1 +1,1 @@
-Displays file upload form for order uploading on quick order page.
+Displays file upload form for order uploading on Quick Order page.
