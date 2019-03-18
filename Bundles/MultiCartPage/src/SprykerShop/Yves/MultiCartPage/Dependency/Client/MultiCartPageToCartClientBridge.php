@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\MultiCartPage\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 class MultiCartPageToCartClientBridge implements MultiCartPageToCartClientInterface
 {
@@ -31,13 +30,5 @@ class MultiCartPageToCartClientBridge implements MultiCartPageToCartClientInterf
     public function validateQuote(): QuoteResponseTransfer
     {
         return $this->cartClient->validateQuote();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getQuote(): QuoteTransfer
-    {
-        return $this->cartClient->getQuote();
     }
 }
