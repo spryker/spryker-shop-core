@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\MultiCartPage\Controller;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -24,6 +23,11 @@ class MultiCartController extends AbstractController
     use PermissionAwareTrait;
 
     protected const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
+
+    /**
+     * @uses \SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin::KEY
+     */
+    protected const REMOVE_CART_ITEM_PERMISSION_PLUGIN_KEY = 'RemoveCartItemPermissionPlugin';
 
     public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
 
@@ -283,7 +287,7 @@ class MultiCartController extends AbstractController
      */
     protected function canRemoveCartItem(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->canPerformCartItemAction(RemoveCartItemPermissionPlugin::KEY, $quoteTransfer);
+        return $this->canPerformCartItemAction(static::REMOVE_CART_ITEM_PERMISSION_PLUGIN_KEY, $quoteTransfer);
     }
 
     /**
