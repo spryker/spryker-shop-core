@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\MultiCartPage\Controller;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,8 +21,6 @@ class MultiCartController extends AbstractController
 {
     use PermissionAwareTrait;
 
-    protected const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
-
     /**
      * @uses \SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin::KEY
      */
@@ -34,7 +31,7 @@ class MultiCartController extends AbstractController
      */
     protected const ROUTE_CART = 'cart';
 
-    public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
+    protected const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
 
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
     protected const GLOSSARY_KEY_CART_UPDATED_ERROR = 'multi_cart_widget.cart.updated.error';
@@ -195,9 +192,9 @@ class MultiCartController extends AbstractController
         }
 
         if (!$this->canRemoveCartItem($quoteTransfer)) {
-            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+            $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
 
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
         $quoteResponseTransfer = $this->getFactory()
