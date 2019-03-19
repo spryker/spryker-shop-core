@@ -1,8 +1,13 @@
-{% extends template('widget') %}
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-request-cart-from',
+    tag: 'div',
+} %}
 
 {% define data = {
-    form: _widget.form,
-    quoteRequestReference: _widget.quoteRequestReference
+    quoteRequestReference: required,
+    form: required,
 } %}
 
 {% block body %}
