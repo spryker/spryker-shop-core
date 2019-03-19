@@ -59,9 +59,7 @@ class AgentQuoteRequestPageFactory extends AbstractFactory
      */
     public function createAgentQuoteRequestFormDataProvider(): AgentQuoteRequestFormDataProvider
     {
-        return new AgentQuoteRequestFormDataProvider(
-            $this->getQuoteRequestClient()
-        );
+        return new AgentQuoteRequestFormDataProvider();
     }
 
     /**
