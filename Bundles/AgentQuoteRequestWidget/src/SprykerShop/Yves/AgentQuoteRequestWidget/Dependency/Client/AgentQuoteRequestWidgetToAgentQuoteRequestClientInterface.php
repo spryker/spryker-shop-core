@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 
 interface AgentQuoteRequestWidgetToAgentQuoteRequestClientInterface
 {
@@ -20,4 +21,11 @@ interface AgentQuoteRequestWidgetToAgentQuoteRequestClientInterface
     public function getQuoteRequestOverviewCollection(
         QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer
     ): QuoteRequestOverviewCollectionTransfer;
+
+    /**
+     * @param string $quoteRequestReference
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequestByReference(string $quoteRequestReference): ?QuoteRequestTransfer;
 }

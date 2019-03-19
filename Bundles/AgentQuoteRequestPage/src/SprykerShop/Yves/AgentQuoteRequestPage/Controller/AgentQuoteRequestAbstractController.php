@@ -7,14 +7,13 @@
 
 namespace SprykerShop\Yves\AgentQuoteRequestPage\Controller;
 
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
+ * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageFactory getFactory()
  */
 class AgentQuoteRequestAbstractController extends AbstractController
 {
@@ -25,20 +24,11 @@ class AgentQuoteRequestAbstractController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
-    protected function getQuoteRequestTransferByReference(string $quoteRequestReference): QuoteRequestTransfer
+    protected function getQuoteRequestByReference(string $quoteRequestReference): QuoteRequestTransfer
     {
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($quoteRequestReference)
-            ->setWithHidden(true);
-
-        $quoteRequestTransfers = $this->getFactory()
-            ->getQuoteRequestClient()
-            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
-            ->getQuoteRequests()
-            ->getArrayCopy();
-
-        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer|null $quoteRequestTransfer */
-        $quoteRequestTransfer = array_shift($quoteRequestTransfers);
+        $quoteRequestTransfer = $this->getFactory()
+            ->getAgentQuoteRequestClient()
+            ->findQuoteRequestByReference($quoteRequestReference);
 
         if (!$quoteRequestTransfer) {
             throw new NotFoundHttpException();

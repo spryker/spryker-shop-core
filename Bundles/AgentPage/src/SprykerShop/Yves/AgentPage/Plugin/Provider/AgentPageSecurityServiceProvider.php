@@ -78,6 +78,10 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
                 'users' => $app->share(function () {
                     return $this->getFactory()->createAgentUserProvider();
                 }),
+                'switch_user' => [
+                    'parameter' => '_switch_user',
+                    'role' => static::ROLE_PREVIOUS_ADMIN,
+                ],
             ],
             CustomerPageConfig::SECURITY_FIREWALL_NAME => [
                 'context' => AgentPageConfig::SECURITY_FIREWALL_NAME,

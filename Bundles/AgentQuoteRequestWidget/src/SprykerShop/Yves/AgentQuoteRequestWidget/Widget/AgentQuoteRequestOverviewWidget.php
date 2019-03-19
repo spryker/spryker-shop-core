@@ -47,7 +47,7 @@ class AgentQuoteRequestOverviewWidget extends AbstractWidget
     protected function getQuoteRequestOverviewCollection(): QuoteRequestOverviewCollectionTransfer
     {
         $quoteTransfer = $this->getFactory()
-            ->getQuoteClient()
+            ->getCartClient()
             ->getQuote();
 
         $paginationTransfer = (new PaginationTransfer())
