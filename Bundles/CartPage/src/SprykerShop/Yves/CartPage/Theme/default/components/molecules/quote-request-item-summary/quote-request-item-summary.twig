@@ -36,7 +36,7 @@
             {% else %}
                 {% include molecule('product-options', 'ProductOptionWidget') ignore missing with {
                     data: {
-                        options: data.cartItem.productOptions | default([])
+                        options: data.cartItem.productOptions,
                     }
                 } only %}
             {% endif %}
