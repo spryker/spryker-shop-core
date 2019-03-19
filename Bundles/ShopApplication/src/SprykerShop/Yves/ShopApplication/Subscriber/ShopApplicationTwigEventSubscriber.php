@@ -85,7 +85,7 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
         $result = $event->getControllerResult();
 
         if ($result instanceof ViewInterface) {
-            $this->setViewGlobalVariable($result);
+            $this->addGlobalView($result);
         }
 
         if ($result instanceof WidgetContainerInterface) {
@@ -97,14 +97,14 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\View\ViewInterface $result
+     * @param \Spryker\Yves\Kernel\View\ViewInterface $view
      *
      * @return void
      */
-    protected function setViewGlobalVariable(ViewInterface $result): void
+    protected function addGlobalView(ViewInterface $view): void
     {
         $twig = $this->getTwig();
-        $twig->addGlobal(static::TWIG_GLOBAL_VARIABLE_NAME_VIEW, $result);
+        $twig->addGlobal(static::TWIG_GLOBAL_VARIABLE_NAME_VIEW, $view);
     }
 
     /**
