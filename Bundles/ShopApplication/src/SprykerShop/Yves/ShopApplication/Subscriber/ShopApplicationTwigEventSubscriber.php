@@ -87,7 +87,7 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
         if ($result instanceof ViewInterface) {
             $this->setViewGlobalVariable($result);
         }
-        
+
         if ($result instanceof WidgetContainerInterface) {
             $this->addWidgetContainerRegister($result);
         }
@@ -98,6 +98,8 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
 
     /**
      * @param \Spryker\Yves\Kernel\View\ViewInterface $result
+     *
+     * @return void
      */
     protected function setViewGlobalVariable(ViewInterface $result): void
     {
