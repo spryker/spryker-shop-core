@@ -11,6 +11,7 @@ class CmsContentWidgetBannerConfigurationProvider implements CmsContentWidgetBan
 {
     public const FUNCTION_NAME = 'cms_banner';
     public const TITLE_BOTTOM_TEMPLATE_IDENTIFIER = 'title-bottom';
+
     /**
      * @return string
      */
@@ -18,6 +19,7 @@ class CmsContentWidgetBannerConfigurationProvider implements CmsContentWidgetBan
     {
         return static::FUNCTION_NAME;
     }
+
     /**
      * @return array
      */
@@ -28,6 +30,7 @@ class CmsContentWidgetBannerConfigurationProvider implements CmsContentWidgetBan
             static::TITLE_BOTTOM_TEMPLATE_IDENTIFIER => '@CmsContentWidgetBanner/views/cms-banner/cms-banner-title-bottom.twig',
         ];
     }
+
     /**
      * @return string
      */
