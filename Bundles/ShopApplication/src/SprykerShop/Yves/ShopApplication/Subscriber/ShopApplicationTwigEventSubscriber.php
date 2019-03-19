@@ -45,7 +45,7 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
     /**
      * @var \SprykerShop\Yves\ShopApplication\ShopApplicationConfig
      */
-    private $shopApplicationConfig;
+    protected $shopApplicationConfig;
 
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
@@ -84,12 +84,9 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
     {
         $result = $event->getControllerResult();
 
-        if (!$result instanceof ViewInterface) {
-            return;
+        if ($result instanceof ViewInterface) {
+            $this->addGlobalView($result);
         }
-
-        $twig = $this->getTwig();
-        $twig->addGlobal(static::TWIG_GLOBAL_VARIABLE_NAME_VIEW, $result);
 
         if ($result instanceof WidgetContainerInterface) {
             $this->addWidgetContainerRegister($result);
@@ -100,14 +97,45 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\View\ViewInterface $result
+     * @param \Spryker\Yves\Kernel\View\ViewInterface $view
+     *
+     * @return void
+     */
+    protected function addGlobalView(ViewInterface $view): void
+    {
+        $twig = $this->getTwig();
+        $twig->addGlobal(static::TWIG_GLOBAL_VARIABLE_NAME_VIEW, $view);
+    }
+
+    /**
+     * @param mixed $result
      *
      * @return \Symfony\Component\HttpFoundation\Response|null
      */
-    protected function getResponse(ViewInterface $result): ?Response
+    protected function getResponse($result): ?Response
     {
         $parameters = $this->getViewParameters($result);
-        $template = $result->getTemplate();
+        $template = $this->getTemplateName($result, $parameters);
+
+        if (!$template) {
+            return null;
+        }
+
+        return $this->createResponse($template, $parameters);
+    }
+
+    /**
+     * @param mixed $result
+     * @param array $parameters
+     *
+     * @return string|null
+     */
+    protected function getTemplateName($result, array $parameters): ?string
+    {
+        $template = null;
+        if ($result instanceof ViewInterface) {
+            $template = $result->getTemplate();
+        }
 
         if (!$template) {
             $request = $this->getRequestStack()->getCurrentRequest();
@@ -120,7 +148,7 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
             $template = '@' . $this->getRoute($parameters, $controller) . '.twig';
         }
 
-        return $this->createResponse($template, $parameters);
+        return $template;
     }
 
     /**
@@ -169,17 +197,17 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\View\ViewInterface $view
+     * @param mixed $result
      *
      * @return array
      */
-    protected function getViewParameters(ViewInterface $view): array
+    protected function getViewParameters($result): array
     {
-        if ($this->shopApplicationConfig->useViewParametersToRenderTwig()) {
-            return $view->getData();
+        if ($result instanceof ViewInterface && $this->shopApplicationConfig->useViewParametersToRenderTwig()) {
+            return $result->getData();
         }
 
-        return [];
+        return (array)$result;
     }
 
     /**
