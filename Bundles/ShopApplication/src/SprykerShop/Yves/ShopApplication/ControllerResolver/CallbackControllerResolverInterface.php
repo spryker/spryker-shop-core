@@ -10,11 +10,11 @@ namespace SprykerShop\Yves\ShopApplication\ControllerResolver;
 interface CallbackControllerResolverInterface
 {
     /**
-     * @param string $name
+     * @param mixed $name
      *
      * @return bool
      */
-    public function isValid(string $name): bool;
+    public function isValid($name): bool;
 
     /**
      * @param string $name

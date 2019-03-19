@@ -28,13 +28,13 @@ class CallbackControllerResolver implements CallbackControllerResolverInterface
     }
 
     /**
-     * @param string $name
+     * @param mixed $name
      *
      * @return bool
      */
-    public function isValid(string $name): bool
+    public function isValid($name): bool
     {
-        return preg_match(static::SERVICE_PATTERN, $name);
+        return is_string($name) && preg_match(static::SERVICE_PATTERN, $name);
     }
 
     /**
