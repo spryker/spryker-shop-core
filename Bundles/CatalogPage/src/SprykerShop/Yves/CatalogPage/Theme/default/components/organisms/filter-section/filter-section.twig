@@ -17,24 +17,26 @@
         {% set filterHasValues = filter.values is not defined or filter.values | length > 0 %}
 
         {% if filterHasValues %}
-            <h6>{{ ('product.filter.' ~ filter.name | lower) | trans }}</h6>
+            {% block filters %}
+                <h6>{{ ('product.filter.' ~ filter.name | lower) | trans }}</h6>
 
-            {% include [
-                molecule('filter-' ~ filter.config.name, 'CatalogPage'),
-                molecule('filter-' ~ filter.config.type, 'CatalogPage')
-            ] ignore missing with {
-                data: {
-                    filterPath: data.filterPath,
-                    categories: data.categories,
-                    filter: filter,
-                    parameter: filter.config.parameterName | default(''),
-                    min: filter.min | default(0),
-                    max: filter.max | default(0),
-                    activeMin: filter.activeMin | default(0),
-                    activeMax: filter.activeMax | default(0),
-                    isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible
-                }
-            } only %}
+                {% include [
+                    molecule('filter-' ~ filter.config.name, 'CatalogPage'),
+                    molecule('filter-' ~ filter.config.type, 'CatalogPage')
+                ] ignore missing with {
+                    data: {
+                        filterPath: data.filterPath,
+                        categories: data.categories,
+                        filter: filter,
+                        parameter: filter.config.parameterName | default(''),
+                        min: filter.min | default(0),
+                        max: filter.max | default(0),
+                        activeMin: filter.activeMin | default(0),
+                        activeMax: filter.activeMax | default(0),
+                        isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible
+                    }
+                } only %}
+            {% endblock %}
 
             <hr />
         {% endif %}

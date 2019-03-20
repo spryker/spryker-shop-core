@@ -1,7 +1,13 @@
 import Component from '../../../models/component';
 
 export default class SideDrawer extends Component {
+    /**
+     * Collection of the trigger elements.
+     */
     triggers: HTMLElement[]
+    /**
+     * Collection of the container elements.
+     */
     containers: HTMLElement[]
 
     protected readyCallback(): void {
@@ -19,16 +25,25 @@ export default class SideDrawer extends Component {
         this.toggle();
     }
 
+    /**
+     * Toggles the class names.
+     */
     toggle(): void {
         const isShown = !this.classList.contains(`${this.name}--show`);
         this.classList.toggle(`${this.name}--show`, isShown);
         this.containers.forEach((conatiner: HTMLElement) => conatiner.classList.toggle(`is-not-scrollable`, isShown));
     }
 
+    /**
+     * Gets a class name of the trigger element.
+     */
     get triggerSelector(): string {
         return this.getAttribute('trigger-selector');
     }
 
+    /**
+     * Gets the css query selector of the container element.
+     */
     get containerSelector(): string {
         return this.getAttribute('container-selector');
     }

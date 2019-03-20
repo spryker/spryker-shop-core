@@ -56,7 +56,7 @@ class AddToShoppingListWidget extends AbstractWidget
             return $shoppingListCollection;
         }
 
-        $customerShoppingListCollection = $this->getFactory()->getShoppingListClient()->getCustomerShoppingListCollection();
+        $customerShoppingListCollection = $this->getFactory()->getShoppingListSessionClient()->getCustomerShoppingListCollection();
 
         foreach ($customerShoppingListCollection->getShoppingLists() as $shoppingList) {
             if ($this->can('WriteShoppingListPermissionPlugin', $shoppingList->getIdShoppingList())) {

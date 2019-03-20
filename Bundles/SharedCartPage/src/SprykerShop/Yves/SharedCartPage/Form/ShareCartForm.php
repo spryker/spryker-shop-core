@@ -84,7 +84,7 @@ class ShareCartForm extends AbstractType
      *
      * @return $this
      */
-    protected function addShareDetailsField(FormBuilderInterface $builder, array $options): self
+    protected function addShareDetailsField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_SHARE_DETAILS, CollectionType::class, [
             'entry_type' => ShareCartCompanyUserShareEditForm::class,

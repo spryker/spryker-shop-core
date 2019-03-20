@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\MultiCartPage\Controller;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,12 +19,17 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class MultiCartController extends AbstractController
 {
-    public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
+    use PermissionAwareTrait;
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
      */
-    public const GLOSSARY_KEY_CART_WAS_DELETED = 'multi_cart_widget.cart.was-deleted-before';
+    protected const ROUTE_CART = 'cart';
+
+    public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
+
+    protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+    protected const GLOSSARY_KEY_CART_UPDATED_ERROR = 'multi_cart_widget.cart.updated.error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -61,7 +66,7 @@ class MultiCartController extends AbstractController
                 ->createQuote($quoteTransfer);
 
             if ($quoteResponseTransfer->getIsSuccessful()) {
-                return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+                return $this->redirectResponseInternal(static::ROUTE_CART);
             }
         }
 
@@ -100,6 +105,13 @@ class MultiCartController extends AbstractController
             ->handleRequest($request);
 
         $quoteTransfer = $quoteForm->getData();
+
+        if (!$quoteTransfer || !$this->canWriteQuote($quoteTransfer)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        }
+
         if ($quoteForm->isSubmitted() && $quoteForm->isValid()) {
             $quoteResponseTransfer = $this->getFactory()
                 ->getMultiCartClient()
@@ -110,6 +122,10 @@ class MultiCartController extends AbstractController
 
                 return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
             }
+
+            $this->addErrorMessage(static::GLOSSARY_KEY_CART_UPDATED_ERROR);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
         }
 
         return [
@@ -131,7 +147,7 @@ class MultiCartController extends AbstractController
             ->getMultiCartClient()
             ->setDefaultQuote($quoteTransfer);
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(static::ROUTE_CART);
     }
 
     /**
@@ -164,6 +180,12 @@ class MultiCartController extends AbstractController
     {
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
 
+        if (!$this->isQuoteEditable($quoteTransfer)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        }
+
         $quoteResponseTransfer = $this->getFactory()
             ->getMultiCartClient()
             ->clearQuote($quoteTransfer);
@@ -172,7 +194,7 @@ class MultiCartController extends AbstractController
             $this->addSuccessMessage('multi_cart_page.cart_clear.success');
         }
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(static::ROUTE_CART);
     }
 
     /**
@@ -183,6 +205,12 @@ class MultiCartController extends AbstractController
     public function deleteAction(int $idQuote)
     {
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
+
+        if (!$this->canWriteQuote($quoteTransfer)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+        }
 
         $this->getFactory()->getMultiCartClient()->deleteQuote($quoteTransfer);
 
@@ -198,7 +226,7 @@ class MultiCartController extends AbstractController
 
         return $this->view(
             $response,
-            $this->getFactory()->getMultiCartListWidgetPlugins(),
+            [],
             '@MultiCartPage/views/cart/cart.twig'
         );
     }
@@ -226,10 +254,7 @@ class MultiCartController extends AbstractController
     {
         $viewData = $this->executeConfirmDeleteAction($idQuote);
 
-        $widgetPlugins = $this->getFactory()
-            ->getCartDeleteCompanyUsersListWidgetPlugins();
-
-        return $this->view($viewData, $widgetPlugins, '@MultiCartPage/views/cart-delete/cart-delete.twig');
+        return $this->view($viewData, [], '@MultiCartPage/views/cart-delete/cart-delete.twig');
     }
 
     /**
@@ -262,5 +287,28 @@ class MultiCartController extends AbstractController
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function canWriteQuote(QuoteTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->getCustomerReference() === $quoteTransfer->getCustomer()->getCustomerReference()
+            || $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->getQuoteClient()
+            ->isQuoteEditable($quoteTransfer);
     }
 }

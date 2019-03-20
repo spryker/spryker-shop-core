@@ -57,7 +57,7 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addLoginRoute(): self
+    protected function addLoginRoute()
     {
         $this->createController('/{login}', self::ROUTE_LOGIN, 'CustomerPage', 'Auth', 'login')
             ->assert('login', $this->getAllowedLocalesPattern() . 'login|login')
@@ -69,7 +69,7 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addLogoutRoute(): self
+    protected function addLogoutRoute()
     {
         $this->createController('/{logout}', self::ROUTE_LOGOUT, 'CustomerPage', 'Auth', 'logout')
             ->assert('logout', $this->getAllowedLocalesPattern() . 'logout|logout')
@@ -81,7 +81,7 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addRegisterRoute(): self
+    protected function addRegisterRoute()
     {
         $this->createController('/{register}', self::ROUTE_REGISTER, 'CustomerPage', 'Register', 'index')
             ->assert('register', $this->getAllowedLocalesPattern() . 'register|register')
@@ -93,7 +93,7 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addForgottenPasswordRoute(): self
+    protected function addForgottenPasswordRoute()
     {
         $this->createController('/{password}/forgotten', self::ROUTE_PASSWORD_FORGOTTEN, 'CustomerPage', 'Password', 'forgottenPassword')
             ->assert('password', $this->getAllowedLocalesPattern() . 'password|password')
@@ -105,7 +105,7 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addRestorePasswordRoute(): self
+    protected function addRestorePasswordRoute()
     {
         $this->createController('/{password}/restore', self::ROUTE_PASSWORD_RESTORE, 'CustomerPage', 'Password', 'restorePassword')
             ->assert('password', $this->getAllowedLocalesPattern() . 'password|password')
@@ -117,7 +117,7 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCustomerOverviewRoute(): self
+    protected function addCustomerOverviewRoute()
     {
         $this->createController('/{customer}/overview', self::ROUTE_CUSTOMER_OVERVIEW, 'CustomerPage', 'Customer', 'index')
             ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
@@ -129,7 +129,7 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCustomerProfileRoute(): self
+    protected function addCustomerProfileRoute()
     {
         $this->createController('/{customer}/profile', self::ROUTE_CUSTOMER_PROFILE, 'CustomerPage', 'Profile', 'index')
             ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
@@ -141,7 +141,7 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCustomerAddressRoute(): self
+    protected function addCustomerAddressRoute()
     {
         $this->createController('/{customer}/address', self::ROUTE_CUSTOMER_ADDRESS, 'CustomerPage', 'Address', 'index')
             ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
@@ -153,7 +153,7 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addNewCustomerAddressRoute(): self
+    protected function addNewCustomerAddressRoute()
     {
         $this->createController('/{customer}/address/new', self::ROUTE_CUSTOMER_NEW_ADDRESS, 'CustomerPage', 'Address', 'create')
             ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
@@ -165,7 +165,7 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addUpdateCustomerAddressRoute(): self
+    protected function addUpdateCustomerAddressRoute()
     {
         $this->createController('/{customer}/address/update', self::ROUTE_CUSTOMER_UPDATE_ADDRESS, 'CustomerPage', 'Address', 'update')
             ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
@@ -177,7 +177,7 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addDeleteCustomerAddressRoute(): self
+    protected function addDeleteCustomerAddressRoute()
     {
         $this->createController('/{customer}/address/delete', self::ROUTE_CUSTOMER_DELETE_ADDRESS, 'CustomerPage', 'Address', 'delete')
             ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
@@ -189,7 +189,7 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addRefreshCustomerAddressRoute(): self
+    protected function addRefreshCustomerAddressRoute()
     {
         $this->createController('/{customer}/address/refresh', self::ROUTE_CUSTOMER_REFRESH_ADDRESS, 'CustomerPage', 'Address', 'refresh')
             ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
@@ -201,7 +201,7 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCustomerOrderRoute(): self
+    protected function addCustomerOrderRoute()
     {
         $this->createController('/{customer}/order', self::ROUTE_CUSTOMER_ORDER, 'CustomerPage', 'Order', 'index')
             ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
@@ -213,7 +213,7 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCustomerOrderDetailsRoute(): self
+    protected function addCustomerOrderDetailsRoute()
     {
         $this->createController('/{customer}/order/details', self::ROUTE_CUSTOMER_ORDER_DETAILS, 'CustomerPage', 'Order', 'details')
             ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
@@ -225,7 +225,7 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCustomerDeleteRoute(): self
+    protected function addCustomerDeleteRoute()
     {
         $this->createController('/{customer}/delete', self::ROUTE_CUSTOMER_DELETE, 'CustomerPage', 'Delete', 'index')
             ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
@@ -237,7 +237,7 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCustomerDeleteConfirmRoute(): self
+    protected function addCustomerDeleteConfirmRoute()
     {
         $this->createController('/{customer}/delete/confirm', self::ROUTE_CUSTOMER_DELETE_CONFIRM, 'CustomerPage', 'Delete', 'confirm')
             ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
