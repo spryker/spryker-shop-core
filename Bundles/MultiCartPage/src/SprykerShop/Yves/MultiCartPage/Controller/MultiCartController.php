@@ -33,6 +33,8 @@ class MultiCartController extends AbstractController
      */
     protected const ROUTE_CART = 'cart';
 
+    protected const REQUEST_HEADER_REFERER = 'referer';
+
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
     protected const GLOSSARY_KEY_CART_UPDATED_ERROR = 'multi_cart_widget.cart.updated.error';
 
@@ -178,23 +180,18 @@ class MultiCartController extends AbstractController
 
     /**
      * @param int $idQuote
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function clearAction(int $idQuote)
+    public function clearAction(int $idQuote, Request $request)
     {
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
 
-        if (!$this->isQuoteEditable($quoteTransfer)) {
+        if (!$this->isQuoteEditable($quoteTransfer) || !$this->canRemoveCartItem($quoteTransfer)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
 
-            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
-        }
-
-        if (!$this->canPerformCartItemAction(static::REMOVE_CART_ITEM_PERMISSION_PLUGIN_KEY, $quoteTransfer)) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
-
-            return $this->redirectResponseInternal(static::ROUTE_CART);
+            return $this->redirectResponseExternal($request->headers->get(static::REQUEST_HEADER_REFERER));
         }
 
         $quoteResponseTransfer = $this->getFactory()
@@ -324,22 +321,17 @@ class MultiCartController extends AbstractController
     }
 
     /**
-     * @param string $permissionPluginKey
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function canPerformCartItemAction(string $permissionPluginKey, QuoteTransfer $quoteTransfer): bool
+    protected function canRemoveCartItem(QuoteTransfer $quoteTransfer): bool
     {
-        if ($quoteTransfer->getCustomer() === null) {
+        if ($quoteTransfer->getCustomer() === null || $quoteTransfer->getCustomer()->getCompanyUserTransfer() === null) {
             return true;
         }
 
-        if ($quoteTransfer->getCustomer()->getCompanyUserTransfer() === null) {
-            return true;
-        }
-
-        if ($this->can($permissionPluginKey)) {
+        if ($this->can(static::REMOVE_CART_ITEM_PERMISSION_PLUGIN_KEY)) {
             return true;
         }
 
