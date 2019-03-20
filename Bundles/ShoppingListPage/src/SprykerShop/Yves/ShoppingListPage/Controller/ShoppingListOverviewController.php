@@ -250,8 +250,8 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             $this->addErrorMessage($shoppingListShareResponseTransfer->getError());
         }
 
-        $shippingListTransferCollection = $this->getCustomerShoppingListCollection();
-        $shoppingListTransfer = $this->getShoppingListById($idShoppingList, $shippingListTransferCollection);
+        $shoppingListTransferCollection = $this->getCustomerShoppingListCollection();
+        $shoppingListTransfer = $this->getShoppingListById($idShoppingList, $shoppingListTransferCollection);
 
         if (!$shoppingListTransfer->getIdShoppingList()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND);
@@ -346,13 +346,13 @@ class ShoppingListOverviewController extends AbstractShoppingListController
 
     /**
      * @param int $idShoppingList
-     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shippingListTransferCollection
+     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListTransferCollection
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    protected function getShoppingListById(int $idShoppingList, ShoppingListCollectionTransfer $shippingListTransferCollection): ShoppingListTransfer
+    protected function getShoppingListById(int $idShoppingList, ShoppingListCollectionTransfer $shoppingListTransferCollection): ShoppingListTransfer
     {
-        foreach ($shippingListTransferCollection->getShoppingLists() as $shoppingListTransfer) {
+        foreach ($shoppingListTransferCollection->getShoppingLists() as $shoppingListTransfer) {
             if ($idShoppingList === $shoppingListTransfer->getIdShoppingList()) {
                 return $shoppingListTransfer;
             }
