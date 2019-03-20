@@ -1,7 +1,8 @@
 {% extends template('widget') %}
 
 {% define data = {
-    quoteRequestOverviewCollection: _widget.quoteRequestOverviewCollection
+    quoteRequestOverviewCollection: _widget.quoteRequestOverviewCollection,
+    form: _widget.form ?? null,
 } %}
 
 {% block body %}
@@ -20,6 +21,13 @@
                 {% include molecule('quote-request-detail', 'AgentQuoteRequestWidget') with {
                     data: {
                         quoteRequest: data.quoteRequestOverviewCollection.currentQuoteRequest
+                    }
+                } only %}
+
+                {% include molecule('quote-request-cart-from', 'AgentQuoteRequestWidget') with {
+                    data: {
+                        quoteRequestReference: data.quoteRequestOverviewCollection.currentQuoteRequest.quoteRequestReference,
+                        form: data.form,
                     }
                 } only %}
             </li>

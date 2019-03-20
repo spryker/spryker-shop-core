@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\AgentQuoteRequestPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
-use SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client\AgentQuoteRequestPageToQuoteRequestClientInterface;
 use SprykerShop\Yves\AgentQuoteRequestPage\Form\AgentQuoteRequestForm;
 
 class AgentQuoteRequestFormDataProvider
@@ -17,19 +16,6 @@ class AgentQuoteRequestFormDataProvider
      * @see \Spryker\Shared\Calculation\CalculationPriceMode::PRICE_MODE_GROSS
      */
     protected const PRICE_MODE_GROSS = 'GROSS_MODE';
-
-    /**
-     * @var \SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client\AgentQuoteRequestPageToQuoteRequestClientInterface
-     */
-    protected $quoteRequestClient;
-
-    /**
-     * @param \SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client\AgentQuoteRequestPageToQuoteRequestClientInterface $quoteRequestClient
-     */
-    public function __construct(AgentQuoteRequestPageToQuoteRequestClientInterface $quoteRequestClient)
-    {
-        $this->quoteRequestClient = $quoteRequestClient;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer

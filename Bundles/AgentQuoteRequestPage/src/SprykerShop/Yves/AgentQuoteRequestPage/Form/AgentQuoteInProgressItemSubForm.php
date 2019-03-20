@@ -124,12 +124,10 @@ class AgentQuoteInProgressItemSubForm extends AbstractType
      */
     protected function createMoneyConstraint(array $options): Regex
     {
-        $validationGroup = $this->getValidationGroup($options);
-
         return new Regex([
             'pattern' => static::PATTERN_MONEY,
             'message' => static::ERROR_MESSAGE_PRICE,
-            'groups' => $validationGroup,
+            'groups' => $this->getValidationGroup($options),
         ]);
     }
 
