@@ -1,0 +1,17 @@
+{% extends template('widget') %}
+
+{% define data = {
+    shoppingListSubtotal: _widget.shoppingListSubtotal
+} %}
+
+{% block body %}
+    <div class="shopping-list-subtotal">
+        <h6 class="shopping-list-subtotal__title">{{ 'customer.account.shopping_list.subtotal' | trans }}</h6>
+
+        {% include molecule('price') with {
+            data: {
+                amount: data.shoppingListSubtotal | money
+            }
+        } only %}
+    </div>
+{% endblock %}
