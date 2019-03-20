@@ -78,23 +78,15 @@
                     }
                 } only %}
                     {% block sourcePriceForm %}
-                        <div class="row">
-                            <div class="col col--sm-12 col--xl-4 float-right">
-                                {{ form_row(data.itemChild) }}
-                            </div>
-                            <div class="col col--sm-12 col--xl-12">
-                                {% include atom('checkbox') with {
-                                    attributes: {
-                                        name: 'use_default_price',
-                                        value: 1,
-                                        checked: (data.cartItem.sourceUnitGrossPrice or data.cartItem.sourceUnitNetPrice) ? false : true,
-                                    },
-                                    data: {
-                                        label: 'quote_request_page.quote_request.use_default_price' | trans
-                                    }
-                                } only %}
-                            </div>
-                        </div>
+                        {% include molecule('source-price-form', 'AgentQuoteRequestPage') with {
+                            data: {
+                                priceFiled: data.itemChild,
+                                checkboxName: 'use_default_price',
+                                checkboxValue: 1,
+                                isChecked: (data.cartItem.sourceUnitGrossPrice or data.cartItem.sourceUnitNetPrice) ? false : true,
+                                checkboxLabel: 'quote_request_page.quote_request.use_default_price' | trans
+                            }
+                        } only %}
                     {% endblock %}
                 {% endembed %}
             {% endfor %}
