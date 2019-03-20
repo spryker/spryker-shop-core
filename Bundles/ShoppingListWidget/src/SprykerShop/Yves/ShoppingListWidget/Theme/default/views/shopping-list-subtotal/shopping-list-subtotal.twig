@@ -6,7 +6,7 @@
 
 {% block body %}
     {% include molecule('subtotal-price', 'ShoppingListWidget') with {
-        class: 'grid grid--justify spacing spacing--inner spacing-bottom spacing-bottom--big spacing-x',
+        class: 'grid grid--justify spacing spacing--inner spacing-bottom spacing-bottom--big',
         data: {
             amount: data.shoppingListSubtotal | money
         }
