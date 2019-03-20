@@ -15,6 +15,8 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ShoppingListSubtotalWidget extends AbstractWidget
 {
+    protected const PARAMETER_SHOPPING_LIST_SUBTOTAL = 'shoppingListSubtotal';
+
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItems
      */
@@ -46,7 +48,7 @@ class ShoppingListSubtotalWidget extends AbstractWidget
      */
     protected function addSubtotalParameter(array $shoppingListItems): void
     {
-        $this->addParameter('shoppingListSubtotal', $this->getShoppingListSubtotal($shoppingListItems));
+        $this->addParameter(static::PARAMETER_SHOPPING_LIST_SUBTOTAL, $this->getShoppingListSubtotal($shoppingListItems));
     }
 
     /**
