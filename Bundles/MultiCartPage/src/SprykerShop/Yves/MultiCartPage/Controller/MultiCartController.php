@@ -21,6 +21,8 @@ class MultiCartController extends AbstractController
 {
     use PermissionAwareTrait;
 
+    public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
+
     /**
      * @uses \SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin::KEY
      */
@@ -30,8 +32,6 @@ class MultiCartController extends AbstractController
      * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
      */
     protected const ROUTE_CART = 'cart';
-
-    protected const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
 
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
     protected const GLOSSARY_KEY_CART_UPDATED_ERROR = 'multi_cart_widget.cart.updated.error';
@@ -191,7 +191,7 @@ class MultiCartController extends AbstractController
             return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
         }
 
-        if (!$this->canRemoveCartItem($quoteTransfer)) {
+        if (!$this->canPerformCartItemAction(static::REMOVE_CART_ITEM_PERMISSION_PLUGIN_KEY, $quoteTransfer)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
@@ -321,16 +321,6 @@ class MultiCartController extends AbstractController
         return $this->getFactory()
             ->getQuoteClient()
             ->isQuoteEditable($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function canRemoveCartItem(QuoteTransfer $quoteTransfer): bool
-    {
-        return $this->canPerformCartItemAction(static::REMOVE_CART_ITEM_PERMISSION_PLUGIN_KEY, $quoteTransfer);
     }
 
     /**
