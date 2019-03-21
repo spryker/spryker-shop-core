@@ -10,7 +10,7 @@
     expenses: [],
     voucherDiscounts: [],
     cartRuleDiscounts: [],
-    cartQuantity: cartQuantity is defined ? cartQuantity : app['cart.quantity'] is defined ? app['cart.quantity'] : '',
+    cartQuantity: cartQuantity is defined ? cartQuantity : app['cart.quantity'] | default,
 
     prices: {
         subTotal: required,
