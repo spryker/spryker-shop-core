@@ -21,14 +21,12 @@ class MultiCartController extends AbstractController
 {
     use PermissionAwareTrait;
 
-    public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
-
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
      */
     protected const ROUTE_CART = 'cart';
 
-    protected const REQUEST_HEADER_REFERER = 'referer';
+    public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
 
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
     protected const GLOSSARY_KEY_CART_UPDATED_ERROR = 'multi_cart_widget.cart.updated.error';
@@ -175,18 +173,17 @@ class MultiCartController extends AbstractController
 
     /**
      * @param int $idQuote
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function clearAction(int $idQuote, Request $request)
+    public function clearAction(int $idQuote)
     {
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
 
         if (!$this->isQuoteEditable($quoteTransfer) || !$this->can('RemoveCartItemPermissionPlugin')) {
             $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
 
-            return $this->redirectResponseExternal($request->headers->get(static::REQUEST_HEADER_REFERER));
+            return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
         $quoteResponseTransfer = $this->getFactory()
