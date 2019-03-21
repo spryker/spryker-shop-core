@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ShoppingListWidget\Widget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
-use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListClientInterface;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetFactory getFactory()
@@ -48,14 +47,6 @@ class ShoppingListSubtotalWidget extends AbstractWidget
      */
     protected function addSubtotalParameter(array $productViewTransferCollection): void
     {
-        $this->addParameter(static::PARAMETER_SHOPPING_LIST_SUBTOTAL, $this->getShoppingListClient()->calculateShoppingListSubtotal($productViewTransferCollection));
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListClientInterface
-     */
-    protected function getShoppingListClient(): ShoppingListWidgetToShoppingListClientInterface
-    {
-        return $this->getFactory()->getShoppingListClient();
+        $this->addParameter(static::PARAMETER_SHOPPING_LIST_SUBTOTAL, $this->getFactory()->getShoppingListClient()->calculateShoppingListSubtotal($productViewTransferCollection));
     }
 }
