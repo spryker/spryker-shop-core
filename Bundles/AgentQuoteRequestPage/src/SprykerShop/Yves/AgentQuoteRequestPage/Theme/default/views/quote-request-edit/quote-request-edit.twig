@@ -67,16 +67,29 @@
     </div>
     <div class="grid">
         <div class="col col--sm-12 col--xl-8">
-            {% if cart is not empty %}
-                {% for cartItem in cart.items %}
-                    {% include molecule('quote-request-cart-item', 'CartPage') with {
-                        class: 'box',
-                        data: {
-                            cartItem: cartItem
-                        }
-                    } only %}
-                {% endfor %}
-            {% endif %}
+            {% for itemChild in data.quoteRequestForm.quoteInProgress.items %}
+                {% set cartItem = itemChild.vars.value %}
+                {% embed molecule('quote-request-cart-item', 'CartPage') with {
+                    class: 'box',
+                    data: {
+                        priceMode: cart.priceMode,
+                        cartItem: cartItem,
+                        itemChild: itemChild,
+                    }
+                } only %}
+                    {% block sourcePriceForm %}
+                        {% include molecule('source-price-form', 'AgentQuoteRequestPage') with {
+                            data: {
+                                priceFiled: data.itemChild,
+                                checkboxName: 'use_default_price',
+                                checkboxValue: 1,
+                                isChecked: (data.cartItem.sourceUnitGrossPrice or data.cartItem.sourceUnitNetPrice) ? false : true,
+                                checkboxLabel: 'quote_request_page.quote_request.use_default_price' | trans
+                            }
+                        } only %}
+                    {% endblock %}
+                {% endembed %}
+            {% endfor %}
         </div>
 
         <div class="col col--sm-12 col--xl-4">

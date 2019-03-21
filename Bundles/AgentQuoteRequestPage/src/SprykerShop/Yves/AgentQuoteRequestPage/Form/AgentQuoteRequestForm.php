@@ -25,6 +25,8 @@ class AgentQuoteRequestForm extends AbstractType
     public const SUBMIT_BUTTON_SAVE = 'save';
     public const SUBMIT_BUTTON_SEND_TO_CUSTOMER = 'sendToCustomer';
 
+    public const OPTION_IS_DEFAULT_PRICE_MODE_GROSS = 'option_is_default_price_mode_gross';
+
     protected const LABEL_QUOTE_REQUEST_IS_HIDDEN = 'quote_request_page.quote_request.labels.hide_from_customer';
 
     /**
@@ -37,6 +39,7 @@ class AgentQuoteRequestForm extends AbstractType
         $resolver->setDefaults([
             'data_class' => QuoteRequestTransfer::class,
         ]);
+        $resolver->setRequired([static::OPTION_IS_DEFAULT_PRICE_MODE_GROSS]);
     }
 
     /**
@@ -49,7 +52,8 @@ class AgentQuoteRequestForm extends AbstractType
     {
         $this->addMetadataForm($builder)
             ->addValidUntilField($builder)
-            ->addIsHiddenField($builder);
+            ->addIsHiddenField($builder)
+            ->addQuoteInProgressField($builder, $options);
     }
 
     /**
@@ -98,6 +102,25 @@ class AgentQuoteRequestForm extends AbstractType
             'label' => static::LABEL_QUOTE_REQUEST_IS_HIDDEN,
             'required' => false,
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addQuoteInProgressField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(
+            QuoteRequestTransfer::QUOTE_IN_PROGRESS,
+            AgentQuoteInProgressSubForm::class,
+            [
+                AgentQuoteRequestForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS => $options[AgentQuoteRequestForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS],
+            ]
+        );
 
         return $this;
     }

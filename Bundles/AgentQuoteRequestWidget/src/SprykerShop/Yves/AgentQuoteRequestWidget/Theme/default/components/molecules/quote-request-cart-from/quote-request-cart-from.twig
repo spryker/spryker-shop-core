@@ -1,0 +1,34 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-request-cart-from',
+    tag: 'div',
+} %}
+
+{% define data = {
+    quoteRequestReference: required,
+    form: required,
+} %}
+
+{% block body %}
+    {% if data.quoteRequestReference %}
+
+        {{ form_start(data.form) }}
+
+        <div class="grid grid--justify">
+            <div class="col">
+                <button type="submit" name="save" class="button button--success">
+                    {{ 'quote_request_page.quote_request.actions.save' | trans }}
+                </button>
+            </div>
+            <div class="col">
+                <button type="submit" name="saveAndBack" class="button button--success">
+                    {{ 'quote_request_page.quote_request.actions.save_and_back_to_edit' | trans }}
+                </button>
+            </div>
+        </div>
+
+        {{ form_end(data.form) }}
+
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'source-price-form',
+    tag: 'source-price-form'
+} %}
+
+{% define data = {
+    priceFiled: required,
+    checkboxName: required,
+    checkboxValue: required,
+    isChecked: required,
+    checkboxLabel: required,
+} %}
+
+{% block body %}
+    <div class="row">
+        <div class="col col--sm-12 col--xl-4 float-right">
+            {{ form_row(data.priceFiled, {'attr': {'class': config.jsName ~ '__input-container'}}) }}
+        </div>
+        <div class="col col--sm-12 col--xl-12">
+            {% include atom('checkbox') with {
+                class: config.jsName ~ '__checkbox-container',
+                attributes: {
+                    name: data.checkboxName,
+                    value: data.checkboxValue,
+                    checked: data.isChecked,
+                },
+                data: {
+                    label: data.checkboxLabel
+                }
+            } only %}
+        </div>
+    </div>
+{% endblock %}

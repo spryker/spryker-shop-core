@@ -6,7 +6,8 @@
 } %}
 
 {% define data = {
-    cartItem: required
+    priceMode: required,
+    cartItem: required,
 } %}
 
 {% block body %}
@@ -28,8 +29,9 @@
                 {{ data.cartItem.sku }}
             </small>
 
-            {% include molecule('cart-item-summary', 'CartPage') with {
+            {% include molecule('quote-request-item-summary', 'CartPage') with {
                 data: {
+                    priceMode: data.priceMode,
                     unitPrice: data.cartItem.unitPrice | money,
                     subtotalPrice: data.cartItem.sumSubtotalAggregation | money,
                     cartItem: data.cartItem
@@ -41,6 +43,8 @@
         <div class="col col--sm-12 col--lg-4">
             {{ 'cart.item_quantity' | trans }}:
             <strong>{{ data.cartItem.quantity }}</strong>
+
+            {% block sourcePriceForm %}{% endblock %}
         </div>
     </div>
 {% endblock %}
