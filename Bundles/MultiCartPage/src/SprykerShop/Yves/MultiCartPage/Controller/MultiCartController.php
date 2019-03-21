@@ -24,11 +24,6 @@ class MultiCartController extends AbstractController
     public const GLOSSARY_KEY_CART_UPDATED_SUCCESS = 'multi_cart_widget.cart.updated.success';
 
     /**
-     * @uses \SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin::KEY
-     */
-    protected const REMOVE_CART_ITEM_PERMISSION_PLUGIN_KEY = 'RemoveCartItemPermissionPlugin';
-
-    /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
      */
     protected const ROUTE_CART = 'cart';
@@ -188,7 +183,7 @@ class MultiCartController extends AbstractController
     {
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
 
-        if (!$this->isQuoteEditable($quoteTransfer) || !$this->canRemoveCartItem($quoteTransfer)) {
+        if (!$this->isQuoteEditable($quoteTransfer) || !$this->can('RemoveCartItemPermissionPlugin')) {
             $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
 
             return $this->redirectResponseExternal($request->headers->get(static::REQUEST_HEADER_REFERER));
@@ -318,23 +313,5 @@ class MultiCartController extends AbstractController
         return $this->getFactory()
             ->getQuoteClient()
             ->isQuoteEditable($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function canRemoveCartItem(QuoteTransfer $quoteTransfer): bool
-    {
-        if ($quoteTransfer->getCustomer() === null || $quoteTransfer->getCustomer()->getCompanyUserTransfer() === null) {
-            return true;
-        }
-
-        if ($this->can(static::REMOVE_CART_ITEM_PERMISSION_PLUGIN_KEY)) {
-            return true;
-        }
-
-        return false;
     }
 }
