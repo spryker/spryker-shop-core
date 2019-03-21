@@ -4,6 +4,11 @@
             color: map-get($setting-color-actions, 'alert');
         }
 
+        &__name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         @content;
     }
 }

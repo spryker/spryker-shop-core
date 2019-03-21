@@ -26,7 +26,8 @@ export default class SideDrawer extends Component {
     }
 
     /**
-     * Toggles the class names.
+     * Toggles the visibility of side-drawer and overlay.
+     * Toggles the scrollability of containers.
      */
     toggle(): void {
         const isShown = !this.classList.contains(`${this.name}--show`);
