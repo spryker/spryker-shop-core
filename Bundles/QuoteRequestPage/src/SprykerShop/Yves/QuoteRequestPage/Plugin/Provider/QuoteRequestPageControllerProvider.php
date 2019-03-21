@@ -14,6 +14,10 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
 {
     protected const ROUTE_QUOTE_REQUEST = 'quote-request';
     protected const ROUTE_QUOTE_REQUEST_CREATE = 'quote-request/create';
+    protected const ROUTE_QUOTE_REQUEST_REVISE = 'quote-request/revise';
+    protected const ROUTE_QUOTE_REQUEST_REVISE_SUBMIT = 'quote-request/revise/submit';
+    protected const ROUTE_QUOTE_REQUEST_REVISE_EDIT = 'quote-request/revise/edit';
+    protected const ROUTE_QUOTE_REQUEST_REVISE_EDIT_ITEMS = 'quote-request/revise/edit-items';
     protected const ROUTE_QUOTE_REQUEST_CANCEL = 'quote-request/cancel';
     protected const ROUTE_QUOTE_REQUEST_VIEW = 'quote-request/view';
     protected const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
@@ -32,6 +36,10 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
     {
         $this->addQuoteRequestRoute()
             ->addQuoteRequestCreateRoute()
+            ->addQuoteRequestReviseRoute()
+            ->addQuoteRequestReviseEditRoute()
+            ->addQuoteRequestReviseEditItemsRoute()
+            ->addQuoteRequestReviseSubmitRoute()
             ->addQuoteRequestCancelRoute()
             ->addQuoteRequestDetailsRoute()
             ->addQuoteRequestConvertToCartRoute();
@@ -61,6 +69,66 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{quoteRequest}/create', static::ROUTE_QUOTE_REQUEST_CREATE, 'QuoteRequestPage', 'QuoteRequestCreate', 'create')
             ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
             ->value('quoteRequest', 'quote-request');
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestReviseController::indexAction()
+     *
+     * @return $this
+     */
+    protected function addQuoteRequestReviseRoute()
+    {
+        $this->createController('/{quoteRequest}/revise/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_REVISE, 'QuoteRequestPage', 'QuoteRequestRevise', 'index')
+            ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
+            ->value('quoteRequest', 'quote-request')
+            ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestReviseController::editAction()
+     *
+     * @return $this
+     */
+    protected function addQuoteRequestReviseEditRoute()
+    {
+        $this->createController('/{quoteRequest}/revise/edit/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_REVISE_EDIT, 'QuoteRequestPage', 'QuoteRequestRevise', 'edit')
+            ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
+            ->value('quoteRequest', 'quote-request')
+            ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestReviseController::editItemsAction()
+     *
+     * @return $this
+     */
+    protected function addQuoteRequestReviseEditItemsRoute()
+    {
+        $this->createController('/{quoteRequest}/revise/edit-items/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_REVISE_EDIT_ITEMS, 'QuoteRequestPage', 'QuoteRequestRevise', 'editItems')
+            ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
+            ->value('quoteRequest', 'quote-request')
+            ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestReviseController::editItemsAction()
+     *
+     * @return $this
+     */
+    protected function addQuoteRequestReviseSubmitRoute()
+    {
+        $this->createController('/{quoteRequest}/revise/submit/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_REVISE_SUBMIT, 'QuoteRequestPage', 'QuoteRequestRevise', 'submit')
+            ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
+            ->value('quoteRequest', 'quote-request')
+            ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
 
         return $this;
     }

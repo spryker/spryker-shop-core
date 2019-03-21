@@ -1,0 +1,107 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: path('customer/overview'),
+                },
+                {
+                    label: 'quote_request_page.quote_request' | trans,
+                    url: path('quote-request')
+                },
+                {
+                    label: 'quote_request_page.quote_request.actions.edit' | trans,
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
+{% define data = {
+    title: 'quote_request_page.quote_request' | trans,
+    quoteRequestForm: _view.quoteRequestForm,
+    quoteRequest: _view.quoteRequestForm.vars.value,
+    latestVersion: _view.quoteRequestForm.vars.value.latestVersion,
+} %}
+
+{% set cart = data.latestVersion ? data.latestVersion.quote : null %}
+
+{% block content %}
+
+    {% if not cart or cart.items is empty %}
+        <div class="box text-center">
+            {% include atom('icon') with {
+                modifiers: ['biggest'],
+                class: 'text-alt',
+                data: {
+                    name: 'shopping-cart'
+                }
+            } only %}
+            <h6>{{ 'cart.empty' | trans }}</h6>
+        </div>
+    {% else %}
+
+        {{ form_start(data.quoteRequestForm) }}
+
+        <div class="grid">
+            <div class="col col--sm-12 col--xl-8">
+                <div class="box">
+                    {% for child in data.quoteRequestForm.metadata %}
+                        <div class="col col--sm-12 col--xl-6">
+                            <div class="box">
+                                {{ form_row(child) }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="col col--sm-12 col--xl-4">
+                <div class="box">
+                    <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}: <b>{{ data.quoteRequestForm.vars.value.createdAt | date('d.m.Y H:i') }}</b></p>
+                    <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:</p>
+                    <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:</p>
+                    <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="col col--sm-12 col--xl-8">
+                {% for cartItem in cart.items %}
+                    {% include molecule('quote-request-cart-item', 'CartPage') with {
+                        class: 'box',
+                        data: {
+                            cartItem: cartItem
+                        }
+                    } only %}
+                {% endfor %}
+            </div>
+
+            <div class="col col--sm-12 col--xl-4">
+                <div class="box">
+                    {% include molecule('quote-request-cart-summary', 'CartPage') with {
+                        data: {
+                            cart: cart
+                        }
+                    } only %}
+                </div>
+                <div class="box">
+                    <a class="button button--expand button--edit-items" href="{{ url('quote-request/revise/edit-items', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                        {{ 'quote_request_page.quote_request.actions.edit_items' | trans }}
+                    </a>
+                    <hr/>
+                    <button type="submit" class="button button--expand button--success">
+                        {{ 'quote_request_page.quote_request.actions.save' | trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {{ form_end(data.quoteRequestForm) }}
+
+    {% endif %}
+{% endblock %}

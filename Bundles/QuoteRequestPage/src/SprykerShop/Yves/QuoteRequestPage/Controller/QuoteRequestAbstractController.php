@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -17,6 +19,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class QuoteRequestAbstractController extends AbstractController
 {
+    protected const PARAM_REFERER = 'referer';
+
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
@@ -33,6 +37,18 @@ class QuoteRequestAbstractController extends AbstractController
         if ($companyUserTransfer === null) {
             throw new NotFoundHttpException("Only company users are allowed to access this page");
         }
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function redirectToReferer(Request $request): RedirectResponse
+    {
+        return $this->redirectResponseExternal(
+            $request->headers->get(static::PARAM_REFERER)
+        );
     }
 
     /**

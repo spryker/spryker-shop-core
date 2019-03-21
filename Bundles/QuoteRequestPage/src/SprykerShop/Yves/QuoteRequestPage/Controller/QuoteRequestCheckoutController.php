@@ -34,7 +34,7 @@ class QuoteRequestCheckoutController extends QuoteRequestAbstractController
 
         $quoteResponseTransfer = $this->getFactory()
             ->getQuoteRequestClient()
-            ->convertQuoteRequestToQuote($quoteRequestTransfer);
+            ->convertQuoteRequestToLockedQuote($quoteRequestTransfer);
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART_SUCCESS);

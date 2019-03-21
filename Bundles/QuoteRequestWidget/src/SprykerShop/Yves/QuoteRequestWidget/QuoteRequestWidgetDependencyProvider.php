@@ -8,7 +8,54 @@
 namespace SprykerShop\Yves\QuoteRequestWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCartClientBridge;
+use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteRequestClientBridge;
 
 class QuoteRequestWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const CLIENT_CART = 'CLIENT_CART';
+    public const CLIENT_QUOTE_REQUEST = 'CLIENT_QUOTE_REQUEST';
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    public function provideDependencies(Container $container)
+    {
+        $container = parent::provideDependencies($container);
+        $container = $this->addCartClient($container);
+        $container = $this->addQuoteRequestClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCartClient(Container $container): Container
+    {
+        $container[static::CLIENT_CART] = function (Container $container) {
+            return new QuoteRequestWidgetToCartClientBridge($container->getLocator()->cart()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuoteRequestClient(Container $container): Container
+    {
+        $container[static::CLIENT_QUOTE_REQUEST] = function (Container $container) {
+            return new QuoteRequestWidgetToQuoteRequestClientBridge($container->getLocator()->quoteRequest()->client());
+        };
+
+        return $container;
+    }
 }

@@ -103,6 +103,7 @@
                 {{ parent() }}
             {% endblock %}
         {% endwidget %}
+        {% widget 'UpdateQuoteRequestWidget' args [data.cart] only %}{% endwidget %}
         {% widget 'AgentQuoteRequestCartWidget' args [data.cart] %}{% endwidget %}
     {% endif %}
 {% endblock %}

@@ -6,6 +6,7 @@
     version: _view.version,
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
     isQuoteRequestReady: _view.isQuoteRequestReady,
+    isQuoteRequestDraft: _view.isQuoteRequestDraft,
 } %}
 
 {% set cart = data.version ? data.version.quote : null %}
@@ -124,6 +125,24 @@
                         <a class="button button--expand button--success"
                            href="{{ path('quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.convert_to_cart' | trans }}
+                        </a>
+                        <hr/>
+                        <a class="button button--expand button--success"
+                           href="{{ path('quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                            {{ 'quote_request_page.quote_request.actions.revise' | trans }}
+                        </a>
+                    {% endif %}
+
+                    {% if data.isQuoteRequestDraft %}
+                        <hr/>
+                        <a class="button button--expand button--success"
+                           href="{{ path('quote-request/revise/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                            {{ 'quote_request_page.quote_request.actions.edit' | trans }}
+                        </a>
+                        <hr/>
+                        <a class="button button--expand button--success"
+                           href="{{ path('quote-request/revise/submit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                            {{ 'quote_request_page.quote_request.revise.actions.submit' | trans }}
                         </a>
                     {% endif %}
 
