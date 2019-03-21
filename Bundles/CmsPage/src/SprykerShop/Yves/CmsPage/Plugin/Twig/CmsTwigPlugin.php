@@ -58,7 +58,7 @@ class CmsTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     /**
      * @param string $identifier
      * @param array $context
-     * @param ContainerInterface $container
+     * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return string
      */
