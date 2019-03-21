@@ -47,29 +47,40 @@ class CmsTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected function registerCmsTwigFunction(Environment $twig, ContainerInterface $container): Environment
     {
         $twig->addFunction(
-            static::TWIG_FUNCTION_SPY_CMS,
             new TwigFunction(static::TWIG_FUNCTION_SPY_CMS, function (array $context, $identifier) use ($container) {
-                $placeholders = $context['_view']['placeholders'];
-
-                $translation = '';
-                if (isset($placeholders[$identifier])) {
-                    $translation = $placeholders[$identifier];
-                }
-
-                if ($this->isGlossaryKey($translation)) {
-                    $translator = $this->getTranslator($container);
-                    $translation = $translator->trans($translation);
-                }
-
-                if ($this->isGlossaryKey($translation)) {
-                    $translation = '';
-                }
-
-                return $translation;
+                return $this->getTranslation($identifier, $context, $container);
             }, ['needs_context' => true])
         );
 
         return $twig;
+    }
+
+    /**
+     * @param string $identifier
+     * @param array $context
+     * @param ContainerInterface $container
+     *
+     * @return string
+     */
+    protected function getTranslation(string $identifier, array $context, ContainerInterface $container): string
+    {
+        $placeholders = $context['_view']['placeholders'];
+
+        $translation = '';
+        if (isset($placeholders[$identifier])) {
+            $translation = $placeholders[$identifier];
+        }
+
+        if ($this->isGlossaryKey($translation)) {
+            $translator = $this->getTranslator($container);
+            $translation = $translator->trans($translation);
+        }
+
+        if ($this->isGlossaryKey($translation)) {
+            $translation = '';
+        }
+
+        return $translation;
     }
 
     /**

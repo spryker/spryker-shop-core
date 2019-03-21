@@ -16,6 +16,9 @@ use Twig_Token;
 use Twig_TokenParser;
 use Twig_TokenStream;
 
+/**
+ * @deprecated PLease use `\SprykerShop\Yves\ShopApplication\Twig\Widget\TokenParser\WidgetTagTwigTokenParser` instead.
+ */
 class WidgetTagTokenParser extends Twig_TokenParser
 {
     public const NODE_ARGS = 'args';

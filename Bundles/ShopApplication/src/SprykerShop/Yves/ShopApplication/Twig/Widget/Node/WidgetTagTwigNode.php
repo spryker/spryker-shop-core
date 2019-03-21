@@ -12,6 +12,9 @@ use SprykerShop\Yves\ShopApplication\Twig\Widget\TokenParser\WidgetTagTokenParse
 use Twig_Compiler;
 use Twig_Node;
 
+/**
+ * @deprecated Please use `\SprykerShop\Yves\ShopApplication\Twig\Widget\Node\WidgetTagNode` instead.
+ */
 class WidgetTagTwigNode extends Twig_Node
 {
     /**

@@ -178,14 +178,4 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
         }
         return $logoutTarget;
     }
-
-    /**
-     * @param \Silex\Application $app
-     *
-     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected function getDispatcher(Application $app): EventDispatcherInterface
-    {
-        return $app['dispatcher'];
-    }
 }
