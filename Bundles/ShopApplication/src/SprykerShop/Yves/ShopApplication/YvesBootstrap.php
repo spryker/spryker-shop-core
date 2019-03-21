@@ -78,9 +78,7 @@ abstract class YvesBootstrap
     protected function getBaseApplication(): SilexApplication
     {
         $application = new SilexApplication();
-
-        $pimple = new Pimple();
-        $pimple->setApplication($application);
+        Pimple::setApplication($application);
 
         return $application;
     }
