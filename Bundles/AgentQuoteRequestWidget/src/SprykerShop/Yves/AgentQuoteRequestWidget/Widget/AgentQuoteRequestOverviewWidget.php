@@ -20,9 +20,18 @@ class AgentQuoteRequestOverviewWidget extends AbstractWidget
 {
     protected const PAGINATION_PAGE = 1;
 
+    protected const PARAMETER_FORM = 'form';
+    protected const PARAMETER_QUOTE_REQUEST_OVERVIEW_COLLECTION = 'quoteRequestOverviewCollection';
+
     public function __construct()
     {
-        $this->addParameter('quoteRequestOverviewCollection', $this->getQuoteRequestOverviewCollection());
+        $quoteRequestOverviewCollectionTransfer = $this->getQuoteRequestOverviewCollection();
+
+        $this->addQuoteRequestOverviewCollectionParameter($quoteRequestOverviewCollectionTransfer);
+
+        if ($quoteRequestOverviewCollectionTransfer->getCurrentQuoteRequest()) {
+            $this->addFormParameter();
+        }
     }
 
     /**
@@ -39,6 +48,25 @@ class AgentQuoteRequestOverviewWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@AgentQuoteRequestWidget/views/agent-quote-request-overview/agent-quote-request-overview.twig';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer $quoteRequestOverviewCollectionTransfer
+     *
+     * @return void
+     */
+    protected function addQuoteRequestOverviewCollectionParameter(
+        QuoteRequestOverviewCollectionTransfer $quoteRequestOverviewCollectionTransfer
+    ): void {
+        $this->addParameter(static::PARAMETER_QUOTE_REQUEST_OVERVIEW_COLLECTION, $quoteRequestOverviewCollectionTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    protected function addFormParameter(): void
+    {
+        $this->addParameter(static::PARAMETER_FORM, $this->getFactory()->getAgentQuoteRequestCartForm()->createView());
     }
 
     /**

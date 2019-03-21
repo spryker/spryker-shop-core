@@ -21,7 +21,7 @@ class AgentQuoteRequestCartForm extends AbstractType
     /**
      * @uses \SprykerShop\Yves\AgentQuoteRequestWidget\Plugin\Provider\AgentQuoteRequestWidgetControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_CART
      */
-    protected const ROUTE_AGENT_QUOTE_REQUEST_CART = 'agent/quote-request/cart';
+    protected const ROUTE_AGENT_QUOTE_REQUEST_CART = '/agent/quote-request/cart';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
