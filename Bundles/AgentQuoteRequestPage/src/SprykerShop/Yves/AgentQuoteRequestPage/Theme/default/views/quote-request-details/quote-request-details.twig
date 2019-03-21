@@ -104,7 +104,7 @@
         </div>
 
         <div class="col col--sm-12 col--xl-4">
-            {% if cart is not empty %}
+            {% if cart and cart.items is not empty %}
                 <div class="box">
                     {% include molecule('quote-request-cart-summary', 'CartPage') with {
                         data: {
@@ -142,7 +142,7 @@
                            href="{{ path('agent/quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.edit' | trans }}
                         </a>
-                        {% if data.quoteRequest.quoteInProgress %}
+                        {% if data.quoteRequest.quoteInProgress and data.quoteRequest.quoteInProgress.items is not empty %}
                             <hr/>
                             <a class="button button--expand button--success"
                                href="{{ path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">

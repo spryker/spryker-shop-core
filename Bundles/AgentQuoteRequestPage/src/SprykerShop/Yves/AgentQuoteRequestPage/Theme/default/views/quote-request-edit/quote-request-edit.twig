@@ -93,7 +93,7 @@
         </div>
 
         <div class="col col--sm-12 col--xl-4">
-            {% if cart is not empty %}
+            {% if cart and cart.items is not empty %}
                 <div class="box">
                     {% include molecule('quote-request-cart-summary', 'CartPage') with {
                         data: {
@@ -117,7 +117,7 @@
                     {{ 'quote_request_page.quote_request.actions.save' | trans }}
                 </button>
                 <hr/>
-                {% if data.quoteRequest.quoteInProgress %}
+                {% if data.quoteRequest.quoteInProgress and data.quoteRequest.quoteInProgress.items is not empty %}
                     <button type="submit" name="sendToCustomer" class="button button--expand button--success">
                         {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
                     </button>

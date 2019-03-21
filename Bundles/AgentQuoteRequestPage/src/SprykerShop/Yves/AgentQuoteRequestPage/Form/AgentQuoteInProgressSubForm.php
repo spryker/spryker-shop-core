@@ -7,8 +7,10 @@
 
 namespace SprykerShop\Yves\AgentQuoteRequestPage\Form;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -61,6 +63,24 @@ class AgentQuoteInProgressSubForm extends AbstractType
             ],
         ]);
 
+        $builder->get(QuoteTransfer::ITEMS)
+            ->addModelTransformer($this->createArrayObjectModelTransformer());
+
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createArrayObjectModelTransformer()
+    {
+        return new CallbackTransformer(
+            function ($value) {
+                return (array)$value;
+            },
+            function ($value) {
+                return new ArrayObject($value);
+            }
+        );
     }
 }

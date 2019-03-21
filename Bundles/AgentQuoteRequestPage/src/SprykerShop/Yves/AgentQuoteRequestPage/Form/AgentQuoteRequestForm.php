@@ -76,7 +76,6 @@ class AgentQuoteRequestForm extends AbstractType
     protected function addValidUntilField(FormBuilderInterface $builder)
     {
         $builder->add(QuoteRequestTransfer::VALID_UNTIL, DateTimeType::class, [
-            'format' => 'yyyy-MM-dd HH:mm',
             'label' => false,
             'widget' => 'single_text',
             'required' => false,

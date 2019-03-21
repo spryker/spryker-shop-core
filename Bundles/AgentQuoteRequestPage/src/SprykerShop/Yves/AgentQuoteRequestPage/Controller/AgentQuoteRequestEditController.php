@@ -115,10 +115,7 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
     protected function executeEditAction(Request $request, string $quoteRequestReference)
     {
         $agentQuoteRequestClient = $this->getFactory()->getAgentQuoteRequestClient();
-
         $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
-        $quoteRequestForm = $this->getFactory()
-            ->getAgentQuoteRequestForm($quoteRequestTransfer);
 
         if ($agentQuoteRequestClient->isQuoteRequestCanStartEditable($quoteRequestTransfer)) {
             return $this->redirectResponseInternal(static::ROUTE_AGENT_QUOTE_REQUEST_START_EDIT, [
@@ -134,7 +131,9 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
             ]);
         }
 
-        $quoteRequestForm->handleRequest($request);
+        $quoteRequestForm = $this->getFactory()
+            ->getAgentQuoteRequestForm($quoteRequestTransfer)
+            ->handleRequest($request);
 
         if ($quoteRequestForm->isSubmitted() && $quoteRequestForm->isValid()) {
             return $this->processAgentQuoteRequestForm($quoteRequestForm, $request);
