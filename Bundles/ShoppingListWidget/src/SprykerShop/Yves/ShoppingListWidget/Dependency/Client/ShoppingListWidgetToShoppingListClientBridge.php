@@ -57,7 +57,7 @@ class ShoppingListWidgetToShoppingListClientBridge implements ShoppingListWidget
     }
 
     /**
-     * @param array $productViewTransferCollection
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransferCollection
      *
      * @return int
      */
