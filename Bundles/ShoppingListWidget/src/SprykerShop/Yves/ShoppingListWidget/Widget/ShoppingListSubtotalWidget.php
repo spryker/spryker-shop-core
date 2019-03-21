@@ -18,11 +18,11 @@ class ShoppingListSubtotalWidget extends AbstractWidget
     protected const PARAMETER_SHOPPING_LIST_SUBTOTAL = 'shoppingListSubtotal';
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItems
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransferCollection
      */
-    public function __construct(array $shoppingListItems)
+    public function __construct(array $productViewTransferCollection)
     {
-        $this->addSubtotalParameter($shoppingListItems);
+        $this->addSubtotalParameter($productViewTransferCollection);
     }
 
     /**
@@ -42,13 +42,13 @@ class ShoppingListSubtotalWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItems
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransferCollection
      *
      * @return void
      */
-    protected function addSubtotalParameter(array $shoppingListItems): void
+    protected function addSubtotalParameter(array $productViewTransferCollection): void
     {
-        $this->addParameter(static::PARAMETER_SHOPPING_LIST_SUBTOTAL, $this->getShoppingListClient()->calculateShoppingListSubtotal($shoppingListItems));
+        $this->addParameter(static::PARAMETER_SHOPPING_LIST_SUBTOTAL, $this->getShoppingListClient()->calculateShoppingListSubtotal($productViewTransferCollection));
     }
 
     /**
