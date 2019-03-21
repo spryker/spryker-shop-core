@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\ShoppingListWidget\Widget;
 
-use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
+use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListClientInterface;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetFactory getFactory()
@@ -42,44 +42,20 @@ class ShoppingListSubtotalWidget extends AbstractWidget
     }
 
     /**
-     * @param array $shoppingListItems
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItems
      *
      * @return void
      */
     protected function addSubtotalParameter(array $shoppingListItems): void
     {
-        $this->addParameter(static::PARAMETER_SHOPPING_LIST_SUBTOTAL, $this->getShoppingListSubtotal($shoppingListItems));
+        $this->addParameter(static::PARAMETER_SHOPPING_LIST_SUBTOTAL, $this->getShoppingListClient()->calculateShoppingListSubtotal($shoppingListItems));
     }
 
     /**
-     * @param array $shoppingListItems
-     *
-     * @return int
+     * @return \SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListClientInterface
      */
-    protected function getShoppingListSubtotal(array $shoppingListItems): int
+    protected function getShoppingListClient(): ShoppingListWidgetToShoppingListClientInterface
     {
-        $shoppingListItems = $this->prepareShoppingListItems($shoppingListItems);
-
-        return $this->getFactory()
-            ->getShoppingListClient()
-            ->calculateShoppingListSubtotal($shoppingListItems);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItems
-     *
-     * @return array
-     */
-    protected function prepareShoppingListItems(array $shoppingListItems): array
-    {
-        $preparedShoppingListItems = [];
-        foreach ($shoppingListItems as $productViewTransfer) {
-            $preparedShoppingListItems[] = [
-                ProductViewTransfer::PRICE => $productViewTransfer->getPrice(),
-                ProductViewTransfer::QUANTITY => $productViewTransfer->getQuantity(),
-            ];
-        }
-
-        return $preparedShoppingListItems;
+        return $this->getFactory()->getShoppingListClient();
     }
 }

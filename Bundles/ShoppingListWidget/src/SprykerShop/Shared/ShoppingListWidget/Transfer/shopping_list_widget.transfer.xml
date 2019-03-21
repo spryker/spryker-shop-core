@@ -12,5 +12,9 @@
         <property name="shoppingLists" type="ShoppingList[]" singular="shoppingList" />
     </transfer>
 
+    <transfer name="ProductView">
+        <property name="price" type="int" />
+        <property name="quantity" type="int" />
+    </transfer>
 </transfers>
 
