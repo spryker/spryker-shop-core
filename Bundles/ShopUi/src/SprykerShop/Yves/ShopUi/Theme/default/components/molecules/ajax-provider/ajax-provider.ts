@@ -57,6 +57,7 @@ export default class AjaxProvider extends Component {
         return new Promise<T>((resolve, reject) => {
             this.xhr.open(this.method, this.url);
 
+            this.xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             this.headers.forEach((value: string, key: string) => {
                 this.xhr.setRequestHeader(key, value);
             });
