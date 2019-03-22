@@ -22,7 +22,7 @@ use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetFactory;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetTagService;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetTagServiceInterface;
 use Twig\Extension\ExtensionInterface;
-use Twig_TokenParserInterface;
+use Twig\TokenParser\TokenParserInterface;
 
 class ShopApplicationFactory extends AbstractFactory
 {
@@ -154,9 +154,9 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Twig_TokenParserInterface
+     * @return \Twig\TokenParser\TokenParserInterface
      */
-    public function createWidgetTagTokenParser(): Twig_TokenParserInterface
+    public function createWidgetTagTokenParser(): TokenParserInterface
     {
         return new WidgetTagTokenParser();
     }
