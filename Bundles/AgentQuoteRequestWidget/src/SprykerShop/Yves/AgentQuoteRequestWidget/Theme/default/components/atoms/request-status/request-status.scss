@@ -1,4 +1,4 @@
-@mixin agent-quote-request-status($name: '.request-status') {
+@mixin agent-quote-request-widget-request-status($name: '.request-status') {
     @include shop-ui-badge($name) {
         &--in-progress {
             background-color: helper-color-light(map-get($setting-color-actions, 'alert'));
