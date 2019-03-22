@@ -22,7 +22,7 @@
                     #{{ data.quoteRequest.quoteRequestReference }}
                 </a>
             </p>
-            <p>
+            <p class="badge">
                 {{ cart.items | default(0) | length }}
                 {{ 'agent_quote_request_widget.items' | trans }}
             </p>
@@ -33,8 +33,10 @@
             <p>{{ data.quoteRequest.companyUser.customer.firstName ~ ' ' ~ data.quoteRequest.companyUser.customer.lastName }}</p>
         </div>
         <div class="col col--sm-3 text-right">
-            <p>{{ data.quoteRequest.status }}</p>
-            <strong>{{ cart.totals.grandTotal | default(0) | money }}</strong>
+            <p class="request-status request-status--{{ data.quoteRequest.status }}">
+                {{ data.quoteRequest.status }}
+            </p>
+            <div><strong>{{ cart.totals.grandTotal | default(0) | money }}</strong></div>
         </div>
     </div>
 {% endblock %}
