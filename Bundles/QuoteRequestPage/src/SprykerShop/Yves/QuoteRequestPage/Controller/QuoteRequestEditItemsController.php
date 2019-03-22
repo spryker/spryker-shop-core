@@ -14,20 +14,26 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
  */
-class QuoteRequestReviseController extends QuoteRequestAbstractController
+class QuoteRequestEditItemsController extends QuoteRequestAbstractController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     */
+    protected const ROUTE_CART = 'cart';
+
+    /**
      * @param string $quoteRequestReference
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(Request $request, string $quoteRequestReference): RedirectResponse
+    public function editItemsAction(string $quoteRequestReference): RedirectResponse
     {
+        $quoteRequestTransfer = $this->getCompanyUserQuoteRequestByReference($quoteRequestReference);
+
         $this->getFactory()
             ->getQuoteRequestClient()
-            ->markQuoteRequestAsDraft((new QuoteRequestCriteriaTransfer())->setQuoteRequestReference($quoteRequestReference));
+            ->convertQuoteRequestToEditableQuote($quoteRequestTransfer);
 
-        return $this->redirectToReferer($request);
+        return $this->redirectResponseInternal(static::ROUTE_CART);
     }
 }

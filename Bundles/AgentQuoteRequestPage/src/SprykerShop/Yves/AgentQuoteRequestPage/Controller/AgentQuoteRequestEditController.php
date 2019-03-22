@@ -72,7 +72,7 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
     {
         $quoteRequestResponseTransfer = $this->getFactory()
             ->getAgentQuoteRequestClient()
-            ->markQuoteRequestInProgress((new QuoteRequestCriteriaTransfer())->setQuoteRequestReference($quoteRequestReference));
+            ->markQuoteRequestAsInProgress((new QuoteRequestCriteriaTransfer())->setQuoteRequestReference($quoteRequestReference));
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
@@ -93,7 +93,7 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
 
         $quoteRequestResponseTransfer = $this->getFactory()
             ->getAgentQuoteRequestClient()
-            ->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
+            ->markQuoteRequestAsReady($quoteRequestCriteriaTransfer);
 
         if ($quoteRequestResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER);

@@ -62,9 +62,9 @@ class AgentQuoteRequestPageToAgentQuoteRequestClientBridge implements AgentQuote
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function markQuoteRequestInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function markQuoteRequestAsInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->agentQuoteRequestClient->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+        return $this->agentQuoteRequestClient->markQuoteRequestAsInProgress($quoteRequestCriteriaTransfer);
     }
 
     /**
@@ -72,9 +72,9 @@ class AgentQuoteRequestPageToAgentQuoteRequestClientBridge implements AgentQuote
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function markQuoteRequestAsReady(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->agentQuoteRequestClient->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
+        return $this->agentQuoteRequestClient->markQuoteRequestAsReady($quoteRequestCriteriaTransfer);
     }
 
     /**

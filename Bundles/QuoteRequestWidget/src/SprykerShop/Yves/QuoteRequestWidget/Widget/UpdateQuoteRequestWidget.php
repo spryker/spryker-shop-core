@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\QuoteRequestWidget\QuoteRequestWidgetFactory getFactory()
  */
-class UpdateQuoteRequestWidget extends AbstractWidget
+class QuoteRequestCartWidget extends AbstractWidget
 {
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
     protected const PARAMETER_FORM = 'form';
@@ -32,7 +32,7 @@ class UpdateQuoteRequestWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'UpdateQuoteRequestWidget';
+        return 'QuoteRequestCartWidget';
     }
 
     /**
@@ -61,8 +61,8 @@ class UpdateQuoteRequestWidget extends AbstractWidget
         $this->addParameter(
             static::PARAMETER_FORM,
             $this->getFactory()
-            ->getQuoteRequestCartForm()
-            ->createView()
+                ->getQuoteRequestCartForm()
+                ->createView()
         );
     }
 
@@ -73,25 +73,6 @@ class UpdateQuoteRequestWidget extends AbstractWidget
      */
     protected function isWidgetVisible(QuoteTransfer $quoteTransfer): bool
     {
-        if (!$quoteTransfer->getCustomer()) {
-            return false;
-        }
-
-        $companyUserTransfer = $quoteTransfer->getCustomer()
-            ->getCompanyUserTransfer();
-
-        if (!$companyUserTransfer) {
-            return false;
-        }
-
-        $quoteRequestClient = $this->getFactory()
-            ->getQuoteRequestClient();
-
-        $quoteRequestTransfer = $quoteRequestClient->findCompanyUserQuoteRequestByReference(
-            $quoteTransfer->getQuoteRequestReference(),
-            $companyUserTransfer->getIdCompanyUser()
-        );
-
-        return $quoteRequestClient->isQuoteRequestDraft($quoteRequestTransfer);
+        return (bool)$quoteTransfer->getQuoteRequestReference();
     }
 }

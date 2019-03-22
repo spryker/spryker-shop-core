@@ -15,14 +15,13 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
     protected const ROUTE_QUOTE_REQUEST = 'quote-request';
     protected const ROUTE_QUOTE_REQUEST_CREATE = 'quote-request/create';
     protected const ROUTE_QUOTE_REQUEST_REVISE = 'quote-request/revise';
-    protected const ROUTE_QUOTE_REQUEST_REVISE_SUBMIT = 'quote-request/revise/submit';
-    protected const ROUTE_QUOTE_REQUEST_REVISE_EDIT = 'quote-request/revise/edit';
-    protected const ROUTE_QUOTE_REQUEST_REVISE_EDIT_ITEMS = 'quote-request/revise/edit-items';
+    protected const ROUTE_QUOTE_REQUEST_SUBMIT = 'quote-request/submit';
+    protected const ROUTE_QUOTE_REQUEST_EDIT = 'quote-request/edit';
+    protected const ROUTE_QUOTE_REQUEST_EDIT_ITEMS = 'quote-request/edit-items';
     protected const ROUTE_QUOTE_REQUEST_CANCEL = 'quote-request/cancel';
     protected const ROUTE_QUOTE_REQUEST_VIEW = 'quote-request/view';
     protected const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
     protected const ROUTE_QUOTE_REQUEST_CONVERT_TO_CART = 'quote-request/convert-to-cart';
-
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
     protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-]+';
@@ -37,9 +36,9 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
         $this->addQuoteRequestRoute()
             ->addQuoteRequestCreateRoute()
             ->addQuoteRequestReviseRoute()
-            ->addQuoteRequestReviseEditRoute()
-            ->addQuoteRequestReviseEditItemsRoute()
-            ->addQuoteRequestReviseSubmitRoute()
+            ->addQuoteRequestEditRoute()
+            ->addQuoteRequestEditItemsRoute()
+            ->addQuoteRequestSubmitRoute()
             ->addQuoteRequestCancelRoute()
             ->addQuoteRequestDetailsRoute()
             ->addQuoteRequestConvertToCartRoute();
@@ -89,13 +88,13 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestReviseController::editAction()
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestEditController::indexAction()
      *
      * @return $this
      */
-    protected function addQuoteRequestReviseEditRoute()
+    protected function addQuoteRequestEditRoute()
     {
-        $this->createController('/{quoteRequest}/revise/edit/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_REVISE_EDIT, 'QuoteRequestPage', 'QuoteRequestRevise', 'edit')
+        $this->createController('/{quoteRequest}/edit/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_EDIT, 'QuoteRequestPage', 'QuoteRequestEdit', 'index')
             ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
             ->value('quoteRequest', 'quote-request')
             ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
@@ -104,13 +103,13 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestReviseController::editItemsAction()
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestEditItemsController::indexAction()
      *
      * @return $this
      */
-    protected function addQuoteRequestReviseEditItemsRoute()
+    protected function addQuoteRequestEditItemsRoute()
     {
-        $this->createController('/{quoteRequest}/revise/edit-items/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_REVISE_EDIT_ITEMS, 'QuoteRequestPage', 'QuoteRequestRevise', 'editItems')
+        $this->createController('/{quoteRequest}/edit-items/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_EDIT_ITEMS, 'QuoteRequestPage', 'QuoteRequestEditItems', 'index')
             ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
             ->value('quoteRequest', 'quote-request')
             ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
@@ -119,13 +118,13 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestReviseController::editItemsAction()
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestEditController::submitAction()
      *
      * @return $this
      */
-    protected function addQuoteRequestReviseSubmitRoute()
+    protected function addQuoteRequestSubmitRoute()
     {
-        $this->createController('/{quoteRequest}/revise/submit/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_REVISE_SUBMIT, 'QuoteRequestPage', 'QuoteRequestRevise', 'submit')
+        $this->createController('/{quoteRequest}/submit/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_SUBMIT, 'QuoteRequestPage', 'QuoteRequestEdit', 'submit')
             ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
             ->value('quoteRequest', 'quote-request')
             ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);

@@ -26,9 +26,9 @@ class QuoteRequestCartController extends AbstractController
     protected const ROUTE_CART = 'cart';
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_REVISE_EDIT
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_EDIT
      */
-    protected const ROUTE_QUOTE_REQUEST_EDIT = 'quote-request/revise/edit';
+    protected const ROUTE_QUOTE_REQUEST_EDIT = 'quote-request/edit';
 
     /**
      * @uses \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE
