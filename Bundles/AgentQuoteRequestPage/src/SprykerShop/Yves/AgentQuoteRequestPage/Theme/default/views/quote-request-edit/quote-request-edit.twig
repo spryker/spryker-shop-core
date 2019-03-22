@@ -58,7 +58,9 @@
                 <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
                     {{ form_row(data.quoteRequestForm.validUntil) }}
                 </p>
-                <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:</p>
+                <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
+                    <b>{{ data.quoteRequest.latestVersion ? data.quoteRequest.latestVersion.versionReference : null }}</b>
+                </p>
                 <p>{{ 'quote_request_page.quote_request.labels.visibility' | trans }}:
                     {{ form_row(data.quoteRequestForm.isHidden) }}
                 </p>
