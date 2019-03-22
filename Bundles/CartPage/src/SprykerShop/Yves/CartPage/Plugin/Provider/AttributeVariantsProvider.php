@@ -57,7 +57,7 @@ class AttributeVariantsProvider
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param array $selectedAttributes
      * @param \ArrayObject $items
      * @param string|null $groupKey

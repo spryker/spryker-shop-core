@@ -47,29 +47,29 @@ interface CartPageToCartClientInterface
     /**
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1);
+    public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1.0);
 
     /**
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1);
+    public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1.0);
 
     /**
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1);
+    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1.0);
 
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
