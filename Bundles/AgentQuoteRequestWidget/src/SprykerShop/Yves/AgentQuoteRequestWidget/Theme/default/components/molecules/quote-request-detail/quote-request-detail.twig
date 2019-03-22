@@ -34,7 +34,7 @@
         </div>
         <div class="col col--sm-3 text-right">
             <p class="request-status request-status--{{ data.quoteRequest.status }}">
-                {{ data.quoteRequest.status }}
+                {{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}
             </p>
             <div><strong>{{ cart.totals.grandTotal | default(0) | money }}</strong></div>
         </div>
