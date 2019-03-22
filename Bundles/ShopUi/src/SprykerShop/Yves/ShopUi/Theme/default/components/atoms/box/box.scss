@@ -25,6 +25,10 @@
             height: calc(100% - 1rem);
         }
 
+        &--dark {
+            background-color: $setting-color-lightest;
+        }
+
         & + & {
             margin-top: 1rem;
         }
