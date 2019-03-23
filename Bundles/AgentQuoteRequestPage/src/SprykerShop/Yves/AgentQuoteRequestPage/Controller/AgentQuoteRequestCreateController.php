@@ -45,17 +45,17 @@ class AgentQuoteRequestCreateController extends AgentQuoteRequestAbstractControl
             ->handleRequest($request);
 
         if ($quoteRequestCreateForm->isSubmitted()) {
-            $quoteRequestResponseTranasfer = $this->getFactory()
+            $quoteRequestResponseTransfer = $this->getFactory()
                 ->createAgentQuoteRequestCreateHandler()
                 ->createQuoteRequest((int)$request->get(AgentQuoteRequestCreateForm::FILED_ID_COMPANY_USER));
 
-            $this->handleResponseErrors($quoteRequestResponseTranasfer);
+            $this->handleResponseErrors($quoteRequestResponseTransfer);
 
-            if ($quoteRequestResponseTranasfer->getIsSuccessful()) {
+            if ($quoteRequestResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CREATED);
 
                 return $this->redirectResponseInternal(static::ROUTE_AGENT_QUOTE_REQUEST_EDIT, [
-                    static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTranasfer->getQuoteRequest()->getQuoteRequestReference(),
+                    static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
                 ]);
             }
         }
