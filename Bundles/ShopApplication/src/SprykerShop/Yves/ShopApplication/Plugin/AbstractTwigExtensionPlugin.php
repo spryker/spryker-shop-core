@@ -8,8 +8,8 @@
 namespace SprykerShop\Yves\ShopApplication\Plugin;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Twig\Environment;
 use Twig\Extension\ExtensionInterface;
-use Twig_Environment;
 
 /**
  * @method \Spryker\Yves\Kernel\AbstractFactory getFactory()
@@ -23,11 +23,11 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Ext
      *
      * @api
      *
-     * @param \Twig_Environment $environment The current Twig_Environment instance
+     * @param \Twig\Environment $environment The current Environment instance
      *
      * @return void
      */
-    public function initRuntime(Twig_Environment $environment)
+    public function initRuntime(Environment $environment)
     {
     }
 
@@ -36,7 +36,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Ext
      *
      * @api
      *
-     * @return array An array of Twig_TokenParserInterface or Twig_TokenParserBrokerInterface instances
+     * @return array An array of TokenParserInterface or TokenParserBrokerInterface instances
      */
     public function getTokenParsers()
     {
@@ -48,7 +48,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Ext
      *
      * @api
      *
-     * @return \Twig_NodeVisitorInterface[] An array of Twig_NodeVisitorInterface instances
+     * @return \Twig\NodeVisitor\NodeVisitorInterface[] An array of NodeVisitorInterface instances
      */
     public function getNodeVisitors()
     {

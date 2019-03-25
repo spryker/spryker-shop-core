@@ -180,10 +180,10 @@ class MultiCartController extends AbstractController
     {
         $quoteTransfer = $this->findQuoteOrFail($idQuote);
 
-        if (!$this->isQuoteEditable($quoteTransfer)) {
+        if (!$this->isQuoteEditable($quoteTransfer) || !$this->can('RemoveCartItemPermissionPlugin')) {
             $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
 
-            return $this->redirectResponseInternal(MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX);
+            return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
         $quoteResponseTransfer = $this->getFactory()
