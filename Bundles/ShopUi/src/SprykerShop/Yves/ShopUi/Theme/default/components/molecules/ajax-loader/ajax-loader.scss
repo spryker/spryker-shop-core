@@ -11,7 +11,7 @@
         z-index: $setting-zi-element-floating;
 
         &__spinner {
-            animation-name: spin;
+            animation-name: spinTo;
             animation-duration: 1s;
             animation-iteration-count: infinite;
             animation-timing-function: linear;
