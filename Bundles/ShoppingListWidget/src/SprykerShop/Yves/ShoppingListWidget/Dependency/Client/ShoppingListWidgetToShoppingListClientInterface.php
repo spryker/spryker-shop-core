@@ -35,9 +35,9 @@ interface ShoppingListWidgetToShoppingListClientInterface
     public function addItems(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransferCollection
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItemProductViewTransfers
      *
      * @return int
      */
-    public function calculateShoppingListSubtotal(array $productViewTransferCollection): int;
+    public function calculateShoppingListSubtotal(array $shoppingListItemProductViewTransfers): int;
 }
