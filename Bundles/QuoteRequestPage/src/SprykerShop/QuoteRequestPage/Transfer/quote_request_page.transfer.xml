@@ -6,11 +6,11 @@
     <transfer name="QuoteRequest">
         <property name="companyUser" type="CompanyUser" />
         <property name="quoteRequestReference" type="string" />
-        <property name="metadata" type="array" />
         <property name="status" type="string" />
         <property name="validUntil" type="string" />
         <property name="createdAt" type="string" />
         <property name="latestVersion" type="QuoteRequestVersion" />
+        <property name="latestVisibleVersion" type="QuoteRequestVersion" />
         <property name="versionReferences" type="string[]" />
     </transfer>
 
@@ -36,6 +36,7 @@
     <transfer name="QuoteRequestVersion">
         <property name="versionReference" type="string" />
         <property name="quote" type="Quote" />
+        <property name="metadata" type="array" />
     </transfer>
 
     <transfer name="Quote">
