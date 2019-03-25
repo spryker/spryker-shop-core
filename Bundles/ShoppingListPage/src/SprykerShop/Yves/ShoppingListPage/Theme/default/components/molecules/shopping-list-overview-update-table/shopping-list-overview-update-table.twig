@@ -59,8 +59,8 @@
                     {% if product.price is not null %}
                         {% include molecule('price') with {
                             data: {
-                                amount: product.price | money,
-                                originalAmount: product.prices.ORIGINAL is not defined or product.prices.ORIGINAL is empty ? null : (product.prices.ORIGINAL | money)
+                                amount: product.price,
+                                originalAmount: product.prices.ORIGINAL is not defined or product.prices.ORIGINAL is empty ? null : product.prices.ORIGINAL
                             }
                         } only %}
                     {% else %}

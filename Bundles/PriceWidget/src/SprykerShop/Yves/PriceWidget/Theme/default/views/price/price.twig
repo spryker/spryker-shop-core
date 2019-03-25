@@ -16,8 +16,8 @@
         {% if can('SeePricePermissionPlugin') %}
             {% include molecule('price') with {
                 data: {
-                    amount: data.amount | money,
-                    originalAmount: data.originalAmount is empty ? null : data.originalAmount | money
+                    amount: data.amount,
+                    originalAmount: data.originalAmount is empty ? null : data.originalAmount
                 }
             } only %}
         {% else %}

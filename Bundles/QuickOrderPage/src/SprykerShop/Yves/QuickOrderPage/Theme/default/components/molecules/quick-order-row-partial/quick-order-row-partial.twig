@@ -57,7 +57,7 @@
             {% block price %}
                 {% include molecule('price') with {
                     data: {
-                        amount: data.price is empty ? null : data.price | money
+                        amount: data.price is empty ? null : data.price
                     }
                 } only %}
             {% endblock %}
