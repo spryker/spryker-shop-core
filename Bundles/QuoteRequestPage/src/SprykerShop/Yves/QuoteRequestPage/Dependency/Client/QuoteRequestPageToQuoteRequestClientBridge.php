@@ -127,9 +127,9 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function convertQuoteRequestToEditableQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
-        return $this->quoteRequestClient->convertQuoteRequestToEditableQuote($quoteRequestTransfer);
+        return $this->quoteRequestClient->convertQuoteRequestToQuote($quoteRequestTransfer);
     }
 
     /**

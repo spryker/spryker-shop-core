@@ -17,6 +17,11 @@ use Symfony\Component\HttpFoundation\Request;
 class QuoteRequestReviseController extends QuoteRequestAbstractController
 {
     /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_EDIT
+     */
+    protected const ROUTE_QUOTE_REQUEST_EDIT = 'quote-request/edit';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $quoteRequestReference
      *
@@ -28,6 +33,6 @@ class QuoteRequestReviseController extends QuoteRequestAbstractController
             ->getQuoteRequestClient()
             ->markQuoteRequestAsDraft((new QuoteRequestCriteriaTransfer())->setQuoteRequestReference($quoteRequestReference));
 
-        return $this->redirectToReferer($request);
+        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT);
     }
 }

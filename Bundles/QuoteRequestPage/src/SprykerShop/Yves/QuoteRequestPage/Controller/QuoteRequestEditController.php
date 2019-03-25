@@ -68,7 +68,7 @@ class QuoteRequestEditController extends QuoteRequestAbstractController
                 $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SAVED);
 
                 return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_DETAILS, [
-                    static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference
+                    static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
                 ]);
             }
 

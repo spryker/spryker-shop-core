@@ -59,7 +59,7 @@ class QuoteRequestHandler implements QuoteRequestHandlerInterface
      */
     public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        return  $this->quoteRequestClient->updateQuoteRequest($quoteRequestTransfer);
+        return $this->quoteRequestClient->updateQuoteRequest($quoteRequestTransfer);
     }
 
     /**
