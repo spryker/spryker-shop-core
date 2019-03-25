@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ShopPermission\Plugin\Twig;
 use Silex\Application;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
-use Twig_SimpleFunction;
+use Twig\TwigFunction;
 
 /**
  * @deprecated Please use PermissionTwigExtensionPlugin instead.
@@ -32,7 +32,7 @@ class PermissionTwigFunctionPlugin extends AbstractPlugin implements TwigFunctio
     public function getFunctions(Application $application)
     {
         return [
-            new Twig_SimpleFunction('can', [
+            new TwigFunction('can', [
                 $this,
                 'can',
             ], [

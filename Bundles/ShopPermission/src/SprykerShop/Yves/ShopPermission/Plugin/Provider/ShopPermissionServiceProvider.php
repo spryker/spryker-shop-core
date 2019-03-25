@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ShopPermission\Plugin\Provider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
  * @method \SprykerShop\Yves\ShopPermission\ShopPermissionFactory getFactory()
@@ -25,7 +25,7 @@ class ShopPermissionServiceProvider extends AbstractPlugin implements ServicePro
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) use ($app) {
+            $app->extend('twig', function (Environment $twig) use ($app) {
                 $twig = $this->registerPermissionTwigFunction($twig, $app);
                 $twig = $this->registerPermissionTwigExtensions($twig);
 
@@ -35,12 +35,12 @@ class ShopPermissionServiceProvider extends AbstractPlugin implements ServicePro
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param \Silex\Application $app
      *
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
-    protected function registerPermissionTwigFunction(Twig_Environment $twig, Application $app)
+    protected function registerPermissionTwigFunction(Environment $twig, Application $app)
     {
         foreach ($this->getPermissionTwigFunctions($app) as $function) {
             $twig->addFunction($function->getName(), $function);
@@ -65,11 +65,11 @@ class ShopPermissionServiceProvider extends AbstractPlugin implements ServicePro
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      *
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
-    protected function registerPermissionTwigExtensions(Twig_Environment $twig): Twig_Environment
+    protected function registerPermissionTwigExtensions(Environment $twig): Environment
     {
         foreach ($this->getFactory()->getPermissionTwigExtensionPlugins() as $extensionPlugin) {
             $twig->addExtension($extensionPlugin);
