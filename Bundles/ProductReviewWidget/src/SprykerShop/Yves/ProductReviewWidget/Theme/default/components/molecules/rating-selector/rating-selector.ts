@@ -25,8 +25,6 @@ export default class RatingSelector extends Component {
     }
 
     protected onStepClick(event: Event): void {
-        event.preventDefault();
-
         const step = <HTMLElement>event.currentTarget;
         const newValue = parseFloat(step.getAttribute('data-step-value'));
 
