@@ -167,22 +167,23 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
                     ->setQuantity(0.0);
             }
 
-            $newQuantity = $quantity + $itemTransfers[$sku]->getQuantity();
+            $newQuantity = $this->sumQuantities($quantity, $itemTransfers[$sku]->getQuantity());
 
-            $itemTransfers[$sku]->setQuantity($this->roundQuantity($newQuantity));
+            $itemTransfers[$sku]->setQuantity($newQuantity);
         }
 
         return array_values($itemTransfers);
     }
 
     /**
-     * @param float $quantity
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
      * @return float
      */
-    protected function roundQuantity(float $quantity): float
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
     {
-        return $this->utilQuantityService->roundQuantity($quantity);
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 
     /**
