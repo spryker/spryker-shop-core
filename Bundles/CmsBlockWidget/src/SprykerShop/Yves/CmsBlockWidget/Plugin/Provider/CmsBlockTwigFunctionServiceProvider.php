@@ -13,6 +13,8 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig\Environment;
 
 /**
+ * @deprecated Use `\SprykerShop\Yves\CmsBlockWidget\Plugin\Twig\CmsBlockTwigPlugin` instead.
+ *
  * @method \SprykerShop\Yves\CmsBlockWidget\CmsBlockWidgetFactory getFactory()
  */
 class CmsBlockTwigFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface

@@ -13,6 +13,8 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig\Environment;
 
 /**
+ * @deprecated Use `\SprykerShop\Yves\ShopUi\Plugin\Twig\ShopUiTwigPlugin` instead.
+ *
  * @method \SprykerShop\Yves\ShopUi\ShopUiFactory getFactory()
  */
 class ShopUiTwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
