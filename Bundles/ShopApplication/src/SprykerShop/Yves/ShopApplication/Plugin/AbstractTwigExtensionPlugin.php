@@ -42,11 +42,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
      *
      * @api
      *
-<<<<<<< HEAD
-     * @param \Twig\Environment $environment The current Twig_Environment instance
-=======
      * @param \Twig\Environment $environment The current Environment instance
->>>>>>> origin/master
      *
      * @return void
      */
