@@ -14,6 +14,8 @@ use Twig\Environment;
 use Twig\TwigFunction;
 
 /**
+ * @deprecated Use `SprykerShop\Yves\CustomerPage\Plugin\Twig\CustomerTwigPlugin` instead.
+ *
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
 class CustomerTwigFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface

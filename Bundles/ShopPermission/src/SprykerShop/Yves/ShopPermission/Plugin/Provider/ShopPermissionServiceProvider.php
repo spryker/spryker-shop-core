@@ -13,6 +13,8 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig\Environment;
 
 /**
+ * @deprecated Use `SprykerShop\Yves\ShopPermission\Plugin\Twig\ShopPermissionTwigPlugin` instead.
+ *
  * @method \SprykerShop\Yves\ShopPermission\ShopPermissionFactory getFactory()
  */
 class ShopPermissionServiceProvider extends AbstractPlugin implements ServiceProviderInterface

@@ -13,6 +13,8 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig\Environment;
 
 /**
+ * @deprecated Use `SprykerShop\Yves\CatalogPage\Plugin\Twig\CatalogPageTwigPlugin` instead.
+ *
  * @method \SprykerShop\Yves\CatalogPage\CatalogPageFactory getFactory()
  */
 class CatalogPageTwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
