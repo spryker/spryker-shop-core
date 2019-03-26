@@ -57,7 +57,7 @@
                 </td>
                 <td nowrap="nowrap" class="{{ config.name }}__cell text-center">
                     {% if product.price is not null %}
-                        {% include molecule('price') with {
+                        {% include molecule('money-price') with {
                             data: {
                                 amount: product.price,
                                 originalAmount: product.prices.ORIGINAL is not defined or product.prices.ORIGINAL is empty ? null : product.prices.ORIGINAL

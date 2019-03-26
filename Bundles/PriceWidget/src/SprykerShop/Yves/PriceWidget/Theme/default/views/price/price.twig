@@ -14,7 +14,7 @@
 {% block body %}
     <p>
         {% if can('SeePricePermissionPlugin') %}
-            {% include molecule('price') with {
+            {% include molecule('money-price') with {
                 data: {
                     amount: data.amount,
                     originalAmount: data.originalAmount is empty ? null : data.originalAmount
