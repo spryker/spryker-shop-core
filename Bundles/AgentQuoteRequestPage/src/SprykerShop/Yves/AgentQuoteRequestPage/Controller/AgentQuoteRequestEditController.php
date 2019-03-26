@@ -23,18 +23,6 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
 
     /**
-     * @param string $quoteRequestReference
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function startEditAction(string $quoteRequestReference): RedirectResponse
-    {
-        $response = $this->executeStartEditAction($quoteRequestReference);
-
-        return $response;
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $quoteRequestReference
      *
@@ -61,24 +49,6 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
         $response = $this->executeSendToCustomerAction($quoteRequestReference);
 
         return $response;
-    }
-
-    /**
-     * @param string $quoteRequestReference
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function executeStartEditAction(string $quoteRequestReference): RedirectResponse
-    {
-        $quoteRequestResponseTransfer = $this->getFactory()
-            ->getAgentQuoteRequestClient()
-            ->markQuoteRequestInProgress((new QuoteRequestCriteriaTransfer())->setQuoteRequestReference($quoteRequestReference));
-
-        $this->handleResponseErrors($quoteRequestResponseTransfer);
-
-        return $this->redirectResponseInternal(static::ROUTE_AGENT_QUOTE_REQUEST_EDIT, [
-            static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
-        ]);
     }
 
     /**
@@ -117,8 +87,8 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
         $agentQuoteRequestClient = $this->getFactory()->getAgentQuoteRequestClient();
         $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
 
-        if ($agentQuoteRequestClient->isQuoteRequestCanStartEditable($quoteRequestTransfer)) {
-            return $this->redirectResponseInternal(static::ROUTE_AGENT_QUOTE_REQUEST_START_EDIT, [
+        if ($agentQuoteRequestClient->isQuoteRequestRevisable($quoteRequestTransfer)) {
+            return $this->redirectResponseInternal(static::ROUTE_AGENT_QUOTE_REQUEST_REVISE, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
             ]);
         }
@@ -156,7 +126,7 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
         $quoteRequestTransfer = $quoteRequestForm->getData();
 
         $quoteRequestResponseTransfer = $this->getFactory()
-            ->getQuoteRequestClient()
+            ->getAgentQuoteRequestClient()
             ->updateQuoteRequest($quoteRequestTransfer);
 
         if ($quoteRequestResponseTransfer->getIsSuccessful()) {

@@ -49,7 +49,7 @@
         <div class="grid">
             <div class="col col--sm-12 col--xl-8">
                 <div class="box">
-                    {% for child in data.quoteRequestForm.metadata %}
+                    {% for child in data.quoteRequestForm.latestVersion.metadata %}
                         <div class="col col--sm-12 col--xl-6">
                             <div class="box">
                                 {{ form_row(child) }}

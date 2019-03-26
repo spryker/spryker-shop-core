@@ -3,12 +3,15 @@
 {% define data = {
     title: 'quote_request_page.quote_request' | trans,
     quoteRequest: _view.quoteRequest,
+    quoteRequestVersionReferences: _view.quoteRequestVersionReferences,
     version: _view.version,
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
     isQuoteRequestReady: _view.isQuoteRequestReady,
 } %}
 
-{% set cart = data.version ? data.version.quote : null %}
+{% set isLatestVersion = (data.version.idQuoteRequestVersion == data.quoteRequest.latestVisibleVersion.idQuoteRequestVersion) ? true : false %}
+{% set cart = data.version.quote %}
+
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -35,7 +38,7 @@
     <div class="grid">
         <div class="col col--sm-12 col--xl-8">
             <div class="box">
-                {% for key, value in data.quoteRequest.metadata %}
+                {% for key, value in data.version.metadata %}
                     <div class="col col--sm-12 col--xl-6">
                         <div class="box">
                             <label class="label">{{ ('quote_request_page.quote_request.metadata.label.' ~ key) | trans }}</label>
@@ -66,7 +69,7 @@
                             onchange: 'this.options[this.selectedIndex].value && (window.location.search = "quote-request-version-reference=" + this.options[this.selectedIndex].value);'
                         },
                         embed: {
-                            versionReferences: data.quoteRequest.versionReferences,
+                            versionReferences: data.quoteRequestVersionReferences,
                             currentVersionReference: data.version ? data.version.versionReference : null
                         }
                     } only %}
@@ -110,7 +113,7 @@
                     {{ 'quote_request_page.quote_request.actions.back_to_list' | trans }}
                 </a>
 
-                {% if data.version and data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion %}
+                {% if data.version and data.version.idQuoteRequestVersion == data.quoteRequest.latestVisibleVersion.idQuoteRequestVersion %}
 
                     {% if data.isQuoteRequestCancelable %}
                         <hr/>

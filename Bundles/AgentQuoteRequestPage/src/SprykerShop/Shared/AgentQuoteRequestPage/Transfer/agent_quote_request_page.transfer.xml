@@ -12,7 +12,6 @@
         <property name="createdAt" type="string" />
         <property name="latestVersion" type="QuoteRequestVersion" />
         <property name="latestVisibleVersion" type="QuoteRequestVersion" />
-        <property name="versionReferences" type="string[]" />
     </transfer>
 
     <transfer name="CompanyUser">
@@ -71,7 +70,6 @@
 
     <transfer name="QuoteRequestFilter">
         <property name="quoteRequestReference" type="string" />
-        <property name="withHidden" type="bool" />
         <property name="pagination" type="Pagination" />
     </transfer>
 

@@ -7,11 +7,8 @@
 
 namespace SprykerShop\Yves\AgentQuoteRequestPage\Form;
 
-use ArrayObject;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageFactory getFactory()
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageConfig getConfig()
  */
-class AgentQuoteInProgressSubForm extends AbstractType
+class AgentQuoteRequestVersionSubForm extends AbstractType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -29,7 +26,7 @@ class AgentQuoteInProgressSubForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => QuoteTransfer::class,
+            'data_class' => QuoteRequestVersionTransfer::class,
             'label' => false,
         ]);
         $resolver->setRequired([AgentQuoteRequestForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS]);
@@ -43,7 +40,20 @@ class AgentQuoteInProgressSubForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addItemsField($builder, $options);
+        $this->addMetadataForm($builder)
+            ->addQuoteForm($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addMetadataForm(FormBuilderInterface $builder)
+    {
+        $builder->add(QuoteRequestVersionTransfer::METADATA, AgentQuoteRequestMetadataSubForm::class);
+
+        return $this;
     }
 
     /**
@@ -52,35 +62,16 @@ class AgentQuoteInProgressSubForm extends AbstractType
      *
      * @return $this
      */
-    protected function addItemsField(FormBuilderInterface $builder, array $options)
+    protected function addQuoteForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(QuoteTransfer::ITEMS, CollectionType::class, [
-            'required' => false,
-            'label' => false,
-            'entry_type' => AgentQuoteInProgressItemSubForm::class,
-            'entry_options' => [
+        $builder->add(
+            QuoteRequestVersionTransfer::QUOTE,
+            AgentQuoteRequestVersionQuoteSubForm::class,
+            [
                 AgentQuoteRequestForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS => $options[AgentQuoteRequestForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS],
-            ],
-        ]);
-
-        $builder->get(QuoteTransfer::ITEMS)
-            ->addModelTransformer($this->createArrayObjectModelTransformer());
+            ]
+        );
 
         return $this;
-    }
-
-    /**
-     * @return \Symfony\Component\Form\CallbackTransformer
-     */
-    protected function createArrayObjectModelTransformer()
-    {
-        return new CallbackTransformer(
-            function ($value) {
-                return (array)$value;
-            },
-            function ($value) {
-                return new ArrayObject($value);
-            }
-        );
     }
 }

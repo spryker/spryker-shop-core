@@ -15,12 +15,12 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
     protected const ROUTE_AGENT_QUOTE_REQUEST = 'agent/quote-request';
     protected const ROUTE_AGENT_QUOTE_REQUEST_CANCEL = 'agent/quote-request/cancel';
     protected const ROUTE_AGENT_QUOTE_REQUEST_DETAILS = 'agent/quote-request/details';
-    protected const ROUTE_AGENT_QUOTE_REQUEST_START_EDIT = 'agent/quote-request/start-edit';
     protected const ROUTE_AGENT_QUOTE_REQUEST_EDIT = 'agent/quote-request/edit';
     protected const ROUTE_AGENT_QUOTE_REQUEST_CREATE = 'agent/quote-request/create';
     protected const ROUTE_AGENT_QUOTE_REQUEST_SEND_TO_CUSTOMER = 'agent/quote-request/send-to-customer';
     protected const ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS = 'agent/quote-request/edit-items';
     protected const ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM = 'agent/quote-request/edit-items-confirm';
+    protected const ROUTE_AGENT_QUOTE_REQUEST_REVISE = 'agent/quote-request/revise';
 
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
@@ -36,7 +36,7 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
         $this->addAgentQuoteRequestRoute()
             ->addAgentQuoteRequestCancelRoute()
             ->addQuoteRequestDetailsRoute()
-            ->addQuoteRequestStartEditRoute()
+            ->addQuoteRequestReviseRoute()
             ->addQuoteRequestEditRoute()
             ->addQuoteRequestSendToCustomerRoute()
             ->addQuoteRequestEditItemsRoute()
@@ -94,9 +94,9 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
      *
      * @return $this
      */
-    protected function addQuoteRequestStartEditRoute()
+    protected function addQuoteRequestReviseRoute()
     {
-        $this->createController('/{agent}/quote-request/start-edit/{quoteRequestReference}', static::ROUTE_AGENT_QUOTE_REQUEST_START_EDIT, 'AgentQuoteRequestPage', 'AgentQuoteRequestEdit', 'startEdit')
+        $this->createController('/{agent}/quote-request/revise/{quoteRequestReference}', static::ROUTE_AGENT_QUOTE_REQUEST_REVISE, 'AgentQuoteRequestPage', 'AgentQuoteRequestRevise', 'index')
             ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
             ->value('agent', 'agent')
             ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);

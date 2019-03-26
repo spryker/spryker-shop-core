@@ -6,7 +6,7 @@
     quoteRequest: _view.quoteRequestForm.vars.value
 } %}
 
-{% set cart = data.quoteRequest.quoteInProgress %}
+{% set cart = data.quoteRequest.latestVersion.quote %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -39,7 +39,7 @@
     <div class="grid">
         <div class="col col--sm-12 col--xl-8">
             <div class="box">
-                {% for child in data.quoteRequestForm.metadata %}
+                {% for child in data.quoteRequestForm.latestVersion.metadata %}
                     <div class="col col--sm-12 col--xl-6">
                         <div class="box">
                             {{ form_row(child) }}
@@ -61,15 +61,15 @@
                 <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
                     <b>{{ data.quoteRequest.latestVersion ? data.quoteRequest.latestVersion.versionReference : null }}</b>
                 </p>
-                <p>{{ 'quote_request_page.quote_request.labels.visibility' | trans }}:
-                    {{ form_row(data.quoteRequestForm.isHidden) }}
+                <p>
+                    {{ form_row(data.quoteRequestForm.isLatestVersionHidden) }}
                 </p>
             </div>
         </div>
     </div>
     <div class="grid">
         <div class="col col--sm-12 col--xl-8">
-            {% for itemChild in data.quoteRequestForm.quoteInProgress.items %}
+            {% for itemChild in data.quoteRequestForm.latestVersion.quote.items %}
                 {% set cartItem = itemChild.vars.value %}
                 {% embed molecule('quote-request-cart-item', 'CartPage') with {
                     class: 'box',
@@ -119,11 +119,9 @@
                     {{ 'quote_request_page.quote_request.actions.save' | trans }}
                 </button>
                 <hr/>
-                {% if data.quoteRequest.quoteInProgress and data.quoteRequest.quoteInProgress.items is not empty %}
-                    <button type="submit" name="sendToCustomer" class="button button--expand button--success">
-                        {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
-                    </button>
-                {% endif %}
+                <button type="submit" name="sendToCustomer" class="button button--expand button--success">
+                    {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
+                </button>
             </div>
         </div>
     </div>

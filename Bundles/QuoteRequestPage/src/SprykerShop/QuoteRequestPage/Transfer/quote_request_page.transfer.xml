@@ -11,7 +11,6 @@
         <property name="createdAt" type="string" />
         <property name="latestVersion" type="QuoteRequestVersion" />
         <property name="latestVisibleVersion" type="QuoteRequestVersion" />
-        <property name="versionReferences" type="string[]" />
     </transfer>
 
     <transfer name="CompanyUser">

@@ -10,9 +10,6 @@
 } %}
 
 {% set cart = data.quoteRequest.latestVersion ? data.quoteRequest.latestVersion.quote : null %}
-{% if data.quoteRequest.status == 'in-progress' and data.quoteRequest.quoteInProgress %}
-    {% set cart = data.quoteRequest.quoteInProgress %}
-{% endif %}
 
 {% block body %}
     <div class="grid grid--middle text-small text-left">

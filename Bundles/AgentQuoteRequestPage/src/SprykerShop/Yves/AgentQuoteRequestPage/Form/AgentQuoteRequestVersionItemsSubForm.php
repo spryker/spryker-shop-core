@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints\Regex;
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageFactory getFactory()
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageConfig getConfig()
  */
-class AgentQuoteInProgressItemSubForm extends AbstractType
+class AgentQuoteRequestVersionItemsSubForm extends AbstractType
 {
     protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';

@@ -27,7 +27,7 @@ class AgentQuoteRequestForm extends AbstractType
 
     public const OPTION_IS_DEFAULT_PRICE_MODE_GROSS = 'option_is_default_price_mode_gross';
 
-    protected const LABEL_QUOTE_REQUEST_IS_HIDDEN = 'quote_request_page.quote_request.labels.hide_from_customer';
+    protected const LABEL_QUOTE_REQUEST_IS_LATEST_VERSION_HIDDEN = 'quote_request_page.quote_request.labels.hide_latest_version';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -50,20 +50,26 @@ class AgentQuoteRequestForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addMetadataForm($builder)
+        $this->addLatestVersionForm($builder, $options)
             ->addValidUntilField($builder)
-            ->addIsHiddenField($builder)
-            ->addQuoteInProgressField($builder, $options);
+            ->addIsHiddenLatestVersionField($builder);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addMetadataForm(FormBuilderInterface $builder)
+    protected function addLatestVersionForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(QuoteRequestTransfer::METADATA, AgentQuoteRequestMetadataSubForm::class);
+        $builder->add(
+            QuoteRequestTransfer::LATEST_VERSION,
+            AgentQuoteRequestVersionSubForm::class,
+            [
+                AgentQuoteRequestForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS => $options[AgentQuoteRequestForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS],
+            ]
+        );
 
         return $this;
     }
@@ -95,31 +101,12 @@ class AgentQuoteRequestForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIsHiddenField(FormBuilderInterface $builder)
+    protected function addIsHiddenLatestVersionField(FormBuilderInterface $builder)
     {
-        $builder->add(QuoteRequestTransfer::IS_HIDDEN, CheckboxType::class, [
-            'label' => static::LABEL_QUOTE_REQUEST_IS_HIDDEN,
+        $builder->add(QuoteRequestTransfer::IS_LATEST_VERSION_HIDDEN, CheckboxType::class, [
+            'label' => static::LABEL_QUOTE_REQUEST_IS_LATEST_VERSION_HIDDEN,
             'required' => false,
         ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addQuoteInProgressField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add(
-            QuoteRequestTransfer::QUOTE_IN_PROGRESS,
-            AgentQuoteInProgressSubForm::class,
-            [
-                AgentQuoteRequestForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS => $options[AgentQuoteRequestForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS],
-            ]
-        );
 
         return $this;
     }
