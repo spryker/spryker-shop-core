@@ -12,9 +12,9 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig_Environment;
-use Twig_SimpleFilter;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * @deprecated Use `SprykerShop\Yves\MoneyWidget\Plugin\Twig\MoneyTwigPlugin` instead.
@@ -31,7 +31,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) {
+            $app->extend('twig', function (Environment $twig) {
                 $twig->addFilter($this->getMoneyFilter());
                 $twig->addFilter($this->getMoneyRawFilter());
                 $twig->addFunction($this->getMoneySymbol());
@@ -53,11 +53,11 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     /**
      * @uses TwigMoneyServiceProvider::moneyFilterFunction()
      *
-     * @return \Twig_SimpleFilter
+     * @return \Twig\TwigFilter
      */
     protected function getMoneyFilter()
     {
-        return new Twig_SimpleFilter('money', [$this, 'moneyFilterFunction']);
+        return new TwigFilter('money', [$this, 'moneyFilterFunction']);
     }
 
     /**
@@ -89,11 +89,11 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     /**
      * @uses TwigMoneyServiceProvider::moneyRawFilterFunction()
      *
-     * @return \Twig_SimpleFilter
+     * @return \Twig\TwigFilter
      */
     protected function getMoneyRawFilter()
     {
-        return new Twig_SimpleFilter('moneyRaw', [$this, 'moneyRawFilterFunction']);
+        return new TwigFilter('moneyRaw', [$this, 'moneyRawFilterFunction']);
     }
 
     /**
@@ -119,11 +119,11 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     /**
      * @uses TwigMoneyServiceProvider::moneySymbolFunction()
      *
-     * @return \Twig_SimpleFunction
+     * @return \Twig\TwigFunction
      */
     protected function getMoneySymbol()
     {
-        return new Twig_SimpleFunction('moneySymbol', [$this, 'moneySymbolFunction']);
+        return new TwigFunction('moneySymbol', [$this, 'moneySymbolFunction']);
     }
 
     /**

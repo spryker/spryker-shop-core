@@ -16,9 +16,9 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ShopApplication\Exception\InvalidApplicationException;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Twig_Environment;
-use Twig_Loader_Chain;
-use Twig_Loader_Filesystem;
+use Twig\Environment;
+use Twig\Loader\ChainLoader;
+use Twig\Loader\FilesystemLoader;
 
 /**
  * @deprecated Use `Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin` instead.
@@ -98,7 +98,7 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
     protected function registerTwigLoaderChain(Application $app)
     {
         $app['twig.loader'] = $app->share(function ($app) {
-            return new Twig_Loader_Chain(
+            return new ChainLoader(
                 [
                     $app['twig.loader.yves'],
                     $app['twig.loader.filesystem'],
@@ -129,11 +129,11 @@ class ShopTwigServiceProvider extends AbstractPlugin implements ServiceProviderI
             return [];
         });
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) use ($app) {
+            $app->extend('twig', function (Environment $twig) use ($app) {
                 if (class_exists('Symfony\Bridge\Twig\Extension\RoutingExtension')) {
                     if (isset($app['form.factory'])) {
                         $app['twig.loader']->addLoader(
-                            new Twig_Loader_Filesystem(__DIR__ . '/../../Resources/views/Form')
+                            new FilesystemLoader(__DIR__ . '/../../Resources/views/Form')
                         );
                     }
                 }
