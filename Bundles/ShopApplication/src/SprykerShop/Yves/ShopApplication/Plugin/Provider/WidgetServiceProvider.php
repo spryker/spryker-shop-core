@@ -15,6 +15,8 @@ use Twig\Environment;
 use Twig\TwigFunction;
 
 /**
+ * @deprecated Use `SprykerShop\Yves\ShopApplication\Plugin\Twig\WidgetTwigPlugin` instead.
+ *
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationConfig getConfig()
  */

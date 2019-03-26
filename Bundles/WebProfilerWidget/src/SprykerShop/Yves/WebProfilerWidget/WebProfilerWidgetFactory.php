@@ -7,8 +7,13 @@
 
 namespace SprykerShop\Yves\WebProfilerWidget;
 
+use Spryker\Shared\Twig\Loader\FilesystemLoader;
+use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 
+/**
+ * @method \SprykerShop\Yves\WebProfilerWidget\WebProfilerWidgetConfig getConfig()
+ */
 class WebProfilerWidgetFactory extends AbstractFactory
 {
     /**
@@ -17,5 +22,13 @@ class WebProfilerWidgetFactory extends AbstractFactory
     public function getWebProfiler()
     {
         return $this->getProvidedDependency(WebProfilerWidgetDependencyProvider::PLUGINS_WEB_PROFILER);
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\Loader\FilesystemLoaderInterface
+     */
+    public function createTwigFilesystemLoader(): FilesystemLoaderInterface
+    {
+        return new FilesystemLoader($this->getConfig()->getWebProfilerTemplatePaths(), 'WebProfiler');
     }
 }

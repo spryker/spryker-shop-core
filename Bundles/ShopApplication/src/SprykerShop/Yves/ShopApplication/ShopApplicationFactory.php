@@ -8,6 +8,10 @@
 namespace SprykerShop\Yves\ShopApplication;
 
 use Silex\Provider\TwigServiceProvider;
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Config\Environment;
+use Spryker\Shared\Twig\Loader\FilesystemLoader;
+use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Widget\WidgetCollection;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
@@ -15,15 +19,21 @@ use Spryker\Yves\Kernel\Widget\WidgetContainerRegistry;
 use Spryker\Yves\Kernel\Widget\WidgetFactory as LegacyWidgetFactory;
 use SprykerShop\Yves\ShopApplication\Dependency\Service\ShopApplicationToUtilTextServiceInterface;
 use SprykerShop\Yves\ShopApplication\Plugin\ShopApplicationTwigExtensionPlugin;
+use SprykerShop\Yves\ShopApplication\Subscriber\ShopApplicationTwigEventSubscriber;
 use SprykerShop\Yves\ShopApplication\Twig\RoutingHelper;
 use SprykerShop\Yves\ShopApplication\Twig\TwigRenderer;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\TokenParser\WidgetTagTokenParser;
+use SprykerShop\Yves\ShopApplication\Twig\Widget\TokenParser\WidgetTagTwigTokenParser;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetFactory;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetTagService;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetTagServiceInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Twig\Extension\ExtensionInterface;
 use Twig\TokenParser\TokenParserInterface;
 
+/**
+ * @method \SprykerShop\Yves\ShopApplication\ShopApplicationConfig getConfig()
+ */
 class ShopApplicationFactory extends AbstractFactory
 {
     /**
@@ -58,6 +68,8 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Instead of this we make use of `Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin`. Method will be removed without replacement.
+     *
      * @return \Silex\Provider\TwigServiceProvider
      */
     public function createSilexTwigServiceProvider()
@@ -162,6 +174,14 @@ class ShopApplicationFactory extends AbstractFactory
     }
 
     /**
+     * @return \Twig\TokenParser\TokenParserInterface
+     */
+    public function createWidgetTagTwigTokenParser(): TokenParserInterface
+    {
+        return new WidgetTagTwigTokenParser();
+    }
+
+    /**
      * @return \SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetTagServiceInterface
      */
     public function createWidgetTagService(): WidgetTagServiceInterface
@@ -179,5 +199,31 @@ class ShopApplicationFactory extends AbstractFactory
     public function createShopApplicationTwigExtensionPlugin(): ExtensionInterface
     {
         return new ShopApplicationTwigExtensionPlugin();
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\Loader\FilesystemLoaderInterface
+     */
+    public function createFilesystemLoader(): FilesystemLoaderInterface
+    {
+        return new FilesystemLoader($this->getConfig()->getShopApplicationResources());
+    }
+
+    /**
+     * @return \Spryker\Shared\Config\Environment
+     */
+    public function getEnvironment(): Environment
+    {
+        return $this->getProvidedDependency(ShopApplicationDependencyProvider::ENVIRONMENT);
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
+     */
+    public function createShopApplicationTwigEventSubscriber(ContainerInterface $container): EventSubscriberInterface
+    {
+        return new ShopApplicationTwigEventSubscriber($container, $this->createWidgetContainerRegistry(), $this->createRoutingHelper(), $this->getConfig());
     }
 }

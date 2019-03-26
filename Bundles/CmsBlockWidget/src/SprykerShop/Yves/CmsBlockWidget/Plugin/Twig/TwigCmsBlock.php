@@ -18,6 +18,8 @@ use Twig\Environment;
 use Twig\TwigFunction;
 
 /**
+ * @deprecated Use `SprykerShop\Yves\CmsBlockWidget\Plugin\Twig\TwigCmsBlockWidgetPlugin` instead.
+ *
  * @method \SprykerShop\Yves\CmsBlockWidget\CmsBlockWidgetFactory getFactory()
  */
 class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
