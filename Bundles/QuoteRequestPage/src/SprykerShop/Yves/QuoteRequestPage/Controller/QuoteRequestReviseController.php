@@ -22,17 +22,23 @@ class QuoteRequestReviseController extends QuoteRequestAbstractController
     protected const ROUTE_QUOTE_REQUEST_EDIT = 'quote-request/edit';
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE
+     */
+    protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
+
+    /**
      * @param string $quoteRequestReference
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(Request $request, string $quoteRequestReference): RedirectResponse
+    public function indexAction(string $quoteRequestReference): RedirectResponse
     {
         $this->getFactory()
             ->getQuoteRequestClient()
             ->markQuoteRequestAsDraft((new QuoteRequestCriteriaTransfer())->setQuoteRequestReference($quoteRequestReference));
 
-        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT);
+        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
+            static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference
+        ]);
     }
 }
