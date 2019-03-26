@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserQueryTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 
 class AgentQuoteRequestWidgetToAgentQuoteRequestClientBridge implements AgentQuoteRequestWidgetToAgentQuoteRequestClientInterface
@@ -29,6 +30,16 @@ class AgentQuoteRequestWidgetToAgentQuoteRequestClientBridge implements AgentQuo
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->agentQuoteRequestClient->updateQuoteRequest($quoteRequestTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer
@@ -44,9 +55,9 @@ class AgentQuoteRequestWidgetToAgentQuoteRequestClientBridge implements AgentQuo
      *
      * @return \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer
      */
-    public function findCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer
+    public function getCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer
     {
-        return $this->agentQuoteRequestClient->findCompanyUsersByQuery($customerQueryTransfer);
+        return $this->agentQuoteRequestClient->getCompanyUsersByQuery($customerQueryTransfer);
     }
 
     /**

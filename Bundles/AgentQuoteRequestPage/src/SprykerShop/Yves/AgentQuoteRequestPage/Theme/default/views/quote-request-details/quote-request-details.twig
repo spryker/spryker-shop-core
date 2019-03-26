@@ -3,19 +3,15 @@
 {% define data = {
     title: 'quote_request_page.quote_request' | trans,
     quoteRequest: _view.quoteRequest,
+    quoteRequestVersionReferences: _view.quoteRequestVersionReferences,
+    version: _view.version,
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
-    isQuoteRequestCanStartEditable: _view.isQuoteRequestCanStartEditable,
+    isQuoteRequestRevisable: _view.isQuoteRequestRevisable,
     isQuoteRequestEditable: _view.isQuoteRequestEditable,
-    version: _view.version
 } %}
 
-{% set cart = data.version ? data.version.quote : null %}
-{% if data.isQuoteRequestEditable %}
-    {% if not data.version or (data.version and data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion) %}
-        {% set cart = data.quoteRequest.quoteInProgress %}
-    {% endif %}
-{% endif %}
-
+{% set isLatestVersion = (data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion) ? true : false %}
+{% set cart = (data.isQuoteRequestEditable and isLatestVersion) ? data.quoteRequest.latestVersion.quote : data.version.quote %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -42,7 +38,7 @@
     <div class="grid">
         <div class="col col--sm-12 col--xl-8">
             <div class="box">
-                {% for key, value in data.quoteRequest.metadata %}
+                {% for key, value in data.version.metadata %}
                     <div class="col col--sm-12 col--xl-6">
                         <div class="box">
                             <label class="label">{{ ('quote_request_page.quote_request.metadata.label.' ~ key) | trans }}</label>
@@ -71,7 +67,7 @@
                             onchange: 'this.options[this.selectedIndex].value && (window.location.search = "quote-request-version-reference=" + this.options[this.selectedIndex].value);'
                         },
                         embed: {
-                            versionReferences: data.quoteRequest.versionReferences,
+                            versionReferences: data.quoteRequestVersionReferences,
                             currentVersionReference: data.version ? data.version.versionReference : null
                         }
                     } only %}
@@ -82,9 +78,9 @@
                         {% endblock %}
                     {% endembed %}
                 </p>
-                <p>{{ 'quote_request_page.quote_request.labels.visibility' | trans }}:
-                    {{ data.quoteRequest.isHidden ? 'Hidden' : '' }}
-                </p>
+                {% if data.quoteRequest.isLatestVersionHidden and isLatestVersion %}
+                    <p><b>{{ 'quote_request_page.quote_request.labels.latest_version_is_hidden' | trans }}</b></p>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -95,7 +91,8 @@
                     {% include molecule('quote-request-cart-item', 'CartPage') with {
                         class: 'box',
                         data: {
-                            cartItem: cartItem
+                            priceMode: cart.priceMode,
+                            cartItem: cartItem,
                         }
                     } only %}
                 {% endfor %}
@@ -103,7 +100,7 @@
         </div>
 
         <div class="col col--sm-12 col--xl-4">
-            {% if cart is not empty %}
+            {% if cart and cart.items is not empty %}
                 <div class="box">
                     {% include molecule('quote-request-cart-summary', 'CartPage') with {
                         data: {
@@ -117,7 +114,7 @@
                     {{ 'quote_request_page.quote_request.actions.back_to_list' | trans }}
                 </a>
 
-                {% if not data.version or data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion %}
+                {% if isLatestVersion %}
 
                     {% if data.isQuoteRequestCancelable %}
                         <hr/>
@@ -127,21 +124,13 @@
                         </a>
                     {% endif %}
 
-                    {% if data.isQuoteRequestCanStartEditable %}
-                        <hr/>
-                        <a class="button button--expand button--success"
-                           href="{{ path('agent/quote-request/start-edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
-                            {{ 'quote_request_page.quote_request.actions.edit' | trans }}
-                        </a>
-                    {% endif %}
-
                     {% if data.isQuoteRequestEditable %}
                         <hr/>
                         <a class="button button--expand button--success"
                            href="{{ path('agent/quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.edit' | trans }}
                         </a>
-                        {% if data.quoteRequest.quoteInProgress %}
+                        {% if data.quoteRequest.latestVersion.quote.items is not empty %}
                             <hr/>
                             <a class="button button--expand button--success"
                                href="{{ path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
@@ -150,12 +139,15 @@
                         {% endif %}
                     {% endif %}
 
-                    {% if data.quoteRequest.status == 'ready' %}
+                    {% if data.isQuoteRequestRevisable %}
                         <hr/>
                         <a class="button button--expand button--hollow"
                            href="{{ path('agent/quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.revise' | trans }}
                         </a>
+                    {% endif %}
+
+                    {% if data.quoteRequest.status == 'ready' %}
                         <hr/>
                         <a class="button button--expand button--success"
                            href="{{ path('agent/quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">

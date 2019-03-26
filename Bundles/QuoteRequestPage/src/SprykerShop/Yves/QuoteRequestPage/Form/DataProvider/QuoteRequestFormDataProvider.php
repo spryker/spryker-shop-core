@@ -71,7 +71,6 @@ class QuoteRequestFormDataProvider
         $quoteRequestTransfer = (new QuoteRequestTransfer())
             ->setCompanyUser($this->companyUserClient->findCompanyUser())
             ->setCreatedAt((new DateTime())->format('Y-m-d H:i:s'))
-            ->setStatus($this->config->getInitialStatus())
             ->setLatestVersion($quoteRequestVersionTransfer);
 
         return $quoteRequestTransfer;

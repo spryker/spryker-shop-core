@@ -5,11 +5,11 @@
     errors: errors | default([])
 } %}
 
-{% set isError = data.errors | length > 0 %}
+{% set hasErrors = data.errors | length > 0 %}
 {% set companyUsersFound = data.companyUsers | length > 0 %}
 
 {% block body %}
-    {% if isError %}
+    {% if hasErrors %}
         {{ data.errors }}
     {% else %}
 

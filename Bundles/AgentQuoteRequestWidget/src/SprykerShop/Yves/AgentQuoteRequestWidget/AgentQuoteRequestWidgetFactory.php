@@ -11,6 +11,7 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToAgentQuoteRequestClientInterface;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToCartClientInterface;
+use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToPersistentCartClientInterface;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToQuoteRequestClientInterface;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Form\AgentQuoteRequestCartForm;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Handler\AgentQuoteRequestCartHandler;
@@ -42,7 +43,6 @@ class AgentQuoteRequestWidgetFactory extends AbstractFactory
     {
         return new AgentQuoteRequestCartHandler(
             $this->getCartClient(),
-            $this->getQuoteRequestClient(),
             $this->getAgentQuoteRequestClient()
         );
     }
@@ -95,5 +95,13 @@ class AgentQuoteRequestWidgetFactory extends AbstractFactory
     public function getCartClient(): AgentQuoteRequestWidgetToCartClientInterface
     {
         return $this->getProvidedDependency(AgentQuoteRequestWidgetDependencyProvider::CLIENT_CART);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToPersistentCartClientInterface
+     */
+    public function getPersistentCartClient(): AgentQuoteRequestWidgetToPersistentCartClientInterface
+    {
+        return $this->getProvidedDependency(AgentQuoteRequestWidgetDependencyProvider::CLIENT_PERSISTENT_CART);
     }
 }

@@ -9,8 +9,9 @@
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/agent-quote-request": "^1.0.0",
     "spryker/application": "^3.8.0",
-    "spryker/cart": "*",
+    "spryker/cart": "^5.6.0",
     "spryker/kernel": "^3.24.0",
+    "spryker/persistent-cart": "^1.8.0",
     "spryker/quote-request": "^1.0.0",
     "spryker/symfony": "^3.1.0"
   },

@@ -42,7 +42,7 @@ class AgentCompanyUserAutocompleteController extends AbstractController
 
         $companyUsers = $this->getFactory()
             ->getAgentQuoteRequestClient()
-            ->findCompanyUsersByQuery((new CompanyUserQueryTransfer())->fromArray($queryParams, true))
+            ->getCompanyUsersByQuery((new CompanyUserQueryTransfer())->fromArray($queryParams, true))
             ->getCompanyUsers()
             ->getArrayCopy();
 

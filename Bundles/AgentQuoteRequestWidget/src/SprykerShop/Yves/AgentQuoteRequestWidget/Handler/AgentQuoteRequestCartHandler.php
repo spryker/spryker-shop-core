@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToAgentQuoteRequestClientInterface;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToCartClientInterface;
-use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToQuoteRequestClientInterface;
 
 class AgentQuoteRequestCartHandler implements AgentQuoteRequestCartHandlerInterface
 {
@@ -23,27 +22,19 @@ class AgentQuoteRequestCartHandler implements AgentQuoteRequestCartHandlerInterf
     protected $cartClient;
 
     /**
-     * @var \SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToQuoteRequestClientInterface
-     */
-    protected $quoteRequestClient;
-
-    /**
      * @var \SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToAgentQuoteRequestClientInterface
      */
     protected $agentQuoteRequestClient;
 
     /**
      * @param \SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToCartClientInterface $cartClient
-     * @param \SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToQuoteRequestClientInterface $quoteRequestClient
      * @param \SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToAgentQuoteRequestClientInterface $agentQuoteRequestClient
      */
     public function __construct(
         AgentQuoteRequestWidgetToCartClientInterface $cartClient,
-        AgentQuoteRequestWidgetToQuoteRequestClientInterface $quoteRequestClient,
         AgentQuoteRequestWidgetToAgentQuoteRequestClientInterface $agentQuoteRequestClient
     ) {
         $this->cartClient = $cartClient;
-        $this->quoteRequestClient = $quoteRequestClient;
         $this->agentQuoteRequestClient = $agentQuoteRequestClient;
     }
 
@@ -65,9 +56,9 @@ class AgentQuoteRequestCartHandler implements AgentQuoteRequestCartHandlerInterf
             return $this->getErrorResponse();
         }
 
-        $quoteRequestTransfer->setQuoteInProgress($quoteTransfer);
+        $quoteRequestTransfer->getLatestVersion()->setQuote($quoteTransfer);
 
-        return $this->quoteRequestClient->updateQuoteRequest($quoteRequestTransfer);
+        return $this->agentQuoteRequestClient->updateQuoteRequest($quoteRequestTransfer);
     }
 
     /**

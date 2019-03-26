@@ -6,7 +6,7 @@
     quoteRequest: _view.quoteRequestForm.vars.value
 } %}
 
-{% set cart = data.quoteRequest.quoteInProgress %}
+{% set cart = data.quoteRequest.latestVersion.quote %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -39,7 +39,7 @@
     <div class="grid">
         <div class="col col--sm-12 col--xl-8">
             <div class="box">
-                {% for child in data.quoteRequestForm.metadata %}
+                {% for child in data.quoteRequestForm.latestVersion.metadata %}
                     <div class="col col--sm-12 col--xl-6">
                         <div class="box">
                             {{ form_row(child) }}
@@ -58,29 +58,44 @@
                 <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
                     {{ form_row(data.quoteRequestForm.validUntil) }}
                 </p>
-                <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:</p>
-                <p>{{ 'quote_request_page.quote_request.labels.visibility' | trans }}:
-                    {{ form_row(data.quoteRequestForm.isHidden) }}
+                <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
+                    <b>{{ data.quoteRequest.latestVersion ? data.quoteRequest.latestVersion.versionReference : null }}</b>
+                </p>
+                <p>
+                    {{ form_row(data.quoteRequestForm.isLatestVersionHidden) }}
                 </p>
             </div>
         </div>
     </div>
     <div class="grid">
         <div class="col col--sm-12 col--xl-8">
-            {% if cart is not empty %}
-                {% for cartItem in cart.items %}
-                    {% include molecule('quote-request-cart-item', 'CartPage') with {
-                        class: 'box',
-                        data: {
-                            cartItem: cartItem
-                        }
-                    } only %}
-                {% endfor %}
-            {% endif %}
+            {% for itemChild in data.quoteRequestForm.latestVersion.quote.items %}
+                {% set cartItem = itemChild.vars.value %}
+                {% embed molecule('quote-request-cart-item', 'CartPage') with {
+                    class: 'box',
+                    data: {
+                        priceMode: cart.priceMode,
+                        cartItem: cartItem,
+                        itemChild: itemChild,
+                    }
+                } only %}
+                    {% block sourcePriceForm %}
+                        {% include molecule('source-price-form', 'AgentQuoteRequestPage') with {
+                            data: {
+                                priceFiled: data.itemChild,
+                                checkboxName: 'use_default_price',
+                                checkboxValue: 1,
+                                isChecked: (data.cartItem.sourceUnitGrossPrice or data.cartItem.sourceUnitNetPrice) ? false : true,
+                                checkboxLabel: 'quote_request_page.quote_request.use_default_price' | trans
+                            }
+                        } only %}
+                    {% endblock %}
+                {% endembed %}
+            {% endfor %}
         </div>
 
         <div class="col col--sm-12 col--xl-4">
-            {% if cart is not empty %}
+            {% if cart and cart.items is not empty %}
                 <div class="box">
                     {% include molecule('quote-request-cart-summary', 'CartPage') with {
                         data: {
@@ -104,11 +119,9 @@
                     {{ 'quote_request_page.quote_request.actions.save' | trans }}
                 </button>
                 <hr/>
-                {% if data.quoteRequest.quoteInProgress %}
-                    <button type="submit" name="sendToCustomer" class="button button--expand button--success">
-                        {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
-                    </button>
-                {% endif %}
+                <button type="submit" name="sendToCustomer" class="button button--expand button--success">
+                    {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
+                </button>
             </div>
         </div>
     </div>

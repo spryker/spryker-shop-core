@@ -122,7 +122,7 @@ class AgentQuoteRequestEditItemsController extends AgentQuoteRequestAbstractCont
 
         $quoteResponseTransfer = $this->getFactory()
             ->getAgentQuoteRequestClient()
-            ->convertQuoteRequestToQuoteInProgress($quoteRequestTransfer);
+            ->convertQuoteRequestToQuote($quoteRequestTransfer);
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART);

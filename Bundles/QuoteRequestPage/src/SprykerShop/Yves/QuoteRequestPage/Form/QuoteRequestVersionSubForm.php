@@ -7,16 +7,16 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Form;
 
-use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
- * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageConfig getConfig()
+ * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageFactory getFactory()
+ * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageConfig getConfig()
  */
-class QuoteRequestForm extends AbstractType
+class QuoteRequestVersionSubForm extends AbstractType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -26,7 +26,8 @@ class QuoteRequestForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => QuoteRequestTransfer::class,
+            'data_class' => QuoteRequestVersionTransfer::class,
+            'label' => false,
         ]);
     }
 
@@ -38,7 +39,7 @@ class QuoteRequestForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addLatestVersionForm($builder);
+        $this->addMetadataForm($builder);
     }
 
     /**
@@ -46,9 +47,9 @@ class QuoteRequestForm extends AbstractType
      *
      * @return $this
      */
-    protected function addLatestVersionForm(FormBuilderInterface $builder)
+    protected function addMetadataForm(FormBuilderInterface $builder)
     {
-        $builder->add(QuoteRequestTransfer::LATEST_VERSION, QuoteRequestVersionSubForm::class);
+        $builder->add(QuoteRequestVersionTransfer::METADATA, QuoteRequestMetadataSubForm::class);
 
         return $this;
     }

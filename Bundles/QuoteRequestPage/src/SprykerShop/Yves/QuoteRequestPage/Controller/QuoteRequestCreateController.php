@@ -14,12 +14,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteRequestCreateController extends QuoteRequestAbstractController
 {
-    /**
-     * @see \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST
-     */
-    protected const ROUTE_QUOTE_REQUEST = 'quote-request';
-
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CREATED = 'quote_request_page.quote_request.created';
+
+    /**
+     * @see \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_DETAILS
+     */
+    protected const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
+
+    /**
+     * @see \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE
+     */
+    protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -56,7 +61,9 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
             if ($quoteRequestResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CREATED);
 
-                return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST);
+                return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_DETAILS, [
+                    static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
+                ]);
             }
 
             $this->handleResponseErrors($quoteRequestResponseTransfer);
