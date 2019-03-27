@@ -29,27 +29,33 @@ export default class AutocompleteForm extends Component {
     /**
      * Performs the Ajax operations.
      */
-    ajaxProvider: AjaxProvider
+    ajaxProvider: AjaxProvider;
+
     /**
      * The text input element.
      */
     textInput: HTMLInputElement;
+
     /**
      * The value input element.
      */
     valueInput: HTMLInputElement;
+
     /**
      * The contains of the suggestions.
      */
     suggestionsContainer: HTMLElement;
+
     /**
      * Collection of the suggestions items.
      */
     suggestionItems: HTMLElement[];
+
     /**
      * The trigger of the form clearing.
      */
     cleanButton: HTMLButtonElement;
+
     /**
      * The last selected saggestion item.
      */
@@ -68,7 +74,7 @@ export default class AutocompleteForm extends Component {
         this.textInput.addEventListener('input', debounce(() => this.onInput(), this.debounceDelay));
         this.textInput.addEventListener('blur', debounce(() => this.onBlur(), this.debounceDelay));
         this.textInput.addEventListener('focus', () => this.onFocus());
-        this.textInput.addEventListener('keydown', (event) => this.onKeyDown(event));
+        this.textInput.addEventListener('keydown', event => this.onKeyDown(event));
 
         if (!this.cleanButton) {
             return;
@@ -99,11 +105,11 @@ export default class AutocompleteForm extends Component {
 
         if (this.inputText.length >= this.minLetters) {
             this.loadSuggestions();
+
             return;
         }
 
         this.hideSuggestions();
-
         if (!!this.inputValue) {
             this.inputValue = '';
             this.dispatchCustomEvent(Events.UNSET);
@@ -136,17 +142,15 @@ export default class AutocompleteForm extends Component {
     protected mapSuggestionItemsEvents(): void {
         const self = this;
         this.suggestionItems.forEach((item: HTMLElement) => {
-            item.addEventListener('click', (e: Event) => self.onItemClick(e));
-            item.addEventListener('mouseover', (e: Event) => this.onItemSelected(e));
+            item.addEventListener('click', (event: Event) => self.onItemClick(event));
+            item.addEventListener('mouseover', (event: Event) => this.onItemSelected(event));
         });
     }
 
-    protected onItemClick(e: Event): void {
-        const textTargetElement = <HTMLElement>e.srcElement;
-        const valueTargetElement = <HTMLElement>e.target;
-
-        this.inputText = textTargetElement.textContent.trim();
-        this.inputValue = valueTargetElement.getAttribute(this.valueAttributeName);
+    protected onItemClick(event: Event): void {
+        const targetElement = <HTMLElement>event.target;
+        this.inputText = targetElement.textContent.trim();
+        this.inputValue = targetElement.getAttribute(this.valueAttributeName);
 
         this.dispatchCustomEvent(Events.SET, {
             text: this.inputText,
@@ -154,8 +158,8 @@ export default class AutocompleteForm extends Component {
         });
     }
 
-    protected onItemSelected(e: Event): void {
-        const item = <HTMLElement>e.srcElement;
+    protected onItemSelected(event: Event): void {
+        const item = <HTMLElement>event.target;
         this.changeSelectedItem(item);
     }
 

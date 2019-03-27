@@ -116,6 +116,7 @@ export default class SuggestSearch extends Component {
     protected onTab(event: KeyboardEvent): boolean {
         this.searchInput.value = this.hint;
         event.preventDefault();
+
         return false;
     }
 
@@ -168,7 +169,7 @@ export default class SuggestSearch extends Component {
     }
 
     protected getNavigation(): HTMLElement[] {
-        return <HTMLElement[]> Array.from(this.getElementsByClassName(`${this.jsName}__item--navigable`))
+        return <HTMLElement[]> Array.from(this.getElementsByClassName(`${this.jsName}__item--navigable`));
     }
 
     protected updateNavigation(): void {
@@ -179,6 +180,7 @@ export default class SuggestSearch extends Component {
             if (this.activeItemIndex > this.navigation.length) {
                 this.activeItemIndex = 0;
                 this.searchInput.focus();
+
                 return;
             }
             if (this.activeItemIndex > 0) {
@@ -202,7 +204,7 @@ export default class SuggestSearch extends Component {
 
         const response = await this.ajaxProvider.fetch(suggestQuery);
 
-        let suggestions = JSON.parse(response).suggestion;
+        const suggestions = JSON.parse(response).suggestion;
         this.suggestionsContainer.innerHTML = suggestions;
 
         this.hint = JSON.parse(response).completion;
@@ -215,7 +217,7 @@ export default class SuggestSearch extends Component {
             this.updateHintInput();
         }
 
-        if (this.hint == null) {
+        if (this.hint == undefined) {
             this.setHintValue('');
         }
 
@@ -294,5 +296,4 @@ export default class SuggestSearch extends Component {
     get searchInputSelector(): string {
         return <string> this.getAttribute('input-selector');
     }
-
 }

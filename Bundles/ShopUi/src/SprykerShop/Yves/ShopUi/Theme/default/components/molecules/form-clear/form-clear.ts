@@ -8,45 +8,49 @@ export default class FormClear extends Component {
      * The current form.
      */
     form: HTMLElement;
+
     /**
      * Collection of the triggers elements.
      */
     triggers: HTMLElement[];
+
     /**
      * Collection of the form elemenets.
      */
     targets: HTMLElement[];
+
     /**
      * Collection of the targets elements which should be ignored while collection the filters.
      */
     ignoreElements: HTMLElement[];
+
     /**
      * Collection of the filter elements.
      */
     filterElements: HTMLElement[];
+
     /**
      * The custom event.
      */
     formFieldsClearAfter: CustomEvent;
 
     protected readyCallback(): void {
-        const formElements = 'select, input[type="text"], input[type="hidden"], input[type="radio"], input[type="checkbox"]';
+        const formElements = `select, input[type="text"], input[type="hidden"], input[type="radio"],
+        input[type="checkbox"]`;
 
         this.triggers = <HTMLElement[]>Array.from(document.querySelectorAll(this.triggerSelector));
         this.form = <HTMLElement>document.querySelector(this.formSelector);
         this.targets = <HTMLElement[]>Array.from(this.form.querySelectorAll(formElements));
         this.ignoreElements = <HTMLElement[]>Array.from(this.form.querySelectorAll(this.ignoreSelector));
-        this.filterElements = this.targets.filter((element) => !this.ignoreElements.includes(element));
+        this.filterElements = this.targets.filter(element => !this.ignoreElements.includes(element));
 
         this.mapEvents();
     }
 
     protected mapEvents(): void {
         this.createCustomEvents();
-        this.triggers.forEach((input) => {
-            input.addEventListener('change', () => {
-                this.onChange(input);
-            });
+        this.triggers.forEach(input => {
+            input.addEventListener('change', () => this.onChange(input));
         });
     }
 
@@ -77,16 +81,16 @@ export default class FormClear extends Component {
         const inputType = element.type;
         const tagName = this.getTagName(element);
 
-        if (tagName == "INPUT") {
-            if (inputType == "text" || inputType == "hidden") {
+        if (tagName === 'INPUT') {
+            if (inputType === 'text' || inputType === 'hidden') {
                 element.value = '';
             }
-            if (inputType == "checkbox" || inputType == "radio") {
+            if (inputType === 'checkbox' || inputType === 'radio') {
                 element.checked = false;
             }
         }
 
-        if (tagName == "SELECT") {
+        if (tagName === 'SELECT') {
             element.selectedIndex = 0;
         }
     }
