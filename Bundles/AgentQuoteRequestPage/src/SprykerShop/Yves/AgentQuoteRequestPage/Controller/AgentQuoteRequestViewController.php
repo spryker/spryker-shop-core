@@ -135,13 +135,13 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
      * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer[] $quoteRequestVersionTransfers
      * @param string|null $versionReference
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer|null
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
      */
     protected function getQuoteRequestVersion(
         QuoteRequestTransfer $quoteRequestTransfer,
         array $quoteRequestVersionTransfers,
         ?string $versionReference
-    ): ?QuoteRequestVersionTransfer {
+    ): QuoteRequestVersionTransfer {
         foreach ($quoteRequestVersionTransfers as $quoteRequestVersionTransfer) {
             if ($quoteRequestVersionTransfer->getVersionReference() === $versionReference) {
                 return $quoteRequestVersionTransfer;
