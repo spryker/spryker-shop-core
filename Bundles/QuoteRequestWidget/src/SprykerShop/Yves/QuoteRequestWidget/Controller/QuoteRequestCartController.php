@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuoteRequestWidget\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\QuoteRequestWidget\Form\QuoteRequestCartForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -58,7 +59,7 @@ class QuoteRequestCartController extends AbstractController
             $this->handleResponseErrors($quoteRequestResponseTransfer);
 
             if ($request->get(QuoteRequestCartForm::SUBMIT_BUTTON_SAVE_AND_BACK) !== null) {
-                $this->clearQuote();
+                $this->clearCustomerQuote($quoteRequestResponseTransfer->getQuoteRequest());
 
                 return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
                     static::PARAM_QUOTE_REQUEST_REFERENCE =>
@@ -84,13 +85,18 @@ class QuoteRequestCartController extends AbstractController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
      * @return void
      */
-    protected function clearQuote(): void
+    protected function clearCustomerQuote(QuoteRequestTransfer $quoteRequestTransfer): void
     {
-        $cartClient = $this->getFactory()->getCartClient();
+        $this->getFactory()
+            ->getCartClient()
+            ->clearQuote();
 
-        $cartClient->clearQuote();
-        $cartClient->validateQuote();
+        $this->getFactory()
+            ->getPersistentCartClient()
+            ->reloadQuoteForCustomer($quoteRequestTransfer->getCompanyUser()->getCustomer());
     }
 }

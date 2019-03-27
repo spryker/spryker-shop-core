@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\QuoteRequestWidget;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCartClientInterface;
+use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToPersistentCartClientInterface;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteRequestClientInterface;
 use SprykerShop\Yves\QuoteRequestWidget\Form\QuoteRequestCartForm;
 use SprykerShop\Yves\QuoteRequestWidget\Handler\QuoteRequestCartHandler;
@@ -63,5 +64,13 @@ class QuoteRequestWidgetFactory extends AbstractFactory
     public function getFormFactory(): FormFactory
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToPersistentCartClientInterface
+     */
+    public function getPersistentCartClient(): QuoteRequestWidgetToPersistentCartClientInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestWidgetDependencyProvider::CLIENT_PERSISTENT_CART);
     }
 }

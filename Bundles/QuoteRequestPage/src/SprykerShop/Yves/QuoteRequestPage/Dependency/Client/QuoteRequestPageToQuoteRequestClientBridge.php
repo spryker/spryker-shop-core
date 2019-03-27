@@ -127,9 +127,9 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function convertQuoteRequestToLockedQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
-        return $this->quoteRequestClient->convertQuoteRequestToLockedQuote($quoteRequestTransfer);
+        return $this->quoteRequestClient->convertQuoteRequestToQuote($quoteRequestTransfer);
     }
 
     /**

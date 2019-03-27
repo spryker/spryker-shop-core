@@ -1,5 +1,13 @@
 {% extends template('page-layout-customer', 'CustomerPage') %}
 
+{% define data = {
+    title: 'quote_request_page.quote_request' | trans,
+    quoteRequestForm: _view.quoteRequestForm,
+    quoteRequest: _view.quoteRequestForm.vars.value,
+} %}
+
+{% set cart = data.quoteRequest.latestVersion.quote %}
+
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
         data: {
@@ -19,15 +27,6 @@
         }
     } only %}
 {% endblock %}
-
-{% define data = {
-    title: 'quote_request_page.quote_request' | trans,
-    quoteRequestForm: _view.quoteRequestForm,
-    quoteRequest: _view.quoteRequestForm.vars.value,
-    latestVersion: _view.quoteRequestForm.vars.value.latestVersion,
-} %}
-
-{% set cart = data.latestVersion ? data.latestVersion.quote : null %}
 
 {% block content %}
 
@@ -49,7 +48,7 @@
         <div class="grid">
             <div class="col col--sm-12 col--xl-8">
                 <div class="box">
-                    {% for child in data.quoteRequestForm.metadata %}
+                    {% for child in data.quoteRequestForm.latestVersion.metadata %}
                         <div class="col col--sm-12 col--xl-6">
                             <div class="box">
                                 {{ form_row(child) }}
@@ -61,10 +60,18 @@
 
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
-                    <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}: <b>{{ data.quoteRequestForm.vars.value.createdAt | date('d.m.Y H:i') }}</b></p>
-                    <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:</p>
-                    <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:</p>
+                    <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}:
+                        <b>{{ data.quoteRequestForm.vars.value.createdAt | date('d.m.Y H:i') }}</b>
+                    </p>
+                    <p>
+                        {{ 'quote_request_page.quote_request.labels.status' | trans }}:
+                        <b>{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</b></p>
+                    </p>
+                    <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
+                        <b>{{ data.quoteRequest.validUntil | date('d.m.Y H:i') }}</b>
+                    </p>
                     <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
+                        <b>{{ data.quoteRequest.latestVersion ? data.quoteRequest.latestVersion.versionReference : null }}</b>
                     </p>
                 </div>
             </div>
@@ -75,6 +82,7 @@
                     {% include molecule('quote-request-cart-item', 'CartPage') with {
                         class: 'box',
                         data: {
+                            priceMode: cart.priceMode,
                             cartItem: cartItem
                         }
                     } only %}

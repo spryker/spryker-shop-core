@@ -21,7 +21,7 @@ class QuoteRequestCartForm extends AbstractType
     /**
      * @uses \SprykerShop\Yves\QuoteRequestWidget\Plugin\Provider\QuoteRequestWidgetControllerProvider::ROUTE_QUOTE_REQUEST_CART
      */
-    protected const ROUTE_QUOTE_REQUEST_CART = 'quoter-request/cart';
+    protected const ROUTE_QUOTE_REQUEST_CART = 'quote-request/cart';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

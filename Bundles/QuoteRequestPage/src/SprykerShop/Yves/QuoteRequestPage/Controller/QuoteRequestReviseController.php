@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
@@ -30,12 +30,25 @@ class QuoteRequestReviseController extends QuoteRequestAbstractController
      * @param string $quoteRequestReference
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function indexAction(string $quoteRequestReference): RedirectResponse
     {
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->findCompanyUser();
+
+        if (!$companyUserTransfer) {
+            throw new NotFoundHttpException();
+        }
+
         $this->getFactory()
             ->getQuoteRequestClient()
-            ->markQuoteRequestAsDraft((new QuoteRequestCriteriaTransfer())->setQuoteRequestReference($quoteRequestReference));
+            ->markQuoteRequestAsDraft(
+                (new QuoteRequestCriteriaTransfer())->setQuoteRequestReference($quoteRequestReference)
+                    ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+            );
 
         return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
             static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference
