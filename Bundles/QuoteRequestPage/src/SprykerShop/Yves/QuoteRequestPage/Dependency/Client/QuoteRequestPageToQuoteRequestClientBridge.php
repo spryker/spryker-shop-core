@@ -32,6 +32,26 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function markQuoteRequestAsDraft(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->quoteRequestClient->markQuoteRequestAsDraft($quoteRequestCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function markQuoteRequestAsWaiting(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->quoteRequestClient->markQuoteRequestAsWaiting($quoteRequestCriteriaTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
@@ -39,6 +59,16 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
     public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
         return $this->quoteRequestClient->createQuoteRequest($quoteRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->quoteRequestClient->updateQuoteRequest($quoteRequestTransfer);
     }
 
     /**
@@ -95,11 +125,31 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->quoteRequestClient->convertQuoteRequestToQuote($quoteRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
      * @return bool
      */
     public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $this->quoteRequestClient->isQuoteRequestCancelable($quoteRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestDraft(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $this->quoteRequestClient->isQuoteRequestDraft($quoteRequestTransfer);
     }
 
     /**

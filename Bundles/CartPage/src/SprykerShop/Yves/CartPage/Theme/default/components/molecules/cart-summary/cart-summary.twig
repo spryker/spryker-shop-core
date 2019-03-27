@@ -103,5 +103,6 @@
                 {{ parent() }}
             {% endblock %}
         {% endwidget %}
+        {% widget 'QuoteRequestCartWidget' args [data.cart] only %}{% endwidget %}
     {% endif %}
 {% endblock %}

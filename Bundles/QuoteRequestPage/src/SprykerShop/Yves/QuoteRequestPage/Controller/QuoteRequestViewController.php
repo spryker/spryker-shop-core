@@ -88,6 +88,7 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
             'version' => $version,
             'isQuoteRequestCancelable' => $quoteRequestClient->isQuoteRequestCancelable($quoteRequestTransfer),
             'isQuoteRequestReady' => $quoteRequestClient->isQuoteRequestReady($quoteRequestTransfer),
+            'isQuoteRequestDraft' => $quoteRequestClient->isQuoteRequestDraft($quoteRequestTransfer),
         ];
     }
 

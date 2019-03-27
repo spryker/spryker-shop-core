@@ -53,6 +53,16 @@ class QuoteRequestHandler implements QuoteRequestHandlerInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->quoteRequestClient->updateQuoteRequest($quoteRequestTransfer);
+    }
+
+    /**
      * @return void
      */
     protected function clearQuote(): void

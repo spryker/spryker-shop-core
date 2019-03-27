@@ -17,6 +17,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class QuoteRequestAbstractController extends AbstractController
 {
+    protected const PARAM_REFERER = 'referer';
+
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
