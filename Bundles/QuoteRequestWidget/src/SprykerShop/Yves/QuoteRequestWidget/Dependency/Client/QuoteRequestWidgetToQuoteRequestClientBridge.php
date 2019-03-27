@@ -30,9 +30,9 @@ class QuoteRequestWidgetToQuoteRequestClientBridge implements QuoteRequestWidget
      *
      * @return bool
      */
-    public function isQuoteRequestDraft(QuoteRequestTransfer $quoteRequestTransfer): bool
+    public function isQuoteRequestEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        return $this->quoteRequestClient->isQuoteRequestDraft($quoteRequestTransfer);
+        return $this->quoteRequestClient->isQuoteRequestEditable($quoteRequestTransfer);
     }
 
     /**
@@ -40,9 +40,9 @@ class QuoteRequestWidgetToQuoteRequestClientBridge implements QuoteRequestWidget
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function updateQuoteRequestQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestClient->updateQuoteRequestQuote($quoteRequestTransfer);
+        return $this->quoteRequestClient->updateQuoteRequest($quoteRequestTransfer);
     }
 
     /**

@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
+use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -14,10 +17,19 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteRequestEditItemsController extends QuoteRequestAbstractController
 {
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART = 'quote_request_page.quote_request.converted_to_cart';
+
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     * @param string $quoteRequestReference
+     *
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected const ROUTE_CART = 'cart';
+    public function indexAction(string $quoteRequestReference)
+    {
+        $response = $this->executeIndexAction($quoteRequestReference);
+
+        return $response;
+    }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -25,9 +37,9 @@ class QuoteRequestEditItemsController extends QuoteRequestAbstractController
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(Request $request, string $quoteRequestReference)
+    public function confirmAction(Request $request, string $quoteRequestReference)
     {
-        $response = $this->executeIndexAction($request, $quoteRequestReference);
+        $response = $this->executeConfirmAction($request, $quoteRequestReference);
 
         if (!is_array($response)) {
             return $response;
@@ -37,31 +49,86 @@ class QuoteRequestEditItemsController extends QuoteRequestAbstractController
     }
 
     /**
+     * @param string $quoteRequestReference
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeIndexAction(string $quoteRequestReference): RedirectResponse
+    {
+        $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
+
+        if ($quoteTransfer->getQuoteRequestReference() && ($quoteTransfer->getQuoteRequestReference() !== $quoteRequestReference)) {
+            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM, [
+                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
+            ]);
+        }
+
+        $quoteRequestTransfer = $this->getCompanyUserQuoteRequestByReference($quoteRequestReference);
+
+        return $this->convertQuoteRequest($quoteRequestTransfer);
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $quoteRequestReference
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeIndexAction(Request $request, string $quoteRequestReference)
+    protected function executeConfirmAction(Request $request, string $quoteRequestReference)
     {
         $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
+
+        if ($quoteTransfer->getQuoteRequestReference() === $quoteRequestReference) {
+            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT_ITEMS, [
+                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
+            ]);
+        }
+
         $quoteRequestTransfer = $this->getCompanyUserQuoteRequestByReference($quoteRequestReference);
-        $quoteRequestEditItemsConfirmForm = $this->getFactory()->getQuoteRequestEditItemsConfirmForm($quoteRequestTransfer);
 
-        $quoteRequestEditItemsConfirmForm->handleRequest($request);
+        $agentQuoteRequestEditItemsConfirmForm = $this->getFactory()
+            ->getQuoteRequestEditItemsConfirmForm($quoteRequestTransfer)
+            ->handleRequest($request);
 
-        if ($quoteTransfer->getQuoteRequestReference() === $quoteRequestReference
-            || $quoteRequestEditItemsConfirmForm->isSubmitted()) {
-            $this->getFactory()
-                ->getQuoteRequestClient()
-                ->convertQuoteRequestToQuote($quoteRequestTransfer);
-
-            return $this->redirectResponseInternal(static::ROUTE_CART);
+        if ($agentQuoteRequestEditItemsConfirmForm->isSubmitted()) {
+            return $this->convertQuoteRequest($agentQuoteRequestEditItemsConfirmForm->getData());
         }
 
         return [
-            'quoteRequestEditItemsConfirmForm' => $quoteRequestEditItemsConfirmForm->createView(),
-            'quoteRequestReference' => $quoteRequestReference,
+            'quoteRequestEditItemsConfirmForm' => $agentQuoteRequestEditItemsConfirmForm->createView(),
+            'quoteRequestReference' => $quoteTransfer->getQuoteRequestReference(),
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function convertQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): RedirectResponse
+    {
+        $quoteResponseTransfer = $this->getFactory()
+            ->getQuoteRequestClient()
+            ->convertQuoteRequestToQuote($quoteRequestTransfer);
+
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART);
+        }
+
+        $this->handleQuoteResponseErrors($quoteResponseTransfer);
+
+        return $this->redirectResponseInternal(static::ROUTE_CART);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return void
+     */
+    protected function handleQuoteResponseErrors(QuoteResponseTransfer $quoteResponseTransfer): void
+    {
+        foreach ($quoteResponseTransfer->getErrors() as $errorTransfer) {
+            $this->addErrorMessage($errorTransfer->getMessage());
+        }
     }
 }

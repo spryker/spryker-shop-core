@@ -8,26 +8,19 @@
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
+use SprykerShop\Yves\QuoteRequestPage\Form\QuoteRequestForm;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
  */
 class QuoteRequestEditController extends QuoteRequestAbstractController
 {
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_UPDATED = 'quote_request_page.quote_request.updated';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SAVED = 'quote_request_page.revise.quote_request.saved';
-
-    /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_DETAILS
-     */
-    protected const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
-
-    /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE
-     */
-    protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_USER = 'quote_request_page.quote_request.sent_to_user';
 
     /**
      * @param string $quoteRequestReference
@@ -50,7 +43,7 @@ class QuoteRequestEditController extends QuoteRequestAbstractController
      * @param string $quoteRequestReference
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executeIndexAction(string $quoteRequestReference, Request $request)
     {
@@ -61,19 +54,7 @@ class QuoteRequestEditController extends QuoteRequestAbstractController
             ->handleRequest($request);
 
         if ($quoteRequestForm->isSubmitted() && $quoteRequestForm->isValid()) {
-            $quoteRequestResponseTransfer = $this->getFactory()
-                ->createQuoteRequestHandler()
-                ->updateQuoteRequest($quoteRequestForm->getData());
-
-            if ($quoteRequestResponseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SAVED);
-
-                return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_DETAILS, [
-                    static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
-                ]);
-            }
-
-            $this->handleResponseErrors($quoteRequestResponseTransfer);
+            return $this->processQuoteRequestForm($quoteRequestForm, $request);
         }
 
         return [
@@ -85,26 +66,73 @@ class QuoteRequestEditController extends QuoteRequestAbstractController
      * @param string $quoteRequestReference
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    public function submitAction(string $quoteRequestReference): RedirectResponse
+    public function sendToUserAction(string $quoteRequestReference): RedirectResponse
+    {
+        $response = $this->executeSendToUserAction($quoteRequestReference);
+
+        return $response;
+    }
+
+    /**
+     * @param string $quoteRequestReference
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeSendToUserAction(string $quoteRequestReference): RedirectResponse
     {
         $companyUserTransfer = $this->getFactory()
             ->getCompanyUserClient()
             ->findCompanyUser();
 
-        if (!$companyUserTransfer) {
-            throw new NotFoundHttpException();
+        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+            ->setQuoteRequestReference($quoteRequestReference)
+            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser());
+
+        $quoteRequestResponseTransfer = $this->getFactory()
+            ->getQuoteRequestClient()
+            ->sendQuoteRequestToUser($quoteRequestCriteriaTransfer);
+
+        if ($quoteRequestResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_USER);
         }
 
-        $this->getFactory()
-            ->getQuoteRequestClient()
-            ->markQuoteRequestAsWaiting(
-                (new QuoteRequestCriteriaTransfer())->setQuoteRequestReference($quoteRequestReference)
-                    ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
-            );
+        $this->handleResponseErrors($quoteRequestResponseTransfer);
 
-        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_DETAILS, [static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference]);
+        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_DETAILS, [
+            static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $quoteRequestForm
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function processQuoteRequestForm(FormInterface $quoteRequestForm, Request $request): RedirectResponse
+    {
+        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer */
+        $quoteRequestTransfer = $quoteRequestForm->getData();
+
+        $quoteRequestResponseTransfer = $this->getFactory()
+            ->getQuoteRequestClient()
+            ->updateQuoteRequest($quoteRequestTransfer);
+
+        if ($quoteRequestResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_UPDATED);
+        }
+
+        $this->handleResponseErrors($quoteRequestResponseTransfer);
+
+        if ($request->get(QuoteRequestForm::SUBMIT_BUTTON_SEND_TO_USER) !== null && $quoteRequestResponseTransfer->getIsSuccessful()) {
+            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_SEND_TO_USER, [
+                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
+            ]);
+        }
+
+        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
+            static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
+        ]);
     }
 }

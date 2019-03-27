@@ -16,11 +16,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class QuoteRequestCheckoutController extends QuoteRequestAbstractController
 {
-    /**
-     * @see \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
-     */
-    protected const ROUTE_CART = 'cart';
-
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART_SUCCESS = 'quote_request.validation.converted_to_cart.success';
 
     /**

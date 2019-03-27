@@ -49,19 +49,18 @@ class QuoteRequestCartHandler implements QuoteRequestCartHandlerInterface
             return $this->getErrorResponse();
         }
 
-        $quoteRequestTransfer = $this->quoteRequestClient
-            ->findCompanyUserQuoteRequestByReference(
-                $quoteTransfer->getQuoteRequestReference(),
-                $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()
-            );
+        $quoteRequestTransfer = $this->quoteRequestClient->findCompanyUserQuoteRequestByReference(
+            $quoteTransfer->getQuoteRequestReference(),
+            $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()
+        );
 
         if (!$quoteRequestTransfer) {
             return $this->getErrorResponse();
         }
 
-        $quoteRequestTransfer->setQuoteInProgress($quoteTransfer);
+        $quoteRequestTransfer->getLatestVersion()->setQuote($quoteTransfer);
 
-        return $this->quoteRequestClient->updateQuoteRequestQuote($quoteRequestTransfer);
+        return $this->quoteRequestClient->updateQuoteRequest($quoteRequestTransfer);
     }
 
     /**
