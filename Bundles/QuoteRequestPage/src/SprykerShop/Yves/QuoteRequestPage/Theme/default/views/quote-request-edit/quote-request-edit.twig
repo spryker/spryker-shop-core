@@ -61,14 +61,13 @@
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
                     <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}:
-                        <b>{{ data.quoteRequestForm.vars.value.createdAt | date('d.m.Y H:i') }}</b>
+                        <b>{{ data.quoteRequest.createdAt | date('d.m.Y H:i') }}</b>
                     </p>
-                    <p>
-                        {{ 'quote_request_page.quote_request.labels.status' | trans }}:
-                        <b>{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</b></p>
+                    <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:
+                        <b>{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</b>
                     </p>
                     <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
-                        <b>{{ data.quoteRequest.validUntil | date('d.m.Y H:i') }}</b>
+                        <b>{{ data.quoteRequest.validUntil ? (data.quoteRequest.validUntil | date('d.m.Y H:i')) : '' }}</b>
                     </p>
                     <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
                         <b>{{ data.quoteRequest.latestVersion ? data.quoteRequest.latestVersion.versionReference : null }}</b>
@@ -98,12 +97,22 @@
                     } only %}
                 </div>
                 <div class="box">
-                    <a class="button button--expand button--edit-items" href="{{ url('quote-request/edit-items', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                    <a class="button button--expand button--hollow"
+                       href="{{ url('quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference}) }}">
+                        {{ 'quote_request_page.quote_request.actions.back_to_view' | trans }}
+                    </a>
+                    <hr/>
+                    <a class="button button--expand button--edit-items"
+                       href="{{ url('quote-request/edit-items', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                         {{ 'quote_request_page.quote_request.actions.edit_items' | trans }}
                     </a>
                     <hr/>
-                    <button type="submit" class="button button--expand button--success">
+                    <button type="submit" name="save" class="button button--expand button--success">
                         {{ 'quote_request_page.quote_request.actions.save' | trans }}
+                    </button>
+                    <hr/>
+                    <button type="submit" name="sendToUser" class="button button--expand button--success">
+                        {{ 'quote_request_page.quote_request.actions.send_to_agent' | trans }}
                     </button>
                 </div>
             </div>

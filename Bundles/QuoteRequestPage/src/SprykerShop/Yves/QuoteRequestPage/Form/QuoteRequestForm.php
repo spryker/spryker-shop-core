@@ -18,6 +18,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class QuoteRequestForm extends AbstractType
 {
+    public const SUBMIT_BUTTON_SAVE = 'save';
+    public const SUBMIT_BUTTON_SEND_TO_USER = 'sendToUser';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *

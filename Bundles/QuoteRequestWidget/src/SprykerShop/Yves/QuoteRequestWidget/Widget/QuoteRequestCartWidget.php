@@ -58,12 +58,7 @@ class QuoteRequestCartWidget extends AbstractWidget
      */
     protected function addFormParameter(): void
     {
-        $this->addParameter(
-            static::PARAMETER_FORM,
-            $this->getFactory()
-                ->getQuoteRequestCartForm()
-                ->createView()
-        );
+        $this->addParameter(static::PARAMETER_FORM, $this->getFactory()->getQuoteRequestCartForm()->createView());
     }
 
     /**

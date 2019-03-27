@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
@@ -17,21 +16,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class QuoteRequestReviseController extends QuoteRequestAbstractController
 {
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_EDIT
-     */
-    protected const ROUTE_QUOTE_REQUEST_EDIT = 'quote-request/edit';
-
-    /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE
-     */
-    protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
-
-    /**
      * @param string $quoteRequestReference
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function indexAction(string $quoteRequestReference): RedirectResponse
     {
@@ -39,19 +26,18 @@ class QuoteRequestReviseController extends QuoteRequestAbstractController
             ->getCompanyUserClient()
             ->findCompanyUser();
 
-        if (!$companyUserTransfer) {
-            throw new NotFoundHttpException();
-        }
+        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+            ->setQuoteRequestReference($quoteRequestReference)
+            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser());
 
-        $this->getFactory()
+        $quoteRequestResponseTransfer = $this->getFactory()
             ->getQuoteRequestClient()
-            ->markQuoteRequestAsDraft(
-                (new QuoteRequestCriteriaTransfer())->setQuoteRequestReference($quoteRequestReference)
-                    ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
-            );
+            ->reviseQuoteRequest($quoteRequestCriteriaTransfer);
+
+        $this->handleResponseErrors($quoteRequestResponseTransfer);
 
         return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
-            static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference
+            static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
         ]);
     }
 }

@@ -62,9 +62,7 @@ class QuoteRequestCartController extends AbstractController
                 $this->clearCustomerQuote($quoteRequestResponseTransfer->getQuoteRequest());
 
                 return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
-                    static::PARAM_QUOTE_REQUEST_REFERENCE =>
-                        $quoteRequestResponseTransfer->getQuoteRequest()
-                            ->getQuoteRequestReference(),
+                    static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
                 ]);
             }
         }
