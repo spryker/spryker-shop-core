@@ -55,4 +55,14 @@ class ShoppingListWidgetToShoppingListClientBridge implements ShoppingListWidget
     {
         return $this->shoppingListClient->addItems($shoppingListTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItemProductViewTransfers
+     *
+     * @return int
+     */
+    public function calculateShoppingListSubtotal(array $shoppingListItemProductViewTransfers): int
+    {
+        return $this->shoppingListClient->calculateShoppingListSubtotal($shoppingListItemProductViewTransfers);
+    }
 }

@@ -87,6 +87,7 @@
                     } only %}
                 </div>
 
+                {% widget 'ShoppingListSubtotalWidget' args [data.shoppingListItems] only %}{% endwidget %}
             </form>
         {% else %}
             {{ 'customer.account.shopping_list.empty' | trans }}
