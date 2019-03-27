@@ -26,6 +26,10 @@ class QuoteRequestCartHandler implements QuoteRequestCartHandlerInterface
      */
     protected $quoteRequestClient;
 
+    /**
+     * @param \SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCartClientInterface $cartClient
+     * @param \SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteRequestClientInterface $quoteRequestClient
+     */
     public function __construct(
         QuoteRequestWidgetToCartClientInterface $cartClient,
         QuoteRequestWidgetToQuoteRequestClientInterface $quoteRequestClient
