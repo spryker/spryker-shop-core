@@ -47,6 +47,11 @@ class ShoppingListSubtotalWidget extends AbstractWidget
      */
     protected function addSubtotalParameter(array $shoppingListItemProductViewTransfers): void
     {
-        $this->addParameter(static::PARAMETER_SHOPPING_LIST_SUBTOTAL, $this->getFactory()->getShoppingListClient()->calculateShoppingListSubtotal($shoppingListItemProductViewTransfers));
+        $this->addParameter(
+            static::PARAMETER_SHOPPING_LIST_SUBTOTAL,
+            $this->getFactory()
+                ->getShoppingListClient()
+                ->calculateShoppingListSubtotal($shoppingListItemProductViewTransfers)
+        );
     }
 }
