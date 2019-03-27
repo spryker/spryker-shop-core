@@ -68,6 +68,6 @@ class QuoteRequestCartWidget extends AbstractWidget
      */
     protected function isWidgetVisible(QuoteTransfer $quoteTransfer): bool
     {
-        return (bool)$quoteTransfer->getQuoteRequestReference() && !$quoteTransfer->getQuoteRequestVersionReference();
+        return $quoteTransfer->getQuoteRequestReference() && !$quoteTransfer->getQuoteRequestVersionReference();
     }
 }

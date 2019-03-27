@@ -66,6 +66,6 @@ class CreateQuoteRequestWidget extends AbstractWidget
             return false;
         }
 
-        return !(bool)$quoteTransfer->getQuoteRequestVersionReference() && !$quoteTransfer->getQuoteRequestReference();
+        return !$quoteTransfer->getQuoteRequestVersionReference() && !$quoteTransfer->getQuoteRequestReference();
     }
 }
