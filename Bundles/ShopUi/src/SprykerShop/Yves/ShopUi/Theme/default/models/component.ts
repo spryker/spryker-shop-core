@@ -3,17 +3,17 @@
  * It is used in Spryker Shop as base class for every components.
  */
 export default abstract class Component extends HTMLElement {
-    private isComponentMounted: boolean
+    private isComponentMounted: boolean;
 
     /**
      * The name of the component.
      */
-    readonly name: string
+    readonly name: string;
 
     /**
      * The js-safe name of the component.
      */
-    readonly jsName: string
+    readonly jsName: string;
 
     /**
      * Creates an instance of Component.
@@ -35,7 +35,7 @@ export default abstract class Component extends HTMLElement {
      *
      * @deprecated Use mountCallback() instead.
      */
-    protected abstract readyCallback(): void
+    protected abstract readyCallback(): void;
 
     /**
      * Used by the application to mark the current component as mounted and avoid multiple initialisations.
@@ -51,7 +51,8 @@ export default abstract class Component extends HTMLElement {
      * Use this method as initial point for your component if you intend to query the DOM for other webcomponents.
      * If this is not needed, you can use connectedCallback() intead for a faster execution,
      * as described by official documentation for Web Components:
-     * {@link https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#Using_the_lifecycle_callbacks}
+     * {@link https://developer.mozilla.org/en-US/docs/Web/Web_Components/
+     * Using_custom_elements#Using_the_lifecycle_callbacks}
      */
     mountCallback(): void {
         this.readyCallback();

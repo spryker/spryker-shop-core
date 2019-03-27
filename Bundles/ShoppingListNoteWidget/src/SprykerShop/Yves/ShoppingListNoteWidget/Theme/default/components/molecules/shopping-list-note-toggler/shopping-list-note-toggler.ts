@@ -15,8 +15,8 @@ export default class ShoppingListNoteToggler extends Component {
     }
 
     protected mapEvents(): void {
-        if(this.button) {
-            this.button.addEventListener('click', (event: Event) => this.onClick(event))
+        if (this.button) {
+            this.button.addEventListener('click', (event: Event) => this.onClick(event));
         }
     }
 

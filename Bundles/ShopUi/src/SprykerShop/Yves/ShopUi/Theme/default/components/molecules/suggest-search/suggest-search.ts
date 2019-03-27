@@ -1,69 +1,56 @@
 import Component from '../../../models/component';
 import AjaxProvider from '../../../components/molecules/ajax-provider/ajax-provider';
-import debounce from 'lodash-es/debounce'
-import throttle from 'lodash-es/throttle'
-
-interface keyCodes {
-    [keyCode: number]: string;
-}
+import debounce from 'lodash-es/debounce';
+import throttle from 'lodash-es/throttle';
 
 export default class SuggestSearch extends Component {
     /**
-     * Keyborad codes map:
-     * - key: keybord button code;
-     * - value: keybord button string representation.
-     */
-    readonly keyboardCodes: keyCodes
-
-    /**
      * The search input element.
      */
-    searchInput: HTMLInputElement
+    searchInput: HTMLInputElement;
+
     /**
      * The hint input element.
      */
-    hintInput: HTMLInputElement
+    hintInput: HTMLInputElement;
+
     /**
      * The container of the suggestions items.
      */
-    suggestionsContainer: HTMLElement
+    suggestionsContainer: HTMLElement;
+
     /**
      * Performs the Ajax operations.
      */
-    ajaxProvider: AjaxProvider
+    ajaxProvider: AjaxProvider;
+
     /**
      * The current value of the search input element.
      */
-    currentSearchValue: string
+    currentSearchValue: string;
+
     /**
      * A content of the hint input element.
      */
-    hint: string
+    hint: string;
+
     /**
      * The list of the search suggestions.
      */
-    navigation: HTMLElement[]
+    navigation: HTMLElement[];
+
     /**
      * The index of the active suggestion item.
      */
-    activeItemIndex: number
+    activeItemIndex: number;
+
     /**
      * The class name of the active suggestion item.
      */
-    navigationActiveClass: string
-
+    navigationActiveClass: string;
 
     constructor() {
         super();
-
-        this.keyboardCodes = {
-            9: 'tab',
-            13: 'enter',
-            37: 'arrowLeft',
-            38: 'arrowUp',
-            39: 'arrowRight',
-            40: 'arrowDown'
-        };
         this.activeItemIndex = 0;
     }
 
@@ -77,9 +64,15 @@ export default class SuggestSearch extends Component {
     }
 
     protected mapEvents(): void {
-        this.searchInput.addEventListener('keyup', debounce((event: Event) => this.onInputKeyUp(event), this.debounceDelay));
-        this.searchInput.addEventListener('keydown', throttle((event: Event) => this.onInputKeyDown(<KeyboardEvent> event), this.throttleDelay));
-        this.searchInput.addEventListener('blur', debounce((event: Event) => this.onInputFocusOut(event), this.debounceDelay));
+        this.searchInput.addEventListener('keyup', debounce((event: Event) => {
+            this.onInputKeyUp(event);
+        }, this.debounceDelay));
+        this.searchInput.addEventListener('keydown', throttle((event: Event) => {
+            this.onInputKeyDown(<KeyboardEvent> event);
+        }, this.throttleDelay));
+        this.searchInput.addEventListener('blur', debounce((event: Event) => {
+            this.onInputFocusOut(event);
+        }, this.debounceDelay));
         this.searchInput.addEventListener('focus', (event: Event) => this.onInputFocusIn(event));
         this.searchInput.addEventListener('click', (event: Event) => this.onInputClick(event));
     }
@@ -87,7 +80,7 @@ export default class SuggestSearch extends Component {
     protected async onInputKeyUp(event: Event): Promise<void> {
         const suggestQuery = this.getSearchValue();
 
-        if (suggestQuery != this.currentSearchValue && suggestQuery.length >= this.lettersTrashold) {
+        if (suggestQuery !== this.currentSearchValue && suggestQuery.length >= this.lettersTrashold) {
             this.saveCurrentSearchValue(suggestQuery);
 
             await this.getSuggestions();
@@ -102,15 +95,13 @@ export default class SuggestSearch extends Component {
     }
 
     protected onInputKeyDown(event: KeyboardEvent): void {
-        var keyCode = event.keyCode;
-
-        switch (this.keyboardCodes[keyCode]) {
-            case 'enter': this.onEnter(event); break;
-            case 'tab': this.onTab(event); break;
-            case 'arrowUp': this.onArrowUp(event); break;
-            case 'arrowDown': this.onArrowDown(event); break;
-            case 'arrowLeft': this.onArrowLeft(event); break;
-            case 'arrowRight': this.onArrowRight(event); break;
+        switch (event.key) {
+            case 'Enter': this.onEnter(event); break;
+            case 'Tab': this.onTab(event); break;
+            case 'ArrowUp': this.onArrowUp(event); break;
+            case 'ArrowDown': this.onArrowDown(event); break;
+            case 'ArrowLeft': this.onArrowLeft(event); break;
+            case 'ArrowRight': this.onArrowRight(event); break;
         }
     }
 
