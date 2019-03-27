@@ -48,8 +48,24 @@ class CreateQuoteRequestWidget extends AbstractWidget
      */
     protected function addIsVisibleParameter(QuoteTransfer $quoteTransfer): void
     {
-        $isVisible = !(bool)$quoteTransfer->getQuoteRequestVersionReference() && !$quoteTransfer->getQuoteRequestReference();
+        $this->addParameter(static::PARAMETER_IS_VISIBLE, $this->isWidgetVisible($quoteTransfer));
+    }
 
-        $this->addParameter(static::PARAMETER_IS_VISIBLE, $isVisible);
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isWidgetVisible(QuoteTransfer $quoteTransfer): bool
+    {
+        $isQuoteEditable = $this->getFactory()
+            ->getQuoteClient()
+            ->isQuoteEditable($quoteTransfer);
+
+        if (!$isQuoteEditable) {
+            return false;
+        }
+
+        return !(bool)$quoteTransfer->getQuoteRequestVersionReference() && !$quoteTransfer->getQuoteRequestReference();
     }
 }
