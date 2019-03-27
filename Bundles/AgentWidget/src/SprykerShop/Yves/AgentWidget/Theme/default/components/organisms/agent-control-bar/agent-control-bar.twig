@@ -13,7 +13,7 @@
 {% block body %}
     <div class="container">
         <div class="box grid grid--middle">
-            <div class="col col--md-5 col--sm-12">
+            <div class="col col--sm-12 col--xl-7 ">
                 {% if not is_granted('ROLE_PREVIOUS_ADMIN') %}
                     <form method="GET" action="/">
                         <div class="grid">
@@ -40,16 +40,9 @@
                         </div>
                     </form>
                 {% endif %}
-
-                {% widget 'AgentQuoteRequestOverviewWidget' only %}
-                    {% block body %}
-                        <li class="menu__item menu__item--has-children-dropdown">
-                            {{ parent() }}
-                        </li>
-                    {% endblock %}
-                {% endwidget %}
+                {% widget 'AgentQuoteRequestOverviewWidget' only %}{% endwidget %}
             </div>
-            <div class="col col--md-7 col--sm-12 text-right">
+            <div class="col col--sm-12 col--xl-5  text-right">
                 {% include molecule('agent-navigation', 'AgentWidget') with {
                     data: {
                         agent: data.agent
