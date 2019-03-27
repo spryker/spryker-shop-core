@@ -35,7 +35,10 @@
                     {% endif %}
                 </td>
                 <td class="text-center">{{ quoteRequest.createdAt | date('d.m.Y H:i:s') }}</td>
-                <td class="text-center">{{ ('quote_request.status.' ~ quoteRequest.status) | trans }}</td>
+                <td class="text-center">
+                    <p class="request-status request-status--{{ quoteRequest.status }}">
+                        {{ ('quote_request.status.' ~ quoteRequest.status) | trans }}
+                    </p>
                 <td>
                     <ul class="nested vertical menu">
                         <li class="menu__item">

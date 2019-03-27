@@ -64,7 +64,7 @@
                         <b>{{ data.quoteRequest.createdAt | date('d.m.Y H:i') }}</b>
                     </p>
                     <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:
-                        <b>{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</b>
+                        <span class="request-status request-status--{{ data.quoteRequest.status }}">{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</span>
                     </p>
                     <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
                         <b>{{ data.quoteRequest.validUntil ? (data.quoteRequest.validUntil | date('d.m.Y H:i')) : '' }}</b>
