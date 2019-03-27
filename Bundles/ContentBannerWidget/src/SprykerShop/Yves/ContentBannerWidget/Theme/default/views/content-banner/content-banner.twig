@@ -1,0 +1,12 @@
+{% extends template('widget') %}
+
+{% include molecule('banner') with {
+    modifiers: _view.modifiers
+    data: {
+        imageUrl: _view.data.imageUrl
+        title: _view.data.title
+        subtitle: _view.data.subtitle
+        clickUrl: _view.data.clickUrl
+        altText: _view.data.altText
+    }
+} only %}
