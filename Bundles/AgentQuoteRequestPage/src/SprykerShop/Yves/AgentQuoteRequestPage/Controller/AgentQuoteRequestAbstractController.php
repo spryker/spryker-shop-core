@@ -21,6 +21,7 @@ class AgentQuoteRequestAbstractController extends AbstractController
      * @uses \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE
      */
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
+    protected const PARAM_QUOTE_REQUEST_VERSION_REFERENCE = '%quoteRequestVersionReference%';
 
     /**
      * @uses \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS
@@ -87,5 +88,31 @@ class AgentQuoteRequestAbstractController extends AbstractController
         foreach ($quoteRequestResponseTransfer->getMessages() as $messageTransfer) {
             $this->addErrorMessage($messageTransfer->getValue());
         }
+    }
+
+    /**
+     * @param string $key
+     * @param array $params
+     *
+     * @return string
+     */
+    protected function getTranslatedMessage(string $key, array $params = []): string
+    {
+        return $this->getFactory()
+            ->getGlossaryStorageClient()
+            ->translate($key, $this->getLocale(), $params);
+    }
+
+    /**
+     * @param string $key
+     * @param array $params
+     *
+     * @return void
+     */
+    protected function addTranslatedSuccessMessage(string $key, array $params = []): void
+    {
+        $this->addSuccessMessage(
+            $this->getTranslatedMessage($key, $params)
+        );
     }
 }

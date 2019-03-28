@@ -57,6 +57,8 @@ class QuoteRequestAbstractController extends AbstractController
      */
     protected const ROUTE_CART = 'cart';
 
+    protected const PARAM_QUOTE_REQUEST_VERSION_REFERENCE = '%quoteRequestVersionReference%';
+
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
@@ -108,5 +110,31 @@ class QuoteRequestAbstractController extends AbstractController
         foreach ($quoteRequestResponseTransfer->getMessages() as $messageTransfer) {
             $this->addErrorMessage($messageTransfer->getValue());
         }
+    }
+
+    /**
+     * @param string $key
+     * @param array $params
+     *
+     * @return string
+     */
+    protected function getTranslatedMessage(string $key, array $params = []): string
+    {
+        return $this->getFactory()
+            ->getGlossaryStorageClient()
+            ->translate($key, $this->getLocale(), $params);
+    }
+
+    /**
+     * @param string $key
+     * @param array $params
+     *
+     * @return void
+     */
+    protected function addTranslatedSuccessMessage(string $key, array $params = []): void
+    {
+        $this->addSuccessMessage(
+            $this->getTranslatedMessage($key, $params)
+        );
     }
 }
