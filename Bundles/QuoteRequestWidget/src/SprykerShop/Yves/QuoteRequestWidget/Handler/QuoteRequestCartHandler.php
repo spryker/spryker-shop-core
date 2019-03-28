@@ -9,17 +9,19 @@ namespace SprykerShop\Yves\QuoteRequestWidget\Handler;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
-use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCartClientInterface;
+use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCompanyUserClientInterface;
+use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteRequestClientInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class QuoteRequestCartHandler implements QuoteRequestCartHandlerInterface
 {
     protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
 
     /**
-     * @var \SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCartClientInterface
+     * @var \SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteClientInterface
      */
-    protected $cartClient;
+    protected $quoteClient;
 
     /**
      * @var \SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteRequestClientInterface
@@ -27,15 +29,23 @@ class QuoteRequestCartHandler implements QuoteRequestCartHandlerInterface
     protected $quoteRequestClient;
 
     /**
-     * @param \SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCartClientInterface $cartClient
+     * @var \SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCompanyUserClientInterface
+     */
+    protected $companyUserClient;
+
+    /**
+     * @param \SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteClientInterface $quoteClient
      * @param \SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteRequestClientInterface $quoteRequestClient
+     * @param \SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCompanyUserClientInterface $companyUserClient
      */
     public function __construct(
-        QuoteRequestWidgetToCartClientInterface $cartClient,
-        QuoteRequestWidgetToQuoteRequestClientInterface $quoteRequestClient
+        QuoteRequestWidgetToQuoteClientInterface $quoteClient,
+        QuoteRequestWidgetToQuoteRequestClientInterface $quoteRequestClient,
+        QuoteRequestWidgetToCompanyUserClientInterface $companyUserClient
     ) {
-        $this->cartClient = $cartClient;
+        $this->quoteClient = $quoteClient;
         $this->quoteRequestClient = $quoteRequestClient;
+        $this->companyUserClient = $companyUserClient;
     }
 
     /**
@@ -43,15 +53,21 @@ class QuoteRequestCartHandler implements QuoteRequestCartHandlerInterface
      */
     public function updateQuoteRequestQuote(): QuoteRequestResponseTransfer
     {
-        $quoteTransfer = $this->cartClient->getQuote();
+        $quoteTransfer = $this->quoteClient->getQuote();
 
         if (!$quoteTransfer->getQuoteRequestReference()) {
             return $this->getErrorResponse();
         }
 
+        $companyUserTransfer = $this->companyUserClient->findCompanyUser();
+
+        if (!$companyUserTransfer) {
+            throw new NotFoundHttpException("Only company users are allowed to access this page");
+        }
+
         $quoteRequestTransfer = $this->quoteRequestClient->findCompanyUserQuoteRequestByReference(
             $quoteTransfer->getQuoteRequestReference(),
-            $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()
+            $companyUserTransfer->getIdCompanyUser()
         );
 
         if (!$quoteRequestTransfer) {

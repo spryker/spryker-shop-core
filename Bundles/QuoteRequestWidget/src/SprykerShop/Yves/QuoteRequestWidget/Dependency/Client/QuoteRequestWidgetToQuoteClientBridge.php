@@ -33,4 +33,12 @@ class QuoteRequestWidgetToQuoteClientBridge implements QuoteRequestWidgetToQuote
     {
         return $this->quoteClient->isQuoteEditable($quoteTransfer);
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote()
+    {
+        return $this->quoteClient->getQuote();
+    }
 }

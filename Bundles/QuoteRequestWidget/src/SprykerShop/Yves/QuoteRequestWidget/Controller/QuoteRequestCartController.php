@@ -59,7 +59,7 @@ class QuoteRequestCartController extends AbstractController
             $this->handleResponseErrors($quoteRequestResponseTransfer);
 
             if ($request->get(QuoteRequestCartForm::SUBMIT_BUTTON_SAVE_AND_BACK) !== null) {
-                $this->clearCustomerQuote($quoteRequestResponseTransfer->getQuoteRequest());
+                $this->reloadQuoteForCustomer($quoteRequestResponseTransfer->getQuoteRequest());
 
                 return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
                     static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
@@ -87,12 +87,8 @@ class QuoteRequestCartController extends AbstractController
      *
      * @return void
      */
-    protected function clearCustomerQuote(QuoteRequestTransfer $quoteRequestTransfer): void
+    protected function reloadQuoteForCustomer(QuoteRequestTransfer $quoteRequestTransfer): void
     {
-        $this->getFactory()
-            ->getCartClient()
-            ->clearQuote();
-
         $this->getFactory()
             ->getPersistentCartClient()
             ->reloadQuoteForCustomer($quoteRequestTransfer->getCompanyUser()->getCustomer());

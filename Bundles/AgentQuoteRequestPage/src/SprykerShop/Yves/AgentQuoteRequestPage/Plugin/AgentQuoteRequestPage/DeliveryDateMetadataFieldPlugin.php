@@ -13,6 +13,8 @@ use SprykerShop\Yves\AgentQuoteRequestPageExtension\Dependency\Plugin\AgentQuote
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageFactory getFactory()
@@ -21,6 +23,7 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements AgentQuo
 {
     protected const FIELD_METADATA_DELIVERY_DATE = 'delivery_date';
     protected const LABEL_METADATA_DELIVERY_DATE = 'quote_request_page.quote_request.metadata.label.delivery_date';
+    protected const GLOSSARY_KEY_METADATA_DELIVERY_DATE_VIOLATION = 'quote_request_page.quote_request.metadata.violations.delivery_date';
 
     /**
      * {@inheritdoc}
@@ -41,6 +44,19 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements AgentQuo
             'required' => false,
             'attr' => [
                 'class' => 'datepicker safe-datetime',
+            ],
+            'constraints' => [
+                new Callback([
+                    'callback' => function ($date, ExecutionContextInterface $context) {
+                        if (!$date) {
+                            return;
+                        }
+
+                        if (new DateTime($date) < new DateTime()) {
+                            $context->addViolation(static::GLOSSARY_KEY_METADATA_DELIVERY_DATE_VIOLATION);
+                        }
+                    },
+                ]),
             ],
         ]);
 

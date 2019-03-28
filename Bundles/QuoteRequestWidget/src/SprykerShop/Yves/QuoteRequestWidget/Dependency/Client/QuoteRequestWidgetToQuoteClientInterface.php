@@ -17,4 +17,9 @@ interface QuoteRequestWidgetToQuoteClientInterface
      * @return bool
      */
     public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote();
 }
