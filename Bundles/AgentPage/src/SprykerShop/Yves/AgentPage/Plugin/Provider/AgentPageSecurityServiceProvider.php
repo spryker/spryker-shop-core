@@ -135,8 +135,12 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
      */
     protected function setSwitchUserEventSubscriber(Application $app): void
     {
-        $this->getDispatcher($app)->addSubscriber(
-            $this->getFactory()->createSwitchUserEventSubscriber()
+        $app['dispatcher'] = $app->share(
+            $app->extend('dispatcher', function (EventDispatcherInterface $eventDispatcher) {
+                $eventDispatcher->addSubscriber($this->getFactory()->createSwitchUserEventSubscriber());
+
+                return $eventDispatcher;
+            })
         );
     }
 
@@ -174,15 +178,5 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
         }
 
         return $path;
-    }
-
-    /**
-     * @param \Silex\Application $app
-     *
-     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected function getDispatcher(Application $app): EventDispatcherInterface
-    {
-        return $app['dispatcher'];
     }
 }

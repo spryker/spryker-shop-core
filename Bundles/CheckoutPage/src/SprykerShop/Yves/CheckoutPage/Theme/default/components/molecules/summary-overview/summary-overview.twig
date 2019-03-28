@@ -10,6 +10,7 @@
     expenses: [],
     voucherDiscounts: [],
     cartRuleDiscounts: [],
+    cartQuantity: cartQuantity is defined ? cartQuantity : app['cart.quantity'] | default,
 
     prices: {
         subTotal: required,
@@ -22,7 +23,7 @@
 
 {% block body %}
     <li>
-        <span class="float-right">{{ app['cart.quantity'] }} {{ 'checkout.step.summary.items' | trans }}</span>
+        <span class="float-right">{{ data.cartQuantity }} {{ 'checkout.step.summary.items' | trans }}</span>
         <h6>{{ 'checkout.step.summary.overview' | trans }}</h6>
     </li>
     {% block separator %}
