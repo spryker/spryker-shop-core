@@ -55,11 +55,7 @@
         {% elsewidget 'MultiCartMenuItemWidgetPlugin' args [data.activePage] only %} {# @deprecated Use MultiCartMenuItemWidget instead. #}
         {% endwidget %}
 
-        {% include molecule('quote-request-menu-item', 'QuoteRequestWidget') ignore missing with {
-            data: {
-                activePage: data.activePage
-            }
-        } only %}
+        {% widget 'QuoteRequestMenuItemWidget' args [data.activePage] only %}{% endwidget %}
 
         {% widget 'BusinessOnBehalfStatusWidget' use view('change-company-user', 'BusinessOnBehalfWidget') with {
             activePage: macros.isActive('menuItemBusinessOnBehalfWidget', data.activePage)

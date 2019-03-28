@@ -49,6 +49,8 @@ class QuoteRequestCartHandler implements QuoteRequestCartHandlerInterface
     }
 
     /**
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
     public function updateQuoteRequestQuote(): QuoteRequestResponseTransfer
