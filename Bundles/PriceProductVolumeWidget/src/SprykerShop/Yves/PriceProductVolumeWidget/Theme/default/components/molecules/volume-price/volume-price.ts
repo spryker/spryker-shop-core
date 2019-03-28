@@ -6,11 +6,31 @@ interface VolumePricesData {
 }
 
 export default class VolumePrice extends Component {
+    /**
+     * The product price text element.
+     */
     productPriceElement: HTMLElement;
+
+    /**
+     * Data object of the volume prices list.
+     */
     volumePricesData: VolumePricesData[];
+
+    /**
+     * The volume select/input element.
+     */
     quantityElement: HTMLFormElement;
+
+    /**
+     * The custom class for price animation.
+     */
     highLightedClass: string;
+
+    /**
+     * The current quantity select/input value.
+     */
     currentQuantityValue: number;
+    protected timeout: number = 400;
 
     protected readyCallback(): void {
         this.productPriceElement = <HTMLElement>this.querySelector(`.${this.jsName}__price`);
@@ -42,7 +62,7 @@ export default class VolumePrice extends Component {
         const volumePrice: string = priceData.price;
         const volumePriceCount: number = priceData.count;
 
-        if(this.currentQuantityValue >= volumePriceCount) {
+        if (this.currentQuantityValue >= volumePriceCount) {
             this.changePrice(volumePrice);
 
             return false;
@@ -52,7 +72,7 @@ export default class VolumePrice extends Component {
     }
 
     protected changePrice(price: string): void {
-        if(this.productPriceElement.innerText !== price) {
+        if (this.productPriceElement.innerText !== price) {
             this.productPriceElement.innerHTML = price;
             this.highlight();
         }
@@ -62,6 +82,6 @@ export default class VolumePrice extends Component {
         const classList = this.productPriceElement.classList;
 
         classList.add(this.highLightedClass);
-        setTimeout(() => classList.remove(this.highLightedClass), 400);
+        setTimeout(() => classList.remove(this.highLightedClass), this.timeout);
     }
 }

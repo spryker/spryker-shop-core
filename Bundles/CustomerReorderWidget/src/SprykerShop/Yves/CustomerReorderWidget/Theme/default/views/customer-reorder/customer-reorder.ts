@@ -4,12 +4,12 @@ export default class CustomerReorder extends Component {
     /**
      * Elements enabling/disabling the trigger.
      */
-    readonly selections: HTMLInputElement[]
+    readonly selections: HTMLInputElement[];
 
     /**
      * Element enabled/disabled by selections changes.
      */
-    readonly trigger: HTMLElement
+    readonly trigger: HTMLElement;
 
     constructor() {
         super();
@@ -39,6 +39,7 @@ export default class CustomerReorder extends Component {
     enableTrigger(enable: boolean): void {
         if (enable) {
             this.trigger.removeAttribute('disabled');
+
             return;
         }
 
