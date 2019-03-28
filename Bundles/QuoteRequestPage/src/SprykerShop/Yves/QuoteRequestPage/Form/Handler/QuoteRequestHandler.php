@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Form\Handler;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface;
@@ -14,6 +15,8 @@ use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteR
 
 class QuoteRequestHandler implements QuoteRequestHandlerInterface
 {
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_WITH_EMPTY_CART = 'quote_request.validation.error.empty_cart';
+
     /**
      * @var \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface
      */
@@ -43,6 +46,10 @@ class QuoteRequestHandler implements QuoteRequestHandlerInterface
      */
     public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
+        if (!$quoteRequestTransfer->getLatestVersion()->getQuote()->getItems()->count()) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_WITH_EMPTY_CART);
+        }
+
         $quoteRequestResponseTransfer = $this->quoteRequestClient->createQuoteRequest($quoteRequestTransfer);
 
         if ($quoteRequestResponseTransfer->getIsSuccessful()) {
@@ -69,5 +76,17 @@ class QuoteRequestHandler implements QuoteRequestHandlerInterface
     {
         $this->cartClient->clearQuote();
         $this->cartClient->validateQuote();
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    protected function getErrorResponse(string $message): QuoteRequestResponseTransfer
+    {
+        return (new QuoteRequestResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addMessage((new MessageTransfer())->setValue($message));
     }
 }

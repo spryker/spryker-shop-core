@@ -20,6 +20,7 @@
     <transfer name="Customer">
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />
+        <property name="email" type="string" />
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
@@ -56,15 +57,6 @@
     <transfer name="QuoteRequestOverviewFilter">
         <property name="quoteRequestReference" type="string" />
         <property name="pagination" type="Pagination" />
-    </transfer>
-
-    <transfer name="CompanyUserAutocompleteResponse">
-        <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
-    </transfer>
-
-    <transfer name="CompanyUserQuery">
-        <property name="query" type="string"/>
-        <property name="limit" type="int"/>
     </transfer>
 
 </transfers>
