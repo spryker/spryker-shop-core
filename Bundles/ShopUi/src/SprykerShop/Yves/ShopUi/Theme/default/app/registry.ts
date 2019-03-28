@@ -15,18 +15,19 @@ const registry: Map<string, Candidate> = new Map();
  * Defines the generic custom element contructor signature that must be exported by each webcomponent module.
  */
 export interface CustomElementContructor {
-    new(): Element
+    new(): Element;
 }
 
 /**
  * Defines the generic custom element module signature that must be implemented by each webcomponent module.
  */
 export interface CustomElementModule {
-    default: CustomElementContructor
+    default: CustomElementContructor;
 }
 
 /**
- * Defines the generic custom element importer signature that must be implemented by each webcomponent importer function.
+ * Defines the generic custom element importer signature that must be implemented by each webcomponent importer
+ * function.
  *
  * @remarks
  * This interface represents an incapsulation of webpack's import() function, as follows:
@@ -36,7 +37,7 @@ export interface CustomElementModule {
  * ```
  */
 export interface CustomElementImporter {
-    (): Promise<CustomElementModule>
+    (): Promise<CustomElementModule>;
 }
 
 /**
@@ -49,6 +50,7 @@ export interface CustomElementImporter {
 export default function register(tagName: string, customElementImporter: CustomElementImporter): Candidate {
     const candidate = new Candidate(tagName, customElementImporter);
     registry.set(tagName, candidate);
+
     return candidate;
 }
 

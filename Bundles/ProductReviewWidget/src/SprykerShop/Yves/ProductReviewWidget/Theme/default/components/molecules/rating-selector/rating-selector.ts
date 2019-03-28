@@ -4,11 +4,12 @@ export default class RatingSelector extends Component {
     /**
      * The input element.
      */
-    input: HTMLInputElement
+    input: HTMLInputElement;
+
     /**
      * Collection of the elements which toggle the steps of the product review.
      */
-    steps: HTMLElement[]
+    steps: HTMLElement[];
 
     protected readyCallback(): void {
         this.input = <HTMLInputElement>this.querySelector(`.${this.jsName}__input`);
@@ -21,7 +22,9 @@ export default class RatingSelector extends Component {
     }
 
     protected mapEvents(): void {
-        this.steps.forEach((step: HTMLElement) => step.addEventListener('click', (event: Event) => this.onStepClick(event)));
+        this.steps.forEach((step: HTMLElement) => {
+            step.addEventListener('click', (event: Event) => this.onStepClick(event));
+        });
     }
 
     protected onStepClick(event: Event): void {
@@ -43,12 +46,12 @@ export default class RatingSelector extends Component {
 
         if (!value) {
             this.input.setAttribute('disabled', 'disabled');
+
             return;
         }
 
         this.input.removeAttribute('disabled');
     }
-
 
     /**
      * Sets the value attribute and toggles the special class name.
@@ -62,6 +65,7 @@ export default class RatingSelector extends Component {
 
             if (value >= stepValue) {
                 step.classList.add(`${this.name}__step--active`);
+
                 return;
             }
 

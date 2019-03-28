@@ -17,22 +17,22 @@ let applicationConfig: Config;
  * events.ready is deprecated; please use events.mount instead.
  */
 export interface Config {
-    readonly name: string
-    readonly isProduction: boolean
+    readonly name: string;
+    readonly isProduction: boolean;
 
     events: {
         mount: string
         ready: string // deprecated
         bootstrap: string
         error: string
-    }
+    };
 
     log: {
         prefix: string
         level: LogLevel
-    },
+    };
 
-    extra?: any
+    extra?: any;
 }
 
 /**
@@ -56,7 +56,7 @@ export const defaultConfig: Config = {
         prefix: __NAME__,
         level: __PRODUCTION__ ? LogLevel.ERRORS_ONLY : LogLevel.VERBOSE
     }
-}
+};
 
 /**
  * Sets a new configuration.

@@ -10,14 +10,6 @@ export enum Events {
     UNSET = 'unset'
 }
 
-const keyCodes: {
-    [key: string]: number;
-} = {
-    arrowUp: 38,
-    arrowDown: 40,
-    enter: 13
-};
-
 /**
  * @event fetching An event which is triggered when an ajax request is sent to the server.
  * @event fetched An event which is triggered when an ajax request is closed.
@@ -174,16 +166,16 @@ export default class AutocompleteForm extends Component {
             return;
         }
 
-        switch (event.keyCode) {
-            case keyCodes.arrowUp:
+        switch (event.key) {
+            case 'ArrowUp':
                 event.preventDefault();
                 this.onKeyDownArrowUp();
                 break;
-            case keyCodes.arrowDown:
+            case 'ArrowDown':
                 event.preventDefault();
                 this.onKeyDownArrowDown();
                 break;
-            case keyCodes.enter:
+            case 'Enter':
                 event.preventDefault();
                 this.onKeyDownEnter();
                 break;
@@ -285,7 +277,8 @@ export default class AutocompleteForm extends Component {
     }
 
     /**
-     * Gets the number of letters which, upon entering in form field, is sufficient to show, hide or load the suggestions.
+     * Gets the number of letters which, upon entering in form field, is sufficient to show, hide or load the
+     * suggestions.
      */
     get minLetters(): number {
         return Number(this.getAttribute('min-letters'));
