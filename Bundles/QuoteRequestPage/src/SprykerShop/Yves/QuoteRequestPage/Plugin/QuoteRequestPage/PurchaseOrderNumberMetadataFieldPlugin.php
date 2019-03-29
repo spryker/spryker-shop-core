@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\QuoteRequestPageExtension\Dependency\Plugin\QuoteRequestFormMetadataFieldPluginInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
@@ -19,6 +20,7 @@ class PurchaseOrderNumberMetadataFieldPlugin extends AbstractPlugin implements Q
 {
     protected const FIELD_METADATA_PURCHASE_ORDER_NUMBER = 'purchase_order_number';
     protected const LABEL_METADATA_PURCHASE_ORDER_NUMBER = 'quote_request_page.quote_request.metadata.label.purchase_order_number';
+    protected const MAX_LENGTH_NUMBER = 128;
 
     /**
      * {@inheritdoc}
@@ -36,6 +38,11 @@ class PurchaseOrderNumberMetadataFieldPlugin extends AbstractPlugin implements Q
         $builder->add(static::FIELD_METADATA_PURCHASE_ORDER_NUMBER, TextType::class, [
             'label' => static::LABEL_METADATA_PURCHASE_ORDER_NUMBER,
             'required' => false,
+            'constraints' => [
+                new Length([
+                    'max' => static::MAX_LENGTH_NUMBER,
+                ]),
+            ],
         ]);
 
         return $builder;
