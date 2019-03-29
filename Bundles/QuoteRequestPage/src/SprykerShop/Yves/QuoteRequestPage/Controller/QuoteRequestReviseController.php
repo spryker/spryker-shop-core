@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class QuoteRequestReviseController extends QuoteRequestAbstractController
 {
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_VERSION_CREATED = 'quote_request_page.quote_request_version.created';
+
     /**
      * @param string $quoteRequestReference
      *
@@ -35,6 +37,10 @@ class QuoteRequestReviseController extends QuoteRequestAbstractController
             ->reviseQuoteRequest($quoteRequestCriteriaTransfer);
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
+
+        if ($quoteRequestResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_VERSION_CREATED);
+        }
 
         return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
             static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
