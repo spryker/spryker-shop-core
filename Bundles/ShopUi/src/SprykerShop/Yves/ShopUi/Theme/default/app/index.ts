@@ -23,10 +23,12 @@ function onApplicationError(e: CustomEvent): void {
     error('application error ->', e.detail);
 }
 
+/* tslint:disable: no-any */
 function dispatchCustomEvent(name: string, detail: any = {}): void {
     const event = new CustomEvent(name, { detail });
     document.dispatchEvent(event);
 }
+/* tslint:enable */
 
 function mountComponent(component: Component): void {
     component.mountCallback();

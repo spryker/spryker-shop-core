@@ -50,6 +50,7 @@ export default class AjaxProvider extends Component {
      * @param data Optional data sent to the server in the request body.
      * @returns A generic typed promise connected to the ajax request.
      */
+    /* tslint:disable: no-any */
     async fetch<T = string>(data?: any): Promise<T> {
         debug(this.method, this.url, 'fetching...');
         this.isFetchingRequest = true;
@@ -64,6 +65,7 @@ export default class AjaxProvider extends Component {
             this.xhr.send(data);
         });
     }
+    /* tslint:enable */
 
     protected onRequestLoad(resolve: Function, reject: Function, loadEvent: Event): void {
         this.isFetchingRequest = false;

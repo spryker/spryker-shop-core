@@ -2,11 +2,13 @@ declare const __NAME__: string;
 declare const __PRODUCTION__: boolean;
 import { LogLevel } from './logger';
 
+/* tslint:disable: no-redundant-jsdoc */
 /**
  * Defines the application configuration.
  *
  * @module Config
  */
+/* tslint:enable */
 
 let applicationConfig: Config;
 
@@ -16,6 +18,7 @@ let applicationConfig: Config;
  * @remarks
  * events.ready is deprecated; please use events.mount instead.
  */
+/* tslint:disable: no-any */
 export interface Config {
     readonly name: string;
     readonly isProduction: boolean;
@@ -34,6 +37,7 @@ export interface Config {
 
     extra?: any;
 }
+/* tslint:enable */
 
 /**
  * Defines the default application configuration object.

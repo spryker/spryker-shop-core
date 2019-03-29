@@ -25,10 +25,12 @@ export default abstract class Component extends HTMLElement {
         this.isComponentMounted = false;
     }
 
+    /* tslint:disable: no-any */
     protected dispatchCustomEvent(name: string, detail: any = {}): void {
         const customEvent = new CustomEvent(name, { detail });
         this.dispatchEvent(customEvent);
     }
+    /* tslint:enable */
 
     /**
      * Same as mountCallback().
