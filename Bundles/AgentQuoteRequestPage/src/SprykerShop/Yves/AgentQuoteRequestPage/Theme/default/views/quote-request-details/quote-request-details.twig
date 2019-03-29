@@ -88,8 +88,12 @@
                         {% endblock %}
                     {% endembed %}
                 </p>
-                {% if data.quoteRequest.isLatestVersionHidden and isLatestVersion %}
-                    <p><b>{{ 'quote_request_page.quote_request.labels.latest_version_is_hidden' | trans }}</b></p>
+                {% if isLatestVersion %}
+                    {% if data.quoteRequest.isLatestVersionHidden %}
+                        <p><b>{{ 'quote_request_page.quote_request.labels.latest_version_is_hidden' | trans }}</b></p>
+                    {% else %}
+                        <p><b>{{ 'quote_request_page.quote_request.labels.latest_version_is_visible' | trans }}</b></p>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
