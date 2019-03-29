@@ -53,6 +53,8 @@
 
         <div class="col col--sm-12 col--xl-4">
             <div class="box">
+                <h6>{{ "quote_request_page.quote_request.labels.information" | trans }}</h6>
+                <hr>
                 <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}:
                     <b>{{ data.quoteRequest.createdAt | date('d.m.Y H:i') }}</b>
                 </p>
@@ -62,6 +64,9 @@
                 <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
                     <b>{{ data.quoteRequest.validUntil ? (data.quoteRequest.validUntil | date('d.m.Y H:i')) : '' }}</b>
                 </p>
+                <hr>
+                <h6>{{ "quote_request_page.quote_request.labels.version_information" | trans }}</h6>
+                <hr>
                 <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
                     {% embed atom('select') with {
                         modifiers: ['naked'],
