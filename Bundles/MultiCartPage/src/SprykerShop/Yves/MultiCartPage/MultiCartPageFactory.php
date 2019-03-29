@@ -11,6 +11,7 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToCartClientInterface;
 use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToMultiCartClientInterface;
+use SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToQuoteClientInterface;
 use SprykerShop\Yves\MultiCartPage\Form\DataProvider\QuoteFormDataProvider;
 use SprykerShop\Yves\MultiCartPage\Form\DataProvider\QuoteFormDataProviderInterface;
 use SprykerShop\Yves\MultiCartPage\Form\QuoteForm;
@@ -59,26 +60,18 @@ class MultiCartPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\MultiCartPage\Dependency\Client\MultiCartPageToQuoteClientInterface
+     */
+    public function getQuoteClient(): MultiCartPageToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(MultiCartPageDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
      * @return \Symfony\Component\Form\FormFactoryInterface
      */
     public function getFormFactory(): FormFactoryInterface
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getCartDeleteCompanyUsersListWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(MultiCartPageDependencyProvider::PLUGINS_CART_DELETE_COMPANY_USERS_LIST_WIDGET);
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getMultiCartListWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(MultiCartPageDependencyProvider::PLUGIN_MULTI_CART_LIST_WIDGETS);
     }
 }

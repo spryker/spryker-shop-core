@@ -10,9 +10,11 @@ namespace SprykerShop\Yves\CmsBlockWidget\Plugin\Provider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
+ * @deprecated Use `\SprykerShop\Yves\CmsBlockWidget\Plugin\Twig\CmsBlockTwigPlugin` instead.
+ *
  * @method \SprykerShop\Yves\CmsBlockWidget\CmsBlockWidgetFactory getFactory()
  */
 class CmsBlockTwigFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
@@ -25,19 +27,19 @@ class CmsBlockTwigFunctionServiceProvider extends AbstractPlugin implements Serv
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) use ($app) {
+            $app->extend('twig', function (Environment $twig) use ($app) {
                 return $this->registerCmsBlockTwigFunction($twig, $app);
             })
         );
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param \Silex\Application $app
      *
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
-    protected function registerCmsBlockTwigFunction(Twig_Environment $twig, Application $app)
+    protected function registerCmsBlockTwigFunction(Environment $twig, Application $app)
     {
         foreach ($this->getCmsBlockTwigFunctions($app) as $function) {
             $twig->addFunction($function->getName(), $function);

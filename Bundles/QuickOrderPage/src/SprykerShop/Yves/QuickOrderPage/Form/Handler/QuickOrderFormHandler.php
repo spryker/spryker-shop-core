@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuickOrderTransfer;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilQuantityServiceInterface;
 use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -49,18 +48,12 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
     protected $itemExpanderPlugins;
 
     /**
-     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface $quoteClient
      * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface $zedRequestClient
      * @param \SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface $productResolver
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemExpanderPluginInterface[] $itemExpanderPlugins
-     * @param \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         QuickOrderPageToCartClientInterface $cartClient,
@@ -68,8 +61,7 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
         QuickOrderPageToZedRequestClientInterface $zedRequestClient,
         ProductResolverInterface $productResolver,
         Request $request,
-        array $itemExpanderPlugins,
-        QuickOrderPageToUtilQuantityServiceInterface $utilQuantityService
+        array $itemExpanderPlugins
     ) {
         $this->cartClient = $cartClient;
         $this->quoteClient = $quoteClient;
@@ -77,7 +69,6 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
         $this->productResolver = $productResolver;
         $this->request = $request;
         $this->itemExpanderPlugins = $itemExpanderPlugins;
-        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -87,7 +78,7 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
      */
     public function addToCart(QuickOrderTransfer $quickOrderTransfer): bool
     {
-        if (!$this->hasItems($quickOrderTransfer)) {
+        if (!$this->hasItems($quickOrderTransfer) || !$this->isValid($quickOrderTransfer)) {
             return false;
         }
 
@@ -101,7 +92,7 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
      */
     public function addToEmptyCart(QuickOrderTransfer $quickOrderTransfer): bool
     {
-        if (!$this->hasItems($quickOrderTransfer)) {
+        if (!$this->hasItems($quickOrderTransfer) || !$this->isValid($quickOrderTransfer)) {
             return false;
         }
 
@@ -111,13 +102,29 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
      * @return bool
      */
-    protected function hasItems(QuickOrderTransfer $quickOrder): bool
+    protected function hasItems(QuickOrderTransfer $quickOrderTransfer): bool
     {
-        return (bool)$quickOrder->getItems()->count();
+        return (bool)$quickOrderTransfer->getItems()->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
+     * @return bool
+     */
+    protected function isValid(QuickOrderTransfer $quickOrderTransfer): bool
+    {
+        foreach ($quickOrderTransfer->getItems() as $quickOrderItemTransfer) {
+            if ($quickOrderItemTransfer->getMessages()->count()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -129,6 +136,7 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
     {
         $itemTransfers = $this->mapToItemTransfers($quickOrderTransfer);
         foreach ($itemTransfers as $key => $itemTransfer) {
+            $itemTransfer->setGroupKeyPrefix(uniqid('', true));
             $itemTransfers[$key] = $this->expandItemTransfer($itemTransfer);
         }
 
@@ -161,29 +169,12 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
                 continue;
             }
 
-            if (!isset($itemTransfers[$sku])) {
-                $itemTransfers[$sku] = (new ItemTransfer())
-                    ->setSku($quickOrderItemTransfer->getSku())
-                    ->setQuantity(0.0);
-            }
-
-            $newQuantity = $this->sumQuantities($quantity, $itemTransfers[$sku]->getQuantity());
-
-            $itemTransfers[$sku]->setQuantity($newQuantity);
+            $itemTransfers[] = (new ItemTransfer())
+                ->setSku($sku)
+                ->setQuantity($quantity);
         }
 
-        return array_values($itemTransfers);
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return float
-     */
-    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
-    {
-        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
+        return $itemTransfers;
     }
 
     /**
