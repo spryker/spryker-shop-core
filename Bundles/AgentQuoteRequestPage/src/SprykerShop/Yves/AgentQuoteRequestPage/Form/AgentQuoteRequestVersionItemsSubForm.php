@@ -109,10 +109,10 @@ class AgentQuoteRequestVersionItemsSubForm extends AbstractType
     {
         return new CallbackTransformer(
             function ($value) {
-                return $value ?? $value / 100;
+                return $value !== null ? $value / 100 : null;
             },
             function ($value) {
-                return $value ?? $value * 100;
+                return $value !== null ? $value * 100 : null;
             }
         );
     }

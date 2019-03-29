@@ -30,8 +30,8 @@
                     {{ quoteRequest.companyUser.customer.firstName ~ ' ' ~ quoteRequest.companyUser.customer.lastName }}
                 </td>
                 <td class="text-center">
-                    {% if (quoteRequest.latestVersion) %}
-                        <strong>{{ quoteRequest.latestVersion.quote.totals.grandTotal | default(0) | money }}</strong>
+                    {% if (quoteRequest.latestVisibleVersion) %}
+                        <strong>{{ quoteRequest.latestVisibleVersion.quote.totals.grandTotal | default(0) | money }}</strong>
                     {% endif %}
                 </td>
                 <td class="text-center">{{ quoteRequest.createdAt | date('d.m.Y H:i:s') }}</td>

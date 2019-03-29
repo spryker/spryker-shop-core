@@ -54,11 +54,17 @@
             <div class="box">
                 <h6>{{ "quote_request_page.quote_request.labels.information" | trans }}</h6>
                 <hr>
-                <p>{{ 'quote_request_page.quote_request.labels.owner' | trans }}:
-                    <b>{{ data.quoteRequest.companyUser.customer.firstName }} {{ data.quoteRequest.companyUser.customer.lastName }}</b>
-                </p>
                 <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}:
                     <b>{{ data.quoteRequest.createdAt | date('d.m.Y H:i') }}</b>
+                </p>
+                <p>{{ 'quote_request_page.quote_request.labels.company' | trans }}:
+                    <b>{{ data.quoteRequest.companyUser.company.name }}</b>
+                </p>
+                <p>{{ 'quote_request_page.quote_request.labels.business_unit' | trans }}:
+                    <b>{{ data.quoteRequest.companyUser.companyBusinessUnit.name }}</b>
+                </p>
+                <p>{{ 'quote_request_page.quote_request.labels.customer' | trans }}:
+                    <b>{{ data.quoteRequest.companyUser.customer.firstName }} {{ data.quoteRequest.companyUser.customer.lastName }}</b>
                 </p>
                 <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:
                     <span class="request-status request-status--{{ data.quoteRequest.status }}">{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</span>
