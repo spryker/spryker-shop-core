@@ -283,12 +283,12 @@ class QuickOrderController extends AbstractController
      */
     public function productAdditionalDataAction(Request $request)
     {
-        $quantity = $request->get('quantity');
+        $quantity = (float) $request->get('quantity');
         $sku = $request->query->get('sku');
         $index = $request->query->get('index');
 
         $quickOrderItemTransfer = (new QuickOrderItemTransfer())
-            ->setQuantity($quantity ?: 1)
+            ->setQuantity($quantity ?: 1.0)
             ->setSku($sku);
 
         $product = $this->getProductByQuickOrderItem($quickOrderItemTransfer);
@@ -461,13 +461,26 @@ class QuickOrderController extends AbstractController
     }
 
     /**
-     * @param mixed $before
-     * @param mixed $after
+     * @param float $before
+     * @param float $after
      *
      * @return bool
      */
     protected function getIsQuantityAdjusted($before, $after): bool
     {
-        return $before !== null && (int)$before !== (int)$after;
+        return $before !== null && !$this->isQuantityEqual($before, $after);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function isQuantityEqual(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->getFactory()
+            ->getUtilQuantityService()
+            ->isQuantityEqual($firstQuantity, $secondQuantity);
     }
 }

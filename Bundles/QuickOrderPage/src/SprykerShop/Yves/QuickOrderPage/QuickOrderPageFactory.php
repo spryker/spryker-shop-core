@@ -16,6 +16,7 @@ use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductSto
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilQuantityServiceInterface;
 use SprykerShop\Yves\QuickOrderPage\Form\Constraint\ItemsFieldConstraint;
 use SprykerShop\Yves\QuickOrderPage\Form\Constraint\QuantityFieldConstraint;
 use SprykerShop\Yves\QuickOrderPage\Form\Constraint\TextOrderFormatConstraint;
@@ -60,7 +61,8 @@ class QuickOrderPageFactory extends AbstractFactory
             $this->getZedRequestClient(),
             $this->createProductResolver(),
             $this->getRequest(),
-            $this->getQuickOrderItemTransferExpanderPlugins()
+            $this->getQuickOrderItemTransferExpanderPlugins(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -268,5 +270,13 @@ class QuickOrderPageFactory extends AbstractFactory
     public function createViewDataTransformer(): ViewDataTransformerInterface
     {
         return new ViewDataTransformer();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilQuantityServiceInterface
+     */
+    public function getUtilQuantityService(): QuickOrderPageToUtilQuantityServiceInterface
+    {
+        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

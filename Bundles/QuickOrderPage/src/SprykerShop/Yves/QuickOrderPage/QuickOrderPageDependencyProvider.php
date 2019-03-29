@@ -17,6 +17,7 @@ use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductSto
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientBridge;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilQuantityServiceBridge;
 
 class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -33,6 +34,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY = 'PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY';
     public const PLUGINS_QUICK_ORDER_FORM_COLUMN = 'PLUGINS_QUICK_ORDER_FORM_ADDITIONAL_DATA_COLUMN_PROVIDER';
     public const PLUGINS_QUICK_ORDER_ITEM_FILTER = 'PLUGINS_QUICK_ORDER_ITEM_FILTER';
+    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -54,6 +56,23 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductStorageClient($container);
         $container = $this->addPriceProductStorageClient($container);
         $container = $this->addProductQuantityStorageClient($container);
+        $container = $this->addUtilQuantityService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addUtilQuantityService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
+            return new QuickOrderPageToUtilQuantityServiceBridge(
+                $container->getLocator()->utilQuantity()->service()
+            );
+        };
 
         return $container;
     }
