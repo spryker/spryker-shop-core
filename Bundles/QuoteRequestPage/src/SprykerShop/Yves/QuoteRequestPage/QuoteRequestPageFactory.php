@@ -12,7 +12,6 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompanyUserClientInterface;
-use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Form\DataProvider\QuoteRequestFormDataProvider;
 use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandler;
@@ -108,14 +107,6 @@ class QuoteRequestPageFactory extends AbstractFactory
     public function getCartClient(): QuoteRequestPageToCartClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::CLIENT_CART);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToGlossaryStorageClientInterface
-     */
-    public function getGlossaryStorageClient(): QuoteRequestPageToGlossaryStorageClientInterface
-    {
-        return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 
     /**
