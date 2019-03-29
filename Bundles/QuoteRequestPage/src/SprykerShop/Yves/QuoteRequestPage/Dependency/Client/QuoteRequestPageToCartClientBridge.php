@@ -29,20 +29,4 @@ class QuoteRequestPageToCartClientBridge implements QuoteRequestPageToCartClient
     {
         return $this->cartClient->getQuote();
     }
-
-    /**
-     * @return void
-     */
-    public function clearQuote()
-    {
-        $this->cartClient->clearQuote();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function validateQuote()
-    {
-        return $this->cartClient->validateQuote();
-    }
 }

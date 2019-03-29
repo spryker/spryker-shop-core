@@ -7,10 +7,10 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Dependency\Client;
 
-interface QuoteRequestPageToCartClientInterface
+interface QuoteRequestPageToCustomerClientInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getQuote();
+    public function getCustomer();
 }

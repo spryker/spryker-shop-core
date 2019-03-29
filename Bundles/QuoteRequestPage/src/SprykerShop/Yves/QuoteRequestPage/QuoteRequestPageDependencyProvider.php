@@ -11,6 +11,8 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientBridge;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompanyUserClientBridge;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCustomerClientBridge;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToPersistentCartClientBridge;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientBridge;
 
 class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvider
@@ -18,6 +20,8 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
     public const CLIENT_QUOTE_REQUEST = 'CLIENT_QUOTE_REQUEST';
     public const CLIENT_CART = 'CLIENT_CART';
+    public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     public const PLUGINS_QUOTE_REQUEST_FORM_METADATA_FIELD = 'PLUGINS_QUOTE_REQUEST_FORM_METADATA_FIELD';
 
@@ -32,6 +36,8 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addCompanyUserClient($container);
         $container = $this->addQuoteRequestClient($container);
         $container = $this->addCartClient($container);
+        $container = $this->addPersistentCartClient($container);
+        $container = $this->addCustomerClient($container);
 
         $container = $this->addQuoteRequestFormMetadataFieldPlugins($container);
 
@@ -89,6 +95,34 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container[static::PLUGINS_QUOTE_REQUEST_FORM_METADATA_FIELD] = function () {
             return $this->getQuoteRequestFormMetadataFieldPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPersistentCartClient(Container $container): Container
+    {
+        $container[static::CLIENT_PERSISTENT_CART] = function (Container $container) {
+            return new QuoteRequestPageToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCustomerClient(Container $container): Container
+    {
+        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+            return new QuoteRequestPageToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 
         return $container;

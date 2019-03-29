@@ -13,7 +13,7 @@
 } %}
 
 {% set priceModeGross = 'GROSS_MODE' %}
-{% set originUnitPrice = (data.priceMode == priceModeGross) ? data.cartItem.originUnitGrossPrice : data.cartItem.originNetGrossPrice %}
+{% set originUnitPrice = (data.priceMode == priceModeGross) ? data.cartItem.originUnitGrossPrice : data.cartItem.originUnitNetPrice %}
 
 {% block class %}{{ parent() }} list{% endblock %}
 
