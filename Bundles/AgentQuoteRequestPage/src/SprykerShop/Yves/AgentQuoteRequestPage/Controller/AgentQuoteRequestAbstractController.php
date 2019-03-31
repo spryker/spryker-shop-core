@@ -23,6 +23,12 @@ class AgentQuoteRequestAbstractController extends AbstractController
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
     /**
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     */
+    protected const ROUTE_CART = 'cart';
+    protected const PARAM_SWITCH_USER = '_switch_user';
+
+    /**
      * @uses \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS
      */
     protected const ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS = 'agent/quote-request/edit-items';

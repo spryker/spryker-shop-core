@@ -21,6 +21,7 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
     protected const ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS = 'agent/quote-request/edit-items';
     protected const ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM = 'agent/quote-request/edit-items-confirm';
     protected const ROUTE_AGENT_QUOTE_REQUEST_REVISE = 'agent/quote-request/revise';
+    protected const ROUTE_AGENT_QUOTE_REQUEST_CONVERT_TO_CART = 'agent/quote-request/convert-to-cart';
 
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
@@ -42,7 +43,8 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
             ->addQuoteRequestEditItemsRoute()
             ->addQuoteRequestEditItemsConfirmRoute()
             ->addQuoteRequestCreateRoute()
-            ->addQuoteRequestSendToCustomerRoute();
+            ->addQuoteRequestSendToCustomerRoute()
+            ->addQuoteRequestConvertToCartRoute();
     }
 
     /**
@@ -171,6 +173,21 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
     protected function addQuoteRequestEditItemsConfirmRoute()
     {
         $this->createController('/{agent}/quote-request/edit-items-confirm/{quoteRequestReference}', static::ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM, 'AgentQuoteRequestPage', 'AgentQuoteRequestEditItems', 'confirm')
+            ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
+            ->value('agent', 'agent')
+            ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestCheckoutController::convertToCartAction()
+     *
+     * @return $this
+     */
+    protected function addQuoteRequestConvertToCartRoute()
+    {
+        $this->createController('/{agent}/quote-request/convert-to-cart/{quoteRequestReference}', static::ROUTE_AGENT_QUOTE_REQUEST_CONVERT_TO_CART, 'AgentQuoteRequestPage', 'AgentQuoteRequestCheckout', 'convertToCart')
             ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
             ->value('agent', 'agent')
             ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);

@@ -23,7 +23,7 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
 {
     protected const FIELD_METADATA_DELIVERY_DATE = 'delivery_date';
     protected const LABEL_METADATA_DELIVERY_DATE = 'quote_request_page.quote_request.metadata.label.delivery_date';
-    protected const GLOSSARY_KEY_METADATA_DELIVERY_DATE_VIOLATION = 'quote_request_page.quote_request.metadata.violations.delivery_date';
+    protected const GLOSSARY_KEY_DATE_VIOLATION = 'quote_request_page.quote_request.violations.invalid_date';
 
     /**
      * {@inheritdoc}
@@ -53,7 +53,7 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
                         }
 
                         if (new DateTime($date) < new DateTime()) {
-                            $context->addViolation(static::GLOSSARY_KEY_METADATA_DELIVERY_DATE_VIOLATION);
+                            $context->addViolation(static::GLOSSARY_KEY_DATE_VIOLATION);
                         }
                     },
                 ]),

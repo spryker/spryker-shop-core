@@ -15,6 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageFactory getFactory()
@@ -28,6 +30,7 @@ class AgentQuoteRequestForm extends AbstractType
     public const OPTION_IS_DEFAULT_PRICE_MODE_GROSS = 'option_is_default_price_mode_gross';
 
     protected const LABEL_QUOTE_REQUEST_IS_LATEST_VERSION_HIDDEN = 'quote_request_page.quote_request.labels.hide_latest_version';
+    protected const GLOSSARY_KEY_DATE_VIOLATION = 'quote_request_page.quote_request.violations.invalid_date';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -87,6 +90,19 @@ class AgentQuoteRequestForm extends AbstractType
             'required' => false,
             'attr' => [
                 'class' => 'datepicker safe-datetime',
+            ],
+            'constraints' => [
+                new Callback([
+                    'callback' => function ($date, ExecutionContextInterface $context) {
+                        if (!$date) {
+                            return;
+                        }
+
+                        if (new DateTime($date) < new DateTime()) {
+                            $context->addViolation(static::GLOSSARY_KEY_DATE_VIOLATION);
+                        }
+                    },
+                ]),
             ],
         ]);
 

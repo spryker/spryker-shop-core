@@ -21,12 +21,6 @@ class AgentQuoteRequestEditItemsController extends AgentQuoteRequestAbstractCont
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART = 'quote_request_page.quote_request.converted_to_cart';
 
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
-     */
-    protected const ROUTE_CART = 'cart';
-    protected const PARAM_SWITCH_USER = '_switch_user';
-
-    /**
      * @param string $quoteRequestReference
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse

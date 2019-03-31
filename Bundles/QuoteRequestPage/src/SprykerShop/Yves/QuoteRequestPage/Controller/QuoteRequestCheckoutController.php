@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
- * @method \Spryker\Client\QuoteRequest\QuoteRequestClient getClient()
  */
 class QuoteRequestCheckoutController extends QuoteRequestAbstractController
 {
