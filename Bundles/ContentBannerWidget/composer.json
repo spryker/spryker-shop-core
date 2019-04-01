@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/content-banner": "^1.1.0",
     "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
