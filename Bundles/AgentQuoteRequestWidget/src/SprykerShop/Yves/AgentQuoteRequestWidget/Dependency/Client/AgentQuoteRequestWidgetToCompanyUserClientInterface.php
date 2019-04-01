@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\CompanyUserQueryTransfer;
 interface AgentQuoteRequestWidgetToCompanyUserClientInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $customerQueryTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $companyUserQueryTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getCompanyUserCollectionByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserCollectionTransfer;
+    public function getCompanyUserCollectionByQuery(CompanyUserQueryTransfer $companyUserQueryTransfer): CompanyUserCollectionTransfer;
 }
