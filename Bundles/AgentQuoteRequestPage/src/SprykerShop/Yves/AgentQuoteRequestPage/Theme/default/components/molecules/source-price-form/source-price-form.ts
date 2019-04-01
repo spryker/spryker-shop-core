@@ -28,6 +28,7 @@ export default class SourcePriceForm extends Component {
         if (this.checkboxChecked) {
             this.inputValue = '';
             this.inputContainer.classList.add('is-hidden');
+
             return;
         }
 
