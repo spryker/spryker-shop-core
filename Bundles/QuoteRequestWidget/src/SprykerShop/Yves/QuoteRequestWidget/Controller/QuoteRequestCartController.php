@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\QuoteRequestWidget\Controller;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use SprykerShop\Yves\QuoteRequestWidget\Form\QuoteRequestCartForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -71,7 +70,9 @@ class QuoteRequestCartController extends AbstractController
             $this->handleResponseErrors($quoteRequestResponseTransfer);
 
             if ($request->get(QuoteRequestCartForm::SUBMIT_BUTTON_SAVE_AND_BACK) !== null) {
-                $this->reloadQuoteForCustomer($quoteRequestResponseTransfer->getQuoteRequest()->getCompanyUser()->getCustomer());
+                $this->getFactory()
+                    ->getPersistentCartClient()
+                    ->reloadQuoteForCustomer($quoteRequestResponseTransfer->getQuoteRequest()->getCompanyUser()->getCustomer());
 
                 return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
                     static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
@@ -92,17 +93,5 @@ class QuoteRequestCartController extends AbstractController
         foreach ($quoteRequestResponseTransfer->getMessages() as $messageTransfer) {
             $this->addErrorMessage($messageTransfer->getValue());
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return void
-     */
-    protected function reloadQuoteForCustomer(CustomerTransfer $customerTransfer): void
-    {
-        $this->getFactory()
-            ->getPersistentCartClient()
-            ->reloadQuoteForCustomer($customerTransfer);
     }
 }

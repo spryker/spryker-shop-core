@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Form\DataProvider;
 
-use DateTime;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface;
@@ -16,6 +15,8 @@ use SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageConfig;
 
 class QuoteRequestFormDataProvider
 {
+    protected const FORMAT_CREATED_DATE = 'Y-m-d H:i:s';
+
     /**
      * @var \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompanyUserClientInterface
      */
@@ -70,7 +71,7 @@ class QuoteRequestFormDataProvider
 
         $quoteRequestTransfer = (new QuoteRequestTransfer())
             ->setCompanyUser($this->companyUserClient->findCompanyUser())
-            ->setCreatedAt((new DateTime())->format('Y-m-d H:i:s'))
+            ->setCreatedAt(date(static::FORMAT_CREATED_DATE))
             ->setLatestVersion($quoteRequestVersionTransfer);
 
         return $quoteRequestTransfer;

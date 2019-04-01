@@ -45,9 +45,10 @@ class AgentQuoteRequestCreateController extends AgentQuoteRequestAbstractControl
             ->handleRequest($request);
 
         if ($quoteRequestCreateForm->isSubmitted()) {
+            $idCompanyUser = $request->request->getInt(AgentQuoteRequestCreateForm::FILED_ID_COMPANY_USER);
             $quoteRequestResponseTransfer = $this->getFactory()
                 ->createAgentQuoteRequestCreateHandler()
-                ->createQuoteRequest($request->query->getInt(AgentQuoteRequestCreateForm::FILED_ID_COMPANY_USER));
+                ->createQuoteRequest($idCompanyUser);
 
             $this->handleResponseErrors($quoteRequestResponseTransfer);
 

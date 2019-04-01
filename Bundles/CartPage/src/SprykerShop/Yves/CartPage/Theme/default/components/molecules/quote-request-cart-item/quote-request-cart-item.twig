@@ -37,11 +37,9 @@
                     cartItem: data.cartItem
                 }
             } only %}
-
         </div>
 
         <div class="col col--sm-12 col--lg-4">
-
             {% if data.cartItem.quantitySalesUnit is not empty and data.cartItem.amountSalesUnit is not empty %}
                 {% include molecule('packaging-unit-cart', 'ProductPackagingUnitWidget') ignore missing with {
                     data: {
@@ -59,8 +57,19 @@
             {% endif %}
 
             {% if data.cartItem.amountSalesUnit is empty %}
-                {{ 'cart.item_quantity' | trans }}:
-                <strong>{{ data.cartItem.quantity }}</strong>
+                {% if data.cartItem.quantitySalesUnit is not empty %}
+                    {% widget 'CartProductMeasurementUnitQuantitySelectorWidget' args [data.cartItem] only %}
+                    {% nowidget %}
+                        {% include molecule('cart-quantity-input', 'CartPage') with {
+                            data: {
+                                cartItem: data.cartItem
+                            }
+                        } only %}
+                    {% endwidget %}
+                {% else %}
+                    {{ 'cart.item_quantity' | trans }}:
+                    <strong>{{ data.cartItem.quantity }}</strong>
+                {% endif %}
             {% endif %}
 
             {% block sourcePriceForm %}{% endblock %}

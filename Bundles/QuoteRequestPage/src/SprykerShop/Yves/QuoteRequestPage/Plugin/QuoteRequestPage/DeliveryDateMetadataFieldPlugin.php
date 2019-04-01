@@ -47,7 +47,7 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
             ],
             'constraints' => [
                 new GreaterThanOrEqual([
-                    'value' => (new DateTime())->format(static::FORMAT_DELIVERY_DATE),
+                    'value' => date(static::FORMAT_DELIVERY_DATE),
                     'message' => static::GLOSSARY_KEY_DATE_VIOLATION,
                 ]),
             ],
