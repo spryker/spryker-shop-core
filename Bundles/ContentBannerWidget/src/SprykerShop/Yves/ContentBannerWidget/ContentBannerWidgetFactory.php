@@ -8,11 +8,14 @@
 namespace SprykerShop\Yves\ContentBannerWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ContentBannerWidget\Dependency\Client\ContentBannerWidgetToContentBannerClientBridge;
+use SprykerShop\Yves\ContentBannerWidget\Dependency\Client\ContentBannerWidgetToContentBannerClientInterface;
 
 class ContentBannerWidgetFactory extends AbstractFactory
 {
-    public function getContentBannerClient(): ContentBannerWidgetToContentBannerClientBridge
+    /**
+     * @return \SprykerShop\Yves\ContentBannerWidget\Dependency\Client\ContentBannerWidgetToContentBannerClientInterface
+     */
+    public function getContentBannerClient(): ContentBannerWidgetToContentBannerClientInterface
     {
         return $this->getProvidedDependency(ContentBannerWidgetDependencyProvider::CLIENT_CONTENT_BANNER);
     }

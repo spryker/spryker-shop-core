@@ -12,10 +12,13 @@ use Generated\Shared\Transfer\BannerTypeTransfer;
 class ContentBannerWidgetToContentBannerClientBridge implements ContentBannerWidgetToContentBannerClientInterface
 {
     /**
-     * @var \Spryker\Client\ContentBanner\ContentBannerClient
+     * @var \Spryker\Client\ContentBanner\ContentBannerClientInterface
      */
     protected $contentBannerClient;
 
+    /**
+     * @param \Spryker\Client\ContentBanner\ContentBannerClientInterface $contentBannerClient
+     */
     public function __construct($contentBannerClient)
     {
         $this->contentBannerClient = $contentBannerClient;

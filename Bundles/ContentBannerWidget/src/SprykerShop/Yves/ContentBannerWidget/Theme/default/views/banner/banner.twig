@@ -1,0 +1,14 @@
+{% block body %}
+
+    {% include molecule('banner') with {
+        modifiers: modifiers,
+        data: {
+            imageUrl: banner.imageUrl,
+            title: banner.title,
+            subtitle: banner.subtitle,
+            clickUrl: banner.clickUrl,
+            altText: banner.altText
+        }
+    } only %}
+
+{% endblock %}

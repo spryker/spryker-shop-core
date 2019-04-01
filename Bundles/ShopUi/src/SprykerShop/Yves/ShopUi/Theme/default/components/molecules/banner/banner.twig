@@ -1,0 +1,11 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'banner',
+} %}
+
+{% define modifiers = modifiers|length > 0 ? modifiers : ['default'] %}
+
+{% block body %}
+    {% include molecule('banner-' ~ modifiers[0]) with {data: data} only %}
+{% endblock %}

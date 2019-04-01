@@ -15,6 +15,11 @@ class ContentBannerWidgetDependencyProvider extends AbstractBundleDependencyProv
 {
     public const CLIENT_CONTENT_BANNER = 'CLIENT_CONTENT_BANNER';
 
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
@@ -24,6 +29,11 @@ class ContentBannerWidgetDependencyProvider extends AbstractBundleDependencyProv
         return $container;
     }
 
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
     protected function addContentBannerClient(Container $container): Container
     {
         $container[static::CLIENT_CONTENT_BANNER] = function (Container $container) {
