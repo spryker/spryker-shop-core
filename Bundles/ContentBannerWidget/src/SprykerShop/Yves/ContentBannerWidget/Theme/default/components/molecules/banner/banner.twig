@@ -7,5 +7,5 @@
 {% define modifiers = modifiers|length > 0 ? modifiers : ['default'] %}
 
 {% block body %}
-    {% include molecule('banner-' ~ modifiers[0]) with {data: data} only %}
+    {% include molecule('banner-' ~ modifiers[0], 'ContentBannerWidget') with {data: data} only %}
 {% endblock %}
