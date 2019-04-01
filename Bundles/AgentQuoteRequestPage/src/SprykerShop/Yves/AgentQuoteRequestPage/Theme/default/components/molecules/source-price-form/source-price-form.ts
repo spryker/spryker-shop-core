@@ -7,7 +7,7 @@ export default class SourcePriceForm extends Component {
 
     protected readyCallback(): void {
         this.input = <HTMLInputElement>this.querySelector(`.${this.jsName}__input-container .input`);
-        this.inputContainer = <HTMLInputElement>this.querySelector(`.${this.jsName}__input-container`);
+        this.inputContainer = <HTMLElement>this.querySelector(`.${this.jsName}__input-container`);
         this.checkbox = <HTMLInputElement>this.querySelector(`.${this.jsName}__checkbox-container .checkbox__input`);
         this.mapEvents();
     }
@@ -28,12 +28,11 @@ export default class SourcePriceForm extends Component {
         if (this.checkboxChecked) {
             this.inputValue = '';
             this.inputContainer.classList.add('is-hidden');
+            return;
         }
 
-        if(!this.checkboxChecked) {
-            this.inputContainer.classList.remove('is-hidden');
-            this.input.focus();
-        }
+        this.inputContainer.classList.remove('is-hidden');
+        this.input.focus();
     }
 
     /**
