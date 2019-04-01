@@ -7,9 +7,15 @@
 
 namespace SprykerShop\Yves\ContentBannerWidget\Plugin\Provider;
 
+use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Twig\Environment;
+use Twig\TwigFunction;
 
+/**
+ * @method \SprykerShop\Yves\ContentBannerWidget\ContentBannerWidgetFactory getFactory()
+ */
 class ContentBannerTwigFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
@@ -35,12 +41,13 @@ class ContentBannerTwigFunctionServiceProvider extends AbstractPlugin implements
     protected function registerExecutedBannerTwigFunction(Environment $twig, Application $app)
     {
         $twig->addFunction(
-            'getExecutedBanner',
-            new TwigFunction('getExecutedBanner', function (array $context, $identifie) {
-                $idContentItem = $context['_view']['id'];
-                return $this->getFactory()->getContentBannerClient()->getExecutedBannerById($idContentItem);
+            'cms_banner',
+            new TwigFunction('cms_banner', function (int $idContent, ?string $template = null) {
+                return $this->getFactory()->getContentBannerClient()->findBannerById($idContent, $this->getLocale());
             })
         );
+
+        return $twig;
     }
 
     /**

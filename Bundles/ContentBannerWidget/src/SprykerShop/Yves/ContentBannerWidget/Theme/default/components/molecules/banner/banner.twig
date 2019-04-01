@@ -1,0 +1,19 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'banner'
+} %}
+
+{% define modifiers: _view.modifiers | default('default'), %}
+
+{% define data = {
+    imageUrl: _view.imageUrl,
+    title: _view.title,
+    subtitle: _view.subtitle,
+    clickUrl: _view.clickUrl,
+    altText: _view.altText
+} %}
+
+{% block body %}
+    {% include molecule(modifiers) with {data: data} only %}
+{% endblock %}

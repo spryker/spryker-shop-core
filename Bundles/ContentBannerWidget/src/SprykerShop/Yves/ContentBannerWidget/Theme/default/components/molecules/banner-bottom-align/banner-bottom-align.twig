@@ -1,0 +1,19 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'banner-default'
+} %}
+
+{% block body %}
+    <div class="col">
+        <a href="{{ data.clickUrl | raw }}">
+            <div class="box box--stretch">
+                <h5>{{ data.title | escape }}</h5>
+                <span>
+                        <img src="{{ data.imageUrl | raw }}" alt="{{ data.altText | escape }}" />
+                    </span>
+                <p>{{ data.subtitle | escape }}</p>
+            </div>
+        </a>
+    </div>
+{% endblock %}

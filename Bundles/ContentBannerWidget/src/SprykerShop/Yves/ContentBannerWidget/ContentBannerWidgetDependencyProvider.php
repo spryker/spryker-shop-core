@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\ContentBannerWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\CategoryImageStorageWidget\Dependency\Client\ContentBannerWidgetToContentBannerClientBridge;
+use SprykerShop\Yves\ContentBannerWidget\Dependency\Client\ContentBannerWidgetToContentBannerClientBridge;
 
 class ContentBannerWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -28,7 +28,7 @@ class ContentBannerWidgetDependencyProvider extends AbstractBundleDependencyProv
     {
         $container[static::CLIENT_CONTENT_BANNER] = function (Container $container) {
             return new ContentBannerWidgetToContentBannerClientBridge(
-                $continer->getLocator()->contentBanner()->client()
+                $container->getLocator()->contentBanner()->client()
             );
         };
 

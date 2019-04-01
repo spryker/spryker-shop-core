@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\ContentBannerWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\CategoryImageStorageWidget\Dependency\Client\ContentBannerWidgetToContentBannerClientBridge;
+use SprykerShop\Yves\ContentBannerWidget\Dependency\Client\ContentBannerWidgetToContentBannerClientBridge;
 
 class ContentBannerWidgetFactory extends AbstractFactory
 {
