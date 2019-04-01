@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCustomerClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToPersistentCartClientInterface;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface;
 
 class QuoteRequestHandler implements QuoteRequestHandlerInterface
@@ -29,6 +30,11 @@ class QuoteRequestHandler implements QuoteRequestHandlerInterface
     protected $persistentCartClient;
 
     /**
+     * @var \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface
+     */
+    protected $quoteClient;
+
+    /**
      * @var \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCustomerClientInterface
      */
     protected $customerClient;
@@ -36,15 +42,18 @@ class QuoteRequestHandler implements QuoteRequestHandlerInterface
     /**
      * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface $quoteRequestClient
      * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToPersistentCartClientInterface $persistentCartClient
+     * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface $quoteClient
      * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCustomerClientInterface $customerClient
      */
     public function __construct(
         QuoteRequestPageToQuoteRequestClientInterface $quoteRequestClient,
         QuoteRequestPageToPersistentCartClientInterface $persistentCartClient,
+        QuoteRequestPageToQuoteClientInterface $quoteClient,
         QuoteRequestPageToCustomerClientInterface $customerClient
     ) {
         $this->quoteRequestClient = $quoteRequestClient;
         $this->persistentCartClient = $persistentCartClient;
+        $this->quoteClient = $quoteClient;
         $this->customerClient = $customerClient;
     }
 
@@ -62,7 +71,7 @@ class QuoteRequestHandler implements QuoteRequestHandlerInterface
         $quoteRequestResponseTransfer = $this->quoteRequestClient->createQuoteRequest($quoteRequestTransfer);
 
         if ($quoteRequestResponseTransfer->getIsSuccessful()) {
-            $this->persistentCartClient->reloadQuoteForCustomer($this->customerClient->getCustomer());
+            $this->clearQuote();
         }
 
         return $quoteRequestResponseTransfer;
@@ -79,14 +88,26 @@ class QuoteRequestHandler implements QuoteRequestHandlerInterface
     }
 
     /**
+     * @return void
+     */
+    protected function clearQuote(): void
+    {
+        $this->quoteClient->clearQuote();
+        $this->persistentCartClient->reloadQuoteForCustomer($this->customerClient->getCustomer());
+    }
+
+    /**
      * @param string $message
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
     protected function getErrorResponse(string $message): QuoteRequestResponseTransfer
     {
+        $messageTransfer = (new MessageTransfer())
+            ->setValue($message);
+
         return (new QuoteRequestResponseTransfer())
             ->setIsSuccessful(false)
-            ->addMessage((new MessageTransfer())->setValue($message));
+            ->addMessage($messageTransfer);
     }
 }

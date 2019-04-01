@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageFactory getFactory()
@@ -132,8 +133,10 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer[] $quoteRequestVersionTransfers
+     * @param array $quoteRequestVersionTransfers
      * @param string|null $versionReference
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
      */
@@ -142,13 +145,17 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
         array $quoteRequestVersionTransfers,
         ?string $versionReference
     ): QuoteRequestVersionTransfer {
+        if (!$versionReference) {
+            return $quoteRequestTransfer->getLatestVersion();
+        }
+
         foreach ($quoteRequestVersionTransfers as $quoteRequestVersionTransfer) {
             if ($quoteRequestVersionTransfer->getVersionReference() === $versionReference) {
                 return $quoteRequestVersionTransfer;
             }
         }
 
-        return $quoteRequestTransfer->getLatestVersion();
+        throw new NotFoundHttpException();
     }
 
     /**

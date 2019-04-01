@@ -15,8 +15,6 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageFactory getFactory()
@@ -90,19 +88,6 @@ class AgentQuoteRequestForm extends AbstractType
             'required' => false,
             'attr' => [
                 'class' => 'datepicker safe-datetime',
-            ],
-            'constraints' => [
-                new Callback([
-                    'callback' => function ($date, ExecutionContextInterface $context) {
-                        if (!$date) {
-                            return;
-                        }
-
-                        if (new DateTime($date) < new DateTime()) {
-                            $context->addViolation(static::GLOSSARY_KEY_DATE_VIOLATION);
-                        }
-                    },
-                ]),
             ],
         ]);
 

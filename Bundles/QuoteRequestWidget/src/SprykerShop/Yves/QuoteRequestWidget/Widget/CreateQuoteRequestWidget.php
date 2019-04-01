@@ -38,7 +38,7 @@ class CreateQuoteRequestWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@QuoteRequestWidget/views/quote-request/create-quote-request.twig';
+        return '@QuoteRequestWidget/views/quote-request/quote-request-create/quote-request-create.twig';
     }
 
     /**

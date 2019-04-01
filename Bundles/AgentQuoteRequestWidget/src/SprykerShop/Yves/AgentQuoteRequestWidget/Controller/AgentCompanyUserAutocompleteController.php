@@ -18,14 +18,24 @@ use Symfony\Component\Validator\ConstraintViolationList;
  */
 class AgentCompanyUserAutocompleteController extends AbstractController
 {
-    protected const VIEW_PATH = '@AgentQuoteRequestWidget/views/company-user-autocomplete/company-user-autocomplete.twig';
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request): Response
+    {
+        $response = $this->executeIndexAction($request);
+
+        return $response;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function executeIndexAction(Request $request): Response
     {
         $queryParams = $request->query->all();
 
@@ -37,7 +47,7 @@ class AgentCompanyUserAutocompleteController extends AbstractController
         $isParamsValid = $constraintViolationList->count() === 0;
 
         if (!$isParamsValid) {
-            return $this->errorResponse($constraintViolationList);
+            return $this->getErrorResponse($constraintViolationList);
         }
 
         $companyUsers = $this->getFactory()
@@ -46,7 +56,12 @@ class AgentCompanyUserAutocompleteController extends AbstractController
             ->getCompanyUsers()
             ->getArrayCopy();
 
-        return $this->renderView(static::VIEW_PATH, ['companyUsers' => $companyUsers]);
+        return $this->renderView(
+            '@AgentQuoteRequestWidget/views/company-user-autocomplete/company-user-autocomplete.twig',
+            [
+                'companyUsers' => $companyUsers,
+            ]
+        );
     }
 
     /**
@@ -54,8 +69,19 @@ class AgentCompanyUserAutocompleteController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function errorResponse(ConstraintViolationList $constraintViolationList): Response
+    protected function getErrorResponse(ConstraintViolationList $constraintViolationList): Response
     {
-        return $this->renderView(static::VIEW_PATH, ['errors' => (string)$constraintViolationList]);
+        $errors = [];
+
+        foreach ($constraintViolationList as $constraintViolation) {
+            $errors[] = $constraintViolation->getMessage();
+        }
+
+        return $this->renderView(
+            '@AgentQuoteRequestWidget/views/company-user-autocomplete/company-user-autocomplete.twig',
+            [
+                'errors' => $errors,
+            ]
+        );
     }
 }

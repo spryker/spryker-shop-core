@@ -13,8 +13,7 @@ use SprykerShop\Yves\QuoteRequestPageExtension\Dependency\Plugin\QuoteRequestFor
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
@@ -22,6 +21,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteRequestFormMetadataFieldPluginInterface
 {
     protected const FIELD_METADATA_DELIVERY_DATE = 'delivery_date';
+    protected const FORMAT_DELIVERY_DATE = 'Y-m-d';
     protected const LABEL_METADATA_DELIVERY_DATE = 'quote_request_page.quote_request.metadata.label.delivery_date';
     protected const GLOSSARY_KEY_DATE_VIOLATION = 'quote_request_page.quote_request.violations.invalid_date';
 
@@ -46,16 +46,9 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
                 'class' => 'datepicker safe-datetime',
             ],
             'constraints' => [
-                new Callback([
-                    'callback' => function ($date, ExecutionContextInterface $context) {
-                        if (!$date) {
-                            return;
-                        }
-
-                        if (new DateTime($date) < new DateTime()) {
-                            $context->addViolation(static::GLOSSARY_KEY_DATE_VIOLATION);
-                        }
-                    },
+                new GreaterThanOrEqual([
+                    'value' => (new DateTime())->format(static::FORMAT_DELIVERY_DATE),
+                    'message' => static::GLOSSARY_KEY_DATE_VIOLATION,
                 ]),
             ],
         ]);
@@ -80,7 +73,7 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
             },
             function ($value) {
                 if ($value instanceof DateTime) {
-                    $value = $value->format('Y-m-d');
+                    $value = $value->format(static::FORMAT_DELIVERY_DATE);
                 }
                 return $value;
             }

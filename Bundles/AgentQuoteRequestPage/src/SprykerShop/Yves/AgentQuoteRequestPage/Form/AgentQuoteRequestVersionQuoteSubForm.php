@@ -72,7 +72,7 @@ class AgentQuoteRequestVersionQuoteSubForm extends AbstractType
     /**
      * @return \Symfony\Component\Form\CallbackTransformer
      */
-    protected function createArrayObjectModelTransformer()
+    protected function createArrayObjectModelTransformer(): CallbackTransformer
     {
         return new CallbackTransformer(
             function ($value) {

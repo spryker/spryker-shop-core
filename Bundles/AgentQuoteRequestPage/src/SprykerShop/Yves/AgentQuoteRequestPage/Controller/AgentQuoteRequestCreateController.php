@@ -47,7 +47,7 @@ class AgentQuoteRequestCreateController extends AgentQuoteRequestAbstractControl
         if ($quoteRequestCreateForm->isSubmitted()) {
             $quoteRequestResponseTransfer = $this->getFactory()
                 ->createAgentQuoteRequestCreateHandler()
-                ->createQuoteRequest((int)$request->get(AgentQuoteRequestCreateForm::FILED_ID_COMPANY_USER));
+                ->createQuoteRequest($request->query->getInt(AgentQuoteRequestCreateForm::FILED_ID_COMPANY_USER));
 
             $this->handleResponseErrors($quoteRequestResponseTransfer);
 

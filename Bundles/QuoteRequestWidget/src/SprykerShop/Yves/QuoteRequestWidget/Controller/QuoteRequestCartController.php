@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\QuoteRequestWidget\Controller;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
-use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\QuoteRequestWidget\Form\QuoteRequestCartForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -43,6 +43,18 @@ class QuoteRequestCartController extends AbstractController
      */
     public function indexAction(Request $request): RedirectResponse
     {
+        $response = $this->executeIndexAction($request);
+
+        return $response;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeIndexAction(Request $request): RedirectResponse
+    {
         $quoteRequestCartForm = $this->getFactory()
             ->getQuoteRequestCartForm()
             ->handleRequest($request);
@@ -59,7 +71,7 @@ class QuoteRequestCartController extends AbstractController
             $this->handleResponseErrors($quoteRequestResponseTransfer);
 
             if ($request->get(QuoteRequestCartForm::SUBMIT_BUTTON_SAVE_AND_BACK) !== null) {
-                $this->reloadQuoteForCustomer($quoteRequestResponseTransfer->getQuoteRequest());
+                $this->reloadQuoteForCustomer($quoteRequestResponseTransfer->getQuoteRequest()->getCompanyUser()->getCustomer());
 
                 return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
                     static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
@@ -83,14 +95,14 @@ class QuoteRequestCartController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
-    protected function reloadQuoteForCustomer(QuoteRequestTransfer $quoteRequestTransfer): void
+    protected function reloadQuoteForCustomer(CustomerTransfer $customerTransfer): void
     {
         $this->getFactory()
             ->getPersistentCartClient()
-            ->reloadQuoteForCustomer($quoteRequestTransfer->getCompanyUser()->getCustomer());
+            ->reloadQuoteForCustomer($customerTransfer);
     }
 }

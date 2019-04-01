@@ -129,17 +129,21 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
         array $quoteRequestVersionTransfers,
         ?string $versionReference
     ): QuoteRequestVersionTransfer {
+        if (!$quoteRequestTransfer->getLatestVisibleVersion()) {
+            throw new NotFoundHttpException();
+        }
+
+        if (!$versionReference) {
+            return $quoteRequestTransfer->getLatestVisibleVersion();
+        }
+
         foreach ($quoteRequestVersionTransfers as $quoteRequestVersionTransfer) {
             if ($quoteRequestVersionTransfer->getVersionReference() === $versionReference) {
                 return $quoteRequestVersionTransfer;
             }
         }
 
-        if (!$quoteRequestTransfer->getLatestVisibleVersion()) {
-            throw new NotFoundHttpException();
-        }
-
-        return $quoteRequestTransfer->getLatestVisibleVersion();
+        throw new NotFoundHttpException();
     }
 
     /**

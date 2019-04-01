@@ -54,8 +54,11 @@ class AgentQuoteRequestCreateHandler implements AgentQuoteRequestCreateHandlerIn
      */
     protected function getErrorResponse(string $message): QuoteRequestResponseTransfer
     {
+        $messageTransfer = (new MessageTransfer())
+            ->setValue($message);
+
         return (new QuoteRequestResponseTransfer())
             ->setIsSuccessful(false)
-            ->addMessage((new MessageTransfer())->setValue($message));
+            ->addMessage($messageTransfer);
     }
 }

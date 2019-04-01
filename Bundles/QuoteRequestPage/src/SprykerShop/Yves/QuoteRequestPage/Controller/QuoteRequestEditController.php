@@ -26,7 +26,7 @@ class QuoteRequestEditController extends QuoteRequestAbstractController
      * @param string $quoteRequestReference
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(string $quoteRequestReference, Request $request)
     {

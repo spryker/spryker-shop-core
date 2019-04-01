@@ -10,19 +10,18 @@
 
 {% block body %}
     {% if hasErrors %}
-        {{ data.errors }}
+        {% for error in errors %}
+            {{ error }}
+        {% endfor %}
     {% else %}
-
         {% if companyUsersFound %}
             {% include molecule('company-user-list', 'AgentQuoteRequestWidget') with {
                 data: {
                     companyUsers: data.companyUsers,
                 }
             } only%}
-
         {% else %}
             {{ 'agent.autocomplete.no_results' | trans }}
         {% endif %}
     {% endif %}
-
 {% endblock %}
