@@ -9,6 +9,7 @@
     cart: required,
     isQuoteValid: required,
     isQuoteEditable: required,
+    cartQuantity: cartQuantity is defined ? cartQuantity : app['cart.quantity'] | default,
 } %}
 
 {% set canProceedToCheckout = data.cart.items is not empty
@@ -17,7 +18,7 @@
 %}
 
 {% block body %}
-    <h6 class="text-secondary float-right">{{ app['cart.quantity'] }} {{ 'item' | trans }}</h6>
+    <h6 class="text-secondary float-right">{{ data.cartQuantity }} {{ 'item' | trans }}</h6>
     <h6>{{ 'cart.your-order' | trans }}</h6>
     <hr/>
 

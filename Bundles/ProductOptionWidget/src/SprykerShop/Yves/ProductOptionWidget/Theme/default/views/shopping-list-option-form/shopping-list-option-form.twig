@@ -5,12 +5,17 @@
     rowClass: rowClass
 } %}
 
+{% define attributes = {
+    'data-product-available': false
+} %}
+
 {% block body %}
     {% if data.options is not empty %}
         <tr class="{{ data.rowClass }}">
             <td>&nbsp;</td>
             <td colspan="5">
                 {% include molecule('shopping-list-product-option-list', 'ProductOptionWidget') with {
+                    attributes: attributes,
                     data: {
                         options: data.options
                     }

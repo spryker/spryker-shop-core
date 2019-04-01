@@ -31,7 +31,7 @@ export default class TogglerClick extends Component {
     }
 
     /**
-     * Toggles the class names.
+     * Toggles the class names in the target elements.
      */
     toggle(): void {
         this.targets.forEach((target: HTMLElement) => {

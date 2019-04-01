@@ -5,16 +5,15 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/cms-content-widget": "^1.4.0",
     "spryker/kernel": "^3.24.0"
   },
   "require-dev": {
-    "spryker/cms-content-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {
-    "spryker/cms-content-widget": "Use this module when using plugins that need CmsContentWidget dependencies.",
     "spryker/twig": "Use this module when using plugins that need Twig dependencies."
   },
   "autoload": {

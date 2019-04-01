@@ -3,10 +3,10 @@
         <a href="{{ banner.clickUrl | raw }}">
             <div class="box box--stretch">
                 <span>
-                    <img src="{{ banner.imageUrl | raw }}" alt="{{ banner.altText | raw }}" />
+                    <img src="{{ banner.imageUrl | raw }}" alt="{{ banner.altText | escape }}" />
                 </span>
-                <h5>{{ banner.title | raw }}</h5>
-                <p>{{ banner.subtitle | raw }}</p>
+                <h5>{{ banner.title | escape }}</h5>
+                <p>{{ banner.subtitle | escape }}</p>
             </div>
         </a>
     </div>

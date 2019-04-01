@@ -2,11 +2,11 @@
     <div class="col">
         <a href="{{ banner.clickUrl | raw }}">
             <div class="box box--stretch">
-                <h5>{{ banner.title | raw }}</h5>
+                <h5>{{ banner.title | escape }}</h5>
                 <span>
-                    <img src="{{ banner.imageUrl | raw }}" alt="{{ banner.altText | raw }}" />
+                    <img src="{{ banner.imageUrl | raw }}" alt="{{ banner.altText | escape }}" />
                 </span>
-                <p>{{ banner.subtitle | raw }}</p>
+                <p>{{ banner.subtitle | escape }}</p>
             </div>
         </a>
     </div>
