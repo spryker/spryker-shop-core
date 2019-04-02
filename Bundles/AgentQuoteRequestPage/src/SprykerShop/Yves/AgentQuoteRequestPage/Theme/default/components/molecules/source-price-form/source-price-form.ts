@@ -2,10 +2,12 @@ import Component from 'ShopUi/models/component';
 
 export default class SourcePriceForm extends Component {
     protected input: HTMLInputElement;
+    protected inputContainer: HTMLElement;
     protected checkbox: HTMLInputElement;
 
     protected readyCallback(): void {
         this.input = <HTMLInputElement>this.querySelector(`.${this.jsName}__input-container .input`);
+        this.inputContainer = <HTMLElement>this.querySelector(`.${this.jsName}__input-container`);
         this.checkbox = <HTMLInputElement>this.querySelector(`.${this.jsName}__checkbox-container .checkbox__input`);
         this.mapEvents();
     }
@@ -17,12 +19,21 @@ export default class SourcePriceForm extends Component {
 
     protected onInputType(event: Event): void {
         this.checkboxChecked = this.inputValueLength === 0;
+        if (this.checkboxChecked) {
+            this.inputContainer.classList.add('is-hidden');
+        }
     }
 
     protected onCheckboxChange(event: Event): void {
         if (this.checkboxChecked) {
             this.inputValue = '';
+            this.inputContainer.classList.add('is-hidden');
+
+            return;
         }
+
+        this.inputContainer.classList.remove('is-hidden');
+        this.input.focus();
     }
 
     /**
