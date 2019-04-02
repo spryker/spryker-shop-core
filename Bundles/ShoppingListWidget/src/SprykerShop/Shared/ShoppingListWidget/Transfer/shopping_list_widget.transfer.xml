@@ -12,9 +12,13 @@
         <property name="shoppingLists" type="ShoppingList[]" singular="shoppingList" />
     </transfer>
 
+    <transfer name="CurrentProductPrice">
+        <property name="sumPrice" type="int"/>
+    </transfer>
+
     <transfer name="ProductView">
-        <property name="price" type="int" />
-        <property name="quantity" type="int" />
+        <property name="available" type="bool" />
+        <property name="currentProductPrice" type="CurrentProductPrice" />
     </transfer>
 
 </transfers>
