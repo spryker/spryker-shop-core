@@ -11,7 +11,8 @@
     salesUnits: _widget.salesUnits | default([]),
     jsonScheme: _widget.jsonScheme | default(''),
     salesUnitCount : _widget.salesUnits|length,
-    isAddToCartDisabled : _widget.isAddToCartDisabled | default(false)
+    isAddToCartDisabled : _widget.isAddToCartDisabled | default(false),
+    minQuantity: 1
 } %}
 
 {% set hasProductMeasurementUnit = data.salesUnitCount >= 1 %}
@@ -41,7 +42,7 @@
                     <input id="sales-unit-quantity" class="input input--expand js-volume-price__quantity" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value"/>
                     <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
                 {% else %}
-                    <input class="input js-volume-price__quantity" name="quantity" value="1"/>
+                    <input class="input js-volume-price__quantity" name="quantity" value="{{ data.minQuantity }}"/>
                 {% endif %}
             </label>
         </div>
