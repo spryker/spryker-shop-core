@@ -2,7 +2,7 @@
 
     {% include molecule('banner') with {
         attributes: {
-            template: template
+            template: template | default('default')
         },
         data: {
             imageUrl: banner.imageUrl,
