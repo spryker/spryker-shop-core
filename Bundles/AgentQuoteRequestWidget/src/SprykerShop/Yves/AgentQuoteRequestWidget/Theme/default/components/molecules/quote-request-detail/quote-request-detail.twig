@@ -10,9 +10,6 @@
 } %}
 
 {% set cart = data.quoteRequest.latestVersion ? data.quoteRequest.latestVersion.quote : null %}
-{% if data.quoteRequest.status == 'in-progress' and data.quoteRequest.quoteInProgress %}
-    {% set cart = data.quoteRequest.quoteInProgress %}
-{% endif %}
 
 {% block body %}
     <div class="grid grid--middle text-small text-left">
@@ -23,7 +20,7 @@
                 </a>
             </p>
             <p class="badge">
-                {{ cart.items | default(0) | length }}
+                {{ cart ? (cart.items | length) : 0 }}
                 {{ 'agent_quote_request_widget.items' | trans }}
             </p>
         </div>

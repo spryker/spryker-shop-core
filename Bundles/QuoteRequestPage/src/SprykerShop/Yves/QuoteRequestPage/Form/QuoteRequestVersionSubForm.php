@@ -5,11 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\AgentQuoteRequestPage\Form;
+namespace SprykerShop\Yves\QuoteRequestPage\Form;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageFactory getFactory()
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageConfig getConfig()
  */
-class AgentQuoteInProgressSubForm extends AbstractType
+class QuoteRequestVersionSubForm extends AbstractType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -27,10 +26,9 @@ class AgentQuoteInProgressSubForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => QuoteTransfer::class,
+            'data_class' => QuoteRequestVersionTransfer::class,
             'label' => false,
         ]);
-        $resolver->setRequired([AgentQuoteRequestForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS]);
     }
 
     /**
@@ -41,25 +39,17 @@ class AgentQuoteInProgressSubForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addItemsField($builder, $options);
+        $this->addMetadataForm($builder);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
      *
      * @return $this
      */
-    protected function addItemsField(FormBuilderInterface $builder, array $options)
+    protected function addMetadataForm(FormBuilderInterface $builder)
     {
-        $builder->add(QuoteTransfer::ITEMS, CollectionType::class, [
-            'required' => false,
-            'label' => false,
-            'entry_type' => AgentQuoteInProgressItemSubForm::class,
-            'entry_options' => [
-                AgentQuoteRequestForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS => $options[AgentQuoteRequestForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS],
-            ],
-        ]);
+        $builder->add(QuoteRequestVersionTransfer::METADATA, QuoteRequestMetadataSubForm::class);
 
         return $this;
     }

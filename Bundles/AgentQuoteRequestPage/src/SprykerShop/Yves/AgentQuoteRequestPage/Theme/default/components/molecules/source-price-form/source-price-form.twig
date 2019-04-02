@@ -15,9 +15,6 @@
 
 {% block body %}
     <div class="row">
-        <div class="col col--sm-12 col--xl-4 float-right">
-            {{ form_row(data.priceFiled, {'attr': {'class': config.jsName ~ '__input-container'}}) }}
-        </div>
         <div class="col col--sm-12 col--xl-12">
             {% include atom('checkbox') with {
                 class: config.jsName ~ '__checkbox-container',
@@ -30,6 +27,9 @@
                     label: data.checkboxLabel
                 }
             } only %}
+        </div>
+        <div class="col col--sm-12 col--xl-10">
+            {{ form_row(data.priceFiled, {'attr': {'class': config.jsName ~ '__input-container is-hidden spacing-top spacing-top--small'}}) }}
         </div>
     </div>
 {% endblock %}

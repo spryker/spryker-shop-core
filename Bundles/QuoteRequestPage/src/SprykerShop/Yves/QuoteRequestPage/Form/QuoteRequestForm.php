@@ -18,7 +18,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class QuoteRequestForm extends AbstractType
 {
-    public const FIELD_METADATA = 'metadata';
+    public const SUBMIT_BUTTON_SAVE = 'save';
+    public const SUBMIT_BUTTON_SEND_TO_USER = 'sendToUser';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -40,7 +41,7 @@ class QuoteRequestForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addMetadataForm($builder);
+        $this->addLatestVersionForm($builder);
     }
 
     /**
@@ -48,9 +49,9 @@ class QuoteRequestForm extends AbstractType
      *
      * @return $this
      */
-    protected function addMetadataForm(FormBuilderInterface $builder)
+    protected function addLatestVersionForm(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_METADATA, QuoteRequestMetadataSubForm::class);
+        $builder->add(QuoteRequestTransfer::LATEST_VERSION, QuoteRequestVersionSubForm::class);
 
         return $this;
     }

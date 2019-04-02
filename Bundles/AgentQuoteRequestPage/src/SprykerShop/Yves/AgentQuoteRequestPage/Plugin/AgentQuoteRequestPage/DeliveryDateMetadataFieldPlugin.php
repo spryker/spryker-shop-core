@@ -13,6 +13,7 @@ use SprykerShop\Yves\AgentQuoteRequestPageExtension\Dependency\Plugin\AgentQuote
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 /**
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageFactory getFactory()
@@ -20,7 +21,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements AgentQuoteRequestFormMetadataFieldPluginInterface
 {
     protected const FIELD_METADATA_DELIVERY_DATE = 'delivery_date';
+    protected const FORMAT_DELIVERY_DATE = 'Y-m-d';
     protected const LABEL_METADATA_DELIVERY_DATE = 'quote_request_page.quote_request.metadata.label.delivery_date';
+    protected const GLOSSARY_KEY_DATE_VIOLATION = 'quote_request_page.quote_request.violations.invalid_date';
 
     /**
      * {@inheritdoc}
@@ -41,6 +44,12 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements AgentQuo
             'required' => false,
             'attr' => [
                 'class' => 'datepicker safe-datetime',
+            ],
+            'constraints' => [
+                new GreaterThanOrEqual([
+                    'value' => date(static::FORMAT_DELIVERY_DATE),
+                    'message' => static::GLOSSARY_KEY_DATE_VIOLATION,
+                ]),
             ],
         ]);
 
@@ -64,7 +73,7 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements AgentQuo
             },
             function ($value) {
                 if ($value instanceof DateTime) {
-                    $value = $value->format('Y-m-d');
+                    $value = $value->format(static::FORMAT_DELIVERY_DATE);
                 }
                 return $value;
             }

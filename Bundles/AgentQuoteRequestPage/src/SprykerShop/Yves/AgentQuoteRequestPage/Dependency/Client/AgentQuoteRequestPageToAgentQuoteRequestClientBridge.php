@@ -28,6 +28,26 @@ class AgentQuoteRequestPageToAgentQuoteRequestClientBridge implements AgentQuote
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->agentQuoteRequestClient->createQuoteRequest($quoteRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->agentQuoteRequestClient->updateQuoteRequest($quoteRequestTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
@@ -38,23 +58,23 @@ class AgentQuoteRequestPageToAgentQuoteRequestClientBridge implements AgentQuote
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function convertQuoteRequestToQuoteInProgress(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
-    {
-        return $this->agentQuoteRequestClient->convertQuoteRequestToQuoteInProgress($quoteRequestTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function markQuoteRequestInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function reviseQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->agentQuoteRequestClient->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+        return $this->agentQuoteRequestClient->reviseQuoteRequest($quoteRequestCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->agentQuoteRequestClient->convertQuoteRequestToQuote($quoteRequestTransfer);
     }
 
     /**
@@ -92,9 +112,9 @@ class AgentQuoteRequestPageToAgentQuoteRequestClientBridge implements AgentQuote
      *
      * @return bool
      */
-    public function isQuoteRequestCanStartEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
+    public function isQuoteRequestRevisable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        return $this->agentQuoteRequestClient->isQuoteRequestCanStartEditable($quoteRequestTransfer);
+        return $this->agentQuoteRequestClient->isQuoteRequestRevisable($quoteRequestTransfer);
     }
 
     /**

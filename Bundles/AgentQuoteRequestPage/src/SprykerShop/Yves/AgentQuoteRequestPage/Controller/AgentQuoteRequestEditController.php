@@ -23,43 +23,6 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
 
     /**
-     * @see \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_DETAILS
-     */
-    protected const ROUTE_AGENT_QUOTE_REQUEST_DETAILS = 'agent/quote-request/details';
-
-    /**
-     * @see \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_EDIT
-     */
-    protected const ROUTE_AGENT_QUOTE_REQUEST_EDIT = 'agent/quote-request/edit';
-
-    /**
-     * @see \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_START_EDIT
-     */
-    protected const ROUTE_AGENT_QUOTE_REQUEST_START_EDIT = 'agent/quote-request/start-edit';
-
-    /**
-     * @see \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_SEND_TO_CUSTOMER
-     */
-    protected const ROUTE_AGENT_QUOTE_REQUEST_SEND_TO_CUSTOMER = 'agent/quote-request/send-to-customer';
-
-    /**
-     * @see \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE
-     */
-    protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
-
-    /**
-     * @param string $quoteRequestReference
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function startEditAction(string $quoteRequestReference): RedirectResponse
-    {
-        $response = $this->executeStartEditAction($quoteRequestReference);
-
-        return $response;
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $quoteRequestReference
      *
@@ -86,24 +49,6 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
         $response = $this->executeSendToCustomerAction($quoteRequestReference);
 
         return $response;
-    }
-
-    /**
-     * @param string $quoteRequestReference
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function executeStartEditAction(string $quoteRequestReference): RedirectResponse
-    {
-        $quoteRequestResponseTransfer = $this->getFactory()
-            ->getAgentQuoteRequestClient()
-            ->markQuoteRequestInProgress((new QuoteRequestCriteriaTransfer())->setQuoteRequestReference($quoteRequestReference));
-
-        $this->handleResponseErrors($quoteRequestResponseTransfer);
-
-        return $this->redirectResponseInternal(static::ROUTE_AGENT_QUOTE_REQUEST_EDIT, [
-            static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
-        ]);
     }
 
     /**
@@ -140,13 +85,10 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
     protected function executeEditAction(Request $request, string $quoteRequestReference)
     {
         $agentQuoteRequestClient = $this->getFactory()->getAgentQuoteRequestClient();
-
         $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
-        $quoteRequestForm = $this->getFactory()
-            ->getAgentQuoteRequestForm($quoteRequestTransfer);
 
-        if ($agentQuoteRequestClient->isQuoteRequestCanStartEditable($quoteRequestTransfer)) {
-            return $this->redirectResponseInternal(static::ROUTE_AGENT_QUOTE_REQUEST_START_EDIT, [
+        if ($agentQuoteRequestClient->isQuoteRequestRevisable($quoteRequestTransfer)) {
+            return $this->redirectResponseInternal(static::ROUTE_AGENT_QUOTE_REQUEST_REVISE, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
             ]);
         }
@@ -159,7 +101,9 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
             ]);
         }
 
-        $quoteRequestForm->handleRequest($request);
+        $quoteRequestForm = $this->getFactory()
+            ->getAgentQuoteRequestForm($quoteRequestTransfer)
+            ->handleRequest($request);
 
         if ($quoteRequestForm->isSubmitted() && $quoteRequestForm->isValid()) {
             return $this->processAgentQuoteRequestForm($quoteRequestForm, $request);
@@ -182,7 +126,7 @@ class AgentQuoteRequestEditController extends AgentQuoteRequestAbstractControlle
         $quoteRequestTransfer = $quoteRequestForm->getData();
 
         $quoteRequestResponseTransfer = $this->getFactory()
-            ->getQuoteRequestClient()
+            ->getAgentQuoteRequestClient()
             ->updateQuoteRequest($quoteRequestTransfer);
 
         if ($quoteRequestResponseTransfer->getIsSuccessful()) {

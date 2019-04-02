@@ -11,6 +11,11 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class AgentQuoteRequestWidgetConfig extends AbstractBundleConfig
 {
+    /**
+     * @see \Spryker\Shared\QuoteRequest\QuoteRequestConfig::STATUS_CLOSED
+     */
+    public const STATUS_CLOSED = 'closed';
+
     protected const PAGINATION_DEFAULT_QUOTE_REQUESTS_PER_PAGE = 5;
 
     /**
@@ -19,5 +24,15 @@ class AgentQuoteRequestWidgetConfig extends AbstractBundleConfig
     public function getPaginationDefaultQuoteRequestsPerPage(): int
     {
         return static::PAGINATION_DEFAULT_QUOTE_REQUESTS_PER_PAGE;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getExcludedStatuses(): array
+    {
+        return [
+            static::STATUS_CLOSED,
+        ];
     }
 }

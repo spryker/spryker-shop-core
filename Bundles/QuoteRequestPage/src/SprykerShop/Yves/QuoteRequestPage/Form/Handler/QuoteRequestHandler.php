@@ -7,33 +7,54 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Form\Handler;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
-use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCustomerClientInterface;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToPersistentCartClientInterface;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface;
 
 class QuoteRequestHandler implements QuoteRequestHandlerInterface
 {
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_WITH_EMPTY_CART = 'quote_request.validation.error.empty_cart';
+
     /**
      * @var \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface
      */
     protected $quoteRequestClient;
 
     /**
-     * @var \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface
+     * @var \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToPersistentCartClientInterface
      */
-    protected $cartClient;
+    protected $persistentCartClient;
+
+    /**
+     * @var \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface
+     */
+    protected $quoteClient;
+
+    /**
+     * @var \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCustomerClientInterface
+     */
+    protected $customerClient;
 
     /**
      * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface $quoteRequestClient
-     * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface $cartClient
+     * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToPersistentCartClientInterface $persistentCartClient
+     * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface $quoteClient
+     * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCustomerClientInterface $customerClient
      */
     public function __construct(
         QuoteRequestPageToQuoteRequestClientInterface $quoteRequestClient,
-        QuoteRequestPageToCartClientInterface $cartClient
+        QuoteRequestPageToPersistentCartClientInterface $persistentCartClient,
+        QuoteRequestPageToQuoteClientInterface $quoteClient,
+        QuoteRequestPageToCustomerClientInterface $customerClient
     ) {
         $this->quoteRequestClient = $quoteRequestClient;
-        $this->cartClient = $cartClient;
+        $this->persistentCartClient = $persistentCartClient;
+        $this->quoteClient = $quoteClient;
+        $this->customerClient = $customerClient;
     }
 
     /**
@@ -43,6 +64,10 @@ class QuoteRequestHandler implements QuoteRequestHandlerInterface
      */
     public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
+        if (!$quoteRequestTransfer->getLatestVersion()->getQuote()->getItems()->count()) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_WITH_EMPTY_CART);
+        }
+
         $quoteRequestResponseTransfer = $this->quoteRequestClient->createQuoteRequest($quoteRequestTransfer);
 
         if ($quoteRequestResponseTransfer->getIsSuccessful()) {
@@ -53,11 +78,36 @@ class QuoteRequestHandler implements QuoteRequestHandlerInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->quoteRequestClient->updateQuoteRequest($quoteRequestTransfer);
+    }
+
+    /**
      * @return void
      */
     protected function clearQuote(): void
     {
-        $this->cartClient->clearQuote();
-        $this->cartClient->validateQuote();
+        $this->quoteClient->clearQuote();
+        $this->persistentCartClient->reloadQuoteForCustomer($this->customerClient->getCustomer());
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    protected function getErrorResponse(string $message): QuoteRequestResponseTransfer
+    {
+        $messageTransfer = (new MessageTransfer())
+            ->setValue($message);
+
+        return (new QuoteRequestResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addMessage($messageTransfer);
     }
 }

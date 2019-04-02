@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints\Regex;
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageFactory getFactory()
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageConfig getConfig()
  */
-class AgentQuoteInProgressItemSubForm extends AbstractType
+class AgentQuoteRequestVersionItemsSubForm extends AbstractType
 {
     protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
@@ -109,10 +109,10 @@ class AgentQuoteInProgressItemSubForm extends AbstractType
     {
         return new CallbackTransformer(
             function ($value) {
-                return $value ? $value / 100 : null;
+                return $value !== null ? $value / 100 : null;
             },
             function ($value) {
-                return $value ? $value * 100 : null;
+                return $value !== null ? $value * 100 : null;
             }
         );
     }

@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 
 class AgentQuoteRequestWidgetToAgentQuoteRequestClientBridge implements AgentQuoteRequestWidgetToAgentQuoteRequestClientInterface
@@ -24,6 +25,16 @@ class AgentQuoteRequestWidgetToAgentQuoteRequestClientBridge implements AgentQuo
     public function __construct($agentQuoteRequestClient)
     {
         $this->agentQuoteRequestClient = $agentQuoteRequestClient;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->agentQuoteRequestClient->updateQuoteRequest($quoteRequestTransfer);
     }
 
     /**

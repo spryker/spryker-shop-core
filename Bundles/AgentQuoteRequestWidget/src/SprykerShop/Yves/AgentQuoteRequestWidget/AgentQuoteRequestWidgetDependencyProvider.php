@@ -11,6 +11,8 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToAgentQuoteRequestClientBridge;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToCartClientBridge;
+use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToCompanyUserClientBridge;
+use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToPersistentCartClientBridge;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToQuoteRequestClientBridge;
 
 class AgentQuoteRequestWidgetDependencyProvider extends AbstractBundleDependencyProvider
@@ -18,6 +20,8 @@ class AgentQuoteRequestWidgetDependencyProvider extends AbstractBundleDependency
     public const CLIENT_AGENT_QUOTE_REQUEST = 'CLIENT_AGENT_QUOTE_REQUEST';
     public const CLIENT_QUOTE_REQUEST = 'CLIENT_QUOTE_REQUEST';
     public const CLIENT_CART = 'CLIENT_CART';
+    public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
+    public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -30,6 +34,8 @@ class AgentQuoteRequestWidgetDependencyProvider extends AbstractBundleDependency
         $container = $this->addAgentQuoteRequestClient($container);
         $container = $this->addQuoteRequestClient($container);
         $container = $this->addCartClient($container);
+        $container = $this->addPersistentCartClient($container);
+        $container = $this->addCompanyUserClient($container);
 
         return $container;
     }
@@ -43,6 +49,20 @@ class AgentQuoteRequestWidgetDependencyProvider extends AbstractBundleDependency
     {
         $container[static::CLIENT_AGENT_QUOTE_REQUEST] = function (Container $container) {
             return new AgentQuoteRequestWidgetToAgentQuoteRequestClientBridge($container->getLocator()->agentQuoteRequest()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCompanyUserClient(Container $container): Container
+    {
+        $container[static::CLIENT_COMPANY_USER] = function (Container $container) {
+            return new AgentQuoteRequestWidgetToCompanyUserClientBridge($container->getLocator()->companyUser()->client());
         };
 
         return $container;
@@ -71,6 +91,20 @@ class AgentQuoteRequestWidgetDependencyProvider extends AbstractBundleDependency
     {
         $container[static::CLIENT_CART] = function (Container $container) {
             return new AgentQuoteRequestWidgetToCartClientBridge($container->getLocator()->cart()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPersistentCartClient(Container $container): Container
+    {
+        $container[static::CLIENT_PERSISTENT_CART] = function (Container $container) {
+            return new AgentQuoteRequestWidgetToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());
         };
 
         return $container;

@@ -14,9 +14,12 @@ use SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client\AgentQuoteRequestPa
 use SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client\AgentQuoteRequestPageToCompanyUserClientInterface;
 use SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client\AgentQuoteRequestPageToQuoteClientInterface;
 use SprykerShop\Yves\AgentQuoteRequestPage\Dependency\Client\AgentQuoteRequestPageToQuoteRequestClientInterface;
+use SprykerShop\Yves\AgentQuoteRequestPage\Form\AgentQuoteRequestCreateForm;
 use SprykerShop\Yves\AgentQuoteRequestPage\Form\AgentQuoteRequestEditItemsConfirmForm;
 use SprykerShop\Yves\AgentQuoteRequestPage\Form\AgentQuoteRequestForm;
 use SprykerShop\Yves\AgentQuoteRequestPage\Form\DataProvider\AgentQuoteRequestFormDataProvider;
+use SprykerShop\Yves\AgentQuoteRequestPage\Form\Handler\AgentQuoteRequestCreateHandler;
+use SprykerShop\Yves\AgentQuoteRequestPage\Form\Handler\AgentQuoteRequestCreateHandlerInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -60,6 +63,24 @@ class AgentQuoteRequestPageFactory extends AbstractFactory
     public function createAgentQuoteRequestFormDataProvider(): AgentQuoteRequestFormDataProvider
     {
         return new AgentQuoteRequestFormDataProvider();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getAgentQuoteRequestCreateForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(AgentQuoteRequestCreateForm::class);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentQuoteRequestPage\Form\Handler\AgentQuoteRequestCreateHandlerInterface
+     */
+    public function createAgentQuoteRequestCreateHandler(): AgentQuoteRequestCreateHandlerInterface
+    {
+        return new AgentQuoteRequestCreateHandler(
+            $this->getAgentQuoteRequestClient()
+        );
     }
 
     /**

@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\AgentQuoteRequestPageExtension\Dependency\Plugin\AgentQuoteRequestFormMetadataFieldPluginInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageFactory getFactory()
@@ -19,6 +20,7 @@ class NoteMetadataFieldPlugin extends AbstractPlugin implements AgentQuoteReques
 {
     protected const FIELD_METADATA_NOTE = 'note';
     protected const LABEL_METADATA_NOTE = 'quote_request_page.quote_request.metadata.label.note';
+    protected const MAX_LENGTH_NOTE = 1024;
 
     /**
      * {@inheritdoc}
@@ -36,6 +38,11 @@ class NoteMetadataFieldPlugin extends AbstractPlugin implements AgentQuoteReques
         $builder->add(static::FIELD_METADATA_NOTE, TextareaType::class, [
             'label' => static::LABEL_METADATA_NOTE,
             'required' => false,
+            'constraints' => [
+                new Length([
+                    'max' => static::MAX_LENGTH_NOTE,
+                ]),
+            ],
         ]);
 
         return $builder;

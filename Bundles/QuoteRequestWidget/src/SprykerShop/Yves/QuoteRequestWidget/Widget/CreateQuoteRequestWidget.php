@@ -38,7 +38,7 @@ class CreateQuoteRequestWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@QuoteRequestWidget/views/quote-request/create-quote-request.twig';
+        return '@QuoteRequestWidget/views/quote-request/quote-request-create/quote-request-create.twig';
     }
 
     /**
@@ -48,6 +48,42 @@ class CreateQuoteRequestWidget extends AbstractWidget
      */
     protected function addIsVisibleParameter(QuoteTransfer $quoteTransfer): void
     {
-        $this->addParameter(static::PARAMETER_IS_VISIBLE, !(bool)$quoteTransfer->getQuoteRequestVersionReference());
+        $this->addParameter(static::PARAMETER_IS_VISIBLE, $this->isWidgetVisible($quoteTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isWidgetVisible(QuoteTransfer $quoteTransfer): bool
+    {
+        if (!$this->isQuoteEditable($quoteTransfer) || !$this->isCompanyUser()) {
+            return false;
+        }
+
+        return !$quoteTransfer->getQuoteRequestVersionReference() && !$quoteTransfer->getQuoteRequestReference();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isCompanyUser(): bool
+    {
+        return (bool)$this->getFactory()
+            ->getCompanyUserClient()
+            ->findCompanyUser();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->getQuoteClient()
+            ->isQuoteEditable($quoteTransfer);
     }
 }

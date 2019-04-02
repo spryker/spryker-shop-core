@@ -12,15 +12,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
- * @method \Spryker\Client\QuoteRequest\QuoteRequestClient getClient()
  */
 class QuoteRequestCheckoutController extends QuoteRequestAbstractController
 {
-    /**
-     * @see \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
-     */
-    protected const ROUTE_CART = 'cart';
-
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART_SUCCESS = 'quote_request.validation.converted_to_cart.success';
 
     /**
@@ -34,7 +28,7 @@ class QuoteRequestCheckoutController extends QuoteRequestAbstractController
 
         $quoteResponseTransfer = $this->getFactory()
             ->getQuoteRequestClient()
-            ->convertQuoteRequestToQuote($quoteRequestTransfer);
+            ->convertQuoteRequestToLockedQuote($quoteRequestTransfer);
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART_SUCCESS);

@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageFactory getFactory()
@@ -58,7 +59,6 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
     protected function executeIndexAction(Request $request): array
     {
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setWithHidden(true)
             ->setPagination($this->getPaginationTransfer($request));
 
         $quoteRequestCollectionTransfer = $this->getFactory()
@@ -82,16 +82,20 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
         $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
         $agentQuoteRequestClient = $this->getFactory()->getAgentQuoteRequestClient();
 
-        $quoteRequestVersionTransfer = $this->findQuoteRequestVersion(
+        $quoteRequestVersionTransfers = $this->getQuoteRequestVersions($quoteRequestTransfer);
+
+        $version = $this->getQuoteRequestVersion(
             $quoteRequestTransfer,
+            $quoteRequestVersionTransfers,
             $request->query->get(static::PARAM_QUOTE_REQUEST_VERSION_REFERENCE)
         );
 
         return [
             'quoteRequest' => $quoteRequestTransfer,
-            'version' => $quoteRequestVersionTransfer,
+            'quoteRequestVersionReferences' => $this->getQuoteRequestVersionReferences($quoteRequestVersionTransfers),
+            'version' => $version,
             'isQuoteRequestCancelable' => $agentQuoteRequestClient->isQuoteRequestCancelable($quoteRequestTransfer),
-            'isQuoteRequestCanStartEditable' => $agentQuoteRequestClient->isQuoteRequestCanStartEditable($quoteRequestTransfer),
+            'isQuoteRequestRevisable' => $agentQuoteRequestClient->isQuoteRequestRevisable($quoteRequestTransfer),
             'isQuoteRequestEditable' => $agentQuoteRequestClient->isQuoteRequestEditable($quoteRequestTransfer),
         ];
     }
@@ -110,21 +114,13 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     * @param string|null $versionReference
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer|null
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer[]
      */
-    protected function findQuoteRequestVersion(
-        QuoteRequestTransfer $quoteRequestTransfer,
-        ?string $versionReference = null
-    ): ?QuoteRequestVersionTransfer {
-        if (!$quoteRequestTransfer->getLatestVersion() || $versionReference === $quoteRequestTransfer->getLatestVersion()->getVersionReference()) {
-            return $quoteRequestTransfer->getLatestVersion();
-        }
-
+    protected function getQuoteRequestVersions(QuoteRequestTransfer $quoteRequestTransfer): array
+    {
         $quoteRequestVersionFilterTransfer = (new QuoteRequestVersionFilterTransfer())
-            ->setQuoteRequest($quoteRequestTransfer)
-            ->setQuoteRequestVersionReference($versionReference);
+            ->setQuoteRequest($quoteRequestTransfer);
 
         $quoteRequestVersionTransfers = $this->getFactory()
             ->getQuoteRequestClient()
@@ -132,8 +128,49 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
             ->getQuoteRequestVersions()
             ->getArrayCopy();
 
-        $quoteRequestVersionTransfer = array_shift($quoteRequestVersionTransfers);
+        return $quoteRequestVersionTransfers;
+    }
 
-        return $quoteRequestVersionTransfer ?? $quoteRequestTransfer->getLatestVersion();
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param array $quoteRequestVersionTransfers
+     * @param string|null $versionReference
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
+     */
+    protected function getQuoteRequestVersion(
+        QuoteRequestTransfer $quoteRequestTransfer,
+        array $quoteRequestVersionTransfers,
+        ?string $versionReference
+    ): QuoteRequestVersionTransfer {
+        if (!$versionReference) {
+            return $quoteRequestTransfer->getLatestVersion();
+        }
+
+        foreach ($quoteRequestVersionTransfers as $quoteRequestVersionTransfer) {
+            if ($quoteRequestVersionTransfer->getVersionReference() === $versionReference) {
+                return $quoteRequestVersionTransfer;
+            }
+        }
+
+        throw new NotFoundHttpException();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer[] $quoteRequestVersionTransfers
+     *
+     * @return string[]
+     */
+    protected function getQuoteRequestVersionReferences(array $quoteRequestVersionTransfers): array
+    {
+        $versionReferences = [];
+
+        foreach ($quoteRequestVersionTransfers as $quoteRequestVersionTransfer) {
+            $versionReferences[] = $quoteRequestVersionTransfer->getVersionReference();
+        }
+
+        return $versionReferences;
     }
 }

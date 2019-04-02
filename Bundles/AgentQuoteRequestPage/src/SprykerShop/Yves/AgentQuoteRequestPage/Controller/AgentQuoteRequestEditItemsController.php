@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\AgentQuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,27 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 class AgentQuoteRequestEditItemsController extends AgentQuoteRequestAbstractController
 {
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART = 'quote_request_page.quote_request.converted_to_cart';
-
-    /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
-     */
-    protected const ROUTE_CART = 'cart';
-    protected const PARAM_SWITCH_USER = '_switch_user';
-
-    /**
-     * @uses \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE
-     */
-    protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
-
-    /**
-     * @uses \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS
-     */
-    protected const ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS = 'agent/quote-request/edit-items';
-
-    /**
-     * @uses \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM
-     */
-    public const ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM = 'agent/quote-request/edit-items-confirm';
 
     /**
      * @param string $quoteRequestReference
@@ -136,11 +116,13 @@ class AgentQuoteRequestEditItemsController extends AgentQuoteRequestAbstractCont
 
         $quoteResponseTransfer = $this->getFactory()
             ->getAgentQuoteRequestClient()
-            ->convertQuoteRequestToQuoteInProgress($quoteRequestTransfer);
+            ->convertQuoteRequestToQuote($quoteRequestTransfer);
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART);
         }
+
+        $this->handleQuoteResponseErrors($quoteResponseTransfer);
 
         $companyUserTransfer = $this->getFactory()
             ->getCompanyUserClient()
@@ -179,5 +161,17 @@ class AgentQuoteRequestEditItemsController extends AgentQuoteRequestAbstractCont
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return void
+     */
+    protected function handleQuoteResponseErrors(QuoteResponseTransfer $quoteResponseTransfer): void
+    {
+        foreach ($quoteResponseTransfer->getErrors() as $errorTransfer) {
+            $this->addErrorMessage($errorTransfer->getMessage());
+        }
     }
 }

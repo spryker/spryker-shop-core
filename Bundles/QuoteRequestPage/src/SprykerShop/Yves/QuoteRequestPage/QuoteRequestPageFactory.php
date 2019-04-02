@@ -12,10 +12,14 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompanyUserClientInterface;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCustomerClientInterface;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToPersistentCartClientInterface;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Form\DataProvider\QuoteRequestFormDataProvider;
 use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandler;
 use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandlerInterface;
+use SprykerShop\Yves\QuoteRequestPage\Form\QuoteRequestEditItemsConfirmForm;
 use SprykerShop\Yves\QuoteRequestPage\Form\QuoteRequestForm;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
@@ -59,7 +63,22 @@ class QuoteRequestPageFactory extends AbstractFactory
     {
         return new QuoteRequestHandler(
             $this->getQuoteRequestClient(),
-            $this->getCartClient()
+            $this->getPersistentCartClient(),
+            $this->getQuoteClient(),
+            $this->getCustomerClient()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getQuoteRequestEditItemsConfirmForm(QuoteRequestTransfer $quoteRequestTransfer): FormInterface
+    {
+        return $this->getFormFactory()->create(
+            QuoteRequestEditItemsConfirmForm::class,
+            $quoteRequestTransfer
         );
     }
 
@@ -93,6 +112,30 @@ class QuoteRequestPageFactory extends AbstractFactory
     public function getCartClient(): QuoteRequestPageToCartClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::CLIENT_CART);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToPersistentCartClientInterface
+     */
+    public function getPersistentCartClient(): QuoteRequestPageToPersistentCartClientInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::CLIENT_PERSISTENT_CART);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCustomerClientInterface
+     */
+    public function getCustomerClient(): QuoteRequestPageToCustomerClientInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface
+     */
+    public function getQuoteClient(): QuoteRequestPageToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::CLIENT_QUOTE);
     }
 
     /**

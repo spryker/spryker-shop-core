@@ -19,11 +19,6 @@ class AgentQuoteRequestDeleteController extends AgentQuoteRequestAbstractControl
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SUCCESS_CANCELED = 'quote_request.validation.success.canceled';
 
     /**
-     * @see \SprykerShop\Yves\AgentQuoteRequestPage\Plugin\Provider\AgentQuoteRequestPageControllerProvider::ROUTE_AGENT_QUOTE_REQUEST
-     */
-    protected const ROUTE_AGENT_QUOTE_REQUEST = 'agent/quote-request';
-
-    /**
      * @param string $quoteRequestReference
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse

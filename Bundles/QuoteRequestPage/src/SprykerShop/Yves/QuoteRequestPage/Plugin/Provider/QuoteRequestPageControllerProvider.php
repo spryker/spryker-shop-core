@@ -14,8 +14,12 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
 {
     protected const ROUTE_QUOTE_REQUEST = 'quote-request';
     protected const ROUTE_QUOTE_REQUEST_CREATE = 'quote-request/create';
+    protected const ROUTE_QUOTE_REQUEST_REVISE = 'quote-request/revise';
+    protected const ROUTE_QUOTE_REQUEST_SEND_TO_USER = 'quote-request/send-to-user';
+    protected const ROUTE_QUOTE_REQUEST_EDIT = 'quote-request/edit';
+    protected const ROUTE_QUOTE_REQUEST_EDIT_ITEMS = 'quote-request/edit-items';
+    protected const ROUTE_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM = 'quote-request/edit-items-confirm';
     protected const ROUTE_QUOTE_REQUEST_CANCEL = 'quote-request/cancel';
-    protected const ROUTE_QUOTE_REQUEST_VIEW = 'quote-request/view';
     protected const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
     protected const ROUTE_QUOTE_REQUEST_CONVERT_TO_CART = 'quote-request/convert-to-cart';
 
@@ -32,6 +36,11 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
     {
         $this->addQuoteRequestRoute()
             ->addQuoteRequestCreateRoute()
+            ->addQuoteRequestReviseRoute()
+            ->addQuoteRequestEditRoute()
+            ->addQuoteRequestEditItemsRoute()
+            ->addQuoteRequestEditItemsConfirmRoute()
+            ->addQuoteRequestSendToUserRoute()
             ->addQuoteRequestCancelRoute()
             ->addQuoteRequestDetailsRoute()
             ->addQuoteRequestConvertToCartRoute();
@@ -61,6 +70,81 @@ class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{quoteRequest}/create', static::ROUTE_QUOTE_REQUEST_CREATE, 'QuoteRequestPage', 'QuoteRequestCreate', 'create')
             ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
             ->value('quoteRequest', 'quote-request');
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestReviseController::indexAction()
+     *
+     * @return $this
+     */
+    protected function addQuoteRequestReviseRoute()
+    {
+        $this->createController('/{quoteRequest}/revise/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_REVISE, 'QuoteRequestPage', 'QuoteRequestRevise', 'index')
+            ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
+            ->value('quoteRequest', 'quote-request')
+            ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestEditController::indexAction()
+     *
+     * @return $this
+     */
+    protected function addQuoteRequestEditRoute()
+    {
+        $this->createController('/{quoteRequest}/edit/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_EDIT, 'QuoteRequestPage', 'QuoteRequestEdit', 'index')
+            ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
+            ->value('quoteRequest', 'quote-request')
+            ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestEditItemsController::indexAction()
+     *
+     * @return $this
+     */
+    protected function addQuoteRequestEditItemsRoute()
+    {
+        $this->createController('/{quoteRequest}/edit-items/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_EDIT_ITEMS, 'QuoteRequestPage', 'QuoteRequestEditItems', 'index')
+            ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
+            ->value('quoteRequest', 'quote-request')
+            ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\AgentQuoteRequestPage\Controller\AgentQuoteRequestEditItemsController::indexAction()
+     *
+     * @return $this
+     */
+    protected function addQuoteRequestEditItemsConfirmRoute()
+    {
+        $this->createController('/{quoteRequest}/edit-items-confirm/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM, 'QuoteRequestPage', 'QuoteRequestEditItems', 'confirm')
+            ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
+            ->value('quoteRequest', 'quote-request')
+            ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestEditController::submitAction()
+     *
+     * @return $this
+     */
+    protected function addQuoteRequestSendToUserRoute()
+    {
+        $this->createController('/{quoteRequest}/send-to-user/{quoteRequestReference}', static::ROUTE_QUOTE_REQUEST_SEND_TO_USER, 'QuoteRequestPage', 'QuoteRequestEdit', 'sendToUser')
+            ->assert('quoteRequest', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
+            ->value('quoteRequest', 'quote-request')
+            ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
 
         return $this;
     }

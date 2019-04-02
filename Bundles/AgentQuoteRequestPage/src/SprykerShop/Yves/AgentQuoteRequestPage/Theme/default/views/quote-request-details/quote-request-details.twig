@@ -3,17 +3,15 @@
 {% define data = {
     title: 'quote_request_page.quote_request' | trans,
     quoteRequest: _view.quoteRequest,
+    quoteRequestVersionReferences: _view.quoteRequestVersionReferences,
+    version: _view.version,
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
-    isQuoteRequestCanStartEditable: _view.isQuoteRequestCanStartEditable,
+    isQuoteRequestRevisable: _view.isQuoteRequestRevisable,
     isQuoteRequestEditable: _view.isQuoteRequestEditable,
-    version: _view.version
 } %}
 
-{% set cart = data.version ? data.version.quote : null %}
-{% if data.isQuoteRequestEditable and data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion %}
-    {% set cart = data.quoteRequest.quoteInProgress %}
-{% endif %}
-
+{% set isLatestVersion = (data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion) ? true : false %}
+{% set cart = (data.isQuoteRequestEditable and isLatestVersion) ? data.quoteRequest.latestVersion.quote : data.version.quote %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -40,12 +38,12 @@
     <div class="grid">
         <div class="col col--sm-12 col--xl-8">
             <div class="box">
-                {% for key, value in data.quoteRequest.metadata %}
+                {% for key, value in data.version.metadata %}
                     <div class="col col--sm-12 col--xl-6">
                         <div class="box">
                             <label class="label">{{ ('quote_request_page.quote_request.metadata.label.' ~ key) | trans }}</label>
                             <hr/>
-                            <p>{{ value }}</p>
+                            <p class="text-break">{{ value }}</p>
                         </div>
                     </div>
                 {% endfor %}
@@ -54,13 +52,29 @@
 
         <div class="col col--sm-12 col--xl-4">
             <div class="box">
+                <h6>{{ "quote_request_page.quote_request.labels.information" | trans }}</h6>
+                <hr>
                 <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}:
-                    <b>{{ data.quoteRequest.createdAt | date('d.m.Y H:i') }}</b></p>
+                    <b>{{ data.quoteRequest.createdAt | date('d.m.Y H:i') }}</b>
+                </p>
+                <p>{{ 'quote_request_page.quote_request.labels.company' | trans }}:
+                    <b>{{ data.quoteRequest.companyUser.company.name }}</b>
+                </p>
+                <p>{{ 'quote_request_page.quote_request.labels.business_unit' | trans }}:
+                    <b>{{ data.quoteRequest.companyUser.companyBusinessUnit.name }}</b>
+                </p>
+                <p>{{ 'quote_request_page.quote_request.labels.customer' | trans }}:
+                    <b>{{ data.quoteRequest.companyUser.customer.firstName }} {{ data.quoteRequest.companyUser.customer.lastName }}</b>
+                </p>
                 <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:
-                    <b>{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</b></p>
+                    <span class="request-status request-status--{{ data.quoteRequest.status }}">{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</span>
+                </p>
                 <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
                     <b>{{ data.quoteRequest.validUntil ? (data.quoteRequest.validUntil | date('d.m.Y H:i')) : '' }}</b>
                 </p>
+                <hr>
+                <h6>{{ "quote_request_page.quote_request.labels.version_information" | trans }}</h6>
+                <hr>
                 <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
                     {% embed atom('select') with {
                         modifiers: ['naked'],
@@ -69,7 +83,7 @@
                             onchange: 'this.options[this.selectedIndex].value && (window.location.search = "quote-request-version-reference=" + this.options[this.selectedIndex].value);'
                         },
                         embed: {
-                            versionReferences: data.quoteRequest.versionReferences,
+                            versionReferences: data.quoteRequestVersionReferences,
                             currentVersionReference: data.version ? data.version.versionReference : null
                         }
                     } only %}
@@ -80,9 +94,13 @@
                         {% endblock %}
                     {% endembed %}
                 </p>
-                <p>{{ 'quote_request_page.quote_request.labels.visibility' | trans }}:
-                    {{ data.quoteRequest.isHidden ? 'Hidden' : '' }}
-                </p>
+                {% if isLatestVersion %}
+                    {% if data.quoteRequest.isLatestVersionHidden %}
+                        <p><b>{{ 'quote_request_page.quote_request.labels.latest_version_is_hidden' | trans }}</b></p>
+                    {% else %}
+                        <p><b>{{ 'quote_request_page.quote_request.labels.latest_version_is_visible' | trans }}</b></p>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
     </div>
@@ -102,7 +120,7 @@
         </div>
 
         <div class="col col--sm-12 col--xl-4">
-            {% if cart is not empty %}
+            {% if cart and cart.items is not empty %}
                 <div class="box">
                     {% include molecule('quote-request-cart-summary', 'CartPage') with {
                         data: {
@@ -116,7 +134,7 @@
                     {{ 'quote_request_page.quote_request.actions.back_to_list' | trans }}
                 </a>
 
-                {% if data.version and data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion %}
+                {% if isLatestVersion %}
 
                     {% if data.isQuoteRequestCancelable %}
                         <hr/>
@@ -126,33 +144,30 @@
                         </a>
                     {% endif %}
 
-                    {% if data.isQuoteRequestCanStartEditable %}
-                        <hr/>
-                        <a class="button button--expand button--success"
-                           href="{{ path('agent/quote-request/start-edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
-                            {{ 'quote_request_page.quote_request.actions.edit' | trans }}
-                        </a>
-                    {% endif %}
-
                     {% if data.isQuoteRequestEditable %}
                         <hr/>
                         <a class="button button--expand button--success"
                            href="{{ path('agent/quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.edit' | trans }}
                         </a>
-                        <hr/>
-                        <a class="button button--expand button--success"
-                           href="{{ path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
-                            {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
-                        </a>
+                        {% if data.quoteRequest.latestVersion.quote.items is not empty %}
+                            <hr/>
+                            <a class="button button--expand button--success"
+                               href="{{ path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                                {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
+                            </a>
+                        {% endif %}
                     {% endif %}
 
-                    {% if data.quoteRequest.status == 'ready' %}
+                    {% if data.isQuoteRequestRevisable %}
                         <hr/>
                         <a class="button button--expand button--hollow"
                            href="{{ path('agent/quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.revise' | trans }}
                         </a>
+                    {% endif %}
+
+                    {% if data.quoteRequest.status == 'ready' and (not data.quoteRequest.validUntil or date(data.quoteRequest.validUntil) > date()) %}
                         <hr/>
                         <a class="button button--expand button--success"
                            href="{{ path('agent/quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">

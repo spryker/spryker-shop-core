@@ -39,16 +39,13 @@
                     {{ quoteRequest.companyUser.customer.firstName ~ ' ' ~ quoteRequest.companyUser.customer.lastName }}
                 </td>
                 <td class="text-center">
-                    {% if quoteRequest.latestVersion %}
-                        {% if quoteRequest.status == 'in-progress' %}
-                            <strong>{{ quoteRequest.quoteInProgress.totals.grandTotal | default(0) | money }}</strong>
-                        {% else %}
-                            <strong>{{ quoteRequest.latestVersion.quote.totals.grandTotal | default(0) | money }}</strong>
-                        {% endif %}
-                    {% endif %}
+                    <strong>{{ quoteRequest.latestVersion.quote.totals.grandTotal | default(0) | money }}</strong>
                 </td>
                 <td class="text-center">{{ quoteRequest.createdAt | date('d.m.Y H:i:s') }}</td>
-                <td class="text-center">{{ ('quote_request.status.' ~ quoteRequest.status) | trans }}</td>
+                <td class="text-center">
+                    <p class="request-status request-status--{{ quoteRequest.status }}">
+                        {{ ('quote_request.status.' ~ quoteRequest.status) | trans }}
+                    </p>
                 <td>
                     <ul class="nested vertical menu">
                         <li class="menu__item">

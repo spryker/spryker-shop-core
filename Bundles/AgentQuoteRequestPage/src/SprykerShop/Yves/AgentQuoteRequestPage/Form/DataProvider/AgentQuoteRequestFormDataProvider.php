@@ -36,6 +36,6 @@ class AgentQuoteRequestFormDataProvider
      */
     protected function isDefaultPriceModeGross(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        return $quoteRequestTransfer->getQuoteInProgress()->getPriceMode() === static::PRICE_MODE_GROSS;
+        return $quoteRequestTransfer->getLatestVersion()->getQuote()->getPriceMode() === static::PRICE_MODE_GROSS;
     }
 }

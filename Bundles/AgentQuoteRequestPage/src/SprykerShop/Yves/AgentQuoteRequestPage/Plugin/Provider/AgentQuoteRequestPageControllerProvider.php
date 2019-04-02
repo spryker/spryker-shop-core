@@ -15,11 +15,13 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
     protected const ROUTE_AGENT_QUOTE_REQUEST = 'agent/quote-request';
     protected const ROUTE_AGENT_QUOTE_REQUEST_CANCEL = 'agent/quote-request/cancel';
     protected const ROUTE_AGENT_QUOTE_REQUEST_DETAILS = 'agent/quote-request/details';
-    protected const ROUTE_AGENT_QUOTE_REQUEST_START_EDIT = 'agent/quote-request/start-edit';
     protected const ROUTE_AGENT_QUOTE_REQUEST_EDIT = 'agent/quote-request/edit';
+    protected const ROUTE_AGENT_QUOTE_REQUEST_CREATE = 'agent/quote-request/create';
     protected const ROUTE_AGENT_QUOTE_REQUEST_SEND_TO_CUSTOMER = 'agent/quote-request/send-to-customer';
     protected const ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS = 'agent/quote-request/edit-items';
     protected const ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM = 'agent/quote-request/edit-items-confirm';
+    protected const ROUTE_AGENT_QUOTE_REQUEST_REVISE = 'agent/quote-request/revise';
+    protected const ROUTE_AGENT_QUOTE_REQUEST_CONVERT_TO_CART = 'agent/quote-request/convert-to-cart';
 
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
@@ -35,11 +37,14 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
         $this->addAgentQuoteRequestRoute()
             ->addAgentQuoteRequestCancelRoute()
             ->addQuoteRequestDetailsRoute()
-            ->addQuoteRequestStartEditRoute()
+            ->addQuoteRequestReviseRoute()
             ->addQuoteRequestEditRoute()
             ->addQuoteRequestSendToCustomerRoute()
             ->addQuoteRequestEditItemsRoute()
-            ->addQuoteRequestEditItemsConfirmRoute();
+            ->addQuoteRequestEditItemsConfirmRoute()
+            ->addQuoteRequestCreateRoute()
+            ->addQuoteRequestSendToCustomerRoute()
+            ->addQuoteRequestConvertToCartRoute();
     }
 
     /**
@@ -91,9 +96,9 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
      *
      * @return $this
      */
-    protected function addQuoteRequestStartEditRoute()
+    protected function addQuoteRequestReviseRoute()
     {
-        $this->createController('/{agent}/quote-request/start-edit/{quoteRequestReference}', static::ROUTE_AGENT_QUOTE_REQUEST_START_EDIT, 'AgentQuoteRequestPage', 'AgentQuoteRequestEdit', 'startEdit')
+        $this->createController('/{agent}/quote-request/revise/{quoteRequestReference}', static::ROUTE_AGENT_QUOTE_REQUEST_REVISE, 'AgentQuoteRequestPage', 'AgentQuoteRequestRevise', 'index')
             ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
             ->value('agent', 'agent')
             ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
@@ -112,6 +117,20 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
             ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
             ->value('agent', 'agent')
             ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\AgentQuoteRequestPage\Controller\AgentQuoteRequestEditController::editAction()
+     *
+     * @return $this
+     */
+    protected function addQuoteRequestCreateRoute()
+    {
+        $this->createController('/{agent}/quote-request/create', static::ROUTE_AGENT_QUOTE_REQUEST_CREATE, 'AgentQuoteRequestPage', 'AgentQuoteRequestCreate', 'create')
+            ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
+            ->value('agent', 'agent');
 
         return $this;
     }
@@ -154,6 +173,21 @@ class AgentQuoteRequestPageControllerProvider extends AbstractYvesControllerProv
     protected function addQuoteRequestEditItemsConfirmRoute()
     {
         $this->createController('/{agent}/quote-request/edit-items-confirm/{quoteRequestReference}', static::ROUTE_AGENT_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM, 'AgentQuoteRequestPage', 'AgentQuoteRequestEditItems', 'confirm')
+            ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
+            ->value('agent', 'agent')
+            ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestCheckoutController::convertToCartAction()
+     *
+     * @return $this
+     */
+    protected function addQuoteRequestConvertToCartRoute()
+    {
+        $this->createController('/{agent}/quote-request/convert-to-cart/{quoteRequestReference}', static::ROUTE_AGENT_QUOTE_REQUEST_CONVERT_TO_CART, 'AgentQuoteRequestPage', 'AgentQuoteRequestCheckout', 'convertToCart')
             ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
             ->value('agent', 'agent')
             ->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
