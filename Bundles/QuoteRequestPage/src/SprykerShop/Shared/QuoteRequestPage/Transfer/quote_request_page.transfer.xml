@@ -10,6 +10,7 @@
         <property name="validUntil" type="string" />
         <property name="createdAt" type="string" />
         <property name="latestVersion" type="QuoteRequestVersion" />
+        <property name="isLatestVersionHidden" type="bool" />
         <property name="latestVisibleVersion" type="QuoteRequestVersion" />
     </transfer>
 
@@ -40,6 +41,7 @@
 
     <transfer name="Quote">
         <property name="totals" type="Totals" />
+        <property name="quoteRequestReference" type="string" />
     </transfer>
 
     <transfer name="Totals">
@@ -56,8 +58,26 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="QuoteRequestCriteria">
+        <property name="quoteRequestReference" type="string" />
+    </transfer>
+
     <transfer name="QuoteRequestCollection">
         <property name="quoteRequests" type="QuoteRequest[]" singular="quoteRequest" />
+    </transfer>
+
+    <transfer name="QuoteRequestVersionFilter">
+        <property name="quoteRequest" type="QuoteRequest" />
+    </transfer>
+
+
+    <transfer name="QuoteRequestVersionCollection">
+        <property name="quoteRequestVersions" type="QuoteRequestVersion[]" singular="quoteRequestVersion" />
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="errors" type="QuoteError[]" singular="error"/>
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 
     <transfer name="QuoteRequestFilter">
