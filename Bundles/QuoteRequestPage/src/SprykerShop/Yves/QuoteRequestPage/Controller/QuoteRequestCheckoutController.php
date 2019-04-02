@@ -24,17 +24,33 @@ class QuoteRequestCheckoutController extends QuoteRequestAbstractController
      */
     public function convertToCartAction(string $quoteRequestReference): RedirectResponse
     {
+        $response = $this->executeConvertToCartActionAction($quoteRequestReference);
+
+        return $response;
+    }
+
+    /**
+     * @param string $quoteRequestReference
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeConvertToCartActionAction(string $quoteRequestReference): RedirectResponse
+    {
         $quoteRequestTransfer = $this->getCompanyUserQuoteRequestByReference($quoteRequestReference);
 
         $quoteResponseTransfer = $this->getFactory()
             ->getQuoteRequestClient()
             ->convertQuoteRequestToLockedQuote($quoteRequestTransfer);
 
-        if ($quoteResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART_SUCCESS);
+        $this->handleQuoteResponseErrors($quoteResponseTransfer);
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_DETAILS, [
+                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
+            ]);
         }
 
-        $this->handleQuoteResponseErrors($quoteResponseTransfer);
+        $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART_SUCCESS);
 
         return $this->redirectResponseInternal(static::ROUTE_CART);
     }

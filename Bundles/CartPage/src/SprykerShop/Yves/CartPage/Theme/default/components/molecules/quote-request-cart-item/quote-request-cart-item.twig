@@ -57,18 +57,19 @@
             {% endif %}
 
             {% if data.cartItem.amountSalesUnit is empty %}
+                {{ 'cart.item_quantity' | trans }}:
+                <strong>{{ data.cartItem.quantity }}</strong>
+
                 {% if data.cartItem.quantitySalesUnit is not empty %}
-                    {% widget 'CartProductMeasurementUnitQuantitySelectorWidget' args [data.cartItem] only %}
-                    {% nowidget %}
-                        {% include molecule('cart-quantity-input', 'CartPage') with {
-                            data: {
-                                cartItem: data.cartItem
-                            }
-                        } only %}
-                    {% endwidget %}
-                {% else %}
-                    {{ 'cart.item_quantity' | trans }}:
-                    <strong>{{ data.cartItem.quantity }}</strong>
+                    {% set value = data.cartItem.quantitySalesUnit.value %}
+                    {% set precision = data.cartItem.quantitySalesUnit.precision %}
+                    {% set salesUnitName = data.cartItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+
+                    <p>
+                        <small class="text-secondary">
+                            [= {{ value / precision }} {{ salesUnitName | trans }}]
+                        </small>
+                    </p>
                 {% endif %}
             {% endif %}
 

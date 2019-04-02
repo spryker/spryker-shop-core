@@ -135,13 +135,11 @@
                            href="{{ path('quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.revise' | trans }}
                         </a>
-                        {% if not data.quoteRequest.validUntil or date(data.quoteRequest.validUntil) > date() %}
-                            <hr/>
-                            <a class="button button--expand button--success"
-                               href="{{ path('quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
-                                {{ 'quote_request_page.quote_request.actions.convert_to_cart' | trans }}
-                            </a>
-                        {% endif %}
+                        <hr/>
+                        <a class="button button--expand button--success"
+                           href="{{ path('quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                            {{ 'quote_request_page.quote_request.actions.convert_to_cart' | trans }}
+                        </a>
                     {% endif %}
 
                     {% if data.isQuoteRequestEditable %}

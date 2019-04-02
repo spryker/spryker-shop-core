@@ -167,7 +167,7 @@
                         </a>
                     {% endif %}
 
-                    {% if data.quoteRequest.status == 'ready' and (not data.quoteRequest.validUntil or date(data.quoteRequest.validUntil) > date()) %}
+                    {% if data.quoteRequest.status == 'ready' %}
                         <hr/>
                         <a class="button button--expand button--success"
                            href="{{ path('agent/quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
