@@ -21,9 +21,8 @@ class ProductPackagingUnitWidget extends AbstractWidget
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param bool $isAddToCartDisabled
-     * @param array $quantityOptions Contains the selectable quantity options; each option is structured as ['label' => 1, 'value' => 1]
      */
-    public function __construct(ProductViewTransfer $productViewTransfer, bool $isAddToCartDisabled, array $quantityOptions = [])
+    public function __construct(ProductViewTransfer $productViewTransfer, bool $isAddToCartDisabled)
     {
         $baseUnit = null;
         $salesUnits = null;
@@ -73,7 +72,6 @@ class ProductPackagingUnitWidget extends AbstractWidget
 
         $this
             ->addParameter('product', $productViewTransfer)
-            ->addParameter('quantityOptions', $quantityOptions)
             ->addParameter('minQuantityInBaseUnit', $minQuantityInBaseUnit)
             ->addParameter('minQuantityInSalesUnits', $minQuantityInSalesUnits)
             ->addParameter('baseUnit', $baseUnit)
