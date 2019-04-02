@@ -21,6 +21,7 @@ class QuoteRequestEditController extends QuoteRequestAbstractController
     protected const GLOSSARY_KEY_QUOTE_REQUEST_UPDATED = 'quote_request_page.quote_request.updated';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SAVED = 'quote_request_page.revise.quote_request.saved';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_USER = 'quote_request_page.quote_request.sent_to_user';
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
 
     /**
      * @param string $quoteRequestReference
@@ -47,7 +48,16 @@ class QuoteRequestEditController extends QuoteRequestAbstractController
      */
     protected function executeIndexAction(string $quoteRequestReference, Request $request)
     {
+        $quoteRequestClient = $this->getFactory()->getQuoteRequestClient();
         $quoteRequestTransfer = $this->getCompanyUserQuoteRequestByReference($quoteRequestReference);
+
+        if (!$quoteRequestClient->isQuoteRequestEditable($quoteRequestTransfer)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
+
+            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_DETAILS, [
+                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
+            ]);
+        }
 
         $quoteRequestForm = $this->getFactory()
             ->getQuoteRequestForm($quoteRequestTransfer)

@@ -9,12 +9,20 @@ export default class SourcePriceForm extends Component {
         this.input = <HTMLInputElement>this.querySelector(`.${this.jsName}__input-container .input`);
         this.inputContainer = <HTMLElement>this.querySelector(`.${this.jsName}__input-container`);
         this.checkbox = <HTMLInputElement>this.querySelector(`.${this.jsName}__checkbox-container .checkbox__input`);
+        this.setSourcePrice();
         this.mapEvents();
     }
 
     protected mapEvents(): void {
         this.input.addEventListener('input', (event: Event) => this.onInputType(event));
         this.checkbox.addEventListener('change', (event: Event) => this.onCheckboxChange(event));
+    }
+
+    protected setSourcePrice(): void {
+        if (this.sourcePrice.length > 0) {
+            this.inputValue = String(Number(this.sourcePrice));
+            this.inputContainer.classList.remove('is-hidden');
+        }
     }
 
     protected onInputType(event: Event): void {
@@ -32,6 +40,7 @@ export default class SourcePriceForm extends Component {
             return;
         }
 
+        this.setSourcePrice();
         this.inputContainer.classList.remove('is-hidden');
         this.input.focus();
     }
@@ -41,6 +50,13 @@ export default class SourcePriceForm extends Component {
      */
     get inputValueLength(): number {
         return this.input.value.length;
+    }
+
+    /**
+     * Gets the source price value of the product.
+     */
+    get sourcePrice(): string {
+        return this.getAttribute('price');
     }
 
     /**
