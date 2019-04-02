@@ -16,9 +16,9 @@ use Twig\TwigFunction;
 /**
  * @method \SprykerShop\Yves\ContentBannerWidget\ContentBannerWidgetFactory getFactory()
  */
-class ContentBannerWidgetTwigPlugin extends AbstractPlugin implements TwigPluginInterface
+class ContentBannerTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
-    protected const FUNCTION_NAME = 'cms_banner';
+    protected const FUNCTION_NAME = 'content_banner';
 
     /**
      * {@inheritdoc}
@@ -32,7 +32,7 @@ class ContentBannerWidgetTwigPlugin extends AbstractPlugin implements TwigPlugin
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        return $this->registerCmsBannerTwigFunction($twig, $container);
+        return $this->registerContentBannerTwigFunction($twig, $container);
     }
 
     /**
@@ -41,18 +41,18 @@ class ContentBannerWidgetTwigPlugin extends AbstractPlugin implements TwigPlugin
      *
      * @return \Twig\Environment
      */
-    protected function registerCmsBannerTwigFunction(Environment $twig, ContainerInterface $container): Environment
+    protected function registerContentBannerTwigFunction(Environment $twig, ContainerInterface $container): Environment
     {
         $twig->addFunction(
             static::FUNCTION_NAME,
             new TwigFunction(static::FUNCTION_NAME, function (int $idContent, ?string $template = null) use ($twig) {
                 $banner = $this->getFactory()->getContentBannerClient()->findBannerById($idContent, $this->getLocale());
-                $response = [
+                $context = [
                     'banner' => $banner,
                     'modifiers' => $template ? [$template] : [],
                 ];
 
-                return $twig->render($this->getTemplate(), $response);
+                return $twig->render($this->getTemplate(), $context);
             }, ['is_safe' => ['html']])
         );
 

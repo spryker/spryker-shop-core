@@ -4,7 +4,7 @@
     name: 'banner',
 } %}
 
-{% define modifiers = modifiers|length > 0 ? modifiers : ['default'] %}
+{% define modifiers = modifiers is not empty > 0 ? modifiers : ['default'] %}
 
 {% block body %}
     {% for modifier in modifiers %}
