@@ -20,9 +20,8 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param bool $isAddToCartDisabled
-     * @param array $quantityOptions
      */
-    public function __construct(ProductViewTransfer $productViewTransfer, bool $isAddToCartDisabled, array $quantityOptions = [])
+    public function __construct(ProductViewTransfer $productViewTransfer, bool $isAddToCartDisabled)
     {
         $salesUnits = null;
         $idBaseUnit = null;
@@ -55,7 +54,6 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
         $minQuantityInSalesUnits = $this->getMinQuantityInSalesUnits($minQuantityInBaseUnits, $salesUnits);
 
         $this->addParameter('product', $productViewTransfer)
-            ->addParameter('quantityOptions', $quantityOptions)
             ->addParameter('minQuantityInBaseUnits', $minQuantityInBaseUnits)
             ->addParameter('minQuantityInSalesUnits', $minQuantityInSalesUnits)
             ->addParameter('baseUnit', $baseUnit)

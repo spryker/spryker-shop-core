@@ -2,7 +2,6 @@
 
 {% define data = {
     product: _widget.product,
-    quantityOptions: _widget.quantityOptions,
     baseUnit: _widget.baseUnit | default,
     salesUnits: _widget.salesUnits | default([]),
     leadProductSalesUnits: _widget.leadProductSalesUnits | default([]),
@@ -15,6 +14,7 @@
     jsonScheme: _widget.jsonScheme | default(''),
     minQuantityInBaseUnit: _widget.minQuantityInBaseUnit,
     minQuantityInSalesUnits: _widget.minQuantityInSalesUnits,
+    minQuantity: 1
 } %}
 
 {% block body %}
@@ -41,7 +41,7 @@
                 <input id="sales-unit-quantity" class="input input--expand js-volume-price__quantity" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-quantity"/>
                 <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnit }}" name="quantity"/>
             {% else %}
-                <input class="input js-volume-price__quantity" name="quantity" />
+                <input class="input js-volume-price__quantity" name="quantity" value="{{ data.minQuantity }}"/>
             {% endif %}
         </div>
 
