@@ -17,9 +17,9 @@ use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductSto
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuickOrderClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientBridge;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilQuantityServiceBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilQuantityServiceBridge;
 
 class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
 {
