@@ -22,13 +22,12 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param bool $isAddToCartDisabled
-     * @param array $quantityOptions
      *
      * @return void
      */
-    public function initialize(ProductViewTransfer $productViewTransfer, bool $isAddToCartDisabled, array $quantityOptions = []): void
+    public function initialize(ProductViewTransfer $productViewTransfer, bool $isAddToCartDisabled): void
     {
-        $widget = new ManageProductMeasurementUnitWidget($productViewTransfer, $isAddToCartDisabled, $quantityOptions);
+        $widget = new ManageProductMeasurementUnitWidget($productViewTransfer, $isAddToCartDisabled);
 
         $this->parameters = $widget->getParameters();
     }
