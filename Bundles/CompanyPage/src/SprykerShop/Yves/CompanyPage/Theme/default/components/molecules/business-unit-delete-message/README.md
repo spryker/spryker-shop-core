@@ -1,11 +1,1 @@
-Displays a business unit removal confirmation dialog box.
-
-## Code sample
-
-```
-{% include molecule('business-unit-delete-message', 'CompanyPage') with {
-    data: {
-        companyBusinessUnit: companyBusinessUnit
-    }
-} only %}
-```
+Displays a confirmation dialog box for the business unit removal.

@@ -16,7 +16,6 @@
   "require-dev": {
     "spryker-shop/product-set-widget": "*",
     "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {

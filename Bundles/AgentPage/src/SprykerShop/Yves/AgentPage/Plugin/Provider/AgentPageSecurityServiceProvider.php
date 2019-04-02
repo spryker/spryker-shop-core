@@ -65,15 +65,15 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
                 'anonymous' => false,
                 'pattern' => $this->getConfig()->getAgentFirewallRegex(),
                 'form' => [
-                    'login_path' => '/agent/login',
-                    'check_path' => '/agent/login_check',
+                    'login_path' => $this->buildPathWithLocalePrefix('/agent/login', $selectedLanguage),
+                    'check_path' => $this->buildPathWithLocalePrefix('/agent/login_check', $selectedLanguage),
                     'username_parameter' => AgentLoginForm::FORM_NAME . '[' . AgentLoginForm::FIELD_EMAIL . ']',
                     'password_parameter' => AgentLoginForm::FORM_NAME . '[' . AgentLoginForm::FIELD_PASSWORD . ']',
                     'listener_class' => UsernamePasswordFormAuthenticationListener::class,
                 ],
                 'logout' => [
-                    'logout_path' => '/agent/logout',
-                    'target_url' => $this->buildLogoutTargetUrl($selectedLanguage),
+                    'logout_path' => $this->buildPathWithLocalePrefix('/agent/logout', $selectedLanguage),
+                    'target_url' => $this->buildPathWithLocalePrefix('/', $selectedLanguage),
                 ],
                 'users' => $app->share(function () {
                     return $this->getFactory()->createAgentUserProvider();
@@ -142,8 +142,12 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
      */
     protected function setSwitchUserEventSubscriber(Application $app): void
     {
-        $this->getDispatcher($app)->addSubscriber(
-            $this->getFactory()->createSwitchUserEventSubscriber()
+        $app['dispatcher'] = $app->share(
+            $app->extend('dispatcher', function (EventDispatcherInterface $eventDispatcher) {
+                $eventDispatcher->addSubscriber($this->getFactory()->createSwitchUserEventSubscriber());
+
+                return $eventDispatcher;
+            })
         );
     }
 
@@ -169,26 +173,17 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
     }
 
     /**
-     * @param string $selectedLanguage
+     * @param string $path
+     * @param string|null $prefixLocale
      *
      * @return string
      */
-    protected function buildLogoutTargetUrl($selectedLanguage)
+    protected function buildPathWithLocalePrefix(string $path, ?string $prefixLocale = null): string
     {
-        $logoutTarget = '/';
-        if ($selectedLanguage) {
-            $logoutTarget .= $selectedLanguage;
+        if ($prefixLocale !== null) {
+            $path = '/' . $prefixLocale . $path;
         }
-        return $logoutTarget;
-    }
 
-    /**
-     * @param \Silex\Application $app
-     *
-     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected function getDispatcher(Application $app): EventDispatcherInterface
-    {
-        return $app['dispatcher'];
+        return $path;
     }
 }

@@ -4,6 +4,7 @@
     name: 'quick-order-rows'
 } %}
 
+{# data.prices is deprecated and will be removed. Use data.rows[%index%].vars.value.sumPrice instead. #}
 {% define data = {
     rows: required,
     products: [],
@@ -13,7 +14,7 @@
 
 {% block body %}
 
-    <div class="grid grid--justify grid--middle {{config.name}}__row {{config.name}}__row--head">
+    <div class="grid grid--justify grid--middle {{ config.name }}__row {{ config.name }}__row--head">
         <div class="col col--sm-4 spacing spacing--inner">
             {{ 'quick-order.input-label.sku.name' | trans }}
         </div>
@@ -56,7 +57,7 @@
                 messages: row.vars.value.messages,
                 additionalColumns: data.additionalColumns,
                 product: product,
-                price: product is null ? null : data.prices[product.sku] | default(),
+                price: row.vars.value.sumPrice ?: (product is null ? null : data.prices[product.sku] | default()),
 
                 autocomplete: {
                     skuFieldName: row.vars.full_name,

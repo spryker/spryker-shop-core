@@ -48,7 +48,7 @@ class AgentPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addLogoutRoute()
     {
-        $this->createController('/{agent}/logout/deprecated', static::ROUTE_LOGOUT, 'AgentPage', 'Auth', 'logout')
+        $this->createController('/{agent}/logout', static::ROUTE_LOGOUT, 'AgentPage', 'Auth', 'logout')
             ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
             ->value('agent', 'agent');
 

@@ -1,6 +1,6 @@
 # RedirectPage Module
 
-{{ADD DESCRIPTION HERE}}
+RedirectPage module.
 
 ## Installation
 
