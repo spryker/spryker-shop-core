@@ -1,0 +1,35 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'banner',
+} %}
+
+{% define data = {
+    imageUrl: required,
+    title: required,
+    subtitle: required,
+    clickUrl: required,
+    altText: required
+} %}
+
+{% block body %}
+    <div class="col">
+        <a href="{{ data.clickUrl | raw }}">
+            <div class="box box--stretch">
+                {% if attributes.template == 'bottom-align' %}
+                    <h5>{{ data.title | escape }}</h5>
+                {% endif %}
+
+                <span>
+                    <img src="{{ data.imageUrl | raw }}" alt="{{ data.altText | escape }}" />
+                </span>
+
+                {% if attributes.template is empty %}
+                    <h5>{{ data.title | escape }}</h5>
+                {% endif %}
+
+                <p>{{ data.subtitle | escape }}</p>
+            </div>
+        </a>
+    </div>
+{% endblock %}

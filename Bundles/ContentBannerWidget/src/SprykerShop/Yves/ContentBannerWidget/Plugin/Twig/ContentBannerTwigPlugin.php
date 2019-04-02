@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ContentBannerWidget\Plugin\Twig;
 
+use Exception;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
@@ -46,17 +47,41 @@ class ContentBannerTwigPlugin extends AbstractPlugin implements TwigPluginInterf
         $twig->addFunction(
             static::FUNCTION_NAME,
             new TwigFunction(static::FUNCTION_NAME, function (int $idContent, ?string $template = null) use ($twig) {
-                $banner = $this->getFactory()->getContentBannerClient()->findBannerById($idContent, $this->getLocale());
-                $context = [
-                    'banner' => $banner,
-                    'modifiers' => $template ? [$template] : [],
-                ];
+                try {
+                    $banner = $this->getFactory()->getContentBannerClient()->findBannerById($idContent, $this->getLocale());
 
-                return $twig->render($this->getTemplate(), $context);
+                    if (!$banner) {
+                        return '<!-- Content Banner with ID ' . $idContent . ' not found. -->';
+                    }
+
+                    $context = [
+                        'banner' => $banner,
+                        'template' => $template,
+                        'modifiers' => $this->getModifiers($template),
+                    ];
+
+                    return $twig->render($this->getTemplate(), $context);
+                } catch (Exception $e) {
+                    return '<!-- ' . $e->getMessage() . ' -->';
+                }
             }, ['is_safe' => ['html']])
         );
 
         return $twig;
+    }
+
+    /**
+     * @param string|null $template
+     *
+     * @return array
+     */
+    protected function getModifiers(?string $template = null): array
+    {
+        if (!$template) {
+            return [];
+        }
+
+        return ['vertical'];
     }
 
     /**
