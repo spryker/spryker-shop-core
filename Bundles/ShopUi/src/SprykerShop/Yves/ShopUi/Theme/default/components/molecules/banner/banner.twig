@@ -24,7 +24,7 @@
                     <img src="{{ data.imageUrl | raw }}" alt="{{ data.altText | escape }}" />
                 </span>
 
-                {% if attributes.template is empty %}
+                {% if attributes.template is empty or attributes.template == 'default' %}
                     <h5>{{ data.title | escape }}</h5>
                 {% endif %}
 

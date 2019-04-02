@@ -20,6 +20,7 @@ use Twig\TwigFunction;
 class ContentBannerTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     protected const FUNCTION_NAME = 'content_banner';
+    protected const TEMPLATE_PATH = '@ContentBannerWidget/views/banner/banner.twig';
 
     /**
      * {@inheritdoc}
@@ -57,7 +58,6 @@ class ContentBannerTwigPlugin extends AbstractPlugin implements TwigPluginInterf
                     $context = [
                         'banner' => $banner,
                         'template' => $template,
-                        'modifiers' => $this->getModifiers($template),
                     ];
 
                     return $twig->render($this->getTemplate(), $context);
@@ -71,24 +71,10 @@ class ContentBannerTwigPlugin extends AbstractPlugin implements TwigPluginInterf
     }
 
     /**
-     * @param string|null $template
-     *
-     * @return array
-     */
-    protected function getModifiers(?string $template = null): array
-    {
-        if (!$template) {
-            return [];
-        }
-
-        return ['vertical'];
-    }
-
-    /**
      * @return string
      */
     protected function getTemplate(): string
     {
-        return '@ContentBannerWidget/views/banner/banner.twig';
+        return static::TEMPLATE_PATH;
     }
 }
