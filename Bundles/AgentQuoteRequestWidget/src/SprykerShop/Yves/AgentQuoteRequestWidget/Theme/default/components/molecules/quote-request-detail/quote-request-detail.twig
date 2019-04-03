@@ -33,7 +33,9 @@
             <p class="request-status request-status--{{ data.quoteRequest.status }}">
                 {{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}
             </p>
-            <div><strong>{{ cart.totals.grandTotal | default(0) | money(true, cart.currency.code) }}</strong></div>
+            <div>
+                <strong>{{ cart.totals.grandTotal | default(0) | money(true, cart.currency ? cart.currency.code : '') }}</strong>
+            </div>
         </div>
     </div>
 {% endblock %}
