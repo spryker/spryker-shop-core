@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
@@ -20,14 +21,19 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class QuoteRequestViewController extends QuoteRequestAbstractController
 {
+    protected const PARAM_PAGE = 'page';
+    protected const DEFAULT_PAGE = 1;
+    protected const DEFAULT_MAX_PER_PAGE = 10;
     protected const PARAM_QUOTE_REQUEST_VERSION_REFERENCE = 'quote-request-version-reference';
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function indexAction(): View
+    public function indexAction(Request $request): View
     {
-        $viewData = $this->executeIndexAction();
+        $viewData = $this->executeIndexAction($request);
 
         return $this->view($viewData, [], '@QuoteRequestPage/views/quote-request-view/quote-request-view.twig');
     }
@@ -46,20 +52,27 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return array
      */
-    protected function executeIndexAction(): array
+    protected function executeIndexAction(Request $request): array
     {
         $companyUserTransfer = $this->getFactory()
             ->getCompanyUserClient()
             ->findCompanyUser();
 
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setCompanyUser($companyUserTransfer)
+            ->setPagination($this->getPaginationTransfer($request));
+
         $quoteRequestCollectionTransfer = $this->getFactory()
             ->getQuoteRequestClient()
-            ->getQuoteRequestCollectionByFilter((new QuoteRequestFilterTransfer())->setCompanyUser($companyUserTransfer));
+            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
 
         return [
             'quoteRequests' => $quoteRequestCollectionTransfer->getQuoteRequests(),
+            'pagination' => $quoteRequestCollectionTransfer->getPagination(),
         ];
     }
 
@@ -160,5 +173,17 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
         }
 
         return $versionReferences;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\PaginationTransfer
+     */
+    protected function getPaginationTransfer(Request $request): PaginationTransfer
+    {
+        return (new PaginationTransfer())
+            ->setPage($request->query->getInt(static::PARAM_PAGE, static::DEFAULT_PAGE))
+            ->setMaxPerPage(static::DEFAULT_MAX_PER_PAGE);
     }
 }

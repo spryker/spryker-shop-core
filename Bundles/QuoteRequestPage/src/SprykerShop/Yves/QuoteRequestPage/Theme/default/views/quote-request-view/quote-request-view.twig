@@ -1,7 +1,15 @@
 {% extends template('page-layout-quote-request', 'QuoteRequestPage') %}
 
 {% define data = {
-    quoteRequests: _view.quoteRequests
+    quoteRequests: _view.quoteRequests,
+
+    pagination: {
+        parameters: {},
+        currentPage: _view.pagination.page,
+        paginationPath: 'quote-request',
+        maxPage: _view.pagination.lastPage,
+        showAlwaysFirstAndLast: true
+    },
 } %}
 
 {% block customerContent %}
@@ -11,6 +19,10 @@
                 data: {
                     quoteRequests: data.quoteRequests,
                 }
+            } only %}
+            <hr/>
+            {% include molecule('pagination') with {
+                data: data.pagination
             } only %}
         {% else %}
             {{ 'quote_request_page.quote_request.view.empty' | trans }}
