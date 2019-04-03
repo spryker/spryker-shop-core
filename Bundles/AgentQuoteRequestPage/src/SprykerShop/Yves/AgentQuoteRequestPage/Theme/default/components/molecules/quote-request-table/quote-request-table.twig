@@ -39,7 +39,7 @@
                     {{ quoteRequest.companyUser.customer.firstName ~ ' ' ~ quoteRequest.companyUser.customer.lastName }}
                 </td>
                 <td class="text-center">
-                    <strong>{{ quoteRequest.latestVersion.quote.totals.grandTotal | default(0) | money }}</strong>
+                    <strong>{{ quoteRequest.latestVersion.quote.totals.grandTotal | default(0) | money(true, quoteRequest.latestVersion.quote.currency.code) }}</strong>
                 </td>
                 <td class="text-center">{{ quoteRequest.createdAt | date('d.m.Y H:i:s') }}</td>
                 <td class="text-center">

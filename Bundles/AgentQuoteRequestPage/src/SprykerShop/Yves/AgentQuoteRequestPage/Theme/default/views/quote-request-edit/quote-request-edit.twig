@@ -85,6 +85,15 @@
     </div>
     <div class="grid">
         <div class="col col--sm-12 col--xl-8">
+            {% if cart and cart.priceMode is not empty %}
+                <div class="box">
+                    {% include molecule('price-mode') with {
+                        data: {
+                            priceMode: cart.priceMode
+                        }
+                    } only %}
+                </div>
+            {% endif %}
             {% for itemChild in data.quoteRequestForm.latestVersion.quote.items %}
                 {% set cartItem = itemChild.vars.value %}
                 {% embed molecule('quote-request-cart-item', 'CartPage') with {
@@ -92,6 +101,7 @@
                     data: {
                         priceMode: cart.priceMode,
                         cartItem: cartItem,
+                        currency: cart.currency,
                         itemChild: itemChild,
                     }
                 } only %}

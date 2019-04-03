@@ -8,6 +8,7 @@
 {% define data = {
     priceMode: required,
     cartItem: required,
+    currency: required,
 } %}
 
 {% block body %}
@@ -32,8 +33,8 @@
             {% include molecule('quote-request-item-summary', 'CartPage') with {
                 data: {
                     priceMode: data.priceMode,
-                    unitPrice: data.cartItem.unitPrice | money,
-                    subtotalPrice: data.cartItem.sumSubtotalAggregation | money,
+                    unitPrice: data.cartItem.unitPrice | money(true, data.currency.code),
+                    subtotalPrice: data.cartItem.sumSubtotalAggregation | money(true, data.currency.code),
                     cartItem: data.cartItem
                 }
             } only %}

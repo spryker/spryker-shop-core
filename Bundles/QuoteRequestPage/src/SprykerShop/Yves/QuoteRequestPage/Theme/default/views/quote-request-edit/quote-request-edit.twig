@@ -82,12 +82,22 @@
         </div>
         <div class="grid">
             <div class="col col--sm-12 col--xl-8">
+                {% if cart and cart.priceMode is not empty %}
+                    <div class="box">
+                        {% include molecule('price-mode') with {
+                            data: {
+                                priceMode: cart.priceMode
+                            }
+                        } only %}
+                    </div>
+                {% endif %}
                 {% for cartItem in cart.items %}
                     {% include molecule('quote-request-cart-item', 'CartPage') with {
                         class: 'box',
                         data: {
                             priceMode: cart.priceMode,
-                            cartItem: cartItem
+                            cartItem: cartItem,
+                            currency: cart.currency,
                         }
                     } only %}
                 {% endfor %}

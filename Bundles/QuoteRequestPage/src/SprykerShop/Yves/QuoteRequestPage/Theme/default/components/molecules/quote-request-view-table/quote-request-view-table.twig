@@ -31,7 +31,7 @@
                 </td>
                 <td class="text-center">
                     {% if (quoteRequest.latestVisibleVersion) %}
-                        <strong>{{ quoteRequest.latestVisibleVersion.quote.totals.grandTotal | default(0) | money }}</strong>
+                        <strong>{{ quoteRequest.latestVisibleVersion.quote.totals.grandTotal | default(0) | money(true, quoteRequest.latestVersion.quote.currency.code) }}</strong>
                     {% endif %}
                 </td>
                 <td class="text-center">{{ quoteRequest.createdAt | date('d.m.Y H:i:s') }}</td>
