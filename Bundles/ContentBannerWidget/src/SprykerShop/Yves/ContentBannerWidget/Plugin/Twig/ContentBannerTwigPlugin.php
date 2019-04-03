@@ -20,7 +20,11 @@ use Twig\TwigFunction;
 class ContentBannerTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     protected const FUNCTION_NAME = 'content_banner';
-    protected const TEMPLATE_PATH = '@ContentBannerWidget/views/banner/banner.twig';
+
+    protected const TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+    protected const TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
+
+    protected const MESSAGE_BANNER_NOT_FOUND = 'Content Product Abstract with ID %s not found.';
 
     /**
      * {@inheritdoc}
@@ -38,6 +42,17 @@ class ContentBannerTwigPlugin extends AbstractPlugin implements TwigPluginInterf
     }
 
     /**
+     * @return array
+     */
+    public function getAvailableTemplates(): array
+    {
+        return [
+            static::TEMPLATE_IDENTIFIER_DEFAULT => '@ContentBannerWidget/views/banner/banner.twig',
+            static::TEMPLATE_IDENTIFIER_TOP_TITLE => '@ContentBannerWidget/views/banner/banner-top-title.twig',
+        ];
+    }
+
+    /**
      * @param \Twig\Environment $twig
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
@@ -47,23 +62,23 @@ class ContentBannerTwigPlugin extends AbstractPlugin implements TwigPluginInterf
     {
         $twig->addFunction(
             static::FUNCTION_NAME,
-            new TwigFunction(static::FUNCTION_NAME, function (int $idContent, ?string $template = null) use ($twig) {
+            new TwigFunction(static::FUNCTION_NAME, function (int $idContent, ?string $templateIdentifier = null) use ($twig) {
                 try {
-                    $banner = $this->getFactory()->getContentBannerClient()->findBannerById($idContent, $this->getLocale());
+                    $contentBannerTypeTransfer = $this->getFactory()
+                        ->getContentBannerClient()
+                        ->findBannerById($idContent, $this->getLocale());
 
-                    if (!$banner) {
-                        return '<!-- Content Banner with ID ' . $idContent . ' not found. -->';
+                    if (!$contentBannerTypeTransfer) {
+                        return '<!-- ' . sprintf(static::MESSAGE_BANNER_NOT_FOUND, $idContent) . ' -->';
                     }
-
-                    $context = [
-                        'banner' => $banner,
-                        'template' => $template,
-                    ];
-
-                    return $twig->render($this->getTemplate(), $context);
                 } catch (Exception $e) {
                     return '<!-- ' . $e->getMessage() . ' -->';
                 }
+
+                return $twig->render($this->resolveTemplatePath($templateIdentifier), [
+                    'banner' => $contentBannerTypeTransfer,
+                ]);
+
             }, ['is_safe' => ['html']])
         );
 
@@ -71,10 +86,16 @@ class ContentBannerTwigPlugin extends AbstractPlugin implements TwigPluginInterf
     }
 
     /**
+     * @param string|null $templateIdentifier
+     *
      * @return string
      */
-    protected function getTemplate(): string
+    protected function resolveTemplatePath(?string $templateIdentifier = null): string
     {
-        return static::TEMPLATE_PATH;
+        if (!$templateIdentifier || !isset($this->getAvailableTemplates()[$templateIdentifier])) {
+            $templateIdentifier = static::TEMPLATE_IDENTIFIER_DEFAULT;
+        }
+
+        return $this->getAvailableTemplates()[$templateIdentifier];
     }
 }

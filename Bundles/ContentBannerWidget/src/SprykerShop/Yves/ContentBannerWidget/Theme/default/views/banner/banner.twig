@@ -1,16 +1,9 @@
-{% block body %}
-
-    {% include molecule('banner') with {
-        attributes: {
-            template: template | default('default')
-        },
-        data: {
-            imageUrl: banner.imageUrl,
-            title: banner.title,
-            subtitle: banner.subtitle,
-            clickUrl: banner.clickUrl,
-            altText: banner.altText
-        }
-    } only %}
-
-{% endblock %}
+{% include molecule('banner') with {
+    data: {
+        imageUrl: banner.imageUrl,
+        title: banner.title,
+        subtitle: banner.subtitle,
+        clickUrl: banner.clickUrl,
+        altText: banner.altText
+    }
+} only %}
