@@ -56,9 +56,11 @@ export default abstract class Component extends HTMLElement {
      * {@link https://developer.mozilla.org/en-US/docs/Web/Web_Components/
      * Using_custom_elements#Using_the_lifecycle_callbacks}
      */
+    /* tslint:disable: deprecation */
     mountCallback(): void {
         this.readyCallback();
     }
+    /* tslint:enable */
 
     /**
      * Gets if the component has beed mounted already.
