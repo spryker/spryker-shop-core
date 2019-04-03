@@ -1,14 +1,9 @@
+/* tslint:disable: max-file-line-count */
 import Component from '../../../models/component';
 import AjaxProvider from '../../../components/molecules/ajax-provider/ajax-provider';
 import debounce from 'lodash-es/debounce';
 
-export enum Events {
-    FETCHING = 'fetching',
-    FETCHED = 'fetched',
-    CHANGE = 'change',
-    SET = 'set',
-    UNSET = 'unset'
-}
+export enum Events {FETCHING = 'fetching', FETCHED = 'fetched', CHANGE = 'change', SET = 'set', UNSET = 'unset'}
 
 /**
  * @event fetching An event which is triggered when an ajax request is sent to the server.
@@ -67,12 +62,9 @@ export default class AutocompleteForm extends Component {
         this.textInput.addEventListener('blur', debounce(() => this.onBlur(), this.debounceDelay));
         this.textInput.addEventListener('focus', () => this.onFocus());
         this.textInput.addEventListener('keydown', event => this.onKeyDown(event));
-
-        if (!this.cleanButton) {
-            return;
+        if (this.cleanButton) {
+            this.cleanButton.addEventListener('click', () => this.onCleanButtonClick());
         }
-
-        this.cleanButton.addEventListener('click', () => this.onCleanButtonClick());
     }
 
     protected onCleanButtonClick(): void {
@@ -88,19 +80,16 @@ export default class AutocompleteForm extends Component {
         if (this.inputText.length < this.minLetters) {
             return;
         }
-
         this.showSuggestions();
     }
 
     protected onInput(): void {
         this.dispatchCustomEvent(Events.CHANGE);
-
         if (this.inputText.length >= this.minLetters) {
             this.loadSuggestions();
 
             return;
         }
-
         this.hideSuggestions();
         if (!!this.inputValue) {
             this.inputValue = '';
@@ -123,7 +112,6 @@ export default class AutocompleteForm extends Component {
         this.dispatchCustomEvent(Events.FETCHING);
         this.showSuggestions();
         this.ajaxProvider.queryParams.set(this.queryString, this.inputText);
-
         await this.ajaxProvider.fetch();
         this.suggestionItems = Array.from(this.suggestionsContainer.querySelectorAll(this.suggestedItemSelector));
         this.lastSelectedItem = this.suggestionItems[0];
@@ -143,11 +131,7 @@ export default class AutocompleteForm extends Component {
         const targetElement = <HTMLElement>event.target;
         this.inputText = targetElement.textContent.trim();
         this.inputValue = targetElement.getAttribute(this.valueAttributeName);
-
-        this.dispatchCustomEvent(Events.SET, {
-            text: this.inputText,
-            value: this.inputValue
-        });
+        this.dispatchCustomEvent(Events.SET, {text: this.inputText, value: this.inputValue});
     }
 
     protected onItemSelected(event: Event): void {
@@ -165,20 +149,10 @@ export default class AutocompleteForm extends Component {
         if (!this.suggestionItems && this.inputText.length < this.minLetters) {
             return;
         }
-
         switch (event.key) {
-            case 'ArrowUp':
-                event.preventDefault();
-                this.onKeyDownArrowUp();
-                break;
-            case 'ArrowDown':
-                event.preventDefault();
-                this.onKeyDownArrowDown();
-                break;
-            case 'Enter':
-                event.preventDefault();
-                this.onKeyDownEnter();
-                break;
+            case 'ArrowUp': this.onKeyDownArrowUp(); break;
+            case 'ArrowDown': this.onKeyDownArrowDown(); break;
+            case 'Enter': this.onKeyDownEnter(); break;
         }
     }
 
@@ -187,7 +161,6 @@ export default class AutocompleteForm extends Component {
         const elementIndex = lastSelectedItemIndex - 1;
         const lastSuggestionItemIndex = this.suggestionItems.length - 1;
         const item = this.suggestionItems[elementIndex < 0 ? lastSuggestionItemIndex : elementIndex];
-
         this.changeSelectedItem(item);
     }
 
@@ -196,7 +169,6 @@ export default class AutocompleteForm extends Component {
         const elementIndex = lastSelectedItemIndex + 1;
         const lastSuggestionItemIndex = this.suggestionItems.length - 1;
         const item = this.suggestionItems[elementIndex > lastSuggestionItemIndex ? 0 : elementIndex];
-
         this.changeSelectedItem(item);
     }
 
