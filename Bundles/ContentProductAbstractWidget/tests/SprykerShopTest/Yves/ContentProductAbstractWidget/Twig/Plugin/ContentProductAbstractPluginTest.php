@@ -17,7 +17,7 @@ use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\ContentProductAbstractWidget\ContentProductAbstractWidgetDependencyProvider;
 use SprykerShop\Yves\ContentProductAbstractWidget\Dependency\Client\ContentProductAbstractWidgetToContentProductClientBridgeInterface;
 use SprykerShop\Yves\ContentProductAbstractWidget\Dependency\Client\ContentProductAbstractWidgetToProductStorageClientBridgeInterface;
-use SprykerShop\Yves\ContentProductAbstractWidget\Plugin\ContentProductAbstractPlugin;
+use SprykerShop\Yves\ContentProductAbstractWidget\Plugin\ContentProductAbstractListTwigPlugin;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Loader\FilesystemLoader;
@@ -28,10 +28,10 @@ use Twig\Loader\FilesystemLoader;
  * @group Yves
  * @group Client
  * @group Plugin
- * @group ContentProductAbstractPluginTest
+ * @group ContentProductAbstractListTwigPluginTest
  * Add your own group annotations below this line
  */
-class ContentProductAbstractPluginTest extends Unit
+class ContentProductAbstractListTwigPluginTest extends Unit
 {
     protected const STORE = 'de_DE';
 
@@ -39,7 +39,7 @@ class ContentProductAbstractPluginTest extends Unit
     protected const CONTENT_TERM = 'TERM';
 
     /**
-     * @var \SprykerShop\Yves\ContentProductAbstractWidget\Plugin\ContentProductAbstractPlugin
+     * @var \SprykerShop\Yves\ContentProductAbstractWidget\Plugin\ContentProductAbstractListTwigPlugin
      */
     protected $twigPlugin;
 
@@ -75,11 +75,11 @@ class ContentProductAbstractPluginTest extends Unit
      */
     public function testContentProductAbstractNotFound(): void
     {
-        $contentProductAbstractPlugin = $this->getContentProductAbstractPlugin();
-        $productAbstractContent = call_user_func($contentProductAbstractPlugin->getCallable(), static::CONTENT_ID, null);
+        $ContentProductAbstractListTwigPlugin = $this->getContentProductAbstractListTwigPlugin();
+        $productAbstractContent = call_user_func($ContentProductAbstractListTwigPlugin->getCallable(), static::CONTENT_ID, null);
 
         $this->assertEquals(
-            sprintf(ContentProductAbstractPlugin::CONTENT_NOT_FOUND_MESSAGE_TEMPLATE, static::CONTENT_ID),
+            sprintf(ContentProductAbstractListTwigPlugin::CONTENT_NOT_FOUND_MESSAGE_TEMPLATE, static::CONTENT_ID),
             $productAbstractContent
         );
     }
@@ -94,11 +94,11 @@ class ContentProductAbstractPluginTest extends Unit
         $contentTypeContextTransfer->setTerm(static::CONTENT_TERM);
         $this->setContentProductClientException();
 
-        $contentProductAbstractPlugin = $this->getContentProductAbstractPlugin();
-        $productAbstractContent = call_user_func($contentProductAbstractPlugin->getCallable(), static::CONTENT_ID, null);
+        $ContentProductAbstractListTwigPlugin = $this->getContentProductAbstractListTwigPlugin();
+        $productAbstractContent = call_user_func($ContentProductAbstractListTwigPlugin->getCallable(), static::CONTENT_ID, null);
 
         $this->assertEquals(
-            sprintf(ContentProductAbstractPlugin::CONTENT_WRONG_TYPE_TEMPLATE, ContentProductAbstractPlugin::FUNCTION_CMS_CONTENT_PRODUCT_ABSTRACT, static::CONTENT_ID),
+            sprintf(ContentProductAbstractListTwigPlugin::CONTENT_WRONG_TYPE_TEMPLATE, ContentProductAbstractListTwigPlugin::FUNCTION_CMS_CONTENT_PRODUCT_ABSTRACT, static::CONTENT_ID),
             $productAbstractContent
         );
     }
@@ -114,9 +114,9 @@ class ContentProductAbstractPluginTest extends Unit
         $this->setContentProductClientReturn($contentTypeContextTransfer);
         $this->setProductStorageClientReturn();
 
-        $contentProductAbstractPlugin = $this->getContentProductAbstractPlugin();
+        $ContentProductAbstractListTwigPlugin = $this->getContentProductAbstractListTwigPlugin();
         $this->expectException(LoaderError::class);
-        $productAbstractContent = call_user_func($contentProductAbstractPlugin->getCallable(), static::CONTENT_ID, null);
+        $productAbstractContent = call_user_func($ContentProductAbstractListTwigPlugin->getCallable(), static::CONTENT_ID, null);
     }
 
     /**
@@ -155,9 +155,9 @@ class ContentProductAbstractPluginTest extends Unit
     /**
      * @return bool|\Twig\TwigFunction
      */
-    protected function getContentProductAbstractPlugin()
+    protected function getContentProductAbstractListTwigPlugin()
     {
-        return $this->getTwig()->getFunction(ContentProductAbstractPlugin::FUNCTION_CMS_CONTENT_PRODUCT_ABSTRACT);
+        return $this->getTwig()->getFunction(ContentProductAbstractListTwigPlugin::FUNCTION_CMS_CONTENT_PRODUCT_ABSTRACT);
     }
 
     /**
@@ -171,11 +171,11 @@ class ContentProductAbstractPluginTest extends Unit
     }
 
     /**
-     * @return \SprykerShop\Yves\ContentProductAbstractWidget\Plugin\ContentProductAbstractPlugin
+     * @return \SprykerShop\Yves\ContentProductAbstractWidget\Plugin\ContentProductAbstractListTwigPlugin
      */
-    protected function createTwigPlugin(): ContentProductAbstractPlugin
+    protected function createTwigPlugin(): ContentProductAbstractListTwigPlugin
     {
-        return new ContentProductAbstractPlugin();
+        return new ContentProductAbstractListTwigPlugin();
     }
 
     /**
