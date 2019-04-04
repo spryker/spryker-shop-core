@@ -61,7 +61,11 @@ export default class AutocompleteForm extends Component {
         this.valueInput = <HTMLInputElement>this.querySelector(`.${this.jsName}__value-input`);
         this.suggestionsContainer = <HTMLElement>this.querySelector(`.${this.jsName}__suggestions`);
         this.cleanButton = <HTMLButtonElement>this.querySelector(`.${this.jsName}__clean-button`);
-        if (this.autoInitEnabled) this.autoLoadInit();
+
+        if (this.autoInitEnabled) {
+            this.autoLoadInit();
+        }
+
         this.mapEvents();
     }
 
