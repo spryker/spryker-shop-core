@@ -627,28 +627,4 @@ class QuickOrderController extends AbstractController
             ->createViewDataTransformer()
             ->transformProductData($productConcreteTransfers, $this->getFactory()->getQuickOrderFormColumnPlugins());
     }
-
-    /**
-     * @param float $before
-     * @param float $after
-     *
-     * @return bool
-     */
-    protected function getIsQuantityAdjusted($before, $after): bool
-    {
-        return $before !== null && !$this->isQuantityEqual($before, $after);
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return float
-     */
-    protected function isQuantityEqual(float $firstQuantity, float $secondQuantity): float
-    {
-        return $this->getFactory()
-            ->getUtilQuantityService()
-            ->isQuantityEqual($firstQuantity, $secondQuantity);
-    }
 }

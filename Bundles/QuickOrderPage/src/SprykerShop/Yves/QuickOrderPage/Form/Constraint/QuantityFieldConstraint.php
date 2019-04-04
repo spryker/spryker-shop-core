@@ -14,11 +14,6 @@ class QuantityFieldConstraint extends SymfonyConstraint
     protected const MESSAGE = 'quick-order.errors.quantity-required';
 
     /**
-     * @var \SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
      * @return string|array One or more constant values
      */
     public function getTargets()

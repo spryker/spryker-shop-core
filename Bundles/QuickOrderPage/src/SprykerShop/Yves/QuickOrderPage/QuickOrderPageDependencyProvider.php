@@ -19,7 +19,6 @@ use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClien
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilCsvServiceInterface;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Service\QuickOrderPageToUtilQuantityServiceBridge;
 
 class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -63,26 +62,6 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductStorageClient($container);
         $container = $this->addPriceProductStorageClient($container);
         $container = $this->addProductQuantityStorageClient($container);
-        $container = $this->addUtilQuantityService($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addUtilQuantityService(Container $container): Container
-    {
-        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
-            return new QuickOrderPageToUtilQuantityServiceBridge(
-                $container->getLocator()->utilQuantity()->service()
-            );
-        };
-        $container = $this->addQuickOrderFileTemplatePlugins($container);
-        $container = $this->addQuickOrderUploadedFileParserPlugins($container);
-        $container = $this->addQuickOrderUploadedFileValidatorPlugins($container);
 
         return $container;
     }
