@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToAgentQuoteRequestClientInterface;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToCartClientInterface;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToCompanyUserClientInterface;
+use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToCustomerClientInterface;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToPersistentCartClientInterface;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToQuoteRequestClientInterface;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Form\AgentQuoteRequestCartForm;
@@ -112,5 +113,13 @@ class AgentQuoteRequestWidgetFactory extends AbstractFactory
     public function getCompanyUserClient(): AgentQuoteRequestWidgetToCompanyUserClientInterface
     {
         return $this->getProvidedDependency(AgentQuoteRequestWidgetDependencyProvider::CLIENT_COMPANY_USER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client\AgentQuoteRequestWidgetToCustomerClientInterface
+     */
+    public function getCustomerClient(): AgentQuoteRequestWidgetToCustomerClientInterface
+    {
+        return $this->getProvidedDependency(AgentQuoteRequestWidgetDependencyProvider::CLIENT_CUSTOMER);
     }
 }

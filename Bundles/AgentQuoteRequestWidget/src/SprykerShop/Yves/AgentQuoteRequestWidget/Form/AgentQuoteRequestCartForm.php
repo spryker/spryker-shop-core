@@ -19,9 +19,9 @@ class AgentQuoteRequestCartForm extends AbstractType
     public const SUBMIT_BUTTON_SAVE_AND_BACK = 'saveAndBack';
 
     /**
-     * @uses \SprykerShop\Yves\AgentQuoteRequestWidget\Plugin\Provider\AgentQuoteRequestWidgetControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_CART
+     * @uses \SprykerShop\Yves\AgentQuoteRequestWidget\Plugin\Provider\AgentQuoteRequestWidgetControllerProvider::ROUTE_AGENT_QUOTE_REQUEST_SAVE_CART
      */
-    protected const ROUTE_AGENT_QUOTE_REQUEST_CART = '/agent/quote-request/cart';
+    protected const ROUTE_AGENT_QUOTE_REQUEST_SAVE_CART = '/agent/quote-request/cart/save';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -31,6 +31,6 @@ class AgentQuoteRequestCartForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->setAction(static::ROUTE_AGENT_QUOTE_REQUEST_CART);
+        $builder->setAction(static::ROUTE_AGENT_QUOTE_REQUEST_SAVE_CART);
     }
 }

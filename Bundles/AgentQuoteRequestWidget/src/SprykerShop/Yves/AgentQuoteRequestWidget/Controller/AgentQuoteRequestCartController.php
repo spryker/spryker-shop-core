@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\AgentQuoteRequestWidget\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
-use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\AgentQuoteRequestWidget\Form\AgentQuoteRequestCartForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -41,7 +40,29 @@ class AgentQuoteRequestCartController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(Request $request): RedirectResponse
+    public function saveAction(Request $request): RedirectResponse
+    {
+        $response = $this->executeSaveAction($request);
+
+        return $response;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function clearAction(): RedirectResponse
+    {
+        $response = $this->executeClearAction();
+
+        return $response;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeSaveAction(Request $request): RedirectResponse
     {
         $agentQuoteRequestCartForm = $this->getFactory()
             ->getAgentQuoteRequestCartForm()
@@ -59,7 +80,7 @@ class AgentQuoteRequestCartController extends AbstractController
             $this->handleResponseErrors($quoteRequestResponseTransfer);
 
             if ($request->get(AgentQuoteRequestCartForm::SUBMIT_BUTTON_SAVE_AND_BACK) !== null) {
-                $this->reloadQuoteForCustomer($quoteRequestResponseTransfer->getQuoteRequest());
+                $this->reloadQuoteForCustomer();
 
                 return $this->redirectResponseInternal(static::ROUTE_AGENT_QUOTE_REQUEST_EDIT, [
                     static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
@@ -68,6 +89,22 @@ class AgentQuoteRequestCartController extends AbstractController
         }
 
         return $this->redirectResponseInternal(static::ROUTE_CART);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeClearAction(): RedirectResponse
+    {
+        $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
+
+        if ($quoteTransfer->getQuoteRequestReference()) {
+            $this->reloadQuoteForCustomer();
+        }
+
+        return $this->redirectResponseInternal(static::ROUTE_AGENT_QUOTE_REQUEST_EDIT, [
+            static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteTransfer->getQuoteRequestReference(),
+        ]);
     }
 
     /**
@@ -83,14 +120,18 @@ class AgentQuoteRequestCartController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
      * @return void
      */
-    protected function reloadQuoteForCustomer(QuoteRequestTransfer $quoteRequestTransfer): void
+    protected function reloadQuoteForCustomer(): void
     {
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        if (!$customerTransfer) {
+            return;
+        }
+
         $this->getFactory()
             ->getPersistentCartClient()
-            ->reloadQuoteForCustomer($quoteRequestTransfer->getCompanyUser()->getCustomer());
+            ->reloadQuoteForCustomer($customerTransfer);
     }
 }

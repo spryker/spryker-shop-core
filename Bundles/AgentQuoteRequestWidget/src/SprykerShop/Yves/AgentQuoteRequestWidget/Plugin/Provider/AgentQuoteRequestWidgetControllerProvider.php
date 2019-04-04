@@ -12,7 +12,8 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class AgentQuoteRequestWidgetControllerProvider extends AbstractYvesControllerProvider
 {
-    protected const ROUTE_AGENT_QUOTE_REQUEST_CART = 'agent/quote-request/cart';
+    protected const ROUTE_AGENT_QUOTE_REQUEST_SAVE_CART = 'agent/quote-request/cart/save';
+    protected const ROUTE_AGENT_QUOTE_REQUEST_CLEAR_CART = 'agent/quote-request/cart/clear';
     protected const ROUTE_AGENT_COMPANY_USER_AUTOCOMPLETE = 'agent/company-user-autocomplete';
 
     /**
@@ -22,18 +23,33 @@ class AgentQuoteRequestWidgetControllerProvider extends AbstractYvesControllerPr
      */
     protected function defineControllers(Application $app): void
     {
-        $this->addQuoteRequestItemsRoute()
+        $this->addQuoteRequestSaveCartRoute()
+            ->addQuoteRequestClearCartRoute()
             ->addCompanyUserAutocompleteRoute();
     }
 
     /**
-     * @uses \SprykerShop\Yves\AgentQuoteRequestWidget\Controller\AgentQuoteRequestCartController::indexAction()
+     * @uses \SprykerShop\Yves\AgentQuoteRequestWidget\Controller\AgentQuoteRequestCartController::saveAction()
      *
      * @return $this
      */
-    protected function addQuoteRequestItemsRoute()
+    protected function addQuoteRequestSaveCartRoute()
     {
-        $this->createController('/{agent}/quote-request/cart', static::ROUTE_AGENT_QUOTE_REQUEST_CART, 'AgentQuoteRequestWidget', 'AgentQuoteRequestCart', 'index')
+        $this->createController('/{agent}/quote-request/cart/save', static::ROUTE_AGENT_QUOTE_REQUEST_SAVE_CART, 'AgentQuoteRequestWidget', 'AgentQuoteRequestCart', 'save')
+            ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
+            ->value('agent', 'agent');
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\AgentQuoteRequestWidget\Controller\AgentQuoteRequestCartController::clearAction()
+     *
+     * @return $this
+     */
+    protected function addQuoteRequestClearCartRoute()
+    {
+        $this->createController('/{agent}/quote-request/cart/clear', static::ROUTE_AGENT_QUOTE_REQUEST_CLEAR_CART, 'AgentQuoteRequestWidget', 'AgentQuoteRequestCart', 'clear')
             ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
             ->value('agent', 'agent');
 
