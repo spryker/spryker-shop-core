@@ -13,23 +13,25 @@
 } %}
 
 {% block body %}
-    <div class="col">
+    <div>
         <a href="{{ data.clickUrl | raw }}">
-            <div class="box box--stretch">
-                {% if attributes.template == 'bottom-align' %}
-                    <h5>{{ data.title | escape }}</h5>
-                {% endif %}
+            {% block content %}
+                <div class="box box--stretch">
+                    {% block image %}
+                        <span>
+                            <img src="{{ data.imageUrl | raw }}" alt="{{ data.altText | escape }}" />
+                        </span>
+                    {% endblock %}
 
-                <span>
-                    <img src="{{ data.imageUrl | raw }}" alt="{{ data.altText | escape }}" />
-                </span>
+                    {% block title %}
+                        <h5>{{ data.title | escape }}</h5>
+                    {% endblock %}
 
-                {% if attributes.template == 'default' %}
-                    <h5>{{ data.title | escape }}</h5>
-                {% endif %}
-
-                <p>{{ data.subtitle | escape }}</p>
-            </div>
+                    {% block subtitle %}
+                        <p>{{ data.subtitle | escape }}</p>
+                    {% endblock %}
+                </div>
+            {% endblock %}
         </a>
     </div>
 {% endblock %}

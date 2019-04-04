@@ -1,0 +1,26 @@
+{% embed molecule('banner') with {
+        data: {
+            imageUrl: banner.imageUrl,
+            title: banner.title,
+            subtitle: banner.subtitle,
+            clickUrl: banner.clickUrl,
+            altText: banner.altText
+        }
+    } only %}
+    {% block content %}
+        <div class="box box--stretch">
+            {% block title %}
+                {{ parent() }}
+            {% endblock %}
+
+            {% block image %}
+                {{ parent() }}
+            {% endblock %}
+
+            {% block subtitle %}
+                {{ parent() }}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endembed %}
+
