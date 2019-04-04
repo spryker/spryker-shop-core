@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ContentBannerWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\BannerTypeTransfer;
+use Generated\Shared\Transfer\ContentBannerTypeTransfer;
 
 class ContentBannerWidgetToContentBannerClientBridge implements ContentBannerWidgetToContentBannerClientInterface
 {
@@ -28,9 +28,9 @@ class ContentBannerWidgetToContentBannerClientBridge implements ContentBannerWid
      * @param int $idContent
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\BannerTypeTransfer|null
+     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer|null
      */
-    public function findBannerById(int $idContent, string $localeName): ?BannerTypeTransfer
+    public function findBannerById(int $idContent, string $localeName): ?ContentBannerTypeTransfer
     {
         return $this->contentBannerClient->findBannerById($idContent, $localeName);
     }
