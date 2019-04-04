@@ -3,7 +3,7 @@
 {% define data = {
     title: 'quote_request_page.quote_request' | trans,
     quoteRequestCreateForm: _view.quoteRequestCreateForm,
-    companyUser: _view.companyUser,
+    impersonatedCustomer: _view.impersonatedCustomer,
 } %}
 
 {% block breadcrumbs %}
@@ -39,12 +39,12 @@
                         id: 'agent-company-user',
                         suggestionsUrl: path('agent/company-user-autocomplete'),
                         name: 'idCompanyUser',
-                        value: data.companyUser ? data.companyUser.customer.email : '',
+                        value: data.impersonatedCustomer ? data.impersonatedCustomer.email : '',
                     },
                     attributes: {
                         'suggested-item-selector': '.company-user-list__container-item',
                         'value-data-attribute': 'data-value',
-                        'auto-init': true
+                        'auto-init': data.impersonatedCustomer ? true : false,
                     }
                 } only %}
             </div>

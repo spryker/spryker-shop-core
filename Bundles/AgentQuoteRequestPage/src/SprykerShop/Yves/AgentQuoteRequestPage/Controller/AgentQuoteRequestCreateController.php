@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\AgentQuoteRequestPage\Controller;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use SprykerShop\Yves\AgentQuoteRequestPage\Form\AgentQuoteRequestCreateForm;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -64,33 +63,7 @@ class AgentQuoteRequestCreateController extends AgentQuoteRequestAbstractControl
 
         return [
             'quoteRequestCreateForm' => $quoteRequestCreateForm->createView(),
-            'companyUser' => $this->findCompanyUser(),
+            'impersonatedCustomer' => $this->getFactory()->getCustomerClient()->getCustomer(),
         ];
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
-     */
-    protected function findCompanyUser(): ?CompanyUserTransfer
-    {
-        $companyUserClient = $this->getFactory()->getCompanyUserClient();
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
-
-        if (!$customerTransfer) {
-            return null;
-        }
-
-        $companyUserTransfer = $companyUserClient->findCompanyUser();
-        $companyUserCollectionTransfer = $companyUserClient->getActiveCompanyUsersByCustomerReference($customerTransfer);
-
-        if (!$companyUserTransfer || $companyUserCollectionTransfer->getCompanyUsers()->count() !== 1) {
-            return null;
-        }
-
-        $companyUserTransfer->setCustomer($customerTransfer);
-
-        return $companyUserTransfer;
     }
 }
