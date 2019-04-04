@@ -61,6 +61,7 @@ export default class AutocompleteForm extends Component {
         this.valueInput = <HTMLInputElement>this.querySelector(`.${this.jsName}__value-input`);
         this.suggestionsContainer = <HTMLElement>this.querySelector(`.${this.jsName}__suggestions`);
         this.cleanButton = <HTMLButtonElement>this.querySelector(`.${this.jsName}__clean-button`);
+        if (this.autoInitEnabled) this.autoLoadInit();
         this.mapEvents();
     }
 
@@ -75,6 +76,11 @@ export default class AutocompleteForm extends Component {
         }
 
         this.cleanButton.addEventListener('click', () => this.onCleanButtonClick());
+    }
+
+    protected autoLoadInit(): void {
+        this.textInput.focus();
+        this.loadSuggestions();
     }
 
     protected onCleanButtonClick(): void {
@@ -285,5 +291,12 @@ export default class AutocompleteForm extends Component {
      */
     get minLetters(): number {
         return Number(this.getAttribute('min-letters'));
+    }
+
+    /**
+     * Gets if the auto load of suggestions is enabled.
+     */
+    get autoInitEnabled(): boolean {
+        return this.hasAttribute('auto-init');
     }
 }
