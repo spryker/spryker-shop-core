@@ -66,7 +66,7 @@ class QuoteRequestMenuItemWidget extends AbstractWidget
     }
 
     /**
-     * @param $activePage string
+     * @param string $activePage
      *
      * @return bool
      */
