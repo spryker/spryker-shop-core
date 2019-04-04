@@ -19,7 +19,6 @@ use SprykerShop\Yves\ContentProductWidget\Dependency\Client\ContentProductWidget
 use SprykerShop\Yves\ContentProductWidget\Dependency\Client\ContentProductWidgetToProductStorageClientBridgeInterface;
 use SprykerShop\Yves\ContentProductWidget\Plugin\ContentProductAbstractListTwigPlugin;
 use Twig\Environment;
-use Twig\Error\LoaderError;
 use Twig\Loader\FilesystemLoader;
 
 /**
@@ -210,10 +209,9 @@ class ContentProductAbstractListTwigPluginTest extends Unit
             ->setMethods(['render'])
             ->getMock();
 
-        $twigMock->method('render')->willReturn(static::RENDERED_STRING); //new Environment(new FilesystemLoader());
+        $twigMock->method('render')->willReturn(static::RENDERED_STRING);
         $twigPlugin = $this->createTwigPlugin();
         $twigPlugin->extend($twigMock, $this->getMockBuilder(ContainerInterface::class)->getMock());
-
 
         return $twigMock;
     }

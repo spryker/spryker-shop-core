@@ -1,5 +1,13 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerShopTest\Yves\ContentProductWidget;
+
+use Codeception\Actor;
 
 /**
  * Inherited Methods
@@ -15,8 +23,8 @@ namespace SprykerShopTest\Yves\ContentProductWidget;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class ContentProductWidgetYvesTester extends \Codeception\Actor
+ */
+class ContentProductWidgetYvesTester extends Actor
 {
     use _generated\ContentProductWidgetYvesTesterActions;
 
