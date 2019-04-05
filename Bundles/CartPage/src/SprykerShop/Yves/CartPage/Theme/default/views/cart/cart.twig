@@ -95,6 +95,14 @@
 
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
+                    {% if data.cart.isLocked %}
+                        <form method="POST" action="{{ path('cart/unlock') }}">
+                            {{ 'persistent_cart.quote.label.locked_cart' | trans }}
+                            <button type="submit" class="link">{{ 'persistent_cart.quote.button.unlock' | trans }}</button>
+                            {{ 'persistent_cart.quote.label.discarded_locked_cart' | trans }}
+                        </form>
+                        <hr />
+                    {% endif %}
                     {% widget 'CartNoteFormWidget' args [data.cart] only %}
                     {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartNoteFormWidget instead. #}
                     {% endwidget %}
