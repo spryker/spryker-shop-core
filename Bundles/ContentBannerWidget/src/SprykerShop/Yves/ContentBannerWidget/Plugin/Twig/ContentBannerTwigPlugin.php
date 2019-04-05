@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ContentBannerWidget\Plugin\Twig;
 
-use Exception;
+use Spryker\Client\ContentBanner\Exception\MissingBannerTermException;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
@@ -19,12 +19,14 @@ use Twig\TwigFunction;
  */
 class ContentBannerTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
-    protected const FUNCTION_NAME = 'content_banner';
+    public const FUNCTION_NAME = 'content_banner';
+
+    public const MESSAGE_BANNER_NOT_FOUND = 'Content Banner with ID %s not found.';
+    public const MESSAGE_BANNER_WRONG_TYPE = '%s widget cannot display for ID %s.';
+    public const MESSAGE_BANNER_WRONG_TEMPLATE = '%s is not supported name of template .';
 
     protected const TEMPLATE_IDENTIFIER_DEFAULT = 'default';
     protected const TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
-
-    protected const MESSAGE_BANNER_NOT_FOUND = 'Content Product Abstract with ID %s not found.';
 
     /**
      * {@inheritdoc}
@@ -62,7 +64,7 @@ class ContentBannerTwigPlugin extends AbstractPlugin implements TwigPluginInterf
     {
         $twig->addFunction(
             static::FUNCTION_NAME,
-            new TwigFunction(static::FUNCTION_NAME, function (int $idContent, ?string $templateIdentifier = null) use ($twig) {
+            new TwigFunction(static::FUNCTION_NAME, function (int $idContent, string $templateIdentifier) use ($twig) {
                 try {
                     $contentBannerTypeTransfer = $this->getFactory()
                         ->getContentBannerClient()
@@ -71,31 +73,21 @@ class ContentBannerTwigPlugin extends AbstractPlugin implements TwigPluginInterf
                     if (!$contentBannerTypeTransfer) {
                         return '<!-- ' . sprintf(static::MESSAGE_BANNER_NOT_FOUND, $idContent) . ' -->';
                     }
-                } catch (Exception $e) {
-                    return '<!-- ' . $e->getMessage() . ' -->';
+                } catch (MissingBannerTermException $e) {
+                    return '<!-- ' . sprintf(static::MESSAGE_BANNER_WRONG_TYPE, static::FUNCTION_NAME, $idContent) . ' -->';
                 }
 
-                return $twig->render($this->resolveTemplatePath($templateIdentifier), [
-                    'banner' => $contentBannerTypeTransfer,
-                ]);
+                if (!isset($this->getAvailableTemplates()[$templateIdentifier])) {
+                    return '<!-- ' . sprintf(static::MESSAGE_BANNER_WRONG_TEMPLATE, $templateIdentifier) . ' -->';
+                }
 
+                return $twig->render(
+                    $this->getAvailableTemplates()[$templateIdentifier],
+                    ['banner' => $contentBannerTypeTransfer]
+                );
             }, ['is_safe' => ['html']])
         );
 
         return $twig;
-    }
-
-    /**
-     * @param string|null $templateIdentifier
-     *
-     * @return string
-     */
-    protected function resolveTemplatePath(?string $templateIdentifier = null): string
-    {
-        if (!$templateIdentifier || !isset($this->getAvailableTemplates()[$templateIdentifier])) {
-            $templateIdentifier = static::TEMPLATE_IDENTIFIER_DEFAULT;
-        }
-
-        return $this->getAvailableTemplates()[$templateIdentifier];
     }
 }
