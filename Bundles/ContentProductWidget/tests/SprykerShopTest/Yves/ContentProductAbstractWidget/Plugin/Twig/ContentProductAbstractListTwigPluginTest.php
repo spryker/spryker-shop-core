@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShopTest\Yves\ContentProductWidget\Twig\Plugin;
+namespace SprykerShopTest\Yves\ContentProductWidget\Plugin\Twig;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer;
@@ -17,7 +17,7 @@ use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\ContentProductWidget\ContentProductWidgetDependencyProvider;
 use SprykerShop\Yves\ContentProductWidget\Dependency\Client\ContentProductWidgetToContentProductClientBridgeInterface;
 use SprykerShop\Yves\ContentProductWidget\Dependency\Client\ContentProductWidgetToProductStorageClientBridgeInterface;
-use SprykerShop\Yves\ContentProductWidget\Plugin\ContentProductAbstractListTwigPlugin;
+use SprykerShop\Yves\ContentProductWidget\Plugin\Twig\ContentProductAbstractListTwigPlugin;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -25,8 +25,9 @@ use Twig\Loader\FilesystemLoader;
  * Auto-generated group annotations
  * @group SprykerShop
  * @group Yves
- * @group Client
+ * @group ContentProductWidget
  * @group Plugin
+ * @group Twig
  * @group ContentProductAbstractListTwigPluginTest
  * Add your own group annotations below this line
  */
@@ -41,21 +42,6 @@ class ContentProductAbstractListTwigPluginTest extends Unit
     protected const CONTENT_TERM = 'TERM';
 
     protected const RENDERED_STRING = 'output';
-
-    /**
-     * @var \SprykerShop\Yves\ContentProductWidget\Plugin\ContentProductAbstractListTwigPlugin
-     */
-    protected $twigPlugin;
-
-    /**
-     * @var \Twig\Environment
-     */
-    protected $twig;
-
-    /**
-     * @var \Spryker\Service\Container\ContainerInterface
-     */
-    protected $container;
 
     /**
      * @var \SprykerShopTest\Yves\ContentProductWidget\ContentProductAbstractWidgetYvesTester
@@ -81,7 +67,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
         $productAbstractContent = call_user_func($contentProductAbstractListTwigPlugin->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
 
         $this->assertEquals(
-            '<!--' . sprintf(ContentProductAbstractListTwigPlugin::CONTENT_NOT_FOUND_MESSAGE_TEMPLATE, static::CONTENT_ID) . '-->',
+            '<!--' . sprintf(ContentProductAbstractListTwigPlugin::MESSAGE_NOT_FOUND_TEMPLATE, static::CONTENT_ID) . '-->',
             $productAbstractContent
         );
     }
@@ -101,8 +87,8 @@ class ContentProductAbstractListTwigPluginTest extends Unit
 
         $this->assertEquals(
             '<!--' . sprintf(
-                ContentProductAbstractListTwigPlugin::CONTENT_WRONG_TYPE_TEMPLATE,
-                ContentProductAbstractListTwigPlugin::FUNCTION_CMS_CONTENT_PRODUCT_ABSTRACT,
+                ContentProductAbstractListTwigPlugin::MESSAGE_WRONG_TYPE_TEMPLATE,
+                ContentProductAbstractListTwigPlugin::FUNCTION_CONTENT_PRODUCT_ABSTRACT,
                 static::CONTENT_ID
             ) . '-->',
             $productAbstractContent
@@ -126,7 +112,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
 
         $this->assertEquals(
             '<!--' . sprintf(
-                ContentProductAbstractListTwigPlugin::CONTENT_NOT_SUPPORTED_MESSAGE_TEMPLATE,
+                ContentProductAbstractListTwigPlugin::MESSAGE_NOT_SUPPORTED_TEMPLATE,
                 static::WRONG_TEMPLATE
             ) . '-->',
             $productAbstractContent
@@ -189,11 +175,11 @@ class ContentProductAbstractListTwigPluginTest extends Unit
      */
     protected function getContentProductAbstractListTwigPlugin()
     {
-        return $this->getTwig()->getFunction(ContentProductAbstractListTwigPlugin::FUNCTION_CMS_CONTENT_PRODUCT_ABSTRACT);
+        return $this->getTwig()->getFunction(ContentProductAbstractListTwigPlugin::FUNCTION_CONTENT_PRODUCT_ABSTRACT);
     }
 
     /**
-     * @return \SprykerShop\Yves\ContentProductWidget\Plugin\ContentProductAbstractListTwigPlugin
+     * @return \SprykerShop\Yves\ContentProductWidget\Plugin\Twig\ContentProductAbstractListTwigPlugin
      */
     protected function createTwigPlugin(): ContentProductAbstractListTwigPlugin
     {
