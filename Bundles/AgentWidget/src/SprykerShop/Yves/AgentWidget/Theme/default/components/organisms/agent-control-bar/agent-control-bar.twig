@@ -13,7 +13,7 @@
 {% block body %}
     <div class="container">
         <div class="box grid grid--middle">
-            <div class="col col--sm-12 col--xl-7 ">
+             <div class="col col--sm-12 col--xl-7">
                 {% if not is_granted('ROLE_PREVIOUS_ADMIN') %}
                     <form method="GET" action="/">
                         <div class="grid">
@@ -40,22 +40,32 @@
                         </div>
                     </form>
                 {% endif %}
-                {% widget 'AgentQuoteRequestOverviewWidget' only %}{% endwidget %}
+
+                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                     {{ 'agent.control_bar.customer_name' | trans({
+                         '%username%': "#{data.customer.firstName} #{data.customer.lastName}"
+                     }) }}
+                     <a href="/?_switch_user=_exit" class="button">{{ 'agent.control_bar.logout_as_customer' | trans }}</a>
+                 {% endif %}
+
             </div>
-            <div class="col col--sm-12 col--xl-5  text-right">
+            <div class="col col--sm-12 col--xl-5 text-right">
                 {% include molecule('agent-navigation', 'AgentWidget') with {
                     data: {
                         agent: data.agent
                     }
                 } only %}
-                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                    <div class="spacing-top spacing-top--big">
-                        {{ 'agent.control_bar.customer_name' | trans({
-                            '%username%': "#{data.customer.firstName} #{data.customer.lastName}"
-                        }) }}
-                        <a href="/?_switch_user=_exit" class="button">{{ 'agent.control_bar.logout_as_customer' | trans }}</a>
-                    </div>
-                {% endif %}
+            </div>
+        </div>
+        <div class="grid grid--middle spacing-bottom spacing-bottom--big">
+            <div class="col col--sm-12">
+                {% widget 'AgentQuoteRequestOverviewWidget' only %}
+                    {% block body %}
+                        <div class="box box--dark">
+                            {{ parent() }}
+                        </div>
+                    {% endblock %}
+                {% endwidget %}
             </div>
         </div>
     </div>

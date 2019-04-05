@@ -15,7 +15,7 @@
 
         {{ form_start(data.form) }}
 
-        <div class="grid grid--justify spacing-top spacing-top--inner spacing-top--small">
+        <div class="grid grid--justify">
             <div class="col">
                 <a class="button button--hollow" href="{{ path('agent/quote-request/cart/clear', { quoteRequestReference: (data.quoteRequestReference)}) }}">
                     {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
