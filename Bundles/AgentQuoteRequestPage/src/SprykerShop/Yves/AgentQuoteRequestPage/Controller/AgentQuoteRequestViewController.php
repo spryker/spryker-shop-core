@@ -59,6 +59,7 @@ class AgentQuoteRequestViewController extends AgentQuoteRequestAbstractControlle
     protected function executeIndexAction(Request $request): array
     {
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setWithHidden(true)
             ->setPagination($this->getPaginationTransfer($request));
 
         $quoteRequestCollectionTransfer = $this->getFactory()
