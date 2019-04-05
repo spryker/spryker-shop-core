@@ -58,7 +58,11 @@ class CreateQuoteRequestWidget extends AbstractWidget
      */
     protected function isWidgetVisible(QuoteTransfer $quoteTransfer): bool
     {
-        if (!$this->isCompanyUser()) {
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->findCompanyUser();
+
+        if (!$companyUserTransfer) {
             return false;
         }
 
@@ -66,39 +70,7 @@ class CreateQuoteRequestWidget extends AbstractWidget
             return false;
         }
 
-        return $this->isQuoteOwner($quoteTransfer) || $this->canWriteSharedCart($quoteTransfer->getIdQuote());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteOwner(QuoteTransfer $quoteTransfer): bool
-    {
-        return $quoteTransfer->getCustomerReference()
-            === $quoteTransfer->getCustomer()->getCustomerReference();
-    }
-
-    /**
-     * @uses \Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin::KEY
-     *
-     * @param int $idQuote
-     *
-     * @return bool
-     */
-    protected function canWriteSharedCart(int $idQuote): bool
-    {
-        return $this->can('WriteSharedCartPermissionPlugin', $idQuote);
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isCompanyUser(): bool
-    {
-        return (bool)$this->getFactory()
-            ->getCompanyUserClient()
-            ->findCompanyUser();
+        return $quoteTransfer->getCustomerReference() === $quoteTransfer->getCustomer()->getCustomerReference()
+            || $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote());
     }
 }
