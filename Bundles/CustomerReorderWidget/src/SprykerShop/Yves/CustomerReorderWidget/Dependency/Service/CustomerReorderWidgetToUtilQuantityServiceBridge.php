@@ -1,13 +1,11 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: kravchenko
- * Date: 2019-04-04
- * Time: 10:57
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Dependency\Service;
-
 
 class CustomerReorderWidgetToUtilQuantityServiceBridge implements CustomerReorderWidgetToUtilQuantityServiceInterface
 {
