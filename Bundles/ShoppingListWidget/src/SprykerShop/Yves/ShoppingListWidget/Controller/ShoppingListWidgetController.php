@@ -87,7 +87,7 @@ class ShoppingListWidgetController extends AbstractController
 
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setSku($request->get(static::PARAM_SKU))
-            ->setQuantity((int)$request->get(static::PARAM_QUANTITY))
+            ->setQuantity((float)$request->get(static::PARAM_QUANTITY))
             ->setFkShoppingList($request->get(static::PARAM_ID_SHOPPING_LIST))
             ->setCustomerReference($customerTransfer->getCustomerReference())
             ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
