@@ -58,32 +58,19 @@ class CreateQuoteRequestWidget extends AbstractWidget
      */
     protected function isWidgetVisible(QuoteTransfer $quoteTransfer): bool
     {
-        if (!$this->isQuoteEditable($quoteTransfer) || !$this->isCompanyUser()) {
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserClient()
+            ->findCompanyUser();
+
+        if (!$companyUserTransfer) {
             return false;
         }
 
-        return !$quoteTransfer->getQuoteRequestVersionReference() && !$quoteTransfer->getQuoteRequestReference();
-    }
+        if ($quoteTransfer->getQuoteRequestVersionReference() || $quoteTransfer->getQuoteRequestReference()) {
+            return false;
+        }
 
-    /**
-     * @return bool
-     */
-    protected function isCompanyUser(): bool
-    {
-        return (bool)$this->getFactory()
-            ->getCompanyUserClient()
-            ->findCompanyUser();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
-    {
-        return $this->getFactory()
-            ->getQuoteClient()
-            ->isQuoteEditable($quoteTransfer);
+        return $quoteTransfer->getCustomerReference() === $quoteTransfer->getCustomer()->getCustomerReference()
+            || $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote());
     }
 }
