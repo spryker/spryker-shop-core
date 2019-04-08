@@ -30,7 +30,7 @@ class PreviewControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addCmsPreviewRoute()
     {
-        $this->createController(sprintf('/{cms}/preview/{%s}', static::PARAM_PAGE), self::ROUTE_PREVIEW, 'CmsPage', 'Preview', 'index')
+        $this->createController('/{cms}/preview/{page}', self::ROUTE_PREVIEW, 'CmsPage', 'Preview', 'index')
             ->assert('cms', $this->getAllowedLocalesPattern() . 'cms|cms')
             ->value('cms', 'cms')
             ->assert(static::PARAM_PAGE, '[0-9]+');
