@@ -19,11 +19,11 @@ use Twig\TwigFunction;
  */
 class ContentBannerTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
-    public const FUNCTION_NAME = 'content_banner';
+    protected const FUNCTION_NAME = 'content_banner';
 
-    public const MESSAGE_BANNER_NOT_FOUND = 'Content Banner with ID %s not found.';
-    public const MESSAGE_BANNER_WRONG_TYPE = '%s widget cannot display for ID %s.';
-    public const MESSAGE_BANNER_WRONG_TEMPLATE = '%s is not supported name of template .';
+    protected const MESSAGE_BANNER_NOT_FOUND = 'Content Banner with ID %s not found.';
+    protected const MESSAGE_BANNER_WRONG_TYPE = '%s widget cannot display for ID %s.';
+    protected const MESSAGE_BANNER_WRONG_TEMPLATE = '%s is not supported name of template .';
 
     protected const TEMPLATE_IDENTIFIER_DEFAULT = 'default';
     protected const TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
@@ -46,7 +46,7 @@ class ContentBannerTwigPlugin extends AbstractPlugin implements TwigPluginInterf
     /**
      * @return array
      */
-    public function getAvailableTemplates(): array
+    protected function getAvailableTemplates(): array
     {
         return [
             static::TEMPLATE_IDENTIFIER_DEFAULT => '@ContentBannerWidget/views/banner/banner.twig',

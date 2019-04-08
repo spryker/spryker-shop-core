@@ -10,6 +10,7 @@ namespace SprykerShopTest\Yves\ContentBannerWidget\Twig\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ContentBannerTypeTransfer;
 use Generated\Shared\Transfer\ContentTypeContextTransfer;
+use ReflectionClassConstant;
 use Spryker\Client\ContentBanner\ContentBannerDependencyProvider;
 use Spryker\Client\ContentBanner\Dependency\Client\ContentBannerToContentStorageClientInterface;
 use Spryker\Service\Container\ContainerInterface;
@@ -32,7 +33,7 @@ use Twig\Loader\FilesystemLoader;
  */
 class ContentBannerTwigPluginTest extends Unit
 {
-    protected const STORE = 'de_DE';
+    protected const LOCALE = 'de_DE';
 
     protected const DEFAULT_TEMPLATE = 'default';
     protected const WRONG_TEMPLATE = 'wrong';
@@ -54,7 +55,7 @@ class ContentBannerTwigPluginTest extends Unit
     {
         parent::setUp();
 
-        Store::getInstance()->setCurrentLocale(static::STORE);
+        Store::getInstance()->setCurrentLocale(static::LOCALE);
     }
 
     /**
@@ -64,9 +65,10 @@ class ContentBannerTwigPluginTest extends Unit
     {
         $contentBannerTwigPlugin = $this->getContentBannerTwigPlugin();
         $bannerContent = call_user_func($contentBannerTwigPlugin->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
+        $messageBannerNotFound = new ReflectionClassConstant(ContentBannerTwigPlugin::class, 'MESSAGE_BANNER_NOT_FOUND');
 
         $this->assertEquals(
-            '<!-- ' . sprintf(ContentBannerTwigPlugin::MESSAGE_BANNER_NOT_FOUND, static::CONTENT_ID) . ' -->',
+            '<!-- ' . sprintf($messageBannerNotFound->getValue(), static::CONTENT_ID) . ' -->',
             $bannerContent
         );
     }
@@ -85,12 +87,11 @@ class ContentBannerTwigPluginTest extends Unit
         $contentBannerTwigPlugin = $this->getContentBannerTwigPlugin();
         $bannerContent = call_user_func($contentBannerTwigPlugin->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
 
+        $messageBannerWrongType = new ReflectionClassConstant(ContentBannerTwigPlugin::class, 'MESSAGE_BANNER_WRONG_TYPE');
+        $functionName = new ReflectionClassConstant(ContentBannerTwigPlugin::class, 'FUNCTION_NAME');
+
         $this->assertEquals(
-            '<!-- ' . sprintf(
-                ContentBannerTwigPlugin::MESSAGE_BANNER_WRONG_TYPE,
-                ContentBannerTwigPlugin::FUNCTION_NAME,
-                static::CONTENT_ID
-            ) . ' -->',
+            '<!-- ' . sprintf($messageBannerWrongType->getValue(), $functionName->getValue(), static::CONTENT_ID) . ' -->',
             $bannerContent
         );
     }
@@ -108,9 +109,11 @@ class ContentBannerTwigPluginTest extends Unit
 
         $bannerContent = call_user_func($contentBannerTwigPlugin->getCallable(), static::CONTENT_ID, static::WRONG_TEMPLATE);
 
+        $messageBannerWrongTemplate = new ReflectionClassConstant(ContentBannerTwigPlugin::class, 'MESSAGE_BANNER_WRONG_TEMPLATE');
+
         $this->assertEquals(
             '<!-- ' . sprintf(
-                ContentBannerTwigPlugin::MESSAGE_BANNER_WRONG_TEMPLATE,
+                $messageBannerWrongTemplate->getValue(),
                 static::WRONG_TEMPLATE
             ) . ' -->',
             $bannerContent
@@ -162,7 +165,9 @@ class ContentBannerTwigPluginTest extends Unit
      */
     protected function getContentBannerTwigPlugin()
     {
-        return $this->getTwig()->getFunction(ContentBannerTwigPlugin::FUNCTION_NAME);
+        $functionName = new ReflectionClassConstant(ContentBannerTwigPlugin::class, 'FUNCTION_NAME');
+
+        return $this->getTwig()->getFunction($functionName->getValue());
     }
 
     /**
