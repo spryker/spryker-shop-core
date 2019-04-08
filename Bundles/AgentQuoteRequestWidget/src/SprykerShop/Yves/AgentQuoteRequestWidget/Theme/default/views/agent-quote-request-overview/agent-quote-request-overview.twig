@@ -5,10 +5,10 @@
     form: _widget.form ?? null,
 } %}
 
-{% block request_list %}
+{% block requestList %}
     <ul class="menu menu--inline">
         <li class="menu__item menu__item--has-children-dropdown">
-            <a href="{{ path('agent/quote-request') }}">
+            <a href="{{ path('agent/quote-request') }}" title="{{ 'agent_quote_request_widget.quote_request' | trans }}">
                 {{ 'agent_quote_request_widget.quote_request' | trans }}
 
                 {% include atom('icon') with {
@@ -40,12 +40,12 @@
                 <li class="menu__item">
                     <div class="grid grid--justify">
                         <div class="col">
-                            <a href="{{ path('agent/quote-request') }}" class="button button--hollow">
+                            <a href="{{ path('agent/quote-request') }}" class="button button--hollow" title="{{ 'agent_quote_request_widget.view_all_requests' | trans }}">
                                 {{ 'agent_quote_request_widget.view_all_requests' | trans }}
                             </a>
                         </div>
                         <div class="col">
-                            <a href="{{ path('agent/quote-request/create') }}" class="button button--success">
+                            <a href="{{ path('agent/quote-request/create') }}" class="button button--success" title="{{ 'agent_quote_request_widget.create_new_request' | trans }}">
                                 {{ 'agent_quote_request_widget.create_new_request' | trans }}
                             </a>
                         </div>
@@ -59,9 +59,9 @@
 {% block body %}
     <div class="grid grid--middle">
         <div class="col col--sm-12">
-            {{ block('request_list') }}
+            {{ block('requestList') }}
         </div>
-        {% block active_request %}
+        {% block activeRequest %}
             {% if data.quoteRequestOverviewCollection.currentQuoteRequest is not empty %}
                 <div class="col col--sm-12">
                     <div class="grid grid--middle">
@@ -75,7 +75,7 @@
                                 {% block body %}
                                     <div class="grid grid--middle grid--justify text-small text-left">
                                         <div class="col">
-                                            <a href="{{ path('agent/quote-request/details', { quoteRequestReference: (data.quoteRequest.quoteRequestReference)}) }}">
+                                            <a href="{{ path('agent/quote-request/details', { quoteRequestReference: (data.quoteRequest.quoteRequestReference)}) }}" title="#{{ data.quoteRequest.quoteRequestReference }}">
                                                 #{{ data.quoteRequest.quoteRequestReference }}
                                             </a>
                                         </div>
