@@ -36,7 +36,7 @@ class CompanyUserAutocompleteValidator implements CompanyUserAutocompleteValidat
     public function validate(array $query): ConstraintViolationListInterface
     {
         $constraint = new Collection(
-            $this->getQueryValidations()
+            $this->getPatternValidations()
         );
 
         return $this->validator->validate($query, $constraint);
@@ -45,10 +45,10 @@ class CompanyUserAutocompleteValidator implements CompanyUserAutocompleteValidat
     /**
      * @return array
      */
-    protected function getQueryValidations(): array
+    protected function getPatternValidations(): array
     {
         return [
-            'query' => [
+            'pattern' => [
                 new NotBlank(),
                 new Length(['min' => 3]),
             ],

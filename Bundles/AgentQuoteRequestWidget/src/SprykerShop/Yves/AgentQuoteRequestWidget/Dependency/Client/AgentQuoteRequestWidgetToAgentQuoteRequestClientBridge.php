@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\AgentQuoteRequestWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
@@ -56,5 +58,15 @@ class AgentQuoteRequestWidgetToAgentQuoteRequestClientBridge implements AgentQuo
     public function findQuoteRequestByReference(string $quoteRequestReference): ?QuoteRequestTransfer
     {
         return $this->agentQuoteRequestClient->findQuoteRequestByReference($quoteRequestReference);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaTransfer $companyUserCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getCompanyUserCollectionByQuery(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
+    {
+        return $this->agentQuoteRequestClient->getCompanyUserCollectionByQuery($companyUserCriteriaTransfer);
     }
 }

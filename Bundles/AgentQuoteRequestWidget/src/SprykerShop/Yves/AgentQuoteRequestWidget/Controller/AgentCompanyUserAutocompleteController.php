@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\AgentQuoteRequestWidget\Controller;
 
-use Generated\Shared\Transfer\CompanyUserQueryTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,8 +51,8 @@ class AgentCompanyUserAutocompleteController extends AbstractController
         }
 
         $companyUsers = $this->getFactory()
-            ->getCompanyUserClient()
-            ->getCompanyUserCollectionByQuery((new CompanyUserQueryTransfer())->fromArray($queryParams, true))
+            ->getAgentQuoteRequestClient()
+            ->getCompanyUserCollectionByQuery((new CompanyUserCriteriaTransfer())->fromArray($queryParams, true))
             ->getCompanyUsers()
             ->getArrayCopy();
 
