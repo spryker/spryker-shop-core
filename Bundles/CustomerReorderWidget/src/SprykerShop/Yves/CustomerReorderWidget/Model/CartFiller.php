@@ -72,6 +72,11 @@ class CartFiller implements CartFillerInterface
         $this->updateCart($items, $orderTransfer);
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * 
+     * @return OrderTransfer
+     */
     protected function groupItemsBySku(OrderTransfer $orderTransfer): OrderTransfer
     {
         /**
