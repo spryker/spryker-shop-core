@@ -66,9 +66,51 @@ class CartFiller implements CartFillerInterface
      */
     public function fillFromOrder(OrderTransfer $orderTransfer): void
     {
+        $orderTransfer = $this->groupItemsBySku($orderTransfer);
         $items = $this->itemsFetcher->getAll($orderTransfer);
 
         $this->updateCart($items, $orderTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function groupItemsBySku(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        /**
+         * @var \Generated\Shared\Transfer\ItemTransfer[] $groupedOrderItems
+         */
+        $groupedOrderItems = [];
+
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            if (!array_key_exists($itemTransfer->getSku(), $groupedOrderItems)) {
+                $groupedOrderItems[$itemTransfer->getSku()] = $itemTransfer;
+                continue;
+            }
+
+            $newQuantity = $this->sumQuantities(
+                $groupedOrderItems[$itemTransfer->getSku()]->getQuantity(),
+                $itemTransfer->getQuantity()
+            );
+            $groupedOrderItems[$itemTransfer->getSku()]->setQuantity($newQuantity);
+        }
+
+        $orderTransfer->setItems(new ArrayObject(array_values($groupedOrderItems)));
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 
     /**
