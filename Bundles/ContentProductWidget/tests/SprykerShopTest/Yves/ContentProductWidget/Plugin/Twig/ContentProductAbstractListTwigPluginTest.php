@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer;
 use Generated\Shared\Transfer\ContentTypeContextTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
+use ReflectionClassConstant;
 use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Kernel\Store;
@@ -33,7 +34,7 @@ use Twig\Loader\FilesystemLoader;
  */
 class ContentProductAbstractListTwigPluginTest extends Unit
 {
-    protected const STORE = 'de_DE';
+    protected const LOCALE = 'de_DE';
 
     protected const DEFAULT_TEMPLATE = 'default';
     protected const WRONG_TEMPLATE = 'wrong';
@@ -44,7 +45,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
     protected const RENDERED_STRING = 'output';
 
     /**
-     * @var \SprykerShopTest\Yves\ContentProductWidget\ContentProductAbstractWidgetYvesTester
+     * @var \SprykerShopTest\Yves\ContentProductWidget\ContentProductWidgetYvesTester
      */
     protected $tester;
 
@@ -55,7 +56,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
     {
         parent::setUp();
 
-        Store::getInstance()->setCurrentLocale(static::STORE);
+        Store::getInstance()->setCurrentLocale(static::LOCALE);
     }
 
     /**
@@ -66,8 +67,10 @@ class ContentProductAbstractListTwigPluginTest extends Unit
         $contentProductAbstractListTwigPlugin = $this->getContentProductAbstractListTwigPlugin();
         $productAbstractContent = call_user_func($contentProductAbstractListTwigPlugin->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
 
+        $messageProductNotFound = new ReflectionClassConstant(ContentProductAbstractListTwigPlugin::class, 'MESSAGE_PRODUCT_NOT_FOUND');
+
         $this->assertEquals(
-            '<!--' . sprintf(ContentProductAbstractListTwigPlugin::MESSAGE_NOT_FOUND_TEMPLATE, static::CONTENT_ID) . '-->',
+            '<!--' . sprintf($messageProductNotFound->getValue(), static::CONTENT_ID) . '-->',
             $productAbstractContent
         );
     }
@@ -85,10 +88,13 @@ class ContentProductAbstractListTwigPluginTest extends Unit
         $contentProductAbstractListTwigPlugin = $this->getContentProductAbstractListTwigPlugin();
         $productAbstractContent = call_user_func($contentProductAbstractListTwigPlugin->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
 
+        $messageWrongTypeTemplate = new ReflectionClassConstant(ContentProductAbstractListTwigPlugin::class, 'MESSAGE_WRONG_TYPE_TEMPLATE');
+        $functionName = new ReflectionClassConstant(ContentProductAbstractListTwigPlugin::class, 'FUNCTION_CONTENT_PRODUCT_ABSTRACT');
+
         $this->assertEquals(
             '<!--' . sprintf(
-                ContentProductAbstractListTwigPlugin::MESSAGE_WRONG_TYPE_TEMPLATE,
-                ContentProductAbstractListTwigPlugin::FUNCTION_CONTENT_PRODUCT_ABSTRACT,
+                $messageWrongTypeTemplate->getValue(),
+                $functionName->getValue(),
                 static::CONTENT_ID
             ) . '-->',
             $productAbstractContent
@@ -110,9 +116,11 @@ class ContentProductAbstractListTwigPluginTest extends Unit
 
         $productAbstractContent = call_user_func($contentProductAbstractListTwigPlugin->getCallable(), static::CONTENT_ID, static::WRONG_TEMPLATE);
 
+        $messageNotSupportedTemplate = new ReflectionClassConstant(ContentProductAbstractListTwigPlugin::class, 'MESSAGE_NOT_SUPPORTED_TEMPLATE');
+
         $this->assertEquals(
             '<!--' . sprintf(
-                ContentProductAbstractListTwigPlugin::MESSAGE_NOT_SUPPORTED_TEMPLATE,
+                $messageNotSupportedTemplate->getValue(),
                 static::WRONG_TEMPLATE
             ) . '-->',
             $productAbstractContent
@@ -175,7 +183,9 @@ class ContentProductAbstractListTwigPluginTest extends Unit
      */
     protected function getContentProductAbstractListTwigPlugin()
     {
-        return $this->getTwig()->getFunction(ContentProductAbstractListTwigPlugin::FUNCTION_CONTENT_PRODUCT_ABSTRACT);
+        $functionName = new ReflectionClassConstant(ContentProductAbstractListTwigPlugin::class, 'FUNCTION_CONTENT_PRODUCT_ABSTRACT');
+
+        return $this->getTwig()->getFunction($functionName->getValue());
     }
 
     /**
