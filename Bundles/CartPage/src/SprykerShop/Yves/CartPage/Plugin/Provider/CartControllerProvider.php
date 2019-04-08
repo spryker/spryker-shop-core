@@ -71,7 +71,7 @@ class CartControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addCartUnlockRoute()
     {
-        $this->createPostController('/{cart}/unlock', self::ROUTE_CART_UNLOCK, 'CartPage', 'Cart', 'unlock')
+        $this->createPostController('/{cart}/unlock', self::ROUTE_CART_UNLOCK, 'CartPage', 'UnlockCart', 'index')
             ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart');
 
