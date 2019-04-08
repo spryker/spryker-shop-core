@@ -38,7 +38,7 @@ class ContentBannerTwigPluginTest extends Unit
     protected const DEFAULT_TEMPLATE = 'default';
     protected const WRONG_TEMPLATE = 'wrong';
 
-    protected const CONTENT_ID = 1;
+    protected const CONTENT_ID = 0;
     protected const CONTENT_TERM = 'TERM';
 
     protected const RENDERED_STRING = 'output';
