@@ -66,7 +66,7 @@ class CartFiller implements CartFillerInterface
      */
     public function fillFromOrder(OrderTransfer $orderTransfer): void
     {
-        $orderTransfer = $this->groupItemsBySku($orderTransfer);
+        $orderTransfer = $this->groupAllOrderItemsBySku($orderTransfer);
         $items = $this->itemsFetcher->getAll($orderTransfer);
 
         $this->updateCart($items, $orderTransfer);
@@ -77,27 +77,10 @@ class CartFiller implements CartFillerInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function groupItemsBySku(OrderTransfer $orderTransfer): OrderTransfer
+    protected function groupAllOrderItemsBySku(OrderTransfer $orderTransfer): OrderTransfer
     {
-        /**
-         * @var \Generated\Shared\Transfer\ItemTransfer[] $groupedOrderItems
-         */
-        $groupedOrderItems = [];
-
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
-            if (!array_key_exists($itemTransfer->getSku(), $groupedOrderItems)) {
-                $groupedOrderItems[$itemTransfer->getSku()] = $itemTransfer;
-                continue;
-            }
-
-            $newQuantity = $this->sumQuantities(
-                $groupedOrderItems[$itemTransfer->getSku()]->getQuantity(),
-                $itemTransfer->getQuantity()
-            );
-            $groupedOrderItems[$itemTransfer->getSku()]->setQuantity($newQuantity);
-        }
-
-        $orderTransfer->setItems(new ArrayObject(array_values($groupedOrderItems)));
+        $groupedOrderItems = $this->groupItemsBySku($orderTransfer->getItems());
+        $orderTransfer->setItems(new ArrayObject($groupedOrderItems));
 
         return $orderTransfer;
     }
@@ -122,8 +105,34 @@ class CartFiller implements CartFillerInterface
     public function fillSelectedFromOrder(OrderTransfer $orderTransfer, array $idOrderItems): void
     {
         $items = $this->itemsFetcher->getByIds($orderTransfer, $idOrderItems);
+        $items = $this->groupItemsBySku($items);
 
         $this->updateCart($items, $orderTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function groupItemsBySku(iterable $orderItems)
+    {
+        $groupedOrderItems = [];
+
+        foreach ($orderItems as $id => $itemTransfer) {
+            if (!array_key_exists($itemTransfer->getSku(), $groupedOrderItems)) {
+                $groupedOrderItems[$itemTransfer->getSku()] = $itemTransfer;
+                continue;
+            }
+
+            $newQuantity = $this->sumQuantities(
+                $groupedOrderItems[$itemTransfer->getSku()]->getQuantity(),
+                $itemTransfer->getQuantity()
+            );
+            $groupedOrderItems[$itemTransfer->getSku()]->setQuantity($newQuantity);
+        }
+
+        return $groupedOrderItems;
     }
 
     /**
