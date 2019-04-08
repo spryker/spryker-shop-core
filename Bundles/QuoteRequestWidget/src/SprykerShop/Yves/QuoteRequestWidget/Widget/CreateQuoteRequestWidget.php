@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuoteRequestWidget\Widget;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -15,6 +16,8 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class CreateQuoteRequestWidget extends AbstractWidget
 {
+    use PermissionAwareTrait;
+
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
 
     /**
