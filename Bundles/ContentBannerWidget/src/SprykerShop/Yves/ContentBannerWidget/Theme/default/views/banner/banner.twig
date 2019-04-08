@@ -1,0 +1,14 @@
+{% define data = {
+    banner: banner,
+} %}
+{% block content %}
+    {% include molecule('banner') with {
+        data: {
+            imageUrl: data.banner.imageUrl,
+            title: data.banner.title,
+            subtitle: data.banner.subtitle,
+            clickUrl: data.banner.clickUrl,
+            altText: data.banner.altText
+        }
+    } only %}
+{% endblock %}
