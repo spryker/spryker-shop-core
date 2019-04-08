@@ -32,4 +32,15 @@ class CustomerReorderWidgetToUtilQuantityServiceBridge implements CustomerReorde
     {
         return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
     }
+
+    /**
+     * @param float $firstAQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    public function sumQuantities(float $firstAQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->sumQuantities($firstAQuantity, $secondQuantity);
+    }
 }
