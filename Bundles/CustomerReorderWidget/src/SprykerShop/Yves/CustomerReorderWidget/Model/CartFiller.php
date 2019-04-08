@@ -115,11 +115,11 @@ class CartFiller implements CartFillerInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function groupItemsBySku(iterable $orderItems)
+    protected function groupItemsBySku(iterable $orderItems): array
     {
         $groupedOrderItems = [];
 
-        foreach ($orderItems as $id => $itemTransfer) {
+        foreach ($orderItems as $itemTransfer) {
             if (!array_key_exists($itemTransfer->getSku(), $groupedOrderItems)) {
                 $groupedOrderItems[$itemTransfer->getSku()] = $itemTransfer;
                 continue;
