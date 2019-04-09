@@ -19,12 +19,33 @@
                 {% block body %}
                 <div class="{% block cardClass %}{{config.name}}__container box box--stretch{% endblock %}">
                         {% block content %}
-                            {{ parent() }}
+                            {% block name %}
+                                {{ parent() }}
+                            {% endblock %}
+
+                            {% block image %}
+                                {{ parent() }}
+                            {% endblock %}
+
+                            {% block labels %}
+                                {{ parent() }}
+                            {% endblock %}
+
+                            {% block groups %}
+                                {{ parent() }}
+                            {% endblock %}
+
+                            {% block sku %}{{ parent() }}{% endblock %}
+
+                            {% block rating %}
+                                {{ parent() }}
+                            {% endblock %}
+
+                            {% block price %}
+                                {{ parent() }}
+                            {% endblock %}
                         {% endblock %}
 
-                        {% block image %}
-                            {{ parent() }}
-                        {% endblock %}
                         {% block actionsContainer %}
                             {{ parent() }}
                         {% endblock %}
