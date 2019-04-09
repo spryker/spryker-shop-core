@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class UnlockCartController extends AbstractController
 {
-    protected const GLOSSARY_KEY_CART_PAGE_UNLOCK_SUCCESS = 'persistent_cart.quote.unlock.success';
+    protected const GLOSSARY_KEY_CART_PAGE_UNLOCK_SUCCESS = 'cart_page.quote.unlock.success';
 
     /**
      * @see \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
@@ -44,10 +44,6 @@ class UnlockCartController extends AbstractController
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_CART_PAGE_UNLOCK_SUCCESS);
         }
-
-        $this->getFactory()
-            ->getZedRequestClient()
-            ->addResponseMessagesToMessenger();
 
         return $this->redirectResponseInternal(static::ROUTE_CART);
     }
