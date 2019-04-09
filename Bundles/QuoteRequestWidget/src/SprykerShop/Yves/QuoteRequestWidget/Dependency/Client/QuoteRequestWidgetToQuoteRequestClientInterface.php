@@ -9,9 +9,17 @@ namespace SprykerShop\Yves\QuoteRequestWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteRequestWidgetToQuoteRequestClientInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteApplicableForQuoteRequest(QuoteTransfer $quoteTransfer): bool;
+
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
