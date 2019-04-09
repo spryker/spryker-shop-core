@@ -289,26 +289,6 @@ class CartController extends AbstractController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function unlockAction(): RedirectResponse
-    {
-        $quoteResponseTransfer = $this->getFactory()
-            ->getCartClient()
-            ->unlockQuote();
-
-        if ($quoteResponseTransfer->getIsSuccessful()) {
-//            $this->addSuccessMessage(static::KEY_GLOSSARY_CART_PAGE_UNLOCK_SUCCESS);
-        }
-
-        $this->getFactory()
-            ->getZedRequestClient()
-            ->addResponseMessagesToMessenger();
-
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
-    }
-
-    /**
      * @param array $items
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
