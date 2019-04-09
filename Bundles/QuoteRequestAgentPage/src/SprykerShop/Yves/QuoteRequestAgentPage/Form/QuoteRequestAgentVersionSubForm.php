@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuoteRequestPage\Form;
+namespace SprykerShop\Yves\QuoteRequestAgentPage\Form;
 
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
@@ -13,10 +13,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
- * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageConfig getConfig()
+ * @method \SprykerShop\Yves\QuoteRequestAgentPage\QuoteRequestAgentPageFactory getFactory()
+ * @method \SprykerShop\Yves\QuoteRequestAgentPage\QuoteRequestAgentPageConfig getConfig()
  */
-class QuoteRequestVersionSubForm extends AbstractType
+class QuoteRequestAgentVersionSubForm extends AbstractType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -29,6 +29,7 @@ class QuoteRequestVersionSubForm extends AbstractType
             'data_class' => QuoteRequestVersionTransfer::class,
             'label' => false,
         ]);
+        $resolver->setRequired([QuoteRequestAgentForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS]);
     }
 
     /**
@@ -39,7 +40,8 @@ class QuoteRequestVersionSubForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addMetadataForm($builder);
+        $this->addMetadataForm($builder)
+            ->addQuoteForm($builder, $options);
     }
 
     /**
@@ -49,7 +51,26 @@ class QuoteRequestVersionSubForm extends AbstractType
      */
     protected function addMetadataForm(FormBuilderInterface $builder)
     {
-        $builder->add(QuoteRequestVersionTransfer::METADATA, QuoteRequestMetadataSubForm::class);
+        $builder->add(QuoteRequestVersionTransfer::METADATA, QuoteRequestAgentMetadataSubForm::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addQuoteForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(
+            QuoteRequestVersionTransfer::QUOTE,
+            QuoteRequestAgentVersionQuoteSubForm::class,
+            [
+                QuoteRequestAgentForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS => $options[QuoteRequestAgentForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS],
+            ]
+        );
 
         return $this;
     }

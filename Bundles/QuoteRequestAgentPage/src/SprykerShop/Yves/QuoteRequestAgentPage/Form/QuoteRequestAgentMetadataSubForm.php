@@ -5,18 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuoteRequestPage\Form;
+namespace SprykerShop\Yves\QuoteRequestAgentPage\Form;
 
-use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
- * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageConfig getConfig()
+ * @method \SprykerShop\Yves\QuoteRequestAgentPage\QuoteRequestAgentPageFactory getFactory()
+ * @method \SprykerShop\Yves\QuoteRequestAgentPage\QuoteRequestAgentPageConfig getConfig()
  */
-class QuoteRequestVersionSubForm extends AbstractType
+class QuoteRequestAgentMetadataSubForm extends AbstractType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -26,7 +25,6 @@ class QuoteRequestVersionSubForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => QuoteRequestVersionTransfer::class,
             'label' => false,
         ]);
     }
@@ -39,18 +37,19 @@ class QuoteRequestVersionSubForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addMetadataForm($builder);
+        $this->addMetadataFields($builder, $options);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
-     * @return $this
+     * @return void
      */
-    protected function addMetadataForm(FormBuilderInterface $builder)
+    protected function addMetadataFields(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add(QuoteRequestVersionTransfer::METADATA, QuoteRequestMetadataSubForm::class);
-
-        return $this;
+        foreach ($this->getFactory()->getQuoteRequestAgentFormMetadataFieldPlugins() as $quoteRequestFormMetadataFieldPlugin) {
+            $builder = $quoteRequestFormMetadataFieldPlugin->buildForm($builder, $options);
+        }
     }
 }
