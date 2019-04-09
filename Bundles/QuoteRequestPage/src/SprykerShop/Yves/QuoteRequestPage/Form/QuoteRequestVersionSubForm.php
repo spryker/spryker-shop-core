@@ -13,8 +13,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageFactory getFactory()
- * @method \SprykerShop\Yves\AgentQuoteRequestPage\AgentQuoteRequestPageConfig getConfig()
+ * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
+ * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageConfig getConfig()
  */
 class QuoteRequestVersionSubForm extends AbstractType
 {

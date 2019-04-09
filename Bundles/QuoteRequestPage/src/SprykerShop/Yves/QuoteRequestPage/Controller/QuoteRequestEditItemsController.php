@@ -86,16 +86,16 @@ class QuoteRequestEditItemsController extends QuoteRequestAbstractController
 
         $quoteRequestTransfer = $this->getCompanyUserQuoteRequestByReference($quoteRequestReference);
 
-        $agentQuoteRequestEditItemsConfirmForm = $this->getFactory()
+        $quoteRequestEditItemsConfirmForm = $this->getFactory()
             ->getQuoteRequestEditItemsConfirmForm($quoteRequestTransfer)
             ->handleRequest($request);
 
-        if ($agentQuoteRequestEditItemsConfirmForm->isSubmitted()) {
-            return $this->convertQuoteRequest($agentQuoteRequestEditItemsConfirmForm->getData());
+        if ($quoteRequestEditItemsConfirmForm->isSubmitted()) {
+            return $this->convertQuoteRequest($quoteRequestEditItemsConfirmForm->getData());
         }
 
         return [
-            'quoteRequestEditItemsConfirmForm' => $agentQuoteRequestEditItemsConfirmForm->createView(),
+            'quoteRequestEditItemsConfirmForm' => $quoteRequestEditItemsConfirmForm->createView(),
             'quoteRequestReference' => $quoteTransfer->getQuoteRequestReference(),
         ];
     }
