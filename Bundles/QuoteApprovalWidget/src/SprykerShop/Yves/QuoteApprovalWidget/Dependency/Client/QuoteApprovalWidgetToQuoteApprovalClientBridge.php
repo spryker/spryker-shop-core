@@ -34,6 +34,16 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
      *
      * @return bool
      */
+    public function isQuoteApplicableForApproval(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteApprovalClient->isQuoteApplicableForApproval($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
     public function canQuoteBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool
     {
         return $this->quoteApprovalClient->canQuoteBeApprovedByCurrentCustomer($quoteTransfer);
