@@ -145,7 +145,7 @@ class ContentBannerTwigPluginTest extends Unit
     protected function setContentBannerWidgetToContentBannerClientReturn(?ContentBannerTypeTransfer $contentBannerTypeTransfer = null): void
     {
         $contentBannerWidgetToContentBannerClientBridge = $this->getMockBuilder(ContentBannerWidgetToContentBannerClientInterface::class)->getMock();
-        $contentBannerWidgetToContentBannerClientBridge->method('findBannerById')->willReturn($contentBannerTypeTransfer);
+        $contentBannerWidgetToContentBannerClientBridge->method('findBannerTypeById')->willReturn($contentBannerTypeTransfer);
         $this->tester->setDependency(ContentBannerWidgetDependencyProvider::CLIENT_CONTENT_BANNER, $contentBannerWidgetToContentBannerClientBridge);
     }
 
