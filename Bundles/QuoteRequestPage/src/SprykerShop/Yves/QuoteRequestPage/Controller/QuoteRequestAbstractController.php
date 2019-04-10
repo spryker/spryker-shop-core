@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
+use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -84,12 +85,13 @@ class QuoteRequestAbstractController extends AbstractController
      */
     protected function getCompanyUserQuoteRequestByReference(string $quoteRequestReference): QuoteRequestTransfer
     {
+        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+            ->setQuoteRequestReference($quoteRequestReference)
+            ->setIdCompanyUser($this->getFactory()->getCompanyUserClient()->findCompanyUser()->getIdCompanyUser());
+
         $quoteRequestTransfer = $this->getFactory()
             ->getQuoteRequestClient()
-            ->findCompanyUserQuoteRequestByReference(
-                $quoteRequestReference,
-                $this->getFactory()->getCompanyUserClient()->findCompanyUser()->getIdCompanyUser()
-            );
+            ->findQuoteRequest($quoteRequestCriteriaTransfer);
 
         if (!$quoteRequestTransfer) {
             throw new NotFoundHttpException();

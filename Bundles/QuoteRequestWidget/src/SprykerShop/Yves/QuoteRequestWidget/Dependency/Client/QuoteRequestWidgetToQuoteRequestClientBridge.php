@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 
@@ -46,13 +47,12 @@ class QuoteRequestWidgetToQuoteRequestClientBridge implements QuoteRequestWidget
     }
 
     /**
-     * @param string $quoteRequestReference
-     * @param int $idCompanyUser
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    public function findCompanyUserQuoteRequestByReference(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer
+    public function findQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer
     {
-        return $this->quoteRequestClient->findCompanyUserQuoteRequestByReference($quoteRequestReference, $idCompanyUser);
+        return $this->quoteRequestClient->findQuoteRequest($quoteRequestCriteriaTransfer);
     }
 }

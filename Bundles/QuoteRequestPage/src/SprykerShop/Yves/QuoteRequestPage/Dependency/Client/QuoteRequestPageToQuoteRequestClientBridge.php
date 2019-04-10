@@ -102,14 +102,13 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
     }
 
     /**
-     * @param string $quoteRequestReference
-     * @param int $idCompanyUser
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    public function findCompanyUserQuoteRequestByReference(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer
+    public function findQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer
     {
-        return $this->quoteRequestClient->findCompanyUserQuoteRequestByReference($quoteRequestReference, $idCompanyUser);
+        return $this->quoteRequestClient->findQuoteRequest($quoteRequestCriteriaTransfer);
     }
 
     /**
