@@ -128,4 +128,12 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     {
         return $this->cartClient->validateQuote();
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function unlockQuote(): QuoteResponseTransfer
+    {
+        return $this->cartClient->unlockQuote();
+    }
 }
