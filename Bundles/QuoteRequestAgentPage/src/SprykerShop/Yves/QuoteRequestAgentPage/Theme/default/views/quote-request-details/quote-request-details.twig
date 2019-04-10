@@ -61,7 +61,7 @@
                     <b>{{ data.quoteRequest.companyUser.company.name }}</b>
                 </p>
                 <p>{{ 'quote_request_page.quote_request.labels.business_unit' | trans }}:
-                    <b>{{ data.quoteRequest.companyUser.companyBusinessUnit.name }}</b>
+                    <b>{{ data.quoteRequest.companyUser.companyBusinessUnit ? data.quoteRequest.companyUser.companyBusinessUnit.name : '' }}</b>
                 </p>
                 <p>{{ 'quote_request_page.quote_request.labels.customer' | trans }}:
                     <b>{{ data.quoteRequest.companyUser.customer.firstName }} {{ data.quoteRequest.companyUser.customer.lastName }}</b>

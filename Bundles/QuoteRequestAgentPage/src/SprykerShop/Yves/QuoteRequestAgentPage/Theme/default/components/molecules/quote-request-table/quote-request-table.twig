@@ -33,7 +33,7 @@
                     {{ quoteRequest.companyUser.company.name }}
                 </td>
                 <td>
-                    {{ quoteRequest.companyUser.companyBusinessUnit.name }}
+                    {{ quoteRequest.companyUser.companyBusinessUnit ? quoteRequest.companyUser.companyBusinessUnit.name : '' }}
                 </td>
                 <td>
                     {{ quoteRequest.companyUser.customer.firstName ~ ' ' ~ quoteRequest.companyUser.customer.lastName }}
