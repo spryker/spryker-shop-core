@@ -72,7 +72,7 @@ class ContentBannerTwigFunction extends TwigFunction
                 return $this->getMessageBannerWrongTemplate($templateIdentifier);
             }
             try {
-                $contentBannerTypeTransfer = $this->contentBannerClient->findBannerTypeById($idContent, $this->localeName);
+                $contentBannerTypeTransfer = $this->contentBannerClient->executeBannerTypeById($idContent, $this->localeName);
 
                 if (!$contentBannerTypeTransfer) {
                     return $this->getMessageBannerNotFound($idContent);
