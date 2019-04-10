@@ -17,7 +17,7 @@ class ContentBannerTwigFunction extends TwigFunction
     protected const TWIG_FUNCTION_NAME_CONTNET_BANNER = 'content_banner';
 
     protected const MESSAGE_BANNER_NOT_FOUND = '<!-- Content Banner with ID %s not found. -->';
-    protected const MESSAGE_BANNER_WRONG_TYPE = '<!-- %s widget cannot display for ID %s. -->';
+    protected const MESSAGE_BANNER_WRONG_TYPE = '<!-- %s could not be rendered for content item with ID %s. -->';
     protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<!-- %s is not supported name of template. -->';
 
     protected const TEMPLATE_IDENTIFIER_DEFAULT = 'default';

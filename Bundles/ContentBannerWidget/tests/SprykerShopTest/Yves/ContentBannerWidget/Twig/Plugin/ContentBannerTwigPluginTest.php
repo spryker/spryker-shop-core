@@ -45,7 +45,7 @@ class ContentBannerTwigPluginTest extends Unit
     protected const RENDERED_STRING = 'output';
 
     protected const MESSAGE_BANNER_NOT_FOUND = '<!-- Content Banner with ID 0 not found. -->';
-    protected const MESSAGE_BANNER_WRONG_TYPE = '<!-- content_banner widget cannot display for ID 0. -->';
+    protected const MESSAGE_BANNER_WRONG_TYPE = '<!-- content_banner could not be rendered for content item with ID 0. -->';
     protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<!-- wrong is not supported name of template. -->';
 
     /**
