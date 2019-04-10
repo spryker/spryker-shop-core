@@ -1,0 +1,11 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    quote: _view.quote,
+} %}
+
+{% block pageInfo %}{% endblock %}
+
+{% block content %}
+    {{ dump(data.quote) }}
+{% endblock %}
