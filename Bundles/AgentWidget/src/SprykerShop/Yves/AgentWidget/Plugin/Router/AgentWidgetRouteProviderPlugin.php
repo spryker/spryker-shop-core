@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\HomePage\Plugin\Router;
+namespace SprykerShop\Yves\AgentWidget\Plugin\Router;
 
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
-class HomePageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
+class AgentWidgetRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
 {
-    public const ROUTE_HOME = 'home';
+    public const ROUTE_CUSTOMER_AUTOCOMPLETE = 'agent-widget/customer-autocomplete';
 
     /**
      * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
@@ -21,7 +21,7 @@ class HomePageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvi
      */
     public function addRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $routeCollection = $this->addHomeRoute($routeCollection);
+        $routeCollection = $this->addCustomerAutocompleteRoute($routeCollection);
         return $routeCollection;
     }
 
@@ -30,10 +30,10 @@ class HomePageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvi
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addHomeRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addCustomerAutocompleteRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/', 'HomePage', 'Index', 'indexAction');
-        $routeCollection->add(static::ROUTE_HOME, $route);
+        $route = $this->buildRoute('/agent-widget/customer-autocomplete', 'AgentWidget', 'CustomerAutocomplete', 'indexAction');
+        $routeCollection->add(static::ROUTE_CUSTOMER_AUTOCOMPLETE, $route);
         return $routeCollection;
     }
 }

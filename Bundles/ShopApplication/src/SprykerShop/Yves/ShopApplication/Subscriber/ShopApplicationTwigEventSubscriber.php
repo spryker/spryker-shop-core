@@ -162,6 +162,12 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
 
         if (!$template) {
             $request = $this->getRequestStack()->getCurrentRequest();
+            $template = $request->attributes->get('_template');
+
+            if ($template) {
+                return sprintf('@%s.twig', $template);
+            }
+
             $controller = $request->attributes->get('_controller');
 
             if (!is_string($controller) || !$controller) {

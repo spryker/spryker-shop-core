@@ -14,8 +14,8 @@ class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     public const ROUTE_ERROR_404 = 'error/404';
     public const ROUTE_ERROR_404_PATH = '/error/404';
-    public const ROUTE_ERROR_403 = 'error/403';
-    public const ROUTE_ERROR_403_PATH = '/error/403';
+    protected const ROUTE_ERROR_403 = 'error/403';
+    protected const ROUTE_ERROR_403_PATH = '/error/403';
 
     /**
      * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
@@ -39,7 +39,7 @@ class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addError404Route(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute(static::ROUTE_ERROR_404_PATH, 'ErrorPage', 'Error404');
+        $route = $this->buildRoute('/error/404', 'ErrorPage', 'Error404', 'indexAction');
         $routeCollection->add(static::ROUTE_ERROR_404, $route);
 
         return $routeCollection;
@@ -54,7 +54,7 @@ class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addError403Route(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute(static::ROUTE_ERROR_403_PATH, 'ErrorPage', 'Error403');
+        $route = $this->buildRoute('/error/403', 'ErrorPage', 'Error403', 'indexAction');
         $routeCollection->add(static::ROUTE_ERROR_403, $route);
 
         return $routeCollection;

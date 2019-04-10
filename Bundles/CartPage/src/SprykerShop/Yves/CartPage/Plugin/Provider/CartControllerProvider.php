@@ -148,12 +148,13 @@ class CartControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addCartUpdateRoute()
     {
-        $this->createController('/{cart}/update/{sku}', self::ROUTE_CART_UPDATE, 'CartPage', 'Cart', 'update')
+        $controller = $this->createController('/{cart}/update/{sku}', self::ROUTE_CART_UPDATE, 'CartPage', 'Cart', 'update')
             ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart')
             ->assert('sku', self::SKU_PATTERN)
-            ->convert('quantity', [$this, 'getQuantityFromRequest'])
-            ->convert('groupKey', [$this, 'getGroupKeyFromRequest'])
+            ->convert('quantity', [$this, 'getQuantityFromRequest']);
+
+        $controller->convert('groupKey', [$this, 'getGroupKeyFromRequest'])
             ->convert('selectedAttributes', [$this, 'getSelectedAttributesFromRequest'])
             ->convert('preselectedAttributes', [$this, 'getPreSelectedAttributesFromRequest'])
             ->convert('optionValueIds', [$this, 'getProductOptionsFromRequest'])

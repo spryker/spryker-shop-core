@@ -7,10 +7,10 @@
 
 namespace SprykerShop\Yves\CompanyPage\Plugin\Router;
 
-use Spryker\Shared\Router\Route\RouteCollection;
-use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Silex\Application;
+use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
-class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
+class CompanyPageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
 {
     public const ROUTE_COMPANY_LOGIN = 'company/login';
     public const ROUTE_COMPANY_REGISTER = 'company/register';
@@ -60,7 +60,7 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    public function addRoutes(RouteCollection $routeCollection): RouteCollection
+    public function addRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
         $routeCollection = $this->addCompanyRoutes($routeCollection);
         $routeCollection = $this->addCompanyAddressRoutes($routeCollection);
@@ -70,7 +70,6 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection = $this->addCompanyUserRoutes($routeCollection);
         $routeCollection = $this->addCompanyRoleUserRoutes($routeCollection);
         $routeCollection = $this->addCompanyUserStatusRoutes($routeCollection);
-
         return $routeCollection;
     }
 
@@ -79,11 +78,12 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCompanyRoutes(RouteCollection $routeCollection): RouteCollection
+    protected function addCompanyRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $routeCollection->add(static::ROUTE_COMPANY_REGISTER, $this->buildRoute('/company/register', 'CompanyPage', 'Register', 'index'));
-        $routeCollection->add(static::ROUTE_COMPANY_OVERVIEW, $this->buildRoute('/company/overview', 'CompanyPage', 'Company', 'index'));
-
+        $route = $this->buildRoute('/company/register', 'CompanyPage', 'Register', 'indexAction');
+        $routeCollection->add(static::ROUTE_COMPANY_REGISTER, $route);
+        $route = $this->buildRoute('/company/overview', 'CompanyPage', 'Company', 'indexAction');
+        $routeCollection->add(static::ROUTE_COMPANY_OVERVIEW, $route);
         return $routeCollection;
     }
 
@@ -92,14 +92,18 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCompanyAddressRoutes(RouteCollection $routeCollection): RouteCollection
+    protected function addCompanyAddressRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $routeCollection->add(static::ROUTE_COMPANY_ADDRESS, $this->buildRoute('/company/address', 'CompanyPage', 'Address', 'index'));
-        $routeCollection->add(static::ROUTE_COMPANY_ADDRESS_CREATE, $this->buildRoute('/company/address/create', 'CompanyPage', 'Address', 'create'));
-        $routeCollection->add(static::ROUTE_COMPANY_ADDRESS_UPDATE, $this->buildRoute('/company/address/update', 'CompanyPage', 'Address', 'update'));
-        $routeCollection->add(static::ROUTE_COMPANY_ADDRESS_DELETE, $this->buildRoute('/company/address/delete', 'CompanyPage', 'Address', 'delete'));
-        $routeCollection->add(static::ROUTE_COMPANY_ADDRESS_DELETE_CONFIRMATION, $this->buildRoute('/company/address/delete-confirmation', 'CompanyPage', 'Address', 'confirmDelete'));
-
+        $route = $this->buildRoute('/company/address', 'CompanyPage', 'Address', 'indexAction');
+        $routeCollection->add(static::ROUTE_COMPANY_ADDRESS, $route);
+        $route = $this->buildRoute('/company/address/create', 'CompanyPage', 'Address', 'createAction');
+        $routeCollection->add(static::ROUTE_COMPANY_ADDRESS_CREATE, $route);
+        $route = $this->buildRoute('/company/address/update', 'CompanyPage', 'Address', 'updateAction');
+        $routeCollection->add(static::ROUTE_COMPANY_ADDRESS_UPDATE, $route);
+        $route = $this->buildRoute('/company/address/delete', 'CompanyPage', 'Address', 'deleteAction');
+        $routeCollection->add(static::ROUTE_COMPANY_ADDRESS_DELETE, $route);
+        $route = $this->buildRoute('/company/address/delete-confirmation', 'CompanyPage', 'Address', 'confirmDeleteAction');
+        $routeCollection->add(static::ROUTE_COMPANY_ADDRESS_DELETE_CONFIRMATION, $route);
         return $routeCollection;
     }
 
@@ -108,16 +112,22 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCompanyBusinessUnitRoutes(RouteCollection $routeCollection): RouteCollection
+    protected function addCompanyBusinessUnitRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT, $this->buildRoute('/company/business-unit', 'CompanyPage', 'BusinessUnit', 'index'));
-        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_DETAILS, $this->buildRoute('/company/business-unit/details', 'CompanyPage', 'BusinessUnit', 'details'));
-        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_CREATE, $this->buildRoute('/company/business-unit/create', 'CompanyPage', 'BusinessUnit', 'create'));
-        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, $this->buildRoute('/company/business-unit/update', 'CompanyPage', 'BusinessUnit', 'update'));
-        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_DELETE, $this->buildRoute('/company/business-unit/delete', 'CompanyPage', 'BusinessUnit', 'delete'));
-        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION, $this->buildRoute('/company/business-unit/delete-confirmation', 'CompanyPage', 'BusinessUnit', 'confirmDelete'));
-        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE, $this->buildRoute('/company/business-unit/address/create', 'CompanyPage', 'BusinessUnitAddress', 'create'));
-
+        $route = $this->buildRoute('/company/business-unit', 'CompanyPage', 'BusinessUnit', 'indexAction');
+        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT, $route);
+        $route = $this->buildRoute('/company/business-unit/details', 'CompanyPage', 'BusinessUnit', 'detailsAction');
+        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_DETAILS, $route);
+        $route = $this->buildRoute('/company/business-unit/create', 'CompanyPage', 'BusinessUnit', 'createAction');
+        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_CREATE, $route);
+        $route = $this->buildRoute('/company/business-unit/update', 'CompanyPage', 'BusinessUnit', 'updateAction');
+        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, $route);
+        $route = $this->buildRoute('/company/business-unit/delete', 'CompanyPage', 'BusinessUnit', 'deleteAction');
+        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_DELETE, $route);
+        $route = $this->buildRoute('/company/business-unit/delete-confirmation', 'CompanyPage', 'BusinessUnit', 'confirmDeleteAction');
+        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION, $route);
+        $route = $this->buildRoute('/company/business-unit/address/create', 'CompanyPage', 'BusinessUnitAddress', 'createAction');
+        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE, $route);
         return $routeCollection;
     }
 
@@ -126,15 +136,20 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCompanyRoleRoutes(RouteCollection $routeCollection): RouteCollection
+    protected function addCompanyRoleRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE, $this->buildRoute('/company/company-role', 'CompanyPage', 'CompanyRole', 'index'));
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_CREATE, $this->buildRoute('/company/company-role/create', 'CompanyPage', 'CompanyRole', 'create'));
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_UPDATE, $this->buildRoute('/company/company-role/update', 'CompanyPage', 'CompanyRole', 'update'));
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_DELETE, $this->buildRoute('/company/company-role/delete', 'CompanyPage', 'CompanyRole', 'delete'));
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_CONFIRM_DELETE, $this->buildRoute('/company/company-role/confirm-delete', 'CompanyPage', 'CompanyRole', 'confirmDelete'));
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_DETAILS, $this->buildRoute('/company/company-role/details', 'CompanyPage', 'CompanyRole', 'details'));
-
+        $route = $this->buildRoute('/company/company-role', 'CompanyPage', 'CompanyRole', 'indexAction');
+        $routeCollection->add(static::ROUTE_COMPANY_ROLE, $route);
+        $route = $this->buildRoute('/company/company-role/create', 'CompanyPage', 'CompanyRole', 'createAction');
+        $routeCollection->add(static::ROUTE_COMPANY_ROLE_CREATE, $route);
+        $route = $this->buildRoute('/company/company-role/update', 'CompanyPage', 'CompanyRole', 'updateAction');
+        $routeCollection->add(static::ROUTE_COMPANY_ROLE_UPDATE, $route);
+        $route = $this->buildRoute('/company/company-role/delete', 'CompanyPage', 'CompanyRole', 'deleteAction');
+        $routeCollection->add(static::ROUTE_COMPANY_ROLE_DELETE, $route);
+        $route = $this->buildRoute('/company/company-role/confirm-delete', 'CompanyPage', 'CompanyRole', 'confirmDeleteAction');
+        $routeCollection->add(static::ROUTE_COMPANY_ROLE_CONFIRM_DELETE, $route);
+        $route = $this->buildRoute('/company/company-role/details', 'CompanyPage', 'CompanyRole', 'detailsAction');
+        $routeCollection->add(static::ROUTE_COMPANY_ROLE_DETAILS, $route);
         return $routeCollection;
     }
 
@@ -143,12 +158,14 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addPermissionRoutes(RouteCollection $routeCollection): RouteCollection
+    protected function addPermissionRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_PERMISSION_CONFIGURE, $this->buildRoute('/company/company-role-permission/configure', 'CompanyPage', 'CompanyRolePermission', 'configure'));
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_PERMISSION_ASSIGN, $this->buildRoute('/company/company-role-permission/assign', 'CompanyPage', 'CompanyRolePermission', 'assign'));
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_PERMISSION_UNASSIGN, $this->buildRoute('/company/company-role-permission/unassign', 'CompanyPage', 'CompanyRolePermission', 'unassign'));
-
+        $route = $this->buildRoute('/company/company-role-permission/configure', 'CompanyPage', 'CompanyRolePermission', 'configureAction');
+        $routeCollection->add(static::ROUTE_COMPANY_ROLE_PERMISSION_CONFIGURE, $route);
+        $route = $this->buildRoute('/company/company-role-permission/assign', 'CompanyPage', 'CompanyRolePermission', 'assignAction');
+        $routeCollection->add(static::ROUTE_COMPANY_ROLE_PERMISSION_ASSIGN, $route);
+        $route = $this->buildRoute('/company/company-role-permission/unassign', 'CompanyPage', 'CompanyRolePermission', 'unassignAction');
+        $routeCollection->add(static::ROUTE_COMPANY_ROLE_PERMISSION_UNASSIGN, $route);
         return $routeCollection;
     }
 
@@ -157,15 +174,20 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCompanyUserRoutes(RouteCollection $routeCollection): RouteCollection
+    protected function addCompanyUserRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $routeCollection->add(static::ROUTE_COMPANY_USER, $this->buildRoute('/company/user', 'CompanyPage', 'User', 'index'));
-        $routeCollection->add(static::ROUTE_COMPANY_USER_CREATE, $this->buildRoute('/company/user/create', 'CompanyPage', 'User', 'create'));
-        $routeCollection->add(static::ROUTE_COMPANY_USER_UPDATE, $this->buildRoute('/company/user/update', 'CompanyPage', 'User', 'update'));
-        $routeCollection->add(static::ROUTE_COMPANY_USER_DELETE, $this->buildRoute('/company/user/delete', 'CompanyPage', 'User', 'delete'));
-        $routeCollection->add(static::ROUTE_COMPANY_USER_CONFIRM_DELETE, $this->buildRoute('/company/user/confirm-delete', 'CompanyPage', 'User', 'confirmDelete'));
-        $routeCollection->add(static::ROUTE_COMPANY_USER_SELECT, $this->buildRoute('/company/user/select', 'CompanyPage', 'BusinessOnBehalf', 'selectCompanyUser'));
-
+        $route = $this->buildRoute('/company/user', 'CompanyPage', 'User', 'indexAction');
+        $routeCollection->add(static::ROUTE_COMPANY_USER, $route);
+        $route = $this->buildRoute('/company/user/create', 'CompanyPage', 'User', 'createAction');
+        $routeCollection->add(static::ROUTE_COMPANY_USER_CREATE, $route);
+        $route = $this->buildRoute('/company/user/update', 'CompanyPage', 'User', 'updateAction');
+        $routeCollection->add(static::ROUTE_COMPANY_USER_UPDATE, $route);
+        $route = $this->buildRoute('/company/user/delete', 'CompanyPage', 'User', 'deleteAction');
+        $routeCollection->add(static::ROUTE_COMPANY_USER_DELETE, $route);
+        $route = $this->buildRoute('/company/user/confirm-delete', 'CompanyPage', 'User', 'confirmDeleteAction');
+        $routeCollection->add(static::ROUTE_COMPANY_USER_CONFIRM_DELETE, $route);
+        $route = $this->buildRoute('/company/user/select', 'CompanyPage', 'BusinessOnBehalf', 'selectCompanyUserAction');
+        $routeCollection->add(static::ROUTE_COMPANY_USER_SELECT, $route);
         return $routeCollection;
     }
 
@@ -174,12 +196,14 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCompanyRoleUserRoutes(RouteCollection $routeCollection): RouteCollection
+    protected function addCompanyRoleUserRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_USER_MANAGE, $this->buildRoute('/company/company-role/user/manage', 'CompanyPage', 'CompanyRoleUser', 'manage'));
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_USER_ASSIGN, $this->buildRoute('/company/company-role/user/assign', 'CompanyPage', 'CompanyRoleUser', 'assign'));
-        $routeCollection->add(static::ROUTE_COMPANY_ROLE_USER_UNASSIGN, $this->buildRoute('/company/company-role/user/unassign', 'CompanyPage', 'CompanyRoleUser', 'unassign'));
-
+        $route = $this->buildRoute('/company/company-role/user/manage', 'CompanyPage', 'CompanyRoleUser', 'manageAction');
+        $routeCollection->add(static::ROUTE_COMPANY_ROLE_USER_MANAGE, $route);
+        $route = $this->buildRoute('/company/company-role/user/assign', 'CompanyPage', 'CompanyRoleUser', 'assignAction');
+        $routeCollection->add(static::ROUTE_COMPANY_ROLE_USER_ASSIGN, $route);
+        $route = $this->buildRoute('/company/company-role/user/unassign', 'CompanyPage', 'CompanyRoleUser', 'unassignAction');
+        $routeCollection->add(static::ROUTE_COMPANY_ROLE_USER_UNASSIGN, $route);
         return $routeCollection;
     }
 
@@ -188,11 +212,12 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCompanyUserStatusRoutes(RouteCollection $routeCollection): RouteCollection
+    protected function addCompanyUserStatusRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $routeCollection->add(static::ROUTE_COMPANY_USER_STATUS_ENABLE, $this->buildRoute('/company/company-user-status/enable', 'CompanyPage', 'CompanyUserStatus', 'enable'));
-        $routeCollection->add(static::ROUTE_COMPANY_USER_STATUS_DISABLE, $this->buildRoute('/company/company-user-status/disable', 'CompanyPage', 'CompanyUserStatus', 'disable'));
-
+        $route = $this->buildRoute('/company/company-user-status/enable', 'CompanyPage', 'CompanyUserStatus', 'enableAction');
+        $routeCollection->add(static::ROUTE_COMPANY_USER_STATUS_ENABLE, $route);
+        $route = $this->buildRoute('/company/company-user-status/disable', 'CompanyPage', 'CompanyUserStatus', 'disableAction');
+        $routeCollection->add(static::ROUTE_COMPANY_USER_STATUS_DISABLE, $route);
         return $routeCollection;
     }
 }

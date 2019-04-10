@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\HomePage\Plugin\Router;
+namespace SprykerShop\Yves\HeartbeatPage\Plugin\Router;
 
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
-class HomePageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
+class HeartbeatPageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
 {
-    public const ROUTE_HOME = 'home';
+    public const ROUTE_HEARTBEAT = 'heartbeat';
 
     /**
      * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
@@ -21,7 +21,7 @@ class HomePageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvi
      */
     public function addRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $routeCollection = $this->addHomeRoute($routeCollection);
+        $routeCollection = $this->addHeartbeatRoute($routeCollection);
         return $routeCollection;
     }
 
@@ -30,10 +30,10 @@ class HomePageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvi
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addHomeRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addHeartbeatRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/', 'HomePage', 'Index', 'indexAction');
-        $routeCollection->add(static::ROUTE_HOME, $route);
+        $route = $this->buildRoute('/{heartbeat}', 'HeartbeatPage', 'Heartbeat', 'indexAction');
+        $routeCollection->add(static::ROUTE_HEARTBEAT, $route);
         return $routeCollection;
     }
 }

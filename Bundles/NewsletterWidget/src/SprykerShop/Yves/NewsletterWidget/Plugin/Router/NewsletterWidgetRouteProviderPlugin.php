@@ -7,12 +7,13 @@
 
 namespace SprykerShop\Yves\NewsletterWidget\Plugin\Router;
 
-use Spryker\Shared\Router\Route\RouteCollection;
-use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Silex\Application;
+use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
-class NewsletterWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
+class NewsletterWidgetRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
 {
     public const ROUTE_NEWSLETTER_SUBSCRIBE = 'newsletter/subscribe';
+
     public const ROUTE_NEWSLETTER_WIDGET_SUBSCRIBE = 'newsletter-widget/subscribe';
 
     /**
@@ -20,37 +21,34 @@ class NewsletterWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    public function addRoutes(RouteCollection $routeCollection): RouteCollection
+    public function addRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
         $routeCollection = $this->addNewsletterSubscribeRoute($routeCollection);
         $routeCollection = $this->addNewsletterWidgetSubscribeRoute($routeCollection);
-
         return $routeCollection;
     }
 
     /**
      * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
      *
-     * @return $this
+     * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addNewsletterSubscribeRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addNewsletterSubscribeRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/newsletter/subscribe', 'NewsletterWidget', 'Subscription', 'subscribe');
+        $route = $this->buildRoute('/newsletter/subscribe', 'NewsletterWidget', 'Subscription', 'subscribeAction');
         $routeCollection->add(static::ROUTE_NEWSLETTER_SUBSCRIBE, $route);
-
         return $routeCollection;
     }
 
     /**
      * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
      *
-     * @return $this
+     * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addNewsletterWidgetSubscribeRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addNewsletterWidgetSubscribeRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/newsletter-widget/subscribe', 'NewsletterWidget', 'SubscriptionWidget', 'subscribe');
+        $route = $this->buildRoute('/newsletter-widget/subscribe', 'NewsletterWidget', 'SubscriptionWidget', 'subscribeAction');
         $routeCollection->add(static::ROUTE_NEWSLETTER_WIDGET_SUBSCRIBE, $route);
-
         return $routeCollection;
     }
 }

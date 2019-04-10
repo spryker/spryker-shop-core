@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\HomePage\Plugin\Router;
+namespace SprykerShop\Yves\ShoppingListWidget\Plugin\Router;
 
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
-class HomePageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
+class ShoppingListWidgetRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
 {
-    public const ROUTE_HOME = 'home';
+    public const ROUTE_ADD_ITEM = 'shopping-list/add-item';
 
     /**
      * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
@@ -21,7 +21,7 @@ class HomePageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvi
      */
     public function addRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $routeCollection = $this->addHomeRoute($routeCollection);
+        $routeCollection = $this->addAddItemRoute($routeCollection);
         return $routeCollection;
     }
 
@@ -30,10 +30,10 @@ class HomePageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvi
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addHomeRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addAddItemRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/', 'HomePage', 'Index', 'indexAction');
-        $routeCollection->add(static::ROUTE_HOME, $route);
+        $route = $this->buildRoute('/shopping-list/add-item', 'ShoppingListWidget', 'ShoppingListWidget', 'indexAction');
+        $routeCollection->add(static::ROUTE_ADD_ITEM, $route);
         return $routeCollection;
     }
 }

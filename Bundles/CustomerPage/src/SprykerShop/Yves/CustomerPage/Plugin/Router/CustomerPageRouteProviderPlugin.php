@@ -7,10 +7,10 @@
 
 namespace SprykerShop\Yves\CustomerPage\Plugin\Router;
 
-use Spryker\Shared\Router\Route\RouteCollection;
-use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Silex\Application;
+use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
-class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
+class CustomerPageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
 {
     public const ROUTE_LOGIN = 'login';
     public const ROUTE_LOGOUT = 'logout';
@@ -34,7 +34,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    public function addRoutes(RouteCollection $routeCollection): RouteCollection
+    public function addRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
         $routeCollection = $this->addLoginRoute($routeCollection);
         $routeCollection = $this->addLogoutRoute($routeCollection);
@@ -52,7 +52,6 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection = $this->addCustomerOrderDetailsRoute($routeCollection);
         $routeCollection = $this->addCustomerDeleteRoute($routeCollection);
         $routeCollection = $this->addCustomerDeleteConfirmRoute($routeCollection);
-
         return $routeCollection;
     }
 
@@ -61,11 +60,10 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addLoginRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addLoginRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/login', 'CustomerPage', 'Auth', 'login');
+        $route = $this->buildRoute('/login', 'CustomerPage', 'Auth', 'loginAction');
         $routeCollection->add(static::ROUTE_LOGIN, $route);
-
         return $routeCollection;
     }
 
@@ -74,11 +72,10 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addLogoutRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addLogoutRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/logout', 'CustomerPage', 'Auth', 'logout');
+        $route = $this->buildRoute('/logout', 'CustomerPage', 'Auth', 'logoutAction');
         $routeCollection->add(static::ROUTE_LOGOUT, $route);
-
         return $routeCollection;
     }
 
@@ -87,11 +84,10 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addRegisterRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addRegisterRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/register', 'CustomerPage', 'Register', 'index');
+        $route = $this->buildRoute('/register', 'CustomerPage', 'Register', 'indexAction');
         $routeCollection->add(static::ROUTE_REGISTER, $route);
-
         return $routeCollection;
     }
 
@@ -100,11 +96,10 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addForgottenPasswordRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addForgottenPasswordRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/password/forgotten', 'CustomerPage', 'Password', 'forgottenPassword');
+        $route = $this->buildRoute('/password/forgotten', 'CustomerPage', 'Password', 'forgottenPasswordAction');
         $routeCollection->add(static::ROUTE_PASSWORD_FORGOTTEN, $route);
-
         return $routeCollection;
     }
 
@@ -113,11 +108,10 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addRestorePasswordRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addRestorePasswordRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/password/restore', 'CustomerPage', 'Password', 'restorePassword');
+        $route = $this->buildRoute('/password/restore', 'CustomerPage', 'Password', 'restorePasswordAction');
         $routeCollection->add(static::ROUTE_PASSWORD_RESTORE, $route);
-
         return $routeCollection;
     }
 
@@ -126,11 +120,10 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCustomerOverviewRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addCustomerOverviewRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/customer/overview', 'CustomerPage', 'Customer', 'index');
+        $route = $this->buildRoute('/customer/overview', 'CustomerPage', 'Customer', 'indexAction');
         $routeCollection->add(static::ROUTE_CUSTOMER_OVERVIEW, $route);
-
         return $routeCollection;
     }
 
@@ -139,11 +132,10 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCustomerProfileRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addCustomerProfileRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/customer/profile', 'CustomerPage', 'Profile', 'index');
+        $route = $this->buildRoute('/customer/profile', 'CustomerPage', 'Profile', 'indexAction');
         $routeCollection->add(static::ROUTE_CUSTOMER_PROFILE, $route);
-
         return $routeCollection;
     }
 
@@ -152,11 +144,10 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCustomerAddressRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addCustomerAddressRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/customer/address', 'CustomerPage', 'Address', 'index');
+        $route = $this->buildRoute('/customer/address', 'CustomerPage', 'Address', 'indexAction');
         $routeCollection->add(static::ROUTE_CUSTOMER_ADDRESS, $route);
-
         return $routeCollection;
     }
 
@@ -165,11 +156,10 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addNewCustomerAddressRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addNewCustomerAddressRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/customer/address/new', 'CustomerPage', 'Address', 'create');
+        $route = $this->buildRoute('/customer/address/new', 'CustomerPage', 'Address', 'createAction');
         $routeCollection->add(static::ROUTE_CUSTOMER_NEW_ADDRESS, $route);
-
         return $routeCollection;
     }
 
@@ -178,11 +168,10 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addUpdateCustomerAddressRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addUpdateCustomerAddressRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/customer/address/update', 'CustomerPage', 'Address', 'update');
+        $route = $this->buildRoute('/customer/address/update', 'CustomerPage', 'Address', 'updateAction');
         $routeCollection->add(static::ROUTE_CUSTOMER_UPDATE_ADDRESS, $route);
-
         return $routeCollection;
     }
 
@@ -191,11 +180,10 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addDeleteCustomerAddressRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addDeleteCustomerAddressRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/customer/address/delete', 'CustomerPage', 'Address', 'delete');
+        $route = $this->buildRoute('/customer/address/delete', 'CustomerPage', 'Address', 'deleteAction');
         $routeCollection->add(static::ROUTE_CUSTOMER_DELETE_ADDRESS, $route);
-
         return $routeCollection;
     }
 
@@ -204,11 +192,10 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addRefreshCustomerAddressRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addRefreshCustomerAddressRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/customer/address/refresh', 'CustomerPage', 'Address', 'refresh');
+        $route = $this->buildRoute('/customer/address/refresh', 'CustomerPage', 'Address', 'refreshAction');
         $routeCollection->add(static::ROUTE_CUSTOMER_REFRESH_ADDRESS, $route);
-
         return $routeCollection;
     }
 
@@ -217,11 +204,10 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCustomerOrderRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addCustomerOrderRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/customer/order', 'CustomerPage', 'Order', 'index');
+        $route = $this->buildRoute('/customer/order', 'CustomerPage', 'Order', 'indexAction');
         $routeCollection->add(static::ROUTE_CUSTOMER_ORDER, $route);
-
         return $routeCollection;
     }
 
@@ -230,11 +216,10 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCustomerOrderDetailsRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addCustomerOrderDetailsRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/customer/order/details', 'CustomerPage', 'Order', 'details');
+        $route = $this->buildRoute('/customer/order/details', 'CustomerPage', 'Order', 'detailsAction');
         $routeCollection->add(static::ROUTE_CUSTOMER_ORDER_DETAILS, $route);
-
         return $routeCollection;
     }
 
@@ -243,11 +228,10 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCustomerDeleteRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addCustomerDeleteRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/customer/delete', 'CustomerPage', 'Delete', 'index');
+        $route = $this->buildRoute('/customer/delete', 'CustomerPage', 'Delete', 'indexAction');
         $routeCollection->add(static::ROUTE_CUSTOMER_DELETE, $route);
-
         return $routeCollection;
     }
 
@@ -256,11 +240,10 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCustomerDeleteConfirmRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addCustomerDeleteConfirmRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
     {
-        $route = $this->buildRoute('/customer/delete/confirm', 'CustomerPage', 'Delete', 'confirm');
+        $route = $this->buildRoute('/customer/delete/confirm', 'CustomerPage', 'Delete', 'confirmAction');
         $routeCollection->add(static::ROUTE_CUSTOMER_DELETE_CONFIRM, $route);
-
         return $routeCollection;
     }
 }
