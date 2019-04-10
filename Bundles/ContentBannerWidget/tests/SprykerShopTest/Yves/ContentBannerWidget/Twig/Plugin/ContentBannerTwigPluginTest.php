@@ -44,6 +44,10 @@ class ContentBannerTwigPluginTest extends Unit
 
     protected const RENDERED_STRING = 'output';
 
+    protected const MESSAGE_BANNER_NOT_FOUND = '<!-- Content Banner with ID 0 not found. -->';
+    protected const MESSAGE_BANNER_WRONG_TYPE = '<!-- content_banner widget cannot display for ID 0. -->';
+    protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<!-- wrong is not supported name of template. -->';
+
     /**
      * @var \SprykerShopTest\Yves\ContentBannerWidget\ContentBannerWidgetYvesTester
      */
@@ -66,12 +70,8 @@ class ContentBannerTwigPluginTest extends Unit
     {
         $contentBannerTwigFunction = $this->getContentBannerTwigFunction();
         $bannerContent = call_user_func($contentBannerTwigFunction->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
-        $messageBannerNotFound = new ReflectionClassConstant(ContentBannerTwigFunction::class, 'MESSAGE_BANNER_NOT_FOUND');
 
-        $this->assertEquals(
-            '<!-- ' . sprintf($messageBannerNotFound->getValue(), static::CONTENT_ID) . ' -->',
-            $bannerContent
-        );
+        $this->assertEquals(sprintf(static::MESSAGE_BANNER_NOT_FOUND, static::CONTENT_ID), $bannerContent);
     }
 
     /**
@@ -88,13 +88,9 @@ class ContentBannerTwigPluginTest extends Unit
         $contentBannerTwigFunction = $this->getContentBannerTwigFunction();
         $bannerContent = call_user_func($contentBannerTwigFunction->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
 
-        $messageBannerWrongType = new ReflectionClassConstant(ContentBannerTwigFunction::class, 'MESSAGE_BANNER_WRONG_TYPE');
         $functionName = new ReflectionClassConstant(ContentBannerTwigFunction::class, 'TWIG_FUNCTION_NAME_CONTNET_BANNER');
 
-        $this->assertEquals(
-            '<!-- ' . sprintf($messageBannerWrongType->getValue(), $functionName->getValue(), static::CONTENT_ID) . ' -->',
-            $bannerContent
-        );
+        $this->assertEquals(static::MESSAGE_BANNER_WRONG_TYPE, $bannerContent);
     }
 
     /**
@@ -110,15 +106,7 @@ class ContentBannerTwigPluginTest extends Unit
 
         $bannerContent = call_user_func($contentBannerTwigFunction->getCallable(), static::CONTENT_ID, static::WRONG_TEMPLATE);
 
-        $messageBannerWrongTemplate = new ReflectionClassConstant(ContentBannerTwigFunction::class, 'MESSAGE_BANNER_WRONG_TEMPLATE');
-
-        $this->assertEquals(
-            '<!-- ' . sprintf(
-                $messageBannerWrongTemplate->getValue(),
-                static::WRONG_TEMPLATE
-            ) . ' -->',
-            $bannerContent
-        );
+        $this->assertEquals(static::MESSAGE_BANNER_WRONG_TEMPLATE, $bannerContent);
     }
 
     /**

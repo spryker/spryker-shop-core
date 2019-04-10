@@ -16,9 +16,9 @@ class ContentBannerTwigFunction extends TwigFunction
 {
     protected const TWIG_FUNCTION_NAME_CONTNET_BANNER = 'content_banner';
 
-    protected const MESSAGE_BANNER_NOT_FOUND = 'Content Banner with ID %s not found.';
-    protected const MESSAGE_BANNER_WRONG_TYPE = '%s widget cannot display for ID %s.';
-    protected const MESSAGE_BANNER_WRONG_TEMPLATE = '%s is not supported name of template .';
+    protected const MESSAGE_BANNER_NOT_FOUND = '<!-- Content Banner with ID %s not found. -->';
+    protected const MESSAGE_BANNER_WRONG_TYPE = '<!-- %s widget cannot display for ID %s. -->';
+    protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<!-- %s is not supported name of template. -->';
 
     protected const TEMPLATE_IDENTIFIER_DEFAULT = 'default';
     protected const TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
@@ -69,16 +69,16 @@ class ContentBannerTwigFunction extends TwigFunction
     {
         return function (int $idContent, string $templateIdentifier) {
             if (!isset($this->getAvailableTemplates()[$templateIdentifier])) {
-                return $this->formatErrorMessage(sprintf(static::MESSAGE_BANNER_WRONG_TEMPLATE, $templateIdentifier));
+                return sprintf(static::MESSAGE_BANNER_WRONG_TEMPLATE, $templateIdentifier);
             }
             try {
                 $contentBannerTypeTransfer = $this->contentBannerClient->findBannerTypeById($idContent, $this->localeName);
 
                 if (!$contentBannerTypeTransfer) {
-                    return $this->formatErrorMessage(sprintf(static::MESSAGE_BANNER_NOT_FOUND, $idContent));
+                    return sprintf(static::MESSAGE_BANNER_NOT_FOUND, $idContent);
                 }
             } catch (MissingBannerTermException $e) {
-                return $this->formatErrorMessage(sprintf(static::MESSAGE_BANNER_WRONG_TYPE, static::TWIG_FUNCTION_NAME_CONTNET_BANNER, $idContent));
+                return sprintf(static::MESSAGE_BANNER_WRONG_TYPE, static::TWIG_FUNCTION_NAME_CONTNET_BANNER, $idContent);
             }
 
             return $this->twig->render(
@@ -97,15 +97,5 @@ class ContentBannerTwigFunction extends TwigFunction
             static::TEMPLATE_IDENTIFIER_DEFAULT => '@ContentBannerWidget/views/banner/banner.twig',
             static::TEMPLATE_IDENTIFIER_TOP_TITLE => '@ContentBannerWidget/views/banner/banner-top-title.twig',
         ];
-    }
-
-    /**
-     * @param string $message
-     *
-     * @return string
-     */
-    protected function formatErrorMessage(string $message): string
-    {
-        return '<!-- ' . $message . ' -->';
     }
 }
