@@ -67,18 +67,18 @@ class ContentBannerTwigFunction extends TwigFunction
      */
     protected function getFunction(): callable
     {
-        return function (int $idContent, string $templateIdentifier) {
+        return function (int $idContent, string $templateIdentifier): string {
             if (!isset($this->getAvailableTemplates()[$templateIdentifier])) {
-                return sprintf(static::MESSAGE_BANNER_WRONG_TEMPLATE, $templateIdentifier);
+                return $this->getMessageBannerWrongTemplate($templateIdentifier);
             }
             try {
                 $contentBannerTypeTransfer = $this->contentBannerClient->findBannerTypeById($idContent, $this->localeName);
 
                 if (!$contentBannerTypeTransfer) {
-                    return sprintf(static::MESSAGE_BANNER_NOT_FOUND, $idContent);
+                    return $this->getMessageBannerNotFound($idContent);
                 }
             } catch (MissingBannerTermException $e) {
-                return sprintf(static::MESSAGE_BANNER_WRONG_TYPE, static::TWIG_FUNCTION_NAME_CONTNET_BANNER, $idContent);
+                return $this->getMessageBannerWrongType($idContent);
             }
 
             return $this->twig->render(
@@ -97,5 +97,35 @@ class ContentBannerTwigFunction extends TwigFunction
             static::TEMPLATE_IDENTIFIER_DEFAULT => '@ContentBannerWidget/views/banner/banner.twig',
             static::TEMPLATE_IDENTIFIER_TOP_TITLE => '@ContentBannerWidget/views/banner/banner-top-title.twig',
         ];
+    }
+
+    /**
+     * @param int $idContent
+     *
+     * @return string
+     */
+    protected function getMessageBannerNotFound(int $idContent)
+    {
+        return sprintf(static::MESSAGE_BANNER_NOT_FOUND, $idContent);
+    }
+
+    /**
+     * @param string $templateIdentifier
+     *
+     * @return string
+     */
+    protected function getMessageBannerWrongTemplate(string $templateIdentifier)
+    {
+        return sprintf(static::MESSAGE_BANNER_WRONG_TEMPLATE, $templateIdentifier);
+    }
+
+    /**
+     * @param int $idContent
+     *
+     * @return string
+     */
+    protected function getMessageBannerWrongType(int $idContent)
+    {
+        return sprintf(static::MESSAGE_BANNER_WRONG_TYPE, static::TWIG_FUNCTION_NAME_CONTNET_BANNER, $idContent);
     }
 }

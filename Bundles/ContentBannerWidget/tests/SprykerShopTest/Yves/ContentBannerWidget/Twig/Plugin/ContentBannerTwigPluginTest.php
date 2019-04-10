@@ -68,10 +68,11 @@ class ContentBannerTwigPluginTest extends Unit
      */
     public function testContentBannerNotFound(): void
     {
-        $contentBannerTwigFunction = $this->getContentBannerTwigFunction();
-        $bannerContent = call_user_func($contentBannerTwigFunction->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
+        // Act
+        $bannerContent = call_user_func($this->getContentBannerTwigFunction()->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
 
-        $this->assertEquals(sprintf(static::MESSAGE_BANNER_NOT_FOUND, static::CONTENT_ID), $bannerContent);
+        // Assert
+        $this->assertEquals(static::MESSAGE_BANNER_NOT_FOUND, $bannerContent);
     }
 
     /**
@@ -79,16 +80,20 @@ class ContentBannerTwigPluginTest extends Unit
      */
     public function testContentBannerWrongType(): void
     {
+        // Assign
         $contentTypeContextTransfer = new ContentTypeContextTransfer();
         $contentTypeContextTransfer->setIdContent(static::CONTENT_ID);
         $contentTypeContextTransfer->setTerm(static::CONTENT_TERM);
-
         $this->setContentBannerToContentStorageClientReturn($contentTypeContextTransfer);
 
-        $contentBannerTwigFunction = $this->getContentBannerTwigFunction();
-        $bannerContent = call_user_func($contentBannerTwigFunction->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
+        // Act
+        $bannerContent = call_user_func(
+            $this->getContentBannerTwigFunction()->getCallable(),
+            static::CONTENT_ID,
+            static::DEFAULT_TEMPLATE
+        );
 
-        $functionName = new ReflectionClassConstant(ContentBannerTwigFunction::class, 'TWIG_FUNCTION_NAME_CONTNET_BANNER');
+        // Assert
 
         $this->assertEquals(static::MESSAGE_BANNER_WRONG_TYPE, $bannerContent);
     }
@@ -98,14 +103,18 @@ class ContentBannerTwigPluginTest extends Unit
      */
     public function testContentBannerWrongTemplate(): void
     {
+        // Assign
         $contentBannerTypeTransfer = new ContentBannerTypeTransfer();
-
         $this->setContentBannerWidgetToContentBannerClientReturn($contentBannerTypeTransfer);
 
-        $contentBannerTwigFunction = $this->getContentBannerTwigFunction();
+        // Act
+        $bannerContent = call_user_func(
+            $this->getContentBannerTwigFunction()->getCallable(),
+            static::CONTENT_ID,
+            static::WRONG_TEMPLATE
+        );
 
-        $bannerContent = call_user_func($contentBannerTwigFunction->getCallable(), static::CONTENT_ID, static::WRONG_TEMPLATE);
-
+        // Assert
         $this->assertEquals(static::MESSAGE_BANNER_WRONG_TEMPLATE, $bannerContent);
     }
 
@@ -114,13 +123,14 @@ class ContentBannerTwigPluginTest extends Unit
      */
     public function testContentBannerRendering(): void
     {
+        // Assign
         $contentTypeContextTransfer = new ContentBannerTypeTransfer();
-
         $this->setContentBannerWidgetToContentBannerClientReturn($contentTypeContextTransfer);
 
-        $contentBannerTwigFunction = $this->getContentBannerTwigFunction();
+        // Act
+        $bannerContent = call_user_func($this->getContentBannerTwigFunction()->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
 
-        $bannerContent = call_user_func($contentBannerTwigFunction->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
+        // Assert
 
         $this->assertEquals($bannerContent, static::RENDERED_STRING);
     }

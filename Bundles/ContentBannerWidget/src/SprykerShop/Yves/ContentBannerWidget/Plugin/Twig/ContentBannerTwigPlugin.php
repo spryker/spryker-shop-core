@@ -18,6 +18,11 @@ use Twig\Environment;
 class ContentBannerTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - The plugin displays a content banner.
+     *
+     * @api
+     *
      * @param \Twig\Environment $twig
      * @param \Spryker\Service\Container\ContainerInterface $container
      *

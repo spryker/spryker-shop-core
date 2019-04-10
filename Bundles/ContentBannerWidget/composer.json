@@ -6,9 +6,9 @@
   "require": {
     "php": ">=7.1",
     "spryker/content-banner": "^1.1.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.23.0",
     "spryker/twig-extension": "^1.0.0",
-    "spryker/twig": "^3.0.0"
+    "spryker/twig": "^3.5.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -16,7 +16,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/container": "ADD SUGGEST DESCRIPTION"
+    "spryker/container": "If you want to use Twig Plugin"
   },
   "autoload": {
     "psr-4": {
