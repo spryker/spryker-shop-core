@@ -6,7 +6,7 @@
     quoteRequest: _view.quoteRequestForm.vars.value
 } %}
 
-{% set cart = data.quoteRequest.latestVersion.quote %}
+{% set quote = data.quoteRequest.latestVersion.quote %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -85,11 +85,11 @@
     </div>
     <div class="grid">
         <div class="col col--sm-12 col--xl-8">
-            {% if cart and cart.priceMode is not empty %}
+            {% if quote and quote.priceMode is not empty %}
                 <div class="box">
                     {% include molecule('price-mode') with {
                         data: {
-                            priceMode: cart.priceMode
+                            priceMode: quote.priceMode
                         }
                     } only %}
                 </div>
@@ -99,9 +99,9 @@
                 {% embed molecule('quote-request-cart-item', 'CartPage') with {
                     class: 'box',
                     data: {
-                        priceMode: cart.priceMode,
+                        priceMode: quote.priceMode,
                         cartItem: cartItem,
-                        currency: cart.currency,
+                        currency: quote.currency,
                         itemChild: itemChild,
                     }
                 } only %}
@@ -134,11 +134,11 @@
         </div>
 
         <div class="col col--sm-12 col--xl-4">
-            {% if cart and cart.items is not empty %}
+            {% if quote and quote.items is not empty %}
                 <div class="box">
                     {% include molecule('quote-request-cart-summary', 'CartPage') with {
                         data: {
-                            cart: cart
+                            cart: quote
                         }
                     } only %}
                 </div>

@@ -58,29 +58,31 @@ class QuoteRequestCartController extends AbstractController
             ->getQuoteRequestCartForm()
             ->handleRequest($request);
 
-        if ($quoteRequestCartForm->isSubmitted()) {
-            $quoteRequestResponseTransfer = $this->getFactory()
-                ->createQuoteRequestCartHandler()
-                ->updateQuoteRequestQuote();
-
-            if ($quoteRequestResponseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_UPDATED);
-            }
-
-            $this->handleResponseErrors($quoteRequestResponseTransfer);
-
-            if ($request->get(QuoteRequestCartForm::SUBMIT_BUTTON_SAVE_AND_BACK) !== null) {
-                $this->getFactory()
-                    ->getPersistentCartClient()
-                    ->reloadQuoteForCustomer($quoteRequestResponseTransfer->getQuoteRequest()->getCompanyUser()->getCustomer());
-
-                return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
-                    static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
-                ]);
-            }
+        if (!$quoteRequestCartForm->isSubmitted()) {
+            return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
-        return $this->redirectResponseInternal(static::ROUTE_CART);
+        $quoteRequestResponseTransfer = $this->getFactory()
+            ->createQuoteRequestCartHandler()
+            ->updateQuoteRequestQuote();
+
+        if ($quoteRequestResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_UPDATED);
+        }
+
+        $this->handleResponseErrors($quoteRequestResponseTransfer);
+
+        if (!$request->get(QuoteRequestCartForm::SUBMIT_BUTTON_SAVE_AND_BACK)) {
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
+        $this->getFactory()
+            ->getPersistentCartClient()
+            ->reloadQuoteForCustomer($quoteRequestResponseTransfer->getQuoteRequest()->getCompanyUser()->getCustomer());
+
+        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
+            static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
+        ]);
     }
 
     /**

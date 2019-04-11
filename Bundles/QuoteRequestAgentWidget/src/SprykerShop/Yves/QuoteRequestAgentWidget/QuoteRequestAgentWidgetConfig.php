@@ -16,20 +16,10 @@ class QuoteRequestAgentWidgetConfig extends AbstractBundleConfig
      */
     public const STATUS_CLOSED = 'closed';
 
-    protected const PAGINATION_DEFAULT_QUOTE_REQUESTS_PER_PAGE = 5;
-
-    /**
-     * @return int
-     */
-    public function getPaginationDefaultQuoteRequestsPerPage(): int
-    {
-        return static::PAGINATION_DEFAULT_QUOTE_REQUESTS_PER_PAGE;
-    }
-
     /**
      * @return string[]
      */
-    public function getExcludedStatuses(): array
+    public function getExcludedOverviewStatuses(): array
     {
         return [
             static::STATUS_CLOSED,

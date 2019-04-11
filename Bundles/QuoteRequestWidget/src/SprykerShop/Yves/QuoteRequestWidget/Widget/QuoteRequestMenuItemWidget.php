@@ -44,7 +44,7 @@ class QuoteRequestMenuItemWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@QuoteRequestWidget/views/quote-request/quote-request-menu-item/quote-request-menu-item.twig';
+        return '@QuoteRequestWidget/views/quote-request-menu-item/quote-request-menu-item.twig';
     }
 
     /**

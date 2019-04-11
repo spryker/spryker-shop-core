@@ -5,16 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuoteRequestPage\Widget;
+namespace SprykerShop\Yves\QuoteRequestWidget\Widget;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
+ * @method \SprykerShop\Yves\QuoteRequestWidget\QuoteRequestWidgetFactory getFactory()
  */
 class QuoteRequestCancelWidget extends AbstractWidget
 {
+    protected const PARAMETER_QUOTE_REQUEST = 'quoteRequest';
+    protected const PARAMETER_IS_QUOTE_REQUEST_CANCELABLE = 'isQuoteRequestCancelable';
+
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      */
@@ -37,7 +40,7 @@ class QuoteRequestCancelWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@QuoteRequestPage/views/quote-request-cancel-link/quote-request-cancel-link.twig';
+        return '@QuoteRequestWidget/views/quote-request-cancel-link/quote-request-cancel-link.twig';
     }
 
     /**
@@ -47,7 +50,7 @@ class QuoteRequestCancelWidget extends AbstractWidget
      */
     protected function addQuoteRequestParameter(QuoteRequestTransfer $quoteRequestTransfer): void
     {
-        $this->addParameter('quoteRequest', $quoteRequestTransfer);
+        $this->addParameter(static::PARAMETER_QUOTE_REQUEST, $quoteRequestTransfer);
     }
 
     /**
@@ -61,6 +64,6 @@ class QuoteRequestCancelWidget extends AbstractWidget
             ->getQuoteRequestClient()
             ->isQuoteRequestCancelable($quoteRequestTransfer);
 
-        $this->addParameter('isQuoteRequestCancelable', $isQuoteRequestCancelable);
+        $this->addParameter(static::PARAMETER_IS_QUOTE_REQUEST_CANCELABLE, $isQuoteRequestCancelable);
     }
 }

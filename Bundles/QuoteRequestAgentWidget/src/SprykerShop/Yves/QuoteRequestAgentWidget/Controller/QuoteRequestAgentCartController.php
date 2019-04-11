@@ -68,27 +68,29 @@ class QuoteRequestAgentCartController extends AbstractController
             ->getQuoteRequestAgentCartForm()
             ->handleRequest($request);
 
-        if ($quoteRequestAgentCartForm->isSubmitted()) {
-            $quoteRequestResponseTransfer = $this->getFactory()
-                ->createQuoteRequestAgentCartHandler()
-                ->updateQuoteRequest();
-
-            if ($quoteRequestResponseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_UPDATED);
-            }
-
-            $this->handleResponseErrors($quoteRequestResponseTransfer);
-
-            if ($request->get(QuoteRequestAgentCartForm::SUBMIT_BUTTON_SAVE_AND_BACK) !== null) {
-                $this->reloadQuoteForCustomer();
-
-                return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT, [
-                    static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
-                ]);
-            }
+        if (!$quoteRequestAgentCartForm->isSubmitted()) {
+            return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
-        return $this->redirectResponseInternal(static::ROUTE_CART);
+        $quoteRequestResponseTransfer = $this->getFactory()
+            ->createQuoteRequestAgentCartHandler()
+            ->updateQuoteRequest();
+
+        if ($quoteRequestResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_UPDATED);
+        }
+
+        $this->handleResponseErrors($quoteRequestResponseTransfer);
+
+        if (!$request->get(QuoteRequestAgentCartForm::SUBMIT_BUTTON_SAVE_AND_BACK)) {
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
+        $this->reloadQuoteForCustomer();
+
+        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT, [
+            static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
+        ]);
     }
 
     /**

@@ -69,4 +69,14 @@ class QuoteRequestAgentWidgetToQuoteRequestAgentClientBridge implements QuoteReq
     {
         return $this->quoteRequestAgentClient->getCompanyUserCollectionByQuery($companyUserCriteriaTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $this->quoteRequestAgentClient->isQuoteRequestCancelable($quoteRequestTransfer);
+    }
 }

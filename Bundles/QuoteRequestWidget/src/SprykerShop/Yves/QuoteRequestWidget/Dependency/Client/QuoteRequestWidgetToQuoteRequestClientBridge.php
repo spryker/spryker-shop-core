@@ -66,4 +66,14 @@ class QuoteRequestWidgetToQuoteRequestClientBridge implements QuoteRequestWidget
     {
         return $this->quoteRequestClient->findQuoteRequest($quoteRequestCriteriaTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $this->quoteRequestClient->isQuoteRequestCancelable($quoteRequestTransfer);
+    }
 }

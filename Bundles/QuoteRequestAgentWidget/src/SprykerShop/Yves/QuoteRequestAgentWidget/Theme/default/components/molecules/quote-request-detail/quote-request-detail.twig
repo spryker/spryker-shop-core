@@ -9,7 +9,7 @@
     quoteRequest: required
 } %}
 
-{% set cart = data.quoteRequest.latestVersion ? data.quoteRequest.latestVersion.quote : null %}
+{% set quote = data.quoteRequest.latestVersion ? data.quoteRequest.latestVersion.quote : null %}
 
 {% block body %}
     <div class="grid grid--middle text-small text-left">
@@ -20,7 +20,7 @@
                 </a>
             </p>
             <p class="badge">
-                {{ cart ? (cart.items | length) : 0 }}
+                {{ quote ? (quote.items | length) : 0 }}
                 {{ 'agent_quote_request_widget.items' | trans }}
             </p>
         </div>
@@ -34,7 +34,7 @@
                 {{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}
             </p>
             <div>
-                <strong>{{ cart.totals.grandTotal | default(0) | money(true, cart.currency ? cart.currency.code : '') }}</strong>
+                <strong>{{ quote.totals.grandTotal | default(0) | money(true, quote.currency ? quote.currency.code : '') }}</strong>
             </div>
         </div>
     </div>

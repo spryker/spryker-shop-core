@@ -2,7 +2,7 @@
 
 {% define data = {
     quoteRequestOverviewCollection: _widget.quoteRequestOverviewCollection,
-    form: _widget.form ?? null,
+    cartForm: _widget.cartForm ?? null,
 } %}
 
 {% block requestList %}
@@ -110,7 +110,7 @@
                             {% include molecule('quote-request-cart-from', 'QuoteRequestAgentWidget') with {
                                 data: {
                                     quoteRequestReference: data.quoteRequestOverviewCollection.currentQuoteRequest.quoteRequestReference,
-                                    form: data.form,
+                                    form: data.cartForm,
                                 }
                             } only %}
                         </div>

@@ -19,8 +19,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class QuoteRequestAgentOverviewWidget extends AbstractWidget
 {
     protected const PAGINATION_PAGE = 1;
+    protected const PAGINATION_DEFAULT_QUOTE_REQUESTS_PER_PAGE = 5;
 
-    protected const PARAMETER_FORM = 'form';
+    protected const PARAMETER_CART_FORM = 'cartForm';
     protected const PARAMETER_QUOTE_REQUEST_OVERVIEW_COLLECTION = 'quoteRequestOverviewCollection';
 
     public function __construct()
@@ -30,7 +31,7 @@ class QuoteRequestAgentOverviewWidget extends AbstractWidget
         $this->addQuoteRequestOverviewCollectionParameter($quoteRequestOverviewCollectionTransfer);
 
         if ($quoteRequestOverviewCollectionTransfer->getCurrentQuoteRequest()) {
-            $this->addFormParameter();
+            $this->addCartFormParameter();
         }
     }
 
@@ -64,9 +65,9 @@ class QuoteRequestAgentOverviewWidget extends AbstractWidget
     /**
      * @return void
      */
-    protected function addFormParameter(): void
+    protected function addCartFormParameter(): void
     {
-        $this->addParameter(static::PARAMETER_FORM, $this->getFactory()->getQuoteRequestAgentCartForm()->createView());
+        $this->addParameter(static::PARAMETER_CART_FORM, $this->getFactory()->getQuoteRequestAgentCartForm()->createView());
     }
 
     /**
@@ -79,7 +80,7 @@ class QuoteRequestAgentOverviewWidget extends AbstractWidget
             ->getQuote();
 
         $paginationTransfer = (new PaginationTransfer())
-            ->setMaxPerPage($this->getConfig()->getPaginationDefaultQuoteRequestsPerPage())
+            ->setMaxPerPage(static::PAGINATION_DEFAULT_QUOTE_REQUESTS_PER_PAGE)
             ->setPage(static::PAGINATION_PAGE);
 
         $quoteRequestReference = null;
@@ -90,7 +91,7 @@ class QuoteRequestAgentOverviewWidget extends AbstractWidget
 
         $quoteRequestOverviewFilterTransfer = (new QuoteRequestOverviewFilterTransfer())
             ->setQuoteRequestReference($quoteRequestReference)
-            ->setExcludedStatuses($this->getConfig()->getExcludedStatuses())
+            ->setExcludedStatuses($this->getConfig()->getExcludedOverviewStatuses())
             ->setPagination($paginationTransfer);
 
         return $this->getFactory()

@@ -11,7 +11,7 @@
 } %}
 
 {% set isLatestVersion = (data.version.idQuoteRequestVersion == data.quoteRequest.latestVisibleVersion.idQuoteRequestVersion) ? true : false %}
-{% set cart = data.version.quote %}
+{% set quote = data.version.quote %}
 
 
 {% block breadcrumbs %}
@@ -91,23 +91,23 @@
     </div>
     <div class="grid">
         <div class="col col--sm-12 col--xl-8">
-            {% if cart and cart.priceMode is not empty %}
+            {% if quote and quote.priceMode is not empty %}
                 <div class="box">
                     {% include molecule('price-mode') with {
                         data: {
-                            priceMode: cart.priceMode
+                            priceMode: quote.priceMode
                         }
                     } only %}
                 </div>
             {% endif %}
-            {% if cart %}
-                {% for cartItem in cart.items %}
+            {% if quote %}
+                {% for cartItem in quote.items %}
                     {% include molecule('quote-request-cart-item', 'CartPage') with {
                         class: 'box',
                         data: {
-                            priceMode: cart.priceMode,
+                            priceMode: quote.priceMode,
                             cartItem: cartItem,
-                            currency: cart.currency,
+                            currency: quote.currency,
                         }
                     } only %}
                 {% endfor %}
@@ -115,11 +115,11 @@
         </div>
 
         <div class="col col--sm-12 col--xl-4">
-            {% if cart.items is not empty %}
+            {% if quote.items is not empty %}
                 <div class="box">
                     {% include molecule('quote-request-cart-summary', 'CartPage') with {
                         data: {
-                            cart: cart
+                            cart: quote
                         }
                     } only %}
                 </div>

@@ -6,7 +6,7 @@
     quoteRequest: _view.quoteRequestForm.vars.value,
 } %}
 
-{% set cart = data.quoteRequest.latestVersion.quote %}
+{% set quote = data.quoteRequest.latestVersion.quote %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -30,7 +30,7 @@
 
 {% block content %}
 
-    {% if not cart or cart.items is empty %}
+    {% if not quote or quote.items is empty %}
         <div class="box text-center">
             {% include atom('icon') with {
                 modifiers: ['biggest'],
@@ -82,22 +82,22 @@
         </div>
         <div class="grid">
             <div class="col col--sm-12 col--xl-8">
-                {% if cart and cart.priceMode is not empty %}
+                {% if quote and quote.priceMode is not empty %}
                     <div class="box">
                         {% include molecule('price-mode') with {
                             data: {
-                                priceMode: cart.priceMode
+                                priceMode: quote.priceMode
                             }
                         } only %}
                     </div>
                 {% endif %}
-                {% for cartItem in cart.items %}
+                {% for cartItem in quote.items %}
                     {% include molecule('quote-request-cart-item', 'CartPage') with {
                         class: 'box',
                         data: {
-                            priceMode: cart.priceMode,
+                            priceMode: quote.priceMode,
                             cartItem: cartItem,
-                            currency: cart.currency,
+                            currency: quote.currency,
                         }
                     } only %}
                 {% endfor %}
@@ -107,7 +107,7 @@
                 <div class="box">
                     {% include molecule('quote-request-cart-summary', 'CartPage') with {
                         data: {
-                            cart: cart
+                            cart: quote
                         }
                     } only %}
                 </div>

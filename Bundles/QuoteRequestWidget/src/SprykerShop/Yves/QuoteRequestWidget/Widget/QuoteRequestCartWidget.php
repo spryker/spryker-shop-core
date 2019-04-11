@@ -40,7 +40,7 @@ class QuoteRequestCartWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@QuoteRequestWidget/views/quote-request/quote-request-update/quote-request-update.twig';
+        return '@QuoteRequestWidget/views/quote-request-update/quote-request-update.twig';
     }
 
     /**
