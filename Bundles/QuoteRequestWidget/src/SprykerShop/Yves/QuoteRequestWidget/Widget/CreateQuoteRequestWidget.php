@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\QuoteRequestWidget\Widget;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -16,8 +15,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class CreateQuoteRequestWidget extends AbstractWidget
 {
-    use PermissionAwareTrait;
-
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
 
     /**
@@ -51,29 +48,10 @@ class CreateQuoteRequestWidget extends AbstractWidget
      */
     protected function addIsVisibleParameter(QuoteTransfer $quoteTransfer): void
     {
-        $this->addParameter(static::PARAMETER_IS_VISIBLE, $this->isWidgetVisible($quoteTransfer));
-    }
+        $isVisible = $this->getFactory()
+            ->getQuoteRequestClient()
+            ->isQuoteApplicableForQuoteRequest($quoteTransfer);
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isWidgetVisible(QuoteTransfer $quoteTransfer): bool
-    {
-        $companyUserTransfer = $this->getFactory()
-            ->getCompanyUserClient()
-            ->findCompanyUser();
-
-        if (!$companyUserTransfer) {
-            return false;
-        }
-
-        if ($quoteTransfer->getQuoteRequestVersionReference() || $quoteTransfer->getQuoteRequestReference()) {
-            return false;
-        }
-
-        return $quoteTransfer->getCustomerReference() === $quoteTransfer->getCustomer()->getCustomerReference()
-            || $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote());
+        $this->addParameter(static::PARAMETER_IS_VISIBLE, $isVisible);
     }
 }
