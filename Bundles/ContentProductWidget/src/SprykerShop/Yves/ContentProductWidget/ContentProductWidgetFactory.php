@@ -12,9 +12,26 @@ use SprykerShop\Yves\ContentProductWidget\Dependency\Client\ContentProductWidget
 use SprykerShop\Yves\ContentProductWidget\Dependency\Client\ContentProductWidgetToProductStorageClientBridgeInterface;
 use SprykerShop\Yves\ContentProductWidget\Reader\ContentProductAbstractReader;
 use SprykerShop\Yves\ContentProductWidget\Reader\ContentProductAbstractReaderInterface;
+use SprykerShop\Yves\ContentProductWidget\Twig\ContentProductAbstractListTwigFunction;
+use Twig\Environment;
 
 class ContentProductWidgetFactory extends AbstractFactory
 {
+    /**
+     * @param \Twig\Environment $twig
+     * @param string $localeName
+     *
+     * @return \SprykerShop\Yves\ContentProductWidget\Twig\ContentProductAbstractListTwigFunction
+     */
+    public function createContentBannerTwigFunction(Environment $twig, string $localeName): ContentProductAbstractListTwigFunction
+    {
+        return new ContentProductAbstractListTwigFunction(
+            $twig,
+            $localeName,
+            $this->createContentProductAbstractReader()
+        );
+    }
+
     /**
      * @return \SprykerShop\Yves\ContentProductWidget\Reader\ContentProductAbstractReaderInterface
      */
