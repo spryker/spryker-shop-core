@@ -9,8 +9,8 @@ namespace SprykerShop\Yves\QuoteRequestAgentWidget\Handler;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
-use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteRequestAgentClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToCartClientInterface;
+use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteRequestAgentClientInterface;
 
 class QuoteRequestAgentCartHandler implements QuoteRequestAgentCartHandlerInterface
 {
