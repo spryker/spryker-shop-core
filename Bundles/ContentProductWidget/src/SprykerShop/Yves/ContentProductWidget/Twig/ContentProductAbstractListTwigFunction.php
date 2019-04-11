@@ -17,10 +17,10 @@ use Twig\Environment;
  */
 class ContentProductAbstractListTwigFunction extends TwigFunction
 {
-    protected const FUNCTION_CONTENT_PRODUCT_ABSTRACT = 'content_product_abstract_list';
+    protected const FUNCTION_CONTENT_PRODUCT_ABSTRACT_LIST = 'content_product_abstract_list';
 
-    protected const MESSAGE_PRODUCT_NOT_FOUND = '<!-- Content Product Abstract with ID %s not found. -->';
-    protected const MESSAGE_WRONG_TYPE_TEMPLATE = '<!-- %s could not be rendered for content item with ID %s. -->';
+    protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<!-- Content product abstract list with ID %s not found. -->';
+    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<!-- %s could not be rendered for content item with ID %s. -->';
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<!-- %s is not supported name of template. -->';
 
     protected const DEFAULT_TEMPLATE_IDENTIFIER = 'default';
@@ -63,7 +63,7 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
      */
     protected function getFunctionName(): string
     {
-        return static::FUNCTION_CONTENT_PRODUCT_ABSTRACT;
+        return static::FUNCTION_CONTENT_PRODUCT_ABSTRACT_LIST;
     }
 
     /**
@@ -114,7 +114,7 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
      */
     protected function getMessageProductAbstractNotFound(int $idContent): string
     {
-        return sprintf(static::MESSAGE_PRODUCT_NOT_FOUND, $idContent);
+        return sprintf(static::MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND, $idContent);
     }
 
     /**
@@ -134,6 +134,6 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
      */
     protected function getMessageProductAbstractWrongType(int $idContent): string
     {
-        return sprintf(static::MESSAGE_WRONG_TYPE_TEMPLATE, static::FUNCTION_CONTENT_PRODUCT_ABSTRACT, $idContent);
+        return sprintf(static::MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE, static::FUNCTION_CONTENT_PRODUCT_ABSTRACT_LIST, $idContent);
     }
 }

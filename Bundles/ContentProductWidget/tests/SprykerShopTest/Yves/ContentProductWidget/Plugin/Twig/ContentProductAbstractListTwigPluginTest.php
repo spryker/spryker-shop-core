@@ -43,8 +43,8 @@ class ContentProductAbstractListTwigPluginTest extends Unit
     protected const CONTENT_ID = 0;
     protected const CONTENT_TERM = 'TERM';
 
-    protected const MESSAGE_PRODUCT_NOT_FOUND = '<!-- Content Product Abstract with ID 0 not found. -->';
-    protected const MESSAGE_WRONG_TYPE_TEMPLATE = '<!-- content_product_abstract_list could not be rendered for content item with ID 0. -->';
+    protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<!-- Content product abstract list with ID 0 not found. -->';
+    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<!-- content_product_abstract_list could not be rendered for content item with ID 0. -->';
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<!-- wrong is not supported name of template. -->';
     protected const RENDERED_STRING = 'output';
 
@@ -72,7 +72,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
         $productAbstractContent = call_user_func($this->getContentProductAbstractListTwigPlugin()->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
 
         // Assert
-        $this->assertEquals(static::MESSAGE_PRODUCT_NOT_FOUND, $productAbstractContent);
+        $this->assertEquals(static::MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND, $productAbstractContent);
     }
 
     /**
@@ -90,7 +90,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
         $productAbstractContent = call_user_func($this->getContentProductAbstractListTwigPlugin()->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
 
         // Assert
-        $this->assertEquals(static::MESSAGE_WRONG_TYPE_TEMPLATE, $productAbstractContent);
+        $this->assertEquals(static::MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE, $productAbstractContent);
     }
 
     /**
@@ -167,7 +167,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
      */
     protected function getContentProductAbstractListTwigPlugin()
     {
-        $functionName = new ReflectionClassConstant(ContentProductAbstractListTwigFunction::class, 'FUNCTION_CONTENT_PRODUCT_ABSTRACT');
+        $functionName = new ReflectionClassConstant(ContentProductAbstractListTwigFunction::class, 'FUNCTION_CONTENT_PRODUCT_ABSTRACT_LIST');
 
         return $this->getTwig()->getFunction($functionName->getValue());
     }
