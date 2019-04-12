@@ -7,10 +7,10 @@
 
 namespace SprykerShop\Yves\SharedCartPage\Plugin\Router;
 
-use Silex\Application;
-use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
+use Spryker\Shared\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 
-class SharedCartPageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
+class SharedCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     public const ROUTE_SHARED_CART_SHARE = 'shared-cart/share';
     public const ROUTE_SHARED_CART_DISMISS = 'shared-cart/dismiss';
@@ -21,47 +21,51 @@ class SharedCartPageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\Rout
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    public function addRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
-        $this->addShareController()
-            ->addDismissController()
-            ->addDismissConfirmController();
+        $routeCollection = $this->addShareRoute($routeCollection);
+        $routeCollection = $this->addDismissRoute($routeCollection);
+        $routeCollection = $this->addDismissConfirmRoute($routeCollection);
+
         return $routeCollection;
     }
 
     /**
-     * @return $this
+     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addShareController()
+    protected function addShareRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $this->createController('/{sharedCart}/share/{idQuote}', static::ROUTE_SHARED_CART_SHARE, 'SharedCartPage', 'Share', 'index')
-            ->assert('sharedCart', $this->getAllowedLocalesPattern() . 'shared-cart|shared-cart')
-            ->value('sharedCart', 'shared-cart');
+        $route = $this->buildRoute('/shared-cart/share/{idQuote}', 'SharedCartPage', 'Share', 'indexAction');
+        $routeCollection->add(static::ROUTE_SHARED_CART_SHARE, $route);
 
-        return $this;
+        return $routeCollection;
     }
 
     /**
-     * @return $this
+     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addDismissController()
+    protected function addDismissRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $this->createController('/{sharedCart}/dismiss/{idQuote}', static::ROUTE_SHARED_CART_DISMISS, 'SharedCartPage', 'Dismiss', 'index')
-            ->assert('sharedCart', $this->getAllowedLocalesPattern() . 'shared-cart|shared-cart')
-            ->value('sharedCart', 'shared-cart');
+        $route = $this->buildRoute('/shared-cart/dismiss/{idQuote}', 'SharedCartPage', 'Dismiss', 'indexAction');
+        $routeCollection->add(static::ROUTE_SHARED_CART_DISMISS, $route);
 
-        return $this;
+        return $routeCollection;
     }
 
     /**
-     * @return $this
+     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addDismissConfirmController()
+    protected function addDismissConfirmRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $this->createController('/{sharedCart}/dismiss-confirm/{idQuote}', static::ROUTE_SHARED_CART_DISMISS_CONFIRM, 'SharedCartPage', 'Dismiss', 'Confirm')
-            ->assert('sharedCart', $this->getAllowedLocalesPattern() . 'shared-cart|shared-cart')
-            ->value('sharedCart', 'shared-cart');
+        $route = $this->buildRoute('/shared-cart/dismiss-confirm/{idQuote}', 'SharedCartPage', 'Dismiss', 'ConfirmAction');
+        $routeCollection->add(static::ROUTE_SHARED_CART_DISMISS_CONFIRM, $route);
 
-        return $this;
+        return $routeCollection;
     }
 }
