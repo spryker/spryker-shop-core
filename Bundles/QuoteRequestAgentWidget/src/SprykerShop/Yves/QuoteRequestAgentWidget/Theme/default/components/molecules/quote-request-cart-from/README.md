@@ -6,7 +6,7 @@ Displays a form at the top navigation bar with action buttons for current RfQ.
 {% include molecule('quote-request-cart-from', 'QuoteRequestAgentWidget') with {
     data: {
         quoteRequestReference: quoteRequestReference,
-        form: form,
+        cartForm: cartForm,
     }
 } only %}
 ```

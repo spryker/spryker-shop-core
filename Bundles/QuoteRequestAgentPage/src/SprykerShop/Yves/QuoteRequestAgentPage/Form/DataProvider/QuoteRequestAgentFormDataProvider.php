@@ -15,7 +15,7 @@ class QuoteRequestAgentFormDataProvider
     /**
      * @see \Spryker\Shared\Calculation\CalculationPriceMode::PRICE_MODE_GROSS
      */
-    protected const PRICE_MODE_GROSS = 'GROSS_MODE';
+    public const PRICE_MODE_GROSS = 'GROSS_MODE';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
@@ -25,17 +25,17 @@ class QuoteRequestAgentFormDataProvider
     public function getOptions(QuoteRequestTransfer $quoteRequestTransfer): array
     {
         return [
-            QuoteRequestAgentForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS => $this->isDefaultPriceModeGross($quoteRequestTransfer),
+            QuoteRequestAgentForm::OPTION_PRICE_MODE => $this->getPriceMode($quoteRequestTransfer),
         ];
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
-     * @return bool
+     * @return string
      */
-    protected function isDefaultPriceModeGross(QuoteRequestTransfer $quoteRequestTransfer): bool
+    protected function getPriceMode(QuoteRequestTransfer $quoteRequestTransfer): string
     {
-        return $quoteRequestTransfer->getLatestVersion()->getQuote()->getPriceMode() === static::PRICE_MODE_GROSS;
+        return $quoteRequestTransfer->getLatestVersion()->getQuote()->getPriceMode() ?? static::PRICE_MODE_GROSS;
     }
 }

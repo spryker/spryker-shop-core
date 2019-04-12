@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage\Form;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider\QuoteRequestAgentFormDataProvider;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -36,7 +37,7 @@ class QuoteRequestAgentVersionItemsSubForm extends AbstractType
             'data_class' => ItemTransfer::class,
             'label' => false,
         ]);
-        $resolver->setRequired([QuoteRequestAgentForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS]);
+        $resolver->setRequired([QuoteRequestAgentForm::OPTION_PRICE_MODE]);
     }
 
     /**
@@ -47,7 +48,7 @@ class QuoteRequestAgentVersionItemsSubForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if ($options[QuoteRequestAgentForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS]) {
+        if ($options[QuoteRequestAgentForm::OPTION_PRICE_MODE] === QuoteRequestAgentFormDataProvider::PRICE_MODE_GROSS) {
             $this->addManualGrossPriceField($builder, $options);
 
             return;

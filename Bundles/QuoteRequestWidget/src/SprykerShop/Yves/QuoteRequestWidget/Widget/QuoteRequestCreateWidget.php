@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\QuoteRequestWidget\QuoteRequestWidgetFactory getFactory()
  */
-class CreateQuoteRequestWidget extends AbstractWidget
+class QuoteRequestCreateWidget extends AbstractWidget
 {
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
 
@@ -30,7 +30,7 @@ class CreateQuoteRequestWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'CreateQuoteRequestWidget';
+        return 'QuoteRequestCreateWidget';
     }
 
     /**

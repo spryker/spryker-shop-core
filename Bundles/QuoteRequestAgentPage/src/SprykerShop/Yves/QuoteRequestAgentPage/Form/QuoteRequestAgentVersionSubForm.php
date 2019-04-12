@@ -29,7 +29,7 @@ class QuoteRequestAgentVersionSubForm extends AbstractType
             'data_class' => QuoteRequestVersionTransfer::class,
             'label' => false,
         ]);
-        $resolver->setRequired([QuoteRequestAgentForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS]);
+        $resolver->setRequired([QuoteRequestAgentForm::OPTION_PRICE_MODE]);
     }
 
     /**
@@ -68,7 +68,7 @@ class QuoteRequestAgentVersionSubForm extends AbstractType
             QuoteRequestVersionTransfer::QUOTE,
             QuoteRequestAgentVersionQuoteSubForm::class,
             [
-                QuoteRequestAgentForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS => $options[QuoteRequestAgentForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS],
+                QuoteRequestAgentForm::OPTION_PRICE_MODE => $options[QuoteRequestAgentForm::OPTION_PRICE_MODE],
             ]
         );
 

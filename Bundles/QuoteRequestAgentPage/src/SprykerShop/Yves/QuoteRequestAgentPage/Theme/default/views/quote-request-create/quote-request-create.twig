@@ -37,7 +37,7 @@
                 {% include molecule('autocomplete-form') with {
                     data: {
                         id: 'agent-company-user',
-                        suggestionsUrl: path('agent/company-user-autocomplete'),
+                        suggestionsUrl: path('agent/company-user/autocomplete'),
                         name: 'idCompanyUser',
                         value: data.impersonatedCustomer ? data.impersonatedCustomer.email : '',
                     },

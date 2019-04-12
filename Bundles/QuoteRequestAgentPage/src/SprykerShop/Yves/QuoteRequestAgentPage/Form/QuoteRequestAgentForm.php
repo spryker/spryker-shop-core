@@ -25,8 +25,9 @@ class QuoteRequestAgentForm extends AbstractType
     public const SUBMIT_BUTTON_SAVE = 'save';
     public const SUBMIT_BUTTON_SEND_TO_CUSTOMER = 'sendToCustomer';
 
-    public const OPTION_IS_DEFAULT_PRICE_MODE_GROSS = 'option_is_default_price_mode_gross';
+    public const OPTION_PRICE_MODE = 'option_price_mode';
 
+    protected const FORMAT_VALID_UNTIL_DATE = 'Y-m-d H:i:s';
     protected const LABEL_QUOTE_REQUEST_IS_LATEST_VERSION_HIDDEN = 'quote_request_page.quote_request.labels.hide_latest_version';
     protected const GLOSSARY_KEY_DATE_VIOLATION = 'quote_request_page.quote_request.violations.invalid_date';
 
@@ -40,7 +41,7 @@ class QuoteRequestAgentForm extends AbstractType
         $resolver->setDefaults([
             'data_class' => QuoteRequestTransfer::class,
         ]);
-        $resolver->setRequired([static::OPTION_IS_DEFAULT_PRICE_MODE_GROSS]);
+        $resolver->setRequired([static::OPTION_PRICE_MODE]);
     }
 
     /**
@@ -68,7 +69,7 @@ class QuoteRequestAgentForm extends AbstractType
             QuoteRequestTransfer::LATEST_VERSION,
             QuoteRequestAgentVersionSubForm::class,
             [
-                QuoteRequestAgentForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS => $options[QuoteRequestAgentForm::OPTION_IS_DEFAULT_PRICE_MODE_GROSS],
+                QuoteRequestAgentForm::OPTION_PRICE_MODE => $options[QuoteRequestAgentForm::OPTION_PRICE_MODE],
             ]
         );
 
@@ -126,7 +127,7 @@ class QuoteRequestAgentForm extends AbstractType
             },
             function ($value) {
                 if ($value instanceof DateTime) {
-                    $value = $value->format('Y-m-d H:i:s.u');
+                    $value = $value->format(static::FORMAT_VALID_UNTIL_DATE);
                 }
                 return $value;
             }

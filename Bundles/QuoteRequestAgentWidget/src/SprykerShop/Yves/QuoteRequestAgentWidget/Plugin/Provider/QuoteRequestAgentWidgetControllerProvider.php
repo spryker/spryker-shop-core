@@ -14,7 +14,6 @@ class QuoteRequestAgentWidgetControllerProvider extends AbstractYvesControllerPr
 {
     protected const ROUTE_QUOTE_REQUEST_AGENT_SAVE_CART = 'agent/quote-request/cart/save';
     protected const ROUTE_QUOTE_REQUEST_AGENT_CLEAR_CART = 'agent/quote-request/cart/clear';
-    protected const ROUTE_AGENT_COMPANY_USER_AUTOCOMPLETE = 'agent/company-user-autocomplete';
 
     /**
      * @param \Silex\Application $app
@@ -24,8 +23,7 @@ class QuoteRequestAgentWidgetControllerProvider extends AbstractYvesControllerPr
     protected function defineControllers(Application $app): void
     {
         $this->addQuoteRequestSaveCartRoute()
-            ->addQuoteRequestClearCartRoute()
-            ->addCompanyUserAutocompleteRoute();
+            ->addQuoteRequestClearCartRoute();
     }
 
     /**
@@ -50,18 +48,6 @@ class QuoteRequestAgentWidgetControllerProvider extends AbstractYvesControllerPr
     protected function addQuoteRequestClearCartRoute()
     {
         $this->createController('/{agent}/quote-request/cart/clear', static::ROUTE_QUOTE_REQUEST_AGENT_CLEAR_CART, 'QuoteRequestAgentWidget', 'QuoteRequestAgentCart', 'clear')
-            ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
-            ->value('agent', 'agent');
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    protected function addCompanyUserAutocompleteRoute()
-    {
-        $this->createController('/{agent}/company-user-autocomplete', static::ROUTE_AGENT_COMPANY_USER_AUTOCOMPLETE, 'QuoteRequestAgentWidget', 'AgentCompanyUserAutocomplete', 'index')
             ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
             ->value('agent', 'agent');
 

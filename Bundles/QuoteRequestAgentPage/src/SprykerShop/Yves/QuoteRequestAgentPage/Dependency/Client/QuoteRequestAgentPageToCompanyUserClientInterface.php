@@ -7,9 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client;
 
-use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 
 interface QuoteRequestAgentPageToCompanyUserClientInterface
 {
@@ -17,13 +15,4 @@ interface QuoteRequestAgentPageToCompanyUserClientInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
     public function findCompanyUser(): ?CompanyUserTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
-     */
-    public function getActiveCompanyUsersByCustomerReference(
-        CustomerTransfer $customerTransfer
-    ): CompanyUserCollectionTransfer;
 }

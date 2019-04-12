@@ -54,7 +54,7 @@
                 <h6>{{ "quote_request_page.quote_request.labels.information" | trans }}</h6>
                 <hr>
                 <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}:
-                    <b>{{ data.quoteRequest.createdAt | date('d.m.Y H:i') }}</b>
+                    <b>{{ data.quoteRequest.createdAt | formatDateTime }}</b>
                 </p>
                 <p>{{ 'quote_request_page.quote_request.labels.company' | trans }}:
                     <b>{{ data.quoteRequest.companyUser.company.name }}</b>

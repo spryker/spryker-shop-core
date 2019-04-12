@@ -15,7 +15,7 @@
         {% endfor %}
     {% else %}
         {% if companyUsersFound %}
-            {% include molecule('company-user-list', 'QuoteRequestAgentWidget') with {
+            {% include molecule('company-user-list', 'CompanyUserAgentWidget') with {
                 data: {
                     companyUsers: data.companyUsers,
                 }

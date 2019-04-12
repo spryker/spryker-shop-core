@@ -13,16 +13,11 @@ use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgent
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToCustomerClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToPersistentCartClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteRequestAgentClientInterface;
-use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteRequestClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Form\QuoteRequestAgentCartForm;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Handler\QuoteRequestAgentCartHandler;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Handler\QuoteRequestAgentCartHandlerInterface;
-use SprykerShop\Yves\QuoteRequestAgentWidget\Validator\CompanyUserAutocompleteValidator;
-use SprykerShop\Yves\QuoteRequestAgentWidget\Validator\CompanyUserAutocompleteValidatorInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestAgentWidget\QuoteRequestAgentWidgetConfig getConfig()
@@ -49,24 +44,6 @@ class QuoteRequestAgentWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteRequestAgentWidget\Validator\CompanyUserAutocompleteValidatorInterface
-     */
-    public function createCompanyUserAutocompleteValidator(): CompanyUserAutocompleteValidatorInterface
-    {
-        return new CompanyUserAutocompleteValidator(
-            $this->getValidator()
-        );
-    }
-
-    /**
-     * @return \Symfony\Component\Validator\Validator\ValidatorInterface
-     */
-    public function getValidator(): ValidatorInterface
-    {
-        return Validation::createValidator();
-    }
-
-    /**
      * @return \Symfony\Component\Form\FormFactory
      */
     public function getFormFactory(): FormFactory
@@ -80,14 +57,6 @@ class QuoteRequestAgentWidgetFactory extends AbstractFactory
     public function getQuoteRequestAgentClient(): QuoteRequestAgentWidgetToQuoteRequestAgentClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestAgentWidgetDependencyProvider::CLIENT_QUOTE_REQUEST_AGENT);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteRequestClientInterface
-     */
-    public function getQuoteRequestClient(): QuoteRequestAgentWidgetToQuoteRequestClientInterface
-    {
-        return $this->getProvidedDependency(QuoteRequestAgentWidgetDependencyProvider::CLIENT_QUOTE_REQUEST);
     }
 
     /**

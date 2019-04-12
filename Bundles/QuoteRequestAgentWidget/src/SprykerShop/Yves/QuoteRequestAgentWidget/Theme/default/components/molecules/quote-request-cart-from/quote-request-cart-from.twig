@@ -7,13 +7,13 @@
 
 {% define data = {
     quoteRequestReference: required,
-    form: required,
+    cartForm: required,
 } %}
 
 {% block body %}
     {% if data.quoteRequestReference %}
 
-        {{ form_start(data.form) }}
+        {{ form_start(data.cartForm) }}
 
         <div class="grid grid--justify">
             <div class="col">
@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        {{ form_end(data.form) }}
+        {{ form_end(data.cartForm) }}
 
     {% endif %}
 {% endblock %}

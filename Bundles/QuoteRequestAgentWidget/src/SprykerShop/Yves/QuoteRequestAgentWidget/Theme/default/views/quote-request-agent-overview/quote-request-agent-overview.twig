@@ -110,7 +110,7 @@
                             {% include molecule('quote-request-cart-from', 'QuoteRequestAgentWidget') with {
                                 data: {
                                     quoteRequestReference: data.quoteRequestOverviewCollection.currentQuoteRequest.quoteRequestReference,
-                                    form: data.cartForm,
+                                    cartForm: data.cartForm,
                                 }
                             } only %}
                         </div>

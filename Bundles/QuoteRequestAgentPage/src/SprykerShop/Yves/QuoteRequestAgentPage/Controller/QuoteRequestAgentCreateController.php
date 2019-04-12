@@ -44,26 +44,31 @@ class QuoteRequestAgentCreateController extends QuoteRequestAgentAbstractControl
             ->getQuoteRequestAgentCreateForm()
             ->handleRequest($request);
 
-        if ($quoteRequestCreateForm->isSubmitted()) {
-            $idCompanyUser = $request->request->getInt(QuoteRequestAgentCreateForm::FILED_ID_COMPANY_USER);
-            $quoteRequestResponseTransfer = $this->getFactory()
-                ->createQuoteRequestAgentCreateHandler()
-                ->createQuoteRequest($idCompanyUser);
-
-            $this->handleResponseErrors($quoteRequestResponseTransfer);
-
-            if ($quoteRequestResponseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CREATED);
-
-                return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT, [
-                    static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
-                ]);
-            }
+        if (!$quoteRequestCreateForm->isSubmitted()) {
+            return [
+                'quoteRequestCreateForm' => $quoteRequestCreateForm->createView(),
+                'impersonatedCustomer' => $this->getFactory()->getCustomerClient()->getCustomer(),
+            ];
         }
 
-        return [
-            'quoteRequestCreateForm' => $quoteRequestCreateForm->createView(),
-            'impersonatedCustomer' => $this->getFactory()->getCustomerClient()->getCustomer(),
-        ];
+        $idCompanyUser = $request->request->getInt(QuoteRequestAgentCreateForm::FILED_ID_COMPANY_USER);
+        $quoteRequestResponseTransfer = $this->getFactory()
+            ->createQuoteRequestAgentCreateHandler()
+            ->createQuoteRequest($idCompanyUser);
+
+        $this->handleResponseErrors($quoteRequestResponseTransfer);
+
+        if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
+            return [
+                'quoteRequestCreateForm' => $quoteRequestCreateForm->createView(),
+                'impersonatedCustomer' => $this->getFactory()->getCustomerClient()->getCustomer(),
+            ];
+        }
+
+        $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CREATED);
+
+        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT, [
+            static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
+        ]);
     }
 }

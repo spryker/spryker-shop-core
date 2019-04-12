@@ -41,7 +41,7 @@
                 <td class="text-center">
                     <strong>{{ quoteRequest.latestVersion.quote.totals.grandTotal | default(0) | money(true, quoteRequest.latestVersion.quote.currency ? quoteRequest.latestVersion.quote.currency.code : '') }}</strong>
                 </td>
-                <td class="text-center">{{ quoteRequest.createdAt | date('d.m.Y H:i:s') }}</td>
+                <td class="text-center">{{ quoteRequest.createdAt | formatDateTime }}</td>
                 <td class="text-center">
                     <p class="request-status request-status--{{ quoteRequest.status }}">
                         {{ ('quote_request.status.' ~ quoteRequest.status) | trans }}

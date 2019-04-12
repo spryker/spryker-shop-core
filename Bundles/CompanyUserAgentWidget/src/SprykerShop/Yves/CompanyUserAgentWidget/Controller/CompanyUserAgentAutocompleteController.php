@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuoteRequestAgentWidget\Controller;
+namespace SprykerShop\Yves\CompanyUserAgentWidget\Controller;
 
 use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -14,9 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationList;
 
 /**
- * @method \SprykerShop\Yves\QuoteRequestAgentWidget\QuoteRequestAgentWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\CompanyUserAgentWidget\CompanyUserAgentWidgetFactory getFactory()
  */
-class AgentCompanyUserAutocompleteController extends AbstractController
+class CompanyUserAgentAutocompleteController extends AbstractController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -50,16 +50,16 @@ class AgentCompanyUserAutocompleteController extends AbstractController
             return $this->getErrorResponse($constraintViolationList);
         }
 
-        $companyUsers = $this->getFactory()
-            ->getQuoteRequestAgentClient()
+        $companyUserTransfers = $this->getFactory()
+            ->getCompanyUserAgentClient()
             ->getCompanyUserCollectionByQuery((new CompanyUserCriteriaTransfer())->fromArray($queryParams, true))
             ->getCompanyUsers()
             ->getArrayCopy();
 
         return $this->renderView(
-            '@QuoteRequestAgentWidget/views/company-user-autocomplete/company-user-autocomplete.twig',
+            '@CompanyUserAgentWidget/views/company-user-autocomplete/company-user-autocomplete.twig',
             [
-                'companyUsers' => $companyUsers,
+                'companyUsers' => $companyUserTransfers,
             ]
         );
     }
@@ -78,7 +78,7 @@ class AgentCompanyUserAutocompleteController extends AbstractController
         }
 
         return $this->renderView(
-            '@QuoteRequestAgentWidget/views/company-user-autocomplete/company-user-autocomplete.twig',
+            '@CompanyUserAgentWidget/views/company-user-autocomplete/company-user-autocomplete.twig',
             [
                 'errors' => $errors,
             ]
