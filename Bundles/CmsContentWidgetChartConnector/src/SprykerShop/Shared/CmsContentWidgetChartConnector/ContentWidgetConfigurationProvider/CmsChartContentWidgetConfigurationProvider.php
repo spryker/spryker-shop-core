@@ -10,7 +10,7 @@ namespace SprykerShop\Shared\CmsContentWidgetChartConnector\ContentWidgetConfigu
 use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 
 /**
- * @deprecated Use "chart()" function instead.
+ * @deprecated Use \SprykerShop\Yves\ChartWidget\Plugin\Twig\ChartTwigPlugin instead.
  */
 class CmsChartContentWidgetConfigurationProvider implements CmsContentWidgetConfigurationProviderInterface
 {

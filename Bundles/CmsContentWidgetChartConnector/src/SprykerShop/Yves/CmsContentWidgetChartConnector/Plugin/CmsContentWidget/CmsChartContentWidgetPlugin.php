@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig\Environment;
 
 /**
- * @deprecated Use "chart()" function instead.
+ * @deprecated Use \SprykerShop\Yves\ChartWidget\Plugin\Twig\ChartTwigPlugin instead.
  *
  * @method \SprykerShop\Yves\CmsContentWidgetChartConnector\CmsContentWidgetChartConnectorFactory getFactory()
  */
