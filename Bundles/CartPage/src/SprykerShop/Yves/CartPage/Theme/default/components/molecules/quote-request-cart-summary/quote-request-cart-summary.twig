@@ -18,6 +18,15 @@
     <h6>{{ 'cart.your-order' | trans }}</h6>
     <hr />
 
+    {% widget 'SalesOrderThresholdWidget' args [data.cart.expenses] only %}
+        {% block body %}
+            <li class="list__item spacing-y">
+                {{ parent() }}
+            </li>
+            <hr/>
+        {% endblock %}
+    {% endwidget %}
+
     {% include molecule('quote-request-discount-summary', 'DiscountWidget') ignore missing with {
         class: 'list spacing-y',
         data: {
