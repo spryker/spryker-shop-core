@@ -7,22 +7,17 @@
 
 {% define data = {
     product: required,
-    maxQuantity: 10
+    maxQuantity: 10,
+    minQuantity: 1,
+    value: 1,
+    step: 1
 } %}
 
-{% set options = [] %}
 {% set brand = data.product.attributes.brand | default %}
 {% set sku = data.product.sku %}
 {% set availabilityWidget = '' %}
 {% set isDisabled = data.product.idProductConcrete is empty or data.product.price is empty %}
 {% set isProductAvailable = true %}
-
-{% for index in 1..data.maxQuantity %}
-    {% set options = options | merge([{
-        label: index,
-        value: index
-    }]) %}
-{% endfor %}
 
 {% if widgetExists('AvailabilityWidgetPlugin') %} {# @deprecated Use molecule('availability-product', 'AvailabilityWidget') instead of AvailabilityWidgetPlugin. #}
     {% set isAvailable = widgetBlock('AvailabilityWidgetPlugin', 'isAvailable', data.product) %}
@@ -91,25 +86,25 @@
         {% endwidget %}
 
         {% if can('SeeAddToCartPermissionPlugin') %}
-            {% widget 'ProductPackagingUnitWidget' args [data.product, isDisabled, options] only %}
-            {% elsewidget 'ProductPackagingUnitWidgetPlugin' args [data.product, isDisabled, options] only %} {# @deprecated Use ProductPackagingUnitWidget instead. #}
-            {% elsewidget 'ManageProductMeasurementUnitWidget' args [data.product, isDisabled, options] only %}
-            {% elsewidget 'ProductMeasurementUnitWidgetPlugin' args [data.product, isDisabled, options] only %} {# @deprecated Use ManageProductMeasurementUnitWidget instead. #}
+            {% widget 'ProductPackagingUnitWidget' args [data.product, isDisabled] only %}
+            {% elsewidget 'ProductPackagingUnitWidgetPlugin' args [data.product, isDisabled] only %} {# @deprecated Use ProductPackagingUnitWidget instead. #}
+            {% elsewidget 'ManageProductMeasurementUnitWidget' args [data.product, isDisabled] only %}
+            {% elsewidget 'ProductMeasurementUnitWidgetPlugin' args [data.product, isDisabled] only %} {# @deprecated Use ManageProductMeasurementUnitWidget instead. #}
             {% nowidget %}
                 <div class="grid grid--bottom grid--justify">
                     <div class="col col--sm-5">
                         <label>
                             {{'cart.item_quantity' | trans}}
-                            {% include atom('select') with {
-                                modifiers: ['expand'],
-                                data: {
-                                    options: options
-                                },
-                                attributes: {
-                                    name: 'quantity',
-                                    disabled: isDisabled
-                                }
-                            } only %}
+
+                            <input class="input input--expand"
+                                   type="number"
+                                   value="{{ data.value }}"
+                                   min="{{ data.minQuantity }}"
+                                   max="{{ data.maxQuantity }}"
+                                   step="{{ data.step }}"
+                                   name="quantity"
+                                    {{ isDisabled ? 'disabled' : '' }}
+                            />
                         </label>
                     </div>
 
