@@ -46,8 +46,9 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
             ->addRestorePasswordRoute()
             ->addCustomerOverviewRoute()
             ->addCustomerProfileRoute()
-            ->addCustomerAddressRoute()
-            ->addNewCustomerAddressRoute()
+            ->addCustomerAddressRoute();
+
+        $this->addNewCustomerAddressRoute()
             ->addUpdateCustomerAddressRoute()
             ->addDeleteCustomerAddressRoute()
             ->addRefreshCustomerAddressRoute()

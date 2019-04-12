@@ -44,8 +44,9 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
             ->addShoppingListDeleteConfirmRoute()
             ->addShoppingListAddToCartRoute()
             ->addShoppingListDetailsRoute()
-            ->addShoppingListRemoveItemRoute()
-            ->addShoppingListAddListsToCartRoute()
+            ->addShoppingListRemoveItemRoute();
+
+        $this->addShoppingListAddListsToCartRoute()
             ->addShoppingListShareRoute()
             ->addShoppingListPrintRoute()
             ->addCreateShoppingListFromCartRoute()
