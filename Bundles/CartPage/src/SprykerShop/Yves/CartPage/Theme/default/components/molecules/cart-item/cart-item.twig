@@ -99,9 +99,11 @@
                 </a>
             {% endif %}
 
-            {% widget 'CartItemNoteFormWidget' args [data.cartItem, data.cart] only %}
-            {% elsewidget 'CartNoteQuoteItemWidgetPlugin' args [data.cartItem, data.cart] only %} {# @deprecated Use CartItemNoteFormWidget instead. #}
-            {% endwidget %}
+            {% block cartItemNote %}
+                {% widget 'CartItemNoteFormWidget' args [data.cartItem, data.cart] only %}
+                {% elsewidget 'CartNoteQuoteItemWidgetPlugin' args [data.cartItem, data.cart] only %} {# @deprecated Use CartItemNoteFormWidget instead. #}
+                {% endwidget %}
+            {% endblock %}
         </div>
     </div>
 {% endblock %}
