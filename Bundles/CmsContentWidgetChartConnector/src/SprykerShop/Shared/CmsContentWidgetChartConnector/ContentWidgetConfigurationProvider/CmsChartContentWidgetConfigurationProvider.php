@@ -9,6 +9,9 @@ namespace SprykerShop\Shared\CmsContentWidgetChartConnector\ContentWidgetConfigu
 
 use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 
+/**
+ * @deprecated Use "chart()" function instead.
+ */
 class CmsChartContentWidgetConfigurationProvider implements CmsContentWidgetConfigurationProviderInterface
 {
     public const FUNCTION_NAME = 'chart';
