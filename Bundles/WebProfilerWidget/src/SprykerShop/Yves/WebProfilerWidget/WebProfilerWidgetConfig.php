@@ -7,8 +7,10 @@
 
 namespace SprykerShop\Yves\WebProfilerWidget;
 
+use ReflectionClass;
 use Spryker\Shared\WebProfiler\WebProfilerConstants;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
+use Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener;
 
 class WebProfilerWidgetConfig extends AbstractBundleConfig
 {
@@ -18,5 +20,17 @@ class WebProfilerWidgetConfig extends AbstractBundleConfig
     public function isWebProfilerEnabled()
     {
         return $this->get(WebProfilerConstants::ENABLE_WEB_PROFILER, false);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getWebProfilerTemplatePaths(): array
+    {
+        $reflectionClass = new ReflectionClass(WebDebugToolbarListener::class);
+
+        return [
+            dirname(dirname((string)$reflectionClass->getFileName())) . '/Resources/views',
+        ];
     }
 }

@@ -65,18 +65,18 @@ class PriceResolver implements PriceResolverInterface
      */
     public function setSumPriceForQuickOrderItemTransfer(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
-        if (!$this->can('SeePricePermissionPlugin') || !$quickOrderItemTransfer->getSku() || !$quickOrderItemTransfer->getQuantity()) {
+        if (!$this->can('SeePricePermissionPlugin') || !$quickOrderItemTransfer->getProductConcrete() || !$quickOrderItemTransfer->getQuantity()) {
             return $quickOrderItemTransfer;
         }
 
-        $idProduct = $this->productResolver->getIdProductBySku($quickOrderItemTransfer->getSku());
+        $idProduct = $quickOrderItemTransfer->getProductConcrete()->getIdProductConcrete();
 
         if ($idProduct === null) {
             return $quickOrderItemTransfer;
         }
 
         $sumPrice = $this->getSumPriceForQuantity(
-            $quickOrderItemTransfer->getQuantity() ?? 0,
+            $quickOrderItemTransfer->getQuantity() ?? 0.0,
             $idProduct,
             $this->productResolver->getIdProductAbstractByIdProduct($idProduct)
         );
@@ -87,13 +87,13 @@ class PriceResolver implements PriceResolverInterface
     }
 
     /**
-     * @param int $quantity
+     * @param float $quantity
      * @param int $idProduct
      * @param int $idProductAbstract
      *
      * @return int|null
      */
-    protected function getSumPriceForQuantity(int $quantity, int $idProduct, int $idProductAbstract): ?int
+    protected function getSumPriceForQuantity(float $quantity, int $idProduct, int $idProductAbstract): ?int
     {
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setQuantity($quantity)

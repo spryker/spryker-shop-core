@@ -1,0 +1,1 @@
+Shows a block with the most important product information and provides an ability to configure product using the variant-configurator component. Also has the quantity drop-down menu and the Add to Cart button.

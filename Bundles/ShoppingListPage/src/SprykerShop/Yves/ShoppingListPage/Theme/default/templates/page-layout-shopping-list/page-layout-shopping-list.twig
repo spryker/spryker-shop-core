@@ -6,7 +6,9 @@
 } %}
 
 {% block title %}
-    <h3>{{ data.title }}</h3>
+    <div class="shopping-list-info shopping-list-info--reset">
+        <h3 class="shopping-list-info__name">{{ data.title }}</h3>
+    </div>
 {% endblock %}
 
 {% block breadcrumbs %}

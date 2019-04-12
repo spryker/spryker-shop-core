@@ -10,10 +10,12 @@ namespace SprykerShop\Yves\CmsPage\Plugin\Provider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig_Environment;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
+ * @deprecated Use `SprykerShop\Yves\CmsPage\Plugin\Twig\CmsTwigPlugin` instead.
+ *
  * @method \SprykerShop\Yves\CmsPage\CmsPageFactory getFactory()
  */
 class CmsTwigFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
@@ -28,23 +30,23 @@ class CmsTwigFunctionServiceProvider extends AbstractPlugin implements ServicePr
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) use ($app) {
+            $app->extend('twig', function (Environment $twig) use ($app) {
                 return $this->registerCmsTwigFunction($twig, $app);
             })
         );
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param \Silex\Application $application
      *
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
-    protected function registerCmsTwigFunction(Twig_Environment $twig, Application $application)
+    protected function registerCmsTwigFunction(Environment $twig, Application $application)
     {
         $twig->addFunction(
             'spyCms',
-            new Twig_SimpleFunction('spyCms', function (array $context, $identifier) use ($application) {
+            new TwigFunction('spyCms', function (array $context, $identifier) use ($application) {
                 $placeholders = $context['_view']['placeholders'];
 
                 $translation = '';

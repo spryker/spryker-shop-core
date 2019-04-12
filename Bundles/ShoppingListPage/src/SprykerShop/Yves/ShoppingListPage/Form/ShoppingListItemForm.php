@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ShoppingListPage\Form;
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
-use SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,6 +24,7 @@ class ShoppingListItemForm extends AbstractType
     protected const FIELD_QUANTITY = 'quantity';
 
     protected const MAX_QUANTITY_RANGE = 2147483647; // 32 bit integer
+    protected const MIN_QUANTITY_RANGE = 1;
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -63,7 +63,7 @@ class ShoppingListItemForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Range([
-                    'min' => ShoppingListPageConfig::MIN_QUANTITY_RANGE,
+                    'min' => static::MIN_QUANTITY_RANGE,
                     'max' => static::MAX_QUANTITY_RANGE,
                 ]),
             ],

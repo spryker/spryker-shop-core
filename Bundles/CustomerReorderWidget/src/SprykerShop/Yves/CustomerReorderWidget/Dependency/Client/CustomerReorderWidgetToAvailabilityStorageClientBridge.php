@@ -31,4 +31,14 @@ class CustomerReorderWidgetToAvailabilityStorageClientBridge implements Customer
     {
         return $this->availabilityClient->getProductAvailabilityByIdProductAbstract($idProductAbstract);
     }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
+     */
+    public function getAvailabilityAbstract($idProductAbstract)
+    {
+        return $this->availabilityClient->getAvailabilityAbstract($idProductAbstract);
+    }
 }
