@@ -7,53 +7,24 @@
 
 namespace SprykerShop\Yves\FileManagerWidget\Plugin\Router;
 
-use Silex\Application;
-use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
+use Spryker\Shared\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 
-class FileManagerWidgetRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
+class FileManagerWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     protected const ROUTE_FILES_DOWNLOAD = 'files/download';
-
-    /**
-     * @var string
-     */
-    protected $allowedLocalesPattern;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct(?bool $sslEnabled = null)
-    {
-        parent::__construct($sslEnabled);
-
-        $this->allowedLocalesPattern = $this->getAllowedLocalesPattern();
-    }
 
     /**
      * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    public function addRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
-        $this->createFilesController('/download', static::ROUTE_FILES_DOWNLOAD, 'Download');
+        $route = $this->buildRoute('/files/download', 'FileManagerWidget', 'Download');
+
+        $routeCollection->add(static::ROUTE_FILES_DOWNLOAD, $route);
+
         return $routeCollection;
-    }
-
-    /**
-     * @param string $path
-     * @param string $name
-     * @param string $controllerName
-     * @param string $action
-     *
-     * @return void
-     */
-    protected function createFilesController(string $path, string $name, string $controllerName, $action = 'index')
-    {
-        $urlPath = '/{files}' . $path;
-
-        $this->createController($urlPath, $name, 'FileManagerWidget', $controllerName, $action)
-            ->assert('files', $this->allowedLocalesPattern . 'files|files')
-            ->value('files', 'files');
     }
 }

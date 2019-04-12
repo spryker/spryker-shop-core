@@ -7,10 +7,10 @@
 
 namespace SprykerShop\Yves\CartNoteWidget\Plugin\Router;
 
-use Silex\Application;
-use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
+use Spryker\Shared\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 
-class CartNoteWidgetRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
+class CartNoteWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     public const ROUTE_CART_NOTE_QUOTE = 'cart-note/quote';
     public const ROUTE_CART_NOTE_ITEM = 'cart-note/item';
@@ -20,34 +20,37 @@ class CartNoteWidgetRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\Rout
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    public function addRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
-        $this->addQuoteController()
-            ->addItemController();
+        $routeCollection = $this->addQuoteRoute($routeCollection);
+        $routeCollection = $this->addItemRoute($routeCollection);
+
         return $routeCollection;
     }
 
     /**
-     * @return $this
+     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addQuoteController()
+    protected function addQuoteRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $this->createPostController('/{cartNote}/quote', static::ROUTE_CART_NOTE_QUOTE, 'CartNoteWidget', 'Quote', 'index')
-            ->assert('cartNote', $this->getAllowedLocalesPattern() . 'cart-note|cart-note')
-            ->value('cartNote', 'cart-note');
+        $route = $this->buildRoute('/cart-note/quote', 'CartNoteWidget', 'Quote', 'indexAction');
+        $routeCollection->add(static::ROUTE_CART_NOTE_QUOTE, $route);
 
-        return $this;
+        return $routeCollection;
     }
 
     /**
-     * @return $this
+     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addItemController()
+    protected function addItemRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $this->createPostController('/{cartNote}/item', static::ROUTE_CART_NOTE_ITEM, 'CartNoteWidget', 'Item', 'index')
-            ->assert('cartNote', $this->getAllowedLocalesPattern() . 'cart-note|cart-note')
-            ->value('cartNote', 'cart-note');
+        $route = $this->buildRoute('/cart-note/item', 'CartNoteWidget', 'Item', 'indexAction');
+        $routeCollection->add(static::ROUTE_CART_NOTE_ITEM, $route);
 
-        return $this;
+        return $routeCollection;
     }
 }

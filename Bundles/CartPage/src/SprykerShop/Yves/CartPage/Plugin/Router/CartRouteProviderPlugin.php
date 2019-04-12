@@ -7,11 +7,11 @@
 
 namespace SprykerShop\Yves\CartPage\Plugin\Router;
 
-use Silex\Application;
-use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
+use Spryker\Shared\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
-class CartRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
+class CartRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     public const ROUTE_CART = 'cart';
     public const ROUTE_CART_ADD = 'cart/add';
@@ -28,7 +28,7 @@ class CartRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    public function addRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $routeCollection = $this->addCartRoute($routeCollection);
         $routeCollection = $this->addCartAddItemsRoute($routeCollection);
@@ -37,6 +37,7 @@ class CartRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\
         $routeCollection = $this->addCartChangeQuantityRoute($routeCollection);
         $routeCollection = $this->addCartUpdateRoute($routeCollection);
         $routeCollection = $this->addCartQuickAddRoute($routeCollection);
+
         return $routeCollection;
     }
 
@@ -45,11 +46,12 @@ class CartRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCartRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addCartRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart', 'CartPage', 'Cart', 'indexAction');
         $route = $route->convert('selectedAttributes', [$this, 'getSelectedAttributesFromRequest']);
         $routeCollection->add(static::ROUTE_CART, $route);
+
         return $routeCollection;
     }
 
@@ -58,10 +60,11 @@ class CartRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCartAddItemsRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addCartAddItemsRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart/add-items', 'CartPage', 'Cart', 'addItemsAction');
         $routeCollection->add(static::ROUTE_CART_ADD_ITEMS, $route);
+
         return $routeCollection;
     }
 
@@ -70,13 +73,14 @@ class CartRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCartAddRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addCartAddRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart/add/{sku}', 'CartPage', 'Cart', 'addAction');
         $route = $route->assert('sku', self::SKU_PATTERN);
         $route = $route->convert('quantity', [$this, 'getQuantityFromRequest']);
         $route = $route->convert('optionValueIds', [$this, 'getProductOptionsFromRequest']);
         $routeCollection->add(static::ROUTE_CART_ADD, $route);
+
         return $routeCollection;
     }
 
@@ -88,12 +92,13 @@ class CartRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCartQuickAddRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addCartQuickAddRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart/quick-add/{sku}', 'CartPage', 'Cart', 'quickAddAction');
         $route = $route->assert('sku', static::SKU_PATTERN);
         $route = $route->convert('quantity', [$this, 'getQuantityFromRequest']);
         $routeCollection->add(static::ROUTE_CART_QUICK_ADD, $route);
+
         return $routeCollection;
     }
 
@@ -102,11 +107,12 @@ class CartRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCartRemoveRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addCartRemoveRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart/remove/{sku}/', 'CartPage', 'Cart', 'removeAction');
         $route = $route->assert('sku', self::SKU_PATTERN);
         $routeCollection->add(static::ROUTE_CART_REMOVE, $route);
+
         return $routeCollection;
     }
 
@@ -115,7 +121,7 @@ class CartRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCartChangeQuantityRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addCartChangeQuantityRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart/change/{sku}', 'CartPage', 'Cart', 'changeAction');
         $route = $route->assert('sku', self::SKU_PATTERN);
@@ -123,6 +129,7 @@ class CartRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\
         $route = $route->convert('groupKey', [$this, 'getGroupKeyFromRequest']);
         $route = $route->method('POST');
         $routeCollection->add(static::ROUTE_CART_CHANGE_QUANTITY, $route);
+
         return $routeCollection;
     }
 
@@ -131,18 +138,20 @@ class CartRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addCartUpdateRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addCartUpdateRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $controller = $this->createController('/{cart}/update/{sku}', self::ROUTE_CART_UPDATE, 'CartPage', 'Cart', 'update')
-            ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
-            ->value('cart', 'cart')
+        $route = $this->buildRoute('/cart/update/{sku}', 'CartPage', 'Cart', 'update')
             ->assert('sku', self::SKU_PATTERN)
             ->convert('quantity', [$this, 'getQuantityFromRequest']);
-        $controller->convert('groupKey', [$this, 'getGroupKeyFromRequest'])
+
+        $route->convert('groupKey', [$this, 'getGroupKeyFromRequest'])
             ->convert('selectedAttributes', [$this, 'getSelectedAttributesFromRequest'])
             ->convert('preselectedAttributes', [$this, 'getPreSelectedAttributesFromRequest'])
             ->convert('optionValueIds', [$this, 'getProductOptionsFromRequest'])
             ->method('POST');
+
+        $routeCollection->add(static::ROUTE_CART_UPDATE, $route);
+
         return $routeCollection;
     }
 
