@@ -9,10 +9,12 @@
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/application": "^3.8.0",
-    "spryker/persistent-cart": "^1.8.0",
     "spryker/cart": "^5.6.0",
     "spryker/company-user": "^2.9.0",
+    "spryker/customer": "*",
     "spryker/kernel": "^3.0.0",
+    "spryker/persistent-cart": "^1.8.0",
+    "spryker/quote": "*",
     "spryker/quote-request": "^1.0.0",
     "spryker/symfony": "^3.1.0"
   },

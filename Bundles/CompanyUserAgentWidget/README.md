@@ -1,13 +1,13 @@
-# CompanyUserAgentPage Module
-[![Build Status](https://travis-ci.org/spryker-shop/company-user-agent-page.svg)](https://travis-ci.org/spryker/company-user-agent-page)
-[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/company-user-agent-page/badge.svg)](https://coveralls.io/github/spryker/company-user-agent-page)
+# CompanyUserAgentWidget Module
+[![Build Status](https://travis-ci.org/spryker-shop/company-user-agent-widget.svg)](https://travis-ci.org/spryker/company-user-agent-widget)
+[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/company-user-agent-widget/badge.svg)](https://coveralls.io/github/spryker/company-user-agent-widget)
 
-This module contains the list/edit/vew pages for requests for quote.
+Widget module is responsible for displaying a list of company users.
 
 ## Installation
 
 ```
-composer require spryker-shop/company-user-agent-page
+composer require spryker-shop/company-user-agent-widget
 ```
 
 ## Documentation

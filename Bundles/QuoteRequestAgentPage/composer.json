@@ -8,18 +8,19 @@
     "spryker-shop/quote-request-agent-page-extension": "^1.0.0",
     "spryker-shop/shop-application": "^1.2.0",
     "spryker-shop/shop-ui": "^1.0.0",
-    "spryker/quote-request-agent": "^1.0.0",
     "spryker/application": "^3.8.0",
     "spryker/company-user": "^2.9.0",
     "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.24.0",
     "spryker/quote": "^2.8.0",
     "spryker/quote-request": "^1.0.0",
+    "spryker/quote-request-agent": "^1.0.0",
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
     "spryker-shop/agent-page": "*",
     "spryker-shop/cart-page": "*",
+    "spryker-shop/company-user-agent-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
@@ -27,6 +28,7 @@
   "suggest": {
     "spryker-shop/agent-page": "If you want to use agent layout templates: ^1.2.0",
     "spryker-shop/cart-page": "If you want to use cart page molecules: ^1.5.0",
+    "spryker-shop/company-user-agent-widget": "If you want to use company user auto-complete form: ^1.0.0",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

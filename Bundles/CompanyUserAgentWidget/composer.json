@@ -1,7 +1,7 @@
 {
-  "name": "spryker-shop/company-user-agent-page",
+  "name": "spryker-shop/company-user-agent-widget",
   "type": "library",
-  "description": "CompanyUserAgentPage module",
+  "description": "CompanyUserAgentWidget module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
