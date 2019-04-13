@@ -17,10 +17,7 @@ class QuoteRequestMenuItemWidget extends AbstractWidget
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
     protected const PARAMETER_IS_ACTIVE_PAGE = 'isActivePage';
 
-    /**
-     * @see \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST
-     */
-    protected const ROUTE_QUOTE_REQUEST = 'quote-request';
+    protected const PAGE_KEY_QUOTE_REQUEST = 'quoteRequest';
 
     /**
      * @param string $activePage
@@ -72,7 +69,7 @@ class QuoteRequestMenuItemWidget extends AbstractWidget
      */
     protected function isQuoteRequestPageActive(string $activePage): bool
     {
-        return $activePage === static::ROUTE_QUOTE_REQUEST;
+        return $activePage === static::PAGE_KEY_QUOTE_REQUEST;
     }
 
     /**

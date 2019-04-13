@@ -89,15 +89,15 @@ class QuoteRequestAbstractController extends AbstractController
             ->setQuoteRequestReference($quoteRequestReference)
             ->setIdCompanyUser($this->getFactory()->getCompanyUserClient()->findCompanyUser()->getIdCompanyUser());
 
-        $quoteRequestTransfer = $this->getFactory()
+        $quoteRequestResponseTransfer = $this->getFactory()
             ->getQuoteRequestClient()
             ->findQuoteRequest($quoteRequestCriteriaTransfer);
 
-        if (!$quoteRequestTransfer) {
+        if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
             throw new NotFoundHttpException();
         }
 
-        return $quoteRequestTransfer;
+        return $quoteRequestResponseTransfer->getQuoteRequest();
     }
 
     /**

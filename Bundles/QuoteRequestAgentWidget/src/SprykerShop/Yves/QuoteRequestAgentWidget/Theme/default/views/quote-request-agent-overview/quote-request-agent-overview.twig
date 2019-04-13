@@ -90,7 +90,7 @@
                                         </div>
                                         <div class="col">
                                             <span class="badge">
-                                                {{ cart ? (cart.items | length) : 0 }}
+                                                {{ quote ? (quote.items | length) : 0 }}
                                                 {{ 'quote_request_agent_widget.items' | trans }}
                                             </span>
                                         </div>
@@ -100,7 +100,7 @@
                                             </span>
                                         </div>
                                         <div class="col">
-                                            <strong>{{ cart.totals.grandTotal | default(0) | money(true, cart.currency ? cart.currency.code : '') }}</strong>
+                                            <strong>{{ quote.totals.grandTotal | default(0) | money(true, quote.currency ? quote.currency.code : '') }}</strong>
                                         </div>
                                     </div>
                                 {% endblock %}
