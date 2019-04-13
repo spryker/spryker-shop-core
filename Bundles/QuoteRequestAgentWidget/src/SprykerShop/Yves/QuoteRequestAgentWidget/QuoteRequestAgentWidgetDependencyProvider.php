@@ -9,15 +9,15 @@ namespace SprykerShop\Yves\QuoteRequestAgentWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToCartClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToCustomerClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToPersistentCartClientBridge;
+use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteRequestAgentClientBridge;
 
 class QuoteRequestAgentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_QUOTE_REQUEST_AGENT = 'CLIENT_QUOTE_REQUEST_AGENT';
-    public const CLIENT_CART = 'CLIENT_CART';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
@@ -30,7 +30,7 @@ class QuoteRequestAgentWidgetDependencyProvider extends AbstractBundleDependency
     {
         $container = parent::provideDependencies($container);
         $container = $this->addQuoteRequestAgentClient($container);
-        $container = $this->addCartClient($container);
+        $container = $this->addQuoteClient($container);
         $container = $this->addPersistentCartClient($container);
         $container = $this->addCustomerClient($container);
 
@@ -56,10 +56,10 @@ class QuoteRequestAgentWidgetDependencyProvider extends AbstractBundleDependency
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCartClient(Container $container): Container
+    protected function addQuoteClient(Container $container): Container
     {
-        $container[static::CLIENT_CART] = function (Container $container) {
-            return new QuoteRequestAgentWidgetToCartClientBridge($container->getLocator()->cart()->client());
+        $container[static::CLIENT_QUOTE] = function (Container $container) {
+            return new QuoteRequestAgentWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
         };
 
         return $container;

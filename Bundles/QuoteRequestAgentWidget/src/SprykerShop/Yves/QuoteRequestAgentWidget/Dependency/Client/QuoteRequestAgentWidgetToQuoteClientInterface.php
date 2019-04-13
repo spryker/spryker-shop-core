@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client;
 
-interface QuoteRequestAgentWidgetToCartClientInterface
+interface QuoteRequestAgentWidgetToQuoteClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer

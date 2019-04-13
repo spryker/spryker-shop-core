@@ -7,19 +7,19 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client;
 
-class QuoteRequestAgentWidgetToCartClientBridge implements QuoteRequestAgentWidgetToCartClientInterface
+class QuoteRequestAgentWidgetToQuoteClientBridge implements QuoteRequestAgentWidgetToQuoteClientInterface
 {
     /**
-     * @var \Spryker\Client\Cart\CartClientInterface
+     * @var \Spryker\Client\Quote\QuoteClientInterface
      */
-    protected $cartClient;
+    protected $quoteClient;
 
     /**
-     * @param \Spryker\Client\Cart\CartClientInterface $cartClient
+     * @param \Spryker\Client\Quote\QuoteClientInterface $quoteClient
      */
-    public function __construct($cartClient)
+    public function __construct($quoteClient)
     {
-        $this->cartClient = $cartClient;
+        $this->quoteClient = $quoteClient;
     }
 
     /**
@@ -27,6 +27,6 @@ class QuoteRequestAgentWidgetToCartClientBridge implements QuoteRequestAgentWidg
      */
     public function getQuote()
     {
-        return $this->cartClient->getQuote();
+        return $this->quoteClient->getQuote();
     }
 }

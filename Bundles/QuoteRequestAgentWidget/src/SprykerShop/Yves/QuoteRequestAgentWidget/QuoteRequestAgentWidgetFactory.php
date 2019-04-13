@@ -9,9 +9,9 @@ namespace SprykerShop\Yves\QuoteRequestAgentWidget;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToCustomerClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToPersistentCartClientInterface;
+use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteRequestAgentClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Form\QuoteRequestAgentCartForm;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Handler\QuoteRequestAgentCartHandler;
@@ -38,7 +38,7 @@ class QuoteRequestAgentWidgetFactory extends AbstractFactory
     public function createQuoteRequestAgentCartHandler(): QuoteRequestAgentCartHandlerInterface
     {
         return new QuoteRequestAgentCartHandler(
-            $this->getCartClient(),
+            $this->getQuoteClient(),
             $this->getQuoteRequestAgentClient()
         );
     }
@@ -60,11 +60,11 @@ class QuoteRequestAgentWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToCartClientInterface
+     * @return \SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteClientInterface
      */
-    public function getCartClient(): QuoteRequestAgentWidgetToCartClientInterface
+    public function getQuoteClient(): QuoteRequestAgentWidgetToQuoteClientInterface
     {
-        return $this->getProvidedDependency(QuoteRequestAgentWidgetDependencyProvider::CLIENT_CART);
+        return $this->getProvidedDependency(QuoteRequestAgentWidgetDependencyProvider::CLIENT_QUOTE);
     }
 
     /**

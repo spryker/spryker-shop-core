@@ -8,8 +8,8 @@
 {% block requestList %}
     <ul class="menu menu--inline">
         <li class="menu__item menu__item--has-children-dropdown">
-            <a href="{{ path('agent/quote-request') }}" title="{{ 'agent_quote_request_widget.quote_request' | trans }}">
-                {{ 'agent_quote_request_widget.quote_request' | trans }}
+            <a href="{{ path('agent/quote-request') }}" title="{{ 'quote_request_agent_widget.quote_request' | trans }}">
+                {{ 'quote_request_agent_widget.quote_request' | trans }}
 
                 {% include atom('icon') with {
                     data: {
@@ -32,7 +32,7 @@
                 {% else %}
                     <li class="menu__item">
                         <span class="no-items no-quote-requests">
-                            {{ 'agent_quote_request_widget.no_request_created' | trans }}
+                            {{ 'quote_request_agent_widget.no_request_created' | trans }}
                         </span>
                     </li>
                 {% endif %}
@@ -40,13 +40,13 @@
                 <li class="menu__item">
                     <div class="grid grid--justify">
                         <div class="col">
-                            <a href="{{ path('agent/quote-request') }}" class="button button--hollow" title="{{ 'agent_quote_request_widget.view_all_requests' | trans }}">
-                                {{ 'agent_quote_request_widget.view_all_requests' | trans }}
+                            <a href="{{ path('agent/quote-request') }}" class="button button--hollow" title="{{ 'quote_request_agent_widget.view_all_requests' | trans }}">
+                                {{ 'quote_request_agent_widget.view_all_requests' | trans }}
                             </a>
                         </div>
                         <div class="col">
-                            <a href="{{ path('agent/quote-request/create') }}" class="button button--success" title="{{ 'agent_quote_request_widget.create_new_request' | trans }}">
-                                {{ 'agent_quote_request_widget.create_new_request' | trans }}
+                            <a href="{{ path('agent/quote-request/create') }}" class="button button--success" title="{{ 'quote_request_agent_widget.create_new_request' | trans }}">
+                                {{ 'quote_request_agent_widget.create_new_request' | trans }}
                             </a>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                                         <div class="col">
                                             <span class="badge">
                                                 {{ cart ? (cart.items | length) : 0 }}
-                                                {{ 'agent_quote_request_widget.items' | trans }}
+                                                {{ 'quote_request_agent_widget.items' | trans }}
                                             </span>
                                         </div>
                                         <div class="col">

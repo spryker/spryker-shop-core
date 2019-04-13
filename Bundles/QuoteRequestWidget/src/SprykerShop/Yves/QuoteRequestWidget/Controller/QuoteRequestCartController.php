@@ -40,9 +40,19 @@ class QuoteRequestCartController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(Request $request): RedirectResponse
+    public function saveAction(Request $request): RedirectResponse
     {
-        $response = $this->executeIndexAction($request);
+        $response = $this->executeSaveAction($request);
+
+        return $response;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function clearAction(): RedirectResponse
+    {
+        $response = $this->executeClearAction();
 
         return $response;
     }
@@ -52,7 +62,7 @@ class QuoteRequestCartController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeIndexAction(Request $request): RedirectResponse
+    protected function executeSaveAction(Request $request): RedirectResponse
     {
         $quoteRequestCartForm = $this->getFactory()
             ->getQuoteRequestCartForm()
@@ -72,17 +82,47 @@ class QuoteRequestCartController extends AbstractController
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
-        if (!$request->get(QuoteRequestCartForm::SUBMIT_BUTTON_SAVE_AND_BACK)) {
+        if ($request->get(QuoteRequestCartForm::SUBMIT_BUTTON_SAVE_AND_BACK) === null) {
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
-        $this->getFactory()
-            ->getPersistentCartClient()
-            ->reloadQuoteForCustomer($quoteRequestResponseTransfer->getQuoteRequest()->getCompanyUser()->getCustomer());
+        $this->reloadQuoteForCustomer();
 
         return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
             static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
         ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeClearAction(): RedirectResponse
+    {
+        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+
+        if ($quoteTransfer->getQuoteRequestReference()) {
+            $this->reloadQuoteForCustomer();
+        }
+
+        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
+            static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteTransfer->getQuoteRequestReference(),
+        ]);
+    }
+
+    /**
+     * @return void
+     */
+    protected function reloadQuoteForCustomer(): void
+    {
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        if (!$customerTransfer) {
+            return;
+        }
+
+        $this->getFactory()
+            ->getPersistentCartClient()
+            ->reloadQuoteForCustomer($customerTransfer);
     }
 
     /**

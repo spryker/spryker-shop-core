@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\QuoteRequestWidget;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCompanyUserClientBridge;
+use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCustomerClientBridge;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToPersistentCartClientBridge;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteClientBridge;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteRequestClientBridge;
@@ -20,6 +21,7 @@ class QuoteRequestWidgetDependencyProvider extends AbstractBundleDependencyProvi
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
     public const CLIENT_QUOTE_REQUEST = 'CLIENT_QUOTE_REQUEST';
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -33,6 +35,7 @@ class QuoteRequestWidgetDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addCompanyUserClient($container);
         $container = $this->addQuoteRequestClient($container);
         $container = $this->addPersistentCartClient($container);
+        $container = $this->addCustomerClient($container);
 
         return $container;
     }
@@ -88,6 +91,20 @@ class QuoteRequestWidgetDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container[static::CLIENT_PERSISTENT_CART] = function (Container $container) {
             return new QuoteRequestWidgetToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCustomerClient(Container $container): Container
+    {
+        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+            return new QuoteRequestWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 
         return $container;

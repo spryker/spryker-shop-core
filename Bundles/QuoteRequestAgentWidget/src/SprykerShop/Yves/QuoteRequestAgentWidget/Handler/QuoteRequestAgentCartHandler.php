@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\QuoteRequestAgentWidget\Handler;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
-use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToCartClientInterface;
+use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteRequestAgentClientInterface;
 
 class QuoteRequestAgentCartHandler implements QuoteRequestAgentCartHandlerInterface
@@ -17,9 +17,9 @@ class QuoteRequestAgentCartHandler implements QuoteRequestAgentCartHandlerInterf
     protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
 
     /**
-     * @var \SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToCartClientInterface
+     * @var \SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteClientInterface
      */
-    protected $cartClient;
+    protected $quoteClient;
 
     /**
      * @var \SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteRequestAgentClientInterface
@@ -27,14 +27,14 @@ class QuoteRequestAgentCartHandler implements QuoteRequestAgentCartHandlerInterf
     protected $quoteRequestAgentClient;
 
     /**
-     * @param \SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToCartClientInterface $cartClient
+     * @param \SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteClientInterface $quoteClient
      * @param \SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteRequestAgentClientInterface $quoteRequestAgentClient
      */
     public function __construct(
-        QuoteRequestAgentWidgetToCartClientInterface $cartClient,
+        QuoteRequestAgentWidgetToQuoteClientInterface $quoteClient,
         QuoteRequestAgentWidgetToQuoteRequestAgentClientInterface $quoteRequestAgentClient
     ) {
-        $this->cartClient = $cartClient;
+        $this->quoteClient = $quoteClient;
         $this->quoteRequestAgentClient = $quoteRequestAgentClient;
     }
 
@@ -43,7 +43,7 @@ class QuoteRequestAgentCartHandler implements QuoteRequestAgentCartHandlerInterf
      */
     public function updateQuoteRequest(): QuoteRequestResponseTransfer
     {
-        $quoteTransfer = $this->cartClient->getQuote();
+        $quoteTransfer = $this->quoteClient->getQuote();
 
         if (!$quoteTransfer->getQuoteRequestReference()) {
             return $this->getErrorResponse();

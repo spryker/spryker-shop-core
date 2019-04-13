@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\QuoteRequestWidget;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCompanyUserClientInterface;
+use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCustomerClientInterface;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToPersistentCartClientInterface;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteRequestClientInterface;
@@ -82,5 +83,13 @@ class QuoteRequestWidgetFactory extends AbstractFactory
     public function getCompanyUserClient(): QuoteRequestWidgetToCompanyUserClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestWidgetDependencyProvider::CLIENT_COMPANY_USER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCustomerClientInterface
+     */
+    public function getCustomerClient(): QuoteRequestWidgetToCustomerClientInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestWidgetDependencyProvider::CLIENT_CUSTOMER);
     }
 }

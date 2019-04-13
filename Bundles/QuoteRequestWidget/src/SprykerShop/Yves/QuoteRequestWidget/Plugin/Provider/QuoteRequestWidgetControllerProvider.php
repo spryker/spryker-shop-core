@@ -12,7 +12,8 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class QuoteRequestWidgetControllerProvider extends AbstractYvesControllerProvider
 {
-    protected const ROUTE_QUOTE_REQUEST_CART = 'quote-request/cart';
+    protected const ROUTE_QUOTE_REQUEST_SAVE_CART = 'quote-request/cart/save';
+    protected const ROUTE_QUOTE_REQUEST_CLEAR_CART = 'quote-request/cart/clear';
 
     /**
      * @param \Silex\Application $app
@@ -21,7 +22,8 @@ class QuoteRequestWidgetControllerProvider extends AbstractYvesControllerProvide
      */
     protected function defineControllers(Application $app): void
     {
-        $this->addQuoteRequestCartRoute();
+        $this->addQuoteRequestSaveCartRoute()
+            ->addQuoteRequestClearCartRoute();
     }
 
     /**
@@ -29,9 +31,23 @@ class QuoteRequestWidgetControllerProvider extends AbstractYvesControllerProvide
      *
      * @return $this
      */
-    protected function addQuoteRequestCartRoute()
+    protected function addQuoteRequestSaveCartRoute()
     {
-        $this->createController('/{quoteRequest}/cart', static::ROUTE_QUOTE_REQUEST_CART, 'QuoteRequestWidget', 'QuoteRequestCart', 'index')
+        $this->createController('/{quoteRequest}/cart/save', static::ROUTE_QUOTE_REQUEST_SAVE_CART, 'QuoteRequestWidget', 'QuoteRequestCart', 'save')
+            ->assert('quote-request', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
+            ->value('quoteRequest', 'quote-request');
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestWidget\Controller\QuoteRequestCartController::clearAction()
+     *
+     * @return $this
+     */
+    protected function addQuoteRequestClearCartRoute()
+    {
+        $this->createController('/{quoteRequest}/cart/clear', static::ROUTE_QUOTE_REQUEST_CLEAR_CART, 'QuoteRequestWidget', 'QuoteRequestCart', 'clear')
             ->assert('quote-request', $this->getAllowedLocalesPattern() . 'quote-request|quote-request')
             ->value('quoteRequest', 'quote-request');
 
