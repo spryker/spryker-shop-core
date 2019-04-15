@@ -70,7 +70,7 @@
                     </p>
                     {% if data.quoteRequest.validUntil %}
                         <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
-                            <b>{{ data.quoteRequest.validUntil | date }}</b>
+                            <b>{{ data.quoteRequest.validUntil | formatDateTime }}</b>
                         </p>
                     {% endif %}
                     <hr>
