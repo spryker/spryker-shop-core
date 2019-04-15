@@ -62,6 +62,8 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductStorageClient($container);
         $container = $this->addPriceProductStorageClient($container);
         $container = $this->addProductQuantityStorageClient($container);
+        $container = $this->addQuickOrderUploadedFileValidatorPlugins($container);
+        $container = $this->addQuickOrderFileTemplatePlugins($container);
 
         return $container;
     }
