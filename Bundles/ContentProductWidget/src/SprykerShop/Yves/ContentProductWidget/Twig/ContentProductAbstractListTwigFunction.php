@@ -20,7 +20,7 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
     protected const FUNCTION_CONTENT_PRODUCT_ABSTRACT_LIST = 'content_product_abstract_list';
 
     protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<b>Content product abstract list with ID %s not found.</b>';
-    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<b>%s could not be rendered for content item with ID %s.</b>';
+    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<b>%s could not be rendered because the content item with ID %s is not an abstract product list.</b>';
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<b>%s is not supported name of template.</b>';
 
     protected const DEFAULT_TEMPLATE_IDENTIFIER = 'default';
