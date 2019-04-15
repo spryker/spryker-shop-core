@@ -44,8 +44,8 @@ class ContentProductAbstractListTwigPluginTest extends Unit
     protected const CONTENT_TERM = 'TERM';
 
     protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<b>Content product abstract list with ID 0 not found.</b>';
-    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<b>content_product_abstract_list could not be rendered because the content item with ID 0 is not an abstract product list.</b>';
-    protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<b>wrong is not supported name of template.</b>';
+    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<b>Content product abstract list widget could not be rendered because the content item with ID 0 is not an abstract product list.</b>';
+    protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<b>"wrong" is not supported name of template.</b>';
     protected const RENDERED_STRING = 'output';
 
     /**
