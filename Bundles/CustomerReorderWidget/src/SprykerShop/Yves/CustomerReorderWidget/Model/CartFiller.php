@@ -79,7 +79,7 @@ class CartFiller implements CartFillerInterface
      */
     protected function groupAllOrderItemsBySku(OrderTransfer $orderTransfer): OrderTransfer
     {
-        $groupedOrderItems = $this->groupItemsBySku($orderTransfer->getItems());
+        $groupedOrderItems = $this->groupItemsByGroupKey($orderTransfer->getItems());
         $orderTransfer->setItems(new ArrayObject($groupedOrderItems));
 
         return $orderTransfer;
@@ -105,7 +105,7 @@ class CartFiller implements CartFillerInterface
     public function fillSelectedFromOrder(OrderTransfer $orderTransfer, array $idOrderItems): void
     {
         $items = $this->itemsFetcher->getByIds($orderTransfer, $idOrderItems);
-        $items = $this->groupItemsBySku($items);
+        $items = $this->groupItemsByGroupKey($items);
 
         $this->updateCart($items, $orderTransfer);
     }
@@ -115,21 +115,21 @@ class CartFiller implements CartFillerInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function groupItemsBySku(iterable $orderItems): array
+    protected function groupItemsByGroupKey(iterable $orderItems): array
     {
         $groupedOrderItems = [];
 
         foreach ($orderItems as $itemTransfer) {
-            if (!array_key_exists($itemTransfer->getSku(), $groupedOrderItems)) {
-                $groupedOrderItems[$itemTransfer->getSku()] = $itemTransfer;
+            if (!array_key_exists($itemTransfer->getGroupKey(), $groupedOrderItems)) {
+                $groupedOrderItems[$itemTransfer->getGroupKey()] = $itemTransfer;
                 continue;
             }
 
             $newQuantity = $this->sumQuantities(
-                $groupedOrderItems[$itemTransfer->getSku()]->getQuantity(),
+                $groupedOrderItems[$itemTransfer->getGroupKey()]->getQuantity(),
                 $itemTransfer->getQuantity()
             );
-            $groupedOrderItems[$itemTransfer->getSku()]->setQuantity($newQuantity);
+            $groupedOrderItems[$itemTransfer->getGroupKey()]->setQuantity($newQuantity);
         }
 
         return $groupedOrderItems;
