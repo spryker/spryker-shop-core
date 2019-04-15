@@ -36,22 +36,7 @@ class FileManagerWidgetControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $this->createFilesController('/download', static::ROUTE_FILES_DOWNLOAD, 'Download');
-    }
-
-    /**
-     * @param string $path
-     * @param string $name
-     * @param string $controllerName
-     * @param string $action
-     *
-     * @return void
-     */
-    protected function createFilesController(string $path, string $name, string $controllerName, $action = 'index')
-    {
-        $urlPath = '/{files}' . $path;
-
-        $this->createController($urlPath, $name, 'FileManagerWidget', $controllerName, $action)
+        $this->createController('/{files}/download', static::ROUTE_FILES_DOWNLOAD, 'FileManagerWidget', 'Download')
             ->assert('files', $this->allowedLocalesPattern . 'files|files')
             ->value('files', 'files');
     }
