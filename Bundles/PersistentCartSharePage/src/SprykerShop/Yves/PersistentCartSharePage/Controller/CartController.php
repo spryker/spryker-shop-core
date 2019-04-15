@@ -29,7 +29,7 @@ class CartController extends AbstractController
             return $response;
         }
 
-        return $this->view($response, [], '@PersistentCartSharePage/views/cart/preview.twig');
+        return $this->view($response, [], '@PersistentCartSharePage/views/cart-preview/cart-preview.twig');
     }
 
     /**
@@ -42,8 +42,15 @@ class CartController extends AbstractController
             ->getPersistentCartShareClient()
             ->getQuoteForPreview($resourceShareUuid);
 
+        $quoteTransfer = $quoteResponceTransfer->getQuoteTransfer();
+        $cartItems = $quoteTransfer->getItems();
+
         return [
-            'quote' => $quoteResponceTransfer->getQuoteTransfer(),
+            'cart' => $quoteTransfer,
+            'isQuoteEditable' => false,
+            'cartItems' => $cartItems,
+            'attributes' => [],
+            'isQuoteValid' => false,
         ];
     }
 }

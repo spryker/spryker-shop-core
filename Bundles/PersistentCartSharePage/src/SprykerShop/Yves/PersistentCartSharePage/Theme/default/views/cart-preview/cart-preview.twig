@@ -1,0 +1,96 @@
+{% extends template('page-layout-cart', 'CartPage') %}
+
+{% define data = {
+    cart: _view.cart,
+    cartItems: _view.cartItems,
+    isQuoteEditable: _view.isQuoteEditable,
+    isQuoteValid: _view.isQuoteValid,
+    request: app.request
+} %}
+
+{% block pageInfo %}
+    <div class="box">
+        {% block breadcrumbs %}{% endblock %}
+        {% block title %}
+            {{ parent() }}
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block emptyCart %}
+    <div class="grid">
+        <div class="col col--sm-12">
+            {{ block('emptyCartMessage') }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block cartItem %}
+    {% embed molecule('cart-item', 'CartPage') with {
+        class: 'box',
+        data: {
+            cart: data.cart,
+            isQuoteEditable: data.isQuoteEditable,
+            cartItem: cartItem,
+            attributes: data.attributes[cartItem.sku] | default([])
+        }
+    } only %}
+        {% block cartItemNote %}
+            {% widget 'CartItemNoteFormWidget' args [data.cartItem, data.cart] only %}
+                {% block body %}
+                    {% set canWrite = false %}
+                    {{ parent() }}
+                {% endblock %}
+            {% elsewidget 'CartNoteQuoteItemWidgetPlugin' args [data.cartItem, data.cart] only %}  {# @deprecated Use CartItemNoteFormWidget instead. #}
+            {% endwidget %}
+        {% endblock %}
+        {% block body %}
+            {% set canEditCart = false %}
+            {{ parent() }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block cartNote %}
+    {% widget 'CartNoteFormWidget' args [data.cart] only %}
+        {% block body %}
+            {% set canWrite = false %}
+            {{ parent() }}
+        {% endblock %}
+    {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %}  {# @deprecated Use CartNoteFormWidget instead. #}
+    {% endwidget %}
+{% endblock %}
+
+{% block cartSummary %}
+    {% embed molecule('cart-summary', 'CartPage') with {
+        data: {
+            cart: data.cart,
+            isQuoteValid: data.isQuoteValid,
+            isQuoteEditable: data.isQuoteEditable,
+        }
+    } only %}
+        {% block body %}
+            {{ block('cartQuantity') }}
+            {% block cartSummaryContent %}
+                {% include molecule('cart-discount-summary', 'DiscountWidget') ignore missing with {
+                    class: 'list spacing-y',
+                    data: {
+                        voucherDiscounts: data.cart.voucherDiscounts,
+                        ruleDiscounts: data.cart.cartRuleDiscounts,
+                        discountTotal: data.cart.totals.discounttotal,
+                        isQuoteEditable: data.isQuoteEditable
+                    }
+                } only %}
+            {% endblock %}
+            {{ block('cartPrice') }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block promotionalItems %}
+    {% widget 'CartDiscountPromotionProductListWidget' args [data.cart, data.request] only %}
+    {% elsewidget 'DiscountPromotionItemListWidgetPlugin' args [data.cart, data.request] only %} {# @deprecated Use CartDiscountPromotionProductListWidget instead. #}
+    {% endwidget %}
+{% endblock %}
+
+{% block cartActions %}{% endblock %}
