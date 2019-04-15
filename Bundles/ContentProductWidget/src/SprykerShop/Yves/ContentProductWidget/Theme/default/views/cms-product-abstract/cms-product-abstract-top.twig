@@ -23,6 +23,10 @@
                                 {{ parent() }}
                             {% endblock %}
 
+                            {% block price %}
+                                {{ parent() }}
+                            {% endblock %}
+
                             {% block image %}
                                 {{ parent() }}
                             {% endblock %}
@@ -41,9 +45,6 @@
                                 {{ parent() }}
                             {% endblock %}
 
-                            {% block price %}
-                                {{ parent() }}
-                            {% endblock %}
                         {% endblock %}
 
                         {% block actionsContainer %}

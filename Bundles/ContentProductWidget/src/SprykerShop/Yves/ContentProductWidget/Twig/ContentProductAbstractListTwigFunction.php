@@ -19,9 +19,9 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
 {
     protected const FUNCTION_CONTENT_PRODUCT_ABSTRACT_LIST = 'content_product_abstract_list';
 
-    protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<!-- Content product abstract list with ID %s not found. -->';
-    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<!-- %s could not be rendered for content item with ID %s. -->';
-    protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<!-- %s is not supported name of template. -->';
+    protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<b>Content product abstract list with ID %s not found.</b>';
+    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<b>%s could not be rendered for content item with ID %s.</b>';
+    protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<b>%s is not supported name of template.</b>';
 
     protected const DEFAULT_TEMPLATE_IDENTIFIER = 'default';
     protected const TOP_TITLE_TEMPLATE_IDENTIFIER = 'top-title';
@@ -72,6 +72,11 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
     public function getFunction(): callable
     {
         return function (int $idContent, string $templateIdentifier): ?string {
+
+            if (!isset($this->getAvailableTemplates()[$templateIdentifier])) {
+                return $this->getMessageProductAbstractWrongTemplate($templateIdentifier);
+            }
+
             try {
                 $productAbstractViewCollection = $this->contentProductAbstractReader
                     ->getProductAbstractCollection($idContent, $this->localeName);
@@ -81,10 +86,6 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
 
             if ($productAbstractViewCollection === null) {
                 return $this->getMessageProductAbstractNotFound($idContent);
-            }
-
-            if (!isset($this->getAvailableTemplates()[$templateIdentifier])) {
-                return $this->getMessageProductAbstractWrongTemplate($templateIdentifier);
             }
 
             return $this->twig->render(
