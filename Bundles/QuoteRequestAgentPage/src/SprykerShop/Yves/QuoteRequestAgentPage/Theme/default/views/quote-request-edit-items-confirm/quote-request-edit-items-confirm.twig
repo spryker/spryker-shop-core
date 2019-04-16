@@ -1,4 +1,4 @@
-{% extends template('page-layout-agent', 'AgentPage') %}
+{% extends template('page-layout-quote-request', 'QuoteRequestAgentPage') %}
 
 {% define data = {
     title: 'quote_request_page.quote_request' | trans,
@@ -35,7 +35,7 @@
     } only %}
 {% endblock %}
 
-{% block content %}
+{% block agentContent %}
 
     <div class="box">
         {{ 'quote_request_page.quote_request.edit_items_confirm' | trans({

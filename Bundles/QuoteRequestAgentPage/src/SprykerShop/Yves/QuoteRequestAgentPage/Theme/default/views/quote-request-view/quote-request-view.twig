@@ -1,4 +1,4 @@
-{% extends template('page-layout-agent', 'AgentPage') %}
+{% extends template('page-layout-quote-request', 'QuoteRequestAgentPage') %}
 
 {% define data = {
     quoteRequests: _view.quoteRequests,
@@ -12,8 +12,6 @@
     },
 
     title: 'agent.account.quote_request' | trans,
-    activePage: 'quote-request',
-    currentBreadcrumb: 'agent.account.quote_request'
 } %}
 
 {% block agentContent %}
