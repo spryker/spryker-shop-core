@@ -32,6 +32,6 @@ class ContentProductWidgetToContentProductClientBridge implements ContentProduct
      */
     public function findContentProductAbstractListType(int $idContent, string $localeName): ?ContentProductAbstractListTypeTransfer
     {
-        return $this->contentProductClient->findContentProductAbstractListType($idContent, $localeName);
+        return $this->contentProductClient->executeProductAbstractListTypeById($idContent, $localeName);
     }
 }
