@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CatalogPage\Twig;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\Twig\TwigExtension;
 use SprykerShop\Yves\CatalogPage\ActiveSearchFilter\UrlGeneratorInterface;
-use Twig_SimpleFunction;
+use Twig\TwigFunction;
 
 class CatalogPageTwigExtension extends TwigExtension
 {
@@ -31,16 +31,16 @@ class CatalogPageTwigExtension extends TwigExtension
     }
 
     /**
-     * @return \Twig_SimpleFunction[]
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction(self::FUNCTION_GET_URL_WITHOUT_ACTIVE_SEARCH_FILTER, [$this, self::FUNCTION_GET_URL_WITHOUT_ACTIVE_SEARCH_FILTER], [
+            new TwigFunction(self::FUNCTION_GET_URL_WITHOUT_ACTIVE_SEARCH_FILTER, [$this, self::FUNCTION_GET_URL_WITHOUT_ACTIVE_SEARCH_FILTER], [
                 'needs_context' => true,
                 'is_safe' => ['html'],
             ]),
-            new Twig_SimpleFunction(self::FUNCTION_GET_URL_WITHOUT_ALL_ACTIVE_SEARCH_FILTERS, [$this, self::FUNCTION_GET_URL_WITHOUT_ALL_ACTIVE_SEARCH_FILTERS], [
+            new TwigFunction(self::FUNCTION_GET_URL_WITHOUT_ALL_ACTIVE_SEARCH_FILTERS, [$this, self::FUNCTION_GET_URL_WITHOUT_ALL_ACTIVE_SEARCH_FILTERS], [
                 'needs_context' => true,
                 'is_safe' => ['html'],
             ]),

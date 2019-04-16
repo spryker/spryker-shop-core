@@ -8,10 +8,10 @@
 namespace SprykerShop\Yves\ShopUi\Twig\TokenParser;
 
 use SprykerShop\Yves\ShopUi\Twig\Node\ShopUiDefineTwigNode;
-use Twig_Token;
-use Twig_TokenParser;
+use Twig\Token;
+use Twig\TokenParser\AbstractTokenParser;
 
-class ShopUiDefineTwigTokenParser extends Twig_TokenParser
+class ShopUiDefineTwigTokenParser extends AbstractTokenParser
 {
     /**
      * @return string
@@ -22,20 +22,20 @@ class ShopUiDefineTwigTokenParser extends Twig_TokenParser
     }
 
     /**
-     * @param \Twig_Token $token
+     * @param \Twig\Token $token
      *
      * @return \SprykerShop\Yves\ShopUi\Twig\Node\ShopUiDefineTwigNode
      */
-    public function parse(Twig_Token $token): ShopUiDefineTwigNode
+    public function parse(Token $token): ShopUiDefineTwigNode
     {
         $parser = $this->parser;
         $stream = $parser->getStream();
-        $name = $stream->expect(Twig_Token::NAME_TYPE)->getValue();
-        $stream->expect(Twig_Token::OPERATOR_TYPE, '=');
+        $name = $stream->expect(Token::NAME_TYPE)->getValue();
+        $stream->expect(Token::OPERATOR_TYPE, '=');
         $value = $parser->getExpressionParser()->parseExpression();
         $line = $token->getLine();
         $tag = $this->getTag();
-        $stream->expect(Twig_Token::BLOCK_END_TYPE);
+        $stream->expect(Token::BLOCK_END_TYPE);
 
         return new ShopUiDefineTwigNode($name, $value, $line, $tag);
     }

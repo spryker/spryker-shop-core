@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CmsContentWidgetChartConnector\Plugin\CmsContentWidge
 use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 use Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
  * @method \SprykerShop\Yves\CmsContentWidgetChartConnector\CmsContentWidgetChartConnectorFactory getFactory()
@@ -39,7 +39,7 @@ class CmsChartContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param array $context
      * @param string $chartPluginName
      * @param string|null $dataIdentifier
@@ -47,7 +47,7 @@ class CmsChartContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
      *
      * @return string
      */
-    public function contentWidgetFunction(Twig_Environment $twig, array $context, $chartPluginName, $dataIdentifier = null, $templateIdentifier = null): string
+    public function contentWidgetFunction(Environment $twig, array $context, $chartPluginName, $dataIdentifier = null, $templateIdentifier = null): string
     {
         $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
         $widgetContainerRegistry->add(

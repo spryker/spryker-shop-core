@@ -1,0 +1,15 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-status',
+} %}
+
+{% define data = {
+    quoteStatus: required
+} %}
+
+{% block body %}
+    {% if data.quoteStatus %}
+        {{ ('quote_approval_widget.cart.status.' ~ data.quoteStatus) | trans }}
+    {% endif %}
+{% endblock %}
