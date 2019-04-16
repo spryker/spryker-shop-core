@@ -100,9 +100,11 @@ class QuoteRequestCartController extends AbstractController
     {
         $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
 
-        if ($quoteTransfer->getQuoteRequestReference()) {
-            $this->reloadQuoteForCustomer();
+        if (!$quoteTransfer->getQuoteRequestReference()) {
+            return $this->redirectResponseInternal(static::ROUTE_CART);
         }
+
+        $this->reloadQuoteForCustomer();
 
         return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
             static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteTransfer->getQuoteRequestReference(),
