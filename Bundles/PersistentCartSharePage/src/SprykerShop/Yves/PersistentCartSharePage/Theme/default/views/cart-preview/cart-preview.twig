@@ -8,6 +8,29 @@
     request: app.request
 } %}
 
+{% block header %}
+    {% embed organism('header') only %}
+        {% block body %}
+            <div class="container">
+                <div class="{{ config.name }}__row grid grid--middle">
+                    {% include molecule('logo') with {
+                        class: 'col col--sm-8 col--lg-4'
+                    } only %}
+                    {% embed organism('navigation-top') with {
+                        class: 'col col--sm-4 col--lg-8 text-right'
+                    } only %}
+                        {% block body %}
+                            <ul class="menu">
+                                <li class="menu__item"><a href="{{ url('login') }}">{{ 'customer.login'|trans }}</a></li>
+                            </ul>
+                        {% endblock %}
+                    {% endembed %}
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
 {% block pageInfo %}
     <div class="box">
         {% block breadcrumbs %}{% endblock %}
@@ -89,6 +112,31 @@
 
 {% block promotionalItems %}
     {% widget 'CartDiscountPromotionProductListWidget' args [data.cart, data.request] only %}
+        {% block product %}
+            {% embed molecule('product-card') with {
+                class: 'col col--sm-12 col--md-6',
+                data: {
+                    name: product.name,
+                    abstractId: product.idProductAbstract,
+                    url: product.url,
+                    imageUrl: (product.images|length ? product.images.0.externalUrlSmall : ''),
+                    price: product.prices.DEFAULT,
+                    originalPrice: (product.prices.ORIGINAL is defined ? product.prices.ORIGINAL : null)
+                },
+                embed: {
+                    sku: product.sku
+                }
+            } only %}
+                {% block cardClass %}box box--stretch{% endblock %}
+                {% block sku %}
+                    <div class="text-secondary">
+                        {{ 'cart.item.sku' | trans }}
+                        {{ embed.sku }}
+                    </div>
+                {% endblock %}
+                {% block actions %}{% endblock %}
+            {% endembed %}
+        {% endblock %}
     {% elsewidget 'DiscountPromotionItemListWidgetPlugin' args [data.cart, data.request] only %} {# @deprecated Use CartDiscountPromotionProductListWidget instead. #}
     {% endwidget %}
 {% endblock %}
