@@ -87,7 +87,7 @@ class CartController extends AbstractController
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param array $optionValueIds
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -190,7 +190,7 @@ class CartController extends AbstractController
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param string|null $groupKey
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -243,7 +243,7 @@ class CartController extends AbstractController
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param array $selectedAttributes
      * @param array $preselectedAttributes
      * @param string|null $groupKey

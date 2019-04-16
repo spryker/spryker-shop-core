@@ -390,7 +390,7 @@ class QuickOrderController extends AbstractController
      */
     public function productAdditionalDataAction(Request $request)
     {
-        $quantity = (int)$request->get('quantity', 1);
+        $quantity = (float)$request->get('quantity');
         $sku = $request->query->get('sku');
         $index = $request->query->get('index');
 

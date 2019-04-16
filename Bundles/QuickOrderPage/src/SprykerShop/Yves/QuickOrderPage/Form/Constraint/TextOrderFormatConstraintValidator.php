@@ -80,7 +80,7 @@ class TextOrderFormatConstraintValidator extends ConstraintValidator
     protected function checkEachRow(array $rows, string $separator): bool
     {
         foreach ($rows as $row) {
-            if (!preg_match("/\w[$separator]\d+$/", $row)) {
+            if (!preg_match("/\w[$separator]\d?[.]?\d+$/", $row)) {
                 return false;
             }
         }
