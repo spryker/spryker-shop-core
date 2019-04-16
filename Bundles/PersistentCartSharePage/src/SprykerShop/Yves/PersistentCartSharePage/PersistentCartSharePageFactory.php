@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\PersistentCartSharePage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\PersistentCartSharePage\Dependency\Client\PersistentCartSharePageToPersistentCartShareClientInterface;
 
 class PersistentCartSharePageFactory extends AbstractFactory
@@ -18,5 +19,13 @@ class PersistentCartSharePageFactory extends AbstractFactory
     public function getPersistentCartShareClient(): PersistentCartSharePageToPersistentCartShareClientInterface
     {
         return $this->getProvidedDependency(PersistentCartSharePageDependencyProvider::CLIENT_PERSISTENT_CART_SHARE);
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\Application
+     */
+    public function getApplication(): Application
+    {
+        return $this->getProvidedDependency(PersistentCartSharePageDependencyProvider::PLUGIN_APPLICATION);
     }
 }

@@ -11,5 +11,18 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 interface PersistentCartSharePageToPersistentCartShareClientInterface
 {
+    /**
+     * Specification:
+     * - Makes Zed-Request.
+     * - Retrieves a quote based on the provided UUID.
+     * - Validates if provided UUID refers to a "preview" type cart share.
+     * - Returns "isSuccess=true" on success and error message otherwise.
+     *
+     * @api
+     *
+     * @param string $resourceShareUuid
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
     public function getQuoteForPreview(string $resourceShareUuid): QuoteResponseTransfer;
 }

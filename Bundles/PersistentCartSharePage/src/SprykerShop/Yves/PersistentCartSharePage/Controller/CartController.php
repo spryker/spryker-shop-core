@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\PersistentCartSharePage\Controller;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -35,12 +36,28 @@ class CartController extends AbstractController
     /**
      * @param string $resourceShareUuid
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
      */
-    protected function executePreviewAction(string $resourceShareUuid, Request $request)
+    protected function executePreviewAction(string $resourceShareUuid, Request $request): array
     {
         $quoteResponceTransfer = $this->getFactory()
             ->getPersistentCartShareClient()
             ->getQuoteForPreview($resourceShareUuid);
+
+        if (!$quoteResponceTransfer->getIsSuccessful()) {
+            foreach ($quoteResponceTransfer->getErrors() as $quoteErrorTransfer) {
+                $this->addErrorMessage($quoteErrorTransfer->getMessage());
+            }
+
+            return [
+                'cart' => new QuoteTransfer(),
+                'isQuoteEditable' => false,
+                'cartItems' => [],
+                'attributes' => [],
+                'isQuoteValid' => false,
+            ];
+        }
 
         $quoteTransfer = $quoteResponceTransfer->getQuoteTransfer();
         $cartItems = $quoteTransfer->getItems();
