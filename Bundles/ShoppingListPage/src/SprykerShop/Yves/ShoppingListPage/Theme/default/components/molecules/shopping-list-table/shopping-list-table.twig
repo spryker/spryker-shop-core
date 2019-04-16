@@ -89,12 +89,18 @@
                     {% endif %}
                 </td>
                 <td class="{{ config.name }}__cell text-center">
-                    <input class="input" {{ isItemAvailable ? '' : 'disabled' }}
-                           type="number"
-                           min="0"
-                           step="0.1"
-                           name="shoppingListItem[quantity][{{ item.idShoppingListItem }}]"
-                           value="{{ item.quantity }}"/>
+                    {% include molecule('quantity-input') with {
+                        inputAttributes: {
+                            name: ('shoppingListItem[quantity][' ~ item.idShoppingListItem ~ ']')
+                        },
+                        data: {
+                            value: item.quantity,
+                            readOnly: not isItemAvailable,
+                            hasUpdateButton: false,
+                            minQuantity: 0.1,
+                            step: 'any'
+                        }
+                    } only %}
                 </td>
                 <td class="{{ config.name }}__cell text-center">
                     {% if isItemAvailable %}
