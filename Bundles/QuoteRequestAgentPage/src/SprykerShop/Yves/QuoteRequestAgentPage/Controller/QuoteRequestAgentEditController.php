@@ -59,6 +59,7 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
     protected function executeSendToCustomerAction(string $quoteRequestReference): RedirectResponse
     {
         $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+            ->setWithHidden(true)
             ->setQuoteRequestReference($quoteRequestReference);
 
         $quoteRequestResponseTransfer = $this->getFactory()
