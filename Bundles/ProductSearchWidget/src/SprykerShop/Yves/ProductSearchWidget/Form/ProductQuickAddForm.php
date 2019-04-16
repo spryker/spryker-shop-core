@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ProductSearchWidget\Form;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
@@ -98,10 +99,10 @@ class ProductQuickAddForm extends AbstractType
      */
     protected function addQuantity(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_QUANTITY, IntegerType::class, [
+        $builder->add(static::FIELD_QUANTITY, NumberType::class, [
                 'required' => true,
                 'label' => false,
-                'attr' => ['min' => 1],
+                'attr' => ['min' => 0, 'step' => 0.1],
                 'constraints' => [
                     $this->createNotBlankConstraint(static::ERROR_MESSAGE_QUANTITY_REQUIRED),
                     $this->createMinLengthConstraint(static::ERROR_MESSAGE_QUANTITY_REQUIRED),
