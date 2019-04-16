@@ -16,9 +16,9 @@ class ContentBannerTwigFunction extends TwigFunction
 {
     protected const TWIG_FUNCTION_NAME_CONTNET_BANNER = 'content_banner';
 
-    protected const MESSAGE_BANNER_NOT_FOUND = '<!-- Content Banner with ID %s not found. -->';
-    protected const MESSAGE_BANNER_WRONG_TYPE = '<!-- %s could not be rendered for content item with ID %s. -->';
-    protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<!-- %s is not supported name of template. -->';
+    protected const MESSAGE_BANNER_NOT_FOUND = '<b> Content Banner with ID %s not found. </b>';
+    protected const MESSAGE_BANNER_WRONG_TYPE = '<b> Content Banner could not be rendered for content item with ID %s.</b>';
+    protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<b> "%s" is not supported name of template. </b>';
 
     protected const TEMPLATE_IDENTIFIER_DEFAULT = 'default';
     protected const TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
@@ -126,6 +126,6 @@ class ContentBannerTwigFunction extends TwigFunction
      */
     protected function getMessageBannerWrongType(int $idContent)
     {
-        return sprintf(static::MESSAGE_BANNER_WRONG_TYPE, static::TWIG_FUNCTION_NAME_CONTNET_BANNER, $idContent);
+        return sprintf(static::MESSAGE_BANNER_WRONG_TYPE, $idContent);
     }
 }
