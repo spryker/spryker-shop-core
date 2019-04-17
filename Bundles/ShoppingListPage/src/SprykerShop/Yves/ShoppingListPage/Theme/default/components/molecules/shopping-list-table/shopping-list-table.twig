@@ -89,18 +89,21 @@
                     {% endif %}
                 </td>
                 <td class="{{ config.name }}__cell text-center">
-                    {% include molecule('quantity-input') with {
-                        inputAttributes: {
-                            name: ('shoppingListItem[quantity][' ~ item.idShoppingListItem ~ ']')
-                        },
-                        data: {
-                            value: item.quantity,
-                            readOnly: not isItemAvailable,
-                            hasUpdateButton: false,
-                            minQuantity: 0.1,
-                            step: 'any'
-                        }
-                    } only %}
+                    {% widget 'ShoppingListItemWidget' args [item, isItemAvailable] only %}
+                    {% nowidget %}
+                        {% include molecule('quantity-input') with {
+                            inputAttributes: {
+                                name: ('shoppingListItem[quantity][' ~ item.idShoppingListItem ~ ']')
+                            },
+                            data: {
+                                value: item.quantity,
+                                readOnly: not isItemAvailable,
+                                hasUpdateButton: false,
+                                minQuantity: 0.1,
+                                step: 'any'
+                            }
+                        } only %}
+                    {% endwidget %}
                 </td>
                 <td class="{{ config.name }}__cell text-center">
                     {% if isItemAvailable %}
