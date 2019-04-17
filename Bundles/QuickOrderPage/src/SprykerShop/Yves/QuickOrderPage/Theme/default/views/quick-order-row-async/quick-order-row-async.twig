@@ -6,7 +6,10 @@
     product: _view.product,
     messages: _view.messages,
     form: _view.form,
-    index: _view.index | default(0)
+    index: _view.index | default(0),
+    minQuantity: _view.minQuantity | default(1),
+    maxQuantity: _view.maxQuantity | default(null),
+    quantityInterval: _view.quantityInterval | default(1)
 } %}
 
 {% block template %}
@@ -17,7 +20,10 @@
             price: data.price,
             additionalColumns: data.additionalColumns,
             messages: data.messages,
-            product: data.product
+            product: data.product,
+            minQuantity: data.minQuantity,
+            maxQuantity: data.maxQuantity,
+            quantityInterval: data.quantityInterval
         }
     } only %}
         {% block component %}

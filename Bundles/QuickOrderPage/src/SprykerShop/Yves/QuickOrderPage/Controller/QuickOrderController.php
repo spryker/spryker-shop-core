@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
@@ -396,7 +397,7 @@ class QuickOrderController extends AbstractController
 
         $quickOrderItemTransfer = (new QuickOrderItemTransfer())->setSku($sku);
 
-        if ($quantity < 1) {
+        if ($quantity < 0) {
             $quantity = 1;
             $this->addMessageToQuickOrderItemTransfer($quickOrderItemTransfer);
         }
@@ -412,6 +413,25 @@ class QuickOrderController extends AbstractController
         $quickOrderItemTransfer->setQuantity($quantity);
         $quickOrderTransfer = $this->getQuickOrderTransfer([$quickOrderItemTransfer]);
         $quickOrderItemTransfer = $quickOrderTransfer->getItems()->offsetGet(0);
+        $productQuantityStorageTransfer = $this->getFactory()
+            ->getProductQuantityStorageClient()
+            ->findProductQuantityStorage($quickOrderItemTransfer->getProductConcrete()->getIdProductConcrete());
+        $availabilityRequestTransfer = new ProductConcreteAvailabilityRequestTransfer();
+        $availabilityRequestTransfer->setSku($sku);
+        $productConcreteAvailabilityTransfer = $this->getFactory()
+            ->getAvailabilityClient()
+            ->findProductConcreteAvailability($availabilityRequestTransfer);
+
+        $minQuantity = $this->getFactory()
+            ->createQuantityRestrictionReader()
+            ->getMinQuantity($productQuantityStorageTransfer);
+        $maxQuantity = $this->getFactory()
+            ->createQuantityRestrictionReader()
+            ->getMaxQuantity($productQuantityStorageTransfer, $productConcreteAvailabilityTransfer);
+        $quantityInterval = $this->getFactory()
+            ->createQuantityRestrictionReader()
+            ->getQuantityInterval($productQuantityStorageTransfer);
+
         $form = $this->getFactory()
             ->createQuickOrderFormFactory()
             ->getQuickOrderItemEmbeddedForm($quickOrderItemTransfer);
@@ -430,6 +450,9 @@ class QuickOrderController extends AbstractController
             'form' => $form->createView(),
             'messages' => $quickOrderItemTransfer->getMessages(),
             'index' => $index,
+            'minQuantity' => $minQuantity,
+            'maxQuantity' => $maxQuantity,
+            'quantityInterval' => $quantityInterval,
         ];
 
         return $this->view(

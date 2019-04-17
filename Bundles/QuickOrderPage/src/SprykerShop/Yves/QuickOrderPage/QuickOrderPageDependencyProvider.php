@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\QuickOrderPage;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
+use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToAvailabilityClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToPriceProductStorageClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientBridge;
@@ -29,6 +30,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_PRODUCT_QUANTITY_STORAGE = 'CLIENT_PRODUCT_QUANTITY_STORAGE';
     public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const CLIENT_AVAILABILITY = 'CLIENT_AVAILABILITY';
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGINS_QUICK_ORDER_PAGE_WIDGETS = 'PLUGINS_QUICK_ORDER_PAGE_WIDGETS';
     public const PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER = 'PLUGINS_QUICK_ORDER_ITEM_TRANSFER_EXPANDER';
@@ -64,6 +66,23 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductQuantityStorageClient($container);
         $container = $this->addQuickOrderUploadedFileValidatorPlugins($container);
         $container = $this->addQuickOrderFileTemplatePlugins($container);
+        $container = $this->addAvailabilityClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addAvailabilityClient(Container $container): Container
+    {
+        $container[static::CLIENT_AVAILABILITY] = function (Container $container) {
+            return new QuickOrderPageToAvailabilityClientBridge(
+                $container->getLocator()->availability()->client()
+            );
+        };
 
         return $container;
     }

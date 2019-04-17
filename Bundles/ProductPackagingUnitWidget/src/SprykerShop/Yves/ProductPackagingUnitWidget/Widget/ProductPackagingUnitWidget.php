@@ -135,13 +135,13 @@ class ProductPackagingUnitWidget extends AbstractWidget
 
     /**
      * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null $productConcreteAvailabilityTransfer
      *
      * @return float|null
      */
     protected function getMaxQuantity(
         ?ProductQuantityStorageTransfer $productQuantityStorageTransfer,
-        ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+        ?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
     ): ?float {
         if ($productConcreteAvailabilityTransfer === null) {
             return 0;
