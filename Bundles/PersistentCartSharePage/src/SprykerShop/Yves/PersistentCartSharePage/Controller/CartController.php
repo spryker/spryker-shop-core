@@ -26,10 +26,6 @@ class CartController extends AbstractController
     {
         $response = $this->executePreviewAction($resourceShareUuid, $request);
 
-        if (!is_array($response)) {
-            return $response;
-        }
-
         return $this->view($response, [], '@PersistentCartSharePage/views/cart-preview/cart-preview.twig');
     }
 
@@ -41,26 +37,17 @@ class CartController extends AbstractController
      */
     protected function executePreviewAction(string $resourceShareUuid, Request $request): array
     {
-        $quoteResponceTransfer = $this->getFactory()
+        $quoteResponseTransfer = $this->getFactory()
             ->getPersistentCartShareClient()
             ->getQuoteForPreview($resourceShareUuid);
 
-        if (!$quoteResponceTransfer->getIsSuccessful()) {
-            foreach ($quoteResponceTransfer->getErrors() as $quoteErrorTransfer) {
-                $this->addErrorMessage($quoteErrorTransfer->getMessage());
-            }
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
 
-            return [
-                'cart' => new QuoteTransfer(),
-                'isQuoteEditable' => false,
-                'cartItems' => [],
-                'attributes' => [],
-                'isQuoteValid' => false,
-            ];
+        if (!$quoteTransfer) {
+            $quoteTransfer = new QuoteTransfer();
         }
 
-        $quoteTransfer = $quoteResponceTransfer->getQuoteTransfer();
-        $cartItems = $quoteTransfer->getItems();
+        $cartItems = $quoteTransfer->getItems() ?? [];
 
         return [
             'cart' => $quoteTransfer,
@@ -68,6 +55,7 @@ class CartController extends AbstractController
             'cartItems' => $cartItems,
             'attributes' => [],
             'isQuoteValid' => false,
+            'errors' => $quoteResponseTransfer->getErrors(),
         ];
     }
 }
