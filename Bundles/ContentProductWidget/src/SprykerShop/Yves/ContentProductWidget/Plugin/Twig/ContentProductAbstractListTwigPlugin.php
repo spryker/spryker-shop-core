@@ -19,7 +19,6 @@ class ContentProductAbstractListTwigPlugin extends AbstractPlugin implements Twi
 {
     /**
      * {@inheritdoc}
-     *
      * - The plugin displays a content product abstract list.
      *
      * @api
