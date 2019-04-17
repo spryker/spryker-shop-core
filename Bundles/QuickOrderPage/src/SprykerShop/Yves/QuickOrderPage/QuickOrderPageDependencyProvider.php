@@ -67,6 +67,7 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuickOrderUploadedFileValidatorPlugins($container);
         $container = $this->addQuickOrderFileTemplatePlugins($container);
         $container = $this->addAvailabilityClient($container);
+        $container = $this->addQuickOrderUploadedFileParserPlugins($container);
 
         return $container;
     }
