@@ -21,6 +21,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker-shop/quote-request-agent-page": "Use this module if you want see quote request agent pages.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

@@ -30,7 +30,7 @@
                 {{ data.cartItem.sku }}
             </small>
 
-            {% include molecule('quote-request-item-summary', 'CartPage') with {
+            {% include molecule('quote-request-item-summary', 'QuoteRequestPage') with {
                 data: {
                     priceMode: data.priceMode,
                     unitPrice: data.cartItem.unitPrice | money(true, data.currency.code),

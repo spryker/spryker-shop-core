@@ -3,7 +3,7 @@ Displays product summary information: price, price for different options, total 
 ## Code sample
 
 ```
-{% include molecule('quote-request-item-summary', 'CartPage') with {
+{% include molecule('quote-request-item-summary', 'QuoteRequestPage') with {
     data: {
         priceMode: 'priceMode',
         unitPrice: 'unitPrice',

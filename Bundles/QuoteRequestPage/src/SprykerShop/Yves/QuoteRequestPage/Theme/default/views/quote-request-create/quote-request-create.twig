@@ -81,7 +81,7 @@
                     </div>
                 {% endif %}
                 {% for cartItem in quote.items %}
-                    {% include molecule('quote-request-cart-item', 'CartPage') with {
+                    {% include molecule('quote-request-cart-item', 'QuoteRequestPage') with {
                         class: 'box',
                         data: {
                             priceMode: quote.priceMode,
@@ -94,7 +94,7 @@
 
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
-                    {% include molecule('quote-request-cart-summary', 'CartPage') with {
+                    {% include molecule('quote-request-cart-summary', 'QuoteRequestPage') with {
                         data: {
                             cart: quote
                         }
