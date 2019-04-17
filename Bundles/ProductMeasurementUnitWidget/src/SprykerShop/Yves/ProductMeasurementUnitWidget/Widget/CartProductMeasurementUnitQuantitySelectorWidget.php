@@ -8,6 +8,9 @@
 namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Widget;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -23,6 +26,58 @@ class CartProductMeasurementUnitQuantitySelectorWidget extends AbstractWidget
         $this->addParameter('itemTransfer', $itemTransfer)
             ->addParameter('isBaseUnit', $this->isBaseUnit($itemTransfer))
             ->addParameter('hasSalesUnit', $this->hasSalesUnit($itemTransfer));
+        $this->setQuantityRestrictions($itemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function setQuantityRestrictions(ItemTransfer $itemTransfer): void
+    {
+        $productQuantityStorageTransfer = $this->getProductQuantityStorageTransfer($itemTransfer);
+        $productConcreteAvailabilityTransfer = $this->getProductConcreteAvailabilityTransfer($itemTransfer);
+        $minQuantity = $this->getFactory()
+            ->createQuantityRestrictionReader()
+            ->getMinQuantity($productQuantityStorageTransfer);
+        $maxQuantity = $this->getFactory()
+            ->createQuantityRestrictionReader()
+            ->getMaxQuantity($productQuantityStorageTransfer, $productConcreteAvailabilityTransfer);
+        $quantityInterval = $this->getFactory()
+            ->createQuantityRestrictionReader()
+            ->getQuantityInterval($productQuantityStorageTransfer);
+
+        $this->addParameter('minQuantity', $minQuantity)
+            ->addParameter('maxQuantity', $maxQuantity)
+            ->addParameter('quantityInterval', $quantityInterval);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
+     */
+    protected function getProductQuantityStorageTransfer(ItemTransfer $itemTransfer): ?ProductQuantityStorageTransfer
+    {
+        return $this->getFactory()
+            ->getProductQuantityStorageClient()
+            ->findProductQuantityStorage($itemTransfer->getId());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     */
+    protected function getProductConcreteAvailabilityTransfer(ItemTransfer $itemTransfer): ?ProductConcreteAvailabilityTransfer
+    {
+        $productConcreteAvailabilityRequestTransfer = new ProductConcreteAvailabilityRequestTransfer();
+        $productConcreteAvailabilityRequestTransfer->setSku($itemTransfer->getSku());
+
+        return $this->getFactory()
+            ->getAvailabilityClient()
+            ->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
     }
 
     /**

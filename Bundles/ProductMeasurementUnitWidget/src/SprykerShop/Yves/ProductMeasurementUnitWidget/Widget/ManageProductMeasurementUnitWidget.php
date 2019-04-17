@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Widget;
 
+use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -27,6 +29,7 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
         $idBaseUnit = null;
         $baseUnit = null;
         $productQuantityStorageTransfer = null;
+        $productConcreteAvailabilityTransfer = null;
 
         if ($productViewTransfer->getIdProductConcrete()) {
             $baseUnit = $this->getFactory()
@@ -44,6 +47,12 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
             $productConcreteMeasurementUnitStorageTransfer = $this->getFactory()
                 ->getProductMeasurementUnitStorageClient()
                 ->findProductConcreteMeasurementUnitStorage($productViewTransfer->getIdProductConcrete());
+            $productConcreteAvailabilityRequestTransfer = new ProductConcreteAvailabilityRequestTransfer();
+            $productConcreteAvailabilityRequestTransfer->setSku($productViewTransfer->getSku());
+
+            $productConcreteAvailabilityTransfer = $this->getFactory()
+                ->getAvailabilityClient()
+                ->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
 
             if ($productConcreteMeasurementUnitStorageTransfer !== null) {
                 $idBaseUnit = $productConcreteMeasurementUnitStorageTransfer->getBaseUnit()->getIdProductMeasurementBaseUnit();
@@ -69,6 +78,32 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
                     $productQuantityStorageTransfer
                 )
             );
+        $this->setQuantityRestrictions($productQuantityStorageTransfer, $productConcreteAvailabilityTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null $productConcreteAvailabilityTransfer
+     *
+     * @return void
+     */
+    protected function setQuantityRestrictions(
+        ?ProductQuantityStorageTransfer $productQuantityStorageTransfer,
+        ?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+    ): void {
+        $minQuantity = $this->getFactory()
+            ->createQuantityRestrictionReader()
+            ->getMinQuantity($productQuantityStorageTransfer);
+        $maxQuantity = $this->getFactory()
+            ->createQuantityRestrictionReader()
+            ->getMaxQuantity($productQuantityStorageTransfer, $productConcreteAvailabilityTransfer);
+        $quantityInterval = $this->getFactory()
+            ->createQuantityRestrictionReader()
+            ->getQuantityInterval($productQuantityStorageTransfer);
+
+        $this->addParameter('minQuantity', $minQuantity)
+            ->addParameter('maxQuantity', $maxQuantity)
+            ->addParameter('quantityInterval', $quantityInterval);
     }
 
     /**

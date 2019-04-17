@@ -11,7 +11,9 @@
     jsonScheme: _widget.jsonScheme | default(''),
     salesUnitCount : _widget.salesUnits|length,
     isAddToCartDisabled : _widget.isAddToCartDisabled | default(false),
-    minQuantity: 1
+    minQuantity: _widget.minQuantity,
+    maxQuantity: _widget.maxQuantity,
+    quantityInterrval: _widget.quantityInterval
 } %}
 
 {% set hasProductMeasurementUnit = data.salesUnitCount >= 1 %}
@@ -38,10 +40,19 @@
                 {{ 'cart.item_quantity' | trans }}
 
                 {% if hasProductMeasurementUnit %}
-                    <input id="sales-unit-quantity" class="input input--expand js-volume-price__quantity" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value"/>
+                    <input id="sales-unit-quantity" class="input input--expand js-volume-price__quantity" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value"
+                           min="{{ data.minQuantityInSalesUnits }}"
+                           max="{{ data.maxQuantity }}"
+                           step="{{ data.quantityInterval }}"
+                    />
                     <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
                 {% else %}
-                    <input class="input js-volume-price__quantity" name="quantity" value="{{ data.minQuantity }}"/>
+                    <input class="input js-volume-price__quantity" name="quantity"
+                           value="{{ data.minQuantity }}"
+                           min="{{ data.minQuantity }}"
+                           max="{{ data.maxQuantity }}"
+                           step="{{ data.quantityInterval }}"
+                    />
                 {% endif %}
             </label>
         </div>

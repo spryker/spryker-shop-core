@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ProductPackagingUnitWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToAvailabilityClientInterface;
 use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToProductMeasurementUnitStorageClientInterface;
 use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToProductPackagingUnitStorageClientInterface;
 use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToProductQuantityStorageClientInterface;
@@ -45,5 +46,13 @@ class ProductPackagingUnitWidgetFactory extends AbstractFactory
     public function getUtilEncodingService(): ProductPackagingUnitWidgetToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ProductPackagingUnitWidgetDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToAvailabilityClientInterface
+     */
+    public function getAvailabilityClient(): ProductPackagingUnitWidgetToAvailabilityClientInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitWidgetDependencyProvider::CLIENT_AVAILABILITY);
     }
 }
