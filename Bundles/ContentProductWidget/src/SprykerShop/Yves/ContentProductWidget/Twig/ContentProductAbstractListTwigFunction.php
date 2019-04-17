@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ContentProductWidget\Twig;
 
-use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException;
+use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTermException;
 use Spryker\Shared\Twig\TwigFunction;
 use SprykerShop\Yves\ContentProductWidget\Reader\ContentProductAbstractReaderInterface;
 use Twig\Environment;
@@ -19,9 +19,9 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
 {
     protected const FUNCTION_CONTENT_PRODUCT_ABSTRACT_LIST = 'content_product_abstract_list';
 
-    protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<b>Content product abstract list with ID %s not found.</b>';
-    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<b>Content product abstract list widget could not be rendered because the content item with ID %s is not an abstract product list.</b>';
-    protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<b>"%s" is not supported name of template.</b>';
+    protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<strong>Content product abstract list with ID %s not found.</strong>';
+    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<strong>Content product abstract list widget could not be rendered because the content item with ID %s is not an abstract product list.</strong>';
+    protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"%s" is not supported name of template.</strong>';
 
     protected const DEFAULT_TEMPLATE_IDENTIFIER = 'default';
     protected const TOP_TITLE_TEMPLATE_IDENTIFIER = 'top-title';
@@ -79,8 +79,8 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
 
             try {
                 $productAbstractViewCollection = $this->contentProductAbstractReader
-                    ->getProductAbstractCollection($idContent, $this->localeName);
-            } catch (InvalidProductAbstractListTypeException $exception) {
+                    ->findProductAbstractCollection($idContent, $this->localeName);
+            } catch (InvalidProductAbstractListTermException $exception) {
                 return $this->getMessageProductAbstractWrongType($idContent);
             }
 
@@ -135,6 +135,6 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
      */
     protected function getMessageProductAbstractWrongType(int $idContent): string
     {
-        return sprintf(static::MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE, static::FUNCTION_CONTENT_PRODUCT_ABSTRACT_LIST, $idContent);
+        return sprintf(static::MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE, $idContent);
     }
 }

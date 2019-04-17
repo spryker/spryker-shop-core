@@ -25,14 +25,14 @@ class ContentProductWidgetToProductStorageClientBridge implements ContentProduct
     }
 
     /**
-     * @param int[] $idProductAbstracts
+     * @param int $idProductAbstract
      * @param string $localeName
      *
-     * @return array
+     * @return array|null
      */
-    public function getProductAbstractCollection(array $idProductAbstracts, string $localeName): array
+    public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
     {
-        return $this->productStorageClient->getProductAbstractCollection($idProductAbstracts, $localeName);
+        return $this->productStorageClient->findProductAbstractStorageData($idProductAbstract, $localeName);
     }
 
     /**

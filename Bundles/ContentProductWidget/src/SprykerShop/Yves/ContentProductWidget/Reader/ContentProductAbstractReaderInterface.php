@@ -15,5 +15,5 @@ interface ContentProductAbstractReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]|null
      */
-    public function getProductAbstractCollection(int $idContent, string $localeName): ?array;
+    public function findProductAbstractCollection(int $idContent, string $localeName): ?array;
 }

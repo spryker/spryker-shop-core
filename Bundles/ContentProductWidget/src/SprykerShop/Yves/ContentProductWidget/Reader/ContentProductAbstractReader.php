@@ -40,18 +40,17 @@ class ContentProductAbstractReader implements ContentProductAbstractReaderInterf
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]|null
      */
-    public function getProductAbstractCollection(int $idContent, string $localeName): ?array
+    public function findProductAbstractCollection(int $idContent, string $localeName): ?array
     {
         $productAbstractViewCollection = [];
-        $contentProductAbstractListTypeTransfer = $this->contentProductClient->findContentProductAbstractListType($idContent, $localeName);
+        $contentProductAbstractListTypeTransfer = $this->contentProductClient->executeProductAbstractListTypeById($idContent, $localeName);
 
         if ($contentProductAbstractListTypeTransfer === null) {
             return null;
         }
 
-        $productAbstractCollection = $this->productStorageClient->getProductAbstractCollection($contentProductAbstractListTypeTransfer->getIdProductAbstracts(), $localeName);
-
-        foreach ($productAbstractCollection as $productAbstract) {
+        foreach ($contentProductAbstractListTypeTransfer->getIdProductAbstracts() as $idProductAbstract) {
+            $productAbstract = $this->productStorageClient->findProductAbstractStorageData($idProductAbstract, $localeName);
             $productAbstractViewCollection[] = $this->productStorageClient->mapProductAbstractStorageData($productAbstract, $localeName);
         }
 

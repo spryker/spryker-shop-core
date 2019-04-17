@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer;
 use Generated\Shared\Transfer\ContentTypeContextTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use ReflectionClassConstant;
-use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException;
+use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTermException;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\ContentProductWidget\ContentProductWidgetDependencyProvider;
@@ -43,9 +43,9 @@ class ContentProductAbstractListTwigPluginTest extends Unit
     protected const CONTENT_ID = 0;
     protected const CONTENT_TERM = 'TERM';
 
-    protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<b>Content product abstract list with ID 0 not found.</b>';
-    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<b>Content product abstract list widget could not be rendered because the content item with ID 0 is not an abstract product list.</b>';
-    protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<b>"wrong" is not supported name of template.</b>';
+    protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<strong>Content product abstract list with ID 0 not found.</strong>';
+    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<strong>Content product abstract list widget could not be rendered because the content item with ID 0 is not an abstract product list.</strong>';
+    protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"wrong" is not supported name of template.</strong>';
     protected const RENDERED_STRING = 'output';
 
     /**
@@ -135,7 +135,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
     protected function setContentProductClientException(): void
     {
         $contentProductWidgetToContentProductClientBridge = $this->getMockBuilder(ContentProductWidgetToContentProductClientBridgeInterface::class)->getMock();
-        $contentProductWidgetToContentProductClientBridge->method('findContentProductAbstractListType')->willThrowException(new InvalidProductAbstractListTypeException());
+        $contentProductWidgetToContentProductClientBridge->method('executeProductAbstractListTypeById')->willThrowException(new InvalidProductAbstractListTermException());
         $this->tester->setDependency(ContentProductWidgetDependencyProvider::CLIENT_CONTENT_PRODUCT, $contentProductWidgetToContentProductClientBridge);
     }
 
@@ -147,7 +147,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
     protected function setContentProductClientReturn(?ContentProductAbstractListTypeTransfer $contentTypeContextTransfer = null): void
     {
         $contentProductWidgetToContentProductClientBridge = $this->getMockBuilder(ContentProductWidgetToContentProductClientBridgeInterface::class)->getMock();
-        $contentProductWidgetToContentProductClientBridge->method('findContentProductAbstractListType')->willReturn($contentTypeContextTransfer);
+        $contentProductWidgetToContentProductClientBridge->method('executeProductAbstractListTypeById')->willReturn($contentTypeContextTransfer);
         $this->tester->setDependency(ContentProductWidgetDependencyProvider::CLIENT_CONTENT_PRODUCT, $contentProductWidgetToContentProductClientBridge);
     }
 
@@ -157,7 +157,7 @@ class ContentProductAbstractListTwigPluginTest extends Unit
     protected function setProductStorageClientReturn(): void
     {
         $contentProductWidgetToProductStorageClientBridge = $this->getMockBuilder(ContentProductWidgetToProductStorageClientBridgeInterface::class)->getMock();
-        $contentProductWidgetToProductStorageClientBridge->method('getProductAbstractCollection')->willReturn([[]]);
+        $contentProductWidgetToProductStorageClientBridge->method('findProductAbstractStorageData')->willReturn([]);
         $contentProductWidgetToProductStorageClientBridge->method('mapProductAbstractStorageData')->willReturn(new ProductViewTransfer());
         $this->tester->setDependency(ContentProductWidgetDependencyProvider::CLIENT_PRODUCT_STORAGE, $contentProductWidgetToProductStorageClientBridge);
     }
