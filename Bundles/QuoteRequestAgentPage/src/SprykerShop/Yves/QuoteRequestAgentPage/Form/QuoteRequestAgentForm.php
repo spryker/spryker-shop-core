@@ -83,10 +83,16 @@ class QuoteRequestAgentForm extends AbstractType
      */
     protected function addValidUntilField(FormBuilderInterface $builder)
     {
+        $currentStoreTimezone = $this->getFactory()
+            ->getStoreClient()
+            ->getCurrentStore()
+            ->getTimezone();
+
         $builder->add(QuoteRequestTransfer::VALID_UNTIL, DateTimeType::class, [
             'label' => false,
             'widget' => 'single_text',
             'required' => false,
+            'view_timezone' => $currentStoreTimezone,
             'attr' => [
                 'class' => 'datepicker safe-datetime',
             ],
