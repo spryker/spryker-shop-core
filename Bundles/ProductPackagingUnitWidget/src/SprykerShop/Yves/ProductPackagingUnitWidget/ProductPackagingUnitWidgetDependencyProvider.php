@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ProductPackagingUnitWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToAvailabilityClientBridge;
 use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToProductMeasurementUnitStorageClientBridge;
 use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToProductPackagingUnitStorageClientBridge;
 use SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client\ProductPackagingUnitWidgetToProductQuantityStorageClientBridge;
@@ -20,6 +21,7 @@ class ProductPackagingUnitWidgetDependencyProvider extends AbstractBundleDepende
     public const CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE = 'CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE';
     public const CLIENT_PRODUCT_QUANTITY_STORAGE = 'CLIENT_PRODUCT_QUANTITY_STORAGE';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const CLIENT_AVAILABILITY = 'CLIENT_AVAILABILITY';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -32,6 +34,23 @@ class ProductPackagingUnitWidgetDependencyProvider extends AbstractBundleDepende
         $container = $this->addProductMeasurementUnitStorageClient($container);
         $container = $this->addProductQuantityStorageClient($container);
         $container = $this->addEncodeService($container);
+        $container = $this->addAvailabilityClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addAvailabilityClient(Container $container): Container
+    {
+        $container[static::CLIENT_AVAILABILITY] = function (Container $container) {
+            return new ProductPackagingUnitWidgetToAvailabilityClientBridge(
+                $container->getLocator()->availability()->client()
+            );
+        };
 
         return $container;
     }

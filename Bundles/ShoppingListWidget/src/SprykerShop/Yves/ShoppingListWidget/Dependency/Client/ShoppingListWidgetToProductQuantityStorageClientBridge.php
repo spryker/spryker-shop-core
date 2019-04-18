@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
+namespace SprykerShop\Yves\ShoppingListWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 
-class QuickOrderPageToProductQuantityStorageClientBridge implements QuickOrderPageToProductQuantityStorageClientInterface
+class ShoppingListWidgetToProductQuantityStorageClientBridge implements ShoppingListWidgetToProductQuantityStorageClientInterface
 {
     /**
      * @var \Spryker\Client\ProductQuantityStorage\ProductQuantityStorageClientInterface
@@ -22,17 +22,6 @@ class QuickOrderPageToProductQuantityStorageClientBridge implements QuickOrderPa
     public function __construct($productQuantityStorageClient)
     {
         $this->productQuantityStorageClient = $productQuantityStorageClient;
-    }
-
-    /**
-     * @param int $idProduct
-     * @param float $quantity
-     *
-     * @return float
-     */
-    public function getNearestQuantity(int $idProduct, float $quantity): float
-    {
-        return $this->productQuantityStorageClient->getNearestQuantity($idProduct, $quantity);
     }
 
     /**
