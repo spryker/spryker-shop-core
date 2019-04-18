@@ -36,25 +36,38 @@
 
     <div class="grid grid--bottom grid--justify">
         <div class="col {% if hasProductMeasurementUnit %}col--sm-7{% else %}col--sm-5{% endif %}">
-            <label>
-                {{ 'cart.item_quantity' | trans }}
-
                 {% if hasProductMeasurementUnit %}
-                    <input id="sales-unit-quantity" class="input input--expand js-volume-price__quantity" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value"
-                           min="{{ data.minQuantityInSalesUnits }}"
-                           max="{{ data.maxQuantity }}"
-                           step="{{ data.quantityInterval }}"
-                    />
+                    {% include molecule('quantity-input') with {
+                        inputAttributes: {
+                            name: 'sales-unit-value',
+                            id: 'sales-unit-quantity',
+                            class: 'input input--expand js-volume-price__quantity'
+                        },
+                        data: {
+                            value: data.minQuantityInSalesUnits,
+                            readOnly: data.isAddToCartDisabled,
+                            hasUpdateButton: false,
+                            minQuantity: data.minQuantity
+                            maxQuantity: data.maxQuantity,
+                            step: data.quantityInterval
+                        }
+                    } only %}
                     <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
                 {% else %}
-                    <input class="input js-volume-price__quantity" name="quantity"
-                           value="{{ data.minQuantity }}"
-                           min="{{ data.minQuantity }}"
-                           max="{{ data.maxQuantity }}"
-                           step="{{ data.quantityInterval }}"
-                    />
+                    {% include molecule('quantity-input') with {
+                        inputAttributes: {
+                            class: 'input js-volume-price__quantity'
+                        },
+                        data: {
+                            value: data.minQuantity,
+                            readOnly: data.isAddToCartDisabled,
+                            hasUpdateButton: false,
+                            minQuantity: data.minQuantity
+                            maxQuantity: data.maxQuantity,
+                            step: data.quantityInterval
+                        }
+                    } only %}
                 {% endif %}
-            </label>
         </div>
 
         <div class="col {% if hasProductMeasurementUnit %}col--sm-4{% else %}col--sm-6{% endif %}">

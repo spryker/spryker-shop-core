@@ -7,15 +7,13 @@
 
 {% define data = {
     product: required,
-    maxQuantity: 10,
-    minQuantity: 1,
-    value: 1,
-    step: 1
+    maxQuantity: 10
 } %}
 
 {% set brand = data.product.attributes.brand | default %}
 {% set sku = data.product.sku %}
 {% set availabilityWidget = '' %}
+{% set isProductAbstract = data.product.idProductConcrete is empty %}
 {% set isDisabled = data.product.idProductConcrete is empty or data.product.price is empty %}
 {% set isProductAvailable = true %}
 
@@ -93,19 +91,14 @@
             {% nowidget %}
                 <div class="grid grid--bottom grid--justify">
                     <div class="col col--sm-5">
-                        <label>
-                            {{'cart.item_quantity' | trans}}
-
-                            <input class="input input--expand"
-                                   type="number"
-                                   value="{{ data.value }}"
-                                   min="{{ data.minQuantity }}"
-                                   max="{{ data.maxQuantity }}"
-                                   step="{{ data.step }}"
-                                   name="quantity"
-                                    {{ isDisabled ? 'disabled' : '' }}
-                            />
-                        </label>
+                        {% include molecule('quantity-input') with {
+                            data: {
+                                value: data.value,
+                                readOnly: isDisabled,
+                                hasUpdateButton: false,
+                                maxQuantity: data.maxQuantity
+                            }
+                        } only %}
                     </div>
 
                     <div class="col col--sm-6">
@@ -137,6 +130,10 @@
             } only %}
         {% endif %}
     </form>
+
+    {% if not isAvailable and not isProductAbstract %}
+        {% widget 'AvailabilityNotificationSubscriptionWidget' args [data.product] only %}{% endwidget %}
+    {% endif %}
 
     {% if can('SeeShoppingListPermissionPlugin') and isProductAvailable %}
         {% widget 'AddToShoppingListWidget' args [sku, isDisabled] only %}

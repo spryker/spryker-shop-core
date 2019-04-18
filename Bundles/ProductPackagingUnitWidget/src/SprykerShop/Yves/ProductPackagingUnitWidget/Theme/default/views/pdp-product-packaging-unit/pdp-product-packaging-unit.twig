@@ -40,19 +40,36 @@
             {{ 'cart.item_quantity' | trans }}
 
             {% if data.salesUnitCount %}
-                <input id="sales-unit-quantity" class="input input--expand js-volume-price__quantity" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-quantity"
-                       min="{{ data.minQuantityInSalesUnits }}"
-                       max="{{ data.maxQuantity }}"
-                       step="{{ data.quantityInterval }}"
-                />
+                {% include molecule('quantity-input') with {
+                    inputAttributes: {
+                        name: 'sales-unit-value',
+                        id: 'sales-unit-quantity',
+                        class: 'input input--expand js-volume-price__quantity'
+                    },
+                    data: {
+                        value: data.minQuantityInSalesUnits,
+                        readOnly: data.isAddToCartDisabled,
+                        hasUpdateButton: false,
+                        minQuantity: data.minQuantity,
+                        maxQuantity: data.maxQuantity,
+                        step: data.quantityInterval
+                    }
+                } only %}
                 <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnit }}" name="quantity"/>
             {% else %}
-                <input type="number" class="input js-volume-price__quantity" name="quantity"
-                       value="{{ data.minQuantity }}"
-                       min="{{ data.minQuantity }}"
-                       max="{{ data.maxQuantity }}"
-                       step="{{ data.quantityInterval }}"
-                />
+                {% include molecule('quantity-input') with {
+                    inputAttributes: {
+                        class: 'input js-volume-price__quantity'
+                    },
+                    data: {
+                        value: data.minQuantity,
+                        readOnly: data.isAddToCartDisabled,
+                        hasUpdateButton: false,
+                        minQuantity: data.minQuantity,
+                        maxQuantity: data.maxQuantity,
+                        step: data.quantityInterval
+                    }
+                } only %}
             {% endif %}
         </div>
 
