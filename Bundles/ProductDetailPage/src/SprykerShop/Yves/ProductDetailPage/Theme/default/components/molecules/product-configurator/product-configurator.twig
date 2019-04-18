@@ -7,7 +7,7 @@
 
 {% define data = {
     product: required,
-    minQuantity: 1
+    maxQuantity: 10
 } %}
 
 {% set brand = data.product.attributes.brand | default %}
@@ -91,14 +91,17 @@
             {% nowidget %}
                 <div class="grid grid--bottom grid--justify">
                     <div class="col col--sm-5">
-                        <label>
-                            {{'cart.item_quantity' | trans}}
-                            <input class="input js-volume-price__quantity" name="quantity" value="{{ data.minQuantity }}" {% if isDisabled %}disabled="disabled"{% endif %}/>
-                        </label>
+                        {% include molecule('quantity-input') with {
+                            data: {
+                                readOnly: isDisabled,
+                                hasUpdateButton: false,
+                                maxQuantity: data.maxQuantity
+                            }
+                        } only %}
                     </div>
 
                     <div class="col col--sm-6">
-                        <button type="submit" class="button button--success button--expand" data-init-single-click {{ isDisabled ? 'disabled' : '' }} {{qa('add-to-cart-button')}}>
+                        <button type="submit" class="button button--success button--expand" {{ isDisabled ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;" {{qa('add-to-cart-button')}}>
                             {% include atom('icon') with {
                                 data: {
                                     name: 'cart-plus'

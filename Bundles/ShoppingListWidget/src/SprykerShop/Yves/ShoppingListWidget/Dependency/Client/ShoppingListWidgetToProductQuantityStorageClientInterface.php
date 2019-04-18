@@ -5,20 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
+namespace SprykerShop\Yves\ShoppingListWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 
-interface QuickOrderPageToProductQuantityStorageClientInterface
+interface ShoppingListWidgetToProductQuantityStorageClientInterface
 {
-    /**
-     * @param int $idProduct
-     * @param float $quantity
-     *
-     * @return float
-     */
-    public function getNearestQuantity(int $idProduct, float $quantity): float;
-
     /**
      * @param int $idProduct
      *
