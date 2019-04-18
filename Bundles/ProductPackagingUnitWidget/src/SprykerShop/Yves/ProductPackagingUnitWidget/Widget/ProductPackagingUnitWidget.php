@@ -110,68 +110,14 @@ class ProductPackagingUnitWidget extends AbstractWidget
         ?ProductQuantityStorageTransfer $productQuantityStorageTransfer,
         ?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
     ): void {
-        $minQuantity = $this->getMinQuantity($productQuantityStorageTransfer);
-        $maxQuantity = $this->getMaxQuantity($productQuantityStorageTransfer, $productConcreteAvailabilityTransfer);
-        $quantityInterval = $this->getQuantityInterval($productQuantityStorageTransfer);
+        $quantityRestrictionReader = $this->getFactory()->createQuantityRestrictionReader();
+        $minQuantity = $quantityRestrictionReader->getMinQuantity($productQuantityStorageTransfer);
+        $maxQuantity = $quantityRestrictionReader->getMaxQuantity($productQuantityStorageTransfer, $productConcreteAvailabilityTransfer);
+        $quantityInterval = $quantityRestrictionReader->getQuantityInterval($productQuantityStorageTransfer);
 
         $this->addParameter('minQuantity', $minQuantity)
             ->addParameter('maxQuantity', $maxQuantity)
             ->addParameter('quantityInterval', $quantityInterval);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
-     *
-     * @return float
-     */
-    protected function getQuantityInterval(?ProductQuantityStorageTransfer $productQuantityStorageTransfer): float
-    {
-        if ($productQuantityStorageTransfer === null) {
-            return 1;
-        }
-
-        return $productQuantityStorageTransfer->getQuantityInterval();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null $productConcreteAvailabilityTransfer
-     *
-     * @return float|null
-     */
-    protected function getMaxQuantity(
-        ?ProductQuantityStorageTransfer $productQuantityStorageTransfer,
-        ?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
-    ): ?float {
-        if ($productConcreteAvailabilityTransfer === null) {
-            return 0;
-        }
-
-        if ($productQuantityStorageTransfer === null && $productConcreteAvailabilityTransfer->getIsNeverOutOfStock()) {
-            return null;
-        }
-
-        $availability = $productConcreteAvailabilityTransfer->getAvailability();
-
-        if (!$productConcreteAvailabilityTransfer->getIsNeverOutOfStock() && $productQuantityStorageTransfer === null) {
-            return $availability;
-        }
-
-        return min($productQuantityStorageTransfer->getQuantityMax(), $availability);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
-     *
-     * @return float
-     */
-    protected function getMinQuantity(?ProductQuantityStorageTransfer $productQuantityStorageTransfer): float
-    {
-        if ($productQuantityStorageTransfer === null) {
-            return 1;
-        }
-
-        return $productQuantityStorageTransfer->getQuantityMin();
     }
 
     /**
