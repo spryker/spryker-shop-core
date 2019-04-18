@@ -98,7 +98,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
             $carrierName = $shipmentMethodTransfer->getCarrierName();
 
-            if($carrierName === null) {
+            if ($carrierName === null) {
                 continue;
             }
 
