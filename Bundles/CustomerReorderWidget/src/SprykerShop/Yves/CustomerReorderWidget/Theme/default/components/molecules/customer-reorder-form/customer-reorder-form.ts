@@ -1,8 +1,8 @@
 import Component from 'ShopUi/models/component';
 
 export default class CustomerReorderForm extends Component {
-    protected readonly selections: HTMLInputElement[]
-    protected readonly trigger: HTMLElement
+    protected readonly selections: HTMLInputElement[];
+    protected readonly trigger: HTMLElement;
 
     constructor() {
         super();
@@ -21,17 +21,19 @@ export default class CustomerReorderForm extends Component {
     }
 
     protected onSelectionChange(event: Event): void {
-        const enable = this.selections.some((selection: HTMLInputElement) => selection.checked);
-        this.enableTrigger(enable);
+        const isEnabled = this.selections.some((selection: HTMLInputElement) => selection.checked);
+        this.enableTrigger(isEnabled);
     }
 
     /**
-     * Sets/removes the disabled attribute from the trigger button element, which if not disabled, on click can reorder selected orders.
+     * Sets/removes the disabled attribute from the trigger button element, which if not disabled, on click can
+     * reorder selected orders.
      * @param enable A boolean value for checking if the trigger is available for changing.
      */
-    enableTrigger(enable: boolean): void {
-        if (enable) {
+    enableTrigger(isEnabled: boolean): void {
+        if (isEnabled) {
             this.trigger.removeAttribute('disabled');
+
             return;
         }
 
