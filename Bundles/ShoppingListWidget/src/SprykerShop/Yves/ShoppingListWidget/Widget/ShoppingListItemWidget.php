@@ -38,15 +38,11 @@ class ShoppingListItemWidget extends AbstractWidget
     {
         $productQuantityStorageTransfer = $this->getProductQuantityStorageTransfer($productViewTransfer);
         $productConcreteAvailabilityTransfer = $this->getProductConcreteAvailabilityTransfer($productViewTransfer);
-        $minQuantity = $this->getFactory()
-            ->createQuantityRestrictionReader()
-            ->getMinQuantity($productQuantityStorageTransfer);
-        $maxQuantity = $this->getFactory()
-            ->createQuantityRestrictionReader()
-            ->getMaxQuantity($productQuantityStorageTransfer, $productConcreteAvailabilityTransfer);
-        $quantityInterval = $this->getFactory()
-            ->createQuantityRestrictionReader()
-            ->getQuantityInterval($productQuantityStorageTransfer);
+        $quantityRestrictionReader = $this->getFactory()
+            ->createQuantityRestrictionReader();
+        $minQuantity = $quantityRestrictionReader->getMinQuantity($productQuantityStorageTransfer);
+        $maxQuantity = $quantityRestrictionReader->getMaxQuantity($productQuantityStorageTransfer, $productConcreteAvailabilityTransfer);
+        $quantityInterval = $quantityRestrictionReader->getQuantityInterval($productQuantityStorageTransfer);
 
         $this->addParameter('minQuantity', $minQuantity)
             ->addParameter('maxQuantity', $maxQuantity)

@@ -91,15 +91,11 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
         ?ProductQuantityStorageTransfer $productQuantityStorageTransfer,
         ?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
     ): void {
-        $minQuantity = $this->getFactory()
-            ->createQuantityRestrictionReader()
-            ->getMinQuantity($productQuantityStorageTransfer);
-        $maxQuantity = $this->getFactory()
-            ->createQuantityRestrictionReader()
-            ->getMaxQuantity($productQuantityStorageTransfer, $productConcreteAvailabilityTransfer);
-        $quantityInterval = $this->getFactory()
-            ->createQuantityRestrictionReader()
-            ->getQuantityInterval($productQuantityStorageTransfer);
+        $quantityRestrictionReader = $this->getFactory()
+            ->createQuantityRestrictionReader();
+        $minQuantity = $quantityRestrictionReader->getMinQuantity($productQuantityStorageTransfer);
+        $maxQuantity = $quantityRestrictionReader->getMaxQuantity($productQuantityStorageTransfer, $productConcreteAvailabilityTransfer);
+        $quantityInterval = $quantityRestrictionReader->getQuantityInterval($productQuantityStorageTransfer);
 
         $this->addParameter('minQuantity', $minQuantity)
             ->addParameter('maxQuantity', $maxQuantity)
