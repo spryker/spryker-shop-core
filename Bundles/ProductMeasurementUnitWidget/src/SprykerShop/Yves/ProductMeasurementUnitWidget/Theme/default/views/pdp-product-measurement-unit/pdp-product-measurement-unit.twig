@@ -36,38 +36,25 @@
 
     <div class="grid grid--bottom grid--justify">
         <div class="col {% if hasProductMeasurementUnit %}col--sm-7{% else %}col--sm-5{% endif %}">
-                {% if hasProductMeasurementUnit %}
-                    {% include molecule('quantity-input') with {
-                        inputAttributes: {
-                            name: 'sales-unit-value',
-                            id: 'sales-unit-quantity',
-                            class: 'input input--expand js-volume-price__quantity'
-                        },
-                        data: {
-                            value: data.minQuantityInSalesUnits,
-                            readOnly: data.isAddToCartDisabled,
-                            hasUpdateButton: false,
-                            minQuantity: data.minQuantity
-                            maxQuantity: data.maxQuantity,
-                            step: data.quantityInterval
-                        }
-                    } only %}
-                    <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
-                {% else %}
-                    {% include molecule('quantity-input') with {
-                        inputAttributes: {
-                            class: 'input js-volume-price__quantity'
-                        },
-                        data: {
-                            value: data.minQuantity,
-                            readOnly: data.isAddToCartDisabled,
-                            hasUpdateButton: false,
-                            minQuantity: data.minQuantity
-                            maxQuantity: data.maxQuantity,
-                            step: data.quantityInterval
-                        }
-                    } only %}
-                {% endif %}
+            {% include molecule('quantity-input') with {
+                inputAttributes: {
+                    name: hasProductMeasurementUnit ? 'sales-unit-value' : 'quantity',
+                    id: hasProductMeasurementUnit ? 'sales-unit-quantity' : '',
+                    class: 'input input--expand js-volume-price__quantity'
+                },
+                data: {
+                    value: hasProductMeasurementUnit ? data.minQuantityInSalesUnits : data.minQuantity,
+                    readOnly: data.isAddToCartDisabled,
+                    hasUpdateButton: false,
+                    minQuantity: data.minQuantity
+                    maxQuantity: data.maxQuantity,
+                    step: data.quantityInterval
+                }
+            } only %}
+
+            {% if hasProductMeasurementUnit %}
+                <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
+            {% endif %}
         </div>
 
         <div class="col {% if hasProductMeasurementUnit %}col--sm-4{% else %}col--sm-6{% endif %}">

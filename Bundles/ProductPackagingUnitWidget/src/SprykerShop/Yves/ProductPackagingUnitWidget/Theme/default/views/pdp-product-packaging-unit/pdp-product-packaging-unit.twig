@@ -37,39 +37,25 @@
 
     <div class="grid grid--bottom grid--justify">
         <div class="col {% if data.salesUnitCount %}col--sm-7{% else %}col--sm-5{% endif %}">
-            {{ 'cart.item_quantity' | trans }}
+
+            {% include molecule('quantity-input') with {
+                inputAttributes: {
+                    name: data.salesUnitCount ? 'sales-unit-value' : 'quantity',
+                    id: data.salesUnitCount ? 'sales-unit-quantity' : '',
+                    class: 'input input--expand js-volume-price__quantity',
+                },
+                data: {
+                    value: data.salesUnitCount ? data.minQuantityInSalesUnits : data.minQuantity,
+                    readOnly: data.isAddToCartDisabled,
+                    hasUpdateButton: false,
+                    minQuantity: data.minQuantity,
+                    maxQuantity: data.maxQuantity,
+                    step: data.quantityInterval
+                }
+            } only %}
 
             {% if data.salesUnitCount %}
-                {% include molecule('quantity-input') with {
-                    inputAttributes: {
-                        name: 'sales-unit-value',
-                        id: 'sales-unit-quantity',
-                        class: 'input input--expand js-volume-price__quantity'
-                    },
-                    data: {
-                        value: data.minQuantityInSalesUnits,
-                        readOnly: data.isAddToCartDisabled,
-                        hasUpdateButton: false,
-                        minQuantity: data.minQuantity,
-                        maxQuantity: data.maxQuantity,
-                        step: data.quantityInterval
-                    }
-                } only %}
                 <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnit }}" name="quantity"/>
-            {% else %}
-                {% include molecule('quantity-input') with {
-                    inputAttributes: {
-                        class: 'input js-volume-price__quantity'
-                    },
-                    data: {
-                        value: data.minQuantity,
-                        readOnly: data.isAddToCartDisabled,
-                        hasUpdateButton: false,
-                        minQuantity: data.minQuantity,
-                        maxQuantity: data.maxQuantity,
-                        step: data.quantityInterval
-                    }
-                } only %}
             {% endif %}
         </div>
 
