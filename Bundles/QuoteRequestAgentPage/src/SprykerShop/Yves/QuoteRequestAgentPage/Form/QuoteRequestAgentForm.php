@@ -87,6 +87,7 @@ class QuoteRequestAgentForm extends AbstractType
             'label' => false,
             'widget' => 'single_text',
             'required' => false,
+            'view_timezone' => $this->getFactory()->getStoreClient()->getCurrentStore()->getTimezone(),
             'attr' => [
                 'class' => 'datepicker safe-datetime',
             ],
