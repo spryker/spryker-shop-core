@@ -69,7 +69,7 @@ class ContentBannerTwigFunction extends TwigFunction
      */
     protected function getFunctionName(): string
     {
-        return static::TWIG_FUNCTION_NAME_CONTNET_BANNER;
+        return static::TWIG_FUNCTION_NAME_CONTENT_BANNER;
     }
 
     /**
@@ -136,6 +136,6 @@ class ContentBannerTwigFunction extends TwigFunction
      */
     protected function getMessageBannerWrongType(int $idContent)
     {
-        return sprintf(static::MESSAGE_BANNER_WRONG_TYPE, static::TWIG_FUNCTION_NAME_CONTNET_BANNER, $idContent);
+        return sprintf(static::MESSAGE_BANNER_WRONG_TYPE, static::TWIG_FUNCTION_NAME_CONTENT_BANNER, $idContent);
     }
 }
