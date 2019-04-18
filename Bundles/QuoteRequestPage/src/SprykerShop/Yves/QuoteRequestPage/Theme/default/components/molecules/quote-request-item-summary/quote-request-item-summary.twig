@@ -9,7 +9,8 @@
     priceMode: required,
     unitPrice: required,
     subtotalPrice: required,
-    cartItem: required
+    cartItem: required,
+    currency: required,
 } %}
 
 {% set priceModeGross = 'GROSS_MODE' %}
@@ -22,7 +23,7 @@
         {% if can('SeePricePermissionPlugin') %}
             {{ 'cart.item.item_price' | trans }}
             {% if data.cartItem.sourceUnitGrossPrice or data.cartItem.sourceUnitNetPrice %}
-                <span class="float-right"><s>{{ originUnitPrice | money }}</s> {{ data.unitPrice }}</span>
+                <span class="float-right"><s>{{ originUnitPrice | money(true, data.currency.code) }}</s> {{ data.unitPrice }}</span>
             {% else %}
                 <span class="float-right">{{ data.unitPrice }}</span>
             {% endif %}

@@ -8,7 +8,8 @@ Displays product summary information: price, price for different options, total 
         priceMode: 'priceMode',
         unitPrice: 'unitPrice',
         subtotalPrice: 'subtotalPrice',
-        cartItem: cartItem
+        cartItem: cartItem,
+        currency: currency
     }
 } only %}
 ```

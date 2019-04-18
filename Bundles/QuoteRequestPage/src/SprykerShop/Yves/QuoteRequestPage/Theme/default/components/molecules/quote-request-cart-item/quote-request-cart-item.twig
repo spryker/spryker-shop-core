@@ -35,7 +35,8 @@
                     priceMode: data.priceMode,
                     unitPrice: data.cartItem.unitPrice | money(true, data.currency.code),
                     subtotalPrice: data.cartItem.sumSubtotalAggregation | money(true, data.currency.code),
-                    cartItem: data.cartItem
+                    cartItem: data.cartItem,
+                    currency: data.currency,
                 }
             } only %}
         </div>
