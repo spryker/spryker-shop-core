@@ -14,11 +14,12 @@ export default class ScriptLoader extends Component {
     /**
      * The <head> tag on the page.
      */
-    head: HTMLHeadElement
+    head: HTMLHeadElement;
+
     /**
      * The <script> tag o the page.
      */
-    script: HTMLScriptElement
+    script: HTMLScriptElement;
 
     protected readyCallback(): void {
         this.script = <HTMLScriptElement>document.querySelector(`script[src="${this.src}"]`);
@@ -26,6 +27,7 @@ export default class ScriptLoader extends Component {
         if (!!this.script) {
             this.mapEvents();
             debug(`${this.name}: "${this.src}" is already in the DOM`);
+
             return;
         }
 
@@ -69,7 +71,7 @@ export default class ScriptLoader extends Component {
     get ignoredAttributes(): string[] {
         return [
             ...defaultIgnoredAttributes
-        ]
+        ];
     }
 
     /**

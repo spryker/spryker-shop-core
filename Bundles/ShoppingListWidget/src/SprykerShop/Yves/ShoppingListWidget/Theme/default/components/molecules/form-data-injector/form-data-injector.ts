@@ -30,7 +30,7 @@ export default class FormDataInjector extends Component {
     /**
      * Injects data into the form fields.
      */
-    public injectData(): void {
+    injectData(): void {
         this.fieldsToInject.forEach((field: HTMLFormElement) => this.addField(field));
     }
 

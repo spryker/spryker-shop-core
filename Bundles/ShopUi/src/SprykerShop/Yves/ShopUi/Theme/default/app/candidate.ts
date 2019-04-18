@@ -6,15 +6,16 @@ import { debug } from '../app/logger';
  * It contains all the information required by the application to define and run a specific component in the DOM.
  */
 export default class Candidate {
-    protected readonly tagName: string
-    protected readonly customElementImporter: CustomElementImporter
-    protected isCustomElementDefined: boolean
+    protected readonly tagName: string;
+    protected readonly customElementImporter: CustomElementImporter;
+    protected isCustomElementDefined: boolean;
 
     /**
      * Creates an instance of Candidate.
      *
      * @param tagName HTML component tagname.
-     * @param customElementImporter Function that executes webpack's import() to asyncronously retrieve the component constructor.
+     * @param customElementImporter Function that executes webpack's import() to asyncronously retrieve the component
+     * constructor.
      */
     constructor(tagName: string, customElementImporter: CustomElementImporter) {
         this.tagName = tagName;
@@ -53,6 +54,7 @@ export default class Candidate {
         }
 
         this.isCustomElementDefined = true;
+
         return elements;
     }
 
