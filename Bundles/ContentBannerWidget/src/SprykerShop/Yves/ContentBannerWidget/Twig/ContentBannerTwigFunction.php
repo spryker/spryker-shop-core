@@ -14,13 +14,23 @@ use Twig\Environment;
 
 class ContentBannerTwigFunction extends TwigFunction
 {
-    protected const TWIG_FUNCTION_NAME_CONTNET_BANNER = 'content_banner';
+    /**
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::FUNCTION_NAME
+     */
+    protected const TWIG_FUNCTION_NAME_CONTENT_BANNER = 'content_banner';
 
     protected const MESSAGE_BANNER_NOT_FOUND = '<!-- Content Banner with ID %s not found. -->';
     protected const MESSAGE_BANNER_WRONG_TYPE = '<!-- %s could not be rendered for content item with ID %s. -->';
     protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<!-- %s is not supported name of template. -->';
 
+    /**
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::TEMPLATE_IDENTIFIER_DEFAULT
+     */
     protected const TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+
+    /**
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::TEMPLATE_IDENTIFIER_TOP_TITLE
+     */
     protected const TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
 
     /**
