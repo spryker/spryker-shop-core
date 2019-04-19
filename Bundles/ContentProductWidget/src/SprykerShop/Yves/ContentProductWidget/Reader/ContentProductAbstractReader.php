@@ -51,6 +51,9 @@ class ContentProductAbstractReader implements ContentProductAbstractReaderInterf
 
         foreach ($contentProductAbstractListTypeTransfer->getIdProductAbstracts() as $idProductAbstract) {
             $productAbstract = $this->productStorageClient->findProductAbstractStorageData($idProductAbstract, $localeName);
+            if (!$productAbstract) {
+                continue;
+            }
             $productAbstractViewCollection[] = $this->productStorageClient->mapProductAbstractStorageData($productAbstract, $localeName);
         }
 
