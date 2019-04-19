@@ -1,0 +1,21 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'subtotal-price'
+} %}
+
+{% define data = {
+    amount: required
+} %}
+
+{% block body %}
+    <div class="grid grid--justify">
+        <h6 class="col">{{ 'customer.account.shopping_list.subtotal' | trans }}</h6>
+        {% include molecule('price') with {
+            class: 'col',
+            data: {
+                amount: data.amount
+            }
+        } only %}
+    </div>
+{% endblock %}
