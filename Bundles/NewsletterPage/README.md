@@ -1,6 +1,6 @@
 # NewsletterPage Module
 
-{{ADD DESCRIPTION HERE}}
+NewsletterPage module.
 
 ## Installation
 

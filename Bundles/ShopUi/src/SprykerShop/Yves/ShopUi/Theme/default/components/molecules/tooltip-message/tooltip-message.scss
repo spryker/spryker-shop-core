@@ -1,0 +1,60 @@
+$shop-ui-tooltip-message-arrow-size: 0.5rem;
+
+@mixin shop-ui-tooltip-message($name: '.tooltip-message') {
+    #{$name} {
+        @include helper-visibility-invisible;
+        @include helper-effect-transition;
+
+        display: block;
+        position: absolute;
+        min-width: 20rem;
+        margin-top: - $shop-ui-tooltip-message-arrow-size;
+        transform: translateX(-50%);
+
+        &__text {
+            @include helper-font-size(default);
+            @include helper-ui-shadow;
+            float: left;
+            display: block;
+            position: absolute;
+            bottom: 0;
+            padding: map-get($setting-spacing, small);
+            background-color: $setting-color-white;
+            border: 1px solid $setting-color-light;
+            text-align: center;
+            z-index: 2;
+        }
+
+        &__arrow {
+            position: absolute;
+            left: calc(50% - #{$shop-ui-tooltip-message-arrow-size});
+            bottom: - $shop-ui-tooltip-message-arrow-size;
+            border: $shop-ui-tooltip-message-arrow-size solid $setting-color-light;
+            border-top-color: transparent;
+            border-left-color: transparent;
+            transform: rotate(45deg);
+            z-index: 1;
+        }
+
+        @each $action, $setting-color-action in $setting-color-actions {
+            @include shop-ui-tooltip-message-action($action, $setting-color-action);
+        }
+
+        @content;
+    }
+}
+
+@mixin shop-ui-tooltip-message-action($action, $setting-color-action) {
+    &--#{$action} &__text {
+        background-color: helper-color-light($setting-color-action);
+        border-color: $setting-color-action;
+        color: $setting-color-action;
+    }
+
+    &--#{$action} &__arrow {
+        border-right-color: $setting-color-action;
+        border-bottom-color: $setting-color-action;
+    }
+
+    @content;
+}

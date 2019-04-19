@@ -77,7 +77,7 @@ class NewProductsController extends AbstractController
     /**
      * @param string $categoryPath
      *
-     * @return array
+     * @return array|null
      */
     protected function findCategoryNode($categoryPath): ?array
     {

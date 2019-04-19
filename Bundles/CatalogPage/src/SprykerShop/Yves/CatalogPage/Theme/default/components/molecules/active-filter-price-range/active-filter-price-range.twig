@@ -16,7 +16,7 @@
 {% set currentValue = data.activeMin | money  ~ ' - ' ~ data.activeMax | money %}
 
 {% block component %}
-    {% if app.request.query.has(data.filter.config.parameterName) %}
+    {% if app.request.query.has(data.filter.config.parameterName) and can('SeePricePermissionPlugin') %}
         {% include molecule('active-filter', 'CatalogPage') with {
             data: {
                 filter: data.filter,

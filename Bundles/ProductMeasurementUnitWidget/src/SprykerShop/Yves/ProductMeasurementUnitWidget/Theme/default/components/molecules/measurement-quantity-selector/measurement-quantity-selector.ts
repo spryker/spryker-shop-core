@@ -1,18 +1,46 @@
 import Component from 'ShopUi/models/component';
 
 export default class MeasurementQuantitySelector extends Component {
+    /**
+     * The input element of the sales quantity value.
+     */
     qtyInSalesUnitInput: HTMLInputElement;
+    /**
+     * The input element of the base quantity value.
+     */
     qtyInBaseUnitInput: HTMLInputElement;
+    /**
+     * The input element of the measurement unit.
+     */
     measurementUnitInput: HTMLSelectElement;
+    /**
+     * The "Add to cart" button.
+     */
     addToCartButton: HTMLButtonElement;
-
+    /**
+     * The base unit object.
+     */
     baseUnit: any;
+    /**
+     * The sales units object.
+     */
     salesUnits: any;
+    /**
+     * The current sales unit object.
+     */
     currentSalesUnit: any;
+    /**
+     * The product quantity storage object.
+     */
     productQuantityStorage: any;
+    /**
+     * The current value.
+     */
     currentValue: Number;
+    /**
+     * The translations object.
+     */
     translations: any;
-
 
     protected readyCallback(event?: Event): void {
         this.qtyInSalesUnitInput = <HTMLInputElement>document.querySelector('#sales-unit-quantity');

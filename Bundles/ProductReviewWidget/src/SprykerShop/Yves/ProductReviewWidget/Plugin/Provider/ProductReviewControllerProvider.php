@@ -14,6 +14,7 @@ class ProductReviewControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_PRODUCT_REVIEW_INDEX = 'product-review/index';
     public const ROUTE_PRODUCT_REVIEW_SUBMIT = 'product-review/submit';
+    public const ROUTE_PRODUCT_REVIEW_CREATE = 'product-review/create';
 
     public const ID_ABSTRACT_PRODUCT_REGEX = '[1-9][0-9]*';
 
@@ -25,13 +26,14 @@ class ProductReviewControllerProvider extends AbstractYvesControllerProvider
     protected function defineControllers(Application $app)
     {
         $this->addProductReviewRoute()
-            ->addProductReviewSubmitRoute();
+            ->addProductReviewSubmitRoute()
+            ->addProductReviewCreateRoute();
     }
 
     /**
      * @return $this
      */
-    protected function addProductReviewRoute(): self
+    protected function addProductReviewRoute()
     {
         $this->createController('/{productReview}/index/{idProductAbstract}', static::ROUTE_PRODUCT_REVIEW_INDEX, 'ProductReviewWidget', 'Index', 'index')
             ->assert('productReview', $this->getAllowedLocalesPattern() . 'product-review|product-review')
@@ -42,11 +44,26 @@ class ProductReviewControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @deprecated use addProductReviewCreateRoute() instead
+     *
      * @return $this
      */
-    protected function addProductReviewSubmitRoute(): self
+    protected function addProductReviewSubmitRoute()
     {
         $this->createController('/{productReview}/submit/{idProductAbstract}', static::ROUTE_PRODUCT_REVIEW_SUBMIT, 'ProductReviewWidget', 'Submit', 'index')
+            ->assert('productReview', $this->getAllowedLocalesPattern() . 'product-review|product-review')
+            ->value('productReview', 'product-review')
+            ->assert('idProductAbstract', static::ID_ABSTRACT_PRODUCT_REGEX);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addProductReviewCreateRoute()
+    {
+        $this->createController('/{productReview}/create/{idProductAbstract}', static::ROUTE_PRODUCT_REVIEW_CREATE, 'ProductReviewWidget', 'Create', 'index')
             ->assert('productReview', $this->getAllowedLocalesPattern() . 'product-review|product-review')
             ->value('productReview', 'product-review')
             ->assert('idProductAbstract', static::ID_ABSTRACT_PRODUCT_REGEX);

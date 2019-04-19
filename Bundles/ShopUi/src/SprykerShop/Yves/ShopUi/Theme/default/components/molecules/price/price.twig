@@ -7,7 +7,8 @@
 
 {% define data = {
     amount: required,
-    originalAmount: null
+    originalAmount: null,
+    noPriceText: '---'
 } %}
 
 {% block body %}
@@ -15,13 +16,17 @@
         <span class="{{config.name}}__amount {{config.name}}__amount--original">{{data.originalAmount}}</span>
     {%- endif -%}
 
-    <span class="{{config.name}}__amount">
-        {% include atom('icon') with {
-            class: config.name ~ '__tag',
-            data: {
-                name: 'tag'
-            }
-        } only %}
-        {{data.amount}}
-    </span>
+    {% if data.amount is empty -%}
+        {{data.noPriceText}}
+    {%- else -%}
+        <span class="{{config.name}}__amount">
+            {% include atom('icon') with {
+                class: config.name ~ '__tag',
+                data: {
+                    name: 'tag'
+                }
+            } only %}
+            {{data.amount}}
+        </span>
+    {%- endif -%}
 {% endblock %}

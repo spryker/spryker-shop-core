@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-
 class QuickOrderPageToCartClientBridge implements QuickOrderPageToCartClientInterface
 {
     /**
@@ -25,20 +23,12 @@ class QuickOrderPageToCartClientBridge implements QuickOrderPageToCartClientInte
     }
 
     /**
-     * @return void
-     */
-    public function clearQuote(): void
-    {
-        $this->cartClient->clearQuote();
-    }
-
-    /**
      * @param array $itemTransfers
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItems(array $itemTransfers, array $params = []): QuoteTransfer
+    public function addItems(array $itemTransfers, array $params = [])
     {
         return $this->cartClient->addItems($itemTransfers, $params);
     }

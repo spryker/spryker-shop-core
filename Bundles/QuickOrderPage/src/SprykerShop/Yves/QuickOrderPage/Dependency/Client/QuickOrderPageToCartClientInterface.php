@@ -7,20 +7,13 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-
 interface QuickOrderPageToCartClientInterface
 {
-    /**
-     * @return void
-     */
-    public function clearQuote(): void;
-
     /**
      * @param array $itemTransfers
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItems(array $itemTransfers, array $params = []): QuoteTransfer;
+    public function addItems(array $itemTransfers, array $params = []);
 }

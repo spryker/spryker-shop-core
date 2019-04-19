@@ -6,68 +6,73 @@
 } %}
 
 {% define data = {
-    value: ''
+    id: required,
+    name: 'query',
+    value: '',
+    hiddenValue: '',
+    suggestionsUrl: required,
+    placeholder: 'autocomplete.placeholder',
+    showCleanButton: false
 } %}
 
 {% define attributes = {
-    'suggestion-url': required,
+    'suggested-item-selector': '',
+    'query-string': 'query',
+    'value-attribute-name': 'data-value',
     'debounce-delay': 500,
-    'min-letters': 3,
-    'query-param-name': 'query',
-    'selected-value-key': '',
-    'value-data-attribute': 'data-value',
-    'item-selector': '',
-    'show-clean-button': false
+    'min-letters': 3
 } %}
 
 {% block body %}
-
     {% include molecule('ajax-provider') with {
-        class: config.jsName ~ '__provider',
+        class: config.jsName ~ '__provider ' ~ config.jsName ~ '__provider-' ~ data.id,
         attributes: {
-            method: 'GET',
-            url: attributes['suggestion-url']
+            url: data.suggestionsUrl
         }
     } only %}
 
     {% include molecule('ajax-loader') with {
         attributes: {
-            'provider-selector': '.' ~ config.jsName ~ '__provider'
+            'provider-selector': '.' ~ config.jsName ~ '__provider-' ~ data.id
+        }
+    } only %}
+
+    {% include molecule('ajax-renderer') with {
+        attributes: {
+            'provider-selector': '.' ~ config.jsName ~ '__provider-' ~ data.id,
+            'target-selector': '.' ~ config.jsName ~ '__suggestions-' ~ data.id,
+            'render-if-response-is-empty': true,
         }
     } only %}
 
     {% block input %}
         <div class="grid">
-            <div class="col {% if not attributes['show-clean-button'] %}col--sm-12{% endif %} {% if attributes['show-clean-button'] %}col--sm-11{% endif %}">
-                <input name="query"
-                       type="text"
-                       class="input input--expand {{ config.jsName }}__input"
-                       placeholder="{{ 'autocomplete.placeholder' | trans }}"
+            <div class="col {% if data.showCleanButton %}col--sm-11{% else %}col--sm-12{% endif %}">
+                <input type="text"
+                       class="input input--expand {{ config.jsName }}__text-input"
+                       placeholder="{{ data.placeholder | trans }}"
                        value="{{ data.value }}"
-                       autocomplete="off">
+                       autocomplete="off" />
 
-                <input type="hidden" name="{{ attributes['selected-value-key'] }}" class="{{ config.jsName }}__input-hidden"/>
+                <input {% if data.name is not empty %}name="{{data.name}}"{% endif %}
+                       type="hidden"
+                       class="{{ config.jsName }}__value-input"
+                       value="{{ data.hiddenValue }}"/>
             </div>
-            {% if attributes['show-clean-button'] %}
+
+            {% if data.showCleanButton %}
                 <div class="col col--sm-1">
                     {% block cleanButton %}
-                        <button type="button" class="button button--warning {{ config.jsName }}__clean-button button--expand">&times</button>
+                        <button type="button" class="button button--warning {{ config.jsName }}__clean-button button--expand">
+                            &times;
+                        </button>
                     {% endblock %}
                 </div>
             {% endif %}
         </div>
     {% endblock %}
 
-    {% block suggestion %}
-        <div class="box is-hidden {{ config.name }}__suggestion {{ config.jsName }}__container">
-            {% include molecule('ajax-renderer') with {
-                attributes: {
-                    'provider-selector': '.' ~ config.jsName ~ '__provider',
-                    'render-if-response-is-empty': true,
-                    'target-selector': config.jsName ~ '__suggestions',
-                }
-            } only %}
-        </div>
+    {% block suggestions %}
+        <div class="box is-hidden {{ config.name }}__suggestions {{ config.jsName }}__suggestions {{ config.jsName }}__suggestions-{{data.id}}"></div>
     {% endblock %}
-
 {% endblock %}
