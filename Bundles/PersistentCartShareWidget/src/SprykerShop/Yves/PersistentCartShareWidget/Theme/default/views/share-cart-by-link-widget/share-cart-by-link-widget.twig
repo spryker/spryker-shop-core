@@ -1,9 +1,19 @@
 {% extends template('widget') %}
 
 {% define data = {
-    idQuote: _widget.idQuote,
+    idQuote: _view.idQuote,
+    permissionOption: _view.permissionOption,
+    links: _view.links,
 } %}
 
 {% block body %}
-    ShareCartByLinkWidget
+    <ul>
+    {% for share_option, link in data.links %}
+        <li class="grid grid--middle share-option-{{ share_option }}">
+            <div class="col text-right spacing-right spacing-right--big">
+                <input type="url" value="{{ link }}" name="share_option[{{ share_option }}]" size="50">
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
 {% endblock %}
