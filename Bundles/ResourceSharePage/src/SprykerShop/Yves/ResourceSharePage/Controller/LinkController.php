@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\ResourceSharePage\Controller;
 
+use ArrayObject;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class LinkController extends AbstractController
 {
+    protected const MESSAGE_RESOURCE_SHARE_NO_ROUTE = 'resource-share.link.error.no-route';
+
     /**
      * @param string $resourceShareUuid
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -26,7 +30,15 @@ class LinkController extends AbstractController
     {
         $response = $this->executeIndexAction($resourceShareUuid, $request);
 
-        return $response;
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view(
+            $response,
+            [],
+            '@ResourceSharePage/views/link/index.twig'
+        );
     }
 
     /**
@@ -46,9 +58,8 @@ class LinkController extends AbstractController
             );
 
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
-            //TODO handle errors
             return [
-                'errors' => 'something.went.wrong',
+                'messages' => $resourceShareResponseTransfer->getErrorMessages(),
             ];
         }
 
@@ -64,10 +75,24 @@ class LinkController extends AbstractController
 
         if (!$routeTransfer) {
             return [
-                'errors' => 'something.went.wrong',
+                'messages' => $this->createNoRouteMessage(),
             ];
         }
 
         return $this->redirectResponseInternal($routeTransfer->getRoute(), $routeTransfer->getParameters());
+    }
+
+    /**
+     * @return \ArrayObject
+     */
+    protected function createNoRouteMessage(): ArrayObject
+    {
+        $message = (new MessageTransfer())
+            ->setValue(static::MESSAGE_RESOURCE_SHARE_NO_ROUTE);
+
+        $messages = (new ArrayObject());
+        $messages->append($message);
+
+        return $messages;
     }
 }
