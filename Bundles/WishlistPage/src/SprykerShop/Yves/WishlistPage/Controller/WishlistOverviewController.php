@@ -122,7 +122,6 @@ class WishlistOverviewController extends AbstractController
 
             $this->handleResponseErrors($wishlistResponseTransfer, $wishlistForm);
         }
-
         $wishlistCollection = $this->getFactory()
             ->getWishlistClient()
             ->getCustomerWishlistCollection();
