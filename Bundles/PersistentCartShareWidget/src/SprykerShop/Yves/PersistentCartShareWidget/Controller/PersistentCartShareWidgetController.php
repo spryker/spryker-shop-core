@@ -42,7 +42,7 @@ class PersistentCartShareWidgetController extends AbstractController
     {
         $response = $this->executeIndexAction($idQuote, $permissionOption);
 
-        return $this->view($response, [], '@PersistentCartShareWidget/views/share-cart-by-link-widget/share-cart-by-link-widget.twig');
+        return $this->view($response, [], '@PersistentCartShareWidget/views/share-cart-response/share-cart-response.twig');
     }
 
     /**
@@ -53,13 +53,29 @@ class PersistentCartShareWidgetController extends AbstractController
      */
     protected function executeIndexAction(int $idQuote, string $permissionOption)
     {
+        if ($permissionOption==='internal') {
+            $links = [
+                'READ_ONLY' => 'http://www.de.suite-nonsplit.local/read-only',
+                'FULL_ACCESS' => 'http://www.de.suite-nonsplit.local/full-access',
+            ];
+            $labels = [
+                'READ_ONLY' => 'persistent_cart_share.share_options.READ_ONLY',
+                'FULL_ACCESS' => 'persistent_cart_share.share_options.FULL_ACCESS',
+            ];
+        } else {
+            $links = [
+                'PREVIEW' => 'http://www.de.suite-nonsplit.local/preview',
+            ];
+            $labels = [
+                'PREVIEW' => ''
+            ];
+        }
+
         return [
             'idQuote' => $idQuote,
             'permissionOption' => $permissionOption,
-            'links' => [
-                'READ_ONLY' => 'http://www.de.suite-nonsplit.local/read-only',
-                'FULL_ACCESS' => 'http://www.de.suite-nonsplit.local/full-access',
-            ],
+            'links' => $links,
+            'labels' => $labels,
         ];
     }
 

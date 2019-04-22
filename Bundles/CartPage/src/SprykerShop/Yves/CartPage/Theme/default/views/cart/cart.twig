@@ -130,6 +130,13 @@
                         {% endwidget %}
                     {% endif %}
 
+                    {% widget 'ShareCartByLinkWidget' args [data.cart.idQuote] only %}
+                        {% block body %}
+                            {{ parent() }}
+                            <hr />
+                        {% endblock %}
+                    {% endwidget %}
+
                     {% include molecule('cart-summary', 'CartPage') with {
                         data: {
                             cart: data.cart,

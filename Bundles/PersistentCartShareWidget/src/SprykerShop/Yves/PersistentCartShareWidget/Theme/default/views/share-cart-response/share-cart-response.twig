@@ -1,0 +1,32 @@
+{% extends template('widget') %}
+
+{% define data = {
+    permissionOption: _view.permissionOption,
+    links: _view.links,
+    labels: _view.labels
+} %}
+
+{% block body %}
+    <div class="form__container {% if data.permissionOption == 'external' %} spacing-bottom spacing-bottom--big {% endif %}">
+        {% for share_option, link in data.links %}
+            <div class="form__fields grid grid--bottom">
+                <div class="form__field col col--sm-12">
+                    <label class="label" for="{{ share_option }}">{{ data.labels[share_option] | trans }}</label>
+                    <input id="{{ share_option }}" class="js-clipboard-copy-target-{{ share_option }} input input--expand" type="url" value="{{ link }}">
+                </div>
+            </div>
+            <div class="form__actions">
+                <button type="button" class="js-clipboard-copy-trigger-{{ share_option }} form__action button">
+                    {{ 'persistent_cart_share.copy' | trans }}
+                </button>
+            </div>
+            {% include molecule('clipboard-copy') with {
+                class: 'col col--sm-12',
+                attributes: {
+                    'trigger-selector': '.js-clipboard-copy-trigger-' ~ share_option,
+                    'target-selector': '.js-clipboard-copy-target-' ~ share_option
+                }
+            } only %}
+        {% endfor %}
+    </div>
+{% endblock %}

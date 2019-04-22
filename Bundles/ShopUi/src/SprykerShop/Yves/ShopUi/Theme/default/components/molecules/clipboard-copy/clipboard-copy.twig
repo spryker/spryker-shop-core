@@ -1,0 +1,15 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'clipboard-copy',
+    tag: 'clipboard-copy'
+} %}
+
+{% define attributes = {
+    'trigger-selector': required,
+    'target-selector': required
+} %}
+
+{% block body %}
+    <p class="{{ config.jsName }}__message text-success text-small is-hidden">{{ 'persistent_cart_share.copy_success' | trans }}</p>
+{% endblock %}
