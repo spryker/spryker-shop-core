@@ -11,7 +11,9 @@
     jsonScheme: _widget.jsonScheme | default(''),
     salesUnitCount : _widget.salesUnits|length,
     isAddToCartDisabled : _widget.isAddToCartDisabled | default(false),
-    minQuantity: 1
+    minQuantity: _widget.minQuantity,
+    maxQuantity: _widget.maxQuantity,
+    quantityInterrval: _widget.quantityInterval
 } %}
 
 {% set hasProductMeasurementUnit = data.salesUnitCount >= 1 %}
@@ -34,16 +36,25 @@
 
     <div class="grid grid--bottom grid--justify">
         <div class="col {% if hasProductMeasurementUnit %}col--sm-7{% else %}col--sm-5{% endif %}">
-            <label>
-                {{ 'cart.item_quantity' | trans }}
+            {% include molecule('quantity-input') with {
+                inputAttributes: {
+                    name: hasProductMeasurementUnit ? 'sales-unit-value' : 'quantity',
+                    id: hasProductMeasurementUnit ? 'sales-unit-quantity' : '',
+                    class: 'input input--expand js-volume-price__quantity'
+                },
+                data: {
+                    value: hasProductMeasurementUnit ? data.minQuantityInSalesUnits : data.minQuantity,
+                    readOnly: data.isAddToCartDisabled,
+                    hasUpdateButton: false,
+                    minQuantity: data.minQuantity
+                    maxQuantity: data.maxQuantity,
+                    step: data.quantityInterval
+                }
+            } only %}
 
-                {% if hasProductMeasurementUnit %}
-                    <input id="sales-unit-quantity" class="input input--expand js-volume-price__quantity" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value"/>
-                    <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
-                {% else %}
-                    <input class="input js-volume-price__quantity" name="quantity" value="{{ data.minQuantity }}"/>
-                {% endif %}
-            </label>
+            {% if hasProductMeasurementUnit %}
+                <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
+            {% endif %}
         </div>
 
         <div class="col {% if hasProductMeasurementUnit %}col--sm-4{% else %}col--sm-6{% endif %}">

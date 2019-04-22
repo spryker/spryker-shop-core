@@ -11,7 +11,8 @@
     minQuantity: 1,
     value: 1,
     readOnly: false,
-    hasUpdateButton: true
+    hasUpdateButton: true,
+    step: 1
 } %}
 
 {% set maxQuantity = data.maxQuantity < 0 or data.maxQuantity < data.minQuantity ? null : data.maxQuantity %}
@@ -23,7 +24,7 @@
     min: data.minQuantity,
     max: maxQuantity is empty ? false : maxQuantity,
     value: data.value,
-    step: 'any',
+    step: data.step,
     disabled: data.readOnly
 } %}
 

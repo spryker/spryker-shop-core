@@ -7,16 +7,21 @@
 
 {% define data = {
     cartItem: required,
-    readOnly: false
+    readOnly: false,
+    minQuantity: 1,
+    maxQuantity: null,
+    quantityInterval: 1
 } %}
 
 {% block body %}
     <form method="POST" action="{{ path('cart/change/quantity', {'sku': data.cartItem.sku }) }}">
         {% include molecule('quantity-input') with {
             data: {
-                maxQuantity: data.cartItem.maxQuantity,
+                maxQuantity: data.maxQuantity,
                 value: data.cartItem.quantity,
-                readOnly: data.readOnly
+                readOnly: data.readOnly,
+                minQuantity: data.minQuantity,
+                step: data.quantityInterval
             }
         } only %}
 

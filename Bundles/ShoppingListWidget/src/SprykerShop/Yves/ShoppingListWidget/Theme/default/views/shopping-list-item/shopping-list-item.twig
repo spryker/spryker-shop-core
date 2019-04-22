@@ -1,0 +1,26 @@
+{% extends template('widget') %}
+
+{% define data = {
+    item: _widget.item,
+    readOnly: _widget.readOnly,
+    minQuantity: _widget.minQuantity | default(1),
+    maxQuantity: _widget.maxQuantity | default(null),
+    quantityInterval: _widget.quantityInterval | default(1)
+} %}
+
+
+{% block body %}
+    {% include molecule('quantity-input') with {
+        inputAttributes: {
+            name: ('shoppingListItem[quantity][' ~ data.item.idShoppingListItem ~ ']')
+        },
+        data: {
+            value: data.item.quantity,
+            readOnly: data.readOnly,
+            hasUpdateButton: false,
+            minQuantity: data.minQuantity,
+            maxQuantity: data.maxQuantity,
+            step: data.quantityInterval
+        }
+    } only %}
+{% endblock %}
