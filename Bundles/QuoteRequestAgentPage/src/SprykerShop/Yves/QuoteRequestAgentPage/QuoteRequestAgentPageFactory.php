@@ -10,12 +10,15 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCompanyUserClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCustomerClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestAgentClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToStoreClientInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToZedRequestClientBridge;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToZedRequestClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider\QuoteRequestAgentFormDataProvider;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandler;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandlerInterface;
@@ -64,7 +67,11 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
      */
     public function createQuoteRequestAgentFormDataProvider(): QuoteRequestAgentFormDataProvider
     {
-        return new QuoteRequestAgentFormDataProvider();
+        return new QuoteRequestAgentFormDataProvider(
+            $this->getQuoteClient(),
+            $this->getCartClient(),
+            $this->getZedRequestClient()
+        );
     }
 
     /**
@@ -123,6 +130,22 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     public function getQuoteClient(): QuoteRequestAgentPageToQuoteClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface
+     */
+    public function getCartClient(): QuoteRequestAgentPageToCartClientInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::CLIENT_CART);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToZedRequestClientInterface
+     */
+    public function getZedRequestClient(): QuoteRequestAgentPageToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::CLIENT_ZED_REQUEST);
     }
 
     /**

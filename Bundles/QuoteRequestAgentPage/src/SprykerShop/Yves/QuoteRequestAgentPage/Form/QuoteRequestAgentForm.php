@@ -26,6 +26,7 @@ class QuoteRequestAgentForm extends AbstractType
     public const SUBMIT_BUTTON_SEND_TO_CUSTOMER = 'sendToCustomer';
 
     public const OPTION_PRICE_MODE = 'option_price_mode';
+    public const OPTION_IS_QUOTE_VALID = 'option_is_quote_valid';
 
     protected const FORMAT_VALID_UNTIL_DATE = 'Y-m-d H:i:s';
     protected const LABEL_QUOTE_REQUEST_IS_LATEST_VERSION_HIDDEN = 'quote_request_page.quote_request.labels.hide_latest_version';
@@ -41,7 +42,10 @@ class QuoteRequestAgentForm extends AbstractType
         $resolver->setDefaults([
             'data_class' => QuoteRequestTransfer::class,
         ]);
-        $resolver->setRequired([static::OPTION_PRICE_MODE]);
+        $resolver->setRequired([
+            static::OPTION_PRICE_MODE,
+            static::OPTION_IS_QUOTE_VALID,
+        ]);
     }
 
     /**
@@ -70,6 +74,7 @@ class QuoteRequestAgentForm extends AbstractType
             QuoteRequestAgentVersionSubForm::class,
             [
                 QuoteRequestAgentForm::OPTION_PRICE_MODE => $options[QuoteRequestAgentForm::OPTION_PRICE_MODE],
+                QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID => $options[QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID],
             ]
         );
 

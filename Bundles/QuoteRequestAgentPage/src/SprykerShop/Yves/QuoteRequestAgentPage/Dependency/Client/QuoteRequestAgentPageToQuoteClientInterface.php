@@ -7,8 +7,17 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+
 interface QuoteRequestAgentPageToQuoteClientInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function setQuote(QuoteTransfer $quoteTransfer);
+
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

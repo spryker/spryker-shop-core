@@ -29,7 +29,10 @@ class QuoteRequestAgentVersionSubForm extends AbstractType
             'data_class' => QuoteRequestVersionTransfer::class,
             'label' => false,
         ]);
-        $resolver->setRequired([QuoteRequestAgentForm::OPTION_PRICE_MODE]);
+        $resolver->setRequired([
+            QuoteRequestAgentForm::OPTION_PRICE_MODE,
+            QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID
+        ]);
     }
 
     /**
@@ -69,6 +72,7 @@ class QuoteRequestAgentVersionSubForm extends AbstractType
             QuoteRequestAgentVersionQuoteSubForm::class,
             [
                 QuoteRequestAgentForm::OPTION_PRICE_MODE => $options[QuoteRequestAgentForm::OPTION_PRICE_MODE],
+                QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID => $options[QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID],
             ]
         );
 

@@ -9,12 +9,14 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCompanyUserClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCustomerClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestAgentClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToStoreClientBridge;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToZedRequestClientBridge;
 
 class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -22,8 +24,10 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
     public const CLIENT_QUOTE_REQUEST_AGENT = 'CLIENT_QUOTE_REQUEST_AGENT';
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const CLIENT_CART = 'CLIENT_CART';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_STORE = 'CLIENT_STORE';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     public const PLUGINS_QUOTE_REQUEST_AGENT_FORM_METADATA_FIELD = 'PLUGINS_QUOTE_REQUEST_AGENT_FORM_METADATA_FIELD';
 
@@ -39,6 +43,8 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addQuoteRequestAgentClient($container);
         $container = $this->addCompanyUserClient($container);
         $container = $this->addQuoteClient($container);
+        $container = $this->addCartClient($container);
+        $container = $this->addZedRequestClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addStoreClient($container);
         $container = $this->addQuoteRequestAgentFormMetadataFieldPlugins($container);
@@ -97,6 +103,34 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
     {
         $container[static::CLIENT_QUOTE] = function (Container $container) {
             return new QuoteRequestAgentPageToQuoteClientBridge($container->getLocator()->quote()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCartClient(Container $container): Container
+    {
+        $container[static::CLIENT_CART] = function (Container $container) {
+            return new QuoteRequestAgentPageToCartClientBridge($container->getLocator()->cart()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addZedRequestClient(Container $container): Container
+    {
+        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+            return new QuoteRequestAgentPageToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
         };
 
         return $container;
