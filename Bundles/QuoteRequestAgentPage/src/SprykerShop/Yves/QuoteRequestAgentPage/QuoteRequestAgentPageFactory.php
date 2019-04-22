@@ -68,8 +68,7 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     {
         return new QuoteRequestAgentFormDataProvider(
             $this->getQuoteClient(),
-            $this->getCartClient(),
-            $this->getZedRequestClient()
+            $this->getCartClient()
         );
     }
 

@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteClientInterface;
-use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToZedRequestClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentForm;
 
 class QuoteRequestAgentFormDataProvider
@@ -26,23 +25,15 @@ class QuoteRequestAgentFormDataProvider
     protected $cartClient;
 
     /**
-     * @var \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToZedRequestClientInterface
-     */
-    protected $zedRequestClient;
-
-    /**
      * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteClientInterface $quoteClient
      * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface $cartClient
-     * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToZedRequestClientInterface $zedRequestClient
      */
     public function __construct(
         QuoteRequestAgentPageToQuoteClientInterface $quoteClient,
-        QuoteRequestAgentPageToCartClientInterface $cartClient,
-        QuoteRequestAgentPageToZedRequestClientInterface $zedRequestClient
+        QuoteRequestAgentPageToCartClientInterface $cartClient
     ) {
         $this->quoteClient = $quoteClient;
         $this->cartClient = $cartClient;
-        $this->zedRequestClient = $zedRequestClient;
     }
 
     /**
@@ -89,7 +80,6 @@ class QuoteRequestAgentFormDataProvider
 
         $this->quoteClient->setQuote($latestQuoteRequestVersion->getQuote());
         $quoteResponseTransfer = $this->cartClient->validateQuote();
-        $this->zedRequestClient->addResponseMessagesToMessenger();
 
         $this->quoteClient->setQuote($backupQuoteTransfer);
 
