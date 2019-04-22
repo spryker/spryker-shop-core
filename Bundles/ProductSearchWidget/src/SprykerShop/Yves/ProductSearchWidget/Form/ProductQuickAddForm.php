@@ -98,10 +98,10 @@ class ProductQuickAddForm extends AbstractType
      */
     protected function addQuantity(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_QUANTITY, IntegerType::class, [
+        $builder->add(static::FIELD_QUANTITY, QuantityType::class, [
                 'required' => true,
                 'label' => false,
-                'attr' => ['min' => 1],
+                'attr' => ['min' => 1, 'step' => 1],
                 'constraints' => [
                     $this->createNotBlankConstraint(static::ERROR_MESSAGE_QUANTITY_REQUIRED),
                     $this->createMinLengthConstraint(static::ERROR_MESSAGE_QUANTITY_REQUIRED),
