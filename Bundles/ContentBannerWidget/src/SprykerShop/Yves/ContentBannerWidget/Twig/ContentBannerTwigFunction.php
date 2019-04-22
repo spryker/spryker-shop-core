@@ -24,14 +24,14 @@ class ContentBannerTwigFunction extends TwigFunction
     protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<!-- %s is not supported name of template. -->';
 
     /**
-     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::TEMPLATE_IDENTIFIER_DEFAULT
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT
      */
-    protected const TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+    protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
 
     /**
-     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::TEMPLATE_IDENTIFIER_TOP_TITLE
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE
      */
-    protected const TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
+    protected const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
 
     /**
      * @var \Twig\Environment
@@ -104,8 +104,8 @@ class ContentBannerTwigFunction extends TwigFunction
     protected function getAvailableTemplates(): array
     {
         return [
-            static::TEMPLATE_IDENTIFIER_DEFAULT => '@ContentBannerWidget/views/banner/banner.twig',
-            static::TEMPLATE_IDENTIFIER_TOP_TITLE => '@ContentBannerWidget/views/banner/banner-top-title.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT => '@ContentBannerWidget/views/banner/banner.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE => '@ContentBannerWidget/views/banner/banner-top-title.twig',
         ];
     }
 
