@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\ResourceSharePage\Controller;
 use ArrayObject;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
+use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Generated\Shared\Transfer\RouteTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,6 +21,12 @@ use Symfony\Component\HttpFoundation\Request;
 class LinkController extends AbstractController
 {
     protected const MESSAGE_RESOURCE_SHARE_NO_ROUTE = 'resource-share.link.error.no-route';
+
+    /**
+     * @see \SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider::ROUTE_LOGIN
+     */
+    protected const ROUTE_LOGIN = 'login';
+    protected const BACK_TO_LINK_REDIRECT = 'backToLinkRedirect';
 
     /**
      * @param string $resourceShareUuid
@@ -49,33 +57,52 @@ class LinkController extends AbstractController
      */
     protected function executeIndexAction(string $resourceShareUuid, Request $request)
     {
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+        $loginLink = '';
+
         /** @var \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer */
         $resourceShareResponseTransfer = $this->getFactory()
             ->getResourceShareClient()
             ->activateResourceShare(
                 (new ResourceShareRequestTransfer())
+                    ->setCustomer($customerTransfer)
                     ->setUuid($resourceShareUuid)
             );
 
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             return [
                 'messages' => $resourceShareResponseTransfer->getErrorMessages(),
+                'loginLink' => $loginLink,
             ];
         }
 
-        $routeTransfer = null;
-
-        foreach ($this->getFactory()->getResourceShareRouterStrategyPlugin() as $strategyPlugin) {
-            if (!$strategyPlugin->isApplicable($resourceShareResponseTransfer->getResourceShare())) {
-                continue;
-            }
-
-            $routeTransfer = $strategyPlugin->resolveRoute($resourceShareResponseTransfer->getResourceShare());
-        }
+        $routeTransfer = $this->getFactory()
+            ->getRouteResolver()
+            ->resolveRoute($resourceShareResponseTransfer);
 
         if (!$routeTransfer) {
             return [
                 'messages' => $this->createNoRouteMessage(),
+                'loginLink' => $loginLink,
+            ];
+        }
+
+        if ($resourceShareResponseTransfer->getIsLoginRequired()) {
+            return [
+                'messages' => $resourceShareResponseTransfer->getErrorMessages(),
+                'loginLink' => $this->getApplication()->path(static::ROUTE_LOGIN, [
+                    static::BACK_TO_LINK_REDIRECT => $this->getApplication()->path(
+                        $routeTransfer->getRoute(),
+                        $routeTransfer->getParameters()
+                    ),
+                ]),
+            ];
+        }
+
+        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
+            return [
+                'messages' => $resourceShareResponseTransfer->getErrorMessages(),
+                'loginLink' => $loginLink,
             ];
         }
 
@@ -95,4 +122,6 @@ class LinkController extends AbstractController
 
         return $messages;
     }
+
+
 }

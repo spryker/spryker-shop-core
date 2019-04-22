@@ -5,7 +5,8 @@
 } %}
 
 {% define data = {
-    messages: _view.messages
+    messages: _view.messages,
+    loginLink: _view.loginLink
 } %}
 
 {% block content %}
@@ -25,7 +26,11 @@
 {% block sidebar %}{% endblock %}
 
 {% block header %}
-    {% embed organism('header') only %}
+    {% embed organism('header') with {
+        data: {
+            loginLink : data.loginLink
+        }
+    } only %}
         {% block body %}
             <div class="container">
                 <div class="{{ config.name }}__row grid grid--middle">
@@ -33,12 +38,17 @@
                         class: 'col col--sm-8 col--lg-4'
                     } only %}
                     {% embed organism('navigation-top') with {
-                        class: 'col col--sm-4 col--lg-8 text-right'
+                        class: 'col col--sm-4 col--lg-8 text-right',
+                        data: {
+                            loginLink : data.loginLink
+                        }
                     } only %}
                         {% block body %}
+                            {% if (data.loginLink) %}
                             <ul class="menu">
-                                <li class="menu__item"><a href="{{ url('login') }}">{{ 'customer.login'|trans }}</a></li>
+                                <li class="menu__item"><a href="{{ data.loginLink }}">{{ 'customer.login'|trans }}</a></li>
                             </ul>
+                            {% endif %}
                         {% endblock %}
                     {% endembed %}
                 </div>
