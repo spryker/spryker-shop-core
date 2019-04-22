@@ -71,10 +71,10 @@ class QuoteRequestAgentFormDataProvider
      */
     protected function isQuoteValid(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        $latestQuoteRequestVersion = $quoteRequestTransfer->requireLatestVersion()
-            ->getLatestVersion();
-
-        $latestQuoteRequestVersion->requireQuote();
+        $latestQuoteRequestVersion = $quoteRequestTransfer
+            ->requireLatestVersion()
+            ->getLatestVersion()
+                ->requireQuote();
 
         $backupQuoteTransfer = $this->quoteClient->getQuote();
 
