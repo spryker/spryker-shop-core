@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client;
 
-
 interface QuoteRequestAgentPageToCartClientInterface
 {
     /**
