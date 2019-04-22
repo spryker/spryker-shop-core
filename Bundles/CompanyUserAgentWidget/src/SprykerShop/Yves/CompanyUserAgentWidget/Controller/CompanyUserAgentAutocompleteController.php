@@ -52,7 +52,7 @@ class CompanyUserAgentAutocompleteController extends AbstractController
 
         $companyUserTransfers = $this->getFactory()
             ->getCompanyUserAgentClient()
-            ->getCompanyUserCollectionByQuery((new CompanyUserCriteriaTransfer())->fromArray($queryParams, true))
+            ->getCompanyUserCollectionByCriteria((new CompanyUserCriteriaTransfer())->fromArray($queryParams, true))
             ->getCompanyUsers()
             ->getArrayCopy();
 
