@@ -89,5 +89,5 @@ interface CartPageToCartClientInterface
     /**
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function unlockQuote(): QuoteResponseTransfer;
+    public function resetQuoteLock(): QuoteResponseTransfer;
 }

@@ -13,9 +13,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
  */
-class UnlockCartController extends AbstractController
+class CartLockController extends AbstractController
 {
-    protected const GLOSSARY_KEY_CART_PAGE_UNLOCK_SUCCESS = 'cart_page.quote.unlock.success';
+    protected const GLOSSARY_KEY_CART_PAGE_RESET_LOCK_SUCCESS = 'cart_page.quote.reset_lock.success';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
@@ -25,9 +25,9 @@ class UnlockCartController extends AbstractController
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(): RedirectResponse
+    public function resetLockAction(): RedirectResponse
     {
-        $response = $this->executeIndexAction();
+        $response = $this->executeResetLockAction();
 
         return $response;
     }
@@ -35,14 +35,14 @@ class UnlockCartController extends AbstractController
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeIndexAction(): RedirectResponse
+    protected function executeResetLockAction(): RedirectResponse
     {
         $quoteResponseTransfer = $this->getFactory()
             ->getCartClient()
-            ->unlockQuote();
+            ->resetQuoteLock();
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::GLOSSARY_KEY_CART_PAGE_UNLOCK_SUCCESS);
+            $this->addSuccessMessage(static::GLOSSARY_KEY_CART_PAGE_RESET_LOCK_SUCCESS);
         }
 
         return $this->redirectResponseInternal(static::ROUTE_CART);
