@@ -1,15 +1,36 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'product-quick-add-fields'
+    name: 'product-quick-add-fields',
+    tag: 'product-quick-add-fields'
 } %}
 
 {% define data = {
     form: required,
-    verticalLayout: false
+    verticalLayout: false,
+    minQuantity: 1,
+    maxQuantity: null,
+    quantityInterval: 1,
+    errorMessages: null,
+    warningMessages: null
 } %}
 
 {% block body %}
+    {% include molecule('ajax-provider') with {
+        class: config.jsName ~ '__provider ',
+        attributes: {
+            url: '/quick-add-to-cart/product-additional-data'
+        }
+    } only %}
+
+    {% include molecule('ajax-renderer') with {
+        class: config.jsName ~ '__renderer',
+        attributes: {
+            'provider-selector': '.' ~ config.jsName ~ '__provider',
+            'target-selector': '.' ~ config.jsName ~ '__target'
+        }
+    } only %}
+
     {% do data.form.sku.setRendered %}
 
     <div class="col col--sm-12 {{ data.verticalLayout ? 'spacing-bottom' : 'col--md-8 spacing-right spacing-right--inner' }}">
@@ -20,12 +41,36 @@
         {% endwidget %}
     </div>
 
-    <div class="col col--sm-12 {{ data.verticalLayout ? 'spacing-bottom' : 'col--md-4 spacing-right spacing-right--inner' }}">
+    <div class="col col--sm-12 {{ config.jsName }}__target {{ data.verticalLayout ? 'spacing-bottom' : 'col--md-4 spacing-right spacing-right--inner' }}">
         {{ form_widget(data.form.children.quantity, {
+            required: true,
             attr: {
                 class: config.jsName ~ '__quantity',
+                min: data.minQuantity,
+                max: data.maxQuantity,
+                step: data.quantityInterval,
+                disabled: data.form.sku.vars.value is empty,
+                value: data.minQuantity,
                 placeholder: 'product_quick_add_widget.form.quantity' | trans
             }}
         ) }}
     </div>
+
+    {% if data.errorMessages is not empty %}
+        <div class="{{ config.name }}__error spacing-bottom spacing-bottom--big">
+            {% for errorMessage in data.errorMessages %}
+                {{ errorMessage.value | trans }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if data.warningMessages is not empty %}
+        <div class="{{ config.name }}__warning spacing-bottom spacing-bottom--big">
+            {% for warningMessage in data.warningMessages %}
+                {{ warningMessage.value | trans(
+                    warningMessage.parameters
+                ) }}
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
