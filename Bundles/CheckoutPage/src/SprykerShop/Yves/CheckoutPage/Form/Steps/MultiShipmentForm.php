@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
@@ -24,6 +25,8 @@ class MultiShipmentForm extends AbstractType
     public const OPTION_SHIPMENT_METHODS = 'shipmentMethods';
 
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+    protected const VALIDATION_INVALID_DATE_MESSAGE = 'validation.invalid_date';
+    protected const VALIDATION_VALID_DATE_FORMAT = 'mm/dd/yyyy';
 
     /**
      * @return string
@@ -83,6 +86,9 @@ class MultiShipmentForm extends AbstractType
             'placeholder' => 'checkout.shipment.requested_delivery_date.placeholder',
             'required' => false,
             'input' => 'string',
+            'constraints' => [
+                $this->createDateConstraint(),
+            ],
         ]);
 
         return $this;
@@ -94,6 +100,14 @@ class MultiShipmentForm extends AbstractType
     protected function createNotBlankConstraint(): NotBlank
     {
         return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Date
+     */
+    protected function createDateConstraint(): Date
+    {
+        return new Date(['message' => sprintf(static::VALIDATION_INVALID_DATE_MESSAGE, static::VALIDATION_VALID_DATE_FORMAT)]);
     }
 
     /**
