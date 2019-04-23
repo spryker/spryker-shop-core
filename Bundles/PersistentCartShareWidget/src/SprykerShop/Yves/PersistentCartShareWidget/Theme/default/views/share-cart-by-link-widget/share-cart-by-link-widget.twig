@@ -9,6 +9,7 @@
         <h5>{{ 'persistent_cart_share.title' | trans }}</h5>
 
         {% include molecule('url-generator-mask' , 'PersistentCartShareWidget') with {
+            class: 'spacing-bottom',
             data: {
                 group: 'cart-share',
                 label: 'persistent_cart_share.external_users' | trans

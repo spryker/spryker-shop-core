@@ -6,10 +6,13 @@
 } %}
 
 {% define attributes = {
+    'success-copy-message': required,
+    'error-copy-message': required,
     'trigger-selector': required,
     'target-selector': required
 } %}
 
 {% block body %}
-    <p class="{{ config.jsName }}__message text-success text-small is-hidden">{{ 'persistent_cart_share.copy_success' | trans }}</p>
+    <p class="{{ config.jsName }}__success-message text-success text-small is-hidden">{{ attributes['success-copy-message'] }}</p>
+    <p class="{{ config.jsName }}__error-message text-warning text-small is-hidden">{{ attributes['error-copy-message'] }}</p>
 {% endblock %}

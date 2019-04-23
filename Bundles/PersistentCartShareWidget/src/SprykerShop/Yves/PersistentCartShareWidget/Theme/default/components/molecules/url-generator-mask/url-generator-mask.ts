@@ -27,7 +27,7 @@ export default class UrlGeneratorMask extends Component {
     /**
      * Sends data to the server usung ajaxProvider and rerender the form.
      */
-    async render() {
+    async render(): Promise<void> {
         await this.provider.fetch();
         mount();
     }
