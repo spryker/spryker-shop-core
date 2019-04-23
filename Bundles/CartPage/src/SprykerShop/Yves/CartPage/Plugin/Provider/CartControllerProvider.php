@@ -21,9 +21,9 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_CART_UPDATE = 'cart/update';
     public const ROUTE_CART_CHANGE_QUANTITY = 'cart/change/quantity';
     public const ROUTE_CART_ADD_ITEMS = 'cart/add-items';
-    public const ROUTE_CART_RESET_LOCK = 'cart/reset-lock';
     public const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
 
+    protected const ROUTE_CART_RESET_LOCK = 'cart/reset-lock';
 
     /**
      * @param \Silex\Application $app
@@ -74,7 +74,7 @@ class CartControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addCartResetLockRoute()
     {
-        $this->createPostController('/{cart}/reset-lock', self::ROUTE_CART_RESET_LOCK, 'CartPage', 'CartLock', 'resetLock')
+        $this->createPostController('/{cart}/reset-lock', static::ROUTE_CART_RESET_LOCK, 'CartPage', 'CartLock', 'resetLock')
             ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart');
 
