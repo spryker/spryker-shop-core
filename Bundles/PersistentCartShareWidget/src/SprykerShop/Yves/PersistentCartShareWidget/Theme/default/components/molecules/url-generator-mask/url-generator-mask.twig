@@ -20,7 +20,7 @@
         class: config.jsName ~ '__provider-' ~ attributes.permissionOption,
         attributes: {
             method: 'POST',
-            url: '/cart/create-link/' ~ attributes.idQuote ~ '/' ~ attributes.permissionOption
+            url: path('cart/create-link', { idQuote:attributes.idQuote, permissionOption: attributes.permissionOption })
         }
     } only %}
 
@@ -51,5 +51,5 @@
         }
     } only %}
 
-    <form class="form form--inline {{ config.jsName }}__actions-{{ attributes.permissionOption }}"></form>
+    <div class="{{ config.jsName }}__actions-{{ attributes.permissionOption }}"></div>
 {% endblock %}

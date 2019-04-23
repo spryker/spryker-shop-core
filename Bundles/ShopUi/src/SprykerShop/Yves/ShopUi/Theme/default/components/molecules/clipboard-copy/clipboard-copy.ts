@@ -40,8 +40,8 @@ export default class ClipboardCopy extends Component {
     /**
      * Performs the copy to the clipboard and tells the component to show the message.
      */
-    public copy(): void {
-        if (this.isCopyCommandSupported) {
+    copy(): void {
+        if(this.isCopyCommandSupported) {
             this.target.select();
             document.execCommand('copy');
             setTimeout(() => this.showMessageFor(this.successCopyMessage, this.defaultDuration));
@@ -55,7 +55,7 @@ export default class ClipboardCopy extends Component {
      * Shows the message during the time set.
      * @param duration A number value which defines the period of time for which the message is shown.
      */
-    public showMessageFor(message: HTMLElement, duration: number): void {
+    showMessageFor(message: HTMLElement, duration: number): void {
         message.classList.remove(HIDE_CLASS_NAME);
         this.durationTimeoutId = setTimeout(() => this.hideMessage(message), duration);
     }
@@ -63,7 +63,7 @@ export default class ClipboardCopy extends Component {
     /**
      * Hides the message.
      */
-    public hideMessage(message: HTMLElement): void {
+    hideMessage(message: HTMLElement): void {
         clearTimeout(this.durationTimeoutId);
         message.classList.add(HIDE_CLASS_NAME);
     }

@@ -1,32 +1,19 @@
 {% extends template('widget') %}
 
 {% define data = {
-    permissionOption: _view.permissionOption,
     links: _view.links,
     labels: _view.labels
 } %}
 
 {% block body %}
-    <div class="form__container">
+    <div class="form form--inline">
         {% for shareOption, link in data.links %}
-            <div class="form__fields grid grid--bottom">
-                <div class="form__field col col--sm-12">
-                    <label class="label" for="{{ shareOption }}">{{ data.labels[shareOption] | trans }}</label>
-                    <input id="{{ shareOption }}" class="js-clipboard-copy-target-{{ shareOption }} input input--expand" type="url" value="{{ link }}">
-                </div>
-            </div>
-            <div class="form__actions">
-                <button type="button" class="js-clipboard-copy-trigger-{{ shareOption }} form__action button">
-                    {{ 'persistent_cart_share.copy' | trans }}
-                </button>
-            </div>
-            {% include molecule('clipboard-copy') with {
-                class: 'col col--sm-12',
-                attributes: {
-                    'success-copy-message': 'copy_to_clipboard_success' | trans,
-                    'error-copy-message': 'copy_to_clipboard_error' | trans,
-                    'trigger-selector': '.js-clipboard-copy-trigger-' ~ shareOption,
-                    'target-selector': '.js-clipboard-copy-target-' ~ shareOption
+            {% include molecule('share-link' , 'PersistentCartShareWidget') with {
+                class: 'form__container',
+                data: {
+                    shareOption: shareOption,
+                    link: link,
+                    labels: data.labels
                 }
             } only %}
         {% endfor %}
