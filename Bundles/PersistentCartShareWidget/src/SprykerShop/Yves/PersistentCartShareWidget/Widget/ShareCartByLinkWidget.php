@@ -54,7 +54,7 @@ class ShareCartByLinkWidget extends AbstractWidget
      */
     protected function addCartShareOptionsParameter(): void
     {
-        $this->addParameter(static::CART_SHARE_OPTIONS_PARAMETER, $this->getCartShareOptions());
+        $this->addParameter(static::CART_SHARE_OPTIONS_PARAMETER, $this->getCartShareOptionsGroups());
     }
 
     /**
@@ -87,12 +87,8 @@ class ShareCartByLinkWidget extends AbstractWidget
     /**
      * @return array
      */
-    protected function getCartShareOptions(): array
+    protected function getCartShareOptionsGroups(): array
     {
-        return [
-            'external' => 'persistent_cart_share.external_users',
-            'internal' => 'persistent_cart_share.internal_users',
-        ];
-        //return $this->getFactory()->getPersistentCartShareClient()->getCartShareOptions();
+        return $this->getFactory()->getPersistentCartShareHelper()->generateShareOptionGroups();
     }
 }

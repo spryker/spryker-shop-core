@@ -7,10 +7,20 @@
 
 namespace SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+
 interface PersistentCartShareWidgetToPersistentCartShareClientInterface
 {
     /**
      * @return array
      */
-    public function getCartShareOptions();
+    public function getCartShareOptions(): array;
+
+    /**
+     * @param int $idQuote
+     * @param string $shareOption
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    public function generateCartResourceShare(int $idQuote, string $shareOption): ResourceShareResponseTransfer;
 }
