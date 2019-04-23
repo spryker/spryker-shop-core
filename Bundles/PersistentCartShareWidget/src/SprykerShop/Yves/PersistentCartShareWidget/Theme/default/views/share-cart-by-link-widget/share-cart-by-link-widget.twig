@@ -1,32 +1,32 @@
 {% extends template('widget') %}
 
 {% define data = {
-    idQuote: _widget.idQuote
+    cart: _widget.cart,
+    isQuoteOwner: _widget.isQuoteOwner
+    cartShareOptions: _widget.cartShareOptions
 } %}
 
 {% block body %}
-    <h5>{{ 'persistent_cart_share.title' | trans }}</h5>
+    {% if data.isQuoteOwner and data.cart.idQuote is not empty %}
+        <div class="easy-cart-share">
+            <h5>{{ 'persistent_cart_share.title' | trans }}</h5>
 
-    {% include molecule('url-generator-mask' , 'PersistentCartShareWidget') with {
-        class: 'spacing-bottom',
-        data: {
-            group: 'cart-share',
-            label: 'persistent_cart_share.external_users' | trans
-        },
-        attributes: {
-            idQuote: data.idQuote,
-            permissionOption: 'external'
-        }
-    } only %}
+            {% for permissionOption, permissionLabel in data.cartShareOptions %}
 
-    {% include molecule('url-generator-mask' , 'PersistentCartShareWidget') with {
-        data: {
-            group: 'cart-share',
-            label: 'persistent_cart_share.internal_users' | trans
-        },
-        attributes: {
-            idQuote: data.idQuote,
-            permissionOption: 'internal'
-        }
-    } only %}
+                {% include molecule('url-generator-mask' , 'PersistentCartShareWidget') with {
+                    class: 'spacing-bottom',
+                    data: {
+                        group: 'cart-share',
+                        label: permissionLabel | trans
+                    },
+                    attributes: {
+                        idQuote: data.cart.idQuote,
+                        permissionOption: permissionOption
+                    }
+                } only %}
+
+            {% endfor %}
+
+        </div>
+    {% endif %}
 {% endblock %}
