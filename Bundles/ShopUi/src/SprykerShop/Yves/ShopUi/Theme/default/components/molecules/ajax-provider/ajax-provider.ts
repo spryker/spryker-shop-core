@@ -56,6 +56,7 @@ export default class AjaxProvider extends Component {
 
         return new Promise<T>((resolve, reject) => {
             this.xhr.open(this.method, this.url);
+            this.headers.forEach((value: string, key: string) => this.xhr.setRequestHeader(key, value));
             this.xhr.responseType = this.responseType;
             this.xhr.addEventListener('load', (event: Event) => this.onRequestLoad(resolve, reject, event));
             this.xhr.addEventListener('error', (event: Event) => this.onRequestError(reject, event));
@@ -101,8 +102,9 @@ export default class AjaxProvider extends Component {
 
         const queryStringParams = [];
 
-        this.queryParams.forEach((value: String, key: String) => {
-            queryStringParams.push(`${key}=${value}`);
+        this.queryParams.forEach((value: string, key: String) => {
+            const encodeValue = encodeURIComponent(value);
+            queryStringParams.push(`${key}=${encodeValue}`);
         });
 
         return url + '?' + queryStringParams.join('&');

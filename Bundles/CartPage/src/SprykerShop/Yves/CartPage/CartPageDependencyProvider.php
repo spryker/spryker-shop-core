@@ -14,12 +14,14 @@ use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientBrid
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientBridge;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToQuoteClientBridge;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientBridge;
 use SprykerShop\Yves\CartPage\Plugin\CartVariantAttributeMapperPlugin;
 
 class CartPageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CART = 'CLIENT_CART';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_AVAILABILITY = 'CLIENT_AVAILABILITY';
     public const CLIENT_AVAILABILITY_STORAGE = 'CLIENT_AVAILABILITY_STORAGE';
@@ -37,6 +39,7 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addCartClient($container);
+        $container = $this->addQuoteClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addAvailabilityClient($container);
         $container = $this->addAvailabilityStorageClient($container);
@@ -58,6 +61,20 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::CLIENT_CART] = function (Container $container) {
             return new CartPageToCartClientBridge($container->getLocator()->cart()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuoteClient(Container $container): Container
+    {
+        $container[static::CLIENT_QUOTE] = function (Container $container) {
+            return new CartPageToQuoteClientBridge($container->getLocator()->quote()->client());
         };
 
         return $container;

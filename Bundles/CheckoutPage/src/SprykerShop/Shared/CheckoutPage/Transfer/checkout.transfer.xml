@@ -99,4 +99,9 @@
         <property name="groups" type="ShipmentGroup[]" singular="group" />
     </transfer>
 
+    <transfer name="QuoteValidationResponse">
+        <property name="isSuccessful" type="bool" />
+        <property name="messages" type="Message[]"  singular="message" />
+    </transfer>
+
 </transfers>

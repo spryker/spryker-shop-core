@@ -1,6 +1,6 @@
 # ProductSetListPage Module
 
-{{ADD DESCRIPTION HERE}}
+ProductSetListPage module.
 
 ## Installation
 

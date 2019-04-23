@@ -1,1 +1,1 @@
-Creates a custom element that adds/removes a class to/from the DOM-elements specified by the selector on change.
+Provides functionality to check selected address in select with address options and add/remove specific class from related address container on change.

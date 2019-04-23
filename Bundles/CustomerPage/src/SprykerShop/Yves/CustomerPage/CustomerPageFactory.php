@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Shared\Twig\TwigFunction;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
@@ -22,6 +23,8 @@ use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationSuccessH
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerSecurityServiceProvider;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerUserProvider;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
+use SprykerShop\Yves\CustomerPage\Twig\GetUsernameTwigFunction;
+use SprykerShop\Yves\CustomerPage\Twig\IsLoggedTwigFunction;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
@@ -277,6 +280,22 @@ class CustomerPageFactory extends AbstractFactory
     public function getAfterCustomerAuthenticationSuccessPlugins(): array
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_AFTER_CUSTOMER_AUTHENTICATION_SUCCESS);
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\TwigFunction
+     */
+    public function createGetUsernameTwigFunction(): TwigFunction
+    {
+        return new GetUsernameTwigFunction($this->getCustomerClient());
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\TwigFunction
+     */
+    public function createIsLoggedTwigFunction(): TwigFunction
+    {
+        return new IsLoggedTwigFunction($this->getCustomerClient());
     }
 
     /**

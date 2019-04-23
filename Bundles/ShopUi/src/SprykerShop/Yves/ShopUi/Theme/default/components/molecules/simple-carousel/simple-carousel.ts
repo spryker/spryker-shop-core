@@ -27,12 +27,12 @@ export default class SimpleCarousel extends Component {
     slideWidth: number
 
     /**
-     * Thr dots elements switches the slides.
+     * Thr dot-switch elements below the slides.
      */
     dots: HTMLElement[]
 
     /**
-     * The number of the views.
+     * The number of views.
      */
     viewsCount: number
 
@@ -76,7 +76,7 @@ export default class SimpleCarousel extends Component {
     }
 
     /**
-     * Gets a number of the slides.
+     * Gets the number of slides.
      */
     getViewsCount(): number {
         return Math.ceil((this.slidesCount - this.slidesToShow) / this.slidesToScroll) + 1;
@@ -110,7 +110,7 @@ export default class SimpleCarousel extends Component {
     }
 
     /**
-     * Switches a slide to a previous one.
+     * Switches the current slide to the previous one.
      */
     loadPrevViewIndex(): void {
         this.viewCurrentIndex = this.viewCurrentIndex - 1;
@@ -121,7 +121,7 @@ export default class SimpleCarousel extends Component {
     }
 
     /**
-     * Switches a slide to a next one.
+     * Switches the current slide to the next one.
      */
     loadNextViewIndex(): void {
         this.viewCurrentIndex = this.viewCurrentIndex + 1;
@@ -132,7 +132,7 @@ export default class SimpleCarousel extends Component {
     }
 
     /**
-     * Switches a slide based on provided dot element.
+     * Switches to the slide based on the provided dot element.
      * @param dot HTMLElement corresponding to the new target slide that has to be loaded.
      */
     loadViewIndexFromDot(dot: HTMLElement): void {

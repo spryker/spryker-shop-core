@@ -14,10 +14,12 @@ use Generated\Shared\Transfer\SpyCmsBlockEntityTransfer;
 use Silex\Application;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
-use Twig_Environment;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
+ * @deprecated Use `SprykerShop\Yves\CmsBlockWidget\Plugin\Twig\TwigCmsBlockWidgetPlugin` instead.
+ *
  * @method \SprykerShop\Yves\CmsBlockWidget\CmsBlockWidgetFactory getFactory()
  */
 class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
@@ -38,7 +40,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     /**
      * @param \Silex\Application $application
      *
-     * @return \Twig_SimpleFunction[]
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions(Application $application)
     {
@@ -46,7 +48,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
         $this->storeName = $application['store'];
 
         return [
-            new Twig_SimpleFunction('spyCmsBlock', [
+            new TwigFunction('spyCmsBlock', [
                 $this,
                 'renderCmsBlock',
             ], [
@@ -58,13 +60,13 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param array $context
      * @param array $blockOptions
      *
      * @return string
      */
-    public function renderCmsBlock(Twig_Environment $twig, array $context, array $blockOptions = [])
+    public function renderCmsBlock(Environment $twig, array $context, array $blockOptions = [])
     {
         $blocks = $this->getBlockDataByOptions($blockOptions);
         $rendered = '';
