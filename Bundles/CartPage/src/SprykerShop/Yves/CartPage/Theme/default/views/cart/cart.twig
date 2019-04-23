@@ -130,7 +130,7 @@
                         {% endwidget %}
                     {% endif %}
 
-                    {% widget 'ShareCartByLinkWidget' args [data.cart.idQuote] only %}
+                    {% widget 'ShareCartByLinkWidget' args [data.cart] only %}
                         {% block body %}
                             {{ parent() }}
                             <hr>
