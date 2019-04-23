@@ -7,10 +7,10 @@
 
 namespace SprykerShop\Yves\HeartbeatPage\Plugin\Router;
 
-use Silex\Application;
-use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
+use Spryker\Shared\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 
-class HeartbeatPageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
+class HeartbeatPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     public const ROUTE_HEARTBEAT = 'heartbeat';
 
@@ -19,9 +19,10 @@ class HeartbeatPageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\Route
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    public function addRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $routeCollection = $this->addHeartbeatRoute($routeCollection);
+
         return $routeCollection;
     }
 
@@ -30,10 +31,11 @@ class HeartbeatPageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\Route
      *
      * @return \Spryker\Shared\Router\Route\RouteCollection
      */
-    protected function addHeartbeatRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addHeartbeatRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/{heartbeat}', 'HeartbeatPage', 'Heartbeat', 'indexAction');
+        $route = $this->buildRoute('/heartbeat', 'HeartbeatPage', 'Heartbeat', 'indexAction');
         $routeCollection->add(static::ROUTE_HEARTBEAT, $route);
+
         return $routeCollection;
     }
 }
