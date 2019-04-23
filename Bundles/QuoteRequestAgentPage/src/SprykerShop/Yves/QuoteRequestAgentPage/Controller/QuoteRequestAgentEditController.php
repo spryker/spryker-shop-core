@@ -111,8 +111,8 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
         }
 
         $this->getFactory()
-            ->getZedRequestClient()
-            ->addResponseMessagesToMessenger();
+            ->getQuoteRequestAgentClient()
+            ->updateQuoteRequest($quoteRequestTransfer);
 
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),

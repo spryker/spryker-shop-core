@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+
 class QuoteRequestAgentPageToCartClientBridge implements QuoteRequestAgentPageToCartClientInterface
 {
     /**
@@ -20,6 +23,16 @@ class QuoteRequestAgentPageToCartClientBridge implements QuoteRequestAgentPageTo
     public function __construct($cartClient)
     {
         $this->cartClient = $cartClient;
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function validateSpecificQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->cartClient->validateSpecificQuote($quoteTransfer);
     }
 
     /**

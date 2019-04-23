@@ -9,30 +9,21 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface;
-use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentForm;
 
 class QuoteRequestAgentFormDataProvider
 {
-    /**
-     * @var \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteClientInterface
-     */
-    protected $quoteClient;
-
     /**
      * @var \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface
      */
     protected $cartClient;
 
     /**
-     * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteClientInterface $quoteClient
      * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface $cartClient
      */
     public function __construct(
-        QuoteRequestAgentPageToQuoteClientInterface $quoteClient,
         QuoteRequestAgentPageToCartClientInterface $cartClient
     ) {
-        $this->quoteClient = $quoteClient;
         $this->cartClient = $cartClient;
     }
 
@@ -76,13 +67,7 @@ class QuoteRequestAgentFormDataProvider
             ->getLatestVersion()
                 ->requireQuote();
 
-        $backupQuoteTransfer = $this->quoteClient->getQuote();
-
-        $this->quoteClient->setQuote($latestQuoteRequestVersion->getQuote());
-        $quoteResponseTransfer = $this->cartClient->validateQuote();
-
-        $this->quoteClient->setQuote($backupQuoteTransfer);
-
-        return $quoteResponseTransfer->getIsSuccessful();
+        return $this->cartClient->validateSpecificQuote($latestQuoteRequestVersion->getQuote())
+            ->getIsSuccessful();
     }
 }

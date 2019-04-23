@@ -7,8 +7,16 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+
 interface QuoteRequestAgentPageToCartClientInterface
 {
+    /**
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function validateSpecificQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
     /**
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */

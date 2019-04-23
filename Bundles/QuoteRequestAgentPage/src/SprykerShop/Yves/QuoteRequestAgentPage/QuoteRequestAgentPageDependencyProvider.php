@@ -27,7 +27,6 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
     public const CLIENT_CART = 'CLIENT_CART';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_STORE = 'CLIENT_STORE';
-    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     public const PLUGINS_QUOTE_REQUEST_AGENT_FORM_METADATA_FIELD = 'PLUGINS_QUOTE_REQUEST_AGENT_FORM_METADATA_FIELD';
 
@@ -44,7 +43,6 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addCompanyUserClient($container);
         $container = $this->addQuoteClient($container);
         $container = $this->addCartClient($container);
-        $container = $this->addZedRequestClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addStoreClient($container);
         $container = $this->addQuoteRequestAgentFormMetadataFieldPlugins($container);
@@ -117,20 +115,6 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
     {
         $container[static::CLIENT_CART] = function (Container $container) {
             return new QuoteRequestAgentPageToCartClientBridge($container->getLocator()->cart()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addZedRequestClient(Container $container): Container
-    {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
-            return new QuoteRequestAgentPageToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
         };
 
         return $container;

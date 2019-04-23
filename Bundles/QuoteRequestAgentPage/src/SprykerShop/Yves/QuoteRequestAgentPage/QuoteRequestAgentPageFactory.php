@@ -67,7 +67,6 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     public function createQuoteRequestAgentFormDataProvider(): QuoteRequestAgentFormDataProvider
     {
         return new QuoteRequestAgentFormDataProvider(
-            $this->getQuoteClient(),
             $this->getCartClient()
         );
     }
@@ -136,14 +135,6 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     public function getCartClient(): QuoteRequestAgentPageToCartClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::CLIENT_CART);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToZedRequestClientInterface
-     */
-    public function getZedRequestClient(): QuoteRequestAgentPageToZedRequestClientInterface
-    {
-        return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::CLIENT_ZED_REQUEST);
     }
 
     /**
