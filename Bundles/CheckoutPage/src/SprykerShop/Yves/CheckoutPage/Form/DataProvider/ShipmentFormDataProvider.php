@@ -216,7 +216,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     protected function getTranslatedDayName(int $deliveryTime): string
     {
-        if($deliveryTime === 1) {
+        if ($deliveryTime === 1) {
             return $this->translate('page.checkout.shipping.day');
         }
 
