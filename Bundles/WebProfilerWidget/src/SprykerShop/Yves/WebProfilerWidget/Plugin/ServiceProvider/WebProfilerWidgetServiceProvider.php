@@ -11,7 +11,6 @@ use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Symfony\Component\Routing\RouteCollection;
 
 /**
  * @method \SprykerShop\Yves\WebProfilerWidget\WebProfilerWidgetFactory getFactory()
@@ -57,7 +56,7 @@ class WebProfilerWidgetServiceProvider extends AbstractPlugin implements Service
      *
      * @return \Silex\ControllerCollection|null
      */
-    public function connect(Application $app, ?RouteCollection $routeCollection = null)
+    public function connect(Application $app)
     {
         if ($this->getConfig()->isWebProfilerEnabled()) {
             foreach ($this->getWebProfiler() as $webProfiler) {

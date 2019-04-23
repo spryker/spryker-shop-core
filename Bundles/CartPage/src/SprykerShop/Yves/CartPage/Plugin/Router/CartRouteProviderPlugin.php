@@ -140,16 +140,14 @@ class CartRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addCartUpdateRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/cart/update/{sku}', 'CartPage', 'Cart', 'update')
-            ->assert('sku', self::SKU_PATTERN)
-            ->convert('quantity', [$this, 'getQuantityFromRequest']);
-
-        $route->convert('groupKey', [$this, 'getGroupKeyFromRequest'])
-            ->convert('selectedAttributes', [$this, 'getSelectedAttributesFromRequest'])
-            ->convert('preselectedAttributes', [$this, 'getPreSelectedAttributesFromRequest'])
-            ->convert('optionValueIds', [$this, 'getProductOptionsFromRequest'])
-            ->method('POST');
-
+        $route = $this->buildRoute('/cart/update/{sku}', 'CartPage', 'Cart', 'updateAction');
+        $route = $route->assert('sku', self::SKU_PATTERN);
+        $route = $route->convert('quantity', [$this, 'getQuantityFromRequest']);
+        $route = $route->convert('groupKey', [$this, 'getGroupKeyFromRequest']);
+        $route = $route->convert('selectedAttributes', [$this, 'getSelectedAttributesFromRequest']);
+        $route = $route->convert('preselectedAttributes', [$this, 'getPreSelectedAttributesFromRequest']);
+        $route = $route->convert('optionValueIds', [$this, 'getProductOptionsFromRequest']);
+        $route = $route->method('POST');
         $routeCollection->add(static::ROUTE_CART_UPDATE, $route);
 
         return $routeCollection;
