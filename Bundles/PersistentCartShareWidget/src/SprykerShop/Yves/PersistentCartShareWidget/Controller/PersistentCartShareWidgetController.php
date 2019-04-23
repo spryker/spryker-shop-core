@@ -34,36 +34,24 @@ class PersistentCartShareWidgetController extends AbstractController
 
     /**
      * @param int $idQuote
-     * @param string $permissionOption
+     * @param string $permissionOptionGroup
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeIndexAction(int $idQuote, string $permissionOption, Request $request)
+    protected function executeIndexAction(int $idQuote, string $permissionOptionGroup, Request $request)
     {
-        if ($permissionOption === 'internal') {
-            $links = [
-                'READ_ONLY' => 'http://www.de.suite-nonsplit.local/read-only',
-                'FULL_ACCESS' => 'http://www.de.suite-nonsplit.local/full-access',
-            ];
-            $labels = [
-                'READ_ONLY' => 'persistent_cart_share.share_options.READ_ONLY',
-                'FULL_ACCESS' => 'persistent_cart_share.share_options.FULL_ACCESS',
-            ];
-        } else {
-            $links = [
-                'PREVIEW' => 'http://www.de.suite-nonsplit.local/preview',
-            ];
-            $labels = [
-                'PREVIEW' => '',
-            ];
-        }
+        $cartShareOptions = $this->getFactory()->getPersistentCartShareClient()->getCartShareOptions();
 
         return [
             'idQuote' => $idQuote,
-            'permissionOption' => $permissionOption,
-            'links' => $links,
-            'labels' => $labels,
+            'permissionOption' => $permissionOptionGroup,
+            'links' => $this->getFactory()
+                ->getPersistentCartShareHelper()
+                ->generateLinks($cartShareOptions, $idQuote, $permissionOptionGroup),
+            'labels' => $this->getFactory()
+                ->getPersistentCartShareHelper()
+                ->generateLabels($cartShareOptions, $idQuote, $permissionOptionGroup),
         ];
     }
 

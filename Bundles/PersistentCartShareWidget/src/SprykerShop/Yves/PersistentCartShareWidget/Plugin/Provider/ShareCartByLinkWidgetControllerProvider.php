@@ -32,8 +32,7 @@ class ShareCartByLinkWidgetControllerProvider extends AbstractYvesControllerProv
         $this->createController('/{PersistentCartShareWidget}/create-link/{idQuote}/{permissionOption}', static::CART_CREATE_LINK, 'PersistentCartShareWidget', 'PersistentCartShareWidget')
             ->assert('PersistentCartShareWidget', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('PersistentCartShareWidget', 'cart')
-            ->assert('idQuote', '\d+')
-            ->assert('permissionOption', 'external|internal');
+            ->assert('idQuote', '\d+');
 
         return $this;
     }
