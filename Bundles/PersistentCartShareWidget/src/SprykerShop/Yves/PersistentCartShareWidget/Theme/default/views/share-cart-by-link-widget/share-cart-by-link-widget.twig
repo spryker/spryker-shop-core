@@ -1,19 +1,32 @@
 {% extends template('widget') %}
 
 {% define data = {
-    idQuote: _view.idQuote,
-    permissionOption: _view.permissionOption,
-    links: _view.links,
+    cart: _widget.cart,
+    isQuoteOwner: _widget.isQuoteOwner
+    cartShareOptions: _widget.cartShareOptions
 } %}
 
 {% block body %}
-    <ul>
-    {% for share_option, link in data.links %}
-        <li class="grid grid--middle share-option-{{ share_option }}">
-            <div class="col text-right spacing-right spacing-right--big">
-                <input type="url" value="{{ link }}" name="share_option[{{ share_option }}]" size="50">
-            </div>
-        </li>
-    {% endfor %}
-    </ul>
+    {% if data.isQuoteOwner and data.cart.idQuote is not empty %}
+        <div class="easy-cart-share">
+            <h5>{{ 'persistent_cart_share.title' | trans }}</h5>
+
+            {% for permissionOption, permissionLabel in data.cartShareOptions %}
+
+                {% include molecule('url-generator-mask' , 'PersistentCartShareWidget') with {
+                    class: 'spacing-bottom',
+                    data: {
+                        group: 'cart-share',
+                        label: permissionLabel | trans
+                    },
+                    attributes: {
+                        idQuote: data.cart.idQuote,
+                        permissionOption: permissionOption
+                    }
+                } only %}
+
+            {% endfor %}
+
+        </div>
+    {% endif %}
 {% endblock %}
