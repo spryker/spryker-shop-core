@@ -151,7 +151,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
                 $shipmentDescription,
                 $this->translate('page.checkout.shipping.delivery_time'),
                 $deliveryTime,
-                ($deliveryTime === 1) ? 'day' : 'days'
+                $this->getTranslatedDayName($deliveryTime)
             );
         }
 
@@ -207,5 +207,19 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected function translate($translationKey)
     {
         return $this->glossaryStorageClient->translate($translationKey, $this->store->getCurrentLocale());
+    }
+
+    /**
+     * @param int $deliveryTime
+     *
+     * @return string
+     */
+    protected function getTranslatedDayName(int $deliveryTime): string
+    {
+        if($deliveryTime === 1) {
+            return $this->translate('page.checkout.shipping.day');
+        }
+
+        return $this->translate('page.checkout.shipping.days');
     }
 }
