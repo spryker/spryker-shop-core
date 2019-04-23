@@ -14,7 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
@@ -25,8 +26,8 @@ class MultiShipmentForm extends AbstractType
     public const OPTION_SHIPMENT_METHODS = 'shipmentMethods';
 
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
-    protected const VALIDATION_INVALID_DATE_MESSAGE = 'validation.invalid_date';
-    protected const VALIDATION_VALID_DATE_FORMAT = 'mm/dd/yyyy';
+    protected const VALIDATION_INVALID_DATE_TIME_MESSAGE = 'validation.invalid_date';
+    protected const VALIDATION_VALID_DATE_TIME_FORMAT = 'mm/dd/yyyy';
 
     /**
      * @return string
@@ -87,7 +88,8 @@ class MultiShipmentForm extends AbstractType
             'required' => false,
             'input' => 'string',
             'constraints' => [
-                $this->createDateConstraint(),
+                $this->createDateTimeConstraint(),
+                $this->createDateTimeGreaterThanOrEqualConstraint('today'),
             ],
         ]);
 
@@ -103,11 +105,24 @@ class MultiShipmentForm extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraints\Date
+     * @return \Symfony\Component\Validator\Constraints\DateTime
      */
-    protected function createDateConstraint(): Date
+    protected function createDateTimeConstraint(): DateTime
     {
-        return new Date(['message' => sprintf(static::VALIDATION_INVALID_DATE_MESSAGE, static::VALIDATION_VALID_DATE_FORMAT)]);
+        return new DateTime([
+            'format' => static::VALIDATION_VALID_DATE_TIME_FORMAT,
+            'message' => sprintf(static::VALIDATION_INVALID_DATE_TIME_MESSAGE, static::VALIDATION_VALID_DATE_TIME_FORMAT),
+        ]);
+    }
+
+    /**
+     * @param string $minDate
+     *
+     * @return \Symfony\Component\Validator\Constraints\GreaterThanOrEqual
+     */
+    protected function createDateTimeGreaterThanOrEqualConstraint(string $minDate): GreaterThanOrEqual
+    {
+        return new GreaterThanOrEqual($minDate);
     }
 
     /**
