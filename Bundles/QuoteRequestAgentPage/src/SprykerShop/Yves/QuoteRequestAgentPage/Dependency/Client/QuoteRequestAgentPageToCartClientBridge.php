@@ -26,7 +26,7 @@ class QuoteRequestAgentPageToCartClientBridge implements QuoteRequestAgentPageTo
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */

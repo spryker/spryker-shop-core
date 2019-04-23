@@ -110,10 +110,6 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
             return $this->processQuoteRequestAgentForm($quoteRequestForm, $request);
         }
 
-        $this->getFactory()
-            ->getQuoteRequestAgentClient()
-            ->updateQuoteRequest($quoteRequestTransfer);
-
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
         ];
