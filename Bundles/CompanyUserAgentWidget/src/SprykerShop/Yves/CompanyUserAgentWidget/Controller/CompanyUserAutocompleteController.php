@@ -16,7 +16,7 @@ use Symfony\Component\Validator\ConstraintViolationList;
 /**
  * @method \SprykerShop\Yves\CompanyUserAgentWidget\CompanyUserAgentWidgetFactory getFactory()
  */
-class CompanyUserAgentAutocompleteController extends AbstractController
+class CompanyUserAutocompleteController extends AbstractController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

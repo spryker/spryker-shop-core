@@ -18,7 +18,7 @@ class UnlockCartController extends AbstractController
     protected const GLOSSARY_KEY_CART_PAGE_UNLOCK_SUCCESS = 'cart_page.quote.unlock.success';
 
     /**
-     * @see \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
      */
     protected const ROUTE_CART = 'cart';
 

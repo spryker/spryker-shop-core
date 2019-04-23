@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class CompanyUserAgentWidgetControllerProvider extends AbstractYvesControllerProvider
 {
-    protected const ROUTE_COMPANY_USER_AGENT_AUTOCOMPLETE = 'agent/company-user/autocomplete';
+    protected const ROUTE_COMPANY_USER_AUTOCOMPLETE = 'agent/company-user/autocomplete';
 
     /**
      * @param \Silex\Application $app
@@ -21,17 +21,17 @@ class CompanyUserAgentWidgetControllerProvider extends AbstractYvesControllerPro
      */
     protected function defineControllers(Application $app): void
     {
-        $this->addCompanyUserAgentAutocompleteRoute();
+        $this->addCompanyUserAutocompleteRoute();
     }
 
     /**
-     * @uses \SprykerShop\Yves\CompanyUserAgentWidget\Controller\CompanyUserAgentViewController::indexAction()
+     * @uses \SprykerShop\Yves\CompanyUserAgentWidget\Controller\CompanyUserAutocompleteController::indexAction()
      *
      * @return $this
      */
-    protected function addCompanyUserAgentAutocompleteRoute()
+    protected function addCompanyUserAutocompleteRoute()
     {
-        $this->createController('/{agent}/company-user/autocomplete', static::ROUTE_COMPANY_USER_AGENT_AUTOCOMPLETE, 'CompanyUserAgentWidget', 'CompanyUserAgentAutocomplete')
+        $this->createController('/{agent}/company-user/autocomplete', static::ROUTE_COMPANY_USER_AUTOCOMPLETE, 'CompanyUserAgentWidget', 'CompanyUserAutocomplete')
             ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
             ->value('agent', 'agent');
 

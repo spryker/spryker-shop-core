@@ -9,8 +9,8 @@ namespace SprykerShop\Yves\CompanyUserAgentWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CompanyUserAgentWidget\Dependency\Client\CompanyUserAgentWidgetToCompanyUserAgentClientInterface;
-use SprykerShop\Yves\CompanyUserAgentWidget\Validator\CompanyUserAgentAutocompleteValidator;
-use SprykerShop\Yves\CompanyUserAgentWidget\Validator\CompanyUserAgentAutocompleteValidatorInterface;
+use SprykerShop\Yves\CompanyUserAgentWidget\Validator\CompanyUserAutocompleteValidator;
+use SprykerShop\Yves\CompanyUserAgentWidget\Validator\CompanyUserAutocompleteValidatorInterface;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -20,11 +20,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class CompanyUserAgentWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\CompanyUserAgentWidget\Validator\CompanyUserAgentAutocompleteValidatorInterface
+     * @return \SprykerShop\Yves\CompanyUserAgentWidget\Validator\CompanyUserAutocompleteValidatorInterface
      */
-    public function createCompanyUserAutocompleteValidator(): CompanyUserAgentAutocompleteValidatorInterface
+    public function createCompanyUserAutocompleteValidator(): CompanyUserAutocompleteValidatorInterface
     {
-        return new CompanyUserAgentAutocompleteValidator(
+        return new CompanyUserAutocompleteValidator(
             $this->getValidator()
         );
     }
