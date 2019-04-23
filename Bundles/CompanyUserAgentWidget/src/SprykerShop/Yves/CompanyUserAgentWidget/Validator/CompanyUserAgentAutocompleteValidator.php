@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class CompanyUserAgentAutocompleteValidator implements CompanyUserAgentAutocompleteValidatorInterface
+class CompanyUserAutocompleteValidator implements CompanyUserAutocompleteValidatorInterface
 {
     /**
      * @var \Symfony\Component\Validator\Validator\ValidatorInterface

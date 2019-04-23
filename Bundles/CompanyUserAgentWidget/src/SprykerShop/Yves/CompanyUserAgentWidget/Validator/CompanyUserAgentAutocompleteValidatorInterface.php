@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CompanyUserAgentWidget\Validator;
 
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-interface CompanyUserAgentAutocompleteValidatorInterface
+interface CompanyUserAutocompleteValidatorInterface
 {
     /**
      * @param array $query
