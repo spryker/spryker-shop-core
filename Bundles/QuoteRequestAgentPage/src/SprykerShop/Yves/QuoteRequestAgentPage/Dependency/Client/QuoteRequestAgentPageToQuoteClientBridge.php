@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+
 class QuoteRequestAgentPageToQuoteClientBridge implements QuoteRequestAgentPageToQuoteClientInterface
 {
     /**
@@ -20,6 +22,16 @@ class QuoteRequestAgentPageToQuoteClientBridge implements QuoteRequestAgentPageT
     public function __construct($quoteClient)
     {
         $this->quoteClient = $quoteClient;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function setQuote(QuoteTransfer $quoteTransfer)
+    {
+        $this->quoteClient->setQuote($quoteTransfer);
     }
 
     /**
