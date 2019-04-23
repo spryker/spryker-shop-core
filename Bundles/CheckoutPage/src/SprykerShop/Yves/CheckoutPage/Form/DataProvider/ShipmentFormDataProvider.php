@@ -20,6 +20,8 @@ use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
 
 class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
 {
+    protected const ONE_DAY = 1;
+
     /**
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface
      */
@@ -216,7 +218,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     protected function getTranslatedDayName(int $deliveryTime): string
     {
-        if ($deliveryTime === 1) {
+        if ($deliveryTime === static::ONE_DAY) {
             return $this->translate('page.checkout.shipping.day');
         }
 
