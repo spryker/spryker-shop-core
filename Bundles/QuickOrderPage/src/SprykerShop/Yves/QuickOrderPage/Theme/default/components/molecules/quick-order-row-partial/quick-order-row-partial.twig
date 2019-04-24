@@ -12,7 +12,7 @@
     price: null,
     additionalColumns: [],
     messages: null,
-    minQuantity: _view.minQuantity | default(1.2),
+    minQuantity: _view.minQuantity | default(1),
     maxQuantity: _view.maxQuantity | default(null),
     quantityInterval: _view.quantityInterval | default(1)
 } %}
@@ -45,6 +45,7 @@
                         step: data.product is empty ? data.quantityInterval : data.product.quantityInterval,
                         disabled: data.product is empty,
                         value: data.product is empty ? null : (data.quantityField.vars.value ? data.quantityField.vars.value : data.product.minQuantity),
+                        value: data.product is empty ? data.minQuantity : data.quantityField.vars.value,
                         pattern: '[0-9]+([\,|\.][0-9]+)?'
                     }
                 } %}
