@@ -13,7 +13,7 @@ use SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPlugin
 
 /**
  * @deprecated Use `\SprykerShop\Yves\CatalogPage\Plugin\StorageRouter\CatalogPageResourceCreatorPlugin` instead.
- * 
+ *
  * @method \SprykerShop\Yves\CatalogPage\CatalogPageFactory getFactory()
  */
 class CatalogPageResourceCreatorPlugin extends AbstractPlugin implements ResourceCreatorPluginInterface
