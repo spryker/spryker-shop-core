@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPriceClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentForm;
 
 class QuoteRequestAgentFormDataProvider
@@ -19,12 +20,20 @@ class QuoteRequestAgentFormDataProvider
     protected $cartClient;
 
     /**
+     * @var \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPriceClientInterface
+     */
+    protected $priceClient;
+
+    /**
      * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface $cartClient
+     * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPriceClientInterface $priceClient
      */
     public function __construct(
-        QuoteRequestAgentPageToCartClientInterface $cartClient
+        QuoteRequestAgentPageToCartClientInterface $cartClient,
+        QuoteRequestAgentPageToPriceClientInterface $priceClient
     ) {
         $this->cartClient = $cartClient;
+        $this->priceClient = $priceClient;
     }
 
     /**
@@ -52,7 +61,7 @@ class QuoteRequestAgentFormDataProvider
      */
     protected function getPriceMode(QuoteRequestTransfer $quoteRequestTransfer): string
     {
-        return $quoteRequestTransfer->getLatestVersion()->getQuote()->getPriceMode() ?? static::PRICE_MODE_GROSS;
+        return $quoteRequestTransfer->getLatestVersion()->getQuote()->getPriceMode() ?? $this->priceClient->getCurrentPriceMode();
     }
 
     /**

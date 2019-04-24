@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCompanyUserClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCustomerClientBridge;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPriceClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestAgentClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestClientBridge;
@@ -24,6 +25,7 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_CART = 'CLIENT_CART';
+    public const CLIENT_PRICE = 'CLIENT_PRICE';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_STORE = 'CLIENT_STORE';
 
@@ -42,6 +44,7 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addCompanyUserClient($container);
         $container = $this->addQuoteClient($container);
         $container = $this->addCartClient($container);
+        $container = $this->addPriceClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addStoreClient($container);
         $container = $this->addQuoteRequestAgentFormMetadataFieldPlugins($container);
@@ -114,6 +117,20 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
     {
         $container[static::CLIENT_CART] = function (Container $container) {
             return new QuoteRequestAgentPageToCartClientBridge($container->getLocator()->cart()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPriceClient(Container $container): Container
+    {
+        $container[static::CLIENT_PRICE] = function (Container $container) {
+            return new QuoteRequestAgentPageToPriceClientBridge($container->getLocator()->price()->client());
         };
 
         return $container;
