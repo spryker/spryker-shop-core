@@ -27,6 +27,11 @@ class QuoteRequestAgentVersionItemsSubForm extends AbstractType
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
 
     /**
+     * @uses \Spryker\Shared\Calculation\CalculationPriceMode::PRICE_MODE_GROSS
+     */
+    protected const PRICE_MODE_GROSS = 'GROSS_MODE';
+
+    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
@@ -48,7 +53,7 @@ class QuoteRequestAgentVersionItemsSubForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if ($options[QuoteRequestAgentForm::OPTION_PRICE_MODE] === QuoteRequestAgentFormDataProvider::PRICE_MODE_GROSS) {
+        if ($options[QuoteRequestAgentForm::OPTION_PRICE_MODE] === static::PRICE_MODE_GROSS) {
             $this->addManualGrossPriceField($builder, $options);
 
             return;

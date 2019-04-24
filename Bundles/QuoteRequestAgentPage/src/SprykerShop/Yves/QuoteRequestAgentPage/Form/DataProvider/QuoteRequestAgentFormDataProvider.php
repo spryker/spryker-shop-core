@@ -37,11 +37,6 @@ class QuoteRequestAgentFormDataProvider
     }
 
     /**
-     * @uses \Spryker\Shared\Calculation\CalculationPriceMode::PRICE_MODE_GROSS
-     */
-    public const PRICE_MODE_GROSS = 'GROSS_MODE';
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return array
