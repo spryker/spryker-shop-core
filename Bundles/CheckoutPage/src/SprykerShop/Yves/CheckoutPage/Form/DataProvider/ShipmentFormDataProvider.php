@@ -22,7 +22,7 @@ use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
 class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
 {
     use PermissionAwareTrait;
-  
+
     protected const ONE_DAY = 1;
 
     /**
