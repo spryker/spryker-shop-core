@@ -8,7 +8,7 @@
         right: 0;
         padding: 0.5rem;
         background-color: rgba($setting-color-lighter, 0.5);
-        z-index: $setting-zi-element-floating;
+        z-index: $setting-zi-ajax-loader;
 
         &__spinner {
             animation-name: spin-to;
