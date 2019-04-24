@@ -15,6 +15,8 @@ use SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPlugin
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Use `\SprykerShop\Yves\ProductSetDetailPage\Plugin\StorageRouter\ProductSetDetailPageResourceCreatorPlugin` instead.
+ * 
  * @method \SprykerShop\Yves\ProductSetDetailPage\ProductSetDetailPageFactory getFactory()
  */
 class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implements ResourceCreatorPluginInterface
