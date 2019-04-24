@@ -28,7 +28,7 @@ class QuoteRequestAgentFormDataProvider
     }
 
     /**
-     * @see \Spryker\Shared\Calculation\CalculationPriceMode::PRICE_MODE_GROSS
+     * @uses \Spryker\Shared\Calculation\CalculationPriceMode::PRICE_MODE_GROSS
      */
     public const PRICE_MODE_GROSS = 'GROSS_MODE';
 

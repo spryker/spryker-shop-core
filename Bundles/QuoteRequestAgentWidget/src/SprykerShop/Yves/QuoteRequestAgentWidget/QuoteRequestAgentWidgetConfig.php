@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class QuoteRequestAgentWidgetConfig extends AbstractBundleConfig
 {
     /**
-     * @see \Spryker\Shared\QuoteRequest\QuoteRequestConfig::STATUS_CLOSED
+     * @uses \Spryker\Shared\QuoteRequest\QuoteRequestConfig::STATUS_CLOSED
      */
     public const STATUS_CLOSED = 'closed';
 

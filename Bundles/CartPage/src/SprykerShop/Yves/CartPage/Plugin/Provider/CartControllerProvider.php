@@ -23,7 +23,7 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_CART_ADD_ITEMS = 'cart/add-items';
     public const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
 
-    protected const ROUTE_CART_UNLOCK = 'cart/unlock';
+    protected const ROUTE_CART_RESET_LOCK = 'cart/reset-lock';
 
     /**
      * @param \Silex\Application $app
@@ -39,7 +39,7 @@ class CartControllerProvider extends AbstractYvesControllerProvider
             ->addCartChangeQuantityRoute()
             ->addCartUpdateRoute()
             ->addCartQuickAddRoute()
-            ->addCartUnlockRoute();
+            ->addCartResetLockRoute();
     }
 
     /**
@@ -68,13 +68,13 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
-     * @uses \SprykerShop\Yves\CartPage\Controller\UnlockCartController::indexAction()
+     * @uses \SprykerShop\Yves\CartPage\Controller\CartLockController::resetLockAction()
      *
      * @return $this
      */
-    protected function addCartUnlockRoute()
+    protected function addCartResetLockRoute()
     {
-        $this->createPostController('/{cart}/unlock', self::ROUTE_CART_UNLOCK, 'CartPage', 'UnlockCart', 'index')
+        $this->createPostController('/{cart}/reset-lock', static::ROUTE_CART_RESET_LOCK, 'CartPage', 'CartLock', 'resetLock')
             ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart');
 
