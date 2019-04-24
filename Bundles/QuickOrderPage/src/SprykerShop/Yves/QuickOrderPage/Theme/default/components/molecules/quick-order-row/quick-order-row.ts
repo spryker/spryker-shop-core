@@ -57,7 +57,12 @@ export default class QuickOrderRow extends Component {
         this.mapQuantityInputChange();
 
         if (!!sku) {
+            const quantityValueLength = this.quantityInput.value.length;
+
             this.quantityInput.focus();
+            this.quantityInput.type = 'text';
+            this.quantityInput.setSelectionRange(quantityValueLength, quantityValueLength);
+            this.quantityInput.type = 'number';
         }
     }
 
