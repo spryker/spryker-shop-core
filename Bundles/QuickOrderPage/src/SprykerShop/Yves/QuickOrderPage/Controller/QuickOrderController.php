@@ -222,7 +222,7 @@ class QuickOrderController extends AbstractController
         foreach ($quickOrderTransfer->getItems() as $orderItem) {
             $productConcreteTransfer = $orderItem->getProductConcrete();
             if ($productConcreteTransfer) {
-                $productConcreteTransfer = $this->setProductConcrete($productConcreteTransfer);
+                $productConcreteTransfer = $this->setProductConcreteRestrictions($productConcreteTransfer);
                 $productConcreteTransfers[] = $productConcreteTransfer;
             }
         }
@@ -235,7 +235,7 @@ class QuickOrderController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function setProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    protected function setProductConcreteRestrictions(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         $productQuantityStorageTransfer = $this->getFactory()
             ->getProductQuantityStorageClient()
