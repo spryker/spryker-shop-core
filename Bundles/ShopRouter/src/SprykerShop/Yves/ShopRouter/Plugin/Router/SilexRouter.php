@@ -12,6 +12,8 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
+ * @deprecated Use `\Spryker\Yves\Router\Plugin\Router\YvesRouterPlugin` instead.
+ *
  * @method \SprykerShop\Yves\ShopRouter\ShopRouterFactory getFactory()
  */
 class SilexRouter extends AbstractPlugin implements RouterInterface
