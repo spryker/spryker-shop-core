@@ -10,10 +10,12 @@ namespace SprykerShop\Yves\CustomerPage\Plugin\Provider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig_Environment;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
+ * @deprecated Use `SprykerShop\Yves\CustomerPage\Plugin\Twig\CustomerTwigPlugin` instead.
+ *
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
 class CustomerTwigFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
@@ -26,22 +28,22 @@ class CustomerTwigFunctionServiceProvider extends AbstractPlugin implements Serv
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) {
+            $app->extend('twig', function (Environment $twig) {
                 return $this->registerCustomerTwigFunction($twig);
             })
         );
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      *
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
-    protected function registerCustomerTwigFunction(Twig_Environment $twig)
+    protected function registerCustomerTwigFunction(Environment $twig)
     {
         $twig->addFunction(
             'getUsername',
-            new Twig_SimpleFunction('getUsername', function () {
+            new TwigFunction('getUsername', function () {
                 if (!$this->getFactory()->getCustomerClient()->isLoggedIn()) {
                     return null;
                 }
@@ -52,7 +54,7 @@ class CustomerTwigFunctionServiceProvider extends AbstractPlugin implements Serv
 
         $twig->addFunction(
             'isLoggedIn',
-            new Twig_SimpleFunction('isLoggedIn', function () {
+            new TwigFunction('isLoggedIn', function () {
                 return $this->getFactory()->getCustomerClient()->isLoggedIn();
             })
         );

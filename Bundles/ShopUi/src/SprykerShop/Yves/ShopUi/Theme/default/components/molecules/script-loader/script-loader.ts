@@ -63,7 +63,8 @@ export default class ScriptLoader extends Component {
     }
 
     /**
-     * Gets an array of the attribute names.
+     * Gets the array of ignored attributes that are not copied from the current component
+     * to the script tag when created.
      */
     get ignoredAttributes(): string[] {
         return [

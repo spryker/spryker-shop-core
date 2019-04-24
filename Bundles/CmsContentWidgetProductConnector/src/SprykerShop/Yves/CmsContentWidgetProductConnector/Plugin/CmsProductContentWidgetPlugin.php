@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CmsContentWidgetProductConnector\Plugin;
 
 use Spryker\Yves\CmsContentWidgetProductConnector\Plugin\CmsProductContentWidgetPlugin as SprykerCmsProductContentWidgetPlugin;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
  * @method \SprykerShop\Yves\CmsContentWidgetProductConnector\CmsContentWidgetProductConnectorFactory getFactory()
@@ -25,14 +25,14 @@ class CmsProductContentWidgetPlugin extends SprykerCmsProductContentWidgetPlugin
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param array $context
      * @param array|string $productAbstractSkuList $productAbstractSkuList
      * @param string|null $templateIdentifier
      *
      * @return string
      */
-    public function contentWidgetFunction(Twig_Environment $twig, array $context, $productAbstractSkuList, $templateIdentifier = null)
+    public function contentWidgetFunction(Environment $twig, array $context, $productAbstractSkuList, $templateIdentifier = null)
     {
         $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
         $widgetContainerRegistry->add($this->createCmsProductContentWidgetCollection());

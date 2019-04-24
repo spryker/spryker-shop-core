@@ -13,7 +13,12 @@ use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockSt
 
 class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @deprecated Use `static::TWIG_EXTENSION_PLUGINS` instead.
+     */
     public const TWIG_FUNCTION_PLUGINS = 'TWIG_FUNCTION_PLUGINS';
+
+    public const TWIG_EXTENSION_PLUGINS = 'TWIG_EXTENSION_PLUGINS';
     public const CLIENT_CMS_BLOCK_STORAGE = 'CLIENT_CMS_BLOCK_STORAGE';
 
     /**
@@ -24,12 +29,15 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addTwigFunctionPlugins($container);
+        $container = $this->addTwigExtensionPlugins($container);
         $container = $this->addCmsBlockStorageClient($container);
 
         return $container;
     }
 
     /**
+     * @deprecated Use `addTwigExtensionPlugins` instead.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -44,9 +52,33 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecatd Use `getTwigExtensionPlugins` instead.
+     *
      * @return \Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface[]
      */
     protected function getTwigFunctionPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addTwigExtensionPlugins(Container $container): Container
+    {
+        $container->set(static::TWIG_EXTENSION_PLUGINS, function () {
+            return $this->getTwigExtensionPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\TwigExtensionInterface[]
+     */
+    protected function getTwigExtensionPlugins(): array
     {
         return [];
     }

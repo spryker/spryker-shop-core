@@ -19,6 +19,10 @@
             &:not(:first-child) {
                 border-top: 1px solid $setting-color-light;
             }
+
+            &--borderless:not(:first-child) {
+                border: none;
+            }
         }
 
         @content;
