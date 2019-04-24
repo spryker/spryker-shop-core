@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Controller;
 
-use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -38,7 +38,7 @@ class QuoteRequestAgentReviseController extends QuoteRequestAgentAbstractControl
     {
         $quoteRequestResponseTransfer = $this->getFactory()
             ->getQuoteRequestAgentClient()
-            ->reviseQuoteRequest((new QuoteRequestCriteriaTransfer())->setQuoteRequestReference($quoteRequestReference));
+            ->reviseQuoteRequest((new QuoteRequestFilterTransfer())->setQuoteRequestReference($quoteRequestReference));
 
         if ($quoteRequestResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_VERSION_CREATED);

@@ -58,10 +58,6 @@
         <property name="value" type="string"/>
     </transfer>
 
-    <transfer name="QuoteRequestCriteria">
-        <property name="quoteRequestReference" type="string" />
-    </transfer>
-
     <transfer name="QuoteRequestCollection">
         <property name="quoteRequests" type="QuoteRequest[]" singular="quoteRequest" />
     </transfer>

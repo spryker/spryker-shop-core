@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
-use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -24,13 +24,13 @@ class QuoteRequestDeleteController extends QuoteRequestAbstractController
      */
     public function cancelAction(string $quoteRequestReference): RedirectResponse
     {
-        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setQuoteRequestReference($quoteRequestReference)
             ->setIdCompanyUser($this->getFactory()->getCompanyUserClient()->findCompanyUser()->getIdCompanyUser());
 
         $quoteRequestResponseTransfer = $this->getFactory()
             ->getQuoteRequestClient()
-            ->cancelQuoteRequest($quoteRequestCriteriaTransfer);
+            ->cancelQuoteRequest($quoteRequestFilterTransfer);
 
         if ($quoteRequestResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SUCCESS_CANCELED);

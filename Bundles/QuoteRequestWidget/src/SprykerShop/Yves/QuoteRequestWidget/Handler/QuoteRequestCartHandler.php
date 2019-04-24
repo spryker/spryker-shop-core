@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\QuoteRequestWidget\Handler;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCompanyUserClientInterface;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToQuoteClientInterface;
@@ -68,11 +68,11 @@ class QuoteRequestCartHandler implements QuoteRequestCartHandlerInterface
             throw new NotFoundHttpException("Only company users are allowed to access this page");
         }
 
-        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setQuoteRequestReference($quoteTransfer->getQuoteRequestReference())
             ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser());
 
-        $quoteRequestResponseTransfer = $this->quoteRequestClient->getQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestClient->getQuoteRequest($quoteRequestFilterTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
             return $quoteRequestResponseTransfer;

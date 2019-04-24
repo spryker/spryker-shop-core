@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
-use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -28,13 +28,13 @@ class QuoteRequestReviseController extends QuoteRequestAbstractController
             ->getCompanyUserClient()
             ->findCompanyUser();
 
-        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setQuoteRequestReference($quoteRequestReference)
             ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser());
 
         $quoteRequestResponseTransfer = $this->getFactory()
             ->getQuoteRequestClient()
-            ->reviseQuoteRequest($quoteRequestCriteriaTransfer);
+            ->reviseQuoteRequest($quoteRequestFilterTransfer);
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
