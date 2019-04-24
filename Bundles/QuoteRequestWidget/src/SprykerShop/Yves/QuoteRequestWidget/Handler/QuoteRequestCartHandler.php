@@ -72,7 +72,7 @@ class QuoteRequestCartHandler implements QuoteRequestCartHandlerInterface
             ->setQuoteRequestReference($quoteTransfer->getQuoteRequestReference())
             ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser());
 
-        $quoteRequestResponseTransfer = $this->quoteRequestClient->findQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestClient->getQuoteRequest($quoteRequestCriteriaTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
             return $quoteRequestResponseTransfer;

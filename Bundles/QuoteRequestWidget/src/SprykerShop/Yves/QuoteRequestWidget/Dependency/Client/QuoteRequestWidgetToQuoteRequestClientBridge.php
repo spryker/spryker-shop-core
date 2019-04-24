@@ -62,9 +62,9 @@ class QuoteRequestWidgetToQuoteRequestClientBridge implements QuoteRequestWidget
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function findQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function getQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestClient->findQuoteRequest($quoteRequestCriteriaTransfer);
+        return $this->quoteRequestClient->getQuoteRequest($quoteRequestCriteriaTransfer);
     }
 
     /**

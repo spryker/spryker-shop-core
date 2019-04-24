@@ -91,7 +91,7 @@ class QuoteRequestAbstractController extends AbstractController
 
         $quoteRequestResponseTransfer = $this->getFactory()
             ->getQuoteRequestClient()
-            ->findQuoteRequest($quoteRequestCriteriaTransfer);
+            ->getQuoteRequest($quoteRequestCriteriaTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
             throw new NotFoundHttpException();
