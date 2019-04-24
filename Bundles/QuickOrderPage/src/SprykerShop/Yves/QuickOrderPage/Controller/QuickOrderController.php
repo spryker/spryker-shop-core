@@ -220,12 +220,43 @@ class QuickOrderController extends AbstractController
     {
         $productConcreteTransfers = [];
         foreach ($quickOrderTransfer->getItems() as $orderItem) {
-            if ($orderItem->getProductConcrete()) {
-                $productConcreteTransfers[] = $orderItem->getProductConcrete();
+            $productConcreteTransfer = $orderItem->getProductConcrete();
+            if ($productConcreteTransfer) {
+                $productConcreteTransfer = $this->setProductConcreteRestrictions($productConcreteTransfer);
+                $productConcreteTransfers[] = $productConcreteTransfer;
             }
         }
 
         return $productConcreteTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function setProductConcreteRestrictions(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    {
+        $productQuantityStorageTransfer = $this->getFactory()
+            ->getProductQuantityStorageClient()
+            ->findProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
+        $availabilityRequestTransfer = new ProductConcreteAvailabilityRequestTransfer();
+        $availabilityRequestTransfer->setSku($productConcreteTransfer->getSku());
+        $productConcreteAvailabilityTransfer = $this->getFactory()
+            ->getAvailabilityClient()
+            ->findProductConcreteAvailability($availabilityRequestTransfer);
+
+        $quantityRestrictionReader = $this->getFactory()
+            ->createQuantityRestrictionReader();
+
+        $minQuantity = $quantityRestrictionReader->getMinQuantity($productQuantityStorageTransfer);
+        $maxQuantity = $quantityRestrictionReader->getMaxQuantity($productQuantityStorageTransfer, $productConcreteAvailabilityTransfer);
+        $quantityInterval = $quantityRestrictionReader->getQuantityInterval($productQuantityStorageTransfer);
+        $productConcreteTransfer->setMinQuantity($minQuantity);
+        $productConcreteTransfer->setMaxQuantity($maxQuantity);
+        $productConcreteTransfer->setQuantityInterval($quantityInterval);
+
+        return $productConcreteTransfer;
     }
 
     /**
@@ -413,21 +444,6 @@ class QuickOrderController extends AbstractController
         $quickOrderItemTransfer->setQuantity($quantity);
         $quickOrderTransfer = $this->getQuickOrderTransfer([$quickOrderItemTransfer]);
         $quickOrderItemTransfer = $quickOrderTransfer->getItems()->offsetGet(0);
-        $productQuantityStorageTransfer = $this->getFactory()
-            ->getProductQuantityStorageClient()
-            ->findProductQuantityStorage($quickOrderItemTransfer->getProductConcrete()->getIdProductConcrete());
-        $availabilityRequestTransfer = new ProductConcreteAvailabilityRequestTransfer();
-        $availabilityRequestTransfer->setSku($sku);
-        $productConcreteAvailabilityTransfer = $this->getFactory()
-            ->getAvailabilityClient()
-            ->findProductConcreteAvailability($availabilityRequestTransfer);
-
-        $quantityRestrictionReader = $this->getFactory()
-            ->createQuantityRestrictionReader();
-
-        $minQuantity = $quantityRestrictionReader->getMinQuantity($productQuantityStorageTransfer);
-        $maxQuantity = $quantityRestrictionReader->getMaxQuantity($productQuantityStorageTransfer, $productConcreteAvailabilityTransfer);
-        $quantityInterval = $quantityRestrictionReader->getQuantityInterval($productQuantityStorageTransfer);
 
         $form = $this->getFactory()
             ->createQuickOrderFormFactory()
@@ -447,9 +463,6 @@ class QuickOrderController extends AbstractController
             'form' => $form->createView(),
             'messages' => $quickOrderItemTransfer->getMessages(),
             'index' => $index,
-            'minQuantity' => $minQuantity,
-            'maxQuantity' => $maxQuantity,
-            'quantityInterval' => $quantityInterval,
         ];
 
         return $this->view(

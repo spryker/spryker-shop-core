@@ -83,7 +83,6 @@ class QuickOrderItemEmbeddedForm extends AbstractType
             [
                 'required' => false,
                 'label' => false,
-                'attr' => ['min' => 1],
             ]
         );
 
