@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ResourceSharePage\Controller;
 use ArrayObject;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
+use Generated\Shared\Transfer\ResourceShareTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -58,18 +59,19 @@ class LinkController extends AbstractController
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
         $loginLink = '';
 
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
+            ->setResourceShare((new ResourceShareTransfer())
+                ->setUuid($resourceShareUuid))
+            ->setCustomer($customerTransfer);
+
         /** @var \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer */
         $resourceShareResponseTransfer = $this->getFactory()
             ->getResourceShareClient()
-            ->activateResourceShare(
-                (new ResourceShareRequestTransfer())
-                    ->setCustomer($customerTransfer)
-                    ->setUuid($resourceShareUuid)
-            );
+            ->activateResourceShare($resourceShareRequestTransfer);
 
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             return [
-                'messages' => $resourceShareResponseTransfer->getErrorMessages(),
+                'messages' => $resourceShareResponseTransfer->getMessages(),
                 'loginLink' => $loginLink,
             ];
         }
@@ -87,7 +89,7 @@ class LinkController extends AbstractController
 
         if ($resourceShareResponseTransfer->getIsLoginRequired()) {
             return [
-                'messages' => $resourceShareResponseTransfer->getErrorMessages(),
+                'messages' => $resourceShareResponseTransfer->getMessages(),
                 'loginLink' => $this->getApplication()->path(static::ROUTE_LOGIN, [
                     static::BACK_TO_LINK_REDIRECT => $this->getApplication()->path(
                         $routeTransfer->getRoute(),
@@ -99,7 +101,7 @@ class LinkController extends AbstractController
 
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             return [
-                'messages' => $resourceShareResponseTransfer->getErrorMessages(),
+                'messages' => $resourceShareResponseTransfer->getMessages(),
                 'loginLink' => $loginLink,
             ];
         }

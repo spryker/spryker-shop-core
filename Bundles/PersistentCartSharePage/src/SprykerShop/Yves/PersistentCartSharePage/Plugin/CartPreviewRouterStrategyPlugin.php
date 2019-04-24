@@ -32,17 +32,14 @@ class CartPreviewRouterStrategyPlugin extends AbstractPlugin implements Resource
             return false;
         }
 
-        $persistentCartShareResourceDataTransfer = $resourceShareTransfer->getPersistentCartShareResourceData();
+        $resourceShareData = $resourceShareTransfer
+            ->requireResourceShareData()->getResourceShareData();
 
-        if (!$persistentCartShareResourceDataTransfer) {
+        if (!$resourceShareTransfer->getUuid() || !$resourceShareData->getShareOption()) {
             return false;
         }
 
-        if (!$persistentCartShareResourceDataTransfer->getIdQuote()) {
-            return false;
-        }
-
-        if ($persistentCartShareResourceDataTransfer->getShareOption() !== static::SHARE_OPTION_PREVIEW) {
+        if ($resourceShareData->getShareOption() !== static::SHARE_OPTION_PREVIEW) {
             return false;
         }
 
