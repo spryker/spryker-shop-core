@@ -8,7 +8,9 @@
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentForm;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -110,13 +112,31 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
             return $this->processQuoteRequestAgentForm($quoteRequestForm, $request);
         }
 
-        $this->getFactory()
-            ->getQuoteRequestAgentClient()
-            ->updateQuoteRequest($quoteRequestTransfer);
+        $quoteRequestForm = $this->validateQuoteRequestInFormData($quoteRequestForm);
 
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\Form\Form $quoteRequestForm
+     *
+     * @return \Symfony\Component\Form\Form
+     */
+    protected function validateQuoteRequestInFormData(Form $quoteRequestForm): Form
+    {
+        $quoteRequestResponseTransfer = $this->getFactory()
+            ->getQuoteRequestAgentClient()
+            ->updateQuoteRequest($quoteRequestForm->getData());
+
+        $quoteRequestForm->get(QuoteRequestTransfer::LATEST_VERSION)
+            ->setData(
+                $quoteRequestResponseTransfer->getQuoteRequest()
+                    ->getLatestVersion()
+            );
+
+        return $quoteRequestForm;
     }
 
     /**
