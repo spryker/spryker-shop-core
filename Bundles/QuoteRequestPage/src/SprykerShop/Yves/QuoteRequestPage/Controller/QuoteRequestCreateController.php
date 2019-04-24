@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -44,20 +45,34 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
             ->handleRequest($request);
 
         if ($quoteRequestForm->isSubmitted() && $quoteRequestForm->isValid()) {
-            $quoteRequestResponseTransfer = $this->getFactory()
-                ->createQuoteRequestHandler()
-                ->createQuoteRequest($quoteRequestForm->getData());
-
-            if ($quoteRequestResponseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CREATED);
-
-                return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_DETAILS, [
-                    static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
-                ]);
-            }
-
-            $this->handleResponseErrors($quoteRequestResponseTransfer);
+            return $this->processQuoteRequestForm($quoteRequestForm);
         }
+
+        return [
+            'quoteRequestForm' => $quoteRequestForm->createView(),
+        ];
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $quoteRequestForm
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function processQuoteRequestForm(FormInterface $quoteRequestForm)
+    {
+        $quoteRequestResponseTransfer = $this->getFactory()
+            ->createQuoteRequestHandler()
+            ->createQuoteRequest($quoteRequestForm->getData());
+
+        if ($quoteRequestResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CREATED);
+
+            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_DETAILS, [
+                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
+            ]);
+        }
+
+        $this->handleResponseErrors($quoteRequestResponseTransfer);
 
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),

@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface QuoteRequestAgentPageToCartClientInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateSpecificQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
