@@ -18,6 +18,9 @@
     <transfer name="ProductConcrete">
         <property name="fkProductAbstract" type="int" />
         <property name="sku" type="string" />
+        <property name="minQuantity" type="float" />
+        <property name="maxQuantity" type="float" />
+        <property name="quantityInterval" type="float" />
     </transfer>
 
     <transfer name="Message">
