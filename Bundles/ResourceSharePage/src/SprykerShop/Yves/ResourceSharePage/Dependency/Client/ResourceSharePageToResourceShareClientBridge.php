@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 
 class ResourceSharePageToResourceShareClientBridge implements ResourceSharePageToResourceShareClientInterface
 {
-
     /**
      * @var \Spryker\Client\ResourceShare\ResourceShareClientInterface
      */

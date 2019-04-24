@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 class PersistentCartSharePageToPersistentCartShareClientBridge implements PersistentCartSharePageToPersistentCartShareClientInterface
 {
-
     /**
      * @var \Spryker\Client\PersistentCartShare\PersistentCartShareClientInterface
      */
