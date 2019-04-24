@@ -50,6 +50,10 @@ class QuantityRestrictionReader implements QuantityRestrictionReaderInterface
             return $availability;
         }
 
+        if ($productConcreteAvailabilityTransfer->getIsNeverOutOfStock()) {
+            return $productQuantityStorageTransfer->getQuantityMax();
+        }
+
         return min($productQuantityStorageTransfer->getQuantityMax(), $availability);
     }
 
