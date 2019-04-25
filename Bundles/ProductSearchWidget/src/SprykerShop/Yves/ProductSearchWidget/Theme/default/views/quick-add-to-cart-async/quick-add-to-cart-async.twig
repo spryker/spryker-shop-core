@@ -1,7 +1,7 @@
 {% extends model('template') %}
 
 {% define data = {
-    messages: _view.messages,
+    messages: _view.messages | default([]),
     form: _view.form,
     minQuantity: _view.minQuantity | default(null),
     maxQuantity: _view.maxQuantity | default(null),

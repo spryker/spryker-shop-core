@@ -115,7 +115,6 @@ class QuickAddToCartController extends AbstractController
             'maxQuantity' => $maxQuantity,
             'quantityInterval' => $quantityInterval,
             'form' => $form->createView(),
-            'messages' => [],
             'isDisabled' => $isDisabled,
         ];
     }
