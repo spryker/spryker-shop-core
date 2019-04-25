@@ -44,6 +44,13 @@ class QuickAddToCartController extends AbstractController
         $form = $this->getFactory()
             ->getProductQuickAddForm();
 
+        if ($sku === null) {
+            return [
+                'form' => $form->createView(),
+                'isDisabled' => true
+            ];
+        }
+
         $productConcreteTransfer = $this->getFactory()
             ->createProductConcreteResolver()
             ->findProductConcreteBySku($sku);
