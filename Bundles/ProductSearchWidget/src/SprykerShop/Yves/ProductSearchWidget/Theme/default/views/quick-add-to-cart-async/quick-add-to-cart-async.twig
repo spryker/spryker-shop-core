@@ -21,7 +21,6 @@
         }
     } only %}
         {% block body %}
-            <div class="col col--sm-12 {{ config.jsName }}__target {{ data.verticalLayout ? 'spacing-bottom' : 'col--md-4 spacing-right spacing-right--inner' }}">
                 {{ form_widget(data.form.children.quantity, {
                     required: true,
                     attr: {
@@ -34,7 +33,6 @@
                         placeholder: 'product_quick_add_widget.form.quantity' | trans
                     }}
                 ) }}
-            </div>
 
             {% if data.messages is not empty %}
                 <div class="col col--sm-12 {{ config.name }}__error spacing-bottom spacing-bottom--big">
