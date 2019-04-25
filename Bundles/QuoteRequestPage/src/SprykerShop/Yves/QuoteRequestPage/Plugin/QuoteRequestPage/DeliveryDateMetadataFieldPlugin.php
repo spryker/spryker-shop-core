@@ -21,7 +21,6 @@ use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteRequestFormMetadataFieldPluginInterface
 {
     protected const FIELD_METADATA_DELIVERY_DATE = 'delivery_date';
-    protected const FORMAT_DELIVERY_DATE = 'Y-m-d';
     protected const LABEL_METADATA_DELIVERY_DATE = 'quote_request_page.quote_request.metadata.label.delivery_date';
     protected const GLOSSARY_KEY_DATE_VIOLATION = 'quote_request_page.quote_request.violations.invalid_date';
 
@@ -47,7 +46,7 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
             ],
             'constraints' => [
                 new GreaterThanOrEqual([
-                    'value' => date(static::FORMAT_DELIVERY_DATE),
+                    'value' => $this->getFactory()->getUtilDateTimeService()->formatDate(new DateTime()),
                     'message' => static::GLOSSARY_KEY_DATE_VIOLATION,
                 ]),
             ],
@@ -73,7 +72,7 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
             },
             function ($value) {
                 if ($value instanceof DateTime) {
-                    $value = $value->format(static::FORMAT_DELIVERY_DATE);
+                    $value = $this->getFactory()->getUtilDateTimeService()->formatDate($value);
                 }
                 return $value;
             }

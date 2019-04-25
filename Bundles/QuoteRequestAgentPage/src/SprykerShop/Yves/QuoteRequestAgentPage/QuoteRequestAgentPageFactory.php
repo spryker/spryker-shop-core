@@ -18,6 +18,7 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPa
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestAgentClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToStoreClientInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToUtilDateTimeServiceInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider\QuoteRequestAgentFormDataProvider;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandler;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandlerInterface;
@@ -144,6 +145,14 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     public function getPriceClient(): QuoteRequestAgentPageToPriceClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::CLIENT_PRICE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToUtilDateTimeServiceInterface
+     */
+    public function getUtilDateTimeService(): QuoteRequestAgentPageToUtilDateTimeServiceInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::SERVICE_UTIL_DATE_TIME);
     }
 
     /**

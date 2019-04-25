@@ -17,6 +17,7 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPa
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestAgentClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToStoreClientBridge;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToUtilDateTimeServiceBridge;
 
 class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -28,6 +29,8 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
     public const CLIENT_PRICE = 'CLIENT_PRICE';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_STORE = 'CLIENT_STORE';
+
+    public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
     public const PLUGINS_QUOTE_REQUEST_AGENT_FORM_METADATA_FIELD = 'PLUGINS_QUOTE_REQUEST_AGENT_FORM_METADATA_FIELD';
 
@@ -47,6 +50,9 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addPriceClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addStoreClient($container);
+
+        $container = $this->addUtilDateTimeService($container);
+
         $container = $this->addQuoteRequestAgentFormMetadataFieldPlugins($container);
 
         return $container;
@@ -131,6 +137,20 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
     {
         $container[static::CLIENT_PRICE] = function (Container $container) {
             return new QuoteRequestAgentPageToPriceClientBridge($container->getLocator()->price()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addUtilDateTimeService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_DATE_TIME] = function (Container $container) {
+            return new QuoteRequestAgentPageToUtilDateTimeServiceBridge($container->getLocator()->utilDateTime()->service());
         };
 
         return $container;

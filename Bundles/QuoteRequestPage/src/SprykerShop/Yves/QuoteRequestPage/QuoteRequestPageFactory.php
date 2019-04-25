@@ -16,6 +16,7 @@ use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCustom
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToPersistentCartClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToUtilDateTimeServiceInterface;
 use SprykerShop\Yves\QuoteRequestPage\Form\DataProvider\QuoteRequestFormDataProvider;
 use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandler;
 use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandlerInterface;
@@ -80,6 +81,14 @@ class QuoteRequestPageFactory extends AbstractFactory
             QuoteRequestEditItemsConfirmForm::class,
             $quoteRequestTransfer
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToUtilDateTimeServiceInterface
+     */
+    public function getUtilDateTimeService(): QuoteRequestPageToUtilDateTimeServiceInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::SERVICE_UTIL_DATE_TIME);
     }
 
     /**
