@@ -47,7 +47,7 @@ class QuickAddToCartController extends AbstractController
         if ($sku === null) {
             return [
                 'form' => $form->createView(),
-                'isDisabled' => true
+                'isDisabled' => true,
             ];
         }
 
