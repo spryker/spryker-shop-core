@@ -9,8 +9,10 @@ namespace SprykerShop\Yves\ProductSearchWidget\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -65,6 +67,17 @@ class QuickAddToCartController extends AbstractController
             ];
         }
 
+        return $this->collectViewProductAdditionalData($productConcreteTransfer, $form);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return array
+     */
+    protected function collectViewProductAdditionalData(ProductConcreteTransfer $productConcreteTransfer, FormInterface $form): array
+    {
         $productQuantityStorageTransfer = $this->getFactory()
             ->getProductQuantityStorageClient()
             ->findProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
