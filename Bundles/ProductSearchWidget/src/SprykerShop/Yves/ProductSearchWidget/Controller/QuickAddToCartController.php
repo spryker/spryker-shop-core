@@ -20,6 +20,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuickAddToCartController extends AbstractController
 {
+    protected const GLOSSARY_KEY_PRODUCT_IS_NOT_EXIST = 'product-cart.validation.error.concrete-product-exists';
+    protected const MESSAGE_PARAM_SKU = 'sku';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -56,8 +59,10 @@ class QuickAddToCartController extends AbstractController
 
         if ($productConcreteTransfer === null) {
             $messageTransfer = new MessageTransfer();
-            $messageTransfer->setValue('Product is not exist');
-            $messageTransfer->setType('warning');
+            $messageTransfer->setValue(static::GLOSSARY_KEY_PRODUCT_IS_NOT_EXIST);
+            $messageTransfer->setParameters([
+                static::MESSAGE_PARAM_SKU => $sku,
+            ]);
             $messages[] = $messageTransfer;
 
             return [
