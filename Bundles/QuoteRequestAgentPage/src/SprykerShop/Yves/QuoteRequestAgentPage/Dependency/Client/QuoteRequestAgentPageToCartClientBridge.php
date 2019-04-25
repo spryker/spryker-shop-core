@@ -34,12 +34,4 @@ class QuoteRequestAgentPageToCartClientBridge implements QuoteRequestAgentPageTo
     {
         return $this->cartClient->validateSpecificQuote($quoteTransfer);
     }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function validateQuote()
-    {
-        return $this->cartClient->validateQuote();
-    }
 }
