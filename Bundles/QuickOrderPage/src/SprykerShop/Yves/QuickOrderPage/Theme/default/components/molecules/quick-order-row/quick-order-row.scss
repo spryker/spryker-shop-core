@@ -1,20 +1,19 @@
 @mixin quick-order-page-quick-order-row($name: '.quick-order-row') {
     #{$name} {
-        &__error,
-        &__warning {
+        &__message {
             padding: 0.5rem;
             background-color: $setting-color-white;
             z-index: $setting-zi-notification-area;
-        }
 
-        &__error {
-            border: 1px solid map-get($setting-color-actions, 'alert');
-            color: map-get($setting-color-actions, 'alert');
-        }
+            &--error {
+                border: 1px solid map-get($setting-color-actions, 'alert');
+                color: map-get($setting-color-actions, 'alert');
+            }
 
-        &__warning {
-            border: 1px solid map-get($setting-color-actions, 'warning');
-            color: map-get($setting-color-actions, 'warning');
+            &--warning {
+                border: 1px solid map-get($setting-color-actions, 'warning');
+                color: map-get($setting-color-actions, 'warning');
+            }
         }
 
         @content;
