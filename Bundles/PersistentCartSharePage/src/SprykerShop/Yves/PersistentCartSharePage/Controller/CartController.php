@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\PersistentCartSharePage\Controller;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,9 +21,9 @@ class CartController extends AbstractController
      * @param string $resourceShareUuid
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View
      */
-    public function previewAction(string $resourceShareUuid, Request $request)
+    public function previewAction(string $resourceShareUuid, Request $request): View
     {
         $response = $this->executePreviewAction($resourceShareUuid, $request);
 

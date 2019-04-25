@@ -25,13 +25,14 @@ class ResourceSharePageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
-     * @uses QuickOrderController::indexAction()
+     * @uses \SprykerShop\Yves\ResourceSharePage\Controller\LinkController::indexAction
      *
      * @return $this
      */
     protected function addLinkRoute()
     {
         $this->createController('/{resourceShareLink}/{resourceShareUuid}', static::ROUTE_RESOURCE_SHARE_LINK, 'ResourceSharePage', 'Link')
+            ->assert('resourceShareLink', $this->getAllowedLocalesPattern() . 'link|link')
             ->value('resourceShareLink', 'link');
 
         return $this;

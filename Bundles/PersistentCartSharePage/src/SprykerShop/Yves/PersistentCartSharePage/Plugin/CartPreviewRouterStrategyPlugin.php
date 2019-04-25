@@ -24,7 +24,15 @@ class CartPreviewRouterStrategyPlugin extends AbstractPlugin implements Resource
     protected const PARAM_RESOURCE_SHARE_UUID = "resourceShareUuid";
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
+     * - Checks if this plugin is applicable to work with quote resource share.
+     * - Checks if this plugin is applicable to work with preview share option.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     *
+     * @return bool
      */
     public function isApplicable(ResourceShareTransfer $resourceShareTransfer): bool
     {
@@ -47,7 +55,14 @@ class CartPreviewRouterStrategyPlugin extends AbstractPlugin implements Resource
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
+     * - Returns route for the cart preview share.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     *
+     * @return \Generated\Shared\Transfer\RouteTransfer
      */
     public function resolveRoute(ResourceShareTransfer $resourceShareTransfer): RouteTransfer
     {

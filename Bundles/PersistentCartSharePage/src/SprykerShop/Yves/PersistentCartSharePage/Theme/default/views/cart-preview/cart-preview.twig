@@ -75,7 +75,6 @@
                     {% set canWrite = false %}
                     {{ parent() }}
                 {% endblock %}
-            {% elsewidget 'CartNoteQuoteItemWidgetPlugin' args [data.cartItem, data.cart] only %}  {# @deprecated Use CartItemNoteFormWidget instead. #}
             {% endwidget %}
         {% endblock %}
         {% block body %}
@@ -91,7 +90,6 @@
             {% set canWrite = false %}
             {{ parent() }}
         {% endblock %}
-    {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %}  {# @deprecated Use CartNoteFormWidget instead. #}
     {% endwidget %}
 {% endblock %}
 
@@ -148,7 +146,6 @@
                 {% block actions %}{% endblock %}
             {% endembed %}
         {% endblock %}
-    {% elsewidget 'DiscountPromotionItemListWidgetPlugin' args [data.cart, data.request] only %} {# @deprecated Use CartDiscountPromotionProductListWidget instead. #}
     {% endwidget %}
 {% endblock %}
 

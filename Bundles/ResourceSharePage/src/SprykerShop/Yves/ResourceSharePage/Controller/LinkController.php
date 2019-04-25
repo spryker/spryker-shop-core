@@ -31,7 +31,7 @@ class LinkController extends AbstractController
      * @param string $resourceShareUuid
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return mixed
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(string $resourceShareUuid, Request $request)
     {
@@ -41,11 +41,7 @@ class LinkController extends AbstractController
             return $response;
         }
 
-        return $this->view(
-            $response,
-            [],
-            '@ResourceSharePage/views/link/index.twig'
-        );
+        return $this->view($response, [], '@ResourceSharePage/views/link/index.twig');
     }
 
     /**
@@ -59,12 +55,13 @@ class LinkController extends AbstractController
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
         $loginLink = '';
 
+        $resourceShareTransfer = (new ResourceShareTransfer())
+            ->setUuid($resourceShareUuid);
+
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
-            ->setResourceShare((new ResourceShareTransfer())
-                ->setUuid($resourceShareUuid))
+            ->setResourceShare($resourceShareTransfer)
             ->setCustomer($customerTransfer);
 
-        /** @var \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer */
         $resourceShareResponseTransfer = $this->getFactory()
             ->getResourceShareClient()
             ->activateResourceShare($resourceShareRequestTransfer);
@@ -88,14 +85,16 @@ class LinkController extends AbstractController
         }
 
         if ($resourceShareResponseTransfer->getIsLoginRequired()) {
+            $loginLink = $this->getApplication()->path(static::ROUTE_LOGIN, [
+                static::BACK_TO_LINK_REDIRECT => $this->getApplication()->path(
+                    $routeTransfer->getRoute(),
+                    $routeTransfer->getParameters()
+                ),
+            ]);
+
             return [
                 'messages' => $resourceShareResponseTransfer->getMessages(),
-                'loginLink' => $this->getApplication()->path(static::ROUTE_LOGIN, [
-                    static::BACK_TO_LINK_REDIRECT => $this->getApplication()->path(
-                        $routeTransfer->getRoute(),
-                        $routeTransfer->getParameters()
-                    ),
-                ]),
+                'loginLink' => $loginLink,
             ];
         }
 

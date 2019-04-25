@@ -16,7 +16,7 @@ use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CustomerRedirectStr
  */
 class ResourceSharePageRedirectAfterLoginStrategyPlugin extends AbstractPlugin implements CustomerRedirectStrategyPluginInterface
 {
-    protected const APPLICATION_REQUEST = 'request';
+    protected const KEY_APPLICATION_REQUEST = 'request';
 
     /**
      * @see \SprykerShop\Yves\ResourceSharePage\Controller\LinkController::BACK_TO_LINK_REDIRECT
@@ -35,9 +35,9 @@ class ResourceSharePageRedirectAfterLoginStrategyPlugin extends AbstractPlugin i
      */
     public function isApplicable(CustomerTransfer $customerTransfer): bool
     {
-        $redirectUrl = $this->getRedirectUrlFromRequest();
+        $redirectUrl = $this->findRedirectUrlFromRequest();
 
-        return !empty($redirectUrl);
+        return (bool)$redirectUrl;
     }
 
     /**
@@ -51,15 +51,15 @@ class ResourceSharePageRedirectAfterLoginStrategyPlugin extends AbstractPlugin i
      */
     public function getRedirectUrl(CustomerTransfer $customerTransfer): string
     {
-        return $this->getRedirectUrlFromRequest();
+        return $this->findRedirectUrlFromRequest();
     }
 
     /**
      * @return string|null
      */
-    protected function getRedirectUrlFromRequest(): ?string
+    protected function findRedirectUrlFromRequest(): ?string
     {
-        $request = $this->getFactory()->getApplication()[static::APPLICATION_REQUEST];
+        $request = $this->getFactory()->getApplication()[static::KEY_APPLICATION_REQUEST];
         $redirectUrl = $request->get(static::BACK_TO_LINK_REDIRECT);
 
         return $redirectUrl;

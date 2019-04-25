@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class PersistentCartSharePageControllerProvider extends AbstractYvesControllerProvider
 {
-    public const ROUTE_CART_PREVIEW = 'cart/preview';
+    protected const ROUTE_CART_PREVIEW = 'cart/preview';
 
     /**
      * @param \Silex\Application $app
@@ -25,11 +25,14 @@ class PersistentCartSharePageControllerProvider extends AbstractYvesControllerPr
     }
 
     /**
+     * @uses \SprykerShop\Yves\PersistentCartSharePage\Controller\CartController::previewAction
+     *
      * @return $this
      */
     protected function addPersistentCartSharePageRoute()
     {
-        $this->createController('{persistentCartShare}/preview/{resourceShareUuid}', self::ROUTE_CART_PREVIEW, 'PersistentCartSharePage', 'Cart', 'preview')
+        $this->createController('{persistentCartShare}/preview/{resourceShareUuid}', static::ROUTE_CART_PREVIEW, 'PersistentCartSharePage', 'Cart', 'preview')
+            ->assert('persistentCartShare', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('persistentCartShare', 'cart');
 
         return $this;

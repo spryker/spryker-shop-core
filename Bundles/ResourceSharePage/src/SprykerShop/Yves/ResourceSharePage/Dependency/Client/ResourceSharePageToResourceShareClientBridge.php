@@ -26,17 +26,12 @@ class ResourceSharePageToResourceShareClientBridge implements ResourceSharePageT
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
     public function activateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        return $this->resourceShareClient
-            ->activateResourceShare($resourceShareRequestTransfer);
+        return $this->resourceShareClient->activateResourceShare($resourceShareRequestTransfer);
     }
 }
