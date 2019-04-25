@@ -163,12 +163,17 @@
 
             <div class="col col--sm-12 col--lg-4">
                 <div class="box">
+                    <h6>{{ 'page.checkout.address.billing-address' | trans }}</h6>
+                    <hr/>
                     {% include molecule('display-address') with {
                         class: 'text-small',
                         data: {
                             address: data.billingAddress
                         }
                     } only %}
+                    <a href="{{ url('checkout-address') }}" {{qa('cart-go-to-address')}}>
+                        {{ 'general.edit.button' | trans }}
+                    </a>
                 </div>
             </div>
         </div>
