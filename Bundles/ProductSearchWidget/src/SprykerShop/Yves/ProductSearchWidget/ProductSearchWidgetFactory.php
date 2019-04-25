@@ -9,6 +9,8 @@ namespace SprykerShop\Yves\ProductSearchWidget;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ProductSearchWidget\Builder\MessageBuilder;
+use SprykerShop\Yves\ProductSearchWidget\Builder\MessageBuilderInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToAvailabilityClientInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductQuantityStorageClientInterface;
@@ -19,6 +21,8 @@ use SprykerShop\Yves\ProductSearchWidget\Reader\QuantityRestrictionReader;
 use SprykerShop\Yves\ProductSearchWidget\Reader\QuantityRestrictionReaderInterface;
 use SprykerShop\Yves\ProductSearchWidget\Resolver\ProductConcreteResolver;
 use SprykerShop\Yves\ProductSearchWidget\Resolver\ProductConcreteResolverInterface;
+use SprykerShop\Yves\ProductSearchWidget\ViewCollector\ProductAdditionalDataViewCollector;
+use SprykerShop\Yves\ProductSearchWidget\ViewCollector\ProductAdditionalDataViewCollectorInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -54,6 +58,26 @@ class ProductSearchWidgetFactory extends AbstractFactory
     public function createQuantityRestrictionReader(): QuantityRestrictionReaderInterface
     {
         return new QuantityRestrictionReader();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductSearchWidget\Builder\MessageBuilderInterface
+     */
+    public function createMessageBuilder(): MessageBuilderInterface
+    {
+        return new MessageBuilder();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductSearchWidget\ViewCollector\ProductAdditionalDataViewCollectorInterface
+     */
+    public function createProductAdditionalDataVIewCollector(): ProductAdditionalDataViewCollectorInterface
+    {
+        return new ProductAdditionalDataViewCollector(
+            $this->createQuantityRestrictionReader(),
+            $this->getAvailabilityClient(),
+            $this->getProductQuantityStorageClient()
+        );
     }
 
     /**

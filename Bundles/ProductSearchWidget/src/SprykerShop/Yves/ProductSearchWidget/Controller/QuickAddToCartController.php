@@ -7,12 +7,8 @@
 
 namespace SprykerShop\Yves\ProductSearchWidget\Controller;
 
-use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,9 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuickAddToCartController extends AbstractController
 {
-    protected const GLOSSARY_KEY_PRODUCT_IS_NOT_EXIST = 'product-cart.validation.error.concrete-product-exists';
-    protected const MESSAGE_PARAM_SKU = 'sku';
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -56,66 +49,19 @@ class QuickAddToCartController extends AbstractController
             ->findProductConcreteBySku($sku);
 
         if ($productConcreteTransfer === null) {
+            $messages = $this->getFactory()
+                ->createMessageBuilder()
+                ->buildErrorMessagesForProductAdditionalData($sku);
+
             return [
                 'form' => $form->createView(),
-                'messages' => $this->buildErrorMessagesForProductAdditionalData($sku),
+                'messages' => $messages,
                 'isDisabled' => true,
             ];
         }
 
-        return $this->collectViewProductAdditionalData($productConcreteTransfer, $form);
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
-     */
-    protected function buildErrorMessagesForProductAdditionalData(string $sku): array
-    {
-        $messages = [];
-        $messageTransfer = new MessageTransfer();
-        $messageTransfer->setValue(static::GLOSSARY_KEY_PRODUCT_IS_NOT_EXIST);
-        $messageTransfer->setParameters([
-            static::MESSAGE_PARAM_SKU => $sku,
-        ]);
-        $messages[] = $messageTransfer;
-
-        return $messages;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
-     * @return array
-     */
-    protected function collectViewProductAdditionalData(ProductConcreteTransfer $productConcreteTransfer, FormInterface $form): array
-    {
-        $productQuantityStorageTransfer = $this->getFactory()
-            ->getProductQuantityStorageClient()
-            ->findProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
-        $availabilityRequestTransfer = new ProductConcreteAvailabilityRequestTransfer();
-        $availabilityRequestTransfer->setSku($productConcreteTransfer->getSku());
-        $productConcreteAvailabilityTransfer = $this->getFactory()
-            ->getAvailabilityClient()
-            ->findProductConcreteAvailability($availabilityRequestTransfer);
-
-        $quantityRestrictionReader = $this->getFactory()
-            ->createQuantityRestrictionReader();
-
-        $minQuantity = $quantityRestrictionReader->getMinQuantity($productQuantityStorageTransfer);
-        $maxQuantity = $quantityRestrictionReader->getMaxQuantity($productQuantityStorageTransfer, $productConcreteAvailabilityTransfer);
-        $quantityInterval = $quantityRestrictionReader->getQuantityInterval($productQuantityStorageTransfer);
-
-        $isDisabled = $minQuantity > 0 ? false : true;
-
-        return [
-            'minQuantity' => $minQuantity,
-            'maxQuantity' => $maxQuantity,
-            'quantityInterval' => $quantityInterval,
-            'form' => $form->createView(),
-            'isDisabled' => $isDisabled,
-        ];
+        return $this->getFactory()
+            ->createProductAdditionalDataVIewCollector()
+            ->collectViewProductAdditionalData($productConcreteTransfer, $form);
     }
 }
