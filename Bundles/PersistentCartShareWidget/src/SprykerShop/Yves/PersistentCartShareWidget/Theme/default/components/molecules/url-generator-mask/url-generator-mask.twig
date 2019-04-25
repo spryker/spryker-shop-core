@@ -1,0 +1,55 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'url-generator-mask',
+    tag: 'url-generator-mask'
+} %}
+
+{% define data = {
+    group: required,
+    label: required
+} %}
+
+{% define attributes = {
+    idQuote: required,
+    permissionOption: required
+} %}
+
+{% block body %}
+    {% include molecule('ajax-provider') with {
+        class: config.jsName ~ '__provider-' ~ attributes.permissionOption,
+        attributes: {
+            method: 'POST',
+            url: path('cart/create-link', { idQuote:attributes.idQuote, permissionOption: attributes.permissionOption })
+        }
+    } only %}
+
+    {% include molecule('ajax-loader') with {
+        modifiers: ['big'],
+        attributes: {
+            'provider-selector': '.' ~ config.jsName ~ '__provider-' ~ attributes.permissionOption
+        }
+    } only %}
+
+    {% include molecule('ajax-renderer') with {
+        attributes: {
+            'provider-selector': '.' ~ config.jsName ~ '__provider-' ~ attributes.permissionOption,
+            'target-selector': '.' ~ config.jsName ~ '__actions-' ~ attributes.permissionOption
+        }
+    } only %}
+
+    {% include molecule('toggler-radio') with {
+        class: config.jsName ~ '__trigger-' ~ attributes.permissionOption,
+        data: {
+            label: data.label
+        },
+        attributes: {
+            checked: false,
+            name: data.group,
+            'target-selector': '.' ~ config.jsName ~ '__actions-' ~ attributes.permissionOption,
+            'class-to-toggle': 'is-hidden'
+        }
+    } only %}
+
+    <div class="{{ config.jsName }}__actions-{{ attributes.permissionOption }}"></div>
+{% endblock %}
