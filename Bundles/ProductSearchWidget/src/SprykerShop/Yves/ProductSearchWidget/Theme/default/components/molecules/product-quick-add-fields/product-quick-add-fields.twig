@@ -12,7 +12,8 @@
     maxQuantity: null,
     quantityInterval: 1,
     errorMessages: null,
-    warningMessages: null
+    warningMessages: null,
+    isDisabled: false
 } %}
 
 {% block body %}
@@ -49,7 +50,7 @@
                 min: data.minQuantity,
                 max: data.maxQuantity,
                 step: data.quantityInterval,
-                disabled: data.form.sku.vars.value is empty,
+                disabled: data.form.sku.vars.value is empty or isDisabled,
                 value: data.minQuantity,
                 placeholder: 'product_quick_add_widget.form.quantity' | trans
             }}

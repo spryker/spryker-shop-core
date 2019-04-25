@@ -9,9 +9,16 @@ namespace SprykerShop\Yves\ProductSearchWidget;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToAvailabilityClientInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientInterface;
+use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductQuantityStorageClientInterface;
+use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductStorageClientInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Service\ProductSearchWidgetToUtilEncodingServiceInterface;
 use SprykerShop\Yves\ProductSearchWidget\Form\ProductQuickAddForm;
+use SprykerShop\Yves\ProductSearchWidget\Reader\QuantityRestrictionReader;
+use SprykerShop\Yves\ProductSearchWidget\Reader\QuantityRestrictionReaderInterface;
+use SprykerShop\Yves\ProductSearchWidget\Resolver\ProductConcreteResolver;
+use SprykerShop\Yves\ProductSearchWidget\Resolver\ProductConcreteResolverInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -34,6 +41,22 @@ class ProductSearchWidgetFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\ProductSearchWidget\Resolver\ProductConcreteResolverInterface
+     */
+    public function createProductConcreteResolver(): ProductConcreteResolverInterface
+    {
+        return new ProductConcreteResolver($this->getProductStorageClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductSearchWidget\Reader\QuantityRestrictionReaderInterface
+     */
+    public function createQuantityRestrictionReader(): QuantityRestrictionReaderInterface
+    {
+        return new QuantityRestrictionReader();
+    }
+
+    /**
      * @return \Symfony\Component\Form\FormFactoryInterface
      */
     public function getFormFactory(): FormFactoryInterface
@@ -47,5 +70,29 @@ class ProductSearchWidgetFactory extends AbstractFactory
     public function getUtilEncodingService(): ProductSearchWidgetToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ProductSearchWidgetDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductStorageClientInterface
+     */
+    public function getProductStorageClient(): ProductSearchWidgetToProductStorageClientInterface
+    {
+        return $this->getProvidedDependency(ProductSearchWidgetDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductQuantityStorageClientInterface
+     */
+    public function getProductQuantityStorageClient(): ProductSearchWidgetToProductQuantityStorageClientInterface
+    {
+        return $this->getProvidedDependency(ProductSearchWidgetDependencyProvider::CLIENT_PRODUCT_QUANTITY_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToAvailabilityClientInterface
+     */
+    public function getAvailabilityClient(): ProductSearchWidgetToAvailabilityClientInterface
+    {
+        return $this->getProvidedDependency(ProductSearchWidgetDependencyProvider::CLIENT_AVAILABILITY);
     }
 }
