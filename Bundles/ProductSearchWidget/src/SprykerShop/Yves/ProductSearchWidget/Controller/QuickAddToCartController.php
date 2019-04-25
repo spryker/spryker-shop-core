@@ -55,24 +55,33 @@ class QuickAddToCartController extends AbstractController
             ->createProductConcreteResolver()
             ->findProductConcreteBySku($sku);
 
-        $messages = [];
-
         if ($productConcreteTransfer === null) {
-            $messageTransfer = new MessageTransfer();
-            $messageTransfer->setValue(static::GLOSSARY_KEY_PRODUCT_IS_NOT_EXIST);
-            $messageTransfer->setParameters([
-                static::MESSAGE_PARAM_SKU => $sku,
-            ]);
-            $messages[] = $messageTransfer;
-
             return [
                 'form' => $form->createView(),
-                'messages' => $messages,
+                'messages' => $this->buildErrorMessagesForProductAdditionalData($sku),
                 'isDisabled' => true,
             ];
         }
 
         return $this->collectViewProductAdditionalData($productConcreteTransfer, $form);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    protected function buildErrorMessagesForProductAdditionalData(string $sku): array
+    {
+        $messages = [];
+        $messageTransfer = new MessageTransfer();
+        $messageTransfer->setValue(static::GLOSSARY_KEY_PRODUCT_IS_NOT_EXIST);
+        $messageTransfer->setParameters([
+            static::MESSAGE_PARAM_SKU => $sku,
+        ]);
+        $messages[] = $messageTransfer;
+
+        return $messages;
     }
 
     /**
