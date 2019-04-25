@@ -46,12 +46,12 @@ class PersistentCartShareWidgetController extends AbstractController
         return [
             'idQuote' => $idQuote,
             'permissionOption' => $permissionOptionGroup,
-            'links' => $this->getFactory()
+            'cartShareLinks' => $this->getFactory()
                 ->getPersistentCartShareHelper()
-                ->generateLinks($cartShareOptions, $idQuote, $permissionOptionGroup),
-            'labels' => $this->getFactory()
+                ->generateCartShareLinks($cartShareOptions, $idQuote, $permissionOptionGroup),
+            'cartShareLinkLabels' => $this->getFactory()
                 ->getPersistentCartShareHelper()
-                ->generateLabels($cartShareOptions, $idQuote, $permissionOptionGroup),
+                ->generateCartShareLinkLabels($cartShareOptions, $idQuote, $permissionOptionGroup),
         ];
     }
 

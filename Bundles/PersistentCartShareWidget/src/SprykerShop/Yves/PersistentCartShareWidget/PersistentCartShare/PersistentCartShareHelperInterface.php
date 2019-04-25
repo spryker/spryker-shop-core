@@ -18,7 +18,7 @@ interface PersistentCartShareHelperInterface
      *
      * @return string[]
      */
-    public function generateLinks(array $cartShareOptions, int $idQuote, string $permissionOptionGroup): array;
+    public function generateCartShareLinks(array $cartShareOptions, int $idQuote, string $permissionOptionGroup): array;
 
     /**
      * @param array $cartShareOptions
@@ -29,10 +29,10 @@ interface PersistentCartShareHelperInterface
      *
      * @return string[]
      */
-    public function generateLabels(array $cartShareOptions, int $idQuote, string $permissionOptionGroup): array;
+    public function generateCartShareLinkLabels(array $cartShareOptions, int $idQuote, string $permissionOptionGroup): array;
 
     /**
      * @return string[]
      */
-    public function generateShareOptionGroups(): array;
+    public function generateCartShareOptionGroups(): array;
 }

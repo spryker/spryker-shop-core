@@ -57,19 +57,19 @@ class PersistentCartShareHelper implements PersistentCartShareHelperInterface
      *
      * @return string[]
      */
-    public function generateLinks(array $cartShareOptions, int $idQuote, string $permissionOptionGroup): array
+    public function generateCartShareLinks(array $cartShareOptions, int $idQuote, string $permissionOptionGroup): array
     {
         if (empty($cartShareOptions[$permissionOptionGroup])) {
             throw new InvalidPermissionOptionException(sprintf('Permission Option "%s" is not valid.', $permissionOptionGroup));
         }
 
-        $links = [];
+        $resourceShareLinks = [];
         foreach ($cartShareOptions[$permissionOptionGroup] as $shareOption) {
             $cartResourceShare = $this->persistentCartShareClient->generateCartResourceShare($idQuote, $shareOption);
-            $links[$shareOption] = $this->buildLink($cartResourceShare->getResourceShare());
+            $resourceShareLinks[$shareOption] = $this->buildResourceShareLink($cartResourceShare->getResourceShare());
         }
 
-        return $links;
+        return $resourceShareLinks;
     }
 
     /**
@@ -81,18 +81,18 @@ class PersistentCartShareHelper implements PersistentCartShareHelperInterface
      *
      * @return string[]
      */
-    public function generateLabels(array $cartShareOptions, int $idQuote, string $permissionOptionGroup): array
+    public function generateCartShareLinkLabels(array $cartShareOptions, int $idQuote, string $permissionOptionGroup): array
     {
         if (empty($cartShareOptions[$permissionOptionGroup])) {
             throw new InvalidPermissionOptionException(sprintf('Permission Option "%s" is not valid.', $permissionOptionGroup));
         }
 
-        $labels = [];
+        $resourceShareLinkLabels = [];
         foreach ($cartShareOptions[$permissionOptionGroup] as $shareOption) {
-            $labels[$shareOption] = $this->glossaryHelper->getKeyForPermissionOption($permissionOptionGroup, $shareOption);
+            $resourceShareLinkLabels[$shareOption] = $this->glossaryHelper->getKeyForPermissionOption($permissionOptionGroup, $shareOption);
         }
 
-        return $labels;
+        return $resourceShareLinkLabels;
     }
 
     /**
@@ -100,25 +100,25 @@ class PersistentCartShareHelper implements PersistentCartShareHelperInterface
      *
      * @return string
      */
-    protected function buildLink(ResourceShareTransfer $cartResourceShare): string
+    protected function buildResourceShareLink(ResourceShareTransfer $cartResourceShare): string
     {
         return 'link/' . $cartResourceShare->getUuid(); //todo replace with application->path()
-//        return $this->application->path(static::LINK_ROUTE, [])
+//        return $this->application->path(static::LINK_ROUTE, ['resourceShareUuid' => $cartResourceShare->getUuid()])
     }
 
     /**
      * @return string[]
      */
-    public function generateShareOptionGroups(): array
+    public function generateCartShareOptionGroups(): array
     {
         $cartShareOptions = $this->persistentCartShareClient->getCartShareOptions();
-        $cartShareOptionGroups = array_keys($cartShareOptions);
+        $optionGroups = array_keys($cartShareOptions);
 
-        $result = [];
-        foreach ($cartShareOptionGroups as $cartShareOptionGroup) {
-            $result[$cartShareOptionGroup] = $this->glossaryHelper->getKeyForPermissionGroup($cartShareOptionGroup);
+        $cartShareOptionGroups = [];
+        foreach ($optionGroups as $cartShareOptionGroup) {
+            $cartShareOptionGroups[$cartShareOptionGroup] = $this->glossaryHelper->getKeyForPermissionGroup($cartShareOptionGroup);
         }
 
-        return $result;
+        return $cartShareOptionGroups;
     }
 }

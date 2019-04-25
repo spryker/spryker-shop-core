@@ -89,6 +89,6 @@ class ShareCartByLinkWidget extends AbstractWidget
      */
     protected function getCartShareOptionsGroups(): array
     {
-        return $this->getFactory()->getPersistentCartShareHelper()->generateShareOptionGroups();
+        return $this->getFactory()->getPersistentCartShareHelper()->generateCartShareOptionGroups();
     }
 }
