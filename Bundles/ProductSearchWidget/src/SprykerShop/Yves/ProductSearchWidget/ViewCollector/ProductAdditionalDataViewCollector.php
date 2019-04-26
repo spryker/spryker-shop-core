@@ -61,18 +61,33 @@ class ProductAdditionalDataViewCollector implements ProductAdditionalDataViewCol
         $productConcreteAvailabilityTransfer = $this->availabilityClient
             ->findProductConcreteAvailability($availabilityRequestTransfer);
 
-        $minQuantity = $this->quantityRestrictionReader->getMinQuantity($productQuantityStorageTransfer);
-        $maxQuantity = $this->quantityRestrictionReader->getMaxQuantity($productQuantityStorageTransfer, $productConcreteAvailabilityTransfer);
+        $minQuantity = $this->quantityRestrictionReader->getMinQuantity(
+            $productQuantityStorageTransfer,
+            $productConcreteAvailabilityTransfer
+        );
+        $maxQuantity = $this->quantityRestrictionReader->getMaxQuantity(
+            $productQuantityStorageTransfer,
+            $productConcreteAvailabilityTransfer
+        );
         $quantityInterval = $this->quantityRestrictionReader->getQuantityInterval($productQuantityStorageTransfer);
-
-        $isDisabled = $minQuantity > 0 ? false : true;
 
         return [
             'minQuantity' => $minQuantity,
             'maxQuantity' => $maxQuantity,
             'quantityInterval' => $quantityInterval,
             'form' => $form->createView(),
-            'isDisabled' => $isDisabled,
+            'isDisabled' => $this->isDisabled((float)$minQuantity, (float)$maxQuantity),
         ];
+    }
+
+    /**
+     * @param float $minQuantity
+     * @param float $maxQuantity
+     *
+     * @return bool
+     */
+    public function isDisabled(float $minQuantity, float $maxQuantity): bool
+    {
+        return $minQuantity > 0 && $maxQuantity > 0 ? false : true;
     }
 }

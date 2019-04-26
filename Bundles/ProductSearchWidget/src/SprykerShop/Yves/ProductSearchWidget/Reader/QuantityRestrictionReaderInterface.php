@@ -25,12 +25,19 @@ interface QuantityRestrictionReaderInterface
      *
      * @return float|null
      */
-    public function getMaxQuantity(?ProductQuantityStorageTransfer $productQuantityStorageTransfer, ?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer): ?float;
+    public function getMaxQuantity(
+        ?ProductQuantityStorageTransfer $productQuantityStorageTransfer,
+        ?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+    ): ?float;
 
     /**
      * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null $productConcreteAvailabilityTransfer
      *
-     * @return float
+     * @return float|null
      */
-    public function getMinQuantity(?ProductQuantityStorageTransfer $productQuantityStorageTransfer): float;
+    public function getMinQuantity(
+        ?ProductQuantityStorageTransfer $productQuantityStorageTransfer,
+        ?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+    ): ?float;
 }

@@ -59,15 +59,34 @@ class QuantityRestrictionReader implements QuantityRestrictionReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null $productConcreteAvailabilityTransfer
      *
-     * @return float
+     * @return float|null
      */
-    public function getMinQuantity(?ProductQuantityStorageTransfer $productQuantityStorageTransfer): float
-    {
-        if ($productQuantityStorageTransfer === null) {
+    public function getMinQuantity(
+        ?ProductQuantityStorageTransfer $productQuantityStorageTransfer,
+        ?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+    ): ?float {
+        if ($productConcreteAvailabilityTransfer === null) {
             return 1;
         }
 
-        return $productQuantityStorageTransfer->getQuantityMin();
+        if ($productQuantityStorageTransfer === null && $productConcreteAvailabilityTransfer->getIsNeverOutOfStock()) {
+            return null;
+        }
+
+        $availability = $productConcreteAvailabilityTransfer->getAvailability();
+
+        if (!$productConcreteAvailabilityTransfer->getIsNeverOutOfStock() && $productQuantityStorageTransfer === null) {
+            return $availability > 0 ? min(1, $availability) : null;
+        }
+
+        if ($productConcreteAvailabilityTransfer->getIsNeverOutOfStock()) {
+            return $productQuantityStorageTransfer->getQuantityMin();
+        }
+
+        $minAvailability = min($productQuantityStorageTransfer->getQuantityMin(), $availability);
+
+        return $minAvailability > 0 ? $minAvailability : null;
     }
 }
