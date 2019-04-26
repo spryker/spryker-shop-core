@@ -49,12 +49,11 @@ class CartController extends AbstractController
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $errorMessages = [];
             foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
-                $errorMessages[] = $quoteErrorTransfer->getMessage();
+                $this->addErrorMessage($quoteErrorTransfer->getMessage());
             }
 
-            throw new NotFoundHttpException(implode(static::ERROR_MESSAGE_SEPARATOR, $errorMessages));
+            throw new NotFoundHttpException();
         }
 
         $cartItems = $quoteTransfer->getItems() ?? [];
