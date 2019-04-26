@@ -25,7 +25,7 @@ class LinkController extends AbstractController
      * @see \SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider::ROUTE_LOGIN
      */
     protected const ROUTE_LOGIN = 'login';
-    protected const BACK_TO_LINK_REDIRECT = 'backToLinkRedirect';
+    protected const LINK_REDIRECT_URL = 'LinkRedirectUrl';
 
     /**
      * @param string $resourceShareUuid
@@ -86,7 +86,7 @@ class LinkController extends AbstractController
 
         if ($resourceShareResponseTransfer->getIsLoginRequired()) {
             $loginLink = $this->getApplication()->path(static::ROUTE_LOGIN, [
-                static::BACK_TO_LINK_REDIRECT => $this->getApplication()->path(
+                static::LINK_REDIRECT_URL => $this->getApplication()->path(
                     $routeTransfer->getRoute(),
                     $routeTransfer->getParameters()
                 ),

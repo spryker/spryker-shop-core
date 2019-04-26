@@ -19,9 +19,9 @@ class ResourceSharePageRedirectAfterLoginStrategyPlugin extends AbstractPlugin i
     protected const KEY_APPLICATION_REQUEST = 'request';
 
     /**
-     * @see \SprykerShop\Yves\ResourceSharePage\Controller\LinkController::BACK_TO_LINK_REDIRECT
+     * @see \SprykerShop\Yves\ResourceSharePage\Controller\LinkController::LINK_REDIRECT_URL
      */
-    protected const BACK_TO_LINK_REDIRECT = 'backToLinkRedirect';
+    protected const LINK_REDIRECT_URL = 'LinkRedirectUrl';
 
     /**
      * {@inheritdoc}
@@ -60,7 +60,7 @@ class ResourceSharePageRedirectAfterLoginStrategyPlugin extends AbstractPlugin i
     protected function findRedirectUrlFromRequest(): ?string
     {
         $request = $this->getFactory()->getApplication()[static::KEY_APPLICATION_REQUEST];
-        $redirectUrl = $request->get(static::BACK_TO_LINK_REDIRECT);
+        $redirectUrl = $request->get(static::LINK_REDIRECT_URL);
 
         return $redirectUrl;
     }
