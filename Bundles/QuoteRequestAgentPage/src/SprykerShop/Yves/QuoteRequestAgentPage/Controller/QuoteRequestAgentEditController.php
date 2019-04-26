@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractController
 {
+    protected const GLOSSARY_KEY_SOURCE_PRICE_CHANGES_FORBIDDEN = 'quote_request_page.quote_request.source_price_changes_forbidden';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_UPDATED = 'quote_request_page.quote_request.updated';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER = 'quote_request_page.quote_request.sent_to_customer';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
@@ -125,6 +126,10 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
      */
     protected function validateQuoteRequestInFormData(FormInterface $quoteRequestForm): FormInterface
     {
+        if (!$quoteRequestForm->getConfig()->getOption(QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_SOURCE_PRICE_CHANGES_FORBIDDEN);
+        }
+
         $quoteRequestResponseTransfer = $this->getFactory()
             ->getQuoteRequestAgentClient()
             ->updateQuoteRequest($quoteRequestForm->getData());
