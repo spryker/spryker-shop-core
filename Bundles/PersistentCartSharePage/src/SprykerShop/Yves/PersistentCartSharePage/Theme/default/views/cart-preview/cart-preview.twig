@@ -5,7 +5,6 @@
     cartItems: _view.cartItems,
     isQuoteEditable: _view.isQuoteEditable,
     isQuoteValid: _view.isQuoteValid,
-    errors: _view.errors,
     request: app.request
 } %}
 
@@ -38,14 +37,6 @@
         {% block title %}
             {{ parent() }}
         {% endblock %}
-
-        {% if data.errors is not empty %}
-            {% for message in data.errors %}
-                <div class="spacing-bottom spacing-bottom--big">
-                    {{ message.message | trans }}
-                </div>
-            {% endfor %}
-        {% endif %}
     </div>
 {% endblock %}
 

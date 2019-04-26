@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\PersistentCartSharePage\Controller;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,6 +36,8 @@ class CartController extends AbstractController
      * @param string $resourceShareUuid
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array
      */
     protected function executePreviewAction(string $resourceShareUuid, Request $request): array
@@ -64,7 +65,6 @@ class CartController extends AbstractController
             'cartItems' => $cartItems,
             'attributes' => [],
             'isQuoteValid' => false,
-            'errors' => $quoteResponseTransfer->getErrors(),
         ];
     }
 }
