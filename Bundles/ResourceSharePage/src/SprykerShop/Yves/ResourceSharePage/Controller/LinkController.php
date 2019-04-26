@@ -7,25 +7,21 @@
 
 namespace SprykerShop\Yves\ResourceSharePage\Controller;
 
-use ArrayObject;
-use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\ResourceShareRequestTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\ResourceSharePage\ResourceSharePageFactory getFactory()
  */
 class LinkController extends AbstractController
 {
-    protected const MESSAGE_RESOURCE_SHARE_NO_ROUTE = 'resource-share.link.error.no-route';
-
     /**
      * @see \SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider::ROUTE_LOGIN
      */
     protected const ROUTE_LOGIN = 'login';
     protected const LINK_REDIRECT_URL = 'LinkRedirectUrl';
+    protected const ERROR_MESSAGE_SEPARATOR = '<BR>';
 
     /**
      * @param string $resourceShareUuid
@@ -48,77 +44,38 @@ class LinkController extends AbstractController
      * @param string $resourceShareUuid
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executeIndexAction(string $resourceShareUuid, Request $request)
     {
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-        $loginLink = '';
+        $resourceShareResponseTransfer = $this->getFactory()->createResourceShareActivator()
+            ->activateResourceShare($resourceShareUuid);
 
-        $resourceShareTransfer = (new ResourceShareTransfer())
-            ->setUuid($resourceShareUuid);
-
-        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
-            ->setResourceShare($resourceShareTransfer)
-            ->setCustomer($customerTransfer);
-
-        $resourceShareResponseTransfer = $this->getFactory()
-            ->getResourceShareClient()
-            ->activateResourceShare($resourceShareRequestTransfer);
-
-        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
-            return [
-                'messages' => $resourceShareResponseTransfer->getMessages(),
-                'loginLink' => $loginLink,
-            ];
-        }
-
-        $routeTransfer = $this->getFactory()
-            ->getRouteResolver()
+        $routeTransfer = $this->getFactory()->getRouteResolver()
             ->resolveRoute($resourceShareResponseTransfer);
 
-        if (!$routeTransfer) {
-            return [
-                'messages' => $this->createNoRouteMessage(),
-                'loginLink' => $loginLink,
-            ];
-        }
-
         if ($resourceShareResponseTransfer->getIsLoginRequired()) {
-            $loginLink = $this->getApplication()->path(static::ROUTE_LOGIN, [
-                static::LINK_REDIRECT_URL => $this->getApplication()->path(
+            $this->addErrorMessage($resourceShareResponseTransfer->getMessages());
+
+            return $this->redirectResponseInternal(static::ROUTE_LOGIN, [
+                static::LINK_REDIRECT_URL => $this->getFactory()->getApplication()->path(
                     $routeTransfer->getRoute(),
                     $routeTransfer->getParameters()
                 ),
             ]);
-
-            return [
-                'messages' => $resourceShareResponseTransfer->getMessages(),
-                'loginLink' => $loginLink,
-            ];
         }
 
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
-            return [
-                'messages' => $resourceShareResponseTransfer->getMessages(),
-                'loginLink' => $loginLink,
-            ];
+            $errorMessages = [];
+            foreach ($resourceShareResponseTransfer->getMessages() as $messageTransfer) {
+                $errorMessages[] = $messageTransfer->getValue();
+            }
+
+            throw new NotFoundHttpException(implode(static::ERROR_MESSAGE_SEPARATOR, $errorMessages));
         }
 
         return $this->redirectResponseInternal($routeTransfer->getRoute(), $routeTransfer->getParameters());
-    }
-
-    /**
-     * @return \ArrayObject
-     */
-    protected function createNoRouteMessage(): ArrayObject
-    {
-        $message = (new MessageTransfer())
-            ->setValue(static::MESSAGE_RESOURCE_SHARE_NO_ROUTE);
-
-        $messages = (new ArrayObject());
-        $messages->append($message);
-
-        return $messages;
     }
 }

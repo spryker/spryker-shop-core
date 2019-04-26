@@ -21,7 +21,7 @@ class PersistentCartSharePageControllerProvider extends AbstractYvesControllerPr
      */
     protected function defineControllers(Application $app): void
     {
-        $this->addPersistentCartSharePageRoute();
+        $this->addPersistentCartSharePagePreviewRoute();
     }
 
     /**
@@ -29,7 +29,7 @@ class PersistentCartSharePageControllerProvider extends AbstractYvesControllerPr
      *
      * @return $this
      */
-    protected function addPersistentCartSharePageRoute()
+    protected function addPersistentCartSharePagePreviewRoute()
     {
         $this->createController('{persistentCartShare}/preview/{resourceShareUuid}', static::ROUTE_CART_PREVIEW, 'PersistentCartSharePage', 'Cart', 'preview')
             ->assert('persistentCartShare', $this->getAllowedLocalesPattern() . 'cart|cart')

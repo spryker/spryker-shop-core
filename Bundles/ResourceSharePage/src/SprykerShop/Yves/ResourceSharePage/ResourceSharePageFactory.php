@@ -11,7 +11,10 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToCustomerClientInterface;
 use SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToResourceShareClientInterface;
+use SprykerShop\Yves\ResourceSharePage\ResourceShare\ResourceShareActivator;
+use SprykerShop\Yves\ResourceSharePage\ResourceShare\ResourceShareValidator;
 use SprykerShop\Yves\ResourceSharePage\RouteResolver\RouteResolver;
+use SprykerShop\Yves\ResourceSharePage\RouteResolver\RouteResolverInterface;
 
 class ResourceSharePageFactory extends AbstractFactory
 {
@@ -48,12 +51,23 @@ class ResourceSharePageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ResourceSharePage\RouteResolver\RouteResolver
+     * @return \SprykerShop\Yves\ResourceSharePage\RouteResolver\RouteResolverInterface
      */
-    public function getRouteResolver(): RouteResolver
+    public function getRouteResolver(): RouteResolverInterface
     {
         return new RouteResolver(
             $this->getResourceShareRouterStrategyPlugins()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ResourceSharePage\ResourceShare\ResourceShareActivator
+     */
+    public function createResourceShareActivator(): ResourceShareActivator
+    {
+        return new ResourceShareActivator(
+            $this->getCustomerClient(),
+            $this->getResourceShareClient()
         );
     }
 }

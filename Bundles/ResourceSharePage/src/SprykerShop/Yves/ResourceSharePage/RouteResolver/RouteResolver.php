@@ -9,9 +9,13 @@ namespace SprykerShop\Yves\ResourceSharePage\RouteResolver;
 
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\RouteTransfer;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class RouteResolver implements RouteResolverInterface
 {
+    protected const MESSAGE_RESOURCE_SHARE_NO_ROUTE = 'resource-share.link.error.no-route';
+
     /**
      * @var \SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareRouterStrategyPluginInterface[]
      */
@@ -28,10 +32,17 @@ class RouteResolver implements RouteResolverInterface
     /**
      * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\RouteTransfer|null
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
+     *
+     * @return \Generated\Shared\Transfer\RouteTransfer
      */
-    public function resolveRoute(ResourceShareResponseTransfer $resourceShareResponseTransfer): ?RouteTransfer
+    public function resolveRoute(ResourceShareResponseTransfer $resourceShareResponseTransfer): RouteTransfer
     {
+        if (!$resourceShareResponseTransfer->getResourceShare()) {
+            throw new UnprocessableEntityHttpException();
+        }
+
         foreach ($this->resourceShareRouterStrategyPlugins as $resourceShareRouterStrategyPlugin) {
             if (!$resourceShareRouterStrategyPlugin->isApplicable($resourceShareResponseTransfer->getResourceShare())) {
                 continue;
@@ -40,6 +51,6 @@ class RouteResolver implements RouteResolverInterface
             return $resourceShareRouterStrategyPlugin->resolveRoute($resourceShareResponseTransfer->getResourceShare());
         }
 
-        return null;
+        throw new NotFoundHttpException(static::MESSAGE_RESOURCE_SHARE_NO_ROUTE);
     }
 }

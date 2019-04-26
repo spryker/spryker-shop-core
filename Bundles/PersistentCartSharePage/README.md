@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/persistent-cart-share-page.svg)](https://travis-ci.org/spryker-shop/persistent-cart-share-page)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/persistent-cart-share-page/badge.svg)](https://coveralls.io/github/spryker-shop/persistent-cart-share-page)
 
-The module provides persistent cart share page functionality.
+Provides a page for persistent cart share functionality.
 
 ## Installation
 

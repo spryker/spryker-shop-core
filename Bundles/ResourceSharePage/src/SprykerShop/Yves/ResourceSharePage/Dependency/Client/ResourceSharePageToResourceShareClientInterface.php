@@ -13,15 +13,6 @@ use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 interface ResourceSharePageToResourceShareClientInterface
 {
     /**
-     * Specification:
-     * - Makes Zed-Request.
-     * - Returns with "isSuccess=false" and error message if resource is not found by provided uuid.
-     * - Applies corresponding strategy using `ResourceShareActivatorStrategyPluginInterface` stack.
-     * - Returns with "isLoginRequired=true" when strategy expects logged in customer.
-     * - Returns with "isSuccess=true" on success or with error messages otherwise.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer

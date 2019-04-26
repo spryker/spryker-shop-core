@@ -11,12 +11,15 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\PersistentCartSharePage\PersistentCartSharePageFactory getFactory()
  */
 class CartController extends AbstractController
 {
+    protected const ERROR_MESSAGE_SEPARATOR = '<br>';
+
     /**
      * @param string $resourceShareUuid
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -44,8 +47,13 @@ class CartController extends AbstractController
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
 
-        if (!$quoteTransfer) {
-            $quoteTransfer = new QuoteTransfer();
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            $errorMessages = [];
+            foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
+                $errorMessages[] = $quoteErrorTransfer->getMessage();
+            }
+
+            throw new NotFoundHttpException(implode(static::ERROR_MESSAGE_SEPARATOR, $errorMessages));
         }
 
         $cartItems = $quoteTransfer->getItems() ?? [];

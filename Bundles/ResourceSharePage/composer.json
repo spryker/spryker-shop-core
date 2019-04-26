@@ -19,7 +19,6 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/persistent-cart-share": "^1.0.0",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
