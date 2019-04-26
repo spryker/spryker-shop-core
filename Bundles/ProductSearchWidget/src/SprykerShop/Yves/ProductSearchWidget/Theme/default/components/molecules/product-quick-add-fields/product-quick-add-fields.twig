@@ -51,7 +51,7 @@
                 max: data.maxQuantity,
                 step: data.quantityInterval,
                 disabled: data.form.sku.vars.value is empty or isDisabled,
-                value: data.minQuantity,
+                value: data.form.sku.vars.value is empty or isDisabled ? null : data.minQuantity,
                 placeholder: 'product_quick_add_widget.form.quantity' | trans
             }}
         ) }}
