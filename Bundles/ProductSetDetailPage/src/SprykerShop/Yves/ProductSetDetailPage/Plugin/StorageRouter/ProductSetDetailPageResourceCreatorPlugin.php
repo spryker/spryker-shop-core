@@ -10,8 +10,8 @@ namespace SprykerShop\Yves\ProductSetDetailPage\Plugin\StorageRouter;
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
 use Spryker\Shared\ProductSetStorage\ProductSetStorageConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
 use SprykerShop\Yves\ProductSetDetailPage\Controller\DetailController;
+use SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

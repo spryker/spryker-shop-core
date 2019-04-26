@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CatalogPage\Plugin\StorageRouter;
 
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
+use SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\CatalogPage\CatalogPageFactory getFactory()

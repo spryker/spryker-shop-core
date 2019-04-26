@@ -9,8 +9,8 @@ namespace SprykerShop\Yves\ProductDetailPage\Plugin\StorageRouter;
 
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
 use SprykerShop\Yves\ProductDetailPage\Controller\ProductController;
+use SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\ProductDetailPage\ProductDetailPageFactory getFactory()

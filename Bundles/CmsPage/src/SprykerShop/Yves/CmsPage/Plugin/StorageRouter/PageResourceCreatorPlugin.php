@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CmsPage\Plugin\StorageRouter;
 
 use Spryker\Shared\CmsStorage\CmsStorageConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
+use SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\CmsPage\CmsPageFactory getFactory()
