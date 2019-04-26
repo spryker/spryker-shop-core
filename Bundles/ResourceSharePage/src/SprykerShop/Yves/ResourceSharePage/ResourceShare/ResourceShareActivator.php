@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ResourceShareTransfer;
 use SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToCustomerClientInterface;
 use SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToResourceShareClientInterface;
 
-class ResourceShareActivator
+class ResourceShareActivator implements ResourceShareActivatorInterface
 {
     /**
      * @var \SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToCustomerClientInterface
