@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\ErrorPage\Plugin\Router;
 
-use Spryker\Shared\Router\Route\RouteCollection;
-use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -18,9 +18,9 @@ class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_ERROR_403_PATH = '/error/403';
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -33,9 +33,9 @@ class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses \SprykerShop\Yves\ErrorPage\Controller\Error404Controller::indexAction()
      *
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addError404Route(RouteCollection $routeCollection): RouteCollection
     {
@@ -48,9 +48,9 @@ class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses \SprykerShop\Yves\ErrorPage\Controller\Error403Controller::indexAction()
      *
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addError403Route(RouteCollection $routeCollection): RouteCollection
     {

@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Plugin\Router;
 
-use Spryker\Shared\Router\Route\RouteCollection;
-use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class QuickOrderPageControllerProvider extends AbstractRouteProviderPlugin
 {
@@ -20,9 +20,9 @@ class QuickOrderPageControllerProvider extends AbstractRouteProviderPlugin
     public const ROUTE_QUICK_ORDER_DOWNLOAD_TEMPLATE = 'quick-order/download-template';
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -38,9 +38,9 @@ class QuickOrderPageControllerProvider extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addQuickOrderRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -52,9 +52,9 @@ class QuickOrderPageControllerProvider extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addQuickOrderAddRowsRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -66,9 +66,9 @@ class QuickOrderPageControllerProvider extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addQuickOrderDeleteRowRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -80,9 +80,9 @@ class QuickOrderPageControllerProvider extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addQuickOrderClearAllRowsRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -94,9 +94,9 @@ class QuickOrderPageControllerProvider extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addQuickOrderProductAdditionalDataRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -108,9 +108,9 @@ class QuickOrderPageControllerProvider extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addQuickOrderDownloadTemplateRoute(RouteCollection $routeCollection): RouteCollection
     {

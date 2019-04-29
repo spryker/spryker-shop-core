@@ -7,33 +7,35 @@
 
 namespace SprykerShop\Yves\HomePage\Plugin\Router;
 
-use Silex\Application;
-use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
+use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use SprykerShop\Yves\Router\Route\RouteCollection;
 
-class HomePageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
+class HomePageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     public const ROUTE_HOME = 'home';
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    public function addRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $routeCollection = $this->addHomeRoute($routeCollection);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addHomeRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addHomeRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/', 'HomePage', 'Index', 'indexAction');
         $routeCollection->add(static::ROUTE_HOME, $route);
+
         return $routeCollection;
     }
 }

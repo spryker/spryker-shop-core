@@ -7,47 +7,50 @@
 
 namespace SprykerShop\Yves\AgentPage\Plugin\Router;
 
-use Silex\Application;
-use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
+use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use SprykerShop\Yves\Router\Route\RouteCollection;
 
-class AgentPageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
+class AgentPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     public const ROUTE_LOGIN = 'agent/login';
     public const ROUTE_LOGOUT = 'agent/logout';
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    public function addRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $routeCollection = $this->addLoginRoute($routeCollection);
         $routeCollection = $this->addLogoutRoute($routeCollection);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addLoginRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addLoginRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/agent/login', 'AgentPage', 'Auth', 'loginAction');
         $routeCollection->add(static::ROUTE_LOGIN, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addLogoutRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addLogoutRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/agent/logout', 'AgentPage', 'Auth', 'logoutAction');
         $routeCollection->add(static::ROUTE_LOGOUT, $route);
+
         return $routeCollection;
     }
 }

@@ -7,33 +7,35 @@
 
 namespace SprykerShop\Yves\CurrencyWidget\Plugin\Router;
 
-use Silex\Application;
-use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
+use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use SprykerShop\Yves\Router\Route\RouteCollection;
 
-class CurrencyWidgetRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
+class CurrencyWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     public const ROUTE_CART = 'currency-switch';
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    public function addRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $routeCollection = $this->addCurrencySwitchRoute($routeCollection);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addCurrencySwitchRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addCurrencySwitchRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/currency/switch', 'CurrencyWidget', 'CurrencySwitch', 'indexAction');
         $routeCollection->add(static::ROUTE_CART, $route);
+
         return $routeCollection;
     }
 }

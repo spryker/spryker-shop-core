@@ -7,61 +7,65 @@
 
 namespace SprykerShop\Yves\CatalogPage\Plugin\Router;
 
-use Silex\Application;
-use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
+use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use SprykerShop\Yves\Router\Route\RouteCollection;
 
-class CatalogPageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
+class CatalogPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     public const ROUTE_SEARCH = 'search';
     public const ROUTE_SUGGESTION = 'search/suggestion';
     public const ROUTER_CHANGE_VIEW_MODE = 'change-view-mode';
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    public function addRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $routeCollection = $this->addFulltextSearchRoute($routeCollection);
         $routeCollection = $this->addSuggestionRoute($routeCollection);
         $routeCollection = $this->addChangeViewRoute($routeCollection);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addFulltextSearchRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addFulltextSearchRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/search', 'CatalogPage', 'Catalog', 'fulltextSearchAction');
         $routeCollection->add(static::ROUTE_SEARCH, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addSuggestionRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addSuggestionRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/search/suggestion', 'CatalogPage', 'Suggestion', 'indexAction');
         $routeCollection->add(static::ROUTE_SUGGESTION, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addChangeViewRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addChangeViewRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/catalog/change-view-mode', 'CatalogPage', 'Catalog', 'changeViewModeAction');
         $routeCollection->add(static::ROUTER_CHANGE_VIEW_MODE, $route);
+
         return $routeCollection;
     }
 }

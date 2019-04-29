@@ -7,54 +7,57 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Plugin\Router;
 
-use Silex\Application;
-use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
+use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use SprykerShop\Yves\Router\Route\RouteCollection;
 
-class CustomerReorderRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
+class CustomerReorderRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     protected const ROUTE_CART_ORDER_REPEAT = 'customer/order/reorder';
     protected const ROUTE_CART_ORDER_ITEMS_REPEAT = 'customer/order/reorder-items';
     protected const PATTERN_ID = '\d+';
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    public function addRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $routeCollection = $this->addReorderRoute($routeCollection);
         $routeCollection = $this->addReorderItemsRoute($routeCollection);
+
         return $routeCollection;
     }
 
     /**
      * @uses \SprykerShop\Yves\CustomerReorderWidget\Controller\OrderController::reorderAction()
      *
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addReorderRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addReorderRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/customer/order/{idSalesOrder}/reorder', 'CustomerReorderWidget', 'Order', 'reorderAction');
         $route = $route->assert('idSalesOrder', static::PATTERN_ID);
         $routeCollection->add(static::ROUTE_CART_ORDER_REPEAT, $route);
+
         return $routeCollection;
     }
 
     /**
      * @uses \SprykerShop\Yves\CustomerReorderWidget\Controller\OrderController::reorderItemsAction()
      *
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addReorderItemsRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addReorderItemsRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/customer/order/reorder-items', 'CustomerReorderWidget', 'Order', 'reorderItemsAction');
         $route = $route->method('POST');
         $routeCollection->add(static::ROUTE_CART_ORDER_ITEMS_REPEAT, $route);
+
         return $routeCollection;
     }
 }

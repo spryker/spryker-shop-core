@@ -7,10 +7,10 @@
 
 namespace SprykerShop\Yves\WishlistPage\Plugin\Router;
 
-use Silex\Application;
-use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
+use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use SprykerShop\Yves\Router\Route\RouteCollection;
 
-class WishlistPageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
+class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     public const ROUTE_ADD_TO_WISHLIST = 'wishlist/add-to-wishlist';
     public const ROUTE_WISHLIST_OVERVIEW = 'wishlist/overview';
@@ -23,11 +23,11 @@ class WishlistPageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteP
     public const ROUTE_MOVE_ALL_AVAILABLE_TO_CART = 'wishlist/move-all-available-to-cart';
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    public function addRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $routeCollection = $this->addAddToWishlistRoute($routeCollection);
         $routeCollection = $this->addWishlistOverviewRoute($routeCollection);
@@ -38,119 +38,129 @@ class WishlistPageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteP
         $routeCollection = $this->addRemoveItemRoute($routeCollection);
         $routeCollection = $this->addMoveToCartRoute($routeCollection);
         $routeCollection = $this->addMoveAllAvailableToCartRoute($routeCollection);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addAddToWishlistRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addAddToWishlistRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/wishlist/add-to-wishlist', 'WishlistPage', 'AddToWishlist', 'indexAction');
         $routeCollection->add(static::ROUTE_ADD_TO_WISHLIST, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addWishlistOverviewRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addWishlistOverviewRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/wishlist', 'WishlistPage', 'WishlistOverview', 'indexAction');
         $routeCollection->add(static::ROUTE_WISHLIST_OVERVIEW, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addUpdateWishlistRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addUpdateWishlistRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/wishlist/update/{wishlistName}', 'WishlistPage', 'WishlistOverview', 'updateAction');
         $route = $route->assert('wishlistName', '.+');
         $routeCollection->add(static::ROUTE_WISHLIST_UPDATE, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addDeleteWishlistRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addDeleteWishlistRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/wishlist/delete/{wishlistName}', 'WishlistPage', 'WishlistOverview', 'deleteAction');
         $route = $route->assert('wishlistName', '.+');
         $routeCollection->add(static::ROUTE_WISHLIST_DELETE, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addWishlistDetailsRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addWishlistDetailsRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/wishlist/details/{wishlistName}', 'WishlistPage', 'Wishlist', 'indexAction');
         $route = $route->assert('wishlistName', '.+');
         $routeCollection->add(static::ROUTE_WISHLIST_DETAILS, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addAddItemRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addAddItemRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/wishlist/add-item', 'WishlistPage', 'Wishlist', 'addItemAction');
         $routeCollection->add(static::ROUTE_ADD_ITEM, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addRemoveItemRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addRemoveItemRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/wishlist/remove-item', 'WishlistPage', 'Wishlist', 'removeItemAction');
         $routeCollection->add(static::ROUTE_REMOVE_ITEM, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addMoveToCartRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addMoveToCartRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/wishlist/move-to-cart', 'WishlistPage', 'Wishlist', 'moveToCartAction');
         $route = $route->assert('sku', '[a-zA-Z0-9-_]+');
         $routeCollection->add(static::ROUTE_MOVE_TO_CART, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addMoveAllAvailableToCartRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addMoveAllAvailableToCartRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/wishlist/move-all-available-to-cart/{wishlistName}', 'WishlistPage', 'Wishlist', 'moveAllAvailableToCartAction');
         $route = $route->assert('wishlistName', '.+');
         $routeCollection->add(static::ROUTE_MOVE_ALL_AVAILABLE_TO_CART, $route);
+
         return $routeCollection;
     }
 }

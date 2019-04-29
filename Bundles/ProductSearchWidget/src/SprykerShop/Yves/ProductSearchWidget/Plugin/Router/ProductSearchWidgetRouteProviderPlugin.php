@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\ProductSearchWidget\Plugin\Router;
 
-use Spryker\Shared\Router\Route\RouteCollection;
-use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class ProductSearchWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -16,9 +16,9 @@ class ProductSearchWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_PRODUCT_QUICK_ADD = 'product-quick-add';
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -31,9 +31,9 @@ class ProductSearchWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses ProductConcreteAddController::indexAction()
      *
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addCartQuickAddRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -46,9 +46,9 @@ class ProductSearchWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses ProductConcreteSearchController::indexAction()
      *
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addProductConcreteSearchRoute(RouteCollection $routeCollection): RouteCollection
     {

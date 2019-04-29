@@ -7,8 +7,9 @@
 
 namespace SprykerShop\Yves\CartPage\Plugin\Router;
 
-use Spryker\Shared\Router\Route\RouteCollection;
-use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use SprykerShop\Yves\Router\Route\RouteCollection;
+use Symfony\Component\HttpFoundation\Request;
 
 class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -23,9 +24,9 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     public const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -41,9 +42,9 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addCartRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -56,9 +57,9 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addCartAddItemsRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -70,9 +71,9 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addCartAddRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -90,9 +91,9 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      * @uses CartControllerProvider::getQuantityFromRequest()
      * @uses CartController::quickAddAction()
      *
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addCartQuickAddRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -106,9 +107,9 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addCartRemoveRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -122,9 +123,9 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addCartChangeQuantityRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -140,9 +141,9 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addCartUpdateRoute(RouteCollection $routeCollection): RouteCollection
     {

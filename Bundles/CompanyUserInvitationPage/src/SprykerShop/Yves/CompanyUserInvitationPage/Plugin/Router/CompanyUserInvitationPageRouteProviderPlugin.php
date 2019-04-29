@@ -7,10 +7,10 @@
 
 namespace SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Router;
 
-use Silex\Application;
-use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
+use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use SprykerShop\Yves\Router\Route\RouteCollection;
 
-class CompanyUserInvitationPageRouteProviderPlugin extends \Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin
+class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     public const ROUTE_OVERVIEW = 'company/user-invitation';
     public const ROUTE_GET_IMPORT_ERRORS = 'company/user-invitation/get-import-errors';
@@ -28,11 +28,11 @@ class CompanyUserInvitationPageRouteProviderPlugin extends \Spryker\Yves\Router\
     public const ROUTE_INVITATION_DELETE_CONFIRM = 'company/user-invitation/delete/confirm';
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    public function addRoutes(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $routeCollection = $this->addUserInvitationRoute($routeCollection);
         $routeCollection = $this->addUserInvitationErrorsRoute($routeCollection);
@@ -43,114 +43,124 @@ class CompanyUserInvitationPageRouteProviderPlugin extends \Spryker\Yves\Router\
         $routeCollection = $this->addUserInvitationDeleteRoute($routeCollection);
         $routeCollection = $this->addUserInvitationDeleteConfirmRoute($routeCollection);
         $routeCollection = $this->addUserInvitationAcceptRoute($routeCollection);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addUserInvitationRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addUserInvitationRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/company/user-invitation', 'CompanyUserInvitationPage', 'Import', 'indexAction');
         $routeCollection->add(static::ROUTE_OVERVIEW, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addUserInvitationErrorsRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addUserInvitationErrorsRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/company/user-invitation/get-import-errors', 'CompanyUserInvitationPage', 'Import', 'getErrorsAction');
         $routeCollection->add(static::ROUTE_GET_IMPORT_ERRORS, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addUserInvitationSendRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addUserInvitationSendRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/company/user-invitation/send', 'CompanyUserInvitationPage', 'Send', 'sendCompanyUserInvitationAction');
         $routeCollection->add(static::ROUTE_INVITATION_SEND, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addUserInvitationSendAllRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addUserInvitationSendAllRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/company/user-invitation/send-all', 'CompanyUserInvitationPage', 'Send', 'sendCompanyUserInvitationsAction');
         $routeCollection->add(static::ROUTE_INVITATION_SEND_ALL, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addUserInvitationResendRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addUserInvitationResendRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/company/user-invitation/resend', 'CompanyUserInvitationPage', 'Resend', 'indexAction');
         $routeCollection->add(static::ROUTE_INVITATION_RESEND, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addUserInvitationResendConfirmRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addUserInvitationResendConfirmRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/company/user-invitation/resend/confirm', 'CompanyUserInvitationPage', 'Resend', 'confirmAction');
         $routeCollection->add(static::ROUTE_INVITATION_RESEND_CONFIRM, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addUserInvitationDeleteRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addUserInvitationDeleteRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/company/user-invitation/delete', 'CompanyUserInvitationPage', 'Delete', 'indexAction');
         $routeCollection->add(static::ROUTE_INVITATION_DELETE, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addUserInvitationDeleteConfirmRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addUserInvitationDeleteConfirmRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/company/user-invitation/delete/confirm', 'CompanyUserInvitationPage', 'Delete', 'confirmAction');
         $routeCollection->add(static::ROUTE_INVITATION_DELETE_CONFIRM, $route);
+
         return $routeCollection;
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addUserInvitationAcceptRoute(\Spryker\Shared\Router\Route\RouteCollection $routeCollection): \Spryker\Shared\Router\Route\RouteCollection
+    protected function addUserInvitationAcceptRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/invitation/accept', 'CompanyUserInvitationPage', 'Accept', 'indexAction');
         $routeCollection->add(static::ROUTE_INVITATION_ACCEPT, $route);
+
         return $routeCollection;
     }
 }

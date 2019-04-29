@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\SharedCartPage\Plugin\Router;
 
-use Spryker\Shared\Router\Route\RouteCollection;
-use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class SharedCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -17,9 +17,9 @@ class SharedCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     public const ROUTE_SHARED_CART_DISMISS_CONFIRM = 'shared-cart/dismiss-confirm';
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -31,9 +31,9 @@ class SharedCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addShareRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -44,9 +44,9 @@ class SharedCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addDismissRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -57,9 +57,9 @@ class SharedCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     protected function addDismissConfirmRoute(RouteCollection $routeCollection): RouteCollection
     {
