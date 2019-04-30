@@ -18,7 +18,6 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationCli
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientBridge;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientBridge;
@@ -40,9 +39,9 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_CART = 'CLIENT_CART';
     public const CLIENT_SHIPMENT = 'CLIENT_SHIPMENT';
-    public const CLIENT_GLOSSARY = 'CLIENT_GLOSSARY';
     public const CLIENT_PRICE = 'CLIENT_PRICE';
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     public const STORE = 'STORE';
 
@@ -69,7 +68,6 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const ADDRESS_STEP_SUB_FORMS = 'ADDRESS_STEP_SUB_FORMS';
     public const ADDRESS_STEP_FORM_DATA_PROVIDER = 'ADDRESS_STEP_FORM_DATA_PROVIDER';
 
-    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
     public const PLUGIN_SUB_FORM_FILTERS = 'PLUGIN_SUB_FORM_FILTERS';
 
     /**
@@ -85,7 +83,6 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerClient($container);
         $container = $this->addCartClient($container);
         $container = $this->addShipmentClient($container);
-        $container = $this->addGlossaryClient($container);
         $container = $this->addPriceClient($container);
         $container = $this->addProductBundleClient($container);
 
@@ -237,20 +234,6 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::CLIENT_SHIPMENT] = function (Container $container) {
             return new CheckoutPageToShipmentClientBridge($container->getLocator()->shipment()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addGlossaryClient(Container $container): Container
-    {
-        $container[self::CLIENT_GLOSSARY] = function (Container $container) {
-            return new CheckoutPageToGlossaryClientBridge($container->getLocator()->glossary()->client());
         };
 
         return $container;
