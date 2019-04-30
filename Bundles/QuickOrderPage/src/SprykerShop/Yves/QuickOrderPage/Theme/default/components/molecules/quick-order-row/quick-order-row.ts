@@ -19,11 +19,6 @@ export default class QuickOrderRow extends Component {
      */
     quantityInput: HTMLInputElement;
 
-    /**
-     * The default timeout.
-     */
-    timeout: number = 3000; // deprecated
-
     protected readyCallback(): void {
         this.ajaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider`);
         this.autocompleteInput = <AutocompleteForm>this.querySelector('autocomplete-form');
