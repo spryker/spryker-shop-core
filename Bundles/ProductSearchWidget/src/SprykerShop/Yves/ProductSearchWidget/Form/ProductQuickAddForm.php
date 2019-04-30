@@ -102,8 +102,6 @@ class ProductQuickAddForm extends AbstractType
                 'label' => false,
                 'attr' => ['min' => 1, 'step' => 1],
                 'constraints' => [
-                    $this->createNotBlankConstraint(static::ERROR_MESSAGE_QUANTITY_REQUIRED),
-                    $this->createMinLengthConstraint(static::ERROR_MESSAGE_QUANTITY_REQUIRED),
                     $this->createLessThanOrEqualConstraint(
                         static::MAX_QUANTITY_VALUE,
                         static::ERROR_MESSAGE_QUANTITY_MAX_VALUE_CONSTRAINT

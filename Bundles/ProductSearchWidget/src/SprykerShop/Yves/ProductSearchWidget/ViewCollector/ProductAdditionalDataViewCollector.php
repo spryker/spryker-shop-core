@@ -88,6 +88,6 @@ class ProductAdditionalDataViewCollector implements ProductAdditionalDataViewCol
      */
     public function isDisabled(float $minQuantity, float $maxQuantity): bool
     {
-        return $minQuantity > 0 && $maxQuantity > 0 ? false : true;
+        return $minQuantity > 0 && $maxQuantity > 0 && $maxQuantity > $minQuantity ? false : true;
     }
 }
