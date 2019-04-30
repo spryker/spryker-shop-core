@@ -122,7 +122,7 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
     /**
      * @param \Symfony\Component\Form\FormInterface $quoteRequestForm
      *
-     * @return \Symfony\Component\Form\Form
+     * @return \Symfony\Component\Form\FormInterface
      */
     protected function assertQuoteRequestVersion(FormInterface $quoteRequestForm): FormInterface
     {

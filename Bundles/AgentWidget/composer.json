@@ -13,10 +13,10 @@
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
+    "spryker-shop/quote-request-agent-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
-    "spryker/testify": "*",
-    "spryker-shop/quote-request-agent-widget": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
