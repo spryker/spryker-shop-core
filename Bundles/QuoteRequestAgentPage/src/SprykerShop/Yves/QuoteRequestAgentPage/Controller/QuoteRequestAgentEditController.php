@@ -137,9 +137,11 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
             ->getQuoteRequestAgentClient()
             ->updateQuoteRequest($quoteRequestForm->getData());
 
-        $quoteRequestForm->get(QuoteRequestTransfer::LATEST_VERSION)
+        $quoteRequestForm
+            ->get(QuoteRequestTransfer::LATEST_VERSION)
             ->setData(
-                $quoteRequestResponseTransfer->getQuoteRequest()
+                $quoteRequestResponseTransfer
+                    ->getQuoteRequest()
                     ->getLatestVersion()
             );
 
