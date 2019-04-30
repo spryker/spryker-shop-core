@@ -22,7 +22,7 @@
     <li class="list__item spacing-y">
         {% if can('SeePricePermissionPlugin') %}
             {{ 'cart.item.item_price' | trans }}
-            {% if data.cartItem.sourceUnitGrossPrice or data.cartItem.sourceUnitNetPrice %}
+            {% if data.cartItem.sourceUnitGrossPrice is not null or data.cartItem.sourceUnitNetPrice is not null %}
                 <span class="float-right"><s>{{ originUnitPrice | money(true, data.currency.code) }}</s> {{ data.unitPrice }}</span>
             {% else %}
                 <span class="float-right">{{ data.unitPrice }}</span>
