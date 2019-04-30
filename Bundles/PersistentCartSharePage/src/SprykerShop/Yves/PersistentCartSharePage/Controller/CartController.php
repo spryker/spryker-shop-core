@@ -17,8 +17,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class CartController extends AbstractController
 {
-    protected const ERROR_MESSAGE_SEPARATOR = '<br>';
-
     /**
      * @param string $resourceShareUuid
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -46,8 +44,6 @@ class CartController extends AbstractController
             ->getPersistentCartShareClient()
             ->getQuoteForPreview($resourceShareUuid);
 
-        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
                 $this->addErrorMessage($quoteErrorTransfer->getMessage());
@@ -56,14 +52,13 @@ class CartController extends AbstractController
             throw new NotFoundHttpException();
         }
 
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $cartItems = $quoteTransfer->getItems() ?? [];
 
         return [
             'cart' => $quoteTransfer,
-            'isQuoteEditable' => false,
             'cartItems' => $cartItems,
             'attributes' => [],
-            'isQuoteValid' => false,
         ];
     }
 }

@@ -17,16 +17,23 @@ use SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareR
  */
 class CartPreviewRouterStrategyPlugin extends AbstractPlugin implements ResourceShareRouterStrategyPluginInterface
 {
+    /**
+     * @see \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig::SHARE_OPTION_PREVIEW
+     */
     protected const SHARE_OPTION_PREVIEW = 'PREVIEW';
+
+    /**
+     * @see \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig::RESOURCE_TYPE_QUOTE
+     */
     protected const RESOURCE_TYPE_QUOTE = 'quote';
-    protected const REDIRECT_URL_PATTERN = 'quote';
+
     protected const ROUTE_CART_PREVIEW = 'cart/preview';
-    protected const PARAM_RESOURCE_SHARE_UUID = "resourceShareUuid";
+    protected const PARAM_RESOURCE_SHARE_UUID = 'resourceShareUuid';
 
     /**
      * {@inheritdoc}
-     * - Checks if this plugin is applicable to work with quote resource share.
-     * - Checks if this plugin is applicable to work with preview share option.
+     * - Returns true if resource type is 'quote' and cart share option is 'PREVIEW'.
+     * - Returns false otherwise.
      *
      * @api
      *
@@ -40,23 +47,15 @@ class CartPreviewRouterStrategyPlugin extends AbstractPlugin implements Resource
             return false;
         }
 
-        $resourceShareData = $resourceShareTransfer
-            ->requireResourceShareData()->getResourceShareData();
+        $resourceShareTransfer->requireResourceShareData();
+        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
-        if (!$resourceShareTransfer->getUuid() || !$resourceShareData->getShareOption()) {
-            return false;
-        }
-
-        if ($resourceShareData->getShareOption() !== static::SHARE_OPTION_PREVIEW) {
-            return false;
-        }
-
-        return true;
+        return $resourceShareTransfer->getUuid() && $resourceShareDataTransfer->getShareOption() === static::SHARE_OPTION_PREVIEW;
     }
 
     /**
      * {@inheritdoc}
-     * - Returns route for the cart preview share.
+     * - Returns route for the cart preview share page.
      *
      * @api
      *
