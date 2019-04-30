@@ -13,6 +13,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class TextOrderFormatConstraintValidator extends ConstraintValidator
 {
+    protected const ROW_REGEXP = "/\w[%s]([0-9]*[.])?[0-9]+$/";
     /**
      * @param mixed $textOrder The value that should be validated
      * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\QuickOrderPage\Form\Constraint\TextOrderFormatConstraint $constraint The constraint for the validation
@@ -80,7 +81,9 @@ class TextOrderFormatConstraintValidator extends ConstraintValidator
     protected function checkEachRow(array $rows, string $separator): bool
     {
         foreach ($rows as $row) {
-            if (!preg_match("/\w[$separator]\d?[.]?\d+$/", $row)) {
+            $rowRegexp = sprintf(static::ROW_REGEXP, $separator);
+            
+            if (!preg_match($rowRegexp, $row)) {
                 return false;
             }
         }
