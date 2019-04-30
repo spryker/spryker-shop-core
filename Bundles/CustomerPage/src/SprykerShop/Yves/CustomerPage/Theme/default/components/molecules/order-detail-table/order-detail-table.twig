@@ -126,7 +126,6 @@
                 <div class="spacing-bottom spacing-bottom--big">
                     <h5>{{ 'checkout.step.summary.delivery_method' | trans }}</h5>
                     <div class="spacing-y spacing-y--inner">
-                        <pre>{{ dump(shipmentGroup.shipment.method) }}</pre>
                         {% include molecule('display-delivery-method') with {
                             class: 'text-small',
                             data: {
