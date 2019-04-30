@@ -87,10 +87,6 @@ class MultiShipmentForm extends AbstractType
             'placeholder' => 'checkout.shipment.requested_delivery_date.placeholder',
             'required' => false,
             'input' => 'string',
-            'constraints' => [
-                $this->createDateTimeConstraint(),
-                $this->createDateTimeGreaterThanOrEqualConstraint('today'),
-            ],
         ]);
 
         return $this;
