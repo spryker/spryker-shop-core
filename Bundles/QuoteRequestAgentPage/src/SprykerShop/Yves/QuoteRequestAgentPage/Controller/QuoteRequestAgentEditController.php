@@ -112,7 +112,7 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
             return $this->processQuoteRequestAgentForm($quoteRequestForm, $request);
         }
 
-        $quoteRequestForm = $this->validateQuoteRequestInFormData($quoteRequestForm);
+        $quoteRequestForm = $this->assertQuoteRequestVersion($quoteRequestForm);
 
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
@@ -124,12 +124,15 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
      *
      * @return \Symfony\Component\Form\Form
      */
-    protected function validateQuoteRequestInFormData(FormInterface $quoteRequestForm): FormInterface
+    protected function assertQuoteRequestVersion(FormInterface $quoteRequestForm): FormInterface
     {
-        if (!$quoteRequestForm->getConfig()->getOption(QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID)) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_SOURCE_PRICE_CHANGES_FORBIDDEN);
+        if ($quoteRequestForm->getConfig()->getOption(QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID)) {
+            return $quoteRequestForm;
         }
 
+        $this->addErrorMessage(static::GLOSSARY_KEY_SOURCE_PRICE_CHANGES_FORBIDDEN);
+
+        // Executes CartFacade::reloadItems() before update.
         $quoteRequestResponseTransfer = $this->getFactory()
             ->getQuoteRequestAgentClient()
             ->updateQuoteRequest($quoteRequestForm->getData());
