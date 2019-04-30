@@ -68,7 +68,7 @@ class QuantityRestrictionReader implements QuantityRestrictionReaderInterface
         ?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
     ): ?float {
         if ($productConcreteAvailabilityTransfer === null) {
-            return 1;
+            return null;
         }
 
         if ($productQuantityStorageTransfer === null && $productConcreteAvailabilityTransfer->getIsNeverOutOfStock()) {
@@ -78,7 +78,7 @@ class QuantityRestrictionReader implements QuantityRestrictionReaderInterface
         $availability = $productConcreteAvailabilityTransfer->getAvailability();
 
         if (!$productConcreteAvailabilityTransfer->getIsNeverOutOfStock() && $productQuantityStorageTransfer === null) {
-            return $availability > 0 ? min(1, $availability) : null;
+            return $availability > 0 ? 1 : null;
         }
 
         if ($productConcreteAvailabilityTransfer->getIsNeverOutOfStock()) {
