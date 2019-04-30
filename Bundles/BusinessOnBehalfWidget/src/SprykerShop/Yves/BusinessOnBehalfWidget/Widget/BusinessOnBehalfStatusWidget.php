@@ -15,7 +15,12 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class BusinessOnBehalfStatusWidget extends AbstractWidget
 {
-    public function __construct()
+    protected const PAGE_KEY = 'change-company-user';
+
+    /**
+     * @param string|null $activePage
+     */
+    public function __construct(?string $activePage = null)
     {
         $customer = $this->getFactory()
             ->getCustomerClient()
@@ -24,7 +29,8 @@ class BusinessOnBehalfStatusWidget extends AbstractWidget
         $this->addParameter('isOnBehalf', $this->isOnBehalf($customer))
             ->addParameter('companyName', $this->getCompanyName($customer))
             ->addParameter('companyBusinessUnitName', $this->getCompanyBusinessUnitName($customer))
-            ->addParameter('isVisible', $this->isVisible($customer));
+            ->addParameter('isVisible', $this->isVisible($customer))
+            ->addParameter('isActivePage', $this->isPageActive($activePage));
     }
 
     /**
@@ -97,5 +103,15 @@ class BusinessOnBehalfStatusWidget extends AbstractWidget
         }
 
         return true;
+    }
+
+    /**
+     * @param string $activePage
+     *
+     * @return bool
+     */
+    protected function isPageActive(string $activePage): bool
+    {
+        return $activePage === static::PAGE_KEY;
     }
 }
