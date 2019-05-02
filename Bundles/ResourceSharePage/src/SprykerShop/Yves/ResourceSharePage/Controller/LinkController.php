@@ -7,7 +7,9 @@
 
 namespace SprykerShop\Yves\ResourceSharePage\Controller;
 
+use Generated\Shared\Transfer\RouteTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -20,24 +22,25 @@ class LinkController extends AbstractController
      * @see \SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider::ROUTE_LOGIN
      */
     protected const ROUTE_LOGIN = 'login';
+
+    /**
+     * @see \SprykerShop\Yves\ResourceSharePage\Plugin\Provider\ResourceSharePageControllerProvider::ROUTE_RESOURCE_SHARE_LINK
+     */
+    protected const ROUTE_RESOURCE_SHARE_LINK = 'link';
+    protected const PARAM_RESOURCE_SHARE_UUID = 'resourceShareUuid';
     protected const LINK_REDIRECT_URL = 'LinkRedirectUrl';
-    protected const ERROR_MESSAGE_SEPARATOR = '<BR>';
 
     /**
      * @param string $resourceShareUuid
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(string $resourceShareUuid, Request $request)
+    public function indexAction(string $resourceShareUuid, Request $request): RedirectResponse
     {
         $response = $this->executeIndexAction($resourceShareUuid, $request);
 
-        if (!is_array($response)) {
-            return $response;
-        }
-
-        return $this->view($response, [], '@ResourceSharePage/views/link/index.twig');
+        return $response;
     }
 
     /**
@@ -46,34 +49,39 @@ class LinkController extends AbstractController
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeIndexAction(string $resourceShareUuid, Request $request)
+    protected function executeIndexAction(string $resourceShareUuid, Request $request): RedirectResponse
     {
         $resourceShareResponseTransfer = $this->getFactory()->createResourceShareActivator()
             ->activateResourceShare($resourceShareUuid);
 
-        $routeTransfer = $this->getFactory()->getRouteResolver()
-            ->resolveRoute($resourceShareResponseTransfer);
-
         if ($resourceShareResponseTransfer->getIsLoginRequired()) {
-            $this->addErrorMessage($resourceShareResponseTransfer->getMessages());
+            foreach ($resourceShareResponseTransfer->getMessages() as $messageTransfer) {
+                $this->addErrorMessage($messageTransfer->getValue());
+            }
+
+            $routeTransfer = (new RouteTransfer())
+                ->setRoute(static::ROUTE_RESOURCE_SHARE_LINK)
+                ->setParameters([static::PARAM_RESOURCE_SHARE_UUID => $resourceShareUuid]);
 
             return $this->redirectResponseInternal(static::ROUTE_LOGIN, [
-                static::LINK_REDIRECT_URL => $this->getFactory()->getApplication()->path(
+                static::LINK_REDIRECT_URL => $this->getApplication()->path(
                     $routeTransfer->getRoute(),
                     $routeTransfer->getParameters()
                 ),
             ]);
         }
 
+        $routeTransfer = $this->getFactory()->createRouteResolver()
+            ->resolveRoute($resourceShareResponseTransfer);
+
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
-            $errorMessages = [];
             foreach ($resourceShareResponseTransfer->getMessages() as $messageTransfer) {
-                $errorMessages[] = $messageTransfer->getValue();
+                $this->addErrorMessage($messageTransfer->getValue());
             }
 
-            throw new NotFoundHttpException(implode(static::ERROR_MESSAGE_SEPARATOR, $errorMessages));
+            throw new NotFoundHttpException();
         }
 
         return $this->redirectResponseInternal($routeTransfer->getRoute(), $routeTransfer->getParameters());

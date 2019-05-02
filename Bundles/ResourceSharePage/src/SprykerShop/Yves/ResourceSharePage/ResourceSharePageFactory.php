@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ResourceSharePage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToCustomerClientInterface;
+use SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToMessengerClientInterface;
 use SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToResourceShareClientInterface;
 use SprykerShop\Yves\ResourceSharePage\ResourceShare\ResourceShareActivator;
 use SprykerShop\Yves\ResourceSharePage\ResourceShare\ResourceShareActivatorInterface;
@@ -51,11 +52,20 @@ class ResourceSharePageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToMessengerClientInterface
+     */
+    public function getMessengerClient(): ResourceSharePageToMessengerClientInterface
+    {
+        return $this->getProvidedDependency(ResourceSharePageDependencyProvider::CLIENT_MESSENGER);
+    }
+
+    /**
      * @return \SprykerShop\Yves\ResourceSharePage\RouteResolver\RouteResolverInterface
      */
-    public function getRouteResolver(): RouteResolverInterface
+    public function createRouteResolver(): RouteResolverInterface
     {
         return new RouteResolver(
+            $this->getMessengerClient(),
             $this->getResourceShareRouterStrategyPlugins()
         );
     }

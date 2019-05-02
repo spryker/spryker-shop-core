@@ -9,8 +9,8 @@ namespace SprykerShop\Yves\ResourceSharePage\RouteResolver;
 
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\RouteTransfer;
+use SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToMessengerClientInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class RouteResolver implements RouteResolverInterface
 {
@@ -22,10 +22,17 @@ class RouteResolver implements RouteResolverInterface
     protected $resourceShareRouterStrategyPlugins;
 
     /**
+     * @var \SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToMessengerClientInterface
+     */
+    protected $messengerClient;
+
+    /**
+     * @param \SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToMessengerClientInterface $messengerClient
      * @param \SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareRouterStrategyPluginInterface[] $resourceShareRouterStrategyPlugins
      */
-    public function __construct(array $resourceShareRouterStrategyPlugins)
+    public function __construct(ResourceSharePageToMessengerClientInterface $messengerClient, array $resourceShareRouterStrategyPlugins)
     {
+        $this->messengerClient = $messengerClient;
         $this->resourceShareRouterStrategyPlugins = $resourceShareRouterStrategyPlugins;
     }
 
@@ -33,15 +40,12 @@ class RouteResolver implements RouteResolverInterface
      * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @throws \Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException
      *
      * @return \Generated\Shared\Transfer\RouteTransfer
      */
     public function resolveRoute(ResourceShareResponseTransfer $resourceShareResponseTransfer): RouteTransfer
     {
-        if (!$resourceShareResponseTransfer->getResourceShare()) {
-            throw new UnprocessableEntityHttpException();
-        }
+        $resourceShareResponseTransfer->requireResourceShare();
 
         foreach ($this->resourceShareRouterStrategyPlugins as $resourceShareRouterStrategyPlugin) {
             if (!$resourceShareRouterStrategyPlugin->isApplicable($resourceShareResponseTransfer->getResourceShare())) {
@@ -51,6 +55,7 @@ class RouteResolver implements RouteResolverInterface
             return $resourceShareRouterStrategyPlugin->resolveRoute($resourceShareResponseTransfer->getResourceShare());
         }
 
-        throw new NotFoundHttpException(static::MESSAGE_RESOURCE_SHARE_NO_ROUTE);
+        $this->messengerClient->addErrorMessage(self::MESSAGE_RESOURCE_SHARE_NO_ROUTE);
+        throw new NotFoundHttpException();
     }
 }

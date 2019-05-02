@@ -57,8 +57,10 @@ class CartController extends AbstractController
 
         return [
             'cart' => $quoteTransfer,
+            'isQuoteEditable' => false,
             'cartItems' => $cartItems,
             'attributes' => [],
+            'isQuoteValid' => false,
         ];
     }
 }

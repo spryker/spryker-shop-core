@@ -20,9 +20,11 @@
                         class: 'col col--sm-4 col--lg-8 text-right'
                     } only %}
                         {% block body %}
-                            <ul class="menu">
+                            {% if is_granted('ROLE_USER') %}
+                                <li class="menu__item"><a href="{{ url('logout') }}">{{ 'customer.logout'|trans }}</a></li>
+                            {% else %}
                                 <li class="menu__item"><a href="{{ url('login') }}">{{ 'customer.login'|trans }}</a></li>
-                            </ul>
+                            {% endif %}
                         {% endblock %}
                     {% endembed %}
                 </div>
