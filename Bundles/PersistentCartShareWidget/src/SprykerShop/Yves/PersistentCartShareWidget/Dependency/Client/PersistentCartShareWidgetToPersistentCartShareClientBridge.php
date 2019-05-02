@@ -25,7 +25,7 @@ class PersistentCartShareWidgetToPersistentCartShareClientBridge implements Pers
     }
 
     /**
-     * @return array
+     * @return string[][]
      */
     public function getCartShareOptions(): array
     {

@@ -16,9 +16,11 @@ use SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryHelperInterface;
 class PersistentCartShareHelper implements PersistentCartShareHelperInterface
 {
     /**
-     * @see ResourceSharePage::
+     * @see \SprykerShop\Yves\ResourceSharePage\Plugin\Provider\ResourceSharePageControllerProvider::ROUTE_RESOURCE_SHARE_LINK
      */
     protected const LINK_ROUTE = 'link';
+    protected const PARAM_RESOURCE_SHARE_UUID = 'resourceShareUuid';
+
     /**
      * @var \SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToPersistentCartShareClientInterface
      */
@@ -102,12 +104,11 @@ class PersistentCartShareHelper implements PersistentCartShareHelperInterface
      */
     protected function buildResourceShareLink(ResourceShareTransfer $cartResourceShare): string
     {
-        return 'link/' . $cartResourceShare->getUuid(); //todo replace with application->path()
-//        return $this->application->path(static::LINK_ROUTE, ['resourceShareUuid' => $cartResourceShare->getUuid()])
+        return $this->application->url(static::LINK_ROUTE, [static::PARAM_RESOURCE_SHARE_UUID => $cartResourceShare->getUuid()]);
     }
 
     /**
-     * @return string[]
+     * @return string[][]
      */
     public function generateCartShareOptionGroups(): array
     {

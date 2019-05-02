@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 interface PersistentCartShareWidgetToPersistentCartShareClientInterface
 {
     /**
-     * @return array
+     * @return string[][]
      */
     public function getCartShareOptions(): array;
 
