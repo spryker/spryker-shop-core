@@ -15,7 +15,7 @@ use Twig\Environment;
 class ContentBannerTwigFunction extends TwigFunction
 {
     /**
-     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::FUNCTION_NAME
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::TWIG_FUNCTION_NAME
      */
     protected const TWIG_FUNCTION_NAME_CONTENT_BANNER = 'content_banner';
 
