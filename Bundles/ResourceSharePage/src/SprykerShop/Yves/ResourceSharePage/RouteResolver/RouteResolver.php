@@ -55,7 +55,8 @@ class RouteResolver implements RouteResolverInterface
             return $resourceShareRouterStrategyPlugin->resolveRoute($resourceShareResponseTransfer->getResourceShare());
         }
 
-        $this->messengerClient->addErrorMessage(self::MESSAGE_RESOURCE_SHARE_NO_ROUTE);
+        $this->messengerClient->addErrorMessage(static::MESSAGE_RESOURCE_SHARE_NO_ROUTE);
+
         throw new NotFoundHttpException();
     }
 }
