@@ -164,7 +164,7 @@ class ContentBannerTwigPluginTest extends Unit
      */
     protected function getContentBannerTwigFunction()
     {
-        $functionName = new ReflectionClassConstant(ContentBannerTwigFunction::class, 'TWIG_FUNCTION_NAME_CONTNET_BANNER');
+        $functionName = new ReflectionClassConstant(ContentBannerTwigFunction::class, 'TWIG_FUNCTION_NAME_CONTENT_BANNER');
 
         return $this->getTwig()->getFunction($functionName->getValue());
     }
