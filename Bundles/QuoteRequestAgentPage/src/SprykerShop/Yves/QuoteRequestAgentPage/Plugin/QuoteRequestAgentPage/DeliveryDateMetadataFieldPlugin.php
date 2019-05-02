@@ -68,7 +68,7 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
                     return;
                 }
 
-                if ((new DateTime())->setTime(0,0) > new DateTime($deliveryDate)) {
+                if ((new DateTime())->setTime(0, 0) > new DateTime($deliveryDate)) {
                     $context->addViolation(static::GLOSSARY_KEY_DATE_VIOLATION);
                 }
             },
