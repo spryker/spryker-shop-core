@@ -13,7 +13,9 @@ use SprykerShop\Yves\QuoteRequestPageExtension\Dependency\Plugin\QuoteRequestFor
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
@@ -45,10 +47,7 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
                 'class' => 'datepicker safe-datetime',
             ],
             'constraints' => [
-                new GreaterThanOrEqual([
-                    'value' => $this->getFactory()->getUtilDateTimeService()->formatDate(new DateTime()),
-                    'message' => static::GLOSSARY_KEY_DATE_VIOLATION,
-                ]),
+                $this->createDeliveryDateConstraint(),
             ],
         ]);
 
@@ -56,6 +55,24 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
             ->addModelTransformer($this->createDateTimeModelTransformer());
 
         return $builder;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function createDeliveryDateConstraint(): Constraint
+    {
+        return new Callback([
+            'callback' => function ($deliveryDate, ExecutionContextInterface $context) {
+                if (!$deliveryDate) {
+                    return;
+                }
+
+                if ((new DateTime())->setTime(0,0) > new DateTime($deliveryDate)) {
+                    $context->addViolation(static::GLOSSARY_KEY_DATE_VIOLATION);
+                }
+            },
+        ]);
     }
 
     /**

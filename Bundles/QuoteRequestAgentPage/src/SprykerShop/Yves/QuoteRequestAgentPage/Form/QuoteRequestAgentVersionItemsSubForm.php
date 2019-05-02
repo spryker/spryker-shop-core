@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class QuoteRequestAgentVersionItemsSubForm extends AbstractType
 {
-    protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
+    protected const ERROR_MESSAGE_PRICE = 'quote_request_agent_page.form.invalid_price';
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
 
     /**

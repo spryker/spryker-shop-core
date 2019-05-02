@@ -66,12 +66,17 @@ class QuoteRequestAgentFormDataProvider
      */
     protected function isQuoteValid(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        $latestQuoteRequestVersion = $quoteRequestTransfer
+        $quoteTransfer = $quoteRequestTransfer
             ->requireLatestVersion()
             ->getLatestVersion()
-                ->requireQuote();
+                ->requireQuote()
+                ->getQuote();
 
-        return $this->cartClient->validateSpecificQuote($latestQuoteRequestVersion->getQuote())
+        if (!$quoteTransfer->getItems()->count()) {
+            return true;
+        }
+
+        return $this->cartClient->validateSpecificQuote($quoteTransfer)
             ->getIsSuccessful();
     }
 }
