@@ -105,11 +105,11 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
     /**
      * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
      *
-     * @return int
+     * @return float
      */
     protected function getMinQuantityInBaseUnits(
         ?ProductQuantityStorageTransfer $productQuantityStorageTransfer = null
-    ): int {
+    ): float {
         $quantityMin = 1;
         if ($productQuantityStorageTransfer !== null) {
             $quantityMin = $productQuantityStorageTransfer->getQuantityMin() ?: 1;
@@ -166,12 +166,12 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
     }
 
     /**
-     * @param int $minQuantityInBaseUnits
+     * @param float $minQuantityInBaseUnits
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null $salesUnits
      *
      * @return float
      */
-    protected function getMinQuantityInSalesUnits(int $minQuantityInBaseUnits, ?array $salesUnits = null): float
+    protected function getMinQuantityInSalesUnits(float $minQuantityInBaseUnits, ?array $salesUnits = null): float
     {
         if ($salesUnits !== null) {
             foreach ($salesUnits as $salesUnit) {
