@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
