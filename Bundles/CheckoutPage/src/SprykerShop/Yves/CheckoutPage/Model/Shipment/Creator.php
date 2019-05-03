@@ -63,7 +63,7 @@ class Creator extends ShipmentHandler
         if ($quoteShipmentGroups->count() === 1) {
             $this->addQuoteLevelShipment(
                 $quoteTransfer,
-                $quoteShipmentGroups->offsetGet($quoteShipmentGroups->getIterator()->key())
+                $quoteShipmentGroups->offsetGet($quoteShipmentGroups->getIterator()->key())->getShipment()
             );
         }
 
