@@ -8,13 +8,10 @@
 namespace SprykerShop\Yves\ShoppingListWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToAvailabilityClientInterface;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToCustomerClientInterface;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToProductQuantityStorageClientInterface;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListClientInterface;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListSessionClientInterface;
-use SprykerShop\Yves\ShoppingListWidget\Reader\QuantityRestrictionReader;
-use SprykerShop\Yves\ShoppingListWidget\Reader\QuantityRestrictionReaderInterface;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetConfig getConfig()
@@ -54,26 +51,10 @@ class ShoppingListWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToAvailabilityClientInterface
-     */
-    public function getAvailabilityClient(): ShoppingListWidgetToAvailabilityClientInterface
-    {
-        return $this->getProvidedDependency(ShoppingListWidgetDependencyProvider::CLIENT_AVAILABILITY);
-    }
-
-    /**
      * @return \SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToProductQuantityStorageClientInterface
      */
     public function getProductQuantityStorageClient(): ShoppingListWidgetToProductQuantityStorageClientInterface
     {
         return $this->getProvidedDependency(ShoppingListWidgetDependencyProvider::CLIENT_PRODUCT_QUANTITY_STORAGE);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ShoppingListWidget\Reader\QuantityRestrictionReaderInterface
-     */
-    public function createQuantityRestrictionReader(): QuantityRestrictionReaderInterface
-    {
-        return new QuantityRestrictionReader();
     }
 }
