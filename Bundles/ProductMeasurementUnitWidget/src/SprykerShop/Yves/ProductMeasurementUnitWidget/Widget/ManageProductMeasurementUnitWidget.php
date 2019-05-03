@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Widget;
 
-use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
-use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -47,12 +45,6 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
             $productConcreteMeasurementUnitStorageTransfer = $this->getFactory()
                 ->getProductMeasurementUnitStorageClient()
                 ->findProductConcreteMeasurementUnitStorage($productViewTransfer->getIdProductConcrete());
-            $productConcreteAvailabilityRequestTransfer = new ProductConcreteAvailabilityRequestTransfer();
-            $productConcreteAvailabilityRequestTransfer->setSku($productViewTransfer->getSku());
-
-            $productConcreteAvailabilityTransfer = $this->getFactory()
-                ->getAvailabilityClient()
-                ->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
 
             if ($productConcreteMeasurementUnitStorageTransfer !== null) {
                 $idBaseUnit = $productConcreteMeasurementUnitStorageTransfer->getBaseUnit()->getIdProductMeasurementBaseUnit();
@@ -78,24 +70,27 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
                     $productQuantityStorageTransfer
                 )
             );
-        $this->setQuantityRestrictions($productQuantityStorageTransfer, $productConcreteAvailabilityTransfer);
+        $this->setQuantityRestrictions($productQuantityStorageTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null $productConcreteAvailabilityTransfer
      *
      * @return void
      */
     protected function setQuantityRestrictions(
-        ?ProductQuantityStorageTransfer $productQuantityStorageTransfer,
-        ?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+        ?ProductQuantityStorageTransfer $productQuantityStorageTransfer
     ): void {
-        $quantityRestrictionReader = $this->getFactory()
-            ->createQuantityRestrictionReader();
-        $minQuantity = $quantityRestrictionReader->getMinQuantity($productQuantityStorageTransfer);
-        $maxQuantity = $quantityRestrictionReader->getMaxQuantity($productQuantityStorageTransfer, $productConcreteAvailabilityTransfer);
-        $quantityInterval = $quantityRestrictionReader->getQuantityInterval($productQuantityStorageTransfer);
+        if ($productQuantityStorageTransfer === null) {
+            $this->addParameter('minQuantity', 1)
+                ->addParameter('maxQuantity', null)
+                ->addParameter('quantityInterval', 1);
+
+            return;
+        }
+        $minQuantity = $productQuantityStorageTransfer->getQuantityMin() ?? 1;
+        $maxQuantity = $productQuantityStorageTransfer->getQuantityMax();
+        $quantityInterval = $productQuantityStorageTransfer->getQuantityInterval() ?? 1;
 
         $this->addParameter('minQuantity', $minQuantity)
             ->addParameter('maxQuantity', $maxQuantity)

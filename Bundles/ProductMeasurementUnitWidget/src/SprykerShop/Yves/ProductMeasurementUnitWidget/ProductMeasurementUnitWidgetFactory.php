@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ProductMeasurementUnitWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToAvailabilityClientInterface;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientInterface;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToProductQuantityStorageClientInterface;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Reader\QuantityRestrictionReader;
@@ -16,14 +15,6 @@ use SprykerShop\Yves\ProductMeasurementUnitWidget\Reader\QuantityRestrictionRead
 
 class ProductMeasurementUnitWidgetFactory extends AbstractFactory
 {
-    /**
-     * @return \SprykerShop\Yves\ProductMeasurementUnitWidget\Reader\QuantityRestrictionReaderInterface
-     */
-    public function createQuantityRestrictionReader(): QuantityRestrictionReaderInterface
-    {
-        return new QuantityRestrictionReader();
-    }
-
     /**
      * @return \SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientInterface
      */
@@ -38,13 +29,5 @@ class ProductMeasurementUnitWidgetFactory extends AbstractFactory
     public function getProductQuantityStorageClient(): ProductMeasurementUnitWidgetToProductQuantityStorageClientInterface
     {
         return $this->getProvidedDependency(ProductMeasurementUnitWidgetDependencyProvider::CLIENT_PRODUCT_QUANTITY_STORAGE);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToAvailabilityClientInterface
-     */
-    public function getAvailabilityClient(): ProductMeasurementUnitWidgetToAvailabilityClientInterface
-    {
-        return $this->getProvidedDependency(ProductMeasurementUnitWidgetDependencyProvider::CLIENT_AVAILABILITY);
     }
 }
