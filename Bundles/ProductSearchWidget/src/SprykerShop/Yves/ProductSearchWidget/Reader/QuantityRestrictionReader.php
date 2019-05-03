@@ -36,10 +36,6 @@ class QuantityRestrictionReader implements QuantityRestrictionReaderInterface
         ?ProductQuantityStorageTransfer $productQuantityStorageTransfer,
         ?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
     ): ?float {
-        if ($productConcreteAvailabilityTransfer === null) {
-            return 0;
-        }
-
         if ($productQuantityStorageTransfer === null && $productConcreteAvailabilityTransfer->getIsNeverOutOfStock()) {
             return null;
         }
@@ -47,7 +43,7 @@ class QuantityRestrictionReader implements QuantityRestrictionReaderInterface
         $availability = $productConcreteAvailabilityTransfer->getAvailability();
 
         if (!$productConcreteAvailabilityTransfer->getIsNeverOutOfStock() && $productQuantityStorageTransfer === null) {
-            return $availability;
+            return $availability > 1 ? $availability : 1;
         }
 
         if ($productConcreteAvailabilityTransfer->getIsNeverOutOfStock()) {
@@ -59,34 +55,16 @@ class QuantityRestrictionReader implements QuantityRestrictionReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null $productConcreteAvailabilityTransfer
      *
      * @return float|null
      */
     public function getMinQuantity(
-        ?ProductQuantityStorageTransfer $productQuantityStorageTransfer,
-        ?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+        ?ProductQuantityStorageTransfer $productQuantityStorageTransfer
     ): ?float {
-        if ($productConcreteAvailabilityTransfer === null) {
-            return null;
+        if ($productQuantityStorageTransfer === null) {
+            return 1;
         }
 
-        if ($productQuantityStorageTransfer === null && $productConcreteAvailabilityTransfer->getIsNeverOutOfStock()) {
-            return null;
-        }
-
-        $availability = $productConcreteAvailabilityTransfer->getAvailability();
-
-        if (!$productConcreteAvailabilityTransfer->getIsNeverOutOfStock() && $productQuantityStorageTransfer === null) {
-            return $availability > 0 ? 1 : null;
-        }
-
-        if ($productConcreteAvailabilityTransfer->getIsNeverOutOfStock()) {
-            return $productQuantityStorageTransfer->getQuantityMin();
-        }
-
-        $minAvailability = min($productQuantityStorageTransfer->getQuantityMin(), $availability);
-
-        return $minAvailability > 0 ? $minAvailability : null;
+        return $productQuantityStorageTransfer->getQuantityMin();
     }
 }

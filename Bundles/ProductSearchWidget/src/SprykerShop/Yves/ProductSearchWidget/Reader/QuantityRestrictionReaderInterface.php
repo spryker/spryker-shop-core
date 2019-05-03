@@ -32,12 +32,10 @@ interface QuantityRestrictionReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null $productConcreteAvailabilityTransfer
      *
      * @return float|null
      */
     public function getMinQuantity(
-        ?ProductQuantityStorageTransfer $productQuantityStorageTransfer,
-        ?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+        ?ProductQuantityStorageTransfer $productQuantityStorageTransfer
     ): ?float;
 }
