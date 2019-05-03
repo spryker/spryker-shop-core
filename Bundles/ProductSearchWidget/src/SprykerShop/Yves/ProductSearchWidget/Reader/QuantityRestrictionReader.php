@@ -39,7 +39,7 @@ class QuantityRestrictionReader implements QuantityRestrictionReaderInterface
         if ($productConcreteAvailabilityTransfer === null) {
             return 0;
         }
-        
+
         if ($productQuantityStorageTransfer === null && $productConcreteAvailabilityTransfer->getIsNeverOutOfStock()) {
             return null;
         }
