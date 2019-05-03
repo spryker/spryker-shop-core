@@ -64,7 +64,13 @@ class ShareCartByLinkWidget extends AbstractWidget
      */
     protected function isQuoteOwner(QuoteTransfer $quoteTransfer): bool
     {
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        if (!$customerTransfer) {
+            return false;
+        }
 
         return $customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference();
     }
@@ -90,6 +96,8 @@ class ShareCartByLinkWidget extends AbstractWidget
      */
     protected function getShareOptionsGroups(): array
     {
-        return $this->getFactory()->createPersistentCartShareLinkGenerator()->generateShareOptionGroups();
+        return $this->getFactory()
+            ->createPersistentCartShareLinkGenerator()
+            ->generateShareOptionGroups();
     }
 }
