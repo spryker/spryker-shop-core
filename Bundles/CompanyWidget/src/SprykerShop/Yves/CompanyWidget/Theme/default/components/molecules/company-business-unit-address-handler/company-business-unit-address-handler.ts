@@ -1,6 +1,3 @@
-/**
- * @todo Check after merging into Split Delivery feature dev branch.
- */
 /* tslint:disable */
 import Component from 'ShopUi/models/component';
 import FormClear from 'ShopUi/components/molecules/form-clear/form-clear';
