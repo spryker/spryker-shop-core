@@ -39,6 +39,7 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
     /**
      * @param \SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToPersistentCartShareClientInterface $persistentCartShareClient
      * @param \SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryKeyGeneratorInterface $glossaryKeyGenerator
+     * @param \Spryker\Yves\Kernel\Application $application
      */
     public function __construct(
         PersistentCartShareWidgetToPersistentCartShareClientInterface $persistentCartShareClient,
@@ -104,7 +105,8 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
      */
     protected function buildResourceShareLink(ResourceShareTransfer $cartResourceShare): string
     {
-        return $this->application->url(static::LINK_ROUTE, [static::PARAM_RESOURCE_SHARE_UUID => $cartResourceShare->getUuid()]);
+        return 'link/' . $cartResourceShare->getUuid(); //todo replace with application->path()
+        //return $this->application->url(static::LINK_ROUTE, [static::PARAM_RESOURCE_SHARE_UUID => $cartResourceShare->getUuid()]);
     }
 
     /**

@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PersistentCartShareWidgetController extends AbstractController
 {
-
     /**
      * @param int $idQuote
      * @param string $shareOptionGroup
