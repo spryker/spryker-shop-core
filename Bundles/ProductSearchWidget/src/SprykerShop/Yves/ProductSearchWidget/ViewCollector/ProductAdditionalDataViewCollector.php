@@ -76,17 +76,7 @@ class ProductAdditionalDataViewCollector implements ProductAdditionalDataViewCol
             'maxQuantity' => $maxQuantity,
             'quantityInterval' => $quantityInterval,
             'form' => $form->createView(),
-            'isDisabled' => $this->isDisabled($minQuantity),
+            'isDisabled' => false,
         ];
-    }
-
-    /**
-     * @param float|null $minQuantity
-     *
-     * @return bool
-     */
-    public function isDisabled(?float $minQuantity): bool
-    {
-        return $minQuantity > 0 ? false : true;
     }
 }
