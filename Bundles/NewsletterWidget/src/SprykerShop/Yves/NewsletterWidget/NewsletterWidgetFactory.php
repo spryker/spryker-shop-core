@@ -11,6 +11,8 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\NewsletterWidget\Dependency\Client\NewsletterWidgetToNewsletterClientInterface;
 use SprykerShop\Yves\NewsletterWidget\Form\NewsletterSubscriptionForm;
+use SprykerShop\Yves\NewsletterWidget\Handler\DoubleOptInSubscriptionRequestHandler;
+use SprykerShop\Yves\NewsletterWidget\Handler\SubscriptionRequestHandlerInterface;
 
 class NewsletterWidgetFactory extends AbstractFactory
 {
@@ -36,5 +38,13 @@ class NewsletterWidgetFactory extends AbstractFactory
     public function getFormFactory()
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\NewsletterWidget\Handler\SubscriptionRequestHandlerInterface
+     */
+    public function createDoubleOptInSubscriptionRequestHandler(): SubscriptionRequestHandlerInterface
+    {
+        return new DoubleOptInSubscriptionRequestHandler($this->getNewsletterClient());
     }
 }

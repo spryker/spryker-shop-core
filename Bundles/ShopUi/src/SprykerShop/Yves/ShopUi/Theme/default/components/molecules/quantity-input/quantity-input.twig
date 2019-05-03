@@ -14,6 +14,18 @@
     hasUpdateButton: true
 } %}
 
+{% set maxQuantity = data.maxQuantity < 0 or data.maxQuantity < data.minQuantity ? null : data.maxQuantity %}
+
+{% define inputAttributes = {
+    type: 'number',
+    name: 'quantity',
+    class: 'input input--expand',
+    min: data.minQuantity,
+    max: maxQuantity is empty ? false : maxQuantity,
+    value: data.value,
+    disabled: data.readOnly
+} %}
+
 {% block body %}
     {% block label %}
         {{ data.label }}
@@ -22,17 +34,7 @@
     <span class="grid">
         <span class="col col--expand">
             {% block input %}
-                {% set maxQuantity = data.maxQuantity < 0 or data.maxQuantity < data.minQuantity ? null : data.maxQuantity %}
-
-                <input
-                    class="input input--expand"
-                    type="number"
-                    value="{{data.value}}"
-                    name="quantity"
-                    min="{{data.minQuantity}}"
-                    {{qa('quantity-input')}}
-                    {% if maxQuantity is not empty %}max="{{maxQuantity}}"{% endif %}
-                    {% if data.readOnly %}disabled{% endif %} />
+                <input {{component.renderAttributes(inputAttributes)}} {{qa('quantity-input')}} />
             {% endblock %}
         </span>
 

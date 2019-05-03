@@ -31,6 +31,8 @@
         <strong>{{data.name}}</strong>
     {% endblock %}
 
+    {% block sku %}{% endblock %}
+
     {% block rating %}
         {% widget 'DisplayProductAbstractReviewWidget' args [data.abstractId] only %}
         {% elsewidget 'ProductAbstractReviewWidgetPlugin' args [data.abstractId] only %} {# @deprecated Use DisplayProductAbstractReviewWidget instead. #}

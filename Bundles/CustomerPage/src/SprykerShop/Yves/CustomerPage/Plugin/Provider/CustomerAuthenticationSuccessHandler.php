@@ -27,7 +27,9 @@ class CustomerAuthenticationSuccessHandler extends AbstractPlugin implements Aut
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
-        $this->setCustomerSession($token->getUser()->getCustomerTransfer());
+        /** @var \SprykerShop\Yves\CustomerPage\Security\Customer $customer */
+        $customer = $token->getUser();
+        $this->setCustomerSession($customer->getCustomerTransfer());
 
         $response = $this->createRedirectResponse($request);
 
@@ -37,15 +39,15 @@ class CustomerAuthenticationSuccessHandler extends AbstractPlugin implements Aut
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
-    protected function setCustomerSession(CustomerTransfer $customer)
+    protected function setCustomerSession(CustomerTransfer $customerTransfer)
     {
         $this->getFactory()
             ->getCustomerClient()
-            ->setCustomer($customer);
+            ->setCustomer($customerTransfer);
     }
 
     /**

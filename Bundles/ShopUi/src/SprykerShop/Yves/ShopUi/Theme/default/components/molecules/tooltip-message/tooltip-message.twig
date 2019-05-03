@@ -1,0 +1,15 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'tooltip-message',
+    tag: 'span'
+} %}
+
+{% define data = {
+    text: ''
+} %}
+
+{% block body %}
+    <span class="{{config.name}}__text">{{data.text}}</span>
+    <span class="{{config.name}}__arrow"></span>
+{% endblock %}

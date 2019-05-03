@@ -9,12 +9,12 @@ namespace SprykerShopTest\Yves\ShopApplication\Twig\Widget;
 
 use SprykerShop\Yves\ShopApplication\Twig\Widget\Node\WidgetTagTwigNode;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\TokenParser\WidgetTagTokenParser;
-use Twig_Node_Expression_Array;
-use Twig_Node_Expression_Constant;
-use Twig_Node_Text;
-use Twig_Test_NodeTestCase;
+use Twig\Node\Expression\ArrayExpression;
+use Twig\Node\Expression\ConstantExpression;
+use Twig\Node\TextNode;
+use Twig\Test\NodeTestCase;
 
-class WidgetTagTest extends Twig_Test_NodeTestCase
+class WidgetTagTest extends NodeTestCase
 {
     /**
      * @return array
@@ -62,11 +62,11 @@ EOF;
     protected function getWidgetTagWithArgumentsTestCase()
     {
         $nodes = [
-            WidgetTagTokenParser::NODE_ARGS => new Twig_Node_Expression_Array([
-                new Twig_Node_Expression_Constant(0, 1),
-                new Twig_Node_Expression_Constant('foo', 1),
-                new Twig_Node_Expression_Constant(1, 1),
-                new Twig_Node_Expression_Constant(123, 1),
+            WidgetTagTokenParser::NODE_ARGS => new ArrayExpression([
+                new ConstantExpression(0, 1),
+                new ConstantExpression('foo', 1),
+                new ConstantExpression(1, 1),
+                new ConstantExpression(123, 1),
             ], 1),
         ];
 
@@ -74,7 +74,7 @@ EOF;
 
         $expectedCode = <<<EOF
 // line 1
-if (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("foo", array(0 => "foo", 1 => 123))) {
+if (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("foo", [0 => "foo", 1 => 123])) {
     \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget))));
     \$context['app']['widget_tag_service']->closeWidgetContext();
 }
@@ -91,7 +91,7 @@ EOF;
     protected function getWidgetTagWithViewTestCase()
     {
         $nodes = [
-            WidgetTagTokenParser::NODE_USE => new Twig_Node_Expression_Constant('custom-view.twig', 1),
+            WidgetTagTokenParser::NODE_USE => new ConstantExpression('custom-view.twig', 1),
         ];
 
         $node = new WidgetTagTwigNode('foo', $nodes, $this->getAttributes(), 1, 'widget');
@@ -120,13 +120,13 @@ EOF;
     protected function getWidgetTagWithVariablesTestCase()
     {
         $nodes = [
-            WidgetTagTokenParser::NODE_WITH => new Twig_Node_Expression_Array([
-                new Twig_Node_Expression_Constant('foo', 1),
-                new Twig_Node_Expression_Constant('bar', 1),
-                new Twig_Node_Expression_Constant('baz', 1),
-                new Twig_Node_Expression_Array([
-                    new Twig_Node_Expression_Constant('a', 1),
-                    new Twig_Node_Expression_Constant('b', 1),
+            WidgetTagTokenParser::NODE_WITH => new ArrayExpression([
+                new ConstantExpression('foo', 1),
+                new ConstantExpression('bar', 1),
+                new ConstantExpression('baz', 1),
+                new ArrayExpression([
+                    new ConstantExpression('a', 1),
+                    new ConstantExpression('b', 1),
                 ], 1),
             ], 1),
         ];
@@ -136,7 +136,7 @@ EOF;
         $expectedCode = <<<EOF
 // line 1
 if (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("foo")) {
-    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget)), array("foo" => "bar", "baz" => array("a" => "b"))));
+    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget)), ["foo" => "bar", "baz" => ["a" => "b"]]));
     \$context['app']['widget_tag_service']->closeWidgetContext();
 }
 EOF;
@@ -157,13 +157,13 @@ EOF;
     protected function getWidgetTagWithVariablesOnlyTestCase()
     {
         $nodes = [
-            WidgetTagTokenParser::NODE_WITH => new Twig_Node_Expression_Array([
-                new Twig_Node_Expression_Constant('foo', 1),
-                new Twig_Node_Expression_Constant('bar', 1),
-                new Twig_Node_Expression_Constant('baz', 1),
-                new Twig_Node_Expression_Array([
-                    new Twig_Node_Expression_Constant('a', 1),
-                    new Twig_Node_Expression_Constant('b', 1),
+            WidgetTagTokenParser::NODE_WITH => new ArrayExpression([
+                new ConstantExpression('foo', 1),
+                new ConstantExpression('bar', 1),
+                new ConstantExpression('baz', 1),
+                new ArrayExpression([
+                    new ConstantExpression('a', 1),
+                    new ConstantExpression('b', 1),
                 ], 1),
             ], 1),
         ];
@@ -177,7 +177,7 @@ EOF;
         $expectedCode = <<<EOF
 // line 1
 if (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("foo")) {
-    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget)), array("foo" => "bar", "baz" => array("a" => "b"))));
+    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget)), ["foo" => "bar", "baz" => ["a" => "b"]]));
     \$context['app']['widget_tag_service']->closeWidgetContext();
 }
 EOF;
@@ -222,7 +222,7 @@ EOF;
     protected function getWidgetTagWithNowidgetTestCase()
     {
         $nodes = [
-            WidgetTagTokenParser::NODE_NOWIDGET => new Twig_Node_Text('content of nowidget', 1),
+            WidgetTagTokenParser::NODE_NOWIDGET => new TextNode('content of nowidget', 1),
         ];
 
         $node = new WidgetTagTwigNode('foo', $nodes, $this->getAttributes(), 1, 'widget');
@@ -252,8 +252,8 @@ EOF;
         $elsewidgetNode = new WidgetTagTwigNode('bar', [], $this->getAttributes([WidgetTagTokenParser::ATTRIBUTE_ELSEWIDGET_CASE => true]), 1);
 
         $nodes = [
-            WidgetTagTokenParser::NODE_ELSEWIDGETS => new Twig_Node_Expression_Array([
-                new Twig_Node_Expression_Constant(0, 1),
+            WidgetTagTokenParser::NODE_ELSEWIDGETS => new ArrayExpression([
+                new ConstantExpression(0, 1),
                 $elsewidgetNode,
             ], 1),
         ];
@@ -285,24 +285,24 @@ EOF;
     protected function getWidgetTagWithMultipleElsewidgetsTestCase()
     {
         $elsewidgetNode1 = new WidgetTagTwigNode('bar', [
-            WidgetTagTokenParser::NODE_WITH => new Twig_Node_Expression_Array([
-                new Twig_Node_Expression_Constant('param1', 1),
-                new Twig_Node_Expression_Constant('bar', 1),
+            WidgetTagTokenParser::NODE_WITH => new ArrayExpression([
+                new ConstantExpression('param1', 1),
+                new ConstantExpression('bar', 1),
             ], 1),
         ], $this->getAttributes([WidgetTagTokenParser::ATTRIBUTE_ELSEWIDGET_CASE => true]), 1);
 
         $elsewidgetNode2 = new WidgetTagTwigNode('baz', [
-            WidgetTagTokenParser::NODE_ARGS => new Twig_Node_Expression_Array([
-                new Twig_Node_Expression_Constant(0, 1),
-                new Twig_Node_Expression_Constant('arg1', 1),
+            WidgetTagTokenParser::NODE_ARGS => new ArrayExpression([
+                new ConstantExpression(0, 1),
+                new ConstantExpression('arg1', 1),
             ], 1),
         ], $this->getAttributes([WidgetTagTokenParser::ATTRIBUTE_ELSEWIDGET_CASE => true]), 1);
 
         $nodes = [
-            WidgetTagTokenParser::NODE_ELSEWIDGETS => new Twig_Node_Expression_Array([
-                new Twig_Node_Expression_Constant(0, 1),
+            WidgetTagTokenParser::NODE_ELSEWIDGETS => new ArrayExpression([
+                new ConstantExpression(0, 1),
                 $elsewidgetNode1,
-                new Twig_Node_Expression_Constant(1, 1),
+                new ConstantExpression(1, 1),
                 $elsewidgetNode2,
             ], 1),
         ];
@@ -315,9 +315,9 @@ if (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("foo"))
     \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget))));
     \$context['app']['widget_tag_service']->closeWidgetContext();
 } elseif (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("bar")) {
-    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget)), array("param1" => "bar")));
+    \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget)), ["param1" => "bar"]));
     \$context['app']['widget_tag_service']->closeWidgetContext();
-} elseif (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("baz", array(0 => "arg1"))) {
+} elseif (\$widget = \$context['app']['widget_tag_service']->openWidgetContext("baz", [0 => "arg1"])) {
     \$this->loadTemplate("parent-template-name.twig", null, 1, 123)->display(array_merge(\$context, array("_widget" => \$widget, "_widgetTemplatePath" => \$context['app']['widget_tag_service']->getTemplatePath(\$widget))));
     \$context['app']['widget_tag_service']->closeWidgetContext();
 }

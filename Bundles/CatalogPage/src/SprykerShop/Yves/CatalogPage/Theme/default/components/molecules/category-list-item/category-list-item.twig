@@ -1,0 +1,51 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'category-list-item'
+} %}
+
+{% define data = {
+    id: required,
+    name: required,
+    url: required
+} %}
+
+{% block body %}
+    {% embed molecule('card') with {
+        data: {
+            url: data.url,
+            name: data.name
+        },
+        embed: {
+            id: data.id
+        }
+    } only %}
+        {% block cardClass -%}
+            grid grid--middle box
+        {%- endblock %}
+
+        {% block image %}
+            <div class="col col--sm-3 col--md-2">
+                <a href="{{ data.url }}">
+                    {% widget 'CategoryImageStorageWidget' args [embed.id, data.name] only %}{% endwidget %}
+                </a>
+            </div>
+        {% endblock %}
+
+        {% block content %}
+            {% block name %}
+                <div class="col col--sm-6 col--md-7 col--xl-8">
+                    <strong class="spacing spacing--inner">{{ data.name }}</strong>
+                </div>
+            {% endblock %}
+        {% endblock %}
+
+        {% block actionsContainer %}
+            <div class="col col--sm-3 col--xl-2">
+                {% block actions %}
+                    {{ parent() }}
+                {% endblock %}
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

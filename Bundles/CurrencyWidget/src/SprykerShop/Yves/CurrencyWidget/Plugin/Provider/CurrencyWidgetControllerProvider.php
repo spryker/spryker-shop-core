@@ -27,7 +27,7 @@ class CurrencyWidgetControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCurrencySwitchRoute(): self
+    protected function addCurrencySwitchRoute()
     {
         $this->createController('/{currency}/switch', static::ROUTE_CART, 'CurrencyWidget', 'CurrencySwitch', 'index')
             ->assert('currency', $this->getAllowedLocalesPattern() . 'currency|currency')

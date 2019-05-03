@@ -27,7 +27,7 @@ class AgentWidgetControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCustomerAutocompleteRoute(): self
+    protected function addCustomerAutocompleteRoute()
     {
         $this->createController(
             '/{agentWidget}/customer-autocomplete',

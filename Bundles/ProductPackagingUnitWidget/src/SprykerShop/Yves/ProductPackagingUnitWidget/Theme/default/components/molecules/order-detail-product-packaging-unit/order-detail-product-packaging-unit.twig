@@ -11,11 +11,12 @@
 } %}
 
 {% block body %}
-    {% if data.concreteItem.amount is not null and data.concreteItem.quantity is not null %}
+    {% if data.concreteItem.quantitySalesUnit is not null and data.concreteItem.quantity is not null %}
         {% set salesUnitName = data.concreteItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+        {% set salesUnitQuantity = data.concreteItem.quantity / data.concreteItem.quantitySalesUnit.conversion %}
         {% set salesUnitSummary = '' %}
         {% if salesUnitName %}
-            {% set salesUnitSummary = data.concreteItem.quantity / data.concreteItem.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
+            {% set salesUnitSummary = salesUnitQuantity | round(data.concreteItem.quantitySalesUnit.precision, 'floor') ~ ' ' ~ salesUnitName | trans %}
         {% endif %}
 
         {% set amountSalesUnitName = data.concreteItem.amountSalesUnit.productMeasurementUnit.name | default('') %}
