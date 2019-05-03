@@ -11,14 +11,11 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductSearchWidget\Builder\MessageBuilder;
 use SprykerShop\Yves\ProductSearchWidget\Builder\MessageBuilderInterface;
-use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToAvailabilityClientInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductQuantityStorageClientInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductStorageClientInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Service\ProductSearchWidgetToUtilEncodingServiceInterface;
 use SprykerShop\Yves\ProductSearchWidget\Form\ProductQuickAddForm;
-use SprykerShop\Yves\ProductSearchWidget\Reader\QuantityRestrictionReader;
-use SprykerShop\Yves\ProductSearchWidget\Reader\QuantityRestrictionReaderInterface;
 use SprykerShop\Yves\ProductSearchWidget\Resolver\ProductConcreteResolver;
 use SprykerShop\Yves\ProductSearchWidget\Resolver\ProductConcreteResolverInterface;
 use SprykerShop\Yves\ProductSearchWidget\ViewCollector\ProductAdditionalDataViewCollector;
@@ -53,14 +50,6 @@ class ProductSearchWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductSearchWidget\Reader\QuantityRestrictionReaderInterface
-     */
-    public function createQuantityRestrictionReader(): QuantityRestrictionReaderInterface
-    {
-        return new QuantityRestrictionReader();
-    }
-
-    /**
      * @return \SprykerShop\Yves\ProductSearchWidget\Builder\MessageBuilderInterface
      */
     public function createMessageBuilder(): MessageBuilderInterface
@@ -74,8 +63,6 @@ class ProductSearchWidgetFactory extends AbstractFactory
     public function createProductAdditionalDataVIewCollector(): ProductAdditionalDataViewCollectorInterface
     {
         return new ProductAdditionalDataViewCollector(
-            $this->createQuantityRestrictionReader(),
-            $this->getAvailabilityClient(),
             $this->getProductQuantityStorageClient()
         );
     }
@@ -110,13 +97,5 @@ class ProductSearchWidgetFactory extends AbstractFactory
     public function getProductQuantityStorageClient(): ProductSearchWidgetToProductQuantityStorageClientInterface
     {
         return $this->getProvidedDependency(ProductSearchWidgetDependencyProvider::CLIENT_PRODUCT_QUANTITY_STORAGE);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToAvailabilityClientInterface
-     */
-    public function getAvailabilityClient(): ProductSearchWidgetToAvailabilityClientInterface
-    {
-        return $this->getProvidedDependency(ProductSearchWidgetDependencyProvider::CLIENT_AVAILABILITY);
     }
 }

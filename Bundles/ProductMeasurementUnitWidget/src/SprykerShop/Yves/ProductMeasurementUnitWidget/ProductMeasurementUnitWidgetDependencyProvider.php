@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ProductMeasurementUnitWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToAvailabilityClientBridge;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientBridge;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToProductQuantityStorageClientBridge;
 
@@ -17,7 +16,6 @@ class ProductMeasurementUnitWidgetDependencyProvider extends AbstractBundleDepen
 {
     public const CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE = 'CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE';
     public const CLIENT_PRODUCT_QUANTITY_STORAGE = 'CLIENT_PRODUCT_QUANTITY_STORAGE';
-    public const CLIENT_AVAILABILITY = 'CLIENT_AVAILABILITY';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -28,23 +26,6 @@ class ProductMeasurementUnitWidgetDependencyProvider extends AbstractBundleDepen
     {
         $container = $this->addProductMeasurementUnitStorageClient($container);
         $container = $this->addProductQuantityStorageClient($container);
-        $container = $this->addAvailabilityClient($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addAvailabilityClient(Container $container): Container
-    {
-        $container[static::CLIENT_AVAILABILITY] = function (Container $container) {
-            return new ProductMeasurementUnitWidgetToAvailabilityClientBridge(
-                $container->getLocator()->availability()->client()
-            );
-        };
 
         return $container;
     }

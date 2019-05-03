@@ -7,42 +7,24 @@
 
 namespace SprykerShop\Yves\ProductSearchWidget\ViewCollector;
 
-use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToAvailabilityClientInterface;
+use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductQuantityStorageClientInterface;
-use SprykerShop\Yves\ProductSearchWidget\Reader\QuantityRestrictionReaderInterface;
 use Symfony\Component\Form\FormInterface;
 
 class ProductAdditionalDataViewCollector implements ProductAdditionalDataViewCollectorInterface
 {
-    /**
-     * @var \SprykerShop\Yves\ProductSearchWidget\Reader\QuantityRestrictionReaderInterface
-     */
-    protected $quantityRestrictionReader;
-
-    /**
-     * @var \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToAvailabilityClientInterface
-     */
-    protected $availabilityClient;
-
     /**
      * @var \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductQuantityStorageClientInterface
      */
     protected $productQuantityStorageClient;
 
     /**
-     * @param \SprykerShop\Yves\ProductSearchWidget\Reader\QuantityRestrictionReaderInterface $quantityRestrictionReader
-     * @param \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToAvailabilityClientInterface $availabilityClient
      * @param \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductQuantityStorageClientInterface $productQuantityStorageClient
      */
     public function __construct(
-        QuantityRestrictionReaderInterface $quantityRestrictionReader,
-        ProductSearchWidgetToAvailabilityClientInterface $availabilityClient,
         ProductSearchWidgetToProductQuantityStorageClientInterface $productQuantityStorageClient
     ) {
-        $this->quantityRestrictionReader = $quantityRestrictionReader;
-        $this->availabilityClient = $availabilityClient;
         $this->productQuantityStorageClient = $productQuantityStorageClient;
     }
 
@@ -54,29 +36,33 @@ class ProductAdditionalDataViewCollector implements ProductAdditionalDataViewCol
      */
     public function collectViewProductAdditionalData(ProductConcreteTransfer $productConcreteTransfer, FormInterface $form): array
     {
-        $productQuantityStorageTransfer = $this->productQuantityStorageClient
-            ->findProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
-        $availabilityRequestTransfer = new ProductConcreteAvailabilityRequestTransfer();
-        $availabilityRequestTransfer->setSku($productConcreteTransfer->getSku());
-        $productConcreteAvailabilityTransfer = $this->availabilityClient
-            ->findProductConcreteAvailability($availabilityRequestTransfer);
-
-        $minQuantity = $this->quantityRestrictionReader->getMinQuantity(
-            $productQuantityStorageTransfer,
-            $productConcreteAvailabilityTransfer
-        );
-        $maxQuantity = $this->quantityRestrictionReader->getMaxQuantity(
-            $productQuantityStorageTransfer,
-            $productConcreteAvailabilityTransfer
-        );
-        $quantityInterval = $this->quantityRestrictionReader->getQuantityInterval($productQuantityStorageTransfer);
+        $productQuantityStorageTransfer = $this->getProductQuantityStorageTransfer($productConcreteTransfer);
 
         return [
-            'minQuantity' => $minQuantity,
-            'maxQuantity' => $maxQuantity,
-            'quantityInterval' => $quantityInterval,
+            'minQuantity' => $productQuantityStorageTransfer->getQuantityMin(),
+            'maxQuantity' => $productQuantityStorageTransfer->getQuantityMax(),
+            'quantityInterval' => $productQuantityStorageTransfer->getQuantityInterval(),
             'form' => $form->createView(),
             'isDisabled' => false,
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
+     */
+    protected function getProductQuantityStorageTransfer(ProductConcreteTransfer $productConcreteTransfer): ProductQuantityStorageTransfer
+    {
+        $productQuantityStorageTransfer = $this->productQuantityStorageClient
+            ->findProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
+
+        if ($productQuantityStorageTransfer === null) {
+            $productQuantityStorageTransfer = (new ProductQuantityStorageTransfer())
+                ->setQuantityMin(1)
+                ->setQuantityInterval(1);
+        }
+
+        return $productQuantityStorageTransfer;
     }
 }
