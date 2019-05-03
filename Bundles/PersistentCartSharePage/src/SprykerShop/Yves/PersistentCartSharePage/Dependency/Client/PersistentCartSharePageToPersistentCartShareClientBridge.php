@@ -31,6 +31,6 @@ class PersistentCartSharePageToPersistentCartShareClientBridge implements Persis
      */
     public function getQuoteForPreview(string $resourceShareUuid): QuoteResponseTransfer
     {
-        return $this->persistentCartShareClient->getQuoteForPreview($resourceShareUuid);
+        return $this->persistentCartShareClient->getQuoteByResourceShareUuid($resourceShareUuid);
     }
 }

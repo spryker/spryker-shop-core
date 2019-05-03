@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RouteResolver implements RouteResolverInterface
 {
-    protected const MESSAGE_RESOURCE_SHARE_NO_ROUTE = 'resource-share.link.error.no-route';
+    protected const GLOSSARY_KEY_RESOURCE_SHARE_LINK_ERROR_NO_ROUTE = 'resource-share.link.error.no-route';
 
     /**
      * @var \SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareRouterStrategyPluginInterface[]
@@ -55,7 +55,7 @@ class RouteResolver implements RouteResolverInterface
             return $resourceShareRouterStrategyPlugin->resolveRoute($resourceShareResponseTransfer->getResourceShare());
         }
 
-        $this->messengerClient->addErrorMessage(static::MESSAGE_RESOURCE_SHARE_NO_ROUTE);
+        $this->messengerClient->addErrorMessage(static::GLOSSARY_KEY_RESOURCE_SHARE_LINK_ERROR_NO_ROUTE);
 
         throw new NotFoundHttpException();
     }
