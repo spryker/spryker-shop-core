@@ -48,8 +48,6 @@ use SprykerShop\Yves\QuickOrderPage\PriceResolver\PriceResolver;
 use SprykerShop\Yves\QuickOrderPage\PriceResolver\PriceResolverInterface;
 use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolver;
 use SprykerShop\Yves\QuickOrderPage\ProductResolver\ProductResolverInterface;
-use SprykerShop\Yves\QuickOrderPage\Reader\QuantityRestrictionReader;
-use SprykerShop\Yves\QuickOrderPage\Reader\QuantityRestrictionReaderInterface;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParser;
 use SprykerShop\Yves\QuickOrderPage\TextOrder\TextOrderParserInterface;
 use SprykerShop\Yves\QuickOrderPage\ViewDataTransformer\ViewDataTransformer;
@@ -423,13 +421,5 @@ class QuickOrderPageFactory extends AbstractFactory
     public function getAvailabilityClient(): QuickOrderPageToAvailabilityClientInterface
     {
         return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_AVAILABILITY);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\QuickOrderPage\Reader\QuantityRestrictionReaderInterface
-     */
-    public function createQuantityRestrictionReader(): QuantityRestrictionReaderInterface
-    {
-        return new QuantityRestrictionReader();
     }
 }
