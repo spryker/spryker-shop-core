@@ -105,8 +105,7 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
      */
     protected function buildResourceShareLink(ResourceShareTransfer $cartResourceShare): string
     {
-        return 'link/' . $cartResourceShare->getUuid(); //todo replace with application->path()
-        //return $this->application->url(static::LINK_ROUTE, [static::PARAM_RESOURCE_SHARE_UUID => $cartResourceShare->getUuid()]);
+        return $this->application->url(static::LINK_ROUTE, [static::PARAM_RESOURCE_SHARE_UUID => $cartResourceShare->getUuid()]);
     }
 
     /**

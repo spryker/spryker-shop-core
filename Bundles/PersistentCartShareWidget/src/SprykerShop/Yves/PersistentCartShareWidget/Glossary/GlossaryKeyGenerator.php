@@ -27,6 +27,6 @@ class GlossaryKeyGenerator implements GlossaryKeyGeneratorInterface
      */
     public function getShareOptionKey(string $shareOptionGroup, string $shareOption): string
     {
-        return 'persistent_cart_share.share_options.' . $shareOption;
+        return 'persistent_cart_share.share_options.' . $shareOptionGroup . '.' . $shareOption;
     }
 }
