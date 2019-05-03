@@ -131,6 +131,15 @@
                             <hr />
                         {% endif %}
 
+                        {% if data.isQuoteEditable and data.cart.idQuote is not empty %}
+                            {% widget 'ShareCartByLinkWidget' args [data.cart] only %}
+                                {% block body %}
+                                    {{ parent() }}
+                                    <hr>
+                                {% endblock %}
+                            {% endwidget %}
+                        {% endif %}
+
                         {% if data.isQuoteEditable %}
                             {% widget 'ProductConcreteAddWidget' args [
                                 'cart.quick_add_to_cart' | trans,
