@@ -10,8 +10,6 @@ namespace SprykerShop\Yves\ProductMeasurementUnitWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientInterface;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToProductQuantityStorageClientInterface;
-use SprykerShop\Yves\ProductMeasurementUnitWidget\Reader\QuantityRestrictionReader;
-use SprykerShop\Yves\ProductMeasurementUnitWidget\Reader\QuantityRestrictionReaderInterface;
 
 class ProductMeasurementUnitWidgetFactory extends AbstractFactory
 {
