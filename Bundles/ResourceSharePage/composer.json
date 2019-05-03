@@ -1,0 +1,45 @@
+{
+  "name": "spryker-shop/resource-share-page",
+  "type": "library",
+  "description": "ResourceSharePage module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/customer": "^7.0.0",
+    "spryker-shop/customer-page-extension": "^1.1.0",
+    "spryker/kernel": "^3.24.0",
+    "spryker/messenger": "^3.0.0",
+    "spryker/resource-share": "^1.0.0",
+    "spryker/resource-share-page-extension": "^1.0.0",
+    "spryker/shop-application": "^1.0.0",
+    "spryker/symfony": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerShopTest\\": "tests/SprykerShopTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
