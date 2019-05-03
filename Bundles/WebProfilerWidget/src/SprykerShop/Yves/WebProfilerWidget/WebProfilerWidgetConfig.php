@@ -8,8 +8,10 @@
 namespace SprykerShop\Yves\WebProfilerWidget;
 
 use ReflectionClass;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\WebProfiler\WebProfilerConstants;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
+use SprykerShop\WebProfilerWidget\src\SprykerShop\Yves\WebProfilerWidget\WebProfilerWidgetYvesEnvironmentConfigConstants;
 use Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener;
 
 class WebProfilerWidgetConfig extends AbstractBundleConfig
@@ -32,5 +34,15 @@ class WebProfilerWidgetConfig extends AbstractBundleConfig
         return [
             dirname(dirname((string)$reflectionClass->getFileName())) . '/Resources/views',
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getProfilerCacheDirectory(): string
+    {
+        $defaultPath = APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/cache/profiler';
+
+        return $this->get(WebProfilerWidgetYvesEnvironmentConfigConstants::PROFILER_CACHE_DIRECTORY, $defaultPath);
     }
 }

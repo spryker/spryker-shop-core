@@ -17,6 +17,8 @@ use Spryker\Yves\Kernel\AbstractFactory;
 class WebProfilerWidgetFactory extends AbstractFactory
 {
     /**
+     * @deprecated Use `\SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin` instead.
+     *
      * @return \Silex\ServiceProviderInterface[]
      */
     public function getWebProfiler()
@@ -30,5 +32,13 @@ class WebProfilerWidgetFactory extends AbstractFactory
     public function createTwigFilesystemLoader(): FilesystemLoaderInterface
     {
         return new FilesystemLoader($this->getConfig()->getWebProfilerTemplatePaths(), 'WebProfiler');
+    }
+
+    /**
+     * @return \SprykerShop\Yves\WebProfilerWidgetExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface[]
+     */
+    public function getDataCollectorPlugins(): array
+    {
+        return $this->getProvidedDependency(WebProfilerWidgetDependencyProvider::PLUGINS_DATA_COLLECTORS);
     }
 }

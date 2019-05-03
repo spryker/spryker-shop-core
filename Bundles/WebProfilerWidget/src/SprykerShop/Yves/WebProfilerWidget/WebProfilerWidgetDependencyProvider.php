@@ -12,7 +12,12 @@ use Spryker\Yves\Kernel\Container;
 
 class WebProfilerWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @deprecated Use `\SprykerShop\Yves\WebProfilerWidget\WebProfilerWidgetDependencyProvider::PLUGINS_DATA_COLLECTORS` instead.
+     */
     public const PLUGINS_WEB_PROFILER = 'PLUGINS_WEB_PROFILER';
+
+    public const PLUGINS_DATA_COLLECTORS = 'PLUGINS_DATA_COLLECTORS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -21,6 +26,8 @@ class WebProfilerWidgetDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideDependencies(Container $container)
     {
+        $container = $this->addDataCollectorPlugins($container);
+
         $container[static::PLUGINS_WEB_PROFILER] = function () {
             return $this->getWebProfilerPlugins();
         };
@@ -29,6 +36,30 @@ class WebProfilerWidgetDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addDataCollectorPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_DATA_COLLECTORS] = function () {
+            return $this->getDataCollectorPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\WebProfilerWidgetExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface[]
+     */
+    public function getDataCollectorPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Use `\SprykerShop\Yves\WebProfilerWidget\WebProfilerWidgetDependencyProvider::getDataCollectorPlugins` instead.
+     *
      * @return array
      */
     protected function getWebProfilerPlugins()
