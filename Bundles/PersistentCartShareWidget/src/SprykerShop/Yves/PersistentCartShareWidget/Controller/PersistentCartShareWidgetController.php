@@ -37,21 +37,27 @@ class PersistentCartShareWidgetController extends AbstractController
      * @param string $permissionOptionGroup
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
-    protected function executeIndexAction(int $idQuote, string $permissionOptionGroup, Request $request)
+    protected function executeIndexAction(int $idQuote, string $permissionOptionGroup, Request $request): array
     {
-        $cartShareOptions = $this->getFactory()->getPersistentCartShareClient()->getCartShareOptions();
+        $cartShareOptions = $this->getFactory()
+            ->getPersistentCartShareClient()
+            ->getCartShareOptions();
+
+        $cartShareLinks = $this->getFactory()
+            ->createPersistentCartShareLinkGenerator()
+            ->generateCartShareLinks($cartShareOptions, $idQuote, $permissionOptionGroup);
+
+        $cartShareLinkLabels = $this->getFactory()
+            ->createPersistentCartShareLinkGenerator()
+            ->generateCartShareLinkLabels($cartShareOptions, $idQuote, $permissionOptionGroup);
 
         return [
             'idQuote' => $idQuote,
             'permissionOption' => $permissionOptionGroup,
-            'cartShareLinks' => $this->getFactory()
-                ->getPersistentCartShareHelper()
-                ->generateCartShareLinks($cartShareOptions, $idQuote, $permissionOptionGroup),
-            'cartShareLinkLabels' => $this->getFactory()
-                ->getPersistentCartShareHelper()
-                ->generateCartShareLinkLabels($cartShareOptions, $idQuote, $permissionOptionGroup),
+            'cartShareLinks' => $cartShareLinks,
+            'cartShareLinkLabels' => $cartShareLinkLabels,
         ];
     }
 

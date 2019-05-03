@@ -7,17 +7,14 @@
 
 namespace SprykerShop\Yves\PersistentCartShareWidget\Glossary;
 
-class GlossaryHelper implements GlossaryHelperInterface
+interface GlossaryKeyGeneratorInterface
 {
     /**
      * @param string $permissionGroup
      *
      * @return string
      */
-    public function getKeyForPermissionGroup(string $permissionGroup): string
-    {
-        return 'persistent_cart_share.' . $permissionGroup . '_users';
-    }
+    public function getKeyForPermissionGroup(string $permissionGroup): string;
 
     /**
      * @param string $permissionGroup
@@ -25,8 +22,5 @@ class GlossaryHelper implements GlossaryHelperInterface
      *
      * @return string
      */
-    public function getKeyForPermissionOption(string $permissionGroup, string $permissionOption): string
-    {
-        return 'persistent_cart_share.share_options.' . $permissionOption;
-    }
+    public function getKeyForPermissionOption(string $permissionGroup, string $permissionOption): string;
 }

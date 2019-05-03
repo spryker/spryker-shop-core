@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShare;
 
-interface PersistentCartShareHelperInterface
+interface PersistentCartShareLinkGeneratorInterface
 {
     /**
      * @param array $cartShareOptions

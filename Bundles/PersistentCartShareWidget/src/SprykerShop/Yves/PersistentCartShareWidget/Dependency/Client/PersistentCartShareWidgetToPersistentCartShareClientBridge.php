@@ -33,7 +33,10 @@ class PersistentCartShareWidgetToPersistentCartShareClientBridge implements Pers
     }
 
     /**
-     * {@inheritDoc}
+     * @param int $idQuote
+     * @param string $shareOption
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
     public function generateCartResourceShare(int $idQuote, string $shareOption): ResourceShareResponseTransfer
     {

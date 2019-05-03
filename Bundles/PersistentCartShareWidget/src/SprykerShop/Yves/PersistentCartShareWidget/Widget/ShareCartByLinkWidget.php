@@ -85,10 +85,10 @@ class ShareCartByLinkWidget extends AbstractWidget
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getCartShareOptionsGroups(): array
     {
-        return $this->getFactory()->getPersistentCartShareHelper()->generateCartShareOptionGroups();
+        return $this->getFactory()->createPersistentCartShareLinkGenerator()->generateCartShareOptionGroups();
     }
 }

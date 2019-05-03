@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToPersistentCartShareClientInterface;
 use SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidPermissionOptionException;
-use SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryHelperInterface;
+use SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryKeyGeneratorInterface;
 
-class PersistentCartShareHelper implements PersistentCartShareHelperInterface
+class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGeneratorInterface
 {
     /**
      * @see \SprykerShop\Yves\ResourceSharePage\Plugin\Provider\ResourceSharePageControllerProvider::ROUTE_RESOURCE_SHARE_LINK
@@ -27,7 +27,7 @@ class PersistentCartShareHelper implements PersistentCartShareHelperInterface
     protected $persistentCartShareClient;
 
     /**
-     * @var \SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryHelperInterface
+     * @var \SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryKeyGeneratorInterface
      */
     protected $glossaryHelper;
 
@@ -38,11 +38,11 @@ class PersistentCartShareHelper implements PersistentCartShareHelperInterface
 
     /**
      * @param \SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToPersistentCartShareClientInterface $persistentCartShareClient
-     * @param \SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryHelperInterface $glossaryHelper
+     * @param \SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryKeyGeneratorInterface $glossaryHelper
      */
     public function __construct(
         PersistentCartShareWidgetToPersistentCartShareClientInterface $persistentCartShareClient,
-        GlossaryHelperInterface $glossaryHelper,
+        GlossaryKeyGeneratorInterface $glossaryHelper,
         Application $application
     ) {
         $this->persistentCartShareClient = $persistentCartShareClient;

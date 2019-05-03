@@ -11,10 +11,10 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToCustomerClientInterface;
 use SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToPersistentCartShareClientInterface;
-use SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryHelper;
-use SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryHelperInterface;
-use SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShare\PersistentCartShareHelper;
-use SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShare\PersistentCartShareHelperInterface;
+use SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryKeyGenerator;
+use SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryKeyGeneratorInterface;
+use SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShare\PersistentCartShareLinkGenerator;
+use SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShare\PersistentCartShareLinkGeneratorInterface;
 
 class PersistentCartShareWidgetFactory extends AbstractFactory
 {
@@ -43,21 +43,21 @@ class PersistentCartShareWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryHelperInterface
+     * @return \SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryKeyGeneratorInterface
      */
-    public function getGlossaryHelper(): GlossaryHelperInterface
+    public function createGlossaryKeyGenerator(): GlossaryKeyGeneratorInterface
     {
-        return new GlossaryHelper();
+        return new GlossaryKeyGenerator();
     }
 
     /**
-     * @return \SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShare\PersistentCartShareHelperInterface
+     * @return \SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShare\PersistentCartShareLinkGeneratorInterface
      */
-    public function getPersistentCartShareHelper(): PersistentCartShareHelperInterface
+    public function createPersistentCartShareLinkGenerator(): PersistentCartShareLinkGeneratorInterface
     {
-        return new PersistentCartShareHelper(
+        return new PersistentCartShareLinkGenerator(
             $this->getPersistentCartShareClient(),
-            $this->getGlossaryHelper(),
+            $this->createGlossaryKeyGenerator(),
             $this->getApplication()
         );
     }

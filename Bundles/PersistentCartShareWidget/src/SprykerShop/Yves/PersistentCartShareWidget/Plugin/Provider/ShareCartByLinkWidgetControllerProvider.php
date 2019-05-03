@@ -25,6 +25,8 @@ class ShareCartByLinkWidgetControllerProvider extends AbstractYvesControllerProv
     }
 
     /**
+     * @uses \SprykerShop\Yves\PersistentCartShareWidget\Controller\PersistentCartShareWidgetController::indexAction
+     *
      * @return $this
      */
     protected function addCreateLinkRoute()
