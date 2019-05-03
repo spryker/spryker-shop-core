@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\QuickOrderPage\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
@@ -222,41 +221,11 @@ class QuickOrderController extends AbstractController
         foreach ($quickOrderTransfer->getItems() as $orderItem) {
             $productConcreteTransfer = $orderItem->getProductConcrete();
             if ($productConcreteTransfer) {
-                $productConcreteTransfer = $this->setProductConcreteRestrictions($productConcreteTransfer);
                 $productConcreteTransfers[] = $productConcreteTransfer;
             }
         }
 
         return $productConcreteTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    protected function setProductConcreteRestrictions(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
-    {
-        $productQuantityStorageTransfer = $this->getFactory()
-            ->getProductQuantityStorageClient()
-            ->findProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
-        $availabilityRequestTransfer = new ProductConcreteAvailabilityRequestTransfer();
-        $availabilityRequestTransfer->setSku($productConcreteTransfer->getSku());
-        $productConcreteAvailabilityTransfer = $this->getFactory()
-            ->getAvailabilityClient()
-            ->findProductConcreteAvailability($availabilityRequestTransfer);
-
-        $quantityRestrictionReader = $this->getFactory()
-            ->createQuantityRestrictionReader();
-
-        $minQuantity = $quantityRestrictionReader->getMinQuantity($productQuantityStorageTransfer);
-        $maxQuantity = $quantityRestrictionReader->getMaxQuantity($productQuantityStorageTransfer, $productConcreteAvailabilityTransfer);
-        $quantityInterval = $quantityRestrictionReader->getQuantityInterval($productQuantityStorageTransfer);
-        $productConcreteTransfer->setMinQuantity($minQuantity);
-        $productConcreteTransfer->setMaxQuantity($maxQuantity);
-        $productConcreteTransfer->setQuantityInterval($quantityInterval);
-
-        return $productConcreteTransfer;
     }
 
     /**

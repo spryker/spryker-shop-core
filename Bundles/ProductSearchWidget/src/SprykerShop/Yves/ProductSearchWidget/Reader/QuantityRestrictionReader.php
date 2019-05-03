@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuickOrderPage\Reader;
+namespace SprykerShop\Yves\ProductSearchWidget\Reader;
 
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
@@ -47,7 +47,7 @@ class QuantityRestrictionReader implements QuantityRestrictionReaderInterface
         $availability = $productConcreteAvailabilityTransfer->getAvailability();
 
         if (!$productConcreteAvailabilityTransfer->getIsNeverOutOfStock() && $productQuantityStorageTransfer === null) {
-            return $availability;
+            return $availability > 1 ? $availability : 1;
         }
 
         if ($productConcreteAvailabilityTransfer->getIsNeverOutOfStock()) {
@@ -60,10 +60,11 @@ class QuantityRestrictionReader implements QuantityRestrictionReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
      *
-     * @return float
+     * @return float|null
      */
-    public function getMinQuantity(?ProductQuantityStorageTransfer $productQuantityStorageTransfer): float
-    {
+    public function getMinQuantity(
+        ?ProductQuantityStorageTransfer $productQuantityStorageTransfer
+    ): ?float {
         if ($productQuantityStorageTransfer === null) {
             return 1;
         }
