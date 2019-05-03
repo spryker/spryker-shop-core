@@ -8,10 +8,10 @@
 namespace SprykerShopTest\Yves\Router\Plugin;
 
 use Codeception\Test\Unit;
-use SprykerShop\Shared\Router\RouterConstants;
 use SprykerShop\Yves\Router\Plugin\RouteManipulator\LanguageDefaultRouteManipulatorPlugin;
 use SprykerShop\Yves\Router\Plugin\Router\YvesRouterPlugin;
 use SprykerShop\Yves\Router\Plugin\RouterEnhancer\LanguagePrefixRouterEnhancerPlugin;
+use SprykerShop\Yves\Router\RouterEnvironmentConfigConstantsYves;
 use SprykerShopTest\Yves\Router\Plugin\Fixtures\RouteProviderPlugin;
 use Symfony\Component\Routing\RequestContext;
 
@@ -37,7 +37,7 @@ class YvesRouterPluginWithLanguagePrefixRouterEnhancerTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->mockEnvironmentConfig(RouterConstants::ROUTER_CACHE_ENABLED, false);
+        $this->tester->mockEnvironmentConfig(RouterEnvironmentConfigConstantsYves::IS_CACHE_ENABLED, false);
 
         $this->tester->mockFactoryMethod('getRouteProviderPlugins', [
             new RouteProviderPlugin(),

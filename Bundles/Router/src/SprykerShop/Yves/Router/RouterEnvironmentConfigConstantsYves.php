@@ -5,12 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Shared\Router;
+namespace SprykerShop\Yves\Router;
 
-/**
- * Declares global environment configuration keys. Do not use it for other class constants.
- */
-interface RouterConstants
+interface RouterEnvironmentConfigConstantsYves
 {
     /**
      * Specification:
@@ -18,7 +15,7 @@ interface RouterConstants
      *
      * @api
      */
-    public const ROUTER_CACHE_ENABLED = 'ROUTER:ROUTER_CACHE_ENABLED';
+    public const IS_CACHE_ENABLED = 'ROUTER_YVES:IS_CACHE_ENABLED';
 
     /**
      * Specification:
@@ -28,7 +25,7 @@ interface RouterConstants
      *
      * @api
      */
-    public const ROUTER_IS_SSL_ENABLED = 'ROUTER:IS_SSL_ENABLED';
+    public const IS_SSL_ENABLED = 'ROUTER_YVES:IS_SSL_ENABLED';
 
     /**
      * Specification:
@@ -37,5 +34,5 @@ interface RouterConstants
      *
      * @api
      */
-    public const ROUTER_SSL_EXCLUDED_ROUTE_NAMES = 'ROUTER:SSL_EXCLUDED_ROUTE_NAMES';
+    public const SSL_EXCLUDED_ROUTE_NAMES = 'ROUTER_YVES:SSL_EXCLUDED_ROUTE_NAMES';
 }
