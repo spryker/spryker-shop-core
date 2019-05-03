@@ -10,13 +10,13 @@ namespace SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShare;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToPersistentCartShareClientInterface;
-use SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidPermissionOptionException;
+use SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidShareOptionGroupException;
 use SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryKeyGeneratorInterface;
 
 class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGeneratorInterface
 {
     /**
-     * @see \SprykerShop\Yves\ResourceSharePage\Plugin\Provider\ResourceSharePageControllerProvider::ROUTE_RESOURCE_SHARE_LINK
+     * @uses \SprykerShop\Yves\ResourceSharePage\Plugin\Provider\ResourceSharePageControllerProvider::ROUTE_RESOURCE_SHARE_LINK
      */
     protected const LINK_ROUTE = 'link';
     protected const PARAM_RESOURCE_SHARE_UUID = 'resourceShareUuid';
@@ -29,7 +29,7 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
     /**
      * @var \SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryKeyGeneratorInterface
      */
-    protected $glossaryHelper;
+    protected $glossaryKeyGenerator;
 
     /**
      * @var \Spryker\Yves\Kernel\Application
@@ -38,35 +38,35 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
 
     /**
      * @param \SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToPersistentCartShareClientInterface $persistentCartShareClient
-     * @param \SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryKeyGeneratorInterface $glossaryHelper
+     * @param \SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryKeyGeneratorInterface $glossaryKeyGenerator
      */
     public function __construct(
         PersistentCartShareWidgetToPersistentCartShareClientInterface $persistentCartShareClient,
-        GlossaryKeyGeneratorInterface $glossaryHelper,
+        GlossaryKeyGeneratorInterface $glossaryKeyGenerator,
         Application $application
     ) {
         $this->persistentCartShareClient = $persistentCartShareClient;
-        $this->glossaryHelper = $glossaryHelper;
+        $this->glossaryKeyGenerator = $glossaryKeyGenerator;
         $this->application = $application;
     }
 
     /**
-     * @param array $cartShareOptions
+     * @param array $shareOptions
      * @param int $idQuote
-     * @param string $permissionOptionGroup
+     * @param string $shareOptionGroup
      *
-     * @throws \SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidPermissionOptionException
+     * @throws \SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidShareOptionGroupException
      *
      * @return string[]
      */
-    public function generateCartShareLinks(array $cartShareOptions, int $idQuote, string $permissionOptionGroup): array
+    public function generateCartShareLinks(array $shareOptions, int $idQuote, string $shareOptionGroup): array
     {
-        if (empty($cartShareOptions[$permissionOptionGroup])) {
-            throw new InvalidPermissionOptionException(sprintf('Permission Option "%s" is not valid.', $permissionOptionGroup));
+        if (empty($shareOptions[$shareOptionGroup])) {
+            throw new InvalidShareOptionGroupException(sprintf('Share Option Group "%s" is not valid.', $shareOptionGroup));
         }
 
         $resourceShareLinks = [];
-        foreach ($cartShareOptions[$permissionOptionGroup] as $shareOption) {
+        foreach ($shareOptions[$shareOptionGroup] as $shareOption) {
             $cartResourceShare = $this->persistentCartShareClient->generateCartResourceShare($idQuote, $shareOption);
             $resourceShareLinks[$shareOption] = $this->buildResourceShareLink($cartResourceShare->getResourceShare());
         }
@@ -75,23 +75,23 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
     }
 
     /**
-     * @param array $cartShareOptions
+     * @param array $shareOptions
      * @param int $idQuote
-     * @param string $permissionOptionGroup
+     * @param string $shareOptionGroup
      *
-     * @throws \SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidPermissionOptionException
+     * @throws \SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidShareOptionGroupException
      *
      * @return string[]
      */
-    public function generateCartShareLinkLabels(array $cartShareOptions, int $idQuote, string $permissionOptionGroup): array
+    public function generateCartShareLinkLabels(array $shareOptions, int $idQuote, string $shareOptionGroup): array
     {
-        if (empty($cartShareOptions[$permissionOptionGroup])) {
-            throw new InvalidPermissionOptionException(sprintf('Permission Option "%s" is not valid.', $permissionOptionGroup));
+        if (empty($shareOptions[$shareOptionGroup])) {
+            throw new InvalidShareOptionGroupException(sprintf('Share Option Group "%s" is not valid.', $shareOptionGroup));
         }
 
         $resourceShareLinkLabels = [];
-        foreach ($cartShareOptions[$permissionOptionGroup] as $shareOption) {
-            $resourceShareLinkLabels[$shareOption] = $this->glossaryHelper->getKeyForPermissionOption($permissionOptionGroup, $shareOption);
+        foreach ($shareOptions[$shareOptionGroup] as $shareOption) {
+            $resourceShareLinkLabels[$shareOption] = $this->glossaryKeyGenerator->getShareOptionKey($shareOptionGroup, $shareOption);
         }
 
         return $resourceShareLinkLabels;
@@ -110,16 +110,16 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
     /**
      * @return string[][]
      */
-    public function generateCartShareOptionGroups(): array
+    public function generateShareOptionGroups(): array
     {
-        $cartShareOptions = $this->persistentCartShareClient->getCartShareOptions();
-        $optionGroups = array_keys($cartShareOptions);
+        $shareOptions = $this->persistentCartShareClient->getCartShareOptions();
+        $shareOptionGroupNames = array_keys($shareOptions);
 
-        $cartShareOptionGroups = [];
-        foreach ($optionGroups as $cartShareOptionGroup) {
-            $cartShareOptionGroups[$cartShareOptionGroup] = $this->glossaryHelper->getKeyForPermissionGroup($cartShareOptionGroup);
+        $shareOptionGroups = [];
+        foreach ($shareOptionGroupNames as $shareOptionGroupName) {
+            $shareOptionGroups[$shareOptionGroupName] = $this->glossaryKeyGenerator->getShareOptionGroupKey($shareOptionGroupName);
         }
 
-        return $cartShareOptionGroups;
+        return $shareOptionGroups;
     }
 }

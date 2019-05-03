@@ -8,8 +8,8 @@ export default class UrlGeneratorMask extends Component {
     protected isActionsRendered: boolean = false;
 
     protected readyCallback(): void {
-        this.provider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider-${this.permissionOption}`);
-        this.trigger = <HTMLInputElement>this.querySelector(`.${this.jsName}__trigger-${this.permissionOption} .js-toggler-radio__trigger`);
+        this.provider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider-${this.shareOptionGroup}`);
+        this.trigger = <HTMLInputElement>this.querySelector(`.${this.jsName}__trigger-${this.shareOptionGroup} .js-toggler-radio__trigger`);
         this.mapEvents();
     }
 
@@ -25,7 +25,7 @@ export default class UrlGeneratorMask extends Component {
     }
 
     /**
-     * Sends data to the server usung ajaxProvider and rerender the form.
+     * Sends data to the server using ajaxProvider and rerender the form.
      */
     async render(): Promise<void> {
         await this.provider.fetch();
@@ -33,9 +33,9 @@ export default class UrlGeneratorMask extends Component {
     }
 
     /**
-     * Gets a permission option of the request.
+     * Gets a share option group of the request.
      */
-    get permissionOption(): string {
-        return this.getAttribute('permissionOption');
+    get shareOptionGroup(): string {
+        return this.getAttribute('shareOptionGroup');
     }
 }

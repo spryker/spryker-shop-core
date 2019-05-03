@@ -10,23 +10,23 @@ namespace SprykerShop\Yves\PersistentCartShareWidget\Glossary;
 class GlossaryKeyGenerator implements GlossaryKeyGeneratorInterface
 {
     /**
-     * @param string $permissionGroup
+     * @param string $shareOptionGroupName
      *
      * @return string
      */
-    public function getKeyForPermissionGroup(string $permissionGroup): string
+    public function getShareOptionGroupKey(string $shareOptionGroupName): string
     {
-        return 'persistent_cart_share.' . $permissionGroup . '_users';
+        return 'persistent_cart_share.' . $shareOptionGroupName . '_users';
     }
 
     /**
-     * @param string $permissionGroup
-     * @param string $permissionOption
+     * @param string $shareOptionGroup
+     * @param string $shareOption
      *
      * @return string
      */
-    public function getKeyForPermissionOption(string $permissionGroup, string $permissionOption): string
+    public function getShareOptionKey(string $shareOptionGroup, string $shareOption): string
     {
-        return 'persistent_cart_share.share_options.' . $permissionOption;
+        return 'persistent_cart_share.share_options.' . $shareOption;
     }
 }

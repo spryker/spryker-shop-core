@@ -31,7 +31,7 @@ class ShareCartByLinkWidgetControllerProvider extends AbstractYvesControllerProv
      */
     protected function addCreateLinkRoute()
     {
-        $this->createController('/{PersistentCartShareWidget}/create-link/{idQuote}/{permissionOption}', static::CART_CREATE_LINK, 'PersistentCartShareWidget', 'PersistentCartShareWidget')
+        $this->createController('/{PersistentCartShareWidget}/create-link/{idQuote}/{shareOptionGroup}', static::CART_CREATE_LINK, 'PersistentCartShareWidget', 'PersistentCartShareWidget')
             ->assert('PersistentCartShareWidget', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('PersistentCartShareWidget', 'cart')
             ->assert('idQuote', '\d+');

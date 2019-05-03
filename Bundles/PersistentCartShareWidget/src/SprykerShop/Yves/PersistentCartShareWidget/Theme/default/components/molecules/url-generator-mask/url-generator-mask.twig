@@ -12,44 +12,44 @@
 
 {% define attributes = {
     idQuote: required,
-    permissionOption: required
+    shareOptionGroup: required
 } %}
 
 {% block body %}
     {% include molecule('ajax-provider') with {
-        class: config.jsName ~ '__provider-' ~ attributes.permissionOption,
+        class: config.jsName ~ '__provider-' ~ attributes.shareOptionGroup,
         attributes: {
             method: 'POST',
-            url: path('cart/create-link', { idQuote:attributes.idQuote, permissionOption: attributes.permissionOption })
+            url: path('cart/create-link', { idQuote:attributes.idQuote, shareOptionGroup: attributes.shareOptionGroup })
         }
     } only %}
 
     {% include molecule('ajax-loader') with {
         modifiers: ['big'],
         attributes: {
-            'provider-selector': '.' ~ config.jsName ~ '__provider-' ~ attributes.permissionOption
+            'provider-selector': '.' ~ config.jsName ~ '__provider-' ~ attributes.shareOptionGroup
         }
     } only %}
 
     {% include molecule('ajax-renderer') with {
         attributes: {
-            'provider-selector': '.' ~ config.jsName ~ '__provider-' ~ attributes.permissionOption,
-            'target-selector': '.' ~ config.jsName ~ '__actions-' ~ attributes.permissionOption
+            'provider-selector': '.' ~ config.jsName ~ '__provider-' ~ attributes.shareOptionGroup,
+            'target-selector': '.' ~ config.jsName ~ '__actions-' ~ attributes.shareOptionGroup
         }
     } only %}
 
     {% include molecule('toggler-radio') with {
-        class: config.jsName ~ '__trigger-' ~ attributes.permissionOption,
+        class: config.jsName ~ '__trigger-' ~ attributes.shareOptionGroup,
         data: {
             label: data.label
         },
         attributes: {
             checked: false,
             name: data.group,
-            'target-selector': '.' ~ config.jsName ~ '__actions-' ~ attributes.permissionOption,
+            'target-selector': '.' ~ config.jsName ~ '__actions-' ~ attributes.shareOptionGroup,
             'class-to-toggle': 'is-hidden'
         }
     } only %}
 
-    <div class="{{ config.jsName }}__actions-{{ attributes.permissionOption }}"></div>
+    <div class="{{ config.jsName }}__actions-{{ attributes.shareOptionGroup }}"></div>
 {% endblock %}

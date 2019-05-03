@@ -20,42 +20,42 @@ class PersistentCartShareWidgetController extends AbstractController
 
     /**
      * @param int $idQuote
-     * @param string $permissionOption
+     * @param string $shareOptionGroup
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function indexAction(int $idQuote, string $permissionOption, Request $request): View
+    public function indexAction(int $idQuote, string $shareOptionGroup, Request $request): View
     {
-        $response = $this->executeIndexAction($idQuote, $permissionOption, $request);
+        $response = $this->executeIndexAction($idQuote, $shareOptionGroup, $request);
 
         return $this->view($response, [], '@PersistentCartShareWidget/views/share-cart-response/share-cart-response.twig');
     }
 
     /**
      * @param int $idQuote
-     * @param string $permissionOptionGroup
+     * @param string $shareOptionGroup
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
-    protected function executeIndexAction(int $idQuote, string $permissionOptionGroup, Request $request): array
+    protected function executeIndexAction(int $idQuote, string $shareOptionGroup, Request $request): array
     {
-        $cartShareOptions = $this->getFactory()
+        $shareOptions = $this->getFactory()
             ->getPersistentCartShareClient()
             ->getCartShareOptions();
 
         $cartShareLinks = $this->getFactory()
             ->createPersistentCartShareLinkGenerator()
-            ->generateCartShareLinks($cartShareOptions, $idQuote, $permissionOptionGroup);
+            ->generateCartShareLinks($shareOptions, $idQuote, $shareOptionGroup);
 
         $cartShareLinkLabels = $this->getFactory()
             ->createPersistentCartShareLinkGenerator()
-            ->generateCartShareLinkLabels($cartShareOptions, $idQuote, $permissionOptionGroup);
+            ->generateCartShareLinkLabels($shareOptions, $idQuote, $shareOptionGroup);
 
         return [
             'idQuote' => $idQuote,
-            'permissionOption' => $permissionOptionGroup,
+            'shareOptionGroup' => $shareOptionGroup,
             'cartShareLinks' => $cartShareLinks,
             'cartShareLinkLabels' => $cartShareLinkLabels,
         ];

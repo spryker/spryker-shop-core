@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\PersistentCartShareWidget\Exceptions;
 
-use InvalidArgumentException;
+use Exception;
 
-class InvalidPermissionOptionException extends InvalidArgumentException
+class InvalidShareOptionGroupException extends Exception
 {
 }

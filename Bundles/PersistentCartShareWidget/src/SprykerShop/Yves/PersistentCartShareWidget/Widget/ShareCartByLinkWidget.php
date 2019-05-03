@@ -15,9 +15,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ShareCartByLinkWidget extends AbstractWidget
 {
-    protected const CART_PARAMETER = 'cart';
-    protected const IS_QUOTE_OWNER_PARAMETER = 'isQuoteOwner';
-    protected const CART_SHARE_OPTIONS_PARAMETER = 'cartShareOptions';
+    protected const PARAM_CART = 'cart';
+    protected const PARAM_IS_QUOTE_OWNER = 'isQuoteOwner';
+    protected const PARAM_SHARE_OPTIONS_GROUPS = 'shareOptionGroups';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -36,7 +36,7 @@ class ShareCartByLinkWidget extends AbstractWidget
      */
     protected function addCartParameter(QuoteTransfer $quoteTransfer): void
     {
-        $this->addParameter(static::CART_PARAMETER, $quoteTransfer);
+        $this->addParameter(static::PARAM_CART, $quoteTransfer);
     }
 
     /**
@@ -46,7 +46,7 @@ class ShareCartByLinkWidget extends AbstractWidget
      */
     protected function addIsQuoteOwnerParameter(QuoteTransfer $quoteTransfer): void
     {
-        $this->addParameter(static::IS_QUOTE_OWNER_PARAMETER, $this->isQuoteOwner($quoteTransfer));
+        $this->addParameter(static::PARAM_IS_QUOTE_OWNER, $this->isQuoteOwner($quoteTransfer));
     }
 
     /**
@@ -54,7 +54,7 @@ class ShareCartByLinkWidget extends AbstractWidget
      */
     protected function addCartShareOptionsParameter(): void
     {
-        $this->addParameter(static::CART_SHARE_OPTIONS_PARAMETER, $this->getCartShareOptionsGroups());
+        $this->addParameter(static::PARAM_SHARE_OPTIONS_GROUPS, $this->getShareOptionsGroups());
     }
 
     /**
@@ -64,8 +64,9 @@ class ShareCartByLinkWidget extends AbstractWidget
      */
     protected function isQuoteOwner(QuoteTransfer $quoteTransfer): bool
     {
-        $customer = $this->getFactory()->getCustomerClient()->getCustomer();
-        return $customer->getCustomerReference() === $quoteTransfer->getCustomerReference();
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        return $customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference();
     }
 
     /**
@@ -87,8 +88,8 @@ class ShareCartByLinkWidget extends AbstractWidget
     /**
      * @return string[]
      */
-    protected function getCartShareOptionsGroups(): array
+    protected function getShareOptionsGroups(): array
     {
-        return $this->getFactory()->createPersistentCartShareLinkGenerator()->generateCartShareOptionGroups();
+        return $this->getFactory()->createPersistentCartShareLinkGenerator()->generateShareOptionGroups();
     }
 }

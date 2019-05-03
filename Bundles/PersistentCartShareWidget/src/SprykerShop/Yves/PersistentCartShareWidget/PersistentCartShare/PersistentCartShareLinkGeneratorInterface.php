@@ -10,29 +10,29 @@ namespace SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShare;
 interface PersistentCartShareLinkGeneratorInterface
 {
     /**
-     * @param array $cartShareOptions
+     * @param array $shareOptions
      * @param int $idQuote
-     * @param string $permissionOptionGroup
+     * @param string $shareOptionGroup
      *
-     * @throws \SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidPermissionOptionException
+     * @throws \SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidShareOptionGroupException
      *
      * @return string[]
      */
-    public function generateCartShareLinks(array $cartShareOptions, int $idQuote, string $permissionOptionGroup): array;
+    public function generateCartShareLinks(array $shareOptions, int $idQuote, string $shareOptionGroup): array;
 
     /**
-     * @param array $cartShareOptions
+     * @param array $shareOptions
      * @param int $idQuote
-     * @param string $permissionOptionGroup
+     * @param string $shareOptionGroup
      *
-     * @throws \SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidPermissionOptionException
+     * @throws \SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidShareOptionGroupException
      *
      * @return string[]
      */
-    public function generateCartShareLinkLabels(array $cartShareOptions, int $idQuote, string $permissionOptionGroup): array;
+    public function generateCartShareLinkLabels(array $shareOptions, int $idQuote, string $shareOptionGroup): array;
 
     /**
      * @return string[]
      */
-    public function generateCartShareOptionGroups(): array;
+    public function generateShareOptionGroups(): array;
 }
