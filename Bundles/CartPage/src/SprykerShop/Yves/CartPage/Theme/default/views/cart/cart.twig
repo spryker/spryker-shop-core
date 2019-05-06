@@ -101,7 +101,15 @@
                             <p>
                                 <strong>{{ 'cart_page.quote.label.locked_cart' | trans }}</strong>
                             </p>
-                            {{ 'persistent_cart.quote.label.locked_cart' | trans }}
+
+                            {% if data.cart.quoteApprovals is defined and data.cart.quoteApprovals is not empty %}
+                                {{ 'persistent_cart.quote.label.locked_cart.by_quote_approval' | trans }}
+                            {% elseif data.cart.quoteRequestVersionReference is defined and data.cart.quoteRequestVersionReference %}
+                                {{ 'persistent_cart.quote.label.locked_cart.by_quote_request' | trans }}
+                            {% else %}
+                                {{ 'persistent_cart.quote.label.locked_cart' | trans }}
+                            {% endif %}
+
                             <button type="submit" class="link">{{ 'persistent_cart.quote.button.reset_lock' | trans }}</button>
                             {{ 'persistent_cart.quote.label.discarded_locked_cart' | trans }}
                         </form>
