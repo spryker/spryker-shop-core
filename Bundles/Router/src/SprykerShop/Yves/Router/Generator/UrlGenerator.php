@@ -8,11 +8,11 @@
 namespace SprykerShop\Yves\Router\Generator;
 
 use SprykerShop\Yves\Router\Route\Route;
-use Symfony\Component\Routing\Router as SymfonyRouter;
 use SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouterEnhancerAwareInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGenerator as SymfonyUrlGenerator;
+use Symfony\Component\Routing\Router as SymfonyRouter;
 
 class UrlGenerator extends SymfonyUrlGenerator implements RouterEnhancerAwareInterface
 {
