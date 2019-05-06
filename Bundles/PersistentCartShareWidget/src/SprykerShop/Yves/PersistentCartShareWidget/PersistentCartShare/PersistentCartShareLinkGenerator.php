@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToPersistentCartShareClientInterface;
 use SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidShareOptionGroupException;
-use SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryKeyGeneratorInterface;
 
 class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGeneratorInterface
 {
@@ -27,27 +26,19 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
     protected $persistentCartShareClient;
 
     /**
-     * @var \SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryKeyGeneratorInterface
-     */
-    protected $glossaryKeyGenerator;
-
-    /**
      * @var \Spryker\Yves\Kernel\Application
      */
     protected $application;
 
     /**
      * @param \SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToPersistentCartShareClientInterface $persistentCartShareClient
-     * @param \SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryKeyGeneratorInterface $glossaryKeyGenerator
      * @param \Spryker\Yves\Kernel\Application $application
      */
     public function __construct(
         PersistentCartShareWidgetToPersistentCartShareClientInterface $persistentCartShareClient,
-        GlossaryKeyGeneratorInterface $glossaryKeyGenerator,
         Application $application
     ) {
         $this->persistentCartShareClient = $persistentCartShareClient;
-        $this->glossaryKeyGenerator = $glossaryKeyGenerator;
         $this->application = $application;
     }
 
@@ -92,7 +83,7 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
 
         $resourceShareLinkLabels = [];
         foreach ($shareOptions[$shareOptionGroup] as $shareOption) {
-            $resourceShareLinkLabels[$shareOption] = $this->glossaryKeyGenerator->getShareOptionKey($shareOptionGroup, $shareOption);
+            $resourceShareLinkLabels[$shareOption] = $this->getShareOptionKey($shareOptionGroup, $shareOption);
         }
 
         return $resourceShareLinkLabels;
@@ -118,9 +109,30 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
 
         $shareOptionGroups = [];
         foreach ($shareOptionGroupNames as $shareOptionGroupName) {
-            $shareOptionGroups[$shareOptionGroupName] = $this->glossaryKeyGenerator->getShareOptionGroupKey($shareOptionGroupName);
+            $shareOptionGroups[$shareOptionGroupName] = $this->getShareOptionGroupKey($shareOptionGroupName);
         }
 
         return $shareOptionGroups;
+    }
+
+    /**
+     * @param string $shareOptionGroupName
+     *
+     * @return string
+     */
+    protected function getShareOptionGroupKey(string $shareOptionGroupName): string
+    {
+        return 'persistent_cart_share.' . $shareOptionGroupName . '_users';
+    }
+
+    /**
+     * @param string $shareOptionGroup
+     * @param string $shareOption
+     *
+     * @return string
+     */
+    protected function getShareOptionKey(string $shareOptionGroup, string $shareOption): string
+    {
+        return 'persistent_cart_share.share_options.' . $shareOptionGroup . '.' . $shareOption;
     }
 }

@@ -7,10 +7,8 @@
 
 namespace SprykerShop\Yves\PersistentCartShareWidget\Controller;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShareWidgetFactory getFactory()
@@ -20,13 +18,12 @@ class PersistentCartShareWidgetController extends AbstractController
     /**
      * @param int $idQuote
      * @param string $shareOptionGroup
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function indexAction(int $idQuote, string $shareOptionGroup, Request $request): View
+    public function indexAction(int $idQuote, string $shareOptionGroup): View
     {
-        $response = $this->executeIndexAction($idQuote, $shareOptionGroup, $request);
+        $response = $this->executeIndexAction($idQuote, $shareOptionGroup);
 
         return $this->view($response, [], '@PersistentCartShareWidget/views/share-cart-response/share-cart-response.twig');
     }
@@ -34,11 +31,10 @@ class PersistentCartShareWidgetController extends AbstractController
     /**
      * @param int $idQuote
      * @param string $shareOptionGroup
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
-    protected function executeIndexAction(int $idQuote, string $shareOptionGroup, Request $request): array
+    protected function executeIndexAction(int $idQuote, string $shareOptionGroup): array
     {
         $shareOptions = $this->getFactory()
             ->getPersistentCartShareClient()
@@ -58,15 +54,5 @@ class PersistentCartShareWidgetController extends AbstractController
             'cartShareLinks' => $cartShareLinks,
             'cartShareLinkLabels' => $cartShareLinkLabels,
         ];
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
-     */
-    protected function getCustomer(): ?CustomerTransfer
-    {
-        return $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
     }
 }

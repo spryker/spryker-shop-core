@@ -43,21 +43,12 @@ class PersistentCartShareWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryKeyGeneratorInterface
-     */
-    public function createGlossaryKeyGenerator(): GlossaryKeyGeneratorInterface
-    {
-        return new GlossaryKeyGenerator();
-    }
-
-    /**
      * @return \SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShare\PersistentCartShareLinkGeneratorInterface
      */
     public function createPersistentCartShareLinkGenerator(): PersistentCartShareLinkGeneratorInterface
     {
         return new PersistentCartShareLinkGenerator(
             $this->getPersistentCartShareClient(),
-            $this->createGlossaryKeyGenerator(),
             $this->getApplication()
         );
     }

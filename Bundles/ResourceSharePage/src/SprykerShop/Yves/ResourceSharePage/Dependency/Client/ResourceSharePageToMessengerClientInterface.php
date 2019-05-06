@@ -14,5 +14,5 @@ interface ResourceSharePageToMessengerClientInterface
      *
      * @return void
      */
-    public function addErrorMessage(string $message): void;
+    public function addErrorMessage($message);
 }
