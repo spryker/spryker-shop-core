@@ -73,9 +73,6 @@ class LinkController extends AbstractController
             ]);
         }
 
-        $routeTransfer = $this->getFactory()->createRouteResolver()
-            ->resolveRoute($resourceShareResponseTransfer);
-
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             foreach ($resourceShareResponseTransfer->getMessages() as $messageTransfer) {
                 $this->addErrorMessage($messageTransfer->getValue());
@@ -83,6 +80,9 @@ class LinkController extends AbstractController
 
             throw new NotFoundHttpException();
         }
+
+        $routeTransfer = $this->getFactory()->createRouteResolver()
+            ->resolveRoute($resourceShareResponseTransfer);
 
         return $this->redirectResponseInternal($routeTransfer->getRoute(), $routeTransfer->getParameters());
     }
