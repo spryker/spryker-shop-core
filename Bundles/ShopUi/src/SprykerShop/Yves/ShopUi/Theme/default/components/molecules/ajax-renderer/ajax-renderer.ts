@@ -3,12 +3,12 @@ import AjaxProvider from '../ajax-provider/ajax-provider';
 import { mount } from 'ShopUi/app';
 
 export default class AjaxRenderer extends Component {
-    protected provider: AjaxProvider
-    protected target: HTMLElement
+    protected provider: AjaxProvider;
+    protected target: HTMLElement;
 
     protected readyCallback(): void {
         this.provider = <AjaxProvider>document.querySelector(this.providerSelector);
-        this.target = !!this.targetSelector ? <HTMLElement>document.querySelector(this.targetSelector) : null;
+        this.target = !!this.targetSelector ? <HTMLElement>document.querySelector(this.targetSelector) : undefined;
         this.mapEvents();
     }
 
@@ -32,6 +32,7 @@ export default class AjaxRenderer extends Component {
 
         if (!!this.target) {
             this.target.innerHTML = response;
+
             return;
         }
 
@@ -42,14 +43,14 @@ export default class AjaxRenderer extends Component {
      * Gets a querySelector name of the provider element.
      */
     get providerSelector(): string {
-        return this.getAttribute('provider-selector') || '';
+        return this.getAttribute('provider-selector');
     }
 
     /**
      * Gets a querySelector name of the target element.
      */
     get targetSelector(): string {
-        return this.getAttribute('target-selector') || '';
+        return this.getAttribute('target-selector');
     }
 
     /**

@@ -2,7 +2,7 @@
     #{$name} {
         @include helper-effect-transition(background-color);
         display: inline-block;
-        padding: calc(.25rem + 1px) calc(.5rem + 1px);
+        padding: calc(0.25rem + 1px) calc(0.5rem + 1px);
         background-color: $setting-color-main;
         border: none;
         color: $setting-color-white;
