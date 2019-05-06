@@ -42,16 +42,6 @@
     </div>
 {% endblock %}
 
-{% block emptyCart %}
-    {% if data.errors is empty %}
-        <div class="grid">
-            <div class="col col--sm-12">
-                {{ block('emptyCartMessage') }}
-            </div>
-        </div>
-    {% endif %}
-{% endblock %}
-
 {% block cartItem %}
     {% embed molecule('cart-item', 'CartPage') with {
         class: 'box',
