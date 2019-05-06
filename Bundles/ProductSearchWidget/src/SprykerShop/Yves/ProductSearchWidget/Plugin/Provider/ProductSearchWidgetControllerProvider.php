@@ -59,9 +59,9 @@ class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvid
      */
     protected function addProductAdditionalDataRoute(): void
     {
-        $this->createController('{quickAddToCart}/product-additional-data', static::ROUTE_PRODUCT_ADDITIONAL_DATA, 'ProductSearchWidget', 'QuickAddToCart', 'productAdditionalData')
-            ->assert('quickAddToCart', $this->allowedLocalesPattern . 'quick-add-to-cart|quick-add-to-cart')
-            ->value('quickAddToCart', 'quick-add-to-cart');
+        $this->createController('{productSearch}/product-additional-data', static::ROUTE_PRODUCT_ADDITIONAL_DATA, 'ProductSearchWidget', 'QuickAddToCart', 'productAdditionalData')
+            ->assert('productSearch', $this->allowedLocalesPattern . 'product-search|product-search')
+            ->value('productSearch', 'product-search');
     }
 
     /**
