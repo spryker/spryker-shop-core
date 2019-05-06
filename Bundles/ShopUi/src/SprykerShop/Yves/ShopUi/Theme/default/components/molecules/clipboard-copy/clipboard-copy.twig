@@ -2,13 +2,13 @@
 
 {% define config = {
     name: 'clipboard-copy',
-    tag: 'clipboard-copy'
+    tag: 'clipboard-copy',
 } %}
 
 {% define attributes = {
     'trigger-selector': required,
     'target-selector': required,
-    'class-to-toggle': required,
+    'class-to-toggle': 'is-hidden',
 } %}
 
 {% block body %}

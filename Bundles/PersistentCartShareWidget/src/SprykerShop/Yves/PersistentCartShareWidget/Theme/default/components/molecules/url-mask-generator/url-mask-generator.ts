@@ -9,7 +9,7 @@ export default class UrlMaskGenerator extends Component {
 
     protected readyCallback(): void {
         this.provider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider-${this.shareOptionGroup}`);
-        this.trigger = <HTMLInputElement>this.querySelector(`.${this.jsName}__trigger-${this.shareOptionGroup} .js-toggler-radio__trigger`);
+        this.trigger = <HTMLInputElement>this.querySelector(`${this.triggerSelector}`);
         this.mapEvents();
     }
 
@@ -37,5 +37,12 @@ export default class UrlMaskGenerator extends Component {
      */
     get shareOptionGroup(): string {
         return this.getAttribute('shareOptionGroup');
+    }
+
+    /**
+     * Gets a css query selector to address the html element that will trigger the render of the form.
+     */
+    get triggerSelector(): string {
+        return this.getAttribute('trigger-selector');
     }
 }

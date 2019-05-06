@@ -13,6 +13,7 @@
 {% define attributes = {
     idQuote: required,
     shareOptionGroup: required,
+    'trigger-selector': '.js-toggler-radio__trigger',
 } %}
 
 {% block body %}
@@ -39,7 +40,6 @@
     } only %}
 
     {% include molecule('toggler-radio') with {
-        class: config.jsName ~ '__trigger-' ~ attributes.shareOptionGroup,
         data: {
             label: data.label,
         },
