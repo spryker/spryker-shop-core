@@ -5,12 +5,12 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/router-extension": "^1.0.0",
     "spryker/application-extension": "^1.0.0",
     "spryker/container": "^1.1.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/log": "^3.0.0",
-    "spryker-shop/router-extension": "^1.0.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
@@ -32,7 +32,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
+      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",

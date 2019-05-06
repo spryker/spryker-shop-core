@@ -11,11 +11,13 @@
     "spryker/storage": "^3.4.0"
   },
   "require-dev": {
+    "spryker-shop/router": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker-shop/router": "Use this module when you want to use the Router.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

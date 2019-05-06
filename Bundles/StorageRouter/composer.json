@@ -5,12 +5,12 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/storage-router-extension": "^1.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/router-extension": "^1.0.0",
-    "spryker-shop/storage-router-extension": "^1.0.0",
     "spryker/symfony": "^3.2.2",
-    "symfony-cmf/routing": "^2.1.0",
-    "spryker/url-storage": "^1.4.1"
+    "spryker/url-storage": "^1.4.1",
+    "symfony-cmf/routing": "^2.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

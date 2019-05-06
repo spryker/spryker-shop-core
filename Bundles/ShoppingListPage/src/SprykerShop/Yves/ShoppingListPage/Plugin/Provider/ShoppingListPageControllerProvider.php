@@ -11,6 +11,9 @@ use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin` instead.
+ */
 class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_SHOPPING_LIST = 'shopping-list';

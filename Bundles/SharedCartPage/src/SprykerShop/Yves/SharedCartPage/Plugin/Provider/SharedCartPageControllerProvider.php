@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\SharedCartPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\SharedCartPage\Plugin\Router\SharedCartPageRouteProviderPlugin` instead.
+ */
 class SharedCartPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_SHARED_CART_SHARE = 'shared-cart/share';

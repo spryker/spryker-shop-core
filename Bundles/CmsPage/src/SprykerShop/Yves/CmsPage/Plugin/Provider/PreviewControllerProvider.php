@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CmsPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CmsPage\Plugin\Router\PreviewRouteProviderPlugin` instead.
+ */
 class PreviewControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_PREVIEW = 'cms-preview';

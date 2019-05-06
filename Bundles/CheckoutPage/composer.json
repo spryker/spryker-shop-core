@@ -36,6 +36,7 @@
     "spryker-shop/company-widget": "*",
     "spryker-shop/gift-card-widget": "*",
     "spryker-shop/product-packaging-unit-widget": "*",
+    "spryker-shop/router": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
@@ -48,6 +49,7 @@
     "spryker-shop/configurable-bundle-widget": "Add the module if you want to use QuoteConfiguredBundleWidget widget.",
     "spryker-shop/gift-card-widget": "Add the module if you want to use gift card widget",
     "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or SummaryProductPackagingUnitWidgetPlugin.",
+    "spryker-shop/router": "Use this module when you want to use the Router.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

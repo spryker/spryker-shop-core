@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\PriceWidget\Plugin\Router;
 use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 use SprykerShop\Yves\Router\Route\RouteCollection;
 
-class PriceRouteProviderPlugin extends AbstractRouteProviderPlugin
+class PriceWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     public const ROUTE_PRICE_SWITCH = 'price-mode-switch';
 
@@ -33,8 +33,10 @@ class PriceRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addPriceModeSwitchRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/price/mode-switch', 'PriceWidget', 'PriceModeSwitch', 'indexAction');
-        $routeCollection->add(static::ROUTE_PRICE_SWITCH, $route);
+        $routeCollection->add(
+            static::ROUTE_PRICE_SWITCH,
+            $this->buildRoute('/price/mode-switch', 'PriceWidget', 'PriceModeSwitch')
+        );
 
         return $routeCollection;
     }

@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CustomerPage\Plugin\Router;
 use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 use SprykerShop\Yves\Router\Route\RouteCollection;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin` instead.
+ */
 class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     public const ROUTE_LOGIN = 'login';

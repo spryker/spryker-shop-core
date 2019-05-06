@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ErrorPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\ErrorPage\Plugin\Router\ErrorPageRouteProviderPlugin` instead.
+ */
 class ErrorPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_ERROR_404 = 'error/404';

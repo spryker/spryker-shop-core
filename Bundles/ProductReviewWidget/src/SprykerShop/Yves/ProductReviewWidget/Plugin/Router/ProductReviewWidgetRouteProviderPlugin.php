@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ProductReviewWidget\Plugin\Router;
 use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 use SprykerShop\Yves\Router\Route\RouteCollection;
 
-class ProductReviewRouteProviderPlugin extends AbstractRouteProviderPlugin
+class ProductReviewWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     public const ROUTE_PRODUCT_REVIEW_INDEX = 'product-review/index';
     public const ROUTE_PRODUCT_REVIEW_SUBMIT = 'product-review/submit';

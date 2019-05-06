@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Router\CompanyUserInvitationPageRouteProviderPlugin` instead.
+ */
 class CompanyUserInvitationPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_OVERVIEW = 'company/user-invitation';

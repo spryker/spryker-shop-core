@@ -15,12 +15,14 @@
   },
   "require-dev": {
     "spryker-shop/customer-page": "*",
+    "spryker-shop/router": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/customer-page": "ADD SUGGEST DESCRIPTION",
+    "spryker-shop/customer-page": "Use this module when you want to use the CustomerPage plugins.",
+    "spryker-shop/router": "Use this module when you want to use the Router.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

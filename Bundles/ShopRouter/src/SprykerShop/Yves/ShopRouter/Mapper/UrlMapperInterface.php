@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\ShopRouter\Mapper;
 
+/**
+ * @deprecated Use `spryker-shop/router` instead.
+ */
 interface UrlMapperInterface
 {
     /**

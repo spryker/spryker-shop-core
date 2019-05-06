@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\QuoteApprovalWidget\Plugin\Router;
 use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 use SprykerShop\Yves\Router\Route\RouteCollection;
 
-class QuoteApprovalRouteProviderPlugin extends AbstractRouteProviderPlugin
+class QuoteApprovalWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     protected const ROUTE_QUOTE_APPROVAL_APPROVE = 'quote-approval-approve';
     protected const ROUTE_QUOTE_APPROVAL_DECLINE = 'quote-approval-decline';
