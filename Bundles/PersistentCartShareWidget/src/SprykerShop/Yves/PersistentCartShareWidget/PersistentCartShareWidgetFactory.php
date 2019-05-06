@@ -11,8 +11,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToCustomerClientInterface;
 use SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToPersistentCartShareClientInterface;
-use SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryKeyGenerator;
-use SprykerShop\Yves\PersistentCartShareWidget\Glossary\GlossaryKeyGeneratorInterface;
 use SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShare\PersistentCartShareLinkGenerator;
 use SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShare\PersistentCartShareLinkGeneratorInterface;
 
