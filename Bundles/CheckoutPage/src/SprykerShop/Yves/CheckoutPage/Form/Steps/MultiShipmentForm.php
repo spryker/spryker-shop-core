@@ -86,7 +86,6 @@ class MultiShipmentForm extends AbstractType
             'placeholder' => 'checkout.shipment.requested_delivery_date.placeholder',
             'required' => false,
             'input' => 'string',
-//            'format' => 'MM/dd/yyyy', // Format accepted by IntlDateFormatter.
             'format' => 'yyyy-MM-dd', // Format accepted by IntlDateFormatter.
             'constraints' => [
                 $this->createDateTimeConstraint(),
