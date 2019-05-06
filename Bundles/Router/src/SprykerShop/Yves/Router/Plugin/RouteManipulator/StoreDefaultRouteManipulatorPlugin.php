@@ -23,9 +23,9 @@ class StoreDefaultRouteManipulatorPlugin extends AbstractPlugin implements Route
 
     /**
      * @param string $routeName
-     * @param \SprykerShop\Yves\Router\Route\Route $route
+     * @param \Symfony\Component\Routing\Route|\SprykerShop\Yves\Router\Route\Route $route
      *
-     * @return \SprykerShop\Yves\Router\Route\Route
+     * @return \Symfony\Component\Routing\Route|\SprykerShop\Yves\Router\Route\Route
      */
     public function manipulate(string $routeName, Route $route): Route
     {
