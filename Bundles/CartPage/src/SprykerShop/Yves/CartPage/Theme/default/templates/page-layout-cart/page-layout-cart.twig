@@ -8,7 +8,7 @@
     attributes: _view.attributes,
     request: app.request,
 
-    title: 'cart.cart' | trans
+    title: 'cart.cart' | trans,
 } %}
 
 {% block breadcrumbs %}
@@ -39,7 +39,7 @@
                                 modifiers: ['biggest'],
                                 class: 'text-alt',
                                 data: {
-                                    name: 'shopping-cart'
+                                    name: 'shopping-cart',
                                 }
                             } only %}
                             <h6>{{ 'cart.empty' | trans }}</h6>
@@ -66,7 +66,7 @@
                     <div class="box">
                         {% include molecule('price-mode') with {
                             data: {
-                                priceMode: data.cart.priceMode
+                                priceMode: data.cart.priceMode,
                             }
                         } only %}
                     </div>
@@ -79,7 +79,7 @@
                                 cart: data.cart,
                                 isQuoteEditable: data.isQuoteEditable,
                                 cartItem: cartItem,
-                                attributes: data.attributes[cartItem.sku] | default([])
+                                attributes: data.attributes[cartItem.sku] | default([]),
                             }
                         } only %}
                     {% endblock %}
@@ -114,12 +114,12 @@
                             {% widget 'DiscountVoucherFormWidget' only %}
                                 {% block body %}
                                     {{ parent() }}
-                                    <hr />
+                                    <hr>
                                 {% endblock %}
                             {% elsewidget 'DiscountVoucherFormWidgetPlugin' only %} {# @deprecated Use DiscountVoucherFormWidget instead. #}
                                 {% block body %}
                                     {{ parent() }}
-                                    <hr />
+                                    <hr>
                                 {% endblock %}
                             {% endwidget %}
                         {% endif %}
@@ -128,7 +128,7 @@
                             {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] only %}
                             {% elsewidget 'CartToShoppingListWidgetPlugin' args [data.cart.idQuote] only %} {# @deprecated Use CreateShoppingListFromCartWidget instead. #}
                             {% endwidget %}
-                            <hr />
+                            <hr>
                         {% endif %}
 
                         {% if data.isQuoteEditable and data.cart.idQuote is not empty %}

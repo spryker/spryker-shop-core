@@ -3,7 +3,7 @@
 {% define data = {
     cart: _widget.cart,
     isQuoteOwner: _widget.isQuoteOwner,
-    shareOptionGroups: _widget.shareOptionGroups
+    shareOptionGroups: _widget.shareOptionGroups,
 } %}
 
 {% block body %}
@@ -16,11 +16,11 @@
                 class: 'spacing-bottom',
                 data: {
                     group: 'cart-share',
-                    label: shareOptionGroupLabel | trans
+                    label: shareOptionGroupLabel | trans,
                 },
                 attributes: {
                     idQuote: data.cart.idQuote,
-                    shareOptionGroup: shareOptionGroup
+                    shareOptionGroup: shareOptionGroup,
                 }
             } only %}
 

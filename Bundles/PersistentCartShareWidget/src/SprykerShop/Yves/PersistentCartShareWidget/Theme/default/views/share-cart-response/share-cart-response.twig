@@ -2,7 +2,7 @@
 
 {% define data = {
     cartShareLinks: _view.cartShareLinks,
-    cartShareLinkLabels: _view.cartShareLinkLabels
+    cartShareLinkLabels: _view.cartShareLinkLabels,
 } %}
 
 {% block body %}
@@ -13,7 +13,7 @@
                 data: {
                     shareOption: shareOption,
                     cartShareLink: cartShareLink,
-                    cartShareLinkLabel: data.cartShareLinkLabels[shareOption]
+                    cartShareLinkLabel: data.cartShareLinkLabels[shareOption],
                 }
             } only %}
         {% endfor %}

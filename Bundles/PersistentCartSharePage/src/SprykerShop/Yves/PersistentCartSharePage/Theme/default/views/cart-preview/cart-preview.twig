@@ -5,7 +5,7 @@
     cartItems: _view.cartItems,
     request: app.request,
     isQuoteEditable: false,
-    isQuoteValid: false
+    isQuoteValid: false,
 } %}
 
 {% block header %}
@@ -14,10 +14,10 @@
             <div class="container">
                 <div class="{{ config.name }}__row grid grid--middle">
                     {% include molecule('logo') with {
-                        class: 'col col--sm-8 col--lg-4'
+                        class: 'col col--sm-8 col--lg-4',
                     } only %}
                     {% embed organism('navigation-top') with {
-                        class: 'col col--sm-4 col--lg-8 text-right'
+                        class: 'col col--sm-4 col--lg-8 text-right',
                     } only %}
                         {% block body %}
                             {% if is_granted('ROLE_USER') %}
@@ -59,7 +59,7 @@
             cart: data.cart,
             isQuoteEditable: data.isQuoteEditable,
             cartItem: cartItem,
-            attributes: data.attributes[cartItem.sku] | default([])
+            attributes: data.attributes[cartItem.sku] | default([]),
         }
     } only %}
         {% block cartItemNote %}
@@ -103,7 +103,7 @@
                         voucherDiscounts: data.cart.voucherDiscounts,
                         ruleDiscounts: data.cart.cartRuleDiscounts,
                         discountTotal: data.cart.totals.discounttotal,
-                        isQuoteEditable: data.isQuoteEditable
+                        isQuoteEditable: data.isQuoteEditable,
                     }
                 } only %}
             {% endblock %}
@@ -123,10 +123,10 @@
                     url: product.url,
                     imageUrl: (product.images|length ? product.images.0.externalUrlSmall : ''),
                     price: product.prices.DEFAULT,
-                    originalPrice: (product.prices.ORIGINAL is defined ? product.prices.ORIGINAL : null)
+                    originalPrice: (product.prices.ORIGINAL is defined ? product.prices.ORIGINAL : null),
                 },
                 embed: {
-                    sku: product.sku
+                    sku: product.sku,
                 }
             } only %}
                 {% block cardClass %}box box--stretch{% endblock %}
