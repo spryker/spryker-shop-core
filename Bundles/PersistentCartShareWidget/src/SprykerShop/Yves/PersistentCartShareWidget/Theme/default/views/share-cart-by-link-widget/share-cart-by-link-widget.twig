@@ -12,7 +12,7 @@
 
         {% for shareOptionGroup, shareOptionGroupLabel in data.shareOptionGroups %}
 
-            {% include molecule('url-generator-mask' , 'PersistentCartShareWidget') with {
+            {% include molecule('url-mask-generator' , 'PersistentCartShareWidget') with {
                 class: 'spacing-bottom',
                 data: {
                     group: 'cart-share',

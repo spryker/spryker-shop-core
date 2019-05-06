@@ -1,14 +1,12 @@
 import Component from 'ShopUi/models/component';
 
 const EVENT_COPY = 'copyToClipboard';
-const HIDE_CLASS_NAME = 'is-hidden';
-type Target = HTMLInputElement | HTMLTextAreaElement;
 
 /**
  * @event copyToClipboard An event emitted when the component performs a copy.
  */
 export default class ClipboardCopy extends Component {
-    protected target: Target;
+    protected target: HTMLInputElement | HTMLTextAreaElement;
     protected trigger: HTMLButtonElement;
     protected successCopyMessage: HTMLElement;
     protected errorCopyMessage: HTMLElement;
@@ -21,7 +19,7 @@ export default class ClipboardCopy extends Component {
 
     protected readyCallback(): void {
         this.trigger = <HTMLButtonElement>document.querySelector(`${this.triggerSelector}`);
-        this.target = <Target>document.querySelector(`${this.targetSelector}`);
+        this.target = <HTMLInputElement | HTMLTextAreaElement>document.querySelector(`${this.targetSelector}`);
         this.successCopyMessage = <HTMLElement>this.querySelector(`.${this.jsName}__success-message`);
         this.errorCopyMessage = <HTMLElement>this.querySelector(`.${this.jsName}__error-message`);
         this.mapEvents();
@@ -32,13 +30,13 @@ export default class ClipboardCopy extends Component {
     }
 
     protected onClick(event: Event): void {
-        this.copy();
+        this.copyToClipboard();
     }
 
     /**
      * Performs the copy to the clipboard and tells the component to show the message.
      */
-    copy(): void {
+    copyToClipboard(): void {
         if(!this.isCopyCommandSupported) {
             setTimeout(() => this.showMessage(this.errorCopyMessage, this.defaultDuration));
 
@@ -57,7 +55,7 @@ export default class ClipboardCopy extends Component {
      * @param duration A number value which defines the period of time for which the message is shown.
      */
     showMessage(message: HTMLElement, duration: number): void {
-        message.classList.remove(HIDE_CLASS_NAME);
+        message.classList.remove(this.hideClassName);
         this.durationTimeoutId = setTimeout(() => this.hideMessage(message), duration);
     }
 
@@ -67,7 +65,7 @@ export default class ClipboardCopy extends Component {
      */
     hideMessage(message: HTMLElement): void {
         clearTimeout(this.durationTimeoutId);
-        message.classList.add(HIDE_CLASS_NAME);
+        message.classList.add(this.hideClassName);
     }
 
     /**
@@ -89,5 +87,12 @@ export default class ClipboardCopy extends Component {
      */
     get isCopyCommandSupported(): boolean {
         return document.queryCommandSupported('copy');
+    }
+
+    /**
+     * Gets a css class name for toggling an element.
+     */
+    get hideClassName(): string {
+        return this.getAttribute('class-to-toggle');
     }
 }

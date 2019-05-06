@@ -14,19 +14,20 @@
     <div class="form__fields grid grid--bottom">
         <div class="form__field col col--sm-12">
             <label class="label" for="{{ data.shareOption }}">{{ data.cartShareLinkLabel | trans }}</label>
-            <input id="{{ data.shareOption }}" class="{{ config.jsName }}-target-{{ data.shareOption }} input input--expand" type="url" value="{{ data.cartShareLink }}">
+            <input id="{{ data.shareOption }}" class="{{ config.jsName }}__target-{{ data.shareOption }} input input--expand" type="url" value="{{ data.cartShareLink }}">
         </div>
     </div>
     <div class="form__actions">
-        <button type="button" class="{{ config.jsName }}-trigger-{{ data.shareOption }} form__action button">
+        <button type="button" class="{{ config.jsName }}__trigger-{{ data.shareOption }} form__action button">
             {{ 'persistent_cart_share.copy' | trans }}
         </button>
     </div>
     {% include molecule('clipboard-copy') with {
         class: 'col col--sm-12',
         attributes: {
-            'trigger-selector': '.' ~ config.jsName ~ '-trigger-' ~ data.shareOption,
-            'target-selector': '.' ~ config.jsName ~ '-target-' ~ data.shareOption,
+            'trigger-selector': '.' ~ config.jsName ~ '__trigger-' ~ data.shareOption,
+            'target-selector': '.' ~ config.jsName ~ '__target-' ~ data.shareOption,
+            'class-to-toggle': 'is-hidden',
         }
     } only %}
 {% endblock %}

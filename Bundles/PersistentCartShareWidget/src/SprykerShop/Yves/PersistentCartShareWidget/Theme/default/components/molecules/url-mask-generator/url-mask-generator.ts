@@ -2,7 +2,7 @@ import { mount } from 'ShopUi/app';
 import Component from 'ShopUi/models/component';
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
 
-export default class UrlGeneratorMask extends Component {
+export default class UrlMaskGenerator extends Component {
     protected provider: AjaxProvider;
     protected trigger: HTMLInputElement;
     protected isActionsRendered: boolean = false;
