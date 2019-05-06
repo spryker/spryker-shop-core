@@ -11,7 +11,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\QuickOrderPage\ColumnProvider\QuickOrderFormAdditionalColumnProvider;
 use SprykerShop\Yves\QuickOrderPage\ColumnProvider\QuickOrderFormAdditionalColumnProviderInterface;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToAvailabilityClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToPriceProductStorageClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientInterface;
@@ -413,13 +412,5 @@ class QuickOrderPageFactory extends AbstractFactory
     public function getModuleConfig(): QuickOrderPageConfig
     {
         return $this->getConfig();
-    }
-
-    /**
-     * @return \SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToAvailabilityClientInterface
-     */
-    public function getAvailabilityClient(): QuickOrderPageToAvailabilityClientInterface
-    {
-        return $this->getProvidedDependency(QuickOrderPageDependencyProvider::CLIENT_AVAILABILITY);
     }
 }
