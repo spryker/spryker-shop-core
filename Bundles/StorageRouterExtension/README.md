@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/storage-router-extension.svg)](https://travis-ci.org/spryker-shop/storage-router-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/storage-router-extension/badge.svg)](https://coveralls.io/github/spryker-shop/storage-router-extension)
 
-{{ADD DESCRIPTION HERE}}
+Extension module for the StorageRouter module.
 
 ## Installation
 

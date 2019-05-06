@@ -1,13 +1,13 @@
 # WebProfilerWidgetExtension Module
-[![Build Status](https://travis-ci.org/spryker-shop/web-profiler-extension.svg)](https://travis-ci.org/spryker-shop/web-profiler-extension)
-[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/web-profiler-extension/badge.svg)](https://coveralls.io/github/spryker-shop/web-profiler-extension)
+[![Build Status](https://travis-ci.org/spryker-shop/web-profiler-widget-extension.svg)](https://travis-ci.org/spryker-shop/web-profiler-widget-extension)
+[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/web-profiler-widget-extension/badge.svg)](https://coveralls.io/github/spryker-shop/web-profiler-widget-extension)
 
-{{ADD DESCRIPTION HERE}}
+Extension module for the WebProfilerWidget module.
 
 ## Installation
 
 ```
-composer require spryker-shop/web-profiler-extension
+composer require spryker-shop/web-profiler-widget-extension
 ```
 
 ## Documentation
