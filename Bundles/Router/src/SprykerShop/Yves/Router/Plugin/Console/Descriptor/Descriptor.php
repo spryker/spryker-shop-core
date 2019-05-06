@@ -9,9 +9,10 @@ namespace SprykerShop\Yves\Router\Plugin\Console\Descriptor;
 
 use InvalidArgumentException;
 use SprykerShop\Yves\Router\Route\Route;
-use SprykerShop\Yves\Router\Route\RouteCollection;
+use Symfony\Cmf\Component\Routing\ChainRouteCollection;
 use Symfony\Component\Console\Descriptor\DescriptorInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Routing\RouteCollection;
 
 abstract class Descriptor implements DescriptorInterface
 {
@@ -30,6 +31,7 @@ abstract class Descriptor implements DescriptorInterface
 
         switch (true) {
             case $object instanceof RouteCollection:
+            case $object instanceof ChainRouteCollection:
                 $this->describeRouteCollection($object, $options);
                 break;
             case $object instanceof Route:
@@ -62,7 +64,7 @@ abstract class Descriptor implements DescriptorInterface
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routes
+     * @param \Symfony\Component\Routing\RouteCollection $routes
      * @param array $options
      *
      * @return mixed

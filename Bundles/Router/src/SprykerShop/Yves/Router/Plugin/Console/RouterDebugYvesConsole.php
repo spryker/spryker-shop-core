@@ -7,9 +7,7 @@
 
 namespace SprykerShop\Yves\Router\Plugin\Console;
 
-use Spryker\Yves\Kernel\Locator;
 use SprykerShop\Yves\Router\Plugin\Console\Helper\DescriptorHelper;
-use SprykerShop\Yves\Router\Route\RouteCollection;
 use SprykerShop\Yves\Router\RouterFactory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
@@ -18,6 +16,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Routing\RouteCollection;
 
 class RouterDebugYvesConsole extends Command
 {
@@ -51,7 +50,7 @@ EOF
      */
     protected function getFactory(): RouterFactory
     {
-        return Locator::getInstance()->router()->factory();
+        return new RouterFactory();
     }
 
     /**
@@ -93,7 +92,7 @@ EOF
 
     /**
      * @param string $name
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection|\Symfony\Component\Routing\RouteCollection $routes
+     * @param \Symfony\Component\Routing\RouteCollection $routes
      *
      * @return array
      */

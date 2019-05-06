@@ -11,8 +11,8 @@ use Closure;
 use InvalidArgumentException;
 use ReflectionFunction;
 use SprykerShop\Yves\Router\Route\Route;
-use SprykerShop\Yves\Router\Route\RouteCollection;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Routing\RouteCollection;
 
 class TextDescriptor extends Descriptor
 {
@@ -127,7 +127,8 @@ class TextDescriptor extends Descriptor
             if (strpos($r->name, '{closure}') !== false) {
                 return 'Closure()';
             }
-            if ($class = $r->getClosureScopeClass()) {
+            $class = $r->getClosureScopeClass();
+            if ($class !== null) {
                 return sprintf('%s::%s()', $class->name, $r->name);
             }
 
