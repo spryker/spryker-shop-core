@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\ResourceSharePage\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 class ResourceSharePageToCustomerClientBridge implements ResourceSharePageToCustomerClientInterface
 {
     /**
@@ -25,7 +27,7 @@ class ResourceSharePageToCustomerClientBridge implements ResourceSharePageToCust
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer()
+    public function getCustomer(): ?CustomerTransfer
     {
         return $this->customerClient->getCustomer();
     }
