@@ -278,6 +278,7 @@ class Creator extends ShipmentHandler
 
     /**
      * @todo Check usages.
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]

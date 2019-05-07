@@ -9,13 +9,13 @@ namespace SprykerShop\Yves\CheckoutPage\Form\Steps;
 
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use SprykerShop\Yves\CheckoutPage\Form\Validator\Constraints\GreaterThanOrEqualDate;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\DateTime as ConstraintDateTime;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\DateTime;
-use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
@@ -27,7 +27,10 @@ class MultiShipmentForm extends AbstractType
 
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
     protected const VALIDATION_INVALID_DATE_TIME_MESSAGE = 'validation.invalid_date';
-    protected const VALIDATION_VALID_DATE_TIME_FORMAT = 'mm/dd/yyyy';
+    protected const VALIDATION_VALID_DATE_TIME_FORMAT = 'Y-m-d'; // Format accepted by date().
+    protected const VALIDATION_DATE_TODAY = 'today';
+
+    protected const FIELD_REQUESTED_DELIVERY_DATE_FORMAT = 'yyyy-MM-dd'; // Format accepted by IntlDateFormatter.
 
     /**
      * @return string
@@ -47,7 +50,7 @@ class MultiShipmentForm extends AbstractType
     {
         $this
             ->addShipmentMethods($builder, $options)
-            ->addRequestedDeliveryDate($builder, $options);
+            ->addRequestedDeliveryDate($builder);
     }
 
     /**
@@ -75,11 +78,10 @@ class MultiShipmentForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
      *
      * @return $this
      */
-    protected function addRequestedDeliveryDate(FormBuilderInterface $builder, array $options)
+    protected function addRequestedDeliveryDate(FormBuilderInterface $builder)
     {
         $builder->add(ShipmentTransfer::REQUESTED_DELIVERY_DATE, DateType::class, [
             'label' => 'page.checkout.shipment.requested_delivery_date.label',
@@ -87,6 +89,11 @@ class MultiShipmentForm extends AbstractType
             'placeholder' => 'checkout.shipment.requested_delivery_date.placeholder',
             'required' => false,
             'input' => 'string',
+            'format' => static::FIELD_REQUESTED_DELIVERY_DATE_FORMAT,
+            'constraints' => [
+                $this->createDateTimeConstraint(),
+                $this->createDateTimeGreaterThanOrEqualConstraint(static::VALIDATION_DATE_TODAY),
+            ],
         ]);
 
         return $this;
@@ -103,9 +110,9 @@ class MultiShipmentForm extends AbstractType
     /**
      * @return \Symfony\Component\Validator\Constraints\DateTime
      */
-    protected function createDateTimeConstraint(): DateTime
+    protected function createDateTimeConstraint(): ConstraintDateTime
     {
-        return new DateTime([
+        return new ConstraintDateTime([
             'format' => static::VALIDATION_VALID_DATE_TIME_FORMAT,
             'message' => sprintf(static::VALIDATION_INVALID_DATE_TIME_MESSAGE, static::VALIDATION_VALID_DATE_TIME_FORMAT),
         ]);
@@ -114,11 +121,11 @@ class MultiShipmentForm extends AbstractType
     /**
      * @param string $minDate
      *
-     * @return \Symfony\Component\Validator\Constraints\GreaterThanOrEqual
+     * @return \SprykerShop\Yves\CheckoutPage\Form\Validator\Constraints\GreaterThanOrEqualDate
      */
-    protected function createDateTimeGreaterThanOrEqualConstraint(string $minDate): GreaterThanOrEqual
+    protected function createDateTimeGreaterThanOrEqualConstraint(string $minDate): GreaterThanOrEqualDate
     {
-        return new GreaterThanOrEqual($minDate);
+        return new GreaterThanOrEqualDate($minDate);
     }
 
     /**
