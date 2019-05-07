@@ -1,4 +1,4 @@
-@mixin product-search-widget-product-quick-add-fields($name: '.product-quick-add-fields') {
+@mixin product-search-widget-product-quick-add-fields-partial($name: '.product-quick-add-fields-partial') {
     #{$name} {
         &__message {
             padding: 0.5rem;
@@ -19,3 +19,5 @@
         @content;
     }
 }
+
+@include product-search-widget-product-quick-add-fields-partial();
