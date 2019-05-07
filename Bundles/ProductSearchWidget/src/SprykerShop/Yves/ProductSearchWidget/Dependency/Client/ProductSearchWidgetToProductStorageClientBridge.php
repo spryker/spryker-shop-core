@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\ProductSearchWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+
 class ProductSearchWidgetToProductStorageClientBridge implements ProductSearchWidgetToProductStorageClientInterface
 {
     /**
@@ -31,5 +33,27 @@ class ProductSearchWidgetToProductStorageClientBridge implements ProductSearchWi
     public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array
     {
         return $this->productStorageClient->findProductConcreteStorageDataByMappingForCurrentLocale($mappingType, $identifier);
+    }
+
+    /**
+     * @param array $data
+     * @param $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = [])
+    {
+        return $this->productStorageClient->mapProductStorageData($data, $localeName, $selectedAttributes);
+    }
+
+    /**
+     * @param array $productStorageData
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function mapProductStorageDataToProductConcreteTransfer(array $productStorageData): ProductConcreteTransfer
+    {
+        return $this->productStorageClient->mapProductStorageDataToProductConcreteTransfer($productStorageData);
     }
 }

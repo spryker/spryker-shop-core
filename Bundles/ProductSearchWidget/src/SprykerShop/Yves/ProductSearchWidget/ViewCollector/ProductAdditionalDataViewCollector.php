@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ProductSearchWidget\ViewCollector;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductQuantityStorageClientInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -36,33 +35,12 @@ class ProductAdditionalDataViewCollector implements ProductAdditionalDataViewCol
      */
     public function collectViewProductAdditionalData(ProductConcreteTransfer $productConcreteTransfer, FormInterface $form): array
     {
-        $productQuantityStorageTransfer = $this->getProductQuantityStorageTransfer($productConcreteTransfer);
-
         return [
-            'minQuantity' => $productQuantityStorageTransfer->getQuantityMin(),
-            'maxQuantity' => $productQuantityStorageTransfer->getQuantityMax(),
-            'quantityInterval' => $productQuantityStorageTransfer->getQuantityInterval(),
+            'minQuantity' => $productConcreteTransfer->getMinQuantity() ?? 1,
+            'maxQuantity' => $productConcreteTransfer->getMaxQuantity(),
+            'quantityInterval' => $productConcreteTransfer->getQuantityInterval(),
             'form' => $form->createView(),
             'isDisabled' => false,
         ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
-     */
-    protected function getProductQuantityStorageTransfer(ProductConcreteTransfer $productConcreteTransfer): ProductQuantityStorageTransfer
-    {
-        $productQuantityStorageTransfer = $this->productQuantityStorageClient
-            ->findProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
-
-        if ($productQuantityStorageTransfer === null) {
-            $productQuantityStorageTransfer = (new ProductQuantityStorageTransfer())
-                ->setQuantityMin(1)
-                ->setQuantityInterval(1);
-        }
-
-        return $productQuantityStorageTransfer;
     }
 }

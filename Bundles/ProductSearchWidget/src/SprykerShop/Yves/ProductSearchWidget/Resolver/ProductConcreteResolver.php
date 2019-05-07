@@ -44,11 +44,7 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
             return null;
         }
 
-        $productConcreteTransfer = (new ProductConcreteTransfer())->fromArray($productConcreteStorageData, true);
-        $localizedAttributesTransfer = (new LocalizedAttributesTransfer())->setName($productConcreteStorageData[static::NAME]);
-
-        return $productConcreteTransfer
-            ->setFkProductAbstract($productConcreteStorageData[static::ID_PRODUCT_ABSTRACT])
-            ->addLocalizedAttributes($localizedAttributesTransfer);
+        return $this->productStorageClient
+            ->mapProductStorageDataToProductConcreteTransfer($productConcreteStorageData);
     }
 }
