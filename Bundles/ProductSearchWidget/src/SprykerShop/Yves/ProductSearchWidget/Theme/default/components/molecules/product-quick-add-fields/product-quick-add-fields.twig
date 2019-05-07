@@ -5,6 +5,10 @@
     tag: 'product-quick-add-fields',
 } %}
 
+{% define attributes = {
+    'partial-quantity-selector': '.js-' ~ config.name ~ '-partial__quantity',
+} %}
+
 {% block body %}
     {% include molecule('ajax-provider') with {
         class: config.jsName ~ '__provider ',

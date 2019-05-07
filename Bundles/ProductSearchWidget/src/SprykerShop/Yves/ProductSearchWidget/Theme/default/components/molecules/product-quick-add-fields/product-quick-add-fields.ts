@@ -17,7 +17,7 @@ export default class ProductQuickAddFields extends Component {
 
     protected registerQuantityInput(): void {
         this.quantityInput = <HTMLInputElement>this.querySelector(
-            `.${this.jsName}__quantity, .${this.jsName}-partial__quantity`
+            `.${this.jsName}__quantity, ${this.partialQuantitySelector}`
         );
     }
 
@@ -47,5 +47,12 @@ export default class ProductQuickAddFields extends Component {
         if (!!sku) {
             this.quantityInput.focus();
         }
+    }
+
+    /**
+     * Gets a querySelector name of the partial quantity field element.
+     */
+    get partialQuantitySelector(): string {
+        return this.getAttribute('partial-quantity-selector');
     }
 }
