@@ -18,8 +18,8 @@ export default class ClipboardCopy extends Component {
     readonly defaultDuration: number = 5000;
 
     protected readyCallback(): void {
-        this.trigger = <HTMLButtonElement>document.querySelector(`${this.triggerSelector}`);
-        this.target = <HTMLInputElement | HTMLTextAreaElement>document.querySelector(`${this.targetSelector}`);
+        this.trigger = <HTMLButtonElement>document.querySelector(this.triggerSelector);
+        this.target = <HTMLInputElement | HTMLTextAreaElement>document.querySelector(this.targetSelector);
         this.successCopyMessage = <HTMLElement>this.querySelector(`.${this.jsName}__success-message`);
         this.errorCopyMessage = <HTMLElement>this.querySelector(`.${this.jsName}__error-message`);
         this.mapEvents();

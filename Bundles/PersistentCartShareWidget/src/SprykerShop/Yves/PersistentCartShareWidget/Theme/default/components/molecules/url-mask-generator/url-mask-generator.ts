@@ -9,7 +9,7 @@ export default class UrlMaskGenerator extends Component {
 
     protected readyCallback(): void {
         this.provider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider-${this.shareOptionGroup}`);
-        this.trigger = <HTMLInputElement>this.querySelector(`${this.triggerSelector}`);
+        this.trigger = <HTMLInputElement>this.querySelector(this.triggerSelector);
         this.mapEvents();
     }
 
