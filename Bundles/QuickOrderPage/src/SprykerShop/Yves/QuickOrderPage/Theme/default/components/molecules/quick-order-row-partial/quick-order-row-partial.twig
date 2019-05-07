@@ -55,9 +55,9 @@
 
         <div class="col col--sm-4 spacing spacing--inner">
             {% block price %}
-                {% include molecule('price') with {
+                {% include molecule('money-price') with {
                     data: {
-                        amount: data.price is empty ? null : data.price | money
+                        amount: data.price is empty ? null : data.price
                     }
                 } only %}
             {% endblock %}
