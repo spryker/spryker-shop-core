@@ -9,7 +9,7 @@
     form: required,
     options: required,
     submitButtonTitle: '',
-    verticalLayout: false
+    verticalLayout: false,
 } %}
 
 {% block body %}
@@ -23,14 +23,14 @@
         {{ form_start(data.form, data.options) }}
             <div class="grid">
                 {% block fields %}
-                    {% set fieldsAlignment = data.verticalLayout ? '' : "col--md-10" %}
+                    {% set fieldsAlignment = data.verticalLayout ? '' : 'col--md-10' %}
 
                     {% include molecule('product-quick-add-fields', 'ProductSearchWidget') with {
-                        class: "grid col col--sm-12 " ~ fieldsAlignment,
+                        class: 'grid col col--sm-12 ' ~ fieldsAlignment,
                         data: {
                             form: data.form,
-                            verticalLayout: data.verticalLayout
-                        }
+                            verticalLayout: data.verticalLayout,
+                        },
                     } only %}
                 {% endblock %}
 

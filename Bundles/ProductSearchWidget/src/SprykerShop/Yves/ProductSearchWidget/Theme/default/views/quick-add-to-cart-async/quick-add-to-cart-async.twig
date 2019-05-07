@@ -7,10 +7,11 @@
     maxQuantity: _view.maxQuantity | default(null),
     quantityInterval: _view.quantityInterval | default(1),
     isDisabled: _view.isDisabled,
+    verticalLayout: _view.verticalLayout | default(true),
 } %}
 
 {% block template %}
-    {% include molecule('product-quick-add-fields', 'ProductSearchWidget') with {
+    {% include molecule('product-quick-add-fields-partial', 'ProductSearchWidget') with {
         data: {
             messages: data.messages,
             minQuantity: data.minQuantity,
@@ -18,6 +19,7 @@
             quantityInterval: data.quantityInterval,
             form: data.form,
             isDisabled: data.isDisabled,
+            verticalLayout: data.verticalLayout,
         }
     } only %}
 {% endblock %}

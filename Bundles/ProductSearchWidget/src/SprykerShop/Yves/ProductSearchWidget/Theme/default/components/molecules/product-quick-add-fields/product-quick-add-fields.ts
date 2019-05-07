@@ -16,7 +16,9 @@ export default class ProductQuickAddFields extends Component {
     }
 
     protected registerQuantityInput(): void {
-        this.quantityInput = <HTMLInputElement>this.querySelector(`.${this.jsName}__quantity`);
+        this.quantityInput = <HTMLInputElement>this.querySelector(
+            `.${this.jsName}__quantity, .${this.jsName}-partial__quantity`
+        );
     }
 
     protected mapEvents(): void {
