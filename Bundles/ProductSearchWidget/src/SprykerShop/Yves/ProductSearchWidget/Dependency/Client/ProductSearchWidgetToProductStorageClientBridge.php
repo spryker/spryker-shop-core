@@ -36,18 +36,6 @@ class ProductSearchWidgetToProductStorageClientBridge implements ProductSearchWi
     }
 
     /**
-     * @param array $data
-     * @param $localeName
-     * @param array $selectedAttributes
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = [])
-    {
-        return $this->productStorageClient->mapProductStorageData($data, $localeName, $selectedAttributes);
-    }
-
-    /**
      * @param array $productStorageData
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
