@@ -12,6 +12,7 @@
 
 {% block template %}
     {% include molecule('product-quick-add-fields-partial', 'ProductSearchWidget') with {
+        class: 'grid col col--sm-12',
         data: {
             messages: data.messages,
             minQuantity: data.minQuantity,
