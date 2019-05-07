@@ -1,3 +1,4 @@
+/* tslint:disable */
 import Component from 'ShopUi/models/component';
 
 export default class AddressFormToggler extends Component {
