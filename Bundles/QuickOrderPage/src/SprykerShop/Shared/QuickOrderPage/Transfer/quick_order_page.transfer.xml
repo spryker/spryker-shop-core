@@ -29,4 +29,10 @@
         <property name="parameters" type="array"/>
     </transfer>
 
+    <transfer name="ProductQuantityStorage">
+        <property name="quantityMin" type="float"/>
+        <property name="quantityMax" type="float"/>
+        <property name="quantityInterval" type="float"/>
+    </transfer>
+
 </transfers>

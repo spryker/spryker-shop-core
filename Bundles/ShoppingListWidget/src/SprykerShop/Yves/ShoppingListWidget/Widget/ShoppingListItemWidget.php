@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ShoppingListWidget\Widget;
 
-use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
@@ -22,9 +21,28 @@ class ShoppingListItemWidget extends AbstractWidget
      */
     public function __construct(ProductViewTransfer $productViewTransfer, bool $isItemAvailable)
     {
+        $productViewTransfer = $this->expandProductViewTransfer($productViewTransfer);
+
         $this->addParameter('item', $productViewTransfer)
             ->addParameter('readOnly', !$isItemAvailable);
         $this->setQuantityRestrictions($productViewTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function expandProductViewTransfer(ProductViewTransfer $productViewTransfer): ProductViewTransfer
+    {
+        $productConcreteExpanderPlugins = $this->getFactory()
+            ->getProductConcreteExpanderPlugins();
+
+        foreach ($productConcreteExpanderPlugins as $productConcreteExpanderPlugin) {
+            $productViewTransfer = $productConcreteExpanderPlugin->expand($productViewTransfer);
+        }
+
+        return $productViewTransfer;
     }
 
     /**
@@ -34,35 +52,13 @@ class ShoppingListItemWidget extends AbstractWidget
      */
     protected function setQuantityRestrictions(ProductViewTransfer $productViewTransfer): void
     {
-        $productQuantityStorageTransfer = $this->getProductQuantityStorageTransfer($productViewTransfer);
-
-        $minQuantity = $productQuantityStorageTransfer->getQuantityMin() ?? 1;
-        $maxQuantity = $productQuantityStorageTransfer->getQuantityMax();
-        $quantityInterval = $productQuantityStorageTransfer->getQuantityInterval() ?? 1;
+        $minQuantity = $productViewTransfer->getQuantityMin() ?? 1;
+        $maxQuantity = $productViewTransfer->getQuantityMax();
+        $quantityInterval = $productViewTransfer->getQuantityInterval() ?? 1;
 
         $this->addParameter('minQuantity', $minQuantity)
             ->addParameter('maxQuantity', $maxQuantity)
             ->addParameter('quantityInterval', $quantityInterval);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
-     */
-    protected function getProductQuantityStorageTransfer(ProductViewTransfer $productViewTransfer): ProductQuantityStorageTransfer
-    {
-        $productQuantityStorageTransfer = $this->getFactory()
-            ->getProductQuantityStorageClient()
-            ->findProductQuantityStorage($productViewTransfer->getIdProductConcrete());
-
-        if ($productQuantityStorageTransfer === null) {
-            $productQuantityStorageTransfer = (new ProductQuantityStorageTransfer())
-                ->setQuantityMin(1)
-                ->setQuantityInterval(1);
-        }
-
-        return $productQuantityStorageTransfer;
     }
 
     /**

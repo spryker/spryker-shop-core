@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\SharedCartPage\Controller;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\SharedCartPage\SharedCartPageFactory getFactory()
@@ -22,6 +23,24 @@ class ShareController extends AbstractController
      * @see \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_OWNER_ACCESS
      */
     protected const PERMISSION_GROUP_OWNER_ACCESS = 'OWNER_ACCESS';
+
+    /**
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        if ($customerTransfer === null || !$customerTransfer->getCompanyUserTransfer()) {
+            throw new NotFoundHttpException('Only company users are allowed to access this page');
+        }
+    }
 
     /**
      * @param int $idQuote

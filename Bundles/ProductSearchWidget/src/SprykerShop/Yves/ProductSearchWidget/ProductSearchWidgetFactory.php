@@ -60,7 +60,7 @@ class ProductSearchWidgetFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\ProductSearchWidget\ViewCollector\ProductAdditionalDataViewCollectorInterface
      */
-    public function createProductAdditionalDataVIewCollector(): ProductAdditionalDataViewCollectorInterface
+    public function createProductAdditionalDataViewCollector(): ProductAdditionalDataViewCollectorInterface
     {
         return new ProductAdditionalDataViewCollector(
             $this->getProductQuantityStorageClient()

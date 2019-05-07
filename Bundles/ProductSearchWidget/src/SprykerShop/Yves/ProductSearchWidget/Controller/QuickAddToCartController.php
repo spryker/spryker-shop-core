@@ -68,7 +68,7 @@ class QuickAddToCartController extends AbstractController
         }
 
         return $this->getFactory()
-            ->createProductAdditionalDataVIewCollector()
+            ->createProductAdditionalDataViewCollector()
             ->collectViewProductAdditionalData($productConcreteTransfer, $form);
     }
 }
