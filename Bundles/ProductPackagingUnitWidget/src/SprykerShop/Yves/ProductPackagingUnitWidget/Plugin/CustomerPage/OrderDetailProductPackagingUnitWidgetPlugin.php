@@ -29,6 +29,17 @@ class OrderDetailProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin i
         $this
             ->addParameter('item', $itemTransfer)
             ->addParameter('currencyIsoCode', $currencyIsoCode);
+        if ($itemTransfer->getQuantitySalesUnit()) {
+            $this->setSalesUnitQuantity($itemTransfer);
+        }
+    }
+
+    protected function setSalesUnitQuantity(ItemTransfer $itemTransfer): void
+    {
+        $salesUnitQuantity = $itemTransfer->getQuantity() / $itemTransfer->getQuantitySalesUnit()->getPrecision();
+        $salesUnitQuantity = round($salesUnitQuantity, $itemTransfer->getQuantitySalesUnit()->getPrecision());
+
+        $this->addParameter('salesUnitQuantity', $salesUnitQuantity);
     }
 
     /**
