@@ -102,9 +102,9 @@
                                 <strong>{{ 'cart_page.quote.label.locked_cart' | trans }}</strong>
                             </p>
 
-                            {% if data.cart.quoteApprovals is defined and data.cart.quoteApprovals is not empty %}
+                            {% if data.cart.quoteApprovals is not empty %}
                                 {{ 'persistent_cart.quote.label.locked_cart.by_quote_approval' | trans }}
-                            {% elseif data.cart.quoteRequestVersionReference is defined and data.cart.quoteRequestVersionReference %}
+                            {% elseif data.cart.quoteRequestVersionReference %}
                                 {{ 'persistent_cart.quote.label.locked_cart.by_quote_request' | trans }}
                             {% else %}
                                 {{ 'persistent_cart.quote.label.locked_cart' | trans }}
