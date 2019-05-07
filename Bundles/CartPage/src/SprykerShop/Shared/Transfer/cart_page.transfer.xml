@@ -10,6 +10,7 @@
     </transfer>
 
     <transfer name="QuoteApproval">
+        <property name="idQuoteApproval" type="int"/>
     </transfer>
 
     <transfer name="Item">
