@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ProductSearchWidget\ViewCollector;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductQuantityStorageClientInterface;
 use Symfony\Component\Form\FormInterface;
 
 class ProductAdditionalDataViewCollector implements ProductAdditionalDataViewCollectorInterface

@@ -51,6 +51,8 @@ class QuickAddToCartController extends AbstractController
             ];
         }
 
+        $form->setData(['sku' => $sku]);
+
         $productConcreteTransfer = $this->getFactory()
             ->createProductConcreteResolver()
             ->findProductConcreteBySku($sku);
