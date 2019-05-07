@@ -16,7 +16,7 @@
     minQuantityInSalesUnits: _widget.minQuantityInSalesUnits,
     minQuantity: _widget.minQuantity,
     maxQuantity: _widget.maxQuantity,
-    quantityInterval: _widget.quantityInterval
+    quantityInterval: _widget.quantityInterval,
 } %}
 
 {% block body %}
@@ -50,8 +50,8 @@
                     hasUpdateButton: false,
                     minQuantity: data.minQuantity,
                     maxQuantity: data.maxQuantity,
-                    step: data.quantityInterval
-                }
+                    step: data.quantityInterval,
+                },
             } only %}
 
             {% if data.salesUnitCount %}
@@ -66,11 +66,11 @@
                     {% embed atom('select') with {
                         modifiers: ['expand'],
                         attributes: {
-                            name: 'id-product-measurement-sales-unit'
+                            name: 'id-product-measurement-sales-unit',
                         },
                         embed: {
-                            salesUnits: data.salesUnits
-                        }
+                            salesUnits: data.salesUnits,
+                        },
                     } only %}
                         {% block selectClass %}select-measurement-unit{% endblock %}
 
@@ -85,8 +85,8 @@
                 <button type="submit" id="add-to-cart-button" class="button button--success button--expand" data-init-single-click {{ data.isAddToCartDisabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
                     {% include atom('icon') with {
                         data: {
-                            name: 'cart-plus'
-                        }
+                            name: 'cart-plus',
+                        },
                     } only %}
                     {{ 'page.detail.add-to-cart' | trans }}
                 </button>
@@ -146,11 +146,11 @@
                     {% embed atom('select') with {
                         modifiers: ['expand'],
                         attributes: {
-                            name: "amount-id-product-measurement-sales-unit[" ~ data.product.sku ~ "]"
+                            name: "amount-id-product-measurement-sales-unit[" ~ data.product.sku ~ "]",
                         },
                         embed: {
-                            salesUnits: data.leadProductSalesUnits
-                        }
+                            salesUnits: data.leadProductSalesUnits,
+                        },
                     } only %}
                         {% block selectClass %}select-lead-measurement-unit{% endblock %}
                         {% block options %}
@@ -169,8 +169,8 @@
 
             {% include molecule('packaging-unit-quantity-selector', 'ProductPackagingUnitWidget') with {
                 data: {
-                    json: data.jsonScheme
-                }
+                    json: data.jsonScheme,
+                },
             } only %}
 
             <div class="text-small is-hidden packaging-unit-choice">
@@ -205,8 +205,8 @@
             <button type="submit" id="add-to-cart-button" class="button button--success button--expand" data-init-single-click {{ data.isAddToCartDisabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
                 {% include atom('icon') with {
                     data: {
-                        name: 'cart-plus'
-                    }
+                        name: 'cart-plus',
+                    },
                 } only %}
                 {{ 'page.detail.add-to-cart' | trans }}
             </button>

@@ -7,7 +7,7 @@
 
 {% define data = {
     product: required,
-    maxQuantity: null
+    maxQuantity: null,
 } %}
 
 {% set brand = data.product.attributes.brand | default %}
@@ -49,8 +49,8 @@
                 {% include molecule('price') with {
                     data: {
                         amount: data.product.price | money,
-                        originalAmount: data.product.prices.ORIGINAL | default
-                    }
+                        originalAmount: data.product.prices.ORIGINAL | default,
+                    },
                 } only %}
             </p>
         {% endif %}
@@ -71,8 +71,8 @@
         data: {
             superAttributes: data.product.attributeMap.superAttributes,
             selectedAttributes: data.product.selectedAttributes,
-            availableAttributes: data.product.availableAttributes
-        }
+            availableAttributes: data.product.availableAttributes,
+        },
     } only %}
         {% block body %}<hr />{{parent()}}{% endblock %}
     {% endembed %}
@@ -95,8 +95,8 @@
                             data: {
                                 readOnly: isDisabled,
                                 hasUpdateButton: false,
-                                maxQuantity: data.maxQuantity
-                            }
+                                maxQuantity: data.maxQuantity,
+                            },
                         } only %}
                     </div>
 
@@ -104,8 +104,8 @@
                         <button type="submit" class="button button--success button--expand" data-init-single-click {{ isDisabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
                             {% include atom('icon') with {
                                 data: {
-                                    name: 'cart-plus'
-                                }
+                                    name: 'cart-plus',
+                                },
                             } only %}
                             {{ 'page.detail.add-to-cart' | trans }}
                         </button>
@@ -124,8 +124,8 @@
             {% include molecule('availability-product', 'AvailabilityWidget') ignore missing with {
                 data: {
                     idProductConcrete: data.product.idProductConcrete,
-                    isAvailable: data.product.available
-                }
+                    isAvailable: data.product.available,
+                },
             } only %}
         {% endif %}
     </form>
@@ -156,8 +156,8 @@
             {% include molecule('wishlist-selector-for-pdp', 'WishlistWidget') ignore missing with {
                 data: {
                     sku: data.product.sku,
-                    idProductConcrete: data.product.idProductConcrete | default
-                }
+                    idProductConcrete: data.product.idProductConcrete | default,
+                },
             } only %}
         {% endif %}
     {% endif %}

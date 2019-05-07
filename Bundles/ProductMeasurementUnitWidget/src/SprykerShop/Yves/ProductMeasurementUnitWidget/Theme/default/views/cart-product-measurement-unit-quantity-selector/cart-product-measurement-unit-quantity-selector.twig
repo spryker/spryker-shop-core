@@ -5,7 +5,7 @@
     isBaseUnit: _widget.isBaseUnit ?? true,
     minQuantity: _widget.minQuantity,
     maxQuantity: _widget.maxQuantity,
-    quantityInterval: _widget.quantityInterval
+    quantityInterval: _widget.quantityInterval,
 } %}
 
 {%- block hasSalesUnit -%}
@@ -21,7 +21,7 @@
             readOnly: hasQuantitySalesUnit,
             minQuantity: data.minQuantity,
             maxQuantity: data.maxQuantity,
-            quantityInterval: data.quantityInterval
+            quantityInterval: data.quantityInterval,
         }
     } only %}
 

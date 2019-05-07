@@ -9,7 +9,7 @@
     index: _view.index | default(0),
     minQuantity: _view.product.minQuantity | default(1),
     maxQuantity: _view.product.maxQuantity | default(null),
-    quantityInterval: _view.product.quantityInterval | default(1)
+    quantityInterval: _view.product.quantityInterval | default(1),
 } %}
 
 {% block template %}
@@ -23,8 +23,8 @@
             product: data.product,
             minQuantity: data.minQuantity,
             maxQuantity: data.maxQuantity,
-            quantityInterval: data.quantityInterval
-        }
+            quantityInterval: data.quantityInterval,
+        },
     } only %}
         {% block component %}
             {{ block('body') }}

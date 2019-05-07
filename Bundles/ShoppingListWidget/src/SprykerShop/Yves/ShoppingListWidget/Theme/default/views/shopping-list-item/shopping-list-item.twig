@@ -5,9 +5,8 @@
     readOnly: _widget.readOnly,
     minQuantity: _widget.minQuantity | default(1),
     maxQuantity: _widget.maxQuantity | default(null),
-    quantityInterval: _widget.quantityInterval | default(1)
+    quantityInterval: _widget.quantityInterval | default(1),
 } %}
-
 
 {% block body %}
     {% include molecule('quantity-input') with {
@@ -20,7 +19,7 @@
             hasUpdateButton: false,
             minQuantity: data.minQuantity,
             maxQuantity: data.maxQuantity,
-            step: data.quantityInterval
-        }
+            step: data.quantityInterval,
+        },
     } only %}
 {% endblock %}

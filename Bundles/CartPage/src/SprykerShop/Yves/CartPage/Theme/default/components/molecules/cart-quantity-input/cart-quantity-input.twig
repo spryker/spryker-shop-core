@@ -10,7 +10,7 @@
     readOnly: false,
     minQuantity: 1,
     maxQuantity: null,
-    quantityInterval: 1
+    quantityInterval: 1,
 } %}
 
 {% block body %}
@@ -21,8 +21,8 @@
                 value: data.cartItem.quantity,
                 readOnly: data.readOnly,
                 minQuantity: data.minQuantity,
-                step: data.quantityInterval
-            }
+                step: data.quantityInterval,
+            },
         } only %}
 
         <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey" />
