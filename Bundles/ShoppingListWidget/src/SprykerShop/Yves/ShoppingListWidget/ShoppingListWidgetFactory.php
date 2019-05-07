@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ShoppingListWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToCustomerClientInterface;
-use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToProductQuantityStorageClientInterface;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListClientInterface;
 use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListSessionClientInterface;
 
@@ -51,10 +50,10 @@ class ShoppingListWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToProductQuantityStorageClientInterface
+     * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ProductViewTransferExpanderPluginInterface[]
      */
-    public function getProductQuantityStorageClient(): ShoppingListWidgetToProductQuantityStorageClientInterface
+    public function getProductConcreteExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ShoppingListWidgetDependencyProvider::CLIENT_PRODUCT_QUANTITY_STORAGE);
+        return $this->getProvidedDependency(ShoppingListWidgetDependencyProvider::PLUGINS_SHOPPING_LIST_PRODUCT_CONCRETE_EXPANDER);
     }
 }

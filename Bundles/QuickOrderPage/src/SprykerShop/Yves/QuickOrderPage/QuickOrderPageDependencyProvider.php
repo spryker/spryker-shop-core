@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\QuickOrderPage;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
-use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToAvailabilityClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToPriceProductStorageClientBridge;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToProductQuantityStorageClientBridge;

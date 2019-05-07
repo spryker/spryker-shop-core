@@ -10,7 +10,6 @@
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/customer": "^7.4.0",
     "spryker/kernel": "^3.24.0",
-    "spryker/product-quantity-storage": "^1.4.0",
     "spryker/shopping-list": "^2.7.0",
     "spryker/shopping-list-session": "^1.0.0",
     "spryker/symfony": "^3.1.0"
@@ -29,6 +28,7 @@
     "spryker-shop/quick-order-page": "If you want to use ShoppingListQuickOrderPageWidgetPlugin: ^1.0.0",
     "spryker-shop/shopping-list-page": "Use this module if you want see shopping list pages",
     "spryker/product-detail-page": "To use ShoppingListWidget plugin, ShoppingListWidgetPluginInterface from product-detail-page v0.2.2 is needed",
+    "spryker/product-quantity-storage": "If you want to use ProductViewTransferQuantityRestrictionExpanderPlugin",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

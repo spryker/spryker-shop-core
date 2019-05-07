@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
-
 class QuickOrderPageToProductQuantityStorageClientBridge implements QuickOrderPageToProductQuantityStorageClientInterface
 {
     /**
@@ -33,15 +31,5 @@ class QuickOrderPageToProductQuantityStorageClientBridge implements QuickOrderPa
     public function getNearestQuantity(int $idProduct, float $quantity): float
     {
         return $this->productQuantityStorageClient->getNearestQuantity($idProduct, $quantity);
-    }
-
-    /**
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
-     */
-    public function findProductQuantityStorage(int $idProduct): ?ProductQuantityStorageTransfer
-    {
-        return $this->productQuantityStorageClient->findProductQuantityStorage($idProduct);
     }
 }
