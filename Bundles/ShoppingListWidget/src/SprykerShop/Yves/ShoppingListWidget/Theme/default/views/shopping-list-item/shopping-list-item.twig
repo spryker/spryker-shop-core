@@ -11,7 +11,7 @@
 {% block body %}
     {% include molecule('quantity-input') with {
         inputAttributes: {
-            name: ('shoppingListItem[quantity][' ~ data.item.idShoppingListItem ~ ']')
+            name: ('shoppingListItem[quantity][' ~ data.item.idShoppingListItem ~ ']'),
         },
         data: {
             value: data.item.quantity,
