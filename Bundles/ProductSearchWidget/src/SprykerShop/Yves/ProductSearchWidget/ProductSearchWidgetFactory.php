@@ -12,7 +12,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductSearchWidget\Builder\MessageBuilder;
 use SprykerShop\Yves\ProductSearchWidget\Builder\MessageBuilderInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientInterface;
-use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductQuantityStorageClientInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductStorageClientInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Service\ProductSearchWidgetToUtilEncodingServiceInterface;
 use SprykerShop\Yves\ProductSearchWidget\Form\ProductQuickAddForm;

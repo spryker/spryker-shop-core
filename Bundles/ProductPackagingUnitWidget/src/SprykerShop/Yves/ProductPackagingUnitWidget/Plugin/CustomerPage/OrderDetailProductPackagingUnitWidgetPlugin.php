@@ -35,7 +35,7 @@ class OrderDetailProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin i
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
