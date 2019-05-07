@@ -62,9 +62,7 @@ class ProductSearchWidgetFactory extends AbstractFactory
      */
     public function createProductAdditionalDataViewCollector(): ProductAdditionalDataViewCollectorInterface
     {
-        return new ProductAdditionalDataViewCollector(
-            $this->getProductQuantityStorageClient()
-        );
+        return new ProductAdditionalDataViewCollector();
     }
 
     /**
@@ -89,13 +87,5 @@ class ProductSearchWidgetFactory extends AbstractFactory
     public function getProductStorageClient(): ProductSearchWidgetToProductStorageClientInterface
     {
         return $this->getProvidedDependency(ProductSearchWidgetDependencyProvider::CLIENT_PRODUCT_STORAGE);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductQuantityStorageClientInterface
-     */
-    public function getProductQuantityStorageClient(): ProductSearchWidgetToProductQuantityStorageClientInterface
-    {
-        return $this->getProvidedDependency(ProductSearchWidgetDependencyProvider::CLIENT_PRODUCT_QUANTITY_STORAGE);
     }
 }

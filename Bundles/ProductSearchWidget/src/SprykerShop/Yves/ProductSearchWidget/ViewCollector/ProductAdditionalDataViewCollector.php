@@ -14,20 +14,6 @@ use Symfony\Component\Form\FormInterface;
 class ProductAdditionalDataViewCollector implements ProductAdditionalDataViewCollectorInterface
 {
     /**
-     * @var \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductQuantityStorageClientInterface
-     */
-    protected $productQuantityStorageClient;
-
-    /**
-     * @param \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductQuantityStorageClientInterface $productQuantityStorageClient
-     */
-    public function __construct(
-        ProductSearchWidgetToProductQuantityStorageClientInterface $productQuantityStorageClient
-    ) {
-        $this->productQuantityStorageClient = $productQuantityStorageClient;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      *
