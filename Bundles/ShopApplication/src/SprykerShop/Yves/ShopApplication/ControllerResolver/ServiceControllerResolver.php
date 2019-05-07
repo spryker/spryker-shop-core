@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 
+/**
+ * @deprecated Use `spryker-shop/router` instead.
+ */
 class ServiceControllerResolver implements ControllerResolverInterface, ArgumentResolverInterface
 {
     /**
