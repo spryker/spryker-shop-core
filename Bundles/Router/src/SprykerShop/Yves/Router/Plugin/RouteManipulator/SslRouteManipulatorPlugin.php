@@ -8,8 +8,8 @@
 namespace SprykerShop\Yves\Router\Plugin\RouteManipulator;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Symfony\Component\Routing\Route;
 use SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouteManipulatorPluginInterface;
+use Symfony\Component\Routing\Route;
 
 /**
  * @method \SprykerShop\Yves\Router\RouterConfig getConfig()
