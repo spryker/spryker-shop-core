@@ -3,16 +3,21 @@ import AutocompleteForm, {Events as AutocompleteEvents} from 'ShopUi/components/
 import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
 import debounce from 'lodash-es/debounce';
 
-const ERROR_MESSAGE_CLASS = 'quick-order-row__error--show';
-const ERROR_PARTIAL_MESSAGE_CLASS = 'quick-order-row-partial__error--show';
-
 export default class QuickOrderRow extends Component {
+    /**
+     * Performs the Ajax operations.
+     */
     ajaxProvider: AjaxProvider;
+
+    /**
+     * The autocomplete text input element.
+     */
     autocompleteInput: AutocompleteForm;
+
+    /**
+     * The quantity number input element.
+     */
     quantityInput: HTMLInputElement;
-    errorMessage: HTMLElement;
-    timer: number;
-    timeout: number = 3000;
 
     protected readyCallback(): void {
         this.ajaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider`);
@@ -22,8 +27,9 @@ export default class QuickOrderRow extends Component {
     }
 
     protected registerQuantityInput(): void {
-        this.quantityInput = <HTMLInputElement>this.querySelector(`.${this.jsName}__quantity, .${this.jsName}-partial__quantity`);
-        this.errorMessage = <HTMLElement>this.querySelector(`.${this.name}__error, .${this.name}-partial__error`);
+        this.quantityInput = <HTMLInputElement>this.querySelector(
+            `.${this.jsName}__quantity, .${this.jsName}-partial__quantity`
+        );
     }
 
     protected mapEvents(): void {
@@ -33,7 +39,9 @@ export default class QuickOrderRow extends Component {
     }
 
     protected mapQuantityInputChange(): void {
-        this.quantityInput.addEventListener('input', debounce(() => this.onQuantityChange(), this.autocompleteInput.debounceDelay));
+        this.quantityInput.addEventListener('input', debounce(() => {
+            this.onQuantityChange();
+        }, this.autocompleteInput.debounceDelay));
     }
 
     protected onAutocompleteSet(): void {
@@ -48,20 +56,16 @@ export default class QuickOrderRow extends Component {
         this.reloadField(this.autocompleteInput.inputValue);
     }
 
-    protected hideErrorMessage(): void {
-        if (!this.errorMessage) {
-            return;
-        }
-
-        this.errorMessage.classList.remove(ERROR_MESSAGE_CLASS, ERROR_PARTIAL_MESSAGE_CLASS);
-    }
-
+    /**
+     * Sends an ajax request to the server and renders the response on the page.
+     * @param sku A product SKU used for reloading autocomplete field.
+     */
     async reloadField(sku: string = '') {
-        clearTimeout(this.timer);
         const quantityInputValue = parseFloat(this.quantityValue);
 
         this.ajaxProvider.queryParams.set('sku', sku);
-        this.ajaxProvider.queryParams.set('index', this.ajaxProvider.getAttribute('class').split('-').pop().trim());
+        this.ajaxProvider.queryParams.set('index', this.ajaxProvider.getAttribute('class')
+            .split('-').pop().trim());
 
         if (!!quantityInputValue) {
             this.ajaxProvider.queryParams.set('quantity', `${quantityInputValue}`);
@@ -71,13 +75,14 @@ export default class QuickOrderRow extends Component {
         this.registerQuantityInput();
         this.mapQuantityInputChange();
 
-        this.timer = setTimeout(() => this.hideErrorMessage(), this.timeout);
-
         if (!!sku) {
             this.quantityInput.focus();
         }
     }
 
+    /**
+     * Gets the value attribute from the quantity input field.
+     */
     get quantityValue(): string {
         return this.quantityInput.value;
     }

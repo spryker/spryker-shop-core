@@ -22,6 +22,7 @@
         {% set amountSalesUnitName = data.concreteItem.amountSalesUnit.productMeasurementUnit.name | default('') %}
     {% endif %}
     <td>
+        {% block actions %}{% endblock %}
         {{ data.concreteItem.sku }}
     </td>
     <td>

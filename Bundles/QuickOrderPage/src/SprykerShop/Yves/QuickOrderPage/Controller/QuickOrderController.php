@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\QuickOrderPage\Form\QuickOrderForm;
@@ -29,12 +30,15 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  */
 class QuickOrderController extends AbstractController
 {
+    use PermissionAwareTrait;
+
     public const PARAM_ROW_INDEX = 'row-index';
     public const PARAM_QUICK_ORDER_FORM = 'quick_order_form';
     protected const PARAM_QUICK_ORDER_FILE_TYPE = 'file-type';
     protected const MESSAGE_CLEAR_ALL_ROWS_SUCCESS = 'quick-order.message.success.the-form-items-have-been-successfully-cleared';
     protected const ERROR_MESSAGE_QUANTITY_INVALID = 'quick-order.errors.quantity-invalid';
     protected const MESSAGE_TYPE_WARNING = 'warning';
+    protected const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -539,30 +543,62 @@ class QuickOrderController extends AbstractController
             ->buildQuickOrderTransfer($quickOrderTransfer);
 
         if ($request->get(QuickOrderForm::SUBMIT_BUTTON_ADD_TO_CART) !== null) {
-            $result = $this->getFactory()
-                ->createFormOperationHandler()
-                ->addToCart($quickOrderTransfer);
-
-            if (!$result) {
-                return null;
-            }
-
-            return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+            return $this->executeAddToCartAction($quickOrderTransfer);
         }
 
         if ($request->get(QuickOrderForm::SUBMIT_BUTTON_CREATE_ORDER) !== null) {
-            $result = $this->getFactory()
-                ->createFormOperationHandler()
-                ->addToEmptyCart($quickOrderTransfer);
-
-            if (!$result) {
-                return null;
-            }
-
-            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_INDEX);
+            return $this->executeCreateOrderAction($quickOrderTransfer);
         }
 
         return $this->executeQuickOrderFormHandlerStrategyPlugin($quickOrderForm, $request);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
+     */
+    protected function executeAddToCartAction(QuickOrderTransfer $quickOrderTransfer): ?RedirectResponse
+    {
+        if (!$this->can('AddCartItemPermissionPlugin')) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return null;
+        }
+
+        $result = $this->getFactory()
+            ->createFormOperationHandler()
+            ->addToCart($quickOrderTransfer);
+
+        if (!$result) {
+            return null;
+        }
+
+        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
+     */
+    protected function executeCreateOrderAction(QuickOrderTransfer $quickOrderTransfer): ?RedirectResponse
+    {
+        if (!$this->can('AddCartItemPermissionPlugin')) {
+            $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
+            return null;
+        }
+
+        $result = $this->getFactory()
+            ->createFormOperationHandler()
+            ->addToEmptyCart($quickOrderTransfer);
+
+        if (!$result) {
+            return null;
+        }
+
+        return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_INDEX);
     }
 
     /**
