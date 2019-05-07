@@ -6,7 +6,8 @@
     minQuantity: _view.minQuantity | default(null),
     maxQuantity: _view.maxQuantity | default(null),
     quantityInterval: _view.quantityInterval | default(1),
-    isDisabled: _view.isDisabled
+    isDisabled: _view.isDisabled,
+    verticalLayout: _view.verticalLayout | default(true),
 } %}
 
 {% block template %}
@@ -17,7 +18,8 @@
             maxQuantity: data.maxQuantity,
             quantityInterval: data.quantityInterval,
             form: data.form,
-            isDisabled: data.isDisabled
+            isDisabled: data.isDisabled,
+            verticalLayout: data.verticalLayout,
         }
     } only %}
         {% block body %}

@@ -27,6 +27,7 @@ class ProductAdditionalDataViewCollector implements ProductAdditionalDataViewCol
             'quantityInterval' => $productConcreteTransfer->getQuantityInterval() ?? 1,
             'form' => $form->createView(),
             'isDisabled' => false,
+            'verticalLayout' => true,
         ];
     }
 }
