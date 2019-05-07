@@ -38,7 +38,7 @@ class ProductAdditionalDataViewCollector implements ProductAdditionalDataViewCol
         return [
             'minQuantity' => $productConcreteTransfer->getMinQuantity() ?? 1,
             'maxQuantity' => $productConcreteTransfer->getMaxQuantity(),
-            'quantityInterval' => $productConcreteTransfer->getQuantityInterval(),
+            'quantityInterval' => $productConcreteTransfer->getQuantityInterval() ?? 1,
             'form' => $form->createView(),
             'isDisabled' => false,
         ];
