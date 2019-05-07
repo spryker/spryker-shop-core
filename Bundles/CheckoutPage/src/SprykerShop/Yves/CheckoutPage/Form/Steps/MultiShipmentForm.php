@@ -28,6 +28,9 @@ class MultiShipmentForm extends AbstractType
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
     protected const VALIDATION_INVALID_DATE_TIME_MESSAGE = 'validation.invalid_date';
     protected const VALIDATION_VALID_DATE_TIME_FORMAT = 'Y-m-d'; // Format accepted by date().
+    protected const VALIDATION_DATE_TODAY = 'today';
+
+    protected const FIELD_REQUESTED_DELIVERY_DATE_FORMAT = 'yyyy-MM-dd'; // Format accepted by IntlDateFormatter.
 
     /**
      * @return string
@@ -86,10 +89,10 @@ class MultiShipmentForm extends AbstractType
             'placeholder' => 'checkout.shipment.requested_delivery_date.placeholder',
             'required' => false,
             'input' => 'string',
-            'format' => 'yyyy-MM-dd', // Format accepted by IntlDateFormatter.
+            'format' => static::FIELD_REQUESTED_DELIVERY_DATE_FORMAT,
             'constraints' => [
                 $this->createDateTimeConstraint(),
-                $this->createDateTimeGreaterThanOrEqualConstraint('today'),
+                $this->createDateTimeGreaterThanOrEqualConstraint(static::VALIDATION_DATE_TODAY),
             ],
         ]);
 
