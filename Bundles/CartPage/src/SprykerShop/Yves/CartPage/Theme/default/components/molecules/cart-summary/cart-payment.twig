@@ -1,0 +1,8 @@
+{# TODO: refactor to molecule #}
+{% for payment in data.cart.payments %}
+    {% if payment.giftCard is null %}
+        <li class="list__item spacing-y">
+            {{ payment.paymentMethod }} <span class="float-right">- {{ payment.amount | money }}</span>
+        </li>
+    {% endif %}
+{% endfor %}

@@ -14,6 +14,7 @@ use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCalculationClientInterface;
 use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToQuoteClientInterface;
 
+// TODO: check for diffs against CodeHandler and remove this class when not needed any more
 class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
 {
     protected const GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED = 'cart.locked.change_denied';

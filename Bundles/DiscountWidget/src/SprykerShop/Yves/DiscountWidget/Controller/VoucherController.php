@@ -29,11 +29,11 @@ class VoucherController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $voucherCode = $form->get(CartVoucherForm::FIELD_VOUCHER_CODE)->getData();
+            $code = $form->get(CartVoucherForm::FIELD_VOUCHER_CODE)->getData();
 
             $this->getFactory()
                 ->createVoucherHandler()
-                ->add($voucherCode);
+                ->add($code);
         }
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
@@ -46,11 +46,11 @@ class VoucherController extends AbstractController
      */
     public function removeAction(Request $request)
     {
-        $voucherCode = $request->query->get('code');
-        if (!empty($voucherCode)) {
+        $code = $request->query->get('code');
+        if (!empty($code)) {
             $this->getFactory()
                 ->createVoucherHandler()
-                ->remove($voucherCode);
+                ->remove($code);
         }
 
         return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);

@@ -65,11 +65,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
-        if ($quoteTransfer->getBillingAddress() === null
-            || $quoteTransfer->getShipment() === null
-            || $quoteTransfer->getPayment() === null
-            || $quoteTransfer->getPayment()->getPaymentProvider() === null
-        ) {
+        if ($quoteTransfer->getBillingAddress() === null || $quoteTransfer->getShipment() === null) {
             return false;
         }
 

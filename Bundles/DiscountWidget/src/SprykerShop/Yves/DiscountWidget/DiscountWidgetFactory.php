@@ -7,13 +7,25 @@
 
 namespace SprykerShop\Yves\DiscountWidget;
 
+use Spryker\Client\Calculation\CalculationClient;
+use Spryker\Client\Cart\CartClient;
+use Spryker\Client\Messenger\MessengerClient;
+use Spryker\Client\Quote\QuoteClient;
+use Spryker\Client\ZedRequest\ZedRequestClient;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCalculationClientBridge;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientBridge;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToMessengerClientBridge;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToQuoteClientBridge;
+use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientBridge;
+use SprykerShop\Yves\CartPage\Handler\CodeHandler;
 use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCalculationClientInterface;
 use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToQuoteClientInterface;
 use SprykerShop\Yves\DiscountWidget\Form\CartVoucherForm;
 use SprykerShop\Yves\DiscountWidget\Form\CheckoutVoucherForm;
-use SprykerShop\Yves\DiscountWidget\Handler\VoucherHandler;
+use SprykerShop\Yves\DiscountWidget\Plugin\GiftCardCodeHandler;
+use SprykerShop\Yves\DiscountWidget\Plugin\VoucherCodeHandler;
 
 class DiscountWidgetFactory extends AbstractFactory
 {
@@ -26,14 +38,20 @@ class DiscountWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\DiscountWidget\Handler\VoucherHandler
+     * @return CodeHandler
      */
     public function createVoucherHandler()
     {
-        return new VoucherHandler(
-            $this->getCalculationClient(),
-            $this->getQuoteClient(),
-            $this->getFlashMessenger()
+        return new CodeHandler(
+            new CartPageToCartClientBridge(new CartClient()),
+            new CartPageToCalculationClientBridge(new CalculationClient()),
+            new CartPageToQuoteClientBridge(new QuoteClient()),
+            new CartPageToZedRequestClientBridge(new ZedRequestClient()),
+            new CartPageToMessengerClientBridge(new MessengerClient()),
+            [
+                new VoucherCodeHandler(),
+                new GiftCardCodeHandler(),
+            ]
         );
     }
 

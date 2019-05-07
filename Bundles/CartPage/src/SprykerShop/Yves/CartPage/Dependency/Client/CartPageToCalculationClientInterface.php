@@ -9,18 +9,12 @@ namespace SprykerShop\Yves\CartPage\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CartPageToQuoteClientInterface
+interface CartPageToCalculationClientInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool;
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function setQuote(QuoteTransfer $quoteTransfer);
+    public function recalculate(QuoteTransfer $quoteTransfer);
 }

@@ -82,6 +82,11 @@
                 {{ 'cart.price.grand.total' | trans }}
                 <strong class="float-right">{{ data.cart.totals.grandTotal | money }}</strong>
             </li>
+            {% include '@CartPage/components/molecules/cart-summary/cart-payment-gift-card.twig' %}
+            {% include '@CartPage/components/molecules/cart-summary/cart-payment.twig' %}
+            <li class="list__item spacing-y">
+                {{ 'cart.total.price_to_pay' | trans }}<span class="float-right">{{ data.cart.totals.priceToPay | money }}</span>
+            </li>
         </ul>
     {% else %}
         <li>{{ 'customer.access.cannot_see_price' | trans }}</li>

@@ -18,4 +18,15 @@ class CheckoutPageConfig extends AbstractBundleConfig
     {
         return true;
     }
+
+    /**
+     * @return string
+     */
+    public function getNoShipmentMethodName(): string
+    {
+        // TODO:
+        // - originally this supposed to be \Spryker\Yves\Shipment\ShipmentConfig::getNoShipmentMethodName()
+        // - also wrong: \Spryker\Zed\GiftCard\Business\Shipment\ShipmentMethodFilter::NO_SHIPMENT_METHOD
+        return 'No shipment';
+    }
 }

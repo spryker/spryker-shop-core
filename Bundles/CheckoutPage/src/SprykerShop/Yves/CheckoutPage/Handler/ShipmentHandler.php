@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CheckoutPage\Handler;
 
 use ArrayObject;
+use Exception;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -29,15 +30,23 @@ class ShipmentHandler implements ShipmentHandlerInterface
     protected $priceClient;
 
     /**
+     * @var string
+     */
+    protected $noShipmentMethodName;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface $priceClient
+     * @param string $noShipmentMethodName
      */
     public function __construct(
         CheckoutPageToShipmentClientInterface $shipmentClient,
-        CheckoutPageToPriceClientInterface $priceClient
+        CheckoutPageToPriceClientInterface $priceClient,
+        string $noShipmentMethodName
     ) {
         $this->shipmentClient = $shipmentClient;
         $this->priceClient = $priceClient;
+        $this->noShipmentMethodName = $noShipmentMethodName;
     }
 
     /**
@@ -50,7 +59,7 @@ class ShipmentHandler implements ShipmentHandlerInterface
     {
         $shipmentTransfer = $quoteTransfer->getShipment();
 
-        $shipmentMethodTransfer = $this->getShipmentMethodById($quoteTransfer);
+        $shipmentMethodTransfer = $this->getShipmentMethod($quoteTransfer);
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
         $shipmentExpenseTransfer = $this->createShippingExpenseTransfer($shipmentMethodTransfer, $quoteTransfer->getPriceMode());
@@ -62,12 +71,50 @@ class ShipmentHandler implements ShipmentHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer|\Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     * TODO: make sure about ShipmentMethodsTransfer vs ShipmentMethodTransfer
      */
-    protected function getShipmentMethodById(QuoteTransfer $quoteTransfer)
+    protected function getShipmentMethod(QuoteTransfer $quoteTransfer)
+    {
+        $selectedShipmentMethod = $quoteTransfer->getShipment()->getShipmentSelection();
+
+        // TODO clarify what is this No shipment thingy!
+        if ($this->noShipmentMethodName && $selectedShipmentMethod === $this->noShipmentMethodName) {
+            return $this->getShipmentMethodNoShipment($quoteTransfer);
+        }
+
+        return $this->getShipmentMethodById($quoteTransfer, (int)$selectedShipmentMethod);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @throws \Exception
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer|\Generated\Shared\Transfer\ShipmentMethodTransfer
+     */
+    protected function getShipmentMethodNoShipment(QuoteTransfer $quoteTransfer)
     {
         $shipmentMethodsTransfer = $this->getAvailableShipmentMethods($quoteTransfer);
-        $idShipmentMethod = $quoteTransfer->getShipment()->getShipmentSelection();
+        foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodsTransfer) {
+            if ($shipmentMethodsTransfer->getName() === $this->noShipmentMethodName) {
+                return $shipmentMethodsTransfer;
+            }
+        }
+
+        // TODO: create custom exception
+        throw new Exception(sprintf('Please create a default no-shipment method with defined name "%s"', $this->noShipmentMethodName));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    protected function getShipmentMethodById(QuoteTransfer $quoteTransfer, int $idShipmentMethod)
+    {
+        $shipmentMethodsTransfer = $this->getAvailableShipmentMethods($quoteTransfer);
 
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodsTransfer) {
             if ($shipmentMethodsTransfer->getIdShipmentMethod() === $idShipmentMethod) {

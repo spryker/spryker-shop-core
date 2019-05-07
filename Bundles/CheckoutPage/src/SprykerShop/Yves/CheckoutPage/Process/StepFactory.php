@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process;
 
+use Spryker\Client\Payment\PaymentClient;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\StepEngine\Process\StepBreadcrumbGenerator;
 use Spryker\Yves\StepEngine\Process\StepCollection;
@@ -19,6 +20,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientInte
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPaymentClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
@@ -171,6 +173,7 @@ class StepFactory extends AbstractFactory
     public function createPaymentStep()
     {
         return new PaymentStep(
+            new CheckoutPageToPaymentClientBridge(new PaymentClient()), // TODO cleanup
             $this->getPaymentMethodHandler(),
             CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
             HomePageControllerProvider::ROUTE_HOME,

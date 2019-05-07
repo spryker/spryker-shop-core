@@ -8,8 +8,10 @@
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Yves\Shipment\ShipmentConfig;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
@@ -53,7 +55,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function requireInput(AbstractTransfer $quoteTransfer)
     {
-        return true;
+        return $this->hasOnlyNoShipmentItems($quoteTransfer) === false;
     }
 
     /**
@@ -64,6 +66,10 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
+        if (!$this->requireInput($quoteTransfer)) {
+            $quoteTransfer = $this->setDefaultNoShipmentMethod($quoteTransfer);
+        }
+
         $shipmentHandler = $this->shipmentPlugins->get(CheckoutPageDependencyProvider::PLUGIN_SHIPMENT_STEP_HANDLER);
         $shipmentHandler->addToDataClass($request, $quoteTransfer);
 
@@ -77,6 +83,10 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
+        if ($this->hasOnlyNoShipmentItems($quoteTransfer)) {
+            return true;
+        }
+
         if (!$this->isShipmentSet($quoteTransfer)) {
             return false;
         }
@@ -91,13 +101,49 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     protected function isShipmentSet(QuoteTransfer $quoteTransfer)
     {
+        // TODO: had to add this because cart page was failing after logged in user visited it (checked only after 1 successful order placement)
+        if (!$quoteTransfer->getShipment()) {
+            return false;
+        }
+
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                return true;
+                return $quoteTransfer->getShipment()->getShipmentSelection() !== null;
             }
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function hasOnlyNoShipmentItems(QuoteTransfer $quoteTransfer)
+    {
+        $onlyPreselected = true;
+        foreach ($quoteTransfer->getItems() as $item) {
+            $isGiftCard = $item->getGiftCardMetadata() ? $item->getGiftCardMetadata()->getIsGiftCard() : false;
+            $onlyPreselected &= $isGiftCard;
+        }
+
+        return (bool)$onlyPreselected;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setDefaultNoShipmentMethod(QuoteTransfer $quoteTransfer)
+    {
+        $shipmentTransfer = (new ShipmentTransfer())
+            ->setShipmentSelection(
+                (new ShipmentConfig)->getNoShipmentMethodName() // TODO: fix config
+            );
+
+        return $quoteTransfer->setShipment($shipmentTransfer);
     }
 
     /**
