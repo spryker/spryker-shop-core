@@ -34,6 +34,11 @@ class OrderDetailProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin i
         }
     }
 
+    /**
+     * @param ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
     protected function setSalesUnitQuantity(ItemTransfer $itemTransfer): void
     {
         $salesUnitQuantity = $itemTransfer->getQuantity() / $itemTransfer->getQuantitySalesUnit()->getPrecision();

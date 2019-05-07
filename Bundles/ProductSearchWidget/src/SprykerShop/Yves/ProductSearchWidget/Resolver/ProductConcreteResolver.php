@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ProductSearchWidget\Resolver;
 
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductStorageClientInterface;
 

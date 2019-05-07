@@ -20,15 +20,6 @@ interface ProductSearchWidgetToProductStorageClientInterface
     public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array;
 
     /**
-     * @param array $data
-     * @param $localeName
-     * @param array $selectedAttributes
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = []);
-
-    /**
      * @param array $productStorageData
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
