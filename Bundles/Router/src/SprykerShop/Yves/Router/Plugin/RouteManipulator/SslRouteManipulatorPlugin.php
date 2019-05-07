@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\Router\Plugin\RouteManipulator;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\Router\Route\Route;
+use Symfony\Component\Routing\Route;
 use SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouteManipulatorPluginInterface;
 
 /**
@@ -16,6 +16,9 @@ use SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouteManipulatorPluginInt
  */
 class SslRouteManipulatorPlugin extends AbstractPlugin implements RouteManipulatorPluginInterface
 {
+    protected const SCHEME_HTTPS = 'https';
+    protected const SCHEME_HTTP = 'http';
+
     /**
      * @var array|null
      */
@@ -28,18 +31,18 @@ class SslRouteManipulatorPlugin extends AbstractPlugin implements RouteManipulat
 
     /**
      * @param string $routeName
-     * @param \Symfony\Component\Routing\Route|\SprykerShop\Yves\Router\Route\Route $route
+     * @param \Symfony\Component\Routing\Route $route
      *
-     * @return \Symfony\Component\Routing\Route|\SprykerShop\Yves\Router\Route\Route
+     * @return \Symfony\Component\Routing\Route
      */
     public function manipulate(string $routeName, Route $route): Route
     {
         if ($this->isSslEnabled()) {
-            $route->requireHttps();
+            $route->setSchemes(static::SCHEME_HTTPS);
         }
 
         if (in_array($routeName, $this->getSslExcludedRouteNames())) {
-            $route->requireHttp();
+            $route->setSchemes(static::SCHEME_HTTP);
         }
 
         return $route;

@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\Router\Plugin\RouteManipulator;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\Router\Route\Route;
+use Symfony\Component\Routing\Route;
 use SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouteManipulatorPluginInterface;
 
 /**
@@ -23,9 +23,9 @@ class StoreDefaultRouteManipulatorPlugin extends AbstractPlugin implements Route
 
     /**
      * @param string $routeName
-     * @param \Symfony\Component\Routing\Route|\SprykerShop\Yves\Router\Route\Route $route
+     * @param \Symfony\Component\Routing\Route $route
      *
-     * @return \Symfony\Component\Routing\Route|\SprykerShop\Yves\Router\Route\Route
+     * @return \Symfony\Component\Routing\Route
      */
     public function manipulate(string $routeName, Route $route): Route
     {

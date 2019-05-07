@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\RouterExtension\Dependency\Plugin;
 
-use SprykerShop\Yves\Router\Route\Route;
+use Symfony\Component\Routing\Route;
 
 interface RouteManipulatorPluginInterface
 {
@@ -18,9 +18,9 @@ interface RouteManipulatorPluginInterface
      * @api
      *
      * @param string $routeName
-     * @param \Symfony\Component\Routing\Route|\SprykerShop\Yves\Router\Route\Route $route
+     * @param \Symfony\Component\Routing\Route $route
      *
-     * @return \Symfony\Component\Routing\Route|\SprykerShop\Yves\Router\Route\Route
+     * @return \Symfony\Component\Routing\Route
      */
     public function manipulate(string $routeName, Route $route): Route;
 }
