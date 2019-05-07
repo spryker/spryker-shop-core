@@ -4,12 +4,12 @@ export default class FlashMessage extends Component {
     /**
      * Default flash message show duration.
      */
-    readonly defaultDuration: number = 5000
+    readonly defaultDuration: number = 5000;
 
     /**
      * The id of flash message timeout.
      */
-    durationTimeoutId: any
+    durationTimeoutId: number;
 
     protected readyCallback(): void {
         this.mapEvents();
