@@ -21,25 +21,25 @@
 
     <div class="col col--sm-12 {{ data.verticalLayout ? '' : 'col--md-10' }}">
         {{ form_start(data.form, data.options) }}
-        <div class="grid">
-            {% block fields %}
-                {% set fieldsAlignment = data.verticalLayout ? '' : "col--md-10" %}
+            <div class="grid">
+                {% block fields %}
+                    {% set fieldsAlignment = data.verticalLayout ? '' : "col--md-10" %}
 
-                {% include molecule('product-quick-add-fields', 'ProductSearchWidget') with {
-                    class: "grid col col--sm-12 " ~ fieldsAlignment,
-                    data: {
-                        form: data.form,
-                        verticalLayout: data.verticalLayout
-                    }
-                } only %}
-            {% endblock %}
+                    {% include molecule('product-quick-add-fields', 'ProductSearchWidget') with {
+                        class: "grid col col--sm-12 " ~ fieldsAlignment,
+                        data: {
+                            form: data.form,
+                            verticalLayout: data.verticalLayout
+                        }
+                    } only %}
+                {% endblock %}
 
-            <div class="col col--sm-12 {{ data.verticalLayout ? '' : 'col--md-2' }}">
-                <button type="submit" class="button button--expand button--success">
-                    {{ data.submitButtonTitle }}
-                </button>
+                <div class="col col--sm-12 {{ data.verticalLayout ? '' : 'col--md-2' }}">
+                    <button type="submit" class="button button--expand button--success">
+                        {{ data.submitButtonTitle }}
+                    </button>
+                </div>
             </div>
-        </div>
         {{ form_end(data.form) }}
     </div>
 {% endblock %}

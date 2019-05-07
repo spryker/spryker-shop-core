@@ -6,41 +6,18 @@
     minQuantity: _view.minQuantity | default(null),
     maxQuantity: _view.maxQuantity | default(null),
     quantityInterval: _view.quantityInterval | default(1),
-    isDisabled: _view.isDisabled
+    isDisabled: _view.isDisabled,
 } %}
 
 {% block template %}
-    {% embed molecule('product-quick-add-fields', 'ProductSearchWidget') with {
+    {% include molecule('product-quick-add-fields', 'ProductSearchWidget') with {
         data: {
             messages: data.messages,
             minQuantity: data.minQuantity,
             maxQuantity: data.maxQuantity,
             quantityInterval: data.quantityInterval,
             form: data.form,
-            isDisabled: data.isDisabled
+            isDisabled: data.isDisabled,
         }
     } only %}
-        {% block body %}
-                {{ form_widget(data.form.children.quantity, {
-                    required: true,
-                    attr: {
-                        class: config.jsName ~ '__quantity',
-                        min: data.minQuantity,
-                        max: data.maxQuantity,
-                        step: data.quantityInterval,
-                        disabled: data.isDisabled,
-                        value: data.minQuantity,
-                        placeholder: 'product_quick_add_widget.form.quantity' | trans
-                    }}
-                ) }}
-
-            {% if data.messages is not empty %}
-                <div class="col col--sm-12 {{ config.name }}__error spacing-bottom spacing-bottom--big">
-                    {% for errorMessage in data.messages %}
-                        {{ errorMessage.value | trans }}
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endblock %}
-    {% endembed %}
 {% endblock %}
