@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
-use Spryker\Yves\Shipment\ShipmentConfig;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
+use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -140,7 +140,8 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     {
         $shipmentTransfer = (new ShipmentTransfer())
             ->setShipmentSelection(
-                (new ShipmentConfig)->getNoShipmentMethodName() // TODO: fix config
+                (new CheckoutPageConfig())->getNoShipmentMethodName() // TODO: fix config, should the value come from project level?
+                //(new ShipmentConfig)->getNoShipmentMethodName() // TODO: clarify old solution
             );
 
         return $quoteTransfer->setShipment($shipmentTransfer);
