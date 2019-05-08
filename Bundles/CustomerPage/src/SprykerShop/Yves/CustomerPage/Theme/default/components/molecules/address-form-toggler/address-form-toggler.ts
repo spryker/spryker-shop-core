@@ -1,4 +1,3 @@
-/* tslint:disable */
 import Component from 'ShopUi/models/component';
 
 export default class AddressFormToggler extends Component {
@@ -19,12 +18,14 @@ export default class AddressFormToggler extends Component {
     protected billingSameAsShippingToggler: HTMLInputElement;
 
     protected readyCallback(): void {
-        if(this.triggerSelector) {
+        if (this.triggerSelector) {
             this.toggler = <HTMLSelectElement>document.querySelector(this.triggerSelector);
             this.form = <HTMLFormElement>document.querySelector(this.targetSelector);
             this.formBillingAddress = <HTMLElement>document.querySelector(this.formBillingAddressSelector);
             this.billingSameAsShipping = <HTMLElement>document.querySelector(this.billingSameAsShippingSelector);
-            this.billingSameAsShippingToggler = <HTMLInputElement>document.querySelector(this.billingSameAsShippingTogglerSelector);
+            this.billingSameAsShippingToggler = <HTMLInputElement>document.querySelector(
+                this.billingSameAsShippingTogglerSelector
+            );
 
             if (this.subTargetSelector) {
                 this.subForm = <HTMLFormElement>document.querySelector(this.subTargetSelector);
@@ -49,7 +50,6 @@ export default class AddressFormToggler extends Component {
 
     protected onTogglerChange(): void {
         const selectedOption = <string>this.toggler.options[this.toggler.selectedIndex].value;
-        const hasCompanyBusinessUnitAddress = (this.hasCompanyBusinessUnitAddress == 'true');
 
         if (selectedOption === this.optionValueDeliverToMultipleAddresses) {
             this.toggleSubForm();
@@ -75,7 +75,7 @@ export default class AddressFormToggler extends Component {
     }
 
     protected toggleForm(isShown: boolean): void {
-        const hasCompanyBusinessUnitAddress = (this.hasCompanyBusinessUnitAddress == 'true');
+        const hasCompanyBusinessUnitAddress = (this.hasCompanyBusinessUnitAddress === 'true');
 
         this.form.classList.toggle(this.classToToggle, hasCompanyBusinessUnitAddress ? false : isShown);
 

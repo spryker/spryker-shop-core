@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* tslint:disable:max-file-line-count */
 import Component from 'ShopUi/models/component';
 import FormClear from 'ShopUi/components/molecules/form-clear/form-clear';
 
@@ -35,7 +35,9 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     /**
      * Data object of the address list.
      */
+    /* tslint:disable:no-any */
     addressesDataObject: any;
+    /* tslint:enable:no-any */
     /**
      * Collection of the address select elements.
      */
@@ -43,7 +45,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     /**
      * The selected address.
      */
-    currentAddress: String;
+    currentAddress: string;
     /**
      * The hidden input with selected address by default.
      */
@@ -75,7 +77,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         this.addressesSelects = <HTMLSelectElement[]>Array.from(this.form.querySelectorAll(this.dataSelector));
         this.targets = <HTMLElement[]>Array.from(this.form.querySelectorAll(formElements));
         this.ignoreElements = <HTMLElement[]>Array.from(this.form.querySelectorAll(this.ignoreSelector));
-        this.filterElements = this.targets.filter((element) => !this.ignoreElements.includes(element));
+        this.filterElements = this.targets.filter(element => !this.ignoreElements.includes(element));
         this.formClear = <FormClear>this.form.querySelector('.js-form-clear');
         this.hiddenDefaultAddressInput = <HTMLInputElement>this.form.querySelector(this.defaultAddressSelector);
         this.customAddressTriggerInput = <HTMLFormElement>this.form.querySelector(this.customAddressTrigger);
@@ -96,11 +98,9 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
             this.resetAddressesSelect();
         });
 
-        this.triggers.forEach((triggerElement) => {
+        this.triggers.forEach(triggerElement => {
             triggerElement.addEventListener('click', () => {
-                this.addressesSelects.forEach((selectElement) => {
-                    this.setCurrentAddress(selectElement);
-                });
+                this.addressesSelects.forEach(selectElement => this.setCurrentAddress(selectElement));
                 this.onClick(triggerElement);
                 triggerElement.dispatchEvent(this.addNewAddressEvent);
             });
@@ -127,9 +127,12 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     }
 
     protected toggleSplitDeliveryAddressFormValue(): void {
-        const addressHiddenInput = <HTMLInputElement>document.querySelector(`[name="${this.shippingAddressHiddenInputSelector}"]`);
-        const hiddenInputIdCustomerAddressSaver = <HTMLInputElement>document.querySelector(this.hiddenInputIdCustomerShippingAddressSaverSelector);
-
+        const addressHiddenInput = <HTMLInputElement>document.querySelector(
+            `[name="${this.shippingAddressHiddenInputSelector}"]`
+        );
+        const hiddenInputIdCustomerAddressSaver = <HTMLInputElement>document.querySelector(
+            this.hiddenInputIdCustomerShippingAddressSaverSelector
+        );
 
         if (this.shippingAddressToggler.value === this.optionValueDeliverToMultipleAddresses) {
             addressHiddenInput.value = this.optionValueDeliverToMultipleAddresses;
@@ -156,12 +159,12 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
      * @param isEnabled A boolean value for checking if the element is available for toggling.
      */
     toggleFormFieldReadOnly(formElement: HTMLFormElement, isEnabled: boolean = true): void {
-        const isSelect = this.formClear.getTagName(formElement) == 'SELECT';
+        const isSelect = this.formClear.getTagName(formElement) === 'SELECT';
 
         if (isSelect) {
             const options = Array.from(formElement.querySelectorAll('option'));
 
-            options.forEach((element) => {
+            options.forEach(element => {
                 if (!element.selected) {
                     element.disabled = isEnabled;
                 }
@@ -188,7 +191,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
 
     protected fillDefaultAddress(): void {
         const hiddenDefaultAddressInputName = this.hiddenDefaultAddressInput.getAttribute('value');
-        const setFormFieldsReadonly = hiddenDefaultAddressInputName === this.optionValueDeliverToMultipleAddresses ? false : true;
+        const setFormFieldsReadonly = hiddenDefaultAddressInputName !== this.optionValueDeliverToMultipleAddresses;
 
         if (hiddenDefaultAddressInputName) {
             this.currentAddress = hiddenDefaultAddressInputName;
@@ -202,9 +205,7 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
      * Clears the filter elements.
      */
     clearFormFields(): void {
-        this.filterElements.forEach((element) => {
-            this.clearFormField(<HTMLFormElement>element);
-        });
+        this.filterElements.forEach(element => this.clearFormField(<HTMLFormElement>element));
     }
 
     /**
@@ -220,10 +221,13 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
      * @param address A data object for filling the fields.
      */
     fillFormFields(address: object): void {
-        const hiddenInputIdCustomerAddressSaver = <HTMLInputElement>this.form.querySelector(this.hiddenInputIdCustomerAddressSaverSelector);
-        hiddenInputIdCustomerAddressSaver.value = address ? address['id_customer_address'] : '';
+        const hiddenInputIdCustomerAddressSaver = <HTMLInputElement>this.form.querySelector(
+            this.hiddenInputIdCustomerAddressSaverSelector
+        );
+        const idCustomerAddress = 'id_customer_address';
+        hiddenInputIdCustomerAddressSaver.value = address ? address[idCustomerAddress] : '';
 
-        for (let key in address) {
+        for (const key in address) {
             const formElement = this.form.querySelector(`[data-key="${key}"]`);
 
             if (formElement !== null) {
@@ -235,12 +239,15 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     protected resetAddressesSelect(): void {
         const addressSelect = <HTMLSelectElement>this.form.querySelector(this.dataSelector);
         const addressSelectOptions = <HTMLOptionElement[]>Array.from(addressSelect.options);
-        const addressHiddenInput = <HTMLInputElement>this.form.querySelector(`[name="${this.addressHiddenInputSelector}"]`);
+        const addressHiddenInput = <HTMLInputElement>this.form.querySelector(
+            `[name="${this.addressHiddenInputSelector}"]`
+        );
 
         addressSelectOptions.some((item, index) => {
-            if(!item.value.length) {
+            if (!item.value.length) {
                 addressSelect.selectedIndex = index;
                 addressHiddenInput.dispatchEvent(this.resetSelectEvent);
+
                 return true;
             }
         });
@@ -249,9 +256,11 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     protected toggleReadonlyForCustomAddressTrigger() {
         if (this.customAddressTriggerInput.checked) {
             this.customAddressTriggerInput.disabled = true;
-        } else {
-            this.customAddressTriggerInput.disabled = false;
+
+            return;
         }
+
+        this.customAddressTriggerInput.disabled = false;
     }
 
     protected initAddressesData(): void {

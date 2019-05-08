@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* tslint:disable:max-file-line-count */
 import Component from 'ShopUi/models/component';
 import FormClear from 'ShopUi/components/molecules/form-clear/form-clear';
 
@@ -65,7 +65,9 @@ export default class SaveNewAddress extends Component {
 
     protected readyCallback(): void {
         if (this.shippingAddressTogglerSelector) {
-            this.customerShippingAddresses = <HTMLFormElement>document.querySelector(this.shippingAddressTogglerSelector);
+            this.customerShippingAddresses = <HTMLFormElement>document.querySelector(
+                this.shippingAddressTogglerSelector
+            );
         }
 
         if (this.billingAddressTogglerSelector) {
@@ -78,11 +80,15 @@ export default class SaveNewAddress extends Component {
         }
 
         if (this.billingSameAsShippingAddressTogglerSelector) {
-            this.sameAsShippingToggler = <HTMLInputElement>document.querySelector(this.billingSameAsShippingAddressTogglerSelector);
+            this.sameAsShippingToggler = <HTMLInputElement>document.querySelector(
+                this.billingSameAsShippingAddressTogglerSelector
+            );
         }
 
         if (this.businessUnitShippingAddressTogglerSelector) {
-            this.businessUnitShippingAddressToggler = <HTMLSelectElement>document.querySelector(this.businessUnitShippingAddressTogglerSelector);
+            this.businessUnitShippingAddressToggler = <HTMLSelectElement>document.querySelector(
+                this.businessUnitShippingAddressTogglerSelector
+            );
         }
 
         if (this.formClearShippingAddressSelector) {
@@ -117,7 +123,9 @@ export default class SaveNewAddress extends Component {
         }
 
         if (this.formClearShippingAddress) {
-            this.formClearShippingAddress.addEventListener('form-fields-clear-after', () => this.splitDeliveryTogglerOnChange());
+            this.formClearShippingAddress.addEventListener('form-fields-clear-after', () => {
+                this.splitDeliveryTogglerOnChange();
+            });
         }
 
         this.customerShippingAddresses.addEventListener('change', () => this.shippingTogglerOnChange());
@@ -131,7 +139,9 @@ export default class SaveNewAddress extends Component {
         }
 
         if (this.businessUnitShippingAddressToggler) {
-            this.businessUnitShippingAddressToggler.addEventListener('change', () => this.splitDeliveryTogglerOnChange());
+            this.businessUnitShippingAddressToggler.addEventListener('change', () => {
+                this.splitDeliveryTogglerOnChange();
+            });
         }
     }
 
@@ -150,7 +160,8 @@ export default class SaveNewAddress extends Component {
     }
 
     protected initSplitDeliveryToggler(): void {
-        if (!this.customerBillingAddresses && this.customerShippingAddresses.value === this.optionValueDeliverToMultipleAddresses) {
+        if (!this.customerBillingAddresses &&
+            this.customerShippingAddresses.value === this.optionValueDeliverToMultipleAddresses) {
             this.newBillingAddressChecked = true;
         }
     }
@@ -182,7 +193,7 @@ export default class SaveNewAddress extends Component {
         }
     }
 
-    protected addressTogglerChange(toggler): boolean {
+    protected addressTogglerChange(toggler: HTMLFormElement): boolean {
         return this.isSaveNewAddressOptionSelected(toggler);
     }
 
