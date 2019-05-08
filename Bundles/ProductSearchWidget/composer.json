@@ -14,7 +14,6 @@
     "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
-    "spryker-shop/shop-application": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
