@@ -20,7 +20,6 @@
   },
   "suggest": {
     "spryker-shop/quick-order-page": "Use this module when using plugins that need QuickOrderPage dependencies.",
-    "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
