@@ -7,7 +7,7 @@
 {% define data = {
     currencyIsoCode: required,
     shipmentGroups: required,
-    order: required
+    order: required,
 } %}
 
 {% block body %}
@@ -24,15 +24,20 @@
 
                     <div class="{{ config.name }}__item grid grid--justify spacing-y spacing-y--inner">
                         <div class="col col--middle col--sm-1 spacing">
-                            {{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', data.order, concreteItem) }}
+                            {% if data.order is not empty %}
+                                {% widget 'CustomerReorderItemCheckboxWidget' args [concreteItem] only %}
+                                {% nowidget %}
+                                    {{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', data.order, concreteItem) }} {# @deprecated Use widget 'CustomerReorderItemCheckboxWidget' instead. #}
+                                {% endwidget %}
+                            {% endif %}
                         </div>
 
                         <div class="col col--middle col--sm-3">
                             {% include atom('thumbnail') with {
                                 modifiers: ['small'],
                                 attributes: {
-                                    src: item.metadata.image
-                                }
+                                    src: item.metadata.image,
+                                },
                             } only %}
                         </div>
 
@@ -101,8 +106,8 @@
                                     {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
                                         data: {
                                             label: 'cart_note.customer_page.item_note',
-                                            note: concreteItem.cartNote
-                                        }
+                                            note: concreteItem.cartNote,
+                                        },
                                     } only %}
                                 {% endif %}
                             {% endif %}
@@ -118,8 +123,8 @@
                     <div class="spacing-y spacing-y--inner">
                         {% include molecule('display-address') with {
                             data: {
-                                address: shipmentGroup.shipment.shippingAddress
-                            }
+                                address: shipmentGroup.shipment.shippingAddress,
+                            },
                         } only %}
                     </div>
                 </div>
@@ -129,8 +134,8 @@
                         {% include molecule('display-delivery-method') with {
                             class: 'text-small',
                             data: {
-                                method: shipmentGroup.shipment.method
-                            }
+                                method: shipmentGroup.shipment.method,
+                            },
                         } only %}
                     </div>
                 </div>

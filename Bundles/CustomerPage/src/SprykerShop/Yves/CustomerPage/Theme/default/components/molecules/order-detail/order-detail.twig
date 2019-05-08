@@ -1,12 +1,12 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'order-detail'
+    name: 'order-detail',
 } %}
 
 {% define data = {
-    orderItems: required,
-    order: required
+    shipmentGroups: required,
+    order: required,
 } %}
 
 {% block body %}
@@ -28,27 +28,17 @@
             <hr />
             {% include molecule('order-detail-table', 'CustomerPage') with {
                 data: {
-                    items: data.orderItems,
+                    shipmentGroups: data.shipmentGroups,
                     currencyIsoCode: data.order.currencyIsoCode,
-                    order: data.order
-                }
+                    order: data.order,
+                },
             } only %}
             <hr />
             {% include molecule('order-summary', 'CustomerPage') with {
                 class: 'text-right',
                 data: {
-                    order: data.order
-                }
-            } only %}
-        </div>
-
-        <div class="box">
-            <h5>{{ 'customer.order.shipping_address' | trans }}</h5>
-            <hr />
-            {% include molecule('display-address') with {
-                data: {
-                    address: data.order.shippingAddress
-                }
+                    order: data.order,
+                },
             } only %}
         </div>
 
@@ -57,8 +47,8 @@
             <hr />
             {% include molecule('display-address') with {
                 data: {
-                    address: data.order.billingAddress
-                }
+                    address: data.order.billingAddress,
+                },
             } only %}
         </div>
 
@@ -70,8 +60,8 @@
                     {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
                         data: {
                             label: 'cart_note.customer_page.order_note',
-                            note: data.order.cartNote
-                        }
+                            note: data.order.cartNote,
+                        },
                     } only %}
                 {% endif %}
             </div>
