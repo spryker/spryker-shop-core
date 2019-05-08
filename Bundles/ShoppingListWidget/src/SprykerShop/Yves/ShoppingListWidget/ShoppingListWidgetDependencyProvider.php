@@ -18,6 +18,7 @@ class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvi
     public const CLIENT_SHOPPING_LIST = 'CLIENT_SHOPPING_LIST';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_SHOPPING_LIST_SESSION = 'CLIENT_SHOPPING_LIST_SESSION';
+    public const PLUGINS_SHOPPING_LIST_PRODUCT_CONCRETE_EXPANDER = 'PLUGINS_SHOPPING_LIST_PRODUCT_CONCRETE_EXPANDER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -29,6 +30,7 @@ class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addShoppingListClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addShoppingListSessionClient($container);
+        $container = $this->addProductViewExpanderPlugins($container);
 
         return $container;
     }
@@ -73,5 +75,27 @@ class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvi
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductViewExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_SHOPPING_LIST_PRODUCT_CONCRETE_EXPANDER] = function () {
+            return $this->getProductViewExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ProductViewTransferExpanderPluginInterface[]
+     */
+    protected function getProductViewExpanderPlugins(): array
+    {
+        return [];
     }
 }

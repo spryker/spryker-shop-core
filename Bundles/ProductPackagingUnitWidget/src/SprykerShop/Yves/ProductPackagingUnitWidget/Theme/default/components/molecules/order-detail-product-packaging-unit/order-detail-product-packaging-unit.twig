@@ -16,7 +16,7 @@
         {% set salesUnitQuantity = data.concreteItem.quantity / data.concreteItem.quantitySalesUnit.conversion %}
         {% set salesUnitSummary = '' %}
         {% if salesUnitName %}
-            {% set salesUnitSummary = salesUnitQuantity | round(data.concreteItem.quantitySalesUnit.precision, 'floor') ~ ' ' ~ salesUnitName | trans %}
+            {% set salesUnitSummary = salesUnitQuantity ~ ' ' ~ salesUnitName | trans %}
         {% endif %}
 
         {% set amountSalesUnitName = data.concreteItem.amountSalesUnit.productMeasurementUnit.name | default('') %}
