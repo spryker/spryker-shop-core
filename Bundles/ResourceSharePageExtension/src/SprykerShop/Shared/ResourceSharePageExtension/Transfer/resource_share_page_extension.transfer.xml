@@ -8,9 +8,15 @@
         <property name="parameters" type="array"/>
     </transfer>
 
+    <transfer name="ResourceShareData">
+        <property name="data" type="array"/>
+        <property name="idQuote" type="int"/>
+        <property name="shareOption" type="string"/>
+    </transfer>
+
     <transfer name="ResourceShare">
         <property name="resourceType" type="string" />
-        <property name="resourceData" type="string" />
+        <property name="resourceShareData" type="ResourceShareData" />
     </transfer>
 
 </transfers>
