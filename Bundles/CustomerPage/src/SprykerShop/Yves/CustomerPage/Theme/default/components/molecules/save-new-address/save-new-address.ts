@@ -160,8 +160,10 @@ export default class SaveNewAddress extends Component {
     }
 
     protected initSplitDeliveryToggler(): void {
-        if (!this.customerBillingAddresses &&
-            this.customerShippingAddresses.value === this.optionValueDeliverToMultipleAddresses) {
+        const isDeliverToMultipleAddresses =
+            this.customerShippingAddresses.value === this.optionValueDeliverToMultipleAddresses;
+
+        if (!this.customerBillingAddresses && isDeliverToMultipleAddresses) {
             this.newBillingAddressChecked = true;
         }
     }
