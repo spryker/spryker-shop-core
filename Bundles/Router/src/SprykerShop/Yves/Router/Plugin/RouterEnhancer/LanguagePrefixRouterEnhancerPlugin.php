@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\Router\Plugin\RouterEnhancer;
 
+use Spryker\Service\UtilText\Model\Url\Url;
+use SprykerShop\Yves\Router\Router\Router;
 use Symfony\Component\Routing\RequestContext;
 
 /**
@@ -59,19 +61,16 @@ class LanguagePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
     /**
      * @param string $url
      * @param \Symfony\Component\Routing\RequestContext $requestContext
+     * @param int $referenceType
      *
      * @return string
      */
-    public function afterGenerate(string $url, RequestContext $requestContext): string
+    public function afterGenerate(string $url, RequestContext $requestContext, int $referenceType): string
     {
         $language = $this->findLanguage($requestContext);
 
         if ($language !== null) {
-            if ($url === '/') {
-                $url = '';
-            }
-
-            return sprintf('/%s%s', $language, $url);
+            return $this->buildUrlWithLanguage($url, $language, $referenceType);
         }
 
         return $url;
@@ -87,7 +86,41 @@ class LanguagePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
         if ($requestContext->hasParameter('language')) {
             return $requestContext->getParameter('language');
         }
+        if ($requestContext->hasParameter('_locale')) {
+            $locale = $requestContext->getParameter('_locale');
+            [$language, $country] = explode('_', $locale);
+
+            return $language;
+        }
 
         return null;
+    }
+
+    /**
+     * @param string $url
+     * @param string $language
+     * @param int $referenceType
+     *
+     * @return string
+     */
+    protected function buildUrlWithLanguage(string $url, string $language, int $referenceType): string
+    {
+        if ($url === '/') {
+            $url = '';
+        }
+
+        if ($referenceType === Router::ABSOLUTE_PATH) {
+            return sprintf('/%s%s', $language, $url);
+        }
+
+        if ($referenceType === Router::ABSOLUTE_URL) {
+            $parsedUrl = Url::parse($url);
+            $pathWithLanguage = sprintf('/%s%s', $language, $parsedUrl->getPath());
+            $parsedUrl->setPath($pathWithLanguage);
+
+            return (string)$parsedUrl;
+        }
+
+        return $url;
     }
 }

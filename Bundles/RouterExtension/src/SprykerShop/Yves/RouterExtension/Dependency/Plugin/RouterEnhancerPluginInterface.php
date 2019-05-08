@@ -64,8 +64,9 @@ interface RouterEnhancerPluginInterface
      *
      * @param string $url
      * @param \Symfony\Component\Routing\RequestContext $requestContext
+     * @param int $referenceType
      *
      * @return string
      */
-    public function afterGenerate(string $url, RequestContext $requestContext): string;
+    public function afterGenerate(string $url, RequestContext $requestContext, int $referenceType): string;
 }

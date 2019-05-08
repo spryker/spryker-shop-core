@@ -18,11 +18,13 @@
     "spryker/event-dispatcher": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
+    "spryker/util-text": "*",
     "spryker/zend": "*"
   },
   "suggest": {
     "spryker/event-dispatcher": "If you want to use the RouterLocaleEventDispatcher plugin.",
     "spryker/silex": "If you want to use the RouterListenerEventDispatcher plugin.",
+    "spryker/util-text": "If you want to use the RouterEnhancer plugins.",
     "spryker/zend": "If you want to use the Router plugin."
   },
   "autoload": {

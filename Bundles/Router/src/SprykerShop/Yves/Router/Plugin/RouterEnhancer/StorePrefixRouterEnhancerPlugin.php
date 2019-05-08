@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\Router\Plugin\RouterEnhancer;
 
+use Spryker\Service\UtilText\Model\Url\Url;
+use SprykerShop\Yves\Router\Router\Router;
 use Symfony\Component\Routing\RequestContext;
 
 /**
@@ -59,20 +61,16 @@ class StorePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
     /**
      * @param string $url
      * @param \Symfony\Component\Routing\RequestContext $requestContext
+     * @param int $referenceType
      *
      * @return string
      */
-    public function afterGenerate(string $url, RequestContext $requestContext): string
+    public function afterGenerate(string $url, RequestContext $requestContext, int $referenceType): string
     {
         $store = $this->findStore($requestContext);
-        if ($url === '/') {
-        }
-        if ($store !== null) {
-            if ($url === '/') {
-                $url = '';
-            }
 
-            return sprintf('/%s%s', $store, $url);
+        if ($store !== null) {
+            return $this->buildUrlWithStore($url, $store, $referenceType);
         }
 
         return $url;
@@ -90,5 +88,33 @@ class StorePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
         }
 
         return null;
+    }
+
+    /**
+     * @param string $url
+     * @param string $store
+     * @param int $referenceType
+     *
+     * @return string
+     */
+    protected function buildUrlWithStore(string $url, string $store, int $referenceType): string
+    {
+        if ($url === '/') {
+            $url = '';
+        }
+
+        if ($referenceType === Router::ABSOLUTE_PATH) {
+            return sprintf('/%s%s', $store, $url);
+        }
+
+        if ($referenceType === Router::ABSOLUTE_URL) {
+            $parsedUrl = Url::parse($url);
+            $pathWithStore = sprintf('/%s%s', $store, $parsedUrl->getPath());
+            $parsedUrl->setPath($pathWithStore);
+
+            return (string)$parsedUrl;
+        }
+
+        return $url;
     }
 }

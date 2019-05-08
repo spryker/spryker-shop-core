@@ -58,7 +58,7 @@ class UrlGenerator extends SymfonyUrlGenerator implements RouterEnhancerAwareInt
         $generatedUrl = parent::generate($name, $parameters, $referenceType);
 
         foreach (array_reverse($this->routerEnhancerPlugins) as $routerEnhancerPlugin) {
-            $generatedUrl = $routerEnhancerPlugin->afterGenerate($generatedUrl, $this->getContext());
+            $generatedUrl = $routerEnhancerPlugin->afterGenerate($generatedUrl, $this->getContext(), $referenceType);
         }
 
         return $generatedUrl;
