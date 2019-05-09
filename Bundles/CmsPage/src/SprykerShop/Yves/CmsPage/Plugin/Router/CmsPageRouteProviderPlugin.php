@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CmsPage\Plugin\Router;
 use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 use SprykerShop\Yves\Router\Route\RouteCollection;
 
-class PreviewRouteProviderPlugin extends AbstractRouteProviderPlugin
+class CmsPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     public const ROUTE_PREVIEW = 'cms-preview';
     public const PARAM_PAGE = 'page';
