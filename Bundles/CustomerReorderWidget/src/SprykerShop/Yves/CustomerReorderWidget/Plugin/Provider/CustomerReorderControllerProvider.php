@@ -11,7 +11,7 @@ use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\CustomerReorderWidget\Plugin\Router\CustomerReorderRouteProviderPlugin` instead.
+ * @deprecated Use `\SprykerShop\Yves\CustomerReorderWidget\Plugin\Router\CustomerReorderWidgetRouteProviderPlugin` instead.
  */
 class CustomerReorderControllerProvider extends AbstractYvesControllerProvider
 {

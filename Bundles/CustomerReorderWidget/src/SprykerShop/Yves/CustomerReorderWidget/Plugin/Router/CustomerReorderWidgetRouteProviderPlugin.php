@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CustomerReorderWidget\Plugin\Router;
 use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 use SprykerShop\Yves\Router\Route\RouteCollection;
 
-class CustomerReorderRouteProviderPlugin extends AbstractRouteProviderPlugin
+class CustomerReorderWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     protected const ROUTE_CART_ORDER_REPEAT = 'customer/order/reorder';
     protected const ROUTE_CART_ORDER_ITEMS_REPEAT = 'customer/order/reorder-items';
