@@ -19,6 +19,14 @@ interface RouterEnvironmentConfigConstantsYves
 
     /**
      * Specification:
+     * - Path to where the cache files should be written to.
+     *
+     * @api
+     */
+    public const CACHE_PATH = 'ROUTER_YVES:CACHE_PATH';
+
+    /**
+     * Specification:
      * - If option set to true, the application will check if the request is secure and not excluded from https.
      * - If request is not secure and not excluded from https, the application will return a redirect response.
      * - If request is secure and page is excluded from https, the application will allow http.
