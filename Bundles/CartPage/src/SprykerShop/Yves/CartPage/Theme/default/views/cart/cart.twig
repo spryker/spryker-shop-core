@@ -100,7 +100,12 @@
                     {% endwidget %}
 
                     {% if (not is_granted('ROLE_USER') or data.isQuoteEditable) and can('SeePricePermissionPlugin') %}
-                        {% widget 'DiscountVoucherFormWidget' only %}
+                        {% widget 'CartCodeFormWidget' args [data.cart] only %}
+                            {% block body %}
+                                {{ parent() }}
+                                <hr />
+                            {% endblock %}
+                        {% elsewidget 'DiscountVoucherFormWidget' only %}
                             {% block body %}
                                 {{ parent() }}
                                 <hr />

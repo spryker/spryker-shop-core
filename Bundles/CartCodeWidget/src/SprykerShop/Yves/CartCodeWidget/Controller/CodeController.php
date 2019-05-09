@@ -5,19 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\DiscountWidget\Controller;
+namespace SprykerShop\Yves\CartCodeWidget\Controller;
 
+use SprykerShop\Yves\CartCodeWidget\Form\CartCodeForm;
 use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
-use SprykerShop\Yves\DiscountWidget\Form\CartVoucherForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated TODO: add description + alternative
- *
- * @method \SprykerShop\Yves\DiscountWidget\DiscountWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\CartCodeWidget\CartCodeWidgetFactory getFactory()
  */
-class VoucherController extends AbstractController
+class CodeController extends AbstractController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -27,18 +25,18 @@ class VoucherController extends AbstractController
     public function addAction(Request $request)
     {
         $form = $this->getFactory()
-            ->getCartVoucherForm()
+            ->getCartCodeForm()
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $voucherCode = $form->get(CartVoucherForm::FIELD_VOUCHER_CODE)->getData();
+            $code = (string)$form->get(CartCodeForm::FIELD_CODE)->getData();
 
             $this->getFactory()
-                ->createVoucherHandler()
-                ->add($voucherCode);
+                ->getCartCodeClient()
+                ->addCode($code);
         }
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART); // TODO: redirect to the same page where the request came from
     }
 
     /**
@@ -48,14 +46,14 @@ class VoucherController extends AbstractController
      */
     public function removeAction(Request $request)
     {
-        $voucherCode = $request->query->get('code');
-        if (!empty($voucherCode)) {
+        $code = $request->query->get('code');
+        if (!empty($code)) {
             $this->getFactory()
-                ->createVoucherHandler()
-                ->remove($voucherCode);
+                ->getCartCodeClient()
+                ->removeCode($code);
         }
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART); // TODO: redirect to the same page where the request came from
     }
 
     /**
@@ -63,8 +61,10 @@ class VoucherController extends AbstractController
      */
     public function clearAction()
     {
-        $this->getFactory()->createVoucherHandler()->clear();
+        $this->getFactory()
+            ->getCartCodeClient()
+            ->clearCodes();
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
+        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART); // TODO: redirect to the same page where the request came from
     }
 }

@@ -5,12 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CartPage\Dependency\Client;
+namespace SprykerShop\Yves\CartCodeWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CartPageToQuoteClientInterface
+interface CartCodeWidgetToQuoteClientInterface
 {
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote();
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

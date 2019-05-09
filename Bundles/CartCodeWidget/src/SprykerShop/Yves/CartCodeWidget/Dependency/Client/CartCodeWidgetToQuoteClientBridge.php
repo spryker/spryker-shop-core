@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CartPage\Dependency\Client;
+namespace SprykerShop\Yves\CartCodeWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class CartPageToQuoteClientBridge implements CartPageToQuoteClientInterface
+class CartCodeWidgetToQuoteClientBridge implements CartCodeWidgetToQuoteClientInterface
 {
     /**
      * @var \Spryker\Client\Quote\QuoteClientInterface
@@ -22,6 +22,14 @@ class CartPageToQuoteClientBridge implements CartPageToQuoteClientInterface
     public function __construct($quoteClient)
     {
         $this->quoteClient = $quoteClient;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote()
+    {
+        return $this->quoteClient->getQuote();
     }
 
     /**

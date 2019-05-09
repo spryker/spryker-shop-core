@@ -1,14 +1,14 @@
 {% extends template('page-layout-checkout', 'CheckoutPage') %}
 
-{# TODO: fix paymentMethod#}
 {% define data = {
+    cart: _view.quoteTransfer,
     backUrl: _view.previousStepUrl,
     transfer: _view.quoteTransfer,
     cartItems: _view.cartItems,
     shippingAddress: _view.quoteTransfer.shippingAddress,
     billingAddress: _view.quoteTransfer.billingAddress,
     shipmentMethod: _view.quoteTransfer.shipment.method.name,
-    paymentMethod: _view.quoteTransfer.payment ? _view.quoteTransfer.payment.paymentMethod : null,
+    paymentMethod: _view.quoteTransfer.payment.paymentMethod,
 
     forms: {
         summary: _view.summaryForm
@@ -122,7 +122,8 @@
             {% endif %}
 
             <div class="box">
-                {% widget 'CheckoutVoucherFormWidget' args [data.transfer] only %}
+                {% widget 'CartCodeFormWidget' args [data.transfer] only %}
+                {% elsewidget 'CheckoutVoucherFormWidget' args [data.transfer] only %}
                 {% elsewidget 'CheckoutVoucherFormWidgetPlugin' args [data.transfer] only %} {# @deprecated Use CheckoutVoucherFormWidget instead. #}
                 {% endwidget %}
             </div>
@@ -142,12 +143,19 @@
                     }
                 },
                 embed: {
-                    overview: data.overview
+                    overview: data.overview,
+                    cart: data.cart
                 }
             } only %}
                 {% block body %}
                     {% include molecule('summary-overview', 'CheckoutPage') with {
                         data: embed.overview
+                    } only %}
+
+                    {% include molecule('gift-card-payment-summary', 'GiftCardWidget') ignore missing with {
+                        data: {
+                            cart: embed.cart
+                        }
                     } only %}
 
                     <hr />
