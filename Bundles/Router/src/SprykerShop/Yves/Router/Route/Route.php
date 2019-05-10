@@ -18,7 +18,13 @@ class Route extends SymfonyRoute
      */
     public function setMethods($method)
     {
-        parent::setMethods(explode('|', $method));
+        if (is_string($method)) {
+            parent::setMethods(explode('|', $method));
+
+            return $this;
+        }
+
+        parent::setMethods($method);
 
         return $this;
     }
