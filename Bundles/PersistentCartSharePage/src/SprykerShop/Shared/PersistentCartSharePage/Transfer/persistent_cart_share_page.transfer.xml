@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+
 <transfers xmlns="spryker:transfer-01"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
@@ -8,9 +9,30 @@
         <property name="parameters" type="array"/>
     </transfer>
 
+    <transfer name="QuoteResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="quoteTransfer" type="Quote"/>
+        <property name="errors" type="QuoteError[]" />
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item" />
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string" />
+    </transfer>
+
+    <transfer name="QuoteError">
+        <property name="message" type="string" />
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string" />
+    </transfer>
+
     <transfer name="ResourceShareData">
         <property name="data" type="array"/>
-        <property name="idQuote" type="int"/>
         <property name="shareOption" type="string"/>
     </transfer>
 
