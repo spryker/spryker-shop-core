@@ -11,6 +11,22 @@
 
     <transfer name="ResourceShareRequest">
         <property name="resourceShare" type="ResourceShare" />
+        <property name="customer" type="Customer" />
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string" />
+    </transfer>
+
+    <transfer name="ResourceShareResponse">
+        <property name="isSuccessful" type="bool" />
+        <property name="resourceShare" type="ResourceShare" />
+        <property name="isLoginRequired" type="bool" />
+        <property name="messages" type="Message[]" singular="message" />
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string" />
     </transfer>
 
     <transfer name="ResourceShare">
