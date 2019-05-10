@@ -27,7 +27,7 @@ class ResourceSharePageToMessengerClientBridge implements ResourceSharePageToMes
      *
      * @return void
      */
-    public function addErrorMessage(string $message): void
+    public function addErrorMessage($message)
     {
         $this->messengerClient->addErrorMessage($message);
     }
