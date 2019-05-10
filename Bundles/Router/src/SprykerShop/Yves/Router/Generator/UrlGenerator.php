@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\Router\Generator;
 
-use SprykerShop\Yves\Router\Route\Route;
 use SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouterEnhancerAwareInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
@@ -53,8 +52,6 @@ class UrlGenerator extends SymfonyUrlGenerator implements RouterEnhancerAwareInt
             throw new RouteNotFoundException(sprintf('Could not find a route by name "%s" in the current route collection.', $name));
         }
 
-        $parameters = $this->convertParameters($parameters, $route);
-
         $generatedUrl = parent::generate($name, $parameters, $referenceType);
 
         foreach (array_reverse($this->routerEnhancerPlugins) as $routerEnhancerPlugin) {
@@ -62,26 +59,6 @@ class UrlGenerator extends SymfonyUrlGenerator implements RouterEnhancerAwareInt
         }
 
         return $generatedUrl;
-    }
-
-    /**
-     * @param array $parameters
-     * @param \SprykerShop\Yves\Router\Route\Route $route
-     *
-     * @return array
-     */
-    protected function convertParameters(array $parameters, Route $route)
-    {
-        $converters = $route->getOption('_converters');
-        foreach ($parameters as $name => $value) {
-            if (!isset($converters[$name]) || !isset($parameters[$name])) {
-                continue;
-            }
-
-            $parameters[$name] = $converters[$name]($value, $this->getRequest());
-        }
-
-        return $parameters;
     }
 
     /**

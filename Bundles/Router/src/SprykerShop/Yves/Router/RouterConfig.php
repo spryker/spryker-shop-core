@@ -27,6 +27,17 @@ class RouterConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return array
+     */
+    public function getFallbackRouterConfiguration(): array
+    {
+        $routerConfiguration = $this->getRouterConfiguration();
+        $routerConfiguration['cache_dir'] = null;
+
+        return $routerConfiguration;
+    }
+
+    /**
      * @return string|null
      */
     protected function getCachePathIfCacheEnabled(): ?string

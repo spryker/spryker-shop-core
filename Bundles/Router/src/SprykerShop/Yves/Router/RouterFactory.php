@@ -47,7 +47,7 @@ class RouterFactory extends AbstractFactory
             $this->createClosureLoader(),
             $this->createResource(),
             $this->getRouterEnhancerPlugins(),
-            $this->getConfig()->getRouterConfiguration()
+            $this->getConfig()->getFallbackRouterConfiguration()
         );
     }
 
@@ -102,5 +102,18 @@ class RouterFactory extends AbstractFactory
     protected function getRouterEnhancerPlugins(): array
     {
         return $this->getProvidedDependency(RouterDependencyProvider::ROUTER_ENHANCER_PLUGINS);
+    }
+
+    /**
+     * @return RouterInterface
+     */
+    public function createYvesFallbackRouter(): RouterInterface
+    {
+        return new Router(
+            $this->createClosureLoader(),
+            $this->createResource(),
+            $this->getRouterEnhancerPlugins(),
+            $this->getConfig()->getFallbackRouterConfiguration()
+        );
     }
 }
