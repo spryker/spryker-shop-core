@@ -105,7 +105,7 @@ class RouterFactory extends AbstractFactory
     }
 
     /**
-     * @return RouterInterface
+     * @return \SprykerShop\Yves\Router\Router\RouterInterface
      */
     public function createYvesFallbackRouter(): RouterInterface
     {
