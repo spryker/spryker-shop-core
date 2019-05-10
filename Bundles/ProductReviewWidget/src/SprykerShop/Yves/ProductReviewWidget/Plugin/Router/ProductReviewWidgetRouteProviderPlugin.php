@@ -40,7 +40,7 @@ class ProductReviewWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addProductReviewRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/product-review/index/{idProductAbstract}', 'ProductReviewWidget', 'Index', 'indexAction');
-        $route = $route->assert('idProductAbstract', static::ID_ABSTRACT_PRODUCT_REGEX);
+        $route = $route->setRequirement('idProductAbstract', static::ID_ABSTRACT_PRODUCT_REGEX);
         $routeCollection->add(static::ROUTE_PRODUCT_REVIEW_INDEX, $route);
 
         return $routeCollection;
@@ -54,7 +54,7 @@ class ProductReviewWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addProductReviewSubmitRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/product-review/submit/{idProductAbstract}', 'ProductReviewWidget', 'Submit', 'indexAction');
-        $route = $route->assert('idProductAbstract', static::ID_ABSTRACT_PRODUCT_REGEX);
+        $route = $route->setRequirement('idProductAbstract', static::ID_ABSTRACT_PRODUCT_REGEX);
         $routeCollection->add(static::ROUTE_PRODUCT_REVIEW_SUBMIT, $route);
 
         return $routeCollection;
@@ -68,7 +68,7 @@ class ProductReviewWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addProductReviewCreateRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/product-review/create/{idProductAbstract}', 'ProductReviewWidget', 'Create', 'indexAction');
-        $route = $route->assert('idProductAbstract', static::ID_ABSTRACT_PRODUCT_REGEX);
+        $route = $route->setRequirement('idProductAbstract', static::ID_ABSTRACT_PRODUCT_REGEX);
         $routeCollection->add(static::ROUTE_PRODUCT_REVIEW_CREATE, $route);
 
         return $routeCollection;

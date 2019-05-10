@@ -50,7 +50,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCheckoutIndexRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/checkout', 'CheckoutPage', 'Checkout', 'indexAction');
-        $route = $route->method('GET|POST');
+        $route = $route->setMethods('GET|POST');
         $routeCollection->add(static::CHECKOUT_INDEX, $route);
 
         return $routeCollection;
@@ -64,7 +64,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCustomerStepRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/checkout/customer', 'CheckoutPage', 'Checkout', 'customerAction');
-        $route = $route->method('GET|POST');
+        $route = $route->setMethods('GET|POST');
         $routeCollection->add(static::CHECKOUT_CUSTOMER, $route);
 
         return $routeCollection;
@@ -78,7 +78,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addAddressStepRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/checkout/address', 'CheckoutPage', 'Checkout', 'addressAction');
-        $route = $route->method('GET|POST');
+        $route = $route->setMethods('GET|POST');
         $routeCollection->add(static::CHECKOUT_ADDRESS, $route);
 
         return $routeCollection;
@@ -92,7 +92,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addShipmentStepRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/checkout/shipment', 'CheckoutPage', 'Checkout', 'shipmentAction');
-        $route = $route->method('GET|POST');
+        $route = $route->setMethods('GET|POST');
         $routeCollection->add(static::CHECKOUT_SHIPMENT, $route);
 
         return $routeCollection;
@@ -106,7 +106,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addPaymentStepRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/checkout/payment', 'CheckoutPage', 'Checkout', 'paymentAction');
-        $route = $route->method('GET|POST');
+        $route = $route->setMethods('GET|POST');
         $routeCollection->add(static::CHECKOUT_PAYMENT, $route);
 
         return $routeCollection;
@@ -120,7 +120,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCheckoutSummaryStepRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/checkout/summary', 'CheckoutPage', 'Checkout', 'summaryAction');
-        $route = $route->method('GET|POST');
+        $route = $route->setMethods('GET|POST');
         $routeCollection->add(static::CHECKOUT_SUMMARY, $route);
 
         return $routeCollection;
@@ -134,7 +134,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addPlaceOrderStepRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/checkout/place-order', 'CheckoutPage', 'Checkout', 'placeOrderAction');
-        $route = $route->method('GET|POST');
+        $route = $route->setMethods('GET|POST');
         $routeCollection->add(static::CHECKOUT_PLACE_ORDER, $route);
 
         return $routeCollection;
@@ -148,7 +148,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCheckoutErrorRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/checkout/error', 'CheckoutPage', 'Checkout', 'errorAction');
-        $route = $route->method('GET|POST');
+        $route = $route->setMethods('GET|POST');
         $routeCollection->add(static::CHECKOUT_ERROR, $route);
 
         return $routeCollection;
@@ -162,7 +162,7 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCheckoutSuccessRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/checkout/success', 'CheckoutPage', 'Checkout', 'successAction');
-        $route = $route->method('GET|POST');
+        $route = $route->setMethods('GET|POST');
         $routeCollection->add(static::CHECKOUT_SUCCESS, $route);
 
         return $routeCollection;

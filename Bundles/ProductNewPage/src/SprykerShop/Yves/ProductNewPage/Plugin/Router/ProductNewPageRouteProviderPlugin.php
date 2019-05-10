@@ -34,8 +34,8 @@ class ProductNewPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addNewProductsRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/new{categoryPath}', 'ProductNewPage', 'NewProducts', 'indexAction');
-        $route = $route->assert('categoryPath', '\/.+');
-        $route = $route->value('categoryPath', null);
+        $route = $route->setRequirement('categoryPath', '\/.+');
+        $route = $route->setDefault('categoryPath', null);
 
         $routeCollection->add(static::ROUTE_NEW_PRODUCTS, $route);
 

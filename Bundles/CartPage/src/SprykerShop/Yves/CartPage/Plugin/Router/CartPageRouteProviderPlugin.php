@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\CartPage\Plugin\Router;
 
 use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 use SprykerShop\Yves\Router\Route\RouteCollection;
-use Symfony\Component\HttpFoundation\Request;
 
 class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -48,8 +47,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addCartRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/cart', 'CartPage', 'Cart')
-            ->convert('selectedAttributes', [$this, 'getSelectedAttributesFromRequest']);
+        $route = $this->buildRoute('/cart', 'CartPage', 'Cart');
 
         $routeCollection->add(self::ROUTE_CART, $route);
 
@@ -78,9 +76,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCartAddRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart/add/{sku}', 'CartPage', 'Cart', 'add')
-            ->assert('sku', self::SKU_PATTERN)
-            ->convert('quantity', [$this, 'getQuantityFromRequest'])
-            ->convert('optionValueIds', [$this, 'getProductOptionsFromRequest']);
+            ->setRequirement('sku', self::SKU_PATTERN);
 
         $routeCollection->add(self::ROUTE_CART_ADD, $route);
 
@@ -98,8 +94,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCartQuickAddRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart/quick-add/{sku}', 'CartPage', 'Cart', 'quickAdd')
-            ->assert('sku', static::SKU_PATTERN)
-            ->convert('quantity', [$this, 'getQuantityFromRequest']);
+            ->setRequirement('sku', static::SKU_PATTERN);
 
         $routeCollection->add(self::ROUTE_CART_QUICK_ADD, $route);
 
@@ -114,8 +109,8 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCartRemoveRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart/remove/{sku}/{groupKey}', 'CartPage', 'Cart', 'remove')
-            ->assert('sku', self::SKU_PATTERN)
-            ->value('groupKey', '');
+            ->setRequirement('sku', self::SKU_PATTERN)
+            ->setDefault('groupKey', '');
 
         $routeCollection->add(self::ROUTE_CART_REMOVE, $route);
 
@@ -130,10 +125,8 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCartChangeQuantityRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart/change/{sku}', 'CartPage', 'Cart', 'change')
-            ->assert('sku', self::SKU_PATTERN)
-            ->convert('quantity', [$this, 'getQuantityFromRequest'])
-            ->convert('groupKey', [$this, 'getGroupKeyFromRequest'])
-            ->method('POST');
+            ->setRequirement('sku', self::SKU_PATTERN)
+            ->setMethods('POST');
 
         $routeCollection->add(self::ROUTE_CART_CHANGE_QUANTITY, $route);
 
@@ -148,90 +141,10 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCartUpdateRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildPostRoute('/cart/update/{sku}', 'CartPage', 'Cart', 'update')
-            ->assert('sku', self::SKU_PATTERN)
-            ->convert('quantity', [$this, 'getQuantityFromRequest'])
-            ->convert('groupKey', [$this, 'getGroupKeyFromRequest'])
-            ->convert('selectedAttributes', [$this, 'getSelectedAttributesFromRequest'])
-            ->convert('preselectedAttributes', [$this, 'getPreSelectedAttributesFromRequest'])
-            ->convert('optionValueIds', [$this, 'getProductOptionsFromRequest']);
+            ->setRequirement('sku', self::SKU_PATTERN);
 
         $routeCollection->add(self::ROUTE_CART_UPDATE, $route);
 
         return $routeCollection;
-    }
-
-    /**
-     * @param mixed $unusedParameter
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return int
-     */
-    public function getQuantityFromRequest($unusedParameter, Request $request)
-    {
-        if ($request->isMethod('POST')) {
-            return $request->request->getInt('quantity', 1);
-        }
-
-        return $request->query->getInt('quantity', 1);
-    }
-
-    /**
-     * @param mixed $unusedParameter
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return int
-     */
-    public function getSelectedAttributesFromRequest($unusedParameter, Request $request)
-    {
-        if ($request->isMethod('POST')) {
-            return $request->request->get('selectedAttributes', []);
-        }
-
-        return $request->query->get('selectedAttributes', []);
-    }
-
-    /**
-     * @param mixed $unusedParameter
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return int
-     */
-    public function getPreSelectedAttributesFromRequest($unusedParameter, Request $request)
-    {
-        if ($request->isMethod('POST')) {
-            return $request->request->get('preselectedAttributes', []);
-        }
-
-        return $request->query->get('preselectedAttributes', []);
-    }
-
-    /**
-     * @param mixed $unusedParameter
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return int
-     */
-    public function getProductOptionsFromRequest($unusedParameter, Request $request)
-    {
-        if ($request->isMethod('POST')) {
-            return $request->request->get('product-option', []);
-        }
-
-        return $request->query->get('product-option', []);
-    }
-
-    /**
-     * @param mixed $unusedParameter
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return int
-     */
-    public function getGroupKeyFromRequest($unusedParameter, Request $request)
-    {
-        if ($request->isMethod('POST')) {
-            return $request->request->get('groupKey');
-        }
-
-        return $request->query->get('groupKey');
     }
 }

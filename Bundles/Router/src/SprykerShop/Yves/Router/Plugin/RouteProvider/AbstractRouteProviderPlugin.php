@@ -35,7 +35,7 @@ abstract class AbstractRouteProviderPlugin extends AbstractPlugin implements Rou
     protected function buildGetRoute(string $path, string $moduleName, string $controllerName, string $actionName = 'index'): Route
     {
         return $this->buildRoute($path, $moduleName, $controllerName, $actionName)
-            ->method(Request::METHOD_GET);
+            ->setMethods(Request::METHOD_GET);
     }
 
     /**
@@ -43,14 +43,13 @@ abstract class AbstractRouteProviderPlugin extends AbstractPlugin implements Rou
      * @param string $moduleName
      * @param string $controllerName
      * @param string $actionName
-     * @param bool $parseJsonBody
      *
      * @return \SprykerShop\Yves\Router\Route\Route
      */
-    protected function buildPostRoute(string $path, string $moduleName, string $controllerName, string $actionName = 'index', bool $parseJsonBody = false): Route
+    protected function buildPostRoute(string $path, string $moduleName, string $controllerName, string $actionName = 'index'): Route
     {
-        return $this->buildRoute($path, $moduleName, $controllerName, $actionName, $parseJsonBody)
-            ->method(Request::METHOD_POST);
+        return $this->buildRoute($path, $moduleName, $controllerName, $actionName)
+            ->setMethods(Request::METHOD_POST);
     }
 
     /**
@@ -58,14 +57,16 @@ abstract class AbstractRouteProviderPlugin extends AbstractPlugin implements Rou
      * @param string $moduleName
      * @param string $controllerName
      * @param string $actionName
-     * @param bool $parseJsonBody
      *
      * @return \SprykerShop\Yves\Router\Route\Route
      */
-    protected function buildRoute(string $path, string $moduleName, string $controllerName, string $actionName = 'indexAction', bool $parseJsonBody = false): Route
+    protected function buildRoute(string $path, string $moduleName, string $controllerName, string $actionName = 'indexAction'): Route
     {
         $route = new Route($path);
 
+        if (preg_match('/Action$/', $actionName) === 0) {
+            $actionName .= 'Action';
+        }
         $moduleNameControllerAction = new BundleControllerAction($moduleName, $controllerName, $actionName);
         $controllerResolver = new ControllerResolver();
         $controller = $controllerResolver->resolve($moduleNameControllerAction);
@@ -81,28 +82,7 @@ abstract class AbstractRouteProviderPlugin extends AbstractPlugin implements Rou
         $route->setDefault('_controller', [get_class($controller), $actionName]);
         $route->setDefault('_template', $template);
 
-        if ($parseJsonBody) {
-            $this->addJsonParsing($route);
-        }
-
         return $route;
-    }
-
-    /**
-     * @param \SprykerShop\Yves\Router\Route\Route $route
-     *
-     * @return void
-     */
-    private function addJsonParsing(Route $route)
-    {
-        $route->before(function (Request $request) {
-            $isJson = (strpos($request->headers->get('Content-Type'), 'application/json') === 0);
-
-            if ($isJson) {
-                $data = json_decode($request->getContent(), true);
-                $request->request->replace(is_array($data) ? $data : []);
-            }
-        });
     }
 
     /**

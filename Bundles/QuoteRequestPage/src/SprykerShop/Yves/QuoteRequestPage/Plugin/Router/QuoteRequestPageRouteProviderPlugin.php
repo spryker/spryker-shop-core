@@ -88,7 +88,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuoteRequestReviseRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quote-request/revise/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestRevise', 'indexAction');
-        $route = $route->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+        $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
         $routeCollection->add(static::ROUTE_QUOTE_REQUEST_REVISE, $route);
 
         return $routeCollection;
@@ -104,7 +104,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuoteRequestEditRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quote-request/edit/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestEdit', 'indexAction');
-        $route = $route->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+        $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
         $routeCollection->add(static::ROUTE_QUOTE_REQUEST_EDIT, $route);
 
         return $routeCollection;
@@ -120,7 +120,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuoteRequestEditItemsRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quote-request/edit-items/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestEditItems', 'indexAction');
-        $route = $route->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+        $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
         $routeCollection->add(static::ROUTE_QUOTE_REQUEST_EDIT_ITEMS, $route);
 
         return $routeCollection;
@@ -136,7 +136,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuoteRequestEditItemsConfirmRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quote-request/edit-items-confirm/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestEditItems', 'confirmAction');
-        $route = $route->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+        $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
         $routeCollection->add(static::ROUTE_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM, $route);
 
         return $routeCollection;
@@ -152,7 +152,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuoteRequestSendToUserRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quote-request/send-to-user/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestEdit', 'sendToUserAction');
-        $route = $route->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+        $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
         $routeCollection->add(static::ROUTE_QUOTE_REQUEST_SEND_TO_USER, $route);
 
         return $routeCollection;
@@ -168,7 +168,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuoteRequestCancelRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quote-request/cancel/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestDelete', 'cancelAction');
-        $route = $route->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+        $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
         $routeCollection->add(static::ROUTE_QUOTE_REQUEST_CANCEL, $route);
 
         return $routeCollection;
@@ -184,7 +184,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuoteRequestDetailsRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quote-request/details/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestView', 'detailsAction');
-        $route = $route->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+        $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
         $routeCollection->add(static::ROUTE_QUOTE_REQUEST_DETAILS, $route);
 
         return $routeCollection;
@@ -200,7 +200,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuoteRequestConvertToCartRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quote-request/convert-to-cart/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestCheckout', 'convertToCartAction');
-        $route = $route->assert(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+        $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
         $routeCollection->add(static::ROUTE_QUOTE_REQUEST_CONVERT_TO_CART, $route);
 
         return $routeCollection;

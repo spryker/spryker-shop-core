@@ -76,7 +76,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addUpdateWishlistRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/wishlist/update/{wishlistName}', 'WishlistPage', 'WishlistOverview', 'updateAction');
-        $route = $route->assert('wishlistName', '.+');
+        $route = $route->setRequirement('wishlistName', '.+');
         $routeCollection->add(static::ROUTE_WISHLIST_UPDATE, $route);
 
         return $routeCollection;
@@ -90,7 +90,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addDeleteWishlistRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/wishlist/delete/{wishlistName}', 'WishlistPage', 'WishlistOverview', 'deleteAction');
-        $route = $route->assert('wishlistName', '.+');
+        $route = $route->setRequirement('wishlistName', '.+');
         $routeCollection->add(static::ROUTE_WISHLIST_DELETE, $route);
 
         return $routeCollection;
@@ -104,7 +104,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addWishlistDetailsRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/wishlist/details/{wishlistName}', 'WishlistPage', 'Wishlist', 'indexAction');
-        $route = $route->assert('wishlistName', '.+');
+        $route = $route->setRequirement('wishlistName', '.+');
         $routeCollection->add(static::ROUTE_WISHLIST_DETAILS, $route);
 
         return $routeCollection;
@@ -144,7 +144,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addMoveToCartRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/wishlist/move-to-cart', 'WishlistPage', 'Wishlist', 'moveToCartAction');
-        $route = $route->assert('sku', '[a-zA-Z0-9-_]+');
+        $route = $route->setRequirement('sku', '[a-zA-Z0-9-_]+');
         $routeCollection->add(static::ROUTE_MOVE_TO_CART, $route);
 
         return $routeCollection;
@@ -158,7 +158,7 @@ class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addMoveAllAvailableToCartRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/wishlist/move-all-available-to-cart/{wishlistName}', 'WishlistPage', 'Wishlist', 'moveAllAvailableToCartAction');
-        $route = $route->assert('wishlistName', '.+');
+        $route = $route->setRequirement('wishlistName', '.+');
         $routeCollection->add(static::ROUTE_MOVE_ALL_AVAILABLE_TO_CART, $route);
 
         return $routeCollection;

@@ -44,7 +44,7 @@ class QuoteApprovalWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuoteApprovalApproveRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quote-approval/approve/{idQuoteApproval}', 'QuoteApprovalWidget', 'QuoteApproval', 'approveAction');
-        $route = $route->assert('idQuoteApproval', static::PATTERN_ID);
+        $route = $route->setRequirement('idQuoteApproval', static::PATTERN_ID);
         $routeCollection->add(static::ROUTE_QUOTE_APPROVAL_APPROVE, $route);
 
         return $routeCollection;
@@ -60,7 +60,7 @@ class QuoteApprovalWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addQuoteApprovalDeclineRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quote-approval/decline/{idQuoteApproval}', 'QuoteApprovalWidget', 'QuoteApproval', 'declineAction');
-        $route = $route->assert('idQuoteApproval', static::PATTERN_ID);
+        $route = $route->setRequirement('idQuoteApproval', static::PATTERN_ID);
         $routeCollection->add(static::ROUTE_QUOTE_APPROVAL_DECLINE, $route);
 
         return $routeCollection;
@@ -91,7 +91,7 @@ class QuoteApprovalWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addRemoveQuoteApprovalRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/quote-approval/{idQuoteApproval}/remove', 'QuoteApprovalWidget', 'QuoteApproval', 'removeQuoteApprovalAction');
-        $route = $route->assert('idQuoteApproval', static::PATTERN_ID);
+        $route = $route->setRequirement('idQuoteApproval', static::PATTERN_ID);
         $routeCollection->add(static::ROUTE_QUOTE_APPROVAL_REMOVE, $route);
 
         return $routeCollection;

@@ -32,11 +32,11 @@ class CartController extends AbstractController
     protected const FIELD_QUANTITY_TO_NORMALIZE = 'quantity';
 
     /**
-     * @param array|null $selectedAttributes
+     * @param array $selectedAttributes
      *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function indexAction(?array $selectedAttributes = null)
+    public function indexAction(array $selectedAttributes = [])
     {
         $viewData = $this->executeIndexAction($selectedAttributes);
 
@@ -48,11 +48,11 @@ class CartController extends AbstractController
     }
 
     /**
-     * @param array|null $selectedAttributes
+     * @param array $selectedAttributes
      *
      * @return array
      */
-    protected function executeIndexAction(?array $selectedAttributes): array
+    protected function executeIndexAction(array $selectedAttributes = []): array
     {
         $validateQuoteResponseTransfer = $this->getFactory()
             ->getCartClient()
@@ -85,14 +85,14 @@ class CartController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $sku
      * @param int $quantity
      * @param array $optionValueIds
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function addAction($sku, $quantity, array $optionValueIds, Request $request)
+    public function addAction(Request $request, $sku, $quantity = 1, array $optionValueIds = [])
     {
         if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
@@ -133,7 +133,7 @@ class CartController extends AbstractController
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
-        return $this->executeQuickAddAction($sku, $quantity, $request);
+        return $this->executeQuickAddAction($sku, $quantity);
     }
 
     /**
@@ -194,7 +194,7 @@ class CartController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function changeAction($sku, $quantity, $groupKey = null)
+    public function changeAction($sku, $quantity = 1, $groupKey = null)
     {
         if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
@@ -250,7 +250,7 @@ class CartController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function updateAction($sku, $quantity, array $selectedAttributes, array $preselectedAttributes, $groupKey = null, array $optionValueIds = [])
+    public function updateAction($sku, $quantity = 1, array $selectedAttributes = [], array $preselectedAttributes = [], $groupKey = null, array $optionValueIds = [])
     {
         if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);

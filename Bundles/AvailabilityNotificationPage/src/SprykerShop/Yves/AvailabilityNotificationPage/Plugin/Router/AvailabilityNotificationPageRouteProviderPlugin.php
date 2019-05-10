@@ -34,7 +34,7 @@ class AvailabilityNotificationPageRouteProviderPlugin extends AbstractRouteProvi
     protected function addAvailabilityNotificationUnsubscribeRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/availability-notification/unsubscribe-by-key/{subscriptionKey}', 'AvailabilityNotificationPage', 'AvailabilityNotificationPage', 'unsubscribeByKeyAction');
-        $route = $route->assert('subscriptionKey', '[0-9A-Za-z]{32}');
+        $route = $route->setRequirement('subscriptionKey', '[0-9A-Za-z]{32}');
         $routeCollection->add(static::ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE, $route);
 
         return $routeCollection;

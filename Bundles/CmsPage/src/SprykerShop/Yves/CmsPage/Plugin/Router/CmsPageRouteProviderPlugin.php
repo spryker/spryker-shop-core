@@ -35,7 +35,7 @@ class CmsPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCmsPreviewRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cms/preview/{page}', 'CmsPage', 'Preview', 'indexAction');
-        $route = $route->assert(static::PARAM_PAGE, '[0-9]+');
+        $route = $route->setRequirement(static::PARAM_PAGE, '[0-9]+');
         $routeCollection->add(static::ROUTE_PREVIEW, $route);
 
         return $routeCollection;

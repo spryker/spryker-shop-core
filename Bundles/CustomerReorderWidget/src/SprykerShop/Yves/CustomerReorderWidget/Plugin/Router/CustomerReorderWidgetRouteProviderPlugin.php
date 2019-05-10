@@ -39,7 +39,7 @@ class CustomerReorderWidgetRouteProviderPlugin extends AbstractRouteProviderPlug
     protected function addReorderRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/customer/order/{idSalesOrder}/reorder', 'CustomerReorderWidget', 'Order', 'reorderAction');
-        $route = $route->assert('idSalesOrder', static::PATTERN_ID);
+        $route = $route->setRequirement('idSalesOrder', static::PATTERN_ID);
         $routeCollection->add(static::ROUTE_CART_ORDER_REPEAT, $route);
 
         return $routeCollection;
@@ -55,7 +55,7 @@ class CustomerReorderWidgetRouteProviderPlugin extends AbstractRouteProviderPlug
     protected function addReorderItemsRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/customer/order/reorder-items', 'CustomerReorderWidget', 'Order', 'reorderItemsAction');
-        $route = $route->method('POST');
+        $route = $route->setMethods('POST');
         $routeCollection->add(static::ROUTE_CART_ORDER_ITEMS_REPEAT, $route);
 
         return $routeCollection;

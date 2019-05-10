@@ -81,7 +81,7 @@ class DiscountWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCheckoutVoucherRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/checkout/add-voucher', 'DiscountWidget', 'Checkout', 'addVoucherAction');
-        $route = $route->method('GET|POST');
+        $route = $route->setMethods('GET|POST');
         $routeCollection->add(static::CHECKOUT_VOUCHER_ADD, $route);
 
         return $routeCollection;
