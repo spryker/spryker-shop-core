@@ -37,7 +37,7 @@
     <div class="box">
         {% block breadcrumbs %}{% endblock %}
         {% block title %}
-            {{ parent() }}
+            <h3>{{ 'persistent_cart_share_page.preview'|trans({'%title%': data.cart.name}) }}</h3>
         {% endblock %}
     </div>
 {% endblock %}
