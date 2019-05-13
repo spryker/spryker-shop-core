@@ -33,10 +33,8 @@ class PriceWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addPriceModeSwitchRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $routeCollection->add(
-            static::ROUTE_PRICE_SWITCH,
-            $this->buildRoute('/price/mode-switch', 'PriceWidget', 'PriceModeSwitch')
-        );
+        $route = $this->buildRoute('/price/mode-switch', 'PriceWidget', 'PriceModeSwitch', 'indexAction');
+        $routeCollection->add(static::ROUTE_PRICE_SWITCH, $route);
 
         return $routeCollection;
     }

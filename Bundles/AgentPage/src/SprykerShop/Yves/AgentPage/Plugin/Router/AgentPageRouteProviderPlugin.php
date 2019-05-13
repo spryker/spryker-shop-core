@@ -13,7 +13,7 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 class AgentPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     public const ROUTE_LOGIN = 'agent/login';
-    public const ROUTE_LOGOUT = 'agent/logout';
+    public const ROUTE_AGENT_OVERVIEW = 'agent/overview';
 
     /**
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
@@ -23,7 +23,7 @@ class AgentPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $routeCollection = $this->addLoginRoute($routeCollection);
-        $routeCollection = $this->addLogoutRoute($routeCollection);
+        $routeCollection = $this->addOverviewRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -42,14 +42,16 @@ class AgentPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
+     * @uses \SprykerShop\Yves\AgentPage\Controller\AgentController::indexAction()
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addLogoutRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addOverviewRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/agent/logout', 'AgentPage', 'Auth', 'logoutAction');
-        $routeCollection->add(static::ROUTE_LOGOUT, $route);
+        $route = $this->buildRoute('/agent/overview', 'AgentPage', 'Agent', 'indexAction');
+        $routeCollection->add(static::ROUTE_AGENT_OVERVIEW, $route);
 
         return $routeCollection;
     }

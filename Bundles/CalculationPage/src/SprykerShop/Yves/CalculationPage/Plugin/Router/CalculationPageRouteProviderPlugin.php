@@ -34,7 +34,7 @@ class CalculationPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCalculationDebugRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/calculation/debug', 'CalculationPage', 'Debug', 'cartAction');
-        $route = $route->setMethods('GET');
+        $route = $route->setMethods(['GET']);
         $routeCollection->add(static::ROUTE_CALCULATION_DEBUG, $route);
 
         return $routeCollection;

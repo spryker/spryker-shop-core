@@ -13,9 +13,7 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 class ProductReviewWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     public const ROUTE_PRODUCT_REVIEW_INDEX = 'product-review/index';
-    public const ROUTE_PRODUCT_REVIEW_SUBMIT = 'product-review/submit';
     public const ROUTE_PRODUCT_REVIEW_CREATE = 'product-review/create';
-
     public const ID_ABSTRACT_PRODUCT_REGEX = '[1-9][0-9]*';
 
     /**
@@ -26,7 +24,6 @@ class ProductReviewWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $routeCollection = $this->addProductReviewRoute($routeCollection);
-        $routeCollection = $this->addProductReviewSubmitRoute($routeCollection);
         $routeCollection = $this->addProductReviewCreateRoute($routeCollection);
 
         return $routeCollection;
@@ -42,20 +39,6 @@ class ProductReviewWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/product-review/index/{idProductAbstract}', 'ProductReviewWidget', 'Index', 'indexAction');
         $route = $route->setRequirement('idProductAbstract', static::ID_ABSTRACT_PRODUCT_REGEX);
         $routeCollection->add(static::ROUTE_PRODUCT_REVIEW_INDEX, $route);
-
-        return $routeCollection;
-    }
-
-    /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
-     *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
-     */
-    protected function addProductReviewSubmitRoute(RouteCollection $routeCollection): RouteCollection
-    {
-        $route = $this->buildRoute('/product-review/submit/{idProductAbstract}', 'ProductReviewWidget', 'Submit', 'indexAction');
-        $route = $route->setRequirement('idProductAbstract', static::ID_ABSTRACT_PRODUCT_REGEX);
-        $routeCollection->add(static::ROUTE_PRODUCT_REVIEW_SUBMIT, $route);
 
         return $routeCollection;
     }

@@ -15,14 +15,18 @@ class FileManagerWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_FILES_DOWNLOAD = 'files/download';
 
     /**
+     * @var string
+     */
+    protected $allowedLocalesPattern;
+
+    /**
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/files/download', 'FileManagerWidget', 'Download');
-
+        $route = $this->buildRoute('/files/download', 'FileManagerWidget', 'Download', 'indexAction');
         $routeCollection->add(static::ROUTE_FILES_DOWNLOAD, $route);
 
         return $routeCollection;
