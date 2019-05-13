@@ -44,9 +44,9 @@ class ContentBannerTwigPluginTest extends Unit
 
     protected const RENDERED_STRING = 'output';
 
-    protected const MESSAGE_BANNER_NOT_FOUND = '<!-- Content Banner with ID 0 not found. -->';
-    protected const MESSAGE_BANNER_WRONG_TYPE = '<!-- content_banner could not be rendered for content item with ID 0. -->';
-    protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<!-- wrong is not supported name of template. -->';
+    protected const MESSAGE_BANNER_NOT_FOUND = '<b>Content Banner with ID 0 not found.</b>';
+    protected const MESSAGE_BANNER_WRONG_TYPE = '<b>Content Banner could not be rendered because the content item with ID 0 is not an banner.</b>';
+    protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<b>"wrong" is not supported name of template.</b>';
 
     /**
      * @var \SprykerShopTest\Yves\ContentBannerWidget\ContentBannerWidgetYvesTester
@@ -164,7 +164,7 @@ class ContentBannerTwigPluginTest extends Unit
      */
     protected function getContentBannerTwigFunction()
     {
-        $functionName = new ReflectionClassConstant(ContentBannerTwigFunction::class, 'TWIG_FUNCTION_NAME_CONTNET_BANNER');
+        $functionName = new ReflectionClassConstant(ContentBannerTwigFunction::class, 'TWIG_FUNCTION_NAME_CONTENT_BANNER');
 
         return $this->getTwig()->getFunction($functionName->getValue());
     }

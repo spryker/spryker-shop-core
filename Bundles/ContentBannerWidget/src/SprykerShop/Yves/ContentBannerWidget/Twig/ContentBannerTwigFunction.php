@@ -14,14 +14,24 @@ use Twig\Environment;
 
 class ContentBannerTwigFunction extends TwigFunction
 {
-    protected const TWIG_FUNCTION_NAME_CONTNET_BANNER = 'content_banner';
+    /**
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::TWIG_FUNCTION_NAME
+     */
+    protected const TWIG_FUNCTION_NAME_CONTENT_BANNER = 'content_banner';
 
-    protected const MESSAGE_BANNER_NOT_FOUND = '<!-- Content Banner with ID %s not found. -->';
-    protected const MESSAGE_BANNER_WRONG_TYPE = '<!-- %s could not be rendered for content item with ID %s. -->';
-    protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<!-- %s is not supported name of template. -->';
+    protected const MESSAGE_BANNER_NOT_FOUND = '<b>Content Banner with ID %s not found.</b>';
+    protected const MESSAGE_BANNER_WRONG_TYPE = '<b>Content Banner could not be rendered because the content item with ID %s is not an banner.</b>';
+    protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<b>"%s" is not supported name of template.</b>';
 
-    protected const TEMPLATE_IDENTIFIER_DEFAULT = 'default';
-    protected const TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
+    /**
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT
+     */
+    protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+
+    /**
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE
+     */
+    protected const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
 
     /**
      * @var \Twig\Environment
@@ -59,7 +69,7 @@ class ContentBannerTwigFunction extends TwigFunction
      */
     protected function getFunctionName(): string
     {
-        return static::TWIG_FUNCTION_NAME_CONTNET_BANNER;
+        return static::TWIG_FUNCTION_NAME_CONTENT_BANNER;
     }
 
     /**
@@ -94,8 +104,8 @@ class ContentBannerTwigFunction extends TwigFunction
     protected function getAvailableTemplates(): array
     {
         return [
-            static::TEMPLATE_IDENTIFIER_DEFAULT => '@ContentBannerWidget/views/banner/banner.twig',
-            static::TEMPLATE_IDENTIFIER_TOP_TITLE => '@ContentBannerWidget/views/banner/banner-top-title.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT => '@ContentBannerWidget/views/banner/banner.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE => '@ContentBannerWidget/views/banner/banner-top-title.twig',
         ];
     }
 
@@ -126,6 +136,6 @@ class ContentBannerTwigFunction extends TwigFunction
      */
     protected function getMessageBannerWrongType(int $idContent)
     {
-        return sprintf(static::MESSAGE_BANNER_WRONG_TYPE, static::TWIG_FUNCTION_NAME_CONTNET_BANNER, $idContent);
+        return sprintf(static::MESSAGE_BANNER_WRONG_TYPE, $idContent);
     }
 }

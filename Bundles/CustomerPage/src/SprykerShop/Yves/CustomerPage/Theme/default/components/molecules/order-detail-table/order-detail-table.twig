@@ -46,11 +46,13 @@
                                 concreteItem: concreteItem
                             }
                         } only %}
-                            {% block body %}
+                            {% block actions %}
                                 {% if embed.order is not empty %}
-                                    <td>{{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', embed.order, embed.concreteItem) }}</td>
+                                    {% widget 'CustomerReorderItemCheckboxWidget' args [embed.concreteItem] only %}
+                                    {% nowidget %}
+                                        {{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', embed.order, embed.concreteItem) }} {# @deprecated Use widget 'CustomerReorderItemCheckboxWidget' instead. #}
+                                    {% endwidget %}
                                 {% endif %}
-                                {{ parent() }}
                             {% endblock %}
                         {% endembed %}
                     {% endif %}

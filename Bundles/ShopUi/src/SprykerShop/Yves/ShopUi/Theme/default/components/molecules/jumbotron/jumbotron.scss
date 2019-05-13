@@ -2,7 +2,6 @@
     #{$name} {
         &__container {
             height: 10rem;
-            background: $setting-color-main;
             background: linear-gradient(to left top, helper-color-dark($setting-color-main), helper-color-light($setting-color-main));
             background-position: center center;
             background-size: cover;

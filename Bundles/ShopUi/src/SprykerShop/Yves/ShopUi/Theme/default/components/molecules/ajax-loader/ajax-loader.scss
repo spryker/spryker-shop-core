@@ -11,7 +11,7 @@
         z-index: $setting-zi-ajax-loader;
 
         &__spinner {
-            animation-name: spin;
+            animation-name: spin-to;
             animation-duration: 1s;
             animation-iteration-count: infinite;
             animation-timing-function: linear;
