@@ -1,0 +1,39 @@
+{% embed organism('product-set-cms-content', 'ProductSetWidget') with {
+    data: {
+        products: productViews,
+        name: productSet.name,
+        description: productSet.description,
+        images: productSet.imageSets.0.images | default([])
+    }
+} only %}
+
+    {% block header %}
+        {{ block('title') }}
+
+        {{ block('description') }}
+    {% endblock %}
+
+    {% block productSet %}
+        {{ parent() }}
+        <form method="POST" action="{{ path('cart/add-items') }}">
+            {% set isDisabled = false %}
+
+            {% for product in data.products %}
+                {% if product.idProductConcrete is not empty %}
+                    {% if product.available %}
+                        <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ product.sku }}" />
+                        <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1" />
+                    {% endif %}
+                {% else %}
+                    {% set isDisabled = true %}
+                {% endif %}
+            {% endfor %}
+
+            <button type="submit" class="button float-left" data-init-single-click {% if isDisabled %}disabled{% endif %}>
+                {{ 'product.set.detail.add-all-to-cart' | trans }}
+            </button>
+        </form>
+        <hr />
+    {% endblock %}
+
+{% endembed %}

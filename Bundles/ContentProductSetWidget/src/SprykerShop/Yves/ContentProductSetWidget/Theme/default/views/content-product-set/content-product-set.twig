@@ -1,0 +1,8 @@
+{% include organism('product-set-cms-content', 'ProductSetWidget') ignore missing  with {
+    data: {
+        products: productViews,
+        name: productSet.name,
+        description: productSet.description,
+        images: productSet.imageSets.0.images | default([])
+    }
+} only %}
