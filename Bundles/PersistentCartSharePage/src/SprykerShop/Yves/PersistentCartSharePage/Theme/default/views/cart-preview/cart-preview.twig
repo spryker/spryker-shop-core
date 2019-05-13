@@ -96,6 +96,7 @@
                         isQuoteEditable: data.isQuoteEditable,
                     }
                 } only %}
+                {{ block('cartShipment') }}
             {% endblock %}
             {{ block('cartPrice') }}
         {% endblock %}

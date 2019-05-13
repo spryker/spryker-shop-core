@@ -45,16 +45,17 @@
             {% endif %}
 
             <ul class="list spacing-y">
-
-                {% if data.cart.shipment is not empty and data.cart.shipment.method is not empty %}
-                    <li class="list__item spacing-y">
-                        <strong>{{ 'cart.shipping' | trans }}</strong>
-                        <br/>
-                        {{ data.cart.shipment.method.name }}
-                        <span class="float-right">{{ data.cart.shipment.method.storeCurrencyPrice | money }}</span>
-                        <hr/>
-                    </li>
-                {% endif %}
+                {% block cartShipment %}
+                    {% if data.cart.shipment is not empty and data.cart.shipment.method is not empty %}
+                        <li class="list__item spacing-y">
+                            <strong>{{ 'cart.shipping' | trans }}</strong>
+                            <br/>
+                            {{ data.cart.shipment.method.name }}
+                            <span class="float-right">{{ data.cart.shipment.method.storeCurrencyPrice | money }}</span>
+                            <hr/>
+                        </li>
+                    {% endif %}
+                {% endblock %}
 
                 {% widget 'SalesOrderThresholdWidget' args [data.cart.expenses] only %}
                     {% block body %}
