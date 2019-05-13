@@ -81,8 +81,6 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addCompanyRoutes(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/company/login', 'CompanyPage', 'Auth', 'loginAction');
-        $routeCollection->add(static::ROUTE_COMPANY_LOGIN, $route);
         $route = $this->buildRoute('/company/register', 'CompanyPage', 'Register', 'indexAction');
         $routeCollection->add(static::ROUTE_COMPANY_REGISTER, $route);
         $route = $this->buildRoute('/company/overview', 'CompanyPage', 'Company', 'indexAction');
