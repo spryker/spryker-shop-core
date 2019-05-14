@@ -12,31 +12,39 @@
     images: []
 } %}
 
+{% block product_set_title %}
+    <h5>{{ 'product.set.detail.set-contents' | trans }}</h5>
+{% endblock %}
+
+{% block title %}
+    {{ block('product_set_title') }}
+{% endblock %}
+
 {% block body %}
     <hr />
     {% block header %}
-        <form method="POST" action="{{ path('cart/add-items') }}">
-            {% set isDisabled = false %}
+        {% block form %}
+            <form method="POST" action="{{ path('cart/add-items') }}">
+                {% set isDisabled = false %}
 
-            {% for product in data.products %}
-                {% if product.idProductConcrete is not empty %}
-                    {% if product.available %}
-                        <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ product.sku }}" />
-                        <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1" />
+                {% for product in data.products %}
+                    {% if product.idProductConcrete is not empty %}
+                        {% if product.available %}
+                            <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ product.sku }}" />
+                            <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1" />
+                        {% endif %}
+                    {% else %}
+                        {% set isDisabled = true %}
                     {% endif %}
-                {% else %}
-                    {% set isDisabled = true %}
-                {% endif %}
-            {% endfor %}
+                {% endfor %}
 
-            <button type="submit" class="button float-right" data-init-single-click {% if isDisabled %}disabled{% endif %}>
-                {{ 'product.set.detail.add-all-to-cart' | trans }}
-            </button>
+                <button type="submit" class="button float-right" data-init-single-click {% if isDisabled %}disabled{% endif %}>
+                    {{ 'product.set.detail.add-all-to-cart' | trans }}
+                </button>
 
-            {% block title %}
-                <h5>{{ 'product.set.detail.set-contents' | trans }}</h5>
-            {% endblock %}
-        </form>
+                {{ block('title') }}
+            </form>
+        {% endblock %}
 
         {% block description %}
             {% if data.description is not empty %}

@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\ContentProductSetWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
-
 class ContentProductSetWidgetToProductSetStorageClientBridge implements ContentProductSetWidgetToProductSetStorageClientInterface
 {
     /**
@@ -30,7 +28,7 @@ class ContentProductSetWidgetToProductSetStorageClientBridge implements ContentP
      *
      * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer|null
      */
-    public function getProductSetByIdProductSet(int $idProductSet, string $localeName): ?ProductSetDataStorageTransfer
+    public function getProductSetByIdProductSet($idProductSet, $localeName)
     {
         return $this->productSetStorageClient->getProductSetByIdProductSet($idProductSet, $localeName);
     }

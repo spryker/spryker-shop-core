@@ -20,9 +20,8 @@ class ContentProductAbstractReader implements ContentProductAbstractReaderInterf
     /**
      * @param \SprykerShop\Yves\ContentProductSetWidget\Dependency\Client\ContentProductSetWidgetToProductStorageClientInterface $productStorageClient
      */
-    public function __construct(
-        ContentProductSetWidgetToProductStorageClientInterface $productStorageClient
-    ) {
+    public function __construct(ContentProductSetWidgetToProductStorageClientInterface $productStorageClient)
+    {
         $this->productStorageClient = $productStorageClient;
     }
 

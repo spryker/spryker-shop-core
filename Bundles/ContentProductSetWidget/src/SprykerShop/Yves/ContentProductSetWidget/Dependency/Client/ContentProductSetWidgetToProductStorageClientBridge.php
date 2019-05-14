@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\ContentProductSetWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductViewTransfer;
-
 class ContentProductSetWidgetToProductStorageClientBridge implements ContentProductSetWidgetToProductStorageClientInterface
 {
     /**
@@ -42,7 +40,7 @@ class ContentProductSetWidgetToProductStorageClientBridge implements ContentProd
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapProductAbstractStorageData(array $data, string $localeName, array $selectedAttributes = []): ProductViewTransfer
+    public function mapProductAbstractStorageData(array $data, $localeName, array $selectedAttributes = [])
     {
         return $this->productStorageClient->mapProductStorageData($data, $localeName, $selectedAttributes);
     }
