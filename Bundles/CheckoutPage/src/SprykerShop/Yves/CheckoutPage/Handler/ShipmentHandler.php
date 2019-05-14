@@ -70,7 +70,7 @@ class ShipmentHandler implements ShipmentHandlerInterface
     {
         $selectedShipmentMethod = $quoteTransfer->getShipment()->getShipmentSelection();
 
-        if ($selectedShipmentMethod === CheckoutPageConfig::NO_SHIPMENT_METHOD_NAME) {
+        if ($selectedShipmentMethod === CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT) {
             return $this->getShipmentMethodNoShipment($quoteTransfer);
         }
 
@@ -88,14 +88,14 @@ class ShipmentHandler implements ShipmentHandlerInterface
     {
         $availableShipmentMethodsTransfer = $this->getAvailableShipmentMethods($quoteTransfer);
         foreach ($availableShipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
-            if ($shipmentMethodTransfer->getName() === CheckoutPageConfig::NO_SHIPMENT_METHOD_NAME) {
+            if ($shipmentMethodTransfer->getName() === CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT) {
                 return $shipmentMethodTransfer;
             }
         }
 
         throw new NotAvailableShipmentMethodException(sprintf(
             'Shipment method "%s" is not available. Please make sure to create this shipment method before using it.',
-            CheckoutPageConfig::NO_SHIPMENT_METHOD_NAME
+            CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT
         ));
     }
 
