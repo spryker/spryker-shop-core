@@ -10,12 +10,22 @@ namespace SprykerShop\Yves\Router;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\Router\Loader\ClosureLoader;
 use SprykerShop\Yves\Router\Loader\LoaderInterface;
+use SprykerShop\Yves\Router\Resolver\RequestRequestValueResolver;
 use SprykerShop\Yves\Router\Resource\ResourceInterface;
 use SprykerShop\Yves\Router\Resource\RouterResource;
 use SprykerShop\Yves\Router\Route\RouteCollection;
 use SprykerShop\Yves\Router\Router\ChainRouter;
 use SprykerShop\Yves\Router\Router\Router;
 use SprykerShop\Yves\Router\Router\RouterInterface;
+use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
+use Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver;
+use Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestAttributeValueResolver;
+use Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestValueResolver;
+use Symfony\Component\HttpKernel\Controller\ArgumentResolver\SessionValueResolver;
+use Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver;
+use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
+use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactory;
+use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactoryInterface;
 
 /**
  * @method \SprykerShop\Yves\Router\RouterConfig getConfig()
@@ -115,5 +125,84 @@ class RouterFactory extends AbstractFactory
             $this->getRouterEnhancerPlugins(),
             $this->getConfig()->getFallbackRouterConfiguration()
         );
+    }
+
+    public function createArgumentResolver()
+    {
+        return new ArgumentResolver(
+            $this->createArgumentMetaDataFactory(),
+            $this->getArgumentValueResolvers()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactoryInterface
+     */
+    public function createArgumentMetaDataFactory(): ArgumentMetadataFactoryInterface
+    {
+        return new ArgumentMetadataFactory();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface[]
+     */
+    public function getArgumentValueResolvers(): array
+    {
+        return [
+            $this->createRequestAttributeValueResolver(),
+            $this->createRequestRequestValueResolver(),
+            $this->createRequestValueResolver(),
+            $this->createSessionValueResolver(),
+            $this->createDefaultValueResolver(),
+            $this->createVariadicValueResolver(),
+        ];
+    }
+
+    /**
+     * @return \Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface
+     */
+    public function createRequestAttributeValueResolver(): ArgumentValueResolverInterface
+    {
+        return new RequestAttributeValueResolver();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface
+     */
+    public function createRequestRequestValueResolver(): ArgumentValueResolverInterface
+    {
+        return new RequestRequestValueResolver();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface
+     */
+    public function createRequestValueResolver(): ArgumentValueResolverInterface
+    {
+        return new RequestValueResolver();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface
+     */
+    public function createSessionValueResolver(): ArgumentValueResolverInterface
+    {
+        return new SessionValueResolver();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface
+     */
+    public function createDefaultValueResolver(): ArgumentValueResolverInterface
+    {
+        return new DefaultValueResolver();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface
+     */
+    public function createVariadicValueResolver(): ArgumentValueResolverInterface
+    {
+        return new VariadicValueResolver();
     }
 }

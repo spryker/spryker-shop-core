@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\Router\Plugin\Application;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\Router\Resolver\ArgumentResolver;
 use SprykerShop\Yves\Router\Resolver\ControllerResolver;
 
 /**
@@ -86,7 +85,7 @@ class RouterApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
     protected function provideArgumentResolver(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_ARGUMENT_RESOLVER, function () {
-            return new ArgumentResolver();
+            return $this->getFactory()->createArgumentResolver();
         });
 
         return $container;
