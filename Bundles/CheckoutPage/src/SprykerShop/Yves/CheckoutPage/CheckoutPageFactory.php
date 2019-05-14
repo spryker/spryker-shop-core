@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CheckoutPage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
@@ -152,7 +152,7 @@ class CheckoutPageFactory extends AbstractFactory
     {
         return new ShipmentFormDataProvider(
             $this->getShipmentClient(),
-            $this->getGlossaryClient(),
+            $this->getGlossaryStorageClient(),
             $this->getStore(),
             $this->getMoneyPlugin()
         );
@@ -175,11 +175,11 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface
      */
-    public function getGlossaryClient(): CheckoutPageToGlossaryClientInterface
+    public function getGlossaryStorageClient(): CheckoutPageToGlossaryStorageClientInterface
     {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_GLOSSARY);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 
     /**

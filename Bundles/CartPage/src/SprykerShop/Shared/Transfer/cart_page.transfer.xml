@@ -5,6 +5,12 @@
 
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="quoteApprovals" type="QuoteApproval[]" singular="quoteApproval"/>
+        <property name="quoteRequestVersionReference" type="string" />
+    </transfer>
+
+    <transfer name="QuoteApproval">
+        <property name="idQuoteApproval" type="int"/>
     </transfer>
 
     <transfer name="Item">

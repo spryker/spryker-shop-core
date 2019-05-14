@@ -96,4 +96,14 @@
         <hr/>
         {% widget 'ProceedToCheckoutButtonWidget' args [data.cart] %}{% endwidget %}
     {% endif %}
+
+    {% if is_granted('ROLE_USER') %}
+        {% widget 'QuoteRequestCreateWidget' args [data.cart] only %}
+            {% block body %}
+                <hr />
+                {{ parent() }}
+            {% endblock %}
+        {% endwidget %}
+        {% widget 'QuoteRequestCartWidget' args [data.cart] only %}{% endwidget %}
+    {% endif %}
 {% endblock %}
