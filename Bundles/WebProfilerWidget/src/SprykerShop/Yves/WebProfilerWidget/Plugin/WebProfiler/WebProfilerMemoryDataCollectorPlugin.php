@@ -8,19 +8,21 @@
 namespace SprykerShop\Yves\WebProfilerWidget\Plugin\WebProfiler;
 
 use Spryker\Service\Container\ContainerInterface;
-use SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin;
 use SprykerShop\Yves\WebProfilerWidgetExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface;
-use Symfony\Bridge\Twig\DataCollector\TwigDataCollector;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
+use Symfony\Component\HttpKernel\DataCollector\MemoryDataCollector;
 
-class WebProfilerTwigDataCollector implements WebProfilerDataCollectorPluginInterface
+class WebProfilerMemoryDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    protected const NAME = 'memory';
+    protected const TEMPLATE = '@WebProfiler/Collector/memory.html.twig';
+
     /**
      * @return string
      */
     public function getName(): string
     {
-        return 'twig';
+        return static::NAME;
     }
 
     /**
@@ -28,7 +30,7 @@ class WebProfilerTwigDataCollector implements WebProfilerDataCollectorPluginInte
      */
     public function getTemplateName(): string
     {
-        return '@WebProfiler/Collector/twig.html.twig';
+        return static::TEMPLATE;
     }
 
     /**
@@ -38,6 +40,6 @@ class WebProfilerTwigDataCollector implements WebProfilerDataCollectorPluginInte
      */
     public function getDataCollector(ContainerInterface $container): DataCollectorInterface
     {
-        return new TwigDataCollector($container->get(WebProfilerApplicationPlugin::SERVICE_TWIG_PROFILE));
+        return new MemoryDataCollector();
     }
 }

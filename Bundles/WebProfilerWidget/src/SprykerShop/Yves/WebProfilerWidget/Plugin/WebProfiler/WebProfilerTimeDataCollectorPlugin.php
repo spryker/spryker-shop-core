@@ -8,18 +8,22 @@
 namespace SprykerShop\Yves\WebProfilerWidget\Plugin\WebProfiler;
 
 use Spryker\Service\Container\ContainerInterface;
+use SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin;
 use SprykerShop\Yves\WebProfilerWidgetExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
-use Symfony\Component\HttpKernel\DataCollector\RequestDataCollector;
+use Symfony\Component\HttpKernel\DataCollector\TimeDataCollector;
 
-class WebProfilerRequestDataCollector implements WebProfilerDataCollectorPluginInterface
+class WebProfilerTimeDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    protected const NAME = 'time';
+    protected const TEMPLATE = '@WebProfiler/Collector/time.html.twig';
+
     /**
      * @return string
      */
     public function getName(): string
     {
-        return 'request';
+        return static::NAME;
     }
 
     /**
@@ -27,7 +31,7 @@ class WebProfilerRequestDataCollector implements WebProfilerDataCollectorPluginI
      */
     public function getTemplateName(): string
     {
-        return '@WebProfiler/Collector/request.html.twig';
+        return static::TEMPLATE;
     }
 
     /**
@@ -37,6 +41,6 @@ class WebProfilerRequestDataCollector implements WebProfilerDataCollectorPluginI
      */
     public function getDataCollector(ContainerInterface $container): DataCollectorInterface
     {
-        return new RequestDataCollector();
+        return new TimeDataCollector(null, $container->get(WebProfilerApplicationPlugin::SERVICE_STOPWATCH));
     }
 }

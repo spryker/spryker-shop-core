@@ -8,18 +8,22 @@
 namespace SprykerShop\Yves\WebProfilerWidget\Plugin\WebProfiler;
 
 use Spryker\Service\Container\ContainerInterface;
+use SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin;
 use SprykerShop\Yves\WebProfilerWidgetExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
-use Symfony\Component\HttpKernel\DataCollector\EventDataCollector;
+use Symfony\Component\HttpKernel\DataCollector\LoggerDataCollector;
 
-class WebProfilerEventsDataCollector implements WebProfilerDataCollectorPluginInterface
+class WebProfilerLoggerDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    protected const NAME = 'logger';
+    protected const TEMPLATE = '@WebProfiler/Collector/logger.html.twig';
+
     /**
      * @return string
      */
     public function getName(): string
     {
-        return 'events';
+        return static::NAME;
     }
 
     /**
@@ -27,7 +31,7 @@ class WebProfilerEventsDataCollector implements WebProfilerDataCollectorPluginIn
      */
     public function getTemplateName(): string
     {
-        return '@WebProfiler/Collector/events.html.twig';
+        return static::TEMPLATE;
     }
 
     /**
@@ -37,6 +41,6 @@ class WebProfilerEventsDataCollector implements WebProfilerDataCollectorPluginIn
      */
     public function getDataCollector(ContainerInterface $container): DataCollectorInterface
     {
-        return new EventDataCollector($container->get('dispatcher'));
+        return new LoggerDataCollector($container->get(WebProfilerApplicationPlugin::SERVICE_LOGGER));
     }
 }

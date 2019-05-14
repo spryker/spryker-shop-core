@@ -66,7 +66,7 @@ class RouterSslRedirectEventDispatcherPlugin extends AbstractPlugin implements E
      *
      * @return bool
      */
-    protected function shouldBeSsl(Request $request)
+    protected function shouldBeSsl(Request $request): bool
     {
         $requestIsSecure = $request->isSecure();
 
@@ -84,7 +84,7 @@ class RouterSslRedirectEventDispatcherPlugin extends AbstractPlugin implements E
      *
      * @return bool
      */
-    protected function isSslExcludedRouteName(Request $request)
+    protected function isSslExcludedRouteName(Request $request): bool
     {
         return in_array($request->getPathInfo(), $this->getConfig()->getSslExcludedRouteNames());
     }

@@ -9,17 +9,20 @@ namespace SprykerShop\Yves\WebProfilerWidget\Plugin\WebProfiler;
 
 use Spryker\Service\Container\ContainerInterface;
 use SprykerShop\Yves\WebProfilerWidgetExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface;
+use Symfony\Component\HttpKernel\DataCollector\ConfigDataCollector;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
-use Symfony\Component\HttpKernel\DataCollector\RouterDataCollector;
 
-class WebProfilerRouterDataCollector implements WebProfilerDataCollectorPluginInterface
+class WebProfilerConfigDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    protected const NAME = 'config';
+    protected const TEMPLATE = '@WebProfiler/Collector/config.html.twig';
+
     /**
      * @return string
      */
     public function getName(): string
     {
-        return 'router';
+        return static::NAME;
     }
 
     /**
@@ -27,7 +30,7 @@ class WebProfilerRouterDataCollector implements WebProfilerDataCollectorPluginIn
      */
     public function getTemplateName(): string
     {
-        return '@WebProfiler/Collector/router.html.twig';
+        return static::TEMPLATE;
     }
 
     /**
@@ -37,6 +40,6 @@ class WebProfilerRouterDataCollector implements WebProfilerDataCollectorPluginIn
      */
     public function getDataCollector(ContainerInterface $container): DataCollectorInterface
     {
-        return new RouterDataCollector();
+        return new ConfigDataCollector();
     }
 }

@@ -10,16 +10,19 @@ namespace SprykerShop\Yves\WebProfilerWidget\Plugin\WebProfiler;
 use Spryker\Service\Container\ContainerInterface;
 use SprykerShop\Yves\WebProfilerWidgetExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
-use Symfony\Component\HttpKernel\DataCollector\ExceptionDataCollector;
+use Symfony\Component\HttpKernel\DataCollector\RequestDataCollector;
 
-class WebProfilerExceptionDataCollector implements WebProfilerDataCollectorPluginInterface
+class WebProfilerRequestDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    protected const NAME = 'request';
+    protected const TEMPLATE = '@WebProfiler/Collector/request.html.twig';
+
     /**
      * @return string
      */
     public function getName(): string
     {
-        return 'exception';
+        return static::NAME;
     }
 
     /**
@@ -27,7 +30,7 @@ class WebProfilerExceptionDataCollector implements WebProfilerDataCollectorPlugi
      */
     public function getTemplateName(): string
     {
-        return '@WebProfiler/Collector/exception.html.twig';
+        return static::TEMPLATE;
     }
 
     /**
@@ -37,6 +40,6 @@ class WebProfilerExceptionDataCollector implements WebProfilerDataCollectorPlugi
      */
     public function getDataCollector(ContainerInterface $container): DataCollectorInterface
     {
-        return new ExceptionDataCollector();
+        return new RequestDataCollector();
     }
 }

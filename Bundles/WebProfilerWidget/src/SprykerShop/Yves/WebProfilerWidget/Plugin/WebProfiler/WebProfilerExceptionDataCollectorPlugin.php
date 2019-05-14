@@ -10,16 +10,19 @@ namespace SprykerShop\Yves\WebProfilerWidget\Plugin\WebProfiler;
 use Spryker\Service\Container\ContainerInterface;
 use SprykerShop\Yves\WebProfilerWidgetExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
-use Symfony\Component\HttpKernel\DataCollector\TimeDataCollector;
+use Symfony\Component\HttpKernel\DataCollector\ExceptionDataCollector;
 
-class WebProfilerTimeDataCollector implements WebProfilerDataCollectorPluginInterface
+class WebProfilerExceptionDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    protected const NAME = 'exception';
+    protected const TEMPLATE = '@WebProfiler/Collector/exception.html.twig';
+
     /**
      * @return string
      */
     public function getName(): string
     {
-        return 'time';
+        return static::NAME;
     }
 
     /**
@@ -27,7 +30,7 @@ class WebProfilerTimeDataCollector implements WebProfilerDataCollectorPluginInte
      */
     public function getTemplateName(): string
     {
-        return '@WebProfiler/Collector/time.html.twig';
+        return static::TEMPLATE;
     }
 
     /**
@@ -37,6 +40,6 @@ class WebProfilerTimeDataCollector implements WebProfilerDataCollectorPluginInte
      */
     public function getDataCollector(ContainerInterface $container): DataCollectorInterface
     {
-        return new TimeDataCollector(null, $container->get('stopwatch'));
+        return new ExceptionDataCollector();
     }
 }
