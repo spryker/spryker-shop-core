@@ -55,7 +55,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function requireInput(AbstractTransfer $quoteTransfer)
     {
-        return $this->hasOnlyNoShipmentItems($quoteTransfer) === false;
+        return $this->hasOnlyGiftCardItems($quoteTransfer) === false;
     }
 
     /**
@@ -83,7 +83,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
-        if ($this->hasOnlyNoShipmentItems($quoteTransfer)) {
+        if ($this->hasOnlyGiftCardItems($quoteTransfer)) {
             return true;
         }
 
@@ -101,7 +101,6 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     protected function isShipmentSet(QuoteTransfer $quoteTransfer)
     {
-        // TODO: had to add this because cart page was failing after logged in user visited it (checked only after 1 successful order placement)
         if (!$quoteTransfer->getShipment()) {
             return false;
         }
@@ -120,15 +119,15 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      *
      * @return bool
      */
-    protected function hasOnlyNoShipmentItems(QuoteTransfer $quoteTransfer)
+    protected function hasOnlyGiftCardItems(QuoteTransfer $quoteTransfer)
     {
-        $onlyPreselected = true;
+        $onlyGiftCardItems = true;
         foreach ($quoteTransfer->getItems() as $item) {
             $isGiftCard = $item->getGiftCardMetadata() ? $item->getGiftCardMetadata()->getIsGiftCard() : false;
-            $onlyPreselected &= $isGiftCard;
+            $onlyGiftCardItems &= $isGiftCard;
         }
 
-        return (bool)$onlyPreselected;
+        return (bool)$onlyGiftCardItems;
     }
 
     /**
@@ -139,10 +138,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     protected function setDefaultNoShipmentMethod(QuoteTransfer $quoteTransfer)
     {
         $shipmentTransfer = (new ShipmentTransfer())
-            ->setShipmentSelection(
-                (new CheckoutPageConfig())->getNoShipmentMethodName() // TODO: fix config, should the value come from project level?
-                //(new ShipmentConfig)->getNoShipmentMethodName() // TODO: clarify old solution
-            );
+            ->setShipmentSelection(CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT);
 
         return $quoteTransfer->setShipment($shipmentTransfer);
     }

@@ -9,15 +9,13 @@
     cart: required,
     isQuoteEditable: false
 } %}
-{# TODO: make sure to add transfer definitions for the used attributes #}
-{# TODO: check glossaries #}
+
 {% block body %}
     {% for payment in data.cart.payments %}
         {% if payment.giftCard is not null %}
             <li class="list__item spacing-y">
                 {{ 'cart.giftcard.label' | trans }}: {{ payment.giftCard.code }}
 
-                {# TODO: make sure to have CartCodeWidget module as hard dependency #}
                 {% include molecule('cart-code-remove-link', 'CartCodeWidget') with {
                     class: 'text-small',
                     data: {

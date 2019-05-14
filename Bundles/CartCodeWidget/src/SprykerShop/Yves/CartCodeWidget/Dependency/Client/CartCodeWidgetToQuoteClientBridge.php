@@ -35,6 +35,16 @@ class CartCodeWidgetToQuoteClientBridge implements CartCodeWidgetToQuoteClientIn
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
+     * @return void
+     */
+    public function setQuote(QuoteTransfer $quoteTransfer)
+    {
+        $this->quoteClient->setQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return bool
      */
     public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool

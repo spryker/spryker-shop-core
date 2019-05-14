@@ -7,8 +7,9 @@
 
 namespace SprykerShop\Yves\CartCodeWidget\Controller;
 
+use Generated\Shared\Transfer\CartCodeOperationMessageTransfer;
+use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use SprykerShop\Yves\CartCodeWidget\Form\CartCodeForm;
-use SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CodeController extends AbstractController
 {
+    public const PARAM_CODE = 'code';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -31,12 +34,26 @@ class CodeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $code = (string)$form->get(CartCodeForm::FIELD_CODE)->getData();
 
-            $this->getFactory()
+            $quoteTransfer = $this->getFactory()
+                ->getQuoteClient()
+                ->getQuote();
+
+            $cartCodeOperationResultTransfers = $this->getFactory()
                 ->getCartCodeClient()
-                ->addCode($code);
+                ->addCode($quoteTransfer, $code);
+
+            $this->getFactory()
+                ->getQuoteClient()
+                ->setQuote($cartCodeOperationResultTransfers->getQuote());
+
+            $this->getFactory()
+                ->getZedRequestClient()
+                ->addFlashMessagesFromLastZedRequest();
+
+            $this->handleCartCodeOperationResult($cartCodeOperationResultTransfers);
         }
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART); // TODO: redirect to the same page where the request came from
+        return $this->redirectResponseExternal($request->headers->get('referer'));
     }
 
     /**
@@ -46,25 +63,87 @@ class CodeController extends AbstractController
      */
     public function removeAction(Request $request)
     {
-        $code = $request->query->get('code');
+        $code = (string)$request->query->get(static::PARAM_CODE);
         if (!empty($code)) {
-            $this->getFactory()
+            $quoteTransfer = $this->getFactory()
+                ->getQuoteClient()
+                ->getQuote();
+
+            $cartCodeOperationResultTransfers = $this->getFactory()
                 ->getCartCodeClient()
-                ->removeCode($code);
+                ->removeCode($quoteTransfer, $code);
+
+            $this->getFactory()
+                ->getQuoteClient()
+                ->setQuote($cartCodeOperationResultTransfers->getQuote());
+
+            $this->getFactory()
+                ->getZedRequestClient()
+                ->addFlashMessagesFromLastZedRequest();
+
+            $this->handleCartCodeOperationResult($cartCodeOperationResultTransfers);
         }
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART); // TODO: redirect to the same page where the request came from
+        return $this->redirectResponseExternal($request->headers->get('referer'));
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function clearAction()
+    public function clearAction(Request $request)
     {
-        $this->getFactory()
-            ->getCartCodeClient()
-            ->clearCodes();
+        $quoteTransfer = $this->getFactory()
+            ->getQuoteClient()
+            ->getQuote();
 
-        return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART); // TODO: redirect to the same page where the request came from
+        $cartCodeOperationResultTransfers = $this->getFactory()
+            ->getCartCodeClient()
+            ->clearCodes($quoteTransfer);
+
+        $this->getFactory()
+            ->getQuoteClient()
+            ->setQuote($cartCodeOperationResultTransfers->getQuote());
+
+        $this->getFactory()
+            ->getZedRequestClient()
+            ->addFlashMessagesFromLastZedRequest();
+
+        $this->handleCartCodeOperationResult($cartCodeOperationResultTransfers);
+
+        return $this->redirectResponseExternal($request->headers->get('referer'));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartCodeOperationResultTransfer $cartCodeOperationResultTransfer
+     *
+     * @return void
+     */
+    protected function handleCartCodeOperationResult(CartCodeOperationResultTransfer $cartCodeOperationResultTransfer): void
+    {
+        foreach ($cartCodeOperationResultTransfer->getMessages() as $cartCodeOperationMessageTransfer) {
+            $this->handleCartCodeOperationMessage($cartCodeOperationMessageTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartCodeOperationMessageTransfer $cartCodeOperationMessageTransfer
+     *
+     * @return void
+     */
+    protected function handleCartCodeOperationMessage(CartCodeOperationMessageTransfer $cartCodeOperationMessageTransfer): void
+    {
+        if (!$cartCodeOperationMessageTransfer->getMessage()) {
+            return;
+        }
+
+        if ($cartCodeOperationMessageTransfer->getIsSuccess()) {
+            $this->addSuccessMessage($cartCodeOperationMessageTransfer->getMessage()->getValue());
+
+            return;
+        }
+
+        $this->addErrorMessage($cartCodeOperationMessageTransfer->getMessage()->getValue());
     }
 }

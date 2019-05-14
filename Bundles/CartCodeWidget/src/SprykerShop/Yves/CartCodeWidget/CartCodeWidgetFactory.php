@@ -9,9 +9,10 @@ namespace SprykerShop\Yves\CartCodeWidget;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\CartCodeWidget\Form\CartCodeForm;
 use SprykerShop\Yves\CartCodeWidget\Dependency\Client\CartCodeWidgetToCartCodeClientInterface;
 use SprykerShop\Yves\CartCodeWidget\Dependency\Client\CartCodeWidgetToQuoteClientInterface;
+use SprykerShop\Yves\CartCodeWidget\Dependency\Client\CartCodeWidgetToZedRequestClientInterface;
+use SprykerShop\Yves\CartCodeWidget\Form\CartCodeForm;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -31,6 +32,15 @@ class CartCodeWidgetFactory extends AbstractFactory
     public function getQuoteClient(): CartCodeWidgetToQuoteClientInterface
     {
         return $this->getProvidedDependency(CartCodeWidgetDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     *
+     * @return \SprykerShop\Yves\CartCodeWidget\Dependency\Client\CartCodeWidgetToZedRequestClientInterface
+     */
+    public function getZedRequestClient(): CartCodeWidgetToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(CartCodeWidgetDependencyProvider::CLIENT_ZED_REQUEST);
     }
 
     /**

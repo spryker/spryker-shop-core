@@ -19,6 +19,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientBrid
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientBridge;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPaymentClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientBridge;
@@ -39,6 +40,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_CART = 'CLIENT_CART';
     public const CLIENT_SHIPMENT = 'CLIENT_SHIPMENT';
+    public const CLIENT_PAYMENT = 'CLIENT_PAYMENT';
     public const CLIENT_PRICE = 'CLIENT_PRICE';
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
@@ -83,6 +85,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerClient($container);
         $container = $this->addCartClient($container);
         $container = $this->addShipmentClient($container);
+        $container = $this->addPaymentClient($container);
         $container = $this->addPriceClient($container);
         $container = $this->addProductBundleClient($container);
 
@@ -234,6 +237,20 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::CLIENT_SHIPMENT] = function (Container $container) {
             return new CheckoutPageToShipmentClientBridge($container->getLocator()->shipment()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPaymentClient(Container $container): Container
+    {
+        $container[self::CLIENT_PAYMENT] = function (Container $container) {
+            return new CheckoutPageToPaymentClientBridge($container->getLocator()->payment()->client());
         };
 
         return $container;

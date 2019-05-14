@@ -13,7 +13,7 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated TODO: add description + alternative
+ * @deprecated Use CartCode and CartCodeWidget modules instead.
  *
  * @method \SprykerShop\Yves\DiscountWidget\DiscountWidgetFactory getFactory()
  */

@@ -7,11 +7,31 @@
 
 namespace SprykerShop\Yves\CartCodeWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+
 interface CartCodeWidgetToCartCodeClientInterface
 {
-    public function addCode(string $code);
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     */
+    public function addCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer;
 
-    public function removeCode(string $code);
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     */
+    public function removeCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer;
 
-    public function clearCodes();
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     */
+    public function clearCodes(QuoteTransfer $quoteTransfer): CartCodeOperationResultTransfer;
 }

@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\CartCodeWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+
 class CartCodeWidgetToCartCodeClientBridge implements CartCodeWidgetToCartCodeClientInterface
 {
     /**
@@ -23,26 +26,34 @@ class CartCodeWidgetToCartCodeClientBridge implements CartCodeWidgetToCartCodeCl
     }
 
     /**
-     * @return void
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function addCode(string $code)
+    public function addCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
     {
-        $this->cartCodeClient->addCode($code);
+        return $this->cartCodeClient->addCode($quoteTransfer, $code);
     }
 
     /**
-     * @return void
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function removeCode(string $code)
+    public function removeCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
     {
-        $this->cartCodeClient->removeCode($code);
+        return $this->cartCodeClient->removeCode($quoteTransfer, $code);
     }
 
     /**
-     * @return void
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function clearCodes()
+    public function clearCodes(QuoteTransfer $quoteTransfer): CartCodeOperationResultTransfer
     {
-        $this->cartCodeClient->clearCodes();
+        return $this->cartCodeClient->clearAllCodes($quoteTransfer);
     }
 }

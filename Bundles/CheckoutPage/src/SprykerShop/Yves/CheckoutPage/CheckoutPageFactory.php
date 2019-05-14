@@ -168,8 +168,7 @@ class CheckoutPageFactory extends AbstractFactory
     {
         return new ShipmentHandler(
             $this->getShipmentClient(),
-            $this->getPriceClient(),
-            $this->getConfig()->getNoShipmentMethodName()
+            $this->getPriceClient()
         );
     }
 

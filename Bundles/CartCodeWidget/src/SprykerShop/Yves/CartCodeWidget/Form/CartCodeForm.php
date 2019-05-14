@@ -45,7 +45,7 @@ class CartCodeForm extends AbstractType
     protected function addCodeField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_CODE, TextType::class, [
-            'label' => 'page.checkout.finalize.enter-voucher', // TODO: fix glossary
+            'label' => 'cart.code.enter-code',
             'required' => false,
         ]);
 

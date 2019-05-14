@@ -123,7 +123,7 @@
 
             <div class="box">
                 {% widget 'CartCodeFormWidget' args [data.transfer] only %}
-                {% elsewidget 'CheckoutVoucherFormWidget' args [data.transfer] only %}
+                {% elsewidget 'CheckoutVoucherFormWidget' args [data.transfer] only %} {# @deprecated Use CartCodeFormWidget instead. #}
                 {% elsewidget 'CheckoutVoucherFormWidgetPlugin' args [data.transfer] only %} {# @deprecated Use CheckoutVoucherFormWidget instead. #}
                 {% endwidget %}
             </div>

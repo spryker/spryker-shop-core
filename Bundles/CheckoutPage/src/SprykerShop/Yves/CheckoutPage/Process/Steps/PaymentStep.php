@@ -12,11 +12,11 @@ use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Shared\Nopayment\NopaymentConfig;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginWithMessengerInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
+use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPaymentClientInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -112,7 +112,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected function getPaymentSelectionWithFallback(QuoteTransfer $quoteTransfer)
     {
         if ($quoteTransfer->getTotals() && $quoteTransfer->getTotals()->getPriceToPay() === 0) {
-            return NopaymentConfig::PAYMENT_PROVIDER_NAME; // TODO: fix
+            return CheckoutPageConfig::PAYMENT_METHOD_NAME_NO_PAYMENT;
         }
 
         $paymentTransfer = $quoteTransfer->getPayment();
@@ -131,6 +131,10 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
+        if ($quoteTransfer->getPayment() === null || $quoteTransfer->getPayment()->getPaymentProvider() === null) {
+            return false;
+        }
+
         $paymentCollection = $this->getPaymentCollection($quoteTransfer);
         if ($paymentCollection->count() === 0) {
             return false;

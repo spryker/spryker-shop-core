@@ -8,13 +8,14 @@
 namespace SprykerShop\Yves\CheckoutPage\Handler;
 
 use ArrayObject;
-use Exception;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
+use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
+use SprykerShop\Yves\CheckoutPage\Exception\NotAvailableShipmentMethodException;
 use Symfony\Component\HttpFoundation\Request;
 
 class ShipmentHandler implements ShipmentHandlerInterface
@@ -30,23 +31,15 @@ class ShipmentHandler implements ShipmentHandlerInterface
     protected $priceClient;
 
     /**
-     * @var string
-     */
-    protected $noShipmentMethodName;
-
-    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface $priceClient
-     * @param string $noShipmentMethodName
      */
     public function __construct(
         CheckoutPageToShipmentClientInterface $shipmentClient,
-        CheckoutPageToPriceClientInterface $priceClient,
-        string $noShipmentMethodName
+        CheckoutPageToPriceClientInterface $priceClient
     ) {
         $this->shipmentClient = $shipmentClient;
         $this->priceClient = $priceClient;
-        $this->noShipmentMethodName = $noShipmentMethodName;
     }
 
     /**
@@ -71,15 +64,13 @@ class ShipmentHandler implements ShipmentHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer|\Generated\Shared\Transfer\ShipmentMethodTransfer|null
-     * TODO: make sure about ShipmentMethodsTransfer vs ShipmentMethodTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     protected function getShipmentMethod(QuoteTransfer $quoteTransfer)
     {
         $selectedShipmentMethod = $quoteTransfer->getShipment()->getShipmentSelection();
 
-        // TODO clarify what is this No shipment thingy!
-        if ($this->noShipmentMethodName && $selectedShipmentMethod === $this->noShipmentMethodName) {
+        if ($selectedShipmentMethod === CheckoutPageConfig::NO_SHIPMENT_METHOD_NAME) {
             return $this->getShipmentMethodNoShipment($quoteTransfer);
         }
 
@@ -89,21 +80,23 @@ class ShipmentHandler implements ShipmentHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @throws \Exception
+     * @throws \SprykerShop\Yves\CheckoutPage\Exception\NotAvailableShipmentMethodException
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer|\Generated\Shared\Transfer\ShipmentMethodTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     protected function getShipmentMethodNoShipment(QuoteTransfer $quoteTransfer)
     {
-        $shipmentMethodsTransfer = $this->getAvailableShipmentMethods($quoteTransfer);
-        foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodsTransfer) {
-            if ($shipmentMethodsTransfer->getName() === $this->noShipmentMethodName) {
-                return $shipmentMethodsTransfer;
+        $availableShipmentMethodsTransfer = $this->getAvailableShipmentMethods($quoteTransfer);
+        foreach ($availableShipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
+            if ($shipmentMethodTransfer->getName() === CheckoutPageConfig::NO_SHIPMENT_METHOD_NAME) {
+                return $shipmentMethodTransfer;
             }
         }
 
-        // TODO: create custom exception
-        throw new Exception(sprintf('Please create a default no-shipment method with defined name "%s"', $this->noShipmentMethodName));
+        throw new NotAvailableShipmentMethodException(sprintf(
+            'Shipment method "%s" is not available. Please make sure to create this shipment method before using it.',
+            CheckoutPageConfig::NO_SHIPMENT_METHOD_NAME
+        ));
     }
 
     /**
