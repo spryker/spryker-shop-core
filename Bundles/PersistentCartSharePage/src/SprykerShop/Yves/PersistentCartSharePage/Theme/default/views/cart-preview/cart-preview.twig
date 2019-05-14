@@ -50,7 +50,7 @@
             isQuoteEditable: data.isQuoteEditable,
             cartItem: cartItem,
             attributes: data.attributes[cartItem.sku] | default([]),
-        }
+        },
     } only %}
         {% block cartItemNote %}
             {% widget 'CartItemNoteFormWidget' args [data.cartItem, data.cart] only %}
@@ -82,7 +82,8 @@
             cart: data.cart,
             isQuoteValid: data.isQuoteValid,
             isQuoteEditable: data.isQuoteEditable,
-        }
+            cartQuantity: data.cartItems.count,
+        },
     } only %}
         {% block body %}
             {{ block('cartQuantity') }}
@@ -94,7 +95,8 @@
                         ruleDiscounts: data.cart.cartRuleDiscounts,
                         discountTotal: data.cart.totals.discounttotal,
                         isQuoteEditable: data.isQuoteEditable,
-                    }
+                        currencyIsoCode: data.cart.currency.code,
+                    },
                 } only %}
                 {{ block('cartShipment') }}
             {% endblock %}
@@ -115,10 +117,11 @@
                     imageUrl: (product.images|length ? product.images.0.externalUrlSmall : ''),
                     price: product.prices.DEFAULT,
                     originalPrice: (product.prices.ORIGINAL is defined ? product.prices.ORIGINAL : null),
+                    currencyIsoCode: data.cart.currency.code,
                 },
                 embed: {
                     sku: product.sku,
-                }
+                },
             } only %}
                 {% block cardClass %}box box--stretch{% endblock %}
                 {% block sku %}

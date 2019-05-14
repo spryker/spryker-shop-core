@@ -2,7 +2,7 @@
 
 {% define config = {
     name: 'cart-summary',
-    tag: 'div'
+    tag: 'div',
 } %}
 
 {% define data = {
@@ -39,8 +39,9 @@
                         voucherDiscounts: data.cart.voucherDiscounts,
                         ruleDiscounts: data.cart.cartRuleDiscounts,
                         discountTotal: data.cart.totals.discounttotal,
-                        isQuoteEditable: data.isQuoteEditable
-                    }
+                        isQuoteEditable: data.isQuoteEditable,
+                        currencyIsoCode: data.cart.currency.code,
+                    },
                 } only %}
             {% endif %}
 
@@ -51,7 +52,7 @@
                             <strong>{{ 'cart.shipping' | trans }}</strong>
                             <br/>
                             {{ data.cart.shipment.method.name }}
-                            <span class="float-right">{{ data.cart.shipment.method.storeCurrencyPrice | money }}</span>
+                            <span class="float-right">{{ data.cart.shipment.method.storeCurrencyPrice | money(true, data.cart.currency.code) }}</span>
                             <hr/>
                         </li>
                     {% endif %}
@@ -76,16 +77,16 @@
                 {% block cartPrice %}
                     <li class="list__item spacing-y">
                         {{ 'cart.price.subtotal' | trans }}
-                        <span class="float-right">{{ data.cart.totals.subtotal | money }}</span>
+                        <span class="float-right">{{ data.cart.totals.subtotal | money(true, data.cart.currency.code) }}</span>
                     </li>
 
                     <li class="list__item spacing-y">
                         {{ 'cart.total.tax_total' | trans }}
-                        <span class="float-right">{{ data.cart.totals.taxTotal.amount | money }}</span>
+                        <span class="float-right">{{ data.cart.totals.taxTotal.amount | money(true, data.cart.currency.code) }}</span>
                     </li>
                     <li class="list__item spacing-y">
                         {{ 'cart.price.grand.total' | trans }}
-                        <strong class="float-right">{{ data.cart.totals.grandTotal | money }}</strong>
+                        <strong class="float-right">{{ data.cart.totals.grandTotal | money(true, data.cart.currency.code) }}</strong>
                     </li>
                 {% endblock %}
             </ul>

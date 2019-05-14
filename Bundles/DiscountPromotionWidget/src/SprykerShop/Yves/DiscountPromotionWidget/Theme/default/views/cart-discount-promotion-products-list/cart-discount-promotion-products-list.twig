@@ -1,7 +1,8 @@
 {% extends template('widget') %}
 
 {% define data = {
-    promotionProducts: _widget.promotionProducts
+    cart: _widget.cart,
+    promotionProducts: _widget.promotionProducts,
 } %}
 
 {% block body %}
@@ -21,7 +22,8 @@
                             url: product.url,
                             imageUrl: (product.images|length ? product.images.0.externalUrlSmall : ''),
                             price: product.prices.DEFAULT,
-                            originalPrice: (product.prices.ORIGINAL is defined ? product.prices.ORIGINAL : null)
+                            originalPrice: (product.prices.ORIGINAL is defined ? product.prices.ORIGINAL : null),
+                            currencyIsoCode: data.cart.currency.code,
                         },
                         embed: {
                             superAttributes: product.attributeMap.superAttributes,
@@ -34,8 +36,8 @@
                                 id: product.promotionItem.discount.discountPromotion.idDiscountPromotion,
                                 maxQuantity: product.promotionItem.maxQuantity,
                                 description: product.promotionItem.discount.description
-                            }
-                        }
+                            },
+                        },
                     } only %}
                         {% block sku %}
                             <div class="text-secondary">
@@ -58,8 +60,8 @@
                                     sku: embed.sku,
                                     superAttributes: embed.superAttributes,
                                     selectedAttributes: embed.selectedAttributes,
-                                    availableAttributes: embed.availableAttributes
-                                }
+                                    availableAttributes: embed.availableAttributes,
+                                },
                             } only %}
                             <hr />
                         {% endblock %}
@@ -72,8 +74,8 @@
                                     {% include molecule('quantity-selector') with {
                                         data: {
                                             maxQuantity: embed.promotionDiscount.maxQuantity,
-                                            hasUpdateButton: false
-                                        }
+                                            hasUpdateButton: false,
+                                        },
                                     } only %}
                                 </div>
 
@@ -84,8 +86,8 @@
                                     <button type="submit" class="button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' : '' }}>
                                         {% include atom('icon') with {
                                             data: {
-                                                name: 'cart-plus'
-                                            }
+                                                name: 'cart-plus',
+                                            },
                                         } only %}
                                         {{ 'page.detail.add-to-cart' | trans }}
                                     </button>
