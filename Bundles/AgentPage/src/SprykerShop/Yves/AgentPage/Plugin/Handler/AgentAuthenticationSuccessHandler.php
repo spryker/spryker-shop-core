@@ -9,8 +9,8 @@ namespace SprykerShop\Yves\AgentPage\Plugin\Handler;
 
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use SprykerShop\Yves\AgentPage\Plugin\Provider\AgentPageControllerProvider;
 use SprykerShop\Yves\AgentPage\Security\Agent;
-use SprykerShop\Yves\HomePage\Plugin\Provider\HomePageControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
@@ -64,7 +64,7 @@ class AgentAuthenticationSuccessHandler extends AbstractPlugin implements Authen
     {
         $targetUrl = $this->getFactory()
             ->getApplication()
-            ->url(HomePageControllerProvider::ROUTE_HOME);
+            ->url(AgentPageControllerProvider::ROUTE_AGENT_OVERVIEW);
 
         $response = $this->getFactory()->createRedirectResponse($targetUrl);
 

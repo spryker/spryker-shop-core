@@ -17,14 +17,24 @@ use Twig\Environment;
  */
 class ContentProductAbstractListTwigFunction extends TwigFunction
 {
+    /**
+     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::TWIG_FUNCTION_NAME
+     */
     protected const FUNCTION_CONTENT_PRODUCT_ABSTRACT_LIST = 'content_product_abstract_list';
 
     protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<strong>Content product abstract list with ID %s not found.</strong>';
     protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<strong>Content product abstract list widget could not be rendered because the content item with ID %s is not an abstract product list.</strong>';
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"%s" is not supported name of template.</strong>';
 
-    protected const DEFAULT_TEMPLATE_IDENTIFIER = 'default';
-    protected const TOP_TITLE_TEMPLATE_IDENTIFIER = 'top-title';
+    /**
+     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT
+     */
+    protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+
+    /**
+     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE
+     */
+    protected const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
 
     /**
      * @var \Twig\Environment
@@ -103,8 +113,8 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
     protected function getAvailableTemplates(): array
     {
         return [
-            static::DEFAULT_TEMPLATE_IDENTIFIER => '@ContentProductWidget/views/cms-product-abstract/cms-product-abstract.twig',
-            static::TOP_TITLE_TEMPLATE_IDENTIFIER => '@ContentProductWidget/views/cms-product-abstract/cms-product-abstract-top.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT => '@ContentProductWidget/views/cms-product-abstract/cms-product-abstract.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE => '@ContentProductWidget/views/cms-product-abstract/cms-product-abstract-top.twig',
         ];
     }
 
