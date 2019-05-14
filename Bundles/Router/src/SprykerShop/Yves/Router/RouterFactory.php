@@ -23,6 +23,7 @@ use Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestAttributeVal
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestValueResolver;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver\SessionValueResolver;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver;
+use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactory;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactoryInterface;
@@ -127,7 +128,10 @@ class RouterFactory extends AbstractFactory
         );
     }
 
-    public function createArgumentResolver()
+    /**
+     * @return \Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface
+     */
+    public function createArgumentResolver(): ArgumentResolverInterface
     {
         return new ArgumentResolver(
             $this->createArgumentMetaDataFactory(),
