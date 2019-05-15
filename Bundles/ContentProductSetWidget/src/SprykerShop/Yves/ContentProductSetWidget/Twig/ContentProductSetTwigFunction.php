@@ -19,19 +19,19 @@ use Twig\Environment;
 class ContentProductSetTwigFunction extends TwigFunction
 {
     /**
-     * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::FUNCTION_CONTENT_PRODUCT_SET
+     * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::TWIG_FUNCTION_NAME
      */
     protected const FUNCTION_CONTENT_PRODUCT_SET = 'content_product_set';
 
     /**
-     * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::TEMPLATE_IDENTIFIER_DEFAULT
+     * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT
      */
-    protected const TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+    protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
 
     /**
-     * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM
+     * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM
      */
-    protected const TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM = 'cart-button-btm';
+    protected const WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM = 'cart-button-btm';
 
     protected const MESSAGE_CONTENT_PRODUCT_SET_NOT_FOUND = '<strong>Content product set with ID %s not found.</strong>';
     protected const MESSAGE_WRONG_CONTENT_PRODUCT_SET_TYPE = '<strong>Content product set widget could not be rendered because the content item with ID %s is not a product set.</strong>';
@@ -125,8 +125,8 @@ class ContentProductSetTwigFunction extends TwigFunction
     protected function getAvailableTemplates(): array
     {
         return [
-            static::TEMPLATE_IDENTIFIER_DEFAULT => '@ContentProductSetWidget/views/content-product-set/content-product-set.twig',
-            static::TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM => '@ContentProductSetWidget/views/content-product-set/content-product-set-cart-button-btm.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT => '@ContentProductSetWidget/views/content-product-set/content-product-set.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM => '@ContentProductSetWidget/views/content-product-set/content-product-set-cart-button-btm.twig',
         ];
     }
 
