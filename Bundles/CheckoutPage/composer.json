@@ -19,12 +19,12 @@
     "spryker/kernel": "^3.24.0",
     "spryker/messenger": "^3.1.0",
     "spryker/money": "^2.4.0",
+    "spryker/payment": "^4.3.0",
     "spryker/permission-extension": "^1.0.0",
     "spryker/price": "^5.1.0",
     "spryker/product-bundle": "^4.1.0",
     "spryker/quote": "^1.1.0 || ^2.0.0",
     "spryker/shipment": "^6.2.0",
-    "spryker/payment": "^4.3.0",
     "spryker/step-engine": "^3.2.0",
     "spryker/symfony": "^3.1.0",
     "spryker/util-validate": "^1.0.0"
@@ -32,6 +32,7 @@
   "require-dev": {
     "spryker-shop/cart-note-widget": "*",
     "spryker-shop/checkout-widget": "*",
+    "spryker-shop/gift-card-widget": "*",
     "spryker-shop/product-packaging-unit-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
@@ -40,6 +41,7 @@
   "suggest": {
     "spryker-shop/cart-note-widget": "If you want to use components from module CartNoteWidget or CartNoteQuoteItemNoteWidgetPlugin.",
     "spryker-shop/checkout-widget": "ADD SUGGEST DESCRIPTION",
+    "spryker-shop/gift-card-widget": "If you want to use components from module GiftCardWidget",
     "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or SummaryProductPackagingUnitWidgetPlugin.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
