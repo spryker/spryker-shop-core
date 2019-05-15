@@ -85,12 +85,14 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
                 if ($value !== null) {
                     $value = new DateTime($value);
                 }
+
                 return $value;
             },
             function ($value) {
                 if ($value instanceof DateTime) {
                     $value = $this->getFactory()->getUtilDateTimeService()->formatDate($value);
                 }
+
                 return $value;
             }
         );

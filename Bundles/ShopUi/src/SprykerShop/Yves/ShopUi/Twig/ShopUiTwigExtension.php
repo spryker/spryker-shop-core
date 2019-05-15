@@ -52,6 +52,7 @@ class ShopUiTwigExtension extends TwigExtension
         return [
             new TwigFunction(self::FUNCTION_GET_PUBLIC_FOLDER_PATH, function ($relativePath) {
                 $publicFolderPath = $this->getPublicFolderPath();
+
                 return $publicFolderPath . $relativePath;
             }, [
                 $this,

@@ -83,6 +83,7 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
 
         if ($this->isVoucherCodeApplied($quoteTransfer, $voucherCode)) {
             $this->setFlashMessagesFromLastZedRequest($this->calculationClient);
+
             return;
         }
 
