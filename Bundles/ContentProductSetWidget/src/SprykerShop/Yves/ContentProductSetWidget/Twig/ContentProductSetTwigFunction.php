@@ -120,7 +120,7 @@ class ContentProductSetTwigFunction extends TwigFunction
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getAvailableTemplates(): array
     {

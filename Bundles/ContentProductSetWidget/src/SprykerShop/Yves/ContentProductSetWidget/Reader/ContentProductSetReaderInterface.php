@@ -15,7 +15,7 @@ interface ContentProductSetReaderInterface
      * @param int $idContent
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]|null
+     * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer[]|null
      */
     public function findProductSet(int $idContent, string $localeName): ?ProductSetDataStorageTransfer;
 }
