@@ -3,6 +3,7 @@
 {% define data = {
     cart: _view.cart,
     isQuoteEditable: _view.isQuoteEditable,
+    isQuoteLocked: _view.isQuoteLocked,
     cartItems: _view.cartItems,
     isQuoteValid: _view.isQuoteValid,
     attributes: _view.attributes,
@@ -95,6 +96,25 @@
 
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
+                    {% if data.isQuoteLocked %}
+                        <form method="POST" action="{{ path('cart/reset-lock') }}">
+                            <p>
+                                <strong>{{ 'cart_page.quote.label.locked_cart' | trans }}</strong>
+                            </p>
+
+                            {% if data.cart.quoteApprovals is not empty %}
+                                {{ 'persistent_cart.quote.label.locked_cart.by_quote_approval' | trans }}
+                            {% elseif data.cart.quoteRequestVersionReference %}
+                                {{ 'persistent_cart.quote.label.locked_cart.by_quote_request' | trans }}
+                            {% else %}
+                                {{ 'persistent_cart.quote.label.locked_cart' | trans }}
+                            {% endif %}
+
+                            <button type="submit" class="link">{{ 'persistent_cart.quote.button.reset_lock' | trans }}</button>
+                            {{ 'persistent_cart.quote.label.discarded_locked_cart' | trans }}
+                        </form>
+                        <hr />
+                    {% endif %}
                     {% widget 'CartNoteFormWidget' args [data.cart] only %}
                     {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartNoteFormWidget instead. #}
                     {% endwidget %}

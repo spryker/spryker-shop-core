@@ -163,6 +163,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
 
         if (!$shoppingListResponseTransfer->getIsSuccess()) {
             $this->handleResponseErrors($shoppingListResponseTransfer);
+
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_UPDATE, [
                 static::ROUTE_PARAM_ID_SHOPPING_LIST => $idShoppingList,
             ]);

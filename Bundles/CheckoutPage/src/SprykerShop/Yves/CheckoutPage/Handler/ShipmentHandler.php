@@ -158,6 +158,7 @@ class ShipmentHandler implements ShipmentHandlerInterface
             $shipmentExpenseTransfer->setUnitGrossPrice(0);
             $shipmentExpenseTransfer->setSumGrossPrice(0);
             $shipmentExpenseTransfer->setUnitNetPrice($price);
+
             return;
         }
 

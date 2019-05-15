@@ -448,6 +448,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::PLUGIN_APPLICATION] = function () {
             $pimplePlugin = new Pimple();
+
             return $pimplePlugin->getApplication();
         };
 

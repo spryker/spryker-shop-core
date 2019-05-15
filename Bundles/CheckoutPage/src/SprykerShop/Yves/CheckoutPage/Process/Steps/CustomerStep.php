@@ -119,6 +119,7 @@ class CustomerStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
         $customerTransfer = $this->customerClient->findCustomerById($customerTransfer);
         if (!$customerTransfer) {
             $this->externalRedirect = $this->logoutRoute;
+
             return false;
         }
 
