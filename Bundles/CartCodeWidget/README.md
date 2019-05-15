@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/cart-code-widget.svg)](https://travis-ci.org/spryker-shop/cart-code-widget)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/cart-code-widget/badge.svg)](https://coveralls.io/github/spryker-shop/cart-code-widget)
 
-{{ADD DESCRIPTION HERE}}
+Provides functionality to apply/remove codes for carts.
 
 ## Installation
 
