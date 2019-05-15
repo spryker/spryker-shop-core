@@ -168,11 +168,11 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
 
     /**
      * @param \Generated\Shared\Transfer\PaymentTransfer[]|\ArrayObject $paymentCollection
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function isValidPaymentSelection(ArrayObject $paymentCollection, AbstractTransfer $quoteTransfer)
+    protected function isValidPaymentSelection(ArrayObject $paymentCollection, QuoteTransfer $quoteTransfer)
     {
         $paymentMethods = $this->paymentClient->getAvailableMethods($quoteTransfer);
 
