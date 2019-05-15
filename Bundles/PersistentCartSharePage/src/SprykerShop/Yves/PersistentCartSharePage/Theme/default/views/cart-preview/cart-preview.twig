@@ -42,6 +42,14 @@
     </div>
 {% endblock %}
 
+{% block emptyCart %}
+    <div class="grid">
+        <div class="col col--sm-12">
+            {{ block('emptyCartMessage') }}
+        </div>
+    </div>
+{% endblock %}
+
 {% block cartItem %}
     {% embed molecule('cart-item', 'CartPage') with {
         class: 'box',
