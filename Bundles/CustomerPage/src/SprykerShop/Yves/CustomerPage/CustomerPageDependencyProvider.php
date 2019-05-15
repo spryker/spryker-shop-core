@@ -7,11 +7,13 @@
 
 namespace SprykerShop\Yves\CustomerPage;
 
+use Exception;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientBridge;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientBridge;
@@ -20,6 +22,7 @@ use SprykerShop\Yves\CustomerPage\Plugin\AuthenticationHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\GuestCheckoutAuthenticationHandlerPlugin;
 use SprykerShop\Yves\CustomerPage\Plugin\LoginCheckoutAuthenticationHandlerPlugin;
 use SprykerShop\Yves\CustomerPage\Plugin\RegistrationCheckoutAuthenticationHandlerPlugin;
+use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface;
 
 class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -29,6 +32,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGIN_AUTHENTICATION_HANDLER = 'PLUGIN_AUTHENTICATION_HANDLER';
+    public const PLUGIN_ACCESS_TOKEN_AUTHENTICATION_HANDLER = 'PLUGIN_ACCESS_TOKEN_AUTHENTICATION_HANDLER';
     public const PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER = 'PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER';
     public const PLUGIN_LOGIN_AUTHENTICATION_HANDLER = 'PLUGIN_LOGIN_AUTHENTICATION_HANDLER';
     public const PLUGIN_GUEST_AUTHENTICATION_HANDLER = 'PLUGIN_GUEST_AUTHENTICATION_HANDLER';
@@ -39,6 +43,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_LIST_WIDGETS';
     public const PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS';
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     public const PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS = 'PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS';
     public const PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT = 'PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT';
@@ -58,6 +63,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteClient($container);
         $container = $this->addApplication($container);
         $container = $this->addAuthenticationHandlerPlugin($container);
+        $container = $this->addAccessTokenAuthenticationHandlerPlugin($container);
         $container = $this->addLoginCheckoutAuthenticationHandlerPlugin($container);
         $container = $this->addGuestCheckoutAuthenticationHandlerPlugin($container);
         $container = $this->addRegistrationCheckoutAuthenticationHandlerPlugin($container);
@@ -71,6 +77,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPreRegistrationCustomerTransferExpanderPlugins($container);
         $container = $this->addAfterLoginCustomerRedirectPlugins($container);
         $container = $this->addAfterCustomerAuthenticationSuccessPlugins($container);
+        $container = $this->addGlossaryStorageClient($container);
 
         return $container;
     }
@@ -114,6 +121,20 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::PLUGIN_AUTHENTICATION_HANDLER] = function () {
             return new AuthenticationHandler();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addAccessTokenAuthenticationHandlerPlugin(Container $container): Container
+    {
+        $container[static::PLUGIN_ACCESS_TOKEN_AUTHENTICATION_HANDLER] = function () {
+            return $this->getAccessTokenAuthenticationHandlerPlugin();
         };
 
         return $container;
@@ -397,5 +418,30 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getAfterCustomerAuthenticationSuccessPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @throws \Exception
+     *
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface
+     */
+    protected function getAccessTokenAuthenticationHandlerPlugin(): AccessTokenAuthenticationHandlerPluginInterface
+    {
+        throw new Exception('Please set an access token authentication handler plugin, 
+        implementing the interface \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface');
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addGlossaryStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
+            return new CustomerPageToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
+        };
+
+        return $container;
     }
 }

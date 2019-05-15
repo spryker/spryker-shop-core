@@ -12,6 +12,7 @@ use Spryker\Shared\Twig\TwigFunction;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
@@ -24,6 +25,7 @@ use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerUserProvider;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
 use SprykerShop\Yves\CustomerPage\Twig\GetUsernameTwigFunction;
 use SprykerShop\Yves\CustomerPage\Twig\IsLoggedTwigFunction;
+use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
@@ -131,6 +133,14 @@ class CustomerPageFactory extends AbstractFactory
     public function getAuthenticationHandler()
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_AUTHENTICATION_HANDLER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface
+     */
+    public function getAccessTokenAuthenticationHandler(): AccessTokenAuthenticationHandlerPluginInterface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_ACCESS_TOKEN_AUTHENTICATION_HANDLER);
     }
 
     /**
@@ -295,5 +305,13 @@ class CustomerPageFactory extends AbstractFactory
     public function createIsLoggedTwigFunction(): TwigFunction
     {
         return new IsLoggedTwigFunction($this->getCustomerClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): CustomerPageToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }
