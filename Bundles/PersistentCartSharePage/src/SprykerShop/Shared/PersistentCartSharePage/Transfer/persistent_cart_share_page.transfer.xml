@@ -32,7 +32,6 @@
     </transfer>
 
     <transfer name="ResourceShareData">
-        <property name="data" type="array"/>
         <property name="shareOption" type="string"/>
     </transfer>
 
