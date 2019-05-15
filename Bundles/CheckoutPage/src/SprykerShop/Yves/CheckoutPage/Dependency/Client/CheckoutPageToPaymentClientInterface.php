@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface CheckoutPageToPaymentClientInterface
 {
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */

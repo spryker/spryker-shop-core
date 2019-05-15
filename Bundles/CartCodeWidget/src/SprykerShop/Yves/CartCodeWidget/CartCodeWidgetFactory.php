@@ -35,7 +35,6 @@ class CartCodeWidgetFactory extends AbstractFactory
     }
 
     /**
-     *
      * @return \SprykerShop\Yves\CartCodeWidget\Dependency\Client\CartCodeWidgetToZedRequestClientInterface
      */
     public function getZedRequestClient(): CartCodeWidgetToZedRequestClientInterface

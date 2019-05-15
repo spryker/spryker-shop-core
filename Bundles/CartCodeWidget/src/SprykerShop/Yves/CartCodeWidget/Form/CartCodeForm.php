@@ -8,8 +8,6 @@
 namespace SprykerShop\Yves\CartCodeWidget\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
-use SprykerShop\Yves\CartCodeWidget\Plugin\Provider\CartCodeWidgetControllerProvider;
-use SprykerShop\Yves\DiscountWidget\Plugin\Provider\DiscountWidgetControllerProvider;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 

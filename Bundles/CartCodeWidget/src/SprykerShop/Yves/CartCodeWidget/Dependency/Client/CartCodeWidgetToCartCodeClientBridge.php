@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CartCodeWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class CartCodeWidgetToCartCodeClientBridge implements CartCodeWidgetToCartCodeClientInterface
 {
