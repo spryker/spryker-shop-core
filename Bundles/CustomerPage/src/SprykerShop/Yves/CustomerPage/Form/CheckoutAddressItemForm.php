@@ -72,9 +72,9 @@ class CheckoutAddressItemForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return \SprykerShop\Yves\CustomerPage\Form\CheckoutAddressItemForm
+     * @return $this
      */
-    protected function addShipmentField(FormBuilderInterface $builder, array $options): CheckoutAddressItemForm
+    protected function addShipmentField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_SHIPMENT_SHIPPING_ADDRESS, CheckoutAddressForm::class, [
             'property_path' => 'shipment.shippingAddress',
@@ -117,9 +117,9 @@ class CheckoutAddressItemForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \SprykerShop\Yves\CustomerPage\Form\CheckoutAddressItemForm
+     * @return $this
      */
-    protected function addIsAddressSavingSkippedField(FormBuilderInterface $builder): CheckoutAddressItemForm
+    protected function addIsAddressSavingSkippedField(FormBuilderInterface $builder)
     {
         $isLoggedIn = $this->getFactory()
             ->getCustomerClient()
@@ -146,7 +146,7 @@ class CheckoutAddressItemForm extends AbstractType
     }
 
     /**
-     * @return Closure
+     * @return \Closure
      */
     protected function getInvertedBooleanValueCallbackTransformer(): Closure
     {

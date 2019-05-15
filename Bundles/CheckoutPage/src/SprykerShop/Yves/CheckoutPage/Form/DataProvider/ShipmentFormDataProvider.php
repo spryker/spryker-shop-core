@@ -16,10 +16,12 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
+use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentCollectionForm;
+use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
 
 class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
 {
@@ -56,24 +58,32 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected $shipmentService;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig
+     */
+    protected $checkoutPageConfig;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface $glossaryStorageClient
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
+     * @param \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig $checkoutPageConfig
      */
     public function __construct(
         CheckoutPageToShipmentClientInterface $shipmentClient,
         CheckoutPageToGlossaryStorageClientInterface $glossaryStorageClient,
         Store $store,
         MoneyPluginInterface $moneyPlugin,
-        CheckoutPageToShipmentServiceInterface $shipmentService
+        CheckoutPageToShipmentServiceInterface $shipmentService,
+        CheckoutPageConfig $checkoutPageConfig
     ) {
         $this->shipmentClient = $shipmentClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
         $this->store = $store;
         $this->moneyPlugin = $moneyPlugin;
         $this->shipmentService = $shipmentService;
+        $this->checkoutPageConfig = $checkoutPageConfig;
     }
 
     /**
@@ -93,6 +103,15 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
+        /**
+         * @deprecated Exists for Backward Compatibility reasons only.
+         */
+        if (!$this->checkoutPageConfig->isMultiShipmentEnabled()) {
+            return [
+                ShipmentForm::OPTION_SHIPMENT_METHODS => $this->createAvailableShipmentChoiceList($quoteTransfer),
+            ];
+        }
+
         $quoteTransfer = $this->setQuoteShipmentGroups($quoteTransfer);
 
         return [

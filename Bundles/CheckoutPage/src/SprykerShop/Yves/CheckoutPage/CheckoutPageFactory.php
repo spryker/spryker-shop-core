@@ -19,10 +19,18 @@ use SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilter;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilterInterface;
 use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
+use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
 use SprykerShop\Yves\CheckoutPage\Model\Shipment\Creator;
 use SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\CheckoutStep\CheckoutStepTemplateResolver;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\CheckoutStep\CheckoutStepTemplateResolverInterface;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\Shipment\ShipmentCreatorStrategyResolver;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\Shipment\ShipmentCreatorStrategyResolverInterface;
 
+/**
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
+ */
 class CheckoutPageFactory extends AbstractFactory
 {
     /**
@@ -157,8 +165,19 @@ class CheckoutPageFactory extends AbstractFactory
             $this->getGlossaryStorageClient(),
             $this->getStore(),
             $this->getMoneyPlugin(),
-            $this->getShippingService()
+            $this->getShippingService(),
+            $this->getConfig()
         );
+    }
+
+    /**
+     * @deprecated Use createShipmentHandlerWithMultipleShipment() instead.
+     *
+     * @return \SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandlerInterface
+     */
+    public function createShipmentHandler()
+    {
+        return new ShipmentHandler($this->getShipmentClient(), $this->getPriceClient());
     }
 
     /**
@@ -246,6 +265,55 @@ class CheckoutPageFactory extends AbstractFactory
             $this->getSubFormFilterPlugins(),
             $this->getQuoteClient()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\StrategyResolver\CheckoutStep\CheckoutStepTemplateResolverInterface
+     */
+    public function createStepFormResolver(): CheckoutStepTemplateResolverInterface
+    {
+        return new CheckoutStepTemplateResolver($this->getConfig());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\StrategyResolver\Shipment\ShipmentCreatorStrategyResolverInterface
+     */
+    public function createShipmentCreatorStrategyResolver(): ShipmentCreatorStrategyResolverInterface
+    {
+        $strategyContainer = [];
+
+        $strategyContainer = $this->addShipmentCreatorWithoutMultipleShipment($strategyContainer);
+        $strategyContainer = $this->addShipmentCreatorWithMultipleShipment($strategyContainer);
+
+        return new ShipmentCreatorStrategyResolver($strategyContainer, $this->getConfig());
+    }
+
+    /**
+     * @param array $strategyContainer
+     *
+     * @return array
+     */
+    protected function addShipmentCreatorWithoutMultipleShipment(array $strategyContainer): array
+    {
+        $strategyContainer[ShipmentCreatorStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+            return $this->createShipmentHandler();
+        };
+
+        return $strategyContainer;
+    }
+
+    /**
+     * @param array $strategyContainer
+     *
+     * @return array
+     */
+    protected function addShipmentCreatorWithMultipleShipment(array $strategyContainer): array
+    {
+        $strategyContainer[ShipmentCreatorStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+            return $this->createShipmentHandlerWithMultipleShipment();
+        };
+
+        return $strategyContainer;
     }
 
     /**

@@ -268,10 +268,11 @@ class CheckoutAddressCollectionForm extends AbstractType
     protected function getSplitDeliveryAddressChoices(array $options): array
     {
         $addressChoices = $options[static::OPTION_ADDRESS_CHOICES];
-        $quote = $this->getFactory()
+        $quoteTransfer = $this->getFactory()
             ->getQuoteClient()
             ->getQuote();
-        if ($quote->getItems()->count() > 1) {
+
+        if ($quoteTransfer->getItems()->count() > 1 && $quoteTransfer->getIsMultipleShipmentEnabled()) {
             $addressChoices[CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES] = static::GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES;
         }
 
