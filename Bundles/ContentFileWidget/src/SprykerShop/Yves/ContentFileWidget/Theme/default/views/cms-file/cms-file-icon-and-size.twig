@@ -1,0 +1,14 @@
+<div class="file-download-container">
+    {% embed molecule('file-download-link', 'FileManagerWidget') with {idFile: file.fkFile, fileName: file.fileName} %}
+        {% block file_content %}
+            {% include atom('icon') with {
+                modifiers: ['small'],
+                data: {
+                    name: fileCssClass
+                }
+            } only %}
+            {{ file.fileName }}
+            {{ fileSize }}
+        {% endblock %}
+    {% endembed %}
+</div>
