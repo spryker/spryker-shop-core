@@ -11,6 +11,18 @@ use Generated\Shared\Transfer\ContentFileListTypeTransfer;
 
 class ContentFileWidgetToContentFileClientBridge implements ContentFileWidgetToContentFileClientInterface
 {
+    /**
+     * @var \Spryker\Client\ContentFile\ContentFileClientInterface
+     */
+    protected $contentFileClient;
+
+    /**
+     * @param \Spryker\Client\ContentFile\ContentFileClientInterface $contentFileClient
+     */
+    public function __construct($contentFileClient)
+    {
+        $this->contentFileClient = $contentFileClient;
+    }
 
     /**
      * @param int $idContent
@@ -20,7 +32,9 @@ class ContentFileWidgetToContentFileClientBridge implements ContentFileWidgetToC
      */
     public function executeContentFileListTypeById(int $idContent, string $localeName): ?ContentFileListTypeTransfer
     {
-        // TODO: have to be changed to real data from client
-        return new ContentFileListTypeTransfer();
+        // TODO: Have to be deleted
+        return (new ContentFileListTypeTransfer())->setFileIds([1,2,3,4]);
+
+        return $this->contentFileClient->executeContentFileListTypeById($idContent, $localeName);
     }
 }

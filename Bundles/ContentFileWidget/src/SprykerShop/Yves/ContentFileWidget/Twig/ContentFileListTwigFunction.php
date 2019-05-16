@@ -68,7 +68,7 @@ class ContentFileListTwigFunction extends TwigFunction
     /**
      * @return string
      */
-    protected function getFunctionName()
+    protected function getFunctionName(): string
     {
         return static::FUNCTION_CONTENT_FILE_LIST;
     }
@@ -110,8 +110,8 @@ class ContentFileListTwigFunction extends TwigFunction
     protected function getAvailableTemplates(): array
     {
         return [
-            static::WIDGET_TEMPLATE_IDENTIFIER_TEXT_LINK => '@ContentFileWidget/views/cms-file/cms-file-text-link.twig',
-            static::WIDGET_TEMPLATE_IDENTIFIER_FILE_ICON_AND_SIZE => '@ContentFileWidget/views/cms-file/cms-file-icon-and-size.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_TEXT_LINK => '@ContentFileWidget/views/content-file/content-file-text-link.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_FILE_ICON_AND_SIZE => '@ContentFileWidget/views/content-file/content-file-icon-and-size.twig',
         ];
     }
 

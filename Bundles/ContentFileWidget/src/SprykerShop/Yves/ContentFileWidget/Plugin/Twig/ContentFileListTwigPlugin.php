@@ -12,6 +12,9 @@ use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig\Environment;
 
+/**
+ * @method \SprykerShop\Yves\ContentFileWidget\ContentFileWidgetFactory getFactory()
+ */
 class ContentFileListTwigPlugin  extends AbstractPlugin implements TwigPluginInterface
 {
     /**
