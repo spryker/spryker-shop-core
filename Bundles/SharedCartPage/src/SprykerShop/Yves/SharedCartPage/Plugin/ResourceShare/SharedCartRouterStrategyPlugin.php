@@ -24,11 +24,6 @@ class SharedCartRouterStrategyPlugin implements ResourceShareRouterStrategyPlugi
     protected const QUOTE_RESOURCE_TYPE = 'quote';
 
     /**
-     * @uses \Spryker\Shared\SharedCart\SharedCartConfig::KEY_SHARE_OPTION
-     */
-    protected const KEY_SHARE_OPTION = 'share_option';
-
-    /**
      * @uses \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_READ_ONLY
      */
     protected const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
@@ -59,12 +54,7 @@ class SharedCartRouterStrategyPlugin implements ResourceShareRouterStrategyPlugi
         $resourceShareTransfer->requireResourceShareData();
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
-        $shareOption = $resourceShareDataTransfer->getData()[static::KEY_SHARE_OPTION] ?? null;
-        if (!$shareOption) {
-            return false;
-        }
-
-        return in_array($shareOption, [static::PERMISSION_GROUP_READ_ONLY, static::PERMISSION_GROUP_FULL_ACCESS], true);
+        return in_array($resourceShareDataTransfer->getShareOption(), [static::PERMISSION_GROUP_READ_ONLY, static::PERMISSION_GROUP_FULL_ACCESS], true);
     }
 
     /**
