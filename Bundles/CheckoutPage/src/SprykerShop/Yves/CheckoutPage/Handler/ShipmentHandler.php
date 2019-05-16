@@ -57,7 +57,10 @@ class ShipmentHandler implements ShipmentHandlerInterface
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
         $shipmentExpenseTransfer = $this->createShippingExpenseTransfer($shipmentMethodTransfer, $quoteTransfer->getPriceMode());
+        $shipmentExpenseTransfer->setShipment($shipmentTransfer);
         $this->replaceShipmentExpenseInQuote($quoteTransfer, $shipmentExpenseTransfer);
+
+        $quoteTransfer = $this->clearItemsShipment($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -154,5 +157,21 @@ class ShipmentHandler implements ShipmentHandlerInterface
     protected function createExpenseTransfer()
     {
         return new ExpenseTransfer();
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function clearItemsShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setShipment(null);
+        }
+
+        return $quoteTransfer;
     }
 }

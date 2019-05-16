@@ -108,10 +108,15 @@ class CheckoutController extends AbstractController
             return $response;
         }
 
+        /**
+         * @deprecated Exists for Backward Compatibility reasons only.
+         */
+        $template = $this->getFactory()->createStepFormResolver()->getTemplateForAddressStep();
+
         return $this->view(
             $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),
-            '@CheckoutPage/views/address-multi-shipment/address-multi-shipment.twig'
+            $template
         );
     }
 
@@ -141,10 +146,15 @@ class CheckoutController extends AbstractController
             return $response;
         }
 
+        /**
+         * @deprecated Exists for Backward Compatibility reasons only.
+         */
+        $template = $this->getFactory()->createStepFormResolver()->getTemplateForShipmentStep();
+
         return $this->view(
             $response,
             $this->getFactory()->getCustomerPageWidgetPlugins(),
-            '@CheckoutPage/views/shipment-multi-shipment/shipment-multi-shipment.twig'
+            $template
         );
     }
 
@@ -207,10 +217,15 @@ class CheckoutController extends AbstractController
             return $viewData;
         }
 
+        /**
+         * @deprecated Exists for Backward Compatibility reasons only.
+         */
+        $template = $this->getFactory()->createStepFormResolver()->getTemplateForSummaryStep();
+
         return $this->view(
             $viewData,
             $this->getFactory()->getSummaryPageWidgetPlugins(),
-            '@CheckoutPage/views/summary-multi-shipment/summary-multi-shipment.twig'
+            $template
         );
     }
 

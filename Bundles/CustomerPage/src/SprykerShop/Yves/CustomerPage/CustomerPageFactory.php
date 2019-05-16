@@ -8,8 +8,8 @@
 namespace SprykerShop\Yves\CustomerPage;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Shared\Twig\TwigFunction;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
+use Spryker\Shared\Twig\TwigFunction;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;

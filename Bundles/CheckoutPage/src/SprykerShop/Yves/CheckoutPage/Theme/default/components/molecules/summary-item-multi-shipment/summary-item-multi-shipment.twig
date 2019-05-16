@@ -1,13 +1,16 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'summary-item',
+    name: 'summary-item-multi-shipment',
     tag: 'div'
 } %}
 
 {% define data = {
     name: required,
     quantity: required,
+    images: required,
+    groupKey: required,
+    sku: required,
     price: 0,
     options: [],
     bundleItems: [],
@@ -21,7 +24,7 @@
         {{ widget('SummaryProductPackagingUnitWidgetPlugin', data) }} {# @deprecated Use molecule('summary-product-packaging-unit', 'ProductPackagingUnitWidget') instead. #}
     {% else %}
         {% include [
-            molecule('summary-product-packaging-unit', 'ProductPackagingUnitWidget'),
+            molecule('summary-product-packaging-unit-multi-shipment', 'CheckoutPage'),
             molecule('summary-product-packaging-unit-default', 'CheckoutPage')
         ] ignore missing with {
             data: {
@@ -29,8 +32,11 @@
                 quantity: data.quantity,
                 amount: data.amount,
                 price: data.price,
+                images: data.images,
                 quantitySalesUnit: data.quantitySalesUnit,
-                amountSalesUnit: data.amountSalesUnit
+                amountSalesUnit: data.amountSalesUnit,
+                groupKey: data.groupKey,
+                sku: data.sku
             }
         } only %}
     {% endif %}
@@ -52,4 +58,11 @@
             {% endfor %}
         </ul>
     {% endif %}
+
+    {% include molecule('summary-item-remove', 'CheckoutPage') with {
+        data: {
+            sku: data.sku,
+            groupKey: data.groupKey
+        }
+    } only %}
 {% endblock %}

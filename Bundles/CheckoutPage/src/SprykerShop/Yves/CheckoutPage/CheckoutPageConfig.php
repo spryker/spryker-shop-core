@@ -37,44 +37,50 @@ class CheckoutPageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param bool $isMultiShipmentEnabled
-     *
      * @return string
      */
-    public function getTemplateForAddressStep(bool $isMultiShipmentEnabled): string
+    public function getTemplateForAddressStepWithSingleShipment(): string
     {
-        if ($isMultiShipmentEnabled) {
-            return self::TEMPLATE_MULTI_SHIPMENT_ADDRESS_STEP;
-        }
-
-        return self::TEMPLATE_SINGLE_SHIPMENT_ADDRESS_STEP;
+        return static::TEMPLATE_SINGLE_SHIPMENT_ADDRESS_STEP;
     }
 
     /**
-     * @param bool $isMultiShipmentEnabled
-     *
      * @return string
      */
-    public function getTemplateForShipmentStep(bool $isMultiShipmentEnabled): string
+    public function getTemplateForAddressStepWithMultiShipment(): string
     {
-        if ($isMultiShipmentEnabled) {
-            return self::TEMPLATE_MULTI_SHIPMENT_SHIPMENT_STEP;
-        }
-
-        return self::TEMPLATE_SINGLE_SHIPMENT_SHIPMENT_STEP;
+        return static::TEMPLATE_MULTI_SHIPMENT_ADDRESS_STEP;
     }
 
     /**
-     * @param bool $isMultiShipmentEnabled
-     *
      * @return string
      */
-    public function getTemplateForSummaryStep(bool $isMultiShipmentEnabled): string
+    public function getTemplateForShipmentStepWithSingleShipment(): string
     {
-        if ($isMultiShipmentEnabled) {
-            return self::TEMPLATE_MULTI_SHIPMENT_SUMMARY_STEP;
-        }
+        return static::TEMPLATE_SINGLE_SHIPMENT_SHIPMENT_STEP;
+    }
 
-        return self::TEMPLATE_SINGLE_SHIPMENT_SUMMARY_STEP;
+    /**
+     * @return string
+     */
+    public function getTemplateForShipmentStepWithMultiShipment(): string
+    {
+        return static::TEMPLATE_MULTI_SHIPMENT_SHIPMENT_STEP;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplateForSummaryStepWithSingleShipment(): string
+    {
+        return static::TEMPLATE_SINGLE_SHIPMENT_SUMMARY_STEP;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplateForSummaryStepWithMultiShipment(): string
+    {
+        return static::TEMPLATE_MULTI_SHIPMENT_SUMMARY_STEP;
     }
 }

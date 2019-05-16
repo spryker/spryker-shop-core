@@ -21,6 +21,9 @@ use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentCollectionForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\SummaryForm;
 
+/**
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
+ */
 class FormFactory extends AbstractFactory
 {
     /**
@@ -60,6 +63,15 @@ class FormFactory extends AbstractFactory
      */
     public function getShipmentFormTypes()
     {
+        /**
+         * @deprecated Exists for Backward Compatibility reasons only.
+         */
+        if (!$this->getConfig()->isMultiShipmentEnabled()) {
+            return [
+                $this->getShipmentForm(),
+            ];
+        }
+
         return [
             $this->getShipmentCollectionForm(),
         ];

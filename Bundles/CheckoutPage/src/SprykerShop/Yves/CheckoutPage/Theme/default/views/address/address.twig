@@ -7,7 +7,7 @@
         billing: _view.addressesForm.billingAddress,
         items: _view.addressesForm.items
     },
-
+    isMultipleShipmentEnabled: _view.addressesForm.vars.value.isMultipleShipmentEnabled,
     title: 'checkout.step.address.title' | trans
 } %}
 
@@ -27,7 +27,8 @@
                 shipping: data.forms.shipping,
                 billing: data.forms.billing,
                 items: data.forms.items
-            }
+            },
+            isMultipleShipmentEnabled: data.isMultipleShipmentEnabled
         }
     } only %}
         {% block fields %}
@@ -48,7 +49,7 @@
                             {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
                                 {% widget companyBusinessUnitAddressWidget with {
                                     data: {
-                                        isMultipleShipmentEnabled: true
+                                        isMultipleShipmentEnabled: embed.isMultipleShipmentEnabled
                                     }
                                 } only %}
                                 {% endwidget %}
@@ -59,9 +60,9 @@
                             {% else %}
                                 <li class="list__item spacing-y">
                                     {{
-                                        form_row(embed.forms.shipping.id_customer_address, {
-                                            component: molecule('select')
-                                        })
+                                    form_row(embed.forms.shipping.id_customer_address, {
+                                        component: molecule('select')
+                                    })
                                     }}
                                 </li>
                             {% endif %}
@@ -89,10 +90,10 @@
                 } only %}
                     {% block field %}
                         {{ form_row(field, {
-                        attr: {
+                            attr: {
                                 'data-key': field.vars.name
                             },
-                        rowAttr: {
+                            rowAttr: {
                                 class: config.name ~ '__field ' ~ fieldLayoutClass
                             }
                         }) }}
@@ -170,9 +171,9 @@
                                     {% else %}
                                         <li class="list__item spacing-y">
                                             {{
-                                                form_row(data.form.id_customer_address, {
-                                                    component: molecule('select')
-                                                })
+                                            form_row(data.form.id_customer_address, {
+                                                component: molecule('select')
+                                            })
                                             }}
                                         </li>
                                     {% endif %}
@@ -191,45 +192,45 @@
         {% block actions %}
             <div class="grid grid--middle grid--justify">
                 <div class="col">
+                    {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', embed.forms.shipping.vars.data]) %}
+                    {% set hasCompanyBusinessUnitAddress = companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
+                    {% set optionValueAddNewAddress = '' %}
+                    {% set optionValueDeliverToMultipleAddresses = constant('SprykerShop\\Yves\\CustomerPage\\Form\\CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES') %}
+
+                    {% if not hasCompanyBusinessUnitAddress %}
+                        {% set existingShippingAddressSelectSelector = embed.forms.shipping.id_customer_address is defined ? '[name="' ~ embed.forms.shipping.id_customer_address.vars.full_name ~ '"]' : '' %}
+                        {% set existingBillingAddressSelectSelector = embed.forms.billing.id_customer_address is defined ? '[name="' ~ embed.forms.billing.id_customer_address.vars.full_name ~ '"]' : '' %}
+                    {% else %}
+                        {% set existingShippingAddressSelectSelector = '.js-form-select-address__shippingAddress' %}
+                        {% set existingBillingAddressSelectSelector = '.js-form-select-address__billingAddress' %}
+                    {% endif %}
+
+                    {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
+                        attributes: {
+                            'trigger-selector': existingShippingAddressSelectSelector | default(''),
+                            'target-selector': '.js-address__shipping',
+                            'sub-target-selector': '.js-address__items-target',
+                            'form-clear-selector': '.js-form-clear__shippingAddress',
+                            'form-add-new-address-selector': '.js-form-add-new-address__shippingAddress',
+                            'form-billing-address-selector': '.js-address__billing-same-as-shipping',
+                            'billing-same-as-shipping-selector': '.js-address__billingSameAsShipping',
+                            'billing-same-as-shipping-toggler-selector': '[name="addressesForm[billingSameAsShipping]"]',
+                            'class-to-toggle': 'is-hidden',
+                            'has-company-business-unit-address': hasCompanyBusinessUnitAddress ? 'true' : 'false',
+                            'toggle-option-value': optionValueDeliverToMultipleAddresses
+                        }
+                    } only %}
+
+                    {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
+                        attributes: {
+                            'trigger-selector': existingBillingAddressSelectSelector | default(''),
+                            'target-selector': '.js-address__billing',
+                            'class-to-toggle': 'is-hidden',
+                            'has-company-business-unit-address': hasCompanyBusinessUnitAddress ? 'true' : 'false'
+                        }
+                    } only %}
+
                     {% if data.form.isAddressSavingSkipped is defined %}
-                        {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', embed.forms.shipping.vars.data]) %}
-                        {% set hasCompanyBusinessUnitAddress = companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
-                        {% set optionValueAddNewAddress = '' %}
-                        {% set optionValueDeliverToMultipleAddresses = constant('SprykerShop\\Yves\\CustomerPage\\Form\\CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES') %}
-
-                        {% if not hasCompanyBusinessUnitAddress %}
-                            {% set existingShippingAddressSelectSelector = embed.forms.shipping.id_customer_address is defined ? '[name="' ~ embed.forms.shipping.id_customer_address.vars.full_name ~ '"]' : '' %}
-                            {% set existingBillingAddressSelectSelector = embed.forms.billing.id_customer_address is defined ? '[name="' ~ embed.forms.billing.id_customer_address.vars.full_name ~ '"]' : '' %}
-                        {% else %}
-                            {% set existingShippingAddressSelectSelector = '.js-form-select-address__shippingAddress' %}
-                            {% set existingBillingAddressSelectSelector = '.js-form-select-address__billingAddress' %}
-                        {% endif %}
-
-                        {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
-                            attributes: {
-                                'trigger-selector': existingShippingAddressSelectSelector | default(''),
-                                'target-selector': '.js-address__shipping',
-                                'sub-target-selector': '.js-address__items-target',
-                                'form-clear-selector': '.js-form-clear__shippingAddress',
-                                'form-add-new-address-selector': '.js-form-add-new-address__shippingAddress',
-                                'form-billing-address-selector': '.js-address__billing-same-as-shipping',
-                                'billing-same-as-shipping-selector': '.js-address__billingSameAsShipping',
-                                'billing-same-as-shipping-toggler-selector': '[name="addressesForm[billingSameAsShipping]"]',
-                                'class-to-toggle': 'is-hidden',
-                                'has-company-business-unit-address': hasCompanyBusinessUnitAddress ? 'true' : 'false',
-                                'toggle-option-value': optionValueDeliverToMultipleAddresses
-                            }
-                        } only %}
-
-                        {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
-                            attributes: {
-                                'trigger-selector': existingBillingAddressSelectSelector | default(''),
-                                'target-selector': '.js-address__billing',
-                                'class-to-toggle': 'is-hidden',
-                                'has-company-business-unit-address': hasCompanyBusinessUnitAddress ? 'true' : 'false'
-                            }
-                        } only %}
-
                         {% include molecule('save-new-address', 'CustomerPage') ignore missing with {
                             class: 'col is-hidden',
                             data: {
@@ -237,7 +238,7 @@
                             },
                             attributes: {
                                 'shipping-address-toggler-selector': embed.forms.shipping.id_customer_address is defined ? '[name="' ~ embed.forms.shipping.id_customer_address.vars.full_name ~ '"]' : '',
-                                'billing-address-toggler-selector': embed.forms.billing.id_customer_address is defined ? '[name="' ~ embed.forms.billing.id_customer_address.vars.full_name ~ '"]' : '',
+                                'billing-address-toggler-selector': embed.forms.billing.id_customer_address is defined ? '[name="' ~ embed.forms.billing.id_customer_address.vars.full_name ~ '"]' : '[name="' ~ embed.forms.billing.vars.full_name ~ '[id_customer_address]"]',
                                 'billing-same-as-shipping-toggler-selector': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]',
                                 'save-address-toggler-selector': '[name="' ~ data.form.isAddressSavingSkipped.vars.full_name ~ '"]',
                                 'add-new-shipping-address-selector': '.js-form-add-new-address__shippingAddress' | default (''),
