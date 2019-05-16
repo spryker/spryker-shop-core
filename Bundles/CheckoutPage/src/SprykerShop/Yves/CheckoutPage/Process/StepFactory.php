@@ -395,7 +395,7 @@ class StepFactory extends AbstractFactory
      */
     protected function addAddressStepSaverWithoutMultipleShippingAddress(array $strategyContainer): array
     {
-        $strategyContainer[AddressStepStrategyResolverInterface::STRATEGY_KEY_SAVER_WITHOUT_MULTI_SHIPMENT] = function () {
+        $strategyContainer[AddressStepStrategyResolverInterface::STRATEGY_KEY_SAVER_WITHOUT_MULTI_SHIPMENT] = function (): SaverInterface {
             return $this->createAddressStepSaverWithoutMultipleShipment();
         };
 
@@ -411,7 +411,7 @@ class StepFactory extends AbstractFactory
      */
     protected function addAddressStepSaverWithMultipleShippingAddress(array $strategyContainer): array
     {
-        $strategyContainer[AddressStepStrategyResolverInterface::STRATEGY_KEY_SAVER_WITH_MULTI_SHIPMENT] = function () {
+        $strategyContainer[AddressStepStrategyResolverInterface::STRATEGY_KEY_SAVER_WITH_MULTI_SHIPMENT] = function (): SaverInterface {
             return $this->createAddressStepSaver();
         };
 
@@ -427,7 +427,7 @@ class StepFactory extends AbstractFactory
      */
     protected function addAddressStepPostConditionCheckerWithoutMultipleShipment(array $strategyContainer): array
     {
-        $strategyContainer[AddressStepStrategyResolverInterface::STRATEGY_KEY_POST_CONDITION_CHECKER_WITHOUT_MULTI_SHIPMENT] = function () {
+        $strategyContainer[AddressStepStrategyResolverInterface::STRATEGY_KEY_POST_CONDITION_CHECKER_WITHOUT_MULTI_SHIPMENT] = function (): PostConditionCheckerInterface {
             return $this->createAddressStepPostConditionCheckerWithoutMultipleShipment();
         };
 
@@ -443,7 +443,7 @@ class StepFactory extends AbstractFactory
      */
     protected function addAddressStepPostConditionCheckerWithMultipleShipment(array $strategyContainer): array
     {
-        $strategyContainer[AddressStepStrategyResolverInterface::STRATEGY_KEY_POST_CONDITION_CHECKER_WITH_MULTI_SHIPMENT] = function () {
+        $strategyContainer[AddressStepStrategyResolverInterface::STRATEGY_KEY_POST_CONDITION_CHECKER_WITH_MULTI_SHIPMENT] = function (): PostConditionCheckerInterface {
             return $this->createAddressStepPostConditionChecker();
         };
 
@@ -492,7 +492,7 @@ class StepFactory extends AbstractFactory
      */
     protected function addShipmentStepPostConditionCheckerWithoutMultipleShipment(array $strategyContainer): array
     {
-        $strategyContainer[ShipmentStepStrategyResolverInterface::STRATEGY_KEY_POST_CONDITION_CHECKER_WITHOUT_MULTI_SHIPMENT] = function () {
+        $strategyContainer[ShipmentStepStrategyResolverInterface::STRATEGY_KEY_POST_CONDITION_CHECKER_WITHOUT_MULTI_SHIPMENT] = function (): PostConditionCheckerInterface {
             return $this->createShipmentStepPostConditionCheckerWithoutMultipleShipment();
         };
 
@@ -508,7 +508,7 @@ class StepFactory extends AbstractFactory
      */
     protected function addShipmentStepPostConditionCheckerWithMultipleShipment(array $strategyContainer): array
     {
-        $strategyContainer[ShipmentStepStrategyResolverInterface::STRATEGY_KEY_POST_CONDITION_CHECKER_WITH_MULTI_SHIPMENT] = function () {
+        $strategyContainer[ShipmentStepStrategyResolverInterface::STRATEGY_KEY_POST_CONDITION_CHECKER_WITH_MULTI_SHIPMENT] = function (): PostConditionCheckerInterface {
             return $this->createShipmentStepPostConditionChecker();
         };
 

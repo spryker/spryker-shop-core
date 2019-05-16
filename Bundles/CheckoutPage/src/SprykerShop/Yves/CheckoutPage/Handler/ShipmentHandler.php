@@ -60,7 +60,7 @@ class ShipmentHandler implements ShipmentHandlerInterface
         $shipmentExpenseTransfer->setShipment($shipmentTransfer);
         $this->replaceShipmentExpenseInQuote($quoteTransfer, $shipmentExpenseTransfer);
 
-        $quoteTransfer = $this->setItemLevelShipmentData($quoteTransfer);
+        $quoteTransfer = $this->clearItemsShipment($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -166,7 +166,7 @@ class ShipmentHandler implements ShipmentHandlerInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function setItemLevelShipmentData(QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function clearItemsShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->setShipment(null);

@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
@@ -23,20 +22,6 @@ class PostConditionCheckerWithoutMultiShipment implements PostConditionCheckerIn
      * @return bool
      */
     public function check(AbstractTransfer $quoteTransfer): bool
-    {
-        if (!$this->isShipmentSet($quoteTransfer)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isShipmentSet(QuoteTransfer $quoteTransfer): bool
     {
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {

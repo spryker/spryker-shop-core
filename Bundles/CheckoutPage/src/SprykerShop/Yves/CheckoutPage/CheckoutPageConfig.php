@@ -41,7 +41,7 @@ class CheckoutPageConfig extends AbstractBundleConfig
      */
     public function getTemplateForAddressStepWithSingleShipment(): string
     {
-        return self::TEMPLATE_SINGLE_SHIPMENT_ADDRESS_STEP;
+        return static::TEMPLATE_SINGLE_SHIPMENT_ADDRESS_STEP;
     }
 
     /**
@@ -49,7 +49,7 @@ class CheckoutPageConfig extends AbstractBundleConfig
      */
     public function getTemplateForAddressStepWithMultiShipment(): string
     {
-        return self::TEMPLATE_MULTI_SHIPMENT_ADDRESS_STEP;
+        return static::TEMPLATE_MULTI_SHIPMENT_ADDRESS_STEP;
     }
 
     /**
@@ -57,7 +57,7 @@ class CheckoutPageConfig extends AbstractBundleConfig
      */
     public function getTemplateForShipmentStepWithSingleShipment(): string
     {
-        return self::TEMPLATE_SINGLE_SHIPMENT_SHIPMENT_STEP;
+        return static::TEMPLATE_SINGLE_SHIPMENT_SHIPMENT_STEP;
     }
 
     /**
@@ -65,7 +65,7 @@ class CheckoutPageConfig extends AbstractBundleConfig
      */
     public function getTemplateForShipmentStepWithMultiShipment(): string
     {
-        return self::TEMPLATE_MULTI_SHIPMENT_SHIPMENT_STEP;
+        return static::TEMPLATE_MULTI_SHIPMENT_SHIPMENT_STEP;
     }
 
     /**
@@ -73,7 +73,7 @@ class CheckoutPageConfig extends AbstractBundleConfig
      */
     public function getTemplateForSummaryStepWithSingleShipment(): string
     {
-        return self::TEMPLATE_SINGLE_SHIPMENT_SUMMARY_STEP;
+        return static::TEMPLATE_SINGLE_SHIPMENT_SUMMARY_STEP;
     }
 
     /**
@@ -81,6 +81,6 @@ class CheckoutPageConfig extends AbstractBundleConfig
      */
     public function getTemplateForSummaryStepWithMultiShipment(): string
     {
-        return self::TEMPLATE_MULTI_SHIPMENT_SUMMARY_STEP;
+        return static::TEMPLATE_MULTI_SHIPMENT_SUMMARY_STEP;
     }
 }

@@ -20,6 +20,7 @@ use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilter;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilterInterface;
 use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
 use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
+use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandlerInterface;
 use SprykerShop\Yves\CheckoutPage\Model\Shipment\Creator;
 use SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
@@ -175,7 +176,7 @@ class CheckoutPageFactory extends AbstractFactory
      *
      * @return \SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandlerInterface
      */
-    public function createShipmentHandler()
+    public function createShipmentHandler(): ShipmentHandlerInterface
     {
         return new ShipmentHandler($this->getShipmentClient(), $this->getPriceClient());
     }
@@ -295,7 +296,7 @@ class CheckoutPageFactory extends AbstractFactory
      */
     protected function addShipmentCreatorWithoutMultipleShipment(array $strategyContainer): array
     {
-        $strategyContainer[ShipmentCreatorStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+        $strategyContainer[ShipmentCreatorStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function (): CreatorInterface {
             return $this->createShipmentHandler();
         };
 
@@ -309,7 +310,7 @@ class CheckoutPageFactory extends AbstractFactory
      */
     protected function addShipmentCreatorWithMultipleShipment(array $strategyContainer): array
     {
-        $strategyContainer[ShipmentCreatorStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+        $strategyContainer[ShipmentCreatorStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function (): CreatorInterface {
             return $this->createShipmentHandlerWithMultipleShipment();
         };
 

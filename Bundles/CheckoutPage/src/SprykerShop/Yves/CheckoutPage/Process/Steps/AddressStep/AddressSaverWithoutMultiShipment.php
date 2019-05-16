@@ -88,8 +88,7 @@ class AddressSaverWithoutMultiShipment implements SaverInterface
 
         foreach ($customerTransfer->getAddresses()->getAddresses() as $customerAddressTransfer) {
             if ($addressTransfer->getIdCustomerAddress() === $customerAddressTransfer->getIdCustomerAddress()) {
-                $addressTransfer->fromArray($customerAddressTransfer->toArray());
-                break;
+                return $addressTransfer->fromArray($customerAddressTransfer->toArray());
             }
         }
 

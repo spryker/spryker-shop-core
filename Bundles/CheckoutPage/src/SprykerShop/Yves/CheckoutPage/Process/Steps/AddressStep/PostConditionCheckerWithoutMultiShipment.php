@@ -48,11 +48,8 @@ class PostConditionCheckerWithoutMultiShipment implements PostConditionCheckerIn
             return true;
         }
 
-        $hasName = (!empty($addressTransfer->getFirstName()) && !empty($addressTransfer->getLastName()));
-        if (!$addressTransfer->getIdCustomerAddress() && !$hasName) {
-            return true;
-        }
-
-        return false;
+        return $addressTransfer->getIdCustomerAddress() === null
+            && empty($addressTransfer->getFirstName())
+            && empty($addressTransfer->getLastName());
     }
 }
