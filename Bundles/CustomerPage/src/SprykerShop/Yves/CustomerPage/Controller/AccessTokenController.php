@@ -48,7 +48,7 @@ class AccessTokenController extends AbstractCustomerController
     protected function executeIndexAction(string $token): RedirectResponse
     {
         if ($this->isLoggedInCustomer()) {
-            $this->addTranslatedErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ALREADY_LOGGED_IN);
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ALREADY_LOGGED_IN);
 
             return $this->redirectResponseInternal(static::ROUTE_CUSTOMER_OVERVIEW);
         }
@@ -59,7 +59,7 @@ class AccessTokenController extends AbstractCustomerController
             ->getCustomerByToken($token);
 
         if (!$customerResponseTransfer->getIsSuccess()) {
-            $this->addTranslatedErrorMessage(static::GLOSSARY_KEY_INVALID_ACCESS_TOKEN);
+            $this->addErrorMessage(static::GLOSSARY_KEY_INVALID_ACCESS_TOKEN);
 
             throw new AccessDeniedHttpException();
         }

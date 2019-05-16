@@ -17,14 +17,19 @@ use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AccessTokenAuthenti
 class CompanyUserAccessTokenAuthenticationHandlerPlugin extends AbstractPlugin implements AccessTokenAuthenticationHandlerPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Retrieves customer by access token.
+     * - Executes CustomerExpanderPlugin stack.
+     *
+     * @api
+     *
      * @param string $accessToken
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function getCustomerByToken(string $accessToken): CustomerResponseTransfer
     {
-        return $this
-            ->getFactory()
+        return $this->getFactory()
             ->getOauthCompanyUserClient()
             ->getCustomerByAccessToken($accessToken);
     }

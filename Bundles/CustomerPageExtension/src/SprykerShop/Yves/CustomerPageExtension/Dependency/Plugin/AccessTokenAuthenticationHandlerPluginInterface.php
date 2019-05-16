@@ -16,7 +16,7 @@ interface AccessTokenAuthenticationHandlerPluginInterface
 {
     /**
      * Specification:
-     *  - Retrieves customer from access token.
+     *  - Retrieves customer by access token.
      *
      * @api
      *

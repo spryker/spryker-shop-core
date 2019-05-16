@@ -13,7 +13,6 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientBridge;
-use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientBridge;
@@ -77,7 +76,6 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPreRegistrationCustomerTransferExpanderPlugins($container);
         $container = $this->addAfterLoginCustomerRedirectPlugins($container);
         $container = $this->addAfterCustomerAuthenticationSuccessPlugins($container);
-        $container = $this->addGlossaryStorageClient($container);
 
         return $container;
     }
@@ -429,19 +427,5 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         throw new Exception('Please set an access token authentication handler plugin, 
         implementing the interface \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface');
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addGlossaryStorageClient(Container $container): Container
-    {
-        $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
-            return new CustomerPageToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
-        };
-
-        return $container;
     }
 }

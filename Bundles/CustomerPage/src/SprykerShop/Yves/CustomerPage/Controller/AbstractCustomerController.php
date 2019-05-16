@@ -46,31 +46,4 @@ abstract class AbstractCustomerController extends AbstractController
             $this->addErrorMessage($errorTransfer->getMessage());
         }
     }
-
-    /**
-     * @param string $key
-     * @param array $params
-     *
-     * @return void
-     */
-    protected function addTranslatedErrorMessage(string $key, array $params = []): void
-    {
-        $message = $this->getTranslatedMessage($key, $this->getLocale(), $params);
-
-        $this->addErrorMessage($message);
-    }
-
-    /**
-     * @param string $key
-     * @param string $locale
-     * @param array $params
-     *
-     * @return string
-     */
-    protected function getTranslatedMessage(string $key, string $locale, array $params = []): string
-    {
-        return $this->getFactory()
-            ->getGlossaryStorageClient()
-            ->translate($key, $locale, $params);
-    }
 }

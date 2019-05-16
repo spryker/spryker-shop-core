@@ -28,9 +28,9 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_CUSTOMER_ORDER_DETAILS = 'customer/order/details';
     public const ROUTE_CUSTOMER_DELETE = 'customer/delete';
     public const ROUTE_CUSTOMER_DELETE_CONFIRM = 'customer/delete/confirm';
-    public const ROUTE_TOKEN = 'token';
+    protected const ROUTE_TOKEN = 'token';
 
-    public const JWT_TOKEN_PATTERN = '^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$';
+    protected const TOKEN_PATTERN = '[a-zA-Z0-9-_\.]+';
 
     /**
      * @param \Silex\Application $app
@@ -251,6 +251,8 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
+     * @see \SprykerShop\Yves\CustomerPage\Controller\AccessTokenController::indexAction()
+     *
      * @return $this
      */
     protected function addAccessTokenRoute()
@@ -258,7 +260,7 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{accessToken}/{token}', static::ROUTE_TOKEN, 'CustomerPage', 'AccessToken', 'index')
             ->assert('accessToken', $this->getAllowedLocalesPattern() . 'access-token|access-token')
             ->value('accessToken', 'access-token')
-            ->assert('token', static::JWT_TOKEN_PATTERN);
+            ->assert('token', static::TOKEN_PATTERN);
 
         return $this;
     }
