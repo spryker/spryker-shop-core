@@ -46,7 +46,7 @@ class CartCodeFormWidget extends AbstractWidget
      *
      * @return bool
      */
-    protected function getIsQuoteEditableParameter(QuoteTransfer $quoteTransfer)
+    protected function getIsQuoteEditableParameter(QuoteTransfer $quoteTransfer): bool
     {
         return $this->getFactory()
             ->getQuoteClient()

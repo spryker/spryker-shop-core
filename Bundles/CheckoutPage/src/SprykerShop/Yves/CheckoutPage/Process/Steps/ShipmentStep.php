@@ -99,7 +99,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      *
      * @return bool
      */
-    protected function isShipmentSet(QuoteTransfer $quoteTransfer)
+    protected function isShipmentSet(QuoteTransfer $quoteTransfer): bool
     {
         if (!$quoteTransfer->getShipment()) {
             return false;
@@ -119,7 +119,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      *
      * @return bool
      */
-    protected function hasOnlyGiftCardItems(QuoteTransfer $quoteTransfer)
+    protected function hasOnlyGiftCardItems(QuoteTransfer $quoteTransfer): bool
     {
         $onlyGiftCardItems = true;
         foreach ($quoteTransfer->getItems() as $item) {
@@ -135,7 +135,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function setDefaultNoShipmentMethod(QuoteTransfer $quoteTransfer)
+    protected function setDefaultNoShipmentMethod(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $shipmentTransfer = (new ShipmentTransfer())
             ->setShipmentSelection(CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT);

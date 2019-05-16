@@ -18,7 +18,7 @@ interface CartCodeWidgetToCartCodeClientInterface
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function addCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer;
+    public function addCandidate(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

@@ -40,7 +40,7 @@ class CodeController extends AbstractController
 
             $cartCodeOperationResultTransfers = $this->getFactory()
                 ->getCartCodeClient()
-                ->addCode($quoteTransfer, $code);
+                ->addCandidate($quoteTransfer, $code);
 
             $this->getFactory()
                 ->getQuoteClient()

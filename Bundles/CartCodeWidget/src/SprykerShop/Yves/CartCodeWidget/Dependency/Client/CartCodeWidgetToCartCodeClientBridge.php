@@ -31,9 +31,9 @@ class CartCodeWidgetToCartCodeClientBridge implements CartCodeWidgetToCartCodeCl
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function addCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
+    public function addCandidate(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
     {
-        return $this->cartCodeClient->addCode($quoteTransfer, $code);
+        return $this->cartCodeClient->addCandidate($quoteTransfer, $code);
     }
 
     /**

@@ -109,7 +109,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return string|null
      */
-    protected function getPaymentSelectionWithFallback(QuoteTransfer $quoteTransfer)
+    protected function getPaymentSelectionWithFallback(QuoteTransfer $quoteTransfer): ?string
     {
         if ($quoteTransfer->getTotals() && $quoteTransfer->getTotals()->getPriceToPay() === 0) {
             return CheckoutPageConfig::PAYMENT_METHOD_NAME_NO_PAYMENT;
@@ -150,7 +150,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return \Generated\Shared\Transfer\PaymentTransfer[]|\ArrayObject
      */
-    protected function getPaymentCollection(QuoteTransfer $quoteTransfer)
+    protected function getPaymentCollection(QuoteTransfer $quoteTransfer): ArrayObject
     {
         $result = new ArrayObject();
         foreach ($quoteTransfer->getPayments() as $payment) {
@@ -172,7 +172,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return bool
      */
-    protected function isValidPaymentSelection(ArrayObject $paymentCollection, QuoteTransfer $quoteTransfer)
+    protected function isValidPaymentSelection(ArrayObject $paymentCollection, QuoteTransfer $quoteTransfer): bool
     {
         $paymentMethods = $this->paymentClient->getAvailableMethods($quoteTransfer);
 
@@ -191,7 +191,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return bool
      */
-    protected function containsPayment(PaymentMethodsTransfer $paymentMethodsTransfer, PaymentTransfer $paymentTransfer)
+    protected function containsPayment(PaymentMethodsTransfer $paymentMethodsTransfer, PaymentTransfer $paymentTransfer): bool
     {
         foreach ($paymentMethodsTransfer->getMethods() as $paymentMethodTransfer) {
             if ($paymentMethodTransfer->getMethodName() === $paymentTransfer->getPaymentSelection()) {

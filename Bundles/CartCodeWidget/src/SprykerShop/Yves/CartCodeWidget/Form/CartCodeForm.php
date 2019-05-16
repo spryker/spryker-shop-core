@@ -14,7 +14,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CartCodeForm extends AbstractType
 {
     public const FORM_NAME = 'cartCodeForm';
+
     public const FIELD_CODE = 'code';
+
+    protected const GLOSSARY_KEY_ENTER_CART_CODE = 'cart.code.enter-code';
 
     /**
      * @return string
@@ -43,7 +46,7 @@ class CartCodeForm extends AbstractType
     protected function addCodeField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_CODE, TextType::class, [
-            'label' => 'cart.code.enter-code',
+            'label' => static::GLOSSARY_KEY_ENTER_CART_CODE,
             'required' => false,
         ]);
 

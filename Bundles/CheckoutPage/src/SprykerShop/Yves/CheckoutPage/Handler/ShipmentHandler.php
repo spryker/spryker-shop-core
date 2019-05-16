@@ -66,7 +66,7 @@ class ShipmentHandler implements ShipmentHandlerInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function getShipmentMethod(QuoteTransfer $quoteTransfer)
+    protected function getShipmentMethod(QuoteTransfer $quoteTransfer): ?ShipmentMethodTransfer
     {
         $selectedShipmentMethod = $quoteTransfer->getShipment()->getShipmentSelection();
 
@@ -84,7 +84,7 @@ class ShipmentHandler implements ShipmentHandlerInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
-    protected function getShipmentMethodNoShipment(QuoteTransfer $quoteTransfer)
+    protected function getShipmentMethodNoShipment(QuoteTransfer $quoteTransfer): ShipmentMethodTransfer
     {
         $availableShipmentMethodsTransfer = $this->getAvailableShipmentMethods($quoteTransfer);
         foreach ($availableShipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
@@ -105,7 +105,7 @@ class ShipmentHandler implements ShipmentHandlerInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function getShipmentMethodById(QuoteTransfer $quoteTransfer, int $idShipmentMethod)
+    protected function getShipmentMethodById(QuoteTransfer $quoteTransfer, int $idShipmentMethod): ?ShipmentMethodTransfer
     {
         $shipmentMethodsTransfer = $this->getAvailableShipmentMethods($quoteTransfer);
 
