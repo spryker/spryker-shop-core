@@ -23,7 +23,7 @@
 {% block body %}
     <hr />
     {% block header %}
-        {% block form %}
+        {% block add_to_cart_form %}
             <form method="POST" action="{{ path('cart/add-items') }}">
                 {% set isDisabled = false %}
 
