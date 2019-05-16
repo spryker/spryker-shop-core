@@ -18,9 +18,9 @@ class OauthCompanyUserCustomerPageConnectorDependencyProvider extends AbstractBu
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return array|\Spryker\Yves\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
         $container = $this->addOauthCompanyUserClient($container);
