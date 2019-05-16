@@ -19,7 +19,6 @@ class CompanyUserAccessTokenAuthenticationHandlerPlugin extends AbstractPlugin i
     /**
      * {@inheritdoc}
      * - Retrieves customer by access token.
-     * - Executes CustomerExpanderPlugin stack.
      *
      * @api
      *
