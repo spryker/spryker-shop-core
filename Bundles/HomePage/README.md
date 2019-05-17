@@ -1,6 +1,6 @@
 # HomePage Module
 
-{{ADD DESCRIPTION HERE}}
+HomePage module.
 
 ## Installation
 

@@ -11,7 +11,7 @@
     cartItem: required
 } %}
 
-{% block class %}{{parent()}} list{% endblock %}
+{% block class %}{{ parent() }} list{% endblock %}
 
 {% block body %}
     <li class="list__item spacing-y">
@@ -35,6 +35,7 @@
         </li>
     {% endif %}
 
+
     <li class="list__item spacing-y">
         {% if can('SeePricePermissionPlugin') %}
             <strong>{{ 'cart.item.item_total' | trans }}</strong>
@@ -43,4 +44,5 @@
             {{ 'customer.access.cannot_see_price' | trans }}
         {% endif %}
     </li>
+
 {% endblock %}

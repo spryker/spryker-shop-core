@@ -41,6 +41,7 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
         foreach ($items as $item) {
             $availabilityMap = array_replace($availabilityMap, $this->getAvailability($item));
         }
+
         return $availabilityMap;
     }
 

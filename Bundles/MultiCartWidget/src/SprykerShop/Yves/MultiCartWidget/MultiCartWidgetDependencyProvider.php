@@ -10,10 +10,12 @@ namespace SprykerShop\Yves\MultiCartWidget;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToMultiCartClientBridge;
+use SprykerShop\Yves\MultiCartWidget\Dependency\Client\MultiCartWidgetToQuoteClientBridge;
 
 class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_MULTI_CART = 'CLIENT_MULTI_CART';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const PLUGINS_VIEW_EXTEND = 'PLUGINS_VIEW_EXTEND';
 
     /**
@@ -24,6 +26,7 @@ class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addMultiCartClient($container);
+        $container = $this->addQuoteClient($container);
         $container = $this->addViewExtendWidgetPlugins($container);
 
         return $container;
@@ -38,6 +41,20 @@ class MultiCartWidgetDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CLIENT_MULTI_CART] = function (Container $container) {
             return new MultiCartWidgetToMultiCartClientBridge($container->getLocator()->multiCart()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuoteClient($container)
+    {
+        $container[static::CLIENT_QUOTE] = function (Container $container) {
+            return new MultiCartWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
         };
 
         return $container;

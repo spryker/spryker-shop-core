@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\SharedCartWidget\Plugin\MultiCartPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\MultiCartPage\Dependency\Plugin\CartListPermissionGroupWidget\CartListPermissionGroupWidgetPluginInterface;
 use SprykerShop\Yves\SharedCartWidget\Widget\CartListPermissionGroupWidget;
 
 /**
@@ -17,8 +16,10 @@ use SprykerShop\Yves\SharedCartWidget\Widget\CartListPermissionGroupWidget;
  *
  * @method \SprykerShop\Yves\SharedCartWidget\SharedCartWidgetFactory getFactory()
  */
-class CartListPermissionGroupWidgetPlugin extends AbstractWidgetPlugin implements CartListPermissionGroupWidgetPluginInterface
+class CartListPermissionGroupWidgetPlugin extends AbstractWidgetPlugin
 {
+    public const NAME = 'CartListPermissionGroupWidgetPlugin';
+
     /**
      * {@inheritdoc}
      *

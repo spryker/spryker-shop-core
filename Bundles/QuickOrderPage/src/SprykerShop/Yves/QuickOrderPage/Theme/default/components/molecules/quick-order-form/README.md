@@ -1,0 +1,1 @@
+Displays a form with several rows which includes an autocomplete product search, measuring unit, quantity and price. Also, the user can add/remove rows, add products to a cart or directly create a new order.

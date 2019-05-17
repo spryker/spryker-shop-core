@@ -1,0 +1,22 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'approve-request-form',
+} %}
+
+{% define data = {
+    quoteApprovalRequestForm: required,
+    quoteApprovalRequestFormOptions: required,
+} %}
+
+{% block body %}
+    {{ form_start(data.quoteApprovalRequestForm, data.quoteApprovalRequestFormOptions) }}
+        {{ form_widget(data.quoteApprovalRequestForm.approverCompanyUserId) }}
+
+        <button type="submit" class="button button--expand button--success spacing-top">
+            {{ 'quote_approval.request.send' | trans }}
+        </button>
+
+        {{ form_errors(data.quoteApprovalRequestForm) }}
+    {{ form_end(data.quoteApprovalRequestForm) }}
+{% endblock %}

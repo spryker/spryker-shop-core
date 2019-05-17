@@ -1,6 +1,6 @@
 # WebProfilerWidget Module
 
-{{ADD DESCRIPTION HERE}}
+WebProfilerWidget module.
 
 ## Installation
 

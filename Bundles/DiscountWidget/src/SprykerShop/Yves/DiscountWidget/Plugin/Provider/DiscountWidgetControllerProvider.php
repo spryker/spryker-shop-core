@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\DiscountWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\CartCodeWidget\Plugin\Provider\CartCodeWidgetControllerProvider instead.
+ */
 class DiscountWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_DISCOUNT_VOUCHER_ADD = 'discount/voucher/add';
@@ -35,7 +38,7 @@ class DiscountWidgetControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addAddVoucherRoute(): self
+    protected function addAddVoucherRoute()
     {
         $this->createController('/{discount}/voucher/add', self::ROUTE_DISCOUNT_VOUCHER_ADD, 'DiscountWidget', 'Voucher', 'add')
             ->assert('discount', $this->getAllowedLocalesPattern() . 'discount|discount')
@@ -47,7 +50,7 @@ class DiscountWidgetControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addRemoveVoucherRoute(): self
+    protected function addRemoveVoucherRoute()
     {
         $this->createController('/{discount}/voucher/remove', self::ROUTE_DISCOUNT_VOUCHER_REMOVE, 'DiscountWidget', 'Voucher', 'remove')
             ->assert('discount', $this->getAllowedLocalesPattern() . 'discount|discount')
@@ -59,7 +62,7 @@ class DiscountWidgetControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addClearVoucherRoute(): self
+    protected function addClearVoucherRoute()
     {
         $this->createController('/{discount}/voucher/clear', self::ROUTE_DISCOUNT_VOUCHER_CLEAR, 'DiscountWidget', 'Voucher', 'clear')
             ->assert('discount', $this->getAllowedLocalesPattern() . 'discount|discount')
@@ -71,7 +74,7 @@ class DiscountWidgetControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addCheckoutVoucherRoute(): self
+    protected function addCheckoutVoucherRoute()
     {
         $this->createController('/{checkout}/add-voucher', self::CHECKOUT_VOUCHER_ADD, 'DiscountWidget', 'Checkout', 'addVoucher')
             ->assert('checkout', $this->getAllowedLocalesPattern() . 'checkout|checkout')

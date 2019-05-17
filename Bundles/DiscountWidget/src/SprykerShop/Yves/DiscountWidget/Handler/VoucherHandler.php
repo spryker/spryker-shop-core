@@ -14,8 +14,13 @@ use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
 use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCalculationClientInterface;
 use SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToQuoteClientInterface;
 
+/**
+ * @deprecated Use CartCode + CartCodeWidget modules instead.
+ */
 class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
 {
+    protected const GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED = 'cart.locked.change_denied';
+
     /**
      * @var \SprykerShop\Yves\DiscountWidget\Dependency\Client\DiscountWidgetToCalculationClientInterface
      */
@@ -50,8 +55,15 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
     {
         $quoteTransfer = $this->quoteClient->getQuote();
 
+        if ($this->quoteClient->isQuoteLocked($quoteTransfer)) {
+             $this->flashMessenger->addErrorMessage(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED);
+
+             return;
+        }
+
         $voucherDiscount = new DiscountTransfer();
         $voucherDiscount->setVoucherCode($voucherCode);
+
         $quoteTransfer->addVoucherDiscount($voucherDiscount);
 
         $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
@@ -74,6 +86,7 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
 
         if ($this->isVoucherCodeApplied($quoteTransfer, $voucherCode)) {
             $this->setFlashMessagesFromLastZedRequest($this->calculationClient);
+
             return;
         }
 
@@ -88,6 +101,12 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
     public function remove($voucherCode)
     {
         $quoteTransfer = $this->quoteClient->getQuote();
+
+        if ($this->quoteClient->isQuoteLocked($quoteTransfer)) {
+            $this->flashMessenger->addErrorMessage(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED);
+
+            return;
+        }
 
         $voucherDiscounts = $quoteTransfer->getVoucherDiscounts();
         $this->unsetVoucherCode($voucherCode, $voucherDiscounts);
@@ -105,6 +124,13 @@ class VoucherHandler extends BaseHandler implements VoucherHandlerInterface
     public function clear()
     {
         $quoteTransfer = $this->quoteClient->getQuote();
+
+        if ($this->quoteClient->isQuoteLocked($quoteTransfer)) {
+            $this->flashMessenger->addErrorMessage(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED);
+
+            return;
+        }
+
         $quoteTransfer->setVoucherDiscounts(new ArrayObject());
         $quoteTransfer->setUsedNotAppliedVoucherCodes([]);
 

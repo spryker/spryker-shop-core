@@ -14,7 +14,7 @@ interface CompanyPageToMessengerClientInterface
      *
      * @return void
      */
-    public function addErrorMessage($message): void;
+    public function addErrorMessage($message);
 
     /**
      * @param string $message
