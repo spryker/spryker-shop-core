@@ -43,7 +43,7 @@ class WishlistPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addAddToWishlistRoute(): self
+    protected function addAddToWishlistRoute()
     {
         $this->createGetController('/{wishlist}/add-to-wishlist', static::ROUTE_ADD_TO_WISHLIST, 'WishlistPage', 'AddToWishlist')
             ->assert('wishlist', $this->getAllowedLocalesPattern() . 'wishlist|wishlist')
@@ -55,7 +55,7 @@ class WishlistPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addWishlistOverviewRoute(): self
+    protected function addWishlistOverviewRoute()
     {
         $this->createController('/{wishlist}', static::ROUTE_WISHLIST_OVERVIEW, 'WishlistPage', 'WishlistOverview')
             ->assert('wishlist', $this->getAllowedLocalesPattern() . 'wishlist|wishlist')
@@ -67,7 +67,7 @@ class WishlistPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addUpdateWishlistRoute(): self
+    protected function addUpdateWishlistRoute()
     {
         $this->createController('/{wishlist}/update/{wishlistName}', static::ROUTE_WISHLIST_UPDATE, 'WishlistPage', 'WishlistOverview', 'update')
             ->assert('wishlist', $this->getAllowedLocalesPattern() . 'wishlist|wishlist')
@@ -80,7 +80,7 @@ class WishlistPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addDeleteWishlistRoute(): self
+    protected function addDeleteWishlistRoute()
     {
         $this->createPostController('/{wishlist}/delete/{wishlistName}', static::ROUTE_WISHLIST_DELETE, 'WishlistPage', 'WishlistOverview', 'delete')
             ->assert('wishlist', $this->getAllowedLocalesPattern() . 'wishlist|wishlist')
@@ -93,7 +93,7 @@ class WishlistPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addWishlistDetailsRoute(): self
+    protected function addWishlistDetailsRoute()
     {
         $this->createGetController('/{wishlist}/details/{wishlistName}', static::ROUTE_WISHLIST_DETAILS, 'WishlistPage', 'Wishlist')
             ->assert('wishlist', $this->getAllowedLocalesPattern() . 'wishlist|wishlist')
@@ -106,7 +106,7 @@ class WishlistPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addAddItemRoute(): self
+    protected function addAddItemRoute()
     {
         $this->createController('/{wishlist}/add-item', static::ROUTE_ADD_ITEM, 'WishlistPage', 'Wishlist', 'addItem')
             ->assert('wishlist', $this->getAllowedLocalesPattern() . 'wishlist|wishlist')
@@ -118,7 +118,7 @@ class WishlistPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addRemoveItemRoute(): self
+    protected function addRemoveItemRoute()
     {
         $this->createPostController('/{wishlist}/remove-item', static::ROUTE_REMOVE_ITEM, 'WishlistPage', 'Wishlist', 'removeItem')
             ->assert('wishlist', $this->getAllowedLocalesPattern() . 'wishlist|wishlist')
@@ -130,7 +130,7 @@ class WishlistPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addMoveToCartRoute(): self
+    protected function addMoveToCartRoute()
     {
         $this->createPostController('/{wishlist}/move-to-cart', static::ROUTE_MOVE_TO_CART, 'WishlistPage', 'Wishlist', 'moveToCart')
             ->assert('wishlist', $this->getAllowedLocalesPattern() . 'wishlist|wishlist')
@@ -143,7 +143,7 @@ class WishlistPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addMoveAllAvailableToCartRoute(): self
+    protected function addMoveAllAvailableToCartRoute()
     {
         $this->createPostController('/{wishlist}/move-all-available-to-cart/{wishlistName}', static::ROUTE_MOVE_ALL_AVAILABLE_TO_CART, 'WishlistPage', 'Wishlist', 'moveAllAvailableToCart')
             ->assert('wishlist', $this->getAllowedLocalesPattern() . 'wishlist|wishlist')

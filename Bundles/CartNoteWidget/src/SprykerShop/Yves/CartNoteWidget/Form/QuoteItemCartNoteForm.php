@@ -45,7 +45,7 @@ class QuoteItemCartNoteForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCartNoteField(FormBuilderInterface $builder): self
+    protected function addCartNoteField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_CART_NOTE, TextareaType::class, [
             'label' => 'cart_note.item_form.enter_note',
@@ -60,7 +60,7 @@ class QuoteItemCartNoteForm extends AbstractType
      *
      * @return $this
      */
-    protected function addItemSkuField(FormBuilderInterface $builder): self
+    protected function addItemSkuField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_SKU, HiddenType::class);
 
@@ -72,7 +72,7 @@ class QuoteItemCartNoteForm extends AbstractType
      *
      * @return $this
      */
-    protected function addGroupKeyField(FormBuilderInterface $builder): self
+    protected function addGroupKeyField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_GROUP_KEY, HiddenType::class);
 

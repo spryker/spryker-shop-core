@@ -21,6 +21,12 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated There are four classes created as replacement for current one.
+ * @see \SprykerShop\Yves\ShopApplication\Plugin\Twig\ShopApplicationTwigPlugin
+ * @see \SprykerShop\Yves\ShopApplication\Plugin\Application\ShopApplicationApplicationPlugin
+ * @see \Spryker\Yves\Store\Plugin\Application\StoreApplicationPlugin
+ * @see \Spryker\Yves\Locale\Plugin\Application\LocaleApplicationPlugin
+ *
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
  */
 class ShopApplicationServiceProvider extends AbstractPlugin implements ServiceProviderInterface

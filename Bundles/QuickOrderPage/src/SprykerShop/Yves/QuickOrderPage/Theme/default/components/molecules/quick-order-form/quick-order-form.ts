@@ -3,12 +3,35 @@ import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provide
 import { mount } from 'ShopUi/app';
 
 export default class QuickOrderForm extends Component {
-    form: HTMLFormElement
-    rows: HTMLElement
-    addRowTrigger: HTMLElement
-    removeRowTriggers: HTMLElement[]
-    addRowAjaxProvider: AjaxProvider
-    removeRowAjaxProvider: AjaxProvider
+    /**
+     * The current form.
+     */
+    form: HTMLFormElement;
+
+    /**
+     * The rows of the current forms.
+     */
+    rows: HTMLElement;
+
+    /**
+     * Element wich creats the for row.
+     */
+    addRowTrigger: HTMLElement;
+
+    /**
+     * Collection of the elements which remove the form row.
+     */
+    removeRowTriggers: HTMLElement[];
+
+    /**
+     * Element creates the AjaxProvider component for the form row.
+     */
+    addRowAjaxProvider: AjaxProvider;
+
+    /**
+     * Element removes the AjaxProvider component from the form row.
+     */
+    removeRowAjaxProvider: AjaxProvider;
 
     protected readyCallback(): void {
         this.form = <HTMLFormElement>this.querySelector(`.${this.jsName}__form`);
@@ -21,7 +44,9 @@ export default class QuickOrderForm extends Component {
     }
 
     protected registerRemoveRowTriggers(): void {
-        this.removeRowTriggers = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__remove-row-trigger`));
+        this.removeRowTriggers = <HTMLElement[]>Array.from(this.querySelectorAll(
+            `.${this.jsName}__remove-row-trigger`)
+        );
     }
 
     protected mapEvents(): void {
@@ -30,7 +55,9 @@ export default class QuickOrderForm extends Component {
     }
 
     protected mapRemoveRowTriggersEvents(): void {
-        this.removeRowTriggers.forEach((trigger: HTMLElement) => trigger.addEventListener('click', (event: Event) => this.onRemoveRowClick(event)));
+        this.removeRowTriggers.forEach((trigger: HTMLElement) => {
+            trigger.addEventListener('click', (event: Event) => this.onRemoveRowClick(event));
+        });
     }
 
     protected onAddRowClick(event: Event): void {
@@ -46,6 +73,10 @@ export default class QuickOrderForm extends Component {
         this.removeRow(rowIndex);
     }
 
+    /**
+     * Sends an ajax request to the server and renders the response on the page.
+     * @template viod The argument type returned by a successful promise.
+     */
     async addRow(): Promise<void> {
         const data = this.getFormData();
         const response = await this.addRowAjaxProvider.fetch(data);
@@ -56,6 +87,11 @@ export default class QuickOrderForm extends Component {
         this.mapRemoveRowTriggersEvents();
     }
 
+    /**
+     * Sends an ajax request to the server and renders the response on the page.
+     * @template viod The argument type returned by a successful promise.
+     * @param rowIndex A row string index used for removal.
+     */
     async removeRow(rowIndex: string): Promise<void> {
         const data = this.getFormData({
             'row-index': rowIndex
@@ -68,6 +104,12 @@ export default class QuickOrderForm extends Component {
         this.mapRemoveRowTriggersEvents();
     }
 
+    /**
+     * Gets an instance of the FormData.
+     * @template FormData A data type returned by the function.
+     * @param appendData An optional data object for extension of the returned data.
+     * @returns A data instance of the FormData type.
+     */
     getFormData(appendData?: object): FormData {
         const data = new FormData(this.form);
 
@@ -77,5 +119,4 @@ export default class QuickOrderForm extends Component {
 
         return data;
     }
-
 }

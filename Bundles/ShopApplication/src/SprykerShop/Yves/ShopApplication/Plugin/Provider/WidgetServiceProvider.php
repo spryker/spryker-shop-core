@@ -11,10 +11,12 @@ use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use SprykerShop\Yves\ShopApplication\Exception\EmptyWidgetRegistryException;
 use SprykerShop\Yves\ShopApplication\Exception\WidgetRenderException;
 use Throwable;
-use Twig_Environment;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
+ * @deprecated Use `SprykerShop\Yves\ShopApplication\Plugin\Twig\WidgetTwigPlugin` instead.
+ *
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationConfig getConfig()
  */
@@ -31,30 +33,30 @@ class WidgetServiceProvider extends WidgetTagServiceProvider
     protected const TWIG_FUNCTION_WIDGET_GLOBAL_EXISTS = 'widgetGlobalExists';
 
     /**
-     * @return \Twig_SimpleFunction[]
+     * @return \Twig\TwigFunction[]
      */
     protected function getFunctions(): array
     {
         $functions = array_merge(parent::getFunctions(), [
-            new Twig_SimpleFunction(static::TWIG_FUNCTION_WIDGET, [$this, 'widget'], [
+            new TwigFunction(static::TWIG_FUNCTION_WIDGET, [$this, 'widget'], [
                 'needs_environment' => true,
                 'needs_context' => false,
                 'is_safe' => ['html'],
             ]),
-            new Twig_SimpleFunction(static::TWIG_FUNCTION_WIDGET_BLOCK, [$this, 'widgetBlock'], [
+            new TwigFunction(static::TWIG_FUNCTION_WIDGET_BLOCK, [$this, 'widgetBlock'], [
                 'needs_environment' => true,
                 'needs_context' => false,
                 'is_safe' => ['html'],
             ]),
-            new Twig_SimpleFunction(static::TWIG_FUNCTION_WIDGET_GLOBAL, [$this, 'widgetGlobal'], [
+            new TwigFunction(static::TWIG_FUNCTION_WIDGET_GLOBAL, [$this, 'widgetGlobal'], [
                 'needs_environment' => true,
                 'needs_context' => false,
                 'is_safe' => ['html'],
             ]),
-            new Twig_SimpleFunction(static::TWIG_FUNCTION_WIDGET_EXISTS, [$this, 'widgetExists'], [
+            new TwigFunction(static::TWIG_FUNCTION_WIDGET_EXISTS, [$this, 'widgetExists'], [
                 'needs_context' => false,
             ]),
-            new Twig_SimpleFunction(static::TWIG_FUNCTION_WIDGET_GLOBAL_EXISTS, [$this, 'widgetGlobalExists'], [
+            new TwigFunction(static::TWIG_FUNCTION_WIDGET_GLOBAL_EXISTS, [$this, 'widgetGlobalExists'], [
                 'needs_context' => false,
             ]),
         ]);
@@ -63,7 +65,7 @@ class WidgetServiceProvider extends WidgetTagServiceProvider
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param string $widgetName
      * @param array $arguments
      *
@@ -71,7 +73,7 @@ class WidgetServiceProvider extends WidgetTagServiceProvider
      *
      * @return string
      */
-    public function widget(Twig_Environment $twig, $widgetName, ...$arguments)
+    public function widget(Environment $twig, $widgetName, ...$arguments)
     {
         try {
             $widgetContainer = $this->getWidgetContainer();
@@ -101,7 +103,7 @@ class WidgetServiceProvider extends WidgetTagServiceProvider
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param string $widgetName
      * @param string $block
      * @param array $arguments
@@ -110,7 +112,7 @@ class WidgetServiceProvider extends WidgetTagServiceProvider
      *
      * @return string
      */
-    public function widgetBlock(Twig_Environment $twig, $widgetName, $block, ...$arguments)
+    public function widgetBlock(Environment $twig, $widgetName, $block, ...$arguments)
     {
         try {
             $widgetContainer = $this->getWidgetContainer();
@@ -140,7 +142,7 @@ class WidgetServiceProvider extends WidgetTagServiceProvider
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param string $widgetName
      * @param array $arguments
      *
@@ -148,7 +150,7 @@ class WidgetServiceProvider extends WidgetTagServiceProvider
      *
      * @return string
      */
-    public function widgetGlobal(Twig_Environment $twig, $widgetName, ...$arguments)
+    public function widgetGlobal(Environment $twig, $widgetName, ...$arguments)
     {
         try {
             $widgetCollection = $this->getFactory()->createWidgetCollection();

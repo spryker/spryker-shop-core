@@ -14,6 +14,7 @@ class AgentPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_LOGIN = 'agent/login';
     public const ROUTE_LOGOUT = 'agent/logout';
+    public const ROUTE_AGENT_OVERVIEW = 'agent/overview';
 
     /**
      * @param \Silex\Application $app
@@ -24,13 +25,14 @@ class AgentPageControllerProvider extends AbstractYvesControllerProvider
     {
         $this
             ->addLoginRoute()
-            ->addLogoutRoute();
+            ->addLogoutRoute()
+            ->addOverviewRoute();
     }
 
     /**
      * @return $this
      */
-    protected function addLoginRoute(): self
+    protected function addLoginRoute()
     {
         $this->createController('/{agent}/login', static::ROUTE_LOGIN, 'AgentPage', 'Auth', 'login')
             ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
@@ -44,9 +46,23 @@ class AgentPageControllerProvider extends AbstractYvesControllerProvider
      *
      * @return $this
      */
-    protected function addLogoutRoute(): self
+    protected function addLogoutRoute()
     {
-        $this->createController('/{agent}/logout/deprecated', static::ROUTE_LOGOUT, 'AgentPage', 'Auth', 'logout')
+        $this->createController('/{agent}/logout', static::ROUTE_LOGOUT, 'AgentPage', 'Auth', 'logout')
+            ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
+            ->value('agent', 'agent');
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\AgentPage\Controller\AgentController::indexAction()
+     *
+     * @return $this
+     */
+    protected function addOverviewRoute()
+    {
+        $this->createController('/{agent}/overview', static::ROUTE_AGENT_OVERVIEW, 'AgentPage', 'Agent', 'index')
             ->assert('agent', $this->getAllowedLocalesPattern() . 'agent|agent')
             ->value('agent', 'agent');
 

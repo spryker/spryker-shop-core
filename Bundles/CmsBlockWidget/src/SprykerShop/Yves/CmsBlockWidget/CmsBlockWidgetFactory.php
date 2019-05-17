@@ -12,11 +12,21 @@ use Spryker\Yves\Kernel\AbstractFactory;
 class CmsBlockWidgetFactory extends AbstractFactory
 {
     /**
+     * @deprecated Use `getTwigExtensionPlugins` instead.
+     *
      * @return \Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface[]
      */
     public function getTwigFunctionPlugins()
     {
         return $this->getProvidedDependency(CmsBlockWidgetDependencyProvider::TWIG_FUNCTION_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\TwigExtensionInterface[]
+     */
+    public function getTwigExtensionPlugins()
+    {
+        return $this->getProvidedDependency(CmsBlockWidgetDependencyProvider::TWIG_EXTENSION_PLUGINS);
     }
 
     /**
