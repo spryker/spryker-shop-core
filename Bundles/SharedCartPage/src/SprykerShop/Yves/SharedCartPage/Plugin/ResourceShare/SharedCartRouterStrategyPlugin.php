@@ -14,9 +14,9 @@ use SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareR
 class SharedCartRouterStrategyPlugin implements ResourceShareRouterStrategyPluginInterface
 {
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     * @uses \SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX
      */
-    protected const ROUTE_CART = 'cart';
+    protected const ROUTE_MULTI_CART_INDEX = 'multi-cart';
 
     /**
      * @uses \Spryker\Shared\SharedCart\SharedCartConfig::QUOTE_RESOURCE_TYPE
@@ -70,6 +70,6 @@ class SharedCartRouterStrategyPlugin implements ResourceShareRouterStrategyPlugi
     public function resolveRoute(ResourceShareTransfer $resourceShareTransfer): RouteTransfer
     {
         return (new RouteTransfer())
-            ->setRoute(static::ROUTE_CART);
+            ->setRoute(static::ROUTE_MULTI_CART_INDEX);
     }
 }
