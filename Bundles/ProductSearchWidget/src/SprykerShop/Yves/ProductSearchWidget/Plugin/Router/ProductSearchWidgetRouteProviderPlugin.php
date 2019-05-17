@@ -16,6 +16,11 @@ class ProductSearchWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_PRODUCT_QUICK_ADD = 'product-quick-add';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

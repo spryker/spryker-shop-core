@@ -12,9 +12,14 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class AgentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_CUSTOMER_AUTOCOMPLETE = 'agent-widget/customer-autocomplete';
+    protected const ROUTE_CUSTOMER_AUTOCOMPLETE = 'agent-widget/customer-autocomplete';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

@@ -12,9 +12,15 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class AvailabilityNotificationPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'availability-notification/unsubscribe-by-key';
+    protected const ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'availability-notification/unsubscribe-by-key';
+    protected const SUBSCRIPTION_KEY_PATTERN = '[0-9A-Za-z]{32}';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection
@@ -34,7 +40,7 @@ class AvailabilityNotificationPageRouteProviderPlugin extends AbstractRouteProvi
     protected function addAvailabilityNotificationUnsubscribeRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/availability-notification/unsubscribe-by-key/{subscriptionKey}', 'AvailabilityNotificationPage', 'AvailabilityNotificationPage', 'unsubscribeByKeyAction');
-        $route = $route->setRequirement('subscriptionKey', '[0-9A-Za-z]{32}');
+        $route = $route->setRequirement('subscriptionKey', static::SUBSCRIPTION_KEY_PATTERN);
         $routeCollection->add(static::ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE, $route);
 
         return $routeCollection;

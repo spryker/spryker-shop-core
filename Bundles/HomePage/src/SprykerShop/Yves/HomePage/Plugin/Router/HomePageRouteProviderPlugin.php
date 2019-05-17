@@ -12,9 +12,14 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class HomePageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_HOME = 'home';
+    protected const ROUTE_HOME = 'home';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

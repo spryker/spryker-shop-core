@@ -12,9 +12,14 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class HeartbeatPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_HEARTBEAT = 'heartbeat';
+    protected const ROUTE_HEARTBEAT = 'heartbeat';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

@@ -12,24 +12,29 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_LOGIN = 'login';
-    public const ROUTE_LOGOUT = 'logout';
-    public const ROUTE_REGISTER = 'register';
-    public const ROUTE_PASSWORD_FORGOTTEN = 'password/forgotten';
-    public const ROUTE_PASSWORD_RESTORE = 'password/restore';
-    public const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';
-    public const ROUTE_CUSTOMER_PROFILE = 'customer/profile';
-    public const ROUTE_CUSTOMER_ADDRESS = 'customer/address';
-    public const ROUTE_CUSTOMER_NEW_ADDRESS = 'customer/address/new';
-    public const ROUTE_CUSTOMER_UPDATE_ADDRESS = 'customer/address/update';
-    public const ROUTE_CUSTOMER_DELETE_ADDRESS = 'customer/address/delete';
-    public const ROUTE_CUSTOMER_REFRESH_ADDRESS = 'customer/address/refresh';
-    public const ROUTE_CUSTOMER_ORDER = 'customer/order';
-    public const ROUTE_CUSTOMER_ORDER_DETAILS = 'customer/order/details';
-    public const ROUTE_CUSTOMER_DELETE = 'customer/delete';
-    public const ROUTE_CUSTOMER_DELETE_CONFIRM = 'customer/delete/confirm';
+    protected const ROUTE_LOGIN = 'login';
+    protected const ROUTE_LOGOUT = 'logout';
+    protected const ROUTE_REGISTER = 'register';
+    protected const ROUTE_PASSWORD_FORGOTTEN = 'password/forgotten';
+    protected const ROUTE_PASSWORD_RESTORE = 'password/restore';
+    protected const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';
+    protected const ROUTE_CUSTOMER_PROFILE = 'customer/profile';
+    protected const ROUTE_CUSTOMER_ADDRESS = 'customer/address';
+    protected const ROUTE_CUSTOMER_NEW_ADDRESS = 'customer/address/new';
+    protected const ROUTE_CUSTOMER_UPDATE_ADDRESS = 'customer/address/update';
+    protected const ROUTE_CUSTOMER_DELETE_ADDRESS = 'customer/address/delete';
+    protected const ROUTE_CUSTOMER_REFRESH_ADDRESS = 'customer/address/refresh';
+    protected const ROUTE_CUSTOMER_ORDER = 'customer/order';
+    protected const ROUTE_CUSTOMER_ORDER_DETAILS = 'customer/order/details';
+    protected const ROUTE_CUSTOMER_DELETE = 'customer/delete';
+    protected const ROUTE_CUSTOMER_DELETE_CONFIRM = 'customer/delete/confirm';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

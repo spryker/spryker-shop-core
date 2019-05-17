@@ -12,14 +12,19 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class QuickOrderPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_QUICK_ORDER = 'quick-order';
-    public const ROUTE_QUICK_ORDER_ADD_ROWS = 'quick-order/add-rows';
-    public const ROUTE_QUICK_ORDER_DELETE_ROW = 'quick-order/delete-row';
-    public const ROUTE_QUICK_ORDER_CLEAR_ALL_ROWS = 'quick-order/clear-all-rows';
-    public const ROUTE_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA = 'quick-order/product-additional-data';
+    protected const ROUTE_QUICK_ORDER = 'quick-order';
+    protected const ROUTE_QUICK_ORDER_ADD_ROWS = 'quick-order/add-rows';
+    protected const ROUTE_QUICK_ORDER_DELETE_ROW = 'quick-order/delete-row';
+    protected const ROUTE_QUICK_ORDER_CLEAR_ALL_ROWS = 'quick-order/clear-all-rows';
+    protected const ROUTE_QUICK_ORDER_PRODUCT_ADDITIONAL_DATA = 'quick-order/product-additional-data';
     protected const ROUTE_QUICK_ORDER_DOWNLOAD_TEMPLATE = 'quick-order/download-template';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

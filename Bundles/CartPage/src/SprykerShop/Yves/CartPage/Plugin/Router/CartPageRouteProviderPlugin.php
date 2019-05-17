@@ -12,19 +12,24 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_CART = 'cart';
-    public const ROUTE_CART_ADD = 'cart/add';
-    public const ROUTE_CART_QUICK_ADD = 'cart/quick-add';
-    public const ROUTE_CART_REMOVE = 'cart/remove';
-    public const ROUTE_CART_CHANGE = 'cart/change';
-    public const ROUTE_CART_UPDATE = 'cart/update';
-    public const ROUTE_CART_CHANGE_QUANTITY = 'cart/change/quantity';
-    public const ROUTE_CART_ADD_ITEMS = 'cart/add-items';
-    public const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
+    protected const ROUTE_CART = 'cart';
+    protected const ROUTE_CART_ADD = 'cart/add';
+    protected const ROUTE_CART_QUICK_ADD = 'cart/quick-add';
+    protected const ROUTE_CART_REMOVE = 'cart/remove';
+    protected const ROUTE_CART_CHANGE = 'cart/change';
+    protected const ROUTE_CART_UPDATE = 'cart/update';
+    protected const ROUTE_CART_CHANGE_QUANTITY = 'cart/change/quantity';
+    protected const ROUTE_CART_ADD_ITEMS = 'cart/add-items';
+    protected const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
 
     protected const ROUTE_CART_RESET_LOCK = 'cart/reset-lock';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection
@@ -92,7 +97,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCartAddRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart/add/{sku}', 'CartPage', 'Cart', 'addAction');
-        $route = $route->setRequirement('sku', self::SKU_PATTERN);
+        $route = $route->setRequirement('sku', static::SKU_PATTERN);
         $routeCollection->add(static::ROUTE_CART_ADD, $route);
 
         return $routeCollection;
@@ -123,7 +128,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCartRemoveRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart/remove/{sku}/', 'CartPage', 'Cart', 'removeAction');
-        $route = $route->setRequirement('sku', self::SKU_PATTERN);
+        $route = $route->setRequirement('sku', static::SKU_PATTERN);
         $routeCollection->add(static::ROUTE_CART_REMOVE, $route);
 
         return $routeCollection;
@@ -137,7 +142,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCartChangeQuantityRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart/change/{sku}', 'CartPage', 'Cart', 'changeAction');
-        $route = $route->setRequirement('sku', self::SKU_PATTERN);
+        $route = $route->setRequirement('sku', static::SKU_PATTERN);
         $route = $route->setMethods(['POST']);
         $routeCollection->add(static::ROUTE_CART_CHANGE_QUANTITY, $route);
 
@@ -152,7 +157,7 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCartUpdateRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cart/update/{sku}', 'CartPage', 'Cart', 'updateAction');
-        $route = $route->setRequirement('sku', self::SKU_PATTERN);
+        $route = $route->setRequirement('sku', static::SKU_PATTERN);
         $route = $route->setMethods(['POST']);
         $routeCollection->add(static::ROUTE_CART_UPDATE, $route);
 

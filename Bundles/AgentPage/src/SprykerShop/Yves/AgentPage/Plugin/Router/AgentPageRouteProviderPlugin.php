@@ -12,10 +12,16 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class AgentPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_LOGIN = 'agent/login';
-    public const ROUTE_AGENT_OVERVIEW = 'agent/overview';
+    protected const ROUTE_LOGIN = 'agent/login';
+    protected const ROUTE_LOGOUT = 'agent/logout';
+    protected const ROUTE_AGENT_OVERVIEW = 'agent/overview';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

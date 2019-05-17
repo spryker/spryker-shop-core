@@ -12,11 +12,16 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class SharedCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_SHARED_CART_SHARE = 'shared-cart/share';
-    public const ROUTE_SHARED_CART_DISMISS = 'shared-cart/dismiss';
-    public const ROUTE_SHARED_CART_DISMISS_CONFIRM = 'shared-cart/dismiss-confirm';
+    protected const ROUTE_SHARED_CART_SHARE = 'shared-cart/share';
+    protected const ROUTE_SHARED_CART_DISMISS = 'shared-cart/dismiss';
+    protected const ROUTE_SHARED_CART_DISMISS_CONFIRM = 'shared-cart/dismiss-confirm';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

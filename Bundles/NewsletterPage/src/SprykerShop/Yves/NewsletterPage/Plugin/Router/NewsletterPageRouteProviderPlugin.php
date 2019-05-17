@@ -12,9 +12,14 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class NewsletterPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_CUSTOMER_NEWSLETTER = 'customer/newsletter';
+    protected const ROUTE_CUSTOMER_NEWSLETTER = 'customer/newsletter';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

@@ -20,6 +20,11 @@ class QuoteApprovalWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const PATTERN_ID = '\d+';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

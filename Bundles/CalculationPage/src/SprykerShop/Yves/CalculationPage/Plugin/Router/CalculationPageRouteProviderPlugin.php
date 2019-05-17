@@ -12,9 +12,14 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class CalculationPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_CALCULATION_DEBUG = 'calculation-debug';
+    protected const ROUTE_CALCULATION_DEBUG = 'calculation-debug';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

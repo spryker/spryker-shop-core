@@ -12,11 +12,16 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class NewsletterWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_NEWSLETTER_SUBSCRIBE = 'newsletter/subscribe';
+    protected const ROUTE_NEWSLETTER_SUBSCRIBE = 'newsletter/subscribe';
 
-    public const ROUTE_NEWSLETTER_WIDGET_SUBSCRIBE = 'newsletter-widget/subscribe';
+    protected const ROUTE_NEWSLETTER_WIDGET_SUBSCRIBE = 'newsletter-widget/subscribe';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

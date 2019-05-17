@@ -12,11 +12,18 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class ProductReviewWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_PRODUCT_REVIEW_INDEX = 'product-review/index';
-    public const ROUTE_PRODUCT_REVIEW_CREATE = 'product-review/create';
-    public const ID_ABSTRACT_PRODUCT_REGEX = '[1-9][0-9]*';
+    protected const ROUTE_PRODUCT_REVIEW_INDEX = 'product-review/index';
+    protected const ROUTE_PRODUCT_REVIEW_SUBMIT = 'product-review/submit';
+    protected const ROUTE_PRODUCT_REVIEW_CREATE = 'product-review/create';
+
+    protected const ID_ABSTRACT_PRODUCT_REGEX = '[1-9][0-9]*';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

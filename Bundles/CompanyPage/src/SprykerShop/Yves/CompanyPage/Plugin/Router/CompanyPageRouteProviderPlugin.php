@@ -12,50 +12,55 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_COMPANY_LOGIN = 'company/login';
-    public const ROUTE_COMPANY_REGISTER = 'company/register';
-    public const ROUTE_COMPANY_OVERVIEW = 'company/overview';
+    protected const ROUTE_COMPANY_LOGIN = 'company/login';
+    protected const ROUTE_COMPANY_REGISTER = 'company/register';
+    protected const ROUTE_COMPANY_OVERVIEW = 'company/overview';
 
-    public const ROUTE_COMPANY_ADDRESS = 'company/address';
-    public const ROUTE_COMPANY_ADDRESS_CREATE = 'company/address/create';
-    public const ROUTE_COMPANY_ADDRESS_UPDATE = 'company/address/update';
-    public const ROUTE_COMPANY_ADDRESS_DELETE = 'company/address/delete';
-    public const ROUTE_COMPANY_ADDRESS_DELETE_CONFIRMATION = 'company/address/delete-confirmation';
+    protected const ROUTE_COMPANY_ADDRESS = 'company/address';
+    protected const ROUTE_COMPANY_ADDRESS_CREATE = 'company/address/create';
+    protected const ROUTE_COMPANY_ADDRESS_UPDATE = 'company/address/update';
+    protected const ROUTE_COMPANY_ADDRESS_DELETE = 'company/address/delete';
+    protected const ROUTE_COMPANY_ADDRESS_DELETE_CONFIRMATION = 'company/address/delete-confirmation';
 
-    public const ROUTE_COMPANY_BUSINESS_UNIT = 'company/business-unit';
-    public const ROUTE_COMPANY_BUSINESS_UNIT_DETAILS = 'company/business-unit/details';
-    public const ROUTE_COMPANY_BUSINESS_UNIT_CREATE = 'company/business-unit/create';
-    public const ROUTE_COMPANY_BUSINESS_UNIT_UPDATE = 'company/business-unit/update';
-    public const ROUTE_COMPANY_BUSINESS_UNIT_DELETE = 'company/business-unit/delete';
-    public const ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE = 'company/business-unit/address/create';
-    public const ROUTE_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION = 'company/business-unit/delete-confirmation';
+    protected const ROUTE_COMPANY_BUSINESS_UNIT = 'company/business-unit';
+    protected const ROUTE_COMPANY_BUSINESS_UNIT_DETAILS = 'company/business-unit/details';
+    protected const ROUTE_COMPANY_BUSINESS_UNIT_CREATE = 'company/business-unit/create';
+    protected const ROUTE_COMPANY_BUSINESS_UNIT_UPDATE = 'company/business-unit/update';
+    protected const ROUTE_COMPANY_BUSINESS_UNIT_DELETE = 'company/business-unit/delete';
+    protected const ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE = 'company/business-unit/address/create';
+    protected const ROUTE_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION = 'company/business-unit/delete-confirmation';
 
-    public const ROUTE_COMPANY_ROLE = 'company/company-role';
-    public const ROUTE_COMPANY_ROLE_CREATE = 'company/company-role/create';
-    public const ROUTE_COMPANY_ROLE_UPDATE = 'company/company-role/update';
-    public const ROUTE_COMPANY_ROLE_DELETE = 'company/company-role/delete';
-    public const ROUTE_COMPANY_ROLE_CONFIRM_DELETE = 'company/company-role/confirm-delete';
-    public const ROUTE_COMPANY_ROLE_DETAILS = 'company/company-role/details';
+    protected const ROUTE_COMPANY_ROLE = 'company/company-role';
+    protected const ROUTE_COMPANY_ROLE_CREATE = 'company/company-role/create';
+    protected const ROUTE_COMPANY_ROLE_UPDATE = 'company/company-role/update';
+    protected const ROUTE_COMPANY_ROLE_DELETE = 'company/company-role/delete';
+    protected const ROUTE_COMPANY_ROLE_CONFIRM_DELETE = 'company/company-role/confirm-delete';
+    protected const ROUTE_COMPANY_ROLE_DETAILS = 'company/company-role/details';
 
-    public const ROUTE_COMPANY_ROLE_USER_MANAGE = 'company/company-role/user/manage';
-    public const ROUTE_COMPANY_ROLE_USER_ASSIGN = 'company/company-role/user/assign';
-    public const ROUTE_COMPANY_ROLE_USER_UNASSIGN = 'company/company-role/user/unassign';
+    protected const ROUTE_COMPANY_ROLE_USER_MANAGE = 'company/company-role/user/manage';
+    protected const ROUTE_COMPANY_ROLE_USER_ASSIGN = 'company/company-role/user/assign';
+    protected const ROUTE_COMPANY_ROLE_USER_UNASSIGN = 'company/company-role/user/unassign';
 
-    public const ROUTE_COMPANY_ROLE_PERMISSION_CONFIGURE = 'company/company-role-permission/configure';
-    public const ROUTE_COMPANY_ROLE_PERMISSION_ASSIGN = 'company/company-role-permission/assign';
-    public const ROUTE_COMPANY_ROLE_PERMISSION_UNASSIGN = 'company/company-role-permission/unassign';
+    protected const ROUTE_COMPANY_ROLE_PERMISSION_CONFIGURE = 'company/company-role-permission/configure';
+    protected const ROUTE_COMPANY_ROLE_PERMISSION_ASSIGN = 'company/company-role-permission/assign';
+    protected const ROUTE_COMPANY_ROLE_PERMISSION_UNASSIGN = 'company/company-role-permission/unassign';
 
-    public const ROUTE_COMPANY_USER = 'company/user';
-    public const ROUTE_COMPANY_USER_CREATE = 'company/user/create';
-    public const ROUTE_COMPANY_USER_UPDATE = 'company/user/update';
-    public const ROUTE_COMPANY_USER_DELETE = 'company/user/delete';
-    public const ROUTE_COMPANY_USER_CONFIRM_DELETE = 'company/user/confirm-delete';
-    public const ROUTE_COMPANY_USER_SELECT = 'company/user/select';
+    protected const ROUTE_COMPANY_USER = 'company/user';
+    protected const ROUTE_COMPANY_USER_CREATE = 'company/user/create';
+    protected const ROUTE_COMPANY_USER_UPDATE = 'company/user/update';
+    protected const ROUTE_COMPANY_USER_DELETE = 'company/user/delete';
+    protected const ROUTE_COMPANY_USER_CONFIRM_DELETE = 'company/user/confirm-delete';
+    protected const ROUTE_COMPANY_USER_SELECT = 'company/user/select';
 
-    public const ROUTE_COMPANY_USER_STATUS_ENABLE = 'company/company-user-status/enable';
-    public const ROUTE_COMPANY_USER_STATUS_DISABLE = 'company/company-user-status/disable';
+    protected const ROUTE_COMPANY_USER_STATUS_ENABLE = 'company/company-user-status/enable';
+    protected const ROUTE_COMPANY_USER_STATUS_DISABLE = 'company/company-user-status/disable';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

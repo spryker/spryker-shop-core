@@ -12,10 +12,15 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class CartNoteWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_CART_NOTE_QUOTE = 'cart-note/quote';
-    public const ROUTE_CART_NOTE_ITEM = 'cart-note/item';
+    protected const ROUTE_CART_NOTE_QUOTE = 'cart-note/quote';
+    protected const ROUTE_CART_NOTE_ITEM = 'cart-note/item';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

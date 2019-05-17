@@ -12,12 +12,17 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class ErrorPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_ERROR_404 = 'error/404';
-    public const ROUTE_ERROR_404_PATH = '/error/404';
+    protected const ROUTE_ERROR_404 = 'error/404';
+    protected const ROUTE_ERROR_404_PATH = '/error/404';
     protected const ROUTE_ERROR_403 = 'error/403';
     protected const ROUTE_ERROR_403_PATH = '/error/403';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

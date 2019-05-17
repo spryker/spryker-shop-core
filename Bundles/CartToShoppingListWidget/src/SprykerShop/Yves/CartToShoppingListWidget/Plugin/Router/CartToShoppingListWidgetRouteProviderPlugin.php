@@ -12,9 +12,14 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class CartToShoppingListWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_CART_TO_SHOPPING_LIST = 'shopping-list/create-from-cart';
+    protected const ROUTE_CART_TO_SHOPPING_LIST = 'shopping-list/create-from-cart';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

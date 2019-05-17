@@ -12,14 +12,19 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class DiscountWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_DISCOUNT_VOUCHER_ADD = 'discount/voucher/add';
-    public const ROUTE_DISCOUNT_VOUCHER_REMOVE = 'discount/voucher/remove';
-    public const ROUTE_DISCOUNT_VOUCHER_CLEAR = 'discount/voucher/clear';
-    public const CHECKOUT_VOUCHER_ADD = 'checkout-voucher-add';
+    protected const ROUTE_DISCOUNT_VOUCHER_ADD = 'discount/voucher/add';
+    protected const ROUTE_DISCOUNT_VOUCHER_REMOVE = 'discount/voucher/remove';
+    protected const ROUTE_DISCOUNT_VOUCHER_CLEAR = 'discount/voucher/clear';
+    protected const CHECKOUT_VOUCHER_ADD = 'checkout-voucher-add';
 
-    public const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
+    protected const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

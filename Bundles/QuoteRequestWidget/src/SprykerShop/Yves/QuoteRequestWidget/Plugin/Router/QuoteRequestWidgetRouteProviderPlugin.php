@@ -16,6 +16,11 @@ class QuoteRequestWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_QUOTE_REQUEST_CLEAR_CART = 'quote-request/cart/clear';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

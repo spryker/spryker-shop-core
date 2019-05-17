@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CatalogPage\Plugin\Router;
+namespace SprykerShop\Yves\CartCodeWidget\Plugin\Router;
 
 use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 use SprykerShop\Yves\Router\Route\RouteCollection;
 
-class CatalogPageRouteProviderPlugin extends AbstractRouteProviderPlugin
+class CartCodeWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    protected const ROUTE_SEARCH = 'search';
-    protected const ROUTE_SUGGESTION = 'search/suggestion';
-    protected const ROUTER_CHANGE_VIEW_MODE = 'change-view-mode';
+    protected const ROUTE_CART_CODE_ADD = 'cart-code/code/add';
+    protected const ROUTE_CART_CODE_REMOVE = 'cart-code/code/remove';
+    protected const ROUTE_CART_CODE_CLEAR = 'cart-code/code/clear';
 
     /**
      * Specification:
@@ -28,9 +28,9 @@ class CatalogPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
-        $routeCollection = $this->addFulltextSearchRoute($routeCollection);
-        $routeCollection = $this->addSuggestionRoute($routeCollection);
-        $routeCollection = $this->addChangeViewRoute($routeCollection);
+        $routeCollection = $this->addAddCodeRoute($routeCollection);
+        $routeCollection = $this->addRemoveCodeRoute($routeCollection);
+        $routeCollection = $this->addClearCodeRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -40,10 +40,10 @@ class CatalogPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addFulltextSearchRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addAddCodeRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/search', 'CatalogPage', 'Catalog', 'fulltextSearchAction');
-        $routeCollection->add(static::ROUTE_SEARCH, $route);
+        $route = $this->buildRoute('/cart-code/code/add', 'CartCodeWidget', 'Code', 'addAction');
+        $routeCollection->add(static::ROUTE_CART_CODE_ADD, $route);
 
         return $routeCollection;
     }
@@ -53,10 +53,10 @@ class CatalogPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addSuggestionRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addRemoveCodeRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/search/suggestion', 'CatalogPage', 'Suggestion', 'indexAction');
-        $routeCollection->add(static::ROUTE_SUGGESTION, $route);
+        $route = $this->buildRoute('/cart-code/code/remove', 'CartCodeWidget', 'Code', 'removeAction');
+        $routeCollection->add(static::ROUTE_CART_CODE_REMOVE, $route);
 
         return $routeCollection;
     }
@@ -66,10 +66,10 @@ class CatalogPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection
      */
-    protected function addChangeViewRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addClearCodeRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/catalog/change-view-mode', 'CatalogPage', 'Catalog', 'changeViewModeAction');
-        $routeCollection->add(static::ROUTER_CHANGE_VIEW_MODE, $route);
+        $route = $this->buildRoute('/cart-code/code/clear', 'CartCodeWidget', 'Code', 'clearAction');
+        $routeCollection->add(static::ROUTE_CART_CODE_CLEAR, $route);
 
         return $routeCollection;
     }

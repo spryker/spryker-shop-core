@@ -12,17 +12,22 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class WishlistPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_ADD_TO_WISHLIST = 'wishlist/add-to-wishlist';
-    public const ROUTE_WISHLIST_OVERVIEW = 'wishlist/overview';
-    public const ROUTE_WISHLIST_UPDATE = 'wishlist/update';
-    public const ROUTE_WISHLIST_DELETE = 'wishlist/delete';
-    public const ROUTE_WISHLIST_DETAILS = 'wishlist/details';
-    public const ROUTE_ADD_ITEM = 'wishlist/add-item';
-    public const ROUTE_REMOVE_ITEM = 'wishlist/remove-item';
-    public const ROUTE_MOVE_TO_CART = 'wishlist/move-to-cart';
-    public const ROUTE_MOVE_ALL_AVAILABLE_TO_CART = 'wishlist/move-all-available-to-cart';
+    protected const ROUTE_ADD_TO_WISHLIST = 'wishlist/add-to-wishlist';
+    protected const ROUTE_WISHLIST_OVERVIEW = 'wishlist/overview';
+    protected const ROUTE_WISHLIST_UPDATE = 'wishlist/update';
+    protected const ROUTE_WISHLIST_DELETE = 'wishlist/delete';
+    protected const ROUTE_WISHLIST_DETAILS = 'wishlist/details';
+    protected const ROUTE_ADD_ITEM = 'wishlist/add-item';
+    protected const ROUTE_REMOVE_ITEM = 'wishlist/remove-item';
+    protected const ROUTE_MOVE_TO_CART = 'wishlist/move-to-cart';
+    protected const ROUTE_MOVE_ALL_AVAILABLE_TO_CART = 'wishlist/move-all-available-to-cart';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

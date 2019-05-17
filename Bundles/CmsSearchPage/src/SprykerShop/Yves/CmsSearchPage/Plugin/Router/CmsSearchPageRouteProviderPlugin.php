@@ -12,9 +12,14 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class CmsSearchPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_SEARCH = 'search-cms';
+    protected const ROUTE_SEARCH = 'search-cms';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

@@ -12,9 +12,14 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class ProductSetListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_PRODUCT_SETS = 'product-sets';
+    protected const ROUTE_PRODUCT_SETS = 'product-sets';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

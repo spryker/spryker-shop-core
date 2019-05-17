@@ -12,17 +12,22 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const CHECKOUT_CUSTOMER = 'checkout-customer';
-    public const CHECKOUT_ADDRESS = 'checkout-address';
-    public const CHECKOUT_SHIPMENT = 'checkout-shipment';
-    public const CHECKOUT_PAYMENT = 'checkout-payment';
-    public const CHECKOUT_SUMMARY = 'checkout-summary';
-    public const CHECKOUT_PLACE_ORDER = 'checkout-place-order';
-    public const CHECKOUT_ERROR = 'checkout-error';
-    public const CHECKOUT_SUCCESS = 'checkout-success';
-    public const CHECKOUT_INDEX = 'checkout-index';
+    protected const CHECKOUT_CUSTOMER = 'checkout-customer';
+    protected const CHECKOUT_ADDRESS = 'checkout-address';
+    protected const CHECKOUT_SHIPMENT = 'checkout-shipment';
+    protected const CHECKOUT_PAYMENT = 'checkout-payment';
+    protected const CHECKOUT_SUMMARY = 'checkout-summary';
+    protected const CHECKOUT_PLACE_ORDER = 'checkout-place-order';
+    protected const CHECKOUT_ERROR = 'checkout-error';
+    protected const CHECKOUT_SUCCESS = 'checkout-success';
+    protected const CHECKOUT_INDEX = 'checkout-index';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

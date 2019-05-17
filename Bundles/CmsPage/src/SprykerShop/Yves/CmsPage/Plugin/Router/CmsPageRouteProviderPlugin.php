@@ -12,10 +12,16 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class CmsPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_PREVIEW = 'cms-preview';
-    public const PARAM_PAGE = 'page';
+    protected const ROUTE_PREVIEW = 'cms-preview';
+    protected const PARAM_PAGE = 'page';
+    protected const PAGE_NUMBER_PATTERN = '[0-9]+';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection
@@ -35,7 +41,7 @@ class CmsPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addCmsPreviewRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/cms/preview/{page}', 'CmsPage', 'Preview', 'indexAction');
-        $route = $route->setRequirement(static::PARAM_PAGE, '[0-9]+');
+        $route = $route->setRequirement(static::PARAM_PAGE, static::PAGE_NUMBER_PATTERN);
         $routeCollection->add(static::ROUTE_PREVIEW, $route);
 
         return $routeCollection;

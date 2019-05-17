@@ -12,22 +12,27 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_OVERVIEW = 'company/user-invitation';
-    public const ROUTE_GET_IMPORT_ERRORS = 'company/user-invitation/get-import-errors';
+    protected const ROUTE_OVERVIEW = 'company/user-invitation';
+    protected const ROUTE_GET_IMPORT_ERRORS = 'company/user-invitation/get-import-errors';
 
-    public const ROUTE_INVITATION_SEND = 'company/user-invitation/send';
-    public const ROUTE_INVITATION_SEND_ALL = 'company/user-invitation/send-all';
+    protected const ROUTE_INVITATION_SEND = 'company/user-invitation/send';
+    protected const ROUTE_INVITATION_SEND_ALL = 'company/user-invitation/send-all';
 
-    public const ROUTE_INVITATION_RESEND = 'company/user-invitation/resend';
-    public const ROUTE_INVITATION_RESEND_CONFIRM = 'company/user-invitation/resend/confirm';
+    protected const ROUTE_INVITATION_RESEND = 'company/user-invitation/resend';
+    protected const ROUTE_INVITATION_RESEND_CONFIRM = 'company/user-invitation/resend/confirm';
 
     /** @see \Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants::ROUTE_INVITATION_ACCEPT */
-    public const ROUTE_INVITATION_ACCEPT = 'invitation/accept';
+    protected const ROUTE_INVITATION_ACCEPT = 'invitation/accept';
 
-    public const ROUTE_INVITATION_DELETE = 'company/user-invitation/delete';
-    public const ROUTE_INVITATION_DELETE_CONFIRM = 'company/user-invitation/delete/confirm';
+    protected const ROUTE_INVITATION_DELETE = 'company/user-invitation/delete';
+    protected const ROUTE_INVITATION_DELETE_CONFIRM = 'company/user-invitation/delete/confirm';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

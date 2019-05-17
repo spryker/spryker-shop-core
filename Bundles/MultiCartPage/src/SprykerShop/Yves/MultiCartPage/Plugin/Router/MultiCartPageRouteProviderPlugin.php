@@ -12,18 +12,23 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_MULTI_CART_INDEX = 'multi-cart';
-    public const ROUTE_MULTI_CART_CREATE = 'multi-cart/create';
-    public const ROUTE_MULTI_CART_UPDATE = 'multi-cart/update';
-    public const ROUTE_MULTI_CART_DELETE = 'multi-cart/delete';
-    public const ROUTE_MULTI_CART_CONFIRM_DELETE = 'multi-cart/confirm-delete';
-    public const ROUTE_MULTI_CART_SET_DEFAULT = 'multi-cart/set-default';
-    public const ROUTE_MULTI_CART_CLEAR = 'multi-cart/clear';
-    public const ROUTE_MULTI_CART_DUPLICATE = 'multi-cart/duplicate';
+    protected const ROUTE_MULTI_CART_INDEX = 'multi-cart';
+    protected const ROUTE_MULTI_CART_CREATE = 'multi-cart/create';
+    protected const ROUTE_MULTI_CART_UPDATE = 'multi-cart/update';
+    protected const ROUTE_MULTI_CART_DELETE = 'multi-cart/delete';
+    protected const ROUTE_MULTI_CART_CONFIRM_DELETE = 'multi-cart/confirm-delete';
+    protected const ROUTE_MULTI_CART_SET_DEFAULT = 'multi-cart/set-default';
+    protected const ROUTE_MULTI_CART_CLEAR = 'multi-cart/clear';
+    protected const ROUTE_MULTI_CART_DUPLICATE = 'multi-cart/duplicate';
 
-    public const PARAM_ID_QUOTE = 'idQuote';
+    protected const PARAM_ID_QUOTE = 'idQuote';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection
@@ -63,7 +68,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addMultiCartUpdateRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/multi-cart/update/{idQuote}', 'MultiCartPage', 'MultiCart', 'updateAction');
-        $route = $route->setRequirement(self::PARAM_ID_QUOTE, '\d+');
+        $route = $route->setRequirement(static::PARAM_ID_QUOTE, '\d+');
         $routeCollection->add(static::ROUTE_MULTI_CART_UPDATE, $route);
 
         return $routeCollection;
@@ -77,7 +82,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addMultiCartDeleteRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/multi-cart/delete/{idQuote}', 'MultiCartPage', 'MultiCart', 'deleteAction');
-        $route = $route->setRequirement(self::PARAM_ID_QUOTE, '\d+');
+        $route = $route->setRequirement(static::PARAM_ID_QUOTE, '\d+');
         $routeCollection->add(static::ROUTE_MULTI_CART_DELETE, $route);
 
         return $routeCollection;
@@ -105,7 +110,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addMultiCartClearRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/multi-cart/clear/{idQuote}', 'MultiCartPage', 'MultiCart', 'clearAction');
-        $route = $route->setRequirement(self::PARAM_ID_QUOTE, '\d+');
+        $route = $route->setRequirement(static::PARAM_ID_QUOTE, '\d+');
         $routeCollection->add(static::ROUTE_MULTI_CART_CLEAR, $route);
 
         return $routeCollection;
@@ -119,7 +124,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addMultiCartDuplicateRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/multi-cart/duplicate/{idQuote}', 'MultiCartPage', 'MultiCart', 'duplicateAction');
-        $route = $route->setRequirement(self::PARAM_ID_QUOTE, '\d+');
+        $route = $route->setRequirement(static::PARAM_ID_QUOTE, '\d+');
         $routeCollection->add(static::ROUTE_MULTI_CART_DUPLICATE, $route);
 
         return $routeCollection;
@@ -133,7 +138,7 @@ class MultiCartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected function addMultiCartSetDefaultRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/multi-cart/set-default/{idQuote}', 'MultiCartPage', 'MultiCart', 'setDefaultAction');
-        $route = $route->setRequirement(self::PARAM_ID_QUOTE, '\d+');
+        $route = $route->setRequirement(static::PARAM_ID_QUOTE, '\d+');
         $routeCollection->add(static::ROUTE_MULTI_CART_SET_DEFAULT, $route);
 
         return $routeCollection;

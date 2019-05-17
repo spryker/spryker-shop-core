@@ -12,9 +12,14 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class CurrencyWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_CART = 'currency-switch';
+    protected const ROUTE_CART = 'currency-switch';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection

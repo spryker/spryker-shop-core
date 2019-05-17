@@ -12,25 +12,30 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 
 class ShoppingListPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    public const ROUTE_SHOPPING_LIST = 'shopping-list';
-    public const ROUTE_SHOPPING_LIST_UPDATE = 'shopping-list/update';
-    public const ROUTE_SHOPPING_LIST_DELETE_CONFIRM = 'shopping-list/delete/confirm';
-    public const ROUTE_SHOPPING_LIST_DELETE = 'shopping-list/delete';
-    public const ROUTE_SHOPPING_LIST_DETAILS = 'shopping-list/details';
-    public const ROUTE_SHOPPING_LIST_CLEAR = 'shopping-list/clear';
-    public const ROUTE_REMOVE_ITEM = 'shopping-list/remove-item';
-    public const ROUTE_ADD_TO_CART = 'shopping-list/add-to-cart';
-    public const ROUTE_ADD_SHOPPING_LIST_TO_CART = 'shopping-list/add-shopping-list-to-cart';
-    public const ROUTE_SHOPPING_LIST_SHARE = 'shopping-list/share';
-    public const ROUTE_SHOPPING_LIST_PRINT = 'shopping-list/print';
-    public const ROUTE_CART_TO_SHOPPING_LIST = 'shopping-list/create-from-exist-cart';
-    public const ROUTE_SHOPPING_LIST_DISMISS = 'shopping-list/dismiss';
-    public const ROUTE_SHOPPING_LIST_DISMISS_CONFIRM = 'shopping-list/dismiss-confirm';
+    protected const ROUTE_SHOPPING_LIST = 'shopping-list';
+    protected const ROUTE_SHOPPING_LIST_UPDATE = 'shopping-list/update';
+    protected const ROUTE_SHOPPING_LIST_DELETE_CONFIRM = 'shopping-list/delete/confirm';
+    protected const ROUTE_SHOPPING_LIST_DELETE = 'shopping-list/delete';
+    protected const ROUTE_SHOPPING_LIST_DETAILS = 'shopping-list/details';
+    protected const ROUTE_SHOPPING_LIST_CLEAR = 'shopping-list/clear';
+    protected const ROUTE_REMOVE_ITEM = 'shopping-list/remove-item';
+    protected const ROUTE_ADD_TO_CART = 'shopping-list/add-to-cart';
+    protected const ROUTE_ADD_SHOPPING_LIST_TO_CART = 'shopping-list/add-shopping-list-to-cart';
+    protected const ROUTE_SHOPPING_LIST_SHARE = 'shopping-list/share';
+    protected const ROUTE_SHOPPING_LIST_PRINT = 'shopping-list/print';
+    protected const ROUTE_CART_TO_SHOPPING_LIST = 'shopping-list/create-from-exist-cart';
+    protected const ROUTE_SHOPPING_LIST_DISMISS = 'shopping-list/dismiss';
+    protected const ROUTE_SHOPPING_LIST_DISMISS_CONFIRM = 'shopping-list/dismiss-confirm';
     protected const ROUTE_SHOPPING_LIST_QUICK_ADD_ITEM = 'shopping-list/quick-add-item';
 
     protected const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
 
     /**
+     * Specification:
+     * - Adds Routes to the RouteCollection.
+     *
+     * @api
+     *
      * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \SprykerShop\Yves\Router\Route\RouteCollection
