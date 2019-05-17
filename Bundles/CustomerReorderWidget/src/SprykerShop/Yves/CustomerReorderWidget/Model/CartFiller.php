@@ -172,7 +172,7 @@ class CartFiller implements CartFillerInterface
                     continue;
                 }
 
-                if ($this->utilQuantityService->isQuantityEqual($spyAvailability->getQuantity(), 0)) {
+                if ($this->utilQuantityService->isQuantityEqual((float)$spyAvailability->getQuantity(), 0)) {
                     continue;
                 }
 
@@ -180,7 +180,7 @@ class CartFiller implements CartFillerInterface
                     continue;
                 }
 
-                $item->setQuantity($spyAvailability->getQuantity());
+                $item->setQuantity((float)$spyAvailability->getQuantity());
             }
         }
     }
