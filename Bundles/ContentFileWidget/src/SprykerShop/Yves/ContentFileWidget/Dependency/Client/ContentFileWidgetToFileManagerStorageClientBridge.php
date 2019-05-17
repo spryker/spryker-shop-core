@@ -7,9 +7,7 @@
 
 namespace SprykerShop\Yves\ContentFileWidget\Dependency\Client;
 
-
 use Generated\Shared\Transfer\FileStorageDataTransfer;
-use Spryker\Client\FileManagerStorage\FileManagerStorageClientInterface;
 
 class ContentFileWidgetToFileManagerStorageClientBridge implements ContentFileWidgetToFileManagerStorageClientInterface
 {

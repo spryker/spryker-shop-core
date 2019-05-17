@@ -1,0 +1,19 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'file-download-link',
+} %}
+
+{% define data = {
+    idFile: required,
+    fileName: required,
+    fileUrl: fileUrl | default('')
+} %}
+
+{% block body %}
+    {% set fileUrl = data.fileUrl is empty ? path('files/download', {'id-file': data.idFile}) %}
+
+    <a href="{{ fileUrl }}">
+        {% block file_content %}{{ data.fileName }}{% endblock %}
+    </a>
+{% endblock %}

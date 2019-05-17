@@ -32,9 +32,6 @@ class ContentFileWidgetToContentFileClientBridge implements ContentFileWidgetToC
      */
     public function executeContentFileListTypeById(int $idContent, string $localeName): ?ContentFileListTypeTransfer
     {
-        // TODO: Have to be deleted
-        return (new ContentFileListTypeTransfer())->setFileIds([1,2,3,4]);
-
         return $this->contentFileClient->executeContentFileListTypeById($idContent, $localeName);
     }
 }

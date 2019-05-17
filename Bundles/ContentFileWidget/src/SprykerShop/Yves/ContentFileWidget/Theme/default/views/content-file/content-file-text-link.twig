@@ -1,17 +1,18 @@
-{% extends model('component') %}
-
-{% define config = {
-    name: 'file-download-link',
-} %}
-
 {% define data = {
-    idFile: required,
-    fileName: required,
-    fileUrl: fileUrl | default('')
+    fileViewCollection: fileViewCollection,
 } %}
 
-{% set fileUrl = data.fileUrl is empty ? path('files/download', {id-file: data.idFile}) %}
-
-<a href=“{{ fileUrl }}“>
-    {% block 'file_content' %}{{ data.fileName }}{% endblock %}
-</a>
+{% block content %}
+    <ul>
+        {% for fileView in data.fileViewCollection %}
+            <li>
+                {% include molecule('file-download-link', 'FileManagerWidget') with {
+                    data: {
+                        idFile: fileView.fkFile,
+                        fileName: fileView.fileName
+                    }
+                } only %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,14 +1,29 @@
-<div class="file-download-container">
-    {% embed molecule('file-download-link', 'FileManagerWidget') with {idFile: file.fkFile, fileName: file.fileName} %}
-        {% block file_content %}
-            {% include atom('icon') with {
-                modifiers: ['small'],
+{% define data = {
+    fileViewCollection: fileViewCollection,
+} %}
+
+{% block content %}
+    <div class="file-download-container">
+        {% for fileView in data.fileViewCollection %}
+            {% embed molecule('file-download-link', 'FileManagerWidget') with {
                 data: {
-                    name: fileCssClass
+                    idFile: fileView.fkFile,
+                    fileName: fileView.fileName
                 }
-            } only %}
-            {{ file.fileName }}
-            {{ fileSize }}
-        {% endblock %}
-    {% endembed %}
-</div>
+            } %}
+                {% block file_content %}
+                    <span class="file-download-icon">
+                        {% include atom('icon') with {
+                            modifiers: ['bigger'],
+                            data: {
+                                name: fileView.iconName
+                            }
+                        } only %}
+                    </span>
+                    <span class="file-download-name">{{ fileView.fileName }}</span>
+                    <span class="file-download-size">{{ fileView.displaySize }}</span>
+                {% endblock %}
+            {% endembed %}
+        {% endfor %}
+    </div>
+{% endblock %}

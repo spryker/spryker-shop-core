@@ -38,9 +38,9 @@ class ContentFileWidgetDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function addContentFileClient(Container $container): Container
     {
-        $container[self::CLIENT_CONTENT_FILE] = function (Container $container) {
+        $container->set(self::CLIENT_CONTENT_FILE, function (Container $container) {
             return new ContentFileWidgetToContentFileClientBridge($container->getLocator()->contentFile()->client());
-        };
+        });
 
         return $container;
     }
@@ -52,9 +52,9 @@ class ContentFileWidgetDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function addFileManagerStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_FILE_MANAGER_STORAGE] = function (Container $container) {
+        $container->set(self::CLIENT_FILE_MANAGER_STORAGE, function (Container $container) {
             return new ContentFileWidgetToFileManagerStorageClientBridge($container->getLocator()->fileManagerStorage()->client());
-        };
+        });
 
         return $container;
     }

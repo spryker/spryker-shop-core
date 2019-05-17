@@ -15,10 +15,13 @@ use SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReaderInterface;
 use SprykerShop\Yves\ContentFileWidget\Twig\ContentFileListTwigFunction;
 use Twig\Environment;
 
+/**
+ * @method \SprykerShop\Yves\ContentFileWidget\ContentFileWidgetConfig getConfig()
+ */
 class ContentFileWidgetFactory extends AbstractFactory
 {
     /**
-     * @param Environment $twig
+     * @param \Twig\Environment $twig
      * @param string $localeName
      *
      * @return \SprykerShop\Yves\ContentFileWidget\Twig\ContentFileListTwigFunction
@@ -39,12 +42,13 @@ class ContentFileWidgetFactory extends AbstractFactory
     {
         return new ContentFileReader(
             $this->getContentFileClient(),
-            $this->getFileManagerStorageClient()
+            $this->getFileManagerStorageClient(),
+            $this->getConfig()
         );
     }
 
     /**
-     * @return \SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToFileManagerStorageClientInterface
+     * @return \SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface
      */
     public function getContentFileClient(): ContentFileWidgetToContentFileClientInterface
     {

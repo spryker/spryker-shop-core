@@ -15,12 +15,12 @@ use Twig\Environment;
 class ContentFileListTwigFunction extends TwigFunction
 {
     /**
-     * @uses \Spryker\Shared\ContentFile\ContentFileConfig::FUNCTION_CONTENT_FILE_LIST
+     * @uses \Spryker\Shared\ContentFile\ContentFileConfig::TWIG_FUNCTION_NAME
      */
     protected const FUNCTION_CONTENT_FILE_LIST = 'content_file_list';
 
     protected const MESSAGE_CONTENT_FILE_LIST_NOT_FOUND = '<strong>Content file list with ID %s not found.</strong>';
-    protected const MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE = '<strong>Content file list widget could not be rendered because the content item with ID %s is not an abstract product list.</strong>';
+    protected const MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE = '<strong>Content file list widget could not be rendered because the content item with ID %s is not an file list.</strong>';
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"%s" is not supported name of template.</strong>';
 
     /**
@@ -98,7 +98,7 @@ class ContentFileListTwigFunction extends TwigFunction
             return $this->twig->render(
                 $this->getAvailableTemplates()[$templateIdentifier],
                 [
-                    'productFileCollection' => $fileViewCollection,
+                    'fileViewCollection' => $fileViewCollection,
                 ]
             );
         };

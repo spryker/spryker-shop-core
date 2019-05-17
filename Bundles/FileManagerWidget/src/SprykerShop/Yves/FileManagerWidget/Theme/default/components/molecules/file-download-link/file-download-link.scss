@@ -1,0 +1,32 @@
+@mixin file-download-link($name: '.file-download-link') {
+    #{$name} {
+        a {
+            display: block;
+            font-size: 14px;
+            float: left;
+            margin: 10px;
+            text-align: center;
+        }
+
+        span.file-download-icon {
+            display: block;
+            padding: 50px;
+            background: #fff7f5;
+            color: #f60c5e;
+        }
+
+        span.file-download-name {
+            display: block;
+            max-width: calc(23em * 0.5);
+            overflow: hidden;
+            color: #899298!important;
+        }
+
+        span.file-download-size {
+            color: #aeb4b8!important;
+            font-size: 12px!important;
+        }
+
+        @content;
+    }
+}

@@ -15,7 +15,7 @@ use Twig\Environment;
 /**
  * @method \SprykerShop\Yves\ContentFileWidget\ContentFileWidgetFactory getFactory()
  */
-class ContentFileListTwigPlugin  extends AbstractPlugin implements TwigPluginInterface
+class ContentFileListTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
      * {@inheritDoc}
