@@ -19,16 +19,6 @@
             margin: 1rem 0 0.5rem;
         }
 
-        &--narrow {
-            @include helper-breakpoint(md) {
-                max-width: 43.75rem;
-            }
-
-            @include helper-breakpoint(xl) {
-                max-width: 31.25rem;
-            }
-        }
-
         &__actions {
             @include helper-breakpoint(md) {
                 display: flex;
