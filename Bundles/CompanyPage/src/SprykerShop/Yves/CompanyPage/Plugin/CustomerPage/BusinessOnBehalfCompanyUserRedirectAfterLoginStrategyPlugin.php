@@ -30,7 +30,9 @@ class BusinessOnBehalfCompanyUserRedirectAfterLoginStrategyPlugin extends Abstra
      */
     public function isApplicable(CustomerTransfer $customerTransfer): bool
     {
-        return $customerTransfer->getIsOnBehalf() && !$customerTransfer->getCompanyUserTransfer();
+        return $customerTransfer->getIsOnBehalf()
+            && !$customerTransfer->getCompanyUserTransfer()
+            && $this->isCustomerChangeAllowed($customerTransfer);
     }
 
     /**
@@ -45,5 +47,17 @@ class BusinessOnBehalfCompanyUserRedirectAfterLoginStrategyPlugin extends Abstra
     public function getRedirectUrl(CustomerTransfer $customerTransfer): string
     {
         return $this->getFactory()->getApplication()->path(static::COMPANY_REDIRECT_ROUTE);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isCustomerChangeAllowed(CustomerTransfer $customerTransfer): bool
+    {
+        return $this->getFactory()
+            ->getBusinessOnBehalfClient()
+            ->isCustomerChangeAllowed($customerTransfer);
     }
 }

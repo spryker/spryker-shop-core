@@ -56,4 +56,14 @@ class CompanyPageToBusinessOnBehalfClientBridge implements CompanyPageToBusiness
     {
         return $this->businessOnBehalfClient->unsetDefaultCompanyUser($customerTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    public function isCustomerChangeAllowed(CustomerTransfer $customerTransfer): bool
+    {
+        return $this->businessOnBehalfClient->isCustomerChangeAllowed($customerTransfer);
+    }
 }
