@@ -31,7 +31,7 @@
   "suggest": {
     "spryker-shop/agent-page": "If you want to use agent layout templates: ^1.2.0",
     "spryker-shop/company-user-agent-widget": "If you want to use company user auto-complete form: ^1.0.0",
-    "spryker-shop/quote-request-page": "If you want to use quote request page molecules: ^1.0.0",
+    "spryker-shop/quote-request-page": "If you want to use quote request page molecules: ^2.0.0",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
