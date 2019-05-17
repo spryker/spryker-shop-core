@@ -1,0 +1,32 @@
+{# @deprecated Use molecule('cart-code-remove-link', 'CartCodeWidget') instead. #}
+{% extends model('component') %}
+
+{% define config = {
+    name: 'voucher-remove-link',
+    tag: 'a'
+} %}
+
+{% define data = {
+    code: required,
+    isQuoteEditable: false
+} %}
+
+{% define attributes = {
+    href: url('discount/voucher/remove', {'code': data.code})
+} %}
+
+{% block component %}
+    {% if data.isQuoteEditable %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% include atom('icon') with {
+        modifiers: ['smaller'],
+        data: {
+            name: 'times'
+        }
+    } only %}
+    {{ 'cart.voucher.remove' | trans }}
+{% endblock %}
