@@ -11,6 +11,7 @@ use Spryker\Client\ContentProductSet\Exception\InvalidProductSetTermException;
 use Spryker\Shared\Twig\TwigFunction;
 use SprykerShop\Yves\ContentProductSetWidget\Reader\ContentProductAbstractReaderInterface;
 use SprykerShop\Yves\ContentProductSetWidget\Reader\ContentProductSetReaderInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
 
 /**
@@ -43,6 +44,11 @@ class ContentProductSetTwigFunction extends TwigFunction
     protected $twig;
 
     /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
+    protected $request;
+
+    /**
      * @var string
      */
     protected $localeName;
@@ -59,12 +65,14 @@ class ContentProductSetTwigFunction extends TwigFunction
 
     /**
      * @param \Twig\Environment $twig
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $localeName
      * @param \SprykerShop\Yves\ContentProductSetWidget\Reader\ContentProductSetReaderInterface $contentProductSetReader
      * @param \SprykerShop\Yves\ContentProductSetWidget\Reader\ContentProductAbstractReaderInterface $contentProductAbstractReader
      */
     public function __construct(
         Environment $twig,
+        Request $request,
         string $localeName,
         ContentProductSetReaderInterface $contentProductSetReader,
         ContentProductAbstractReaderInterface $contentProductAbstractReader
@@ -72,6 +80,7 @@ class ContentProductSetTwigFunction extends TwigFunction
         parent::__construct();
 
         $this->twig = $twig;
+        $this->request = $request;
         $this->localeName = $localeName;
         $this->contentProductSetReader = $contentProductSetReader;
         $this->contentProductAbstractReader = $contentProductAbstractReader;
@@ -107,7 +116,7 @@ class ContentProductSetTwigFunction extends TwigFunction
             }
 
             $productAbstractViewCollection = $this->contentProductAbstractReader
-                ->findProductAbstractCollection($productSetDataStorageTransfer, $this->localeName);
+                ->findProductAbstractCollection($productSetDataStorageTransfer, $this->request, $this->localeName);
 
             return $this->twig->render(
                 $this->getAvailableTemplates()[$templateIdentifier],

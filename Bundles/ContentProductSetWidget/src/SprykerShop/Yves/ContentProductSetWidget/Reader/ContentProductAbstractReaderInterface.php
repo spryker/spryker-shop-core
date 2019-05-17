@@ -8,14 +8,20 @@
 namespace SprykerShop\Yves\ContentProductSetWidget\Reader;
 
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
+use Symfony\Component\HttpFoundation\Request;
 
 interface ContentProductAbstractReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]|null
      */
-    public function findProductAbstractCollection(ProductSetDataStorageTransfer $productSetDataStorageTransfer, string $localeName): ?array;
+    public function findProductAbstractCollection(
+        ProductSetDataStorageTransfer $productSetDataStorageTransfer,
+        Request $request,
+        string $localeName
+    ): ?array;
 }
