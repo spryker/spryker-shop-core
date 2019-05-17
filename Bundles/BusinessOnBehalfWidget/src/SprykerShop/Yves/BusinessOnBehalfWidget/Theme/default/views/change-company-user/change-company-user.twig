@@ -1,11 +1,12 @@
 {% extends template('widget') %}
 
 {% define data = {
-    isVisible: _widget.isVisible
+    isVisible: _widget.isVisible,
+    isCustomerChangeAllowed: _widget.isCustomerChangeAllowed,
 } %}
 
 {% block template %}
-    {% if data.isVisible %}
+    {% if data.isVisible and data.isCustomerChangeAllowed %}
         {{parent()}}
     {% endif %}
 {% endblock %}
