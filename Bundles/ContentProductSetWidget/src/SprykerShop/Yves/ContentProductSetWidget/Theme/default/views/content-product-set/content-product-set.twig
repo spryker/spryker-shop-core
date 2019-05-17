@@ -1,4 +1,4 @@
-{% include organism('product-set-cms-content', 'ProductSetWidget') ignore missing  with {
+{% embed organism('product-set-cms-content', 'ProductSetWidget') ignore missing with {
     data: {
         products: productViews,
         name: productSet.name,
@@ -6,3 +6,15 @@
         images: productSet.imageSets.0.images | default([])
     }
 } only %}
+
+    {% block product_set_title %}
+        <h5>{{ data.name }}</h5>
+    {% endblock %}
+
+    {% block description %}
+        {% if data.description is not empty %}
+            <p>{{ data.description }}</p>
+        {% endif %}
+    {% endblock %}
+
+{% endembed %}

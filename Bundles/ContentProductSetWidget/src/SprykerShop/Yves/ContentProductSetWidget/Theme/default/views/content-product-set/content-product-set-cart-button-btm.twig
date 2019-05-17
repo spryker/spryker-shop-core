@@ -1,4 +1,4 @@
-{% embed organism('product-set-cms-content', 'ProductSetWidget') with {
+{% embed organism('product-set-cms-content', 'ProductSetWidget') ignore missing with {
     data: {
         products: productViews,
         name: productSet.name,
@@ -7,7 +7,20 @@
     }
 } only %}
 
+    {% block product_set_title %}
+        <h5>{{ data.name }}</h5>
+    {% endblock %}
+
     {% block title %}{% endblock %}
+
+    {% set add_to_cart_form_class = 'text-center' %}
+    {% set add_all_button_class = 'float-none' %}
+
+    {% block description %}
+        {% if data.description is not empty %}
+            <p>{{ data.description }}</p>
+        {% endif %}
+    {% endblock %}
 
     {% block header %}
         {{ block('product_set_title') }}
