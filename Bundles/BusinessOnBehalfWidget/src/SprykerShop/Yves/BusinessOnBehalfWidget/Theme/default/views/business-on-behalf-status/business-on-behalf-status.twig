@@ -2,9 +2,10 @@
 
 {% define data = {
     isOnBehalf: _widget.isOnBehalf,
+    isCustomerChangeAllowed: _widget.isCustomerChangeAllowed,
     companyName: _widget.companyName,
     companyBusinessUnitName: _widget.companyBusinessUnitName,
-    isVisible: _widget.isVisible
+    isVisible: _widget.isVisible,
 } %}
 
 {% block template %}
@@ -14,9 +15,17 @@
 {% endblock %}
 
 {% block body %}
-    {% if data.isOnBehalf and data.companyName is not empty and data.companyBusinessUnitName is not empty %}
-        <a href="{{ path('company/user/select') }}">{{ data.companyName }} / {{ data.companyBusinessUnitName }}</a>
+    {% if data.isCustomerChangeAllowed %}
+        {% if data.isOnBehalf and data.companyName is not empty and data.companyBusinessUnitName is not empty %}
+            <a href="{{ path('company/user/select') }}">{{ data.companyName }} / {{ data.companyBusinessUnitName }}</a>
+        {% else %}
+            <a href="{{ path('company/user/select') }}">{{ 'business_on_behalf_widget.no_selected_company' | trans }}</a>
+        {% endif %}
     {% else %}
-        <a href="{{ path('company/user/select') }}">{{ 'business_on_behalf_widget.no_selected_company' | trans }}</a>
+        {% if data.isOnBehalf and data.companyName is not empty and data.companyBusinessUnitName is not empty %}
+            <span>{{ data.companyName }} / {{ data.companyBusinessUnitName }}</span>
+        {% else %}
+            <span>{{ 'business_on_behalf_widget.no_selected_company' | trans }}</span>
+        {% endif %}
     {% endif %}
 {% endblock %}

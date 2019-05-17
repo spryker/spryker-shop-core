@@ -34,4 +34,11 @@ interface CompanyPageToBusinessOnBehalfClientInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function unsetDefaultCompanyUser(CustomerTransfer $customerTransfer): CustomerTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    public function isCustomerChangeAllowed(CustomerTransfer $customerTransfer): bool;
 }

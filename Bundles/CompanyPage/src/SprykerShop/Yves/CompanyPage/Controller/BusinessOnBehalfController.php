@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CompanyPage\Form\CompanyUserAccountSelectorForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
@@ -19,6 +20,28 @@ class BusinessOnBehalfController extends AbstractController
 {
     protected const ERROR_COMPANY_NOT_ACTIVE = 'company_user.business_on_behalf.error.company_not_active';
     protected const ERROR_COMPANY_USER_INVALID = 'company_user.business_on_behalf.error.company_user_invalid';
+
+    /**
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return void
+     */
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        $isAllowed = $this->getFactory()
+            ->getBusinessOnBehalfClient()
+            ->isCustomerChangeAllowed($customerTransfer);
+
+        if (!$isAllowed) {
+            throw new NotFoundHttpException('You are not allowed to access this page.');
+        }
+    }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

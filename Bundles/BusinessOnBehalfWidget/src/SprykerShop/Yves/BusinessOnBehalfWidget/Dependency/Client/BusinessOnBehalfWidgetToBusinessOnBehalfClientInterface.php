@@ -18,4 +18,11 @@ interface BusinessOnBehalfWidgetToBusinessOnBehalfClientInterface
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
     public function findActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    public function isCustomerChangeAllowed(CustomerTransfer $customerTransfer): bool;
 }

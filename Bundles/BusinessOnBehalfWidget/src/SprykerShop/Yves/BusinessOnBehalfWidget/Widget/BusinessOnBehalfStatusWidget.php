@@ -15,6 +15,8 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class BusinessOnBehalfStatusWidget extends AbstractWidget
 {
+    protected const PARAMETER_IS_CUSTOMER_CHANGE_ALLOWED = 'isCustomerChangeAllowed';
+
     public function __construct()
     {
         $customer = $this->getFactory()
@@ -25,6 +27,8 @@ class BusinessOnBehalfStatusWidget extends AbstractWidget
             ->addParameter('companyName', $this->getCompanyName($customer))
             ->addParameter('companyBusinessUnitName', $this->getCompanyBusinessUnitName($customer))
             ->addParameter('isVisible', $this->isVisible($customer));
+
+        $this->addIsCustomerChangeAllowedParameter($customer);
     }
 
     /**
@@ -41,6 +45,24 @@ class BusinessOnBehalfStatusWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@BusinessOnBehalfWidget/views/business-on-behalf-status/business-on-behalf-status.twig';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
+     * @return void
+     */
+    protected function addIsCustomerChangeAllowedParameter(?CustomerTransfer $customerTransfer): void
+    {
+        $isAllowed = true;
+
+        if ($this->isOnBehalf($customerTransfer)) {
+            $isAllowed = $this->getFactory()
+                ->getBusinessOnBehalfClient()
+                ->isCustomerChangeAllowed($customerTransfer);
+        }
+
+        $this->addParameter(static::PARAMETER_IS_CUSTOMER_CHANGE_ALLOWED, $isAllowed);
     }
 
     /**
