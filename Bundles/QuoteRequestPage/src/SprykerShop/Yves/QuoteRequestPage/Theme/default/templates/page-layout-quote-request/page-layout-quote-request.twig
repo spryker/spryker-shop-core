@@ -1,0 +1,26 @@
+{% extends template('page-layout-customer', 'CustomerPage') %}
+
+{% define data = {
+    title: 'quote_request_page.quote_request' | trans,
+    activePage: 'quoteRequest'
+} %}
+
+{% block title %}
+    <h3>{{ data.title }}</h3>
+{% endblock %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'quote_request_page.quote_request' | trans,
+                }
+            ]
+        }
+    } only %}
+{% endblock %}

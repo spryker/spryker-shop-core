@@ -1,8 +1,15 @@
 import Component from '../../../models/component';
 
 export default class TogglerClick extends Component {
-    readonly triggers: HTMLElement[]
-    readonly targets: HTMLElement[]
+    /**
+     * Elements triggering the toggle action.
+     */
+    readonly triggers: HTMLElement[];
+
+    /**
+     * Elements targeted by the toggle action.
+     */
+    readonly targets: HTMLElement[];
 
     constructor() {
         super();
@@ -15,7 +22,9 @@ export default class TogglerClick extends Component {
     }
 
     protected mapEvents(): void {
-        this.triggers.forEach((trigger: HTMLElement) => trigger.addEventListener('click', (event: Event) => this.onTriggerClick(event)));
+        this.triggers.forEach((trigger: HTMLElement) => {
+            trigger.addEventListener('click', (event: Event) => this.onTriggerClick(event));
+        });
     }
 
     protected onTriggerClick(event: Event): void {
@@ -23,6 +32,9 @@ export default class TogglerClick extends Component {
         this.toggle();
     }
 
+    /**
+     * Toggles the class names in the target elements.
+     */
     toggle(): void {
         this.targets.forEach((target: HTMLElement) => {
             const addClass = !target.classList.contains(this.classToToggle);
@@ -30,14 +42,23 @@ export default class TogglerClick extends Component {
         });
     }
 
+    /**
+     * Gets a querySelector of the trigger element.
+     */
     get triggerSelector(): string {
         return this.getAttribute('trigger-selector');
     }
 
+    /**
+     * Gets a querySelector of the target element.
+     */
     get targetSelector(): string {
         return this.getAttribute('target-selector');
     }
 
+    /**
+     * Gets a class name for the toggle action.
+     */
     get classToToggle(): string {
         return this.getAttribute('class-to-toggle');
     }

@@ -18,13 +18,14 @@
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
-    "spryker-shop/home-page": "*",
+    "spryker-shop/quote-request-agent-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/home-page": "Widget plugins are available for this module.",
+    "spryker-shop/quote-request-agent-widget": "If you want to use quote quote-request-menu-item.twig molecule.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

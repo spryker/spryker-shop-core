@@ -1,0 +1,18 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'company-user-list',
+    tag: 'ul'
+} %}
+
+{% define data = {
+    companyUsers: required
+} %}
+
+{% block body %}
+    {% for companyUser in data.companyUsers %}
+        <li class="{{ config.name }}__container-item" data-value="{{ companyUser.idCompanyUser }}">
+            {{ companyUser.customer.firstName }} {{ companyUser.customer.lastName }}: {{ companyUser.customer.email }} ({{ companyUser.company.name }}{{ companyUser.companyBusinessUnit ? ' - ' ~ companyUser.companyBusinessUnit.name : '' }})
+        </li>
+    {% endfor %}
+{% endblock %}

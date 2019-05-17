@@ -32,6 +32,7 @@ class SharedCartShareWidget extends AbstractWidget
     protected function isQuoteOwner(QuoteTransfer $quoteTransfer)
     {
         $customer = $this->getFactory()->getCustomerClient()->getCustomer();
+
         return $customer->getCustomerReference() === $quoteTransfer->getCustomerReference();
     }
 

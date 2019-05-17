@@ -9,7 +9,8 @@ namespace SprykerShop\Yves\CheckoutPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
@@ -20,6 +21,9 @@ use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
 use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
 
+/**
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
+ */
 class CheckoutPageFactory extends AbstractFactory
 {
     /**
@@ -78,6 +82,14 @@ class CheckoutPageFactory extends AbstractFactory
     public function getPaymentPageWidgetPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_PAYMENT_PAGE_WIDGETS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface
+     */
+    public function getCheckoutClient(): CheckoutPageToCheckoutClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CHECKOUT);
     }
 
     /**
@@ -143,7 +155,7 @@ class CheckoutPageFactory extends AbstractFactory
     {
         return new ShipmentFormDataProvider(
             $this->getShipmentClient(),
-            $this->getGlossaryClient(),
+            $this->getGlossaryStorageClient(),
             $this->getStore(),
             $this->getMoneyPlugin()
         );
@@ -154,7 +166,10 @@ class CheckoutPageFactory extends AbstractFactory
      */
     public function createShipmentHandler()
     {
-        return new ShipmentHandler($this->getShipmentClient(), $this->getPriceClient());
+        return new ShipmentHandler(
+            $this->getShipmentClient(),
+            $this->getPriceClient()
+        );
     }
 
     /**
@@ -166,11 +181,11 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface
      */
-    public function getGlossaryClient(): CheckoutPageToGlossaryClientInterface
+    public function getGlossaryStorageClient(): CheckoutPageToGlossaryStorageClientInterface
     {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_GLOSSARY);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 
     /**

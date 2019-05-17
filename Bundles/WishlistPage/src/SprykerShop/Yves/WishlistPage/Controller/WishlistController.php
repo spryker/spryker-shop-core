@@ -173,12 +173,14 @@ class WishlistController extends AbstractController
 
         if ($result->getRequests()->count()) {
             $this->addErrorMessage('customer.account.wishlist.item.moved_to_cart.failed');
+
             return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
                 'wishlistName' => $wishlistItemTransfer->getWishlistName(),
             ]);
         }
 
         $this->addSuccessMessage('customer.account.wishlist.item.moved_to_cart');
+
         return $this->redirectResponseInternal(WishlistPageControllerProvider::ROUTE_WISHLIST_DETAILS, [
             'wishlistName' => $wishlistItemTransfer->getWishlistName(),
         ]);

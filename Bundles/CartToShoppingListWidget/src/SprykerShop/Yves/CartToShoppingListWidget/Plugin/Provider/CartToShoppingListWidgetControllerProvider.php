@@ -27,7 +27,7 @@ class CartToShoppingListWidgetControllerProvider extends AbstractYvesControllerP
     /**
      * @return $this
      */
-    protected function addCreateShoppingListFromCartRoute(): self
+    protected function addCreateShoppingListFromCartRoute()
     {
         $this->createPostController('/{shoppingList}/create-from-cart', static::ROUTE_CART_TO_SHOPPING_LIST, 'CartToShoppingListWidget', 'CartToShoppingList')
             ->assert('shoppingList', $this->getAllowedLocalesPattern() . 'shopping-list|shopping-list')

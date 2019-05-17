@@ -12,6 +12,8 @@ use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Use `SprykerShop\Yves\CategoryWidget\Plugin\Twig\CategoryTwigPlugin` instead.
+ *
  * @method \SprykerShop\Yves\CategoryWidget\CategoryWidgetFactory getFactory()
  */
 class CategoryServiceProvider extends AbstractPlugin implements ServiceProviderInterface
