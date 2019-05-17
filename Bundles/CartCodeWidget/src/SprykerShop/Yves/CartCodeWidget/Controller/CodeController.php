@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CartCodeWidget\Controller;
 
-use Generated\Shared\Transfer\CartCodeOperationMessageTransfer;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use SprykerShop\Yves\CartCodeWidget\Form\CartCodeForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
 class CodeController extends AbstractController
 {
     public const PARAM_CODE = 'code';
+
+    protected const MESSAGE_TYPE_SUCCESS = 'success';
+    protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -122,28 +125,27 @@ class CodeController extends AbstractController
      */
     protected function handleCartCodeOperationResult(CartCodeOperationResultTransfer $cartCodeOperationResultTransfer): void
     {
-        foreach ($cartCodeOperationResultTransfer->getMessages() as $cartCodeOperationMessageTransfer) {
-            $this->handleCartCodeOperationMessage($cartCodeOperationMessageTransfer);
+        foreach ($cartCodeOperationResultTransfer->getMessages() as $messageTransfer) {
+            $this->handleMessage($messageTransfer);
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartCodeOperationMessageTransfer $cartCodeOperationMessageTransfer
+     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
      *
      * @return void
      */
-    protected function handleCartCodeOperationMessage(CartCodeOperationMessageTransfer $cartCodeOperationMessageTransfer): void
+    protected function handleMessage(MessageTransfer $messageTransfer): void
     {
-        if (!$cartCodeOperationMessageTransfer->getMessage()) {
-            return;
+        switch ($messageTransfer->getType()) {
+            case self::MESSAGE_TYPE_SUCCESS:
+                $this->addSuccessMessage($messageTransfer->getValue());
+                break;
+            case self::MESSAGE_TYPE_ERROR:
+                $this->addErrorMessage($messageTransfer->getValue());
+                break;
+            default:
+                $this->addInfoMessage($messageTransfer->getValue());
         }
-
-        if ($cartCodeOperationMessageTransfer->getIsSuccess()) {
-            $this->addSuccessMessage($cartCodeOperationMessageTransfer->getMessage()->getValue());
-
-            return;
-        }
-
-        $this->addErrorMessage($cartCodeOperationMessageTransfer->getMessage()->getValue());
     }
 }
