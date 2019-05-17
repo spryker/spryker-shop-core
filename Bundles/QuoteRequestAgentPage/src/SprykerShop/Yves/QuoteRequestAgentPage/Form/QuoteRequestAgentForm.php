@@ -134,12 +134,14 @@ class QuoteRequestAgentForm extends AbstractType
                 if ($value !== null) {
                     $value = new DateTime($value);
                 }
+
                 return $value;
             },
             function ($value) {
                 if ($value instanceof DateTime) {
                     $value = $value->format(static::FORMAT_VALID_UNTIL_DATE);
                 }
+
                 return $value;
             }
         );

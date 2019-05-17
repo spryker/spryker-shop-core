@@ -1,6 +1,7 @@
 {% extends template('page-layout-checkout', 'CheckoutPage') %}
 
 {% define data = {
+    cart: _view.quoteTransfer,
     backUrl: _view.previousStepUrl,
     transfer: _view.quoteTransfer,
     cartItems: _view.cartItems,
@@ -15,6 +16,7 @@
 
     overview: {
         shipmentMethod: _view.quoteTransfer.shipment.method.name,
+        payments: _view.quoteTransfer.payments,
         expenses: _view.quoteTransfer.expenses,
         voucherDiscounts: _view.quoteTransfer.voucherDiscounts,
         cartRuleDiscounts: _view.quoteTransfer.cartRuleDiscounts,
@@ -23,6 +25,7 @@
             subTotal: _view.quoteTransfer.totals.subtotal,
             storeCurrency: _view.quoteTransfer.shipment.method.storeCurrencyPrice,
             grandTotal: _view.quoteTransfer.totals.grandtotal,
+            priceToPay: _view.quoteTransfer.totals.priceToPay,
             tax: _view.quoteTransfer.totals.taxtotal.amount,
             discountTotal: _view.quoteTransfer.totals.discounttotal | default
         }
@@ -119,7 +122,8 @@
             {% endif %}
 
             <div class="box">
-                {% widget 'CheckoutVoucherFormWidget' args [data.transfer] only %}
+                {% widget 'CartCodeFormWidget' args [data.transfer] only %}
+                {% elsewidget 'CheckoutVoucherFormWidget' args [data.transfer] only %} {# @deprecated Use CartCodeFormWidget instead. #}
                 {% elsewidget 'CheckoutVoucherFormWidgetPlugin' args [data.transfer] only %} {# @deprecated Use CheckoutVoucherFormWidget instead. #}
                 {% endwidget %}
             </div>
@@ -139,12 +143,19 @@
                     }
                 },
                 embed: {
-                    overview: data.overview
+                    overview: data.overview,
+                    cart: data.cart
                 }
             } only %}
                 {% block body %}
                     {% include molecule('summary-overview', 'CheckoutPage') with {
                         data: embed.overview
+                    } only %}
+
+                    {% include molecule('gift-card-payment-summary', 'GiftCardWidget') ignore missing with {
+                        data: {
+                            cart: embed.cart
+                        }
                     } only %}
 
                     <hr />
