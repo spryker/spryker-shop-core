@@ -32,7 +32,6 @@
     </transfer>
 
     <transfer name="ResourceShareData">
-        <property name="idQuote" type="int"/>
         <property name="shareOption" type="string"/>
     </transfer>
 
