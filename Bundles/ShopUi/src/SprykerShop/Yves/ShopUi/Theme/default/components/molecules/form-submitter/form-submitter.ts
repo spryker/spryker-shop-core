@@ -20,7 +20,7 @@ export default class FormSubmitter extends Component {
         const TAG_NAME = 'form';
         const form = <HTMLFormElement>trigger.closest(TAG_NAME);
         if (form) {
-            const submit = <HTMLElement | HTMLInputElement>form.querySelector('[type="submit"]') ||
+            const submit = <HTMLButtonElement | HTMLInputElement>form.querySelector('[type="submit"]') ||
                 <HTMLButtonElement> form.querySelector('button');
             if (submit) {
                 submit.click();
