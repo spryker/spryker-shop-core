@@ -2,7 +2,7 @@ Creates a simple, clickable button element.
 
 ## Code sample
 
-```
+```html
 <button class="button"></button>
 <button class="button button--expand"></button>
 <button class="button button--hollow"></button>
