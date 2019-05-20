@@ -19,7 +19,7 @@ class SharedCartRouterStrategyPlugin implements ResourceShareRouterStrategyPlugi
     protected const ROUTE_CART = 'cart';
 
     /**
-     * @uses \Spryker\Shared\SharedCart\SharedCartConfig::QUOTE_RESOURCE_TYPE
+     * @uses \Spryker\Shared\SharedCart\SharedCartConfig::RESOURCE_TYPE_QUOTE
      */
     protected const QUOTE_RESOURCE_TYPE = 'quote';
 
