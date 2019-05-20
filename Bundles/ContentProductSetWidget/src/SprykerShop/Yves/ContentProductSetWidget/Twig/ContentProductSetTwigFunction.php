@@ -179,6 +179,7 @@ class ContentProductSetTwigFunction extends TwigFunction
 
     /**
      * @param array $context
+     *
      * @return \Symfony\Component\HttpFoundation\Request
      */
     protected function getRequest(array $context): Request
