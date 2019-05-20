@@ -9,7 +9,8 @@
     voucherDiscounts: null,
     ruleDiscounts: null,
     discountTotal: null,
-    isQuoteEditable: false
+    isQuoteEditable: false,
+    currencyIsoCode: null,
 } %}
 
 {% block component %}
@@ -26,8 +27,8 @@
                     {% include atom('icon') with {
                         modifiers: ['smaller'],
                         data: {
-                            name: 'times'
-                        }
+                            name: 'times',
+                        },
                     } only %}
                     {{ 'cart.vouchers.clear-all' | trans }}
                 </a>
@@ -45,14 +46,14 @@
                                     {% include atom('icon') with {
                                         modifiers: ['smaller'],
                                         data: {
-                                            name: 'times'
-                                        }
+                                            name: 'times',
+                                        },
                                     } only %}
                                     {{ 'cart.voucher.remove' | trans }}
                                 </a>
                             {% endif %}
                         </span>
-                        <span class="col col--expand text-right">- {{ voucherDiscount.amount | money }}</span>
+                        <span class="col col--expand text-right">- {{ voucherDiscount.amount | money(true, data.currencyIsoCode) }}</span>
                     </li>
                 {% endfor %}
             </ul>
@@ -67,7 +68,7 @@
                 {% for ruleDiscount in data.ruleDiscounts %}
                     <li class="grid grid--justify">
                         <span class="col col--sm-8">{{ ruleDiscount.displayName }}</span>
-                        <span class="col col--expand text-right">- {{ ruleDiscount.amount | money }}</span>
+                        <span class="col col--expand text-right">- {{ ruleDiscount.amount | money(true, data.currencyIsoCode) }}</span>
                     </li>
                 {% endfor %}
             </ul>
