@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\CompanyPage\Form\CompanyUserAccountSelectorForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -42,11 +43,12 @@ class BusinessOnBehalfController extends AbstractController
      */
     protected function executeSelectCompanyUserAction(Request $request): array
     {
-        if (!$this->isCompanyUserChangeAllowed()) {
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        if (!$this->isCompanyUserChangeAllowed($customerTransfer)) {
             throw new NotFoundHttpException('You are not allowed to access this page.');
         }
 
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
         $companyUserAccountFormDataProvider = $this->getFactory()->createCompanyPageFormFactory()->createCompanyUserAccountDataProvider();
         $activeCompanyUsers = $this->getFactory()->getBusinessOnBehalfClient()->findActiveCompanyUsersByCustomerId($customerTransfer);
 
@@ -87,14 +89,12 @@ class BusinessOnBehalfController extends AbstractController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
      * @return bool
      */
-    protected function isCompanyUserChangeAllowed(): bool
+    protected function isCompanyUserChangeAllowed(CustomerTransfer $customerTransfer): bool
     {
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
-
         return $this->getFactory()
             ->getBusinessOnBehalfClient()
             ->isCompanyUserChangeAllowed($customerTransfer);
