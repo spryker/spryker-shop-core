@@ -37,17 +37,13 @@ class BusinessOnBehalfController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return array
      */
     protected function executeSelectCompanyUserAction(Request $request): array
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        if (!$this->isCompanyUserChangeAllowed($customerTransfer)) {
-            throw new NotFoundHttpException('You are not allowed to access this page.');
-        }
+        $this->assertCompanyUserChangeAllowed($customerTransfer);
 
         $companyUserAccountFormDataProvider = $this->getFactory()->createCompanyPageFormFactory()->createCompanyUserAccountDataProvider();
         $activeCompanyUsers = $this->getFactory()->getBusinessOnBehalfClient()->findActiveCompanyUsersByCustomerId($customerTransfer);
@@ -91,12 +87,18 @@ class BusinessOnBehalfController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return bool
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return void
      */
-    protected function isCompanyUserChangeAllowed(CustomerTransfer $customerTransfer): bool
+    protected function assertCompanyUserChangeAllowed(CustomerTransfer $customerTransfer): void
     {
-        return $this->getFactory()
+        $isAllowed = $this->getFactory()
             ->getBusinessOnBehalfClient()
             ->isCompanyUserChangeAllowed($customerTransfer);
+
+        if (!$isAllowed) {
+            throw new NotFoundHttpException('You are not allowed to access this page.');
+        }
     }
 }
