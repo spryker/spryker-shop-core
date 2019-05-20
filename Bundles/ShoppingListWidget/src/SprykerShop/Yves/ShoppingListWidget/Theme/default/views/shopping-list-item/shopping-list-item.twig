@@ -9,7 +9,7 @@
 } %}
 
 {% block body %}
-    {% include molecule('quantity-input') with {
+    {% embed molecule('quantity-input') with {
         inputAttributes: {
             name: ('shoppingListItem[quantity][' ~ data.item.idShoppingListItem ~ ']'),
         },
@@ -22,4 +22,6 @@
             step: data.quantityInterval,
         },
     } only %}
+        {% block label %}{% endblock %}
+    {% endembed %}
 {% endblock %}
