@@ -29,7 +29,7 @@ class QuoteRequestAgentForm extends AbstractType
     public const OPTION_IS_QUOTE_VALID = 'option_is_quote_valid';
 
     protected const FORMAT_VALID_UNTIL_DATE = 'Y-m-d H:i:s';
-    protected const LABEL_QUOTE_REQUEST_IS_LATEST_VERSION_HIDDEN = 'quote_request_page.quote_request.labels.hide_latest_version';
+    protected const LABEL_QUOTE_REQUEST_IS_LATEST_VERSION_VISIBLE = 'quote_request_page.quote_request.labels.show_latest_version';
     protected const GLOSSARY_KEY_DATE_VIOLATION = 'quote_request_page.quote_request.violations.invalid_date';
 
     /**
@@ -58,7 +58,7 @@ class QuoteRequestAgentForm extends AbstractType
     {
         $this->addLatestVersionForm($builder, $options)
             ->addValidUntilField($builder)
-            ->addIsHiddenLatestVersionField($builder);
+            ->addIsVisibleLatestVersionField($builder);
     }
 
     /**
@@ -114,10 +114,10 @@ class QuoteRequestAgentForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIsHiddenLatestVersionField(FormBuilderInterface $builder)
+    protected function addIsVisibleLatestVersionField(FormBuilderInterface $builder)
     {
-        $builder->add(QuoteRequestTransfer::IS_LATEST_VERSION_HIDDEN, CheckboxType::class, [
-            'label' => static::LABEL_QUOTE_REQUEST_IS_LATEST_VERSION_HIDDEN,
+        $builder->add(QuoteRequestTransfer::IS_LATEST_VERSION_VISIBLE, CheckboxType::class, [
+            'label' => static::LABEL_QUOTE_REQUEST_IS_LATEST_VERSION_VISIBLE,
             'required' => false,
         ]);
 

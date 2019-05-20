@@ -121,7 +121,7 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
             ->getQuoteRequestVersions()
             ->getArrayCopy();
 
-        if ($quoteRequestTransfer->getIsLatestVersionHidden()) {
+        if (!$quoteRequestTransfer->getIsLatestVersionVisible()) {
             array_shift($quoteRequestVersionTransfers);
         }
 
