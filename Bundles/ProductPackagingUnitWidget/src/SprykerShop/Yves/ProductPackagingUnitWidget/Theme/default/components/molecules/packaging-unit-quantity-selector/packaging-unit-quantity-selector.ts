@@ -396,12 +396,9 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.productPackagingNewPriceBlock.classList.add('is-hidden');
         this.puError = false;
         let amountInBaseUnits = this.multiply(amountInSalesUnitInput, +this.currentLeadSalesUnit.conversion);
-        amountInBaseUnits = Math.round(amountInBaseUnits);
 
-        if ((amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval() !== 0) {
-            this.puError = true;
-            this.puIntervalNotificationElement.classList.remove('is-hidden');
-        } else if (amountInBaseUnits < this.getMinAmount()) {
+
+        if (amountInBaseUnits < this.getMinAmount()) {
             this.puError = true;
             this.puMinNotificationElement.classList.remove('is-hidden');
         } else if (this.getMaxAmount() > 0 && amountInBaseUnits > this.getMaxAmount()) {
