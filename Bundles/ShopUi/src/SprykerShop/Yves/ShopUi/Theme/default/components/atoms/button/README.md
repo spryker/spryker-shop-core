@@ -1,6 +1,6 @@
 Creates a simple, clickable button element.
 
-## Code sample
+## Usage
 
 ```html
 <button class="button"></button>
