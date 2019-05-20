@@ -57,8 +57,6 @@ class Creator extends ShipmentHandler
         $this->setShipmentGroupsSelectedMethodTransfer($quoteTransfer->getShipmentGroups());
         $quoteTransfer = $this->setShipmentExpenseTransfers($quoteTransfer);
 
-        $quoteTransfer = $this->setQuoteLevelShipmentData($quoteTransfer);
-
         return $quoteTransfer;
     }
 
@@ -183,7 +181,12 @@ class Creator extends ShipmentHandler
             $shipmentExpenseTransfer = $this->createShippingExpenseTransfer($shipmentTransfer->getMethod(), $priceMode);
             $shipmentExpenseTransfer->setShipment($shipmentTransfer);
 
-            $quoteTransfer->addExpense($shipmentExpenseTransfer);
+            $expenseShipmentKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
+            if ($quoteTransfer->getExpenses()->offsetExists($expenseShipmentKey)) {
+                continue;
+            }
+
+            $quoteTransfer->getExpenses()->offsetSet($expenseShipmentKey, $shipmentExpenseTransfer);
         }
 
         return $quoteTransfer;
@@ -196,44 +199,12 @@ class Creator extends ShipmentHandler
      */
     protected function removeAllShipmentExpensesFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $notShipmentExpensesCollection = new ArrayObject();
-
-        foreach ($quoteTransfer->getExpenses() as $expense) {
-            if ($expense->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+        foreach ($quoteTransfer->getExpenses() as $index => $expenseTransfer) {
+            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
                 continue;
             }
 
-            $notShipmentExpensesCollection->append($expense);
-        }
-
-        $quoteTransfer->setExpenses($notShipmentExpensesCollection);
-
-        return $quoteTransfer;
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function setQuoteLevelShipmentData(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        $quoteShipmentGroups = $quoteTransfer->getShipmentGroups();
-
-        if ($quoteShipmentGroups->count() !== 1) {
-            return $quoteTransfer;
-        }
-
-        /** @var \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer */
-        $shipmentTransfer = $quoteShipmentGroups->offsetGet($quoteShipmentGroups->getIterator()->key())->getShipment();
-
-        $quoteTransfer->setShipment($shipmentTransfer);
-        $quoteTransfer->setShippingAddress($shipmentTransfer->getShippingAddress());
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->setShipment(null);
+            $quoteTransfer->getExpenses()->offsetUnset($index);
         }
 
         return $quoteTransfer;
