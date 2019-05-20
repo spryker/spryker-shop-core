@@ -111,6 +111,7 @@ class AddressSaver implements SaverInterface
 
         if ($quoteTransfer->getBillingSameAsShipping() === true && $quoteTransfer->getShippingAddress() === null) {
             $quoteTransfer->setBillingAddress(null);
+
             return;
         }
 

@@ -132,6 +132,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
                 $availableItemsSku[] = $sku;
             }
         }
+
         return $availableItemsSku;
     }
 
@@ -162,6 +163,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
             new RecursiveArrayIterator($attributeMap['attribute_variants']),
             RecursiveIteratorIterator::SELF_FIRST
         );
+
         return $attributeMapIterator;
     }
 

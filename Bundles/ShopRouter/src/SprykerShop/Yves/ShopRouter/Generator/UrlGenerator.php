@@ -79,6 +79,7 @@ class UrlGenerator extends SymfonyUrlGenerator
 
             $parameters[$name] = $converters[$name]($value, $this->app['request']);
         }
+
         return $parameters;
     }
 

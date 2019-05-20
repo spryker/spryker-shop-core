@@ -163,6 +163,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
         if ($prefixLocale) {
             $logoutPath = '/' . $prefixLocale . $logoutPath;
         }
+
         return $logoutPath;
     }
 
@@ -177,6 +178,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
         if ($prefixLocale) {
             $loginPath = '/' . $prefixLocale . $loginPath;
         }
+
         return $loginPath;
     }
 
@@ -198,6 +200,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
         if ($prefixLocale . '/' !== $localePath) {
             return null;
         }
+
         return $prefixLocale;
     }
 
@@ -212,6 +215,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
         if ($selectedLanguage) {
             $logoutTarget .= $selectedLanguage;
         }
+
         return $logoutTarget;
     }
 }

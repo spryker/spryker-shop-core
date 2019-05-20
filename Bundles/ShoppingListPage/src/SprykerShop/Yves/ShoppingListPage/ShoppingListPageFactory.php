@@ -241,6 +241,7 @@ class ShoppingListPageFactory extends AbstractFactory
     public function getCartFromShoppingListForm(?int $idQuote): FormInterface
     {
         $formDataProvider = $this->createCartFromShoppingListFormDataProvider();
+
         return $this->getFormFactory()->create(ShoppingListFromCartForm::class, $formDataProvider->getData($idQuote), $formDataProvider->getOptions());
     }
 
