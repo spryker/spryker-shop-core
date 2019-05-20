@@ -251,7 +251,7 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
-     * @see \SprykerShop\Yves\CustomerPage\Controller\AccessTokenController::indexAction()
+     * @uses \SprykerShop\Yves\CustomerPage\Controller\AccessTokenController::indexAction()
      *
      * @return $this
      */
