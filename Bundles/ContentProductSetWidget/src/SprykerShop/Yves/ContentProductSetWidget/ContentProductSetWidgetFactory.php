@@ -16,26 +16,22 @@ use SprykerShop\Yves\ContentProductSetWidget\Reader\ContentProductAbstractReader
 use SprykerShop\Yves\ContentProductSetWidget\Reader\ContentProductSetReader;
 use SprykerShop\Yves\ContentProductSetWidget\Reader\ContentProductSetReaderInterface;
 use SprykerShop\Yves\ContentProductSetWidget\Twig\ContentProductSetTwigFunction;
-use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
 
 class ContentProductSetWidgetFactory extends AbstractFactory
 {
     /**
      * @param \Twig\Environment $twig
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $localeName
      *
      * @return \SprykerShop\Yves\ContentProductSetWidget\Twig\ContentProductSetTwigFunction
      */
     public function createContentProductSetTwigFunction(
         Environment $twig,
-        Request $request,
         string $localeName
     ): ContentProductSetTwigFunction {
         return new ContentProductSetTwigFunction(
             $twig,
-            $request,
             $localeName,
             $this->createContentProductSetReader(),
             $this->createContentProductAbstractReader()

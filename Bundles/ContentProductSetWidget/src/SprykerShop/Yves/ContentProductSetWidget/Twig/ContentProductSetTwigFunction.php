@@ -65,14 +65,12 @@ class ContentProductSetTwigFunction extends TwigFunction
 
     /**
      * @param \Twig\Environment $twig
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $localeName
      * @param \SprykerShop\Yves\ContentProductSetWidget\Reader\ContentProductSetReaderInterface $contentProductSetReader
      * @param \SprykerShop\Yves\ContentProductSetWidget\Reader\ContentProductAbstractReaderInterface $contentProductAbstractReader
      */
     public function __construct(
         Environment $twig,
-        Request $request,
         string $localeName,
         ContentProductSetReaderInterface $contentProductSetReader,
         ContentProductAbstractReaderInterface $contentProductAbstractReader
@@ -80,7 +78,6 @@ class ContentProductSetTwigFunction extends TwigFunction
         parent::__construct();
 
         $this->twig = $twig;
-        $this->request = $request;
         $this->localeName = $localeName;
         $this->contentProductSetReader = $contentProductSetReader;
         $this->contentProductAbstractReader = $contentProductAbstractReader;
@@ -99,7 +96,7 @@ class ContentProductSetTwigFunction extends TwigFunction
      */
     public function getFunction(): callable
     {
-        return function (int $idContent, string $templateIdentifier): string {
+        return function (array $context, int $idContent, string $templateIdentifier): string {
             if (!isset($this->getAvailableTemplates()[$templateIdentifier])) {
                 return $this->getMessageProductSetWrongTemplate($templateIdentifier);
             }
@@ -116,7 +113,7 @@ class ContentProductSetTwigFunction extends TwigFunction
             }
 
             $productAbstractViewCollection = $this->contentProductAbstractReader
-                ->findProductAbstractCollection($productSetDataStorageTransfer, $this->request, $this->localeName);
+                ->findProductAbstractCollection($productSetDataStorageTransfer, $this->getRequest($context), $this->localeName);
 
             return $this->twig->render(
                 $this->getAvailableTemplates()[$templateIdentifier],
@@ -126,6 +123,17 @@ class ContentProductSetTwigFunction extends TwigFunction
                 ]
             );
         };
+    }
+
+    /**
+     * @return array
+     */
+    protected function getOptions(): array
+    {
+        return [
+            'needs_context' => true,
+            'is_safe' => ['html'],
+        ];
     }
 
     /**
@@ -167,5 +175,14 @@ class ContentProductSetTwigFunction extends TwigFunction
     protected function getMessageProductSetWrongType(int $idContent): string
     {
         return sprintf(static::MESSAGE_WRONG_CONTENT_PRODUCT_SET_TYPE, $idContent);
+    }
+
+    /**
+     * @param array $context
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function getRequest(array $context): Request
+    {
+        return $context['app']['request'];
     }
 }
