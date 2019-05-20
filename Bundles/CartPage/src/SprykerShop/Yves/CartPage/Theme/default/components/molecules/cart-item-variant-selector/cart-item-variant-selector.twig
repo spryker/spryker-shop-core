@@ -45,13 +45,13 @@
                             modifiers: ['expand'],
                             data: {
                                 label: ('product.attribute.' ~ attributeName) | trans,
-                                options: options
+                                options: options,
                             },
                             attributes: {
                                 name: 'preselectedAttributes[' ~ attributeName ~ ']',
-                                'onchange': 'this.form.submit();',
-                                disabled: not data.canEditCart
-                            }
+                                'data-form-submitter': true,
+                                disabled: not data.canEditCart,
+                            },
                         } only %}
                     </label>
                     <input name="selectedAttributes[{{ attributeName }}]" type="hidden" />

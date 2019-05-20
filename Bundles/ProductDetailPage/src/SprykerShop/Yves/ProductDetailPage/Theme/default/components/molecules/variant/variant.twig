@@ -22,11 +22,11 @@
                 modifiers: ['expand'],
                 attributes: {
                     name: data.formName,
-                    onchange: 'this.form.submit()'
+                    'data-form-submitter': true,
                 },
                 embed: {
-                    values: data.values
-                }
+                    values: data.values,
+                },
             } only %}
                 {% block options %}
                     <option>{{ 'product.attribute._none' | trans }}</option>
