@@ -6,12 +6,11 @@
 } %}
 
 {% define data = {
-    totalCosts: required,
+    shipmentMethod: required,
     expenses: [],
     voucherDiscounts: [],
     cartRuleDiscounts: [],
     cartQuantity: cartQuantity is defined ? cartQuantity : app['cart.quantity'] | default,
-    shipmentGroups: required,
 
     prices: {
         subTotal: required,
@@ -66,16 +65,9 @@
     {% endif %}
 
     <li>
-        <span class="float-right">{{ data.totalCosts | money  }}</span>
-        <strong>{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
-        {% for shipmentGroup in data.shipmentGroups %}
-            <div class="grid grid--justify">
-                <span class="col col--sm-10">{{ shipmentGroup.shipment.method.carrierName }} - {{ shipmentGroup.shipment.method.name }}</span>
-                <span class="col col--expand text-right">{{ shipmentGroup.shipment.method.storeCurrencyPrice | money }}</span>
-            </div>
-        {% endfor %}
+        <span class="float-right">{{ data.prices.storeCurrency | money }}</span>
+        {{ 'checkout.step.summary.shipping' | trans }} (<strong>{{ data.shipmentMethod }}</strong>)
     </li>
-
     {% widget 'SalesOrderThresholdWidget' args [data.expenses] only %}
         {% block body %}
             {{block('separator')}}

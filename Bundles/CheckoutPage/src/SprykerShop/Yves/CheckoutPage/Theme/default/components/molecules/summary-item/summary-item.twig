@@ -8,9 +8,6 @@
 {% define data = {
     name: required,
     quantity: required,
-    images: required,
-    groupKey: required,
-    sku: required,
     price: 0,
     options: [],
     bundleItems: [],
@@ -32,11 +29,8 @@
                 quantity: data.quantity,
                 amount: data.amount,
                 price: data.price,
-                images: data.images,
                 quantitySalesUnit: data.quantitySalesUnit,
-                amountSalesUnit: data.amountSalesUnit,
-                groupKey: data.groupKey,
-                sku: data.sku
+                amountSalesUnit: data.amountSalesUnit
             }
         } only %}
     {% endif %}
@@ -58,11 +52,4 @@
             {% endfor %}
         </ul>
     {% endif %}
-
-    {% include molecule('summary-item-remove', 'CheckoutPage') with {
-        data: {
-            sku: data.sku,
-            groupKey: data.groupKey
-        }
-    } only %}
 {% endblock %}

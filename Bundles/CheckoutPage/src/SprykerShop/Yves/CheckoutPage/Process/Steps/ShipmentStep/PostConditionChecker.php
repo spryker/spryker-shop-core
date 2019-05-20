@@ -38,16 +38,6 @@ class PostConditionChecker implements PostConditionCheckerInterface
      */
     public function check(AbstractTransfer $quoteTransfer): bool
     {
-        return $this->isShipmentSet($quoteTransfer);
-    }
-
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isShipmentSet(QuoteTransfer $quoteTransfer): bool
-    {
         if ($quoteTransfer->getItems()->count() === 0) {
             return false;
         }

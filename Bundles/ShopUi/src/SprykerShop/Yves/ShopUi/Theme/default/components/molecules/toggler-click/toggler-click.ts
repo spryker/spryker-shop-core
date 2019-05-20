@@ -4,12 +4,12 @@ export default class TogglerClick extends Component {
     /**
      * Elements triggering the toggle action.
      */
-    readonly triggers: HTMLElement[]
+    readonly triggers: HTMLElement[];
 
     /**
      * Elements targeted by the toggle action.
      */
-    readonly targets: HTMLElement[]
+    readonly targets: HTMLElement[];
 
     constructor() {
         super();
@@ -22,7 +22,9 @@ export default class TogglerClick extends Component {
     }
 
     protected mapEvents(): void {
-        this.triggers.forEach((trigger: HTMLElement) => trigger.addEventListener('click', (event: Event) => this.onTriggerClick(event)));
+        this.triggers.forEach((trigger: HTMLElement) => {
+            trigger.addEventListener('click', (event: Event) => this.onTriggerClick(event));
+        });
     }
 
     protected onTriggerClick(event: Event): void {

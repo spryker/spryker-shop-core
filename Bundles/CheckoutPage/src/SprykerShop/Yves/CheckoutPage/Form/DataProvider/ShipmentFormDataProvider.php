@@ -14,14 +14,20 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface;
+use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentCollectionForm;
+use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
 
 class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
 {
+    use PermissionAwareTrait;
+
+    protected const ONE_DAY = 1;
     protected const SECONDS_IN_ONE_DAY = 86400;
 
     public const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
@@ -32,9 +38,9 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected $shipmentClient;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface
      */
-    protected $glossaryClient;
+    protected $glossaryStorageClient;
 
     /**
      * @var \Spryker\Shared\Kernel\Store
@@ -52,24 +58,32 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected $shipmentService;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig
+     */
+    protected $checkoutPageConfig;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface $glossaryClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface $glossaryStorageClient
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
+     * @param \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig $checkoutPageConfig
      */
     public function __construct(
         CheckoutPageToShipmentClientInterface $shipmentClient,
-        CheckoutPageToGlossaryClientInterface $glossaryClient,
+        CheckoutPageToGlossaryStorageClientInterface $glossaryStorageClient,
         Store $store,
         MoneyPluginInterface $moneyPlugin,
-        CheckoutPageToShipmentServiceInterface $shipmentService
+        CheckoutPageToShipmentServiceInterface $shipmentService,
+        CheckoutPageConfig $checkoutPageConfig
     ) {
         $this->shipmentClient = $shipmentClient;
-        $this->glossaryClient = $glossaryClient;
+        $this->glossaryStorageClient = $glossaryStorageClient;
         $this->store = $store;
         $this->moneyPlugin = $moneyPlugin;
         $this->shipmentService = $shipmentService;
+        $this->checkoutPageConfig = $checkoutPageConfig;
     }
 
     /**
@@ -89,6 +103,15 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
+        /**
+         * @deprecated Exists for Backward Compatibility reasons only.
+         */
+        if (!$this->checkoutPageConfig->isMultiShipmentEnabled()) {
+            return [
+                ShipmentForm::OPTION_SHIPMENT_METHODS => $this->createAvailableShipmentChoiceList($quoteTransfer),
+            ];
+        }
+
         $quoteTransfer = $this->setQuoteShipmentGroups($quoteTransfer);
 
         return [
@@ -145,7 +168,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return int[][]
      */
     protected function createAvailableShipmentChoiceList(QuoteTransfer $quoteTransfer)
     {
@@ -153,13 +176,16 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
 
         $shipmentMethodsTransfer = $this->getAvailableShipmentMethods($quoteTransfer);
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
-            if (!isset($shipmentMethods[$shipmentMethodTransfer->getCarrierName()])) {
-                $shipmentMethods[$shipmentMethodTransfer->getCarrierName()] = [];
+            $carrierName = $shipmentMethodTransfer->getCarrierName();
+
+            if ($carrierName === null) {
+                continue;
             }
-            $description = $this->getShipmentDescription(
-                $shipmentMethodTransfer
-            );
-            $shipmentMethods[$shipmentMethodTransfer->getCarrierName()][$description] = $shipmentMethodTransfer->getIdShipmentMethod();
+
+            $shipmentMethods[$carrierName] = $shipmentMethods[$carrierName] ?? [];
+
+            $description = $this->getShipmentDescription($shipmentMethodTransfer);
+            $shipmentMethods[$carrierName][$description] = $shipmentMethodTransfer->getIdShipmentMethod();
         }
 
         return $shipmentMethods;
@@ -174,9 +200,9 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     {
         $shipmentMethods = [];
 
-        $shipmentGroupCollectionTransfer = $this->getAvailableMethodsByShipment($quoteTransfer);
+        $shipmentMethodsTransferCollection = $this->getAvailableMethodsByShipment($quoteTransfer);
 
-        foreach ($shipmentGroupCollectionTransfer->getGroups() as $shipmentGroupTransfer) {
+        foreach ($shipmentMethodsTransferCollection->getGroups() as $shipmentGroupTransfer) {
             $shipmentMethodsTransfer = $shipmentGroupTransfer->getAvailableShipmentMethods();
             if ($shipmentMethodsTransfer === null) {
                 continue;
@@ -226,9 +252,10 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected function getShipmentDescription(ShipmentMethodTransfer $shipmentMethodTransfer)
     {
         $shipmentDescription = $this->translate($shipmentMethodTransfer->getName());
-
         $shipmentDescription = $this->appendDeliveryTime($shipmentMethodTransfer, $shipmentDescription);
-        $shipmentDescription = $this->appendShipmentPrice($shipmentMethodTransfer, $shipmentDescription);
+        if ($this->can('SeePricePermissionPlugin')) {
+            $shipmentDescription = $this->appendShipmentPrice($shipmentMethodTransfer, $shipmentDescription);
+        }
 
         return $shipmentDescription;
     }
@@ -249,7 +276,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
                 $shipmentDescription,
                 $this->translate('page.checkout.shipping.delivery_time'),
                 $deliveryTime,
-                ($deliveryTime === 1) ? 'day' : 'days'
+                $this->getTranslatedDayName($deliveryTime)
             );
         }
 
@@ -304,7 +331,21 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     protected function translate($translationKey)
     {
-        return $this->glossaryClient->translate($translationKey, $this->store->getCurrentLocale());
+        return $this->glossaryStorageClient->translate($translationKey, $this->store->getCurrentLocale());
+    }
+
+    /**
+     * @param int $deliveryTime
+     *
+     * @return string
+     */
+    protected function getTranslatedDayName(int $deliveryTime): string
+    {
+        if ($deliveryTime === static::ONE_DAY) {
+            return $this->translate('page.checkout.shipping.day');
+        }
+
+        return $this->translate('page.checkout.shipping.days');
     }
 
     /**

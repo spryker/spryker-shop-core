@@ -67,6 +67,19 @@ class ShipmentGroupForm extends AbstractType
             }
         });
 
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            /**
+             * @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+             */
+            $shipmentGroupTransfer = $event->getForm()->getData();
+            if ($shipmentGroupTransfer instanceof ShipmentGroupTransfer) {
+                $shipmentTransfer = $shipmentGroupTransfer->getShipment();
+                foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
+                    $itemTransfer->setShipment($shipmentTransfer);
+                }
+            }
+        });
+
         return $this;
     }
 

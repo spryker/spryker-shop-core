@@ -9,10 +9,10 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
+use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\SaverInterface;
+use SprykerShop\Yves\CheckoutPage\StrategyResolver\AddressStep\AddressStepStrategyResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
@@ -28,37 +28,37 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $calculationClient;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\AddressSaver
+     * @var \SprykerShop\Yves\CheckoutPage\StrategyResolver\AddressStep\AddressStepStrategyResolverInterface
      */
-    protected $addressSaver;
+    protected $stepResolver;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\PostConditionChecker
+     * @var \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig
      */
-    protected $postConditionChecker;
+    protected $checkoutPageConfig;
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
      * @param string $stepRoute
      * @param string $escapeRoute
-     * @param \SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\SaverInterface $addressSaver
-     * @param \SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface $postConditionChecker
+     * @param \SprykerShop\Yves\CheckoutPage\StrategyResolver\AddressStep\AddressStepStrategyResolverInterface $stepResolver
+     * @param \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig $checkoutPageConfig
      */
     public function __construct(
         CheckoutPageToCustomerClientInterface $customerClient,
         CheckoutPageToCalculationClientInterface $calculationClient,
         $stepRoute,
         $escapeRoute,
-        SaverInterface $addressSaver,
-        PostConditionCheckerInterface $postConditionChecker
+        AddressStepStrategyResolverInterface $stepResolver,
+        CheckoutPageConfig $checkoutPageConfig
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->calculationClient = $calculationClient;
         $this->customerClient = $customerClient;
-        $this->addressSaver = $addressSaver;
-        $this->postConditionChecker = $postConditionChecker;
+        $this->stepResolver = $stepResolver;
+        $this->checkoutPageConfig = $checkoutPageConfig;
     }
 
     /**
@@ -69,6 +69,18 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     public function requireInput(AbstractTransfer $dataTransfer)
     {
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function preCondition(AbstractTransfer $quoteTransfer)
+    {
+        $quoteTransfer->setIsMultipleShipmentEnabled($this->checkoutPageConfig->isMultiShipmentEnabled());
+
+        return parent::preCondition($quoteTransfer);
     }
 
     /**
@@ -84,7 +96,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
-        $quoteTransfer = $this->addressSaver->save($request, $quoteTransfer);
+        $quoteTransfer = $this->stepResolver->resolveSaver()->save($request, $quoteTransfer);
 
         return $this->calculationClient->recalculate($quoteTransfer);
     }
@@ -96,7 +108,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
-        return $this->postConditionChecker->check($quoteTransfer);
+        return $this->stepResolver->resolvePostCondition()->check($quoteTransfer);
     }
 
     /**
