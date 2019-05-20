@@ -19,14 +19,15 @@ export default class FormSubmitter extends Component {
     protected triggerEvent(trigger: HTMLElement): void {
         const TAG_NAME = 'form';
         const form = <HTMLFormElement>trigger.closest(TAG_NAME);
-        if (form) {
-            const submit = <HTMLButtonElement | HTMLInputElement>form.querySelector('[type="submit"]') ||
-                <HTMLButtonElement> form.querySelector('button');
-            if (submit) {
-                submit.click();
-            }
-            form.submit();
+        if (!form) {
+            return;
         }
+        const submit = <HTMLButtonElement | HTMLInputElement>form.querySelector('[type="submit"]') ||
+            <HTMLButtonElement> form.querySelector('button');
+        if (submit) {
+            submit.click();
+        }
+        form.submit();
     }
 
     /**
