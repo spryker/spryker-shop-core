@@ -15,7 +15,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class BusinessOnBehalfStatusWidget extends AbstractWidget
 {
-    protected const PARAMETER_IS_CUSTOMER_CHANGE_ALLOWED = 'isCustomerChangeAllowed';
+    protected const PARAMETER_IS_COMPANY_USER_CHANGE_ALLOWED = 'isCompanyUserChangeAllowed';
 
     public function __construct()
     {
@@ -28,7 +28,7 @@ class BusinessOnBehalfStatusWidget extends AbstractWidget
             ->addParameter('companyBusinessUnitName', $this->getCompanyBusinessUnitName($customer))
             ->addParameter('isVisible', $this->isVisible($customer));
 
-        $this->addIsCustomerChangeAllowedParameter($customer);
+        $this->addIsCompanyUserChangeAllowedParameter($customer);
     }
 
     /**
@@ -52,17 +52,17 @@ class BusinessOnBehalfStatusWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function addIsCustomerChangeAllowedParameter(?CustomerTransfer $customerTransfer): void
+    protected function addIsCompanyUserChangeAllowedParameter(?CustomerTransfer $customerTransfer): void
     {
         $isAllowed = true;
 
         if ($this->isOnBehalf($customerTransfer)) {
             $isAllowed = $this->getFactory()
                 ->getBusinessOnBehalfClient()
-                ->isCustomerChangeAllowed($customerTransfer);
+                ->isCompanyUserChangeAllowed($customerTransfer);
         }
 
-        $this->addParameter(static::PARAMETER_IS_CUSTOMER_CHANGE_ALLOWED, $isAllowed);
+        $this->addParameter(static::PARAMETER_IS_COMPANY_USER_CHANGE_ALLOWED, $isAllowed);
     }
 
     /**

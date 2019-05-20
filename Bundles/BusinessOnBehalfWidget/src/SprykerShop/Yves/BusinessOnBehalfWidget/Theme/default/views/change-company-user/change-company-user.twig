@@ -2,11 +2,11 @@
 
 {% define data = {
     isVisible: _widget.isVisible,
-    isCustomerChangeAllowed: _widget.isCustomerChangeAllowed,
+    isCompanyUserChangeAllowed: _widget.isCompanyUserChangeAllowed,
 } %}
 
 {% block template %}
-    {% if data.isVisible and data.isCustomerChangeAllowed %}
+    {% if data.isVisible and data.isCompanyUserChangeAllowed %}
         {{parent()}}
     {% endif %}
 {% endblock %}

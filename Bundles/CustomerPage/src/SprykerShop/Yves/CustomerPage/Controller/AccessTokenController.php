@@ -55,8 +55,8 @@ class AccessTokenController extends AbstractCustomerController
 
         $customerResponseTransfer = $this
             ->getFactory()
-            ->getAccessTokenAuthenticationHandler()
-            ->getCustomerByToken($token);
+            ->getCustomerClient()
+            ->getCustomerByAccessToken($token);
 
         if (!$customerResponseTransfer->getIsSuccess()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_INVALID_ACCESS_TOKEN);

@@ -7,4 +7,9 @@
         <property name="idCustomer" type="int" />
     </transfer>
 
+    <transfer name="CustomerResponse">
+        <property name="customerTransfer" type="Customer" />
+        <property name="isSuccess" type="bool" />
+    </transfer>
+
 </transfers>

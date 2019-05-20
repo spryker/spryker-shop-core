@@ -24,7 +24,6 @@ use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerUserProvider;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
 use SprykerShop\Yves\CustomerPage\Twig\GetUsernameTwigFunction;
 use SprykerShop\Yves\CustomerPage\Twig\IsLoggedTwigFunction;
-use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
@@ -132,14 +131,6 @@ class CustomerPageFactory extends AbstractFactory
     public function getAuthenticationHandler()
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_AUTHENTICATION_HANDLER);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface
-     */
-    public function getAccessTokenAuthenticationHandler(): AccessTokenAuthenticationHandlerPluginInterface
-    {
-        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGIN_ACCESS_TOKEN_AUTHENTICATION_HANDLER);
     }
 
     /**

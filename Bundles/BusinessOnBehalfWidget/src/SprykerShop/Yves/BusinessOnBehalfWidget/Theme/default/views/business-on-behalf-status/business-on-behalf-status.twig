@@ -2,7 +2,7 @@
 
 {% define data = {
     isOnBehalf: _widget.isOnBehalf,
-    isCustomerChangeAllowed: _widget.isCustomerChangeAllowed,
+    isCompanyUserChangeAllowed: _widget.isCompanyUserChangeAllowed,
     companyName: _widget.companyName,
     companyBusinessUnitName: _widget.companyBusinessUnitName,
     isVisible: _widget.isVisible,
@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block body %}
-    {% if data.isCustomerChangeAllowed %}
+    {% if data.isCompanyUserChangeAllowed %}
         {% if data.isOnBehalf and data.companyName is not empty and data.companyBusinessUnitName is not empty %}
             <a href="{{ path('company/user/select') }}">{{ data.companyName }} / {{ data.companyBusinessUnitName }}</a>
         {% else %}

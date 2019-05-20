@@ -24,5 +24,5 @@ interface BusinessOnBehalfWidgetToBusinessOnBehalfClientInterface
      *
      * @return bool
      */
-    public function isCustomerChangeAllowed(CustomerTransfer $customerTransfer): bool;
+    public function isCompanyUserChangeAllowed(CustomerTransfer $customerTransfer): bool;
 }

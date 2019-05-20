@@ -22,28 +22,6 @@ class BusinessOnBehalfController extends AbstractController
     protected const ERROR_COMPANY_USER_INVALID = 'company_user.business_on_behalf.error.company_user_invalid';
 
     /**
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return void
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
-
-        $isAllowed = $this->getFactory()
-            ->getBusinessOnBehalfClient()
-            ->isCustomerChangeAllowed($customerTransfer);
-
-        if (!$isAllowed) {
-            throw new NotFoundHttpException('You are not allowed to access this page.');
-        }
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Yves\Kernel\View\View
@@ -58,10 +36,16 @@ class BusinessOnBehalfController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array
      */
     protected function executeSelectCompanyUserAction(Request $request): array
     {
+        if (!$this->isCompanyUserChangeAllowed()) {
+            throw new NotFoundHttpException('You are not allowed to access this page.');
+        }
+
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
         $companyUserAccountFormDataProvider = $this->getFactory()->createCompanyPageFormFactory()->createCompanyUserAccountDataProvider();
         $activeCompanyUsers = $this->getFactory()->getBusinessOnBehalfClient()->findActiveCompanyUsersByCustomerId($customerTransfer);
@@ -100,5 +84,19 @@ class BusinessOnBehalfController extends AbstractController
         }
 
         return $isDefault;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isCompanyUserChangeAllowed(): bool
+    {
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        return $this->getFactory()
+            ->getBusinessOnBehalfClient()
+            ->isCompanyUserChangeAllowed($customerTransfer);
     }
 }

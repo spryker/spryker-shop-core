@@ -62,8 +62,8 @@ class CompanyPageToBusinessOnBehalfClientBridge implements CompanyPageToBusiness
      *
      * @return bool
      */
-    public function isCustomerChangeAllowed(CustomerTransfer $customerTransfer): bool
+    public function isCompanyUserChangeAllowed(CustomerTransfer $customerTransfer): bool
     {
-        return $this->businessOnBehalfClient->isCustomerChangeAllowed($customerTransfer);
+        return $this->businessOnBehalfClient->isCompanyUserChangeAllowed($customerTransfer);
     }
 }

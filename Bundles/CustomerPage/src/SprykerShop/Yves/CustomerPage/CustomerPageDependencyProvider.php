@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerPage;
 
-use Exception;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
@@ -21,7 +20,6 @@ use SprykerShop\Yves\CustomerPage\Plugin\AuthenticationHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\GuestCheckoutAuthenticationHandlerPlugin;
 use SprykerShop\Yves\CustomerPage\Plugin\LoginCheckoutAuthenticationHandlerPlugin;
 use SprykerShop\Yves\CustomerPage\Plugin\RegistrationCheckoutAuthenticationHandlerPlugin;
-use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface;
 
 class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -31,7 +29,6 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGIN_AUTHENTICATION_HANDLER = 'PLUGIN_AUTHENTICATION_HANDLER';
-    public const PLUGIN_ACCESS_TOKEN_AUTHENTICATION_HANDLER = 'PLUGIN_ACCESS_TOKEN_AUTHENTICATION_HANDLER';
     public const PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER = 'PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER';
     public const PLUGIN_LOGIN_AUTHENTICATION_HANDLER = 'PLUGIN_LOGIN_AUTHENTICATION_HANDLER';
     public const PLUGIN_GUEST_AUTHENTICATION_HANDLER = 'PLUGIN_GUEST_AUTHENTICATION_HANDLER';
@@ -62,7 +59,6 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteClient($container);
         $container = $this->addApplication($container);
         $container = $this->addAuthenticationHandlerPlugin($container);
-        $container = $this->addAccessTokenAuthenticationHandlerPlugin($container);
         $container = $this->addLoginCheckoutAuthenticationHandlerPlugin($container);
         $container = $this->addGuestCheckoutAuthenticationHandlerPlugin($container);
         $container = $this->addRegistrationCheckoutAuthenticationHandlerPlugin($container);
@@ -119,20 +115,6 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::PLUGIN_AUTHENTICATION_HANDLER] = function () {
             return new AuthenticationHandler();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addAccessTokenAuthenticationHandlerPlugin(Container $container): Container
-    {
-        $container[static::PLUGIN_ACCESS_TOKEN_AUTHENTICATION_HANDLER] = function () {
-            return $this->getAccessTokenAuthenticationHandlerPlugin();
         };
 
         return $container;
@@ -416,16 +398,5 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getAfterCustomerAuthenticationSuccessPlugins(): array
     {
         return [];
-    }
-
-    /**
-     * @throws \Exception
-     *
-     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface
-     */
-    protected function getAccessTokenAuthenticationHandlerPlugin(): AccessTokenAuthenticationHandlerPluginInterface
-    {
-        throw new Exception('Please set an access token authentication handler plugin, 
-        implementing the interface \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface');
     }
 }
