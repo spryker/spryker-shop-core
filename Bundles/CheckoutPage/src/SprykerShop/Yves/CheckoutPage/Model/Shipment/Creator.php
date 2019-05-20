@@ -77,6 +77,11 @@ class Creator extends ShipmentHandler
                 }
 
                 $shipmentGroupTransfer->setShipment($quoteShipmentGroupTransfer->getShipment());
+                break;
+            }
+
+            foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
+                $itemTransfer->setShipment($shipmentGroupTransfer->getShipment());
             }
         }
 

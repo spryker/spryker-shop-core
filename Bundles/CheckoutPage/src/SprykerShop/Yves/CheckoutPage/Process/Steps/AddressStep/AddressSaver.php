@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\SaverInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,16 +26,25 @@ class AddressSaver implements SaverInterface
     protected $customerClient;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface
+     */
+    protected $customerService;
+
+    /**
      * @var \Generated\Shared\Transfer\ShipmentTransfer[]
      */
     protected $existingShipments = [];
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface $customerService
      */
-    public function __construct(CheckoutPageToCustomerClientInterface $customerClient)
-    {
+    public function __construct(
+        CheckoutPageToCustomerClientInterface $customerClient,
+        CheckoutPageToCustomerServiceInterface $customerService
+    ) {
         $this->customerClient = $customerClient;
+        $this->customerService = $customerService;
     }
 
     /**
@@ -190,6 +200,10 @@ class AddressSaver implements SaverInterface
             return $this->existingShipments[$addressHash];
         }
 
+        /**
+         * @todo Check that every shipping address for multiple shipment process should be default.
+         */
+        $shippingAddress->setIsDefaultShipping(true);
         $shipmentTransfer = $this->createShipment($shippingAddress);
         $this->existingShipments[$addressHash] = $shipmentTransfer;
 
@@ -220,7 +234,7 @@ class AddressSaver implements SaverInterface
      */
     protected function getAddressHash(AddressTransfer $addressTransfer): string
     {
-        return md5($addressTransfer->serialize());
+        return $this->customerService->getUniqueAddressKey($addressTransfer);
     }
 
     /**
