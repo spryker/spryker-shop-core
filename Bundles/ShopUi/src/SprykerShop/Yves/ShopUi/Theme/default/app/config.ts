@@ -2,33 +2,57 @@ declare const __NAME__: string;
 declare const __PRODUCTION__: boolean;
 import { LogLevel } from './logger';
 
-let config: Config;
+/* tslint:disable: no-redundant-jsdoc */
+/**
+ * Defines the application configuration.
+ *
+ * @module Config
+ */
+/* tslint:enable */
 
+let applicationConfig: Config;
+
+/**
+ * Defines the structure of the application configuration object.
+ *
+ * @remarks
+ * events.ready is deprecated; please use events.mount instead.
+ */
+/* tslint:disable: no-any */
 export interface Config {
-    readonly name: string
-    readonly isProduction: boolean
+    readonly name: string;
+    readonly isProduction: boolean;
 
     events: {
-        ready: string
+        mount: string
+        ready: string // deprecated
         bootstrap: string
         error: string
-    }
+    };
 
     log: {
         prefix: string
         level: LogLevel
-    },
+    };
 
-    extra?: any
+    extra?: any;
 }
+/* tslint:enable */
 
-export const defaultConfig = <Config>{
+/**
+ * Defines the default application configuration object.
+ *
+ * @remarks
+ * events.ready is deprecated; please use events.mount instead.
+ */
+export const defaultConfig: Config = {
     name: __NAME__,
     isProduction: __PRODUCTION__,
 
     events: {
-        ready: 'component-ready',
-        bootstrap: 'application-bootstrap-completed',
+        mount: 'components-mount',
+        ready: 'components-ready', // deprecated
+        bootstrap: 'application-bootstrap',
         error: 'application-error'
     },
 
@@ -36,12 +60,22 @@ export const defaultConfig = <Config>{
         prefix: __NAME__,
         level: __PRODUCTION__ ? LogLevel.ERRORS_ONLY : LogLevel.VERBOSE
     }
+};
+
+/**
+ * Sets a new configuration.
+ *
+ * @param config New configuration to set.
+ */
+export function set(config: Config): void {
+    applicationConfig = config;
 }
 
-export function set(newConfig: Config): void {
-    config = newConfig;
-}
-
+/**
+ * Gets the current configuration.
+ *
+ * @returns The current configuration.
+ */
 export function get(): Config {
-    return config;
+    return applicationConfig;
 }

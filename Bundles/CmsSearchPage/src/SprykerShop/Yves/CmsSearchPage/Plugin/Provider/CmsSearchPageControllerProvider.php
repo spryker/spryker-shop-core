@@ -27,7 +27,7 @@ class CmsSearchPageControllerProvider extends AbstractYvesControllerProvider
     /**
      * @return $this
      */
-    protected function addFulltextSearchRoute(): self
+    protected function addFulltextSearchRoute()
     {
         $this->createController('/{search}/cms', static::ROUTE_SEARCH, 'CmsSearchPage', 'CmsSearch', 'fulltextSearch')
             ->assert('search', $this->getAllowedLocalesPattern() . 'search|search')

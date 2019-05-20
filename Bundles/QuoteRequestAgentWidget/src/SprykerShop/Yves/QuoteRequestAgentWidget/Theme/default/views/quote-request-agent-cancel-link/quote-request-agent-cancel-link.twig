@@ -1,0 +1,14 @@
+{% extends template('widget') %}
+
+{% define data = {
+    quoteRequestReference: _widget.quoteRequest.quoteRequestReference,
+    isQuoteRequestCancelable: _widget.isQuoteRequestCancelable
+} %}
+
+{% block body %}
+    {% if data.isQuoteRequestCancelable %}
+        <a href="{{ path('agent/quote-request/cancel', { quoteRequestReference: (data.quoteRequestReference) }) }}">
+            {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
+        </a>
+    {% endif %}
+{% endblock %}

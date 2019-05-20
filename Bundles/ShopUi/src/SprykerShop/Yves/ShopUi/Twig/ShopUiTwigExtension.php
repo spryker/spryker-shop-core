@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\ShopUi\Twig;
 use Spryker\Shared\Twig\TwigExtension;
 use SprykerShop\Yves\ShopUi\Twig\Node\ShopUiDefineTwigNode;
 use SprykerShop\Yves\ShopUi\Twig\TokenParser\ShopUiDefineTwigTokenParser;
-use Twig_SimpleFunction;
+use Twig\TwigFunction;
 
 class ShopUiTwigExtension extends TwigExtension
 {
@@ -37,7 +37,7 @@ class ShopUiTwigExtension extends TwigExtension
     }
 
     /**
-     * @return \Twig_SimpleFilter[]
+     * @return \Twig\TwigFilter[]
      */
     public function getFilters(): array
     {
@@ -45,20 +45,21 @@ class ShopUiTwigExtension extends TwigExtension
     }
 
     /**
-     * @return \Twig_SimpleFunction[]
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions(): array
     {
         return [
-            new Twig_SimpleFunction(self::FUNCTION_GET_PUBLIC_FOLDER_PATH, function ($relativePath) {
+            new TwigFunction(self::FUNCTION_GET_PUBLIC_FOLDER_PATH, function ($relativePath) {
                 $publicFolderPath = $this->getPublicFolderPath();
+
                 return $publicFolderPath . $relativePath;
             }, [
                 $this,
                 self::FUNCTION_GET_PUBLIC_FOLDER_PATH,
             ]),
 
-            new Twig_SimpleFunction(self::FUNCTION_GET_QA_ATTRIBUTE, function (array $qaValues = []) {
+            new TwigFunction(self::FUNCTION_GET_QA_ATTRIBUTE, function (array $qaValues = []) {
                 return $this->getQaAttribute($qaValues);
             }, [
                 $this,
@@ -67,7 +68,7 @@ class ShopUiTwigExtension extends TwigExtension
                 'is_variadic' => true,
             ]),
 
-            new Twig_SimpleFunction(self::FUNCTION_GET_QA_ATTRIBUTE_SUB, function ($qaName, array $qaValues = []) {
+            new TwigFunction(self::FUNCTION_GET_QA_ATTRIBUTE_SUB, function ($qaName, array $qaValues = []) {
                 return $this->getQaAttribute($qaValues, $qaName);
             }, [
                 $this,
@@ -76,42 +77,42 @@ class ShopUiTwigExtension extends TwigExtension
                 'is_variadic' => true,
             ]),
 
-            new Twig_SimpleFunction(self::FUNCTION_GET_UI_MODEL_COMPONENT_TEMPLATE, function ($modelName) {
+            new TwigFunction(self::FUNCTION_GET_UI_MODEL_COMPONENT_TEMPLATE, function ($modelName) {
                 return $this->getModelTemplate($modelName);
             }, [
                 $this,
                 self::FUNCTION_GET_UI_MODEL_COMPONENT_TEMPLATE,
             ]),
 
-            new Twig_SimpleFunction(self::FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE) {
+            new TwigFunction(self::FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE) {
                 return $this->getComponentTemplate($componentModule, 'atoms', $componentName);
             }, [
                 $this,
                 self::FUNCTION_GET_UI_ATOM_COMPONENT_TEMPLATE,
             ]),
 
-            new Twig_SimpleFunction(self::FUNCTION_GET_UI_MOLECULE_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE) {
+            new TwigFunction(self::FUNCTION_GET_UI_MOLECULE_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE) {
                 return $this->getComponentTemplate($componentModule, 'molecules', $componentName);
             }, [
                 $this,
                 self::FUNCTION_GET_UI_MOLECULE_COMPONENT_TEMPLATE,
             ]),
 
-            new Twig_SimpleFunction(self::FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE) {
+            new TwigFunction(self::FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE, function ($componentName, $componentModule = self::DEFAULT_MODULE) {
                 return $this->getComponentTemplate($componentModule, 'organisms', $componentName);
             }, [
                 $this,
                 self::FUNCTION_GET_UI_ORGANISM_COMPONENT_TEMPLATE,
             ]),
 
-            new Twig_SimpleFunction(self::FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE, function ($templateName, $templateModule = self::DEFAULT_MODULE) {
+            new TwigFunction(self::FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE, function ($templateName, $templateModule = self::DEFAULT_MODULE) {
                 return $this->getTemplateTemplate($templateModule, $templateName);
             }, [
                 $this,
                 self::FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE,
             ]),
 
-            new Twig_SimpleFunction(self::FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE, function ($viewName, $viewModule = self::DEFAULT_MODULE) {
+            new TwigFunction(self::FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE, function ($viewName, $viewModule = self::DEFAULT_MODULE) {
                 return $this->getViewTemplate($viewModule, $viewName);
             }, [
                 $this,
@@ -121,7 +122,7 @@ class ShopUiTwigExtension extends TwigExtension
     }
 
     /**
-     * @return \Twig_TokenParser[]
+     * @return \Twig\TokenParser\AbstractTokenParser[]
      */
     public function getTokenParsers(): array
     {

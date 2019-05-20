@@ -88,8 +88,8 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
     protected function setSecurityAccessRules(Application &$app)
     {
         $customerSecuredPattern = $this->getFactory()
-            ->getCustomerAccessPermissionClient()
-            ->getCustomerSecuredPatternForUnauthenticatedCustomerAccess();
+            ->getCustomerClient()
+            ->getCustomerSecuredPattern();
 
         $app['security.access_rules'] = [
             [
@@ -163,6 +163,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
         if ($prefixLocale) {
             $logoutPath = '/' . $prefixLocale . $logoutPath;
         }
+
         return $logoutPath;
     }
 
@@ -177,6 +178,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
         if ($prefixLocale) {
             $loginPath = '/' . $prefixLocale . $loginPath;
         }
+
         return $loginPath;
     }
 
@@ -198,6 +200,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
         if ($prefixLocale . '/' !== $localePath) {
             return null;
         }
+
         return $prefixLocale;
     }
 
@@ -212,6 +215,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
         if ($selectedLanguage) {
             $logoutTarget .= $selectedLanguage;
         }
+
         return $logoutTarget;
     }
 }

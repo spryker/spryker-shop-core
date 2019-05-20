@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\ProductReplacementForWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
+
 class ProductReplacementForWidgetToProductStorageClientBridge implements ProductReplacementForWidgetToProductStorageClientInterface
 {
     /**
@@ -23,38 +25,14 @@ class ProductReplacementForWidgetToProductStorageClientBridge implements Product
     }
 
     /**
-     * @param array $data
+     * @param int $idProductConcrete
      * @param string $localeName
      * @param array $selectedAttributes
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = [])
+    public function findProductConcreteViewTransfer(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
     {
-        return $this->productStorageClient->mapProductStorageData($data, $localeName, $selectedAttributes);
-    }
-
-    /**
-     * @deprecated Use getProductConcreteStorageData($idProductConcrete, $localeName)
-     *
-     * @param int $idProductConcrete
-     * @param string $localeName
-     *
-     * @return array
-     */
-    public function getProductConcreteStorageData($idProductConcrete, $localeName)
-    {
-        return $this->productStorageClient->getProductConcreteStorageData($idProductConcrete, $localeName);
-    }
-
-    /**
-     * @param int $idProductConcrete
-     * @param string $localeName
-     *
-     * @return array|null
-     */
-    public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array
-    {
-        return $this->productStorageClient->findProductConcreteStorageData($idProductConcrete, $localeName);
+        return $this->productStorageClient->findProductConcreteViewTransfer($idProductConcrete, $localeName, $selectedAttributes);
     }
 }

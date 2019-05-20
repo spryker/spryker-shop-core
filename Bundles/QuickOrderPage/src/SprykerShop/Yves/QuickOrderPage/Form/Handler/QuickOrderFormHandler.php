@@ -78,7 +78,7 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
      */
     public function addToCart(QuickOrderTransfer $quickOrderTransfer): bool
     {
-        if (!$this->hasItems($quickOrderTransfer)) {
+        if (!$this->hasItems($quickOrderTransfer) || !$this->isValid($quickOrderTransfer)) {
             return false;
         }
 
@@ -92,7 +92,7 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
      */
     public function addToEmptyCart(QuickOrderTransfer $quickOrderTransfer): bool
     {
-        if (!$this->hasItems($quickOrderTransfer)) {
+        if (!$this->hasItems($quickOrderTransfer) || !$this->isValid($quickOrderTransfer)) {
             return false;
         }
 
@@ -102,13 +102,29 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrder
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
      * @return bool
      */
-    protected function hasItems(QuickOrderTransfer $quickOrder): bool
+    protected function hasItems(QuickOrderTransfer $quickOrderTransfer): bool
     {
-        return (bool)$quickOrder->getItems()->count();
+        return (bool)$quickOrderTransfer->getItems()->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
+     * @return bool
+     */
+    protected function isValid(QuickOrderTransfer $quickOrderTransfer): bool
+    {
+        foreach ($quickOrderTransfer->getItems() as $quickOrderItemTransfer) {
+            if ($quickOrderItemTransfer->getMessages()->count()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -120,6 +136,7 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
     {
         $itemTransfers = $this->mapToItemTransfers($quickOrderTransfer);
         foreach ($itemTransfers as $key => $itemTransfer) {
+            $itemTransfer->setGroupKeyPrefix(uniqid('', true));
             $itemTransfers[$key] = $this->expandItemTransfer($itemTransfer);
         }
 
@@ -152,16 +169,12 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
                 continue;
             }
 
-            if (!isset($itemTransfers[$sku])) {
-                $itemTransfers[$sku] = (new ItemTransfer())
-                    ->setSku($quickOrderItemTransfer->getSku())
-                    ->setQuantity(0);
-            }
-
-            $itemTransfers[$sku]->setQuantity($quantity + $itemTransfers[$sku]->getQuantity());
+            $itemTransfers[] = (new ItemTransfer())
+                ->setSku($sku)
+                ->setQuantity($quantity);
         }
 
-        return array_values($itemTransfers);
+        return $itemTransfers;
     }
 
     /**

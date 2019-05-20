@@ -1,0 +1,38 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quick-order-file-upload',
+} %}
+
+{% define data = {
+    uploadOrderForm: required
+} %}
+
+{% block body %}
+    <h5>{{ 'quick-order.file-upload-order.title' | trans }}</h5>
+    <p>{{ 'quick-order.file-upload-order.description' | trans }}</p>
+    {% include molecule('form') with {
+        data: {
+            form: data.uploadOrderForm,
+            enableStart: false,
+            enableEnd: false
+        }
+    } only %}
+
+    <button type="submit" name="uploadOrder" class="button button--expand button--success">
+        {{ 'quick-order.file-upload-order.button.upload' | trans }}
+    </button>
+
+    {% if data.fileTemplateExtensions %}
+        <div class="col col--sm-12">
+            {% for fileTemplateExt in data.fileTemplateExtensions %}
+                <p>
+                    <a href="{{ path('quick-order/download-template', {'file-type': fileTemplateExt}) }}">
+                    {{ 'quick-order.file-upload-order.file-template-download-message' | trans({'%template%': fileTemplateExt})}}
+                    </a>
+                </p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+{% endblock %}

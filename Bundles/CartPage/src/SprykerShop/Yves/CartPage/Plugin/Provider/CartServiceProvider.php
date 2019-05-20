@@ -12,6 +12,8 @@ use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Use `SprykerShop\Yves\CartPage\Plugin\Twig\CartTwigPlugin` instead.
+ *
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
  */
 class CartServiceProvider extends AbstractPlugin implements ServiceProviderInterface

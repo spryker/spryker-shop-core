@@ -54,7 +54,7 @@ class WebProfilerWidgetServiceProvider extends AbstractPlugin implements Service
     /**
      * @param \Silex\Application $app
      *
-     * @return void
+     * @return \Silex\ControllerCollection|null
      */
     public function connect(Application $app)
     {
