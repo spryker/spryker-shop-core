@@ -1,0 +1,31 @@
+{# @deprecated Use molecule('cart-code-clear-link', 'CartCodeWidget') instead. #}
+{% extends model('component') %}
+
+{% define config = {
+    name: 'voucher-clear-link',
+    tag: 'a'
+} %}
+
+{% define data = {
+    isQuoteEditable: false
+} %}
+
+{% define attributes = {
+    href: url('discount/voucher/clear')
+} %}
+
+{% block component %}
+    {% if data.isQuoteEditable %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% include atom('icon') with {
+        modifiers: ['smaller'],
+        data: {
+            name: 'times'
+        }
+    } only %}
+    {{ 'cart.vouchers.clear-all' | trans }}
+{% endblock %}

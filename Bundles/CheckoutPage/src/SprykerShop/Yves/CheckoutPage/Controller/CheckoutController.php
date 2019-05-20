@@ -237,6 +237,7 @@ class CheckoutController extends AbstractController
 
         if (!$this->can('PlaceOrderWithAmountUpToPermissionPlugin', $grandTotal)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
+
             return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUMMARY);
         }
 

@@ -1,0 +1,31 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-code-remove-link',
+    tag: 'a'
+} %}
+
+{% define data = {
+    code: required,
+    isQuoteEditable: false
+} %}
+
+{% define attributes = {
+    href: url('cart-code/code/remove', {'code': data.code})
+} %}
+
+{% block component %}
+    {% if data.isQuoteEditable %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% include atom('icon') with {
+        modifiers: ['smaller'],
+        data: {
+            name: 'times'
+        }
+    } only %}
+    {{ 'cart.voucher.remove' | trans }}
+{% endblock %}

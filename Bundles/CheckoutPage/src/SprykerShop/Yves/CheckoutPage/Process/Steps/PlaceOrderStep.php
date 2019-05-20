@@ -101,6 +101,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
 
         if (!$quoteTransfer->getCheckoutConfirmed()) {
             $this->escapeRoute = CheckoutPageControllerProvider::CHECKOUT_SUMMARY;
+
             return false;
         }
 

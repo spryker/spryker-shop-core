@@ -11,6 +11,8 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 use Symfony\Component\Form\FormView;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\CartCodeWidget\Widget\CartCodeFormWidget instead.
+ *
  * @method \SprykerShop\Yves\DiscountWidget\DiscountWidgetFactory getFactory()
  */
 class DiscountVoucherFormWidget extends AbstractWidget

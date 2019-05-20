@@ -169,6 +169,7 @@ class AgentPageSecurityServiceProvider extends AbstractPlugin implements Service
         if ($prefixLocale . '/' !== $localePath) {
             return null;
         }
+
         return $prefixLocale;
     }
 
