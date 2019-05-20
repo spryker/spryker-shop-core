@@ -1,6 +1,6 @@
 # ProductNewPage Module
 
-{{ADD DESCRIPTION HERE}}
+ProductNewPage module.
 
 ## Installation
 

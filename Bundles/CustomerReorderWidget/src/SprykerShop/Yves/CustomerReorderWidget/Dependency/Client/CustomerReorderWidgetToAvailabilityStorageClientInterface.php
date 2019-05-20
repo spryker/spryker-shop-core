@@ -15,4 +15,11 @@ interface CustomerReorderWidgetToAvailabilityStorageClientInterface
      * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer|null
      */
     public function getProductAvailabilityByIdProductAbstract($idProductAbstract);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
+     */
+    public function getAvailabilityAbstract($idProductAbstract);
 }

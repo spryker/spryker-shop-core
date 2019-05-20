@@ -1,6 +1,6 @@
 # CmsPage Module
 
-{{ADD DESCRIPTION HERE}}
+This module contains the cms page and its components.
 
 ## Installation
 

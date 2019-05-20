@@ -1,8 +1,15 @@
 import Component from 'ShopUi/models/component';
 
 export default class CustomerReorder extends Component {
-    readonly selections: HTMLInputElement[]
-    readonly trigger: HTMLElement
+    /**
+     * Elements enabling/disabling the trigger.
+     */
+    readonly selections: HTMLInputElement[];
+
+    /**
+     * Element enabled/disabled by selections changes.
+     */
+    readonly trigger: HTMLElement;
 
     constructor() {
         super();
@@ -21,13 +28,18 @@ export default class CustomerReorder extends Component {
     }
 
     protected onSelectionChange(event: Event): void {
-        const enable = this.selections.some((selection: HTMLInputElement) => selection.checked);
-        this.enableTrigger(enable);
+        const isEnabled = this.selections.some((selection: HTMLInputElement) => selection.checked);
+        this.enableTrigger(isEnabled);
     }
 
-    enableTrigger(enable: boolean): void {
-        if (enable) {
+    /**
+     * Sets or removes the disabled attribute from the trigger element.
+     * @param enable A boolean value for checking if the trigger is available for changing.
+     */
+    enableTrigger(isEnabled: boolean): void {
+        if (isEnabled) {
             this.trigger.removeAttribute('disabled');
+
             return;
         }
 

@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ProductBundleWidget\Plugin\MultiCartPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\MultiCartPage\Dependency\Plugin\ProductBundleItemCounterWidget\ProductBundleItemCounterWidgetPluginInterface;
 use SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleItemCounterWidget;
 
 /**
@@ -17,8 +16,10 @@ use SprykerShop\Yves\ProductBundleWidget\Widget\ProductBundleItemCounterWidget;
  *
  * @method \SprykerShop\Yves\ProductBundleWidget\ProductBundleWidgetFactory getFactory()
  */
-class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin implements ProductBundleItemCounterWidgetPluginInterface
+class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin
 {
+    public const NAME = 'ProductBundleItemCounterWidgetPlugin';
+
     /**
      * {@inheritdoc}
      *

@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\SharedCartPage\Controller;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\SharedCartPage\SharedCartPageFactory getFactory()
@@ -22,6 +23,24 @@ class ShareController extends AbstractController
      * @see \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_OWNER_ACCESS
      */
     protected const PERMISSION_GROUP_OWNER_ACCESS = 'OWNER_ACCESS';
+
+    /**
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        if ($customerTransfer === null || !$customerTransfer->getCompanyUserTransfer()) {
+            throw new NotFoundHttpException('Only company users are allowed to access this page');
+        }
+    }
 
     /**
      * @param int $idQuote
@@ -52,7 +71,7 @@ class ShareController extends AbstractController
             ->getMultiCartClient()
             ->findQuoteById($idQuote);
 
-        if ($quoteTransfer === null || !$this->isQuoteAccessOwner($quoteTransfer)) {
+        if (!$this->canShareQuote($quoteTransfer)) {
             return $this->redirectResponseInternal(static::URL_REDIRECT_MULTI_CART_PAGE);
         }
 
@@ -76,6 +95,32 @@ class ShareController extends AbstractController
             'sharedCartForm' => $sharedCartForm->createView(),
             'cart' => $quoteTransfer,
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function canShareQuote(?QuoteTransfer $quoteTransfer = null): bool
+    {
+        if (!$quoteTransfer || $this->isQuoteLocked($quoteTransfer)) {
+            return false;
+        }
+
+        return $this->isQuoteAccessOwner($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->getQuoteClient()
+            ->isQuoteLocked($quoteTransfer);
     }
 
     /**
