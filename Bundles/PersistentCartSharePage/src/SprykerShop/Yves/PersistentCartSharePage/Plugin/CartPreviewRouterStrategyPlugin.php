@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\PersistentCartSharePage\Plugin;
 
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Generated\Shared\Transfer\RouteTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
@@ -18,12 +19,12 @@ use SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareR
 class CartPreviewRouterStrategyPlugin extends AbstractPlugin implements ResourceShareRouterStrategyPluginInterface
 {
     /**
-     * @see \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig::SHARE_OPTION_PREVIEW
+     * @uses \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig::SHARE_OPTION_PREVIEW
      */
     protected const SHARE_OPTION_PREVIEW = 'PREVIEW';
 
     /**
-     * @see \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig::RESOURCE_TYPE_QUOTE
+     * @uses \Spryker\Shared\PersistentCartShare\PersistentCartShareConfig::RESOURCE_TYPE_QUOTE
      */
     protected const RESOURCE_TYPE_QUOTE = 'quote';
 
@@ -40,12 +41,15 @@ class CartPreviewRouterStrategyPlugin extends AbstractPlugin implements Resource
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return bool
      */
-    public function isApplicable(ResourceShareTransfer $resourceShareTransfer): bool
+    public function isApplicable(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
+        $resourceShareRequestTransfer->requireResourceShare();
+        $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
+
         if ($resourceShareTransfer->getResourceType() !== static::RESOURCE_TYPE_QUOTE) {
             return false;
         }

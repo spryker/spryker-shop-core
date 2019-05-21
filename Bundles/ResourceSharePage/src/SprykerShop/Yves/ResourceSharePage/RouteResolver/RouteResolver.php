@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ResourceSharePage\RouteResolver;
 
-use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\RouteTransfer;
 use SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToMessengerClientInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -37,22 +37,22 @@ class RouteResolver implements RouteResolverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return \Generated\Shared\Transfer\RouteTransfer
      */
-    public function resolveRoute(ResourceShareResponseTransfer $resourceShareResponseTransfer): RouteTransfer
+    public function resolveRoute(ResourceShareRequestTransfer $resourceShareRequestTransfer): RouteTransfer
     {
-        $resourceShareResponseTransfer->requireResourceShare();
+        $resourceShareRequestTransfer->requireResourceShare();
 
         foreach ($this->resourceShareRouterStrategyPlugins as $resourceShareRouterStrategyPlugin) {
-            if (!$resourceShareRouterStrategyPlugin->isApplicable($resourceShareResponseTransfer->getResourceShare())) {
+            if (!$resourceShareRouterStrategyPlugin->isApplicable($resourceShareRequestTransfer)) {
                 continue;
             }
 
-            return $resourceShareRouterStrategyPlugin->resolveRoute($resourceShareResponseTransfer->getResourceShare());
+            return $resourceShareRouterStrategyPlugin->resolveRoute($resourceShareRequestTransfer->getResourceShare());
         }
 
         $this->messengerClient->addErrorMessage(static::GLOSSARY_KEY_RESOURCE_SHARE_LINK_ERROR_NO_ROUTE);
