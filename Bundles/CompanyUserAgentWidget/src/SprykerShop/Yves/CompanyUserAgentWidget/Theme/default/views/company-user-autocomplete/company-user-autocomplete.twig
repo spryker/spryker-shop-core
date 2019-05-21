@@ -1,0 +1,27 @@
+{% extends template('widget') %}
+
+{% define data = {
+    companyUsers: companyUsers | default([]),
+    errors: errors | default([])
+} %}
+
+{% set hasErrors = data.errors | length > 0 %}
+{% set companyUsersFound = data.companyUsers | length > 0 %}
+
+{% block body %}
+    {% if hasErrors %}
+        {% for error in errors %}
+            {{ error }}
+        {% endfor %}
+    {% else %}
+        {% if companyUsersFound %}
+            {% include molecule('company-user-list', 'CompanyUserAgentWidget') with {
+                data: {
+                    companyUsers: data.companyUsers,
+                }
+            } only%}
+        {% else %}
+            {{ 'agent.autocomplete.no_results' | trans }}
+        {% endif %}
+    {% endif %}
+{% endblock %}

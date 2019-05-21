@@ -155,6 +155,10 @@ class QuoteApproveRequestWidget extends AbstractWidget
      */
     protected function isWidgetVisible(QuoteTransfer $quoteTransfer): bool
     {
+        if (!$quoteTransfer->getIdQuote()) {
+            return false;
+        }
+
         $customerTransfer = $this->findCurrentCustomer();
 
         if (!$customerTransfer || !$this->findCurrentCompanyUser()) {

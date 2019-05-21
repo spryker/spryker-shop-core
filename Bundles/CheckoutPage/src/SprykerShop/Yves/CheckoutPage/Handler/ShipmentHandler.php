@@ -12,8 +12,10 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
+use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
+use SprykerShop\Yves\CheckoutPage\Exception\NotAvailableShipmentMethodException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -53,7 +55,7 @@ class ShipmentHandler implements ShipmentHandlerInterface
     {
         $shipmentTransfer = $quoteTransfer->getShipment();
 
-        $shipmentMethodTransfer = $this->getShipmentMethodById($quoteTransfer);
+        $shipmentMethodTransfer = $this->getShipmentMethod($quoteTransfer);
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
         $shipmentExpenseTransfer = $this->createShippingExpenseTransfer($shipmentMethodTransfer, $quoteTransfer->getPriceMode());
@@ -70,10 +72,48 @@ class ShipmentHandler implements ShipmentHandlerInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function getShipmentMethodById(QuoteTransfer $quoteTransfer)
+    protected function getShipmentMethod(QuoteTransfer $quoteTransfer): ?ShipmentMethodTransfer
+    {
+        $selectedShipmentMethod = $quoteTransfer->getShipment()->getShipmentSelection();
+
+        if ($selectedShipmentMethod === CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT) {
+            return $this->getShipmentMethodNoShipment($quoteTransfer);
+        }
+
+        return $this->getShipmentMethodById($quoteTransfer, (int)$selectedShipmentMethod);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @throws \SprykerShop\Yves\CheckoutPage\Exception\NotAvailableShipmentMethodException
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     */
+    protected function getShipmentMethodNoShipment(QuoteTransfer $quoteTransfer): ShipmentMethodTransfer
+    {
+        $availableShipmentMethodsTransfer = $this->getAvailableShipmentMethods($quoteTransfer);
+        foreach ($availableShipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
+            if ($shipmentMethodTransfer->getName() === CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT) {
+                return $shipmentMethodTransfer;
+            }
+        }
+
+        throw new NotAvailableShipmentMethodException(sprintf(
+            'Shipment method "%s" is not available. Please make sure to create this shipment method before using it.',
+            CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT
+        ));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    protected function getShipmentMethodById(QuoteTransfer $quoteTransfer, int $idShipmentMethod): ?ShipmentMethodTransfer
     {
         $shipmentMethodsTransfer = $this->getAvailableShipmentMethods($quoteTransfer);
-        $idShipmentMethod = $quoteTransfer->getShipment()->getShipmentSelection();
 
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodsTransfer) {
             if ($shipmentMethodsTransfer->getIdShipmentMethod() === $idShipmentMethod) {

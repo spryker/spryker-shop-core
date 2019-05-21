@@ -38,6 +38,20 @@ class PostConditionChecker implements PostConditionCheckerInterface
      */
     public function check(AbstractTransfer $quoteTransfer): bool
     {
+        if ($this->hasOnlyGiftCardItems($quoteTransfer)) {
+            return true;
+        }
+
+        return $this->isShipmentSet($quoteTransfer);
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isShipmentSet(QuoteTransfer $quoteTransfer): bool
+    {
         if ($quoteTransfer->getItems()->count() === 0) {
             return false;
         }
@@ -67,10 +81,26 @@ class PostConditionChecker implements PostConditionCheckerInterface
             if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
                 && $expenseShipmentKey === $itemShipmentKey
             ) {
-                return true;
+                return $shipmentTransfer->getShipmentSelection() !== null;
             }
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function hasOnlyGiftCardItems(QuoteTransfer $quoteTransfer): bool
+    {
+        $onlyGiftCardItems = true;
+        foreach ($quoteTransfer->getItems() as $item) {
+            $isGiftCard = $item->getGiftCardMetadata() ? $item->getGiftCardMetadata()->getIsGiftCard() : false;
+            $onlyGiftCardItems &= $isGiftCard;
+        }
+
+        return (bool)$onlyGiftCardItems;
     }
 }

@@ -1,0 +1,26 @@
+{% extends template('page-layout-agent', 'AgentPage') %}
+
+{% define data = {
+    title: 'quote_request_page.quote_request' | trans,
+    activePage: 'quoteRequestAgent'
+} %}
+
+{% block title %}
+    <h3>{{ data.title }}</h3>
+{% endblock %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'agent.account.page_title' | trans,
+                    url: path('agent/overview'),
+                },
+                {
+                    label: 'quote_request_page.quote_request' | trans,
+                },
+            ]
+        }
+    } only %}
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'agent-navigation',
+    tag: 'nav'
+} %}
+
+{% define data = {
+    activePage: required
+} %}
+
+{%- macro isActive(page, activePage) -%}
+    {%- if page == activePage -%}menu__item--active{%- endif -%}
+{%- endmacro -%}
+
+{%- import _self as macros -%}
+
+{% block body %}
+    <ul class="menu">
+        <li class="menu__item {{macros.isActive('overview', data.activePage)}}">
+            <a href="{{ path('agent/overview') }}">{{ 'agent.account.overview' | trans }}</a>
+        </li>
+        {% include molecule('quote-request-menu-item', 'QuoteRequestAgentWidget') ignore missing with {
+            data: {
+                activePage: data.activePage
+            }
+        } only %}
+    </ul>
+{% endblock %}

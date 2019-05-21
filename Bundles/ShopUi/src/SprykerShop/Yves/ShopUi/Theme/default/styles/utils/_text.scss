@@ -27,6 +27,10 @@
         color: $setting-color-dark;
     }
 
+    .text-break {
+        word-break: break-word;
+    }
+
     @each $action, $setting-color-action in $setting-color-actions {
         @include util-text-action($action, $setting-color-action);
     }
