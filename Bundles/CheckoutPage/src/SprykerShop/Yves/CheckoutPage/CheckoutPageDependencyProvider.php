@@ -657,11 +657,11 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addShipmentService(Container $container): Container
     {
-        $container[static::SERVICE_SHIPMENT] = function (Container $container) {
+        $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
             return new CheckoutPageToShipmentServiceBridge(
                 $container->getLocator()->shipment()->service()
             );
-        };
+        });
 
         return $container;
     }
@@ -673,9 +673,9 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerService(Container $container): Container
     {
-        $container[static::SERVICE_CUSTOMER] = function (Container $container): CheckoutPageToCustomerServiceInterface {
+        $container->set(static::SERVICE_CUSTOMER, function (Container $container): CheckoutPageToCustomerServiceInterface {
             return new CheckoutPageToCustomerServiceBridge($container->getLocator()->customer()->service());
-        };
+        });
 
         return $container;
     }

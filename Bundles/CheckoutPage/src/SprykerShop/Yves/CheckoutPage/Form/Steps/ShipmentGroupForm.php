@@ -48,7 +48,7 @@ class ShipmentGroupForm extends AbstractType
      */
     protected function addShipmentMethods(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
             /**
              * @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
              */
@@ -67,7 +67,7 @@ class ShipmentGroupForm extends AbstractType
             }
         });
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
             /**
              * @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
              */

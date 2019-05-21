@@ -166,12 +166,23 @@ class AddressSaver implements SaverInterface
 
         foreach ($customerTransfer->getAddresses()->getAddresses() as $customerAddressTransfer) {
             if ($addressTransfer->getIdCustomerAddress() === $customerAddressTransfer->getIdCustomerAddress()) {
-                $addressTransfer->fromArray($customerAddressTransfer->toArray());
+                $this->mapCustomerAddressToAddressTransfer($addressTransfer, $customerAddressTransfer);
                 break;
             }
         }
 
         return $addressTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $customerAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function mapCustomerAddressToAddressTransfer(AddressTransfer $addressTransfer, AddressTransfer $customerAddressTransfer): AddressTransfer
+    {
+        return $addressTransfer->fromArray($customerAddressTransfer->toArray());
     }
 
     /**
@@ -200,10 +211,6 @@ class AddressSaver implements SaverInterface
             return $this->existingShipments[$addressHash];
         }
 
-        /**
-         * @todo Check that every shipping address for multiple shipment process should be default.
-         */
-        $shippingAddress->setIsDefaultShipping(true);
         $shipmentTransfer = $this->createShipment($shippingAddress);
         $this->existingShipments[$addressHash] = $shipmentTransfer;
 
