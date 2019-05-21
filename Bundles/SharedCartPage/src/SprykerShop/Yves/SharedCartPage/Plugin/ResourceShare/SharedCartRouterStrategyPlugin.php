@@ -14,14 +14,14 @@ use SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareR
 class SharedCartRouterStrategyPlugin implements ResourceShareRouterStrategyPluginInterface
 {
     /**
-     * @uses \SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider::ROUTE_MULTI_CART_INDEX
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
      */
-    protected const ROUTE_MULTI_CART_INDEX = 'multi-cart';
+    protected const ROUTE_CART = 'cart';
 
     /**
-     * @uses \Spryker\Shared\SharedCart\SharedCartConfig::QUOTE_RESOURCE_TYPE
+     * @uses \Spryker\Shared\SharedCart\SharedCartConfig::RESOURCE_TYPE_QUOTE
      */
-    protected const QUOTE_RESOURCE_TYPE = 'quote';
+    protected const RESOURCE_TYPE_QUOTE = 'quote';
 
     /**
      * @uses \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_READ_ONLY
@@ -47,7 +47,7 @@ class SharedCartRouterStrategyPlugin implements ResourceShareRouterStrategyPlugi
     public function isApplicable(ResourceShareTransfer $resourceShareTransfer): bool
     {
         $resourceShareTransfer->requireResourceType();
-        if ($resourceShareTransfer->getResourceType() !== static::QUOTE_RESOURCE_TYPE) {
+        if ($resourceShareTransfer->getResourceType() !== static::RESOURCE_TYPE_QUOTE) {
             return false;
         }
 
@@ -70,6 +70,6 @@ class SharedCartRouterStrategyPlugin implements ResourceShareRouterStrategyPlugi
     public function resolveRoute(ResourceShareTransfer $resourceShareTransfer): RouteTransfer
     {
         return (new RouteTransfer())
-            ->setRoute(static::ROUTE_MULTI_CART_INDEX);
+            ->setRoute(static::ROUTE_CART);
     }
 }
