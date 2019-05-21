@@ -4,11 +4,15 @@
     isVisible: _widget.isVisible
 } %}
 
-{% block body %}
+{% block template %}
     {% if data.isVisible %}
-        <a class="button button--expand button--success" href="{{ url('checkout-index') }}" {{qa('cart-go-to-checkout')}}>
-            {{ 'cart.checkout' | trans }}
-        </a>
+        {{ parent() }}
     {% endif %}
+{% endblock %}
+
+{% block body %}
+    <a class="button button--expand button--success" href="{{ url('checkout-index') }}" {{qa('cart-go-to-checkout')}}>
+        {{ 'cart.checkout' | trans }}
+    </a>
 {% endblock %}
 

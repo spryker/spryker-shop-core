@@ -21,6 +21,16 @@ class CheckoutPageConfig extends AbstractBundleConfig
     public const TEMPLATE_MULTI_SHIPMENT_SUMMARY_STEP = '@CheckoutPage/views/summary-multi-shipment/summary-multi-shipment.twig';
 
     /**
+     * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT
+     */
+    public const SHIPMENT_METHOD_NAME_NO_SHIPMENT = 'NoShipment';
+
+    /**
+     * @uses \Spryker\Shared\Nopayment\NopaymentConfig::PAYMENT_PROVIDER_NAME
+     */
+    public const PAYMENT_METHOD_NAME_NO_PAYMENT = 'Nopayment';
+
+    /**
      * @return bool
      */
     public function cleanCartAfterOrderCreation()

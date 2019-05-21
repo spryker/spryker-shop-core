@@ -7,9 +7,12 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
+use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
@@ -69,7 +72,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function requireInput(AbstractTransfer $quoteTransfer)
     {
-        return true;
+        return $quoteTransfer->getItems()->count() && $this->hasOnlyGiftCardItems($quoteTransfer) === false;
     }
 
     /**
@@ -80,6 +83,10 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
+        if (!$this->requireInput($quoteTransfer)) {
+            $quoteTransfer = $this->setDefaultNoShipmentMethod($quoteTransfer);
+        }
+
         $shipmentHandler = $this->shipmentPlugins->get(CheckoutPageDependencyProvider::PLUGIN_SHIPMENT_STEP_HANDLER);
         $quoteTransfer = $shipmentHandler->addToDataClass($request, $quoteTransfer);
 
@@ -94,6 +101,35 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
         return $this->stepResolver->resolvePostCondition()->check($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function hasOnlyGiftCardItems(QuoteTransfer $quoteTransfer): bool
+    {
+        $onlyGiftCardItems = true;
+        foreach ($quoteTransfer->getItems() as $item) {
+            $isGiftCard = $item->getGiftCardMetadata() ? $item->getGiftCardMetadata()->getIsGiftCard() : false;
+            $onlyGiftCardItems &= $isGiftCard;
+        }
+
+        return (bool)$onlyGiftCardItems;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setDefaultNoShipmentMethod(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $shipmentTransfer = (new ShipmentTransfer())
+            ->setShipmentSelection(CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT);
+
+        return $quoteTransfer->setShipment($shipmentTransfer);
     }
 
     /**

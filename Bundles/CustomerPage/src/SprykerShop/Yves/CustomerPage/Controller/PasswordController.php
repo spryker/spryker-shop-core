@@ -58,6 +58,7 @@ class PasswordController extends AbstractCustomerController
         $data = [
             'form' => $form->createView(),
         ];
+
         return $data;
     }
 
@@ -86,6 +87,7 @@ class PasswordController extends AbstractCustomerController
     {
         if ($this->isLoggedInCustomer()) {
             $this->addErrorMessage('customer.reset.password.error.already.loggedIn');
+
             return $this->redirectResponseInternal('home');
         }
 

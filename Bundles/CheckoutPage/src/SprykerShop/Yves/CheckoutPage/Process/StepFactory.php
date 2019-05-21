@@ -19,6 +19,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientInte
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPaymentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
@@ -188,6 +189,7 @@ class StepFactory extends AbstractFactory
     public function createPaymentStep()
     {
         return new PaymentStep(
+            $this->getPaymentClient(),
             $this->getPaymentMethodHandler(),
             CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
             HomePageControllerProvider::ROUTE_HOME,
@@ -330,6 +332,14 @@ class StepFactory extends AbstractFactory
     public function getGlossaryStorageClient(): CheckoutPageToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPaymentClientInterface
+     */
+    public function getPaymentClient(): CheckoutPageToPaymentClientInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_PAYMENT);
     }
 
     /**
