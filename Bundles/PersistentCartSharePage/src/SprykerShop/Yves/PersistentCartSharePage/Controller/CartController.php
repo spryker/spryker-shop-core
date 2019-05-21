@@ -61,6 +61,7 @@ class CartController extends AbstractController
             'cartItems' => $cartItems,
             'attributes' => [],
             'isQuoteValid' => false,
+            'isQuoteLocked' => false,
         ];
     }
 }
