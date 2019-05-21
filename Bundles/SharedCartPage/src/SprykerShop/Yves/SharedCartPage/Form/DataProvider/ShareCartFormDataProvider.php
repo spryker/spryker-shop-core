@@ -94,7 +94,7 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
     protected function getShareDetails(int $idQuote): ArrayObject
     {
         $quoteTransfer = $this->multiCartClient->findQuoteById($idQuote);
-        $shareDetailTransfers = $quoteTransfer->getShareDetails();
+        $shareDetailTransfers = $this->sharedCartClient->getShareDetailsByIdQuoteAction($quoteTransfer)->getShareDetails();
         $companyUserData = $this->getCustomerListData();
         $indexedSharedCompanyUsers = $this->indexExistingCompanyUsers($shareDetailTransfers);
         foreach ($companyUserData as $idCompanyUser => $companyUserName) {
