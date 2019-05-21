@@ -3,6 +3,7 @@
 {% define data = {
     cart: _view.cart,
     isQuoteEditable: _view.isQuoteEditable,
+    isQuoteLocked: _view.isQuoteLocked,
     cartItems: _view.cartItems,
     isQuoteValid: _view.isQuoteValid,
     attributes: _view.attributes,
@@ -103,6 +104,26 @@
 
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
+                    {% if data.isQuoteLocked %}
+                        <form method="POST" action="{{ path('cart/reset-lock') }}">
+                            <p>
+                                <strong>{{ 'cart_page.quote.label.locked_cart' | trans }}</strong>
+                            </p>
+
+                            {% if data.cart.quoteApprovals is not empty %}
+                                {{ 'persistent_cart.quote.label.locked_cart.by_quote_approval' | trans }}
+                            {% elseif data.cart.quoteRequestVersionReference %}
+                                {{ 'persistent_cart.quote.label.locked_cart.by_quote_request' | trans }}
+                            {% else %}
+                                {{ 'persistent_cart.quote.label.locked_cart' | trans }}
+                            {% endif %}
+
+                            <button type="submit" class="link">{{ 'persistent_cart.quote.button.reset_lock' | trans }}</button>
+                            {{ 'persistent_cart.quote.label.discarded_locked_cart' | trans }}
+                        </form>
+                        <hr />
+                    {% endif %}
+
                     {% block cartNote %}
                         {% widget 'CartNoteFormWidget' args [data.cart] only %}
                         {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartNoteFormWidget instead. #}
@@ -111,15 +132,20 @@
 
                     {% block cartActions %}
                         {% if (not is_granted('ROLE_USER') or data.isQuoteEditable) and can('SeePricePermissionPlugin') %}
-                            {% widget 'DiscountVoucherFormWidget' only %}
+                            {% widget 'CartCodeFormWidget' args [data.cart] only %}
                                 {% block body %}
                                     {{ parent() }}
-                                    <hr>
+                                    <hr />
                                 {% endblock %}
-                            {% elsewidget 'DiscountVoucherFormWidgetPlugin' only %} {# @deprecated Use DiscountVoucherFormWidget instead. #}
+                            {% elsewidget 'DiscountVoucherFormWidget' only %}
                                 {% block body %}
                                     {{ parent() }}
-                                    <hr>
+                                    <hr />
+                                {% endblock %}
+                            {% elsewidget 'DiscountVoucherFormWidgetPlugin' only %} {# @deprecated Use VoucherFormWidget instead. #}
+                                {% block body %}
+                                    {{ parent() }}
+                                    <hr />
                                 {% endblock %}
                             {% endwidget %}
                         {% endif %}

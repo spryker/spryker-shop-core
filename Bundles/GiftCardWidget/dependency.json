@@ -1,0 +1,6 @@
+{
+  "include": {
+    "ShopUi": "ShopUi provides basic frontend infrastructure.",
+    "CartCodeWidget": "GiftCardWidget components are depending on some CartCodeWidget components."
+  }
+}

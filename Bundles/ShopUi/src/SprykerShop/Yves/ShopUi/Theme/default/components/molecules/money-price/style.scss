@@ -1,0 +1,3 @@
+@include helper-import(molecule, money-price) {
+    @include shop-ui-money-price;
+}

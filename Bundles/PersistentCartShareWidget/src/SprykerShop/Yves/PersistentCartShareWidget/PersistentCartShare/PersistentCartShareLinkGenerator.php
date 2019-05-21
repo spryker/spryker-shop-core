@@ -100,7 +100,7 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
     }
 
     /**
-     * @return string[][]
+     * @return array
      */
     public function generateShareOptionGroups(): array
     {
