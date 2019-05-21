@@ -121,9 +121,6 @@
                 <label>
                     {{ 'Amount' | trans }}
                     <input id="user-amount"
-                           min="{{ data.productPackagingUnit.amountMin }}"
-                           max="{{ data.productPackagingUnit.amountMax }}"
-                           step="{{ data.productPackagingUnit.amountInterval }}"
                            class="input input--expand"
                            type="number"
                            value="{{ data.productPackagingUnit.defaultAmount }}"
