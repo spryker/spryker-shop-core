@@ -24,6 +24,10 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleC
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
+use SprykerShop\Yves\CheckoutPage\Model\Address\AddressDataChecker;
+use SprykerShop\Yves\CheckoutPage\Model\Address\AddressDataCheckerInterface;
+use SprykerShop\Yves\CheckoutPage\Model\Address\CustomerAddressExpander;
+use SprykerShop\Yves\CheckoutPage\Model\Address\CustomerAddressExpanderInterface;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\AddressSaver;
@@ -348,7 +352,11 @@ class StepFactory extends AbstractFactory
      */
     public function createAddressStepSaver(): SaverInterface
     {
-        return new AddressSaver($this->getCustomerClient(), $this->getCustomerService());
+        return new AddressSaver(
+            $this->getCustomerService(),
+            $this->getAddressDataChecker(),
+            $this->getCustomerAddressExpander()
+        );
     }
 
     /**
@@ -366,7 +374,7 @@ class StepFactory extends AbstractFactory
      */
     public function createAddressStepPostConditionChecker(): PostConditionCheckerInterface
     {
-        return new AddressStepPostConditionChecker();
+        return new AddressStepPostConditionChecker($this->getAddressDataChecker());
     }
 
     /**
@@ -376,7 +384,7 @@ class StepFactory extends AbstractFactory
      */
     public function createAddressStepPostConditionCheckerWithoutMultipleShipment(): PostConditionCheckerInterface
     {
-        return new AddressStepPostConditionCheckerWithoutMultiShipment();
+        return new AddressStepPostConditionCheckerWithoutMultiShipment($this->getAddressDataChecker());
     }
 
     /**
@@ -540,5 +548,21 @@ class StepFactory extends AbstractFactory
     public function getCustomerService(): CheckoutPageToCustomerServiceInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_CUSTOMER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Model\Address\CustomerAddressExpanderInterface
+     */
+    public function getCustomerAddressExpander(): CustomerAddressExpanderInterface
+    {
+        return new CustomerAddressExpander($this->getCustomerClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Model\Address\AddressDataCheckerInterface
+     */
+    public function getAddressDataChecker(): AddressDataCheckerInterface
+    {
+        return new AddressDataChecker();
     }
 }

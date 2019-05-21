@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 
-use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use SprykerShop\Yves\CheckoutPage\Model\Address\AddressDataCheckerInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
 
 /**
@@ -16,6 +16,19 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionChecker
  */
 class PostConditionCheckerWithoutMultiShipment implements PostConditionCheckerInterface
 {
+    /**
+     * @var \SprykerShop\Yves\CheckoutPage\Model\Address\AddressDataCheckerInterface
+     */
+    protected $addressDataChecker;
+
+    /**
+     * @param \SprykerShop\Yves\CheckoutPage\Model\Address\AddressDataCheckerInterface $addressDataChecker
+     */
+    public function __construct(AddressDataCheckerInterface $addressDataChecker)
+    {
+        $this->addressDataChecker = $addressDataChecker;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -27,29 +40,14 @@ class PostConditionCheckerWithoutMultiShipment implements PostConditionCheckerIn
             return false;
         }
 
-        $shippingIsEmpty = $this->isAddressEmpty($quoteTransfer->getShippingAddress());
-        $billingIsEmpty = $quoteTransfer->getBillingSameAsShipping() === false && $this->isAddressEmpty($quoteTransfer->getBillingAddress());
+        $shippingIsEmpty = $this->addressDataChecker->isAddressEmpty($quoteTransfer->getShippingAddress());
+        $billingIsEmpty = $quoteTransfer->getBillingSameAsShipping() === false
+            && $this->addressDataChecker->isAddressEmpty($quoteTransfer->getBillingAddress());
 
         if ($shippingIsEmpty || $billingIsEmpty) {
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
-     *
-     * @return bool
-     */
-    protected function isAddressEmpty(?AddressTransfer $addressTransfer = null): bool
-    {
-        if ($addressTransfer === null) {
-            return true;
-        }
-
-        return $addressTransfer->getIdCustomerAddress() === null
-            && empty($addressTransfer->getFirstName())
-            && empty($addressTransfer->getLastName());
     }
 }
