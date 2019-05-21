@@ -6,11 +6,24 @@
     <transfer name="Quote">
         <property name="isLocked" type="bool"/>
         <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="ShareDetail">
         <property name="idCompanyUser" type="int"/>
         <property name="customerName" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUserCriteriaFilter">
+        <property name="isActive" type="bool"/>
     </transfer>
 
 </transfers>

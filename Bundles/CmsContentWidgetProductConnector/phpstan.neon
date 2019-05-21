@@ -1,0 +1,3 @@
+parameters:
+    ignoreErrors:
+        - '#Return type \(.+ProductViewTransfer\) of method .+CmsProductContentWidgetPlugin::mapProductStorageTransfer\(\) should be compatible with return type \(.+StorageProductTransfer\) of method .+CmsProductContentWidgetPlugin::mapProductStorageTransfer\(\)#'

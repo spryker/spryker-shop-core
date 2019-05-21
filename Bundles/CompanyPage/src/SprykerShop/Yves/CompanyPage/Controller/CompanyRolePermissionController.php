@@ -127,6 +127,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
     {
         if ($responseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_SUCCESSFUL_PERMISSION_SAVED);
+
             return;
         }
 

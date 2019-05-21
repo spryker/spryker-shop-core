@@ -2,7 +2,7 @@ import Component from '../../../models/component';
 import AjaxProvider from '../ajax-provider/ajax-provider';
 
 export default class AjaxLoader extends Component {
-    protected providers: AjaxProvider[]
+    protected providers: AjaxProvider[];
 
     protected readyCallback(): void {
         this.providers = <AjaxProvider[]>Array.from(document.querySelectorAll(this.providerSelector));

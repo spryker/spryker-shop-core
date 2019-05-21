@@ -90,20 +90,42 @@
                     </li>
                 {% endblock %}
             </ul>
+
+            {% include molecule('gift-card-payment-summary', 'GiftCardWidget') ignore missing with {
+                class: 'list spacing-y',
+                data: {
+                    cart: data.cart,
+                    isQuoteEditable: data.isQuoteEditable
+                }
+            } only %}
         {% else %}
-            <ul class="list spacing-y">
-                <li>{{ 'customer.access.cannot_see_price' | trans }}</li>
-            </ul>
+            {{ 'customer.access.cannot_see_price' | trans }}
         {% endif %}
     {% endblock %}
 
     {% if data.isQuoteValid %}
-        <hr />
-        {% widget 'QuoteApproveRequestWidget' args [data.cart] %}{% endwidget %}
+        {% widget 'QuoteApproveRequestWidget' args [data.cart] %}
+            {% block body %}
+                <hr />{{ parent() }}
+            {% endblock %}
+        {% endwidget %}
     {% endif %}
 
     {% if canProceedToCheckout %}
-        <hr/>
-        {% widget 'ProceedToCheckoutButtonWidget' args [data.cart] %}{% endwidget %}
+        {% widget 'ProceedToCheckoutButtonWidget' args [data.cart] %}
+            {% block body %}
+                <hr />{{ parent() }}
+            {% endblock %}
+        {% endwidget %}
+    {% endif %}
+
+    {% if is_granted('ROLE_USER') %}
+        {% widget 'QuoteRequestCreateWidget' args [data.cart] only %}
+            {% block body %}
+                <hr />
+                {{ parent() }}
+            {% endblock %}
+        {% endwidget %}
+        {% widget 'QuoteRequestCartWidget' args [data.cart] only %}{% endwidget %}
     {% endif %}
 {% endblock %}

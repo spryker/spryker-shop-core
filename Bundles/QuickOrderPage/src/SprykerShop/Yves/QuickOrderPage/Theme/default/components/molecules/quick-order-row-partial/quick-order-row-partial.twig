@@ -55,9 +55,9 @@
 
         <div class="col col--sm-4 spacing spacing--inner">
             {% block price %}
-                {% include molecule('price') with {
+                {% include molecule('money-price') with {
                     data: {
-                        amount: data.price is empty ? null : data.price | money
+                        amount: data.price is empty ? null : data.price
                     }
                 } only %}
             {% endblock %}
@@ -66,7 +66,7 @@
 
     {% if data.messages is not empty %}
         {% for message in data.messages %}
-            <div class="{{ config.name }}__error spacing-bottom spacing-bottom--big">
+            <div class="{{ config.name }}__message {{ config.name }}__message--{{ message.type }} spacing-bottom spacing-bottom--big">
                 {{ message.value | trans(
                     message.parameters
                 ) }}

@@ -9,7 +9,7 @@
     "spryker-shop/shop-ui": "^1.6.0",
     "spryker/availability": "^5.4.0 || ^6.0.0",
     "spryker/availability-storage": "^1.0.0",
-    "spryker/cart": "^5.6.0",
+    "spryker/cart": "^5.9.0",
     "spryker/cart-variant": "^1.0.0",
     "spryker/kernel": "^3.24.0",
     "spryker/permission-extension": "^1.0.0",
@@ -21,6 +21,7 @@
   },
   "require-dev": {
     "spryker-shop/discount-widget": "*",
+    "spryker-shop/gift-card-widget": "*",
     "spryker-shop/multi-cart-widget": "*",
     "spryker-shop/product-option-widget": "*",
     "spryker-shop/product-packaging-unit-widget": "*",
@@ -32,6 +33,7 @@
   },
   "suggest": {
     "spryker-shop/discount-widget": "If you want to use components from module DiscountWidget or DiscountSummaryWidgetPlugin",
+    "spryker-shop/gift-card-widget": "If you want to use components from module GiftCardWidget.",
     "spryker-shop/multi-cart-widget": "If you want to use components from module MultiCartWidget or CartOperationsWidgetPlugin",
     "spryker-shop/product-option-widget": "If you want to use components from module ProductOptionWidget or CartItemProductOptionWidgetPlugin",
     "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or CartProductPackagingUnitWidgetPlugin",
