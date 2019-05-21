@@ -7,10 +7,8 @@
 
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
@@ -64,33 +62,13 @@ class AccessTokenController extends AbstractCustomerController
             throw new AccessDeniedHttpException();
         }
 
-        $this->authenticateCustomer($customerResponseTransfer->getCustomerTransfer());
-
-        return $this->redirectResponseInternal(static::ROUTE_CUSTOMER_OVERVIEW);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return void
-     */
-    protected function authenticateCustomer(CustomerTransfer $customerTransfer): void
-    {
+        $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
         $token = $this->getFactory()->createUsernamePasswordToken($customerTransfer);
-        $this->getSecurityContext()->setToken($token);
 
         $this->getFactory()
-            ->getCustomerClient()
-            ->setCustomer($customerTransfer);
-    }
+            ->createCustomerAuthenticator()
+            ->authenticateCustomer($customerTransfer, $token);
 
-    /**
-     * @return \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
-     */
-    protected function getSecurityContext(): TokenStorageInterface
-    {
-        $application = $this->getFactory()->getApplication();
-
-        return $application['security.token_storage'];
+        return $this->redirectResponseInternal(static::ROUTE_CUSTOMER_OVERVIEW);
     }
 }
