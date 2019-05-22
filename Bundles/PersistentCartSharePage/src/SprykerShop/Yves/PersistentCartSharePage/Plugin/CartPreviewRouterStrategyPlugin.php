@@ -19,7 +19,7 @@ use SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareR
 class CartPreviewRouterStrategyPlugin extends AbstractPlugin implements ResourceShareRouterStrategyPluginInterface
 {
     /**
-     * @uses \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig::SHARE_OPTION_PREVIEW
+     * @uses \Spryker\Shared\PersistentCartShare\PersistentCartShareConfig::SHARE_OPTION_PREVIEW
      */
     protected const SHARE_OPTION_PREVIEW = 'PREVIEW';
 
