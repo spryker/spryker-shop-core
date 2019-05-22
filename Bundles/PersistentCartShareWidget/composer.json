@@ -5,15 +5,15 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/persistent-cart-share": "^1.0.0",
+    "spryker-shop/shop-application": "^1.0.0",
     "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.0.0",
-    "spryker-shop/shop-application": "^1.0.0"
+    "spryker/persistent-cart-share": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/silex": "*"
+    "spryker/silex": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
@@ -21,11 +21,6 @@
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",
