@@ -5,21 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin;
+namespace SprykerShop\Yves\ProductQuantity\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 
-interface ProductViewTransferExpanderPluginInterface
+interface ProductQuantityToProductQuantityStorageClientInterface
 {
     /**
-     * Specification:
-     * - expand and returns ProductViewTransfer. Used in ShoppingListItemWidget::expandProductViewTransfer.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expand(ProductViewTransfer $productViewTransfer): ProductViewTransfer;
+    public function expandProductViewTransferWithQuantityRestrictions(
+        ProductViewTransfer $productViewTransfer
+    ): ProductViewTransfer;
 }
