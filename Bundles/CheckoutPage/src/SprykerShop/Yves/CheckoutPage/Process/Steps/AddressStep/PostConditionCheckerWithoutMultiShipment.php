@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
@@ -41,13 +42,23 @@ class PostConditionCheckerWithoutMultiShipment implements PostConditionCheckerIn
         }
 
         $shippingIsEmpty = $this->customerService->isAddressEmpty($quoteTransfer->getShippingAddress());
-        $billingIsEmpty = $quoteTransfer->getBillingSameAsShipping() === false
-            && $this->customerService->isAddressEmpty($quoteTransfer->getBillingAddress());
+        $billingIsEmpty = $this->isBillingAddressEmpty($quoteTransfer);
 
         if ($shippingIsEmpty || $billingIsEmpty) {
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isBillingAddressEmpty(QuoteTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->getBillingSameAsShipping() === false
+            && $this->customerService->isAddressEmpty($quoteTransfer->getBillingAddress());
     }
 }

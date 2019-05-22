@@ -121,13 +121,8 @@ class AddressSaver implements SaverInterface
     protected function setBillingAddress(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         if ($quoteTransfer->getBillingSameAsShipping() === true) {
-            if ($quoteTransfer->getShippingAddress() === null) {
-                $quoteTransfer->setBillingAddress(null);
-
-                return $quoteTransfer;
-            }
-
-            $quoteTransfer->setBillingAddress(clone $quoteTransfer->getShippingAddress());
+            $billingAddressTransfer = $this->copyShippingAddress($quoteTransfer->getShippingAddress());
+            $quoteTransfer->setBillingAddress($billingAddressTransfer);
 
             return $quoteTransfer;
         }
@@ -183,5 +178,19 @@ class AddressSaver implements SaverInterface
         $this->existingShipments[$addressHash] = $shipmentTransfer;
 
         return $shipmentTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function copyShippingAddress(AddressTransfer $addressTransfer): AddressTransfer
+    {
+        if ($addressTransfer === null) {
+            return null;
+        }
+
+        return (clone $addressTransfer);
     }
 }
