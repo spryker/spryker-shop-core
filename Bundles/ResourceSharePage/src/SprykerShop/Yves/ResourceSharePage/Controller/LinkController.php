@@ -19,9 +19,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class LinkController extends AbstractController
 {
-    protected const MESSAGE_TYPE_ERROR = 'error';
-    protected const MESSAGE_TYPE_SUCCESS = 'success';
-
     /**
      * @see \SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider::ROUTE_LOGIN
      */
@@ -60,16 +57,11 @@ class LinkController extends AbstractController
         $resourceShareResponseTransfer = $this->getFactory()->createResourceShareActivator()
             ->activateResourceShare($resourceShareUuid);
 
-        foreach ($resourceShareResponseTransfer->getMessages() as $messageTransfer) {
-            if ($messageTransfer->getType() === static::MESSAGE_TYPE_ERROR) {
+        if ($resourceShareResponseTransfer->getIsLoginRequired()) {
+            foreach ($resourceShareResponseTransfer->getMessages() as $messageTransfer) {
                 $this->addErrorMessage($messageTransfer->getValue());
-                continue;
             }
 
-            $this->addSuccessMessage($messageTransfer->getValue());
-        }
-
-        if ($resourceShareResponseTransfer->getIsLoginRequired()) {
             $routeTransfer = (new RouteTransfer())
                 ->setRoute(static::ROUTE_RESOURCE_SHARE_LINK)
                 ->setParameters([static::PARAM_RESOURCE_SHARE_UUID => $resourceShareUuid]);
@@ -83,7 +75,15 @@ class LinkController extends AbstractController
         }
 
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
+            foreach ($resourceShareResponseTransfer->getMessages() as $messageTransfer) {
+                $this->addErrorMessage($messageTransfer->getValue());
+            }
+
             throw new NotFoundHttpException();
+        }
+
+        foreach ($resourceShareResponseTransfer->getMessages() as $messageTransfer) {
+            $this->addSuccessMessage($messageTransfer->getValue());
         }
 
         $routeTransfer = $this->getFactory()->createRouteResolver()
