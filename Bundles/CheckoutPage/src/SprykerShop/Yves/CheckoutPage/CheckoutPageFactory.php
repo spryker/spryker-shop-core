@@ -21,6 +21,9 @@ use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
 use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
 
+/**
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
+ */
 class CheckoutPageFactory extends AbstractFactory
 {
     /**
@@ -163,7 +166,10 @@ class CheckoutPageFactory extends AbstractFactory
      */
     public function createShipmentHandler()
     {
-        return new ShipmentHandler($this->getShipmentClient(), $this->getPriceClient());
+        return new ShipmentHandler(
+            $this->getShipmentClient(),
+            $this->getPriceClient()
+        );
     }
 
     /**
