@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\SharedCartPage\Plugin\ResourceShare;
 
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Generated\Shared\Transfer\RouteTransfer;
 use SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareRouterStrategyPluginInterface;
@@ -40,12 +41,18 @@ class SharedCartRouterStrategyPlugin implements ResourceShareRouterStrategyPlugi
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return bool
      */
-    public function isApplicable(ResourceShareTransfer $resourceShareTransfer): bool
+    public function isApplicable(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
+        $customerTransfer = $resourceShareRequestTransfer->getCustomer();
+        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
+            return false;
+        }
+
+        $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
         $resourceShareTransfer->requireResourceType();
         if ($resourceShareTransfer->getResourceType() !== static::RESOURCE_TYPE_QUOTE) {
             return false;

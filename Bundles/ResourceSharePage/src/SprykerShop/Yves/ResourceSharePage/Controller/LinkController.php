@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ResourceSharePage\Controller;
 
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\RouteTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -82,7 +83,11 @@ class LinkController extends AbstractController
         }
 
         $routeTransfer = $this->getFactory()->createRouteResolver()
-            ->resolveRoute($resourceShareResponseTransfer);
+            ->resolveRoute(
+                (new ResourceShareRequestTransfer())
+                    ->setResourceShare($resourceShareResponseTransfer->getResourceShare())
+                    ->setCustomer($this->getFactory()->getCustomerClient()->getCustomer())
+            );
 
         return $this->redirectResponseInternal($routeTransfer->getRoute(), $routeTransfer->getParameters());
     }

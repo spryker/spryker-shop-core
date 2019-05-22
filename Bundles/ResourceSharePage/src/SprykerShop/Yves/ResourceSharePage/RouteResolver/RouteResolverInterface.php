@@ -7,15 +7,15 @@
 
 namespace SprykerShop\Yves\ResourceSharePage\RouteResolver;
 
-use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\RouteTransfer;
 
 interface RouteResolverInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RouteTransfer|null
      */
-    public function resolveRoute(ResourceShareResponseTransfer $resourceShareResponseTransfer): ?RouteTransfer;
+    public function resolveRoute(ResourceShareRequestTransfer $resourceShareRequestTransfer): ?RouteTransfer;
 }
