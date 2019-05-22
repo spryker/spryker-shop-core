@@ -8,21 +8,26 @@
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
+use SprykerShop\Yves\CheckoutPage\Model\Address\CustomerAddressExpanderInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\SaverInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class AddressSaver implements SaverInterface
 {
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface
      */
-    protected $customerClient;
+    protected $customerService;
+
+    /**
+     * @var \SprykerShop\Yves\CheckoutPage\Model\Address\CustomerAddressExpanderInterface
+     */
+    protected $customerAddressExpander;
 
     /**
      * @var \Generated\Shared\Transfer\ShipmentTransfer[]
@@ -30,11 +35,15 @@ class AddressSaver implements SaverInterface
     protected $existingShipments = [];
 
     /**
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface $customerService
+     * @param \SprykerShop\Yves\CheckoutPage\Model\Address\CustomerAddressExpanderInterface $customerAddressExpander
      */
-    public function __construct(CheckoutPageToCustomerClientInterface $customerClient)
-    {
-        $this->customerClient = $customerClient;
+    public function __construct(
+        CheckoutPageToCustomerServiceInterface $customerService,
+        CustomerAddressExpanderInterface $customerAddressExpander
+    ) {
+        $this->customerService = $customerService;
+        $this->customerAddressExpander = $customerAddressExpander;
     }
 
     /**
@@ -50,10 +59,10 @@ class AddressSaver implements SaverInterface
      */
     public function save(Request $request, AbstractTransfer $quoteTransfer): AbstractTransfer
     {
-        $this->setQuoteShippingAddress($quoteTransfer);
-        $this->setItemsShippingAddress($quoteTransfer);
-        $this->setBillingAddress($quoteTransfer);
-        $this->setQuoteShipment($quoteTransfer);
+        $quoteTransfer = $this->setQuoteShippingAddress($quoteTransfer);
+        $quoteTransfer = $this->setItemsShippingAddress($quoteTransfer);
+        $quoteTransfer = $this->setBillingAddress($quoteTransfer);
+        $quoteTransfer = $this->setQuoteShipment($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -61,33 +70,82 @@ class AddressSaver implements SaverInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function setQuoteShipment(QuoteTransfer $quoteTransfer): void
+    protected function setQuoteShippingAddress(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $quoteTransfer->setShipment(new ShipmentTransfer());
+        $addressTransfer = $quoteTransfer->getShippingAddress();
+
+        if ($addressTransfer === null) {
+            return $quoteTransfer;
+        }
+
+        $isDefaultShipping = $addressTransfer->getIsDefaultShipping();
+        $addressTransfer = $this->customerAddressExpander->expand($addressTransfer);
+        $addressTransfer->setIsDefaultShipping($isDefaultShipping);
+
+        return $quoteTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function hydrateCustomerAddress(AddressTransfer $addressTransfer, CustomerTransfer $customerTransfer): AddressTransfer
+    protected function setItemsShippingAddress(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if ($customerTransfer->getAddresses() === null) {
-            return $addressTransfer;
-        }
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $shipmentTransfer = $itemTransfer->getShipment();
 
-        foreach ($customerTransfer->getAddresses()->getAddresses() as $customerAddressTransfer) {
-            if ($addressTransfer->getIdCustomerAddress() === $customerAddressTransfer->getIdCustomerAddress()) {
-                $addressTransfer->fromArray($customerAddressTransfer->toArray());
-                break;
+            if ($shipmentTransfer === null) {
+                continue;
             }
+
+            $addressTransfer = $shipmentTransfer->getShippingAddress();
+            if ($quoteTransfer->getShippingAddress()->getIdCustomerAddress() === null ||
+                $this->customerService->isAddressEmpty($addressTransfer)) {
+                $addressTransfer = $quoteTransfer->getShippingAddress();
+            }
+
+            $itemTransfer->setShipment($this->getItemShipment($addressTransfer));
         }
 
-        return $addressTransfer;
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setBillingAddress(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        if ($quoteTransfer->getBillingSameAsShipping() === true) {
+            $billingAddressTransfer = $this->copyShippingAddress($quoteTransfer->getShippingAddress());
+            $quoteTransfer->setBillingAddress($billingAddressTransfer);
+
+            return $quoteTransfer;
+        }
+
+        $billingAddressTransfer = $quoteTransfer->getBillingAddress();
+        if ($billingAddressTransfer === null || $billingAddressTransfer->getIdCustomerAddress() === null) {
+            return $quoteTransfer;
+        }
+
+        $billingAddressTransfer = $this->customerAddressExpander->expand($billingAddressTransfer);
+        $quoteTransfer->setBillingAddress($billingAddressTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setQuoteShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $quoteTransfer->setShipment(new ShipmentTransfer());
     }
 
     /**
@@ -103,79 +161,14 @@ class AddressSaver implements SaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    protected function setItemsShippingAddress(QuoteTransfer $quoteTransfer): void
-    {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $shipmentTransfer = $itemTransfer->getShipment();
-
-            if ($shipmentTransfer === null) {
-                continue;
-            }
-
-            if ($quoteTransfer->getShippingAddress()->getIdCustomerAddress() === null ||
-                $this->validateAddress($shipmentTransfer->getShippingAddress())) {
-                $shipmentTransfer->setShippingAddress($quoteTransfer->getShippingAddress());
-            }
-
-            $itemTransfer->setShipment(
-                $this->getItemShipment($shipmentTransfer->getShippingAddress())
-            );
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    protected function setQuoteShippingAddress(QuoteTransfer $quoteTransfer): void
-    {
-        $addressTransfer = $quoteTransfer->getShippingAddress();
-
-        if ($addressTransfer !== null) {
-            $this->prepareShippingAddress($addressTransfer);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    protected function setBillingAddress(QuoteTransfer $quoteTransfer): void
-    {
-        $billingAddressTransfer = $quoteTransfer->getBillingAddress();
-
-        if ($quoteTransfer->getBillingSameAsShipping() === true) {
-            $quoteTransfer->setBillingAddress(clone $quoteTransfer->getShippingAddress());
-            $quoteTransfer->getBillingAddress()->setIsDefaultBilling(true);
-
-            return;
-        }
-
-        if ($billingAddressTransfer !== null && $billingAddressTransfer->getIdCustomerAddress() !== null) {
-            $billingAddressTransfer = $this->hydrateCustomerAddress(
-                $billingAddressTransfer,
-                $this->customerClient->getCustomer()
-            );
-
-            $quoteTransfer->setBillingAddress($billingAddressTransfer);
-        }
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\AddressTransfer $itemShippingAddress
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     protected function getItemShipment(AddressTransfer $itemShippingAddress): ShipmentTransfer
     {
-        $shippingAddress = $this->prepareShippingAddress($itemShippingAddress);
-        $addressHash = $this->getAddressHash($shippingAddress);
+        $shippingAddress = $this->customerAddressExpander->expand($itemShippingAddress);
+        $addressHash = $this->customerService->getUniqueAddressKey($shippingAddress);
 
         if (isset($this->existingShipments[$addressHash])) {
             return $this->existingShipments[$addressHash];
@@ -188,50 +181,16 @@ class AddressSaver implements SaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $shippingAddress
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function prepareShippingAddress(AddressTransfer $shippingAddress): AddressTransfer
-    {
-        if ($shippingAddress->getIdCustomerAddress() !== null) {
-            $shippingAddress = $this->hydrateCustomerAddress(
-                $shippingAddress,
-                $this->customerClient->getCustomer()
-            );
-        }
-
-        $shippingAddress->setIsDefaultShipping(true);
-
-        return $shippingAddress;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return string
-     */
-    protected function getAddressHash(AddressTransfer $addressTransfer): string
-    {
-        return md5($addressTransfer->serialize());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
-     *
-     * @return bool
-     */
-    protected function validateAddress(?AddressTransfer $addressTransfer = null): bool
+    protected function copyShippingAddress(AddressTransfer $addressTransfer): AddressTransfer
     {
         if ($addressTransfer === null) {
-            return true;
+            return null;
         }
 
-        $hasNoName = empty($addressTransfer->getFirstName()) && empty($addressTransfer->getLastName());
-        if ($addressTransfer->getIdCustomerAddress() === null && $hasNoName) {
-            return true;
-        }
-
-        return false;
+        return (clone $addressTransfer);
     }
 }

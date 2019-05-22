@@ -24,6 +24,8 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientBri
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientBridge;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceBridge;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceBridge;
 use SprykerShop\Yves\CheckoutPage\Plugin\CheckoutBreadcrumbPlugin;
@@ -50,6 +52,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
+    public const SERVICE_CUSTOMER = 'SERVICE_CUSTOMER';
 
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGIN_CUSTOMER_STEP_HANDLER = 'PLUGIN_CUSTOMER_STEP_HANDLER';
@@ -115,6 +118,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addAddressStepFormDataProvider($container);
         $container = $this->addGlossaryStorageClient($container);
         $container = $this->addShipmentService($container);
+        $container = $this->addCustomerService($container);
 
         return $container;
     }
@@ -653,11 +657,25 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addShipmentService(Container $container): Container
     {
-        $container[static::SERVICE_SHIPMENT] = function (Container $container) {
+        $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
             return new CheckoutPageToShipmentServiceBridge(
                 $container->getLocator()->shipment()->service()
             );
-        };
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCustomerService(Container $container): Container
+    {
+        $container->set(static::SERVICE_CUSTOMER, function (Container $container): CheckoutPageToCustomerServiceInterface {
+            return new CheckoutPageToCustomerServiceBridge($container->getLocator()->customer()->service());
+        });
 
         return $container;
     }

@@ -7,8 +7,9 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 
-use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
 
 /**
@@ -16,6 +17,19 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionChecker
  */
 class PostConditionCheckerWithoutMultiShipment implements PostConditionCheckerInterface
 {
+    /**
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface
+     */
+    protected $customerService;
+
+    /**
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface $customerService
+     */
+    public function __construct(CheckoutPageToCustomerServiceInterface $customerService)
+    {
+        $this->customerService = $customerService;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -27,8 +41,8 @@ class PostConditionCheckerWithoutMultiShipment implements PostConditionCheckerIn
             return false;
         }
 
-        $shippingIsEmpty = $this->isAddressEmpty($quoteTransfer->getShippingAddress());
-        $billingIsEmpty = $quoteTransfer->getBillingSameAsShipping() === false && $this->isAddressEmpty($quoteTransfer->getBillingAddress());
+        $shippingIsEmpty = $this->customerService->isAddressEmpty($quoteTransfer->getShippingAddress());
+        $billingIsEmpty = $this->isBillingAddressEmpty($quoteTransfer);
 
         if ($shippingIsEmpty || $billingIsEmpty) {
             return false;
@@ -38,18 +52,13 @@ class PostConditionCheckerWithoutMultiShipment implements PostConditionCheckerIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function isAddressEmpty(?AddressTransfer $addressTransfer = null): bool
+    public function isBillingAddressEmpty(QuoteTransfer $quoteTransfer): bool
     {
-        if ($addressTransfer === null) {
-            return true;
-        }
-
-        return $addressTransfer->getIdCustomerAddress() === null
-            && empty($addressTransfer->getFirstName())
-            && empty($addressTransfer->getLastName());
+        return $quoteTransfer->getBillingSameAsShipping() === false
+            && $this->customerService->isAddressEmpty($quoteTransfer->getBillingAddress());
     }
 }
