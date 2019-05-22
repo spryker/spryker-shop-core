@@ -33,4 +33,14 @@ class CheckoutPageToCustomerServiceBridge implements CheckoutPageToCustomerServi
     {
         return $this->customerService->getUniqueAddressKey($addressTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
+     *
+     * @return bool
+     */
+    public function isAddressEmpty(?AddressTransfer $addressTransfer = null): bool
+    {
+        return $this->customerService->isAddressEmpty($addressTransfer);
+    }
 }

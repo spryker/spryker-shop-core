@@ -8,23 +8,23 @@
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use SprykerShop\Yves\CheckoutPage\Model\Address\AddressDataCheckerInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
 use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressForm;
 
 class PostConditionChecker implements PostConditionCheckerInterface
 {
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\Model\Address\AddressDataCheckerInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface
      */
-    protected $addressDataChecker;
+    protected $customerService;
 
     /**
-     * @param \SprykerShop\Yves\CheckoutPage\Model\Address\AddressDataCheckerInterface $addressDataChecker
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface $customerService
      */
-    public function __construct(AddressDataCheckerInterface $addressDataChecker)
+    public function __construct(CheckoutPageToCustomerServiceInterface $customerService)
     {
-        $this->addressDataChecker = $addressDataChecker;
+        $this->customerService = $customerService;
     }
 
     /**
@@ -48,13 +48,13 @@ class PostConditionChecker implements PostConditionCheckerInterface
         }
 
         $billingIsEmpty = $quoteTransfer->getBillingSameAsShipping() === false &&
-            $this->addressDataChecker->isAddressEmpty($quoteTransfer->getBillingAddress());
+            $this->customerService->isAddressEmpty($quoteTransfer->getBillingAddress());
 
         if ($billingIsEmpty) {
             return false;
         }
 
-        if ($this->addressDataChecker->isAddressEmpty($quoteTransfer->getShippingAddress()) && $isSplitDelivery === false) {
+        if ($this->customerService->isAddressEmpty($quoteTransfer->getShippingAddress()) && $isSplitDelivery === false) {
             return false;
         }
 
@@ -80,7 +80,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() === null
-                || $this->addressDataChecker->isAddressEmpty($itemTransfer->getShipment()->getShippingAddress())
+                || $this->customerService->isAddressEmpty($itemTransfer->getShipment()->getShippingAddress())
             ) {
                 return true;
             }

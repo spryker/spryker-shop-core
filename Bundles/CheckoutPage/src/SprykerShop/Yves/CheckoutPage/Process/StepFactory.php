@@ -24,8 +24,6 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleC
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
-use SprykerShop\Yves\CheckoutPage\Model\Address\AddressDataChecker;
-use SprykerShop\Yves\CheckoutPage\Model\Address\AddressDataCheckerInterface;
 use SprykerShop\Yves\CheckoutPage\Model\Address\CustomerAddressExpander;
 use SprykerShop\Yves\CheckoutPage\Model\Address\CustomerAddressExpanderInterface;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
@@ -354,7 +352,6 @@ class StepFactory extends AbstractFactory
     {
         return new AddressSaver(
             $this->getCustomerService(),
-            $this->getAddressDataChecker(),
             $this->getCustomerAddressExpander()
         );
     }
@@ -374,7 +371,7 @@ class StepFactory extends AbstractFactory
      */
     public function createAddressStepPostConditionChecker(): PostConditionCheckerInterface
     {
-        return new AddressStepPostConditionChecker($this->getAddressDataChecker());
+        return new AddressStepPostConditionChecker($this->getCustomerService());
     }
 
     /**
@@ -384,7 +381,7 @@ class StepFactory extends AbstractFactory
      */
     public function createAddressStepPostConditionCheckerWithoutMultipleShipment(): PostConditionCheckerInterface
     {
-        return new AddressStepPostConditionCheckerWithoutMultiShipment($this->getAddressDataChecker());
+        return new AddressStepPostConditionCheckerWithoutMultiShipment($this->getCustomerService());
     }
 
     /**
@@ -556,13 +553,5 @@ class StepFactory extends AbstractFactory
     public function getCustomerAddressExpander(): CustomerAddressExpanderInterface
     {
         return new CustomerAddressExpander($this->getCustomerClient());
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CheckoutPage\Model\Address\AddressDataCheckerInterface
-     */
-    public function getAddressDataChecker(): AddressDataCheckerInterface
-    {
-        return new AddressDataChecker();
     }
 }

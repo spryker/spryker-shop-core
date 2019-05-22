@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
-use SprykerShop\Yves\CheckoutPage\Model\Address\AddressDataCheckerInterface;
 use SprykerShop\Yves\CheckoutPage\Model\Address\CustomerAddressExpanderInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\SaverInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,11 +23,6 @@ class AddressSaver implements SaverInterface
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface
      */
     protected $customerService;
-
-    /**
-     * @var \SprykerShop\Yves\CheckoutPage\Model\Address\AddressDataCheckerInterface
-     */
-    protected $addressDataChecker;
 
     /**
      * @var \SprykerShop\Yves\CheckoutPage\Model\Address\CustomerAddressExpanderInterface
@@ -42,16 +36,13 @@ class AddressSaver implements SaverInterface
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface $customerService
-     * @param \SprykerShop\Yves\CheckoutPage\Model\Address\AddressDataCheckerInterface $addressDataChecker
      * @param \SprykerShop\Yves\CheckoutPage\Model\Address\CustomerAddressExpanderInterface $customerAddressExpander
      */
     public function __construct(
         CheckoutPageToCustomerServiceInterface $customerService,
-        AddressDataCheckerInterface $addressDataChecker,
         CustomerAddressExpanderInterface $customerAddressExpander
     ) {
         $this->customerService = $customerService;
-        $this->addressDataChecker = $addressDataChecker;
         $this->customerAddressExpander = $customerAddressExpander;
     }
 
@@ -112,7 +103,7 @@ class AddressSaver implements SaverInterface
 
             $addressTransfer = $shipmentTransfer->getShippingAddress();
             if ($quoteTransfer->getShippingAddress()->getIdCustomerAddress() === null ||
-                $this->addressDataChecker->isAddressEmpty($addressTransfer)) {
+                $this->customerService->isAddressEmpty($addressTransfer)) {
                 $addressTransfer = $quoteTransfer->getShippingAddress();
             }
 
@@ -129,26 +120,25 @@ class AddressSaver implements SaverInterface
      */
     protected function setBillingAddress(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if ($quoteTransfer->getBillingSameAsShipping() !== true) {
-            $billingAddressTransfer = $quoteTransfer->getBillingAddress();
-            if ($billingAddressTransfer === null || $billingAddressTransfer->getIdCustomerAddress() === null) {
+        if ($quoteTransfer->getBillingSameAsShipping() === true) {
+            if ($quoteTransfer->getShippingAddress() === null) {
+                $quoteTransfer->setBillingAddress(null);
+
                 return $quoteTransfer;
             }
 
-            $billingAddressTransfer = $this->customerAddressExpander->expand($billingAddressTransfer);
-            $quoteTransfer->setBillingAddress($billingAddressTransfer);
+            $quoteTransfer->setBillingAddress(clone $quoteTransfer->getShippingAddress());
 
             return $quoteTransfer;
         }
 
-        if ($quoteTransfer->getShippingAddress() === null) {
-            $quoteTransfer->setBillingAddress(null);
-
+        $billingAddressTransfer = $quoteTransfer->getBillingAddress();
+        if ($billingAddressTransfer === null || $billingAddressTransfer->getIdCustomerAddress() === null) {
             return $quoteTransfer;
         }
 
-        $quoteTransfer->setBillingAddress(clone $quoteTransfer->getShippingAddress());
-        $quoteTransfer->getBillingAddress()->setIsDefaultBilling(true);
+        $billingAddressTransfer = $this->customerAddressExpander->expand($billingAddressTransfer);
+        $quoteTransfer->setBillingAddress($billingAddressTransfer);
 
         return $quoteTransfer;
     }

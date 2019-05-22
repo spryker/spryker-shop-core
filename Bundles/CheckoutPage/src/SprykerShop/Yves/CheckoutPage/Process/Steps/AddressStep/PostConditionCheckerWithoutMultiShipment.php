@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use SprykerShop\Yves\CheckoutPage\Model\Address\AddressDataCheckerInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
 
 /**
@@ -17,16 +17,16 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionChecker
 class PostConditionCheckerWithoutMultiShipment implements PostConditionCheckerInterface
 {
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\Model\Address\AddressDataCheckerInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface
      */
-    protected $addressDataChecker;
+    protected $customerService;
 
     /**
-     * @param \SprykerShop\Yves\CheckoutPage\Model\Address\AddressDataCheckerInterface $addressDataChecker
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface $customerService
      */
-    public function __construct(AddressDataCheckerInterface $addressDataChecker)
+    public function __construct(CheckoutPageToCustomerServiceInterface $customerService)
     {
-        $this->addressDataChecker = $addressDataChecker;
+        $this->customerService = $customerService;
     }
 
     /**
@@ -40,9 +40,9 @@ class PostConditionCheckerWithoutMultiShipment implements PostConditionCheckerIn
             return false;
         }
 
-        $shippingIsEmpty = $this->addressDataChecker->isAddressEmpty($quoteTransfer->getShippingAddress());
+        $shippingIsEmpty = $this->customerService->isAddressEmpty($quoteTransfer->getShippingAddress());
         $billingIsEmpty = $quoteTransfer->getBillingSameAsShipping() === false
-            && $this->addressDataChecker->isAddressEmpty($quoteTransfer->getBillingAddress());
+            && $this->customerService->isAddressEmpty($quoteTransfer->getBillingAddress());
 
         if ($shippingIsEmpty || $billingIsEmpty) {
             return false;
