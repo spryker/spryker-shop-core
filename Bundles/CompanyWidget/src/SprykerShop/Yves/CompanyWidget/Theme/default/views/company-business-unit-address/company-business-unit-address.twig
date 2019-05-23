@@ -70,7 +70,7 @@
             {{ parent() }}
         {% endblock %}
         {% block optionsGroup %}
-            <option value="">{{ 'page.checkout.address.address_select' | trans }}</option>
+            <option value="">{{ 'company.account.add_new_address' | trans }}</option>
 
             {% if embed.customerAddresses is not empty %}
                 <optgroup label="{{ 'page.checkout.address.option_group.customer' | trans }}">

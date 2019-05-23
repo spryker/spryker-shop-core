@@ -34,12 +34,10 @@
         {% block fields %}
             {% set existingShippingAddresses = data.form.shippingAddress.id_customer_address is defined %}
             {% set hasShippingAddresses = data.form.shippingAddress.id_customer_address is defined %}
-            {% set hideShippingAddressForm = data.form.shippingAddress.id_customer_address is defined %}
             {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', embed.forms.shipping.vars.data]) %}
 
             {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
                 {% set hasShippingAddresses = true %}
-                {% set hideShippingAddressForm = false %}
             {% endif %}
 
             <div class="grid col col--sm-12 js-form-handler__shippingAddress">
@@ -71,7 +69,7 @@
                 {% endif %}
 
                 {% embed molecule('form') with {
-                    class: 'js-address__shipping' ~ (hideShippingAddressForm ? ' is-hidden ' : ''),
+                    class: 'is-hidden js-address__shipping',
                     data: {
                         form: embed.forms.shipping,
                         enableStart: false,
@@ -152,11 +150,9 @@
                     {% block fields %}
                         {% set existingBillingAddresses = data.form.id_customer_address is defined %}
                         {% set hasBillingAddresses = data.form.id_customer_address is defined %}
-                        {% set hideBillingAddressForm = data.form.id_customer_address is defined %}
                         {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['billingAddress', data.form.vars.data]) %}
                         {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
                             {% set hasBillingAddresses = true %}
-                            {% set hideBillingAddressForm = false %}
                         {% endif %}
 
                         {% if hasBillingAddresses %}
@@ -181,7 +177,7 @@
                             </div>
                         {% endif %}
 
-                        <div class="js-address__billing {{ hideBillingAddressForm ? ' is-hidden ' : '' }}">
+                        <div class="is-hidden js-address__billing">
                             {{parent()}}
                         </div>
                     {% endblock %}
