@@ -82,6 +82,10 @@ class LinkController extends AbstractController
             throw new NotFoundHttpException();
         }
 
+        foreach ($resourceShareResponseTransfer->getMessages() as $messageTransfer) {
+            $this->addSuccessMessage($messageTransfer->getValue());
+        }
+
         $routeTransfer = $this->getFactory()->createRouteResolver()
             ->resolveRoute(
                 (new ResourceShareRequestTransfer())
