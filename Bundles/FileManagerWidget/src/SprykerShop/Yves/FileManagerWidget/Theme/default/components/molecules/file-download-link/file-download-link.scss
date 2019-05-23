@@ -1,30 +1,49 @@
 @mixin file-download-link($name: '.file-download-link') {
     #{$name} {
-        a {
+        &--icon {
+            width: 8.5rem;
+        }
+
+        &__link {
+            &--icon {
+                display: block;
+                font-size: map-get($setting-font-size, 'small');
+                color: $setting-color-darker;
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+
+        &__icon {
             display: block;
-            font-size: 14px;
-            float: left;
-            margin: 10px;
+            padding: 2rem 0;
+            margin-bottom: 0.25rem;
+            background-color: helper-color-light(map-get($setting-color-actions, 'alert'), 57);
+            color: helper-color-light(map-get($setting-color-actions, 'alert'), 20);
             text-align: center;
         }
 
-        span.file-download-icon {
-            display: block;
-            padding: 50px;
-            background: #fff7f5;
-            color: #f60c5e;
+        &__name {
+            display: inline-block;
+            vertical-align: middle;
+
+            &--icon {
+                max-width: 6rem;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
         }
 
-        span.file-download-name {
-            display: block;
-            max-width: calc(23em * 0.5);
-            overflow: hidden;
-            color: #899298!important;
+        &__extension {
+            vertical-align: middle;
         }
 
-        span.file-download-size {
-            color: #aeb4b8!important;
-            font-size: 12px!important;
+        &__size {
+            display: block;
+            opacity: 0.5;
         }
 
         @content;

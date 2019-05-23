@@ -7,13 +7,35 @@
 {% define data = {
     idFile: required,
     fileName: required,
-    fileUrl: fileUrl | default('')
+    fileUrl: fileUrl | default(''),
+    fileIcon: null,
+    fileSize: null
 } %}
 
 {% block body %}
     {% set fileUrl = data.fileUrl is empty ? path('files/download', {'id-file': data.idFile}) %}
 
-    <a href="{{ fileUrl }}">
-        {% block file_content %}{{ data.fileName }}{% endblock %}
+    <a class="{{ config.name }}__link {% if data.fileIcon %}{{ config.name }}__link--icon{% endif %}" href="{{ fileUrl }}">
+        {% if data.fileIcon %}
+            <span class="{{ config.name }}__icon">
+                {% include atom('icon') with {
+                    modifiers: ['bigger'],
+                    data: {
+                        name: data.fileIcon
+                    }
+                } only %}
+            </span>
+
+            {% set splittedFileName = data.fileName | split('.') %}
+
+            <span class="{{ config.name }}__name {{ config.name }}__name--icon">{{ splittedFileName[0] }}</span>
+            <span class="{{ config.name }}__extension">.{{ splittedFileName[1] }}</span>
+        {% else %}
+            <span class="{{ config.name }}__name">{{ data.fileName }}</span>
+        {% endif %}
+
+        {% if data.fileIcon %}
+            <span class="{{ config.name }}__size">{{ data.fileSize }}</span>
+        {% endif %}
     </a>
 {% endblock %}

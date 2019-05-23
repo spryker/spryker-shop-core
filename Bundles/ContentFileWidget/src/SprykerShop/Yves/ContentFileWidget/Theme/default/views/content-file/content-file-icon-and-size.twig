@@ -3,27 +3,19 @@
 } %}
 
 {% block content %}
-    <div class="file-download-container">
+    <ul class="list list--inline">
         {% for fileView in data.fileViewCollection %}
-            {% embed molecule('file-download-link', 'FileManagerWidget') with {
-                data: {
-                    idFile: fileView.fkFile,
-                    fileName: fileView.fileName
-                }
-            } %}
-                {% block file_content %}
-                    <span class="file-download-icon">
-                        {% include atom('icon') with {
-                            modifiers: ['bigger'],
-                            data: {
-                                name: fileView.iconName
-                            }
-                        } only %}
-                    </span>
-                    <span class="file-download-name">{{ fileView.fileName }}</span>
-                    <span class="file-download-size">{{ fileView.displaySize }}</span>
-                {% endblock %}
-            {% endembed %}
+            <li class="list__item">
+                {% include molecule('file-download-link', 'FileManagerWidget') with {
+                    modifiers: ['icon'],
+                    data: {
+                        idFile: fileView.fkFile,
+                        fileName: fileView.fileName,
+                        fileIcon: fileView.iconName,
+                        fileSize: fileView.displaySize
+                    }
+                } only %}
+            </li>
         {% endfor %}
-    </div>
+    </ul>
 {% endblock %}
