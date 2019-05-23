@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\ContentFileWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToFileManagerStorageClientInterface;
+use SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpander;
+use SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface;
 use SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReader;
 use SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReaderInterface;
 use SprykerShop\Yves\ContentFileWidget\Twig\ContentFileListTwigFunction;
@@ -43,8 +45,16 @@ class ContentFileWidgetFactory extends AbstractFactory
         return new ContentFileReader(
             $this->getContentFileClient(),
             $this->getFileManagerStorageClient(),
-            $this->getConfig()
+            $this->createFileStorageDataExpander()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface
+     */
+    public function createFileStorageDataExpander(): FileStorageDataExpanderInterface
+    {
+        return new FileStorageDataExpander($this->getConfig());
     }
 
     /**

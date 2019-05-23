@@ -7,15 +7,13 @@
 
 namespace SprykerShop\Yves\ContentFileWidget\Reader;
 
-use Generated\Shared\Transfer\FileStorageDataTransfer;
-use SprykerShop\Yves\ContentFileWidget\ContentFileWidgetConfig;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToFileManagerStorageClientInterface;
+use SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface;
 
 class ContentFileReader implements ContentFileReaderInterface
 {
     protected const LABEL_FILE_SIZES = ['B', 'Kb', 'MB', 'GB', 'TB', 'PB'];
-    protected const KEY_DEFAULT_ICON_NAME = 'text/plain';
 
     /**
      * @var \SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface
@@ -28,23 +26,23 @@ class ContentFileReader implements ContentFileReaderInterface
     protected $fileManagerStorageClient;
 
     /**
-     * @var \SprykerShop\Yves\ContentFileWidget\ContentFileWidgetConfig
+     * @var \SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface
      */
-    protected $contentFileWidgetConfig;
+    protected $fileStorageDataExpander;
 
     /**
      * @param \SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface $contentFileClient
      * @param \SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToFileManagerStorageClientInterface $fileManagerStorageClient
-     * @param \SprykerShop\Yves\ContentFileWidget\ContentFileWidgetConfig $contentFileWidgetConfig
+     * @param \SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface $fileStorageDataExpander
      */
     public function __construct(
         ContentFileWidgetToContentFileClientInterface $contentFileClient,
         ContentFileWidgetToFileManagerStorageClientInterface $fileManagerStorageClient,
-        ContentFileWidgetConfig $contentFileWidgetConfig
+        FileStorageDataExpanderInterface $fileStorageDataExpander
     ) {
         $this->contentFileClient = $contentFileClient;
         $this->fileManagerStorageClient = $fileManagerStorageClient;
-        $this->contentFileWidgetConfig = $contentFileWidgetConfig;
+        $this->fileStorageDataExpander = $fileStorageDataExpander;
     }
 
     /**
@@ -70,7 +68,7 @@ class ContentFileReader implements ContentFileReaderInterface
             }
 
             $fileDisplaySize = $this->getFileDisplaySize($fileStorageDataTransfer->getSize());
-            $fileIconName = $this->getIconName($fileStorageDataTransfer);
+            $fileIconName = $this->fileStorageDataExpander->getIconName($fileStorageDataTransfer);
 
             $fileViewCollection[] = $fileStorageDataTransfer->setDisplaySize($fileDisplaySize)
                 ->setIconName($fileIconName);
@@ -90,33 +88,5 @@ class ContentFileReader implements ContentFileReaderInterface
         $calculatedSize = number_format($fileSize / (1024 ** $power), 1);
 
         return sprintf('%s %s', $calculatedSize, static::LABEL_FILE_SIZES[(int)$power]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileStorageDataTransfer $fileStorageDataTransfer
-     *
-     * @return string
-     */
-    protected function getIconName(FileStorageDataTransfer $fileStorageDataTransfer): string
-    {
-        $iconNames = $this->contentFileWidgetConfig->getFileIconNames();
-        $fileType = explode('/', $fileStorageDataTransfer->getType())[0];
-
-        return $iconNames[$fileStorageDataTransfer->getType()]
-            ?? $iconNames[$fileType]
-            ?? $this->getFileIconNameByExtension($fileStorageDataTransfer->getFileName());
-    }
-
-    /**
-     * @param string $fileName
-     *
-     * @return string
-     */
-    protected function getFileIconNameByExtension(string $fileName): string
-    {
-        $iconNames = $this->contentFileWidgetConfig->getFileIconNames();
-        $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
-
-        return $iconNames[$fileExtension] ?? $iconNames[static::KEY_DEFAULT_ICON_NAME];
     }
 }
