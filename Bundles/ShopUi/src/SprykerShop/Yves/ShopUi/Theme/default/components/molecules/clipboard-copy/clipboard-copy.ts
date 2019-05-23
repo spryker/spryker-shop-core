@@ -37,7 +37,7 @@ export default class ClipboardCopy extends Component {
      * Performs the copy to the clipboard and tells the component to show the message.
      */
     copyToClipboard(): void {
-        if(!this.isCopyCommandSupported) {
+        if (!this.isCopyCommandSupported) {
             setTimeout(() => this.showMessage(this.errorCopyMessage, this.defaultDuration));
 
             return;

@@ -18,7 +18,7 @@ export default class UrlMaskGenerator extends Component {
     }
 
     protected onChange(event: Event): void {
-        if(!this.isActionsRendered) {
+        if (!this.isActionsRendered) {
             this.render();
             this.isActionsRendered = true;
         }
