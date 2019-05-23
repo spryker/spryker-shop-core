@@ -30,7 +30,7 @@ class ContentFileListTwigPlugin extends AbstractPlugin implements TwigPluginInte
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        $twig->addFunction($this->getFactory()->createContentFileTwigFunction($twig, $this->getLocale()));
+        $twig->addFunction($this->getFactory()->createContentFileListTwigFunction($twig, $this->getLocale()));
 
         return $twig;
     }

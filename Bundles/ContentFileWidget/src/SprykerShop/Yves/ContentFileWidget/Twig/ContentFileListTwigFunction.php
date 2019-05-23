@@ -86,7 +86,7 @@ class ContentFileListTwigFunction extends TwigFunction
 
             try {
                 $fileViewCollection = $this->contentFileReader
-                    ->findFileCollection($idContent, $this->localeName);
+                    ->getFileCollection($idContent, $this->localeName);
             } catch (InvalidFileListTermException $exception) {
                 return $this->getMessageFileWrongType($idContent);
             }

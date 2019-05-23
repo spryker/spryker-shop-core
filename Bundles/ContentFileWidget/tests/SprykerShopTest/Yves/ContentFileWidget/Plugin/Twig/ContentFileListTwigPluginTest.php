@@ -9,7 +9,6 @@ namespace SprykerShopTest\Yves\ContentFileWidget\Plugin\Twig;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ContentFileListTypeTransfer;
-use Generated\Shared\Transfer\ContentTypeContextTransfer;
 use Generated\Shared\Transfer\FileStorageDataTransfer;
 use ReflectionClassConstant;
 use Spryker\Client\ContentFile\Exception\InvalidFileListTermException;
@@ -43,8 +42,8 @@ class ContentFileListTwigPluginTest extends Unit
     protected const CONTENT_ID = 0;
     protected const CONTENT_TERM = 'TERM';
 
-    protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<strong>Content file list with ID 0 not found.</strong>';
-    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<strong>Content file list widget could not be rendered because the content item with ID 0 is not an file list.</strong>';
+    protected const MESSAGE_CONTENT_FILE_LIST_NOT_FOUND = '<strong>Content file list with ID 0 not found.</strong>';
+    protected const MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE = '<strong>Content file list widget could not be rendered because the content item with ID 0 is not an file list.</strong>';
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"wrong" is not supported name of template.</strong>';
     protected const RENDERED_STRING = 'output';
 
@@ -64,7 +63,7 @@ class ContentFileListTwigPluginTest extends Unit
     {
         parent::setUp();
 
-        Store::getInstance()->setCurrentLocale(static::LOCALE);
+//        Store::getInstance()->setCurrentLocale(static::LOCALE);
     }
 
     /**
@@ -76,7 +75,7 @@ class ContentFileListTwigPluginTest extends Unit
         $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_ID, static::TEMPLATE_TEXT_LINK);
 
         // Assert
-        $this->assertEquals(static::MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND, $fileContent);
+        $this->assertEquals(static::MESSAGE_CONTENT_FILE_LIST_NOT_FOUND, $fileContent);
     }
 
     /**
@@ -85,16 +84,13 @@ class ContentFileListTwigPluginTest extends Unit
     public function testContentFileWrongType(): void
     {
         // Assign
-        $contentTypeContextTransfer = new ContentTypeContextTransfer();
-        $contentTypeContextTransfer->setIdContent(static::CONTENT_ID);
-        $contentTypeContextTransfer->setTerm(static::CONTENT_TERM);
         $this->setContentFileClientException();
 
         // Act
         $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_ID, static::TEMPLATE_TEXT_LINK);
 
         // Assert
-        $this->assertEquals(static::MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE, $fileContent);
+        $this->assertEquals(static::MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE, $fileContent);
     }
 
     /**

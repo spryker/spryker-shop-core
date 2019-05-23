@@ -13,7 +13,7 @@ interface ContentFileReaderInterface
      * @param int $idContent
      * @param string $localeName
      *
-     * @return array|null
+     * @return array
      */
-    public function findFileCollection(int $idContent, string $localeName): ?array;
+    public function getFileCollection(int $idContent, string $localeName): array;
 }

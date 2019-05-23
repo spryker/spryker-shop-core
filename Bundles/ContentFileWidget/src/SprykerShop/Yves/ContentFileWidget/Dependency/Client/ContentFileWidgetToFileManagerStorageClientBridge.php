@@ -30,7 +30,7 @@ class ContentFileWidgetToFileManagerStorageClientBridge implements ContentFileWi
      *
      * @return \Generated\Shared\Transfer\FileStorageDataTransfer|null
      */
-    public function findFileById(int $idFile, string $localeName): ?FileStorageDataTransfer
+    public function findFileById(int $idFile, string $localeName)
     {
         return $this->fileManagerStorageClient->findFileById($idFile, $localeName);
     }

@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ContentFileWidget\Reader;
 
+use Generated\Shared\Transfer\FileStorageDataTransfer;
 use SprykerShop\Yves\ContentFileWidget\ContentFileWidgetConfig;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToFileManagerStorageClientInterface;
@@ -50,17 +51,16 @@ class ContentFileReader implements ContentFileReaderInterface
      * @param int $idContent
      * @param string $localeName
      *
-     * @return array|null
+     * @return array
      */
-    public function findFileCollection(int $idContent, string $localeName): ?array
+    public function getFileCollection(int $idContent, string $localeName): array
     {
-        $contentFileListTypeTransfer = $this->contentFileClient->executeContentFileListTypeById($idContent, $localeName);
+        $contentFileListTypeTransfer = $this->contentFileClient->executeFileListTypeById($idContent, $localeName);
+        $fileViewCollection = [];
 
         if ($contentFileListTypeTransfer === null) {
-            return null;
+            return $fileViewCollection;
         }
-
-        $fileViewCollection = [];
 
         foreach ($contentFileListTypeTransfer->getFileIds() as $fileId) {
             $fileStorageDataTransfer = $this->fileManagerStorageClient->findFileById($fileId, $localeName);
@@ -70,10 +70,7 @@ class ContentFileReader implements ContentFileReaderInterface
             }
 
             $fileDisplaySize = $this->getFileDisplaySize($fileStorageDataTransfer->getSize());
-            $fileIconName = $this->getIconName(
-                $fileStorageDataTransfer->getType(),
-                $fileStorageDataTransfer->getFileName()
-            );
+            $fileIconName = $this->getIconName($fileStorageDataTransfer);
 
             $fileViewCollection[] = $fileStorageDataTransfer->setDisplaySize($fileDisplaySize)
                 ->setIconName($fileIconName);
@@ -90,24 +87,24 @@ class ContentFileReader implements ContentFileReaderInterface
     protected function getFileDisplaySize(int $fileSize): string
     {
         $power = floor(log($fileSize, 1024));
-        $calculatedSize = number_format($fileSize / (1024 ** $power), 1, '.', ',');
+        $calculatedSize = number_format($fileSize / (1024 ** $power), 1);
 
         return sprintf('%s %s', $calculatedSize, static::LABEL_FILE_SIZES[(int)$power]);
     }
 
     /**
-     * @param string $fileMimeType
-     * @param string $fileName
+     * @param \Generated\Shared\Transfer\FileStorageDataTransfer $fileStorageDataTransfer
      *
      * @return string
      */
-    protected function getIconName(string $fileMimeType, string $fileName): string
+    protected function getIconName(FileStorageDataTransfer $fileStorageDataTransfer): string
     {
         $iconNames = $this->contentFileWidgetConfig->getFileIconNames();
-        $fileType = explode('/', $fileMimeType)[0];
-        $fileIconName = $this->getFileIconNameByExtension($fileName);
+        $fileType = explode('/', $fileStorageDataTransfer->getType())[0];
 
-        return $iconNames[$fileMimeType] ?? $iconNames[$fileType] ?? $fileIconName;
+        return $iconNames[$fileStorageDataTransfer->getType()]
+            ?? $iconNames[$fileType]
+            ?? $this->getFileIconNameByExtension($fileStorageDataTransfer->getFileName());
     }
 
     /**

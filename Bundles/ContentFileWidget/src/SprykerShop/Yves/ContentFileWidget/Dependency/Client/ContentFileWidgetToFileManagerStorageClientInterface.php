@@ -17,5 +17,5 @@ interface ContentFileWidgetToFileManagerStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\FileStorageDataTransfer|null
      */
-    public function findFileById(int $idFile, string $localeName): ?FileStorageDataTransfer;
+    public function findFileById(int $idFile, string $localeName);
 }

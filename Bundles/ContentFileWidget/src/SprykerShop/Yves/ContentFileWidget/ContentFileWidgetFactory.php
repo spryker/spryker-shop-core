@@ -26,7 +26,7 @@ class ContentFileWidgetFactory extends AbstractFactory
      *
      * @return \SprykerShop\Yves\ContentFileWidget\Twig\ContentFileListTwigFunction
      */
-    public function createContentFileTwigFunction(Environment $twig, string $localeName): ContentFileListTwigFunction
+    public function createContentFileListTwigFunction(Environment $twig, string $localeName): ContentFileListTwigFunction
     {
         return new ContentFileListTwigFunction(
             $twig,
