@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\FileStorageDataTransfer;
 use ReflectionClassConstant;
 use Spryker\Client\ContentFile\Exception\InvalidFileListTermException;
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\ContentFileWidget\ContentFileWidgetDependencyProvider;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToFileManagerStorageClientInterface;
@@ -34,8 +33,6 @@ use Twig\Loader\FilesystemLoader;
  */
 class ContentFileListTwigPluginTest extends Unit
 {
-    protected const LOCALE = 'de_DE';
-
     protected const TEMPLATE_TEXT_LINK = 'text-link';
     protected const TEMPLATE_WRONG = 'wrong';
 
@@ -47,24 +44,10 @@ class ContentFileListTwigPluginTest extends Unit
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"wrong" is not supported name of template.</strong>';
     protected const RENDERED_STRING = 'output';
 
-    protected const FILE_SIZE = 1100;
-    protected const FILE_TYPE = 'text/plain';
-    protected const FILE_NAME = 'test.csv';
-
     /**
      * @var \SprykerShopTest\Yves\ContentFileWidget\ContentFileWidgetYvesTester
      */
     protected $tester;
-
-    /**
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-//        Store::getInstance()->setCurrentLocale(static::LOCALE);
-    }
 
     /**
      * @return void
@@ -102,7 +85,7 @@ class ContentFileListTwigPluginTest extends Unit
         $contentTypeContextTransfer = new ContentFileListTypeTransfer();
         $contentTypeContextTransfer->setFileIds([static::CONTENT_ID]);
         $this->setContentFileClientReturn($contentTypeContextTransfer);
-        $this->setFileStorageClientReturn();
+        $this->setFileManagerStorageClientReturn();
 
         // Act
         $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_ID, static::TEMPLATE_WRONG);
@@ -120,7 +103,7 @@ class ContentFileListTwigPluginTest extends Unit
         $contentTypeContextTransfer = new ContentFileListTypeTransfer();
         $contentTypeContextTransfer->setFileIds([static::CONTENT_ID]);
         $this->setContentFileClientReturn($contentTypeContextTransfer);
-        $this->setFileStorageClientReturn();
+        $this->setFileManagerStorageClientReturn();
 
         // Act
         $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_ID, static::TEMPLATE_TEXT_LINK);
@@ -135,7 +118,7 @@ class ContentFileListTwigPluginTest extends Unit
     protected function setContentFileClientException(): void
     {
         $contentFileWidgetToContentFileClientBridge = $this->getMockBuilder(ContentFileWidgetToContentFileClientInterface::class)->getMock();
-        $contentFileWidgetToContentFileClientBridge->method('executeContentFileListTypeById')->willThrowException(new InvalidFileListTermException());
+        $contentFileWidgetToContentFileClientBridge->method('executeFileListTypeById')->willThrowException(new InvalidFileListTermException());
         $this->tester->setDependency(ContentFileWidgetDependencyProvider::CLIENT_CONTENT_FILE, $contentFileWidgetToContentFileClientBridge);
     }
 
@@ -147,22 +130,19 @@ class ContentFileListTwigPluginTest extends Unit
     protected function setContentFileClientReturn(?ContentFileListTypeTransfer $contentTypeContextTransfer = null): void
     {
         $contentFileWidgetToContentFileClientBridge = $this->getMockBuilder(ContentFileWidgetToContentFileClientInterface::class)->getMock();
-        $contentFileWidgetToContentFileClientBridge->method('executeContentFileListTypeById')->willReturn($contentTypeContextTransfer);
+        $contentFileWidgetToContentFileClientBridge->method('executeFileListTypeById')->willReturn($contentTypeContextTransfer);
         $this->tester->setDependency(ContentFileWidgetDependencyProvider::CLIENT_CONTENT_FILE, $contentFileWidgetToContentFileClientBridge);
     }
 
     /**
+     * @param \Generated\Shared\Transfer\FileStorageDataTransfer $fileStorageDataTransfer
+     *
      * @return void
      */
-    protected function setFileStorageClientReturn(): void
+    protected function setFileManagerStorageClientReturn(?FileStorageDataTransfer $fileStorageDataTransfer = null): void
     {
         $contentFileWidgetToFileStorageClientBridge = $this->getMockBuilder(ContentFileWidgetToFileManagerStorageClientInterface::class)->getMock();
-        $contentFileWidgetToFileStorageClientBridge->method('findFileById')->willReturn(
-            (new FileStorageDataTransfer())
-                ->setSize(static::FILE_SIZE)
-                ->setType(static::FILE_TYPE)
-                ->setFileName(static::FILE_NAME)
-        );
+        $contentFileWidgetToFileStorageClientBridge->method('findFileById')->willReturn($fileStorageDataTransfer);
         $this->tester->setDependency(ContentFileWidgetDependencyProvider::CLIENT_FILE_MANAGER_STORAGE, $contentFileWidgetToFileStorageClientBridge);
     }
 
