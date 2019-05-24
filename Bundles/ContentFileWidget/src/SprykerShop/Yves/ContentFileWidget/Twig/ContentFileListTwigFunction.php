@@ -95,12 +95,12 @@ class ContentFileListTwigFunction extends TwigFunction
 
             try {
                 $contentFileListTypeTransfer = $this->contentFileClient->executeFileListTypeById($idContent, $this->localeName);
-
-                if (!$contentFileListTypeTransfer) {
-                    return $this->getMessageContentFileListNotFound($idContent);
-                }
             } catch (InvalidFileListTermException $exception) {
                 return $this->getMessageContentFileListWrongType($idContent);
+            }
+
+            if (!$contentFileListTypeTransfer) {
+                return $this->getMessageContentFileListNotFound($idContent);
             }
 
             $fileViewCollection = $this->contentFileReader
