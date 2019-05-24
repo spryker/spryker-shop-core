@@ -7,58 +7,43 @@
 
 namespace SprykerShop\Yves\ContentFileWidget\Reader;
 
-use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface;
+use Generated\Shared\Transfer\ContentFileListTypeTransfer;
+use Generated\Shared\Transfer\FileStorageDataTransfer;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToFileManagerStorageClientInterface;
-use SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface;
 
 class ContentFileReader implements ContentFileReaderInterface
 {
-    protected const LABEL_FILE_SIZES = ['B', 'Kb', 'MB', 'GB', 'TB', 'PB'];
-
-    /**
-     * @var \SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface
-     */
-    protected $contentFileClient;
-
     /**
      * @var \SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToFileManagerStorageClientInterface
      */
     protected $fileManagerStorageClient;
 
     /**
-     * @var \SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface
+     * @var \SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface[]
      */
-    protected $fileStorageDataExpander;
+    protected $fileStorageDataExpanders;
 
     /**
-     * @param \SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface $contentFileClient
      * @param \SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToFileManagerStorageClientInterface $fileManagerStorageClient
-     * @param \SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface $fileStorageDataExpander
+     * @param \SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface[] $fileStorageDataExpanders
      */
     public function __construct(
-        ContentFileWidgetToContentFileClientInterface $contentFileClient,
         ContentFileWidgetToFileManagerStorageClientInterface $fileManagerStorageClient,
-        FileStorageDataExpanderInterface $fileStorageDataExpander
+        array $fileStorageDataExpanders
     ) {
-        $this->contentFileClient = $contentFileClient;
         $this->fileManagerStorageClient = $fileManagerStorageClient;
-        $this->fileStorageDataExpander = $fileStorageDataExpander;
+        $this->fileStorageDataExpanders = $fileStorageDataExpanders;
     }
 
     /**
-     * @param int $idContent
+     * @param \Generated\Shared\Transfer\ContentFileListTypeTransfer $contentFileListTypeTransfer
      * @param string $localeName
      *
-     * @return array|null
+     * @return array
      */
-    public function getFileCollection(int $idContent, string $localeName): ?array
+    public function getFileCollection(ContentFileListTypeTransfer $contentFileListTypeTransfer, string $localeName): array
     {
-        $contentFileListTypeTransfer = $this->contentFileClient->executeFileListTypeById($idContent, $localeName);
         $fileViewCollection = [];
-
-        if ($contentFileListTypeTransfer === null) {
-            return null;
-        }
 
         foreach ($contentFileListTypeTransfer->getFileIds() as $fileId) {
             $fileStorageDataTransfer = $this->fileManagerStorageClient->findFileById($fileId, $localeName);
@@ -67,26 +52,26 @@ class ContentFileReader implements ContentFileReaderInterface
                 continue;
             }
 
-            $fileDisplaySize = $this->getFileDisplaySize($fileStorageDataTransfer->getSize());
-            $fileIconName = $this->fileStorageDataExpander->getIconName($fileStorageDataTransfer);
-
-            $fileViewCollection[] = $fileStorageDataTransfer->setDisplaySize($fileDisplaySize)
-                ->setIconName($fileIconName);
+            $fileViewCollection[] = $this->expandFileStorageDataTransfer($fileStorageDataTransfer);
         }
 
         return $fileViewCollection;
     }
 
     /**
-     * @param int $fileSize
+     * @param \Generated\Shared\Transfer\FileStorageDataTransfer $fileStorageDataTransfer
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\FileStorageDataTransfer
      */
-    protected function getFileDisplaySize(int $fileSize): string
+    protected function expandFileStorageDataTransfer(FileStorageDataTransfer $fileStorageDataTransfer): FileStorageDataTransfer
     {
-        $power = floor(log($fileSize, 1024));
-        $calculatedSize = number_format($fileSize / (1024 ** $power), 1);
+        foreach ($this->fileStorageDataExpanders as $fileStorageDataExpander) {
+            /**
+             * @var \SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface|\SprykerShop\Yves\ContentFileWidget\Expander\IconNameFileStorageDataExpander $fileStorageDataExpander
+             */
+            $fileStorageDataTransfer = $fileStorageDataExpander->expand($fileStorageDataTransfer);
+        }
 
-        return sprintf('%s %s', $calculatedSize, static::LABEL_FILE_SIZES[(int)$power]);
+        return $fileStorageDataTransfer;
     }
 }

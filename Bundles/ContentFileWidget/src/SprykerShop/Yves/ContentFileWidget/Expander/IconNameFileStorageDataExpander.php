@@ -10,9 +10,9 @@ namespace SprykerShop\Yves\ContentFileWidget\Expander;
 use Generated\Shared\Transfer\FileStorageDataTransfer;
 use SprykerShop\Yves\ContentFileWidget\ContentFileWidgetConfig;
 
-class FileStorageDataExpander implements FileStorageDataExpanderInterface
+class IconNameFileStorageDataExpander implements FileStorageDataExpanderInterface
 {
-    protected const KEY_DEFAULT_ICON_NAME = 'text/plain';
+    protected const KEY_DEFAULT_ICON_NAME = 'file';
 
     /**
      * @var \SprykerShop\Yves\ContentFileWidget\ContentFileWidgetConfig
@@ -22,23 +22,36 @@ class FileStorageDataExpander implements FileStorageDataExpanderInterface
     /**
      * @param \SprykerShop\Yves\ContentFileWidget\ContentFileWidgetConfig $contentFileWidgetConfig
      */
-    public function __construct(ContentFileWidgetConfig $contentFileWidgetConfig) {
+    public function __construct(ContentFileWidgetConfig $contentFileWidgetConfig)
+    {
         $this->contentFileWidgetConfig = $contentFileWidgetConfig;
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileStorageDataTransfer $fileStorageDataTransfer
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\FileStorageDataTransfer
      */
-    public function getIconName(FileStorageDataTransfer $fileStorageDataTransfer): string
+    public function expand(FileStorageDataTransfer $fileStorageDataTransfer): FileStorageDataTransfer
     {
+        $fileStorageDataTransfer->requireType();
         $iconNames = $this->contentFileWidgetConfig->getFileIconNames();
+
+        if (isset($iconNames[$fileStorageDataTransfer->getType()]) && $iconNames[$fileStorageDataTransfer->getType()] !== static::KEY_DEFAULT_ICON_NAME) {
+            return $fileStorageDataTransfer->setIconName($iconNames[$fileStorageDataTransfer->getType()]);
+        }
+
         $fileType = explode('/', $fileStorageDataTransfer->getType())[0];
 
-        return $iconNames[$fileStorageDataTransfer->getType()]
-            ?? $iconNames[$fileType]
-            ?? $this->getFileIconNameByExtension($fileStorageDataTransfer->getFileName());
+        if (isset($iconNames[$fileType]) && $iconNames[$fileType] !== static::KEY_DEFAULT_ICON_NAME) {
+            return $fileStorageDataTransfer->setIconName($iconNames[$fileType]);
+        }
+
+        $fileIconName = $this->getFileIconNameByExtension(
+            $fileStorageDataTransfer->requireFileName()->getFileName()
+        );
+
+        return $fileStorageDataTransfer->setIconName($fileIconName);
     }
 
     /**

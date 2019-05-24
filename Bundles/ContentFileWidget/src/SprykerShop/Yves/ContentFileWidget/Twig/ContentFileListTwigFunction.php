@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ContentFileWidget\Twig;
 
 use Spryker\Client\ContentFile\Exception\InvalidFileListTermException;
 use Spryker\Shared\Twig\TwigFunction;
+use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface;
 use SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReaderInterface;
 use Twig\Environment;
 
@@ -49,20 +50,28 @@ class ContentFileListTwigFunction extends TwigFunction
     protected $contentFileReader;
 
     /**
+     * @var \SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface
+     */
+    protected $contentFileClient;
+
+    /**
      * @param \Twig\Environment $twig
      * @param string $localeName
      * @param \SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReaderInterface $contentFileReader
+     * @param \SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface $contentFileClient
      */
     public function __construct(
         Environment $twig,
         string $localeName,
-        ContentFileReaderInterface $contentFileReader
+        ContentFileReaderInterface $contentFileReader,
+        ContentFileWidgetToContentFileClientInterface $contentFileClient
     ) {
         parent::__construct();
 
         $this->twig = $twig;
         $this->localeName = $localeName;
         $this->contentFileReader = $contentFileReader;
+        $this->contentFileClient = $contentFileClient;
     }
 
     /**
@@ -81,19 +90,21 @@ class ContentFileListTwigFunction extends TwigFunction
         return function (int $idContent, string $templateIdentifier): ?string {
 
             if (!isset($this->getAvailableTemplates()[$templateIdentifier])) {
-                return $this->getMessageFileWrongTemplate($templateIdentifier);
+                return $this->getMessageContentFileListWrongTemplate($templateIdentifier);
             }
 
             try {
-                $fileViewCollection = $this->contentFileReader
-                    ->getFileCollection($idContent, $this->localeName);
+                $contentFileListTypeTransfer = $this->contentFileClient->executeFileListTypeById($idContent, $this->localeName);
+
+                if (!$contentFileListTypeTransfer) {
+                    return $this->getMessageContentFileListNotFound($idContent);
+                }
             } catch (InvalidFileListTermException $exception) {
-                return $this->getMessageFileWrongType($idContent);
+                return $this->getMessageContentFileListWrongType($idContent);
             }
 
-            if ($fileViewCollection === null) {
-                return $this->getMessageFileNotFound($idContent);
-            }
+            $fileViewCollection = $this->contentFileReader
+                ->getFileCollection($contentFileListTypeTransfer, $this->localeName);
 
             return $this->twig->render(
                 $this->getAvailableTemplates()[$templateIdentifier],
@@ -120,7 +131,7 @@ class ContentFileListTwigFunction extends TwigFunction
      *
      * @return string
      */
-    protected function getMessageFileNotFound(int $idContent): string
+    protected function getMessageContentFileListNotFound(int $idContent): string
     {
         return sprintf(static::MESSAGE_CONTENT_FILE_LIST_NOT_FOUND, $idContent);
     }
@@ -130,7 +141,7 @@ class ContentFileListTwigFunction extends TwigFunction
      *
      * @return string
      */
-    protected function getMessageFileWrongTemplate(string $templateIdentifier): string
+    protected function getMessageContentFileListWrongTemplate(string $templateIdentifier): string
     {
         return sprintf(static::MESSAGE_NOT_SUPPORTED_TEMPLATE, $templateIdentifier);
     }
@@ -140,7 +151,7 @@ class ContentFileListTwigFunction extends TwigFunction
      *
      * @return string
      */
-    protected function getMessageFileWrongType(int $idContent): string
+    protected function getMessageContentFileListWrongType(int $idContent): string
     {
         return sprintf(static::MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE, $idContent);
     }

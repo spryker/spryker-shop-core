@@ -10,8 +10,9 @@ namespace SprykerShop\Yves\ContentFileWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToFileManagerStorageClientInterface;
-use SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpander;
+use SprykerShop\Yves\ContentFileWidget\Expander\DisplayFileSizeFileStorageDataExpander;
 use SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface;
+use SprykerShop\Yves\ContentFileWidget\Expander\IconNameFileStorageDataExpander;
 use SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReader;
 use SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReaderInterface;
 use SprykerShop\Yves\ContentFileWidget\Twig\ContentFileListTwigFunction;
@@ -33,7 +34,8 @@ class ContentFileWidgetFactory extends AbstractFactory
         return new ContentFileListTwigFunction(
             $twig,
             $localeName,
-            $this->createContentFileReader()
+            $this->createContentFileReader(),
+            $this->getContentFileClient()
         );
     }
 
@@ -43,18 +45,36 @@ class ContentFileWidgetFactory extends AbstractFactory
     public function createContentFileReader(): ContentFileReaderInterface
     {
         return new ContentFileReader(
-            $this->getContentFileClient(),
             $this->getFileManagerStorageClient(),
-            $this->createFileStorageDataExpander()
+            $this->getFileStorageDataExpanders()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface[]
+     */
+    public function getFileStorageDataExpanders(): array
+    {
+        return [
+            $this->createIconNameFileStorageDataExpander(),
+            $this->createDisplayFileSizeFileStorageDataExpander(),
+        ];
     }
 
     /**
      * @return \SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface
      */
-    public function createFileStorageDataExpander(): FileStorageDataExpanderInterface
+    public function createIconNameFileStorageDataExpander(): FileStorageDataExpanderInterface
     {
-        return new FileStorageDataExpander($this->getConfig());
+        return new IconNameFileStorageDataExpander($this->getConfig());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface
+     */
+    public function createDisplayFileSizeFileStorageDataExpander(): FileStorageDataExpanderInterface
+    {
+        return new DisplayFileSizeFileStorageDataExpander();
     }
 
     /**

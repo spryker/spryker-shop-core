@@ -7,13 +7,15 @@
 
 namespace SprykerShop\Yves\ContentFileWidget\Reader;
 
+use Generated\Shared\Transfer\ContentFileListTypeTransfer;
+
 interface ContentFileReaderInterface
 {
     /**
-     * @param int $idContent
+     * @param \Generated\Shared\Transfer\ContentFileListTypeTransfer $contentFileListTypeTransfer
      * @param string $localeName
      *
-     * @return array|null
+     * @return array
      */
-    public function getFileCollection(int $idContent, string $localeName): ?array;
+    public function getFileCollection(ContentFileListTypeTransfer $contentFileListTypeTransfer, string $localeName): array;
 }

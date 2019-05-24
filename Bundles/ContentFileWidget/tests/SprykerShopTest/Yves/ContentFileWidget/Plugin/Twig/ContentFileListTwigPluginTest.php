@@ -9,7 +9,6 @@ namespace SprykerShopTest\Yves\ContentFileWidget\Plugin\Twig;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ContentFileListTypeTransfer;
-use Generated\Shared\Transfer\FileStorageDataTransfer;
 use ReflectionClassConstant;
 use Spryker\Client\ContentFile\Exception\InvalidFileListTermException;
 use Spryker\Service\Container\ContainerInterface;
@@ -85,7 +84,6 @@ class ContentFileListTwigPluginTest extends Unit
         $contentTypeContextTransfer = new ContentFileListTypeTransfer();
         $contentTypeContextTransfer->setFileIds([static::CONTENT_ID]);
         $this->setContentFileClientReturn($contentTypeContextTransfer);
-        $this->setFileManagerStorageClientReturn();
 
         // Act
         $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_ID, static::TEMPLATE_WRONG);
@@ -135,14 +133,12 @@ class ContentFileListTwigPluginTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileStorageDataTransfer $fileStorageDataTransfer
-     *
      * @return void
      */
-    protected function setFileManagerStorageClientReturn(?FileStorageDataTransfer $fileStorageDataTransfer = null): void
+    protected function setFileManagerStorageClientReturn(): void
     {
         $contentFileWidgetToFileStorageClientBridge = $this->getMockBuilder(ContentFileWidgetToFileManagerStorageClientInterface::class)->getMock();
-        $contentFileWidgetToFileStorageClientBridge->method('findFileById')->willReturn($fileStorageDataTransfer);
+        $contentFileWidgetToFileStorageClientBridge->method('findFileById')->willReturn(null);
         $this->tester->setDependency(ContentFileWidgetDependencyProvider::CLIENT_FILE_MANAGER_STORAGE, $contentFileWidgetToFileStorageClientBridge);
     }
 

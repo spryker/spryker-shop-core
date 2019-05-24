@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class ContentFileWidgetConfig extends AbstractBundleConfig
 {
     protected const ICON_NAME_MAP = [
+        'file' => 'file',
         'text/plain' => 'file',
         'image' => 'file-image',
         'jpg' => 'file-image',

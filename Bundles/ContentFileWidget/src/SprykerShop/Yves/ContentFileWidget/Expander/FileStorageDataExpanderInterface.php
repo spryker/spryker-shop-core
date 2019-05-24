@@ -14,7 +14,7 @@ interface FileStorageDataExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\FileStorageDataTransfer $fileStorageDataTransfer
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\FileStorageDataTransfer
      */
-    public function getIconName(FileStorageDataTransfer $fileStorageDataTransfer): string;
+    public function expand(FileStorageDataTransfer $fileStorageDataTransfer): FileStorageDataTransfer;
 }
