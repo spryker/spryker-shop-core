@@ -81,9 +81,9 @@ class ContentFileListTwigPluginTest extends Unit
     public function testContentFileWrongTemplate(): void
     {
         // Assign
-        $contentTypeContextTransfer = new ContentFileListTypeTransfer();
-        $contentTypeContextTransfer->setFileIds([static::CONTENT_ID]);
-        $this->setContentFileClientReturn($contentTypeContextTransfer);
+        $contentFileListTypeTransfer = new ContentFileListTypeTransfer();
+        $contentFileListTypeTransfer->setFileIds([static::CONTENT_ID]);
+        $this->setContentFileClientReturn($contentFileListTypeTransfer);
 
         // Act
         $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_ID, static::TEMPLATE_WRONG);
@@ -98,9 +98,9 @@ class ContentFileListTwigPluginTest extends Unit
     public function testContentFileRendering(): void
     {
         // Assign
-        $contentTypeContextTransfer = new ContentFileListTypeTransfer();
-        $contentTypeContextTransfer->setFileIds([static::CONTENT_ID]);
-        $this->setContentFileClientReturn($contentTypeContextTransfer);
+        $contentFileListTypeTransfer = new ContentFileListTypeTransfer();
+        $contentFileListTypeTransfer->setFileIds([static::CONTENT_ID]);
+        $this->setContentFileClientReturn($contentFileListTypeTransfer);
         $this->setFileManagerStorageClientReturn();
 
         // Act
@@ -121,14 +121,14 @@ class ContentFileListTwigPluginTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentFileListTypeTransfer|null $contentTypeContextTransfer
+     * @param \Generated\Shared\Transfer\ContentFileListTypeTransfer|null $contentFileListTypeTransfer
      *
      * @return void
      */
-    protected function setContentFileClientReturn(?ContentFileListTypeTransfer $contentTypeContextTransfer = null): void
+    protected function setContentFileClientReturn(?ContentFileListTypeTransfer $contentFileListTypeTransfer = null): void
     {
         $contentFileWidgetToContentFileClientBridge = $this->getMockBuilder(ContentFileWidgetToContentFileClientInterface::class)->getMock();
-        $contentFileWidgetToContentFileClientBridge->method('executeFileListTypeById')->willReturn($contentTypeContextTransfer);
+        $contentFileWidgetToContentFileClientBridge->method('executeFileListTypeById')->willReturn($contentFileListTypeTransfer);
         $this->tester->setDependency(ContentFileWidgetDependencyProvider::CLIENT_CONTENT_FILE, $contentFileWidgetToContentFileClientBridge);
     }
 
