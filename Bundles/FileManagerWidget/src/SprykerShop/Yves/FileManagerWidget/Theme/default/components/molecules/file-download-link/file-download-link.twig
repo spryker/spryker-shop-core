@@ -12,9 +12,9 @@
     fileSize: null
 } %}
 
-{% block body %}
-    {% set fileUrl = data.fileUrl is empty ? path('files/download', {'id-file': data.idFile}) %}
+{% set fileUrl = data.fileUrl is empty ? path('files/download', {'id-file': data.idFile}) %}
 
+{% block body %}
     <a class="{{ config.name }}__link {% if data.fileIcon %}{{ config.name }}__link--icon{% endif %}" href="{{ fileUrl }}">
         {% if data.fileIcon %}
             <span class="{{ config.name }}__icon">
