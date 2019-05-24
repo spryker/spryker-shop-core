@@ -7,15 +7,13 @@
 {% define data = {
     idFile: required,
     fileName: required,
-    fileUrl: fileUrl | default(''),
+    fileUrl: fileUrl | default(path('files/download', {'id-file': data.idFile})),
     fileIcon: null,
     fileSize: null
 } %}
 
-{% set fileUrl = data.fileUrl is empty ? path('files/download', {'id-file': data.idFile}) %}
-
 {% block body %}
-    <a class="{{ config.name }}__link {% if data.fileIcon %}{{ config.name }}__link--icon{% endif %}" href="{{ fileUrl }}">
+    <a class="{{ config.name }}__link {% if data.fileIcon %}{{ config.name }}__link--icon{% endif %}" href="{{ data.fileUrl }}">
         {% if data.fileIcon %}
             <span class="{{ config.name }}__icon">
                 {% include atom('icon') with {
