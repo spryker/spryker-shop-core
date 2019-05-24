@@ -54,6 +54,6 @@ class YvesRouterPluginRouteConverterTest extends Unit
 
         $generatedUrl = $router->generate('converter', ['parameter' => 'foo']);
 
-        $this->assertSame('/route/converted', $generatedUrl);
+        $this->assertSame('/route/foo', $generatedUrl);
     }
 }
