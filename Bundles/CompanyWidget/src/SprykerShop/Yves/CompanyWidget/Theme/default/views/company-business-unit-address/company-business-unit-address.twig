@@ -50,7 +50,7 @@
             optionValueDeliverToMultipleAddresses: optionValueDeliverToMultipleAddresses
         }
     } only %}
-        {% block selectClass %}js-form-clear__ignore-element js-form-select-address__{{ embed.formType }}{% endblock %}
+        {% block selectClass %}js-form-select-address__{{ embed.formType }}{% endblock %}
         {% block option %}
             {% set isSelected = embed.defaultAddressKey == address.key %}
             {% set fullName = '%s %s %s, %s %s, %s %s' | format(
@@ -100,23 +100,23 @@
         {#<button type="button" class="button spacing-bottom js-form-add-new-address__{{ data.formType }}">#}
             {#{{ 'page.checkout.address.use_selected_address' | trans }}#}
         {#</button>#}
-        {#{% include molecule('company-business-unit-address-handler', 'CompanyWidget') with {#}
-            {#attributes: {#}
-                {#'form-selector': '.js-form-handler__' ~ data.formType,#}
-                {#'trigger-selector': '.js-form-add-new-address__' ~ data.formType,#}
-                {#'data-selector': '.js-form-select-address__' ~ data.formType,#}
-                {#'shipping-address-toggler-selector': '.js-form-select-address__shippingAddress',#}
-                {#'ignore-selector': '.js-form-clear__ignore-element',#}
-                {#'default-address-selector': '.js-form-default-address__' ~ data.formType,#}
-                {#'custom-address-trigger': '.js-form-clear__'~ data.formType ~'-toggler',#}
-                {#'address-hidden-input-selector': 'addressesForm[' ~ data.formType ~ '][id_customer_address]',#}
-                {#'shipping-address-hidden-input-selector': 'addressesForm[shippingAddress][id_customer_address]',#}
-                {#'hidden-input-id-customer-address-saver-selector': '.js-hidden-input-id-customer-' ~ data.formType ~ '-saver',#}
-                {#'hidden-input-id-customer-shipping-address-saver-selector': '.js-hidden-input-id-customer-shippingAddress-saver',#}
-                {#'addresses': data.addresses,#}
-                {#'toggle-option-value': optionValueDeliverToMultipleAddresses#}
-            {#}#}
-        {#} only %}#}
+        {% include molecule('company-business-unit-address-handler', 'CompanyWidget') with {
+            attributes: {
+                'form-selector': '.js-form-handler__' ~ data.formType,
+                'trigger-selector': '.js-form-add-new-address__' ~ data.formType,
+                'data-selector': '.js-form-select-address__' ~ data.formType,
+                'shipping-address-toggler-selector': '.js-form-select-address__shippingAddress',
+                'ignore-selector': '.js-form-clear__ignore-element',
+                'default-address-selector': '.js-form-default-address__' ~ data.formType,
+                'custom-address-trigger': '.js-form-clear__'~ data.formType ~'-toggler',
+                'address-hidden-input-selector': 'addressesForm[' ~ data.formType ~ '][id_customer_address]',
+                'shipping-address-hidden-input-selector': 'addressesForm[shippingAddress][id_customer_address]',
+                'hidden-input-id-customer-address-saver-selector': '.js-hidden-input-id-customer__' ~ data.formType ~ '-saver',
+                'hidden-input-id-customer-shipping-address-saver-selector': '.js-hidden-input-id-customer__shippingAddress-saver',
+                'addresses': data.addresses,
+                'toggle-option-value': optionValueDeliverToMultipleAddresses
+            }
+        } only %}
     {#</div>#}
 
     {#<div>#}
@@ -139,7 +139,7 @@
         {#} only %}#}
     {#</div>#}
 
-    <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]" data-key="id_customer_address">
-    {#<input type="hidden" class="js-hidden-input-id-customer-{{ data.formType }}-saver">#}
-    {#<input type="hidden" class="js-form-clear__ignore-element js-form-default-address__{{ data.formType }}" value="{{ defaultAddressKey }}">#}
+    <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]">
+    <input type="hidden" class="js-hidden-input-id-customer__{{ data.formType }}-saver">
+    <input type="hidden" class="js-form-default-address__{{ data.formType }}" value="{{ defaultAddressKey }}">
 {% endblock %}

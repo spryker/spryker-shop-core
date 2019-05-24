@@ -5,10 +5,10 @@
         address: _view.addressesForm,
         shipping: _view.addressesForm.shippingAddress,
         billing: _view.addressesForm.billingAddress,
-        items: _view.addressesForm.items
+        items: _view.addressesForm.items,
     },
     isMultipleShipmentEnabled: _view.addressesForm.vars.value.isMultipleShipmentEnabled,
-    title: 'checkout.step.address.title' | trans
+    title: 'checkout.step.address.title' | trans,
 } %}
 
 {% block content %}
@@ -34,10 +34,12 @@
         {% block fields %}
             {% set existingShippingAddresses = data.form.shippingAddress.id_customer_address is defined %}
             {% set hasShippingAddresses = data.form.shippingAddress.id_customer_address is defined %}
+            {% set hideShippingAddressForm = data.form.shippingAddress.id_customer_address is defined %}
             {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', embed.forms.shipping.vars.data]) %}
 
             {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
                 {% set hasShippingAddresses = true %}
+                {% set hideShippingAddressForm = true %}
             {% endif %}
 
             <div class="grid col col--sm-12 js-form-handler__shippingAddress">
@@ -69,7 +71,7 @@
                 {% endif %}
 
                 {% embed molecule('form') with {
-                    class: 'is-hidden js-address__shipping',
+                    class: 'js-address__shipping' ~ (hideShippingAddressForm ? ' is-hidden ' : ''),
                     data: {
                         form: embed.forms.shipping,
                         enableStart: false,
@@ -88,9 +90,6 @@
                 } only %}
                     {% block field %}
                         {{ form_row(field, {
-                            attr: {
-                                'data-key': field.vars.name,
-                            },
                             rowAttr: {
                                 class: config.name ~ '__field ' ~ fieldLayoutClass,
                             },
@@ -139,9 +138,6 @@
                 } only %}
                     {% block field %}
                         {{ form_row(field, {
-                            attr: {
-                                'data-key': field.vars.name
-                            },
                             rowAttr: {
                                 class: config.name ~ '__field ' ~ fieldLayoutClass
                             }
@@ -150,9 +146,11 @@
                     {% block fields %}
                         {% set existingBillingAddresses = data.form.id_customer_address is defined %}
                         {% set hasBillingAddresses = data.form.id_customer_address is defined %}
+                        {% set hideBillingAddressForm = data.form.id_customer_address is defined %}
                         {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['billingAddress', data.form.vars.data]) %}
                         {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
                             {% set hasBillingAddresses = true %}
+                            {% set hideBillingAddressForm = true %}
                         {% endif %}
 
                         {% if hasBillingAddresses %}
@@ -177,7 +175,7 @@
                             </div>
                         {% endif %}
 
-                        <div class="is-hidden js-address__billing">
+                        <div class="js-address__billing {{ hideBillingAddressForm ? ' is-hidden ' : '' }}">
                             {{parent()}}
                         </div>
                     {% endblock %}
@@ -229,15 +227,12 @@
                                 form: data.form,
                             },
                             attributes: {
-                                'shipping-address-toggler-selector': embed.forms.shipping.id_customer_address is defined ? '[name="' ~ embed.forms.shipping.id_customer_address.vars.full_name ~ '"]' : '',
-                                'billing-address-toggler-selector': embed.forms.billing.id_customer_address is defined ? '[name="' ~ embed.forms.billing.id_customer_address.vars.full_name ~ '"]' : '[name="' ~ embed.forms.billing.vars.full_name ~ '[id_customer_address]"]',
+                                'shipping-address-toggler-selector': '[name="' ~ embed.forms.shipping.vars.full_name ~ '[id_customer_address]"]',
+                                'billing-address-toggler-selector': '[name="' ~ embed.forms.billing.vars.full_name ~ '[id_customer_address]"]',
                                 'billing-same-as-shipping-toggler-selector': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]',
                                 'save-address-toggler-selector': '[name="' ~ data.form.isAddressSavingSkipped.vars.full_name ~ '"]',
-                                'add-new-shipping-address-selector': '.js-form-add-new-address__shippingAddress' | default (''),
-                                'add-new-billing-address-selector': '.js-form-add-new-address__billingAddress' | default (''),
                                 'business-unit-shipping-address-toggler-selector': '.js-form-select-address__shippingAddress',
-                                'form-clear-shipping-address-selector': '.js-form-clear__shippingAddress',
-                                'toggle-option-value': optionValueDeliverToMultipleAddresses
+                                'toggle-option-value': optionValueDeliverToMultipleAddresses,
                             },
                         } only %}
                     {% endif %}
