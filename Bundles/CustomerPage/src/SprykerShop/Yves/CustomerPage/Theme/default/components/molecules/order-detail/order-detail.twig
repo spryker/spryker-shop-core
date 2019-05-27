@@ -33,13 +33,6 @@
                     order: data.order,
                 },
             } only %}
-            <hr />
-            {% include molecule('order-summary', 'CustomerPage') with {
-                class: 'text-right',
-                data: {
-                    order: data.order,
-                },
-            } only %}
         </div>
 
         <div class="box">
@@ -66,5 +59,16 @@
                 {% endif %}
             </div>
         {% endif %}
+
+        <div class="box">
+            <h5>{{ 'customer.order.complete_checkout' | trans }}</h5>
+            <hr />
+            {% include molecule('order-summary', 'CustomerPage') with {
+                class: 'text-right',
+                data: {
+                    order: data.order,
+                },
+            } only %}
+        </div>
     {% endblock %}
 {% endblock %}
