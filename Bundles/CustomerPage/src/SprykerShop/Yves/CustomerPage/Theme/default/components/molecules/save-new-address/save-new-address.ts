@@ -1,9 +1,6 @@
 /* tslint:disable:max-file-line-count */
 import Component from 'ShopUi/models/component';
 
-/**
- * @event add-new-address An event which is triggered after the form fields are filled.
- */
 export default class SaveNewAddress extends Component {
     /**
      * The select/input address element which triggers toggling of the shipping address form.
@@ -152,7 +149,6 @@ export default class SaveNewAddress extends Component {
     }
 
     protected isSaveNewAddressOptionSelected(toggler: HTMLFormElement): boolean {
-        console.log(toggler, !toggler.value);
         return !toggler.value;
     }
 

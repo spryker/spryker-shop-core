@@ -29,7 +29,7 @@
                 items: data.forms.items,
             },
             isMultipleShipmentEnabled: data.isMultipleShipmentEnabled,
-        }
+        },
     } only %}
         {% block fields %}
             {% set existingShippingAddresses = data.form.shippingAddress.id_customer_address is defined %}
