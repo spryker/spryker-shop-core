@@ -24,10 +24,8 @@
                 } only %}
             </span>
 
-            {% set splittedFileName = data.fileName | split('.') %}
-
-            <span class="{{ config.name }}__name {{ config.name }}__name--icon">{{ splittedFileName[0] }}</span>
-            <span class="{{ config.name }}__extension">.{{ splittedFileName[1] }}</span>
+            <span class="{{ config.name }}__name {{ config.name }}__name--icon">{{ data.fileName | split('.') | slice(0, -1) | join('.') }}</span>
+            <span class="{{ config.name }}__extension">.{{ data.fileName | split('.') | last }}</span>
         {% else %}
             <span class="{{ config.name }}__name">{{ data.fileName }}</span>
         {% endif %}
