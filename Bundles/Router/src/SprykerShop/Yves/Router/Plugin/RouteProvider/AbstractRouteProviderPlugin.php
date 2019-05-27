@@ -32,7 +32,7 @@ abstract class AbstractRouteProviderPlugin extends AbstractPlugin implements Rou
      *
      * @return \SprykerShop\Yves\Router\Route\Route
      */
-    protected function buildGetRoute(string $path, string $moduleName, string $controllerName, string $actionName = 'index'): Route
+    protected function buildGetRoute(string $path, string $moduleName, string $controllerName, string $actionName = 'indexAction'): Route
     {
         return $this->buildRoute($path, $moduleName, $controllerName, $actionName)
             ->setMethods(Request::METHOD_GET);
@@ -46,7 +46,7 @@ abstract class AbstractRouteProviderPlugin extends AbstractPlugin implements Rou
      *
      * @return \SprykerShop\Yves\Router\Route\Route
      */
-    protected function buildPostRoute(string $path, string $moduleName, string $controllerName, string $actionName = 'index'): Route
+    protected function buildPostRoute(string $path, string $moduleName, string $controllerName, string $actionName = 'indexAction'): Route
     {
         return $this->buildRoute($path, $moduleName, $controllerName, $actionName)
             ->setMethods(Request::METHOD_POST);
