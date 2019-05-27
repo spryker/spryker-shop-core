@@ -64,6 +64,6 @@ class IconNameFileStorageDataExpander implements FileStorageDataExpanderInterfac
         $iconNames = $this->contentFileWidgetConfig->getFileIconNames();
         $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
 
-        return $iconNames[$fileExtension] ?? $iconNames[static::KEY_DEFAULT_ICON_NAME];
+        return $iconNames[$fileExtension] ?? static::KEY_DEFAULT_ICON_NAME;
     }
 }
