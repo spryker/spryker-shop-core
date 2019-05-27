@@ -50,14 +50,14 @@ class IconNameFileStorageDataExpanderTest extends Unit
     public function fileDataProvider(): array
     {
         return [
-            'text/plain', 'test.csv', 'file-csv',
-            'image/png', 'test.png', 'file-image',
-            'image/jpeg', 'test.jpeg', 'file-image',
-            'video/mp4', 'test.mp4', 'file-video',
-            'audio/mp3', 'test.mp3', 'file-audio',
-            'application/pdf', 'test.pdf', 'file-pdf',
-            'text/plain', 'test.txt', 'file',
-            'test/test', 'test.test', 'file',
+            ['text/plain', 'test.csv', 'file-csv'],
+            ['image/png', 'test.png', 'file-image'],
+            ['image/jpeg', 'test.jpeg', 'file-image'],
+            ['video/mp4', 'test.mp4', 'file-video'],
+            ['audio/mp3', 'test.mp3', 'file-audio'],
+            ['application/pdf', 'test.pdf', 'file-pdf'],
+            ['text/plain', 'test.txt', 'file'],
+            ['test/test', 'test.test', 'file'],
         ];
     }
 
