@@ -1,0 +1,18 @@
+{% define data = {
+    fileViewCollection: fileViewCollection,
+} %}
+
+{% block content %}
+    <ul class="list">
+        {% for fileView in data.fileViewCollection %}
+            <li class="list__item spacing-bottom">
+                {% include molecule('file-download-link', 'FileManagerWidget') with {
+                    data: {
+                        idFile: fileView.fkFile,
+                        fileName: fileView.fileName
+                    }
+                } only %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
