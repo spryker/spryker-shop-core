@@ -27,11 +27,11 @@ class ErrorMessage implements ErrorMessageInterface
     }
 
     /**
-     * @param $exception
+     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
      *
      * @return string
      */
-    public function getNotFoundMessage($exception): string
+    public function getNotFoundMessage(FlattenException $exception): string
     {
         if (!$this->errorPageConfig->isErrorStackTraceEnabled()) {
             return '';

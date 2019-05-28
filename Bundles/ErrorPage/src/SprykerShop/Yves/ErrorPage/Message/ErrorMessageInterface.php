@@ -7,12 +7,14 @@
 
 namespace SprykerShop\Yves\ErrorPage\Message;
 
+use Symfony\Component\Debug\Exception\FlattenException;
+
 interface ErrorMessageInterface
 {
     /**
-     * @param $exception
+     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
      *
      * @return string
      */
-    public function getNotFoundMessage($exception): string;
+    public function getNotFoundMessage(FlattenException $exception): string;
 }
