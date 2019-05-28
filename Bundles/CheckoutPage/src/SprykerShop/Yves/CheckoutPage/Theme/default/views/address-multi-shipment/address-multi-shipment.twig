@@ -32,21 +32,20 @@
         },
     } only %}
         {% block fields %}
-            {% set existingShippingAddresses = data.form.shippingAddress.id_customer_address is defined %}
-            {% set hasShippingAddresses = data.form.shippingAddress.id_customer_address is defined %}
-            {% set hideShippingAddressForm = data.form.shippingAddress.id_customer_address is defined %}
             {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', embed.forms.shipping.vars.data]) %}
+            {% set isCompanyBusinessUnitAddressApplicable = companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
+            {% set hasShippingAddresses = data.form.shippingAddress.id_customer_address is defined %}
+            {% set hasShippingAddressesApplicable = hasShippingAddresses %}
 
-            {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
-                {% set hasShippingAddresses = true %}
-                {% set hideShippingAddressForm = true %}
+            {% if isCompanyBusinessUnitAddressApplicable %}
+                {% set hasShippingAddressesApplicable = true %}
             {% endif %}
 
             <div class="grid col col--sm-12 js-form-handler__shippingAddress">
-                {% if hasShippingAddresses %}
+                {% if hasShippingAddressesApplicable %}
                     <div class="form__field col col--sm-6">
                         <ul class="list spacing-y">
-                            {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
+                            {% if isCompanyBusinessUnitAddressApplicable %}
                                 {% widget companyBusinessUnitAddressWidget with {
                                     data: {
                                         isMultipleShipmentEnabled: embed.isMultipleShipmentEnabled,
@@ -54,7 +53,7 @@
                                 } only %}
                                 {% endwidget %}
 
-                                {% if existingShippingAddresses %}
+                                {% if hasShippingAddresses %}
                                     {% do data.form.shippingAddress.id_customer_address.setRendered %}
                                 {% endif %}
                             {% else %}
@@ -71,7 +70,7 @@
                 {% endif %}
 
                 {% embed molecule('form') with {
-                    class: 'js-address__shipping' ~ (hideShippingAddressForm ? ' is-hidden ' : ''),
+                    class: 'js-address__shipping' ~ (hasShippingAddressesApplicable ? ' is-hidden ' : ''),
                     data: {
                         form: embed.forms.shipping,
                         enableStart: false,
@@ -143,23 +142,24 @@
                             }
                         }) }}
                     {% endblock %}
+
                     {% block fields %}
-                        {% set existingBillingAddresses = data.form.id_customer_address is defined %}
-                        {% set hasBillingAddresses = data.form.id_customer_address is defined %}
-                        {% set hideBillingAddressForm = data.form.id_customer_address is defined %}
                         {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['billingAddress', data.form.vars.data]) %}
-                        {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
-                            {% set hasBillingAddresses = true %}
-                            {% set hideBillingAddressForm = true %}
+                        {% set isCompanyBusinessUnitAddressApplicable = companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
+                        {% set hasBillingAddresses = data.form.id_customer_address is defined %}
+                        {% set hasBillingAddressesApplicable = hasBillingAddresses %}
+
+                        {% if isCompanyBusinessUnitAddressApplicable %}
+                            {% set hasBillingAddressesApplicable = true %}
                         {% endif %}
 
-                        {% if hasBillingAddresses %}
+                        {% if hasBillingAddressesApplicable %}
                             <div class="form__field col col--sm-6">
                                 <ul class="list spacing-y">
-                                    {% if companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
+                                    {% if isCompanyBusinessUnitAddressApplicable %}
                                         {% widget companyBusinessUnitAddressWidget %}{% endwidget %}
 
-                                        {% if existingBillingAddresses %}
+                                        {% if hasBillingAddresses %}
                                             {% do data.form.id_customer_address.setRendered %}
                                         {% endif %}
                                     {% else %}
@@ -175,7 +175,7 @@
                             </div>
                         {% endif %}
 
-                        <div class="js-address__billing {{ hideBillingAddressForm ? ' is-hidden ' : '' }}">
+                        <div class="js-address__billing {{ hasBillingAddressesApplicable ? ' is-hidden ' : '' }}">
                             {{parent()}}
                         </div>
                     {% endblock %}
@@ -187,11 +187,9 @@
             <div class="grid grid--middle grid--justify">
                 <div class="col">
                     {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', embed.forms.shipping.vars.data]) %}
-                    {% set hasCompanyBusinessUnitAddress = companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
-                    {% set optionValueAddNewAddress = '' %}
-                    {% set optionValueDeliverToMultipleAddresses = constant('SprykerShop\\Yves\\CustomerPage\\Form\\CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES') %}
+                    {% set isCompanyBusinessUnitAddressApplicable = companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
 
-                    {% if not hasCompanyBusinessUnitAddress %}
+                    {% if not isCompanyBusinessUnitAddressApplicable %}
                         {% set existingShippingAddressSelectSelector = embed.forms.shipping.id_customer_address is defined ? '[name="' ~ embed.forms.shipping.id_customer_address.vars.full_name ~ '"]' : '' %}
                         {% set existingBillingAddressSelectSelector = embed.forms.billing.id_customer_address is defined ? '[name="' ~ embed.forms.billing.id_customer_address.vars.full_name ~ '"]' : '' %}
                     {% else %}
@@ -208,7 +206,7 @@
                             'billing-same-as-shipping-selector': '.js-address__billingSameAsShipping',
                             'billing-same-as-shipping-toggler-selector': '[name="addressesForm[billingSameAsShipping]"]',
                             'class-to-toggle': 'is-hidden',
-                            'toggle-option-value': optionValueDeliverToMultipleAddresses,
+                            'toggle-option-value': '-1',
                         },
                     } only %}
 
@@ -232,7 +230,7 @@
                                 'billing-same-as-shipping-toggler-selector': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]',
                                 'save-address-toggler-selector': '[name="' ~ data.form.isAddressSavingSkipped.vars.full_name ~ '"]',
                                 'business-unit-shipping-address-toggler-selector': '.js-form-select-address__shippingAddress',
-                                'toggle-option-value': optionValueDeliverToMultipleAddresses,
+                                'toggle-option-value': '-1',
                             },
                         } only %}
                     {% endif %}

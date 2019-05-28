@@ -90,12 +90,12 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
     }
 
     protected fillHiddenInputsWithNewAddress(): void {
-        const currentAddressList = this.addressesDataObject[this.currentAddress.toString()];
+        const currentAddressList = this.addressesDataObject[this.currentAddress];
         const hiddenInputIdCustomerAddress = <HTMLInputElement>this.form.querySelector(
             `[name="${this.addressHiddenInputSelector}"]`
         );
 
-        this.hiddenDefaultAddressInput.value = this.currentAddress.toString();
+        this.hiddenDefaultAddressInput.value = this.currentAddress;
         this.fillHiddenInputAddressesFields(currentAddressList);
         hiddenInputIdCustomerAddress.dispatchEvent(this.hiddenAddressInputChangeEvent);
     }
@@ -121,9 +121,10 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
             `[name="${this.addressHiddenInputSelector}"]`
         );
         const idCustomerAddress = 'id_customer_address';
+        const idCustomerAddressValue = address ? address[idCustomerAddress] : '';
 
-        hiddenInputIdCustomerAddressSaver.value = address ? address[idCustomerAddress] : '';
-        hiddenInputIdCustomerAddress.value = address ? address[idCustomerAddress] : '';
+        hiddenInputIdCustomerAddressSaver.value = idCustomerAddressValue;
+        hiddenInputIdCustomerAddress.value = idCustomerAddressValue;
     }
 
     protected initAddressesData(): void {
