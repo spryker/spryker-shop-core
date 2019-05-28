@@ -8,8 +8,8 @@
 namespace SprykerShopTest\Yves\Router\Plugin;
 
 use Codeception\Test\Unit;
+use SprykerShop\Shared\Router\RouterConstants;
 use SprykerShop\Yves\Router\Plugin\Router\YvesRouterPlugin;
-use SprykerShop\Yves\Router\RouterEnvironmentConfigConstantsYves;
 use SprykerShopTest\Yves\Router\Plugin\Fixtures\RouteProviderPlugin;
 
 /**
@@ -34,7 +34,7 @@ class YvesRouterPluginTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->mockEnvironmentConfig(RouterEnvironmentConfigConstantsYves::IS_CACHE_ENABLED, false);
+        $this->tester->mockEnvironmentConfig(RouterConstants::IS_CACHE_ENABLED, false);
 
         $this->tester->mockFactoryMethod('getRouteProviderPlugins', [
             new RouteProviderPlugin(),

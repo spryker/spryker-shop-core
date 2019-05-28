@@ -5,9 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\Router;
+namespace SprykerShop\Shared\Router;
 
-interface RouterEnvironmentConfigConstantsYves
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
+interface RouterConstants
 {
     /**
      * Specification:

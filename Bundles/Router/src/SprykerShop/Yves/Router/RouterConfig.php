@@ -42,10 +42,10 @@ class RouterConfig extends AbstractBundleConfig
      */
     protected function getCachePathIfCacheEnabled(): ?string
     {
-        if ($this->get(RouterEnvironmentConfigConstantsYves::IS_CACHE_ENABLED, true)) {
+        if ($this->get(RouterConstants::IS_CACHE_ENABLED, true)) {
             $defaultCachePath = APPLICATION_ROOT_DIR . '/data/' . APPLICATION_STORE . '/cache/' . APPLICATION . '/routing';
 
-            return $this->get(RouterEnvironmentConfigConstantsYves::CACHE_PATH, $defaultCachePath);
+            return $this->get(RouterConstants::CACHE_PATH, $defaultCachePath);
         }
 
         return null;
@@ -56,7 +56,7 @@ class RouterConfig extends AbstractBundleConfig
      */
     public function isSslEnabled(): bool
     {
-        return $this->get(RouterEnvironmentConfigConstantsYves::IS_SSL_ENABLED, true);
+        return $this->get(RouterConstants::IS_SSL_ENABLED, true);
     }
 
     /**
@@ -64,7 +64,7 @@ class RouterConfig extends AbstractBundleConfig
      */
     public function getSslExcludedRouteNames(): array
     {
-        return $this->get(RouterEnvironmentConfigConstantsYves::SSL_EXCLUDED_ROUTE_NAMES, []);
+        return $this->get(RouterConstants::SSL_EXCLUDED_ROUTE_NAMES, []);
     }
 
     /**

@@ -19,7 +19,7 @@ class WebProfilerWidgetConfig extends AbstractBundleConfig
      */
     public function isWebProfilerEnabled()
     {
-        return $this->get(WebProfilerWidgetEnvironmentConfigConstantsYves::IS_WEB_PROFILER_ENABLED, false);
+        return $this->get(WebProfilerWidgetConstants::IS_WEB_PROFILER_ENABLED, false);
     }
 
     /**
@@ -41,6 +41,6 @@ class WebProfilerWidgetConfig extends AbstractBundleConfig
     {
         $defaultPath = APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/cache/profiler';
 
-        return $this->get(WebProfilerWidgetEnvironmentConfigConstantsYves::PROFILER_CACHE_DIRECTORY, $defaultPath);
+        return $this->get(WebProfilerWidgetConstants::PROFILER_CACHE_DIRECTORY, $defaultPath);
     }
 }
