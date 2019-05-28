@@ -75,7 +75,10 @@ export async function mount(): Promise<void> {
     try {
         await mountComponents();
         dispatchCustomEvent(config().events.mount);
-        dispatchCustomEvent(config().events.ready); // deprecated
+        /**
+         * @deprecated Use events.mount instead.
+         */
+        dispatchCustomEvent(config().events.ready);
 
         if (isBootstrap) {
             dispatchCustomEvent(config().events.bootstrap);
