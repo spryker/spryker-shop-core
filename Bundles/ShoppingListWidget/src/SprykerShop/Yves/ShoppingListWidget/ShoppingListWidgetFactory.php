@@ -48,12 +48,4 @@ class ShoppingListWidgetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ShoppingListWidgetDependencyProvider::CLIENT_SHOPPING_LIST_SESSION);
     }
-
-    /**
-     * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ProductViewTransferExpanderPluginInterface[]
-     */
-    public function getProductConcreteExpanderPlugins(): array
-    {
-        return $this->getProvidedDependency(ShoppingListWidgetDependencyProvider::PLUGINS_SHOPPING_LIST_PRODUCT_CONCRETE_EXPANDER);
-    }
 }

@@ -21,28 +21,9 @@ class ShoppingListItemWidget extends AbstractWidget
      */
     public function __construct(ProductViewTransfer $productViewTransfer, bool $isItemAvailable)
     {
-        $productViewTransfer = $this->expandProductViewTransfer($productViewTransfer);
-
         $this->addParameter('item', $productViewTransfer)
             ->addParameter('readOnly', !$isItemAvailable);
         $this->setQuantityRestrictions($productViewTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    protected function expandProductViewTransfer(ProductViewTransfer $productViewTransfer): ProductViewTransfer
-    {
-        $productConcreteExpanderPlugins = $this->getFactory()
-            ->getProductConcreteExpanderPlugins();
-
-        foreach ($productConcreteExpanderPlugins as $productConcreteExpanderPlugin) {
-            $productViewTransfer = $productConcreteExpanderPlugin->expand($productViewTransfer);
-        }
-
-        return $productViewTransfer;
     }
 
     /**
