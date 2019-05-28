@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Shared\CalculationPage;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface CalculationPageConstants
 {
     public const ENABLE_CART_DEBUG = 'CALCULATION_PAGE:ENABLE_CART_DEBUG';

@@ -16,8 +16,6 @@ use Spryker\Yves\Kernel\Controller\AbstractController;
 class DebugController extends AbstractController
 {
     /**
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return array
      */
     public function cartAction()

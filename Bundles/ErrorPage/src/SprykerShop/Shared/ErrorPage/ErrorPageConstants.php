@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Shared\ErrorPage;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface ErrorPageConstants
 {
     public const ENABLE_ERROR404_STACK_TRACE = 'ERROR_PAGE:ENABLE_ERROR404_STACK_TRACE';

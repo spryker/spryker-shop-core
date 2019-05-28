@@ -46,6 +46,8 @@ class QuoteReader implements QuoteReaderInterface
     }
 
     /**
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function getRecalculatedQuote(): QuoteTransfer
