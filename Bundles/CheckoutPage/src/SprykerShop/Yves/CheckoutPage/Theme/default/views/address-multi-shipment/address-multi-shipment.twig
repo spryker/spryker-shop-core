@@ -12,6 +12,9 @@
 } %}
 
 {% block content %}
+    {% set companyBusinessUnitShippingAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', data.forms.shipping.vars.data]) %}
+    {% set isCompanyBusinessUnitShippingAddressApplicable = companyBusinessUnitShippingAddressWidget and companyBusinessUnitShippingAddressWidget.isApplicable %}
+
     {% embed molecule('form') with {
         class: 'box',
         data: {
@@ -29,15 +32,15 @@
                 items: data.forms.items,
             },
             isMultipleShipmentEnabled: data.isMultipleShipmentEnabled,
+            companyBusinessUnitShippingAddressWidget: companyBusinessUnitShippingAddressWidget,
+            isCompanyBusinessUnitShippingAddressApplicable: isCompanyBusinessUnitShippingAddressApplicable,
         },
     } only %}
         {% block fields %}
-            {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', embed.forms.shipping.vars.data]) %}
-            {% set isCompanyBusinessUnitAddressApplicable = companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
             {% set hasShippingAddresses = data.form.shippingAddress.id_customer_address is defined %}
             {% set hasShippingAddressesApplicable = hasShippingAddresses %}
 
-            {% if isCompanyBusinessUnitAddressApplicable %}
+            {% if embed.isCompanyBusinessUnitShippingAddressApplicable %}
                 {% set hasShippingAddressesApplicable = true %}
             {% endif %}
 
@@ -45,8 +48,8 @@
                 {% if hasShippingAddressesApplicable %}
                     <div class="form__field col col--sm-6">
                         <ul class="list spacing-y">
-                            {% if isCompanyBusinessUnitAddressApplicable %}
-                                {% widget companyBusinessUnitAddressWidget with {
+                            {% if embed.isCompanyBusinessUnitShippingAddressApplicable %}
+                                {% widget embed.companyBusinessUnitShippingAddressWidget with {
                                     data: {
                                         isMultipleShipmentEnabled: embed.isMultipleShipmentEnabled,
                                     },
@@ -144,20 +147,20 @@
                     {% endblock %}
 
                     {% block fields %}
-                        {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['billingAddress', data.form.vars.data]) %}
-                        {% set isCompanyBusinessUnitAddressApplicable = companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
+                        {% set companyBusinessUnitBillingAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['billingAddress', data.form.vars.data]) %}
+                        {% set isCompanyBusinessUnitBillingAddressApplicable = companyBusinessUnitBillingAddressWidget and companyBusinessUnitBillingAddressWidget.isApplicable %}
                         {% set hasBillingAddresses = data.form.id_customer_address is defined %}
                         {% set hasBillingAddressesApplicable = hasBillingAddresses %}
 
-                        {% if isCompanyBusinessUnitAddressApplicable %}
+                        {% if isCompanyBusinessUnitBillingAddressApplicable %}
                             {% set hasBillingAddressesApplicable = true %}
                         {% endif %}
 
                         {% if hasBillingAddressesApplicable %}
                             <div class="form__field col col--sm-6">
                                 <ul class="list spacing-y">
-                                    {% if isCompanyBusinessUnitAddressApplicable %}
-                                        {% widget companyBusinessUnitAddressWidget %}{% endwidget %}
+                                    {% if isCompanyBusinessUnitBillingAddressApplicable %}
+                                        {% widget companyBusinessUnitBillingAddressWidget %}{% endwidget %}
 
                                         {% if hasBillingAddresses %}
                                             {% do data.form.id_customer_address.setRendered %}
@@ -186,10 +189,7 @@
         {% block actions %}
             <div class="grid grid--middle grid--justify">
                 <div class="col">
-                    {% set companyBusinessUnitAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', embed.forms.shipping.vars.data]) %}
-                    {% set isCompanyBusinessUnitAddressApplicable = companyBusinessUnitAddressWidget and companyBusinessUnitAddressWidget.isApplicable %}
-
-                    {% if not isCompanyBusinessUnitAddressApplicable %}
+                    {% if not embed.isCompanyBusinessUnitShippingAddressApplicable %}
                         {% set existingShippingAddressSelectSelector = embed.forms.shipping.id_customer_address is defined ? '[name="' ~ embed.forms.shipping.id_customer_address.vars.full_name ~ '"]' : '' %}
                         {% set existingBillingAddressSelectSelector = embed.forms.billing.id_customer_address is defined ? '[name="' ~ embed.forms.billing.id_customer_address.vars.full_name ~ '"]' : '' %}
                     {% else %}
