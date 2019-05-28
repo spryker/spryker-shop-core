@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\Router;
 
 use Spryker\Yves\Kernel\AbstractBundleConfig;
+use SprykerShop\Shared\Router\RouterConstants;
 use SprykerShop\Yves\Router\Generator\UrlGenerator;
 use SprykerShop\Yves\Router\UrlMatcher\RedirectableUrlMatcher;
 

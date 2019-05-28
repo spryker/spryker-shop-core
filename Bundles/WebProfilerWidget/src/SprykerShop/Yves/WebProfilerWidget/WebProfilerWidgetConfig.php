@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\WebProfilerWidget;
 use ReflectionClass;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
+use SprykerShop\Shared\WebProfilerWidget\WebProfilerWidgetConstants;
 use Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener;
 
 class WebProfilerWidgetConfig extends AbstractBundleConfig
