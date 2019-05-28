@@ -19,7 +19,8 @@ use Twig\Environment;
 use Twig\TwigFunction;
 
 /**
- * @deprecated Use `SprykerShop\Yves\ShopApplication\Plugin\Twig\WidgetTagTwigPlugin` instead.
+ * @deprecated Use `SprykerShop\Yves\ShopApplication\Plugin\Twig\WidgetTagTwigPlugin` instead to provide twig functionality.
+ * @deprecated Use `\SprykerShop\Yves\ShopApplication\Plugin\EventDispatcher\ShopApplicationEventDispatcherPlugin` instead to handle View response.
  *
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationConfig getConfig()
