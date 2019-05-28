@@ -25,6 +25,10 @@
             text-align: center;
         }
 
+        &__name-wrapper {
+            display: flex;
+        }
+
         &__name {
             display: inline-block;
             vertical-align: middle;
