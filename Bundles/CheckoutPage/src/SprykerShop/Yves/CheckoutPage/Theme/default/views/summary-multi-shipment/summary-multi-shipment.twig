@@ -103,8 +103,11 @@
                     {% include molecule('display-delivery-method') with {
                         class: 'text-small',
                         data: {
-                            method: shipmentGroup.shipment.method
-                        }
+                            carrierName: shipmentGroup.shipment.method.carrierName,
+                            name: shipmentGroup.shipment.method.name,
+                            storeCurrencyPrice: shipmentGroup.shipment.method.storeCurrencyPrice,
+                            currencyIsoCode: shipmentGroup.shipment.method.currencyIsoCode,
+                        },
                     } only %}
                     <a href="{{ url('checkout-shipment') }}" {{qa('cart-go-to-shipment')}}>
                         {{ 'general.edit.button' | trans }}
