@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CheckoutPage\Model\Address;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
 
 class CustomerAddressExpander implements CustomerAddressExpanderInterface
@@ -33,7 +34,7 @@ class CustomerAddressExpander implements CustomerAddressExpanderInterface
     public function expand(AddressTransfer $addressTransfer): AddressTransfer
     {
         $customerTransfer = $this->customerClient->getCustomer();
-        if ($customerTransfer === null || $customerTransfer->getAddresses() === null || $addressTransfer->getIdCustomerAddress() === null) {
+        if (!$this->isCustomerAddressValid($customerTransfer) || $addressTransfer->getIdCustomerAddress() === null) {
             return $addressTransfer;
         }
 
@@ -56,5 +57,15 @@ class CustomerAddressExpander implements CustomerAddressExpanderInterface
     protected function expandAddressTransferWithCustomerAddressData(AddressTransfer $addressTransfer, AddressTransfer $customerAddressTransfer): AddressTransfer
     {
         return $addressTransfer->fromArray($customerAddressTransfer->toArray());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isCustomerAddressValid(?CustomerTransfer $customerTransfer): bool
+    {
+        return $customerTransfer !== null && $customerTransfer->getAddresses() !== null;
     }
 }
