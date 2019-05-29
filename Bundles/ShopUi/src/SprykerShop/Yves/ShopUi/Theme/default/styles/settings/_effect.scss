@@ -1,5 +1,9 @@
 /**
- * Defines default values for animation effects
+ * Defines default duration value for animation effects. Usage: mixins providing animation properies.
  */
 $setting-effect-default-duration: 250ms !default;
+
+/**
+ * Defines default timing function for animation effects. Usage: mixins providing animation properies.
+ */
 $setting-effect-default-ease: ease-in-out !default;

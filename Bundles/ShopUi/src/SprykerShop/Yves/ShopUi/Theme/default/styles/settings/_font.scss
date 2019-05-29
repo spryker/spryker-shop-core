@@ -1,12 +1,12 @@
 /**
- * Definition of main font values
+ * Definition of main font values. Usage: body global font styles
  */
 $setting-font-family: 'Arial', sans-serif !default;
 $setting-font-family-code: 'Menlo', monospace !default;
 $setting-font-size-base: 16px !default;
 
 /**
- * Font size values map.
+ * Font size values map. Usage: mixins providing styles for headings, text elements etc.
  */
 $setting-font-size: (
     1: 38px,
@@ -21,7 +21,7 @@ $setting-font-size: (
 ) !default;
 
 /**
- * Font weight values map
+ * Font weight values map. Usage: mixin to set font weight property.
  */
 $setting-font-weight: (
     light: 300,
@@ -30,7 +30,7 @@ $setting-font-weight: (
 ) !default;
 
 /**
- * Font line height values map
+ * Font line height values map. Usage: mixins providing styles for headings, text elements etc.
  */
 $setting-font-line-height: (
     1: 1.1,
