@@ -34,7 +34,7 @@ class CustomerAddressExpander implements CustomerAddressExpanderInterface
     public function expand(AddressTransfer $addressTransfer): AddressTransfer
     {
         $customerTransfer = $this->customerClient->getCustomer();
-        if (!$this->isCustomerAddressValid($customerTransfer) || $addressTransfer->getIdCustomerAddress() === null) {
+        if (!$this->isCustomerAddressExists($customerTransfer) || $addressTransfer->getIdCustomerAddress() === null) {
             return $addressTransfer;
         }
 
@@ -64,7 +64,7 @@ class CustomerAddressExpander implements CustomerAddressExpanderInterface
      *
      * @return bool
      */
-    protected function isCustomerAddressValid(?CustomerTransfer $customerTransfer): bool
+    protected function isCustomerAddressExists(?CustomerTransfer $customerTransfer): bool
     {
         return $customerTransfer !== null && $customerTransfer->getAddresses() !== null;
     }
