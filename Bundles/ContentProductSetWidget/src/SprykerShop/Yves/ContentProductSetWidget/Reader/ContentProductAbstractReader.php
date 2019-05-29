@@ -19,7 +19,7 @@ class ContentProductAbstractReader implements ContentProductAbstractReaderInterf
     protected const PARAM_ATTRIBUTE = 'attributes';
 
     /**
-     * @var \SprykerShop\Yves\ContentProductSetWidget\Dependency\Client\ContentProductSetWidgetToProductSetStorageClientInterface
+     * @var \SprykerShop\Yves\ContentProductSetWidget\Dependency\Client\ContentProductSetWidgetToProductStorageClientInterface
      */
     protected $productStorageClient;
 

@@ -40,11 +40,11 @@ class ContentProductSetWidgetDependencyProvider extends AbstractBundleDependency
      */
     protected function addContentProductClient(Container $container): Container
     {
-        $container[static::CLIENT_CONTENT_PRODUCT_SET] = function (Container $container) {
+        $container->set(static::CLIENT_CONTENT_PRODUCT_SET, function (Container $container) {
             return new ContentProductSetWidgetToContentProductSetClientBridge(
                 $container->getLocator()->contentProductSet()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -56,11 +56,11 @@ class ContentProductSetWidgetDependencyProvider extends AbstractBundleDependency
      */
     protected function addProductSetStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_SET_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_SET_STORAGE, function (Container $container) {
             return new ContentProductSetWidgetToProductSetStorageClientBridge(
                 $container->getLocator()->productSetStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -72,9 +72,11 @@ class ContentProductSetWidgetDependencyProvider extends AbstractBundleDependency
      */
     protected function addProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
-            return new ContentProductSetWidgetToProductStorageClientBridge($container->getLocator()->productStorage()->client());
-        };
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
+            return new ContentProductSetWidgetToProductStorageClientBridge(
+                $container->getLocator()->productStorage()->client()
+            );
+        });
 
         return $container;
     }
