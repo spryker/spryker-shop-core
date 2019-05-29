@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\ResourceSharePage\Controller;
 
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
-use Generated\Shared\Transfer\RouteTransfer;
+use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,18 +19,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class LinkController extends AbstractController
 {
-    /**
-     * @see \SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider::ROUTE_LOGIN
-     */
-    protected const ROUTE_LOGIN = 'login';
-
-    /**
-     * @see \SprykerShop\Yves\ResourceSharePage\Plugin\Provider\ResourceSharePageControllerProvider::ROUTE_RESOURCE_SHARE_LINK
-     */
-    protected const ROUTE_RESOURCE_SHARE_LINK = 'link';
-    protected const PARAM_RESOURCE_SHARE_UUID = 'resourceShareUuid';
-    protected const LINK_REDIRECT_URL = 'LinkRedirectUrl';
-
     /**
      * @param string $resourceShareUuid
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -57,42 +45,41 @@ class LinkController extends AbstractController
         $resourceShareResponseTransfer = $this->getFactory()->createResourceShareActivator()
             ->activateResourceShare($resourceShareUuid);
 
-        if ($resourceShareResponseTransfer->getIsLoginRequired()) {
-            foreach ($resourceShareResponseTransfer->getMessages() as $messageTransfer) {
-                $this->addErrorMessage($messageTransfer->getValue());
-            }
+        $this->processMessages($resourceShareResponseTransfer);
 
-            $routeTransfer = (new RouteTransfer())
-                ->setRoute(static::ROUTE_RESOURCE_SHARE_LINK)
-                ->setParameters([static::PARAM_RESOURCE_SHARE_UUID => $resourceShareUuid]);
-
-            return $this->redirectResponseInternal(static::ROUTE_LOGIN, [
-                static::LINK_REDIRECT_URL => $this->getApplication()->path(
-                    $routeTransfer->getRoute(),
-                    $routeTransfer->getParameters()
-                ),
-            ]);
-        }
-
-        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
-            foreach ($resourceShareResponseTransfer->getMessages() as $messageTransfer) {
-                $this->addErrorMessage($messageTransfer->getValue());
-            }
-
+        if (!$resourceShareResponseTransfer->getIsSuccessful() && !$resourceShareResponseTransfer->getIsLoginRequired()) {
             throw new NotFoundHttpException();
-        }
-
-        foreach ($resourceShareResponseTransfer->getMessages() as $messageTransfer) {
-            $this->addSuccessMessage($messageTransfer->getValue());
         }
 
         $routeTransfer = $this->getFactory()->createRouteResolver()
             ->resolveRoute(
+                $request,
+                (bool)$resourceShareResponseTransfer->getIsLoginRequired(),
                 (new ResourceShareRequestTransfer())
                     ->setResourceShare($resourceShareResponseTransfer->getResourceShare())
                     ->setCustomer($this->getFactory()->getCustomerClient()->getCustomer())
             );
 
         return $this->redirectResponseInternal($routeTransfer->getRoute(), $routeTransfer->getParameters());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
+     *
+     * @return void
+     */
+    protected function processMessages(ResourceShareResponseTransfer $resourceShareResponseTransfer): void
+    {
+        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
+            foreach ($resourceShareResponseTransfer->getMessages() as $messageTransfer) {
+                $this->addErrorMessage($messageTransfer->getValue());
+            }
+
+            return;
+        }
+
+        foreach ($resourceShareResponseTransfer->getMessages() as $messageTransfer) {
+            $this->addSuccessMessage($messageTransfer->getValue());
+        }
     }
 }

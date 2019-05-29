@@ -10,10 +10,20 @@ namespace SprykerShop\Yves\ResourceSharePage\RouteResolver;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\RouteTransfer;
 use SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToMessengerClientInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RouteResolver implements RouteResolverInterface
 {
+    /**
+     * @see \SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider::ROUTE_LOGIN
+     */
+    protected const ROUTE_LOGIN = 'login';
+
+    /**
+     * @see \SprykerShop\Yves\CustomerPage\Plugin\CustomerPage\RedirectUrlRedirectAfterLoginStrategyPlugin::PARAM_REDIRECT_URL
+     */
+    protected const LINK_REDIRECT_URL = 'redirectUrl';
     protected const GLOSSARY_KEY_RESOURCE_SHARE_LINK_ERROR_NO_ROUTE = 'resource-share.link.error.no-route';
 
     /**
@@ -37,14 +47,20 @@ class RouteResolver implements RouteResolverInterface
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param bool $isLoginRequired
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return \Generated\Shared\Transfer\RouteTransfer
      */
-    public function resolveRoute(ResourceShareRequestTransfer $resourceShareRequestTransfer): RouteTransfer
+    public function resolveRoute(Request $request, bool $isLoginRequired, ResourceShareRequestTransfer $resourceShareRequestTransfer): RouteTransfer
     {
+        if ($isLoginRequired) {
+            return $this->getLoginRoute($request);
+        }
+
         $resourceShareRequestTransfer->requireResourceShare();
 
         foreach ($this->resourceShareRouterStrategyPlugins as $resourceShareRouterStrategyPlugin) {
@@ -58,5 +74,19 @@ class RouteResolver implements RouteResolverInterface
         $this->messengerClient->addErrorMessage(static::GLOSSARY_KEY_RESOURCE_SHARE_LINK_ERROR_NO_ROUTE);
 
         throw new NotFoundHttpException();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\RouteTransfer
+     */
+    protected function getLoginRoute(Request $request): RouteTransfer
+    {
+        return (new RouteTransfer())
+            ->setRoute(static::ROUTE_LOGIN)
+            ->setParameters([
+                static::LINK_REDIRECT_URL => $request->getRequestUri(),
+            ]);
     }
 }
