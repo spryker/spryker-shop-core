@@ -22,6 +22,7 @@ use SprykerShop\Yves\ContentProductSetWidget\Dependency\Client\ContentProductSet
 use SprykerShop\Yves\ContentProductSetWidget\Dependency\Client\ContentProductSetWidgetToProductStorageClientInterface;
 use SprykerShop\Yves\ContentProductSetWidget\Plugin\Twig\ContentProductSetTwigPlugin;
 use SprykerShop\Yves\ContentProductSetWidget\Twig\ContentProductSetTwigFunction;
+use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -46,7 +47,7 @@ class ContentProductSetTwigPluginTest extends Unit
     protected const CONTENT_TERM = 'TERM';
 
     protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<strong>Content product set with ID 0 not found.</strong>';
-    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<strong>Content product set widget could not be rendered because the content item with ID 0 is not an abstract product list.</strong>';
+    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<strong>Content product set widget could not be rendered because the content item with ID 0 is not a product set.</strong>';
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"wrong" is not supported name of template.</strong>';
     protected const RENDERED_STRING = 'output';
 
@@ -71,7 +72,12 @@ class ContentProductSetTwigPluginTest extends Unit
     public function testContentProductSetNotFound(): void
     {
         // Act
-        $productAbstractContent = call_user_func($this->getContentProductSetTwigPlugin()->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
+        $productAbstractContent = call_user_func(
+            $this->getContentProductSetTwigPlugin()->getCallable(),
+            $this->getContext(),
+            static::CONTENT_ID,
+            static::DEFAULT_TEMPLATE
+        );
 
         // Assert
         $this->assertEquals(static::MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND, $productAbstractContent);
@@ -89,7 +95,12 @@ class ContentProductSetTwigPluginTest extends Unit
         $this->setContentProductClientException();
 
         // Act
-        $productSetContent = call_user_func($this->getContentProductSetTwigPlugin()->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
+        $productSetContent = call_user_func(
+            $this->getContentProductSetTwigPlugin()->getCallable(),
+            $this->getContext(),
+            static::CONTENT_ID,
+            static::DEFAULT_TEMPLATE
+        );
 
         // Assert
         $this->assertEquals(static::MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE, $productSetContent);
@@ -107,7 +118,12 @@ class ContentProductSetTwigPluginTest extends Unit
         $this->setProductStorageClientReturn();
 
         // Act
-        $productSetContent = call_user_func($this->getContentProductSetTwigPlugin()->getCallable(), static::CONTENT_ID, static::WRONG_TEMPLATE);
+        $productSetContent = call_user_func(
+            $this->getContentProductSetTwigPlugin()->getCallable(),
+            $this->getContext(),
+            static::CONTENT_ID,
+            static::WRONG_TEMPLATE
+        );
 
         // Assert
         $this->assertEquals(static::MESSAGE_NOT_SUPPORTED_TEMPLATE, $productSetContent);
@@ -127,7 +143,12 @@ class ContentProductSetTwigPluginTest extends Unit
         $this->setProductSetStorageClientReturn();
 
         // Act
-        $productSetContent = call_user_func($this->getContentProductSetTwigPlugin()->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
+        $productSetContent = call_user_func(
+            $this->getContentProductSetTwigPlugin()->getCallable(),
+            $this->getContext(),
+            static::CONTENT_ID,
+            static::DEFAULT_TEMPLATE
+        );
 
         // Assert
         $this->assertEquals(static::RENDERED_STRING, $productSetContent);
@@ -208,5 +229,23 @@ class ContentProductSetTwigPluginTest extends Unit
         $twigPlugin->extend($twigMock, $this->getMockBuilder(ContainerInterface::class)->getMock());
 
         return $twigMock;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getContext(): array
+    {
+        $context['app']['request'] = $this->getRequest();
+
+        return $context;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function getRequest(): Request
+    {
+        return new Request();
     }
 }
