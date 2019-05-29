@@ -1,3 +1,6 @@
+/**
+ * Color settings definition list
+ */
 $setting-color-main: #2199e8 !default;
 $setting-color-alt: #e2694a !default;
 
@@ -20,6 +23,9 @@ $setting-color-input-border-focus: $setting-color-dark !default;
 $setting-color-shadow: rgba($setting-color-black, 0.1) !default;
 $setting-color-overlay: rgba($setting-color-black, 0.3) !default;
 
+/**
+ * Defines action colors map
+ */
 $setting-color-actions: (
     success: #4fc2a0,
     warning: #f29133,

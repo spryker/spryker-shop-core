@@ -1,3 +1,6 @@
+/**
+ * Provides global class names for elements float alignment
+ */
 @mixin util-float() {
     .clear {
         @include helper-ui-clearfix;

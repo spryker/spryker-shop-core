@@ -1,7 +1,13 @@
+/**
+ * Definition of main font values
+ */
 $setting-font-family: 'Arial', sans-serif !default;
 $setting-font-family-code: 'Menlo', monospace !default;
 $setting-font-size-base: 16px !default;
 
+/**
+ * Font size values map.
+ */
 $setting-font-size: (
     1: 38px,
     2: 34px,
@@ -14,12 +20,18 @@ $setting-font-size: (
     small: 12px
 ) !default;
 
+/**
+ * Font weight values map
+ */
 $setting-font-weight: (
     light: 300,
     regular: 400,
     bold: 900
 ) !default;
 
+/**
+ * Font line height values map
+ */
 $setting-font-line-height: (
     1: 1.1,
     2: 1.2,
