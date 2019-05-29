@@ -58,11 +58,4 @@
             {% endfor %}
         </ul>
     {% endif %}
-
-    {% include molecule('summary-item-remove', 'CheckoutPage') with {
-        data: {
-            sku: data.sku,
-            groupKey: data.groupKey
-        }
-    } only %}
 {% endblock %}
