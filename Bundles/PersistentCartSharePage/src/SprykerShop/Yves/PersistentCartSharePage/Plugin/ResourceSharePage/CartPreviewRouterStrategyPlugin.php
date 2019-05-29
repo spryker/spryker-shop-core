@@ -56,7 +56,7 @@ class CartPreviewRouterStrategyPlugin extends AbstractPlugin implements Resource
         $resourceShareTransfer->requireResourceShareData();
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
-        return $resourceShareTransfer->getUuid() && $resourceShareDataTransfer->getShareOption() === static::SHARE_OPTION_PREVIEW;
+        return $resourceShareDataTransfer->getShareOption() === static::SHARE_OPTION_PREVIEW;
     }
 
     /**

@@ -47,11 +47,6 @@ class SharedCartRouterStrategyPlugin implements ResourceShareRouterStrategyPlugi
      */
     public function isApplicable(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
-        $customerTransfer = $resourceShareRequestTransfer->getCustomer();
-        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
-            return false;
-        }
-
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
         $resourceShareTransfer->requireResourceType();
         if ($resourceShareTransfer->getResourceType() !== static::RESOURCE_TYPE_QUOTE) {
