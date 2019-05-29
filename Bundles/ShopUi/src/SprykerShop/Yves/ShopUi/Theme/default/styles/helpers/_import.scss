@@ -1,3 +1,8 @@
+/**
+ * Checks parameter on presence in blacklist of imports setting list
+ * @param {List} $keywords
+ * @content Extends mixin with properties if $keywords is not in blacklist
+ */
 @mixin helper-import($keywords...) {
     $isBlacklisted: false;
 
