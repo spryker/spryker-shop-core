@@ -14,6 +14,7 @@ use SprykerShop\Yves\CalculationPage\QuoteReader\QuoteReaderInterface;
 
 /**
  * @method \Spryker\Client\Calculation\CalculationClientInterface getClient()
+ * @method \SprykerShop\Yves\CalculationPage\CalculationPageConfig getConfig()
  */
 class CalculationPageFactory extends AbstractFactory
 {
