@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ResourceSharePage\Plugin\CustomerPage;
+namespace SprykerShop\Yves\CustomerPage\Plugin\CustomerPage;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
@@ -14,14 +14,10 @@ use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CustomerRedirectStr
 /**
  * @method \SprykerShop\Yves\ResourceSharePage\ResourceSharePageFactory getFactory()
  */
-class ResourceSharePageRedirectAfterLoginStrategyPlugin extends AbstractPlugin implements CustomerRedirectStrategyPluginInterface
+class RedirectUrlRedirectAfterLoginStrategyPlugin extends AbstractPlugin implements CustomerRedirectStrategyPluginInterface
 {
     protected const KEY_REQUEST = 'request';
-
-    /**
-     * @uses \SprykerShop\Yves\ResourceSharePage\Controller\LinkController::LINK_REDIRECT_URL
-     */
-    protected const LINK_REDIRECT_URL = 'LinkRedirectUrl';
+    protected const PARAM_REDIRECT_URL = 'redirectUrl';
 
     /**
      * {@inheritdoc}
@@ -58,7 +54,7 @@ class ResourceSharePageRedirectAfterLoginStrategyPlugin extends AbstractPlugin i
     protected function findRedirectUrlFromRequest(): ?string
     {
         $request = $this->getFactory()->getApplication()[static::KEY_REQUEST];
-        $redirectUrl = $request->get(static::LINK_REDIRECT_URL);
+        $redirectUrl = $request->get(static::PARAM_REDIRECT_URL);
 
         return $redirectUrl;
     }
