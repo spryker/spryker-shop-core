@@ -1,0 +1,12 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'validate-next-checkout-step',
+    tag: 'validate-next-checkout-step',
+} %}
+
+{% define attributes = {
+    'form-selector': required,
+    'trigger-selector': required,
+    'target-selector': required,
+} %}
