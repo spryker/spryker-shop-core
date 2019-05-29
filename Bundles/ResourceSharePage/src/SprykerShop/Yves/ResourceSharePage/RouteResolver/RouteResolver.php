@@ -52,7 +52,7 @@ class RouteResolver implements RouteResolverInterface
                 continue;
             }
 
-            return $resourceShareRouterStrategyPlugin->resolveRoute($resourceShareRequestTransfer->getResourceShare());
+            return $resourceShareRouterStrategyPlugin->resolveRoute($resourceShareRequestTransfer);
         }
 
         $this->messengerClient->addErrorMessage(static::GLOSSARY_KEY_RESOURCE_SHARE_LINK_ERROR_NO_ROUTE);

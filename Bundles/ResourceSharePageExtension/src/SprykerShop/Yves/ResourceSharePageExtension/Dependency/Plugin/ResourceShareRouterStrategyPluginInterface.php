@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
 use Generated\Shared\Transfer\RouteTransfer;
 
 interface ResourceShareRouterStrategyPluginInterface
@@ -31,9 +30,9 @@ interface ResourceShareRouterStrategyPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RouteTransfer
      */
-    public function resolveRoute(ResourceShareTransfer $resourceShareTransfer): RouteTransfer;
+    public function resolveRoute(ResourceShareRequestTransfer $resourceShareRequestTransfer): RouteTransfer;
 }

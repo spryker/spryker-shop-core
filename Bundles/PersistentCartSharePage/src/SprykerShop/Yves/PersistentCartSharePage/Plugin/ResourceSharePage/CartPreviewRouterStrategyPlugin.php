@@ -65,16 +65,16 @@ class CartPreviewRouterStrategyPlugin extends AbstractPlugin implements Resource
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RouteTransfer
      */
-    public function resolveRoute(ResourceShareTransfer $resourceShareTransfer): RouteTransfer
+    public function resolveRoute(ResourceShareRequestTransfer $resourceShareRequestTransfer): RouteTransfer
     {
         return (new RouteTransfer())
             ->setRoute(static::ROUTE_CART_PREVIEW)
             ->setParameters([
-                static::PARAM_RESOURCE_SHARE_UUID => $resourceShareTransfer->getUuid(),
+                static::PARAM_RESOURCE_SHARE_UUID => $resourceShareRequestTransfer->getResourceShare()->getUuid(),
             ]);
     }
 }
