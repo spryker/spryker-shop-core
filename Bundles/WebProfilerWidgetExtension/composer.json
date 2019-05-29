@@ -4,7 +4,8 @@
   "description": "WebProfilerWidgetExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "spryker/web-profiler-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

@@ -88,7 +88,7 @@ class LanguagePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
         }
         if ($requestContext->hasParameter('_locale')) {
             $locale = $requestContext->getParameter('_locale');
-            [$language, $country] = explode('_', $locale);
+            $language = $this->getLanguageFromLocale($locale);
 
             return $language;
         }
@@ -122,5 +122,17 @@ class LanguagePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
         }
 
         return $url;
+    }
+
+    /**
+     * @param string $locale
+     *
+     * @return string
+     */
+    protected function getLanguageFromLocale(string $locale): string
+    {
+        $localeFragments = explode('_', $locale);
+
+        return current($localeFragments);
     }
 }

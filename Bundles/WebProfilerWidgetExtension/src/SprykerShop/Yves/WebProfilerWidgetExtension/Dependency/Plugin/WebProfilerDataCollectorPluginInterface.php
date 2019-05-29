@@ -8,9 +8,10 @@
 namespace SprykerShop\Yves\WebProfilerWidgetExtension\Dependency\Plugin;
 
 use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface as SprykerWebProfilerDataCollectorPluginInterface;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 
-interface WebProfilerDataCollectorPluginInterface
+interface WebProfilerDataCollectorPluginInterface extends SprykerWebProfilerDataCollectorPluginInterface
 {
     /**
      * Specification:
