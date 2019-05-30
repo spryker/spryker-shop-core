@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\PersistentCartSharePage\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 
 class PersistentCartSharePageToPersistentCartShareClientBridge implements PersistentCartSharePageToPersistentCartShareClientInterface
 {
@@ -25,12 +26,12 @@ class PersistentCartSharePageToPersistentCartShareClientBridge implements Persis
     }
 
     /**
-     * @param string $resourceShareUuid
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteForPreview(string $resourceShareUuid): QuoteResponseTransfer
+    public function getPreviewQuoteResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer
     {
-        return $this->persistentCartShareClient->getQuoteByResourceShareUuid($resourceShareUuid);
+        return $this->persistentCartShareClient->getPreviewQuoteResourceShare($resourceShareRequestTransfer);
     }
 }
