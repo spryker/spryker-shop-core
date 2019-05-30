@@ -34,10 +34,23 @@
 
             {% if item.shippingAddress.id_customer_address is defined %}
                 <div class="col col--sm-3 spacing spacing--inner">
-                    {{ form_widget(item.shippingAddress.id_customer_address) }}
+                    {{ form_widget(item.shippingAddress.id_customer_address, {
+                        attr: {
+                            'form-target-selector': '',
+                            'class': 'js-validate-next-checkout-step__trigger',
+                        },
+                    }) }}
                 </div>
                 {% set hiddenClass = 'is-hidden' %}
             {% endif %}
+
+            {% include molecule('validate-next-checkout-step', 'CheckoutPage') with {
+                attributes: {
+                    'form-selector': '',
+                    'trigger-selector': '',
+                    'target-selector': '',
+                },
+            } only %}
 
             <div class="col col--sm-12">
                 {% embed molecule('form') with {
