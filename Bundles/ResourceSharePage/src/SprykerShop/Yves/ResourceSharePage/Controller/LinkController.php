@@ -37,36 +37,23 @@ class LinkController extends AbstractController
      * @param string $resourceShareUuid
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executeIndexAction(string $resourceShareUuid, Request $request): RedirectResponse
     {
+        $resourceShareResponseTransfer = $this->getResourceShareByUuid($resourceShareUuid);
+
+        $resourceShareResponseTransfer->requireResourceShare();
+        $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
+
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
-            ->setResourceShare((new ResourceShareTransfer())
-                ->setUuid($resourceShareUuid))
+            ->setResourceShare($resourceShareTransfer)
             ->setCustomer($this->getFactory()
                 ->getCustomerClient()
                 ->getCustomer());
+        $resourceShareResponseTransfer = $this->activateResourceShare($resourceShareRequestTransfer);
 
-        $resourceShareResponseTransfer = $this->getFactory()->createResourceShareActivator()
-            ->activateResourceShare($resourceShareRequestTransfer);
-
-        $this->processMessages($resourceShareResponseTransfer);
-
-        if (!$resourceShareResponseTransfer->getIsSuccessful() && !$resourceShareResponseTransfer->getIsLoginRequired()) {
-            throw new NotFoundHttpException();
-        }
-
-        $routeTransfer = $this->getFactory()->createRouteResolver()
-            ->resolveRoute(
-                $request,
-                (bool)$resourceShareResponseTransfer->getIsLoginRequired(),
-                (new ResourceShareRequestTransfer())
-                    ->setResourceShare($resourceShareResponseTransfer->getResourceShare())
-                    ->setCustomer($this->getFactory()->getCustomerClient()->getCustomer())
-            );
+        $routeTransfer = $this->resolveRoute($request, (bool)$resourceShareResponseTransfer->getIsLoginRequired(), $resourceShareRequestTransfer);
 
         return $this->redirectResponseInternal($routeTransfer->getRoute(), $routeTransfer->getParameters());
     }
@@ -90,4 +77,68 @@ class LinkController extends AbstractController
             $this->addSuccessMessage($messageTransfer->getValue());
         }
     }
+
+    /**
+     * @param string $resourceShareUuid
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    protected function getResourceShareByUuid(string $resourceShareUuid): ResourceShareResponseTransfer
+    {
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
+            ->setResourceShare((new ResourceShareTransfer())
+                ->setUuid($resourceShareUuid));
+
+        $resourceShareResponseTransfer = $this->getFactory()->getResourceShareClient()->getResourceShareByUuid($resourceShareRequestTransfer);
+
+        $this->processMessages($resourceShareResponseTransfer);
+
+        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
+            throw new NotFoundHttpException();
+        }
+
+        return $resourceShareResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    protected function activateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    {
+        $resourceShareResponseTransfer = $this->getFactory()->createResourceShareActivator()
+            ->activateResourceShare($resourceShareRequestTransfer);
+
+        $this->processMessages($resourceShareResponseTransfer);
+
+        if (!$resourceShareResponseTransfer->getIsSuccessful() && !$resourceShareResponseTransfer->getIsLoginRequired()) {
+            throw new NotFoundHttpException();
+        }
+
+        return $resourceShareResponseTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param bool $isLoginRequired
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RouteTransfer
+     */
+    protected function resolveRoute(Request $request, bool $isLoginRequired, ResourceShareRequestTransfer $resourceShareRequestTransfer): \Generated\Shared\Transfer\RouteTransfer
+    {
+        $routeTransfer = $this->getFactory()->createRouteResolver()
+            ->resolveRoute(
+                $request,
+                $isLoginRequired,
+                $resourceShareRequestTransfer
+            );
+
+        return $routeTransfer;
+}
 }
