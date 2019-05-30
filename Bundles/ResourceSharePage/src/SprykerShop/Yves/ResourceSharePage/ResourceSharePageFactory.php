@@ -76,7 +76,6 @@ class ResourceSharePageFactory extends AbstractFactory
     public function createResourceShareActivator(): ResourceShareActivatorInterface
     {
         return new ResourceShareActivator(
-            $this->getCustomerClient(),
             $this->getResourceShareClient()
         );
     }

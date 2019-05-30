@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 
 class PersistentCartShareWidgetToPersistentCartShareClientBridge implements PersistentCartShareWidgetToPersistentCartShareClientInterface
@@ -25,21 +27,22 @@ class PersistentCartShareWidgetToPersistentCartShareClientBridge implements Pers
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
      * @return string[][]
      */
-    public function getCartShareOptions(): array
+    public function getCartShareOptions(?CustomerTransfer $customerTransfer): array
     {
-        return $this->persistentCartShareClient->getCartShareOptions();
+        return $this->persistentCartShareClient->getCartShareOptions($customerTransfer);
     }
 
     /**
-     * @param int $idQuote
-     * @param string $shareOption
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function generateCartResourceShare(int $idQuote, string $shareOption): ResourceShareResponseTransfer
+    public function generateCartResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        return $this->persistentCartShareClient->generateCartResourceShare($idQuote, $shareOption);
+        return $this->persistentCartShareClient->generateCartResourceShare($resourceShareRequestTransfer);
     }
 }

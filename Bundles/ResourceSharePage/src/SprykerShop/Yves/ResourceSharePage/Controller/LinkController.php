@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ResourceSharePage\Controller;
 
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Generated\Shared\Transfer\ResourceShareTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,8 +43,15 @@ class LinkController extends AbstractController
      */
     protected function executeIndexAction(string $resourceShareUuid, Request $request): RedirectResponse
     {
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
+            ->setResourceShare((new ResourceShareTransfer())
+                ->setUuid($resourceShareUuid))
+            ->setCustomer($this->getFactory()
+                ->getCustomerClient()
+                ->getCustomer());
+
         $resourceShareResponseTransfer = $this->getFactory()->createResourceShareActivator()
-            ->activateResourceShare($resourceShareUuid);
+            ->activateResourceShare($resourceShareRequestTransfer);
 
         $this->processMessages($resourceShareResponseTransfer);
 
