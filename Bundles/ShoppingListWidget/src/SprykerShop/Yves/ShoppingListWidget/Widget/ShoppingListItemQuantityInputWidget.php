@@ -36,9 +36,9 @@ class ShoppingListItemQuantityInputWidget extends AbstractWidget
      */
     protected function setQuantityRestrictions(ProductViewTransfer $productViewTransfer): void
     {
-        $minQuantity = $productViewTransfer->getQuantityMin() ?? STATIC::DEFAULT_MINIMUM_QUANTITY;
+        $minQuantity = $productViewTransfer->getQuantityMin() ?? static::DEFAULT_MINIMUM_QUANTITY;
         $maxQuantity = $productViewTransfer->getQuantityMax();
-        $quantityInterval = $productViewTransfer->getQuantityInterval() ?? STATIC::DEFAULT_QUANTITY_INTERVAL;
+        $quantityInterval = $productViewTransfer->getQuantityInterval() ?? static::DEFAULT_QUANTITY_INTERVAL;
 
         $this->addParameter('minQuantity', $minQuantity)
             ->addParameter('maxQuantity', $maxQuantity)
