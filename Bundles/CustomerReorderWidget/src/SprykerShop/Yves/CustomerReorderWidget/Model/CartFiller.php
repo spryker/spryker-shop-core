@@ -176,13 +176,24 @@ class CartFiller implements CartFillerInterface
                     continue;
                 }
 
-                if ($spyAvailability->getQuantity() >= $item->getQuantity()) {
+                if ($this->isQuantityGreaterOrEqual((float)$spyAvailability->getQuantity(), (float)$item->getQuantity())) {
                     continue;
                 }
 
                 $item->setQuantity((float)$spyAvailability->getQuantity());
             }
         }
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    protected function isQuantityGreaterOrEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityGreaterOrEqual($firstQuantity, $secondQuantity);
     }
 
     /**

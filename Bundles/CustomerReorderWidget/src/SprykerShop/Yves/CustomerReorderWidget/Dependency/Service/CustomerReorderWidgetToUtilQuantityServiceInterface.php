@@ -24,4 +24,12 @@ interface CustomerReorderWidgetToUtilQuantityServiceInterface
      * @return float
      */
     public function sumQuantities(float $firstAQuantity, float $secondQuantity): float;
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityGreaterOrEqual(float $firstQuantity, float $secondQuantity): bool;
 }
