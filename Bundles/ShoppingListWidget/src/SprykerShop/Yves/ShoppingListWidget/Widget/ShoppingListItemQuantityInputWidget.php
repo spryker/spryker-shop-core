@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetFactory getFactory()
  */
-class ShoppingListItemWidget extends AbstractWidget
+class ShoppingListItemQuantityInputWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -47,7 +47,7 @@ class ShoppingListItemWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ShoppingListItemWidget';
+        return 'ShoppingListItemQuantityInputWidget';
     }
 
     /**

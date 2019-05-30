@@ -89,7 +89,7 @@
                     {% endif %}
                 </td>
                 <td class="{{ config.name }}__cell text-center">
-                    {% widget 'ShoppingListItemWidget' args [item, isItemAvailable] only %}
+                    {% widget 'ShoppingListItemQuantityInputWidget' args [item, isItemAvailable] only %}
                     {% nowidget %}
                         {% include molecule('quantity-input') with {
                             inputAttributes: {
