@@ -1,5 +1,6 @@
 /**
- * Applies reset-normalize of default elements styles
+ * Applies or overrides default styles of the HTML elements for more predictable
+ * and convenient behavior in different browsers.
  */
 @mixin basic-reset() {
     * {

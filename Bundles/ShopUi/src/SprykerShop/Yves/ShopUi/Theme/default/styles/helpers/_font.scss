@@ -1,5 +1,5 @@
 /**
- * Sets font-size property from font size settings map - $setting-font-size according to map key passed
+ * Sets font-size property from font size settings map - $setting-font-size according to map key passed.
  * @param {String | Number} $size
  */
 @mixin helper-font-size($size) {
@@ -7,7 +7,7 @@
 }
 
 /**
- * Sets font-weight property from font weight settings map - $setting-font-weight according to map key passed
+ * Sets font-weight property from font weight settings map - $setting-font-weight according to map key passed.
  * @param {String} $weight
  */
 @mixin helper-font-weight($weight) {
@@ -15,7 +15,7 @@
 }
 
 /**
- * Sets line-height property from line-height settings map - $setting-font-line-height according to map key passed
+ * Sets line-height property from line-height settings map - $setting-font-line-height according to map key passed.
  * @param {String | Number} $height
  */
 @mixin helper-font-line-height($height) {

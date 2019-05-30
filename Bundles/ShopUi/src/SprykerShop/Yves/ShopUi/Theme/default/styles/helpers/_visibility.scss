@@ -1,5 +1,5 @@
 /**
- * Provides set of properties for visible element
+ * Forces element visibility.
  */
 @mixin helper-visibility-visible {
     pointer-events: all;
@@ -8,7 +8,7 @@
 }
 
 /**
- * Provides set of properties for invisible element
+ * Forces element invisibility.
  */
 @mixin helper-visibility-invisible {
     pointer-events: none;

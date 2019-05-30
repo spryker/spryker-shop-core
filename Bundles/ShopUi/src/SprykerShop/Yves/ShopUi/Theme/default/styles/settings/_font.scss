@@ -1,8 +1,17 @@
 /**
- * Definition of main font values. Usage: body global font styles
+ * Defines font family setting. Usage: body global font styles.
  */
 $setting-font-family: 'Arial', sans-serif !default;
+
+/**
+ * Defines font family setting for code. Can be used for code and pre elements.
+ */
 $setting-font-family-code: 'Menlo', monospace !default;
+
+
+/**
+ * Defines basic font size. Usage: global basic font size.
+ */
 $setting-font-size-base: 16px !default;
 
 /**

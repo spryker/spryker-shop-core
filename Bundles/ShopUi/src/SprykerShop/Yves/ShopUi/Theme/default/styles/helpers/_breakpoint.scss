@@ -1,6 +1,6 @@
 /**
- * Returns 0 or first value from $edges list
- * @param {List} $edges [$setting-breakpoints] List lenght must be less or equal to 2
+ * Returns 0 or the first value from $edges list.
+ * @param {List} $edges [$setting-breakpoints] List length must be less or equal to 2.
  * @return {Base}
  */
 @function helper-breakpoint-edge-min($edges) {
@@ -12,8 +12,8 @@
 }
 
 /**
- * Returns null or last value from $edges list
- * @param {List} $edges [$setting-breakpoints] List lenght must be less or equal to 2
+ * Returns null or the last value from the $edges list.
+ * @param {List} $edges [$setting-breakpoints] List length must be less than or equal to 2.
  * @return {Base}
  */
 @function helper-breakpoint-edge-max($edges) {
@@ -25,9 +25,9 @@
 }
 
 /**
- * Sets screen media query with min-width set to $min parameter
+ * Sets screen media query with min-width set to $min parameter.
  * @param $min {Number} [0]
- * @content Extends mixin with properties for media query
+ * @content Extends mixin with properties for media query.
  */
 @mixin helper-breakpoint-media-min($min: 0) {
     @media only screen and (min-width: $min) {
@@ -36,10 +36,10 @@
 }
 
 /**
- * Sets screen media query with breakpoints range passed to parameters
+ * Sets screen media query with breakpoints range passed to parameters.
  * @param {Number} $min [0]
  * @param {Number} $max [$setting-grid-max-width]
- * @content Extends mixin with properties for media query
+ * @content Extends mixin with properties for media query.
  */
 @mixin helper-breakpoint-media-between($min: 0, $max: $setting-grid-max-width) {
     @media only screen and (min-width: $min) and (max-width: $max) {
@@ -48,9 +48,9 @@
 }
 
 /**
- * Sets screen media query with max-width set to $max parameter
+ * Sets screen media query with max-width set to $max parameter.
  * @param {Number} $max [$setting-grid-max-width]
- * @content Extends mixin with properties for media query
+ * @content Extends mixin with properties for media query.
  */
 @mixin helper-breakpoint-media-max($max: $setting-grid-max-width) {
     @media only screen and (max-width: $max) {
@@ -60,9 +60,9 @@
 
 /**
  * Sets screen media query with breakpoints range passed to parameters or
- * with min-width query if only one parameter is passed
+ * with min-width query if only one parameter is passed.
  * @param {Number} $max [$setting-grid-max-width]
- * @content Extends mixin with properties for media query
+ * @content Extends mixin with properties for media query.
  */
 @mixin helper-breakpoint($min-bp, $max-bp: null) {
     $edges-min: map-get($setting-breakpoints, $min-bp);
