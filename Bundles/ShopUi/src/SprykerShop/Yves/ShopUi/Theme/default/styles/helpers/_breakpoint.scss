@@ -1,6 +1,6 @@
 /**
  * Returns 0 or the first value from $edges list.
- * @param {List} $edges [$setting-breakpoints] List length must be less or equal to 2.
+ * @param {List} $edges [$setting-breakpoints] List length must be less than or equal to 2.
  * @return {Base}
  */
 @function helper-breakpoint-edge-min($edges) {
@@ -36,7 +36,7 @@
 }
 
 /**
- * Sets screen media query with breakpoints range passed to parameters.
+ * Sets screen media query with breakpoints range passed as parameters.
  * @param {Number} $min [0]
  * @param {Number} $max [$setting-grid-max-width]
  * @content Extends mixin with properties for media query.
