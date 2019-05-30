@@ -15,6 +15,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ShoppingListItemQuantityInputWidget extends AbstractWidget
 {
+    public const DEFAULT_MINIMUM_QUANTITY = 1.0;
+    public const DEFAULT_QUANTITY_INTERVAL = 1.0;
+
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param bool $isItemAvailable
@@ -33,9 +36,9 @@ class ShoppingListItemQuantityInputWidget extends AbstractWidget
      */
     protected function setQuantityRestrictions(ProductViewTransfer $productViewTransfer): void
     {
-        $minQuantity = $productViewTransfer->getQuantityMin() ?? 1;
+        $minQuantity = $productViewTransfer->getQuantityMin() ?? STATIC::DEFAULT_MINIMUM_QUANTITY;
         $maxQuantity = $productViewTransfer->getQuantityMax();
-        $quantityInterval = $productViewTransfer->getQuantityInterval() ?? 1;
+        $quantityInterval = $productViewTransfer->getQuantityInterval() ?? STATIC::DEFAULT_QUANTITY_INTERVAL;
 
         $this->addParameter('minQuantity', $minQuantity)
             ->addParameter('maxQuantity', $maxQuantity)

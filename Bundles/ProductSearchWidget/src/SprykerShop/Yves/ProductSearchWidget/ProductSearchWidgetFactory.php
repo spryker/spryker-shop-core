@@ -17,8 +17,6 @@ use SprykerShop\Yves\ProductSearchWidget\Dependency\Service\ProductSearchWidgetT
 use SprykerShop\Yves\ProductSearchWidget\Form\ProductQuickAddForm;
 use SprykerShop\Yves\ProductSearchWidget\Resolver\ProductConcreteResolver;
 use SprykerShop\Yves\ProductSearchWidget\Resolver\ProductConcreteResolverInterface;
-use SprykerShop\Yves\ProductSearchWidget\ViewCollector\ProductAdditionalDataViewCollector;
-use SprykerShop\Yves\ProductSearchWidget\ViewCollector\ProductAdditionalDataViewCollectorInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -54,14 +52,6 @@ class ProductSearchWidgetFactory extends AbstractFactory
     public function createMessageBuilder(): MessageBuilderInterface
     {
         return new MessageBuilder();
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ProductSearchWidget\ViewCollector\ProductAdditionalDataViewCollectorInterface
-     */
-    public function createProductAdditionalDataViewCollector(): ProductAdditionalDataViewCollectorInterface
-    {
-        return new ProductAdditionalDataViewCollector();
     }
 
     /**
