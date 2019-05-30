@@ -8,7 +8,6 @@
     isQuoteValid: _view.isQuoteValid,
     attributes: _view.attributes,
     request: app.request,
-
     title: 'cart.cart' | trans,
 } %}
 
@@ -41,7 +40,7 @@
                                 class: 'text-alt',
                                 data: {
                                     name: 'shopping-cart',
-                                }
+                                },
                             } only %}
                             <h6>{{ 'cart.empty' | trans }}</h6>
                         </div>
@@ -68,7 +67,7 @@
                         {% include molecule('price-mode') with {
                             data: {
                                 priceMode: data.cart.priceMode,
-                            }
+                            },
                         } only %}
                     </div>
                 {% endif %}
@@ -81,7 +80,7 @@
                                 isQuoteEditable: data.isQuoteEditable,
                                 cartItem: cartItem,
                                 attributes: data.attributes[cartItem.sku] | default([]),
-                            }
+                            },
                         } only %}
                     {% endblock %}
                 {% endfor %}
@@ -121,7 +120,7 @@
                             <button type="submit" class="link">{{ 'persistent_cart.quote.button.reset_lock' | trans }}</button>
                             {{ 'persistent_cart.quote.label.discarded_locked_cart' | trans }}
                         </form>
-                        <hr />
+                        <hr>
                     {% endif %}
 
                     {% block cartNote %}
@@ -135,17 +134,17 @@
                             {% widget 'CartCodeFormWidget' args [data.cart] only %}
                                 {% block body %}
                                     {{ parent() }}
-                                    <hr />
+                                    <hr>
                                 {% endblock %}
                             {% elsewidget 'DiscountVoucherFormWidget' only %}
                                 {% block body %}
                                     {{ parent() }}
-                                    <hr />
+                                    <hr>
                                 {% endblock %}
                             {% elsewidget 'DiscountVoucherFormWidgetPlugin' only %} {# @deprecated Use VoucherFormWidget instead. #}
                                 {% block body %}
                                     {{ parent() }}
-                                    <hr />
+                                    <hr>
                                 {% endblock %}
                             {% endwidget %}
                         {% endif %}
@@ -183,7 +182,7 @@
                                 cart: data.cart,
                                 isQuoteValid: data.isQuoteValid,
                                 isQuoteEditable: data.isQuoteEditable,
-                            }
+                            },
                         } only %}
                     {% endblock %}
                 </div>
