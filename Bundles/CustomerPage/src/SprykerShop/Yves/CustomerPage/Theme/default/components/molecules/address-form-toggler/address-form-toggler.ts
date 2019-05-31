@@ -11,8 +11,6 @@ export default class AddressFormToggler extends Component {
      */
     form: HTMLFormElement;
     protected subForm: HTMLFormElement;
-    protected formClear: HTMLInputElement;
-    protected addNewAddress: HTMLButtonElement;
     protected formBillingAddress: HTMLElement;
     protected billingSameAsShipping: HTMLElement;
     protected billingSameAsShippingToggler: HTMLInputElement;
@@ -29,14 +27,6 @@ export default class AddressFormToggler extends Component {
 
             if (this.subTargetSelector) {
                 this.subForm = <HTMLFormElement>document.querySelector(this.subTargetSelector);
-            }
-
-            if (this.formClearSelector) {
-                this.formClear = <HTMLInputElement>document.querySelector(this.formClearSelector);
-            }
-
-            if (this.formAddNewAddressSelector) {
-                this.addNewAddress = <HTMLButtonElement>document.querySelector(this.formAddNewAddressSelector);
             }
 
             this.onTogglerChange();
@@ -66,27 +56,15 @@ export default class AddressFormToggler extends Component {
             this.formBillingAddress.classList.remove(this.classToToggle);
             this.billingSameAsShipping.classList.add(this.classToToggle);
             this.billingSameAsShippingToggler.checked = false;
-
-            if (this.formClear && this.addNewAddress) {
-                this.formClear.classList.add(this.classToToggle);
-                this.addNewAddress.classList.add(this.classToToggle);
-            }
         }
     }
 
     protected toggleForm(isShown: boolean): void {
-        const hasCompanyBusinessUnitAddress = (this.hasCompanyBusinessUnitAddress === 'true');
-
-        this.form.classList.toggle(this.classToToggle, hasCompanyBusinessUnitAddress ? false : isShown);
+        this.form.classList.toggle(this.classToToggle, isShown);
 
         if (this.subForm) {
             this.subForm.classList.add(this.classToToggle);
             this.billingSameAsShipping.classList.remove(this.classToToggle);
-
-            if (this.formClear && this.addNewAddress) {
-                this.formClear.classList.remove(this.classToToggle);
-                this.addNewAddress.classList.remove(this.classToToggle);
-            }
         }
     }
 
@@ -109,20 +87,6 @@ export default class AddressFormToggler extends Component {
      */
     get subTargetSelector(): string {
         return this.getAttribute('sub-target-selector');
-    }
-
-    /**
-     * Gets a querySelector of the 'form clear' custom element.
-     */
-    get formClearSelector(): string {
-        return this.getAttribute('form-clear-selector');
-    }
-
-    /**
-     * Gets a querySelector of the trigger button element.
-     */
-    get formAddNewAddressSelector(): string {
-        return this.getAttribute('form-add-new-address-selector');
     }
 
     /**
@@ -151,13 +115,6 @@ export default class AddressFormToggler extends Component {
      */
     get classToToggle(): string {
         return this.getAttribute('class-to-toggle');
-    }
-
-    /**
-     * Gets if the company business unit address is defined.
-     */
-    get hasCompanyBusinessUnitAddress(): string {
-        return this.getAttribute('has-company-business-unit-address');
     }
 
     /**

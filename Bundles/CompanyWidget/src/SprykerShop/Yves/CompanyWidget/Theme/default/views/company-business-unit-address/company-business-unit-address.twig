@@ -8,12 +8,12 @@
     customerAddresses: _widget.customerAddresses,
     companyBusinessUnitAddresses: _widget.companyBusinessUnitAddresses,
     isCustomAddress: app.request.get('customAddress')[_widget.formType]  | default(not _widget.formAddressTransfer.idCustomerAddress),
-    isMultipleShipmentEnabled: false
+    isMultipleShipmentEnabled: false,
 } %}
 
-{% block template %}
+{% block body %}
     {% set defaultAddressKey = null %}
-    {% set optionValueDeliverToMultipleAddresses = constant('SprykerShop\\Yves\\CustomerPage\\Form\\CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES') %}
+    {% set optionValueDeliverToMultipleAddresses = '-1' %}
 
     {% if not data.isCustomAddress and (data.currentAddressId or not data.formAddressTransfer.firstName) %}
         {% for address in data.customerAddresses %}
@@ -35,10 +35,10 @@
     {% embed atom('select') with {
         class: 'spacing-bottom',
         attributes: {
-            name: 'checkout-full-addresses'
+            name: 'checkout-full-addresses',
         },
         data: {
-            isGrouped: true
+            isGrouped: true,
         },
         embed: {
             customerAddresses: data.customerAddresses,
@@ -47,10 +47,10 @@
             defaultAddressKey: defaultAddressKey,
             currentAddressId: data.currentAddressId,
             isMultipleShipmentEnabled: data.isMultipleShipmentEnabled,
-            optionValueDeliverToMultipleAddresses: optionValueDeliverToMultipleAddresses
-        }
+            optionValueDeliverToMultipleAddresses: optionValueDeliverToMultipleAddresses,
+        },
     } only %}
-        {% block selectClass %}js-form-clear__ignore-element js-form-select-address__{{ embed.formType }}{% endblock %}
+        {% block selectClass %}js-form-select-address__{{ embed.formType }}{% endblock %}
         {% block option %}
             {% set isSelected = embed.defaultAddressKey == address.key %}
             {% set fullName = '%s %s %s, %s %s, %s %s' | format(
@@ -70,7 +70,7 @@
             {{ parent() }}
         {% endblock %}
         {% block optionsGroup %}
-            <option value="">{{ 'page.checkout.address.address_select' | trans }}</option>
+            <option value="">{{ 'company.account.add_new_address' | trans }}</option>
 
             {% if embed.customerAddresses is not empty %}
                 <optgroup label="{{ 'page.checkout.address.option_group.customer' | trans }}">
@@ -96,51 +96,23 @@
         {% endblock %}
     {% endembed %}
 
-    <div>
-        <button type="button" class="button spacing-bottom js-form-add-new-address__{{ data.formType }}">
-            {{ 'page.checkout.address.use_selected_address' | trans }}
-        </button>
-        {% include molecule('company-business-unit-address-handler', 'CompanyWidget') with {
-            attributes: {
-                'form-selector': '.js-form-handler__' ~ data.formType,
-                'trigger-selector': '.js-form-add-new-address__' ~ data.formType,
-                'data-selector': '.js-form-select-address__' ~ data.formType,
-                'shipping-address-toggler-selector': '.js-form-select-address__shippingAddress',
-                'ignore-selector': '.js-form-clear__ignore-element',
-                'default-address-selector': '.js-form-default-address__' ~ data.formType,
-                'custom-address-trigger': '.js-form-clear__'~ data.formType ~'-toggler',
-                'address-hidden-input-selector': 'addressesForm[' ~ data.formType ~ '][id_customer_address]',
-                'shipping-address-hidden-input-selector': 'addressesForm[shippingAddress][id_customer_address]',
-                'hidden-input-id-customer-address-saver-selector': '.js-hidden-input-id-customer-' ~ data.formType ~ '-saver',
-                'hidden-input-id-customer-shipping-address-saver-selector': '.js-hidden-input-id-customer-shippingAddress-saver',
-                'addresses': data.addresses,
-                'toggle-option-value': optionValueDeliverToMultipleAddresses
-            }
-        } only %}
-    </div>
+    {% include molecule('company-business-unit-address-handler', 'CompanyWidget') with {
+        attributes: {
+            'form-selector': '.js-form-handler__' ~ data.formType,
+            'data-selector': '.js-form-select-address__' ~ data.formType,
+            'shipping-address-toggler-selector': '.js-form-select-address__shippingAddress',
+            'default-address-selector': '.js-form-default-address__' ~ data.formType,
+            'address-hidden-input-selector': 'addressesForm[' ~ data.formType ~ '][id_customer_address]',
+            'shipping-address-hidden-input-selector': 'addressesForm[shippingAddress][id_customer_address]',
+            'hidden-input-id-customer-address-saver-selector': '.js-hidden-input-id-customer__' ~ data.formType ~ '-saver',
+            'hidden-input-id-customer-shipping-address-saver-selector': '.js-hidden-input-id-customer__shippingAddress-saver',
+            'addresses': data.addresses,
+            'toggle-option-value': optionValueDeliverToMultipleAddresses,
+        },
+    } only %}
 
-    <div>
-        <label class="js-form-clear__{{ data.formType }}">
-            <input type="checkbox" name="customAddress[{{ data.formType }}]" {% if data.isCustomAddress %}checked{% endif %} class="js-form-clear__{{ data.formType }}-toggler js-form-clear__ignore-element" value="1" data-show-save-new-address>
-            {% if data.formType == 'shippingAddress' %}
-                {{ 'page.checkout.address.different_delivery_address' | trans }}
-            {% endif %}
-            {% if data.formType == 'billingAddress' %}
-                {{ 'page.checkout.address.different_billing_address' | trans }}
-            {% endif %}
-        </label>
-        {% include molecule('form-clear') with {
-            class: 'js-form-clear__' ~ data.formType,
-            attributes: {
-                'form-selector': '.js-form-clear__' ~ data.formType ~ '-form',
-                'trigger-selector': '.js-form-clear__' ~ data.formType ~ '-toggler',
-                'ignore-selector': '.js-form-clear__ignore-element'
-            }
-        } only %}
-    </div>
-
-    <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]" data-key="id_customer_address">
+    <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]">
     <input type="hidden" name="addressesForm[{{ data.formType }}][id_business_unit_address]" value="{{ data.formAddressTransfer.idBusinessUnitAddress }}">
-    <input type="hidden" class="js-hidden-input-id-customer-{{ data.formType }}-saver">
-    <input type="hidden" class="js-form-clear__ignore-element js-form-default-address__{{ data.formType }}" value="{{ defaultAddressKey }}">
+    <input type="hidden" class="js-hidden-input-id-customer__{{ data.formType }}-saver">
+    <input type="hidden" class="js-form-default-address__{{ data.formType }}" value="{{ defaultAddressKey }}">
 {% endblock %}
