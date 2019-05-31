@@ -91,7 +91,8 @@ class LinkController extends AbstractController
             ->setResourceShare((new ResourceShareTransfer())
                 ->setUuid($resourceShareUuid));
 
-        $resourceShareResponseTransfer = $this->getFactory()->getResourceShareClient()->getResourceShareByUuid($resourceShareRequestTransfer);
+        $resourceShareResponseTransfer = $this->getFactory()->getResourceShareClient()
+            ->getResourceShareByUuid($resourceShareRequestTransfer);
 
         $this->processMessages($resourceShareResponseTransfer);
 
@@ -140,5 +141,5 @@ class LinkController extends AbstractController
             );
 
         return $routeTransfer;
-}
+    }
 }
