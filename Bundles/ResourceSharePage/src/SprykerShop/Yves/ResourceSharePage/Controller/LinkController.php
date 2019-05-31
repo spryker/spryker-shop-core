@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ResourceSharePage\Controller;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
+use Generated\Shared\Transfer\RouteTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
