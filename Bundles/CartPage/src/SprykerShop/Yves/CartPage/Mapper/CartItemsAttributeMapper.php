@@ -54,14 +54,19 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
 
         $attributes = [];
 
+        $productAbstractIds = array_map(function (ItemTransfer $itemTransfer) {
+            return $itemTransfer->getIdProductAbstract();
+        }, $items->getArrayCopy());
+
+        $abstractProductData = $this->findAttributesMapByProductAbstractIds($productAbstractIds, $localeName);
+
         foreach ($items as $item) {
-            $productData = $this->getAttributesMapByProductAbstract($item, $localeName);
-            if ($productData === null) {
+            if (!isset($abstractProductData[$item->getIdProductAbstract()])) {
                 continue;
             }
             $attributes[$item->getSku()] = $this->getAttributesWithAvailability(
                 $item,
-                $productData['attribute_map'],
+                $abstractProductData[$item->getIdProductAbstract()]['attribute_map'],
                 $availableItemsSkus
             );
         }
@@ -109,6 +114,8 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     }
 
     /**
+     * @deprecated Use `SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper::findAttributesMapByProductAbstractIds()` instead.
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $item
      * @param string $localeName
      *
@@ -117,6 +124,17 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     protected function getAttributesMapByProductAbstract(ItemTransfer $item, $localeName)
     {
         return $this->productStorageClient->findProductAbstractStorageData($item->getIdProductAbstract(), $localeName);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function findAttributesMapByProductAbstractIds(array $productAbstractIds, $localeName): array
+    {
+        return $this->productStorageClient->findBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
     }
 
     /**

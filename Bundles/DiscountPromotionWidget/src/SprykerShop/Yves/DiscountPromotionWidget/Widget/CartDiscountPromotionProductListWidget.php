@@ -55,21 +55,21 @@ class CartDiscountPromotionProductListWidget extends AbstractWidget
     protected function getPromotionProducts(QuoteTransfer $quoteTransfer, Request $request): array
     {
         $promotionProducts = [];
+        $selectedAttributes = [];
+        $ids = [];
+        $localeName = $this->getLocale();
+        $promotionItemTransferIndexedByProductId = [];
         foreach ($quoteTransfer->getPromotionItems() as $promotionItemTransfer) {
-            $promotionItemTransfer->requireAbstractSku();
+            $ids[] = $promotionItemTransfer->getIdProductAbstract();
+            $selectedAttributes[$promotionItemTransfer->getIdProductAbstract()] = $this->getSelectedAttributes($request, $promotionItemTransfer->getAbstractSku());
+            $promotionItemTransferIndexedByProductId[$promotionItemTransfer->getIdProductAbstract()] = $promotionItemTransfer;
+        }
 
-            $productViewTransfer = $this->getFactory()->getProductStorageClient()->findProductAbstractViewTransfer(
-                $promotionItemTransfer->getIdProductAbstract(),
-                $this->getLocale(),
-                $this->getSelectedAttributes($request, $promotionItemTransfer->getAbstractSku())
-            );
+        $productViewTransfers = $this->getFactory()->getProductStorageClient()->findProductAbstractViewTransfers($ids, $localeName, $selectedAttributes);
 
-            if ($productViewTransfer === null) {
-                continue;
-            }
-
+        foreach ($productViewTransfers as $productViewTransfer) {
+            $promotionItemTransfer = $promotionItemTransferIndexedByProductId[$productViewTransfer->getIdProductAbstract()];
             $productViewTransfer->setPromotionItem($promotionItemTransfer);
-
             $promotionProducts[$this->createPromotionProductBucketIdentifier($promotionItemTransfer)] = $productViewTransfer;
         }
 
