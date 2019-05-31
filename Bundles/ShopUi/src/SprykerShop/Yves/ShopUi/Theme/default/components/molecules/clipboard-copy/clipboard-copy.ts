@@ -38,14 +38,14 @@ export default class ClipboardCopy extends Component {
      */
     copyToClipboard(): void {
         if (!this.isCopyCommandSupported) {
-            setTimeout(() => this.showMessage(this.errorCopyMessage, this.defaultDuration));
+            this.showMessage(this.errorCopyMessage, this.defaultDuration);
 
             return;
         }
 
         this.target.select();
         document.execCommand('copy');
-        setTimeout(() => this.showMessage(this.successCopyMessage, this.defaultDuration));
+        this.showMessage(this.successCopyMessage, this.defaultDuration);
         this.dispatchCustomEvent(EVENT_COPY);
     }
 

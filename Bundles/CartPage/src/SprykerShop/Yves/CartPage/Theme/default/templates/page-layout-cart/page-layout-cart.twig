@@ -149,14 +149,13 @@
                             {% endwidget %}
                         {% endif %}
 
-                        {% if data.isQuoteEditable and data.cart.idQuote is not empty %}
+                        {% if data.isQuoteEditable and data.cart.idQuote %}
                             {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] only %}
                             {% elsewidget 'CartToShoppingListWidgetPlugin' args [data.cart.idQuote] only %} {# @deprecated Use CreateShoppingListFromCartWidget instead. #}
                             {% endwidget %}
-                            <hr>
-                        {% endif %}
 
-                        {% if data.isQuoteEditable and data.cart.idQuote is not empty %}
+                            <hr>
+
                             {% widget 'ShareCartByLinkWidget' args [data.cart] only %}
                                 {% block body %}
                                     {{ parent() }}
