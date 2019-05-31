@@ -42,19 +42,10 @@ class LinkController extends AbstractController
      */
     protected function executeIndexAction(string $resourceShareUuid, Request $request): RedirectResponse
     {
-        $resourceShareResponseTransfer = $this->getResourceShareByUuid($resourceShareUuid);
-
-        $resourceShareResponseTransfer->requireResourceShare();
-        $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
-
-        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
-            ->setResourceShare($resourceShareTransfer)
-            ->setCustomer($this->getFactory()
-                ->getCustomerClient()
-                ->getCustomer());
-        $resourceShareResponseTransfer = $this->activateResourceShare($resourceShareRequestTransfer);
-
-        $routeTransfer = $this->resolveRoute($request, (bool)$resourceShareResponseTransfer->getIsLoginRequired(), $resourceShareRequestTransfer);
+        $resourceShareResponseTransfer = $this->activateResourceShare(
+            $this->getResourceShareByUuid($resourceShareUuid)->getResourceShare()
+        );
+        $routeTransfer = $this->resolveRoute($request, (bool)$resourceShareResponseTransfer->getIsLoginRequired(), $resourceShareResponseTransfer->getResourceShare());
 
         return $this->redirectResponseInternal($routeTransfer->getRoute(), $routeTransfer->getParameters());
     }
@@ -105,14 +96,20 @@ class LinkController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    protected function activateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    protected function activateResourceShare(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
+            ->setResourceShare($resourceShareTransfer)
+            ->setCustomer($this->getFactory()
+                ->getCustomerClient()
+                ->getCustomer());
+
         $resourceShareResponseTransfer = $this->getFactory()->createResourceShareActivator()
             ->activateResourceShare($resourceShareRequestTransfer);
 
@@ -128,12 +125,18 @@ class LinkController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param bool $isLoginRequired
-     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
      * @return \Generated\Shared\Transfer\RouteTransfer
      */
-    protected function resolveRoute(Request $request, bool $isLoginRequired, ResourceShareRequestTransfer $resourceShareRequestTransfer): \Generated\Shared\Transfer\RouteTransfer
+    protected function resolveRoute(Request $request, bool $isLoginRequired, ResourceShareTransfer $resourceShareTransfer): RouteTransfer
     {
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
+            ->setResourceShare($resourceShareTransfer)
+            ->setCustomer($this->getFactory()
+                ->getCustomerClient()
+                ->getCustomer());
+
         $routeTransfer = $this->getFactory()->createRouteResolver()
             ->resolveRoute(
                 $request,
