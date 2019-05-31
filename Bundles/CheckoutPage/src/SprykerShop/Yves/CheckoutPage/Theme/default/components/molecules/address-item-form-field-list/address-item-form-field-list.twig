@@ -34,9 +34,9 @@
 
             {% if item.shippingAddress.id_customer_address is defined %}
                 <div class="col col--sm-3 spacing spacing--inner">
-                    {{ form_widget(item.shippingAddress.id_customer_address, {
+                    {{ form_row(item.shippingAddress.id_customer_address, {
                         attr: {
-                            'form-target-selector': '',
+                            'form-target-selector': '.js-address__item-shipping--' ~ loop.index,
                             'class': 'js-validate-next-checkout-step__trigger',
                         },
                     }) }}
@@ -44,16 +44,8 @@
                 {% set hiddenClass = 'is-hidden' %}
             {% endif %}
 
-            {% include molecule('validate-next-checkout-step', 'CheckoutPage') with {
-                attributes: {
-                    'form-selector': '',
-                    'trigger-selector': '',
-                    'target-selector': '',
-                },
-            } only %}
-
             <div class="col col--sm-12">
-                {% embed molecule('form') with {
+                {% include molecule('form') with {
                     class: 'js-address__item-shipping ' ~ hiddenClass ~ ' js-address__item-shipping--' ~ loop.index,
                     data: {
                         form: item.shippingAddress,
@@ -71,17 +63,6 @@
                         }
                     }
                 } only %}
-                    {% block field %}
-                        {{ form_row(field, {
-                            attr: {
-                                'data-key': field.vars.name
-                            },
-                            rowAttr: {
-                                class: config.name ~ '__field ' ~ fieldLayoutClass
-                            }
-                        }) }}
-                    {% endblock %}
-                {% endembed %}
 
                 {% if item.shippingAddress.id_customer_address is defined %}
                     {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
@@ -105,6 +86,14 @@
                         }
                     } only %}
                 {% endif %}
+
+                {% include molecule('validate-next-checkout-step', 'CheckoutPage') with {
+                    attributes: {
+                        'trigger-selector': '.js-validate-next-checkout-step__trigger',
+                        'target-selector': '.js-validate-next-checkout-step__target',
+                        'shipping-address-toggler-selector': '[name="addressesForm[shippingAddress][id_customer_address]"]',
+                    },
+                } only %}
             </div>
         {% endfor %}
     </div>

@@ -23,6 +23,8 @@
             submit: {
                 enable: true,
                 text: 'checkout.step.shipment' | trans,
+                class: 'button button--saccess js-validate-next-checkout-step__target',
+                isDisabled: true,
             },
         },
         embed: {
@@ -72,7 +74,7 @@
                     </div>
                 {% endif %}
 
-                {% embed molecule('form') with {
+                {% include molecule('form') with {
                     class: 'js-address__shipping' ~ (hasShippingAddressesApplicable ? ' is-hidden ' : ''),
                     data: {
                         form: embed.forms.shipping,
@@ -90,14 +92,6 @@
                         },
                     },
                 } only %}
-                    {% block field %}
-                        {{ form_row(field, {
-                            rowAttr: {
-                                class: config.name ~ '__field ' ~ fieldLayoutClass,
-                            },
-                        }) }}
-                    {% endblock %}
-                {% endembed %}
             </div>
 
             {% include molecule('address-item-form', 'CheckoutPage') with {
@@ -138,14 +132,6 @@
                         },
                     },
                 } only %}
-                    {% block field %}
-                        {{ form_row(field, {
-                            rowAttr: {
-                                class: config.name ~ '__field ' ~ fieldLayoutClass
-                            }
-                        }) }}
-                    {% endblock %}
-
                     {% block fields %}
                         {% set companyBusinessUnitBillingAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['billingAddress', data.form.vars.data]) %}
                         {% set isCompanyBusinessUnitBillingAddressApplicable = companyBusinessUnitBillingAddressWidget and companyBusinessUnitBillingAddressWidget.isApplicable %}
@@ -235,6 +221,7 @@
                         } only %}
                     {% endif %}
                 </div>
+
                 <div class="col">
                     {{ parent() }}
                 </div>
