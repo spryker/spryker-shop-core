@@ -51,19 +51,33 @@ export default class ValidateNextCheckoutStep extends Component {
         const splitDeliveryFormSelector = <string>element.getAttribute('form-target-selector');
         const splitDeliveryForm = <HTMLElement>document.querySelector(splitDeliveryFormSelector);
         const requiredFormFieldSelectors = `select[required], input[required]`;
-        const requiredFormFields = <HTMLElement[]>Array.from(splitDeliveryForm.querySelectorAll(
+        const requiredFormFields = <HTMLFormElement[]>Array.from(splitDeliveryForm.querySelectorAll(
             requiredFormFieldSelectors
         ));
 
         if (currentValue.length > 0) {
+            this.target.disabled = false;
+
             return;
         }
 
-        console.log(element);
-
         requiredFormFields.forEach((element: HTMLFormElement) => {
-            // console.log(element.value);
+            this.toggleVisibilityNextStepButton(element);
+
+            element.addEventListener('change', () => {
+                this.toggleVisibilityNextStepButton(element);
+            });
         });
+    }
+
+    protected toggleVisibilityNextStepButton(element: HTMLFormElement): void {
+        if (element.value) {
+            this.target.disabled = false;
+
+            return;
+        }
+
+        this.target.disabled = true;
     }
 
     get isSplitDeliveryFormEnabled(): boolean {
