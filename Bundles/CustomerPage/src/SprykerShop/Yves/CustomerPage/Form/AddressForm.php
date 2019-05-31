@@ -38,6 +38,7 @@ class AddressForm extends AbstractType
     public const FIELD_IS_DEFAULT_SHIPPING = 'is_default_shipping';
     public const FIELD_IS_DEFAULT_BILLING = 'is_default_billing';
     public const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
+    public const FIELD_ID_COMPANY_UNIT_ADDRESS = 'id_company_unit_address';
 
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
@@ -86,7 +87,8 @@ class AddressForm extends AbstractType
             ->addPhoneField($builder)
             ->addIsDefaultShippingField($builder)
             ->addIsDefaultBillingField($builder)
-            ->addIdCustomerAddressField($builder);
+            ->addIdCustomerAddressField($builder)
+            ->addIdCompanyUnitAddressField($builder);
     }
 
     /**
@@ -338,6 +340,18 @@ class AddressForm extends AbstractType
     protected function addIdCustomerAddressField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_ID_CUSTOMER_ADDRESS, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return \SprykerShop\Yves\CustomerPage\Form\AddressForm
+     */
+    protected function addIdCompanyUnitAddressField(FormBuilderInterface $builder): AddressForm
+    {
+        $builder->add(self::FIELD_ID_COMPANY_UNIT_ADDRESS, HiddenType::class);
 
         return $this;
     }
