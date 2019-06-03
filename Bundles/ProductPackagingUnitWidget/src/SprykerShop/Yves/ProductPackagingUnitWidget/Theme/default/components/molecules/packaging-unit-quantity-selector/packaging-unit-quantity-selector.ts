@@ -1,3 +1,4 @@
+/* tslint:disable */
 import Component from 'ShopUi/models/component';
 
 export default class PackagingUnitQuantitySelector extends Component {
@@ -505,7 +506,6 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.puChoiceElement.classList.add('is-hidden');
         this.amountInputChange();
     }
-
 
     private leadSalesUnitSelectChange(event: Event) {
         let salesUnitId = parseInt((event.srcElement as HTMLSelectElement).value);

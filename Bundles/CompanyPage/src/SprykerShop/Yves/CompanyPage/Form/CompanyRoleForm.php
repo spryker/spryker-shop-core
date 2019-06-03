@@ -50,7 +50,7 @@ class CompanyRoleForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdCompanyRoleField(FormBuilderInterface $builder): self
+    protected function addIdCompanyRoleField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_COMPANY_ROLE, HiddenType::class, [
             'required' => false,
@@ -64,7 +64,7 @@ class CompanyRoleForm extends AbstractType
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder): self
+    protected function addNameField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'company.account.company_role.name',
@@ -82,7 +82,7 @@ class CompanyRoleForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFkCompanyField(FormBuilderInterface $builder): self
+    protected function addFkCompanyField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FK_COMPANY, HiddenType::class, [
             'required' => true,
@@ -99,7 +99,7 @@ class CompanyRoleForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIsDefaultField(FormBuilderInterface $builder): self
+    protected function addIsDefaultField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_DEFAULT, CheckboxType::class, [
             'label' => 'company.account.company_role.is_default',

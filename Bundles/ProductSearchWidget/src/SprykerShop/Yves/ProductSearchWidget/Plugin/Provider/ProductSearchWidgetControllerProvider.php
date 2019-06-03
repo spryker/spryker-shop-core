@@ -13,6 +13,8 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     protected const ROUTE_PRODUCT_CONCRETE_SEARCH = 'product-search/product-concrete-search';
+    protected const ROUTE_PRODUCT_QUICK_ADD = 'product-quick-add';
+    protected const ROUTE_RENDER_PRODUCT_QUICK_ADD_FORM = 'render-product-quick-add-form';
 
     /**
      * {@inheritdoc}
@@ -35,7 +37,41 @@ class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvid
      */
     protected function defineControllers(Application $app): void
     {
-        $this->createController('{productSearch}/product-concrete-search', static::ROUTE_PRODUCT_CONCRETE_SEARCH, 'ProductSearchWidget', 'ProductConcreteSearch', 'index')
+        $this->addCartQuickAddRoute();
+        $this->addProductConcreteSearchRoute();
+        $this->addRenderProductQuickAddForm();
+    }
+
+    /**
+     * @uses ProductConcreteAddController::indexAction()
+     *
+     * @return void
+     */
+    protected function addCartQuickAddRoute(): void
+    {
+        $this->createPostController('/{productSearch}/product-quick-add', static::ROUTE_PRODUCT_QUICK_ADD, 'ProductSearchWidget', 'ProductConcreteAdd')
+            ->assert('productSearch', $this->allowedLocalesPattern . 'product-search|product-search')
+            ->value('productSearch', 'product-search');
+    }
+
+    /**
+     * @return void
+     */
+    protected function addRenderProductQuickAddForm(): void
+    {
+        $this->createController('{productSearch}/render-product-quick-add-form', static::ROUTE_RENDER_PRODUCT_QUICK_ADD_FORM, 'ProductSearchWidget', 'QuickAddToCart', 'renderProductQuickAddForm')
+            ->assert('productSearch', $this->allowedLocalesPattern . 'product-search|product-search')
+            ->value('productSearch', 'product-search');
+    }
+
+    /**
+     * @uses ProductConcreteSearchController::indexAction()
+     *
+     * @return void
+     */
+    protected function addProductConcreteSearchRoute(): void
+    {
+        $this->createController('{productSearch}/product-concrete-search', static::ROUTE_PRODUCT_CONCRETE_SEARCH, 'ProductSearchWidget', 'ProductConcreteSearch')
             ->assert('productSearch', $this->allowedLocalesPattern . 'product-search|product-search')
             ->value('productSearch', 'product-search');
     }

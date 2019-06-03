@@ -264,6 +264,7 @@ class BusinessUnitController extends AbstractCompanyController
         if (!$this->isCurrentCustomerRelatedToCompany($companyBusinessUnitTransfer->getFkCompany())) {
             throw new NotFoundHttpException();
         }
+
         return [
             'companyBusinessUnit' => $companyBusinessUnitTransfer,
         ];

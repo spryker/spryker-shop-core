@@ -62,6 +62,7 @@ class ShoppingListWidgetController extends AbstractController
 
         if (!$shoppingListItemTransfer->getIdShoppingListItem()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED);
+
             return $this->redirectResponseInternal(static::SHOPPING_LISTS_REDIRECT_URL);
         }
 
@@ -87,7 +88,7 @@ class ShoppingListWidgetController extends AbstractController
 
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setSku($request->get(static::PARAM_SKU))
-            ->setQuantity((int)$request->get(static::PARAM_QUANTITY))
+            ->setQuantity((float)$request->get(static::PARAM_QUANTITY))
             ->setFkShoppingList($request->get(static::PARAM_ID_SHOPPING_LIST))
             ->setCustomerReference($customerTransfer->getCustomerReference())
             ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());

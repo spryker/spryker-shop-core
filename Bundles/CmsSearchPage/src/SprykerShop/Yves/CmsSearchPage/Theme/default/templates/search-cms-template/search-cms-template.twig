@@ -5,9 +5,7 @@
 } %}
 
 {% block content %}
-    <form method="GET" class="grid js-form-input-default-value-disabler__catalog-form">
-        {% block form %}
-
-        {% endblock %}
+    <form method="GET" class="grid" data-init-default-value-form>
+        {% block form %}{% endblock %}
     </form>
 {% endblock %}

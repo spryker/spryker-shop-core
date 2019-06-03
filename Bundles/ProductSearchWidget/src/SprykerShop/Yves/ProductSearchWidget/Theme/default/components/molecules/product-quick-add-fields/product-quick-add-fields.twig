@@ -1,0 +1,41 @@
+{% extends molecule('product-quick-add-fields-partial', 'ProductSearchWidget') %}
+
+{% define config = {
+    name: 'product-quick-add-fields',
+    tag: 'product-quick-add-fields',
+} %}
+
+{% define attributes = {
+    'partial-quantity-selector': '.js-' ~ config.name ~ '-partial__quantity',
+} %}
+
+{% block body %}
+    {% include molecule('ajax-provider') with {
+        class: config.jsName ~ '__provider ',
+        attributes: {
+            url: path('render-product-quick-add-form'),
+        },
+    } only %}
+
+    {% include molecule('ajax-renderer') with {
+        class: config.jsName ~ '__renderer',
+        attributes: {
+            'provider-selector': '.' ~ config.jsName ~ '__provider',
+            'target-selector': '.' ~ config.jsName ~ '__target',
+        },
+    } only %}
+
+    {% do data.form.sku.setRendered %}
+
+    <div class="col col--sm-12 {{ data.verticalLayout ? 'spacing-bottom' : 'col--md-8 spacing-right spacing-right--inner' }}">
+        {% widget 'ProductConcreteSearchWidget' args [
+            'ajax-provider' ~ config.name,
+            data.form.sku.vars.full_name,
+        ] only %}
+        {% endwidget %}
+    </div>
+
+    <div class="col col--sm-12 {{ config.jsName }}__target {{ data.verticalLayout ? 'spacing-bottom' : 'col--md-4 spacing-right spacing-right--inner' }}">
+        {{ parent() }}
+    </div>
+{% endblock %}

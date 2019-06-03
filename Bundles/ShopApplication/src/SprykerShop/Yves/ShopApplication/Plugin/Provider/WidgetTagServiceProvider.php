@@ -15,10 +15,13 @@ use Spryker\Yves\Kernel\View\ViewInterface;
 use SprykerShop\Yves\ShopApplication\Exception\InvalidApplicationException;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Twig_Environment;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
+ * @deprecated Use `SprykerShop\Yves\ShopApplication\Plugin\Twig\WidgetTagTwigPlugin` instead to provide twig functionality.
+ * @deprecated Use `\SprykerShop\Yves\ShopApplication\Plugin\EventDispatcher\ShopApplicationEventDispatcherPlugin` instead to handle View response.
+ *
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationConfig getConfig()
  */
@@ -39,7 +42,7 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
         $this->addWidgetTagTokenParser($application);
 
         $application['twig'] = $application->share(
-            $application->extend('twig', function (Twig_Environment $twig) {
+            $application->extend('twig', function (Environment $twig) {
                 return $this->registerWidgetTwigFunction($twig);
             })
         );
@@ -86,7 +89,7 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
     protected function addWidgetTagTokenParser(Application $application): void
     {
         $application['twig'] = $application->share(
-            $application->extend('twig', function (Twig_Environment $twig) {
+            $application->extend('twig', function (Environment $twig) {
                 $twig->addTokenParser($this->getFactory()->createWidgetTagTokenParser());
 
                 return $twig;
@@ -95,11 +98,11 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      *
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
-    protected function registerWidgetTwigFunction(Twig_Environment $twig)
+    protected function registerWidgetTwigFunction(Environment $twig)
     {
         foreach ($this->getFunctions() as $function) {
             $twig->addFunction($function->getName(), $function);
@@ -109,12 +112,12 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
-     * @return \Twig_SimpleFunction[]
+     * @return \Twig\TwigFunction[]
      */
     protected function getFunctions(): array
     {
         return [
-            new Twig_SimpleFunction(static::TWIG_FUNCTION_FIND_WIDGET, [$this, 'findWidget'], [
+            new TwigFunction(static::TWIG_FUNCTION_FIND_WIDGET, [$this, 'findWidget'], [
                 'needs_context' => false,
             ]),
         ];
@@ -155,7 +158,7 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
             return;
         }
 
-        /** @var \Twig_Environment $twig */
+        /** @var \Twig\Environment $twig */
         $twig = $application['twig'];
         $twig->addGlobal('_view', $result);
 

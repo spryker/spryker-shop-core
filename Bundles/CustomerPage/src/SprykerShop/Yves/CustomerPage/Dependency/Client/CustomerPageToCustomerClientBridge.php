@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage\Dependency\Client;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 class CustomerPageToCustomerClientBridge implements CustomerPageToCustomerClientInterface
@@ -185,5 +186,23 @@ class CustomerPageToCustomerClientBridge implements CustomerPageToCustomerClient
     public function markCustomerAsDirty()
     {
         $this->customerClient->markCustomerAsDirty();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerSecuredPattern(): string
+    {
+        return $this->customerClient->getCustomerSecuredPattern();
+    }
+
+    /**
+     * @param string $accessToken
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function getCustomerByAccessToken(string $accessToken): CustomerResponseTransfer
+    {
+        return $this->customerClient->getCustomerByAccessToken($accessToken);
     }
 }

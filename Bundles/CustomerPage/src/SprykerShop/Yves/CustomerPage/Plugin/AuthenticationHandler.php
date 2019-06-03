@@ -55,21 +55,10 @@ class AuthenticationHandler extends AbstractPlugin
     protected function loginAfterSuccessfulRegistration(CustomerTransfer $customerTransfer)
     {
         $token = $this->getFactory()->createUsernamePasswordToken($customerTransfer);
-        $this->getSecurityContext()->setToken($token);
 
         $this->getFactory()
-            ->getCustomerClient()
-            ->setCustomer($customerTransfer);
-    }
-
-    /**
-     * @return \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
-     */
-    protected function getSecurityContext()
-    {
-        $application = $this->getFactory()->getApplication();
-
-        return $application['security.token_storage'];
+            ->createCustomerAuthenticator()
+            ->authenticateCustomer($customerTransfer, $token);
     }
 
     /**

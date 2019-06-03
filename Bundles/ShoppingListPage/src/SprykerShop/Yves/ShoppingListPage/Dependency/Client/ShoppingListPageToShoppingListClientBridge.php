@@ -18,7 +18,6 @@ use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
-use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 
@@ -55,16 +54,6 @@ class ShoppingListPageToShoppingListClientBridge implements ShoppingListPageToSh
     public function clearShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
         return $this->shoppingListClient->clearShoppingList($shoppingListTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
-     */
-    public function shareShoppingList(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
-    {
-        return $this->shoppingListClient->shareShoppingList($shoppingListShareRequestTransfer);
     }
 
     /**
@@ -156,16 +145,6 @@ class ShoppingListPageToShoppingListClientBridge implements ShoppingListPageToSh
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
-     */
-    public function getShoppingListOverview(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer
-    {
-        return $this->shoppingListClient->getShoppingListOverview($shoppingListOverviewRequestTransfer);
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
     public function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer
@@ -201,5 +180,16 @@ class ShoppingListPageToShoppingListClientBridge implements ShoppingListPageToSh
     public function dismissShoppingListSharing(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer
     {
         return $this->shoppingListClient->dismissShoppingListSharing($shoppingListDismissRequest);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param array $params
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer, array $params = []): ShoppingListItemTransfer
+    {
+        return $this->shoppingListClient->addItem($shoppingListItemTransfer, $params);
     }
 }
