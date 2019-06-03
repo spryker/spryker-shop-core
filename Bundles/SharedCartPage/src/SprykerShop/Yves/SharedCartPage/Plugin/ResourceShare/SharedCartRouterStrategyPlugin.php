@@ -19,19 +19,8 @@ class SharedCartRouterStrategyPlugin implements ResourceShareRouterStrategyPlugi
      */
     protected const ROUTE_CART = 'cart';
 
-    /**
-     * @uses \Spryker\Shared\SharedCart\SharedCartConfig::RESOURCE_TYPE_QUOTE
-     */
     protected const RESOURCE_TYPE_QUOTE = 'quote';
-
-    /**
-     * @uses \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_READ_ONLY
-     */
     protected const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
-
-    /**
-     * @uses \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_FULL_ACCESS
-     */
     protected const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
 
     /**
@@ -47,11 +36,6 @@ class SharedCartRouterStrategyPlugin implements ResourceShareRouterStrategyPlugi
      */
     public function isApplicable(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
-        $customerTransfer = $resourceShareRequestTransfer->getCustomer();
-        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
-            return false;
-        }
-
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
         $resourceShareTransfer->requireResourceType();
         if ($resourceShareTransfer->getResourceType() !== static::RESOURCE_TYPE_QUOTE) {
@@ -70,11 +54,11 @@ class SharedCartRouterStrategyPlugin implements ResourceShareRouterStrategyPlugi
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RouteTransfer
      */
-    public function resolveRoute(ResourceShareTransfer $resourceShareTransfer): RouteTransfer
+    public function resolveRoute(ResourceShareRequestTransfer $resourceShareRequestTransfer): RouteTransfer
     {
         return (new RouteTransfer())
             ->setRoute(static::ROUTE_CART);

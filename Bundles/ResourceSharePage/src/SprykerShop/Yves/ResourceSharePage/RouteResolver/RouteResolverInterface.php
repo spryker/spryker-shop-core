@@ -9,13 +9,16 @@ namespace SprykerShop\Yves\ResourceSharePage\RouteResolver;
 
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\RouteTransfer;
+use Symfony\Component\HttpFoundation\Request;
 
 interface RouteResolverInterface
 {
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param bool $isLoginRequired
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\RouteTransfer|null
+     * @return \Generated\Shared\Transfer\RouteTransfer
      */
-    public function resolveRoute(ResourceShareRequestTransfer $resourceShareRequestTransfer): ?RouteTransfer;
+    public function resolveRoute(Request $request, bool $isLoginRequired, ResourceShareRequestTransfer $resourceShareRequestTransfer): RouteTransfer;
 }

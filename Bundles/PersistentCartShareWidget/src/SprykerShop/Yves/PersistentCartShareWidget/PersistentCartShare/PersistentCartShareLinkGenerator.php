@@ -9,8 +9,10 @@ namespace SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShare;
 
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Yves\Kernel\Application;
+use SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToCustomerClientInterface;
 use SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToPersistentCartShareClientInterface;
 use SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidShareOptionGroupException;
+use SprykerShop\Yves\PersistentCartShareWidget\ResourceShare\ResourceShareRequestBuilder;
 
 class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGeneratorInterface
 {
@@ -31,15 +33,31 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
     protected $application;
 
     /**
+     * @var \SprykerShop\Yves\PersistentCartShareWidget\ResourceShare\ResourceShareRequestBuilder
+     */
+    protected $resourceShareRequestBuilder;
+
+    /**
+     * @var \SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToCustomerClientInterface
+     */
+    protected $customerClient;
+
+    /**
      * @param \SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToPersistentCartShareClientInterface $persistentCartShareClient
      * @param \Spryker\Yves\Kernel\Application $application
+     * @param \SprykerShop\Yves\PersistentCartShareWidget\ResourceShare\ResourceShareRequestBuilder $resourceShareRequestBuilder
+     * @param \SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToCustomerClientInterface $customerClient
      */
     public function __construct(
         PersistentCartShareWidgetToPersistentCartShareClientInterface $persistentCartShareClient,
-        Application $application
+        Application $application,
+        ResourceShareRequestBuilder $resourceShareRequestBuilder,
+        PersistentCartShareWidgetToCustomerClientInterface $customerClient
     ) {
         $this->persistentCartShareClient = $persistentCartShareClient;
         $this->application = $application;
+        $this->resourceShareRequestBuilder = $resourceShareRequestBuilder;
+        $this->customerClient = $customerClient;
     }
 
     /**
@@ -59,7 +77,9 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
 
         $resourceShareLinks = [];
         foreach ($shareOptions[$shareOptionGroup] as $shareOption) {
-            $cartResourceShare = $this->persistentCartShareClient->generateCartResourceShare($idQuote, $shareOption);
+            $cartResourceShare = $this->persistentCartShareClient->generateCartResourceShare(
+                $this->resourceShareRequestBuilder->buildResourceShareRequest($idQuote, $shareOption)
+            );
             $resourceShareLinks[$shareOption] = $this->buildResourceShareLink($cartResourceShare->getResourceShare());
         }
 
@@ -104,7 +124,9 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
      */
     public function generateShareOptionGroups(): array
     {
-        $shareOptions = $this->persistentCartShareClient->getCartShareOptions();
+        $shareOptions = $this->persistentCartShareClient->getCartShareOptions(
+            $this->customerClient->getCustomer()
+        );
         $shareOptionGroupNames = array_keys($shareOptions);
 
         $shareOptionGroups = [];

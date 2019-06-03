@@ -5,10 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\PersistentCartSharePage\Plugin;
+namespace SprykerShop\Yves\PersistentCartSharePage\Plugin\ResourceSharePage;
 
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
 use Generated\Shared\Transfer\RouteTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareRouterStrategyPluginInterface;
@@ -57,7 +56,7 @@ class CartPreviewRouterStrategyPlugin extends AbstractPlugin implements Resource
         $resourceShareTransfer->requireResourceShareData();
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
-        return $resourceShareTransfer->getUuid() && $resourceShareDataTransfer->getShareOption() === static::SHARE_OPTION_PREVIEW;
+        return $resourceShareDataTransfer->getShareOption() === static::SHARE_OPTION_PREVIEW;
     }
 
     /**
@@ -66,16 +65,16 @@ class CartPreviewRouterStrategyPlugin extends AbstractPlugin implements Resource
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RouteTransfer
      */
-    public function resolveRoute(ResourceShareTransfer $resourceShareTransfer): RouteTransfer
+    public function resolveRoute(ResourceShareRequestTransfer $resourceShareRequestTransfer): RouteTransfer
     {
         return (new RouteTransfer())
             ->setRoute(static::ROUTE_CART_PREVIEW)
             ->setParameters([
-                static::PARAM_RESOURCE_SHARE_UUID => $resourceShareTransfer->getUuid(),
+                static::PARAM_RESOURCE_SHARE_UUID => $resourceShareRequestTransfer->getResourceShare()->getUuid(),
             ]);
     }
 }

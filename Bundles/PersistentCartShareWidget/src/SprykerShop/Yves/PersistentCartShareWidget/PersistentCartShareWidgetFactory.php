@@ -13,6 +13,7 @@ use SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartS
 use SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToPersistentCartShareClientInterface;
 use SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShare\PersistentCartShareLinkGenerator;
 use SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShare\PersistentCartShareLinkGeneratorInterface;
+use SprykerShop\Yves\PersistentCartShareWidget\ResourceShare\ResourceShareRequestBuilder;
 
 class PersistentCartShareWidgetFactory extends AbstractFactory
 {
@@ -41,13 +42,25 @@ class PersistentCartShareWidgetFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\PersistentCartShareWidget\ResourceShare\ResourceShareRequestBuilder
+     */
+    public function createResourceShareRequestBuilder(): ResourceShareRequestBuilder
+    {
+        return new ResourceShareRequestBuilder(
+            $this->getCustomerClient()
+        );
+    }
+
+    /**
      * @return \SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShare\PersistentCartShareLinkGeneratorInterface
      */
     public function createPersistentCartShareLinkGenerator(): PersistentCartShareLinkGeneratorInterface
     {
         return new PersistentCartShareLinkGenerator(
             $this->getPersistentCartShareClient(),
-            $this->getApplication()
+            $this->getApplication(),
+            $this->createResourceShareRequestBuilder(),
+            $this->getCustomerClient()
         );
     }
 }

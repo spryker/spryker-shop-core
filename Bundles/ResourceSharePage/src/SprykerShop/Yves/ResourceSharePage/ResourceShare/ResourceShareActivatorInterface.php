@@ -7,14 +7,15 @@
 
 namespace SprykerShop\Yves\ResourceSharePage\ResourceShare;
 
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 
 interface ResourceShareActivatorInterface
 {
     /**
-     * @param string $resourceShareUuid
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function activateResourceShare(string $resourceShareUuid): ResourceShareResponseTransfer;
+    public function activateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
 }

@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\PersistentCartSharePage\Controller;
 
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
+use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,7 +44,11 @@ class CartController extends AbstractController
     {
         $quoteResponseTransfer = $this->getFactory()
             ->getPersistentCartShareClient()
-            ->getQuoteForPreview($resourceShareUuid);
+            ->getPreviewQuoteResourceShare((new ResourceShareRequestTransfer())
+                ->setResourceShare(
+                    (new ResourceShareTransfer())
+                        ->setUuid($resourceShareUuid)
+                ));
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
