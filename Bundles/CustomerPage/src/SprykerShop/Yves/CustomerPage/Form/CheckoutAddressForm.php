@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -57,7 +58,8 @@ class CheckoutAddressForm extends AddressForm
             ->addZipCodeField($builder, $options)
             ->addCityField($builder, $options)
             ->addIso2CodeField($builder, $options)
-            ->addPhoneField($builder);
+            ->addPhoneField($builder)
+            ->addIdCompanyUnitAddressTextField($builder);
     }
 
     /**
@@ -81,6 +83,18 @@ class CheckoutAddressForm extends AddressForm
             'placeholder' => 'customer.account.add_new_address',
             'label' => 'page.checkout.address.address_select',
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return \SprykerShop\Yves\CustomerPage\Form\CheckoutAddressForm
+     */
+    protected function addIdCompanyUnitAddressTextField(FormBuilderInterface $builder): CheckoutAddressForm
+    {
+        $builder->add(self::FIELD_ID_COMPANY_UNIT_ADDRESS, HiddenType::class);
 
         return $this;
     }
