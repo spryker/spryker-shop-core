@@ -4,6 +4,7 @@ export default class ValidateNextCheckoutStep extends Component {
     protected target: HTMLButtonElement;
     protected triggers: HTMLSelectElement[];
     protected shippingAddressToggler: HTMLSelectElement;
+    protected readonly requiredFormFieldSelectors: string = `select[required], input[required]`;
 
     protected readyCallback(): void {
         this.target = <HTMLButtonElement>document.querySelector(this.targetSelector);
@@ -41,6 +42,26 @@ export default class ValidateNextCheckoutStep extends Component {
     }
 
     protected initFormFieldsState(): void {
+        if (!this.triggers.length) {
+            const splitDeliveryForm = <HTMLElement>document.querySelector(this.splitDeliveryFormSelector);
+            const requiredFormFields = <HTMLFormElement[]>Array.from(splitDeliveryForm.querySelectorAll(
+                this.requiredFormFieldSelectors
+            ));
+
+            requiredFormFields.forEach((element: HTMLFormElement) => {
+                this.toggleVisibilityNextStepButton(element);
+                console.log(element);
+
+                element.addEventListener('change', () => {
+                    console.log(element);
+
+                    this.toggleVisibilityNextStepButton(element);
+                });
+            });
+
+            return;
+        }
+
         this.triggers.forEach((element: HTMLSelectElement) => {
             this.checkFormFieldsState(element);
         });
@@ -50,9 +71,8 @@ export default class ValidateNextCheckoutStep extends Component {
         const currentValue = element.options[element.selectedIndex].value;
         const splitDeliveryFormSelector = <string>element.getAttribute('form-target-selector');
         const splitDeliveryForm = <HTMLElement>document.querySelector(splitDeliveryFormSelector);
-        const requiredFormFieldSelectors = `select[required], input[required]`;
         const requiredFormFields = <HTMLFormElement[]>Array.from(splitDeliveryForm.querySelectorAll(
-            requiredFormFieldSelectors
+            this.requiredFormFieldSelectors
         ));
 
         if (currentValue.length > 0) {
@@ -61,16 +81,17 @@ export default class ValidateNextCheckoutStep extends Component {
             return;
         }
 
-        requiredFormFields.forEach((element: HTMLFormElement) => {
-            this.toggleVisibilityNextStepButton(element);
-
-            element.addEventListener('change', () => {
-                this.toggleVisibilityNextStepButton(element);
-            });
-        });
+        // requiredFormFields.forEach((element: HTMLFormElement) => {
+        //     this.toggleVisibilityNextStepButton(element);
+        //
+        //     element.addEventListener('change', () => {
+        //         this.toggleVisibilityNextStepButton(element);
+        //     });
+        // });
     }
 
     protected toggleVisibilityNextStepButton(element: HTMLFormElement): void {
+        console.log(element);
         if (element.value) {
             this.target.disabled = false;
 
@@ -84,6 +105,10 @@ export default class ValidateNextCheckoutStep extends Component {
         const currentValue = <string>this.shippingAddressToggler.options[this.shippingAddressToggler.selectedIndex].value;
 
         return currentValue === this.toggleOptionValue;
+    }
+
+    get splitDeliveryFormSelector(): string {
+        return this.getAttribute('split-delivery-form-selector');
     }
 
     get triggerSelector(): string {

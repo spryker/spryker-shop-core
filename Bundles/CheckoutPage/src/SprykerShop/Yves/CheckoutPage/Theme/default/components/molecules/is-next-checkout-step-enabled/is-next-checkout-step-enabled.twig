@@ -1,14 +1,12 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'validate-next-checkout-step',
-    tag: 'validate-next-checkout-step',
+    name: 'is-next-checkout-step-enabled',
+    tag: 'is-next-checkout-step-enabled',
 } %}
 
 {% define attributes = {
-    'split-delivery-form-selector': required,
     'trigger-selector': required,
     'target-selector': required,
-    'shipping-address-toggler-selector': required,
     'toggle-option-value': '-1',
 } %}

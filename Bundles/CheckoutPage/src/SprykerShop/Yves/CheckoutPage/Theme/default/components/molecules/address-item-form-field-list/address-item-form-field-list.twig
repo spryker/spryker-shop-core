@@ -86,15 +86,16 @@
                         }
                     } only %}
                 {% endif %}
-
-                {% include molecule('validate-next-checkout-step', 'CheckoutPage') with {
-                    attributes: {
-                        'trigger-selector': '.js-validate-next-checkout-step__trigger',
-                        'target-selector': '.js-validate-next-checkout-step__target',
-                        'shipping-address-toggler-selector': '[name="addressesForm[shippingAddress][id_customer_address]"]',
-                    },
-                } only %}
             </div>
         {% endfor %}
+
+        {% include molecule('validate-next-checkout-step', 'CheckoutPage') with {
+            attributes: {
+                'trigger-selector': '.js-validate-next-checkout-step__trigger',
+                'target-selector': '.js-validate-next-checkout-step__target',
+                'shipping-address-toggler-selector': '[name="addressesForm[shippingAddress][id_customer_address]"]',
+                'split-delivery-form-selector': '.js-address__items-target',
+            },
+        } only %}
     </div>
 {% endblock %}
