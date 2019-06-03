@@ -48,7 +48,9 @@ class ContentProductAbstractReader implements ContentProductAbstractReaderInterf
             return null;
         }
 
-        $productAbstractViewCollection = $this->productStorageClient->findProductAbstractViewTransfers($contentProductAbstractListTypeTransfer->getIdProductAbstracts(), $localeName);
+        $productAbstractViewCollection = $this
+            ->productStorageClient
+            ->findProductAbstractViewTransfers($contentProductAbstractListTypeTransfer->getIdProductAbstracts(), $localeName);
 
         return $productAbstractViewCollection;
     }

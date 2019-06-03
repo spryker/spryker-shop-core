@@ -90,7 +90,7 @@ class CmsProductSetContentWidgetPlugin extends SprykerCmsProductSetContentWidget
     {
         $selectedAttributes = [];
         foreach ($productSetDataStorageTransfer->getProductAbstractIds() as $idProductAbstract) {
-            $selectedAttributes[$idProductAbstract] = $this->getSelectedAttributes($idProductAbstract);
+            $selectedAttributes[$idProductAbstract] = $this->getSelectedAttributes($context, $idProductAbstract);
         }
 
         $productViewTransfers = $this->getFactory()
