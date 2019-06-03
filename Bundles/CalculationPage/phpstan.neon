@@ -1,3 +1,5 @@
 parameters:
-    ignoreErrors:
-        - "#Strict comparison using === between '' and 'development' will always evaluate to false.#"
+    dynamicConstantNames:
+           - APPLICATION
+           - APPLICATION_ENV
+           - APPLICATION_STORE
