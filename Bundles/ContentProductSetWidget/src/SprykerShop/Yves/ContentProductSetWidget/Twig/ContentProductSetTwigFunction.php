@@ -34,6 +34,11 @@ class ContentProductSetTwigFunction extends TwigFunction
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM = 'cart-button-btm';
 
+    /**
+     * @uses \SprykerShop\Yves\ProductSetDetailPage\Controller\DetailController::PARAM_ATTRIBUTE
+     */
+    protected const PARAM_ATTRIBUTE = 'attributes';
+
     protected const MESSAGE_CONTENT_PRODUCT_SET_NOT_FOUND = '<strong>Content product set with ID %s not found.</strong>';
     protected const MESSAGE_WRONG_CONTENT_PRODUCT_SET_TYPE = '<strong>Content product set widget could not be rendered because the content item with ID %s is not a product set.</strong>';
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"%s" is not supported name of template.</strong>';
@@ -112,8 +117,9 @@ class ContentProductSetTwigFunction extends TwigFunction
                 return $this->getMessageProductSetNotFound($idContent);
             }
 
+            $selectedAttributes = $this->getRequest($context)->query->get(static::PARAM_ATTRIBUTE, []);
             $productAbstractViewCollection = $this->contentProductAbstractReader
-                ->findProductAbstractCollection($productSetDataStorageTransfer, $this->getRequest($context), $this->localeName);
+                ->findProductAbstractCollection($productSetDataStorageTransfer, $selectedAttributes, $this->localeName);
 
             return $this->twig->render(
                 $this->getAvailableTemplates()[$templateIdentifier],

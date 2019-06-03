@@ -22,6 +22,7 @@ use SprykerShop\Yves\ContentProductSetWidget\Dependency\Client\ContentProductSet
 use SprykerShop\Yves\ContentProductSetWidget\Dependency\Client\ContentProductSetWidgetToProductStorageClientInterface;
 use SprykerShop\Yves\ContentProductSetWidget\Plugin\Twig\ContentProductSetTwigPlugin;
 use SprykerShop\Yves\ContentProductSetWidget\Twig\ContentProductSetTwigFunction;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -50,6 +51,8 @@ class ContentProductSetTwigPluginTest extends Unit
     protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<strong>Content product set widget could not be rendered because the content item with ID 0 is not a product set.</strong>';
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"wrong" is not supported name of template.</strong>';
     protected const RENDERED_STRING = 'output';
+
+    protected const PARAM_ATTRIBUTE_VALUE = [];
 
     /**
      * @var \SprykerShopTest\Yves\ContentProductSetWidget\ContentProductSetWidgetYvesTester
@@ -204,7 +207,7 @@ class ContentProductSetTwigPluginTest extends Unit
     {
         $functionName = new ReflectionClassConstant(ContentProductSetTwigFunction::class, 'FUNCTION_CONTENT_PRODUCT_SET');
 
-        return $this->getTwig()->getFunction($functionName->getValue());
+        return $this->createTwigMock()->getFunction($functionName->getValue());
     }
 
     /**
@@ -218,7 +221,7 @@ class ContentProductSetTwigPluginTest extends Unit
     /**
      * @return \Twig\Environment
      */
-    protected function getTwig(): Environment
+    protected function createTwigMock(): Environment
     {
         $twigMock = $this->getMockBuilder(Environment::class)->setConstructorArgs([new FilesystemLoader()])
             ->setMethods(['render'])
@@ -236,7 +239,7 @@ class ContentProductSetTwigPluginTest extends Unit
      */
     protected function getContext(): array
     {
-        $context['app']['request'] = $this->getRequest();
+        $context['app']['request'] = $this->createRequestMock();
 
         return $context;
     }
@@ -244,8 +247,17 @@ class ContentProductSetTwigPluginTest extends Unit
     /**
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    protected function getRequest(): Request
+    protected function createRequestMock(): Request
     {
-        return new Request();
+        $query = $this->getMockBuilder(ParameterBag::class)->getMock();
+        $query->method('get')
+            ->willReturn(static::PARAM_ATTRIBUTE_VALUE);
+
+        $request = $this->getMockBuilder(Request::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $request->query = $query;
+
+        return $request;
     }
 }

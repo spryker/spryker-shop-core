@@ -9,15 +9,9 @@ namespace SprykerShop\Yves\ContentProductSetWidget\Reader;
 
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
 use SprykerShop\Yves\ContentProductSetWidget\Dependency\Client\ContentProductSetWidgetToProductStorageClientInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class ContentProductAbstractReader implements ContentProductAbstractReaderInterface
 {
-    /**
-     * @uses \SprykerShop\Yves\ProductSetDetailPage\Controller\DetailController::PARAM_ATTRIBUTE
-     */
-    protected const PARAM_ATTRIBUTE = 'attributes';
-
     /**
      * @var \SprykerShop\Yves\ContentProductSetWidget\Dependency\Client\ContentProductSetWidgetToProductStorageClientInterface
      */
@@ -33,18 +27,17 @@ class ContentProductAbstractReader implements ContentProductAbstractReaderInterf
 
     /**
      * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param array $selectedAttributes
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]|null
      */
     public function findProductAbstractCollection(
         ProductSetDataStorageTransfer $productSetDataStorageTransfer,
-        Request $request,
+        array $selectedAttributes,
         string $localeName
     ): ?array {
         $productAbstractViewCollection = [];
-        $requestAttributes = $request->query->get(static::PARAM_ATTRIBUTE, []);
 
         foreach ($productSetDataStorageTransfer->getProductAbstractIds() as $idProductAbstract) {
             $productAbstract = $this->productStorageClient->findProductAbstractStorageData($idProductAbstract, $localeName);
@@ -53,8 +46,9 @@ class ContentProductAbstractReader implements ContentProductAbstractReaderInterf
                 continue;
             }
 
-            $selectedAttributes = $this->getSelectedAttributesByIdProductAbstract($idProductAbstract, $requestAttributes);
-            $productAbstractViewCollection[] = $this->productStorageClient->mapProductAbstractStorageData($productAbstract, $localeName, $selectedAttributes);
+            $productAbstractSelectedAttributes = $this->getSelectedAttributesByIdProductAbstract($idProductAbstract, $selectedAttributes);
+            $productAbstractViewCollection[] = $this->productStorageClient
+                ->mapProductAbstractStorageData($productAbstract, $localeName, $productAbstractSelectedAttributes);
         }
 
         return $productAbstractViewCollection;
@@ -62,12 +56,12 @@ class ContentProductAbstractReader implements ContentProductAbstractReaderInterf
 
     /**
      * @param int $idProductAbstract
-     * @param array $attributes
+     * @param array $selectedAttributes
      *
      * @return array
      */
-    protected function getSelectedAttributesByIdProductAbstract(int $idProductAbstract, array $attributes): array
+    protected function getSelectedAttributesByIdProductAbstract(int $idProductAbstract, array $selectedAttributes): array
     {
-        return isset($attributes[$idProductAbstract]) ? array_filter($attributes[$idProductAbstract]) : [];
+        return isset($selectedAttributes[$idProductAbstract]) ? array_filter($selectedAttributes[$idProductAbstract]) : [];
     }
 }
