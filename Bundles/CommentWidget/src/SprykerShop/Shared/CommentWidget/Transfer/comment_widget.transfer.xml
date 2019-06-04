@@ -39,8 +39,4 @@
     <transfer name="Quote">
         <property name="commentThread" type="CommentThread" />
     </transfer>
-
-    <transfer name="Message">
-        <property name="value" type="string"/>
-    </transfer>
 </transfers>
