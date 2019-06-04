@@ -39,7 +39,7 @@ class AddressProvider implements AddressProviderInterface
     {
         $customerTransfer = $this->customerClient->getCustomer();
 
-        if (!$customerTransfer) {
+        if ($customerTransfer === null) {
             return false;
         }
 
@@ -89,13 +89,7 @@ class AddressProvider implements AddressProviderInterface
 
         $addressTransfer = $this->setAddressCustomerAttributes($addressTransfer, $customerTransfer);
         $addressTransfer->setKey($this->getBusinessUnitAddressKey($companyUnitAddressTransfer->getIdCompanyUnitAddress()));
-
-        $companyBusinessUnitTransfer = $this->findCompanyBusinessUnit($customerTransfer);
-        if ($companyBusinessUnitTransfer) {
-            $addressTransfer->setCompany(
-                $companyBusinessUnitTransfer->getCompany()->getName()
-            );
-        }
+        $addressTransfer = $this->setCompanyNameToAddressTransfer($addressTransfer, $customerTransfer);
 
         return $addressTransfer;
     }
@@ -106,6 +100,11 @@ class AddressProvider implements AddressProviderInterface
     protected function getCustomerAddressList(): ArrayObject
     {
         $customerTransfer = $this->customerClient->getCustomer();
+        $addressesTransfer = $customerTransfer->getAddresses();
+
+        if ($addressesTransfer === null) {
+            return new ArrayObject();
+        }
 
         return $customerTransfer->getAddresses()
             ->getAddresses();
@@ -176,9 +175,33 @@ class AddressProvider implements AddressProviderInterface
         AddressTransfer $addressTransfer,
         CustomerTransfer $customerTransfer
     ): AddressTransfer {
-        $addressTransfer = $addressTransfer->setLastName($customerTransfer->getLastName())
+        return $addressTransfer
+            ->setLastName($customerTransfer->getLastName())
             ->setFirstName($customerTransfer->getFirstName())
             ->setSalutation($customerTransfer->getSalutation());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function setCompanyNameToAddressTransfer(
+        AddressTransfer $addressTransfer,
+        CustomerTransfer $customerTransfer
+    ): AddressTransfer {
+        $companyBusinessUnitTransfer = $this->findCompanyBusinessUnit($customerTransfer);
+        if ($companyBusinessUnitTransfer === null) {
+            return $addressTransfer;
+        }
+
+        $companyTransfer = $companyBusinessUnitTransfer->getCompany();
+        if ($companyTransfer === null) {
+            return $addressTransfer;
+        }
+
+        $addressTransfer->setCompany($companyTransfer->getName());
 
         return $addressTransfer;
     }

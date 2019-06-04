@@ -90,9 +90,9 @@ class CheckoutAddressForm extends AddressForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \SprykerShop\Yves\CustomerPage\Form\CheckoutAddressForm
+     * @return $this
      */
-    protected function addIdCompanyUnitAddressTextField(FormBuilderInterface $builder): CheckoutAddressForm
+    protected function addIdCompanyUnitAddressTextField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_ID_COMPANY_UNIT_ADDRESS, HiddenType::class);
 

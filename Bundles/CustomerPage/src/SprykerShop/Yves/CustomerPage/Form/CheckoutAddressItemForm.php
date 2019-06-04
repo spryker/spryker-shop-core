@@ -34,7 +34,7 @@ class CheckoutAddressItemForm extends AbstractType
     /**
      * @return string|null
      */
-    public function getBlockPrefix ()
+    public function getBlockPrefix()
     {
         return 'checkout_address_item';
     }
