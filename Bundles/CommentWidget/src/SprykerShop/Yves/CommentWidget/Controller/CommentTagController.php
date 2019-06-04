@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CommentWidget\Controller;
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentTagTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
+use SprykerShop\Yves\CommentWidget\CommentWidgetConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -56,7 +57,7 @@ class CommentTagController extends AbstractCommentController
         $commentTransfer = (new CommentTransfer())
             ->setUuid($request->request->get(static::PARAMETER_UUID))
             ->setCustomer($customerTransfer)
-            ->addCommentTag((new CommentTagTransfer())->setName('attached'));
+            ->addCommentTag((new CommentTagTransfer())->setName(CommentWidgetConfig::COMMENT_TAG_ATTACHED));
 
         $commentThreadRequestTransfer = $this->getFactory()
             ->getCommentClient()

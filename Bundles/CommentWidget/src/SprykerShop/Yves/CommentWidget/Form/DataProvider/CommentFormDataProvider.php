@@ -9,11 +9,10 @@ namespace SprykerShop\Yves\CommentWidget\Form\DataProvider;
 
 use Generated\Shared\Transfer\CommentThreadTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
+use SprykerShop\Yves\CommentWidget\CommentWidgetConfig;
 
 class CommentFormDataProvider
 {
-    protected const COMMENT_TAG_ATTACHED = 'attached';
-
     /**
      * @param \Generated\Shared\Transfer\CommentThreadTransfer|null $commentThreadTransfer
      *
@@ -52,7 +51,7 @@ class CommentFormDataProvider
     protected function isCommentAttached(CommentTransfer $commentTransfer): bool
     {
         foreach ($commentTransfer->getTags() as $commentTagTransfer) {
-            if ($commentTagTransfer->getName() === static::COMMENT_TAG_ATTACHED) {
+            if ($commentTagTransfer->getName() === CommentWidgetConfig::COMMENT_TAG_ATTACHED) {
                 return true;
             }
         }

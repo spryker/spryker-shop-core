@@ -11,4 +11,8 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class CommentWidgetConfig extends AbstractBundleConfig
 {
+    /**
+     * @see \Spryker\Zed\Comment\CommentConfig::COMMENT_TAG_ATTACHED
+     */
+    public const COMMENT_TAG_ATTACHED = 'attached';
 }

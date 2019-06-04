@@ -41,7 +41,7 @@ class CommentForm extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return self::COMMENT_FORM;
+        return static::COMMENT_FORM;
     }
 
     /**
@@ -52,9 +52,9 @@ class CommentForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addUuidFiled($builder);
-        $this->addMessageFiled($builder);
-        $this->addCommentTags($builder);
+        $this->addUuidFiled($builder)
+            ->addMessageFiled($builder)
+            ->addCommentTags($builder);
     }
 
     /**
@@ -78,7 +78,6 @@ class CommentForm extends AbstractType
     {
         $builder->add(CommentTransfer::MESSAGE, TextareaType::class, [
             'label' => false,
-            'required' => true,
             'constraints' => [
                 new NotBlank(),
                 new Length([
