@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Order">
         <property name="idSalesOrder" type="int" />
@@ -232,5 +232,15 @@
     <transfer name="ShipmentGroupCollection">
         <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
     </transfer>
+
+    <transfer name="Customer">
+        <property name="idCustomer" type="int" />
+    </transfer>
+
+    <transfer name="CustomerResponse">
+        <property name="customerTransfer" type="Customer" />
+        <property name="isSuccess" type="bool" />
+    </transfer>
+
 
 </transfers>

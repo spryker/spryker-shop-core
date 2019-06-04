@@ -25,7 +25,7 @@ interface CartItemHandlerInterface
     /**
      * @param string $currentItemSku
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param int $quantity
+     * @param float $quantity
      * @param string $groupKey
      * @param array $optionValueIds
      *

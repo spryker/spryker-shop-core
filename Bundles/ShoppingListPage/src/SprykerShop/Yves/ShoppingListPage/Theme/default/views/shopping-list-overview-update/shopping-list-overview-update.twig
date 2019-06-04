@@ -101,9 +101,11 @@
                         {{ 'customer.account.shopping_list.empty' | trans }}
                     {% endif %}
                 </div>
-                <div class="col col--sm-12 spacing-x spacing-x--inner">
-                    {% widget 'ShoppingListSubtotalWidget' args [data.shoppingListItemProducts] only %}{% endwidget %}
-                </div>
+                {% if data.shoppingList.items is not empty %}
+                    <div class="col col--sm-12 spacing-x spacing-x--inner">
+                        {% widget 'ShoppingListSubtotalWidget' args [data.shoppingListItemProducts] only %}{% endwidget %}
+                    </div>
+                {% endif %}
             {% endblock %}
 
             {% block actions %}
