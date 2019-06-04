@@ -1,0 +1,73 @@
+{% extends template('widget') %}
+
+{% define data = {
+    ownerId: _widget.ownerId,
+    ownerType: _widget.ownerType,
+    returnRoute: _widget.returnRoute,
+    commentThread: _widget.commentThread,
+    createCommentForm: _widget.createCommentForm,
+    updateCommentForms: _widget.updateCommentForms,
+} %}
+
+{% block body %}
+    <h6>{{ 'comment_widget.comments_to_cart' | trans }}</h6>
+    <hr/>
+
+    {% if data.commentThread is not empty %}
+        {% for comment in data.commentThread.comments %}
+
+            {% if data.updateCommentForms[comment.idComment] is defined %}
+
+                {% set form = data.updateCommentForms[comment.idComment] %}
+
+                <p>{{ comment.customer.firstName }} {{ comment.customer.lastName }} ({{ 'comment_widget.form.you' | trans }})</p>
+                <p class="text-secondary">{{ comment.createdAt | formatDateTime }}</p>
+
+                {{ form_start(form, {
+                    action: url('comment/update')
+                }) }}
+
+                {{ form_widget(form) }}
+
+                <input type="hidden" name="returnRoute" value="{{ data.returnRoute }}" />
+                <input type="submit" class="button button--primary float-right" value="{{ 'comment_widget.form.update_comment' | trans }}" />
+
+                {{ form_end(form) }}
+
+                <form action="{{ url('comment/remove') }}" method="post">
+                    <input type="hidden" name="uuid" value="{{ comment.uuid }}" />
+                    <input type="hidden" name="returnRoute" value="{{ data.returnRoute }}" />
+                    <button type="submit" class="button button--success float-right">
+                        {{ 'comment_widget.form.remove_comment' | trans }}
+                    </button>
+                </form>
+            {% else %}
+                <p>{{ comment.customer.firstName }} {{ comment.customer.lastName }}</p>
+                <p class="text-secondary">{{ comment.createdAt | formatDateTime }}</p>
+                <p>{{ comment.message }}</p>
+            {% endif %}
+
+            <form action="{{ url(comment.isAttached ? 'comment/tag/unattach' : 'comment/tag/attach') }}" method="post">
+                <input type="hidden" name="uuid" value="{{ comment.uuid }}" />
+                <input type="hidden" name="returnRoute" value="{{ data.returnRoute }}" />
+                <button type="submit" class="button button--warning">
+                    {{ comment.isAttached ? ('comment_widget.form.unattach' | trans) : ('comment_widget.form.attach' | trans) }}
+                </button>
+            </form>
+
+        {% endfor %}
+        <hr/>
+    {% endif %}
+
+    {{ form_start(data.createCommentForm, {
+        action: url('comment/add')
+    }) }}
+        {{ form_widget(data.createCommentForm) }}
+        <input type="hidden" name="returnRoute" value="{{ data.returnRoute }}" />
+        <input type="hidden" name="ownerId" value="{{ data.ownerId }}" />
+        <input type="hidden" name="ownerType" value="{{ data.ownerType }}" />
+        <input type="submit" class="button button--primary" value="{{ 'comment_widget.form.add_comment' | trans }}" />
+    {{ form_end(data.createCommentForm) }}
+    <hr/>
+
+{% endblock %}

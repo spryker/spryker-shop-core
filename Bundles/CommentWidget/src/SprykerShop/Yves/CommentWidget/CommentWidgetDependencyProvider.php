@@ -17,6 +17,8 @@ class CommentWidgetDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_COMMENT = 'CLIENT_COMMENT';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
+    public const PLUGINS_COMMENT_THREAD_AFTER_OPERATION = 'PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT';
+
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
@@ -27,6 +29,7 @@ class CommentWidgetDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideDependencies($container);
         $container = $this->addCommentClient($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addCommentThreadAfterOperationPlugins($container);
 
         return $container;
     }
@@ -38,9 +41,9 @@ class CommentWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCommentClient(Container $container): Container
     {
-        $container[static::CLIENT_COMMENT] = function (Container $container) {
+        $container->set(static::CLIENT_COMMENT, function (Container $container) {
             return new CommentWidgetToCommentClientBridge($container->getLocator()->comment()->client());
-        };
+        });
 
         return $container;
     }
@@ -52,10 +55,32 @@ class CommentWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new CommentWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCommentThreadAfterOperationPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_COMMENT_THREAD_AFTER_OPERATION, function () {
+            return $this->getCommentThreadAfterOperationPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CommentWidgetExtension\Dependency\Plugin\CommentThreadAfterOperationStrategyPluginInterface[]
+     */
+    protected function getCommentThreadAfterOperationPlugins(): array
+    {
+        return [];
     }
 }

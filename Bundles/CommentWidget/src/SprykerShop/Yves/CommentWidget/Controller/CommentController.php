@@ -9,23 +9,26 @@ namespace SprykerShop\Yves\CommentWidget\Controller;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
-use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use SprykerShop\Yves\CommentWidget\Form\CommentForm;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \SprykerShop\Yves\CommentWidget\CommentWidgetFactory getFactory()
  */
-class CommentController extends AbstractController
+class CommentController extends AbstractCommentController
 {
+    protected const PARAMETER_OWNER_ID = 'ownerId';
+    protected const PARAMETER_OWNER_TYPE = 'ownerType';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function addCommentAction(Request $request): Response
+    public function addAction(Request $request): RedirectResponse
     {
-        $response = $this->executeAddCommentAction($request);
+        $response = $this->executeAddAction($request);
 
         return $response;
     }
@@ -33,11 +36,11 @@ class CommentController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function updateCommentAction(Request $request): Response
+    public function updateAction(Request $request): RedirectResponse
     {
-        $response = $this->executeUpdateCommentAction($request);
+        $response = $this->executeUpdateAction($request);
 
         return $response;
     }
@@ -45,59 +48,101 @@ class CommentController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeAddCommentAction(Request $request): Response
+    public function removeAction(Request $request): RedirectResponse
+    {
+        $response = $this->executeRemoveAction($request);
+
+        return $response;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeAddAction(Request $request): RedirectResponse
+    {
+        $commentTransfer = $this->createCommentTransferFromRequest($request);
+
+        $commentRequestTransfer = (new CommentRequestTransfer())
+            ->setComment($commentTransfer)
+            ->setOwnerId($request->request->get(static::PARAMETER_OWNER_ID))
+            ->setOwnerType($request->request->get(static::PARAMETER_OWNER_TYPE));
+
+        $commentThreadRequestTransfer = $this->getFactory()
+            ->getCommentClient()
+            ->addComment($commentRequestTransfer);
+
+        if ($commentThreadRequestTransfer->getIsSuccessful()) {
+            $this->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
+        }
+
+        return $this->redirectResponseInternal($request->request->get(static::PARAMETER_RETURN_ROUTE));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeUpdateAction(Request $request): RedirectResponse
+    {
+        $commentTransfer = $this->createCommentTransferFromRequest($request);
+
+        $commentThreadRequestTransfer = $this->getFactory()
+            ->getCommentClient()
+            ->updateComment((new CommentRequestTransfer())->setComment($commentTransfer));
+
+        if ($commentThreadRequestTransfer->getIsSuccessful()) {
+            $this->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
+        }
+
+        return $this->redirectResponseInternal($request->request->get(static::PARAMETER_RETURN_ROUTE));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeRemoveAction(Request $request): RedirectResponse
     {
         $customerTransfer = $this->getFactory()
             ->getCustomerClient()
             ->getCustomer();
 
         $commentTransfer = (new CommentTransfer())
-            ->setCustomer($customerTransfer)
-            ->setMessage($request->request->get('message'));
+            ->setUuid($request->request->get(static::PARAMETER_UUID))
+            ->setCustomer($customerTransfer);
 
-        $commentRequestTransfer = (new CommentRequestTransfer())
-            ->setComment($commentTransfer)
-            ->setOwnerId($request->request->get('ownerId'))
-            ->setOwnerType($request->request->get('ownerType'));
-
-        $this->getFactory()
+        $commentThreadRequestTransfer = $this->getFactory()
             ->getCommentClient()
-            ->addComment($commentRequestTransfer);
+            ->removeComment((new CommentRequestTransfer())->setComment($commentTransfer));
 
-        $commentThreadTransfer = $this->getFactory()
-            ->getCommentClient()
-            ->findCommentThread($commentRequestTransfer);
+        if ($commentThreadRequestTransfer->getIsSuccessful()) {
+            $this->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
+        }
 
-        return $this->renderView(
-            '@CommentWidget/views/comment/comment.twig',
-            [
-                'commentThread' => $commentThreadTransfer,
-            ]
-        );
+        return $this->redirectResponseInternal($request->request->get(static::PARAMETER_RETURN_ROUTE));
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Generated\Shared\Transfer\CommentTransfer
      */
-    protected function executeUpdateCommentAction(Request $request): Response
+    protected function createCommentTransferFromRequest(Request $request): CommentTransfer
     {
-        $commentRequestTransfer = (new CommentRequestTransfer())
-            ->setOwnerId($request->request->get('ownerId'))
-            ->setOwnerType($request->request->get('ownerType'));
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
 
-        $commentThreadTransfer = $this->getFactory()
-            ->getCommentClient()
-            ->findCommentThread($commentRequestTransfer);
+        $commentTransfer = (new CommentTransfer())
+            ->fromArray($request->request->get(CommentForm::COMMENT_FORM), true)
+            ->setCustomer($customerTransfer);
 
-        return $this->renderView(
-            '@CommentWidget/views/comment/comment.twig',
-            [
-                'commentThread' => $commentThreadTransfer,
-            ]
-        );
+        return $commentTransfer;
     }
 }

@@ -12,10 +12,11 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class CommentWidgetControllerProvider extends AbstractYvesControllerProvider
 {
-    protected const ROUTE_COMMENT_ADD_COMMENT = 'comment/add-comment';
-    protected const ROUTE_COMMENT_UPDATE_COMMENT = 'comment/update-comment';
-    protected const ROUTE_COMMENT_REMOVE_COMMENT = 'comment/remove-comment';
-    protected const ROUTE_COMMENT_UPDATE_COMMENT_TAGS = 'comment/update-comment-tags';
+    protected const ROUTE_COMMENT_ADD = 'comment/add';
+    protected const ROUTE_COMMENT_UPDATE = 'comment/update';
+    protected const ROUTE_COMMENT_REMOVE = 'comment/remove';
+    protected const ROUTE_COMMENT_TAG_ATTACH = 'comment/tag/attach';
+    protected const ROUTE_COMMENT_TAG_UNATTACH = 'comment/tag/unattach';
 
     /**
      * @param \Silex\Application $app
@@ -27,17 +28,18 @@ class CommentWidgetControllerProvider extends AbstractYvesControllerProvider
         $this->addAddCommentRoute()
             ->addUpdateCommentRoute()
             ->addRemoveCommentRoute()
-            ->addUpdateCommentTagsRoute();
+            ->addAttachCommentRoute()
+            ->addUnattachCommentRoute();
     }
 
     /**
-     * @uses \SprykerShop\Yves\CommentWidget\Controller\CommentController::addCommentAction()
+     * @uses \SprykerShop\Yves\CommentWidget\Controller\CommentController::addAction()
      *
      * @return $this
      */
     protected function addAddCommentRoute()
     {
-        $this->createController('/{comment}/add-comment', static::ROUTE_COMMENT_ADD_COMMENT, 'CommentWidget', 'Comment', 'addComment')
+        $this->createController('/{comment}/add', static::ROUTE_COMMENT_ADD, 'CommentWidget', 'Comment', 'add')
             ->assert('comment', $this->getAllowedLocalesPattern() . 'comment|comment')
             ->value('comment', 'comment');
 
@@ -45,13 +47,13 @@ class CommentWidgetControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
-     * @uses \SprykerShop\Yves\CommentWidget\Controller\CommentController::updateCommentAction()
+     * @uses \SprykerShop\Yves\CommentWidget\Controller\CommentController::updateAction()
      *
      * @return $this
      */
     protected function addUpdateCommentRoute()
     {
-        $this->createController('/{comment}/update-comment', static::ROUTE_COMMENT_UPDATE_COMMENT, 'CommentWidget', 'Comment', 'updateComment')
+        $this->createController('/{comment}/update', static::ROUTE_COMMENT_UPDATE, 'CommentWidget', 'Comment', 'update')
             ->assert('comment', $this->getAllowedLocalesPattern() . 'comment|comment')
             ->value('comment', 'comment');
 
@@ -59,13 +61,13 @@ class CommentWidgetControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
-     * @uses \SprykerShop\Yves\CommentWidget\Controller\CommentController::removeCommentAction()
+     * @uses \SprykerShop\Yves\CommentWidget\Controller\CommentController::removeAction()
      *
      * @return $this
      */
     protected function addRemoveCommentRoute()
     {
-        $this->createController('/{comment}/remove-comment', static::ROUTE_COMMENT_REMOVE_COMMENT, 'CommentWidget', 'Comment', 'removeComment')
+        $this->createController('/{comment}/remove', static::ROUTE_COMMENT_REMOVE, 'CommentWidget', 'Comment', 'remove')
             ->assert('comment', $this->getAllowedLocalesPattern() . 'comment|comment')
             ->value('comment', 'comment');
 
@@ -73,13 +75,27 @@ class CommentWidgetControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
-     * @uses \SprykerShop\Yves\CommentWidget\Controller\CommentController::updateCommentTagsAction()
+     * @uses \SprykerShop\Yves\CommentWidget\Controller\CommentTagController::attachAction()
      *
      * @return $this
      */
-    protected function addUpdateCommentTagsRoute()
+    protected function addAttachCommentRoute()
     {
-        $this->createController('/{comment}/remove-comment', static::ROUTE_COMMENT_UPDATE_COMMENT_TAGS, 'CommentWidget', 'Comment', 'updateCommentTags')
+        $this->createController('/{comment}/tag/attach', static::ROUTE_COMMENT_TAG_ATTACH, 'CommentWidget', 'CommentTag', 'attach')
+            ->assert('comment', $this->getAllowedLocalesPattern() . 'comment|comment')
+            ->value('comment', 'comment');
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\CommentWidget\Controller\CommentTagController::unattachAction()
+     *
+     * @return $this
+     */
+    protected function addUnattachCommentRoute()
+    {
+        $this->createController('/{comment}/tag/unattach', static::ROUTE_COMMENT_TAG_UNATTACH, 'CommentWidget', 'CommentTag', 'unattach')
             ->assert('comment', $this->getAllowedLocalesPattern() . 'comment|comment')
             ->value('comment', 'comment');
 

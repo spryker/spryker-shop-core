@@ -54,6 +54,17 @@
                     ] only %}
                     {% endwidget %}
                 </div>
+                {% if is_granted('ROLE_USER') and data.cart.idQuote is not empty %}
+                    <div class="box">
+                        {% widget 'CommentThreadWidget' args [
+                            data.cart.idQuote,
+                            'quote',
+                            'cart',
+                            data.cart.commentThread
+                        ] only %}
+                        {% endwidget %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     {% else %}
@@ -135,6 +146,16 @@
                                 {{ parent() }}
                                 <hr />
                             {% endblock %}
+                        {% endwidget %}
+                    {% endif %}
+
+                    {% if is_granted('ROLE_USER') and data.cart.idQuote is not empty %}
+                        {% widget 'CommentThreadWidget' args [
+                            data.cart.idQuote,
+                            'quote',
+                            'cart',
+                            data.cart.commentThread
+                        ] only %}
                         {% endwidget %}
                     {% endif %}
 
