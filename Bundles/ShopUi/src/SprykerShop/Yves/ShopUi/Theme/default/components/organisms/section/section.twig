@@ -14,9 +14,13 @@
 {% block body %}
     <div class="{{ config.name }}__inner {{ data.innerClass }}">
         {% if data.title %}
-            <h2 {% if data.titleClass %} class="{{ data.titleClass }}" {% endif %}">
-                {{ data.title }}
-            </h2>
+            {% block title %}
+                <h2 {% if data.titleClass %} class="{{ data.titleClass }}" {% endif %}">
+                    {%- block titleInner -%}
+                        {{ data.title }}
+                    {%- endblock -%}
+                </h2>
+            {% endblock %}
         {% endif %}
 
         {% block inner %}{% endblock %}
