@@ -1,1 +1,1 @@
-Creates a list with the product attributes.
+Shows a list with the product attributes.
