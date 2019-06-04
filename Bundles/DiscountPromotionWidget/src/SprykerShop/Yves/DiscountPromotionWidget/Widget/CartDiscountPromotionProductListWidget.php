@@ -65,7 +65,7 @@ class CartDiscountPromotionProductListWidget extends AbstractWidget
 
         $productViewTransfers = $this->getFactory()
             ->getProductStorageClient()
-            ->findProductAbstractViewTransfers($productAbstractIds, $this->getLocale(), $selectedAttributes);
+            ->getProductAbstractViewTransfers($productAbstractIds, $this->getLocale(), $selectedAttributes);
 
         return $this->mapPromotionProducts($productViewTransfers, $promotionItemTransfersIndexedByProductId);
     }

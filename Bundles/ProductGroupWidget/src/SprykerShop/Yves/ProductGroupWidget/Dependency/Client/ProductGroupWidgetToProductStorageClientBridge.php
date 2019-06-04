@@ -43,8 +43,8 @@ class ProductGroupWidgetToProductStorageClientBridge implements ProductGroupWidg
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function findProductAbstractViewTransfers(array $productAbstractIds, string $localeName, array $selectedAttributes = []): array
+    public function getProductAbstractViewTransfers(array $productAbstractIds, string $localeName, array $selectedAttributes = []): array
     {
-        return $this->productStorageClient->findProductAbstractViewTransfers($productAbstractIds, $localeName, $selectedAttributes);
+        return $this->productStorageClient->getProductAbstractViewTransfers($productAbstractIds, $localeName, $selectedAttributes);
     }
 }

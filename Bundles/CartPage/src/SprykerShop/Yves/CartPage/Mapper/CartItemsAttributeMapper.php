@@ -134,7 +134,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      */
     protected function findAttributesMapByProductAbstractIds(array $productAbstractIds, $localeName): array
     {
-        return $this->productStorageClient->findBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
+        return $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
     }
 
     /**
