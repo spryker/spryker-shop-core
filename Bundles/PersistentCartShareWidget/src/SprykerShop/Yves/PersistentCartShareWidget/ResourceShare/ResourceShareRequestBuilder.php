@@ -65,7 +65,7 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
      */
     protected function createResolvedByShareOptionResourceShareDataTransfer(int $idQuote, string $shareOption, CustomerTransfer $customerTransfer): ResourceShareDataTransfer
     {
-        if ($shareOption === PersistentCartShareConfig::SHARE_OPTION_PREVIEW) {
+        if ($shareOption === PersistentCartShareConfig::SHARE_OPTION_KEY_PREVIEW) {
             return $this->createCartPreviewResourceShareDataTransfer($idQuote);
         }
 
@@ -81,7 +81,7 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
     {
         return (new ResourceShareDataTransfer())
             ->setIdQuote($idQuote)
-            ->setShareOption(PersistentCartShareConfig::SHARE_OPTION_PREVIEW);
+            ->setShareOption(PersistentCartShareConfig::SHARE_OPTION_KEY_PREVIEW);
     }
 
     /**
