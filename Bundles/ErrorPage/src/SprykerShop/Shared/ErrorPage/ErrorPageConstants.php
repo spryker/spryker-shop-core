@@ -5,14 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Shared\ShopApplication;
+namespace SprykerShop\Shared\ErrorPage;
 
 /**
  * Declares global environment configuration keys. Do not use it for other class constants.
  */
-interface ShopApplicationConstants
+interface ErrorPageConstants
 {
-    public const ENABLE_APPLICATION_DEBUG = 'SHOP_APPLICATION:ENABLE_APPLICATION_DEBUG';
-
-    public const ENABLE_YVES_HOST_URL_VALIDATION = 'SHOP_APPLICATION:ENABLE_YVES_HOST_URL_VALIDATION';
+    public const ENABLE_ERROR404_STACK_TRACE = 'ERROR_PAGE:ENABLE_ERROR404_STACK_TRACE';
 }

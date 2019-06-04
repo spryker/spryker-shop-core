@@ -12,7 +12,6 @@ use Silex\ServiceProviderInterface;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Application\Environment as ApplicationEnvironment;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
@@ -57,7 +56,7 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
         $this->setLogLevel();
 
         $this->addGlobalTemplateVariables($app, [
-            'environment' => Environment::getEnvironment(),
+            'environment' => $this->getConfig()->getEnvironmentName(),
         ]);
     }
 

@@ -66,4 +66,12 @@ class ShopApplicationConfig extends AbstractBundleConfig
     {
         return $this->get(ShopApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
     }
+
+    /**
+     * @return bool
+     */
+    public function isYvesHostUrlValidationEnabled(): bool
+    {
+        return $this->get(ShopApplicationConstants::ENABLE_YVES_HOST_URL_VALIDATION, APPLICATION_ENV === 'development');
+    }
 }

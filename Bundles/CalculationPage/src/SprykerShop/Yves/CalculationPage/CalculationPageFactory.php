@@ -9,12 +9,27 @@ namespace SprykerShop\Yves\CalculationPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CalculationPage\Dependency\Client\CalculationPageToCalculationClientInterface;
+use SprykerShop\Yves\CalculationPage\QuoteReader\QuoteReader;
+use SprykerShop\Yves\CalculationPage\QuoteReader\QuoteReaderInterface;
 
 /**
  * @method \Spryker\Client\Calculation\CalculationClientInterface getClient()
+ * @method \SprykerShop\Yves\CalculationPage\CalculationPageConfig getConfig()
  */
 class CalculationPageFactory extends AbstractFactory
 {
+    /**
+     * @return \SprykerShop\Yves\CalculationPage\QuoteReader\QuoteReaderInterface
+     */
+    public function createQuoteReader(): QuoteReaderInterface
+    {
+        return new QuoteReader(
+            $this->getQuoteClient(),
+            $this->getCalculationClient(),
+            $this->getConfig()
+        );
+    }
+
     /**
      * @return \SprykerShop\Yves\CalculationPage\Dependency\Client\CalculationPageToQuoteClientInterface
      */

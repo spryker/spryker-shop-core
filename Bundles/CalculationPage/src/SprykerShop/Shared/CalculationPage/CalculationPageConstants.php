@@ -5,14 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Shared\ShopApplication;
+namespace SprykerShop\Shared\CalculationPage;
 
 /**
  * Declares global environment configuration keys. Do not use it for other class constants.
  */
-interface ShopApplicationConstants
+interface CalculationPageConstants
 {
-    public const ENABLE_APPLICATION_DEBUG = 'SHOP_APPLICATION:ENABLE_APPLICATION_DEBUG';
-
-    public const ENABLE_YVES_HOST_URL_VALIDATION = 'SHOP_APPLICATION:ENABLE_YVES_HOST_URL_VALIDATION';
+    public const ENABLE_CART_DEBUG = 'CALCULATION_PAGE:ENABLE_CART_DEBUG';
 }

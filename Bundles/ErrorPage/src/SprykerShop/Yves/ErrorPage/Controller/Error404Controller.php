@@ -7,11 +7,12 @@
 
 namespace SprykerShop\Yves\ErrorPage\Controller;
 
-use Spryker\Shared\Config\Environment;
 use Spryker\Yves\Kernel\Controller\AbstractController;
-use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \SprykerShop\Yves\ErrorPage\ErrorPageFactory getFactory()
+ */
 class Error404Controller extends AbstractController
 {
     protected const REQUEST_PARAM_EXCEPTION = 'exception';
@@ -23,28 +24,11 @@ class Error404Controller extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $exception = $request->query->get(static::REQUEST_PARAM_EXCEPTION);
+
         return $this->viewResponse([
-            'error' => $this->getErrorMessage($request),
+            'error' => $this->getFactory()->createErrorMessage()->getNotFoundMessage($exception),
             'hideUserMenu' => true,
         ]);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return string
-     */
-    protected function getErrorMessage(Request $request)
-    {
-        if (!Environment::isDevelopment()) {
-            return '';
-        }
-
-        $exception = $request->query->get(static::REQUEST_PARAM_EXCEPTION);
-        if ($exception instanceof FlattenException) {
-            return $exception->getMessage();
-        }
-
-        return '';
     }
 }

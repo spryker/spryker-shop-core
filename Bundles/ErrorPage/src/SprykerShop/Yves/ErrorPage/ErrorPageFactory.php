@@ -8,9 +8,24 @@
 namespace SprykerShop\Yves\ErrorPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ErrorPage\Message\ErrorMessage;
+use SprykerShop\Yves\ErrorPage\Message\ErrorMessageInterface;
 
+/**
+ * @method \SprykerShop\Yves\ErrorPage\ErrorPageConfig getConfig()
+ */
 class ErrorPageFactory extends AbstractFactory
 {
+    /**
+     * @return \SprykerShop\Yves\ErrorPage\Message\ErrorMessageInterface
+     */
+    public function createErrorMessage(): ErrorMessageInterface
+    {
+        return new ErrorMessage(
+            $this->getConfig()
+        );
+    }
+
     /**
      * @return \Spryker\Shared\Kernel\Communication\Application
      */
