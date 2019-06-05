@@ -103,9 +103,9 @@
             'shipping-address-toggler-selector': '.js-form-select-address__shippingAddress',
             'default-address-selector': '.js-form-default-address__' ~ data.formType,
             'address-hidden-input-selector': 'addressesForm[' ~ data.formType ~ '][id_customer_address]',
+            'company-address-hidden-input-selector': 'addressesForm[' ~ data.formType ~ '][id_company_unit_address]',
             'shipping-address-hidden-input-selector': 'addressesForm[shippingAddress][id_customer_address]',
-            'hidden-input-id-customer-address-saver-selector': '.js-hidden-input-id-customer__' ~ data.formType ~ '-saver',
-            'hidden-input-id-customer-shipping-address-saver-selector': '.js-hidden-input-id-customer__shippingAddress-saver',
+            'shipping-company-address-hidden-input-selector': 'addressesForm[shippingAddress][id_company_unit_address]',
             'addresses': data.addresses,
             'toggle-option-value': optionValueDeliverToMultipleAddresses,
         },
@@ -113,6 +113,5 @@
 
     <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]">
     <input type="hidden" name="addressesForm[{{ data.formType }}][id_company_unit_address]">
-    <input type="hidden" class="js-hidden-input-id-customer__{{ data.formType }}-saver">
     <input type="hidden" class="js-form-default-address__{{ data.formType }}" value="{{ defaultAddressKey }}">
 {% endblock %}
