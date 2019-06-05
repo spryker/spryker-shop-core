@@ -56,7 +56,6 @@
 
                                 {% if existingShippingAddresses %}
                                     {% do data.form.shippingAddress.id_customer_address.setRendered %}
-                                    {% do data.form.shippingAddress.id_company_unit_address.setRendered %}
                                 {% endif %}
                             {% else %}
                                 <li class="list__item spacing-y">
@@ -168,7 +167,6 @@
 
                                         {% if existingBillingAddresses %}
                                             {% do data.form.id_customer_address.setRendered %}
-                                            {% do data.form.id_company_unit_address.setRendered %}
                                         {% endif %}
                                     {% else %}
                                         <li class="list__item spacing-y">
