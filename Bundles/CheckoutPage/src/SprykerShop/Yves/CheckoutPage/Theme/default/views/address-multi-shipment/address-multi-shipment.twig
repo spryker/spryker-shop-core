@@ -58,7 +58,6 @@
 
                                 {% if hasShippingAddresses %}
                                     {% do data.form.shippingAddress.id_customer_address.setRendered %}
-                                    {% do data.form.shippingAddress.id_company_unit_address.setRendered %}
                                 {% endif %}
                             {% else %}
                                 <li class="list__item spacing-y">
@@ -165,7 +164,6 @@
 
                                         {% if hasBillingAddresses %}
                                             {% do data.form.id_customer_address.setRendered %}
-                                            {% do data.form.id_company_unit_address.setRendered %}
                                         {% endif %}
                                     {% else %}
                                         <li class="list__item spacing-y">
@@ -191,14 +189,7 @@
         {% block actions %}
             <div class="grid grid--middle grid--justify">
                 <div class="col">
-<<<<<<< .merge_file_yZ48y6
-<<<<<<< .merge_file_lVDf5G
-=======
                     {% set optionValueDeliverToMultipleAddresses = '-1' %}
->>>>>>> .merge_file_XWHSSx
-=======
-                    {% set optionValueDeliverToMultipleAddresses = '-1' %}
->>>>>>> .merge_file_dcOodv
                     {% if not embed.isCompanyBusinessUnitShippingAddressApplicable %}
                         {% set existingShippingAddressSelectSelector = embed.forms.shipping.id_customer_address is defined ? '[name="' ~ embed.forms.shipping.id_customer_address.vars.full_name ~ '"]' : '' %}
                         {% set existingBillingAddressSelectSelector = embed.forms.billing.id_customer_address is defined ? '[name="' ~ embed.forms.billing.id_customer_address.vars.full_name ~ '"]' : '' %}
@@ -216,15 +207,7 @@
                             'billing-same-as-shipping-selector': '.js-address__billingSameAsShipping',
                             'billing-same-as-shipping-toggler-selector': '[name="addressesForm[billingSameAsShipping]"]',
                             'class-to-toggle': 'is-hidden',
-<<<<<<< .merge_file_yZ48y6
-<<<<<<< .merge_file_lVDf5G
-                            'toggle-option-value': '-1',
-=======
                             'toggle-option-value': optionValueDeliverToMultipleAddresses,
->>>>>>> .merge_file_XWHSSx
-=======
-                            'toggle-option-value': optionValueDeliverToMultipleAddresses,
->>>>>>> .merge_file_dcOodv
                         },
                     } only %}
 
@@ -248,15 +231,7 @@
                                 'billing-same-as-shipping-toggler-selector': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]',
                                 'save-address-toggler-selector': '[name="' ~ data.form.isAddressSavingSkipped.vars.full_name ~ '"]',
                                 'business-unit-shipping-address-toggler-selector': '.js-form-select-address__shippingAddress',
-<<<<<<< .merge_file_yZ48y6
-<<<<<<< .merge_file_lVDf5G
-                                'toggle-option-value': '-1',
-=======
                                 'toggle-option-value': optionValueDeliverToMultipleAddresses,
->>>>>>> .merge_file_XWHSSx
-=======
-                                'toggle-option-value': optionValueDeliverToMultipleAddresses,
->>>>>>> .merge_file_dcOodv
                             },
                         } only %}
                     {% endif %}
