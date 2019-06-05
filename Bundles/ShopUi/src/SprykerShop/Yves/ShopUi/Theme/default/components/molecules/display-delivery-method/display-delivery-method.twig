@@ -2,11 +2,14 @@
 
 {% define config = {
     name: 'display-delivery-method',
-    tag: 'ul'
+    tag: 'ul',
 } %}
 
 {% define data = {
-    method: required
+    carrierName: required,
+    name: required,
+    storeCurrencyPrice: required,
+    currencyIsoCode: required,
 } %}
 
 {% block class %}
@@ -14,9 +17,9 @@
 {% endblock %}
 
 {% block body %}
-    <li class="list__item">{{ data.method.carrierName }}</li>
+    <li class="list__item">{{ data.carrierName }}</li>
     <li class="list__item">
-        {{ data.method.name }}
-        {{ data.method.storeCurrencyPrice | money(true, data.method.currencyIsoCode) }}
+        {{ data.name }}
+        {{ data.storeCurrencyPrice | money(true, data.currencyIsoCode) }}
     </li>
 {% endblock %}
