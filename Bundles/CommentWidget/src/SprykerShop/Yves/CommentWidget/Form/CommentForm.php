@@ -22,6 +22,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CommentForm extends AbstractType
 {
+    public const COMMENT_FORM = 'commentForm';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -32,6 +34,14 @@ class CommentForm extends AbstractType
         $resolver->setDefaults([
             'data_class' => CommentTransfer::class,
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix(): string
+    {
+        return static::COMMENT_FORM;
     }
 
     /**

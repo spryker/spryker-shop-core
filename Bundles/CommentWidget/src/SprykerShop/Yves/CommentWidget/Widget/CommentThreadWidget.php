@@ -21,8 +21,9 @@ class CommentThreadWidget extends AbstractWidget
     protected const PARAMETER_RETURN_ROUTE = 'returnRoute';
     protected const PARAMETER_COMMENT_THREAD = 'commentThread';
 
+    protected const PARAMETER_ALL_COMMENT_FORMS = 'allCommentForms';
+    protected const PARAMETER_ATTACH_COMMENT_FORMS = 'attachCommentForms';
     protected const PARAMETER_CREATE_COMMENT_FORM = 'createCommentForm';
-    protected const PARAMETER_UPDATE_COMMENT_FORMS = 'updateCommentForms';
 
     /**
      * @param int $ownerId
@@ -44,7 +45,8 @@ class CommentThreadWidget extends AbstractWidget
         $this->addOwnerTypeParameter($ownerType);
         $this->addReturnRouteParameter($returnRoute);
         $this->addCommentThreadParameter($commentThreadTransfer);
-        $this->addUpdateCommentFormsParameter($commentThreadTransfer);
+        $this->addALlCommentFormsParameter($commentThreadTransfer);
+        $this->addAttachCommentFormsParameter($commentThreadTransfer);
         $this->addCreateCommentFormParameter();
     }
 
@@ -109,20 +111,42 @@ class CommentThreadWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function addUpdateCommentFormsParameter(CommentThreadTransfer $commentThreadTransfer): void
+    protected function addAllCommentFormsParameter(CommentThreadTransfer $commentThreadTransfer): void
     {
-        $updateCommentForms = [];
+        $allCommentForms = [];
         $customerTransfer = $this->getFactory()
             ->getCustomerClient()
             ->getCustomer();
 
         foreach ($commentThreadTransfer->getComments() as $commentTransfer) {
             if ($customerTransfer->getIdCustomer() === $commentTransfer->getCustomer()->getIdCustomer()) {
-                $updateCommentForms[$commentTransfer->getIdComment()] = $this->getFactory()->getCommentForm($commentTransfer)->createView();
+                $allCommentForms[$commentTransfer->getIdComment()] = $this->getFactory()->getCommentForm($commentTransfer)->createView();
             }
         }
 
-        $this->addParameter(static::PARAMETER_UPDATE_COMMENT_FORMS, $updateCommentForms);
+        $this->addParameter(static::PARAMETER_ALL_COMMENT_FORMS, $allCommentForms);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
+     *
+     * @return void
+     */
+    protected function addAttachCommentFormsParameter(CommentThreadTransfer $commentThreadTransfer): void
+    {
+        $attachCommentForms = [];
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        foreach ($commentThreadTransfer->getComments() as $commentTransfer) {
+            if ($customerTransfer->getIdCustomer() === $commentTransfer->getCustomer()->getIdCustomer()
+            && $commentTransfer->getIsAttached()) {
+                $attachCommentForms[$commentTransfer->getIdComment()] = $this->getFactory()->getCommentForm($commentTransfer)->createView();
+            }
+        }
+
+        $this->addParameter(static::PARAMETER_ATTACH_COMMENT_FORMS, $attachCommentForms);
     }
 
     /**

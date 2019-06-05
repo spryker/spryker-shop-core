@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CommentWidget\Controller;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
+use SprykerShop\Yves\CommentWidget\Form\CommentForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -134,15 +135,13 @@ class CommentController extends AbstractCommentController
      */
     protected function createCommentTransferFromRequest(Request $request): CommentTransfer
     {
-        /** @var \Generated\Shared\Transfer\CommentTransfer $commentTransfer */
-        $commentTransfer = $this->getFactory()
-            ->getCommentForm(new CommentTransfer())
-            ->handleRequest($request)
-            ->getData();
-
         $customerTransfer = $this->getFactory()
             ->getCustomerClient()
             ->getCustomer();
+
+        $commentTransfer = (new CommentTransfer())
+            ->fromArray($request->request->get(CommentForm::COMMENT_FORM), true)
+            ->setCustomer($customerTransfer);
 
         $commentTransfer->setCustomer($customerTransfer);
 
