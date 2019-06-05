@@ -6,9 +6,11 @@
 } %}
 
 {% define attributes = {
-    'split-delivery-form-selector': required,
-    'trigger-selector': required,
+    'form-selector': required,
     'target-selector': required,
-    'shipping-address-toggler-selector': required,
-    'toggle-option-value': '-1',
+    'is-enable': true,
 } %}
+
+{%- block class -%}
+    {{parent()}} {{ config.jsName }}
+{%- endblock -%}

@@ -34,12 +34,7 @@
 
             {% if item.shippingAddress.id_customer_address is defined %}
                 <div class="col col--sm-3 spacing spacing--inner">
-                    {{ form_row(item.shippingAddress.id_customer_address, {
-                        attr: {
-                            'form-target-selector': '.js-address__item-shipping--' ~ loop.index,
-                            'class': 'js-validate-next-checkout-step__trigger',
-                        },
-                    }) }}
+                    {{ form_row(item.shippingAddress.id_customer_address) }}
                 </div>
                 {% set hiddenClass = 'is-hidden' %}
             {% endif %}
@@ -89,12 +84,18 @@
             </div>
         {% endfor %}
 
+        {% include molecule('is-next-checkout-step-enabled', 'CheckoutPage') with {
+            attributes: {
+                'trigger-selector': '[name="addressesForm[shippingAddress][id_customer_address]"]',
+                'target-selector': '.js-validate-next-checkout-step',
+            },
+        } only %}
+
         {% include molecule('validate-next-checkout-step', 'CheckoutPage') with {
             attributes: {
-                'trigger-selector': '.js-validate-next-checkout-step__trigger',
-                'target-selector': '.js-validate-next-checkout-step__target',
-                'shipping-address-toggler-selector': '[name="addressesForm[shippingAddress][id_customer_address]"]',
-                'split-delivery-form-selector': '.js-address__items-target',
+                'form-selector': '.js-address__item-shipping',
+                'target-selector': '.js-address__form-submit',
+                'is-enable': false,
             },
         } only %}
     </div>
