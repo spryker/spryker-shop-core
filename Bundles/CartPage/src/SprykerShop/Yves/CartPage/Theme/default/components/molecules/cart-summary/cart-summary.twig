@@ -20,7 +20,7 @@
 {% block body %}
     <h6 class="text-secondary float-right">{{ data.cartQuantity }} {{ 'item' | trans }}</h6>
     <h6>{{ 'cart.your-order' | trans }}</h6>
-    <hr/>
+    <hr>
 
     {% widget 'QuoteApprovalWidget' args [data.cart] only %}{% endwidget %}
 
@@ -46,10 +46,10 @@
             {% if data.cart.shipment is not empty and data.cart.shipment.method is not empty %}
                 <li class="list__item spacing-y">
                     <strong>{{ 'cart.shipping' | trans }}</strong>
-                    <br/>
+                    <br>
                     {{ data.cart.shipment.method.name }}
                     <span class="float-right">{{ data.cart.shipment.method.storeCurrencyPrice | money }}</span>
-                    <hr/>
+                    <hr>
                 </li>
             {% endif %}
 
@@ -58,14 +58,14 @@
                     <li class="list__item spacing-y">
                         {{ parent() }}
                     </li>
-                    <hr/>
+                    <hr>
                 {% endblock %}
             {% elsewidget 'SalesOrderThresholdWidgetPlugin' args [data.cart.expenses] only %} {# @deprecated Use SalesOrderThresholdWidget instead. #}
                 {% block body %}
                     <li class="list__item spacing-y">
                         {{ parent() }}
                     </li>
-                    <hr/>
+                    <hr>
                 {% endblock %}
             {% endwidget %}
 
@@ -98,7 +98,7 @@
     {% if data.isQuoteValid %}
         {% widget 'QuoteApproveRequestWidget' args [data.cart] %}
             {% block body %}
-                <hr />{{ parent() }}
+                <hr>{{ parent() }}
             {% endblock %}
         {% endwidget %}
     {% endif %}
@@ -106,7 +106,7 @@
     {% if canProceedToCheckout %}
         {% widget 'ProceedToCheckoutButtonWidget' args [data.cart] %}
             {% block body %}
-                <hr />{{ parent() }}
+                <hr>{{ parent() }}
             {% endblock %}
         {% endwidget %}
     {% endif %}
@@ -114,7 +114,7 @@
     {% if is_granted('ROLE_USER') %}
         {% widget 'QuoteRequestCreateWidget' args [data.cart] only %}
             {% block body %}
-                <hr />
+                <hr>
                 {{ parent() }}
             {% endblock %}
         {% endwidget %}

@@ -70,7 +70,7 @@
                 {% endif %}
                 {% for cartItem in data.cartItems %}
                     {% include molecule('cart-item', 'CartPage') with {
-                        class: 'box',
+                        class: 'box spacing-top spacing-top--big',
                         data: {
                             cart: data.cart,
                             isQuoteEditable: data.isQuoteEditable,
@@ -113,7 +113,7 @@
                             <button type="submit" class="link">{{ 'persistent_cart.quote.button.reset_lock' | trans }}</button>
                             {{ 'persistent_cart.quote.label.discarded_locked_cart' | trans }}
                         </form>
-                        <hr />
+                        <hr class="box__separator">
                     {% endif %}
                     {% widget 'CartNoteFormWidget' args [data.cart] only %}
                     {% elsewidget 'CartNoteQuoteWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartNoteFormWidget instead. #}
@@ -123,17 +123,17 @@
                         {% widget 'CartCodeFormWidget' args [data.cart] only %}
                             {% block body %}
                                 {{ parent() }}
-                                <hr />
+                                <hr class="box__separator">
                             {% endblock %}
                         {% elsewidget 'DiscountVoucherFormWidget' only %}
                             {% block body %}
                                 {{ parent() }}
-                                <hr />
+                                <hr class="box__separator">
                             {% endblock %}
                         {% elsewidget 'DiscountVoucherFormWidgetPlugin' only %} {# @deprecated Use VoucherFormWidget instead. #}
                             {% block body %}
                                 {{ parent() }}
-                                <hr />
+                                <hr class="box__separator">
                             {% endblock %}
                         {% endwidget %}
                     {% endif %}
@@ -142,7 +142,7 @@
                         {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] only %}
                         {% elsewidget 'CartToShoppingListWidgetPlugin' args [data.cart.idQuote] only %} {# @deprecated Use CreateShoppingListFromCartWidget instead. #}
                         {% endwidget %}
-                        <hr />
+                        <hr class="box__separator">
                     {% endif %}
 
                     {% if data.isQuoteEditable %}

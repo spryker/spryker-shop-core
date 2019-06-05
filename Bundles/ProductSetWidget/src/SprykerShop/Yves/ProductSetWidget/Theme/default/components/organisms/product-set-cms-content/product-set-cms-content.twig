@@ -13,7 +13,7 @@
 } %}
 
 {% block body %}
-    <hr />
+    <hr>
     {% block header %}
         <form method="POST" action="{{ path('cart/add-items') }}">
             {% set isDisabled = false %}
@@ -21,8 +21,8 @@
             {% for product in data.products %}
                 {% if product.idProductConcrete is not empty %}
                     {% if product.available %}
-                        <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ product.sku }}" />
-                        <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1" />
+                        <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ product.sku }}">
+                        <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1">
                     {% endif %}
                 {% else %}
                     {% set isDisabled = true %}
@@ -45,7 +45,7 @@
             {% endif %}
         {% endblock %}
     {% endblock %}
-    <hr />
+    <hr>
 
     {% block carousel %}
         {% embed molecule('simple-carousel') with {
@@ -66,7 +66,7 @@
             {% endblock %}
         {% endembed %}
     {% endblock %}
-    <hr />
+    <hr>
 
     {% block productSet %}
         <form method="GET">

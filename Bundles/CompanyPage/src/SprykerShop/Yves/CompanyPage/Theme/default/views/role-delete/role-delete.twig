@@ -31,8 +31,8 @@
 {% block companyContent %}
     <div class="box">
         <h5>{{ "company.account.company_role.delete.confirmation.warning" | trans }}</h5>
-        <hr />
-        {{ "company.account.company_role.delete.confirmation.trying_to_delete" | trans }}: {{ data.roleName }}<br/>
+        <hr class="box__separator">
+        {{ "company.account.company_role.delete.confirmation.trying_to_delete" | trans }}: {{ data.roleName }}<br>
 
         {% if data.assignedUsers is empty %}
             {{ "company.account.company_role.delete.confirmation.deletion_warning" | trans }}

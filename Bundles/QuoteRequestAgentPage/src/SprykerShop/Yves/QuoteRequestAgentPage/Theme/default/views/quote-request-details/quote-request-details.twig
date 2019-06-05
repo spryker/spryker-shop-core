@@ -42,7 +42,7 @@
                     <div class="col col--sm-12 col--xl-6">
                         <div class="box">
                             <label class="label">{{ ('quote_request_page.quote_request.metadata.label.' ~ key) | trans }}</label>
-                            <hr/>
+                            <hr class="box__separator">
                             <p class="text-break">{{ value }}</p>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
         <div class="col col--sm-12 col--xl-4">
             <div class="box">
                 <h6>{{ "quote_request_page.quote_request.labels.information" | trans }}</h6>
-                <hr>
+                <hr class="box__separator">
                 <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}:
                     <b>{{ data.quoteRequest.createdAt | formatDateTime }}</b>
                 </p>
@@ -74,9 +74,9 @@
                         <b>{{ data.quoteRequest.validUntil | formatDateTime }}</b>
                     </p>
                 {% endif %}
-                <hr>
+                <hr class="box__separator">
                 <h6>{{ "quote_request_page.quote_request.labels.version_information" | trans }}</h6>
-                <hr>
+                <hr class="box__separator">
                 <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
                     {% embed atom('select') with {
                         modifiers: ['naked'],
@@ -120,7 +120,7 @@
             {% if quote is not empty %}
                 {% for cartItem in quote.items %}
                     {% include molecule('quote-request-cart-item', 'QuoteRequestPage') with {
-                        class: 'box',
+                        class: 'box spacing-top spacing-top--big',
                         data: {
                             priceMode: quote.priceMode,
                             cartItem: cartItem,
@@ -149,7 +149,7 @@
                 {% if isLatestVersion %}
 
                     {% if data.isQuoteRequestCancelable %}
-                        <hr/>
+                        <hr class="box__separator">
                         <a class="button button--expand button--cancel"
                            href="{{ path('agent/quote-request/cancel', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
@@ -157,13 +157,13 @@
                     {% endif %}
 
                     {% if data.isQuoteRequestEditable %}
-                        <hr/>
+                        <hr class="box__separator">
                         <a class="button button--expand button--success"
                            href="{{ path('agent/quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.edit' | trans }}
                         </a>
                         {% if data.quoteRequest.latestVersion.quote.items is not empty %}
-                            <hr/>
+                            <hr class="box__separator">
                             <a class="button button--expand button--success"
                                href="{{ path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                                 {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
@@ -172,7 +172,7 @@
                     {% endif %}
 
                     {% if data.isQuoteRequestRevisable %}
-                        <hr/>
+                        <hr class="box__separator">
                         <a class="button button--expand button--hollow"
                            href="{{ path('agent/quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.revise' | trans }}
@@ -180,7 +180,7 @@
                     {% endif %}
 
                     {% if data.quoteRequest.status == 'ready' %}
-                        <hr/>
+                        <hr class="box__separator">
                         <a class="button button--expand button--success"
                            href="{{ path('agent/quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                             {{ 'quote_request_page.quote_request.actions.convert_to_cart' | trans }}

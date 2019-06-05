@@ -47,11 +47,11 @@
                         {{parent()}}
 
                         {% if embed.promotionDiscount.description is not empty %}
-                            <hr />
+                            <hr>
                             <p>{{ embed.promotionDiscount.description }}</p>
                         {% endif %}
 
-                        <hr />
+                        <hr>
                         {% include molecule('variant-configurator', 'DiscountPromotionWidget') with {
                             data: {
                                 sku: embed.sku,
@@ -60,7 +60,7 @@
                                 availableAttributes: embed.availableAttributes
                             }
                         } only %}
-                        <hr />
+                        <hr>
                     {% endblock %}
 
                     {% block actions %}

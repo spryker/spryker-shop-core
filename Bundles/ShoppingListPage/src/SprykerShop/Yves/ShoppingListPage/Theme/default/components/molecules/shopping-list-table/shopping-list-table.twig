@@ -30,7 +30,7 @@
             {% endif %}
             <tr class="{{ config.name }}__row {{ not isItemAvailable ? config.name ~ '__row--disable' : ''}}">
                 <td class="{{ config.name }}__cell">
-                    <input type="checkbox" {{ isItemAvailable ? '' : 'disabled' }} name="shoppingListItem[idShoppingListItem][{{ item.idShoppingListItem }}]" value="{{ item.idShoppingListItem }}"/>
+                    <input type="checkbox" {{ isItemAvailable ? '' : 'disabled' }} name="shoppingListItem[idShoppingListItem][{{ item.idShoppingListItem }}]" value="{{ item.idShoppingListItem }}">
                 </td>
                 <td class="{{ config.name }}__cell text-center">
                     {% if item.images is defined and item.images is not empty %}

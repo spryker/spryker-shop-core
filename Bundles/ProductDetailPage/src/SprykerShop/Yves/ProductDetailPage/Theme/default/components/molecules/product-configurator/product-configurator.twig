@@ -38,7 +38,7 @@
     {% endif %}
     <small>{{ 'product.attribute.sku' | trans }}: {{sku}}</small>
 
-    <hr />
+    <hr>
     {% widget 'ProductPriceVolumeWidget' args [data.product] only %}
     {% elsewidget 'PriceProductVolumeWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductPriceVolumeWidget instead. #}
     {% nowidget %}
@@ -74,10 +74,10 @@
             availableAttributes: data.product.availableAttributes,
         },
     } only %}
-        {% block body %}<hr />{{parent()}}{% endblock %}
+        {% block body %}<hr>{{parent()}}{% endblock %}
     {% endembed %}
 
-    <hr />
+    <hr>
     <form method="POST" class="{{ config.jsName }}__form" action="{{ path("cart/add", {"sku": sku}) }}">
         {% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}
         {% elsewidget 'ProductOptionWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductOptionConfiguratorWidget instead. #}
@@ -137,12 +137,12 @@
     {% if can('SeeShoppingListPermissionPlugin') and isProductAvailable %}
         {% widget 'AddToShoppingListWidget' args [sku, isDisabled] only %}
             {% block body %}
-                <hr />
+                <hr>
                 {{ parent() }}
             {% endblock %}
         {% elsewidget 'ShoppingListWidgetPlugin' args [sku, isDisabled] only %} {# @deprecated Use AddToShoppingListWidget instead. #}
             {% block body %}
-                <hr />
+                <hr>
                 {{ parent() }}
             {% endblock %}
         {% endwidget %}
@@ -150,7 +150,7 @@
 
     {% if can('SeeWishlistPermissionPlugin') and isProductAvailable %}
         {% if widgetExists('WishlistWidgetPlugin') %}
-            <hr />
+            <hr>
             {{ widget('WishlistWidgetPlugin', data.product) }} {# @deprecated Use molecule('wishlist-selector', 'WishlistWidget') instead. #}
         {% else %}
             {% include molecule('wishlist-selector-for-pdp', 'WishlistWidget') ignore missing with {

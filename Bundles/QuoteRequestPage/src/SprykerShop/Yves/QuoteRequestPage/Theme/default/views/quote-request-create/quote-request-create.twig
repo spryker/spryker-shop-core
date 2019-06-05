@@ -82,7 +82,7 @@
                 {% endif %}
                 {% for cartItem in quote.items %}
                     {% include molecule('quote-request-cart-item', 'QuoteRequestPage') with {
-                        class: 'box',
+                        class: 'box spacing-top spacing-top--big',
                         data: {
                             priceMode: quote.priceMode,
                             cartItem: cartItem,
@@ -100,11 +100,11 @@
                         }
                     } only %}
                 </div>
-                <div class="box">
+                <div class="box spacing-top spacing-top--big">
                     <a class="button button--expand button--cancel" href="{{ url('cart') }}">
                         {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
                     </a>
-                    <hr/>
+                    <hr class="box__separator">
                     <button type="submit" class="button button--expand button--success">
                         {{ 'quote_request_page.quote_request.submit' | trans }}
                     </button>

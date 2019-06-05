@@ -31,7 +31,7 @@
                 {% endif %}
             {% endfor %}
         </ul>
-        <hr />
+        <hr>
     {% endif %}
 
     <div class="grid grid--bottom grid--justify">
@@ -99,7 +99,7 @@
         } only %}
 
         <div class="text-small is-hidden measurement-unit-choice">
-            <hr />
+            <hr>
 
             <div class="measurement-unit-notifications">
                 <div id="quantity-between-units" class="is-hidden">
@@ -121,7 +121,7 @@
     {% endif %}
 
     {% if hasProductMeasurementUnit %}
-        <hr />
+        <hr>
         <button type="submit" id="add-to-cart-button" class="button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
             {% include atom('icon') with {
                 data: {

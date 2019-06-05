@@ -43,8 +43,8 @@
                 {% for product in data.products %}
                     {% if product.idProductConcrete is not empty %}
                         {% if product.available %}
-                            <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ product.sku }}" />
-                            <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1" />
+                            <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ product.sku }}">
+                            <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1">
                         {% endif %}
                     {% else %}
                         {% set isDisabled = true %}
@@ -60,7 +60,7 @@
                 {% endblock %}
             </form>
 
-            <hr />
+            <hr class="box__separator">
             {% block description %}
                 {% if data.description is not empty %}
                     <h6>{{ 'product.attribute.long_description' | trans }}</h6>

@@ -61,7 +61,7 @@
             <div class="col col--sm-12 col--xl-4">
                 <div class="box">
                     <h6>{{ "quote_request_page.quote_request.labels.information" | trans }}</h6>
-                    <hr>
+                    <hr class="box__separator">
                     <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}:
                         <b>{{ data.quoteRequest.createdAt | formatDateTime }}</b>
                     </p>
@@ -73,9 +73,9 @@
                             <b>{{ data.quoteRequest.validUntil | formatDateTime }}</b>
                         </p>
                     {% endif %}
-                    <hr>
+                    <hr class="box__separator">
                     <h6>{{ "quote_request_page.quote_request.labels.version_information" | trans }}</h6>
-                    <hr>
+                    <hr class="box__separator">
                     <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
                         <b>{{ data.quoteRequest.latestVersion ? data.quoteRequest.latestVersion.versionReference : null }}</b>
                     </p>
@@ -95,7 +95,7 @@
                 {% endif %}
                 {% for cartItem in quote.items %}
                     {% include molecule('quote-request-cart-item', 'QuoteRequestPage') with {
-                        class: 'box',
+                        class: 'box spacing-top spacing-top--big',
                         data: {
                             priceMode: quote.priceMode,
                             cartItem: cartItem,
@@ -113,21 +113,21 @@
                         }
                     } only %}
                 </div>
-                <div class="box">
+                <div class="box spacing-top spacing-top--big">
                     <a class="button button--expand button--hollow"
                        href="{{ url('quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference}) }}">
                         {{ 'quote_request_page.quote_request.actions.back_to_view' | trans }}
                     </a>
-                    <hr/>
+                    <hr class="box__separator">
                     <a class="button button--expand button--edit-items"
                        href="{{ url('quote-request/edit-items', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                         {{ 'quote_request_page.quote_request.actions.edit_items' | trans }}
                     </a>
-                    <hr/>
+                    <hr class="box__separator">
                     <button type="submit" name="save" class="button button--expand button--success">
                         {{ 'quote_request_page.quote_request.actions.save' | trans }}
                     </button>
-                    <hr/>
+                    <hr class="box__separator">
                     <button type="submit" name="sendToUser" class="button button--expand button--success">
                         {{ 'quote_request_page.quote_request.actions.send_to_agent' | trans }}
                     </button>
