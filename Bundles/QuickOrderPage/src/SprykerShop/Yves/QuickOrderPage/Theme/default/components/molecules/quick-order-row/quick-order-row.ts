@@ -61,7 +61,7 @@ export default class QuickOrderRow extends Component {
      * @param sku A product SKU used for reloading autocomplete field.
      */
     async reloadField(sku: string = '') {
-        const quantityInputValue = this.quantityValue;
+        const quantityInputValue = parseFloat(this.quantityValue);
 
         this.ajaxProvider.queryParams.set('sku', sku);
         this.ajaxProvider.queryParams.set('index', this.ajaxProvider.getAttribute('class')
@@ -75,9 +75,16 @@ export default class QuickOrderRow extends Component {
         this.registerQuantityInput();
         this.mapQuantityInputChange();
 
-        if (!!sku) {
-            this.quantityInput.focus();
+        if (!sku) {
+            return;
         }
+
+        const quantityValueLength = this.quantityValue.length;
+
+        this.quantityInput.focus();
+        this.quantityInput.type = 'text';
+        this.quantityInput.setSelectionRange(quantityValueLength, quantityValueLength);
+        this.quantityInput.type = 'number';
     }
 
     /**

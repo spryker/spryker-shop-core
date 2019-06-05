@@ -223,8 +223,9 @@ class QuickOrderController extends AbstractController
     {
         $productConcreteTransfers = [];
         foreach ($quickOrderTransfer->getItems() as $orderItem) {
-            if ($orderItem->getProductConcrete()) {
-                $productConcreteTransfers[] = $orderItem->getProductConcrete();
+            $productConcreteTransfer = $orderItem->getProductConcrete();
+            if ($productConcreteTransfer) {
+                $productConcreteTransfers[] = $productConcreteTransfer;
             }
         }
 
@@ -394,13 +395,13 @@ class QuickOrderController extends AbstractController
      */
     public function productAdditionalDataAction(Request $request)
     {
-        $quantity = (int)$request->get('quantity', 1);
+        $quantity = (float)$request->get('quantity');
         $sku = $request->query->get('sku');
         $index = $request->query->get('index');
 
         $quickOrderItemTransfer = (new QuickOrderItemTransfer())->setSku($sku);
 
-        if ($quantity < 1) {
+        if ($quantity < 0) {
             $quantity = 1;
             $this->addMessageToQuickOrderItemTransfer($quickOrderItemTransfer);
         }
@@ -416,6 +417,7 @@ class QuickOrderController extends AbstractController
         $quickOrderItemTransfer->setQuantity($quantity);
         $quickOrderTransfer = $this->getQuickOrderTransfer([$quickOrderItemTransfer]);
         $quickOrderItemTransfer = $quickOrderTransfer->getItems()->offsetGet(0);
+
         $form = $this->getFactory()
             ->createQuickOrderFormFactory()
             ->getQuickOrderItemEmbeddedForm($quickOrderItemTransfer);

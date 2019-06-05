@@ -256,12 +256,12 @@ class ShoppingListPageControllerProvider extends AbstractYvesControllerProvider
      * @param mixed $postRequestQuantityValue
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return int
+     * @return float
      */
-    public function getQuantityFromRequest($postRequestQuantityValue, Request $request): int
+    public function getQuantityFromRequest($postRequestQuantityValue, Request $request): float
     {
         $quantity = $request->get('quantity');
 
-        return is_numeric($quantity) ? (int)$quantity : 1;
+        return is_numeric($quantity) ? $quantity : 1.0;
     }
 }
