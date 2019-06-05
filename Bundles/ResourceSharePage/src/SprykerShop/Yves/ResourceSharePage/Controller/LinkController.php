@@ -80,10 +80,12 @@ class LinkController extends AbstractController
     protected function getResourceShareByUuid(string $resourceShareUuid): ResourceShareResponseTransfer
     {
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
-            ->setResourceShare((new ResourceShareTransfer())
-                ->setUuid($resourceShareUuid));
+            ->setResourceShare(
+                (new ResourceShareTransfer())->setUuid($resourceShareUuid)
+            );
 
-        $resourceShareResponseTransfer = $this->getFactory()->getResourceShareClient()
+        $resourceShareResponseTransfer = $this->getFactory()
+            ->getResourceShareClient()
             ->getResourceShareByUuid($resourceShareRequestTransfer);
 
         $this->processMessages($resourceShareResponseTransfer);
@@ -106,11 +108,14 @@ class LinkController extends AbstractController
     {
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
             ->setResourceShare($resourceShareTransfer)
-            ->setCustomer($this->getFactory()
-                ->getCustomerClient()
-                ->getCustomer());
+            ->setCustomer(
+                $this->getFactory()
+                    ->getCustomerClient()
+                    ->getCustomer()
+            );
 
-        $resourceShareResponseTransfer = $this->getFactory()->createResourceShareActivator()
+        $resourceShareResponseTransfer = $this->getFactory()
+            ->createResourceShareActivator()
             ->activateResourceShare($resourceShareRequestTransfer);
 
         $this->processMessages($resourceShareResponseTransfer);
@@ -133,11 +138,14 @@ class LinkController extends AbstractController
     {
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
             ->setResourceShare($resourceShareTransfer)
-            ->setCustomer($this->getFactory()
-                ->getCustomerClient()
-                ->getCustomer());
+            ->setCustomer(
+                $this->getFactory()
+                    ->getCustomerClient()
+                    ->getCustomer()
+            );
 
-        $routeTransfer = $this->getFactory()->createRouteResolver()
+        $routeTransfer = $this->getFactory()
+            ->createRouteResolver()
             ->resolveRoute(
                 $request,
                 $isLoginRequired,

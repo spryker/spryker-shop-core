@@ -23,7 +23,7 @@ class RouteResolver implements RouteResolverInterface
     /**
      * @see \SprykerShop\Yves\CustomerPage\Plugin\CustomerPage\RedirectUrlRedirectAfterLoginStrategyPlugin::PARAM_REDIRECT_URL
      */
-    protected const LINK_REDIRECT_URL = 'redirectUrl';
+    protected const PARAM_REDIRECT_URL = 'redirectUrl';
     protected const GLOSSARY_KEY_RESOURCE_SHARE_LINK_ERROR_NO_ROUTE = 'resource-share.link.error.no-route';
 
     /**
@@ -86,7 +86,7 @@ class RouteResolver implements RouteResolverInterface
         return (new RouteTransfer())
             ->setRoute(static::ROUTE_LOGIN)
             ->setParameters([
-                static::LINK_REDIRECT_URL => $request->getRequestUri(),
+                static::PARAM_REDIRECT_URL => $request->getRequestUri(),
             ]);
     }
 }

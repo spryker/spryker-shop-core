@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CustomerRedirectStrategyPluginInterface;
 
 /**
- * @method \SprykerShop\Yves\ResourceSharePage\ResourceSharePageFactory getFactory()
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
 class RedirectUrlRedirectAfterLoginStrategyPlugin extends AbstractPlugin implements CustomerRedirectStrategyPluginInterface
 {

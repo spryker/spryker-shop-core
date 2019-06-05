@@ -44,11 +44,13 @@ class CartController extends AbstractController
     {
         $quoteResponseTransfer = $this->getFactory()
             ->getPersistentCartShareClient()
-            ->getPreviewQuoteResourceShare((new ResourceShareRequestTransfer())
-                ->setResourceShare(
-                    (new ResourceShareTransfer())
-                        ->setUuid($resourceShareUuid)
-                ));
+            ->getPreviewQuoteResourceShare(
+                (new ResourceShareRequestTransfer())
+                    ->setResourceShare(
+                        (new ResourceShareTransfer())
+                            ->setUuid($resourceShareUuid)
+                    )
+            );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
