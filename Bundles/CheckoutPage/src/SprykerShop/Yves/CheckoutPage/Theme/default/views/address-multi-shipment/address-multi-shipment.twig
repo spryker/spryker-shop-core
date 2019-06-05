@@ -174,6 +174,7 @@
         {% block actions %}
             <div class="grid grid--middle grid--justify">
                 <div class="col">
+                    {% set optionValueDeliverToMultipleAddresses = '-1' %}
                     {% if not embed.isCompanyBusinessUnitShippingAddressApplicable %}
                         {% set existingShippingAddressSelectSelector = embed.forms.shipping.id_customer_address is defined ? '[name="' ~ embed.forms.shipping.id_customer_address.vars.full_name ~ '"]' : '' %}
                         {% set existingBillingAddressSelectSelector = embed.forms.billing.id_customer_address is defined ? '[name="' ~ embed.forms.billing.id_customer_address.vars.full_name ~ '"]' : '' %}
@@ -191,7 +192,7 @@
                             'billing-same-as-shipping-selector': '.js-address__billingSameAsShipping',
                             'billing-same-as-shipping-toggler-selector': '[name="addressesForm[billingSameAsShipping]"]',
                             'class-to-toggle': 'is-hidden',
-                            'toggle-option-value': '-1',
+                            'toggle-option-value': optionValueDeliverToMultipleAddresses,
                         },
                     } only %}
 
@@ -215,7 +216,7 @@
                                 'billing-same-as-shipping-toggler-selector': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]',
                                 'save-address-toggler-selector': '[name="' ~ data.form.isAddressSavingSkipped.vars.full_name ~ '"]',
                                 'business-unit-shipping-address-toggler-selector': '.js-form-select-address__shippingAddress',
-                                'toggle-option-value': '-1',
+                                'toggle-option-value': optionValueDeliverToMultipleAddresses,
                             },
                         } only %}
                     {% endif %}

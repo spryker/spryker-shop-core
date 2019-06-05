@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Order">
         <property name="idSalesOrder" type="int" />
@@ -106,7 +106,7 @@
         <property name="unitGrossPrice" type="int" />
         <property name="sumGrossPrice" type="int" />
         <property name="taxRate" type="float" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
         <property name="variety" type="string" />
         <property name="state" type="ItemState" />
@@ -129,7 +129,7 @@
         <property name="taxRate" type="float" />
         <property name="unitTaxAmount" type="int" />
         <property name="sumTaxAmount" type="int" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
         <property name="unitNetPrice" type="int" />
         <property name="sumNetPrice" type="int" />
         <property name="unitPrice" type="int" />
@@ -232,5 +232,15 @@
     <transfer name="ShipmentGroupCollection">
         <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
     </transfer>
+
+    <transfer name="Customer">
+        <property name="idCustomer" type="int" />
+    </transfer>
+
+    <transfer name="CustomerResponse">
+        <property name="customerTransfer" type="Customer" />
+        <property name="isSuccess" type="bool" />
+    </transfer>
+
 
 </transfers>
