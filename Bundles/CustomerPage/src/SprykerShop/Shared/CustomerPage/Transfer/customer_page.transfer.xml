@@ -106,7 +106,7 @@
         <property name="unitGrossPrice" type="int" />
         <property name="sumGrossPrice" type="int" />
         <property name="taxRate" type="float" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
         <property name="variety" type="string" />
         <property name="state" type="ItemState" />
@@ -129,7 +129,7 @@
         <property name="taxRate" type="float" />
         <property name="unitTaxAmount" type="int" />
         <property name="sumTaxAmount" type="int" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
         <property name="unitNetPrice" type="int" />
         <property name="sumNetPrice" type="int" />
         <property name="unitPrice" type="int" />
