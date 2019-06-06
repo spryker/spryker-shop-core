@@ -39,13 +39,13 @@ class ContentBannerTwigPluginTest extends Unit
     protected const DEFAULT_TEMPLATE = 'default';
     protected const WRONG_TEMPLATE = 'wrong';
 
-    protected const CONTENT_ID = 0;
+    protected const CONTENT_KEY = '0';
     protected const CONTENT_TERM = 'TERM';
 
     protected const RENDERED_STRING = 'output';
 
-    protected const MESSAGE_BANNER_NOT_FOUND = '<b>Content Banner with ID 0 not found.</b>';
-    protected const MESSAGE_BANNER_WRONG_TYPE = '<b>Content Banner could not be rendered because the content item with ID 0 is not an banner.</b>';
+    protected const MESSAGE_BANNER_NOT_FOUND = '<b>Content Banner with KEY 0 not found.</b>';
+    protected const MESSAGE_BANNER_WRONG_TYPE = '<b>Content Banner could not be rendered because the content item with KEY 0 is not an banner.</b>';
     protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<b>"wrong" is not supported name of template.</b>';
 
     /**
@@ -69,7 +69,7 @@ class ContentBannerTwigPluginTest extends Unit
     public function testContentBannerNotFound(): void
     {
         // Act
-        $bannerContent = call_user_func($this->getContentBannerTwigFunction()->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
+        $bannerContent = call_user_func($this->getContentBannerTwigFunction()->getCallable(), static::CONTENT_KEY, static::DEFAULT_TEMPLATE);
 
         // Assert
         $this->assertEquals(static::MESSAGE_BANNER_NOT_FOUND, $bannerContent);
@@ -82,14 +82,14 @@ class ContentBannerTwigPluginTest extends Unit
     {
         // Assign
         $contentTypeContextTransfer = new ContentTypeContextTransfer();
-        $contentTypeContextTransfer->setIdContent(static::CONTENT_ID);
+        $contentTypeContextTransfer->setIdContent(static::CONTENT_KEY);
         $contentTypeContextTransfer->setTerm(static::CONTENT_TERM);
         $this->setContentBannerToContentStorageClientReturn($contentTypeContextTransfer);
 
         // Act
         $bannerContent = call_user_func(
             $this->getContentBannerTwigFunction()->getCallable(),
-            static::CONTENT_ID,
+            static::CONTENT_KEY,
             static::DEFAULT_TEMPLATE
         );
 
@@ -110,7 +110,7 @@ class ContentBannerTwigPluginTest extends Unit
         // Act
         $bannerContent = call_user_func(
             $this->getContentBannerTwigFunction()->getCallable(),
-            static::CONTENT_ID,
+            static::CONTENT_KEY,
             static::WRONG_TEMPLATE
         );
 
@@ -128,7 +128,7 @@ class ContentBannerTwigPluginTest extends Unit
         $this->setContentBannerWidgetToContentBannerClientReturn($contentTypeContextTransfer);
 
         // Act
-        $bannerContent = call_user_func($this->getContentBannerTwigFunction()->getCallable(), static::CONTENT_ID, static::DEFAULT_TEMPLATE);
+        $bannerContent = call_user_func($this->getContentBannerTwigFunction()->getCallable(), static::CONTENT_KEY, static::DEFAULT_TEMPLATE);
 
         // Assert
 
@@ -143,7 +143,7 @@ class ContentBannerTwigPluginTest extends Unit
     protected function setContentBannerWidgetToContentBannerClientReturn(?ContentBannerTypeTransfer $contentBannerTypeTransfer = null): void
     {
         $contentBannerWidgetToContentBannerClientBridge = $this->getMockBuilder(ContentBannerWidgetToContentBannerClientInterface::class)->getMock();
-        $contentBannerWidgetToContentBannerClientBridge->method('executeBannerTypeById')->willReturn($contentBannerTypeTransfer);
+        $contentBannerWidgetToContentBannerClientBridge->method('executeBannerTypeByKey')->willReturn($contentBannerTypeTransfer);
         $this->tester->setDependency(ContentBannerWidgetDependencyProvider::CLIENT_CONTENT_BANNER, $contentBannerWidgetToContentBannerClientBridge);
     }
 
@@ -155,7 +155,7 @@ class ContentBannerTwigPluginTest extends Unit
     protected function setContentBannerToContentStorageClientReturn(?ContentTypeContextTransfer $contentTypeContextTransfer = null): void
     {
         $contentBannerWidgetToContentStorageClientBridge = $this->getMockBuilder(ContentBannerToContentStorageClientInterface::class)->getMock();
-        $contentBannerWidgetToContentStorageClientBridge->method('findContentTypeContext')->willReturn($contentTypeContextTransfer);
+        $contentBannerWidgetToContentStorageClientBridge->method('findContentTypeContextByKey')->willReturn($contentTypeContextTransfer);
         $this->tester->setDependency(ContentBannerDependencyProvider::CLIENT_CONTENT_STORAGE, $contentBannerWidgetToContentStorageClientBridge);
     }
 
