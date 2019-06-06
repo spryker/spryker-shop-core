@@ -6,11 +6,7 @@ export default class FormSubmitter extends Component {
     protected triggers: HTMLElement[];
 
     protected readyCallback(): void {}
-
-    /**
-     * Default callback, which is called when all web components are ready for use.
-     */
-    mountCallback(): void {
+    protected init(): void {
         this.triggers = <HTMLElement[]>Array.from(document.querySelectorAll(this.triggerSelector));
         this.mapEvents();
     }
