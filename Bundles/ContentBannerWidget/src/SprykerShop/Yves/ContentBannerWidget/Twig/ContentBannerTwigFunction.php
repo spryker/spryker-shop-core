@@ -110,13 +110,13 @@ class ContentBannerTwigFunction extends TwigFunction
     }
 
     /**
-     * @param int $idContent
+     * @param string $contentKey
      *
      * @return string
      */
-    protected function getMessageBannerNotFound(int $idContent)
+    protected function getMessageBannerNotFound(string $contentKey)
     {
-        return sprintf(static::MESSAGE_BANNER_NOT_FOUND, $idContent);
+        return sprintf(static::MESSAGE_BANNER_NOT_FOUND, $contentKey);
     }
 
     /**
@@ -130,12 +130,12 @@ class ContentBannerTwigFunction extends TwigFunction
     }
 
     /**
-     * @param int $idContent
+     * @param string $contentKey
      *
      * @return string
      */
-    protected function getMessageBannerWrongType(int $idContent)
+    protected function getMessageBannerWrongType(string $contentKey)
     {
-        return sprintf(static::MESSAGE_BANNER_WRONG_TYPE, $idContent);
+        return sprintf(static::MESSAGE_BANNER_WRONG_TYPE, $contentKey);
     }
 }
