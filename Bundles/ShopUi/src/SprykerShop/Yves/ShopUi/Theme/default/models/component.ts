@@ -35,9 +35,18 @@ export default abstract class Component extends HTMLElement {
     /**
      * Same as mountCallback().
      *
-     * @deprecated Use mountCallback() instead.
+     * @deprecated Use init() instead.
      */
     protected abstract readyCallback(): void;
+
+    /**
+     * Invoked when DOM is loaded and every webcomponent in the page is defined.
+     */
+    protected init(): void {
+        /* tslint:disable: deprecation */
+        this.readyCallback();
+        /* tslint:enable */
+    }
 
     /**
      * Used by the application to mark the current component as mounted and avoid multiple initialisations.
@@ -47,20 +56,11 @@ export default abstract class Component extends HTMLElement {
     }
 
     /**
-     * Invoked when DOM is loaded and every webcomponent in the page is defined.
-     *
-     * @remarks
-     * Use this method as initial point for your component if you intend to query the DOM for other webcomponents.
-     * If this is not needed, you can use connectedCallback() intead for a faster execution,
-     * as described by official documentation for Web Components:
-     * {@link https://developer.mozilla.org/en-US/docs/Web/Web_Components/
-     * Using_custom_elements#Using_the_lifecycle_callbacks}
+     * Used by the application and called when component is mounted.
      */
-    /* tslint:disable: deprecation */
     mountCallback(): void {
-        this.readyCallback();
+        this.init();
     }
-    /* tslint:enable */
 
     /**
      * Gets if the component has beed mounted already.
