@@ -10,7 +10,7 @@
         <property name="validUntil" type="string" />
         <property name="createdAt" type="string" />
         <property name="latestVersion" type="QuoteRequestVersion" />
-        <property name="isLatestVersionHidden" type="bool" />
+        <property name="isLatestVersionVisible" type="bool" />
         <property name="latestVisibleVersion" type="QuoteRequestVersion" />
     </transfer>
 
