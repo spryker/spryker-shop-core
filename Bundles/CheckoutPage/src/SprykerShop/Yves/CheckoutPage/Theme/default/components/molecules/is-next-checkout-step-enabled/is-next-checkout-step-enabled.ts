@@ -26,17 +26,31 @@ export default class IsNextCheckoutStepEnabled extends Component {
 
         if (currentValue === this.toggleOptionValue && this.target) {
             this.target.enableTrigger();
+
+            return;
         }
+
+        this.target.enableNextStepButton();
     }
 
+    /**
+     * Gets a querySelector name of the trigger element.
+     */
     get triggerSelector(): string {
         return this.getAttribute('trigger-selector');
     }
 
+    /**
+     * Gets a querySelector name of the target element.
+     */
     get targetSelector(): string {
         return this.getAttribute('target-selector');
     }
 
+    /**
+     * Gets an option value for comparison with chosen value from dropdown to enable 'validate-next-checkout-step'
+     * component.
+     */
     get toggleOptionValue(): string {
         return this.getAttribute('toggle-option-value');
     }

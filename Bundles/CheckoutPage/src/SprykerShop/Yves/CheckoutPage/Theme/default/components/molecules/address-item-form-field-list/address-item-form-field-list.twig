@@ -34,7 +34,11 @@
 
             {% if item.shippingAddress.id_customer_address is defined %}
                 <div class="col col--sm-3 spacing spacing--inner">
-                    {{ form_row(item.shippingAddress.id_customer_address) }}
+                    {{ form_row(item.shippingAddress.id_customer_address, {
+                        attr: {
+                            class: 'js-address__item-shipping-trigger',
+                        },
+                    }) }}
                 </div>
                 {% set hiddenClass = 'is-hidden' %}
             {% endif %}
@@ -95,6 +99,7 @@
             attributes: {
                 'form-selector': '.js-address__item-shipping',
                 'target-selector': '.js-address__form-submit',
+                'dropdown-trigger-selector': '.js-address__item-shipping-trigger',
                 'is-enable': false,
             },
         } only %}
