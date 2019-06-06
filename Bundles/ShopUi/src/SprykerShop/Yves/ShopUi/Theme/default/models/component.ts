@@ -56,7 +56,7 @@ export default abstract class Component extends HTMLElement {
     }
 
     /**
-     * Used by the application and called when component is mounted.
+     * Automatically invoked by the application when component has to be mounted.
      */
     mountCallback(): void {
         this.init();
