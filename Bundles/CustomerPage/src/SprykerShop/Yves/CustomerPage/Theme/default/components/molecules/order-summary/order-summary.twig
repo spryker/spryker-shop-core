@@ -11,9 +11,20 @@
 
 {% block body %}
     <li>
-        {{ 'customer.order.subTotal' | trans }}:
-        {{ data.order.totals.subtotal | money(true, data.order.currencyIsoCode) }}
+        <strong>{{ 'customer.order.subTotal' | trans }}:
+            {{ data.order.totals.subtotal | money(true, data.order.currencyIsoCode) }}</strong>
     </li>
+    {% for discount in data.order.calculatedDiscounts %}
+        <li>
+            {{ discount.displayName | trans}}
+            - {{ discount.sumAmount | money(true, data.order.currencyIsoCode) }}
+        </li>
+    {% endfor %}
+    <li>
+        <strong>{{ 'customer.order.expenseTotal' | trans }}:
+            {{ data.order.totals.expenseTotal | money(true, data.order.currencyIsoCode) }}</strong>
+    </li>
+    <li>
     {% for expense in data.order.expenses %}
         <li>
             {% if expense.type == constant('\\Spryker\\Shared\\Shipment\\ShipmentConstants::SHIPMENT_EXPENSE_TYPE') %} {{ 'customer.order.shipment' | trans }} {% endif %} {{ expense.name | trans }}:
@@ -21,14 +32,14 @@
         </li>
     {% endfor %}
     <li>
-        {{ 'customer.order.discount.total' | trans }}:
-        - {{ data.order.totals.discountTotal | money(true, data.order.currencyIsoCode) }}
-    </li>
-    <li>
         {% if data.order.totals.canceledTotal %}
             {{ 'customer.order.canceledTotal' | trans }}:
             - {{ data.order.totals.canceledTotal | money(true, data.order.currencyIsoCode) }}
         {% endif %}
+    </li>
+    <li>
+        {{ 'customer.order.taxTotal' | trans }}:
+        {{ data.order.totals.taxTotal.amount | money(true, data.order.currencyIsoCode) }}
     </li>
     <li>
         <strong>{{ 'customer.order.grandTotal' | trans }}:
