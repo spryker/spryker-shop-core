@@ -28,6 +28,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_CUSTOMER_ORDER_DETAILS = 'customer/order/details';
     protected const ROUTE_CUSTOMER_DELETE = 'customer/delete';
     protected const ROUTE_CUSTOMER_DELETE_CONFIRM = 'customer/delete/confirm';
+    protected const ROUTE_TOKEN = 'token';
+
+    protected const TOKEN_PATTERN = '[a-zA-Z0-9-_\.]+';
 
     /**
      * Specification:
@@ -57,6 +60,7 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection = $this->addCustomerOrderDetailsRoute($routeCollection);
         $routeCollection = $this->addCustomerDeleteRoute($routeCollection);
         $routeCollection = $this->addCustomerDeleteConfirmRoute($routeCollection);
+        $routeCollection = $this->addAccessTokenRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -265,6 +269,22 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/customer/delete/confirm', 'CustomerPage', 'Delete', 'confirmAction');
         $routeCollection->add(static::ROUTE_CUSTOMER_DELETE_CONFIRM, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\CustomerPage\Controller\AccessTokenController::indexAction()
+     *
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     */
+    protected function addAccessTokenRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute('/access-token/{token}', 'CustomerPage', 'AccessToken', 'indexAction');
+        $route = $route->setRequirement('token', static::TOKEN_PATTERN);
+        $routeCollection->add(static::ROUTE_TOKEN, $route);
 
         return $routeCollection;
     }

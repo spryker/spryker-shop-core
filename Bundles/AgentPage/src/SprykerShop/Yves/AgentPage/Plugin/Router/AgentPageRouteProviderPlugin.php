@@ -13,7 +13,6 @@ use SprykerShop\Yves\Router\Route\RouteCollection;
 class AgentPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     protected const ROUTE_LOGIN = 'agent/login';
-    protected const ROUTE_LOGOUT = 'agent/logout';
     protected const ROUTE_AGENT_OVERVIEW = 'agent/overview';
 
     /**
