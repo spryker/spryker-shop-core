@@ -19,8 +19,8 @@ class ContentBannerTwigFunction extends TwigFunction
      */
     protected const TWIG_FUNCTION_NAME_CONTENT_BANNER = 'content_banner';
 
-    protected const MESSAGE_BANNER_NOT_FOUND = '<b>Content Banner with KEY %s not found.</b>';
-    protected const MESSAGE_BANNER_WRONG_TYPE = '<b>Content Banner could not be rendered because the content item with KEY %s is not an banner.</b>';
+    protected const MESSAGE_BANNER_NOT_FOUND = '<b>Content Banner with key %s not found.</b>';
+    protected const MESSAGE_BANNER_WRONG_TYPE = '<b>Content Banner could not be rendered because the content item with key %s is not an banner.</b>';
     protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<b>"%s" is not supported name of template.</b>';
 
     /**

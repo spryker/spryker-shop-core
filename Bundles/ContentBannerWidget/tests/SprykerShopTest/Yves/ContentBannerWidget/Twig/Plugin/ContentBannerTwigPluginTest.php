@@ -44,8 +44,8 @@ class ContentBannerTwigPluginTest extends Unit
 
     protected const RENDERED_STRING = 'output';
 
-    protected const MESSAGE_BANNER_NOT_FOUND = '<b>Content Banner with KEY 0 not found.</b>';
-    protected const MESSAGE_BANNER_WRONG_TYPE = '<b>Content Banner could not be rendered because the content item with KEY 0 is not an banner.</b>';
+    protected const MESSAGE_BANNER_NOT_FOUND = '<b>Content Banner with key 0 not found.</b>';
+    protected const MESSAGE_BANNER_WRONG_TYPE = '<b>Content Banner could not be rendered because the content item with key 0 is not an banner.</b>';
     protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<b>"wrong" is not supported name of template.</b>';
 
     /**
@@ -82,7 +82,7 @@ class ContentBannerTwigPluginTest extends Unit
     {
         // Assign
         $contentTypeContextTransfer = new ContentTypeContextTransfer();
-        $contentTypeContextTransfer->setIdContent(static::CONTENT_KEY);
+        $contentTypeContextTransfer->setKey(static::CONTENT_KEY);
         $contentTypeContextTransfer->setTerm(static::CONTENT_TERM);
         $this->setContentBannerToContentStorageClientReturn($contentTypeContextTransfer);
 
