@@ -19,8 +19,8 @@ class ContentBannerTwigFunction extends TwigFunction
      */
     protected const TWIG_FUNCTION_NAME_CONTENT_BANNER = 'content_banner';
 
-    protected const MESSAGE_BANNER_NOT_FOUND = '<b>Content Banner with ID %s not found.</b>';
-    protected const MESSAGE_BANNER_WRONG_TYPE = '<b>Content Banner could not be rendered because the content item with ID %s is not an banner.</b>';
+    protected const MESSAGE_BANNER_NOT_FOUND = '<b>Content Banner with key %s not found.</b>';
+    protected const MESSAGE_BANNER_WRONG_TYPE = '<b>Content Banner could not be rendered because the content item with key %s is not an banner.</b>';
     protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<b>"%s" is not supported name of template.</b>';
 
     /**
@@ -77,18 +77,18 @@ class ContentBannerTwigFunction extends TwigFunction
      */
     protected function getFunction(): callable
     {
-        return function (int $idContent, string $templateIdentifier): ?string {
+        return function (string $contentKey, string $templateIdentifier): ?string {
             if (!isset($this->getAvailableTemplates()[$templateIdentifier])) {
                 return $this->getMessageBannerWrongTemplate($templateIdentifier);
             }
             try {
-                $contentBannerTypeTransfer = $this->contentBannerClient->executeBannerTypeById($idContent, $this->localeName);
+                $contentBannerTypeTransfer = $this->contentBannerClient->executeBannerTypeByKey($contentKey, $this->localeName);
 
                 if (!$contentBannerTypeTransfer) {
-                    return $this->getMessageBannerNotFound($idContent);
+                    return $this->getMessageBannerNotFound($contentKey);
                 }
             } catch (MissingBannerTermException $e) {
-                return $this->getMessageBannerWrongType($idContent);
+                return $this->getMessageBannerWrongType($contentKey);
             }
 
             return $this->twig->render(
