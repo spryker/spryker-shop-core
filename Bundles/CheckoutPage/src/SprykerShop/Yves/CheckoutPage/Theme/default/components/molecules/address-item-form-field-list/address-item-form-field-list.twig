@@ -11,19 +11,10 @@
 {% block body %}
     <div class="grid grid--middle">
         {% for item in data.items %}
-            {% set companyBusinessUnitShippingAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', item.vars.data]) %}
-            {% set isCompanyBusinessUnitShippingAddressApplicable = companyBusinessUnitShippingAddressWidget and companyBusinessUnitShippingAddressWidget.isApplicable %}
-            {% set hasShippingAddresses = item.shippingAddress.id_customer_address is defined %}
-            {% set hasShippingAddressesApplicable = hasShippingAddresses %}
-
-            {% if embed.isCompanyBusinessUnitShippingAddressApplicable %}
-                {% set hasShippingAddressesApplicable = true %}
-            {% endif %}
-
             {% set itemName = item.vars.data.name | default %}
             {% set itemQuantity = item.vars.data.quantity | default %}
             {% set imageUrl = item.vars.data.images is not empty ? item.vars.data.images[0].externalUrlSmall : '' %}
-            {#{% set hiddenClass = item.shippingAddress.id_customer_address is defined ? 'is-hidden' : '' %}#}
+            {% set hiddenClass = item.shippingAddress.id_customer_address is defined ? 'is-hidden' : '' %}
 
             <div class="col col--sm-1 spacing spacing--inner">
                 {% include atom('thumbnail') with {
@@ -41,24 +32,19 @@
                 <p>{{ ('customer.order.item_quantity' | trans) }}: {{ itemQuantity }}</p>
             </div>
 
-            {% if hasShippingAddressesApplicable %}
+            {% if item.shippingAddress.id_customer_address is defined %}
                 <div class="col col--sm-3 spacing spacing--inner">
-                    {% if isCompanyBusinessUnitShippingAddressApplicable %}
-                        {% widget embed.companyBusinessUnitShippingAddressWidget %}{% endwidget %}
-
-                        {% if hasShippingAddresses %}
-                            {% do item.shippingAddress.id_customer_address.setRendered %}
-                            {% do item.shippingAddress.id_company_unit_address.setRendered %}
-                        {% endif %}
-                    {% else %}
-                        {{ form_widget(item.shippingAddress.id_customer_address) }}
-                    {% endif %}
+                    {{ form_row(item.shippingAddress.id_customer_address, {
+                        attr: {
+                            class: 'js-address__item-shipping-trigger',
+                        },
+                    }) }}
                 </div>
             {% endif %}
 
             <div class="col col--sm-12">
                 {% include molecule('form') with {
-                    class: 'js-address__item-shipping ' ~ (hasShippingAddressesApplicable ? ' is-hidden ' : '') ~ ' js-address__item-shipping--' ~ loop.index,
+                    class: 'js-address__item-shipping ' ~ hiddenClass ~ ' js-address__item-shipping--' ~ loop.index,
                     data: {
                         form: item.shippingAddress,
                         enableStart: false,
@@ -81,7 +67,8 @@
                         attributes: {
                             'trigger-selector': '[name="' ~ item.shippingAddress.id_customer_address.vars.full_name ~ '"]' | default(''),
                             'target-selector': '.js-address__item-shipping--' ~ loop.index,
-                        },
+                            'class-to-toggle': 'is-hidden'
+                        }
                     } only %}
                 {% endif %}
 
@@ -99,5 +86,21 @@
                 {% endif %}
             </div>
         {% endfor %}
+
+        {% include molecule('is-next-checkout-step-enabled', 'CheckoutPage') with {
+            attributes: {
+                'trigger-selector': '[name="addressesForm[shippingAddress][id_customer_address]"]',
+                'target-selector': '.js-validate-next-checkout-step',
+            },
+        } only %}
+
+        {% include molecule('validate-next-checkout-step', 'CheckoutPage') with {
+            attributes: {
+                'form-selector': '.js-address__item-shipping',
+                'target-selector': '.js-address__form-submit',
+                'dropdown-trigger-selector': '.js-address__item-shipping-trigger',
+                'is-enable': false,
+            },
+        } only %}
     </div>
 {% endblock %}
