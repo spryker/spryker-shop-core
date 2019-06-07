@@ -5,7 +5,9 @@ export default class IsNextCheckoutStepEnabled extends Component {
     protected trigger: HTMLSelectElement;
     protected target: ValidateNextCheckoutStep;
 
-    protected readyCallback(): void {
+    protected readyCallback(): void {}
+
+    mountCallback(): void {
         this.trigger = <HTMLSelectElement>document.querySelector(this.triggerSelector);
         this.target = <ValidateNextCheckoutStep>document.querySelector(this.targetSelector);
 
@@ -30,7 +32,7 @@ export default class IsNextCheckoutStepEnabled extends Component {
             return;
         }
 
-        this.target.enableNextStepButton();
+        this.target.disableNextStepButton(false);
     }
 
     /**

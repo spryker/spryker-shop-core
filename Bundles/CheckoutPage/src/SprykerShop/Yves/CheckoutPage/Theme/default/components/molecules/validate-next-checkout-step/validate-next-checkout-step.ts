@@ -5,9 +5,11 @@ export default class ValidateNextCheckoutStep extends Component {
     protected triggers: HTMLFormElement[];
     protected target: HTMLButtonElement;
     protected dropdownTriggers: HTMLSelectElement[];
-    protected readonly requiredFormFieldSelectors: string = `select[required], input[required]`;
+    protected readonly requiredFormFieldSelectors: string = 'select[required], input[required]';
 
-    protected readyCallback(): void {
+    protected readyCallback(): void {}
+
+    mountCallback(): void {
         this.forms = <HTMLElement[]>Array.from(document.querySelectorAll(this.formSelector));
         this.target = <HTMLButtonElement>document.querySelector(this.targetSelector);
         if (this.dropdownTriggerSelector) {
@@ -21,14 +23,18 @@ export default class ValidateNextCheckoutStep extends Component {
     }
 
     protected mapEvents(): void {
-        if (this.triggers) {
-            this.triggers.forEach((element: HTMLFormElement) => {
-                element.addEventListener('change', () => this.onTriggerChange());
-            });
-        }
+        this.mapTriggerEvents();
 
         if (this.dropdownTriggers) {
             this.dropdownTriggers.forEach((element: HTMLSelectElement) => {
+                element.addEventListener('change', () => this.onDropdownTriggerChange());
+            });
+        }
+    }
+
+    protected mapTriggerEvents(): void {
+        if (this.triggers) {
+            this.triggers.forEach((element: HTMLFormElement) => {
                 element.addEventListener('change', () => this.onTriggerChange());
             });
         }
@@ -46,15 +52,19 @@ export default class ValidateNextCheckoutStep extends Component {
     protected fillFormFieldsCollection(): void {
         this.triggers = [];
 
-        if (this.forms) {
-            this.forms.forEach((element: HTMLElement) => {
-                if (!element.classList.contains(this.classToToggle)) {
-                    this.triggers.push(...<HTMLFormElement[]>Array.from(element.querySelectorAll(
-                        this.requiredFormFieldSelectors
-                    )));
-                }
-            });
+        if (!this.forms) {
+            return;
         }
+
+        this.triggers = <HTMLFormElement[]>this.forms.reduce((collection: HTMLElement[], element: HTMLElement) => {
+            if (!element.classList.contains(this.classToToggle)) {
+                collection.push(...<HTMLFormElement[]>Array.from(element.querySelectorAll(
+                    this.requiredFormFieldSelectors
+                )));
+            }
+
+            return collection;
+        }, []);
     }
 
     protected onTriggerChange(): void {
@@ -62,34 +72,35 @@ export default class ValidateNextCheckoutStep extends Component {
         this.toggleDisablingNextStepButton();
     }
 
+    protected onDropdownTriggerChange(): void {
+        this.fillFormFieldsCollection();
+        this.toggleDisablingNextStepButton();
+        this.mapTriggerEvents();
+    }
+
     protected toggleDisablingNextStepButton(): void {
-        if (this.target) {
-            if (this.isFormFieldsEmpty) {
-                this.disableNextStepButton();
-
-                return;
-            }
-
-            this.enableNextStepButton();
+        if (!this.target) {
+            return;
         }
+
+        if (this.isFormFieldsEmpty) {
+            this.disableNextStepButton(true);
+
+            return;
+        }
+
+        this.disableNextStepButton(false);
     }
 
     /**
-     * Sets the disabled attribute for target element.
+     * Removes/Sets the disabled attribute for target element.
      */
-    disableNextStepButton(): void {
-        if (this.target) {
-            this.target.disabled = true;
+    disableNextStepButton(isDisabled: boolean): void {
+        if (!this.target) {
+            return;
         }
-    }
 
-    /**
-     * Removes the disabled attribute for target element.
-     */
-    enableNextStepButton(): void {
-        if (this.target) {
-            this.target.disabled = false;
-        }
+        this.target.disabled = isDisabled;
     }
 
     /**
