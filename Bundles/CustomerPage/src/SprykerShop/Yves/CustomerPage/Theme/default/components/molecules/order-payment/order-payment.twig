@@ -12,7 +12,6 @@
 
 {% block body %}
     {% for payment in data.payments %}
-        <pre>{{ dump(payment) }}</pre>
         {% if payment.paymentMethod == 'invoice' %}
             <li class="list__item"><strong>{{ 'dummyPaymentInvoice.invoice' | trans }} {{ payment.amount | money(true, data.currencyIsoCode) }}</strong></li>
             <li class="list__item">{{ 'dummyPaymentInvoice.date_of_birth' | trans }}:</li>
