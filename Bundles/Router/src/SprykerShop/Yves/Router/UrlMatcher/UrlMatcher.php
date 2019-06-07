@@ -8,9 +8,11 @@
 namespace SprykerShop\Yves\Router\UrlMatcher;
 
 use SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouterEnhancerAwareInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Matcher\CompiledUrlMatcher;
+use Symfony\Component\Routing\Matcher\RedirectableUrlMatcherInterface;
 
-class UrlMatcher extends CompiledUrlMatcher implements RouterEnhancerAwareInterface
+class UrlMatcher extends CompiledUrlMatcher implements RouterEnhancerAwareInterface, RedirectableUrlMatcherInterface
 {
     /**
      * @var \SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
@@ -45,5 +47,43 @@ class UrlMatcher extends CompiledUrlMatcher implements RouterEnhancerAwareInterf
         }
 
         return $parameters;
+    }
+
+    /**
+     * @param string $path
+     * @param string $route
+     * @param string|null $scheme
+     *
+     * @return array
+     */
+    public function redirect($path, $route, $scheme = null)
+    {
+        $url = $this->context->getBaseUrl() . $path;
+        $query = $this->context->getQueryString() ?: '';
+
+        if ($query !== '') {
+            $url .= '?' . $query;
+        }
+
+        if ($this->context->getHost()) {
+            if ($scheme) {
+                $port = '';
+                if ($scheme === 'http' && $this->context->getHttpPort() != 80) {
+                    $port = ':' . $this->context->getHttpPort();
+                } elseif ($scheme === 'https' && $this->context->getHttpsPort() != 443) {
+                    $port = ':' . $this->context->getHttpsPort();
+                }
+
+                $url = sprintf('%s://%s%s%s', $scheme, $this->context->getHost(), $port, $url);
+            }
+        }
+
+        return [
+            '_controller' => function ($url) {
+                return new RedirectResponse($url, 301);
+            },
+            '_route' => null,
+            'url' => $url,
+        ];
     }
 }
