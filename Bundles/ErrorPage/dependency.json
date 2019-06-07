@@ -1,6 +1,5 @@
 {
   "include": {
-    "ShopUi": "ShopUi provides basic frontend infrastructure.",
-    "Config": "Required by module"
+    "ShopUi": "ShopUi provides basic frontend infrastructure."
   }
 }

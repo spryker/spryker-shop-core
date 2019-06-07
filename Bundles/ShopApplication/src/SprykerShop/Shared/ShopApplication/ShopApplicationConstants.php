@@ -13,6 +13,4 @@ namespace SprykerShop\Shared\ShopApplication;
 interface ShopApplicationConstants
 {
     public const ENABLE_APPLICATION_DEBUG = 'SHOP_APPLICATION:ENABLE_APPLICATION_DEBUG';
-
-    public const ENABLE_YVES_HOST_URL_VALIDATION = 'SHOP_APPLICATION:ENABLE_YVES_HOST_URL_VALIDATION';
 }
