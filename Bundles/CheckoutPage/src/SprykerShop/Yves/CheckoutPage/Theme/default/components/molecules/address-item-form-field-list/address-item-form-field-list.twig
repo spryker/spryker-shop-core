@@ -11,9 +11,6 @@
 {% block body %}
     <div class="grid grid--middle">
         {% for item in data.items %}
-            {% set companyBusinessUnitShippingAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', item.vars.data]) %}
-            {% set isCompanyBusinessUnitShippingAddressApplicable = companyBusinessUnitShippingAddressWidget and companyBusinessUnitShippingAddressWidget.isApplicable %}
-
             {% set itemName = item.vars.data.name | default %}
             {% set itemQuantity = item.vars.data.quantity | default %}
             {% set imageUrl = item.vars.data.images is not empty ? item.vars.data.images[0].externalUrlSmall : '' %}
@@ -46,7 +43,7 @@
             {% endif %}
 
             <div class="col col--sm-12">
-                {% embed molecule('form') with {
+                {% include molecule('form') with {
                     class: 'js-address__item-shipping ' ~ hiddenClass ~ ' js-address__item-shipping--' ~ loop.index,
                     data: {
                         form: item.shippingAddress,
@@ -64,8 +61,6 @@
                         },
                     },
                 } only %}
-
-                {% endembed %}
 
                 {% if item.shippingAddress.id_customer_address is defined %}
                     {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
