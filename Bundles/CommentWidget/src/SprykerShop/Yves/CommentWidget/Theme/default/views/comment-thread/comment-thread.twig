@@ -40,7 +40,8 @@
     } only %}
 
     {{ form_start(data.createCommentForm, {
-        action: url('comment/add')
+        action: url('comment/add'),
+        attr: {'id': ''}
     }) }}
     <div class="cart-comments-main__form">
         {{ form_widget(data.createCommentForm) }}

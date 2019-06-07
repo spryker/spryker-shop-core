@@ -106,6 +106,24 @@
                                         },
                                     } only %}
                                 {% endif %}
+
+                                {% include molecule('cart-comment-action-form', 'CommentWidget') with {
+                                    data: {
+                                        action: url(comment.isAttached ? 'comment/tag/unattach' : 'comment/tag/attach'),
+                                        hiddenData: [
+                                            {
+                                                name:"uuid",
+                                                value: comment.uuid
+                                            },
+                                            {
+                                                name:"returnRoute",
+                                                value: data.returnRoute
+                                            }
+                                        ],
+                                        buttonClassString: 'button button--warning',
+                                        buttonText: comment.isAttached ? ('comment_widget.form.unattach' | trans) : ('comment_widget.form.attach' | trans),
+                                    },
+                                } only %}
                             {% endif %}
                         </div>
                     {% endfor %}

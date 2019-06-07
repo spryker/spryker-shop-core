@@ -19,7 +19,13 @@
         action: url('comment/update')
     }) }}
 
-    {{ form_widget(data.form) }}
+    {{ form_row(data.form.uuid, { 'id': '' }) }}
+    {{ form_row(data.form.message, { 'id': '' }) }}
+    {% for tagForm in data.form.tags.children %}
+        {{ form_row(tagForm, { 'id': '' }) }}
+    {% endfor %}
+    {{ form_row(data.form.tags, { 'id': '' }) }}
+    {{ form_row(data.form._token, { 'id': '' }) }}
 
     <input type="hidden" name="returnRoute" value="{{ data.returnRoute }}" />
     <input type="submit" class="button button--primary float-right" value="{{ 'comment_widget.form.update_comment' | trans }}" />
