@@ -1,7 +1,7 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'order-payment',
+    name: 'order-payments',
     tag: 'div'
 } %}
 
@@ -12,16 +12,8 @@
 
 {% block body %}
     {% for payment in data.payments %}
-        {% if payment.paymentMethod == 'invoice' %}
-            <li class="list__item"><strong>{{ 'dummyPaymentInvoice.invoice' | trans }} {{ payment.amount | money(true, data.currencyIsoCode) }}</strong></li>
-            <li class="list__item">{{ 'dummyPaymentInvoice.date_of_birth' | trans }}:</li>
-        {% endif %}
-        {% if payment.paymentMethod == 'credit card' %}
-            <li class="list__item">{{ 'DummyPaymentCreditCard' | trans }}</li>
-            <li class="list__item">{{ 'dummyPaymentCreditCard.card_type' | trans }}:</li>
-            <li class="list__item">{{ 'dummyPaymentCreditCard.card_number' | trans }}:</li>
-            <li class="list__item">{{ 'dummyPaymentCreditCard.name_on_card' | trans }}:</li>
-            <li class="list__item">{{ 'dummyPaymentCreditCard.card_expires' | trans }}:</li>
-        {% endif %}
+        <li class="list__item">{{ payment.paymentProvider | trans }}</li>
+        <li class="list__item">{{ 'customer.order.payment_method' | trans }}: {{ payment.paymentMethod | trans }}</li>
+        <li class="list__item">{{ payment.amount | money(true, data.currencyIsoCode) }}</li>
     {% endfor %}
 {% endblock %}

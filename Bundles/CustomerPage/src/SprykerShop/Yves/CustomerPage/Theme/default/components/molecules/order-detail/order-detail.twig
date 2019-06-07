@@ -36,10 +36,9 @@
         </div>
 
         <div class="box">
-            <div class="row">
-                <div class="col col-sm-6">
-                    <h5>{{ 'customer.order.payment' | trans }}</h5>
-                    <hr />
+            <h5>{{ 'customer.order.payment' | trans }}</h5>
+            <div class="box grid grid--justify spacing-bottom spacing-bottom--big">
+                <div class="col col--sm-12 col--lg-6">
                     {% include molecule('order-payment', 'CustomerPage') with {
                         data: {
                             payments: data.order.payments,
@@ -47,9 +46,8 @@
                         },
                     } only %}
                 </div>
-                <div class="col col-sm-6">
-                    <h5>{{ 'customer.order.billing_address' | trans }}</h5>
-                    <hr />
+                <div class="ol col--sm-12 col--lg-5 spacing-left spacing-left--inner">
+                    <strong>{{ 'customer.order.billing_address' | trans }}</strong>
                     {% include molecule('display-address') with {
                         data: {
                             address: data.order.billingAddress,
