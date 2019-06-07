@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\Router;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 use SprykerShop\Shared\Router\RouterConstants;
 use SprykerShop\Yves\Router\Generator\UrlGenerator;
-use SprykerShop\Yves\Router\UrlMatcher\RedirectableUrlMatcher;
+use SprykerShop\Yves\Router\UrlMatcher\UrlMatcher;
 
 class RouterConfig extends AbstractBundleConfig
 {
@@ -22,8 +22,8 @@ class RouterConfig extends AbstractBundleConfig
         return [
             'cache_dir' => $this->getCachePathIfCacheEnabled(),
             'generator_class' => UrlGenerator::class,
-            'matcher_class' => RedirectableUrlMatcher::class,
-            'matcher_base_class' => RedirectableUrlMatcher::class,
+            'matcher_class' => UrlMatcher::class,
+            'matcher_base_class' => UrlMatcher::class,
         ];
     }
 
@@ -44,7 +44,7 @@ class RouterConfig extends AbstractBundleConfig
     protected function getCachePathIfCacheEnabled(): ?string
     {
         if ($this->get(RouterConstants::IS_CACHE_ENABLED, true)) {
-            $defaultCachePath = APPLICATION_ROOT_DIR . '/data/' . APPLICATION_STORE . '/cache/' . APPLICATION . '/routing';
+            $defaultCachePath = APPLICATION_ROOT_DIR . '/data/' . APPLICATION_STORE . '/cache/Yves/routing';
 
             return $this->get(RouterConstants::CACHE_PATH, $defaultCachePath);
         }

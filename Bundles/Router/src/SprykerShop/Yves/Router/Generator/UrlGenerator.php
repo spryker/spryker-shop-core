@@ -9,11 +9,10 @@ namespace SprykerShop\Yves\Router\Generator;
 
 use SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouterEnhancerAwareInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
-use Symfony\Component\Routing\Generator\UrlGenerator as SymfonyUrlGenerator;
+use Symfony\Component\Routing\Generator\CompiledUrlGenerator;
 use Symfony\Component\Routing\Router as SymfonyRouter;
 
-class UrlGenerator extends SymfonyUrlGenerator implements RouterEnhancerAwareInterface
+class UrlGenerator extends CompiledUrlGenerator implements RouterEnhancerAwareInterface
 {
     /**
      * @var \Symfony\Component\HttpFoundation\Request|null
@@ -40,18 +39,10 @@ class UrlGenerator extends SymfonyUrlGenerator implements RouterEnhancerAwareInt
      * @param array $parameters
      * @param int $referenceType
      *
-     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
-     *
      * @return string
      */
     public function generate($name, $parameters = [], $referenceType = SymfonyRouter::ABSOLUTE_PATH)
     {
-        $route = $this->routes->get($name);
-
-        if (!$route) {
-            throw new RouteNotFoundException(sprintf('Could not find a route by name "%s" in the current route collection.', $name));
-        }
-
         $generatedUrl = parent::generate($name, $parameters, $referenceType);
 
         foreach (array_reverse($this->routerEnhancerPlugins) as $routerEnhancerPlugin) {

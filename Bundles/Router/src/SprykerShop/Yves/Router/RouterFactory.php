@@ -58,7 +58,7 @@ class RouterFactory extends AbstractFactory
             $this->createClosureLoader(),
             $this->createResource(),
             $this->getRouterEnhancerPlugins(),
-            $this->getConfig()->getFallbackRouterConfiguration()
+            $this->getConfig()->getRouterConfiguration()
         );
     }
 
