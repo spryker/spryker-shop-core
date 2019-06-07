@@ -27,7 +27,7 @@
             overflow-y: auto;
         }
 
-        &__action-active {
+        &__action--active {
             color: $setting-color-white;
             background-color: $setting-color-main;
         }
@@ -36,12 +36,8 @@
             display: none;
         }
 
-        &__content-item-active {
+        &__content-item--active {
             display: block;
-        }
-
-        &-main__form {
-            padding-top: 0.75rem;
         }
     }
 }

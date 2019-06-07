@@ -16,7 +16,7 @@
     <p class="text-secondary">{{ data.comment.createdAt | formatDateTime }} </p>
 
     {{ form_start(data.form, {
-        action: url('comment/update')
+        action: url('comment/update'),
     }) }}
 
     {{ form_row(data.form.uuid, { 'id': '' }) }}
@@ -38,11 +38,11 @@
             hiddenData: [
                 {
                     name:"uuid",
-                    value: data.comment.uuid
+                    value: data.comment.uuid,
                 },
                 {
                     name:"returnRoute",
-                    value: data.returnRoute
+                    value: data.returnRoute,
                 }
             ],
             buttonClassString: 'button button--success float-right',
