@@ -24,7 +24,7 @@
     {% for tagForm in data.form.tags.children %}
         {{ form_row(tagForm, { 'id': '' }) }}
     {% endfor %}
-    {{ form_row(data.form.tags, { 'id': '' }) }}
+    {% do data.form.tags.setRendered %}
     {{ form_row(data.form._token, { 'id': '' }) }}
 
     <input type="hidden" name="returnRoute" value="{{ data.returnRoute }}" />
