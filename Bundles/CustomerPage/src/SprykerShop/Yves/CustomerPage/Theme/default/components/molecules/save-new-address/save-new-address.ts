@@ -1,6 +1,5 @@
 /* tslint:disable:max-file-line-count */
 import Component from 'ShopUi/models/component';
-import {log} from "ShopUi/app/logger";
 
 export default class SaveNewAddress extends Component {
     /**
