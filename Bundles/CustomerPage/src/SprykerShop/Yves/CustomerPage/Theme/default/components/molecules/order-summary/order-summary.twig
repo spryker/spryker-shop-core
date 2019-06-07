@@ -11,8 +11,10 @@
 
 {% block body %}
     <li>
-        <strong>{{ 'customer.order.subTotal' | trans }}:
-            {{ data.order.totals.subtotal | money(true, data.order.currencyIsoCode) }}</strong>
+        <strong>
+            {{ 'customer.order.subTotal' | trans }}:
+            {{ data.order.totals.subtotal | money(true, data.order.currencyIsoCode) }}
+        </strong>
     </li>
     {% for discount in data.order.calculatedDiscounts %}
         <li>
@@ -21,8 +23,10 @@
         </li>
     {% endfor %}
     <li>
-        <strong>{{ 'customer.order.expenseTotal' | trans }}:
-            {{ data.order.totals.expenseTotal | money(true, data.order.currencyIsoCode) }}</strong>
+        <strong>
+            {{ 'customer.order.expenseTotal' | trans }}:
+            {{ data.order.totals.expenseTotal | money(true, data.order.currencyIsoCode) }}
+        </strong>
     </li>
     <li>
     {% for expense in data.order.expenses %}
@@ -42,7 +46,9 @@
         {{ data.order.totals.taxTotal.amount | money(true, data.order.currencyIsoCode) }}
     </li>
     <li>
-        <strong>{{ 'customer.order.grandTotal' | trans }}:
-            {{ data.order.totals.grandTotal | money(true, data.order.currencyIsoCode) }}</strong>
+        <strong>
+            {{ 'customer.order.grandTotal' | trans }}:
+            {{ data.order.totals.grandTotal | money(true, data.order.currencyIsoCode) }}
+        </strong>
     </li>
 {% endblock %}
