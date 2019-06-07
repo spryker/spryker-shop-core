@@ -73,8 +73,7 @@ export default class ValidateNextCheckoutStep extends Component {
     }
 
     protected onDropdownTriggerChange(): void {
-        this.fillFormFieldsCollection();
-        this.toggleDisablingNextStepButton();
+        this.onTriggerChange();
         this.mapTriggerEvents();
     }
 
@@ -96,11 +95,9 @@ export default class ValidateNextCheckoutStep extends Component {
      * Removes/Sets the disabled attribute for target element.
      */
     disableNextStepButton(isDisabled: boolean): void {
-        if (!this.target) {
-            return;
+        if (this.target) {
+            this.target.disabled = isDisabled;
         }
-
-        this.target.disabled = isDisabled;
     }
 
     /**

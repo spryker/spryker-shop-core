@@ -1,1 +1,1 @@
-Verifies form field elements to enable next step checkout button.
+Verifies form field elements to enable the next step of checkout button.
