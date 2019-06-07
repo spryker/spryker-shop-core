@@ -89,7 +89,7 @@
 
         {% include molecule('is-next-checkout-step-enabled', 'CheckoutPage') with {
             attributes: {
-                'trigger-selector': '[name="addressesForm[shippingAddress][id_customer_address]"]',
+                'trigger-selector': '.js-form-select-address__shippingAddress' ?: '[name="addressesForm[shippingAddress][id_customer_address]"]',
                 'target-selector': '.js-validate-next-checkout-step',
             },
         } only %}
