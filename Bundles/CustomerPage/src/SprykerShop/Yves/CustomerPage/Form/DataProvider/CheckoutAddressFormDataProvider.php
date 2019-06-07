@@ -117,15 +117,10 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function isShippingAddressInQuote(QuoteTransfer $quoteTransfer): bool
     {
-        if ($quoteTransfer->getShippingAddress() === null) {
-            return false;
-        }
+        $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
 
-        if ($quoteTransfer->getShippingAddress()->getIdCustomerAddress() === null) {
-            return false;
-        }
-
-        return true;
+        return $shippingAddressTransfer !== null
+            && ($shippingAddressTransfer->getIdCustomerAddress() === null || $shippingAddressTransfer->getIdCompanyUnitAddress());
     }
 
     /**
@@ -154,15 +149,10 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function isBillingAddressInQuote(QuoteTransfer $quoteTransfer): bool
     {
-        if ($quoteTransfer->getBillingAddress() === null) {
-            return false;
-        }
+        $billingAddressTransfer = $quoteTransfer->getBillingAddress();
 
-        if ($quoteTransfer->getBillingAddress()->getIdCustomerAddress() === null) {
-            return false;
-        }
-
-        return true;
+        return $billingAddressTransfer !== null
+            && ($billingAddressTransfer->getIdCustomerAddress() === null || $billingAddressTransfer->getIdCompanyUnitAddress());
     }
 
     /**

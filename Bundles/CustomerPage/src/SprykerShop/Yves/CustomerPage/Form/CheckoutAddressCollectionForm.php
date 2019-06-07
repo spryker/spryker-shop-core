@@ -105,8 +105,7 @@ class CheckoutAddressCollectionForm extends AbstractType
             'data_class' => AddressTransfer::class,
             'required' => true,
             'validation_groups' => function (FormInterface $form) {
-                if ($form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
-                    && !$form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData()) {
+                if ($this->isIdCustomerAddressFieldEmpty($form) && $this->isIdCompanyUnitAddressFieldEmpty($form)) {
                     return [self::GROUP_SHIPPING_ADDRESS];
                 }
 
@@ -148,8 +147,7 @@ class CheckoutAddressCollectionForm extends AbstractType
 
                     if ($shippingAddressForm->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
                         && $shippingAddressForm->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData()
-                        == CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES
-                    ) {
+                        == CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES) {
                         return static::GROUP_BILLING_SAME_AS_SHIPPING;
                     }
 
@@ -176,7 +174,7 @@ class CheckoutAddressCollectionForm extends AbstractType
                     return false;
                 }
 
-                if (!$form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS) || !$form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData()) {
+                if ($this->isIdCustomerAddressAbsentOrEmpty($form) && $this->isIdCompanyUnitAddressFieldAbsentOrEmpty($form)) {
                     return [self::GROUP_BILLING_ADDRESS];
                 }
 
@@ -288,5 +286,49 @@ class CheckoutAddressCollectionForm extends AbstractType
             'message' => static::VALIDATION_BILLING_SAME_AS_SHIPPING_MESSAGE,
             'groups' => static::GROUP_BILLING_SAME_AS_SHIPPING,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool
+     */
+    protected function isIdCustomerAddressFieldEmpty(FormInterface $form): bool
+    {
+        return $form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
+            && !$form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool
+     */
+    protected function isIdCompanyUnitAddressFieldEmpty(FormInterface $form): bool
+    {
+        return $form->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)
+            && !$form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData();
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool
+     */
+    protected function isIdCustomerAddressAbsentOrEmpty(FormInterface $form): bool
+    {
+        return !$form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
+            && !$form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool
+     */
+    protected function isIdCompanyUnitAddressFieldAbsentOrEmpty(FormInterface $form): bool
+    {
+        return !$form->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)
+            && !$form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData();
     }
 }

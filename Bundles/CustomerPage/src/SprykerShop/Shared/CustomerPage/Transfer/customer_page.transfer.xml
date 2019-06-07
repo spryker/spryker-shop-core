@@ -44,6 +44,7 @@
     <transfer name="Address">
         <property name="idSalesOrderAddress" type="int" />
         <property name="idCustomerAddress" type="int" />
+        <property name="idCompanyUnitAddress" type="int" />
         <property name="iso2Code" type="string" />
         <property name="region" type="string" />
         <property name="state" type="string" />
