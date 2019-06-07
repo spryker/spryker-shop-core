@@ -1,11 +1,12 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'address-item-form'
+    name: 'address-item-form',
 } %}
 
 {% define data = {
-    form: required
+    form: required,
+    shippingForm: required,
 } %}
 
 {% block body %}
@@ -21,20 +22,22 @@
             enableEnd: false,
             options: {
                 attr: {
-                    class: config.jsName ~ '__form'
-                }
-            }
+                    class: config.jsName ~ '__form',
+                },
+            },
         },
         embed: {
-            jsName: config.jsName
-        }
+            jsName: config.jsName,
+            shippingForm: data.shippingForm,
+        },
     } only %}
         {% block fields %}
             <div class="{{ embed.jsName }}__list col col--sm-12">
                 {% include molecule('address-item-form-field-list', 'CheckoutPage') with {
                     data: {
-                        items: data.form
-                    }
+                        items: data.form,
+                        shippingForm: embed.shippingForm,
+                    },
                 } only %}
             </div>
         {% endblock %}
