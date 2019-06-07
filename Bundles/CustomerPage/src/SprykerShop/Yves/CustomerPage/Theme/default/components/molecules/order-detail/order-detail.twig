@@ -36,13 +36,27 @@
         </div>
 
         <div class="box">
-            <h5>{{ 'customer.order.billing_address' | trans }}</h5>
-            <hr />
-            {% include molecule('display-address') with {
-                data: {
-                    address: data.order.billingAddress,
-                },
-            } only %}
+            <div class="row">
+                <div class="col col-sm-6">
+                    <h5>{{ 'customer.order.payment' | trans }}</h5>
+                    <hr />
+                    {% include molecule('order-payment', 'CustomerPage') with {
+                        data: {
+                            payments: data.order.payments,
+                            currencyIsoCode: data.order.currencyIsoCode,
+                        },
+                    } only %}
+                </div>
+                <div class="col col-sm-6">
+                    <h5>{{ 'customer.order.billing_address' | trans }}</h5>
+                    <hr />
+                    {% include molecule('display-address') with {
+                        data: {
+                            address: data.order.billingAddress,
+                        },
+                    } only %}
+                </div>
+            </div>
         </div>
 
         {% if data.order.cartNote is not empty %}
