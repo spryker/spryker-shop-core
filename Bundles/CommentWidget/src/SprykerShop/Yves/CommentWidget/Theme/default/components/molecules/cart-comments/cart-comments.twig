@@ -1,0 +1,116 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-comments',
+    tag: 'cart-comments',
+} %}
+
+{% define data = {
+    ownerId: required,
+    ownerType: required,
+    returnRoute: required,
+    commentThread: required,
+    createCommentForm: required,
+    allCommentForms: required,
+    attachCommentForms: required,
+} %}
+
+{% define attributes = {
+    'tab-selector': required,
+    'content-block-selector': required,
+    'tab-class-to-toggle': required,
+    'content-block-class-to-toggle': required,
+} %}
+
+{% set attachedComments = [] %}
+
+{% for comment in data.commentThread.comments %}
+    {% if comment.isAttached %}
+        {% set attachedComments = attachedComments|merge([comment]) %}
+    {% endif %}
+{% endfor %}
+
+{% block body %}
+    <div class="cart-comments__container">
+        <ul class="cart-comments__tabs">
+            <li class="cart-comments__tab">
+                <button class="cart-comments__action cart-comments__action-active js-cart-comments__tab"> {{ 'comment_widget.form.all' | trans }} ({{ data.commentThread.comments|length }})</button>
+            </li>
+            <li class="cart-comments__tab">
+                <button class="cart-comments__action js-cart-comments__tab">{{ 'comment_widget.form.attached' | trans }} ({{ attachedComments|length }}) </button>
+            </li>
+        </ul>
+        <div class="cart-comments__content">
+            <div class="cart-comments__content-item cart-comments__content-item-active js-cart-comments__content-item">
+                {% for comment in data.commentThread.comments %}
+                    <div class="cart-comment-block">
+                        {% if data.allCommentForms[comment.idComment] is defined %}
+
+                            {% set form = data.allCommentForms[comment.idComment] %}
+
+                            {% include molecule('cart-comment-form', 'CommentWidget') with {
+                                data: {
+                                    form: form,
+                                    comment: comment,
+                                    returnRoute: data.returnRoute,
+                                },
+                            } only %}
+                        {% else %}
+                            {% include molecule('cart-comment-info', 'CommentWidget') with {
+                                data: {
+                                    comment: comment,
+                                },
+                            } only %}
+                        {% endif %}
+
+                        {% include molecule('cart-comment-action-form', 'CommentWidget') with {
+                            data: {
+                                action: url(comment.isAttached ? 'comment/tag/unattach' : 'comment/tag/attach'),
+                                hiddenData: [
+                                    {
+                                        name:"uuid",
+                                        value: comment.uuid
+                                    },
+                                    {
+                                        name:"returnRoute",
+                                        value: data.returnRoute
+                                    }
+                                ],
+                                buttonClassString: 'button button--warning',
+                                buttonText: comment.isAttached ? ('comment_widget.form.unattach' | trans) : ('comment_widget.form.attach' | trans),
+                            },
+                        } only %}
+                    </div>
+                {% endfor %}
+                <hr/>
+            </div>
+            <div class="cart-comments__content-item js-cart-comments__content-item">
+                {% if data.commentThread is not empty %}
+                    {% for comment in data.commentThread.comments %}
+                        <div class="cart-comment-block">
+                            {% if comment.isAttached %}
+                                {% if data.attachCommentForms[comment.idComment] is defined %}
+                                    {% set form = data.attachCommentForms[comment.idComment] %}
+
+                                    {% include molecule('cart-comment-form', 'CommentWidget') with {
+                                        data: {
+                                            form: form,
+                                            comment: comment,
+                                            returnRoute: data.returnRoute,
+                                        },
+                                    } only %}
+                                {% else %}
+                                    {% include molecule('cart-comment-info', 'CommentWidget') with {
+                                        data: {
+                                            comment: comment,
+                                        },
+                                    } only %}
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
