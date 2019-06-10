@@ -9,11 +9,11 @@ namespace SprykerShop\Yves\ResourceSharePage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Application;
+use SprykerShop\Yves\ResourceSharePage\Activator\ResourceShareActivator;
+use SprykerShop\Yves\ResourceSharePage\Activator\ResourceShareActivatorInterface;
 use SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToCustomerClientInterface;
 use SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToMessengerClientInterface;
 use SprykerShop\Yves\ResourceSharePage\Dependency\Client\ResourceSharePageToResourceShareClientInterface;
-use SprykerShop\Yves\ResourceSharePage\ResourceShare\ResourceShareActivator;
-use SprykerShop\Yves\ResourceSharePage\ResourceShare\ResourceShareActivatorInterface;
 use SprykerShop\Yves\ResourceSharePage\RouteResolver\RouteResolver;
 use SprykerShop\Yves\ResourceSharePage\RouteResolver\RouteResolverInterface;
 
@@ -71,7 +71,7 @@ class ResourceSharePageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ResourceSharePage\ResourceShare\ResourceShareActivatorInterface
+     * @return \SprykerShop\Yves\ResourceSharePage\Activator\ResourceShareActivatorInterface
      */
     public function createResourceShareActivator(): ResourceShareActivatorInterface
     {
