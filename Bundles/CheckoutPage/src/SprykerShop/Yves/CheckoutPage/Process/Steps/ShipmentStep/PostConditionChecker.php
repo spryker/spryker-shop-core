@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
 
 class PostConditionChecker implements PostConditionCheckerInterface
 {

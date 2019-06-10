@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
 use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressForm;
 
 class PostConditionChecker implements PostConditionCheckerInterface
@@ -52,7 +52,9 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return false;
         }
 
-        $isQuoteShippingAddressEmpty = $this->customerService->isAddressEmpty($quoteTransfer->getShippingAddress());
+        $itemTransfer = $quoteTransfer->getItems()[0];
+        $addressTransfer = $itemTransfer->getShipment()->getShippingAddress();
+        $isQuoteShippingAddressEmpty = $this->customerService->isAddressEmpty($addressTransfer);
         if ($isQuoteShippingAddressEmpty && $isSplitDelivery === false) {
             return false;
         }
@@ -67,6 +69,10 @@ class PostConditionChecker implements PostConditionCheckerInterface
      */
     protected function isSplitDelivery(AbstractTransfer $quoteTransfer): bool
     {
+        if ($quoteTransfer->getShippingAddress() === null) {
+            return false;
+        }
+
         return $quoteTransfer->getShippingAddress()->getIdCustomerAddress() === CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES;
     }
 

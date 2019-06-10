@@ -26,25 +26,18 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServi
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\AddressSaver;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\AddressSaverWithoutMultiShipment;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\AddressStepExecutor;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\PostConditionChecker as AddressStepPostConditionChecker;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\PostConditionCheckerWithoutMultiShipment as AddressStepPostConditionCheckerWithoutMultiShipment;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\SaverInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\CustomerStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\EntryStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PaymentStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PlaceOrderStep;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\PostConditionChecker as ShipmentStepPostConditionChecker;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\PostConditionCheckerWithoutMultiShipment as ShipmentStepPostConditionCheckerWithoutMultiShipment;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\StepExecutorInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\SuccessStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\SummaryStep;
-use SprykerShop\Yves\CheckoutPage\StrategyResolver\AddressStep\AddressStepStrategyResolver;
-use SprykerShop\Yves\CheckoutPage\StrategyResolver\AddressStep\AddressStepStrategyResolverInterface;
-use SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep\ShipmentStepStrategyResolver;
-use SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep\ShipmentStepStrategyResolverInterface;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 use SprykerShop\Yves\HomePage\Plugin\Provider\HomePageControllerProvider;
 
@@ -144,12 +137,12 @@ class StepFactory extends AbstractFactory
     public function createAddressStep(): AddressStep
     {
         return new AddressStep(
-            $this->getCustomerClient(),
             $this->getCalculationClient(),
+            $this->createAddressStepExecutor(),
+            $this->createAddressStepPostConditionChecker(),
+            $this->getConfig(),
             CheckoutPageControllerProvider::CHECKOUT_ADDRESS,
-            HomePageControllerProvider::ROUTE_HOME,
-            $this->createAddressStepStrategyResolver(),
-            $this->getConfig()
+            HomePageControllerProvider::ROUTE_HOME
         );
     }
 
@@ -161,10 +154,9 @@ class StepFactory extends AbstractFactory
         return new ShipmentStep(
             $this->getCalculationClient(),
             $this->getShipmentPlugins(),
-            $this->getShipmentService(),
+            $this->createShipmentStepPostConditionChecker(),
             CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
-            HomePageControllerProvider::ROUTE_HOME,
-            $this->createShipmentStepStrategyResolver()
+            HomePageControllerProvider::ROUTE_HOME
         );
     }
 
@@ -344,11 +336,11 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\SaverInterface
+     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\StepExecutorInterface
      */
-    public function createAddressStepSaver(): SaverInterface
+    public function createAddressStepExecutor(): StepExecutorInterface
     {
-        return new AddressSaver(
+        return new AddressStepExecutor(
             $this->getCustomerService(),
             $this->getCustomerClient(),
             $this->getShoppingListItemExpanderPlugins()
@@ -356,17 +348,7 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use createAddressStepSaver() instead.
-     *
-     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\SaverInterface
-     */
-    public function createAddressStepSaverWithoutMultipleShipment(): SaverInterface
-    {
-        return new AddressSaverWithoutMultiShipment($this->getCustomerClient());
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface
+     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface
      */
     public function createAddressStepPostConditionChecker(): PostConditionCheckerInterface
     {
@@ -374,160 +356,11 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use createAddressStepPostConditionChecker() instead.
-     *
-     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface
-     */
-    public function createAddressStepPostConditionCheckerWithoutMultipleShipment(): PostConditionCheckerInterface
-    {
-        return new AddressStepPostConditionCheckerWithoutMultiShipment($this->getCustomerService());
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
-     *
-     * @return \SprykerShop\Yves\CheckoutPage\StrategyResolver\AddressStep\AddressStepStrategyResolverInterface
-     */
-    public function createAddressStepStrategyResolver(): AddressStepStrategyResolverInterface
-    {
-        $strategyContainer = [];
-
-        $strategyContainer = $this->addAddressStepSaverWithoutMultipleShippingAddress($strategyContainer);
-        $strategyContainer = $this->addAddressStepSaverWithMultipleShippingAddress($strategyContainer);
-
-        $strategyContainer = $this->addAddressStepPostConditionCheckerWithoutMultipleShipment($strategyContainer);
-        $strategyContainer = $this->addAddressStepPostConditionCheckerWithMultipleShipment($strategyContainer);
-
-        return new AddressStepStrategyResolver($strategyContainer, $this->getConfig());
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addAddressStepSaverWithoutMultipleShippingAddress(array $strategyContainer): array
-    {
-        $strategyContainer[AddressStepStrategyResolverInterface::STRATEGY_KEY_SAVER_WITHOUT_MULTI_SHIPMENT] = function (): SaverInterface {
-            return $this->createAddressStepSaverWithoutMultipleShipment();
-        };
-
-        return $strategyContainer;
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addAddressStepSaverWithMultipleShippingAddress(array $strategyContainer): array
-    {
-        $strategyContainer[AddressStepStrategyResolverInterface::STRATEGY_KEY_SAVER_WITH_MULTI_SHIPMENT] = function (): SaverInterface {
-            return $this->createAddressStepSaver();
-        };
-
-        return $strategyContainer;
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addAddressStepPostConditionCheckerWithoutMultipleShipment(array $strategyContainer): array
-    {
-        $strategyContainer[AddressStepStrategyResolverInterface::STRATEGY_KEY_POST_CONDITION_CHECKER_WITHOUT_MULTI_SHIPMENT] = function (): PostConditionCheckerInterface {
-            return $this->createAddressStepPostConditionCheckerWithoutMultipleShipment();
-        };
-
-        return $strategyContainer;
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addAddressStepPostConditionCheckerWithMultipleShipment(array $strategyContainer): array
-    {
-        $strategyContainer[AddressStepStrategyResolverInterface::STRATEGY_KEY_POST_CONDITION_CHECKER_WITH_MULTI_SHIPMENT] = function (): PostConditionCheckerInterface {
-            return $this->createAddressStepPostConditionChecker();
-        };
-
-        return $strategyContainer;
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface
+     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface
      */
     public function createShipmentStepPostConditionChecker(): PostConditionCheckerInterface
     {
         return new ShipmentStepPostConditionChecker($this->getShipmentService());
-    }
-
-    /**
-     * @deprecated Use createShipmentStepPostConditionChecker() instead.
-     *
-     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface
-     */
-    public function createShipmentStepPostConditionCheckerWithoutMultipleShipment(): PostConditionCheckerInterface
-    {
-        return new ShipmentStepPostConditionCheckerWithoutMultiShipment();
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
-     *
-     * @return \SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep\ShipmentStepStrategyResolverInterface
-     */
-    public function createShipmentStepStrategyResolver(): ShipmentStepStrategyResolverInterface
-    {
-        $strategyContainer = [];
-
-        $strategyContainer = $this->addShipmentStepPostConditionCheckerWithoutMultipleShipment($strategyContainer);
-        $strategyContainer = $this->addShipmentStepPostConditionCheckerWithMultipleShipment($strategyContainer);
-
-        return new ShipmentStepStrategyResolver($strategyContainer, $this->getConfig());
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addShipmentStepPostConditionCheckerWithoutMultipleShipment(array $strategyContainer): array
-    {
-        $strategyContainer[ShipmentStepStrategyResolverInterface::STRATEGY_KEY_POST_CONDITION_CHECKER_WITHOUT_MULTI_SHIPMENT] = function (): PostConditionCheckerInterface {
-            return $this->createShipmentStepPostConditionCheckerWithoutMultipleShipment();
-        };
-
-        return $strategyContainer;
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addShipmentStepPostConditionCheckerWithMultipleShipment(array $strategyContainer): array
-    {
-        $strategyContainer[ShipmentStepStrategyResolverInterface::STRATEGY_KEY_POST_CONDITION_CHECKER_WITH_MULTI_SHIPMENT] = function (): PostConditionCheckerInterface {
-            return $this->createShipmentStepPostConditionChecker();
-        };
-
-        return $strategyContainer;
     }
 
     /**

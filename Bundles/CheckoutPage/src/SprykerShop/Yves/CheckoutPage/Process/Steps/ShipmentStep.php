@@ -15,8 +15,6 @@ use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
-use SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep\ShipmentStepStrategyResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
@@ -32,37 +30,29 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     protected $shipmentPlugins;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface
      */
-    protected $shipmentService;
-
-    /**
-     * @var \SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep\ShipmentStepStrategyResolverInterface
-     */
-    protected $stepResolver;
+    protected $postConditionChecker;
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection $shipmentPlugins
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
+     * @param \SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface $postConditionChecker
      * @param string $stepRoute
      * @param string $escapeRoute
-     * @param \SprykerShop\Yves\CheckoutPage\StrategyResolver\ShipmentStep\ShipmentStepStrategyResolverInterface $stepResolver
      */
     public function __construct(
         CheckoutPageToCalculationClientInterface $calculationClient,
         StepHandlerPluginCollection $shipmentPlugins,
-        CheckoutPageToShipmentServiceInterface $shipmentService,
+        PostConditionCheckerInterface $postConditionChecker,
         $stepRoute,
-        $escapeRoute,
-        ShipmentStepStrategyResolverInterface $stepResolver
+        $escapeRoute
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->calculationClient = $calculationClient;
         $this->shipmentPlugins = $shipmentPlugins;
-        $this->stepResolver = $stepResolver;
-        $this->shipmentService = $shipmentService;
+        $this->postConditionChecker = $postConditionChecker;
     }
 
     /**
@@ -100,7 +90,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
-        return $this->stepResolver->resolvePostCondition()->check($quoteTransfer);
+        return $this->postConditionChecker->check($quoteTransfer);
     }
 
     /**
