@@ -153,7 +153,7 @@ class OrderController extends AbstractCustomerController
             ));
         }
 
-        $shipmentGroupsTransfer = ($this->isOrderWithMultishipment($orderTransfer))
+        $shipmentGroupsTransfer = ($orderTransfer->getIsMultiShipment())
             ? $orderTransfer->getShipmentGroups()
             : [$this->createShipmentGroup($orderTransfer)];
 
@@ -180,20 +180,5 @@ class OrderController extends AbstractCustomerController
         return (new ShipmentGroupTransfer())
             ->setShipment($shipmentTransfer)
             ->setItems($orderTransfer->getItems());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return bool
-     */
-    protected function isOrderWithMultishipment(OrderTransfer $orderTransfer): bool {
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }
