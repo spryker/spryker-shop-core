@@ -39,8 +39,8 @@ class ContentProductSetTwigFunction extends TwigFunction
      */
     protected const PARAM_ATTRIBUTE = 'attributes';
 
-    protected const MESSAGE_CONTENT_PRODUCT_SET_NOT_FOUND = '<strong>Content product set with ID %s not found.</strong>';
-    protected const MESSAGE_WRONG_CONTENT_PRODUCT_SET_TYPE = '<strong>Content product set widget could not be rendered because the content item with ID %s is not a product set.</strong>';
+    protected const MESSAGE_CONTENT_PRODUCT_SET_NOT_FOUND = '<strong>Content product set with content key "%s" not found.</strong>';
+    protected const MESSAGE_WRONG_CONTENT_PRODUCT_SET_TYPE = '<strong>Content product set widget could not be rendered because the content item with key "%s" is not a product set.</strong>';
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"%s" is not supported name of template.</strong>';
 
     /**
@@ -101,20 +101,20 @@ class ContentProductSetTwigFunction extends TwigFunction
      */
     public function getFunction(): callable
     {
-        return function (array $context, int $idContent, string $templateIdentifier): string {
+        return function (array $context, string $contentKey, string $templateIdentifier): string {
             if (!isset($this->getAvailableTemplates()[$templateIdentifier])) {
                 return $this->getMessageProductSetWrongTemplate($templateIdentifier);
             }
 
             try {
                 $productSetDataStorageTransfer = $this->contentProductSetReader
-                    ->findProductSet($idContent, $this->localeName);
+                    ->findProductSet($contentKey, $this->localeName);
             } catch (InvalidProductSetTermException $exception) {
-                return $this->getMessageProductSetWrongType($idContent);
+                return $this->getMessageProductSetWrongType($contentKey);
             }
 
             if (!$productSetDataStorageTransfer) {
-                return $this->getMessageProductSetNotFound($idContent);
+                return $this->getMessageProductSetNotFound($contentKey);
             }
 
             $selectedAttributes = $this->getRequest($context)->query->get(static::PARAM_ATTRIBUTE, []);
@@ -154,13 +154,13 @@ class ContentProductSetTwigFunction extends TwigFunction
     }
 
     /**
-     * @param int $idContent
+     * @param string $contentKey
      *
      * @return string
      */
-    protected function getMessageProductSetNotFound(int $idContent): string
+    protected function getMessageProductSetNotFound(string $contentKey): string
     {
-        return sprintf(static::MESSAGE_CONTENT_PRODUCT_SET_NOT_FOUND, $idContent);
+        return sprintf(static::MESSAGE_CONTENT_PRODUCT_SET_NOT_FOUND, $contentKey);
     }
 
     /**
@@ -174,13 +174,13 @@ class ContentProductSetTwigFunction extends TwigFunction
     }
 
     /**
-     * @param int $idContent
+     * @param string $contentKey
      *
      * @return string
      */
-    protected function getMessageProductSetWrongType(int $idContent): string
+    protected function getMessageProductSetWrongType(string $contentKey): string
     {
-        return sprintf(static::MESSAGE_WRONG_CONTENT_PRODUCT_SET_TYPE, $idContent);
+        return sprintf(static::MESSAGE_WRONG_CONTENT_PRODUCT_SET_TYPE, $contentKey);
     }
 
     /**

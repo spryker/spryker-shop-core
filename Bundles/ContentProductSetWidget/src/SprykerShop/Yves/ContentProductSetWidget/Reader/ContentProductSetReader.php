@@ -36,14 +36,14 @@ class ContentProductSetReader implements ContentProductSetReaderInterface
     }
 
     /**
-     * @param int $idContent
+     * @param string $contentKey
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer|null
      */
-    public function findProductSet(int $idContent, string $localeName): ?ProductSetDataStorageTransfer
+    public function findProductSet(string $contentKey, string $localeName): ?ProductSetDataStorageTransfer
     {
-        $contentProductSetTypeTransfer = $this->contentProductSetClient->executeProductSetTypeById($idContent, $localeName);
+        $contentProductSetTypeTransfer = $this->contentProductSetClient->executeProductSetTypeByKey($contentKey, $localeName);
 
         if ($contentProductSetTypeTransfer === null) {
             return null;
