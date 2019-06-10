@@ -9,6 +9,7 @@
     companyBusinessUnitAddresses: _widget.companyBusinessUnitAddresses,
     isCustomAddress: app.request.get('customAddress')[_widget.formType]  | default(not _widget.formAddressTransfer.idCustomerAddress),
     isMultipleShipmentEnabled: false,
+    itemShippingTriggerJsClass: null,
 } %}
 
 {% block body %}
@@ -48,9 +49,15 @@
             currentAddressId: data.currentAddressId,
             isMultipleShipmentEnabled: data.isMultipleShipmentEnabled,
             optionValueDeliverToMultipleAddresses: optionValueDeliverToMultipleAddresses,
+            itemShippingTriggerJsClass: data.itemShippingTriggerJsClass,
         },
     } only %}
-        {% block selectClass %}js-form-select-address__{{ embed.formType }}{% endblock %}
+        {% block selectClass -%}
+            js-form-select-address__{{ embed.formType }}
+            {% if embed.itemShippingTriggerJsClass %}
+                {{ embed.itemShippingTriggerJsClass }}
+            {% endif %}
+        {%- endblock %}
         {% block option %}
             {% set isSelected = embed.defaultAddressKey == address.key %}
             {% set fullName = '%s %s %s, %s %s, %s %s' | format(
@@ -96,22 +103,26 @@
         {% endblock %}
     {% endembed %}
 
-    {% include molecule('company-business-unit-address-handler', 'CompanyWidget') with {
-        attributes: {
-            'form-selector': '.js-form-handler__' ~ data.formType,
-            'data-selector': '.js-form-select-address__' ~ data.formType,
-            'shipping-address-toggler-selector': '.js-form-select-address__shippingAddress',
-            'default-address-selector': '.js-form-default-address__' ~ data.formType,
-            'address-hidden-input-selector': 'addressesForm[' ~ data.formType ~ '][id_customer_address]',
-            'company-address-hidden-input-selector': 'addressesForm[' ~ data.formType ~ '][id_company_unit_address]',
-            'shipping-address-hidden-input-selector': 'addressesForm[shippingAddress][id_customer_address]',
-            'shipping-company-address-hidden-input-selector': 'addressesForm[shippingAddress][id_company_unit_address]',
-            'addresses': data.addresses,
-            'toggle-option-value': optionValueDeliverToMultipleAddresses,
-        },
-    } only %}
+    {% block addressHandler %}
+        {% include molecule('company-business-unit-address-handler', 'CompanyWidget') with {
+            attributes: {
+                'form-selector': '.js-form-handler__' ~ data.formType,
+                'data-selector': '.js-form-select-address__' ~ data.formType,
+                'shipping-address-toggler-selector': '.js-form-select-address__shippingAddress',
+                'default-address-selector': '.js-form-default-address__' ~ data.formType,
+                'address-hidden-input-selector': 'addressesForm[' ~ data.formType ~ '][id_customer_address]',
+                'company-address-hidden-input-selector': 'addressesForm[' ~ data.formType ~ '][id_company_unit_address]',
+                'shipping-address-hidden-input-selector': 'addressesForm[shippingAddress][id_customer_address]',
+                'shipping-company-address-hidden-input-selector': 'addressesForm[shippingAddress][id_company_unit_address]',
+                'addresses': data.addresses,
+                'toggle-option-value': optionValueDeliverToMultipleAddresses,
+            },
+        } only %}
+    {% endblock %}
 
-    <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]">
-    <input type="hidden" name="addressesForm[{{ data.formType }}][id_company_unit_address]">
-    <input type="hidden" class="js-form-default-address__{{ data.formType }}" value="{{ defaultAddressKey }}">
+    {% block hiddenFields %}
+        <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]">
+        <input type="hidden" name="addressesForm[{{ data.formType }}][id_company_unit_address]">
+        <input type="hidden" class="js-form-default-address__{{ data.formType }}" value="{{ defaultAddressKey }}">
+    {% endblock %}
 {% endblock %}
