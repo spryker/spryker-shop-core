@@ -14,14 +14,17 @@ use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CustomerRedirectStr
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
-class RedirectUrlRedirectAfterLoginStrategyPlugin extends AbstractPlugin implements CustomerRedirectStrategyPluginInterface
+class RedirectUriCustomerRedirectStrategyPlugin extends AbstractPlugin implements CustomerRedirectStrategyPluginInterface
 {
-    protected const KEY_REQUEST = 'request';
-    protected const PARAM_REDIRECT_URL = 'redirectUrl';
+    /**
+     * @uses \Spryker\Shared\Kernel\Communication\Application::REQUEST
+     */
+    protected const REQUEST = 'request';
+    protected const PARAM_REDIRECT_URI = 'redirectUrl';
 
     /**
      * {@inheritdoc}
-     * - Checks if application request has Resource Share Redirect Url.
+     * - Checks if application request has param Redirect Uri.
      *
      * @api
      *
@@ -31,7 +34,7 @@ class RedirectUrlRedirectAfterLoginStrategyPlugin extends AbstractPlugin impleme
      */
     public function isApplicable(CustomerTransfer $customerTransfer): bool
     {
-        return (bool)$this->findRedirectUrlFromRequest();
+        return (bool)$this->findParamRedirectUri();
     }
 
     /**
@@ -45,17 +48,16 @@ class RedirectUrlRedirectAfterLoginStrategyPlugin extends AbstractPlugin impleme
      */
     public function getRedirectUrl(CustomerTransfer $customerTransfer): string
     {
-        return $this->findRedirectUrlFromRequest();
+        return $this->findParamRedirectUri();
     }
 
     /**
      * @return string|null
      */
-    protected function findRedirectUrlFromRequest(): ?string
+    protected function findParamRedirectUri(): ?string
     {
-        $request = $this->getFactory()->getApplication()[static::KEY_REQUEST];
-        $redirectUrl = $request->get(static::PARAM_REDIRECT_URL);
+        $request = $this->getFactory()->getApplication()[static::REQUEST];
 
-        return $redirectUrl;
+        return $request->get(static::PARAM_REDIRECT_URI);
     }
 }
