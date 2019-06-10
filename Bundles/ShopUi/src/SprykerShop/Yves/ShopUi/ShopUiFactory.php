@@ -7,9 +7,14 @@
 
 namespace SprykerShop\Yves\ShopUi;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientInterface;
 use SprykerShop\Yves\ShopUi\Twig\ShopUiTwigExtension;
 
+/**
+ * @method \SprykerShop\Yves\ShopUi\ShopUiConfig getConfig()
+ */
 class ShopUiFactory extends AbstractFactory
 {
     /**
@@ -17,6 +22,26 @@ class ShopUiFactory extends AbstractFactory
      */
     public function createShopUiTwigExtension()
     {
-        return new ShopUiTwigExtension();
+        return new ShopUiTwigExtension(
+            $this->getConfig(),
+            $this->getStore(),
+            $this->getTwigClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore(): Store
+    {
+        return $this->getProvidedDependency(ShopUiDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientInterface
+     */
+    public function getTwigClient(): ShopUiToTwigClientInterface
+    {
+        return $this->getProvidedDependency(ShopUiDependencyProvider::CLIENT_TWIG);
     }
 }

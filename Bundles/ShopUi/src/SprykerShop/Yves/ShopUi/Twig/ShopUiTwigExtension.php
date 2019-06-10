@@ -7,7 +7,10 @@
 
 namespace SprykerShop\Yves\ShopUi\Twig;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Twig\TwigExtension;
+use SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientInterface;
+use SprykerShop\Yves\ShopUi\ShopUiConfig;
 use SprykerShop\Yves\ShopUi\Twig\Node\ShopUiDefineTwigNode;
 use SprykerShop\Yves\ShopUi\Twig\TokenParser\ShopUiDefineTwigTokenParser;
 use Twig\TwigFunction;
@@ -25,6 +28,36 @@ class ShopUiTwigExtension extends TwigExtension
     public const FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE = 'template';
     public const FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE = 'view';
     public const DEFAULT_MODULE = 'ShopUi';
+
+    /**
+     * @var \SprykerShop\Yves\ShopUi\ShopUiConfig
+     */
+    protected $shopUiConfig;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @var \SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientInterface
+     */
+    protected $twigClient;
+
+    /**
+     * @param \SprykerShop\Yves\ShopUi\ShopUiConfig $shopUiConfig
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientInterface $twigClient
+     */
+    public function __construct(
+        ShopUiConfig $shopUiConfig,
+        Store $store,
+        ShopUiToTwigClientInterface $twigClient
+    ) {
+        $this->shopUiConfig = $shopUiConfig;
+        $this->store = $store;
+        $this->twigClient = $twigClient;
+    }
 
     /**
      * @return string[]
@@ -136,7 +169,39 @@ class ShopUiTwigExtension extends TwigExtension
      */
     protected function getPublicFolderPath(): string
     {
-        return '/assets/';
+        return str_replace(
+            [
+                '%store%',
+                '%theme%',
+            ],
+            [
+                $this->getStoreKey(),
+                $this->getThemeKey(),
+            ],
+            $this->shopUiConfig->getYvesPublicFolderPathPattern()
+        );
+    }
+
+    /**
+     * @return string
+     */
+    protected function getThemeKey(): string
+    {
+        $themeName = $this->twigClient->getYvesThemeName();
+
+        if (!$themeName) {
+            $themeName = $this->twigClient->getYvesThemeNameDefault();
+        }
+
+        return strtolower($themeName);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStoreKey(): string
+    {
+        return strtolower($this->store->getStoreName());
     }
 
     /**
