@@ -45,10 +45,11 @@ class ContentProductSetTwigPluginTest extends Unit
     protected const WRONG_TEMPLATE = 'wrong';
 
     protected const CONTENT_ID = 0;
+    protected const CONTENT_KEY = 'test-key';
     protected const CONTENT_TERM = 'TERM';
 
-    protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<strong>Content product set with ID 0 not found.</strong>';
-    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<strong>Content product set widget could not be rendered because the content item with ID 0 is not a product set.</strong>';
+    protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<strong>Content product set with content key "test-key" not found.</strong>';
+    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<strong>Content product set widget could not be rendered because the content item with key "test-key" is not a product set.</strong>';
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"wrong" is not supported name of template.</strong>';
     protected const RENDERED_STRING = 'output';
 
@@ -78,7 +79,7 @@ class ContentProductSetTwigPluginTest extends Unit
         $productAbstractContent = call_user_func(
             $this->getContentProductSetTwigPlugin()->getCallable(),
             $this->getContext(),
-            static::CONTENT_ID,
+            static::CONTENT_KEY,
             static::DEFAULT_TEMPLATE
         );
 
@@ -101,7 +102,7 @@ class ContentProductSetTwigPluginTest extends Unit
         $productSetContent = call_user_func(
             $this->getContentProductSetTwigPlugin()->getCallable(),
             $this->getContext(),
-            static::CONTENT_ID,
+            static::CONTENT_KEY,
             static::DEFAULT_TEMPLATE
         );
 
@@ -124,7 +125,7 @@ class ContentProductSetTwigPluginTest extends Unit
         $productSetContent = call_user_func(
             $this->getContentProductSetTwigPlugin()->getCallable(),
             $this->getContext(),
-            static::CONTENT_ID,
+            static::CONTENT_KEY,
             static::WRONG_TEMPLATE
         );
 
@@ -149,7 +150,7 @@ class ContentProductSetTwigPluginTest extends Unit
         $productSetContent = call_user_func(
             $this->getContentProductSetTwigPlugin()->getCallable(),
             $this->getContext(),
-            static::CONTENT_ID,
+            static::CONTENT_KEY,
             static::DEFAULT_TEMPLATE
         );
 
@@ -163,7 +164,7 @@ class ContentProductSetTwigPluginTest extends Unit
     protected function setContentProductClientException(): void
     {
         $contentProductSetWidgetToContentProductClientBridge = $this->getMockBuilder(ContentProductSetWidgetToContentProductSetClientInterface::class)->getMock();
-        $contentProductSetWidgetToContentProductClientBridge->method('executeProductSetTypeById')->willThrowException(new InvalidProductSetTermException());
+        $contentProductSetWidgetToContentProductClientBridge->method('executeProductSetTypeByKey')->willThrowException(new InvalidProductSetTermException());
         $this->tester->setDependency(ContentProductSetWidgetDependencyProvider::CLIENT_CONTENT_PRODUCT_SET, $contentProductSetWidgetToContentProductClientBridge);
     }
 
@@ -175,7 +176,7 @@ class ContentProductSetTwigPluginTest extends Unit
     protected function setContentProductSetClientReturn(?ContentProductSetTypeTransfer $contentTypeContextTransfer = null): void
     {
         $contentProductSetWidgetToContentProductClientBridge = $this->getMockBuilder(ContentProductSetWidgetToContentProductSetClientInterface::class)->getMock();
-        $contentProductSetWidgetToContentProductClientBridge->method('executeProductSetTypeById')->willReturn($contentTypeContextTransfer);
+        $contentProductSetWidgetToContentProductClientBridge->method('executeProductSetTypeByKey')->willReturn($contentTypeContextTransfer);
         $this->tester->setDependency(ContentProductSetWidgetDependencyProvider::CLIENT_CONTENT_PRODUCT_SET, $contentProductSetWidgetToContentProductClientBridge);
     }
 
