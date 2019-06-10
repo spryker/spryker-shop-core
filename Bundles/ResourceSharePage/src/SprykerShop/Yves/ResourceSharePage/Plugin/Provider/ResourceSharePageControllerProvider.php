@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 
 class ResourceSharePageControllerProvider extends AbstractYvesControllerProvider
 {
-    public const ROUTE_RESOURCE_SHARE_LINK = 'link';
+    protected const ROUTE_RESOURCE_SHARE_LINK = 'resource-share/link';
 
     /**
      * @param \Silex\Application $app
@@ -32,8 +32,8 @@ class ResourceSharePageControllerProvider extends AbstractYvesControllerProvider
     protected function addLinkRoute()
     {
         $this->createController('/{resourceShareLink}/{resourceShareUuid}', static::ROUTE_RESOURCE_SHARE_LINK, 'ResourceSharePage', 'Link')
-            ->assert('resourceShareLink', $this->getAllowedLocalesPattern() . 'link|link')
-            ->value('resourceShareLink', 'link');
+            ->assert('resourceShareLink', $this->getAllowedLocalesPattern() . 'resource-share/link|resource-share/link')
+            ->value('resourceShareLink', 'resource-share/link');
 
         return $this;
     }
