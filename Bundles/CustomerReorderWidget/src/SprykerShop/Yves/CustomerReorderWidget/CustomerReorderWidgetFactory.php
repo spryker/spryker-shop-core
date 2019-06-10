@@ -18,6 +18,7 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductStorageClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToZedRequestClientInterface;
+use SprykerShop\Yves\CustomerReorderWidget\Dependency\Service\CustomerReorderWidgetToUtilQuantityServiceInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityChecker;
 use SprykerShop\Yves\CustomerReorderWidget\Model\AvailabilityCheckerInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Model\CartFiller;
@@ -37,7 +38,8 @@ class CustomerReorderWidgetFactory extends AbstractFactory
         return new CartFiller(
             $this->getCartClient(),
             $this->createItemsFetcher(),
-            $this->getAvailabilityStorageClient()
+            $this->getAvailabilityStorageClient(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -154,5 +156,13 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     public function getProductStorageClient(): CustomerReorderWidgetToProductStorageClientInterface
     {
         return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerReorderWidget\Dependency\Service\CustomerReorderWidgetToUtilQuantityServiceInterface
+     */
+    public function getUtilQuantityService(): CustomerReorderWidgetToUtilQuantityServiceInterface
+    {
+        return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }
