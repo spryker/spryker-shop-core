@@ -14,7 +14,7 @@
 {% block body %}
     <form action="{{ data.action }}" method="post">
         {% for hiddenItem in data.hiddenData %}
-            <input type="hidden" name="{{ hiddenItem.name }}" value="{{ hiddenItem.value }}" />
+            <input type="hidden" name="{{ hiddenItem.name }}" value="{{ hiddenItem.value }}">
         {% endfor %}
         <button type="submit" class="{{ data.buttonClassString }}">
             {{ data.buttonText }}
