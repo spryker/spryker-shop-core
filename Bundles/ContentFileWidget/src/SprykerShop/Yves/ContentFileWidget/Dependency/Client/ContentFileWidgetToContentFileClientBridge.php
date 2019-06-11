@@ -25,13 +25,13 @@ class ContentFileWidgetToContentFileClientBridge implements ContentFileWidgetToC
     }
 
     /**
-     * @param int $idContent
+     * @param string $contentKey
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ContentFileListTypeTransfer|null
      */
-    public function executeFileListTypeById(int $idContent, string $localeName): ?ContentFileListTypeTransfer
+    public function executeFileListTypeByKey(string $contentKey, string $localeName): ?ContentFileListTypeTransfer
     {
-        return $this->contentFileClient->executeFileListTypeById($idContent, $localeName);
+        return $this->contentFileClient->executeFileListTypeByKey($contentKey, $localeName);
     }
 }

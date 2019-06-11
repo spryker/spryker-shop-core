@@ -20,8 +20,8 @@ class ContentFileListTwigFunction extends TwigFunction
      */
     protected const FUNCTION_CONTENT_FILE_LIST = 'content_file_list';
 
-    protected const MESSAGE_CONTENT_FILE_LIST_NOT_FOUND = '<strong>Content file list with ID %s not found.</strong>';
-    protected const MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE = '<strong>Content file list widget could not be rendered because the content item with ID %s is not an file list.</strong>';
+    protected const MESSAGE_CONTENT_FILE_LIST_NOT_FOUND = '<strong>Content file list with Key %s not found.</strong>';
+    protected const MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE = '<strong>Content file list widget could not be rendered because the content item with Key %s is not an file list.</strong>';
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"%s" is not supported name of template.</strong>';
 
     /**
@@ -87,20 +87,20 @@ class ContentFileListTwigFunction extends TwigFunction
      */
     public function getFunction(): callable
     {
-        return function (int $idContent, string $templateIdentifier): ?string {
+        return function (string $contentKey, string $templateIdentifier): ?string {
 
             if (!isset($this->getAvailableTemplates()[$templateIdentifier])) {
                 return $this->getMessageContentFileListWrongTemplate($templateIdentifier);
             }
 
             try {
-                $contentFileListTypeTransfer = $this->contentFileClient->executeFileListTypeById($idContent, $this->localeName);
+                $contentFileListTypeTransfer = $this->contentFileClient->executeFileListTypeByKey($contentKey, $this->localeName);
             } catch (InvalidFileListTermException $exception) {
-                return $this->getMessageContentFileListWrongType($idContent);
+                return $this->getMessageContentFileListWrongType($contentKey);
             }
 
             if (!$contentFileListTypeTransfer) {
-                return $this->getMessageContentFileListNotFound($idContent);
+                return $this->getMessageContentFileListNotFound($contentKey);
             }
 
             $fileViewCollection = $this->contentFileReader
@@ -127,13 +127,13 @@ class ContentFileListTwigFunction extends TwigFunction
     }
 
     /**
-     * @param int $idContent
+     * @param string $contentKey
      *
      * @return string
      */
-    protected function getMessageContentFileListNotFound(int $idContent): string
+    protected function getMessageContentFileListNotFound(string $contentKey): string
     {
-        return sprintf(static::MESSAGE_CONTENT_FILE_LIST_NOT_FOUND, $idContent);
+        return sprintf(static::MESSAGE_CONTENT_FILE_LIST_NOT_FOUND, $contentKey);
     }
 
     /**
@@ -147,12 +147,12 @@ class ContentFileListTwigFunction extends TwigFunction
     }
 
     /**
-     * @param int $idContent
+     * @param string $contentKey
      *
      * @return string
      */
-    protected function getMessageContentFileListWrongType(int $idContent): string
+    protected function getMessageContentFileListWrongType(string $contentKey): string
     {
-        return sprintf(static::MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE, $idContent);
+        return sprintf(static::MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE, $contentKey);
     }
 }
