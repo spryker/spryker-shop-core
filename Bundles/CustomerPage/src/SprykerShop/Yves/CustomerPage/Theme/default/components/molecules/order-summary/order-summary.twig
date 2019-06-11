@@ -2,53 +2,47 @@
 
 {% define config = {
     name: 'order-summary',
-    tag: 'ul'
+    tag: 'ul',
 } %}
 
 {% define data = {
-    order: required
+    order: required,
 } %}
 
 {% block body %}
-    <li>
-        <strong>
-            {{ 'customer.order.subTotal' | trans }}:
-            {{ data.order.totals.subtotal | money(true, data.order.currencyIsoCode) }}
-        </strong>
+    <li class="grid grid--justify">
+        <strong class="col">{{ 'customer.order.subTotal' | trans }}:</strong>
+        <strong class="col text-right">{{ data.order.totals.subtotal | money(true, data.order.currencyIsoCode) }}</strong>
     </li>
     {% for discount in data.order.calculatedDiscounts %}
-        <li>
-            {{ discount.displayName | trans}}
-            - {{ discount.sumAmount | money(true, data.order.currencyIsoCode) }}
+        <li class="grid grid--justify">
+            <span class="col">{{ discount.displayName | trans}}:</span>
+            <span class="col text-right">- {{ discount.sumAmount | money(true, data.order.currencyIsoCode) }}</span>
         </li>
     {% endfor %}
-    <li>
-        <strong>
-            {{ 'customer.order.expenseTotal' | trans }}:
-            {{ data.order.totals.expenseTotal | money(true, data.order.currencyIsoCode) }}
-        </strong>
+    <li class="grid grid--justify">
+        <strong class="col">{{ 'customer.order.expenseTotal' | trans }}:</strong>
+        <strong class="col text-right">{{ data.order.totals.expenseTotal | money(true, data.order.currencyIsoCode) }}</strong>
     </li>
     <li>
     {% for expense in data.order.expenses %}
-        <li>
-            {% if expense.type == constant('\\Spryker\\Shared\\Shipment\\ShipmentConstants::SHIPMENT_EXPENSE_TYPE') %} {{ 'customer.order.shipment' | trans }} {% endif %} {{ expense.name | trans }}:
-            {{ expense.sumPrice | money(true, data.order.currencyIsoCode) }}
+        <li class="grid grid--justify">
+            <span class="col">{% if expense.type == constant('\\Spryker\\Shared\\Shipment\\ShipmentConstants::SHIPMENT_EXPENSE_TYPE') %} {{ 'customer.order.shipment' | trans }} {% endif %} {{ expense.name | trans }}:</span>
+            <span class="col text-right">{{ expense.sumPrice | money(true, data.order.currencyIsoCode) }}</span>
         </li>
     {% endfor %}
-    <li>
+    <li class="grid grid--justify">
         {% if data.order.totals.canceledTotal %}
-            {{ 'customer.order.canceledTotal' | trans }}:
-            - {{ data.order.totals.canceledTotal | money(true, data.order.currencyIsoCode) }}
+            <span class="col">{{ 'customer.order.canceledTotal' | trans }}:</span>
+            <span class="col text-right">- {{ data.order.totals.canceledTotal | money(true, data.order.currencyIsoCode) }}</span>
         {% endif %}
     </li>
-    <li>
-        {{ 'customer.order.taxTotal' | trans }}:
-        {{ data.order.totals.taxTotal.amount | money(true, data.order.currencyIsoCode) }}
+    <li class="grid grid--justify">
+        <span class="col">{{ 'customer.order.taxTotal' | trans }}:</span>
+        <span class="col text-right">{{ data.order.totals.taxTotal.amount | money(true, data.order.currencyIsoCode) }}</span>
     </li>
-    <li>
-        <strong>
-            {{ 'customer.order.grandTotal' | trans }}:
-            {{ data.order.totals.grandTotal | money(true, data.order.currencyIsoCode) }}
-        </strong>
+    <li class="grid grid--justify">
+        <strong class="col">{{ 'customer.order.grandTotal' | trans }}:</strong>
+        <strong class="col text-right">{{ data.order.totals.grandTotal | money(true, data.order.currencyIsoCode) }}</strong>
     </li>
 {% endblock %}
