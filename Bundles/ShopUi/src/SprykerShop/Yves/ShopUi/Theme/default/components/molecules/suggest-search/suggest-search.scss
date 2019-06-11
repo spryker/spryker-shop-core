@@ -13,6 +13,10 @@
             position: relative;
             z-index: $setting-zi-search-suggestions + 2;
 
+            @include helper-media-ie() {
+                padding: 0.4rem;
+            }
+
             &--transparent {
                 background-color: $setting-color-transparent;
             }
@@ -27,9 +31,15 @@
         &__hint {
             position: absolute;
             top: 0;
+            height: 100%;
+            width: 100%;
             border-color: $setting-color-transparent;
             z-index: $setting-zi-search-suggestions + 1;
             color: $setting-color-light;
+
+            @include helper-media-ie() {
+                padding: 0.45rem;
+            }
         }
 
         @content;
