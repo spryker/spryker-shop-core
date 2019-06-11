@@ -1,8 +1,6 @@
 {% extends template('widget') %}
 
 {% define data = {
-    ownerId: _widget.ownerId,
-    ownerType: _widget.ownerType,
     returnRoute: _widget.returnRoute,
     commentThread: _widget.commentThread,
     createCommentForm: _widget.createCommentForm,
@@ -23,19 +21,11 @@
     <hr>
     {% include molecule('cart-comments', 'CommentWidget') with {
         data: {
-            ownerId: data.ownerId,
-            ownerType: data.ownerType,
             returnRoute: data.returnRoute,
             commentThread: data.commentThread,
             createCommentForm: data.createCommentForm,
             allCommentForms: data.allCommentForms,
             attachCommentForms: data.attachCommentForms,
-        },
-        attributes: {
-            'tab-selector': '.js-cart-comments__tab',
-            'content-block-selector': '.js-cart-comments__content-item',
-            'tab-class-to-toggle': 'cart-comments__action--active',
-            'content-block-class-to-toggle': 'cart-comments__content-item--active',
         },
     } only %}
     <div class="spacing-top--inner">
@@ -45,10 +35,10 @@
         }) }}
 
         {{ form_widget(data.createCommentForm) }}
-        <input type="hidden" name="returnRoute" value="{{ data.returnRoute }}" />
-        <input type="hidden" name="ownerId" value="{{ data.ownerId }}" />
-        <input type="hidden" name="ownerType" value="{{ data.ownerType }}" />
-        <input type="submit" class="button button--primary" value="{{ 'comment_widget.form.add_comment' | trans }}" />
+        <input type="hidden" name="returnRoute" value="{{ data.returnRoute }}">
+        <input type="hidden" name="ownerId" value="{{ data.commentThread.ownerId }}">
+        <input type="hidden" name="ownerType" value="{{ data.commentThread.ownerType }}">
+        <input type="submit" class="button button--primary" value="{{ 'comment_widget.form.add_comment' | trans }}">
         {{ form_end(data.createCommentForm) }}
     </div>
     <hr>

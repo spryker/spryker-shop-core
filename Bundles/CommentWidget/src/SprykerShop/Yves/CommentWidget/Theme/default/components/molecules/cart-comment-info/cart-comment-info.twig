@@ -2,15 +2,35 @@
 
 {% define config = {
     name: 'cart-comment-info',
-    tag: 'cart-comment-info',
 } %}
 
 {% define data = {
+    form: required,
     comment: required,
+    returnRoute: required,
+    isEditable: false,
 } %}
 
 {% block body %}
-    <p>{{ data.comment.customer.firstName }} {{ data.comment.customer.lastName }}</p>
-    <p class="text-secondary">{{ data.comment.createdAt | formatDateTime }}</p>
-    <p>{{ data.comment.message }}</p>
+    {% block text %}
+        <p>{{ data.comment.customer.firstName }} {{ data.comment.customer.lastName }}</p>
+        <p class="text-secondary">
+            <span>{{ data.comment.createdAt | formatDateTime }}</span>
+            {% if data.comment.isUpdated %}
+                <span>{{ comment_widget.form.updated | trans }}</span>
+            {% endif %}
+        </p>
+    {% endblock %}
+    {% if data.isEditable %}
+        {% include molecule('cart-comment-form', 'CommentWidget') with {
+            data: {
+                form: data.form,
+                comment: data.comment,
+                returnRoute: data.returnRoute,
+            },
+        } only %}
+    {% endif %}
+    {% if not data.isEditable %}
+        <p>{{ data.comment.message }}</p>
+    {% endif %}
 {% endblock %}

@@ -2,14 +2,13 @@
 
 {% define config = {
     name: 'cart-comment-action-form',
-    tag: 'cart-comment-action-form',
 } %}
 
 {% define data = {
     action: required,
     hiddenData: [],
-    buttonClassString: '',
-    buttonText: '',
+    buttonClassString: 'button button--warning',
+    buttonText: 'comment_widget.form.button_default' | trans,
 } %}
 
 {% block body %}
