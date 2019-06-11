@@ -166,15 +166,15 @@ class CartControllerProvider extends AbstractYvesControllerProvider
      * @param mixed $unusedParameter
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return int
+     * @return float
      */
     public function getQuantityFromRequest($unusedParameter, Request $request)
     {
         if ($request->isMethod('POST')) {
-            return $request->request->getInt('quantity', 1);
+            return (float)$request->request->get('quantity', 1.0);
         }
 
-        return $request->query->getInt('quantity', 1);
+        return (float)$request->query->get('quantity', 1.0);
     }
 
     /**
