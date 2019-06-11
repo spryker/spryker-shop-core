@@ -19,6 +19,8 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleC
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
+use SprykerShop\Yves\CustomerPage\Model\ShipmentGroups\ShipmentGroupsBuilder;
+use SprykerShop\Yves\CustomerPage\Model\ShipmentGroups\ShipmentGroupsBuilderInterface;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\AccessDeniedHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationSuccessHandler;
@@ -328,5 +330,13 @@ class CustomerPageFactory extends AbstractFactory
     public function getShipmentService(): ShipmentServiceInterface
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_SHIPMENT);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Model\ShipmentGroups\ShipmentGroupsBuilderInterface
+     */
+    public function createShipmentGroupsBuilder(): ShipmentGroupsBuilderInterface
+    {
+        return new ShipmentGroupsBuilder();
     }
 }
