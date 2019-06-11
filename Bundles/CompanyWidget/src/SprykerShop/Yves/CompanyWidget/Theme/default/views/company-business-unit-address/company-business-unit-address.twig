@@ -3,21 +3,21 @@
 {% define data = {
     formType: _widget.formType,
     currentAddressId: _widget.formAddressTransfer.idCustomerAddress | default,
-    formAddressTransfer: _widget.formAddressTransfer,
     addresses: _widget.addresses,
     customerAddresses: _widget.customerAddresses,
     companyBusinessUnitAddresses: _widget.companyBusinessUnitAddresses,
-    isCustomAddress: app.request.get('customAddress')[_widget.formType]  | default(not _widget.formAddressTransfer.idCustomerAddress),
     isMultipleShipmentEnabled: false,
     itemShippingTriggerJsClass: null,
+    items: null,
 } %}
 
 {% block body %}
     {% set defaultAddressKey = null %}
     {% set optionValueDeliverToMultipleAddresses = '-1' %}
+    {% set fullAddresses = data.customerAddresses | merge(data.companyBusinessUnitAddresses) %}
 
-    {% if not data.isCustomAddress and (data.currentAddressId or not data.formAddressTransfer.firstName) %}
-        {% for address in data.customerAddresses %}
+    {% if fullAddresses %}
+        {% for address in fullAddresses %}
             {% if not data.currentAddressId and data.formType == 'shippingAddress' and address.isDefaultShipping %}
                 {% set defaultAddressKey = address.key %}
             {% endif %}
@@ -50,6 +50,7 @@
             isMultipleShipmentEnabled: data.isMultipleShipmentEnabled,
             optionValueDeliverToMultipleAddresses: optionValueDeliverToMultipleAddresses,
             itemShippingTriggerJsClass: data.itemShippingTriggerJsClass,
+            items: data.items,
         },
     } only %}
         {% block selectClass -%}
@@ -77,7 +78,7 @@
         {% block optionsGroup %}
             <option value="">{{ 'company.account.add_new_address' | trans }}</option>
 
-            {% if embed.customerAddresses is not empty %}
+            {% if embed.customerAddresses %}
                 <optgroup label="{{ 'page.checkout.address.option_group.customer' | trans }}">
                     {% for address in embed.customerAddresses %}
                         {{ block('option') }}
@@ -85,7 +86,7 @@
                 </optgroup>
             {% endif %}
 
-            {% if embed.companyBusinessUnitAddresses is not empty %}
+            {% if embed.companyBusinessUnitAddresses %}
                 <optgroup label="{{ 'page.checkout.address.option_group.company_business_unit' | trans }}">
                     {% for address in embed.companyBusinessUnitAddresses %}
                         {{ block('option') }}
@@ -93,7 +94,7 @@
                 </optgroup>
             {% endif %}
 
-            {% if embed.formType == 'shippingAddress' and embed.isMultipleShipmentEnabled %}
+            {% if embed.formType == 'shippingAddress' and embed.isMultipleShipmentEnabled and embed.items | length > 1 %}
                 <option value="{{ embed.optionValueDeliverToMultipleAddresses }}" {% if embed.defaultAddressKey == embed.optionValueDeliverToMultipleAddresses %}selected{% endif %}>
                     {{ 'customer.account.deliver_to_multiple_addresses' | trans }}
                 </option>

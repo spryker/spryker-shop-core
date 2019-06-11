@@ -296,7 +296,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     protected function isIdCustomerAddressFieldEmpty(FormInterface $form): bool
     {
         return $form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
-            || !$form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
+            && !$form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
     }
 
     /**
@@ -307,7 +307,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     protected function isIdCompanyUnitAddressFieldEmpty(FormInterface $form): bool
     {
         return $form->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)
-            || !$form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData();
+            && !$form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData();
     }
 
     /**

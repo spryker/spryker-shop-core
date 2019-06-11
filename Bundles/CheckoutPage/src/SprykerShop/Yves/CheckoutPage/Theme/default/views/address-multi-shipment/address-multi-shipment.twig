@@ -49,6 +49,7 @@
                                 {% widget embed.companyBusinessUnitShippingAddressWidget with {
                                     data: {
                                         isMultipleShipmentEnabled: embed.isMultipleShipmentEnabled,
+                                        items: embed.forms.items,
                                     },
                                 } only %}
                                 {% endwidget %}

@@ -11,11 +11,15 @@ export default class IsNextCheckoutStepEnabled extends Component {
      * Default callback, which is called when all web components are ready for use.
      */
     mountCallback(): void {
-        this.trigger = <HTMLSelectElement>document.querySelector(this.triggerSelector);
+        if (this.triggerSelector) {
+            this.trigger = <HTMLSelectElement>document.querySelector(this.triggerSelector);
+        }
         this.target = <ValidateNextCheckoutStep>document.querySelector(this.targetSelector);
 
-        this.initTriggerState();
-        this.mapEvents();
+        if (this.trigger) {
+            this.initTriggerState();
+            this.mapEvents();
+        }
     }
 
     protected mapEvents(): void {

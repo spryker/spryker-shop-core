@@ -80,7 +80,7 @@ export default class SaveNewAddress extends Component {
     }
 
     protected customerAddressesExists(): void {
-        if (!this.customerShippingAddresses && !this.companyShippingAddresses) {
+        if (!this.customerShippingAddresses) {
             this.showSaveNewAddress();
 
             return;
@@ -91,7 +91,9 @@ export default class SaveNewAddress extends Component {
     }
 
     protected mapEvents(): void {
-        this.customerShippingAddresses.addEventListener('change', () => this.shippingTogglerOnChange());
+        if (this.customerShippingAddresses) {
+            this.customerShippingAddresses.addEventListener('change', () => this.shippingTogglerOnChange());
+        }
 
         if (this.companyShippingAddresses) {
             this.companyShippingAddresses.addEventListener('change', () => this.shippingTogglerOnChange());
@@ -140,7 +142,9 @@ export default class SaveNewAddress extends Component {
     }
 
     protected shippingTogglerOnChange(): void {
-        this.initSplitDeliveryToggler();
+        if (this.customerShippingAddresses) {
+            this.initSplitDeliveryToggler();
+        }
 
         this.saveNewShippingAddressChecked();
         this.toggleSaveNewAddress();
@@ -152,18 +156,18 @@ export default class SaveNewAddress extends Component {
     }
 
     protected initSaveNewAddressState(): void {
-        this.saveNewShippingAddressChecked();
-
         if (this.customerBillingAddresses) {
             this.saveNewBillingAddressChecked();
         }
-
-        this.initSplitDeliveryToggler();
-        this.toggleSaveNewAddress();
-
+        if (this.customerShippingAddresses) {
+            this.initSplitDeliveryToggler();
+        }
         if (this.businessUnitShippingAddressToggler) {
             this.splitDeliveryTogglerOnChange();
         }
+
+        this.saveNewShippingAddressChecked();
+        this.toggleSaveNewAddress();
     }
 
     protected saveNewBillingAddressChecked(): void {
@@ -183,7 +187,9 @@ export default class SaveNewAddress extends Component {
     }
 
     protected isSaveNewAddressOptionSelected(toggler: HTMLFormElement): boolean {
-        return !toggler.value;
+        if (toggler) {
+            return !toggler.value;
+        }
     }
 
     /**
