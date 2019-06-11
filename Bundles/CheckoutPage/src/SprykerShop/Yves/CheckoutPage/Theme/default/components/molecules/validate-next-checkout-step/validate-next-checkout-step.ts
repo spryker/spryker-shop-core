@@ -44,7 +44,7 @@ export default class ValidateNextCheckoutStep extends Component {
     }
 
     /**
-     * Init the methods, which fills form fields collection and toggle disabling of the target button.
+     * Init the methods, which fill the collection of form fields and toggle disabling of button.
      */
     initTriggerState(): void {
         this.fillFormFieldsCollection();
