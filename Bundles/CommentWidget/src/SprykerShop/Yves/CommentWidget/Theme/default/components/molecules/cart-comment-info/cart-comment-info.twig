@@ -5,10 +5,9 @@
 } %}
 
 {% define data = {
-    form: required,
+    form: {},
     comment: required,
-    returnRoute: required,
-    isEditable: false,
+    returnRoute: '',
 } %}
 
 {% block body %}
@@ -17,20 +16,23 @@
         <p class="text-secondary">
             <span>{{ data.comment.createdAt | formatDateTime }}</span>
             {% if data.comment.isUpdated %}
-                <span>{{ comment_widget.form.updated | trans }}</span>
+                <span>({{ 'comment_widget.form.edited' | trans }})</span>
             {% endif %}
         </p>
+        {% if not data.form %}
+            <p>{{ data.comment.message }}</p>
+        {% endif %}
     {% endblock %}
-    {% if data.isEditable %}
-        {% include molecule('cart-comment-form', 'CommentWidget') with {
-            data: {
-                form: data.form,
-                comment: data.comment,
-                returnRoute: data.returnRoute,
-            },
-        } only %}
-    {% endif %}
-    {% if not data.isEditable %}
-        <p>{{ data.comment.message }}</p>
-    {% endif %}
+
+    {% block form %}
+        {% if data.form %}
+            {% include molecule('cart-comment-form', 'CommentWidget') with {
+                data: {
+                    form: data.form,
+                    comment: data.comment,
+                    returnRoute: data.returnRoute,
+                },
+            } only %}
+        {% endif %}
+    {% endblock %}
 {% endblock %}

@@ -43,10 +43,9 @@
                             <div class="{{config.name}}__info">
                                 {% include molecule('cart-comment-info', 'CommentWidget') with {
                                     data: {
-                                        form: data.allCommentForms[comment.idComment],
+                                        form: data.allCommentForms[comment.idComment] ?? {},
                                         comment: comment,
                                         returnRoute: data.returnRoute,
-                                        isEditable: data.allCommentForms[comment.idComment] is defined ? true : false,
                                     },
                                 } only %}
 
@@ -77,10 +76,9 @@
                                     {% if comment.isAttached %}
                                         {% include molecule('cart-comment-info', 'CommentWidget') with {
                                             data: {
-                                                form: data.allCommentForms[comment.idComment],
+                                                form: data.allCommentForms[comment.idComment] ?? {},
                                                 comment: comment,
                                                 returnRoute: data.returnRoute,
-                                                isEditable: data.allCommentForms[comment.idComment] is defined ? true : false,
                                             },
                                         } only %}
 
