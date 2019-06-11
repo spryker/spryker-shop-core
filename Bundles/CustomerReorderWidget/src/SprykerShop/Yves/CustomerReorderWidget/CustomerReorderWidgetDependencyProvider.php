@@ -19,6 +19,7 @@ use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidg
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToProductStorageClientBridge;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToSalesClientBridge;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToZedRequestClientBridge;
+use SprykerShop\Yves\CustomerReorderWidget\Dependency\Service\CustomerReorderWidgetToUtilQuantityServiceBridge;
 
 class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -32,6 +33,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -50,6 +52,23 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addProductStorageClient($container);
         $container = $this->addZedRequestClient($container);
         $container = $this->addLocaleClient($container);
+        $container = $this->addUtilQuantityService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addUtilQuantityService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
+            return new CustomerReorderWidgetToUtilQuantityServiceBridge(
+                $container->getLocator()->utilQuantity()->service()
+            );
+        };
 
         return $container;
     }
