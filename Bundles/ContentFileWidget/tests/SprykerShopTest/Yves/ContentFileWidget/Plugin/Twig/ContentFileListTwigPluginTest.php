@@ -35,11 +35,11 @@ class ContentFileListTwigPluginTest extends Unit
     protected const TEMPLATE_TEXT_LINK = 'text-link';
     protected const TEMPLATE_WRONG = 'wrong';
 
-    protected const CONTENT_ID = 0;
+    protected const CONTENT_WRONG_KEY = 'fl-0';
     protected const CONTENT_TERM = 'TERM';
 
-    protected const MESSAGE_CONTENT_FILE_LIST_NOT_FOUND = '<strong>Content file list with ID 0 not found.</strong>';
-    protected const MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE = '<strong>Content file list widget could not be rendered because the content item with ID 0 is not an file list.</strong>';
+    protected const MESSAGE_CONTENT_FILE_LIST_NOT_FOUND = '<strong>Content file list with Key fl-0 not found.</strong>';
+    protected const MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE = '<strong>Content file list widget could not be rendered because the content item with Key fl-0 is not an file list.</strong>';
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"wrong" is not supported name of template.</strong>';
     protected const RENDERED_STRING = 'output';
 
@@ -54,7 +54,7 @@ class ContentFileListTwigPluginTest extends Unit
     public function testContentFileNotFound(): void
     {
         // Act
-        $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_ID, static::TEMPLATE_TEXT_LINK);
+        $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_WRONG_KEY, static::TEMPLATE_TEXT_LINK);
 
         // Assert
         $this->assertEquals(static::MESSAGE_CONTENT_FILE_LIST_NOT_FOUND, $fileContent);
@@ -69,7 +69,7 @@ class ContentFileListTwigPluginTest extends Unit
         $this->setContentFileClientException();
 
         // Act
-        $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_ID, static::TEMPLATE_TEXT_LINK);
+        $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_WRONG_KEY, static::TEMPLATE_TEXT_LINK);
 
         // Assert
         $this->assertEquals(static::MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE, $fileContent);
@@ -82,11 +82,11 @@ class ContentFileListTwigPluginTest extends Unit
     {
         // Assign
         $contentFileListTypeTransfer = new ContentFileListTypeTransfer();
-        $contentFileListTypeTransfer->setFileIds([static::CONTENT_ID]);
+        $contentFileListTypeTransfer->setFileIds([0]);
         $this->setContentFileClientReturn($contentFileListTypeTransfer);
 
         // Act
-        $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_ID, static::TEMPLATE_WRONG);
+        $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_WRONG_KEY, static::TEMPLATE_WRONG);
 
         // Assert
         $this->assertEquals(static::MESSAGE_NOT_SUPPORTED_TEMPLATE, $fileContent);
@@ -99,12 +99,12 @@ class ContentFileListTwigPluginTest extends Unit
     {
         // Assign
         $contentFileListTypeTransfer = new ContentFileListTypeTransfer();
-        $contentFileListTypeTransfer->setFileIds([static::CONTENT_ID]);
+        $contentFileListTypeTransfer->setFileIds([0]);
         $this->setContentFileClientReturn($contentFileListTypeTransfer);
         $this->setFileManagerStorageClientReturn();
 
         // Act
-        $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_ID, static::TEMPLATE_TEXT_LINK);
+        $fileContent = call_user_func($this->getContentFileListTwigPlugin()->getCallable(), static::CONTENT_WRONG_KEY, static::TEMPLATE_TEXT_LINK);
 
         // Assert
         $this->assertEquals(static::RENDERED_STRING, $fileContent);
@@ -116,7 +116,7 @@ class ContentFileListTwigPluginTest extends Unit
     protected function setContentFileClientException(): void
     {
         $contentFileWidgetToContentFileClientBridge = $this->getMockBuilder(ContentFileWidgetToContentFileClientInterface::class)->getMock();
-        $contentFileWidgetToContentFileClientBridge->method('executeFileListTypeById')->willThrowException(new InvalidFileListTermException());
+        $contentFileWidgetToContentFileClientBridge->method('executeFileListTypeByKey')->willThrowException(new InvalidFileListTermException());
         $this->tester->setDependency(ContentFileWidgetDependencyProvider::CLIENT_CONTENT_FILE, $contentFileWidgetToContentFileClientBridge);
     }
 
@@ -128,7 +128,7 @@ class ContentFileListTwigPluginTest extends Unit
     protected function setContentFileClientReturn(?ContentFileListTypeTransfer $contentFileListTypeTransfer = null): void
     {
         $contentFileWidgetToContentFileClientBridge = $this->getMockBuilder(ContentFileWidgetToContentFileClientInterface::class)->getMock();
-        $contentFileWidgetToContentFileClientBridge->method('executeFileListTypeById')->willReturn($contentFileListTypeTransfer);
+        $contentFileWidgetToContentFileClientBridge->method('executeFileListTypeByKey')->willReturn($contentFileListTypeTransfer);
         $this->tester->setDependency(ContentFileWidgetDependencyProvider::CLIENT_CONTENT_FILE, $contentFileWidgetToContentFileClientBridge);
     }
 
