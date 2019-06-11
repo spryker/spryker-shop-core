@@ -38,8 +38,8 @@ class ContentFileListTwigPluginTest extends Unit
     protected const CONTENT_WRONG_KEY = 'fl-0';
     protected const CONTENT_TERM = 'TERM';
 
-    protected const MESSAGE_CONTENT_FILE_LIST_NOT_FOUND = '<strong>Content file list with Key fl-0 not found.</strong>';
-    protected const MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE = '<strong>Content file list widget could not be rendered because the content item with Key fl-0 is not an file list.</strong>';
+    protected const MESSAGE_CONTENT_FILE_LIST_NOT_FOUND = '<strong>Content file list with key "fl-0" not found.</strong>';
+    protected const MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE = '<strong>Content file list widget could not be rendered because the content item with key "fl-0" is not an file list.</strong>';
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"wrong" is not supported name of template.</strong>';
     protected const RENDERED_STRING = 'output';
 

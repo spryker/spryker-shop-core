@@ -20,8 +20,8 @@ class ContentFileListTwigFunction extends TwigFunction
      */
     protected const FUNCTION_CONTENT_FILE_LIST = 'content_file_list';
 
-    protected const MESSAGE_CONTENT_FILE_LIST_NOT_FOUND = '<strong>Content file list with Key %s not found.</strong>';
-    protected const MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE = '<strong>Content file list widget could not be rendered because the content item with Key %s is not an file list.</strong>';
+    protected const MESSAGE_CONTENT_FILE_LIST_NOT_FOUND = '<strong>Content file list with key "%s" not found.</strong>';
+    protected const MESSAGE_WRONG_CONTENT_FILE_LIST_TYPE = '<strong>Content file list widget could not be rendered because the content item with key "%s" is not an file list.</strong>';
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"%s" is not supported name of template.</strong>';
 
     /**
