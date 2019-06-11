@@ -13,7 +13,6 @@
   },
   "require-dev": {
     "spryker-shop/cart-page": "*",
-    "spryker-shop/discount-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
