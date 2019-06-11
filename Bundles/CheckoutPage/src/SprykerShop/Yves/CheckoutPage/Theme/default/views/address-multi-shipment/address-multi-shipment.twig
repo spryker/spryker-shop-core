@@ -71,7 +71,7 @@
                 {% endif %}
 
                 {% include molecule('form') with {
-                    class: 'js-address__shipping' ~ (hasShippingAddressesAndApplicable ? ' is-hidden ' : ''),
+                    class: 'js-address__shipping' ~ (hasShippingAddressesAndApplicable ? ' is-hidden'),
                     data: {
                         form: embed.forms.shipping,
                         enableStart: false,
@@ -160,7 +160,7 @@
                             </div>
                         {% endif %}
 
-                        <div class="js-address__billing {{ hasBillingAddressesAndApplicable ? ' is-hidden ' : '' }}">
+                        <div class="js-address__billing {{ hasBillingAddressesAndApplicable ? ' is-hidden' }}">
                             {{parent()}}
                         </div>
                     {% endblock %}
