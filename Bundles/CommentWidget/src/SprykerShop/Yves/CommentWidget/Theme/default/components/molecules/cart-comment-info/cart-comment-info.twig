@@ -14,9 +14,9 @@
     {% block text %}
         <p>{{ data.comment.customer.firstName }} {{ data.comment.customer.lastName }}</p>
         <p class="text-secondary">
-            <span>{{ data.comment.createdAt | formatDateTime }}</span>
+            {{ data.comment.createdAt | formatDateTime }}
             {% if data.comment.isUpdated %}
-                <span>({{ 'comment_widget.form.edited' | trans }})</span>
+                ({{ 'comment_widget.form.edited' | trans }})
             {% endif %}
         </p>
         {% if not data.form %}

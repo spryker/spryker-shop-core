@@ -9,18 +9,6 @@ export default class CartComments extends Component {
      * Elements shows by click on tab.
      */
     contentBlocks: HTMLElement[];
-    /**
-     * Active class for tabs.
-     */
-    tabActiveClass: string;
-    /**
-     * Active class for content block.
-     */
-    contentBlockActiveClass: string;
-
-    constructor() {
-        super();
-    }
 
     protected readyCallback(): void {}
 
@@ -30,8 +18,6 @@ export default class CartComments extends Component {
     mountCallback(): void {
         this.tabs = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__tab`));
         this.contentBlocks = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__content-item`));
-        this.tabActiveClass = `${this.name}__tab--active`;
-        this.contentBlockActiveClass = `${this.name}__content-item--active`;
         this.mapEvents();
     }
 
@@ -56,5 +42,19 @@ export default class CartComments extends Component {
         newActiveTab.classList.add(this.tabActiveClass);
         currentActiveContentBlock.classList.remove(this.contentBlockActiveClass);
         this.contentBlocks[indexOfNeededContentBlock].classList.add(this.contentBlockActiveClass);
+    }
+
+    /**
+     * Gets a class name for the active tab.
+     */
+    get tabActiveClass(): string {
+        return this.getAttribute('tab-class-to-toggle');
+    }
+
+    /**
+     * Gets a class name for the active content block.
+     */
+    get contentBlockActiveClass(): string {
+        return this.getAttribute('content-block-class-to-toggle');
     }
 }

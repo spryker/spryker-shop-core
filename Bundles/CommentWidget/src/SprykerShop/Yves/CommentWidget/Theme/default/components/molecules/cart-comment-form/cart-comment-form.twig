@@ -23,7 +23,7 @@
     {% do data.form.tags.setRendered %}
     {{ form_row(data.form._token, { 'id': '' }) }}
     <input type="hidden" name="returnRoute" value="{{ data.returnRoute }}">
-    <input type="submit" class="button button--primary float-right" value="{{ 'comment_widget.form.update_comment' | trans }}">
+    <button type="submit" class="button button--primary float-right">{{ 'comment_widget.form.update_comment' | trans }}</button>
 
     {{ form_end(data.form) }}
 

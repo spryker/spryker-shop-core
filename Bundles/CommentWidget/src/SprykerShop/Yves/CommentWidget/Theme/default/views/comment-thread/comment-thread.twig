@@ -28,7 +28,7 @@
             attachCommentForms: data.attachCommentForms,
         },
     } only %}
-    <div class="spacing-top--inner">
+    <div class="spacing-top spacing-top--inner">
         {{ form_start(data.createCommentForm, {
             action: url('comment/add'),
             attr: {'id': ''},
@@ -38,7 +38,7 @@
         <input type="hidden" name="returnRoute" value="{{ data.returnRoute }}">
         <input type="hidden" name="ownerId" value="{{ data.commentThread.ownerId }}">
         <input type="hidden" name="ownerType" value="{{ data.commentThread.ownerType }}">
-        <input type="submit" class="button button--primary" value="{{ 'comment_widget.form.add_comment' | trans }}">
+        <button type="submit" class="button button--primary">{{ 'comment_widget.form.add_comment' | trans }}</button>
         {{ form_end(data.createCommentForm) }}
     </div>
     <hr>
