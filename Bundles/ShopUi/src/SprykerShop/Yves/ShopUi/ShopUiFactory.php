@@ -7,9 +7,10 @@
 
 namespace SprykerShop\Yves\ShopUi;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientInterface;
+use SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProvider;
+use SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface;
 use SprykerShop\Yves\ShopUi\Twig\ShopUiTwigExtension;
 
 /**
@@ -23,18 +24,28 @@ class ShopUiFactory extends AbstractFactory
     public function createShopUiTwigExtension()
     {
         return new ShopUiTwigExtension(
-            $this->getConfig(),
-            $this->getStore(),
-            $this->getTwigClient()
+            $this->createAssetsUrlProvider()
         );
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface
      */
-    public function getStore(): Store
+    public function createAssetsUrlProvider(): AssetsUrlProviderInterface
     {
-        return $this->getProvidedDependency(ShopUiDependencyProvider::STORE);
+        return new AssetsUrlProvider(
+            $this->getConfig(),
+            $this->getTwigClient(),
+            $this->getStoreName()
+        );
+    }
+
+    /**
+     * @return string
+     */
+    public function getStoreName(): string
+    {
+        return $this->getProvidedDependency(ShopUiDependencyProvider::STORE_NAME);
     }
 
     /**

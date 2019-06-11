@@ -15,7 +15,7 @@ use SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientBridge;
 class ShopUiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_TWIG = 'CLIENT_TWIG';
-    public const STORE = 'STORE';
+    public const STORE_NAME = 'STORE_NAME';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -25,7 +25,7 @@ class ShopUiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-        $container = $this->addStore($container);
+        $container = $this->addStoreName($container);
         $container = $this->addTwigClient($container);
 
         return $container;
@@ -52,10 +52,10 @@ class ShopUiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addStore(Container $container): Container
+    protected function addStoreName(Container $container): Container
     {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
+        $container->set(static::STORE_NAME, function () {
+            return Store::getInstance()->getStoreName();
         });
 
         return $container;

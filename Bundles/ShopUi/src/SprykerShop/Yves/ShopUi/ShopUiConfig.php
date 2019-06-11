@@ -14,7 +14,7 @@ class ShopUiConfig extends AbstractBundleConfig
 {
     /**
      * Specification:
-     * - Yves public folder for assets.
+     * - Provides Yves assets url.
      * - %store% will be replaced with current store.
      * - %theme% will be replaced with current theme.
      *
@@ -22,8 +22,8 @@ class ShopUiConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getYvesPublicFolderPathPattern(): string
+    public function getYvesAssetsUrlPattern(): string
     {
-        return $this->get(ShopUiConstants::YVES_PUBLIC_FOLDER_PATH_PATTERN, '/assets/');
+        return $this->get(ShopUiConstants::YVES_ASSETS_URL_PATTERN, '/assets/');
     }
 }

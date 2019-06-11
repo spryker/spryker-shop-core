@@ -14,11 +14,11 @@ interface ShopUiConstants
 {
     /**
      * Specification:
-     * - Yves public folder for assets.
+     * - Yves assets url.
      * - %store% will be replaced with current store.
      * - %theme% will be replaced with current theme.
      *
      * @api
      */
-    public const YVES_PUBLIC_FOLDER_PATH_PATTERN = 'SHOP_UI:YVES_PUBLIC_FOLDER_PATH_PATTERN';
+    public const YVES_ASSETS_URL_PATTERN = 'SHOP_UI:YVES_ASSETS_URL_PATTERN';
 }
