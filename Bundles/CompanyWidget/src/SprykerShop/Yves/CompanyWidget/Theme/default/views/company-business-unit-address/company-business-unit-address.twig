@@ -54,9 +54,7 @@
     } only %}
         {% block selectClass -%}
             js-form-select-address__{{ embed.formType }}
-            {% if embed.itemShippingTriggerJsClass %}
-                {{ embed.itemShippingTriggerJsClass }}
-            {% endif %}
+            {{ embed.itemShippingTriggerJsClass ? embed.itemShippingTriggerJsClass }}
         {%- endblock %}
         {% block option %}
             {% set isSelected = embed.defaultAddressKey == address.key %}

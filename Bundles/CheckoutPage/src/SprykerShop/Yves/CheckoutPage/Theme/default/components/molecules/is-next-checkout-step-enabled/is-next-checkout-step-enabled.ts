@@ -7,6 +7,9 @@ export default class IsNextCheckoutStepEnabled extends Component {
 
     protected readyCallback(): void {}
 
+    /**
+     * Default callback, which is called when all web components are ready for use.
+     */
     mountCallback(): void {
         this.trigger = <HTMLSelectElement>document.querySelector(this.triggerSelector);
         this.target = <ValidateNextCheckoutStep>document.querySelector(this.targetSelector);
@@ -27,7 +30,7 @@ export default class IsNextCheckoutStepEnabled extends Component {
         const currentValue = this.trigger.options[this.trigger.selectedIndex].value;
 
         if (currentValue === this.toggleOptionValue && this.target) {
-            this.target.enableTrigger();
+            this.target.initTriggerState();
 
             return;
         }

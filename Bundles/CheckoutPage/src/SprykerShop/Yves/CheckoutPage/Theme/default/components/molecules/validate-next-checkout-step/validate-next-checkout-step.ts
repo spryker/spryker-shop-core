@@ -9,6 +9,9 @@ export default class ValidateNextCheckoutStep extends Component {
 
     protected readyCallback(): void {}
 
+    /**
+     * Default callback, which is called when all web components are ready for use.
+     */
     mountCallback(): void {
         this.forms = <HTMLElement[]>Array.from(document.querySelectorAll(this.formSelector));
         this.target = <HTMLButtonElement>document.querySelector(this.targetSelector);
@@ -18,7 +21,7 @@ export default class ValidateNextCheckoutStep extends Component {
             ));
         }
         if (this.isTriggerEnabled) {
-            this.enableTrigger();
+            this.initTriggerState();
         }
     }
 
@@ -43,7 +46,7 @@ export default class ValidateNextCheckoutStep extends Component {
     /**
      * Calls the functions and map events.
      */
-    enableTrigger(): void {
+    initTriggerState(): void {
         this.fillFormFieldsCollection();
         this.toggleDisablingNextStepButton();
         this.mapEvents();
