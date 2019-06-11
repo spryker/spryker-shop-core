@@ -76,8 +76,8 @@
                         {% endwidget %}
 
                         {% if hasShippingAddresses %}
-                            {#{% do item.shippingAddress.id_customer_address.setRendered %}#}
-                            {#{% do item.shippingAddress.id_company_unit_address.setRendered %}#}
+                            {% do item.shippingAddress.id_customer_address.setRendered %}
+                            {% do item.shippingAddress.id_company_unit_address.setRendered %}
                         {% endif %}
                     {% else %}
                         {{ form_row(item.shippingAddress.id_customer_address, {
