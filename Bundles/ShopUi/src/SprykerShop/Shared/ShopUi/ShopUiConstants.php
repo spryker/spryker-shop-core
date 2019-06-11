@@ -14,7 +14,9 @@ interface ShopUiConstants
 {
     /**
      * Specification:
-     * - Sets the command to build Yves assets.
+     * - Yves public folder for assets.
+     * - %store% will be replaced with current store.
+     * - %theme% will be replaced with current theme.
      *
      * @api
      */

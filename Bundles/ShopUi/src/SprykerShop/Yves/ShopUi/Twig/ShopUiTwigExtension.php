@@ -29,6 +29,9 @@ class ShopUiTwigExtension extends TwigExtension
     public const FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE = 'view';
     public const DEFAULT_MODULE = 'ShopUi';
 
+    protected const STORE_KEY = '%store%';
+    protected const THEME_KEY = '%theme%';
+
     /**
      * @var \SprykerShop\Yves\ShopUi\ShopUiConfig
      */
@@ -171,8 +174,8 @@ class ShopUiTwigExtension extends TwigExtension
     {
         return str_replace(
             [
-                '%store%',
-                '%theme%',
+                static::STORE_KEY,
+                static::THEME_KEY,
             ],
             [
                 $this->getStoreKey(),

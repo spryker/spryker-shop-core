@@ -13,6 +13,13 @@ use SprykerShop\Shared\ShopUi\ShopUiConstants;
 class ShopUiConfig extends AbstractBundleConfig
 {
     /**
+     * Specification:
+     * - Yves public folder for assets.
+     * - %store% will be replaced with current store.
+     * - %theme% will be replaced with current theme.
+     *
+     * @api
+     *
      * @return string
      */
     public function getYvesPublicFolderPathPattern(): string
