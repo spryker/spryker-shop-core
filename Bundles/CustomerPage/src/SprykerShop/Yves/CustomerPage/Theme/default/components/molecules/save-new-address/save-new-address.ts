@@ -80,7 +80,7 @@ export default class SaveNewAddress extends Component {
     }
 
     protected customerAddressesExists(): void {
-        if (!this.customerShippingAddresses) {
+        if (!this.customerShippingAddresses && !this.companyShippingAddresses) {
             this.showSaveNewAddress();
 
             return;
