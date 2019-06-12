@@ -68,10 +68,10 @@
                                 {{ parent() }}
 
                                 {% if widgetExists('CartNoteQuoteItemNoteWidgetPlugin') %}
-                                    {% if embed.item.cartNote is not empty %}
+                                    {% if embed.item.cartNote %}
                                         {{ widget('CartNoteQuoteItemNoteWidgetPlugin', embed.item) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
                                     {% endif %}
-                                {% elseif embed.item.cartNote is not empty %}
+                                {% elseif embed.item.cartNote %}
                                     {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
                                         data: {
                                             label: 'cart_note.checkout_page.item_note',
@@ -96,7 +96,7 @@
                         },
                     } only %}
 
-                    <a href="{{ url('checkout-address') }}" {{qa('cart-go-to-address')}}>
+                    <a href="{{ url('checkout-address') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-address') }}>
                         {{ 'general.edit.button' | trans }}
                     </a>
                 </div>
@@ -113,7 +113,7 @@
                         },
                     } only %}
 
-                    <a href="{{ url('checkout-shipment') }}" {{qa('cart-go-to-shipment')}}>
+                    <a href="{{ url('checkout-shipment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
                         {{ 'general.edit.button' | trans }}
                     </a>
                 </div>
@@ -123,7 +123,7 @@
                     <ul class="list">
                         <li class="list__item">{{ shipmentGroup.shipment.requestedDeliveryDate }}</li>
                     </ul>
-                    <a href="{{ url('checkout-shipment') }}" {{qa('cart-go-to-shipment')}}>
+                    <a href="{{ url('checkout-shipment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
                         {{ 'general.edit.button' | trans }}
                     </a>
                 </div>
@@ -159,7 +159,7 @@
                             <li class="list__item"><strong>{{ 'page.checkout.summary.card_expires' | trans }}: </strong>{{ data.transfer.payment.dummyPayment.cardExpiresMonth ~ '.' ~ data.transfer.payment.dummyPayment.cardExpiresYear }}</li>
                         {% endif %}
                     </ul>
-                    <a href="{{ url('checkout-payment') }}" {{qa('cart-go-to-payment')}}>
+                    <a href="{{ url('checkout-payment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-payment') }}>
                         {{ 'general.edit.button' | trans }}
                     </a>
                 </div>
@@ -175,7 +175,7 @@
                         },
                     } only %}
 
-                    <a href="{{ url('checkout-address') }}" {{qa('cart-go-to-address')}}>
+                    <a href="{{ url('checkout-address') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-address') }}>
                         {{ 'general.edit.button' | trans }}
                     </a>
                 </div>
@@ -233,7 +233,7 @@
             } only %}
                 {% block body %}
                     {% embed molecule('summary-overview-multi-shipment', 'CheckoutPage') with {
-                        data: embed.overview
+                        data: embed.overview,
                     } only %}
                         {% block body %}
                             {% block overview %}{% endblock %}

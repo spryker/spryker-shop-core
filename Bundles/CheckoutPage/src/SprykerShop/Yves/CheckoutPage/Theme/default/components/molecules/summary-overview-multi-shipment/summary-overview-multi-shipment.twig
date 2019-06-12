@@ -38,12 +38,12 @@
 
         {% block separator %}
             <li>
-                <hr/>
+                <hr>
             </li>
         {% endblock %}
 
         {% if data.prices.discountTotal %}
-            {% if data.voucherDiscounts is not empty %}
+            {% if data.voucherDiscounts | length %}
                 <li>
                     <strong>{{ 'cart.vouchers' | trans }}</strong>
                     {% for voucherDiscount in data.voucherDiscounts %}
@@ -55,7 +55,7 @@
                 </li>
             {% endif %}
 
-            {% if data.cartRuleDiscounts|length %}
+            {% if data.cartRuleDiscounts | length %}
                 <li>
                     <strong>{{ 'cart.discounts' | trans }}</strong>
                     {% for ruleDiscount in data.cartRuleDiscounts %}
