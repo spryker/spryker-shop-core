@@ -29,6 +29,16 @@ class ErrorPageConfig extends AbstractBundleConfig
      */
     public function isErrorStackTraceEnabled(): bool
     {
-        return $this->get(ErrorPageConstants::ENABLE_ERROR404_STACK_TRACE, $this->getEnvironmentName() === 'development');
+        return $this->get(ErrorPageConstants::ENABLE_ERROR404_STACK_TRACE, $this->getErrorStackTraceDefaultValue());
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return bool
+     */
+    protected function getErrorStackTraceDefaultValue(): bool
+    {
+        return APPLICATION_ENV === 'development';
     }
 }
