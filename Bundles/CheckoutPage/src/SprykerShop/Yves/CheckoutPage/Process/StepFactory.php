@@ -551,6 +551,6 @@ class StepFactory extends AbstractFactory
      */
     public function getShoppingListItemExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_ADDRESS_TRANSFER_EXPANDERS);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_ADDRESS_STEP_EXECUTOR_ADDRESS_TRANSFER_EXPANDERS);
     }
 }

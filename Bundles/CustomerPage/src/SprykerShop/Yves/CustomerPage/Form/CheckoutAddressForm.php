@@ -94,7 +94,7 @@ class CheckoutAddressForm extends AddressForm
      */
     protected function addIdCompanyUnitAddressTextField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_COMPANY_UNIT_ADDRESS, HiddenType::class);
+        $builder->add(static::FIELD_ID_COMPANY_UNIT_ADDRESS, HiddenType::class);
 
         return $this;
     }

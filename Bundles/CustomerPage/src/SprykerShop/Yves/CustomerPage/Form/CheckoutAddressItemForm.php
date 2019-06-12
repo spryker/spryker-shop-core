@@ -161,7 +161,7 @@ class CheckoutAddressItemForm extends AbstractType
     protected function isIdCustomerOrCompanyUnitAddressesExist(FormInterface $customerAddressForm): bool
     {
         return $customerAddressForm->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
-            && $customerAddressForm->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS);
+            || $customerAddressForm->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS);
     }
 
     /**
