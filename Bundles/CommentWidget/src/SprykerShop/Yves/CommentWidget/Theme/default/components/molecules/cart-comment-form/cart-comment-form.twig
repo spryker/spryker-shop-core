@@ -1,0 +1,47 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-comment-form',
+} %}
+
+{% define data = {
+    form: required,
+    comment: required,
+    returnRoute: required,
+} %}
+
+{% block body %}
+    {{ form_start(data.form, {
+        action: url('comment/update'),
+    }) }}
+
+    {{ form_row(data.form.uuid, { 'id': '' }) }}
+    {{ form_row(data.form.message, { 'id': '' }) }}
+    {% for tagForm in data.form.tags.children %}
+        {{ form_row(tagForm, { 'id': '' }) }}
+    {% endfor %}
+    {% do data.form.tags.setRendered %}
+    {{ form_row(data.form._token, { 'id': '' }) }}
+    <input type="hidden" name="returnRoute" value="{{ data.returnRoute }}">
+    <button type="submit" class="button button--primary float-right">{{ 'comment_widget.form.update_comment' | trans }}</button>
+
+    {{ form_end(data.form) }}
+
+    {% include molecule('cart-comment-action-form', 'CommentWidget') with {
+        data: {
+            action: url('comment/remove'),
+            hiddenData: [
+                {
+                    name:"uuid",
+                    value: data.comment.uuid,
+                },
+                {
+                    name:"returnRoute",
+                    value: data.returnRoute,
+                },
+            ],
+            buttonClassString: 'button button--success float-right',
+            buttonText: 'comment_widget.form.remove_comment' | trans ,
+        },
+    } only %}
+{% endblock %}

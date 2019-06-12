@@ -16,8 +16,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class CommentThreadWidget extends AbstractWidget
 {
-    protected const PARAMETER_OWNER_ID = 'ownerId';
-    protected const PARAMETER_OWNER_TYPE = 'ownerType';
     protected const PARAMETER_RETURN_ROUTE = 'returnRoute';
     protected const PARAMETER_COMMENT_THREAD = 'commentThread';
 
@@ -41,8 +39,10 @@ class CommentThreadWidget extends AbstractWidget
             ->createCommentFormDataProvider()
             ->getData($commentThreadTransfer);
 
-        $this->addOwnerIdParameter($ownerId);
-        $this->addOwnerTypeParameter($ownerType);
+        $commentThreadTransfer
+            ->setOwnerId($ownerId)
+            ->setOwnerType($ownerType);
+
         $this->addReturnRouteParameter($returnRoute);
         $this->addCommentThreadParameter($commentThreadTransfer);
         $this->addALlCommentFormsParameter($commentThreadTransfer);
