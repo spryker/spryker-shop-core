@@ -12,13 +12,14 @@
         &__input {
             position: relative;
             z-index: $setting-zi-search-suggestions + 2;
-
-            @include helper-media-ie() {
-                padding: 0.4rem;
-            }
+            min-height: 1.925rem;
 
             &--transparent {
                 background-color: $setting-color-transparent;
+            }
+
+            &::-ms-clear {
+                display: none;
             }
         }
 
@@ -36,10 +37,7 @@
             border-color: $setting-color-transparent;
             z-index: $setting-zi-search-suggestions + 1;
             color: $setting-color-light;
-
-            @include helper-media-ie() {
-                padding: 0.45rem;
-            }
+            padding: 0.25rem 0.5rem;
         }
 
         @content;
