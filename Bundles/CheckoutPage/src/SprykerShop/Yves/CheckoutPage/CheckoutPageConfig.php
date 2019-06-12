@@ -11,9 +11,6 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class CheckoutPageConfig extends AbstractBundleConfig
 {
-    public const TEMPLATE_SINGLE_SHIPMENT_ADDRESS_STEP = '@CheckoutPage/views/address/address.twig';
-    public const TEMPLATE_MULTI_SHIPMENT_ADDRESS_STEP = '@CheckoutPage/views/address-multi-shipment/address-multi-shipment.twig';
-
     public const TEMPLATE_SINGLE_SHIPMENT_SHIPMENT_STEP = '@CheckoutPage/views/shipment/shipment.twig';
     public const TEMPLATE_MULTI_SHIPMENT_SHIPMENT_STEP = '@CheckoutPage/views/shipment-multi-shipment/shipment-multi-shipment.twig';
 
@@ -44,22 +41,6 @@ class CheckoutPageConfig extends AbstractBundleConfig
     public function isMultiShipmentEnabled(): bool
     {
         return true;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTemplateForAddressStepWithSingleShipment(): string
-    {
-        return static::TEMPLATE_SINGLE_SHIPMENT_ADDRESS_STEP;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTemplateForAddressStepWithMultiShipment(): string
-    {
-        return static::TEMPLATE_MULTI_SHIPMENT_ADDRESS_STEP;
     }
 
     /**

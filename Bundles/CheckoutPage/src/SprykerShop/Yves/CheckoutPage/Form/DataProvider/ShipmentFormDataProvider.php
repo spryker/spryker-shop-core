@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
@@ -93,6 +94,20 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     public function getData(AbstractTransfer $quoteTransfer)
     {
+        $defaultShipmentTransfer = new ShipmentTransfer();
+        $defaultShipmentTransfer->setShippingAddress(new AddressTransfer());
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                $itemTransfer->setShipment($defaultShipmentTransfer);
+            }
+        }
+
+        $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+        $quoteTransfer->setShipmentGroups($shipmentGroupTransfers);
+
+        $quoteTransfer = $this->setQuoteShipment($quoteTransfer);
+
         return $quoteTransfer;
     }
 
@@ -127,6 +142,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     protected function getShippingAddressLabelList(QuoteTransfer $quoteTransfer): array
     {
+        return [];
         $shippingAddressLabelList = [];
 
         $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
@@ -198,6 +214,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     protected function createAvailableMethodsByShipmentChoiceList(QuoteTransfer $quoteTransfer): array
     {
+        return [];
         $shipmentMethods = [];
 
         $shipmentMethodsTransferCollection = $this->getAvailableMethodsByShipment($quoteTransfer);
@@ -359,5 +376,17 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         $quoteTransfer->setShipmentGroups($shipmentGroupTransfers);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setQuoteShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $quoteTransfer->setShipment(new ShipmentTransfer());
     }
 }

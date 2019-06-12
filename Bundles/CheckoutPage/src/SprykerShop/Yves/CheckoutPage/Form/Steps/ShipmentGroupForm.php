@@ -53,30 +53,35 @@ class ShipmentGroupForm extends AbstractType
              * @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
              */
             $shipmentGroupTransfer = $event->getData();
+            if (!($shipmentGroupTransfer instanceof ShipmentGroupTransfer)) {
+                return;
+            }
+
             $form = $event->getForm();
             $options = $form->getConfig()->getOptions();
-            if ($shipmentGroupTransfer instanceof ShipmentGroupTransfer) {
-                $availableShipmentMethods = $options[ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP][$shipmentGroupTransfer->getHash()] ?? [];
-                $shippingAddressLabel = $options[ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST][$shipmentGroupTransfer->getHash()] ?? '';
 
-                $form->add('shipment', MultiShipmentForm::class, [
-                    MultiShipmentForm::OPTION_SHIPMENT_METHODS => $availableShipmentMethods,
-                    'required' => true,
-                    'label' => $shippingAddressLabel,
-                ]);
-            }
+            $availableShipmentMethods = $options[ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP][$shipmentGroupTransfer->getHash()] ?? [];
+            $shippingAddressLabel = $options[ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST][$shipmentGroupTransfer->getHash()] ?? '';
+
+            $form->add('shipment', MultiShipmentForm::class, [
+                MultiShipmentForm::OPTION_SHIPMENT_METHODS => $availableShipmentMethods,
+                'required' => true,
+                'label' => $shippingAddressLabel,
+            ]);
         });
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event): void {
             /**
              * @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
              */
             $shipmentGroupTransfer = $event->getForm()->getData();
-            if ($shipmentGroupTransfer instanceof ShipmentGroupTransfer) {
-                $shipmentTransfer = $shipmentGroupTransfer->getShipment();
-                foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
-                    $itemTransfer->setShipment($shipmentTransfer);
-                }
+            if (!($shipmentGroupTransfer instanceof ShipmentGroupTransfer)) {
+                return;
+            }
+
+            $shipmentTransfer = $shipmentGroupTransfer->getShipment();
+            foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
+                $itemTransfer->setShipment($shipmentTransfer);
             }
         });
 

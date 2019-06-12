@@ -72,10 +72,9 @@ class AddressStepExecutor implements StepExecutorInterface
             return $quoteTransfer;
         }
 
-        $quoteTransfer = $this->setItemLevelShippingAddresses($quoteTransfer, $customerTransfer);
-        $quoteTransfer = $this->setBillingAddress($quoteTransfer, $customerTransfer);
+        $quoteTransfer = $this->hydrateItemLevelShippingAddresses($quoteTransfer, $customerTransfer);
+        $quoteTransfer = $this->hydrateBillingAddress($quoteTransfer, $customerTransfer);
         $quoteTransfer = $this->setQuoteShippingAddress($quoteTransfer);
-        $quoteTransfer = $this->setQuoteShipment($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -86,7 +85,7 @@ class AddressStepExecutor implements StepExecutorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function setItemLevelShippingAddresses(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): QuoteTransfer
+    protected function hydrateItemLevelShippingAddresses(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->requireShipment();
@@ -108,7 +107,7 @@ class AddressStepExecutor implements StepExecutorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function setBillingAddress(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): QuoteTransfer
+    protected function hydrateBillingAddress(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): QuoteTransfer
     {
         if ($quoteTransfer->getBillingSameAsShipping() === true) {
             $firstItemTransfer = $quoteTransfer->getItems()[0];
@@ -144,6 +143,9 @@ class AddressStepExecutor implements StepExecutorInterface
             return $this->createdShipmentsWithShippingAddressesList[$addressHash];
         }
 
+        /**
+         * @todo Try to use existing shipment.
+         */
         $shipmentTransfer = $this->createShipment($shippingAddress);
         $this->createdShipmentsWithShippingAddressesList[$addressHash] = $shipmentTransfer;
 
@@ -223,17 +225,5 @@ class AddressStepExecutor implements StepExecutorInterface
         $firstItemTransfer->requireShipment();
 
         return $quoteTransfer->setShippingAddress($firstItemTransfer->getShipment()->getShippingAddress());
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function setQuoteShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        return $quoteTransfer->setShipment(new ShipmentTransfer());
     }
 }

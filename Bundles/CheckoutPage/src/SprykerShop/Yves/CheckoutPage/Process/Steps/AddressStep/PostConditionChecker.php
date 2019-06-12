@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
-use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressForm;
 
 class PostConditionChecker implements PostConditionCheckerInterface
 {
@@ -43,8 +42,8 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return false;
         }
 
-        $isSplitDelivery = $this->isSplitDelivery($quoteTransfer);
-        if ($isSplitDelivery && $quoteTransfer->getBillingSameAsShipping()) {
+        $hasMultipleShippingAddresses = $this->hasMultipleShippingAddresses($quoteTransfer);
+        if ($hasMultipleShippingAddresses && $quoteTransfer->getBillingSameAsShipping()) {
             return false;
         }
 
@@ -52,28 +51,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return false;
         }
 
-        $itemTransfer = $quoteTransfer->getItems()[0];
-        $addressTransfer = $itemTransfer->getShipment()->getShippingAddress();
-        $isQuoteShippingAddressEmpty = $this->customerService->isAddressEmpty($addressTransfer);
-        if ($isQuoteShippingAddressEmpty && $isSplitDelivery === false) {
-            return false;
-        }
-
         return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isSplitDelivery(AbstractTransfer $quoteTransfer): bool
-    {
-        if ($quoteTransfer->getShippingAddress() === null) {
-            return false;
-        }
-
-        return $quoteTransfer->getShippingAddress()->getIdCustomerAddress() === CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES;
     }
 
     /**
@@ -87,6 +65,31 @@ class PostConditionChecker implements PostConditionCheckerInterface
             if ($itemTransfer->getShipment() === null
                 || $this->customerService->isAddressEmpty($itemTransfer->getShipment()->getShippingAddress())
             ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function hasMultipleShippingAddresses(AbstractTransfer $quoteTransfer): bool
+    {
+        if ($quoteTransfer->getItems()->count() === 1) {
+            return false;
+        }
+
+        $uniqueAddresses = [];
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $addressUniqueKey = $this->customerService->getUniqueAddressKey($itemTransfer->getShipment()->getShippingAddress());
+            $uniqueAddresses[$addressUniqueKey] = 1;
+
+            if (count($uniqueAddresses) > 1) {
                 return true;
             }
         }
