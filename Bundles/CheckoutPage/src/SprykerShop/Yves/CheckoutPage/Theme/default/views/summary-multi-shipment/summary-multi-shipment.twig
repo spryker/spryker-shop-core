@@ -43,7 +43,7 @@
                     <h6><strong>{{ 'checkout.step.summary.products' | trans }}</strong></h6>
 
                     {% for item in shipmentGroup.items %}
-                        {% set item = item.bundleProduct is defined ? item.bundleProduct : item %}
+                        {% set item = item.bundleProduct ?? : item %}
 
                         {% embed molecule('summary-item-multi-shipment', 'CheckoutPage') with {
                             data: {
