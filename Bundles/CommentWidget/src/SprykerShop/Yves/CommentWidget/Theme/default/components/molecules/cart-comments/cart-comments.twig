@@ -80,7 +80,7 @@
                                 {% if comment.isAttached %}
                                     {% include molecule('cart-comment-info', 'CommentWidget') with {
                                         data: {
-                                            form: data.allCommentForms[comment.idComment] | default({}),
+                                            form: data.attachCommentForms[comment.idComment] | default({}),
                                             comment: comment,
                                             returnRoute: data.returnRoute,
                                         },
