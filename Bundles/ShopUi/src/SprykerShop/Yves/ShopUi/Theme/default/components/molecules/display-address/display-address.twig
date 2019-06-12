@@ -2,19 +2,20 @@
 
 {% define config = {
     name: 'display-address',
-    tag: 'ul'
+    tag: 'ul',
 } %}
 
 {% define data = {
-    address: required
+    address: required,
 } %}
 
-{% block class %}
+{% block class -%}
+    {{ parent() }}
     list
-{% endblock %}
+{%- endblock %}
 
 {% block body %}
-    <li class="list__item">{{ data.address.salutation }} <strong>{{ data.address.firstName }} {{ data.address.lastName }}</strong></li>
+    <li class="list__item">{{ data.address.salutation }} {{ data.address.firstName }} {{ data.address.lastName }}</li>
 
     {% if data.address.company is not empty %}
         <li class="list__item">{{ data.address.company }}</li>
