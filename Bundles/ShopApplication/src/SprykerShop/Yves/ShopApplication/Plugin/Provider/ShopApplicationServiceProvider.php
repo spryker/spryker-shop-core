@@ -27,6 +27,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @see \Spryker\Yves\Locale\Plugin\Application\LocaleApplicationPlugin
  *
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
+ * @method \SprykerShop\Yves\ShopApplication\ShopApplicationConfig getConfig()
  */
 class ShopApplicationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -56,7 +57,7 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
         $this->setLogLevel();
 
         $this->addGlobalTemplateVariables($app, [
-            'environment' => $this->getConfig()->getEnvironmentName(),
+            'environment' => $this->getConfig()->getShopTwigEnvironmentName(),
         ]);
     }
 
