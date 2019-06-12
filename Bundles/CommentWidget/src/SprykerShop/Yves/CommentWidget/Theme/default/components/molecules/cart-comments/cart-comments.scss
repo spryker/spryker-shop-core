@@ -1,4 +1,4 @@
-@mixin cart-comments($name: '.cart-comments') {
+@mixin comment-widget-cart-comments($name: '.cart-comments') {
     #{$name} {
         display: block;
 

@@ -31,7 +31,7 @@ export default class CartComments extends Component {
     protected setActiveTab(newActiveTab: HTMLElement): void {
         const currentActiveTab = this.querySelector(`.${this.tabActiveClass}`);
         const currentActiveContentBlock = this.querySelector(`.${this.contentBlockActiveClass}`);
-        const indexOfNeededContentBlock = this.tabs.findIndex(tab => tab===newActiveTab);
+        const indexOfNeededContentBlock = this.tabs.findIndex(tab => tab === newActiveTab);
         currentActiveTab.classList.remove(this.tabActiveClass);
         newActiveTab.classList.add(this.tabActiveClass);
         currentActiveContentBlock.classList.remove(this.contentBlockActiveClass);

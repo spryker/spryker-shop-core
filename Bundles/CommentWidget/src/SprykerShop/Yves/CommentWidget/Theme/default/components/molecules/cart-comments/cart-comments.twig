@@ -31,10 +31,10 @@
         <ul class="{{config.name}}__tabs">
             {% block tabItems %}
                 <li class="{{config.name}}__tab-item">
-                    <button class="{{config.name}}__tab {{config.name}}__tab--active {{config.jsName}}__tab"> {{ 'comment_widget.form.all' | trans }} ({{ data.commentThread.comments|length }})</button>
+                    <button class="{{config.name}}__tab {{config.name}}__tab--active {{config.jsName}}__tab"> {{ 'comment_widget.form.all' | trans }} ({{ data.commentThread.comments | length }})</button>
                 </li>
                 <li class="{{config.name}}__tab-item">
-                    <button class="{{config.name}}__tab {{config.jsName}}__tab">{{ 'comment_widget.form.attached' | trans }} ({{ attachedComments|length }}) </button>
+                    <button class="{{config.name}}__tab {{config.jsName}}__tab">{{ 'comment_widget.form.attached' | trans }} ({{ attachedComments | length }}) </button>
                 </li>
             {% endblock %}
         </ul>
@@ -44,7 +44,7 @@
             {% block contentItems %}
                 <div class="{{config.name}}__content-item {{config.name}}__content-item--active {{config.jsName}}__content-item">
                     {% for comment in data.commentThread.comments %}
-                        <div class="{{config.name}}__info">
+                        <div>
                             {% include molecule('cart-comment-info', 'CommentWidget') with {
                                 data: {
                                     form: data.allCommentForms[comment.idComment] | default({}),
@@ -76,7 +76,7 @@
                 <div class="{{config.name}}__content-item {{config.jsName}}__content-item">
                     {% if data.commentThread %}
                         {% for comment in data.commentThread.comments %}
-                            <div class="{{config.name}}__info">
+                            <div>
                                 {% if comment.isAttached %}
                                     {% include molecule('cart-comment-info', 'CommentWidget') with {
                                         data: {
