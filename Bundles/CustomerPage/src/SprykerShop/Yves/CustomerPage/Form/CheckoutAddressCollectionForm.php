@@ -164,8 +164,8 @@ class CheckoutAddressCollectionForm extends AbstractType
             return false;
         }
 
-        $idCustomerAddress  =$form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
-        
+        $idCustomerAddress = $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
+
         return $idCustomerAddress == CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES;
     }
 
