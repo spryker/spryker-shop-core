@@ -1,14 +1,8 @@
 import Component from 'ShopUi/models/component';
 
 export default class CartComments extends Component {
-    /**
-     * Elements targeted by click action.
-     */
-    tabs: HTMLElement[];
-    /**
-     * Elements shows by click on tab.
-     */
-    contentBlocks: HTMLElement[];
+    protected tabs: HTMLElement[];
+    protected contentBlocks: HTMLElement[];
 
     protected readyCallback(): void {}
 
@@ -28,13 +22,13 @@ export default class CartComments extends Component {
     }
 
     protected onTabClick(event: Event): void {
-        const clickedTab = <HTMLElement>event.target;
-        if (!clickedTab.classList.contains(this.tabActiveClass)) {
-            this.swithOnThisTab(clickedTab);
+        const targetTab = <HTMLElement>event.target;
+        if (!targetTab.classList.contains(this.tabActiveClass)) {
+            this.setActiveTab(targetTab);
         }
     }
 
-    protected swithOnThisTab(newActiveTab): void {
+    protected setActiveTab(newActiveTab: HTMLElement): void {
         const currentActiveTab = this.querySelector(`.${this.tabActiveClass}`);
         const currentActiveContentBlock = this.querySelector(`.${this.contentBlockActiveClass}`);
         const indexOfNeededContentBlock = this.tabs.findIndex(tab => tab===newActiveTab);
