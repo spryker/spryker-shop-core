@@ -90,19 +90,11 @@ class CheckoutAddressItemForm extends AbstractType
                     return false;
                 }
 
-                $quoteIdCustomerAddress = $customerAddressForm
-                    ->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
-                    ->getData();
-
-                if ($quoteIdCustomerAddress !== CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES) {
-                    return false;
-                }
-
                 if ($this->isIdCustomerAddressEmpty($customerAddressForm) && $this->isIdCompanyUnitAddressEmpty($customerAddressForm)) {
                     return [CheckoutAddressCollectionForm::GROUP_SHIPPING_ADDRESS];
                 }
 
-                return false;
+                return $this->isDeliverToMultipleAddressesEnabled($customerAddressForm);
             },
             CheckoutAddressForm::OPTION_VALIDATION_GROUP => CheckoutAddressCollectionForm::GROUP_SHIPPING_ADDRESS,
             CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
@@ -110,6 +102,22 @@ class CheckoutAddressItemForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool
+     */
+    protected function isDeliverToMultipleAddressesEnabled(FormInterface $form): bool
+    {
+        if ($form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS) !== true) {
+            return false;
+        }
+
+        $idCustomerAddress = $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
+
+        return $idCustomerAddress == CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES;
     }
 
     /**
