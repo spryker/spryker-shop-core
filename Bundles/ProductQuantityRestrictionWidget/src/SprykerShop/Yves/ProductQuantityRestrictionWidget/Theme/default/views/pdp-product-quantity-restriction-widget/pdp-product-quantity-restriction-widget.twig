@@ -1,0 +1,34 @@
+{% extends template('widget') %}
+
+{% define data = {
+    productQuantityStorage: _widget.productQuantityStorage
+} %}
+
+{% block body %}
+    <div class="grid grid--bottom grid--justify">
+        <div class="col col--sm-7">
+            {% include molecule('quantity-input') with {
+                inputAttributes: {
+                    class: 'input input--expand js-volume-price__quantity',
+                },
+                data: {
+                    maxQuantity: data.productQuantityStorage.quantityMax,
+                    value: data.productQuantityStorage.quantityMin,
+                    minQuantity: data.productQuantityStorage.quantityMin,
+                    step: data.productQuantityStorage.quantityInterval,
+                    hasUpdateButton: false,
+                },
+            } only %}
+        </div>
+        <div class="col--sm-4">
+            <button type="submit" id="add-to-cart-button" class="button button--success button--expand" data-init-single-click {{ qa('add-to-cart-button') }}>
+                {% include atom('icon') with {
+                    data: {
+                        name: 'cart-plus',
+                    },
+                } only %}
+                {{ 'page.detail.add-to-cart' | trans }}
+            </button>
+        </div>
+    </div>
+{% endblock %}

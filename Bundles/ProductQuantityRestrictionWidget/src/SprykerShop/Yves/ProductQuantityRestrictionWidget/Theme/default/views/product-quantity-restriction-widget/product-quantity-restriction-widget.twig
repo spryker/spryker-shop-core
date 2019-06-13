@@ -1,0 +1,16 @@
+{% extends template('widget') %}
+
+{% define data = {
+    productQuantityStorage: _widget.productQuantityStorage
+} %}
+
+{% block body %}
+    {% include molecule('quantity-input') with {
+        data: {
+            maxQuantity: data.productQuantityStorage.quantityMax,
+            value: data.productQuantityStorage.quantityMin,
+            minQuantity: data.productQuantityStorage.quantityMin,
+            step: data.productQuantityStorage.quantityInterval,
+        },
+    } only %}
+{% endblock %}
