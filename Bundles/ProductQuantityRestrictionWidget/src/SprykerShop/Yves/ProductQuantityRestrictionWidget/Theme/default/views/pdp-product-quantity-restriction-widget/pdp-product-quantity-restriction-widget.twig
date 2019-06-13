@@ -1,7 +1,7 @@
 {% extends template('widget') %}
 
 {% define data = {
-    productQuantityStorage: _widget.productQuantityStorage
+    productQuantityStorage: _widget.productQuantityStorage,
 } %}
 
 {% block body %}
@@ -20,7 +20,7 @@
                 },
             } only %}
         </div>
-        <div class="col--sm-4">
+        <div class="col col--sm-4">
             <button type="submit" id="add-to-cart-button" class="button button--success button--expand" data-init-single-click {{ qa('add-to-cart-button') }}>
                 {% include atom('icon') with {
                     data: {

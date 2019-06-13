@@ -7,8 +7,35 @@
 
 namespace SprykerShop\Yves\ProductQuantityRestrictionWidget\Widget;
 
-class PdpProductQuantityRestrictionWidget extends ProductQuantityRestrictionWidget
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
+
+/**
+ * @method \SprykerShop\Yves\ProductQuantityRestrictionWidget\ProductQuantityRestrictionWidgetFactory getFactory()
+ */
+class PdpProductQuantityRestrictionWidget extends AbstractWidget
 {
+    /**
+     * @param int $fkProductConcrete
+     */
+    public function __construct(int $fkProductConcrete)
+    {
+        $this->setQuantityRestrictions($fkProductConcrete);
+    }
+
+    /**
+     * @param int $fkProductConcrete
+     *
+     * @return void
+     */
+    protected function setQuantityRestrictions(int $fkProductConcrete): void
+    {
+        $productQuantityStorageTransfer = $this->getFactory()
+            ->createQuantityRestrictionReader()
+            ->getQuantityRestrictions($fkProductConcrete);
+
+        $this->addParameter('productQuantityStorage', $productQuantityStorageTransfer);
+    }
+
     /**
      * @return string
      */

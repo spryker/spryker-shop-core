@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/product-quantity-restriction-widget.svg)](https://travis-ci.org/spryker-shop/product-quantity-restriction-widget)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/product-quantity-restriction-widget/badge.svg)](https://coveralls.io/github/spryker-shop/product-quantityrestriction-widget)
 
-Provides Yves widget for handling quantity restrictions for a concrete product.
+Provides Yves widget to handle quantity restrictions for a concrete product.
 
 ## Installation
 

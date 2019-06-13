@@ -80,7 +80,7 @@
                 {% if canEditCart %}
                     {% widget 'CartProductMeasurementUnitQuantitySelectorWidget' args [data.cartItem] only %}
                     {% elsewidget 'QuantitySalesUnitWidgetPlugin' args [data.cartItem] only %} {# @deprecated Use CartProductMeasurementUnitQuantitySelectorWidget instead. #}
-                    {% elsewidget 'ProductQuantityRestrictionWidget' args [data.cartItem.id] only %}
+                    {% elsewidget 'ProductQuantityRestrictionWidget' args [data.cartItem] only %}
                     {% nowidget %}
                         {% include molecule('cart-quantity-input', 'CartPage') with {
                             data: {

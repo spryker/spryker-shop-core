@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ProductQuantityRestrictionWidget\Widget;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -15,11 +16,14 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class ProductQuantityRestrictionWidget extends AbstractWidget
 {
     /**
-     * @param int $fkProductConcrete
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      */
-    public function __construct(int $fkProductConcrete)
+    public function __construct(ItemTransfer $itemTransfer)
     {
-        $this->setQuantityRestrictions($fkProductConcrete);
+        $this->addParameter('quantity', $itemTransfer->getQuantity())
+            ->addParameter('groupKey', $itemTransfer->getGroupKey())
+            ->addParameter('sku', $itemTransfer->getSku());
+        $this->setQuantityRestrictions($itemTransfer->getId());
     }
 
     /**
