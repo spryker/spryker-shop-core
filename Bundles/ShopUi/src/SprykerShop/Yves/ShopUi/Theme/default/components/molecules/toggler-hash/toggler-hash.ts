@@ -4,7 +4,7 @@ export default class TogglerHash extends Component {
     /**
      * Elements targeted by the toggle action.
      */
-    readonly targets: HTMLElement[]
+    readonly targets: HTMLElement[];
 
     constructor() {
         super();
@@ -30,6 +30,7 @@ export default class TogglerHash extends Component {
     checkHash(): void {
         if (this.triggerHash === this.hash) {
             this.toggle(this.addClassWhenHashInUrl);
+
             return;
         }
 
@@ -37,7 +38,7 @@ export default class TogglerHash extends Component {
     }
 
     /**
-     * Toggles the class names.
+     * Toggles the class names in the target elements.
      * @param addClass A boolean value for a more flexible toggling action.
      */
     toggle(addClass: boolean): void {

@@ -23,6 +23,8 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_CART_ADD_ITEMS = 'cart/add-items';
     public const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
 
+    protected const ROUTE_CART_RESET_LOCK = 'cart/reset-lock';
+
     /**
      * @param \Silex\Application $app
      *
@@ -36,7 +38,8 @@ class CartControllerProvider extends AbstractYvesControllerProvider
             ->addCartRemoveRoute()
             ->addCartChangeQuantityRoute()
             ->addCartUpdateRoute()
-            ->addCartQuickAddRoute();
+            ->addCartQuickAddRoute()
+            ->addCartResetLockRoute();
     }
 
     /**
@@ -58,6 +61,20 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     protected function addCartAddItemsRoute()
     {
         $this->createPostController('/{cart}/add-items', self::ROUTE_CART_ADD_ITEMS, 'CartPage', 'Cart', 'addItems')
+            ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
+            ->value('cart', 'cart');
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\CartPage\Controller\CartLockController::resetLockAction()
+     *
+     * @return $this
+     */
+    protected function addCartResetLockRoute()
+    {
+        $this->createPostController('/{cart}/reset-lock', static::ROUTE_CART_RESET_LOCK, 'CartPage', 'CartLock', 'resetLock')
             ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart');
 
@@ -149,15 +166,15 @@ class CartControllerProvider extends AbstractYvesControllerProvider
      * @param mixed $unusedParameter
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return int
+     * @return float
      */
     public function getQuantityFromRequest($unusedParameter, Request $request)
     {
         if ($request->isMethod('POST')) {
-            return $request->request->getInt('quantity', 1);
+            return (float)$request->request->get('quantity', 1.0);
         }
 
-        return $request->query->getInt('quantity', 1);
+        return (float)$request->query->get('quantity', 1.0);
     }
 
     /**

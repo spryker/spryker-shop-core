@@ -72,13 +72,12 @@ class CartController extends AbstractController
             ->createCartItemsAttributeProvider()
             ->getItemsAttributes($quoteTransfer, $this->getLocale(), $selectedAttributes);
 
-        $isQuoteEditable = $this->getFactory()
-            ->getQuoteClient()
-            ->isQuoteEditable($quoteTransfer);
+        $quoteClient = $this->getFactory()->getQuoteClient();
 
         return [
             'cart' => $quoteTransfer,
-            'isQuoteEditable' => $isQuoteEditable,
+            'isQuoteEditable' => $quoteClient->isQuoteEditable($quoteTransfer),
+            'isQuoteLocked' => $quoteClient->isQuoteLocked($quoteTransfer),
             'cartItems' => $cartItems,
             'attributes' => $itemAttributesBySku,
             'isQuoteValid' => $validateQuoteResponseTransfer->getIsSuccessful(),
@@ -87,7 +86,7 @@ class CartController extends AbstractController
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param array $optionValueIds
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -121,12 +120,12 @@ class CartController extends AbstractController
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function quickAddAction(string $sku, int $quantity, Request $request): RedirectResponse
+    public function quickAddAction(string $sku, float $quantity, Request $request): RedirectResponse
     {
         if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
@@ -139,12 +138,12 @@ class CartController extends AbstractController
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeQuickAddAction(string $sku, int $quantity, Request $request): RedirectResponse
+    protected function executeQuickAddAction(string $sku, float $quantity, Request $request): RedirectResponse
     {
         $itemTransfer = (new ItemTransfer())
             ->setSku($sku)
@@ -190,7 +189,7 @@ class CartController extends AbstractController
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param string|null $groupKey
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -243,7 +242,7 @@ class CartController extends AbstractController
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param array $selectedAttributes
      * @param array $preselectedAttributes
      * @param string|null $groupKey

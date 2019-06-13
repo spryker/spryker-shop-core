@@ -1,5 +1,9 @@
 @mixin shop-ui-product-card($name: '.product-card') {
     @include shop-ui-card($name) {
+        &__container {
+            padding-bottom: 3.5rem;
+        }
+
         @content;
     }
 }

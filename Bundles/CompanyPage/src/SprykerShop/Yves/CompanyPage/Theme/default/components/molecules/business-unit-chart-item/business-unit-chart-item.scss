@@ -1,6 +1,3 @@
-$business-unit-chart-link-bg: $setting-color-lightest;
-$business-unit-chart-link-color: $setting-color-darkest;
-
 @mixin business-unit-chart-item($name: '.business-unit-chart-item') {
     #{$name} {
         & & {
@@ -11,8 +8,8 @@ $business-unit-chart-link-color: $setting-color-darkest;
             display: block;
             padding: map-get($setting-spacing, 'default');
             margin-bottom: map-get($setting-spacing, 'default');
-            background: $business-unit-chart-link-bg;
-            color: $business-unit-chart-link-color;
+            background: $setting-color-lightest;
+            color: $setting-color-darkest;
             border-radius: 4px;
         }
     }
