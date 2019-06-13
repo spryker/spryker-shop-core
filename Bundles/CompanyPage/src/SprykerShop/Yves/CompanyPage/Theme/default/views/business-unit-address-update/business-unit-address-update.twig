@@ -2,8 +2,8 @@
 
 {% define data = {
      form: _view.form,
-     idCompanyBusinessUnit: _view.idCompanyBusinessUnit | default(''),
-     idCompanyUnitAddress: _view.idCompanyUnitAddress | default(''),
+     idCompanyBusinessUnit: _view.idCompanyBusinessUnit | default,
+     idCompanyUnitAddress: _view.idCompanyUnitAddress | default,
      title: 'company.account.address' | trans,
      activePage: 'business-unit'
 } %}
@@ -29,8 +29,10 @@
                 <a class="button button--alert" href="{{ path('company/address/delete-confirmation', {'id': data.idCompanyUnitAddress, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">{{ 'company.account.business_unit.delete' | trans }}</a>
             </div>
         </div>
-        {% set buIndexUrl = path('company/business-unit/update', { id: data.idCompanyBusinessUnit }) %}
-        {% set buListUrl = path('company/business-unit') %}
+
+        {% set companyBusinessUnitUpdateUrl = path('company/business-unit/update', { id: data.idCompanyBusinessUnit }) %}
+        {% set companyBusinessUnitIndexUrl = path('company/business-unit') %}
+
         {% include molecule('form') with {
             data: {
                 form: data.form,
@@ -52,7 +54,7 @@
                 },
                 cancel: {
                     enable: true,
-                    url: data.idCompanyBusinessUnit ? buIndexUrl : buListUrl,
+                    url: data.idCompanyBusinessUnit ? companyBusinessUnitUpdateUrl : companyBusinessUnitIndexUrl,
                     text: 'general.back.button' | trans
                 }
             }

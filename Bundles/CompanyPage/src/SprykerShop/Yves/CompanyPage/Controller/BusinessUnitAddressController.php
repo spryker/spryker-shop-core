@@ -62,8 +62,6 @@ class BusinessUnitAddressController extends AbstractCompanyController
      */
     protected function executeCreateAction(Request $request)
     {
-        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_COMPANY_BUSINESS_UNIT_ID);
-
         $dataProvider = $this
             ->getFactory()
             ->createCompanyPageFormFactory()
@@ -74,6 +72,8 @@ class BusinessUnitAddressController extends AbstractCompanyController
             ->createCompanyPageFormFactory()
             ->getCompanyBusinessUnitAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
+
+        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_COMPANY_BUSINESS_UNIT_ID);
 
         if ($addressForm->isSubmitted() === false) {
             $addressForm->setData(
@@ -126,29 +126,38 @@ class BusinessUnitAddressController extends AbstractCompanyController
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
         }
 
-        $dataProvider = $this
-            ->getFactory()
+        $companyUnitAddressFormDataProvider = $this->getFactory()
             ->createCompanyPageFormFactory()
             ->createCompanyUnitAddressFormDataProvider();
 
-        $addressForm = $this
-            ->getFactory()
+        $companyUnitAddressForm = $this->getFactory()
             ->createCompanyPageFormFactory()
-            ->getCompanyBusinessUnitAddressForm($dataProvider->getOptions())
+            ->getCompanyBusinessUnitAddressForm($companyUnitAddressFormDataProvider->getOptions())
             ->handleRequest($request);
 
-        $data = $dataProvider->getData($this->findCurrentCompanyUserTransfer(), $idCompanyUnitAddress, $idCompanyBusinessUnit);
+        $companyUnitAddressFormData = $companyUnitAddressFormDataProvider->getData(
+            $this->findCurrentCompanyUserTransfer(),
+            $idCompanyUnitAddress,
+            $idCompanyBusinessUnit
+        );
 
-        if (!$this->isCurrentCustomerRelatedToCompany($data[CompanyBusinessUnitAddressForm::FIELD_FK_COMPANY])) {
+        if (!$this->isCurrentCustomerRelatedToCompany($companyUnitAddressFormData[CompanyBusinessUnitAddressForm::FIELD_FK_COMPANY])) {
             throw new NotFoundHttpException();
         }
 
-        if ($addressForm->isValid()) {
-            $data = array_merge($data, $addressForm->getData());
+        if (!$companyUnitAddressForm->isSubmitted()) {
+            $companyUnitAddressForm->setData($companyUnitAddressFormData);
+        }
+
+        if ($companyUnitAddressForm->isValid()) {
+            $companyUnitAddressFormData = array_merge(
+                $companyUnitAddressFormData,
+                $companyUnitAddressForm->getData()
+            );
 
             $companyUnitAddressTransfer = $this->getFactory()
                 ->createCompanyBusinessAddressSaver()
-                ->saveAddress($data);
+                ->saveAddress($companyUnitAddressFormData);
 
             $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS, [
                 '%address%' => $companyUnitAddressTransfer->getAddress1(),
@@ -158,12 +167,9 @@ class BusinessUnitAddressController extends AbstractCompanyController
                 'id' => $idCompanyBusinessUnit,
             ]);
         }
-        if ($addressForm->isSubmitted() === false) {
-            $addressForm->setData($data);
-        }
 
         return [
-            'form' => $addressForm->createView(),
+            'form' => $companyUnitAddressForm->createView(),
             'idCompanyBusinessUnit' => $idCompanyBusinessUnit,
             'idCompanyUnitAddress' => $idCompanyUnitAddress,
         ];

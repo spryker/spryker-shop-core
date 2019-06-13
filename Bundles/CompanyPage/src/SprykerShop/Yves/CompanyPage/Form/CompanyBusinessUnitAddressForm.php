@@ -16,6 +16,8 @@ class CompanyBusinessUnitAddressForm extends CompanyUnitAddressForm
 {
     public const FIELD_IS_DEFAULT_BILLING = 'is_default_billing';
 
+    protected const FIELD_LABEL_IS_DEFAULT_BILLING = 'company.account.address.is_default_billing';
+
     /**
      * @return string
      */
@@ -34,32 +36,26 @@ class CompanyBusinessUnitAddressForm extends CompanyUnitAddressForm
     {
         parent::buildForm($builder, $options);
 
-        $this->addIsDefaultBillingField($builder, $options);
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            $this->getCompanyBusinessUnitAddressIsDefaultBillingFormPreSetDataCallback()
+        );
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
+     * @return \Closure
      */
-    protected function addIsDefaultBillingField(FormBuilderInterface $builder, array $options)
+    protected function getCompanyBusinessUnitAddressIsDefaultBillingFormPreSetDataCallback(): callable
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+        return function (FormEvent $event) {
             $form = $event->getForm();
             $data = $event->getData();
-            $fieldOptions = [
-                'label' => 'company.account.address.is_default_billing',
+
+            $form->add(static::FIELD_IS_DEFAULT_BILLING, CheckboxType::class, [
                 'required' => false,
-            ];
-
-            if ($data && isset($data[static::FIELD_IS_DEFAULT_BILLING])) {
-                $fieldOptions['disabled'] = true;
-            }
-
-            $form->add(static::FIELD_IS_DEFAULT_BILLING, CheckboxType::class, $fieldOptions);
-        });
-
-        return $this;
+                'label' => static::FIELD_LABEL_IS_DEFAULT_BILLING,
+                'disabled' => isset($data[static::FIELD_IS_DEFAULT_BILLING]),
+            ]);
+        };
     }
 }
