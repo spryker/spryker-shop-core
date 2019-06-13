@@ -25,7 +25,7 @@ class ResourceSharePageControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
-     * @uses \SprykerShop\Yves\ResourceSharePage\Controller\LinkController::indexAction
+     * @uses \SprykerShop\Yves\ResourceSharePage\Controller\LinkController::indexAction()
      *
      * @return $this
      */

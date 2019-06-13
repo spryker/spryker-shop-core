@@ -13,7 +13,7 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
 class PersistentCartSharePageControllerProvider extends AbstractYvesControllerProvider
 {
     /**
-     * @uses \SprykerShop\Yves\PersistentCartSharePage\Controller\CartController::previewAction
+     * @uses \SprykerShop\Yves\PersistentCartSharePage\Controller\CartController::previewAction()
      */
     protected const ROUTE_CART_PREVIEW = 'cart/preview';
 
@@ -28,7 +28,7 @@ class PersistentCartSharePageControllerProvider extends AbstractYvesControllerPr
     }
 
     /**
-     * @uses \SprykerShop\Yves\PersistentCartSharePage\Controller\CartController::previewAction
+     * @uses \SprykerShop\Yves\PersistentCartSharePage\Controller\CartController::previewAction()
      *
      * @return $this
      */

@@ -16,12 +16,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class RouteResolver implements RouteResolverInterface
 {
     /**
-     * @see \SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider::ROUTE_LOGIN
+     * @uses \SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider::ROUTE_LOGIN
      */
     protected const ROUTE_LOGIN = 'login';
 
     /**
-     * @see \SprykerShop\Yves\CustomerPage\Plugin\CustomerPage\RedirectUriCustomerRedirectStrategyPlugin::PARAM_REDIRECT_URI
+     * @uses \SprykerShop\Yves\CustomerPage\Plugin\CustomerPage\RedirectUriCustomerRedirectStrategyPlugin::PARAM_REDIRECT_URI
      */
     protected const PARAM_REDIRECT_URI = 'redirectUri';
     protected const GLOSSARY_KEY_RESOURCE_SHARE_LINK_ERROR_NO_ROUTE = 'resource-share.link.error.no-route';
