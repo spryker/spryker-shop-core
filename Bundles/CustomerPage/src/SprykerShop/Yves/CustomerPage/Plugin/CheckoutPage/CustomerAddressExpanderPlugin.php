@@ -19,6 +19,7 @@ class CustomerAddressExpanderPlugin extends AbstractPlugin implements AddressTra
 {
     /**
      * {@inheritdoc}
+     * - Expands address transfer with customer address data.
      *
      * @api
      *

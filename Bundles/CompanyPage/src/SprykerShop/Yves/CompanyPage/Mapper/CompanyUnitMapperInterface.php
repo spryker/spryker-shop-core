@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CompanyPage\Mapper;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CompanyUnitMapperInterface
 {
@@ -21,5 +22,16 @@ interface CompanyUnitMapperInterface
     public function mapCompanyUnitAddressTransferToAddressTransfer(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
         AddressTransfer $addressTransfer
+    ): AddressTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function mapCustomerDataToAddressTransfer(
+        AddressTransfer $addressTransfer,
+        CustomerTransfer $customerTransfer
     ): AddressTransfer;
 }
