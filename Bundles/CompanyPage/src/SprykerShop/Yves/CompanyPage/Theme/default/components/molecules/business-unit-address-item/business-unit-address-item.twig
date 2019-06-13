@@ -19,7 +19,7 @@
                 })
             }}
         </div>
-        <div class="col col--md-3 col--sm-12 {{ config.name }}__actions">
+        <div class="{{ config.name }}__actions col col--sm-12 col--md-3">
             <a href="{{ url('company/business-unit/address/update', {'id': data.address.vars.value, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">
                 {{ "company.account.address.edit" | trans }}
             </a>
