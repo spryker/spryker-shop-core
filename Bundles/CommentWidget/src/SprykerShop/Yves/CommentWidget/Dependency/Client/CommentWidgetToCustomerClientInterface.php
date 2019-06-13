@@ -7,12 +7,10 @@
 
 namespace SprykerShop\Yves\CommentWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-
 interface CommentWidgetToCustomerClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer(): ?CustomerTransfer;
+    public function getCustomer();
 }

@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\CommentWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-
 class CommentWidgetToCustomerClientBridge implements CommentWidgetToCustomerClientInterface
 {
     /**
@@ -27,7 +25,7 @@ class CommentWidgetToCustomerClientBridge implements CommentWidgetToCustomerClie
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer(): ?CustomerTransfer
+    public function getCustomer()
     {
         return $this->customerClient->getCustomer();
     }
