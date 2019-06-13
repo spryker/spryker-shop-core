@@ -43,7 +43,6 @@ class ShipmentGroupsBuilder implements ShipmentGroupsBuilderInterface
             ->setShippingAddress($orderTransfer->getShippingAddress())
             ->setMethod($shipmentMethodTransfer);
 
-
         $shipmentGroupTransfer =  (new ShipmentGroupTransfer())
             ->setShipment($shipmentTransfer)
             ->setItems($orderTransfer->getItems());
