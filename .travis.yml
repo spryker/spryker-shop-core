@@ -18,12 +18,15 @@ env:
 
 before_install:
   - phpenv config-rm xdebug.ini
+  - nvm install 10
 
 install:
   - composer install --no-interaction --prefer-dist --optimize-autoloader
+  - npm install -g git+https://github.com/spryker-sdk/frontend-sniffer.git
 
 script:
   - composer cs-check
+  - frontend-sniffer --config ./ --path ./Bundles
 
 notifications:
   email: false
