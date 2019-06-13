@@ -36,14 +36,14 @@ class QuantityRestrictionReader implements QuantityRestrictionReaderInterface
     }
 
     /**
-     * @param int $fkProductConcrete
+     * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
      */
-    public function getQuantityRestrictions(int $fkProductConcrete): ProductQuantityStorageTransfer
+    public function getQuantityRestrictions(int $idProductConcrete): ProductQuantityStorageTransfer
     {
         $productQuantityStorageTransfer = $this->productQuantityStorageClient
-            ->findProductQuantityStorage($fkProductConcrete);
+            ->findProductQuantityStorage($idProductConcrete);
 
         if ($productQuantityStorageTransfer === null) {
             return $this->createDefaultProductQuantityStorageTransfer();

@@ -15,23 +15,23 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class PdpProductQuantityRestrictionWidget extends AbstractWidget
 {
     /**
-     * @param int $fkProductConcrete
+     * @param int $idProductConcrete
      */
-    public function __construct(int $fkProductConcrete)
+    public function __construct(int $idProductConcrete)
     {
-        $this->setQuantityRestrictions($fkProductConcrete);
+        $this->setQuantityRestrictions($idProductConcrete);
     }
 
     /**
-     * @param int $fkProductConcrete
+     * @param int $idProductConcrete
      *
      * @return void
      */
-    protected function setQuantityRestrictions(int $fkProductConcrete): void
+    protected function setQuantityRestrictions(int $idProductConcrete): void
     {
         $productQuantityStorageTransfer = $this->getFactory()
             ->createQuantityRestrictionReader()
-            ->getQuantityRestrictions($fkProductConcrete);
+            ->getQuantityRestrictions($idProductConcrete);
 
         $this->addParameter('productQuantityStorage', $productQuantityStorageTransfer);
     }
