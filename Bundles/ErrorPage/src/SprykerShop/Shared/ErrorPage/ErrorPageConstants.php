@@ -14,7 +14,7 @@ interface ErrorPageConstants
 {
     /**
      * Specification:
-     * - Enables stack trace output.
+     * - Defines the mode when 404 error output is extended with stacktrace.
      *
      * @api
      */

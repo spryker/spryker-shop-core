@@ -14,7 +14,7 @@ interface CalculationPageConstants
 {
     /**
      * Specification:
-     * - Enables cart debug.
+     * - Enables the endpoint to show debugging info for the cart.
      *
      * @api
      */
