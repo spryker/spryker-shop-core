@@ -12,5 +12,11 @@ namespace SprykerShop\Shared\CalculationPage;
  */
 interface CalculationPageConstants
 {
+    /**
+     * Specification:
+     * - Enables cart debug.
+     *
+     * @api
+     */
     public const ENABLE_CART_DEBUG = 'CALCULATION_PAGE:ENABLE_CART_DEBUG';
 }

@@ -75,7 +75,7 @@ class ShopApplicationTwigExtensionPlugin extends AbstractTwigExtensionPlugin
     public function getGlobals(): array
     {
         return [
-            'environment' => $this->getConfig()->getShopTwigEnvironmentName(),
+            'environment' => $this->getConfig()->getTwigEnvironmentName(),
         ];
     }
 }

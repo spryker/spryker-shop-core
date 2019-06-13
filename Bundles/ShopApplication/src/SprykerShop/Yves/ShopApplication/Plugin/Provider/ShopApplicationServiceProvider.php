@@ -57,7 +57,7 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
         $this->setLogLevel();
 
         $this->addGlobalTemplateVariables($app, [
-            'environment' => $this->getConfig()->getShopTwigEnvironmentName(),
+            'environment' => $this->getConfig()->getTwigEnvironmentName(),
         ]);
     }
 

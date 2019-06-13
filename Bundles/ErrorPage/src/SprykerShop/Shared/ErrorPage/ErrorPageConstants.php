@@ -12,5 +12,11 @@ namespace SprykerShop\Shared\ErrorPage;
  */
 interface ErrorPageConstants
 {
+    /**
+     * Specification:
+     * - Enables stack trace output.
+     *
+     * @api
+     */
     public const ENABLE_ERROR404_STACK_TRACE = 'ERROR_PAGE:ENABLE_ERROR404_STACK_TRACE';
 }

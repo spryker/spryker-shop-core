@@ -20,5 +20,5 @@ interface ShopApplicationConstants
      *
      * @api
      */
-    public const SHOP_TWIG_ENVIRONMENT_NAME = 'SHOP_APPLICATION:SHOP_TWIG_ENVIRONMENT_NAME';
+    public const TWIG_ENVIRONMENT_NAME = 'SHOP_APPLICATION:TWIG_ENVIRONMENT_NAME';
 }
