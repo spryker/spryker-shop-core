@@ -27,9 +27,14 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"%s" is not supported name of template.</strong>';
 
     /**
-     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT
+     * @deprecated Use `\SprykerShop\Yves\ContentProductWidget\Twig\ContentProductAbstractListTwigFunction::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE` instead.
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+
+    /**
+     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE
+     */
+    protected const WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE = 'bottom-title';
 
     /**
      * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE
@@ -114,6 +119,7 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
     {
         return [
             static::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT => '@ContentProductWidget/views/cms-product-abstract/cms-product-abstract.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE => '@ContentProductWidget/views/cms-product-abstract/cms-product-abstract.twig',
             static::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE => '@ContentProductWidget/views/cms-product-abstract/cms-product-abstract-top.twig',
         ];
     }
