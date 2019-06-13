@@ -48,6 +48,9 @@ class ShipmentGroupForm extends AbstractType
      */
     protected function addShipmentMethods(FormBuilderInterface $builder, array $options)
     {
+        /**
+         * @todo Try using POST_SET_DATA event.
+         */
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
             /**
              * @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
@@ -68,6 +71,23 @@ class ShipmentGroupForm extends AbstractType
                 'required' => true,
                 'label' => $shippingAddressLabel,
             ]);
+        });
+
+        /**
+         * @todo Try using POST_SET_DATA event.
+         */
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event): void {
+            /**
+             * @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+             */
+            $shipmentGroupTransfer = $event->getData();
+            if (!($shipmentGroupTransfer instanceof ShipmentGroupTransfer)) {
+                return;
+            }
+
+            $form = $event->getForm();
+            $options = $form->getConfig()->getOptions();
+            $test = 1;
         });
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event): void {

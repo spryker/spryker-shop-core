@@ -76,7 +76,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const ADDRESS_STEP_FORM_DATA_PROVIDER = 'ADDRESS_STEP_FORM_DATA_PROVIDER';
 
     public const PLUGIN_SUB_FORM_FILTERS = 'PLUGIN_SUB_FORM_FILTERS';
-    public const PLUGIN_ADDRESS_TRANSFER_EXPANDERS = 'PLUGIN_ADDRESS_TRANSFER_EXPANDERS';
+    public const PLUGIN_ADDRESS_STEP_EXECUTOR_ADDRESS_TRANSFER_EXPANDERS = 'PLUGIN_ADDRESS_STEP_EXECUTOR_ADDRESS_TRANSFER_EXPANDERS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -120,7 +120,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addGlossaryStorageClient($container);
         $container = $this->addShipmentService($container);
         $container = $this->addCustomerService($container);
-        $container = $this->addShoppingListItemExpanderPlugins($container);
+        $container = $this->addAddressStepExecutorAddressTransferExpanderPlugins($container);
 
         return $container;
     }
@@ -687,11 +687,11 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addShoppingListItemExpanderPlugins(Container $container): Container
+    protected function addAddressStepExecutorAddressTransferExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_ADDRESS_TRANSFER_EXPANDERS] = function () {
-            return $this->getAddressTransferExpanderPlugins();
-        };
+        $container->set(static::PLUGIN_ADDRESS_STEP_EXECUTOR_ADDRESS_TRANSFER_EXPANDERS, function (): array {
+            return $this->getAddressStepExecutorAddressExpanderPlugins();
+        });
 
         return $container;
     }
@@ -699,7 +699,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\AddressTransferExpanderPluginInterface[]
      */
-    protected function getAddressTransferExpanderPlugins(): array
+    protected function getAddressStepExecutorAddressExpanderPlugins(): array
     {
         return [];
     }

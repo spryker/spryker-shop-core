@@ -103,8 +103,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
             }
         }
 
-        $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
-        $quoteTransfer->setShipmentGroups($shipmentGroupTransfers);
+        $quoteTransfer = $this->setQuoteShipmentGroups($quoteTransfer);
 
         $quoteTransfer = $this->setQuoteShipment($quoteTransfer);
 
@@ -118,16 +117,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
-        /**
-         * @deprecated Exists for Backward Compatibility reasons only.
-         */
-        if (!$this->checkoutPageConfig->isMultiShipmentEnabled()) {
-            return [
-                ShipmentForm::OPTION_SHIPMENT_METHODS => $this->createAvailableShipmentChoiceList($quoteTransfer),
-            ];
-        }
-
-        $quoteTransfer = $this->setQuoteShipmentGroups($quoteTransfer);
+//        $quoteTransfer = $this->setQuoteShipmentGroups($quoteTransfer);
 
         return [
             ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP => $this->createAvailableMethodsByShipmentChoiceList($quoteTransfer),

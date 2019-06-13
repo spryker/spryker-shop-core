@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
@@ -63,7 +64,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() === null
-                || $this->customerService->isAddressEmpty($itemTransfer->getShipment()->getShippingAddress())
+                || $this->isAddressEmpty($itemTransfer->getShipment()->getShippingAddress())
             ) {
                 return true;
             }
@@ -105,6 +106,28 @@ class PostConditionChecker implements PostConditionCheckerInterface
     public function isBillingAddressEmpty(QuoteTransfer $quoteTransfer): bool
     {
         return $quoteTransfer->getBillingSameAsShipping() === false
-            && $this->customerService->isAddressEmpty($quoteTransfer->getBillingAddress());
+            && $this->isAddressEmpty($quoteTransfer->getBillingAddress());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
+     *
+     * @return bool
+     */
+    public function isAddressEmpty(?AddressTransfer $addressTransfer = null): bool
+    {
+        if ($addressTransfer === null) {
+            return true;
+        }
+
+        if ($addressTransfer->getIdCustomerAddress() !== null || $addressTransfer->getIdCompanyUnitAddress() !== null) {
+            return false;
+        }
+
+        $firstName = trim($addressTransfer->getFirstName());
+        $lastName = trim($addressTransfer->getLastName());
+
+        return ($firstName === null || $firstName === '')
+            && ($lastName === null || $lastName === '');
     }
 }

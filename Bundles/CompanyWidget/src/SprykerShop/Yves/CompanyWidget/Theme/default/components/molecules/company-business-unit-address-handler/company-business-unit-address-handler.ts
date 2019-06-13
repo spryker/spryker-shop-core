@@ -1,7 +1,6 @@
 import Component from 'ShopUi/models/component';
 
 const EVENT_HIDDEN_ADDRESS_INPUT_CHANGE = 'hidden-address-input-change';
-
 /**
  * @event hidden-address-input-change An event which is triggered after the new address are selected.
  */
@@ -41,13 +40,18 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         this.form = <HTMLFormElement>document.querySelector(this.formSelector);
         this.addressesSelects = <HTMLSelectElement[]>Array.from(this.form.querySelectorAll(this.dataSelector));
         this.hiddenDefaultAddressInput = <HTMLInputElement>this.form.querySelector(this.defaultAddressSelector);
-        this.shippingAddressToggler = <HTMLSelectElement>document.querySelector(this.shippingAddressTogglerSelector);
-
+        if (this.shippingAddressTogglerSelector) {
+            this.shippingAddressToggler = <HTMLSelectElement>document.querySelector(
+                this.shippingAddressTogglerSelector
+            );
+        }
         this.initAddressesData();
         this.mapEvents();
         this.initHiddenAddressInputChangeEvent();
         this.fillDefaultAddress();
-        this.toggleSplitDeliveryAddressFormValue();
+        if (this.shippingAddressToggler) {
+            this.toggleSplitDeliveryAddressFormValue();
+        }
     }
 
     protected mapEvents(): void {
@@ -57,10 +61,11 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
                 this.fillHiddenInputsWithNewAddress();
             });
         });
-
-        this.shippingAddressToggler.addEventListener('change', () => {
-            this.toggleSplitDeliveryAddressFormValue();
-        });
+        if (this.shippingAddressToggler) {
+            this.shippingAddressToggler.addEventListener('change', () => {
+                this.toggleSplitDeliveryAddressFormValue();
+            });
+        }
     }
 
     protected initHiddenAddressInputChangeEvent(): void {
@@ -75,7 +80,6 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         const hiddenInputIdCompanyShippingAddress = <HTMLInputElement>document.querySelector(
             `[name="${this.shippingCompanyAddressHiddenInputSelector}"]`
         );
-
         if (this.shippingAddressToggler.value === this.optionValueDeliverToMultipleAddresses) {
             hiddenInputIdCustomerShippingAddress.value = this.optionValueDeliverToMultipleAddresses;
             hiddenInputIdCompanyShippingAddress.value = this.optionValueDeliverToMultipleAddresses;
@@ -94,7 +98,6 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         const hiddenInputIdCompanyAddress = <HTMLInputElement>this.form.querySelector(
             `[name="${this.companyAddressHiddenInputSelector}"]`
         );
-
         this.hiddenDefaultAddressInput.value = this.currentAddress;
         this.fillHiddenInputAddressesFields(currentAddressList);
         hiddenInputIdCustomerAddress.dispatchEvent(this.hiddenAddressInputChangeEvent);
@@ -103,7 +106,6 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
 
     protected fillDefaultAddress(): void {
         const hiddenDefaultAddressInputValue = this.hiddenDefaultAddressInput.getAttribute('value');
-
         if (hiddenDefaultAddressInputValue) {
             this.currentAddress = hiddenDefaultAddressInputValue;
             this.fillHiddenInputsWithNewAddress();
@@ -123,7 +125,6 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
         );
         const idCustomerAddress = 'id_customer_address';
         const idCompanyAddress = 'id_company_unit_address';
-
         hiddenInputIdCustomerAddress.value = address ? address[idCustomerAddress] : '';
         hiddenInputIdCompanyAddress.value = address ? address[idCompanyAddress] : '';
     }

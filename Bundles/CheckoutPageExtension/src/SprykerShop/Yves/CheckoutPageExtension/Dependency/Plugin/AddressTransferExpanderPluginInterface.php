@@ -14,7 +14,7 @@ interface AddressTransferExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Extend address transfer with data from customer addresses fields.
+     * - Expand address transfer with data from customer addresses fields.
      *
      * @api
      *

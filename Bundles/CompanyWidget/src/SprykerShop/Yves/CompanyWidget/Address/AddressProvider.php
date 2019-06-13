@@ -89,7 +89,7 @@ class AddressProvider implements AddressProviderInterface
 
         $addressTransfer = $this->setAddressCustomerAttributes($addressTransfer, $customerTransfer);
         $addressTransfer->setKey($this->getBusinessUnitAddressKey($companyUnitAddressTransfer->getIdCompanyUnitAddress()));
-        $addressTransfer = $this->setCompanyNameToAddressTransfer($addressTransfer, $customerTransfer);
+        $addressTransfer = $this->hydrateCompanyNameToAddressTransfer($addressTransfer, $customerTransfer);
 
         return $addressTransfer;
     }
@@ -187,7 +187,7 @@ class AddressProvider implements AddressProviderInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function setCompanyNameToAddressTransfer(
+    protected function hydrateCompanyNameToAddressTransfer(
         AddressTransfer $addressTransfer,
         CustomerTransfer $customerTransfer
     ): AddressTransfer {

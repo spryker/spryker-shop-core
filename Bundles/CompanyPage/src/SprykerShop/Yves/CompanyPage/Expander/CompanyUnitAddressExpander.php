@@ -41,8 +41,7 @@ class CompanyUnitAddressExpander implements CompanyUnitAddressExpanderInterface
             return $addressTransfer;
         }
 
-        $idCompanyUnitAddress = (int)$addressTransfer->getIdCompanyUnitAddress();
-        $addressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
+        $addressTransfer = $this->convertIdCompanyUnitAddressToInt($addressTransfer);
 
         foreach ($this->getCompanyUnitAddresses($customerTransfer) as $companyUnitAddressTransfer) {
             if ($addressTransfer->getIdCompanyUnitAddress() !== $companyUnitAddressTransfer->getIdCompanyUnitAddress()) {
@@ -51,6 +50,19 @@ class CompanyUnitAddressExpander implements CompanyUnitAddressExpanderInterface
 
             return $this->prepareCompanyUnitAddress($companyUnitAddressTransfer, $customerTransfer);
         }
+
+        return $addressTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function convertIdCompanyUnitAddressToInt(AddressTransfer $addressTransfer): AddressTransfer
+    {
+        $idCompanyUnitAddress = (int)$addressTransfer->getIdCompanyUnitAddress();
+        $addressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
 
         return $addressTransfer;
     }
@@ -66,7 +78,7 @@ class CompanyUnitAddressExpander implements CompanyUnitAddressExpanderInterface
         $addressTransfer = $this->companyUnitMapper
             ->mapCompanyUnitAddressTransferToAddressTransfer($companyUnitAddressTransfer, new AddressTransfer());
 
-        $addressTransfer = $this->appendCustomerAttributesToAddressTransfer($addressTransfer, $customerTransfer);
+        $addressTransfer = $this->hydrateAddressTransferWithCustomerData($addressTransfer, $customerTransfer);
         $addressTransfer->setCompany($this->getCompanyName($customerTransfer));
 
         return $addressTransfer;
@@ -113,7 +125,7 @@ class CompanyUnitAddressExpander implements CompanyUnitAddressExpanderInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function appendCustomerAttributesToAddressTransfer(
+    protected function hydrateAddressTransferWithCustomerData(
         AddressTransfer $addressTransfer,
         CustomerTransfer $customerTransfer
     ): AddressTransfer {

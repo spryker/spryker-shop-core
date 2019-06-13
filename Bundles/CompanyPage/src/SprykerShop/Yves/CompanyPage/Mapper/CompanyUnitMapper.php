@@ -22,7 +22,6 @@ class CompanyUnitMapper implements CompanyUnitMapperInterface
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
         AddressTransfer $addressTransfer
     ): AddressTransfer {
-        return (new AddressTransfer())
-            ->fromArray($companyUnitAddressTransfer->modifiedToArray(), true);
+        return $addressTransfer->fromArray($companyUnitAddressTransfer->modifiedToArray(), true);
     }
 }

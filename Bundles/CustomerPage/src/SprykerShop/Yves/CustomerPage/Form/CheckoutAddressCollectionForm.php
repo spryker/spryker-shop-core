@@ -244,18 +244,28 @@ class CheckoutAddressCollectionForm extends AbstractType
                         return false;
                     }
 
-                    if ($shippingAddressForm->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
-                        && $shippingAddressForm->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData()
-                        == CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES) {
-                        return static::GROUP_BILLING_SAME_AS_SHIPPING;
-                    }
-
-                    return false;
+                    return $this->isDeliverToMultipleAddressesEnabled($shippingAddressForm);
                 },
             ]
         );
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool
+     */
+    protected function isDeliverToMultipleAddressesEnabled(FormInterface $form): bool
+    {
+        if ($form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS) !== true) {
+            return false;
+        }
+
+        $idCustomerAddress = $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
+
+        return $idCustomerAddress == CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES;
     }
 
     /**
@@ -417,7 +427,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     protected function isIdCustomerAddressAbsentOrEmpty(FormInterface $form): bool
     {
         return !$form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
-            && !$form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
+            || !$form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
     }
 
     /**
@@ -428,6 +438,6 @@ class CheckoutAddressCollectionForm extends AbstractType
     protected function isIdCompanyUnitAddressFieldAbsentOrEmpty(FormInterface $form): bool
     {
         return !$form->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)
-            && !$form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData();
+            || !$form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData();
     }
 }
