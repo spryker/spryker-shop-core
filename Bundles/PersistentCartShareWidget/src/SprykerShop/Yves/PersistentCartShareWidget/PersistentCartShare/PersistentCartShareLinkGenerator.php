@@ -20,6 +20,9 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
      * @uses \SprykerShop\Yves\ResourceSharePage\Plugin\Provider\ResourceSharePageControllerProvider::ROUTE_RESOURCE_SHARE_LINK
      */
     protected const LINK_ROUTE = 'resource-share/link';
+    /**
+     * @uses \SprykerShop\Yves\ResourceSharePage\Plugin\Provider\ResourceSharePageControllerProvider::PARAM_RESOURCE_SHARE_UUID
+     */
     protected const PARAM_RESOURCE_SHARE_UUID = 'resourceShareUuid';
 
     /**

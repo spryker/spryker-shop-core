@@ -31,6 +31,9 @@ class CartPreviewRouterStrategyPlugin extends AbstractPlugin implements Resource
      * @uses \SprykerShop\Yves\PersistentCartSharePage\Plugin\Provider\PersistentCartSharePageControllerProvider::ROUTE_CART_PREVIEW
      */
     protected const ROUTE_CART_PREVIEW = 'cart/preview';
+    /**
+     * @uses \SprykerShop\Yves\PersistentCartSharePage\Plugin\Provider\PersistentCartSharePageControllerProvider::PARAM_RESOURCE_SHARE_UUID
+     */
     protected const PARAM_RESOURCE_SHARE_UUID = 'resourceShareUuid';
 
     /**

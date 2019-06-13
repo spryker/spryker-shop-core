@@ -16,6 +16,7 @@ class PersistentCartSharePageControllerProvider extends AbstractYvesControllerPr
      * @uses \SprykerShop\Yves\PersistentCartSharePage\Controller\CartController::previewAction()
      */
     protected const ROUTE_CART_PREVIEW = 'cart/preview';
+    protected const PARAM_RESOURCE_SHARE_UUID = 'resourceShareUuid';
 
     /**
      * @param \Silex\Application $app
@@ -34,7 +35,7 @@ class PersistentCartSharePageControllerProvider extends AbstractYvesControllerPr
      */
     protected function addPersistentCartSharePagePreviewRoute()
     {
-        $this->createController('{persistentCartShare}/preview/{resourceShareUuid}', static::ROUTE_CART_PREVIEW, 'PersistentCartSharePage', 'Cart', 'preview')
+        $this->createController('{persistentCartShare}/preview/{' . static::PARAM_RESOURCE_SHARE_UUID . '}', static::ROUTE_CART_PREVIEW, 'PersistentCartSharePage', 'Cart', 'preview')
             ->assert('persistentCartShare', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('persistentCartShare', 'cart');
 
