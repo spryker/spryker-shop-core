@@ -19,6 +19,7 @@ class CompanyUnitAddressExpanderPlugin extends AbstractPlugin implements Address
 {
     /**
      * {@inheritdoc}
+     * - Expands address transfer with company unit address data
      *
      * @api
      *

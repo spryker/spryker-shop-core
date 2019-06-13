@@ -78,7 +78,7 @@ class CompanyUnitAddressExpander implements CompanyUnitAddressExpanderInterface
         $addressTransfer = $this->companyUnitMapper
             ->mapCompanyUnitAddressTransferToAddressTransfer($companyUnitAddressTransfer, new AddressTransfer());
 
-        $addressTransfer = $this->hydrateAddressTransferWithCustomerData($addressTransfer, $customerTransfer);
+        $addressTransfer = $this->mapCustomerDataToAddressTransfer($addressTransfer, $customerTransfer);
         $addressTransfer->setCompany($this->getCompanyName($customerTransfer));
 
         return $addressTransfer;
@@ -125,7 +125,7 @@ class CompanyUnitAddressExpander implements CompanyUnitAddressExpanderInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function hydrateAddressTransferWithCustomerData(
+    protected function mapCustomerDataToAddressTransfer(
         AddressTransfer $addressTransfer,
         CustomerTransfer $customerTransfer
     ): AddressTransfer {

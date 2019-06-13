@@ -119,8 +119,11 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     {
         $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
 
-        return $shippingAddressTransfer !== null
-            && ($shippingAddressTransfer->getIdCustomerAddress() === null || $shippingAddressTransfer->getIdCompanyUnitAddress());
+        if ($shippingAddressTransfer === null) {
+            return false;
+        }
+
+        return $shippingAddressTransfer->getIdCustomerAddress() === null || $shippingAddressTransfer->getIdCompanyUnitAddress();
     }
 
     /**
@@ -151,8 +154,11 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     {
         $billingAddressTransfer = $quoteTransfer->getBillingAddress();
 
-        return $billingAddressTransfer !== null
-            && ($billingAddressTransfer->getIdCustomerAddress() === null || $billingAddressTransfer->getIdCompanyUnitAddress());
+        if ($billingAddressTransfer === null) {
+            return false;
+        }
+
+        return $billingAddressTransfer->getIdCustomerAddress() === null || $billingAddressTransfer->getIdCompanyUnitAddress();
     }
 
     /**
