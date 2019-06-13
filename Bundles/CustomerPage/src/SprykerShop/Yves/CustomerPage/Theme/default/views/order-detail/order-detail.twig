@@ -39,15 +39,6 @@
         {% endblock %}
 
         {% block orderDetailContent %}
-            <div class="box">
-                {% widget 'CommentThreadWidget' args [
-                    data.order.idSalesOrder,
-                    'sales_order',
-                    app.request.requestUri,
-                    data.order.commentThread
-                ] only %}
-                {% endwidget %}
-            </div>
             {{ widgetBlock('CustomerReorderWidgetPlugin', 'formStart', data.order) }} {# @deprecated Use molecule('customer-reorder-form', 'CustomerReorderWidget') instead. #}
 
             {{ parent() }}

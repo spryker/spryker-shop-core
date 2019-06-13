@@ -68,7 +68,7 @@
                     {% widget 'CommentThreadWidget' args [
                         data.cart.idQuote,
                         'quote',
-                        'checkout-summary',
+                        app.request.requestUri,
                         data.cart.commentThread
                     ] only %}
                     {% endwidget %}

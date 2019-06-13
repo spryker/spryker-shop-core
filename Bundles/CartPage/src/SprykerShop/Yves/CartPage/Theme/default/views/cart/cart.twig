@@ -59,7 +59,7 @@
                         {% widget 'CommentThreadWidget' args [
                             data.cart.idQuote,
                             'quote',
-                            'cart',
+                            app.request.requestUri,
                             data.cart.commentThread
                         ] only %}
                         {% endwidget %}
@@ -153,7 +153,7 @@
                         {% widget 'CommentThreadWidget' args [
                             data.cart.idQuote,
                             'quote',
-                            'cart',
+                            app.request.requestUri,
                             data.cart.commentThread
                         ] only %}
                         {% endwidget %}
