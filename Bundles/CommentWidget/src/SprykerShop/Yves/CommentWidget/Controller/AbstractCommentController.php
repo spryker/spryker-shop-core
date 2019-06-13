@@ -16,7 +16,7 @@ use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 class AbstractCommentController extends AbstractController
 {
     protected const PARAMETER_UUID = 'uuid';
-    protected const PARAMETER_RETURN_ROUTE = 'returnRoute';
+    protected const PARAMETER_RETURN_URL = 'returnUrl';
 
     /**
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer

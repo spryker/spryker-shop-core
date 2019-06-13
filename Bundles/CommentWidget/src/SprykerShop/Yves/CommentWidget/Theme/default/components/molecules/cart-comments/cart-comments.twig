@@ -6,7 +6,7 @@
 } %}
 
 {% define data = {
-    returnRoute: required,
+    returnUrl: required,
     commentThread: required,
     createCommentForm: required,
     allCommentForms: required,
@@ -49,7 +49,7 @@
                                 data: {
                                     form: data.allCommentForms[comment.idComment] | default({}),
                                     comment: comment,
-                                    returnRoute: data.returnRoute,
+                                    returnUrl: data.returnUrl,
                                 },
                             } only %}
 
@@ -62,8 +62,8 @@
                                             value: comment.uuid,
                                         },
                                         {
-                                            name:"returnRoute",
-                                            value: data.returnRoute,
+                                            name:"returnUrl",
+                                            value: data.returnUrl,
                                         },
                                     ],
                                     buttonText: (comment.isAttached ? 'comment_widget.form.unattach' : 'comment_widget.form.attach') | trans,
@@ -82,7 +82,7 @@
                                         data: {
                                             form: data.attachCommentForms[comment.idComment] | default({}),
                                             comment: comment,
-                                            returnRoute: data.returnRoute,
+                                            returnUrl: data.returnUrl,
                                         },
                                     } only %}
 
@@ -95,8 +95,8 @@
                                                     value: comment.uuid,
                                                 },
                                                 {
-                                                    name:"returnRoute",
-                                                    value: data.returnRoute,
+                                                    name:"returnUrl",
+                                                    value: data.returnUrl,
                                                 },
                                             ],
                                             buttonText: (comment.isAttached ? 'comment_widget.form.unattach' : 'comment_widget.form.attach') | trans,

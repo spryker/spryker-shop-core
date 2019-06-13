@@ -7,7 +7,7 @@
 {% define data = {
     form: {},
     comment: required,
-    returnRoute: '',
+    returnUrl: '',
 } %}
 
 {% block body %}
@@ -30,7 +30,7 @@
                 data: {
                     form: data.form,
                     comment: data.comment,
-                    returnRoute: data.returnRoute,
+                    returnUrl: data.returnUrl,
                 },
             } only %}
         {% endif %}

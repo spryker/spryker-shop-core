@@ -1,7 +1,7 @@
 {% extends template('widget') %}
 
 {% define data = {
-    returnRoute: _widget.returnRoute,
+    returnUrl: _widget.returnUrl,
     commentThread: _widget.commentThread,
     createCommentForm: _widget.createCommentForm,
     allCommentForms: _widget.allCommentForms,
@@ -21,7 +21,7 @@
     <hr>
     {% include molecule('cart-comments', 'CommentWidget') with {
         data: {
-            returnRoute: data.returnRoute,
+            returnUrl: data.returnUrl,
             commentThread: data.commentThread,
             createCommentForm: data.createCommentForm,
             allCommentForms: data.allCommentForms,
@@ -35,7 +35,7 @@
         }) }}
 
         {{ form_widget(data.createCommentForm) }}
-        <input type="hidden" name="returnRoute" value="{{ data.returnRoute }}">
+        <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
         <input type="hidden" name="ownerId" value="{{ data.commentThread.ownerId }}">
         <input type="hidden" name="ownerType" value="{{ data.commentThread.ownerType }}">
         <button type="submit" class="button button--primary">{{ 'comment_widget.form.add_comment' | trans }}</button>

@@ -16,7 +16,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class CommentThreadWidget extends AbstractWidget
 {
-    protected const PARAMETER_RETURN_ROUTE = 'returnRoute';
+    protected const PARAMETER_RETURN_URL = 'returnUrl';
     protected const PARAMETER_COMMENT_THREAD = 'commentThread';
 
     protected const PARAMETER_ALL_COMMENT_FORMS = 'allCommentForms';
@@ -26,13 +26,13 @@ class CommentThreadWidget extends AbstractWidget
     /**
      * @param int $ownerId
      * @param string $ownerType
-     * @param string $returnRoute
+     * @param string $returnUrl
      * @param \Generated\Shared\Transfer\CommentThreadTransfer|null $commentThreadTransfer
      */
     public function __construct(
         int $ownerId,
         string $ownerType,
-        string $returnRoute,
+        string $returnUrl,
         ?CommentThreadTransfer $commentThreadTransfer
     ) {
         $commentThreadTransfer = $this->getFactory()
@@ -43,7 +43,7 @@ class CommentThreadWidget extends AbstractWidget
             ->setOwnerId($ownerId)
             ->setOwnerType($ownerType);
 
-        $this->addReturnRouteParameter($returnRoute);
+        $this->addReturnUrlParameter($returnUrl);
         $this->addCommentThreadParameter($commentThreadTransfer);
         $this->addALlCommentFormsParameter($commentThreadTransfer);
         $this->addAttachCommentFormsParameter($commentThreadTransfer);
@@ -67,33 +67,13 @@ class CommentThreadWidget extends AbstractWidget
     }
 
     /**
-     * @param int $ownerId
+     * @param string $returnUrl
      *
      * @return void
      */
-    protected function addOwnerIdParameter(int $ownerId): void
+    protected function addReturnUrlParameter(string $returnUrl): void
     {
-        $this->addParameter(static::PARAMETER_OWNER_ID, $ownerId);
-    }
-
-    /**
-     * @param string $ownerType
-     *
-     * @return void
-     */
-    protected function addOwnerTypeParameter(string $ownerType): void
-    {
-        $this->addParameter(static::PARAMETER_OWNER_TYPE, $ownerType);
-    }
-
-    /**
-     * @param string $returnRoute
-     *
-     * @return void
-     */
-    protected function addReturnRouteParameter(string $returnRoute): void
-    {
-        $this->addParameter(static::PARAMETER_RETURN_ROUTE, $returnRoute);
+        $this->addParameter(static::PARAMETER_RETURN_URL, $returnUrl);
     }
 
     /**

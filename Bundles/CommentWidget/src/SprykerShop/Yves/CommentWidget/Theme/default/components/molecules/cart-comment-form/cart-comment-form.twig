@@ -7,7 +7,7 @@
 {% define data = {
     form: required,
     comment: required,
-    returnRoute: required,
+    returnUrl: required,
 } %}
 
 {% block body %}
@@ -22,7 +22,7 @@
     {% endfor %}
     {% do data.form.tags.setRendered %}
     {{ form_row(data.form._token, { 'id': '' }) }}
-    <input type="hidden" name="returnRoute" value="{{ data.returnRoute }}">
+    <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
     <button type="submit" class="button button--primary float-right">{{ 'comment_widget.form.update_comment' | trans }}</button>
 
     {{ form_end(data.form) }}
@@ -36,8 +36,8 @@
                     value: data.comment.uuid,
                 },
                 {
-                    name:"returnRoute",
-                    value: data.returnRoute,
+                    name:"returnUrl",
+                    value: data.returnUrl,
                 },
             ],
             buttonClassString: 'button button--success float-right',

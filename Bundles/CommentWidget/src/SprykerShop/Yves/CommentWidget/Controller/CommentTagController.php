@@ -67,7 +67,7 @@ class CommentTagController extends AbstractCommentController
             $this->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
         }
 
-        return $this->redirectResponseInternal($request->request->get(static::PARAMETER_RETURN_ROUTE));
+        return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
     }
 
     /**
@@ -93,6 +93,6 @@ class CommentTagController extends AbstractCommentController
             $this->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
         }
 
-        return $this->redirectResponseInternal($request->request->get(static::PARAMETER_RETURN_ROUTE));
+        return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
     }
 }
