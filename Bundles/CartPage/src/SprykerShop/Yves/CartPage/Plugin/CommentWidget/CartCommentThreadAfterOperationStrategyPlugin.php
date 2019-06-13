@@ -16,7 +16,10 @@ use SprykerShop\Yves\CommentWidgetExtension\Dependency\Plugin\CommentThreadAfter
  */
 class CartCommentThreadAfterOperationStrategyPlugin extends AbstractPlugin implements CommentThreadAfterOperationStrategyPluginInterface
 {
-    protected const COMMENT_THREAD_OWNER_TYPE = 'quote';
+    /**
+     * @uses \Spryker\Zed\Comment\CommentConfig::COMMENT_THREAD_QUOTE_OWNER_TYPE
+     */
+    protected const COMMENT_THREAD_QUOTE_OWNER_TYPE = 'quote';
 
     /**
      * {@inheritdoc}
@@ -30,7 +33,7 @@ class CartCommentThreadAfterOperationStrategyPlugin extends AbstractPlugin imple
      */
     public function isApplicable(CommentThreadTransfer $commentThreadTransfer): bool
     {
-        return $commentThreadTransfer->getOwnerType() === static::COMMENT_THREAD_OWNER_TYPE;
+        return $commentThreadTransfer->getOwnerType() === static::COMMENT_THREAD_QUOTE_OWNER_TYPE;
     }
 
     /**
