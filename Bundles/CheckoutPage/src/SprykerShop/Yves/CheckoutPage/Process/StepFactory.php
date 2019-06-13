@@ -24,8 +24,6 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleC
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
-use SprykerShop\Yves\CheckoutPage\Model\Address\CustomerAddressExpander;
-use SprykerShop\Yves\CheckoutPage\Model\Address\CustomerAddressExpanderInterface;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep\AddressSaver;
@@ -352,7 +350,8 @@ class StepFactory extends AbstractFactory
     {
         return new AddressSaver(
             $this->getCustomerService(),
-            $this->getCustomerAddressExpander()
+            $this->getCustomerClient(),
+            $this->getShoppingListItemExpanderPlugins()
         );
     }
 
@@ -548,10 +547,10 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPage\Model\Address\CustomerAddressExpanderInterface
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\AddressTransferExpanderPluginInterface[]
      */
-    public function getCustomerAddressExpander(): CustomerAddressExpanderInterface
+    public function getShoppingListItemExpanderPlugins(): array
     {
-        return new CustomerAddressExpander($this->getCustomerClient());
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_ADDRESS_STEP_EXECUTOR_ADDRESS_TRANSFER_EXPANDERS);
     }
 }

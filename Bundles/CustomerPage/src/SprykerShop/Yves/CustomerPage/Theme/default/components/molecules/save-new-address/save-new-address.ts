@@ -6,10 +6,12 @@ export default class SaveNewAddress extends Component {
      * The select/input address element which triggers toggling of the shipping address form.
      */
     customerShippingAddresses: HTMLFormElement;
+    protected companyShippingAddresses: HTMLFormElement;
     /**
      * The select/input address element which triggers toggling of the billing address form.
      */
     customerBillingAddresses: HTMLFormElement;
+    protected companyBillingAddresses: HTMLFormElement;
     /**
      * The input checkbox element which shows/hides if specified address need to be save/unsave.
      */
@@ -42,8 +44,20 @@ export default class SaveNewAddress extends Component {
             );
         }
 
+        if (this.shippingCompanyAddressTogglerSelector) {
+            this.companyShippingAddresses = <HTMLFormElement>document.querySelector(
+                this.shippingCompanyAddressTogglerSelector
+            );
+        }
+
         if (this.billingAddressTogglerSelector) {
             this.customerBillingAddresses = <HTMLFormElement>document.querySelector(this.billingAddressTogglerSelector);
+        }
+
+        if (this.billingCompanyAddressTogglerSelector) {
+            this.companyBillingAddresses = <HTMLFormElement>document.querySelector(
+                this.billingCompanyAddressTogglerSelector
+            );
         }
 
         if (this.billingSameAsShippingAddressTogglerSelector) {
@@ -77,10 +91,20 @@ export default class SaveNewAddress extends Component {
     }
 
     protected mapEvents(): void {
-        this.customerShippingAddresses.addEventListener('change', () => this.shippingTogglerOnChange());
+        if (this.customerShippingAddresses) {
+            this.customerShippingAddresses.addEventListener('change', () => this.shippingTogglerOnChange());
+        }
+
+        if (this.companyShippingAddresses) {
+            this.companyShippingAddresses.addEventListener('change', () => this.shippingTogglerOnChange());
+        }
 
         if (this.customerBillingAddresses) {
             this.customerBillingAddresses.addEventListener('change', () => this.billingTogglerOnChange());
+        }
+
+        if (this.companyBillingAddresses) {
+            this.companyBillingAddresses.addEventListener('change', () => this.billingTogglerOnChange());
         }
 
         if (this.sameAsShippingToggler) {
@@ -104,7 +128,7 @@ export default class SaveNewAddress extends Component {
             return;
         }
 
-        this.newShippingAddressChecked = this.isSaveNewAddressOptionSelected(this.customerShippingAddresses);
+        this.saveNewShippingAddressChecked();
         this.toggleSaveNewAddress();
     }
 
@@ -118,38 +142,54 @@ export default class SaveNewAddress extends Component {
     }
 
     protected shippingTogglerOnChange(): void {
-        this.initSplitDeliveryToggler();
+        if (this.customerShippingAddresses) {
+            this.initSplitDeliveryToggler();
+        }
 
-        this.newShippingAddressChecked = this.addressTogglerChange(this.customerShippingAddresses);
+        this.saveNewShippingAddressChecked();
         this.toggleSaveNewAddress();
     }
 
     protected billingTogglerOnChange(): void {
-        this.newBillingAddressChecked = this.addressTogglerChange(this.customerBillingAddresses);
+        this.saveNewBillingAddressChecked();
         this.toggleSaveNewAddress();
     }
 
     protected initSaveNewAddressState(): void {
-        this.newShippingAddressChecked = this.isSaveNewAddressOptionSelected(this.customerShippingAddresses);
-
         if (this.customerBillingAddresses) {
-            this.newBillingAddressChecked = this.isSaveNewAddressOptionSelected(this.customerBillingAddresses);
+            this.saveNewBillingAddressChecked();
         }
-
-        this.initSplitDeliveryToggler();
-        this.toggleSaveNewAddress();
-
+        if (this.customerShippingAddresses) {
+            this.initSplitDeliveryToggler();
+        }
         if (this.businessUnitShippingAddressToggler) {
             this.splitDeliveryTogglerOnChange();
         }
+
+        this.saveNewShippingAddressChecked();
+        this.toggleSaveNewAddress();
     }
 
-    protected addressTogglerChange(toggler: HTMLFormElement): boolean {
-        return this.isSaveNewAddressOptionSelected(toggler);
+    protected saveNewBillingAddressChecked(): void {
+        this.newBillingAddressChecked = this.isSaveNewAddressOptionSelected(
+            this.companyBillingAddresses && this.companyBillingAddresses.value ?
+                this.companyBillingAddresses :
+                this.customerBillingAddresses
+        );
+    }
+
+    protected saveNewShippingAddressChecked(): void {
+        this.newShippingAddressChecked = this.isSaveNewAddressOptionSelected(
+            this.companyShippingAddresses && this.companyShippingAddresses.value ?
+                this.companyShippingAddresses :
+                this.customerShippingAddresses
+        );
     }
 
     protected isSaveNewAddressOptionSelected(toggler: HTMLFormElement): boolean {
-        return !toggler.value;
+        if (toggler) {
+            return !toggler.value;
+        }
     }
 
     /**
@@ -193,17 +233,31 @@ export default class SaveNewAddress extends Component {
     }
 
     /**
-     * Gets a querySelector of the shipping address toggler element.
+     * Gets a querySelector of the shipping customer address toggler element.
      */
     get shippingAddressTogglerSelector(): string {
         return this.getAttribute('shipping-address-toggler-selector');
     }
 
     /**
-     * Gets a querySelector of the billing address toggler element.
+     * Gets a querySelector of the shipping company address toggler element.
+     */
+    get shippingCompanyAddressTogglerSelector(): string {
+        return this.getAttribute('shipping-company-address-toggler-selector');
+    }
+
+    /**
+     * Gets a querySelector of the billing customer address toggler element.
      */
     get billingAddressTogglerSelector(): string {
         return this.getAttribute('billing-address-toggler-selector');
+    }
+
+    /**
+     * Gets a querySelector of the billing company address toggler element.
+     */
+    get billingCompanyAddressTogglerSelector(): string {
+        return this.getAttribute('billing-company-address-toggler-selector');
     }
 
     /**

@@ -86,7 +86,7 @@ class CheckoutAddressItemForm extends AbstractType
                     ->getParent()
                     ->get(CheckoutAddressCollectionForm::FIELD_SHIPPING_ADDRESS);
 
-                if (!$customerAddressForm->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)) {
+                if (!$this->isIdCustomerOrCompanyUnitAddressesExist($customerAddressForm)) {
                     return false;
                 }
 
@@ -98,9 +98,7 @@ class CheckoutAddressItemForm extends AbstractType
                     return false;
                 }
 
-                if ($form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS) === true
-                    && $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() === null
-                ) {
+                if ($this->isIdCustomerAddressEmpty($customerAddressForm) && $this->isIdCompanyUnitAddressEmpty($customerAddressForm)) {
                     return [CheckoutAddressCollectionForm::GROUP_SHIPPING_ADDRESS];
                 }
 
@@ -153,5 +151,38 @@ class CheckoutAddressItemForm extends AbstractType
         return function (?bool $value): bool {
             return !$value;
         };
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $customerAddressForm
+     *
+     * @return bool
+     */
+    protected function isIdCustomerOrCompanyUnitAddressesExist(FormInterface $customerAddressForm): bool
+    {
+        return $customerAddressForm->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
+            || $customerAddressForm->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool
+     */
+    protected function isIdCustomerAddressEmpty(FormInterface $form): bool
+    {
+        return $form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS) === true
+            && $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() === null;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool
+     */
+    protected function isIdCompanyUnitAddressEmpty(FormInterface $form): bool
+    {
+        return $form->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS) === true
+            && $form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData() === null;
     }
 }

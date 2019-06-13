@@ -8,12 +8,13 @@
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
-use SprykerShop\Yves\CheckoutPage\Model\Address\CustomerAddressExpanderInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\SaverInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,9 +26,14 @@ class AddressSaver implements SaverInterface
     protected $customerService;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\Model\Address\CustomerAddressExpanderInterface
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface
      */
-    protected $customerAddressExpander;
+    protected $customerClient;
+
+    /**
+     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\AddressTransferExpanderPluginInterface[]
+     */
+    protected $addressTransferExpanderPlugins;
 
     /**
      * @var \Generated\Shared\Transfer\ShipmentTransfer[]
@@ -36,14 +42,17 @@ class AddressSaver implements SaverInterface
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface $customerService
-     * @param \SprykerShop\Yves\CheckoutPage\Model\Address\CustomerAddressExpanderInterface $customerAddressExpander
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
+     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\AddressTransferExpanderPluginInterface[] $addressTransferExpanderPlugins
      */
     public function __construct(
         CheckoutPageToCustomerServiceInterface $customerService,
-        CustomerAddressExpanderInterface $customerAddressExpander
+        CheckoutPageToCustomerClientInterface $customerClient,
+        array $addressTransferExpanderPlugins
     ) {
         $this->customerService = $customerService;
-        $this->customerAddressExpander = $customerAddressExpander;
+        $this->customerClient = $customerClient;
+        $this->addressTransferExpanderPlugins = $addressTransferExpanderPlugins;
     }
 
     /**
@@ -59,9 +68,15 @@ class AddressSaver implements SaverInterface
      */
     public function save(Request $request, AbstractTransfer $quoteTransfer): AbstractTransfer
     {
-        $quoteTransfer = $this->setQuoteShippingAddress($quoteTransfer);
-        $quoteTransfer = $this->setItemsShippingAddress($quoteTransfer);
-        $quoteTransfer = $this->setBillingAddress($quoteTransfer);
+        $customerTransfer = $this->getCustomerTransfer();
+
+        if ($customerTransfer === null) {
+            return $quoteTransfer;
+        }
+
+        $quoteTransfer = $this->setQuoteShippingAddress($quoteTransfer, $customerTransfer);
+        $quoteTransfer = $this->setItemsShippingAddress($quoteTransfer, $customerTransfer);
+        $quoteTransfer = $this->setBillingAddress($quoteTransfer, $customerTransfer);
         $quoteTransfer = $this->setQuoteShipment($quoteTransfer);
 
         return $quoteTransfer;
@@ -69,10 +84,11 @@ class AddressSaver implements SaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function setQuoteShippingAddress(QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function setQuoteShippingAddress(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): QuoteTransfer
     {
         $addressTransfer = $quoteTransfer->getShippingAddress();
 
@@ -81,18 +97,19 @@ class AddressSaver implements SaverInterface
         }
 
         $isDefaultShipping = $addressTransfer->getIsDefaultShipping();
-        $addressTransfer = $this->customerAddressExpander->expand($addressTransfer);
+        $addressTransfer = $this->expandAddressTransfer($addressTransfer, $customerTransfer);
         $addressTransfer->setIsDefaultShipping($isDefaultShipping);
 
-        return $quoteTransfer;
+        return $quoteTransfer->setShippingAddress($addressTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function setItemsShippingAddress(QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function setItemsShippingAddress(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $shipmentTransfer = $itemTransfer->getShipment();
@@ -107,7 +124,7 @@ class AddressSaver implements SaverInterface
                 $addressTransfer = $quoteTransfer->getShippingAddress();
             }
 
-            $itemTransfer->setShipment($this->getItemShipment($addressTransfer));
+            $itemTransfer->setShipment($this->getItemShipment($addressTransfer, $customerTransfer));
         }
 
         return $quoteTransfer;
@@ -115,10 +132,11 @@ class AddressSaver implements SaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function setBillingAddress(QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function setBillingAddress(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): QuoteTransfer
     {
         if ($quoteTransfer->getBillingSameAsShipping() === true) {
             $billingAddressTransfer = $this->copyShippingAddress($quoteTransfer->getShippingAddress());
@@ -132,7 +150,7 @@ class AddressSaver implements SaverInterface
             return $quoteTransfer;
         }
 
-        $billingAddressTransfer = $this->customerAddressExpander->expand($billingAddressTransfer);
+        $billingAddressTransfer = $this->expandAddressTransfer($billingAddressTransfer, $customerTransfer);
         $quoteTransfer->setBillingAddress($billingAddressTransfer);
 
         return $quoteTransfer;
@@ -162,12 +180,13 @@ class AddressSaver implements SaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $itemShippingAddress
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    protected function getItemShipment(AddressTransfer $itemShippingAddress): ShipmentTransfer
+    protected function getItemShipment(AddressTransfer $itemShippingAddress, CustomerTransfer $customerTransfer): ShipmentTransfer
     {
-        $shippingAddress = $this->customerAddressExpander->expand($itemShippingAddress);
+        $shippingAddress = $this->expandAddressTransfer($itemShippingAddress, $customerTransfer);
         $addressHash = $this->customerService->getUniqueAddressKey($shippingAddress);
 
         if (isset($this->existingShipments[$addressHash])) {
@@ -192,5 +211,28 @@ class AddressSaver implements SaverInterface
         }
 
         return (clone $addressTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected function getCustomerTransfer(): ?CustomerTransfer
+    {
+        return $this->customerClient->getCustomer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function expandAddressTransfer(AddressTransfer $addressTransfer, CustomerTransfer $customerTransfer): AddressTransfer
+    {
+        foreach ($this->addressTransferExpanderPlugins as $addressTransferExpanderPlugin) {
+            $addressTransfer = $addressTransferExpanderPlugin->expand($addressTransfer, $customerTransfer);
+        }
+
+        return $addressTransfer;
     }
 }

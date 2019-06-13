@@ -1,0 +1,12 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'is-next-checkout-step-enabled',
+    tag: 'is-next-checkout-step-enabled',
+} %}
+
+{% define attributes = {
+    'trigger-selector': required,
+    'target-selector': required,
+    'toggle-option-value': '-1',
+} %}
