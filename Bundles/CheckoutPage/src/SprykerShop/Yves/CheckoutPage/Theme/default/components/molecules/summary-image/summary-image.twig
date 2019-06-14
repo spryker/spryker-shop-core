@@ -2,22 +2,21 @@
 
 {% define config = {
     name: 'summary-image',
-    tag: 'div'
 } %}
 
 {% define data = {
     name: '',
-    image: null
+    image: null,
 } %}
 
 {% block body %}
-    {% if data.image is not empty %}
+    {% if data.image %}
         {% include atom('thumbnail') with {
             modifiers: ['small'],
             attributes: {
                 alt: data.name,
-                src: data.image.externalUrlLarge
-            }
+                src: data.image.externalUrlLarge,
+            },
         } only %}
     {% else %}
         <div class="text-center">
