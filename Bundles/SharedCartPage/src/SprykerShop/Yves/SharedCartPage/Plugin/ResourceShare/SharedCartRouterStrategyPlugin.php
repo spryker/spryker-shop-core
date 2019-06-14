@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\SharedCartPage\Plugin\ResourceShare;
 
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
 use Generated\Shared\Transfer\RouteTransfer;
 use SprykerShop\Yves\ResourceSharePageExtension\Dependency\Plugin\ResourceShareRouterStrategyPluginInterface;
 
