@@ -88,7 +88,6 @@
             {% elsewidget 'ProductPackagingUnitWidgetPlugin' args [data.product, isDisabled] only %} {# @deprecated Use ProductPackagingUnitWidget instead. #}
             {% elsewidget 'ManageProductMeasurementUnitWidget' args [data.product, isDisabled] only %}
             {% elsewidget 'ProductMeasurementUnitWidgetPlugin' args [data.product, isDisabled] only %} {# @deprecated Use ManageProductMeasurementUnitWidget instead. #}
-            {% elsewidget 'PdpProductQuantityRestrictionWidget' args [data.product.idProductConcrete] only %}
             {% nowidget %}
                 <div class="grid grid--bottom grid--justify">
                     <div class="col col--sm-5">
