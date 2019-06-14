@@ -50,7 +50,7 @@ class ContentFileWidgetConfig extends AbstractBundleConfig
     ];
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getFileIconNames(): array
     {
