@@ -120,7 +120,7 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
         return [
             static::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT => '@ContentProductWidget/views/cms-product-abstract/cms-product-abstract.twig',
             static::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE => '@ContentProductWidget/views/cms-product-abstract/cms-product-abstract.twig',
-            static::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE => '@ContentProductWidget/views/cms-product-abstract/cms-product-abstract-top.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE => '@ContentProductWidget/views/cms-product-abstract-alternative/cms-product-abstract-alternative.twig',
         ];
     }
 

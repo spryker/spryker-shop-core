@@ -1,8 +1,10 @@
+{% extends template('widget') %}
+
 {% define data = {
     productAbstractViewCollection: productAbstractViewCollection,
 } %}
 
-{% block content %}
+{% block body %}
     <div class="grid grid--stretch">
         {% for productAbstractView in data.productAbstractViewCollection %}
             {% embed molecule('product-card') with {
@@ -18,38 +20,37 @@
             } only %}
                 {% block body %}
                 <div class="{% block cardClass %}{{config.name}}__container box box--stretch{% endblock %}">
-                        {% block content %}
-                            {% block name %}
-                                {{ parent() }}
-                            {% endblock %}
-
-                            {% block price %}
-                                {{ parent() }}
-                            {% endblock %}
-
-                            {% block image %}
-                                {{ parent() }}
-                            {% endblock %}
-
-                            {% block labels %}
-                                {{ parent() }}
-                            {% endblock %}
-
-                            {% block groups %}
-                                {{ parent() }}
-                            {% endblock %}
-
-                            {% block sku %}{{ parent() }}{% endblock %}
-
-                            {% block rating %}
-                                {{ parent() }}
-                            {% endblock %}
-
-                        {% endblock %}
-
-                        {% block actionsContainer %}
+                    {% block content %}
+                        {% block name %}
                             {{ parent() }}
                         {% endblock %}
+
+                        {% block price %}
+                            {{ parent() }}
+                        {% endblock %}
+
+                        {% block image %}
+                            {{ parent() }}
+                        {% endblock %}
+
+                        {% block labels %}
+                            {{ parent() }}
+                        {% endblock %}
+
+                        {% block groups %}
+                            {{ parent() }}
+                        {% endblock %}
+
+                        {% block sku %}{{ parent() }}{% endblock %}
+
+                        {% block rating %}
+                            {{ parent() }}
+                        {% endblock %}
+                    {% endblock %}
+
+                    {% block actionsContainer %}
+                        {{ parent() }}
+                    {% endblock %}
                 </div>
                 {% endblock %}
             {% endembed %}

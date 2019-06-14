@@ -111,7 +111,7 @@ class ContentBannerTwigFunction extends TwigFunction
         return [
             static::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT => '@ContentBannerWidget/views/banner/banner.twig',
             static::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE => '@ContentBannerWidget/views/banner/banner.twig',
-            static::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE => '@ContentBannerWidget/views/banner/banner-top-title.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE => '@ContentBannerWidget/views/banner-alternative/banner-alternative.twig',
         ];
     }
 

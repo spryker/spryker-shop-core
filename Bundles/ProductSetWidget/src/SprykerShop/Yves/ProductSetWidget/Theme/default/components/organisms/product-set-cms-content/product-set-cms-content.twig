@@ -2,29 +2,26 @@
 
 {% define config = {
     name: 'product-set-cms-content',
-    tag: 'div'
 } %}
 
 {% define data = {
+    formClass: '',
+    buttonClass: '',
     name: '',
     products: required,
     description: '',
-    images: []
+    images: [],
 } %}
 
-{% block product_set_title %}
+{% block productSetTitle %}
     <h5>{{ 'product.set.detail.set-contents' | trans }}</h5>
-{% endblock %}
-
-{% block title %}
-    {{ block('product_set_title') }}
 {% endblock %}
 
 {% block body %}
     <hr />
     {% block header %}
-        {% block add_to_cart_form %}
-            <form method="POST" class="{{ add_to_cart_form_class|default('') }}" action="{{ path('cart/add-items') }}">
+        {% block addToCartForm %}
+            <form method="POST" class="{{ data.formClass }}" action="{{ path('cart/add-items') }}">
                 {% set isDisabled = false %}
 
                 {% for product in data.products %}
@@ -38,11 +35,13 @@
                     {% endif %}
                 {% endfor %}
 
-                <button type="submit" class="button {{ add_all_button_class|default('float-right') }}" data-init-single-click {% if isDisabled %}disabled{% endif %}>
+                <button type="submit" class="button {{ data.buttonClass }}" data-init-single-click {% if isDisabled %}disabled{% endif %}>
                     {{ 'product.set.detail.add-all-to-cart' | trans }}
                 </button>
 
-                {{ block('title') }}
+                {% block title %}
+                    {{ block('product_set_title') }}
+                {% endblock %}
             </form>
         {% endblock %}
 

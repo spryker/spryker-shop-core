@@ -1,8 +1,10 @@
+{% extends template('widget') %}
+
 {% define data = {
     productAbstractViewCollection: productAbstractViewCollection,
 } %}
 
-{% block content %}
+{% block body %}
     <div class="grid grid--stretch">
         {% for productAbstractView in data.productAbstractViewCollection %}
             {% include molecule('product-card') with {
