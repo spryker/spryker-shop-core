@@ -92,7 +92,7 @@ class AddressStepExecutor implements StepExecutorInterface
             $itemTransfer->getShipment()->requireShippingAddress();
 
             $shipmentTransfer = $this->getShipmentWithUniqueShippingAddress(
-                $itemTransfer->getShipment()->getShippingAddress(),
+                $itemTransfer->getShipment(),
                 $customerTransfer
             );
             $itemTransfer->setShipment($shipmentTransfer);
@@ -129,13 +129,14 @@ class AddressStepExecutor implements StepExecutorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $shippingAddress
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    protected function getShipmentWithUniqueShippingAddress(AddressTransfer $shippingAddress, CustomerTransfer $customerTransfer): ShipmentTransfer
+    protected function getShipmentWithUniqueShippingAddress(ShipmentTransfer $shipmentTransfer, CustomerTransfer $customerTransfer): ShipmentTransfer
     {
+        $shippingAddress = $shipmentTransfer->getShippingAddress();
         $shippingAddress = $this->expandAddressTransfer($shippingAddress, $customerTransfer);
         $addressHash = $this->customerService->getUniqueAddressKey($shippingAddress);
 
@@ -143,24 +144,10 @@ class AddressStepExecutor implements StepExecutorInterface
             return $this->createdShipmentsWithShippingAddressesList[$addressHash];
         }
 
-        /**
-         * @todo Try to use existing shipment.
-         */
-        $shipmentTransfer = $this->createShipment($shippingAddress);
+        $shipmentTransfer->setShippingAddress($shippingAddress);
         $this->createdShipmentsWithShippingAddressesList[$addressHash] = $shipmentTransfer;
 
         return $shipmentTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
-     */
-    protected function createShipment(AddressTransfer $addressTransfer): ShipmentTransfer
-    {
-        return (new ShipmentTransfer())
-            ->setShippingAddress($addressTransfer);
     }
 
     /**

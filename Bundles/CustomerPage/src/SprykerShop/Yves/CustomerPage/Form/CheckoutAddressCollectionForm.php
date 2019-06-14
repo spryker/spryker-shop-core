@@ -117,7 +117,7 @@ class CheckoutAddressCollectionForm extends AbstractType
                 return false;
             },
             CheckoutAddressForm::OPTION_VALIDATION_GROUP => self::GROUP_SHIPPING_ADDRESS,
-            CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $this->getSplitDeliveryAddressChoices($options),
+            CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $this->getShippingAddressChoices($options),
             CheckoutAddressForm::OPTION_COUNTRY_CHOICES => $options[self::OPTION_COUNTRY_CHOICES],
         ];
 
@@ -372,8 +372,11 @@ class CheckoutAddressCollectionForm extends AbstractType
      *
      * @return string[]
      */
-    protected function getSplitDeliveryAddressChoices(array $options): array
+    protected function getShippingAddressChoices(array $options): array
     {
+        /**
+         * @todo Refactor this.
+         */
         $addressChoices = $options[static::OPTION_ADDRESS_CHOICES];
         $quoteTransfer = $this->getFactory()
             ->getQuoteClient()

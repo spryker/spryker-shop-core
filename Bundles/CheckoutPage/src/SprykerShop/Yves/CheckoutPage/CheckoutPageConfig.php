@@ -11,12 +11,6 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class CheckoutPageConfig extends AbstractBundleConfig
 {
-    public const TEMPLATE_SINGLE_SHIPMENT_SHIPMENT_STEP = '@CheckoutPage/views/shipment/shipment.twig';
-    public const TEMPLATE_MULTI_SHIPMENT_SHIPMENT_STEP = '@CheckoutPage/views/shipment-multi-shipment/shipment-multi-shipment.twig';
-
-    public const TEMPLATE_SINGLE_SHIPMENT_SUMMARY_STEP = '@CheckoutPage/views/summary/summary.twig';
-    public const TEMPLATE_MULTI_SHIPMENT_SUMMARY_STEP = '@CheckoutPage/views/summary-multi-shipment/summary-multi-shipment.twig';
-
     /**
      * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT
      */
@@ -41,37 +35,5 @@ class CheckoutPageConfig extends AbstractBundleConfig
     public function isMultiShipmentEnabled(): bool
     {
         return true;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTemplateForShipmentStepWithSingleShipment(): string
-    {
-        return static::TEMPLATE_SINGLE_SHIPMENT_SHIPMENT_STEP;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTemplateForShipmentStepWithMultiShipment(): string
-    {
-        return static::TEMPLATE_MULTI_SHIPMENT_SHIPMENT_STEP;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTemplateForSummaryStepWithSingleShipment(): string
-    {
-        return static::TEMPLATE_SINGLE_SHIPMENT_SUMMARY_STEP;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTemplateForSummaryStepWithMultiShipment(): string
-    {
-        return static::TEMPLATE_MULTI_SHIPMENT_SUMMARY_STEP;
     }
 }

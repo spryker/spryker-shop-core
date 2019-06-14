@@ -117,34 +117,42 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
-//        $quoteTransfer = $this->setQuoteShipmentGroups($quoteTransfer);
+        $shipmentGroupCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
 
-        return [
+        $options = [
+            ShipmentCollectionForm::OPTION_SHIPMENT_GROUPS => $shipmentGroupCollection,
+            ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST => $this->getShippingAddressLabelList($shipmentGroupCollection),
             ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP => $this->createAvailableMethodsByShipmentChoiceList($quoteTransfer),
-            ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST => $this->getShippingAddressLabelList($quoteTransfer),
         ];
+
+        /**
+         * @deprecated Exists for Backward Compatibility reasons only.
+         */
+        $options[ShipmentForm::OPTION_SHIPMENT_METHODS] = $this->createAvailableShipmentChoiceList($quoteTransfer);
+
+        return $options;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
      *
-     * @return array
+     * @return string[]
      */
-    protected function getShippingAddressLabelList(QuoteTransfer $quoteTransfer): array
+    protected function getShippingAddressLabelList(iterable $shipmentGroupCollection): array
     {
-        return [];
         $shippingAddressLabelList = [];
 
-        $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
-
-        foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
-            if ($shipmentGroupTransfer->getShipment() === null
-                || $shipmentGroupTransfer->getShipment()->getShippingAddress() === null
-            ) {
+        foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
+            if ($shipmentGroupTransfer->getShipment() === null) {
                 continue;
             }
 
-            $shippingAddressLabelList[$shipmentGroupTransfer->getHash()] = $this->getShippingAddressLabel($shipmentGroupTransfer->getShipment()->getShippingAddress());
+            $shippingAddressTransfer = $shipmentGroupTransfer->getShipment()->getShippingAddress();
+            if ($shippingAddressTransfer === null) {
+                continue;
+            }
+
+            $shippingAddressLabelList[$shipmentGroupTransfer->getHash()] = $this->getShippingAddressLabel($shippingAddressTransfer);
         }
 
         return $shippingAddressLabelList;
@@ -198,13 +206,24 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     }
 
     /**
+     * @deprecated Use getAvailableMethodsByShipment() instead.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     */
+    protected function getAvailableShipmentMethods(QuoteTransfer $quoteTransfer)
+    {
+        return $this->shipmentClient->getAvailableMethods($quoteTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
     protected function createAvailableMethodsByShipmentChoiceList(QuoteTransfer $quoteTransfer): array
     {
-        return [];
         $shipmentMethods = [];
 
         $shipmentMethodsTransferCollection = $this->getAvailableMethodsByShipment($quoteTransfer);
@@ -215,30 +234,20 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
                 continue;
             }
 
+            $shipmentHashKey = $shipmentGroupTransfer->getHash();
             foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
-                if (!isset($shipmentMethods[$shipmentGroupTransfer->getHash()][$shipmentMethodTransfer->getCarrierName()])) {
-                    $shipmentMethods[$shipmentGroupTransfer->getHash()][$shipmentMethodTransfer->getCarrierName()] = [];
+                $shipmentMethodCarrierName = $shipmentMethodTransfer->getCarrierName();
+
+                if (!isset($shipmentMethods[$shipmentHashKey][$shipmentMethodCarrierName])) {
+                    $shipmentMethods[$shipmentHashKey][$shipmentMethodCarrierName] = [];
                 }
-                $description = $this->getShipmentDescription(
-                    $shipmentMethodTransfer
-                );
-                $shipmentMethods[$shipmentGroupTransfer->getHash()][$shipmentMethodTransfer->getCarrierName()][$description] = $shipmentMethodTransfer->getIdShipmentMethod();
+
+                $description = $this->getShipmentDescription($shipmentMethodTransfer);
+                $shipmentMethods[$shipmentHashKey][$shipmentMethodCarrierName][$description] = $shipmentMethodTransfer->getIdShipmentMethod();
             }
         }
 
         return $shipmentMethods;
-    }
-
-    /**
-     * @deprecated Use getAvailableMethodsByShipment() instead.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
-     */
-    protected function getAvailableShipmentMethods(QuoteTransfer $quoteTransfer)
-    {
-        return $this->shipmentClient->getAvailableMethods($quoteTransfer);
     }
 
     /**

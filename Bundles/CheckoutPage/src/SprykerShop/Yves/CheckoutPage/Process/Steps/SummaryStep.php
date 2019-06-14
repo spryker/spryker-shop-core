@@ -84,6 +84,9 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
+        /**
+         * @todo Update this check using multi shipment logic.
+         */
         if ($quoteTransfer->getBillingAddress() === null
             || $quoteTransfer->getShipment() === null
             || $quoteTransfer->getPayment() === null
@@ -102,20 +105,6 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function getTemplateVariables(AbstractTransfer $quoteTransfer)
     {
-        if ($this->checkoutPageConfig->isMultiShipmentEnabled()) {
-            return $this->getTemplateVariablesForMultipleShipment($quoteTransfer);
-        }
-
-        return $this->getTemplateVariablesForSingleShipment($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array
-     */
-    public function getTemplateVariablesForMultipleShipment(AbstractTransfer $quoteTransfer)
-    {
         $shipmentGroups = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
 
         return [
@@ -126,22 +115,6 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
             ),
             'shipmentGroups' => $shipmentGroups,
             'totalCosts' => $this->getTotalCosts($shipmentGroups),
-        ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array
-     */
-    public function getTemplateVariablesForSingleShipment(AbstractTransfer $quoteTransfer)
-    {
-        return [
-            'quoteTransfer' => $quoteTransfer,
-            'cartItems' => $this->productBundleClient->getGroupedBundleItems(
-                $quoteTransfer->getItems(),
-                $quoteTransfer->getBundleItems()
-            ),
         ];
     }
 
