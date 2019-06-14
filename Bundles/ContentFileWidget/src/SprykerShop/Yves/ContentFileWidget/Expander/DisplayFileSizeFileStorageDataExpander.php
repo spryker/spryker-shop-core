@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\FileStorageDataTransfer;
 
 class DisplayFileSizeFileStorageDataExpander implements FileStorageDataExpanderInterface
 {
-    protected const LABEL_FILE_SIZES = ['B', 'Kb', 'MB', 'GB', 'TB', 'PB'];
+    protected const LABEL_FILE_SIZES = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
 
     /**
      * @param \Generated\Shared\Transfer\FileStorageDataTransfer $fileStorageDataTransfer
