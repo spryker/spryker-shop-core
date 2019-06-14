@@ -53,14 +53,29 @@ class IconNameFileStorageDataExpanderTest extends Unit
     public function fileDataProvider(): array
     {
         return [
-            ['text/plain', 'test.csv', 'file-csv'],
-            ['image/png', 'test.png', 'file-image'],
-            ['image/jpeg', 'test.jpeg', 'file-image'],
-            ['video/mp4', 'test.mp4', 'file-video'],
-            ['audio/mp3', 'test.mp3', 'file-audio'],
+            ['application/csv', 'test.csv', 'file-csv'],
+            ['application/gzip', 'test.gz', 'file-archive'],
+            ['application/msword', 'test.doc', 'file-word'],
             ['application/pdf', 'test.pdf', 'file-pdf'],
-            ['text/plain', 'test.txt', 'file'],
+            ['application/vnd.ms-word', 'test.docx', 'file-word'],
+            ['application/x-csv', 'test.csv', 'file-csv'],
+            ['application/x-zip-compressed', 'test.zip', 'file-archive'],
+            ['application/zip', 'test.zip', 'file-archive'],
+            ['audio/mp3', 'test.mp3', 'file-audio'],
+            ['image/gif', 'test.gif', 'file-image'],
+            ['image/jpeg', 'test.jpeg', 'file-image'],
+            ['image/jpg', 'test.jpg', 'file-image'],
+            ['image/png', 'test.png', 'file-image'],
             ['test/test', 'test.test', 'file'],
+            ['text/csv', 'test.csv', 'file-csv'],
+            ['text/comma-separated-values', 'test.csv', 'file-csv'],
+            ['text/plain', 'test.csv', 'file-csv'],
+            ['text/plain', 'test.txt', 'file'],
+            ['text/tab-separated-values', 'test.csv', 'file-csv'],
+            ['text/x-comma-separated-values', 'test.csv', 'file-csv'],
+            ['text/x-csv', 'test.csv', 'file-csv'],
+            ['image/tiff', 'test.tiff', 'file-image'],
+            ['video/mp4', 'test.mp4', 'file-video'],
         ];
     }
 
