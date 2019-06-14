@@ -7,11 +7,11 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions\PostConditionCheckerInterface;
-use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressForm;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
 
 class PostConditionChecker implements PostConditionCheckerInterface
 {
@@ -43,17 +43,12 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return false;
         }
 
-        $isSplitDelivery = $this->isSplitDelivery($quoteTransfer);
-        if ($isSplitDelivery && $quoteTransfer->getBillingSameAsShipping()) {
+        $hasMultipleShippingAddresses = $this->hasMultipleShippingAddresses($quoteTransfer);
+        if ($hasMultipleShippingAddresses && $quoteTransfer->getBillingSameAsShipping()) {
             return false;
         }
 
         if ($this->isBillingAddressEmpty($quoteTransfer)) {
-            return false;
-        }
-
-        $isQuoteShippingAddressEmpty = $this->customerService->isAddressEmpty($quoteTransfer->getShippingAddress());
-        if ($isQuoteShippingAddressEmpty && $isSplitDelivery === false) {
             return false;
         }
 
@@ -65,9 +60,17 @@ class PostConditionChecker implements PostConditionCheckerInterface
      *
      * @return bool
      */
-    protected function isSplitDelivery(AbstractTransfer $quoteTransfer): bool
+    protected function hasItemsWithEmptyShippingAddresses(AbstractTransfer $quoteTransfer): bool
     {
-        return $quoteTransfer->getShippingAddress()->getIdCustomerAddress() === CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES;
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null
+                || $this->isAddressEmpty($itemTransfer->getShipment()->getShippingAddress())
+            ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -75,12 +78,19 @@ class PostConditionChecker implements PostConditionCheckerInterface
      *
      * @return bool
      */
-    protected function hasItemsWithEmptyShippingAddresses(AbstractTransfer $quoteTransfer): bool
+    protected function hasMultipleShippingAddresses(AbstractTransfer $quoteTransfer): bool
     {
+        if ($quoteTransfer->getItems()->count() === 1) {
+            return false;
+        }
+
+        $uniqueAddresses = [];
+
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null
-                || $this->customerService->isAddressEmpty($itemTransfer->getShipment()->getShippingAddress())
-            ) {
+            $addressUniqueKey = $this->customerService->getUniqueAddressKey($itemTransfer->getShipment()->getShippingAddress());
+            $uniqueAddresses[$addressUniqueKey] = 1;
+
+            if (count($uniqueAddresses) > 1) {
                 return true;
             }
         }
@@ -96,6 +106,28 @@ class PostConditionChecker implements PostConditionCheckerInterface
     public function isBillingAddressEmpty(QuoteTransfer $quoteTransfer): bool
     {
         return $quoteTransfer->getBillingSameAsShipping() === false
-            && $this->customerService->isAddressEmpty($quoteTransfer->getBillingAddress());
+            && $this->isAddressEmpty($quoteTransfer->getBillingAddress());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
+     *
+     * @return bool
+     */
+    public function isAddressEmpty(?AddressTransfer $addressTransfer = null): bool
+    {
+        if ($addressTransfer === null) {
+            return true;
+        }
+
+        if ($addressTransfer->getIdCustomerAddress() !== null || $addressTransfer->getIdCompanyUnitAddress() !== null) {
+            return false;
+        }
+
+        $firstName = trim($addressTransfer->getFirstName());
+        $lastName = trim($addressTransfer->getLastName());
+
+        return ($firstName === null || $firstName === '')
+            && ($lastName === null || $lastName === '');
     }
 }

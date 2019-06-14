@@ -17,11 +17,4 @@ interface CheckoutPageToCustomerServiceInterface
      * @return string
      */
     public function getUniqueAddressKey(AddressTransfer $addressTransfer): string;
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
-     *
-     * @return bool
-     */
-    public function isAddressEmpty(?AddressTransfer $addressTransfer = null): bool;
 }

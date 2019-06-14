@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CheckoutPage\Process\Steps\BaseActions;
+namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
-interface SaverInterface
+interface StepExecutorInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -18,5 +18,5 @@ interface SaverInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer
      */
-    public function save(Request $request, AbstractTransfer $quoteTransfer): AbstractTransfer;
+    public function execute(Request $request, AbstractTransfer $quoteTransfer): AbstractTransfer;
 }

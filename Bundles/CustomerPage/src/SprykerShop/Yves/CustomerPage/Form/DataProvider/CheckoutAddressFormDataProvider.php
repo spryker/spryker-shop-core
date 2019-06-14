@@ -52,9 +52,16 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     public function getData(AbstractTransfer $quoteTransfer)
     {
+        /**
+         * @deprecated Exists for Backward Compatibility reasons only.
+         */
         $quoteTransfer->setShippingAddress($this->getShippingAddress($quoteTransfer));
+
         $quoteTransfer->setBillingAddress($this->getBillingAddress($quoteTransfer));
 
+        /**
+         * @todo Use customer service to get unique address keys and compare them.
+         */
         if ($quoteTransfer->getBillingAddress()->toArray() === $quoteTransfer->getShippingAddress()->toArray()) {
             $quoteTransfer->setBillingSameAsShipping(true);
         }
@@ -92,6 +99,8 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     }
 
     /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -111,6 +120,8 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     }
 
     /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
@@ -123,7 +134,8 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
             return false;
         }
 
-        return $shippingAddressTransfer->getIdCustomerAddress() === null || $shippingAddressTransfer->getIdCompanyUnitAddress();
+        return $shippingAddressTransfer->getIdCustomerAddress() !== null
+            || $shippingAddressTransfer->getIdCompanyUnitAddress() !== null;
     }
 
     /**
@@ -158,7 +170,8 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
             return false;
         }
 
-        return $billingAddressTransfer->getIdCustomerAddress() === null || $billingAddressTransfer->getIdCompanyUnitAddress();
+        return $billingAddressTransfer->getIdCustomerAddress() !== null
+            || $billingAddressTransfer->getIdCompanyUnitAddress() !== null;
     }
 
     /**
