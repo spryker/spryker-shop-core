@@ -35,7 +35,7 @@
         {% block fields %}
             {% set shipmentGroupCollectionForm = data.form.shipmentGroups | default %}
             {% for shipmentGroupForm in shipmentGroupCollectionForm %}
-                <article class="grid spacing spacing--inner">
+                <article class="col col--sm-12 grid spacing spacing--inner">
                     <div class="col col--sm-12 spacing-bottom">
                         <h3>
                             {{ 'page.checkout.shipment.shipping_address.title' | trans }}:
@@ -62,7 +62,6 @@
                                     },
                                     embed: {
                                         isLast: not loop.last,
-                                        item: item,
                                     }
                                 } only %}
                                     {% block body %}
@@ -73,23 +72,21 @@
                             </div>
                         {% endfor %}
                     </div>
-                    <div class="col col--sm-12 col--lg-6 grid">
+                    <div class="col col--sm-12 col--lg-6">
                         {{ form_errors(shipmentGroupForm.shipment.shipmentSelection) }}
                         {% for name, choices in shipmentGroupForm.shipment.shipmentSelection.vars.choices %}
-                            <div class="col col--sm-12">
-                                <h5>{{ name }}</h5>
-                                <ul class="list spacing-y">
-                                    {% for key, choice in choices %}
-                                        <li class="list__item spacing-y">
-                                            {{ form_row(shipmentGroupForm.shipment.shipmentSelection[key], {
-                                                label: shipmentGroupForm.shipment.shipmentSelection[key].vars.label,
-                                                required: false
-                                            }) }}
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            {% if not loop.last %}<div class="col col--sm-12"><hr></div>{% endif %}
+                            <h5>{{ name }}</h5>
+                            <ul class="list spacing-y">
+                                {% for key, choice in choices %}
+                                    <li class="list__item spacing-y">
+                                        {{ form_row(shipmentGroupForm.shipment.shipmentSelection[key], {
+                                            label: shipmentGroupForm.shipment.shipmentSelection[key].vars.label,
+                                            required: false
+                                        }) }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            {% if not loop.last %}<hr>{% endif %}
                         {% endfor %}
 
                         <div class="col col--sm-12">
