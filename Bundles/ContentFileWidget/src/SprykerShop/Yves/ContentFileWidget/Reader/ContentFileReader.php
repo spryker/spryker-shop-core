@@ -39,7 +39,7 @@ class ContentFileReader implements ContentFileReaderInterface
      * @param \Generated\Shared\Transfer\ContentFileListTypeTransfer $contentFileListTypeTransfer
      * @param string $localeName
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\FileStorageDataTransfer[]
      */
     public function getFileCollection(ContentFileListTypeTransfer $contentFileListTypeTransfer, string $localeName): array
     {
