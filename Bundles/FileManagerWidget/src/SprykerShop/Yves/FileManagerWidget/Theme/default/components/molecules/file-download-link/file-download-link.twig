@@ -23,9 +23,12 @@
                     }
                 } only %}
             </span>
+
+            {% set fileName = data.fileName | split('.') | slice(0, -1) | join('.') %}
+            {% set fileExtension = data.fileName | split('.') | last %}
             <span class="{{ config.name }}__name-wrapper">
-                <span class="{{ config.name }}__name {{ config.name }}__name--icon">{{ data.fileName | split('.') | slice(0, -1) | join('.') }}</span>
-                <span class="{{ config.name }}__extension">.{{ data.fileName | split('.') | last }}</span>
+                <span class="{{ config.name }}__name {{ config.name }}__name--icon">{{ fileName }}</span>
+                <span class="{{ config.name }}__extension">.{{ fileExtension }}</span>
             </span>
         {% else %}
             <span class="{{ config.name }}__name">{{ data.fileName }}</span>
