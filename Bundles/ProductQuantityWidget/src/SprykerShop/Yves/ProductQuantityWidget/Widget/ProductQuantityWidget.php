@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductQuantityRestrictionWidget\Widget;
+namespace SprykerShop\Yves\ProductQuantityWidget\Widget;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @method \SprykerShop\Yves\ProductQuantityRestrictionWidget\ProductQuantityRestrictionWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\ProductQuantityWidget\ProductQuantityWidgetFactory getFactory()
  */
-class ProductQuantityRestrictionWidget extends AbstractWidget
+class ProductQuantityWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -45,7 +45,7 @@ class ProductQuantityRestrictionWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ProductQuantityRestrictionWidget';
+        return 'ProductQuantityWidget';
     }
 
     /**
@@ -53,6 +53,6 @@ class ProductQuantityRestrictionWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ProductQuantityRestrictionWidget/views/product-quantity-restriction-widget/product-quantity-restriction-widget.twig';
+        return '@ProductQuantityWidget/views/product-quantity-widget/product-quantity-widget.twig';
     }
 }

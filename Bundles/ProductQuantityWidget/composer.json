@@ -1,13 +1,12 @@
 {
-  "name": "spryker-shop/product-quantity-restriction-widget",
+  "name": "spryker-shop/product-quantity-widget",
   "type": "library",
-  "description": "ProductQuantityRestrictionWidget module",
+  "description": "ProductQuantityWidget module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker-shop/shop-ui": "^1.13.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/product-quantity": "^2.1.0",
     "spryker/product-quantity-storage": "^2.0.0"
   },
   "require-dev": {

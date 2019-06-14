@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductQuantityRestrictionWidget\Dependency\Client;
+namespace SprykerShop\Yves\ProductQuantityWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 
-interface ProductQuantityRestrictionWidgetToProductQuantityStorageClientInterface
+interface ProductQuantityWidgetToProductQuantityStorageClientInterface
 {
     /**
      * @param int $idProduct
@@ -17,4 +17,11 @@ interface ProductQuantityRestrictionWidgetToProductQuantityStorageClientInterfac
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
      */
     public function findProductQuantityStorage(int $idProduct): ?ProductQuantityStorageTransfer;
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
+     */
+    public function getProductQuantityStorage(int $idProduct): ProductQuantityStorageTransfer;
 }

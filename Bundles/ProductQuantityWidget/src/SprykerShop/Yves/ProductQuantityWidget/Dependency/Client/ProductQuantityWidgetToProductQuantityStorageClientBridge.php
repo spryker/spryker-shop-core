@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductQuantityRestrictionWidget\Dependency\Client;
+namespace SprykerShop\Yves\ProductQuantityWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 
-class ProductQuantityRestrictionWidgetToProductQuantityStorageClientBridge implements ProductQuantityRestrictionWidgetToProductQuantityStorageClientInterface
+class ProductQuantityWidgetToProductQuantityStorageClientBridge implements ProductQuantityWidgetToProductQuantityStorageClientInterface
 {
     /**
      * @var \Spryker\Client\ProductQuantityStorage\ProductQuantityStorageClientInterface
@@ -32,5 +32,15 @@ class ProductQuantityRestrictionWidgetToProductQuantityStorageClientBridge imple
     public function findProductQuantityStorage(int $idProduct): ?ProductQuantityStorageTransfer
     {
         return $this->productQuantityStorageClient->findProductQuantityStorage($idProduct);
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
+     */
+    public function getProductQuantityStorage(int $idProduct): ProductQuantityStorageTransfer
+    {
+        return $this->productQuantityStorageClient->getProductQuantityStorage($idProduct);
     }
 }
