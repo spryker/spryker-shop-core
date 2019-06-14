@@ -62,7 +62,8 @@
                                 <li class="list__item spacing-y">
                                     {{
                                         form_row(embed.forms.shipping.id_customer_address, {
-                                            component: molecule('select')
+                                            label: 'page.checkout.address.delivery.address_select' | trans,
+                                            component: molecule('select'),
                                         })
                                     }}
                                 </li>
@@ -152,7 +153,8 @@
                                         <li class="list__item spacing-y">
                                             {{
                                                 form_row(data.form.id_customer_address, {
-                                                    component: molecule('select')
+                                                    label: 'page.checkout.address.billing.address_select' | trans,
+                                                    component: molecule('select'),
                                                 })
                                             }}
                                         </li>
