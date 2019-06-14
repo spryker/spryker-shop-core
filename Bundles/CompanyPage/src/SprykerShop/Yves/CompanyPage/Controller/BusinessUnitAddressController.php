@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitAddressForm;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -127,42 +128,15 @@ class BusinessUnitAddressController extends AbstractCompanyController
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
         }
 
-        $companyUnitAddressFormDataProvider = $this->getFactory()
-            ->createCompanyPageFormFactory()
-            ->createCompanyUnitAddressFormDataProvider();
-
-        $companyUnitAddressForm = $this->getFactory()
-            ->createCompanyPageFormFactory()
-            ->getCompanyBusinessUnitAddressForm($companyUnitAddressFormDataProvider->getOptions())
+        $companyBusinessUnitAddressForm = $this->getCompanyBusinessUnitAddressForm($idCompanyUnitAddress, $idCompanyBusinessUnit)
             ->handleRequest($request);
 
-        $companyUnitAddressFormData = $companyUnitAddressFormDataProvider->getData(
-            $this->findCurrentCompanyUserTransfer(),
-            $idCompanyUnitAddress,
-            $idCompanyBusinessUnit
-        );
-
-        if (!$this->isCurrentCustomerRelatedToCompany($companyUnitAddressFormData[CompanyBusinessUnitAddressForm::FIELD_FK_COMPANY])) {
+        if (!$this->isCurrentCustomerRelatedToCompany($companyBusinessUnitAddressForm->getData()[CompanyBusinessUnitAddressForm::FIELD_FK_COMPANY])) {
             throw new NotFoundHttpException();
         }
 
-        if (!$companyUnitAddressForm->isSubmitted()) {
-            $companyUnitAddressForm->setData($companyUnitAddressFormData);
-        }
-
-        if ($companyUnitAddressForm->isValid()) {
-            $companyUnitAddressFormData = array_merge(
-                $companyUnitAddressFormData,
-                $companyUnitAddressForm->getData()
-            );
-
-            $companyUnitAddressTransfer = $this->getFactory()
-                ->createCompanyBusinessAddressSaver()
-                ->saveAddress($companyUnitAddressFormData);
-
-            $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS, [
-                '%address%' => $companyUnitAddressTransfer->getAddress1(),
-            ]);
+        if ($companyBusinessUnitAddressForm->isSubmitted() && $companyBusinessUnitAddressForm->isValid()) {
+            $this->updateCompanyBusinessUnitAddress($companyBusinessUnitAddressForm);
 
             return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
                 'id' => $idCompanyBusinessUnit,
@@ -170,9 +144,51 @@ class BusinessUnitAddressController extends AbstractCompanyController
         }
 
         return [
-            'form' => $companyUnitAddressForm->createView(),
+            'form' => $companyBusinessUnitAddressForm->createView(),
             'idCompanyBusinessUnit' => $idCompanyBusinessUnit,
             'idCompanyUnitAddress' => $idCompanyUnitAddress,
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $companyBusinessUnitAddressForm
+     *
+     * @return void
+     */
+    protected function updateCompanyBusinessUnitAddress(FormInterface $companyBusinessUnitAddressForm): void
+    {
+        $companyUnitAddressTransfer = $this->getFactory()
+            ->createCompanyBusinessAddressSaver()
+            ->saveAddress($companyBusinessUnitAddressForm->getData());
+
+        $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS, [
+            '%address%' => $companyUnitAddressTransfer->getAddress1(),
+        ]);
+    }
+
+    /**
+     * @param int $idCompanyUnitAddress
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function getCompanyBusinessUnitAddressForm(int $idCompanyUnitAddress, int $idCompanyBusinessUnit): FormInterface
+    {
+        $companyUnitAddressFormDataProvider = $this->getFactory()
+            ->createCompanyPageFormFactory()
+            ->createCompanyUnitAddressFormDataProvider();
+
+        $companyUnitAddressFormData = $companyUnitAddressFormDataProvider->getData(
+            $this->findCurrentCompanyUserTransfer(),
+            $idCompanyUnitAddress,
+            $idCompanyBusinessUnit
+        );
+
+        return $this->getFactory()
+            ->createCompanyPageFormFactory()
+            ->getCompanyBusinessUnitAddressForm(
+                $companyUnitAddressFormDataProvider->getOptions(),
+                $companyUnitAddressFormData
+            );
     }
 }

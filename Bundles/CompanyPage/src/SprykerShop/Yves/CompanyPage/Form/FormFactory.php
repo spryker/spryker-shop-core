@@ -66,12 +66,13 @@ class FormFactory extends AbstractFactory
 
     /**
      * @param array $formOptions
+     * @param array|null $formData
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getCompanyBusinessUnitAddressForm(array $formOptions): FormInterface
+    public function getCompanyBusinessUnitAddressForm(array $formOptions, ?array $formData = null): FormInterface
     {
-        return $this->getFormFactory()->create(CompanyBusinessUnitAddressForm::class, null, $formOptions);
+        return $this->getFormFactory()->create(CompanyBusinessUnitAddressForm::class, $formData, $formOptions);
     }
 
     /**
