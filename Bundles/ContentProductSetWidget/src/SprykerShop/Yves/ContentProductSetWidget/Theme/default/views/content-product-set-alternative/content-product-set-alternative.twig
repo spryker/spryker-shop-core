@@ -16,7 +16,7 @@
             name: data.name,
             description: data.description,
             images: data.images,
-        }
+        },
     } only %}
         {% block productSetTitle %}
             <h5>{{ data.name }}</h5>
@@ -25,10 +25,10 @@
         {% block title %}{% endblock %}
 
         {% block header %}
-            {{ block('product_set_title') }}
+            {{ block('productSetTitle') }}
 
             {% block description %}
-                {% if data.description is not empty %}
+                {% if data.description %}
                     <p>{{ data.description }}</p>
                 {% endif %}
             {% endblock %}

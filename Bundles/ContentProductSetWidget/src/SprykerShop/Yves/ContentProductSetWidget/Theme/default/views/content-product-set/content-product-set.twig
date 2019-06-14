@@ -14,14 +14,14 @@
             name: data.name,
             description: data.description,
             images: data.images,
-        }
+        },
     } only %}
         {% block productSetTitle %}
             <h5>{{ data.name }}</h5>
         {% endblock %}
 
         {% block description %}
-            {% if data.description is not empty %}
+            {% if data.description %}
                 <p>{{ data.description }}</p>
             {% endif %}
         {% endblock %}
