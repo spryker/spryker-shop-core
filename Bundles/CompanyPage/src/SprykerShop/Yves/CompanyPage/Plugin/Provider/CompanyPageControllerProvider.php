@@ -148,9 +148,33 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addCompanyBusinessUnitAddressRoutes()
     {
+        $this->addCompanyBusinessUnitAddressCreateRoute()
+            ->addCompanyBUsinessUnitAddressUpdateRoute();
+
+        return $this;
+    }
+
+    /**
+     * @see \SprykerShop\Yves\CompanyPage\Controller\BusinessUnitAddressController::createAction()
+     *
+     * @return $this
+     */
+    protected function addCompanyBusinessUnitAddressCreateRoute()
+    {
         $this->createController('/{company}/business-unit/address/create', static::ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE, 'CompanyPage', 'BusinessUnitAddress', 'create')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
+
+        return $this;
+    }
+
+    /**
+     * @see \SprykerShop\Yves\CompanyPage\Controller\BusinessUnitAddressController::updateAction()
+     *
+     * @return $this
+     */
+    protected function addCompanyBUsinessUnitAddressUpdateRoute()
+    {
         $this->createController('/{company}/business-unit/address/update', static::ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_UPDATE, 'CompanyPage', 'BusinessUnitAddress', 'update')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
