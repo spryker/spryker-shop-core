@@ -27,16 +27,6 @@ class ProductQuantityWidgetToProductQuantityStorageClientBridge implements Produ
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
-     */
-    public function findProductQuantityStorage(int $idProduct): ?ProductQuantityStorageTransfer
-    {
-        return $this->productQuantityStorageClient->findProductQuantityStorage($idProduct);
-    }
-
-    /**
-     * @param int $idProduct
-     *
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
      */
     public function getProductQuantityStorage(int $idProduct): ProductQuantityStorageTransfer

@@ -3,12 +3,9 @@
 {% define data = {
     productQuantityStorage: _widget.productQuantityStorage,
     quantity: _widget.quantity,
-    groupKey: _widget.groupKey,
-    sku: _widget.sku,
 } %}
 
 {% block body %}
-    <form method="POST" action="{{ path('cart/change/quantity', {'sku': data.sku }) }}">
         {% include molecule('quantity-input') with {
             data: {
                 maxQuantity: data.productQuantityStorage.quantityMax,
@@ -17,6 +14,4 @@
                 step: data.productQuantityStorage.quantityInterval,
             },
         } only %}
-        <input type="hidden" value="{{ data.groupKey }}" name="groupKey" />
-    </form>
 {% endblock %}

@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ProductQuantityWidget\Widget;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -16,14 +15,13 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class ProductQuantityWidget extends AbstractWidget
 {
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param float $quantity
+     * @param int $idProductConcrete
      */
-    public function __construct(ItemTransfer $itemTransfer)
+    public function __construct(float $quantity, int $idProductConcrete)
     {
-        $this->addParameter('quantity', $itemTransfer->getQuantity())
-            ->addParameter('groupKey', $itemTransfer->getGroupKey())
-            ->addParameter('sku', $itemTransfer->getSku());
-        $this->setQuantityRestrictions($itemTransfer->getId());
+        $this->addParameter('quantity', $quantity);
+        $this->setQuantityRestrictions($idProductConcrete);
     }
 
     /**
@@ -34,8 +32,8 @@ class ProductQuantityWidget extends AbstractWidget
     protected function setQuantityRestrictions(int $idProductConcrete): void
     {
         $productQuantityStorageTransfer = $this->getFactory()
-            ->createQuantityRestrictionReader()
-            ->getQuantityRestrictions($idProductConcrete);
+            ->getProductQuantityStorageClient()
+            ->getProductQuantityStorage($idProductConcrete);
 
         $this->addParameter('productQuantityStorage', $productQuantityStorageTransfer);
     }

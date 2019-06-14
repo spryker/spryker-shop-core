@@ -9,21 +9,9 @@ namespace SprykerShop\Yves\ProductQuantityWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductQuantityWidget\Dependency\Client\ProductQuantityWidgetToProductQuantityStorageClientInterface;
-use SprykerShop\Yves\ProductQuantityWidget\QuantityRestrictionReader\QuantityRestrictionReader;
-use SprykerShop\Yves\ProductQuantityWidget\QuantityRestrictionReader\QuantityRestrictionReaderInterface;
 
 class ProductQuantityWidgetFactory extends AbstractFactory
 {
-    /**
-     * @return \SprykerShop\Yves\ProductQuantityWidget\QuantityRestrictionReader\QuantityRestrictionReaderInterface
-     */
-    public function createQuantityRestrictionReader(): QuantityRestrictionReaderInterface
-    {
-        return new QuantityRestrictionReader(
-            $this->getProductQuantityStorageClient()
-        );
-    }
-
     /**
      * @return \SprykerShop\Yves\ProductQuantityWidget\Dependency\Client\ProductQuantityWidgetToProductQuantityStorageClientInterface
      */
