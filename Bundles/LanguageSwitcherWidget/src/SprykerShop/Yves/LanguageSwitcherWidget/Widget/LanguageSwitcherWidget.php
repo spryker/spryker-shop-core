@@ -124,8 +124,8 @@ class LanguageSwitcherWidget extends AbstractWidget
      */
     protected function replaceCurrentUrlLanguage(string $currentUrl, array $languages, string $replacementLanguage): string
     {
-        if (preg_match('/\/(' . implode('|', $languages) . ')/', $currentUrl)) {
-            return preg_replace('/\/(' . implode('|', $languages) . ')/', '/' . $replacementLanguage, $currentUrl, 1);
+        if (preg_match('~/(' . implode('|', $languages) . ')/~', $currentUrl)) {
+            return preg_replace('~/(' . implode('|', $languages) . ')~', '/' . $replacementLanguage, $currentUrl, 1);
         }
 
         return rtrim('/' . $replacementLanguage . $currentUrl, '/');
