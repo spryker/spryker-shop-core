@@ -15,13 +15,15 @@
     {% set defaultAddressKey = null %}
     {% set optionValueDeliverToMultipleAddresses = '-1' %}
     {% set fullAddresses = data.customerAddresses | merge(data.companyBusinessUnitAddresses) %}
+    {% set shippingAddress = 'shippingAddress' %}
+    {% set billingAddress = 'billingAddress' %}
 
     {% if fullAddresses %}
         {% for address in fullAddresses %}
-            {% if not data.currentAddressId and data.formType == 'shippingAddress' and address.isDefaultShipping %}
+            {% if not data.currentAddressId and data.formType == shippingAddress and address.isDefaultShipping %}
                 {% set defaultAddressKey = address.key %}
             {% endif %}
-            {% if not data.currentAddressId and data.formType == 'billingAddress' and address.isDefaultBilling %}
+            {% if not data.currentAddressId and data.formType == billingAddress and address.isDefaultBilling %}
                 {% set defaultAddressKey = address.key %}
             {% endif %}
             {% if data.currentAddressId == address.idCustomerAddress %}
@@ -33,10 +35,10 @@
         {% endfor %}
     {% endif %}
 
-    {% if data.formType == 'shippingAddress' %}
+    {% if data.formType == shippingAddress %}
         <label>{{ 'page.checkout.address.delivery.address_select' | trans }}</label><br>
     {% endif %}
-    {% if data.formType == 'billingAddress' %}
+    {% if data.formType == billingAddress %}
         <label>{{ 'page.checkout.address.billing.address_select' | trans }}</label><br>
     {% endif %}
 
@@ -101,7 +103,7 @@
                 </optgroup>
             {% endif %}
 
-            {% if embed.formType == 'shippingAddress' and embed.isMultipleShipmentEnabled and embed.items | length > 1 %}
+            {% if embed.formType == shippingAddress and embed.isMultipleShipmentEnabled and embed.items | length > 1 %}
                 <option value="{{ embed.optionValueDeliverToMultipleAddresses }}" {% if embed.defaultAddressKey == embed.optionValueDeliverToMultipleAddresses %}selected{% endif %}>
                     {{ 'customer.account.deliver_to_multiple_addresses' | trans }}
                 </option>
@@ -114,12 +116,12 @@
             attributes: {
                 'form-selector': '.js-form-handler__' ~ data.formType,
                 'data-selector': '.js-form-select-address__' ~ data.formType,
-                'shipping-address-toggler-selector': '.js-form-select-address__shippingAddress',
+                'shipping-address-toggler-selector': '.js-form-select-address__' ~ shippingAddress,
                 'default-address-selector': '.js-form-default-address__' ~ data.formType,
                 'address-hidden-input-selector': 'addressesForm[' ~ data.formType ~ '][id_customer_address]',
                 'company-address-hidden-input-selector': 'addressesForm[' ~ data.formType ~ '][id_company_unit_address]',
-                'shipping-address-hidden-input-selector': 'addressesForm[shippingAddress][id_customer_address]',
-                'shipping-company-address-hidden-input-selector': 'addressesForm[shippingAddress][id_company_unit_address]',
+                'shipping-address-hidden-input-selector': 'addressesForm[' ~ shippingAddress ~ '][id_customer_address]',
+                'shipping-company-address-hidden-input-selector': 'addressesForm[' ~ shippingAddress ~ '][id_company_unit_address]',
                 'addresses': data.addresses,
                 'toggle-option-value': optionValueDeliverToMultipleAddresses,
             },
