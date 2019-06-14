@@ -12,9 +12,10 @@
     currencyIsoCode: required,
 } %}
 
-{% block class %}
+{% block class -%}
+    {{ parent() }}
     list
-{% endblock %}
+{%- endblock %}
 
 {% block body %}
     <li class="list__item">{{ data.carrierName }}</li>

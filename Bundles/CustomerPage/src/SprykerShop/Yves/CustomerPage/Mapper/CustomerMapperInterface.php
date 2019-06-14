@@ -5,16 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CheckoutPage\Model\Address;
+namespace SprykerShop\Yves\CustomerPage\Mapper;
 
 use Generated\Shared\Transfer\AddressTransfer;
 
-interface CustomerAddressExpanderInterface
+interface CustomerMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $customerAddressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function expand(AddressTransfer $addressTransfer): AddressTransfer;
+    public function mapCustomerAddressTransferToAddressTransfer(
+        AddressTransfer $customerAddressTransfer,
+        AddressTransfer $addressTransfer
+    ): AddressTransfer;
 }

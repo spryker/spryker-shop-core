@@ -38,6 +38,7 @@ class AddressForm extends AbstractType
     public const FIELD_IS_DEFAULT_SHIPPING = 'is_default_shipping';
     public const FIELD_IS_DEFAULT_BILLING = 'is_default_billing';
     public const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
+    public const FIELD_ID_COMPANY_UNIT_ADDRESS = 'id_company_unit_address';
 
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
