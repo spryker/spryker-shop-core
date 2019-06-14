@@ -18,5 +18,5 @@ interface ErrorPageConstants
      *
      * @api
      */
-    public const ENABLE_ERROR404_STACK_TRACE = 'ERROR_PAGE:ENABLE_ERROR404_STACK_TRACE';
+    public const ENABLE_ERROR_404_STACK_TRACE = 'ERROR_PAGE:ENABLE_ERROR_404_STACK_TRACE';
 }

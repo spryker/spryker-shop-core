@@ -29,7 +29,7 @@ class ErrorPageConfig extends AbstractBundleConfig
      */
     public function isErrorStackTraceEnabled(): bool
     {
-        return $this->get(ErrorPageConstants::ENABLE_ERROR404_STACK_TRACE, $this->getErrorStackTraceDefaultValue());
+        return $this->get(ErrorPageConstants::ENABLE_ERROR_404_STACK_TRACE, $this->getErrorStackTraceDefaultValue());
     }
 
     /**

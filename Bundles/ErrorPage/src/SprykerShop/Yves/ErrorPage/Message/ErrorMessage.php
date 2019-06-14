@@ -20,9 +20,8 @@ class ErrorMessage implements ErrorMessageInterface
     /**
      * @param \SprykerShop\Yves\ErrorPage\ErrorPageConfig $errorPageConfig
      */
-    public function __construct(
-        ErrorPageConfig $errorPageConfig
-    ) {
+    public function __construct(ErrorPageConfig $errorPageConfig)
+    {
         $this->errorPageConfig = $errorPageConfig;
     }
 
