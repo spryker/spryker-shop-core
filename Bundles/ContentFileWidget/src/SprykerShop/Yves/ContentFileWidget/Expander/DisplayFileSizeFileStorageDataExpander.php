@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\FileStorageDataTransfer;
 class DisplayFileSizeFileStorageDataExpander implements FileStorageDataExpanderInterface
 {
     protected const LABEL_FILE_SIZES = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+    protected const NUMBER_OF_DECIMALS = 1;
 
     /**
      * @param \Generated\Shared\Transfer\FileStorageDataTransfer $fileStorageDataTransfer
@@ -34,7 +35,7 @@ class DisplayFileSizeFileStorageDataExpander implements FileStorageDataExpanderI
     protected function getFileDisplaySize(int $fileSize): string
     {
         $power = floor(log($fileSize, 1024));
-        $calculatedSize = number_format($fileSize / (1024 ** $power), 1);
+        $calculatedSize = number_format($fileSize / (1024 ** $power), static::NUMBER_OF_DECIMALS);
 
         return sprintf('%s %s', $calculatedSize, static::LABEL_FILE_SIZES[(int)$power]);
     }
