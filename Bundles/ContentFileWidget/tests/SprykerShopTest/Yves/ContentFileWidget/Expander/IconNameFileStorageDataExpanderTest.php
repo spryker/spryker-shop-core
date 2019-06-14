@@ -35,12 +35,15 @@ class IconNameFileStorageDataExpanderTest extends Unit
      */
     public function testGetIconNameForFile(string $fileType, string $fileName, string $expectedFileIconName): void
     {
+        // Arrange
         $fileStorageDataTransfer = (new FileStorageDataTransfer())
             ->setFileName($fileName)
             ->setType($fileType);
 
+        // Act
         $fileStorageDataTransfer = $this->createIconNameFileStorageDataExpander()->expand($fileStorageDataTransfer);
 
+        // Assert
         $this->assertEquals($expectedFileIconName, $fileStorageDataTransfer->getIconName());
     }
 
