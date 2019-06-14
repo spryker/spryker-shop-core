@@ -33,6 +33,13 @@
         {% endfor %}
     {% endif %}
 
+    {% if data.formType == 'shippingAddress' %}
+        <label>{{ 'page.checkout.address.delivery.address_select' | trans }}</label><br>
+    {% endif %}
+    {% if data.formType == 'billingAddress' %}
+        <label>{{ 'page.checkout.address.billing.address_select' | trans }}</label><br>
+    {% endif %}
+
     {% embed atom('select') with {
         class: 'spacing-bottom',
         attributes: {
