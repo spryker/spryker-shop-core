@@ -35,6 +35,9 @@
         {% block fields %}
             {% set shipmentGroupCollectionForm = data.form.shipmentGroups | default %}
             {% for shipmentGroupForm in shipmentGroupCollectionForm %}
+                {% if shipmentGroupForm.hash is defined %}
+                    {% do shipmentGroupForm.hash.setRendered %}
+                {% endif %}
                 <article class="grid grid--stretch grid--justify box col--sm-12">
                     <div class="col col--sm-12">
                         <div class="col col--sm-12">

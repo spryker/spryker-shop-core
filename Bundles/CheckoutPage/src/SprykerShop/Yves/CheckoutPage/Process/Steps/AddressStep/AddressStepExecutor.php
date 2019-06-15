@@ -118,7 +118,7 @@ class AddressStepExecutor implements StepExecutorInterface
         }
 
         $billingAddressTransfer = $quoteTransfer->getBillingAddress();
-        if ($billingAddressTransfer === null || $billingAddressTransfer->getIdCustomerAddress() === null) {
+        if ($billingAddressTransfer === null) {
             return $quoteTransfer;
         }
 
