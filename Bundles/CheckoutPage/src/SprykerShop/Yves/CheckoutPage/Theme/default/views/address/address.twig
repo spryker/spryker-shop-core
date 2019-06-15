@@ -39,6 +39,8 @@
     } only %}
         {% block fields %}
             {% set hasShippingAddresses = data.form.shippingAddress.id_customer_address is defined %}
+            {% set hasCompanyUnitAddress = data.form.shippingAddress.id_company_unit_address is defined %}
+
             {% set hasShippingAddressesAndApplicable = embed.isCompanyBusinessUnitShippingAddressApplicable ? true : hasShippingAddresses %}
 
             <div class="grid col col--sm-12 js-form-handler__shippingAddress">
@@ -56,8 +58,12 @@
 
                                 {% if hasShippingAddresses %}
                                     {% do data.form.shippingAddress.id_customer_address.setRendered %}
+                                {% endif %}
+
+                                {% if hasCompanyUnitAddress %}
                                     {% do data.form.shippingAddress.id_company_unit_address.setRendered %}
                                 {% endif %}
+
                             {% else %}
                                 <li class="list__item spacing-y">
                                     {{
@@ -137,6 +143,7 @@
                         {% set companyBusinessUnitBillingAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['billingAddress', data.form.vars.data]) %}
                         {% set isCompanyBusinessUnitBillingAddressApplicable = companyBusinessUnitBillingAddressWidget and companyBusinessUnitBillingAddressWidget.isApplicable %}
                         {% set hasBillingAddresses = data.form.id_customer_address is defined %}
+                        {% set hasBillingCompanyUnitAddresses = data.form.id_company_unit_address is defined %}
                         {% set hasBillingAddressesAndApplicable = isCompanyBusinessUnitBillingAddressApplicable ? true : hasBillingAddresses %}
 
                         {% if hasBillingAddressesAndApplicable %}
@@ -147,8 +154,12 @@
 
                                         {% if hasBillingAddresses %}
                                             {% do data.form.id_customer_address.setRendered %}
+                                        {% endif %}
+
+                                        {% if hasBillingCompanyUnitAddresses %}
                                             {% do data.form.id_company_unit_address.setRendered %}
                                         {% endif %}
+
                                     {% else %}
                                         <li class="list__item spacing-y">
                                             {{
