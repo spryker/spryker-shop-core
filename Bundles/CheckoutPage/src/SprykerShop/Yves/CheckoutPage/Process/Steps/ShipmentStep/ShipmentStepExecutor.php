@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CheckoutPage\Model\Shipment;
+namespace SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep;
 
 use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -19,7 +19,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServi
 use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
 use Symfony\Component\HttpFoundation\Request;
 
-class Creator extends ShipmentHandler
+class ShipmentStepExecutor extends ShipmentHandler
 {
     /**
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface

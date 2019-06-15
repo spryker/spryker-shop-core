@@ -21,9 +21,9 @@ use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilterInterface;
 use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
 use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
 use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandlerInterface;
-use SprykerShop\Yves\CheckoutPage\Model\Shipment\Creator;
-use SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\ShipmentStepExecutor;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\ShipmentStepExecutorInterface;
 
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
@@ -181,11 +181,11 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface
+     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\ShipmentStepExecutorInterface
      */
-    public function createShipmentHandlerWithMultipleShipment(): CreatorInterface
+    public function createShipmentHandlerWithMultipleShipment(): ShipmentStepExecutorInterface
     {
-        return new Creator(
+        return new ShipmentStepExecutor(
             $this->getShipmentClient(),
             $this->getPriceClient(),
             $this->getShippingService()
