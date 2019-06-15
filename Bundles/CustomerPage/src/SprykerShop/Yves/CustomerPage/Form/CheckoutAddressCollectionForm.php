@@ -375,7 +375,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     protected function getShippingAddressChoices(array $options): array
     {
         /**
-         * @todo Refactor this.
+         * @todo Refactor this. Use data provider to provide needed data.
          */
         $addressChoices = $options[static::OPTION_ADDRESS_CHOICES];
         $quoteTransfer = $this->getFactory()
