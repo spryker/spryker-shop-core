@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CheckoutPage\Form\Steps;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,6 +23,7 @@ class ShipmentCollectionForm extends AbstractType
     public const FIELD_SHIPMENT_COLLECTION_GROUP = 'shipmentGroups';
     public const OPTION_SHIPMENT_METHODS_BY_GROUP = 'shipmentMethodsByGroup';
     public const OPTION_SHIPMENT_ADDRESS_LABEL_LIST = 'shippingAddressLabelList';
+    public const OPTION_SHIPMENT_GROUPS = 'shipmentGroups';
 
     /**
      * @return string
@@ -56,10 +56,10 @@ class ShipmentCollectionForm extends AbstractType
             'entry_type' => ShipmentGroupForm::class,
             'allow_add' => true,
             'allow_delete' => false,
+//            'mapped' => false,
             'entry_options' => [
-                'data_class' => ShipmentGroupTransfer::class,
-                static::OPTION_SHIPMENT_METHODS_BY_GROUP => $options[static::OPTION_SHIPMENT_METHODS_BY_GROUP] ?? [],
-                static::OPTION_SHIPMENT_ADDRESS_LABEL_LIST => $options[static::OPTION_SHIPMENT_ADDRESS_LABEL_LIST] ?? [],
+                static::OPTION_SHIPMENT_METHODS_BY_GROUP => $options[static::OPTION_SHIPMENT_METHODS_BY_GROUP],
+                static::OPTION_SHIPMENT_ADDRESS_LABEL_LIST => $options[static::OPTION_SHIPMENT_ADDRESS_LABEL_LIST],
             ],
         ]);
 
@@ -79,7 +79,13 @@ class ShipmentCollectionForm extends AbstractType
             ->setDefaults([
                 'data_class' => QuoteTransfer::class,
             ])
-            ->setRequired(ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP)
-            ->setRequired(ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST);
+            ->setRequired(static::OPTION_SHIPMENT_GROUPS)
+            ->setRequired(static::OPTION_SHIPMENT_METHODS_BY_GROUP)
+            ->setRequired(static::OPTION_SHIPMENT_ADDRESS_LABEL_LIST);
+
+        /**
+         * @deprecated Exists for Backward Compatibility reasons only.
+         */
+        $resolver->setDefined(ShipmentForm::OPTION_SHIPMENT_METHODS);
     }
 }

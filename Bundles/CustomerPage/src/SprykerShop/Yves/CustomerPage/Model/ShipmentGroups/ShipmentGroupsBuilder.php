@@ -18,7 +18,7 @@ class ShipmentGroupsBuilder implements ShipmentGroupsBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]|ArrayObject
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]|\ArrayObject
      */
     public function buildShipmentGroups(OrderTransfer $orderTransfer): ArrayObject
     {
@@ -32,7 +32,7 @@ class ShipmentGroupsBuilder implements ShipmentGroupsBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]|ArrayObject
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]|\ArrayObject
      */
     protected function createShipmentGroups(OrderTransfer $orderTransfer): ArrayObject
     {
@@ -43,7 +43,7 @@ class ShipmentGroupsBuilder implements ShipmentGroupsBuilderInterface
             ->setShippingAddress($orderTransfer->getShippingAddress())
             ->setMethod($shipmentMethodTransfer);
 
-        $shipmentGroupTransfer =  (new ShipmentGroupTransfer())
+        $shipmentGroupTransfer = (new ShipmentGroupTransfer())
             ->setShipment($shipmentTransfer)
             ->setItems($orderTransfer->getItems());
 

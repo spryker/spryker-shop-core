@@ -32,6 +32,8 @@ use SprykerShop\Yves\CheckoutPage\Plugin\CheckoutBreadcrumbPlugin;
 use SprykerShop\Yves\CheckoutPage\Plugin\ShipmentFormDataProviderPlugin;
 use SprykerShop\Yves\CheckoutPage\Plugin\ShipmentHandlerPlugin;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientBridge;
+use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceBridge;
+use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
 use SprykerShop\Yves\CustomerPage\Plugin\CustomerStepHandler;
 use SprykerShop\Yves\MoneyWidget\Plugin\MoneyPlugin;
 
@@ -612,6 +614,16 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getStore()
     {
         return Store::getInstance();
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface
+     */
+    public function getCustomerService(Container $container): CustomerPageToCustomerServiceInterface
+    {
+        return new CustomerPageToCustomerServiceBridge($container->getLocator()->customer()->service());
     }
 
     /**

@@ -14,6 +14,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
+ * @deprecated Use \SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentGroupForm instead.
+ *
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
  */
 class ShipmentForm extends AbstractType

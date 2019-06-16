@@ -15,6 +15,8 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClient
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientBridge;
+use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceBridge;
+use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToUtilValidateServiceBridge;
 use SprykerShop\Yves\CustomerPage\Plugin\AuthenticationHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\GuestCheckoutAuthenticationHandlerPlugin;
@@ -40,6 +42,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS = 'PLUGIN_CUSTOMER_ORDER_VIEW_WIDGETS';
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
+    public const SERVICE_CUSTOMER = 'SERVICE_CUSTOMER';
 
     public const PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS = 'PLUGIN_CUSTOMER_MENU_ITEM_WIDGETS';
     public const PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT = 'PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT';
@@ -73,6 +76,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addAfterLoginCustomerRedirectPlugins($container);
         $container = $this->addAfterCustomerAuthenticationSuccessPlugins($container);
         $container = $this->addShipmentService($container);
+        $container = $this->addCustomerService($container);
 
         return $container;
     }
@@ -411,6 +415,20 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::SERVICE_SHIPMENT] = function (Container $container) {
             return $container->getLocator()->shipment()->service();
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCustomerService(Container $container): Container
+    {
+        $container->set(static::SERVICE_CUSTOMER, function (Container $container): CustomerPageToCustomerServiceInterface {
+            return new CustomerPageToCustomerServiceBridge($container->getLocator()->customer()->service());
+        });
 
         return $container;
     }

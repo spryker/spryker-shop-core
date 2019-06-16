@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CheckoutPage\Form\Steps;
 
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -20,6 +21,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ShipmentGroupForm extends AbstractType
 {
     public const BLOCK_PREFIX = 'shipmentGroupForm';
+    public const FIELD_SHIPMENT = 'shipment';
+    public const FIELD_HASH = 'hash';
+    public const OPTION_SHIPMENT_LABEL = 'shipmentLabel';
 
     /**
      * @return string
@@ -48,36 +52,30 @@ class ShipmentGroupForm extends AbstractType
      */
     protected function addShipmentMethods(FormBuilderInterface $builder, array $options)
     {
+        $builder->add(static::FIELD_HASH, HiddenType::class, ['required' => true]);
+
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
             /**
              * @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
              */
             $shipmentGroupTransfer = $event->getData();
+            if (!($shipmentGroupTransfer instanceof ShipmentGroupTransfer)) {
+                return;
+            }
+
             $form = $event->getForm();
             $options = $form->getConfig()->getOptions();
-            if ($shipmentGroupTransfer instanceof ShipmentGroupTransfer) {
-                $availableShipmentMethods = $options[ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP][$shipmentGroupTransfer->getHash()] ?? [];
-                $shippingAddressLabel = $options[ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST][$shipmentGroupTransfer->getHash()] ?? '';
 
-                $form->add('shipment', MultiShipmentForm::class, [
-                    MultiShipmentForm::OPTION_SHIPMENT_METHODS => $availableShipmentMethods,
-                    'required' => true,
-                    'label' => $shippingAddressLabel,
-                ]);
-            }
-        });
+            $availableShipmentMethods = $options[ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP][$shipmentGroupTransfer->getHash()] ?? [];
+            $shippingAddressLabel = $options[ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST][$shipmentGroupTransfer->getHash()] ?? '';
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
-            /**
-             * @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-             */
-            $shipmentGroupTransfer = $event->getForm()->getData();
-            if ($shipmentGroupTransfer instanceof ShipmentGroupTransfer) {
-                $shipmentTransfer = $shipmentGroupTransfer->getShipment();
-                foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
-                    $itemTransfer->setShipment($shipmentTransfer);
-                }
-            }
+            $options = [
+                'required' => true,
+                'label' => $shippingAddressLabel,
+                MultiShipmentForm::OPTION_SHIPMENT_METHODS => $availableShipmentMethods,
+            ];
+
+            $form->add(static::FIELD_SHIPMENT, MultiShipmentForm::class, $options);
         });
 
         return $this;

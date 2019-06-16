@@ -15,7 +15,7 @@ interface ShipmentGroupsBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return ArrayObject
+     * @return \ArrayObject
      */
     public function buildShipmentGroups(OrderTransfer $orderTransfer): ArrayObject;
 }

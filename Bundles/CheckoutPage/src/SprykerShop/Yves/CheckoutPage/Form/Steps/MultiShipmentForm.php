@@ -25,6 +25,10 @@ class MultiShipmentForm extends AbstractType
     public const BLOCK_PREFIX = 'shipmentGroupForm';
     public const OPTION_SHIPMENT_METHODS = 'shipmentMethods';
 
+    public const SHIPMENT_PROPERTY_PATH = 'shipment';
+    public const SHIPMENT_SELECTION = 'shipmentSelection';
+    public const SHIPMENT_SELECTION_PROPERTY_PATH = self::SHIPMENT_PROPERTY_PATH . '.' . self::SHIPMENT_SELECTION;
+
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
     protected const VALIDATION_INVALID_DATE_TIME_MESSAGE = 'validation.invalid_date';
     protected const VALIDATION_VALID_DATE_TIME_FORMAT = 'Y-m-d'; // Format accepted by date().
@@ -67,6 +71,7 @@ class MultiShipmentForm extends AbstractType
             'multiple' => false,
             'required' => true,
             'placeholder' => false,
+//            'property_path' => static::SHIPMENT_SELECTION_PROPERTY_PATH,
             'constraints' => [
                 $this->createNotBlankConstraint(),
             ],

@@ -7,11 +7,11 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Handler;
 
-use SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\ShipmentStepExecutorInterface;
 
 /**
  * @deprecated Use \SprykerShop\Yves\CheckoutPage\Model\Shipment\CreatorInterface instead.
  */
-interface ShipmentHandlerInterface extends CreatorInterface
+interface ShipmentHandlerInterface extends ShipmentStepExecutorInterface
 {
 }

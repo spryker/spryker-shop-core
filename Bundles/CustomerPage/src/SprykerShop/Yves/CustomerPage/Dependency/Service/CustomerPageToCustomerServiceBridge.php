@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CheckoutPage\Dependency\Service;
+namespace SprykerShop\Yves\CustomerPage\Dependency\Service;
 
 use Generated\Shared\Transfer\AddressTransfer;
 
-class CheckoutPageToCustomerServiceBridge implements CheckoutPageToCustomerServiceInterface
+class CustomerPageToCustomerServiceBridge implements CustomerPageToCustomerServiceInterface
 {
     /**
      * @var \Spryker\Service\Customer\CustomerServiceInterface

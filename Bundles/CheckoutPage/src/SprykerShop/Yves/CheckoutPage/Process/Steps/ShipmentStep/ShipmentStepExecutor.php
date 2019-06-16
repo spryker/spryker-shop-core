@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CheckoutPage\Model\Shipment;
+namespace SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep;
 
 use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -19,7 +19,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServi
 use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
 use Symfony\Component\HttpFoundation\Request;
 
-class Creator extends ShipmentHandler
+class ShipmentStepExecutor extends ShipmentHandler
 {
     /**
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
@@ -49,7 +49,9 @@ class Creator extends ShipmentHandler
      */
     public function addShipmentToQuote(Request $request, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $quoteTransfer = $this->updateQuoteShipmentGroupsUsingHash($quoteTransfer);
+        $quoteTransfer = $this->updateItemShipments($quoteTransfer);
+        $quoteTransfer = $this->updateQuoteItemsWithShipmentGroupsItems($quoteTransfer);
+        $quoteTransfer = $this->updateQuoteShipmentGroups($quoteTransfer);
 
         $availableShipmentMethodsGroupedByShipment = $this->getAvailableMethodsByShipment($quoteTransfer)->getGroups();
         $quoteTransfer = $this->setShipmentMethodsToQuoteShipmentGroups($quoteTransfer, $availableShipmentMethodsGroupedByShipment);
@@ -65,14 +67,52 @@ class Creator extends ShipmentHandler
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function updateQuoteShipmentGroupsUsingHash(QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function updateItemShipments(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
+            $shipmentTransfer = $shipmentGroupTransfer->getShipment();
+            foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
+                $itemTransfer->setShipment($shipmentTransfer);
+            }
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function updateQuoteItemsWithShipmentGroupsItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $quoteItemsCollection = new ArrayObject();
+
+        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
+            foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
+                $quoteItemsCollection->append($itemTransfer);
+            }
+        }
+
+        $quoteTransfer->setItems($quoteItemsCollection);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function updateQuoteShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $shipmentGroupsCollection = $this->groupItemsByShipment($quoteTransfer->getItems());
         $quoteShipmentGroupCollection = $quoteTransfer->getShipmentGroups();
 
         foreach ($shipmentGroupsCollection as $shipmentGroupTransfer) {
             foreach ($quoteShipmentGroupCollection as $quoteShipmentGroupTransfer) {
-                if ($shipmentGroupTransfer->getHash() !== $quoteShipmentGroupTransfer->getHash()) {
+                $quoteShipmentGroupHashKey = $this->shipmentService->getShipmentHashKey($quoteShipmentGroupTransfer->getShipment());
+                if ($shipmentGroupTransfer->getHash() !== $quoteShipmentGroupHashKey) {
                     continue;
                 }
 
