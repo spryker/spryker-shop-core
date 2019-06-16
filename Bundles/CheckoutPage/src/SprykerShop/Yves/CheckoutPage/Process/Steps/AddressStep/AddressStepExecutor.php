@@ -74,6 +74,7 @@ class AddressStepExecutor implements StepExecutorInterface
 
         $quoteTransfer = $this->hydrateItemLevelShippingAddresses($quoteTransfer, $customerTransfer);
         $quoteTransfer = $this->hydrateBillingAddress($quoteTransfer, $customerTransfer);
+        $quoteTransfer = $this->setItemLevelIsAddressSavingSkippedFromQuoteLevel($quoteTransfer);
         $quoteTransfer = $this->setQuoteShippingAddress($quoteTransfer);
 
         return $quoteTransfer;
@@ -136,15 +137,15 @@ class AddressStepExecutor implements StepExecutorInterface
      */
     protected function getShipmentWithUniqueShippingAddress(ShipmentTransfer $shipmentTransfer, CustomerTransfer $customerTransfer): ShipmentTransfer
     {
-        $shippingAddress = $shipmentTransfer->getShippingAddress();
-        $shippingAddress = $this->expandAddressTransfer($shippingAddress, $customerTransfer);
-        $addressHash = $this->customerService->getUniqueAddressKey($shippingAddress);
+        $shippingAddressTransfer = $shipmentTransfer->getShippingAddress();
+        $shippingAddressTransfer = $this->expandAddressTransfer($shippingAddressTransfer, $customerTransfer);
+        $addressHash = $this->customerService->getUniqueAddressKey($shippingAddressTransfer);
 
         if (isset($this->createdShipmentsWithShippingAddressesList[$addressHash])) {
             return $this->createdShipmentsWithShippingAddressesList[$addressHash];
         }
 
-        $shipmentTransfer->setShippingAddress($shippingAddress);
+        $shipmentTransfer->setShippingAddress($shippingAddressTransfer);
         $this->createdShipmentsWithShippingAddressesList[$addressHash] = $shipmentTransfer;
 
         return $shipmentTransfer;
@@ -193,6 +194,25 @@ class AddressStepExecutor implements StepExecutorInterface
         }
 
         return $addressTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setItemLevelIsAddressSavingSkippedFromQuoteLevel(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        if ($this->getUniqueAddressesCount() !== 1) {
+            return $quoteTransfer;
+        }
+
+        $quoteLevelIsAddressSavingSkipped = $quoteTransfer->getIsAddressSavingSkipped();
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setIsAddressSavingSkipped($quoteLevelIsAddressSavingSkipped);
+        }
+
+        return $quoteTransfer;
     }
 
     /**
