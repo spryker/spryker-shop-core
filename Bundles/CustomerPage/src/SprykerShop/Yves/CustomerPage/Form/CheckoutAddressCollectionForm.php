@@ -376,7 +376,7 @@ class CheckoutAddressCollectionForm extends AbstractType
      */
     protected function getShippingAddressChoices(array $options): array
     {
-        if(!$options[static::OPTION_IS_MULTI_SHIPMENT_ENABLED]) {
+        if (!$options[static::OPTION_IS_MULTI_SHIPMENT_ENABLED]) {
             return $options[static::OPTION_ADDRESS_CHOICES];
         }
 
