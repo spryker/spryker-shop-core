@@ -57,7 +57,6 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return false;
         }
 
-
         foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
             if (!$this->checkShipmentExpenseSetInQuote($quoteTransfer, $shipmentGroupTransfer)) {
                 return false;
@@ -121,6 +120,6 @@ class PostConditionChecker implements PostConditionCheckerInterface
         string $expenseShipmentKey
     ): bool {
         return $expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
-            && $itemShipmentKey === $expenseShipmentKey ;
+            && $itemShipmentKey === $expenseShipmentKey;
     }
 }

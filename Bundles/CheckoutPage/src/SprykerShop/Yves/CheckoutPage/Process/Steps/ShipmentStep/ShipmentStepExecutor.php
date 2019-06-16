@@ -271,7 +271,7 @@ class ShipmentStepExecutor extends ShipmentHandler
     protected function updateQuoteLevelShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $shipmentGroupsCollection = $quoteTransfer->getShipmentGroups();
-        if($shipmentGroupsCollection->count() > 1) {
+        if ($shipmentGroupsCollection->count() > 1) {
             return $quoteTransfer->setShipment(null);
         }
 
