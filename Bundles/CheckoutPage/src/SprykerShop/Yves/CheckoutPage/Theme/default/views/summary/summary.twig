@@ -36,7 +36,7 @@
 {% block content %}
     <div class="grid grid--stretch grid--justify">
         {% for shipmentGroup in data.shipmentGroups %}
-            <div class="col col--sm-12 col--xl-6">
+            <div class="col col--sm-12 col--lg-6">
                 <div class="box">
                     <h4>{{ 'checkout.step.shipment.title' | trans }} n°{{ loop.index }}</h4>
                     <hr>
@@ -135,7 +135,7 @@
         <h4>{{ 'checkout.step.summary.payment' | trans }}</h4>
         <hr>
         <div class="grid grid--stretch grid--justify">
-            <div class="col col--sm-12 col--xl-6">
+            <div class="col col--sm-12 col--lg-6">
                 <div class="box">
                     <h6>{{ data.transfer.payment.paymentMethod | capitalize }}</h6>
                     <hr>
