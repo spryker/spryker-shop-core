@@ -49,7 +49,6 @@ class ShipmentStepExecutor extends ShipmentHandler
      */
     public function addShipmentToQuote(Request $request, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $quoteTransfer = $this->updateQuoteLevelShipment($quoteTransfer);
         $quoteTransfer = $this->updateItemShipments($quoteTransfer);
         $quoteTransfer = $this->updateQuoteItemsWithShipmentGroupsItems($quoteTransfer);
         $quoteTransfer = $this->updateQuoteShipmentGroups($quoteTransfer);
@@ -59,6 +58,8 @@ class ShipmentStepExecutor extends ShipmentHandler
 
         $this->setShipmentGroupsSelectedMethodTransfer($quoteTransfer->getShipmentGroups());
         $quoteTransfer = $this->setShipmentExpenseTransfers($quoteTransfer);
+
+        $quoteTransfer = $this->updateQuoteLevelShipment($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -261,17 +262,22 @@ class ShipmentStepExecutor extends ShipmentHandler
     }
 
     /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function updateQuoteLevelShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $quoteShipmentGroupTransfer = $quoteTransfer->getShipmentGroups();
-        if($quoteShipmentGroupTransfer->count() > 0) {
+        $shipmentGroupsCollection = $quoteTransfer->getShipmentGroups();
+        if($shipmentGroupsCollection->count() > 1) {
             return $quoteTransfer->setShipment(null);
         }
 
-        return $quoteTransfer->setShipment($quoteShipmentGroupTransfer[0]->requireShipment()->getShipment());
+        $firstShipmentGroup = $shipmentGroupsCollection[0];
+        $firstShipmentGroup->requireShipment();
+
+        return $quoteTransfer->setShipment($firstShipmentGroup->getShipment());
     }
 }

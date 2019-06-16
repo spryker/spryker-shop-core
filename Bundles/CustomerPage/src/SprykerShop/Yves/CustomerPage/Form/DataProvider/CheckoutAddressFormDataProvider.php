@@ -84,7 +84,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         return [
             CheckoutAddressCollectionForm::OPTION_ADDRESS_CHOICES => $this->getAddressChoices(),
             CheckoutAddressCollectionForm::OPTION_COUNTRY_CHOICES => $this->getAvailableCountries(),
-            CheckoutAddressCollectionForm::OPTION_IS_MULTI_SHIPMENT_USED => $this->isMultiShipmentUsed($quoteTransfer),
+            CheckoutAddressCollectionForm::OPTION_IS_MULTI_SHIPMENT_ENABLED => $this->isMultiShipmentEnabled($quoteTransfer),
         ];
     }
 
@@ -298,7 +298,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      *
      * @return bool
      */
-    protected function isMultiShipmentUsed(QuoteTransfer $quoteTransfer): bool
+    protected function isMultiShipmentEnabled(QuoteTransfer $quoteTransfer): bool
     {
         return $quoteTransfer->getItems()->count() > 1 && $quoteTransfer->getIsMultipleShipmentEnabled();
     }

@@ -57,26 +57,14 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return false;
         }
 
-        if ($quoteTransfer->getIsMultipleShipmentEnabled()) {
-            foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
-                if (!$this->checkShipmentExpenseSetInQuote($quoteTransfer, $shipmentGroupTransfer)) {
-                    return false;
-                }
-            }
 
-            return true;
-        }
-
-        /**
-         * Added for BC reason only.
-         */
-        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                return $quoteTransfer->requireShipment()->getShipment()->getShipmentSelection() !== null;
+        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
+            if (!$this->checkShipmentExpenseSetInQuote($quoteTransfer, $shipmentGroupTransfer)) {
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -112,8 +100,8 @@ class PostConditionChecker implements PostConditionCheckerInterface
     {
         $onlyGiftCardItems = true;
         foreach ($quoteTransfer->getItems() as $item) {
-            $giftCardMetadataTransfer = $item->requireGiftCardMetadata()->getGiftCardMetadata();
-            $isGiftCard = $giftCardMetadataTransfer ? $giftCardMetadataTransfer->getIsGiftCard() : false;
+            $giftCardMetadataTransfer = $item->getGiftCardMetadata();
+            $isGiftCard = $giftCardMetadataTransfer !== null ? $giftCardMetadataTransfer->getIsGiftCard() : false;
             $onlyGiftCardItems &= $isGiftCard;
         }
 

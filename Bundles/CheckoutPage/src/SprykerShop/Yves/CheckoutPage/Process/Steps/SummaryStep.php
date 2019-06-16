@@ -85,7 +85,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
         return $quoteTransfer->getBillingAddress() !== null
-            && $this->isItemsShipmentValid($quoteTransfer)
+            && $this->haveItemsShipmentTransfers($quoteTransfer)
             && $quoteTransfer->getPayment() !== null
             && $quoteTransfer->getPayment()->getPaymentProvider() !== null;
     }
@@ -172,7 +172,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return bool
      */
-    protected function isItemsShipmentValid(QuoteTransfer $quoteTransfer): bool
+    protected function haveItemsShipmentTransfers(QuoteTransfer $quoteTransfer): bool
     {
         foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
             if ($shipmentGroupTransfer->getShipment() === null) {
