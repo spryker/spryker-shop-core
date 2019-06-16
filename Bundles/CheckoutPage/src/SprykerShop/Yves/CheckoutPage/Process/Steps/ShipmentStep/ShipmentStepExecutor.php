@@ -49,6 +49,7 @@ class ShipmentStepExecutor extends ShipmentHandler
      */
     public function addShipmentToQuote(Request $request, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
+        $quoteTransfer = $this->updateQuoteLevelShipment($quoteTransfer);
         $quoteTransfer = $this->updateItemShipments($quoteTransfer);
         $quoteTransfer = $this->updateQuoteItemsWithShipmentGroupsItems($quoteTransfer);
         $quoteTransfer = $this->updateQuoteShipmentGroups($quoteTransfer);
@@ -166,7 +167,9 @@ class ShipmentStepExecutor extends ShipmentHandler
                     continue;
                 }
 
-                $shipmentGroupTransfer->setAvailableShipmentMethods($availableShipmentMethodsShipmentGroupTransfer->getAvailableShipmentMethods());
+                $shipmentGroupTransfer->setAvailableShipmentMethods(
+                    $availableShipmentMethodsShipmentGroupTransfer->getAvailableShipmentMethods()
+                );
             }
         }
 
@@ -197,8 +200,10 @@ class ShipmentStepExecutor extends ShipmentHandler
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function findShipmentMethodById(ShipmentMethodsTransfer $shipmentMethodsTransfer, int $idShipmentMethod): ?ShipmentMethodTransfer
-    {
+    protected function findShipmentMethodById(
+        ShipmentMethodsTransfer $shipmentMethodsTransfer,
+        int $idShipmentMethod
+    ): ?ShipmentMethodTransfer {
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
             if ($shipmentMethodTransfer->getIdShipmentMethod() === $idShipmentMethod) {
                 return $shipmentMethodTransfer;
@@ -253,5 +258,20 @@ class ShipmentStepExecutor extends ShipmentHandler
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function updateQuoteLevelShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $quoteShipmentGroupTransfer = $quoteTransfer->getShipmentGroups();
+        if($quoteShipmentGroupTransfer->count() > 0) {
+            return $quoteTransfer->setShipment(null);
+        }
+
+        return $quoteTransfer->setShipment($quoteShipmentGroupTransfer[0]->requireShipment()->getShipment());
     }
 }

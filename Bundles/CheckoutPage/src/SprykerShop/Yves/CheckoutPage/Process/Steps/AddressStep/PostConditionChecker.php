@@ -120,6 +120,10 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return true;
         }
 
+        if($addressTransfer->getIdCustomerAddress() !== null || $addressTransfer->getIdCompanyUnitAddress() !== null) {
+            return false;
+        }
+
         $firstName = trim($addressTransfer->getFirstName());
         $lastName = trim($addressTransfer->getLastName());
 

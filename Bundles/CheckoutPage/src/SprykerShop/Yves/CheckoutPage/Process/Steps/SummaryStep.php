@@ -84,18 +84,10 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
-        /**
-         * @todo Update this check using multi shipment logic.
-         */
-        if ($quoteTransfer->getBillingAddress() === null
-            || $quoteTransfer->getShipment() === null
-            || $quoteTransfer->getPayment() === null
-            || $quoteTransfer->getPayment()->getPaymentProvider() === null
-        ) {
-            return false;
-        }
-
-        return true;
+        return $quoteTransfer->getBillingAddress() !== null
+            && $this->isItemsShipmentValid($quoteTransfer)
+            && $quoteTransfer->getPayment() !== null
+            && $quoteTransfer->getPayment()->getPaymentProvider() !== null;
     }
 
     /**
@@ -173,5 +165,21 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         }
 
         return $totalCosts;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isItemsShipmentValid(QuoteTransfer $quoteTransfer): bool
+    {
+        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
+            if ($shipmentGroupTransfer->getShipment() === null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
