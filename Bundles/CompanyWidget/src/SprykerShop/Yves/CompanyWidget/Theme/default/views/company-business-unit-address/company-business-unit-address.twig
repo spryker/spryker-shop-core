@@ -14,7 +14,7 @@
 {% block body %}
     {% set defaultAddressKey = null %}
     {% set optionValueDeliverToMultipleAddresses = '-1' %}
-    {% set fullAddresses = data.customerAddresses | merge(data.companyBusinessUnitAddresses) %}
+    {% set fullAddresses = data.customerAddresses ?: data.companyBusinessUnitAddresses %}
     {% set shippingAddress = 'shippingAddress' %}
     {% set billingAddress = 'billingAddress' %}
 
