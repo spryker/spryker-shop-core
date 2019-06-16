@@ -38,6 +38,7 @@ class CheckoutAddressCollectionForm extends AbstractType
 
     public const OPTION_ADDRESS_CHOICES = 'address_choices';
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
+    public const OPTION_IS_MULTI_SHIPMENT_ENABLED = 'is_multi_shipment_enabled';
 
     public const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
     public const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
@@ -79,6 +80,7 @@ class CheckoutAddressCollectionForm extends AbstractType
 
         $resolver->setDefined(self::OPTION_ADDRESS_CHOICES);
         $resolver->setRequired(self::OPTION_COUNTRY_CHOICES);
+        $resolver->setRequired(static::OPTION_IS_MULTI_SHIPMENT_ENABLED);
     }
 
     /**
@@ -374,17 +376,12 @@ class CheckoutAddressCollectionForm extends AbstractType
      */
     protected function getShippingAddressChoices(array $options): array
     {
-        /**
-         * @todo Refactor this. Use data provider to provide needed data.
-         */
-        $addressChoices = $options[static::OPTION_ADDRESS_CHOICES];
-        $quoteTransfer = $this->getFactory()
-            ->getQuoteClient()
-            ->getQuote();
-
-        if ($quoteTransfer->getItems()->count() > 1 && $quoteTransfer->getIsMultipleShipmentEnabled()) {
-            $addressChoices[CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES] = static::GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES;
+        if(!$options[static::OPTION_IS_MULTI_SHIPMENT_ENABLED]) {
+            return $options[static::OPTION_ADDRESS_CHOICES];
         }
+
+        $addressChoices = $options[static::OPTION_ADDRESS_CHOICES];
+        $addressChoices[CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES] = static::GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES;
 
         return $addressChoices;
     }
