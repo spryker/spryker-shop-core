@@ -22,7 +22,7 @@ class ShipmentGroupsBuilder implements ShipmentGroupsBuilderInterface
      */
     public function buildShipmentGroups(OrderTransfer $orderTransfer): ArrayObject
     {
-        if (!$orderTransfer->getIsMultiShipment()) {
+        if (!$this->isMultiShipmentOrder($orderTransfer)) {
             return $this->createShipmentGroups($orderTransfer);
         }
 
@@ -51,5 +51,35 @@ class ShipmentGroupsBuilder implements ShipmentGroupsBuilderInterface
         $shipmentGroups->append($shipmentGroupTransfer);
 
         return $shipmentGroups;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    protected function isMultiShipmentOrder(OrderTransfer $orderTransfer): bool
+    {
+        if ($orderTransfer->getItems()->count() <= 1) {
+            return false;
+        }
+
+        return $this->hasOrderMultiShipmentGroups($orderTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    protected function hasOrderMultiShipmentGroups(OrderTransfer $orderTransfer): bool
+    {
+        if (($orderTransfer->getShipmentGroups() === null
+            || $orderTransfer->getShipmentGroups()->count() <= 1)
+        ) {
+            return false;
+        }
+
+        return true;
     }
 }
