@@ -121,8 +121,8 @@ class ContentFileListTwigFunction extends TwigFunction
     protected function getAvailableTemplates(): array
     {
         return [
-            static::WIDGET_TEMPLATE_IDENTIFIER_TEXT_LINK => '@ContentFileWidget/views/content-file/content-file-text-link.twig',
-            static::WIDGET_TEMPLATE_IDENTIFIER_FILE_ICON_AND_SIZE => '@ContentFileWidget/views/content-file/content-file-icon-and-size.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_TEXT_LINK => '@ContentFileWidget/views/content-file-text/content-file-text.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_FILE_ICON_AND_SIZE => '@ContentFileWidget/views/content-file-icon/content-file-icon.twig',
         ];
     }
 

@@ -8,8 +8,8 @@
     idFile: required,
     fileName: required,
     fileUrl: fileUrl | default(path('files/download', {'id-file': data.idFile})),
-    fileIcon: null,
-    fileSize: null
+    fileIcon: '',
+    fileSize: '',
 } %}
 
 {% block body %}
@@ -19,8 +19,8 @@
                 {% include atom('icon') with {
                     modifiers: ['bigger'],
                     data: {
-                        name: data.fileIcon
-                    }
+                        name: data.fileIcon,
+                    },
                 } only %}
             </span>
 
