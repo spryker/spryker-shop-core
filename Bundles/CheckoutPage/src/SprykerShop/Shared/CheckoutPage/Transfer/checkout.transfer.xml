@@ -93,10 +93,11 @@
     <transfer name="ShipmentGroup">
         <property name="shipment" type="Shipment" />
         <property name="items" type="Item[]" singular="item" />
+        <property name="availableShipmentMethods" type="ShipmentMethods" />
     </transfer>
 
     <transfer name="ShipmentGroupCollection">
-        <property name="groups" type="ShipmentGroup[]" singular="group" />
+        <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
     </transfer>
 
     <transfer name="QuoteValidationResponse">

@@ -53,7 +53,7 @@ class ShipmentStepExecutor extends ShipmentHandler
         $quoteTransfer = $this->updateQuoteItemsWithShipmentGroupsItems($quoteTransfer);
         $quoteTransfer = $this->updateQuoteShipmentGroups($quoteTransfer);
 
-        $availableShipmentMethodsGroupedByShipment = $this->getAvailableMethodsByShipment($quoteTransfer)->getGroups();
+        $availableShipmentMethodsGroupedByShipment = $this->getAvailableMethodsByShipment($quoteTransfer)->getShipmentGroups();
         $quoteTransfer = $this->setShipmentMethodsToQuoteShipmentGroups($quoteTransfer, $availableShipmentMethodsGroupedByShipment);
 
         $this->setShipmentGroupsSelectedMethodTransfer($quoteTransfer->getShipmentGroups());
