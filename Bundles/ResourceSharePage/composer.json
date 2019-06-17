@@ -19,6 +19,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker-shop/customer-page": "Use RedirectUriCustomerRedirectStrategyPlugin to allow redirect when login is necessary for a shared resource: 1.21.0",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
