@@ -103,7 +103,8 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
             return false;
         }
 
-        if ($quoteTransfer->getShippingAddress()->getIdCustomerAddress() === null) {
+        $shippingAddressData = $quoteTransfer->getShippingAddress()->toArray();
+        if (!count(array_filter($shippingAddressData))) {
             return false;
         }
 
@@ -140,7 +141,8 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
             return false;
         }
 
-        if ($quoteTransfer->getBillingAddress()->getIdCustomerAddress() === null) {
+        $billingAddressData = $quoteTransfer->getBillingAddress()->toArray();
+        if (!count(array_filter($billingAddressData))) {
             return false;
         }
 
