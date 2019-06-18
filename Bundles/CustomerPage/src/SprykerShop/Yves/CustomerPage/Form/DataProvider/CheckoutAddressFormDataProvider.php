@@ -43,9 +43,9 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         $quoteTransfer->setShippingAddress($this->getShippingAddress($quoteTransfer));
         $quoteTransfer->setBillingAddress($this->getBillingAddress($quoteTransfer));
 
-        if ($quoteTransfer->getBillingAddress()->toArray() == $quoteTransfer->getShippingAddress()->toArray()) {
-            $quoteTransfer->setBillingSameAsShipping(true);
-        }
+        $quoteTransfer->setBillingSameAsShipping(
+            $this->isSameAddress($quoteTransfer->getShippingAddress(), $quoteTransfer->getBillingAddress())
+        );
 
         return $quoteTransfer;
     }
@@ -147,6 +147,17 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $shippingAddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $billingAddressTransfer
+     *
+     * @return bool
+     */
+    protected function isSameAddress(AddressTransfer $shippingAddressTransfer, AddressTransfer $billingAddressTransfer): bool
+    {
+        return !count(array_diff($shippingAddressTransfer->toArray(), $billingAddressTransfer->toArray()));
     }
 
     /**
