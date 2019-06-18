@@ -193,7 +193,7 @@ class CommentController extends CommentWidgetAbstractController
      */
     protected function addFormErrorMessages(FormErrorIterator $formErrorIterator): void
     {
-        if ($formErrorIterator->count() === 0) {
+        if (!$formErrorIterator->count()) {
             return;
         }
 
