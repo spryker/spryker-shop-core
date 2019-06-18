@@ -11,14 +11,13 @@ use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentTagTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use SprykerShop\Yves\CommentWidget\CommentWidgetConfig;
-use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CommentWidget\CommentWidgetFactory getFactory()
  */
-class CommentTagController extends AbstractController
+class CommentTagController extends CommentWidgetAbstractController
 {
     protected const PARAMETER_UUID = 'uuid';
     protected const PARAMETER_RETURN_URL = 'returnUrl';
@@ -73,6 +72,8 @@ class CommentTagController extends AbstractController
                 ->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
         }
 
+        $this->handleResponseErrors($commentThreadRequestTransfer);
+
         return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
     }
 
@@ -100,6 +101,8 @@ class CommentTagController extends AbstractController
                 ->createCommentOperation()
                 ->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
         }
+
+        $this->handleResponseErrors($commentThreadRequestTransfer);
 
         return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
     }

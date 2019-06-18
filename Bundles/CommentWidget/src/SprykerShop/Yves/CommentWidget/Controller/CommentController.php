@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CommentWidget\Controller;
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use SprykerShop\Yves\CommentWidget\Form\CommentForm;
-use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \SprykerShop\Yves\CommentWidget\CommentWidgetFactory getFactory()
  */
-class CommentController extends AbstractController
+class CommentController extends CommentWidgetAbstractController
 {
     protected const PARAMETER_UUID = 'uuid';
     protected const PARAMETER_RETURN_URL = 'returnUrl';
@@ -89,6 +88,8 @@ class CommentController extends AbstractController
                 ->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
         }
 
+        $this->handleResponseErrors($commentThreadRequestTransfer);
+
         return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
     }
 
@@ -114,6 +115,8 @@ class CommentController extends AbstractController
                 ->createCommentOperation()
                 ->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
         }
+
+        $this->handleResponseErrors($commentThreadRequestTransfer);
 
         return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
     }
@@ -142,6 +145,8 @@ class CommentController extends AbstractController
                 ->createCommentOperation()
                 ->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
         }
+
+        $this->handleResponseErrors($commentThreadRequestTransfer);
 
         return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
     }
