@@ -14,8 +14,8 @@ use SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface
 use SprykerShop\Yves\ContentFileWidget\Expander\IconNameFileStorageDataExpander;
 use SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReader;
 use SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReaderInterface;
-use SprykerShop\Yves\ContentFileWidget\Twig\ReadableByteSizeTwigFilter;
 use SprykerShop\Yves\ContentFileWidget\Twig\ContentFileListTwigFunction;
+use SprykerShop\Yves\ContentFileWidget\Twig\ReadableByteSizeTwigFilter;
 use Twig\Environment;
 
 /**
