@@ -32,5 +32,5 @@ interface CheckoutPageToShipmentServiceInterface
      *
      * @return string
      */
-    public function isShipmentEqualShipmentHashKey(ShipmentTransfer $shipmentTransfer, string $shipmentHashKey): bool;
+    public function isShipmentEqualToShipmentHash(ShipmentTransfer $shipmentTransfer, string $shipmentHashKey): bool;
 }
