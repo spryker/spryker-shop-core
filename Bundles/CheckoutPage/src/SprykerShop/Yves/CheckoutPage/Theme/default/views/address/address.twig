@@ -5,7 +5,7 @@
         address: _view.addressesForm,
         shipping: _view.addressesForm.shippingAddress,
         billing: _view.addressesForm.billingAddress,
-        items: _view.addressesForm.items,
+        items: _view.addressesForm.multiShippingAddresses,
     },
     isMultipleShipmentEnabled: _view.addressesForm.vars.value.isMultipleShipmentEnabled,
     title: 'checkout.step.address.title' | trans,
@@ -212,11 +212,11 @@
                         },
                     } only %}
 
-                    {% if data.form.isAddressSavingSkipped is defined %}
+                    {% if data.form.shippingAddress.isAddressSavingSkipped is defined %}
                         {% include molecule('save-new-address', 'CustomerPage') ignore missing with {
                             class: 'col is-hidden',
                             data: {
-                                form: data.form,
+                                form: data.form.shippingAddress,
                             },
                             attributes: {
                                 'shipping-address-toggler-selector': '[name="' ~ embed.forms.shipping.vars.full_name ~ '[id_customer_address]"]',
@@ -224,7 +224,7 @@
                                 'billing-address-toggler-selector': '[name="' ~ embed.forms.billing.vars.full_name ~ '[id_customer_address]"]',
                                 'billing-company-address-toggler-selector': '[name="' ~ embed.forms.billing.vars.full_name ~ '[id_company_unit_address]"]',
                                 'billing-same-as-shipping-toggler-selector': '[name="' ~ data.form.billingSameAsShipping.vars.full_name ~ '"]',
-                                'save-address-toggler-selector': '[name="' ~ data.form.isAddressSavingSkipped.vars.full_name ~ '"]',
+                                'save-address-toggler-selector': '[name="' ~ data.form.shippingAddress.isAddressSavingSkipped.vars.full_name ~ '"]',
                                 'business-unit-shipping-address-toggler-selector': '.js-form-select-address__shippingAddress',
                                 'toggle-option-value': optionValueDeliverToMultipleAddresses,
                             },

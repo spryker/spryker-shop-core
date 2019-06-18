@@ -19,11 +19,11 @@ use SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilter;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilterInterface;
 use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
+use SprykerShop\Yves\CheckoutPage\Handler\MultiShipmentHandler;
+use SprykerShop\Yves\CheckoutPage\Handler\MultiShipmentHandlerInterface;
 use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
 use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandlerInterface;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\ShipmentStepExecutor;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\ShipmentStepExecutorInterface;
 
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
@@ -181,11 +181,11 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\ShipmentStepExecutorInterface
+     * @return \SprykerShop\Yves\CheckoutPage\Handler\MultiShipmentHandlerInterface
      */
-    public function createShipmentHandlerWithMultipleShipment(): ShipmentStepExecutorInterface
+    public function createShipmentHandlerWithMultipleShipment(): MultiShipmentHandlerInterface
     {
-        return new ShipmentStepExecutor(
+        return new MultiShipmentHandler(
             $this->getShipmentClient(),
             $this->getPriceClient(),
             $this->getShippingService()

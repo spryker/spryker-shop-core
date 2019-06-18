@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep;
+namespace SprykerShop\Yves\CheckoutPage\Handler;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
-interface ShipmentStepExecutorInterface
+interface MultiShipmentHandlerInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

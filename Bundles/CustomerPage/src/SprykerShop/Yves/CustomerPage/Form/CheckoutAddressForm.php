@@ -7,6 +7,10 @@
 
 namespace SprykerShop\Yves\CustomerPage\Form;
 
+use Closure;
+use Generated\Shared\Transfer\AddressTransfer;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,10 +19,14 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CheckoutAddressForm extends AddressForm
 {
+    public const FIELD_IS_ADDRESS_SAVING_SKIPPED = 'isAddressSavingSkipped';
+
     public const OPTION_VALIDATION_GROUP = 'validation_group';
     public const OPTION_ADDRESS_CHOICES = 'addresses_choices';
 
     public const VALUE_DELIVER_TO_MULTIPLE_ADDRESSES = -1;
+
+    protected const GLOSSARY_KEY_SAVE_NEW_ADDRESS = 'customer.address.save_new_address';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -31,6 +39,7 @@ class CheckoutAddressForm extends AddressForm
 
         $resolver->setDefaults([
             static::OPTION_ADDRESS_CHOICES => [],
+            'data_class' => AddressTransfer::class,
             'allow_extra_fields' => true,
         ]);
 
@@ -59,7 +68,8 @@ class CheckoutAddressForm extends AddressForm
             ->addCityField($builder, $options)
             ->addIso2CodeField($builder, $options)
             ->addPhoneField($builder)
-            ->addIdCompanyUnitAddressTextField($builder);
+            ->addIdCompanyUnitAddressTextField($builder)
+            ->addIsAddressSavingSkippedField($builder);
     }
 
     /**
@@ -100,6 +110,37 @@ class CheckoutAddressForm extends AddressForm
     }
 
     /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIsAddressSavingSkippedField(FormBuilderInterface $builder)
+    {
+        $isLoggedIn = $this->getFactory()
+            ->getCustomerClient()
+            ->isLoggedIn();
+
+        if (!$isLoggedIn) {
+            return $this;
+        }
+
+        $builder->add(static::FIELD_IS_ADDRESS_SAVING_SKIPPED, CheckboxType::class, [
+            'label' => static::GLOSSARY_KEY_SAVE_NEW_ADDRESS,
+            'required' => false,
+        ]);
+
+        $callbackTransformer = new CallbackTransformer(
+            $this->getInvertedBooleanValueCallbackTransformer(),
+            $this->getInvertedBooleanValueCallbackTransformer()
+        );
+
+        $builder->get(static::FIELD_IS_ADDRESS_SAVING_SKIPPED)
+            ->addModelTransformer($callbackTransformer);
+
+        return $this;
+    }
+
+    /**
      * @param array $options
      *
      * @return \Symfony\Component\Validator\Constraints\NotBlank
@@ -110,5 +151,15 @@ class CheckoutAddressForm extends AddressForm
             'groups' => $options[static::OPTION_VALIDATION_GROUP],
             'message' => static::VALIDATION_NOT_BLANK_MESSAGE,
         ]);
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function getInvertedBooleanValueCallbackTransformer(): Closure
+    {
+        return function (?bool $value): bool {
+            return !$value;
+        };
     }
 }

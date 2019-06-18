@@ -66,6 +66,7 @@
         <property name="comment" type="string" />
         <property name="description" type="string" />
         <property name="country" type="Country" />
+        <property name="isAddressSavingSkipped" type="bool"/>
     </transfer>
 
     <transfer name="Comment">
@@ -94,6 +95,14 @@
         <property name="createdAt" type="string" />
         <property name="hash" type="string" />
         <property name="customerId" type="string" />
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="billingAddress" type="Address"/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="isAddressSavingSkipped" type="bool" deprecated="Use address transfer property (shippingAddress.isAddressSavingSkipped) instead." />
+        <property name="billingSameAsShipping" type="bool"/>
     </transfer>
 
     <transfer name="Item">

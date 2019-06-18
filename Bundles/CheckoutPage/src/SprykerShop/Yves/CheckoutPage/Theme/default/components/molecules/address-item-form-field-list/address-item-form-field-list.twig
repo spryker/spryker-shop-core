@@ -121,7 +121,7 @@
                     } only %}
                 {% endif %}
 
-                {% if item.isAddressSavingSkipped is defined %}
+                {% if item.shippingAddress.isAddressSavingSkipped is defined %}
                     {% include molecule('save-new-address', 'CustomerPage') ignore missing with {
                         class: 'spacing is-hidden',
                         data: {
@@ -129,7 +129,7 @@
                         },
                         attributes: {
                             'shipping-address-toggler-selector': '.' ~ config.jsName ~ '__trigger--' ~ loop.index,
-                            'save-address-toggler-selector': '[name="' ~ item.isAddressSavingSkipped.vars.full_name ~ '"]',
+                            'save-address-toggler-selector': '[name="' ~ item.shippingAddress.isAddressSavingSkipped.vars.full_name ~ '"]',
                         },
                     } only %}
                 {% endif %}
