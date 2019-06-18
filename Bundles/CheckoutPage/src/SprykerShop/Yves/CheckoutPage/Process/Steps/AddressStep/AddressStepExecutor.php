@@ -74,7 +74,7 @@ class AddressStepExecutor implements StepExecutorInterface
 
         $quoteTransfer = $this->hydrateItemLevelShippingAddresses($quoteTransfer, $customerTransfer);
         $quoteTransfer = $this->hydrateBillingAddress($quoteTransfer, $customerTransfer);
-        $quoteTransfer = $this->setItemLevelIsAddressSavingSkippedFromQuoteLevel($quoteTransfer);
+//        $quoteTransfer = $this->setItemLevelIsAddressSavingSkipped($quoteTransfer);
         $quoteTransfer = $this->setQuoteShippingAddress($quoteTransfer);
 
         return $quoteTransfer;
@@ -152,11 +152,11 @@ class AddressStepExecutor implements StepExecutorInterface
     }
 
     /**
-     * @return int
+     * @return bool
      */
-    protected function getUniqueAddressesCount(): int
+    protected function hasQuoteMultiShippingAddresses(): bool
     {
-        return count($this->createdShipmentsWithShippingAddressesList);
+        return count($this->createdShipmentsWithShippingAddressesList) > 1;
     }
 
     /**
@@ -201,15 +201,23 @@ class AddressStepExecutor implements StepExecutorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function setItemLevelIsAddressSavingSkippedFromQuoteLevel(QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function setItemLevelIsAddressSavingSkipped(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if ($this->getUniqueAddressesCount() !== 1) {
+        if ($this->hasQuoteMultiShippingAddresses()) {
             return $quoteTransfer;
         }
 
+        /**
+         * Change this after form changes will be done.
+         */
         $quoteLevelIsAddressSavingSkipped = $quoteTransfer->getIsAddressSavingSkipped();
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->setIsAddressSavingSkipped($quoteLevelIsAddressSavingSkipped);
+            $itemTransfer->requireShipment();
+            $itemTransfer->getShipment()->requireShippingAddress();
+
+            $itemTransfer->getShipment()
+                ->getShippingAddress()
+                ->setIsAddressSavingSkipped($quoteLevelIsAddressSavingSkipped);
         }
 
         return $quoteTransfer;
@@ -224,7 +232,7 @@ class AddressStepExecutor implements StepExecutorInterface
      */
     protected function setQuoteShippingAddress(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if ($this->getUniqueAddressesCount() !== 1) {
+        if ($this->hasQuoteMultiShippingAddresses()) {
             return $quoteTransfer;
         }
 

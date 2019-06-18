@@ -7,13 +7,11 @@
 
 namespace SprykerShop\Yves\CustomerPage\Form;
 
-use Closure;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -33,8 +31,11 @@ class CheckoutAddressCollectionForm extends AbstractType
     public const FIELD_SHIPPING_ADDRESS = 'shippingAddress';
     public const FIELD_BILLING_ADDRESS = 'billingAddress';
     public const FIELD_BILLING_SAME_AS_SHIPPING = 'billingSameAsShipping';
+    /**
+     * @deprecated Use Address level field instead.
+     */
     public const FIELD_IS_ADDRESS_SAVING_SKIPPED = 'isAddressSavingSkipped';
-    public const FIELD_ITEMS = 'items';
+    public const FIELD_MULTI_SHIPPING_ADDRESSES = 'multiShippingAddresses';
 
     public const OPTION_ADDRESS_CHOICES = 'address_choices';
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
@@ -48,6 +49,8 @@ class CheckoutAddressCollectionForm extends AbstractType
 
     protected const GLOSSARY_KEY_SAVE_NEW_ADDRESS = 'customer.address.save_new_address';
     protected const GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES = 'customer.account.deliver_to_multiple_addresses';
+
+    protected const PROPERTY_PATH_MULTI_SHIPPING_ADDRESSES = 'items';
 
     /**
      * @return string
@@ -67,19 +70,19 @@ class CheckoutAddressCollectionForm extends AbstractType
         /** @var \Symfony\Component\OptionsResolver\OptionsResolver $resolver */
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
-                $validationGroups = [Constraint::DEFAULT_GROUP, self::GROUP_SHIPPING_ADDRESS];
+                $validationGroups = [Constraint::DEFAULT_GROUP, static::GROUP_SHIPPING_ADDRESS];
 
-                if (!$form->get(self::FIELD_BILLING_SAME_AS_SHIPPING)->getData()) {
-                    $validationGroups[] = self::GROUP_BILLING_ADDRESS;
+                if (!$form->get(static::FIELD_BILLING_SAME_AS_SHIPPING)->getData()) {
+                    $validationGroups[] = static::GROUP_BILLING_ADDRESS;
                 }
 
                 return $validationGroups;
             },
-            self::OPTION_ADDRESS_CHOICES => [],
+            static::OPTION_ADDRESS_CHOICES => [],
         ]);
 
-        $resolver->setDefined(self::OPTION_ADDRESS_CHOICES);
-        $resolver->setRequired(self::OPTION_COUNTRY_CHOICES);
+        $resolver->setDefined(static::OPTION_ADDRESS_CHOICES);
+        $resolver->setRequired(static::OPTION_COUNTRY_CHOICES);
         $resolver->setRequired(static::OPTION_IS_MULTI_SHIPMENT_ENABLED);
     }
 
@@ -95,8 +98,7 @@ class CheckoutAddressCollectionForm extends AbstractType
             ->addShippingAddressSubForm($builder, $options)
             ->addItemShippingAddressSubForm($builder, $options)
             ->addSameAsShipmentCheckbox($builder)
-            ->addBillingAddressSubForm($builder, $options)
-            ->addIsAddressSavingSkippedField($builder);
+            ->addBillingAddressSubForm($builder, $options);
     }
 
     /**
@@ -113,17 +115,17 @@ class CheckoutAddressCollectionForm extends AbstractType
             'mapped' => false,
             'validation_groups' => function (FormInterface $form) {
                 if ($this->isIdCustomerAddressFieldEmpty($form) && $this->isIdCompanyUnitAddressFieldEmpty($form)) {
-                    return [self::GROUP_SHIPPING_ADDRESS];
+                    return [static::GROUP_SHIPPING_ADDRESS];
                 }
 
                 return false;
             },
-            CheckoutAddressForm::OPTION_VALIDATION_GROUP => self::GROUP_SHIPPING_ADDRESS,
+            CheckoutAddressForm::OPTION_VALIDATION_GROUP => static::GROUP_SHIPPING_ADDRESS,
             CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $this->getShippingAddressChoices($options),
-            CheckoutAddressForm::OPTION_COUNTRY_CHOICES => $options[self::OPTION_COUNTRY_CHOICES],
+            CheckoutAddressForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
         ];
 
-        $builder->add(self::FIELD_SHIPPING_ADDRESS, CheckoutAddressForm::class, $options);
+        $builder->add(static::FIELD_SHIPPING_ADDRESS, CheckoutAddressForm::class, $options);
 
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
             $quoteTransfer = $event->getData();
@@ -230,7 +232,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     protected function addSameAsShipmentCheckbox(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_BILLING_SAME_AS_SHIPPING,
+            static::FIELD_BILLING_SAME_AS_SHIPPING,
             CheckboxType::class,
             [
                 'required' => false,
@@ -281,70 +283,25 @@ class CheckoutAddressCollectionForm extends AbstractType
         $options = [
             'data_class' => AddressTransfer::class,
             'validation_groups' => function (FormInterface $form) {
-                if ($form->getParent()->get(self::FIELD_BILLING_SAME_AS_SHIPPING)->getData()) {
+                if ($form->getParent()->get(static::FIELD_BILLING_SAME_AS_SHIPPING)->getData()) {
                     return false;
                 }
 
                 if ($this->isIdCustomerAddressAbsentOrEmpty($form) && $this->isIdCompanyUnitAddressFieldAbsentOrEmpty($form)) {
-                    return [self::GROUP_BILLING_ADDRESS];
+                    return [static::GROUP_BILLING_ADDRESS];
                 }
 
                 return false;
             },
             'required' => true,
-            CheckoutAddressForm::OPTION_VALIDATION_GROUP => self::GROUP_BILLING_ADDRESS,
-            CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $options[self::OPTION_ADDRESS_CHOICES],
-            CheckoutAddressForm::OPTION_COUNTRY_CHOICES => $options[self::OPTION_COUNTRY_CHOICES],
+            CheckoutAddressForm::OPTION_VALIDATION_GROUP => static::GROUP_BILLING_ADDRESS,
+            CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
+            CheckoutAddressForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
         ];
 
-        $builder->add(self::FIELD_BILLING_ADDRESS, CheckoutAddressForm::class, $options);
+        $builder->add(static::FIELD_BILLING_ADDRESS, CheckoutAddressForm::class, $options);
 
         return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIsAddressSavingSkippedField(FormBuilderInterface $builder)
-    {
-        $isLoggedIn = $this->getFactory()
-            ->getCustomerClient()
-            ->isLoggedIn();
-
-        if (!$isLoggedIn) {
-            return $this;
-        }
-
-        $builder->add(static::FIELD_IS_ADDRESS_SAVING_SKIPPED, CheckboxType::class, [
-            'label' => static::GLOSSARY_KEY_SAVE_NEW_ADDRESS,
-            'required' => false,
-        ]);
-
-        $callbackTransformer = new CallbackTransformer(
-            $this->getInvertedBooleanValueCallbackTransformer(),
-            $this->getInvertedBooleanValueCallbackTransformer()
-        );
-
-        $builder->get(static::FIELD_IS_ADDRESS_SAVING_SKIPPED)
-            ->addModelTransformer($callbackTransformer);
-
-        return $this;
-    }
-
-    /**
-     * @return \Closure
-     */
-    protected function getInvertedBooleanValueCallbackTransformer(): Closure
-    {
-        return function (?bool $value): bool {
-            if ($value === null) {
-                return true;
-            }
-
-            return !$value;
-        };
     }
 
     /**
@@ -355,14 +312,15 @@ class CheckoutAddressCollectionForm extends AbstractType
      */
     protected function addItemShippingAddressSubForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_ITEMS, CollectionType::class, [
+        $builder->add(static::FIELD_MULTI_SHIPPING_ADDRESSES, CollectionType::class, [
             'label' => false,
-            'entry_type' => CheckoutAddressItemForm::class,
+            'property_path' => static::PROPERTY_PATH_MULTI_SHIPPING_ADDRESSES,
+            'entry_type' => CheckoutMultiShippingAddressesForm::class,
             'entry_options' => [
                 'data_class' => ItemTransfer::class,
                 'label' => false,
-                CheckoutAddressItemForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
-                CheckoutAddressItemForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
+                CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
+                CheckoutMultiShippingAddressesForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
             ],
         ]);
 

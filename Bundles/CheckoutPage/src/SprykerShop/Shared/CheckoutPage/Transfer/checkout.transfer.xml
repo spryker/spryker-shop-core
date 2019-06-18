@@ -5,8 +5,10 @@
 
     <transfer name="Quote">
         <property name="checkoutConfirmed" type="bool" />
+        <property name="billingAddress" type="Address"/>
         <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="isAddressSavingSkipped" type="bool" deprecated="Use address transfer property (shippingAddress.isAddressSavingSkipped) instead." />
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="isMultipleShipmentEnabled" type="bool"/>
     </transfer>
@@ -57,6 +59,7 @@
         <property name="fkCountry" type="int" />
         <property name="fkRegion" type="int" />
         <property name="iso2Code" type="string" />
+        <property name="isAddressSavingSkipped" type="bool"/>
     </transfer>
 
     <transfer name="Shipment">
@@ -75,7 +78,7 @@
         <property name="taxRate" type="float" />
         <property name="quantity" type="float" />
         <property name="shipment" type="Shipment" />
-        <property name="isAddressSavingSkipped" type="bool"/>
+        <property name="giftCardMetadata" type="GiftCardMetadata" />
     </transfer>
 
     <transfer name="Expense">
@@ -103,10 +106,6 @@
     <transfer name="QuoteValidationResponse">
         <property name="isSuccessful" type="bool" />
         <property name="messages" type="Message[]"  singular="message" />
-    </transfer>
-
-    <transfer name="Item">
-        <property name="giftCardMetadata" type="GiftCardMetadata" />
     </transfer>
 
     <transfer name="GiftCardMetadata">

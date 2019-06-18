@@ -19,7 +19,7 @@ use SprykerShop\Yves\CheckoutPage\Exception\NotAvailableShipmentMethodException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CheckoutPage\Model\Shipment\Creator instead.
+ * @deprecated Use \SprykerShop\Yves\CheckoutPage\Handler\ShipmentStepExecutor instead.
  */
 class ShipmentHandler implements ShipmentHandlerInterface
 {
