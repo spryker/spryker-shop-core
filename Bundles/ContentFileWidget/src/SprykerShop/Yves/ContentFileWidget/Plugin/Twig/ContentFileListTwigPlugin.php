@@ -33,7 +33,11 @@ class ContentFileListTwigPlugin extends AbstractPlugin implements TwigPluginInte
         $contentFileListTwigFunction = $this->getFactory()
             ->createContentFileListTwigFunction($twig, $this->getLocale());
 
+        $contentFileListReadableFileSizeTwigFilter = $this->getFactory()
+            ->ContentFileLIstReadableByteSizeTwigFilter();
+
         $twig->addFunction($contentFileListTwigFunction);
+        $twig->addFilter($contentFileListReadableFileSizeTwigFilter);
 
         return $twig;
     }

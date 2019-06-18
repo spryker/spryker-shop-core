@@ -10,7 +10,6 @@
     <transfer name="FileStorageData">
         <property name="type" type="string"/>
         <property name="size" type="int"/>
-        <property name="displaySize" type="string"/>
         <property name="iconName" type="string"/>
     </transfer>
 

@@ -4,7 +4,7 @@
     fileViewCollection: fileViewCollection,
 } %}
 
-{% block body %}
+{% block content %}
     <ul class="list list--inline">
         {% for fileView in data.fileViewCollection %}
             <li class="list__item">
@@ -14,8 +14,8 @@
                         idFile: fileView.fkFile,
                         fileName: fileView.fileName,
                         fileIcon: fileView.iconName,
-                        fileSize: fileView.displaySize,
-                    },
+                        fileSize: fileView.size | readable_bytesize
+                    }
                 } only %}
             </li>
         {% endfor %}

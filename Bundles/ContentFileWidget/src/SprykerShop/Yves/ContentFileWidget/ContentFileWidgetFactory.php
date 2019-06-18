@@ -15,6 +15,7 @@ use SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface
 use SprykerShop\Yves\ContentFileWidget\Expander\IconNameFileStorageDataExpander;
 use SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReader;
 use SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReaderInterface;
+use SprykerShop\Yves\ContentFileWidget\Twig\ContentFileLIstReadableByteSizeTwigFilter;
 use SprykerShop\Yves\ContentFileWidget\Twig\ContentFileListTwigFunction;
 use Twig\Environment;
 
@@ -40,6 +41,14 @@ class ContentFileWidgetFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\ContentFileWidget\Twig\ContentFileLIstReadableByteSizeTwigFilter
+     */
+    public function ContentFileLIstReadableByteSizeTwigFilter(): ContentFileLIstReadableByteSizeTwigFilter
+    {
+        return new ContentFileLIstReadableByteSizeTwigFilter();
+    }
+
+    /**
      * @return \SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReaderInterface
      */
     public function createContentFileReader(): ContentFileReaderInterface
@@ -57,7 +66,6 @@ class ContentFileWidgetFactory extends AbstractFactory
     {
         return [
             $this->createIconNameFileStorageDataExpander(),
-            $this->createDisplayFileSizeFileStorageDataExpander(),
         ];
     }
 
