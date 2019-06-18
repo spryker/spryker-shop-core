@@ -11,14 +11,18 @@ use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentTagTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use SprykerShop\Yves\CommentWidget\CommentWidgetConfig;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CommentWidget\CommentWidgetFactory getFactory()
  */
-class CommentTagController extends AbstractCommentController
+class CommentTagController extends AbstractController
 {
+    protected const PARAMETER_UUID = 'uuid';
+    protected const PARAMETER_RETURN_URL = 'returnUrl';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -64,7 +68,9 @@ class CommentTagController extends AbstractCommentController
             ->updateCommentTags((new CommentRequestTransfer())->setComment($commentTransfer));
 
         if ($commentThreadRequestTransfer->getIsSuccessful()) {
-            $this->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
+            $this->getFactory()
+                ->createCommentOperation()
+                ->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
         }
 
         return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
@@ -90,7 +96,9 @@ class CommentTagController extends AbstractCommentController
             ->updateCommentTags((new CommentRequestTransfer())->setComment($commentTransfer));
 
         if ($commentThreadRequestTransfer->getIsSuccessful()) {
-            $this->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
+            $this->getFactory()
+                ->createCommentOperation()
+                ->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
         }
 
         return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
