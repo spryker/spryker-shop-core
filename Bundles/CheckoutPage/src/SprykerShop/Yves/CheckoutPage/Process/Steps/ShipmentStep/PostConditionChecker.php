@@ -7,8 +7,9 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep;
 
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
@@ -56,10 +57,8 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return false;
         }
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null
-                || !$this->checkShipmentExpenseSetInQuote($quoteTransfer, $itemTransfer->getShipment())
-            ) {
+        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
+            if (!$this->checkShipmentExpenseSetInQuote($quoteTransfer, $shipmentGroupTransfer)) {
                 return false;
             }
         }
@@ -69,18 +68,21 @@ class PostConditionChecker implements PostConditionCheckerInterface
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      *
      * @return bool
      */
-    protected function checkShipmentExpenseSetInQuote(QuoteTransfer $quoteTransfer, ShipmentTransfer $shipmentTransfer): bool
+    protected function checkShipmentExpenseSetInQuote(QuoteTransfer $quoteTransfer, ShipmentGroupTransfer $shipmentGroupTransfer): bool
     {
+        $shipmentTransfer = $shipmentGroupTransfer->getShipment();
+        if ($shipmentTransfer === null) {
+            return false;
+        }
+
         $itemShipmentKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             $expenseShipmentKey = $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment());
-            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
-                && $expenseShipmentKey === $itemShipmentKey
-            ) {
+            if ($this->checkShipmentExpenseKey($expenseTransfer, $itemShipmentKey, $expenseShipmentKey)) {
                 return $shipmentTransfer->getShipmentSelection() !== null;
             }
         }
@@ -97,10 +99,27 @@ class PostConditionChecker implements PostConditionCheckerInterface
     {
         $onlyGiftCardItems = true;
         foreach ($quoteTransfer->getItems() as $item) {
-            $isGiftCard = $item->getGiftCardMetadata() ? $item->getGiftCardMetadata()->getIsGiftCard() : false;
+            $giftCardMetadataTransfer = $item->getGiftCardMetadata();
+            $isGiftCard = $giftCardMetadataTransfer !== null ? $giftCardMetadataTransfer->getIsGiftCard() : false;
             $onlyGiftCardItems &= $isGiftCard;
         }
 
         return (bool)$onlyGiftCardItems;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param string $itemShipmentKey
+     * @param string $expenseShipmentKey
+     *
+     * @return bool
+     */
+    protected function checkShipmentExpenseKey(
+        ExpenseTransfer $expenseTransfer,
+        string $itemShipmentKey,
+        string $expenseShipmentKey
+    ): bool {
+        return $expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
+            && $itemShipmentKey === $expenseShipmentKey;
     }
 }

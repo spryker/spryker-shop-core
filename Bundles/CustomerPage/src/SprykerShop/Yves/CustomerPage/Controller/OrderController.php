@@ -135,8 +135,7 @@ class OrderController extends AbstractCustomerController
         $customerTransfer = $this->getLoggedInCustomerTransfer();
 
         $orderTransfer = new OrderTransfer();
-        $orderTransfer
-            ->setIdSalesOrder($idSalesOrder)
+        $orderTransfer->setIdSalesOrder($idSalesOrder)
             ->setFkCustomer($customerTransfer->getIdCustomer());
 
         $orderTransfer = $this->getFactory()
@@ -150,9 +149,13 @@ class OrderController extends AbstractCustomerController
             ));
         }
 
+        $shipmentGroupCollection = $this->getFactory()
+            ->createShipmentGroupsBuilder()
+            ->buildShipmentGroups($orderTransfer);
+
         return [
             'order' => $orderTransfer,
-            'shipmentGroups' => $this->getFactory()->createShipmentGroupsBuilder()->buildShipmentGroups($orderTransfer),
+            'shipmentGroups' => $shipmentGroupCollection,
         ];
     }
 }

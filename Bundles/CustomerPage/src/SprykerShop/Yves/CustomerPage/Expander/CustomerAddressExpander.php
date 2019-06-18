@@ -34,6 +34,10 @@ class CustomerAddressExpander implements CustomerAddressExpanderInterface
      */
     public function expandWithCustomerAddress(AddressTransfer $addressTransfer, CustomerTransfer $customerTransfer): AddressTransfer
     {
+        if ($addressTransfer->getFkCustomer() === null) {
+            $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
+        }
+
         if ($customerTransfer->getAddresses() === null || $addressTransfer->getIdCustomerAddress() === null) {
             return $addressTransfer;
         }

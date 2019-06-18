@@ -53,11 +53,13 @@ class ShipmentStepExecutor extends ShipmentHandler
         $quoteTransfer = $this->updateQuoteItemsWithShipmentGroupsItems($quoteTransfer);
         $quoteTransfer = $this->updateQuoteShipmentGroups($quoteTransfer);
 
-        $availableShipmentMethodsGroupedByShipment = $this->getAvailableMethodsByShipment($quoteTransfer)->getGroups();
+        $availableShipmentMethodsGroupedByShipment = $this->getAvailableMethodsByShipment($quoteTransfer)->getShipmentGroups();
         $quoteTransfer = $this->setShipmentMethodsToQuoteShipmentGroups($quoteTransfer, $availableShipmentMethodsGroupedByShipment);
 
         $this->setShipmentGroupsSelectedMethodTransfer($quoteTransfer->getShipmentGroups());
         $quoteTransfer = $this->setShipmentExpenseTransfers($quoteTransfer);
+
+        $quoteTransfer = $this->updateQuoteLevelShipment($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -166,7 +168,9 @@ class ShipmentStepExecutor extends ShipmentHandler
                     continue;
                 }
 
-                $shipmentGroupTransfer->setAvailableShipmentMethods($availableShipmentMethodsShipmentGroupTransfer->getAvailableShipmentMethods());
+                $shipmentGroupTransfer->setAvailableShipmentMethods(
+                    $availableShipmentMethodsShipmentGroupTransfer->getAvailableShipmentMethods()
+                );
             }
         }
 
@@ -197,8 +201,10 @@ class ShipmentStepExecutor extends ShipmentHandler
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function findShipmentMethodById(ShipmentMethodsTransfer $shipmentMethodsTransfer, int $idShipmentMethod): ?ShipmentMethodTransfer
-    {
+    protected function findShipmentMethodById(
+        ShipmentMethodsTransfer $shipmentMethodsTransfer,
+        int $idShipmentMethod
+    ): ?ShipmentMethodTransfer {
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
             if ($shipmentMethodTransfer->getIdShipmentMethod() === $idShipmentMethod) {
                 return $shipmentMethodTransfer;
@@ -253,5 +259,25 @@ class ShipmentStepExecutor extends ShipmentHandler
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function updateQuoteLevelShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $shipmentGroupsCollection = $quoteTransfer->getShipmentGroups();
+        if ($shipmentGroupsCollection->count() > 1) {
+            return $quoteTransfer->setShipment(null);
+        }
+
+        $firstShipmentGroup = $shipmentGroupsCollection[0];
+        $firstShipmentGroup->requireShipment();
+
+        return $quoteTransfer->setShipment($firstShipmentGroup->getShipment());
     }
 }
