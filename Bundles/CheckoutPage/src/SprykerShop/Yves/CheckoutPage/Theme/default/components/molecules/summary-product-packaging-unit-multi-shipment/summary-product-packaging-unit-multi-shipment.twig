@@ -2,7 +2,6 @@
 
 {% define config = {
     name: 'summary-product-packaging-unit-multi-shipment',
-    tag: 'div'
 } %}
 
 {% define data = {
@@ -12,36 +11,30 @@
     price: required,
     quantitySalesUnit: required,
     amountSalesUnit: required,
-    images: []
+    images: [],
 } %}
 
 {% block body %}
-    <div class="col col--sm-12 col--lg-2">
+    <div class="col col--sm-12 col--lg-3">
         {% include molecule('summary-image', 'CheckoutPage') with {
             data: {
                 name: data.name | default(''),
-                image: data.images is empty ? null : (data.images | first)
-            }
+                image: data.images ? (data.images | first) : null,
+            },
         } only %}
     </div>
-    {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default('') %}
-    {% set salesUnitSummary = '' %}
-    {% if salesUnitName is not empty %}
-        {% set salesUnitSummary = data.quantity / data.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
-    {% endif %}
-    {% set amountPerQuantity = data.amount / data.quantity %}
+    <div class="col col--sm-12 col--lg-9">
+        {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+        {% set salesUnitSummary = salesUnitName ? data.quantity / data.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
+        {% set amountPerQuantity = data.amount / data.quantity %}
 
-    {% if can('SeePricePermissionPlugin') %}
-        <strong class="float-right">{{data.price}}</strong>
-    {% else %}
-        <strong class="float-right">{{ 'customer.access.cannot_see_price' | trans }}</strong>
-    {% endif %}
-    {{data.quantity}} <span class="text-secondary">&times;</span> {{data.name}} {% if salesUnitSummary is not empty %}(={{ salesUnitSummary }}){% endif %}
-    <br/>
-    {{ 'packaging_units.cart.quantity' | trans }}: {{data.quantity}}
-    <br/>
-    {% if data.amountSalesUnit is defined and data.amountSalesUnit is not empty %}
-        {% set amountSalesUnitName = data.amountSalesUnit.productMeasurementUnit.name | default('') %}
-        <span class="text-secondary">&times;</span> {{ amountPerQuantity }} {{ 'packaging_units.cart.item' | trans }} (= {{ amountPerQuantity / data.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.amount }} {{ 'packaging_units.cart.item' | trans }}
-    {% endif %}
-{% endblock body %}
+        <strong class="float-right">{{ can('SeePricePermissionPlugin') ? data.price : 'customer.access.cannot_see_price' | trans }}</strong>
+        <div>{{data.quantity}} <span class="text-secondary">&times;</span> {{data.name}} {% if salesUnitSummary %}(={{ salesUnitSummary }}){% endif %}</div>
+        <div>{{ 'packaging_units.cart.quantity' | trans }}: {{data.quantity}}</div>
+
+        {% if data.amountSalesUnit is defined and data.amountSalesUnit is not empty %}
+            {% set amountSalesUnitName = data.amountSalesUnit.productMeasurementUnit.name | default('') %}
+            <div><span class="text-secondary">&times;</span> {{ amountPerQuantity }} {{ 'packaging_units.cart.item' | trans }} (= {{ amountPerQuantity / data.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.amount }} {{ 'packaging_units.cart.item' | trans }}</div>
+        {% endif %}
+    </div>
+{% endblock %}
