@@ -2,6 +2,7 @@ import Component from 'ShopUi/models/component';
 
 export default class CartComments extends Component {
     protected tabs: HTMLElement[];
+    protected content: HTMLElement;
     protected contentBlocks: HTMLElement[];
 
     protected readyCallback(): void {}
@@ -12,6 +13,8 @@ export default class CartComments extends Component {
     mountCallback(): void {
         this.tabs = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__tab`));
         this.contentBlocks = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__content-item`));
+        this.content = this.querySelector(`.${this.jsName}__content`);
+        this.autoScrollInit();
         this.mapEvents();
     }
 
@@ -19,6 +22,10 @@ export default class CartComments extends Component {
         this.tabs.forEach((tab: HTMLElement) => {
             tab.addEventListener('click', (event: Event) => this.onTabClick(event));
         });
+    }
+
+    protected autoScrollInit(): void {
+        this.content.scrollTop = this.content.scrollHeight;
     }
 
     protected onTabClick(event: Event): void {
