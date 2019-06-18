@@ -154,9 +154,9 @@ class CommentController extends CommentWidgetAbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\CommentTransfer|null
+     * @return \Generated\Shared\Transfer\CommentTransfer
      */
-    protected function createCommentTransferFromRequest(Request $request): ?CommentTransfer
+    protected function createCommentTransferFromRequest(Request $request): CommentTransfer
     {
         $customerTransfer = $this->getFactory()
             ->getCustomerClient()
