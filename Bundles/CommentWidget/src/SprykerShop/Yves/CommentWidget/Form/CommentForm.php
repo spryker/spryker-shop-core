@@ -24,6 +24,8 @@ class CommentForm extends AbstractType
 {
     public const COMMENT_FORM = 'commentForm';
 
+    protected const GLOSSARY_KEY_COMMENT_WIDGET_MESSAGE_LENGTH_EXCEEDED = 'comment_widget.message.length.exceeded';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -82,6 +84,7 @@ class CommentForm extends AbstractType
                 new NotBlank(),
                 new Length([
                     'max' => 5000,
+                    'maxMessage' => static::GLOSSARY_KEY_COMMENT_WIDGET_MESSAGE_LENGTH_EXCEEDED,
                 ]),
             ],
         ]);

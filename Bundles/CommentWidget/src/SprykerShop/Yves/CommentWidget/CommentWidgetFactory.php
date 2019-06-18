@@ -14,6 +14,8 @@ use SprykerShop\Yves\CommentWidget\Dependency\Client\CommentWidgetToCommentClien
 use SprykerShop\Yves\CommentWidget\Dependency\Client\CommentWidgetToCustomerClientInterface;
 use SprykerShop\Yves\CommentWidget\Form\CommentForm;
 use SprykerShop\Yves\CommentWidget\Form\DataProvider\CommentFormDataProvider;
+use SprykerShop\Yves\CommentWidget\Operation\CommentOperation;
+use SprykerShop\Yves\CommentWidget\Operation\CommentOperationInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -38,6 +40,16 @@ class CommentWidgetFactory extends AbstractFactory
     public function createCommentFormDataProvider(): CommentFormDataProvider
     {
         return new CommentFormDataProvider();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CommentWidget\Operation\CommentOperationInterface
+     */
+    public function createCommentOperation(): CommentOperationInterface
+    {
+        return new CommentOperation(
+            $this->getCommentThreadAfterOperationPlugins()
+        );
     }
 
     /**

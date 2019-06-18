@@ -10,14 +10,17 @@ namespace SprykerShop\Yves\CommentWidget\Controller;
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use SprykerShop\Yves\CommentWidget\Form\CommentForm;
+use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\CommentWidget\CommentWidgetFactory getFactory()
  */
-class CommentController extends AbstractCommentController
+class CommentController extends CommentWidgetAbstractController
 {
+    protected const PARAMETER_UUID = 'uuid';
+    protected const PARAMETER_RETURN_URL = 'returnUrl';
     protected const PARAMETER_OWNER_ID = 'ownerId';
     protected const PARAMETER_OWNER_TYPE = 'ownerType';
 
@@ -66,6 +69,10 @@ class CommentController extends AbstractCommentController
     {
         $commentTransfer = $this->createCommentTransferFromRequest($request);
 
+        if (!$this->validateCommentForm($request, $commentTransfer)) {
+            return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
+        }
+
         $commentRequestTransfer = (new CommentRequestTransfer())
             ->setComment($commentTransfer)
             ->setOwnerId($request->request->get(static::PARAMETER_OWNER_ID))
@@ -76,8 +83,12 @@ class CommentController extends AbstractCommentController
             ->addComment($commentRequestTransfer);
 
         if ($commentThreadRequestTransfer->getIsSuccessful()) {
-            $this->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
+            $this->getFactory()
+                ->createCommentOperation()
+                ->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
         }
+
+        $this->handleResponseErrors($commentThreadRequestTransfer);
 
         return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
     }
@@ -91,13 +102,21 @@ class CommentController extends AbstractCommentController
     {
         $commentTransfer = $this->createCommentTransferFromRequest($request);
 
+        if (!$this->validateCommentForm($request, $commentTransfer)) {
+            return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
+        }
+
         $commentThreadRequestTransfer = $this->getFactory()
             ->getCommentClient()
             ->updateComment((new CommentRequestTransfer())->setComment($commentTransfer));
 
         if ($commentThreadRequestTransfer->getIsSuccessful()) {
-            $this->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
+            $this->getFactory()
+                ->createCommentOperation()
+                ->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
         }
+
+        $this->handleResponseErrors($commentThreadRequestTransfer);
 
         return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
     }
@@ -122,8 +141,12 @@ class CommentController extends AbstractCommentController
             ->removeComment((new CommentRequestTransfer())->setComment($commentTransfer));
 
         if ($commentThreadRequestTransfer->getIsSuccessful()) {
-            $this->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
+            $this->getFactory()
+                ->createCommentOperation()
+                ->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
         }
+
+        $this->handleResponseErrors($commentThreadRequestTransfer);
 
         return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
     }
@@ -143,8 +166,39 @@ class CommentController extends AbstractCommentController
             ->fromArray($request->request->get(CommentForm::COMMENT_FORM), true)
             ->setCustomer($customerTransfer);
 
-        $commentTransfer->setCustomer($customerTransfer);
-
         return $commentTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     *
+     * @return bool
+     */
+    protected function validateCommentForm(Request $request, CommentTransfer $commentTransfer): bool
+    {
+        $commentForm = $this->getFactory()
+            ->getCommentForm($commentTransfer)
+            ->handleRequest($request);
+
+        $this->addFormErrorMessages($commentForm->getErrors(true));
+
+        return $commentForm->isValid();
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormErrorIterator $formErrorIterator
+     *
+     * @return void
+     */
+    protected function addFormErrorMessages(FormErrorIterator $formErrorIterator): void
+    {
+        if (!$formErrorIterator->count()) {
+            return;
+        }
+
+        foreach ($formErrorIterator as $formError) {
+            $this->addErrorMessage($formError->getMessage());
+        }
     }
 }
