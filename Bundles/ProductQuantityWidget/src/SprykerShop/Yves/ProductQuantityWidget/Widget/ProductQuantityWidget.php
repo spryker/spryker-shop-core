@@ -17,10 +17,14 @@ class ProductQuantityWidget extends AbstractWidget
     /**
      * @param float $quantity
      * @param int $idProductConcrete
+     * @param string $sku
+     * @param string $groupKey
      */
-    public function __construct(float $quantity, int $idProductConcrete)
+    public function __construct(float $quantity, int $idProductConcrete, string $sku, string $groupKey)
     {
-        $this->addParameter('quantity', $quantity);
+        $this->addParameter('quantity', $quantity)
+            ->addParameter('sku', $sku)
+            ->addParameter('groupKey', $groupKey);
         $this->setQuantityRestrictions($idProductConcrete);
     }
 
