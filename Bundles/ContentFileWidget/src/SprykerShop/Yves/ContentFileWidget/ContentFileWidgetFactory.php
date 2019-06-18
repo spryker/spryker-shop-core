@@ -10,12 +10,11 @@ namespace SprykerShop\Yves\ContentFileWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToContentFileClientInterface;
 use SprykerShop\Yves\ContentFileWidget\Dependency\Client\ContentFileWidgetToFileManagerStorageClientInterface;
-use SprykerShop\Yves\ContentFileWidget\Expander\DisplayFileSizeFileStorageDataExpander;
 use SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface;
 use SprykerShop\Yves\ContentFileWidget\Expander\IconNameFileStorageDataExpander;
 use SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReader;
 use SprykerShop\Yves\ContentFileWidget\Reader\ContentFileReaderInterface;
-use SprykerShop\Yves\ContentFileWidget\Twig\ContentFileLIstReadableByteSizeTwigFilter;
+use SprykerShop\Yves\ContentFileWidget\Twig\ReadableByteSizeTwigFilter;
 use SprykerShop\Yves\ContentFileWidget\Twig\ContentFileListTwigFunction;
 use Twig\Environment;
 
@@ -41,11 +40,11 @@ class ContentFileWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ContentFileWidget\Twig\ContentFileLIstReadableByteSizeTwigFilter
+     * @return \SprykerShop\Yves\ContentFileWidget\Twig\ReadableByteSizeTwigFilter
      */
-    public function ContentFileLIstReadableByteSizeTwigFilter(): ContentFileLIstReadableByteSizeTwigFilter
+    public function createReadableByteSizeTwigFilter(): ReadableByteSizeTwigFilter
     {
-        return new ContentFileLIstReadableByteSizeTwigFilter();
+        return new ReadableByteSizeTwigFilter();
     }
 
     /**
@@ -75,14 +74,6 @@ class ContentFileWidgetFactory extends AbstractFactory
     public function createIconNameFileStorageDataExpander(): FileStorageDataExpanderInterface
     {
         return new IconNameFileStorageDataExpander($this->getConfig());
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ContentFileWidget\Expander\FileStorageDataExpanderInterface
-     */
-    public function createDisplayFileSizeFileStorageDataExpander(): FileStorageDataExpanderInterface
-    {
-        return new DisplayFileSizeFileStorageDataExpander();
     }
 
     /**

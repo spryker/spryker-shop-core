@@ -9,10 +9,10 @@ namespace SprykerShop\Yves\ContentFileWidget\Twig;
 
 use Spryker\Shared\Twig\TwigFilter;
 
-class ContentFileLIstReadableByteSizeTwigFilter extends TwigFilter
+class ReadableByteSizeTwigFilter extends TwigFilter
 {
     protected const FILTER_READABLE_BITESIZE = 'readable_bytesize';
-    protected const LABEL_FILE_SIZES = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+    protected const LABEL_SIZES = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
     protected const NUMBER_OF_DECIMALS = 1;
 
     public function __construct()
@@ -37,7 +37,7 @@ class ContentFileLIstReadableByteSizeTwigFilter extends TwigFilter
             $power = floor(log($fileSize, 1024));
             $calculatedSize = number_format($fileSize / (1024 ** $power), static::NUMBER_OF_DECIMALS);
 
-            return sprintf('%s %s', $calculatedSize, static::LABEL_FILE_SIZES[$power]);
+            return sprintf('%s %s', $calculatedSize, static::LABEL_SIZES[$power]);
         };
     }
 }
