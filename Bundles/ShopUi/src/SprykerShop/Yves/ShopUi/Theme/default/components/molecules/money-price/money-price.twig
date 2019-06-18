@@ -8,6 +8,7 @@
 {% define data = {
     amount: required,
     originalAmount: null,
+    noPriceText: '---',
     currencyIsoCode: null,
 } %}
 
@@ -17,7 +18,7 @@
     {%- endif -%}
 
     {% if data.amount is empty -%}
-        <span>--</span>
+        {{ data.noPriceText }}
     {%- else -%}
         <span class="{{config.name}}__amount">
             {% include atom('icon') with {
