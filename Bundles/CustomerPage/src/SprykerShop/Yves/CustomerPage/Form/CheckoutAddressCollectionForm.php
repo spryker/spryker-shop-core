@@ -311,6 +311,10 @@ class CheckoutAddressCollectionForm extends AbstractType
      */
     protected function addItemShippingAddressSubForm(FormBuilderInterface $builder, array $options)
     {
+        if (!$options[static::OPTION_IS_MULTI_SHIPMENT_ENABLED]) {
+            return $this;
+        }
+
         $builder->add(static::FIELD_MULTI_SHIPPING_ADDRESSES, CollectionType::class, [
             'label' => false,
             'property_path' => static::PROPERTY_PATH_MULTI_SHIPPING_ADDRESSES,
