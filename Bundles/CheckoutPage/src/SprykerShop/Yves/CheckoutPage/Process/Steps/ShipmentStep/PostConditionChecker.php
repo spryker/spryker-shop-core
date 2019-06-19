@@ -102,8 +102,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
 
         $itemShipmentKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            $expenseShipmentKey = $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment());
-            if ($this->checkShipmentExpenseKey($expenseTransfer, $itemShipmentKey, $expenseShipmentKey)) {
+            if ($this->checkShipmentExpenseKey($expenseTransfer, $itemShipmentKey)) {
                 return $shipmentTransfer->getShipmentSelection() !== null;
             }
         }
@@ -131,16 +130,13 @@ class PostConditionChecker implements PostConditionCheckerInterface
     /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      * @param string $itemShipmentKey
-     * @param string $expenseShipmentKey
      *
      * @return bool
      */
-    protected function checkShipmentExpenseKey(
-        ExpenseTransfer $expenseTransfer,
-        string $itemShipmentKey,
-        string $expenseShipmentKey
-    ): bool {
+    protected function checkShipmentExpenseKey(ExpenseTransfer $expenseTransfer, string $itemShipmentKey): bool
+    {
         return $expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
-            && $itemShipmentKey === $expenseShipmentKey;
+            && $this->shipmentService
+                ->isShipmentEqualToShipmentHash($expenseTransfer->requireShipment()->getShipment(), $itemShipmentKey);
     }
 }
