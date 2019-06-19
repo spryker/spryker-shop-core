@@ -10,10 +10,10 @@ namespace SprykerShop\Yves\ContentProductWidget\Reader;
 interface ContentProductAbstractReaderInterface
 {
     /**
-     * @param int $idContent
+     * @param string $contentKey
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]|null
      */
-    public function findProductAbstractCollection(int $idContent, string $localeName): ?array;
+    public function findProductAbstractCollection(string $contentKey, string $localeName): ?array;
 }
