@@ -10,7 +10,8 @@
 {% block body %}
     {% embed organism('product-set-cms-content', 'ProductSetWidget') ignore missing with {
         data: {
-            buttonClass: 'float-right',
+            formClass: 'text-center',
+            buttonClass: 'float-none',
             products: data.products,
             name: data.name,
             description: data.description,
@@ -21,10 +22,22 @@
             <h5>{{ data.name }}</h5>
         {% endblock %}
 
-        {% block description %}
-            {% if data.description %}
-                <p>{{ data.description }}</p>
-            {% endif %}
+        {% block title %}{% endblock %}
+
+        {% block header %}
+            {{ block('productSetTitle') }}
+
+            {% block description %}
+                {% if data.description %}
+                    <p>{{ data.description }}</p>
+                {% endif %}
+            {% endblock %}
+        {% endblock %}
+
+        {% block productSet %}
+            {{ parent() }}
+            {{ block('addToCartForm') }}
+            <hr>
         {% endblock %}
     {% endembed %}
 {% endblock %}

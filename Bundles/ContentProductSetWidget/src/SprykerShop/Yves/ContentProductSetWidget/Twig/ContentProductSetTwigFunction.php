@@ -25,9 +25,14 @@ class ContentProductSetTwigFunction extends TwigFunction
     protected const FUNCTION_CONTENT_PRODUCT_SET = 'content_product_set';
 
     /**
-     * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT
+     * @deprecated Use `\SprykerShop\Yves\ContentProductSetWidget\Twig\ContentProductSetTwigFunction::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP` instead.
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+
+    /**
+     * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP
+     */
+    protected const WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP = 'cart-button-top';
 
     /**
      * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM
@@ -149,7 +154,8 @@ class ContentProductSetTwigFunction extends TwigFunction
     {
         return [
             static::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT => '@ContentProductSetWidget/views/content-product-set/content-product-set.twig',
-            static::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM => '@ContentProductSetWidget/views/content-product-set/content-product-set-cart-button-btm.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_TOP => '@ContentProductSetWidget/views/content-product-set/content-product-set.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_CART_BUTTON_BOTTOM => '@ContentProductSetWidget/views/content-product-set-alternative/content-product-set-alternative.twig',
         ];
     }
 
