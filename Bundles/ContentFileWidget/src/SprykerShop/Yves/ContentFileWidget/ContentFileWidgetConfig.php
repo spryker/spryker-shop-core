@@ -30,7 +30,7 @@ class ContentFileWidgetConfig extends AbstractBundleConfig
         'png' => 'file-image',
         'text/csv' => 'file-csv',
         'text/comma-separated-values' => 'file-csv',
-        'text/plain' => 'file',
+        'text/plain' => 'file-text',
         'text/tab-separated-values' => 'file-csv',
         'text/x-comma-separated-values' => 'file-csv',
         'text/x-csv' => 'file-csv',

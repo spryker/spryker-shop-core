@@ -70,7 +70,7 @@ class IconNameFileStorageDataExpanderTest extends Unit
             ['text/csv', 'test.csv', 'file-csv'],
             ['text/comma-separated-values', 'test.csv', 'file-csv'],
             ['text/plain', 'test.csv', 'file-csv'],
-            ['text/plain', 'test.txt', 'file'],
+            ['text/plain', 'test.txt', 'file-text'],
             ['text/tab-separated-values', 'test.csv', 'file-csv'],
             ['text/x-comma-separated-values', 'test.csv', 'file-csv'],
             ['text/x-csv', 'test.csv', 'file-csv'],
