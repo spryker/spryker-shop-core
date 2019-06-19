@@ -1,1 +1,1 @@
-Added navigation menu for Quote Requests in Agent dashboard.
+Added a navigation menu for Quote Requests to the Agent dashboard.
