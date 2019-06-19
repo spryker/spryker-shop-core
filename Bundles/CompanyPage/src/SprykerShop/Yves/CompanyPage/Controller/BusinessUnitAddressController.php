@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CompanyPage\Controller;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitAddressForm;
 use SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider;
@@ -24,6 +25,17 @@ class BusinessUnitAddressController extends AbstractCompanyController
 
     protected const MESSAGE_BUSINESS_UNIT_ADDRESS_CREATE_SUCCESS = 'message.business_unit_address.create';
     protected const MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS = 'message.business_unit_address.update';
+    protected const GLOSSARY_MESSAGE_PARAM_ADDRESS = '%address%';
+
+    /**
+     * @uses \SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT
+     */
+    protected const ROUTE_COMPANY_BUSINESS_UNIT = 'company/business-unit';
+
+    /**
+     * @uses \SprykerShop\Yves\CompanyPage\Plugin\Provider\CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE
+     */
+    protected const ROUTE_COMPANY_BUSINESS_UNIT_UPDATE = 'company/business-unit/update';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -115,8 +127,6 @@ class BusinessUnitAddressController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executeUpdateAction(Request $request)
@@ -125,22 +135,28 @@ class BusinessUnitAddressController extends AbstractCompanyController
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
 
         if (!$idCompanyBusinessUnit || !$idCompanyUnitAddress) {
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT);
+            return $this->redirectResponseInternal(static::ROUTE_COMPANY_BUSINESS_UNIT);
         }
 
         $companyBusinessUnitAddressForm = $this->getCompanyBusinessUnitAddressForm($idCompanyUnitAddress, $idCompanyBusinessUnit)
             ->handleRequest($request);
 
-        if (!$this->isCurrentCustomerRelatedToCompany($companyBusinessUnitAddressForm->getData()[CompanyBusinessUnitAddressForm::FIELD_FK_COMPANY])) {
-            throw new NotFoundHttpException();
-        }
+        $this->assertCurrentCustomerRelatedToCompany($companyBusinessUnitAddressForm);
 
         if ($companyBusinessUnitAddressForm->isSubmitted() && $companyBusinessUnitAddressForm->isValid()) {
-            $this->updateCompanyBusinessUnitAddress($companyBusinessUnitAddressForm);
+            $companyUnitAddressResponseTransfer = $this->updateCompanyBusinessUnitAddress($companyBusinessUnitAddressForm);
 
-            return $this->redirectResponseInternal(CompanyPageControllerProvider::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
-                'id' => $idCompanyBusinessUnit,
-            ]);
+            if ($companyUnitAddressResponseTransfer->getIsSuccessful()) {
+                $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS, [
+                    static::GLOSSARY_MESSAGE_PARAM_ADDRESS => $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getAddress1(),
+                ]);
+
+                return $this->redirectResponseInternal(static::ROUTE_COMPANY_BUSINESS_UNIT_UPDATE, [
+                    static::REQUEST_COMPANY_BUSINESS_UNIT_ID => $idCompanyBusinessUnit,
+                ]);
+            }
+
+            $this->addCompanyUnitAddressResponseErrorMessages($companyUnitAddressResponseTransfer);
         }
 
         return [
@@ -153,17 +169,42 @@ class BusinessUnitAddressController extends AbstractCompanyController
     /**
      * @param \Symfony\Component\Form\FormInterface $companyBusinessUnitAddressForm
      *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    protected function updateCompanyBusinessUnitAddress(FormInterface $companyBusinessUnitAddressForm): CompanyUnitAddressResponseTransfer
+    {
+        return $this->getFactory()
+            ->getCompanyUnitAddressClient()
+            ->updateCompanyUnitAddress(
+                (new CompanyUnitAddressTransfer())
+                    ->fromArray($companyBusinessUnitAddressForm->getData())
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer
+     *
      * @return void
      */
-    protected function updateCompanyBusinessUnitAddress(FormInterface $companyBusinessUnitAddressForm): void
+    protected function addCompanyUnitAddressResponseErrorMessages(CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer): void
     {
-        $companyUnitAddressTransfer = $this->getFactory()
-            ->createCompanyBusinessAddressSaver()
-            ->saveAddress($companyBusinessUnitAddressForm->getData());
+        foreach ($companyUnitAddressResponseTransfer->getMessages() as $responseMessageTransfer) {
+            $this->addErrorMessage($responseMessageTransfer->getText());
+        }
+    }
 
-        $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS, [
-            '%address%' => $companyUnitAddressTransfer->getAddress1(),
-        ]);
+    /**
+     * @param \Symfony\Component\Form\FormInterface $companyBusinessUnitAddressForm
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return void
+     */
+    protected function assertCurrentCustomerRelatedToCompany(FormInterface $companyBusinessUnitAddressForm): void
+    {
+        if (!$this->isCurrentCustomerRelatedToCompany($companyBusinessUnitAddressForm->getData()[CompanyBusinessUnitAddressForm::FIELD_FK_COMPANY])) {
+            throw new NotFoundHttpException();
+        }
     }
 
     /**

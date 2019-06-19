@@ -28,7 +28,6 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_COMPANY_BUSINESS_UNIT_UPDATE = 'company/business-unit/update';
     public const ROUTE_COMPANY_BUSINESS_UNIT_DELETE = 'company/business-unit/delete';
     public const ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE = 'company/business-unit/address/create';
-    public const ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_UPDATE = 'company/business-unit/address/update';
     public const ROUTE_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION = 'company/business-unit/delete-confirmation';
 
     public const ROUTE_COMPANY_ROLE = 'company/company-role';
@@ -55,6 +54,8 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
 
     public const ROUTE_COMPANY_USER_STATUS_ENABLE = 'company/company-user-status/enable';
     public const ROUTE_COMPANY_USER_STATUS_DISABLE = 'company/company-user-status/disable';
+
+    protected const ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_UPDATE = 'company/business-unit/address/update';
 
     /**
      * @param \Silex\Application $app
@@ -149,7 +150,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     protected function addCompanyBusinessUnitAddressRoutes()
     {
         $this->addCompanyBusinessUnitAddressCreateRoute()
-            ->addCompanyBUsinessUnitAddressUpdateRoute();
+            ->addCompanyBusinessUnitAddressUpdateRoute();
 
         return $this;
     }
@@ -173,7 +174,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
      *
      * @return $this
      */
-    protected function addCompanyBUsinessUnitAddressUpdateRoute()
+    protected function addCompanyBusinessUnitAddressUpdateRoute()
     {
         $this->createController('/{company}/business-unit/address/update', static::ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_UPDATE, 'CompanyPage', 'BusinessUnitAddress', 'update')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
