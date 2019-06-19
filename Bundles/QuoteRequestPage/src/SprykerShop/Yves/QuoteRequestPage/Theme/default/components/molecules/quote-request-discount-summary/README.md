@@ -1,1 +1,1 @@
-Displays a list of vouchers with remove link and discount rules.
+Displays a list of vouchers with the Remove button and discount rules.
