@@ -5,29 +5,25 @@
 {% block content %}
     <div class="grid grid--stretch">
         {% for productAbstractView in data.productAbstractViewCollection %}
-            {% embed molecule('product-card') with {
-                class: 'col col--sm-12 col--md-6 col--lg-4',
-                data: {
-                    name: productAbstractView.name,
-                    abstractId: productAbstractView.idProductAbstract,
-                    url: productAbstractView.url,
-                    imageUrl: productAbstractView.images is empty ? '' : productAbstractView.images.0.externalUrlSmall,
-                    price: productAbstractView.prices.DEFAULT | default(null),
-                    originalPrice: productAbstractView.prices.ORIGINAL is defined ? productAbstractView.prices.ORIGINAL : null
-                }
-            } only %}
-                {% block body %}
-                <div class="{% block cardClass %}{{config.name}}__container box box--stretch{% endblock %}">
+            <div class="col col--sm-12 col--md-6 col--lg-4">
+                {% embed molecule('product-item') with {
+                    class: 'box--stretch',
+                    data: {
+                        product: productAbstractView,
+                        sku: '',
+                    },
+                } only %}
+                    {% block body %}
                         {% block content %}
                             {% block name %}
                                 {{ parent() }}
                             {% endblock %}
 
-                            {% block price %}
+                            {% block priceContainer %}
                                 {{ parent() }}
                             {% endblock %}
 
-                            {% block image %}
+                            {% block imageContainer %}
                                 {{ parent() }}
                             {% endblock %}
 
@@ -39,20 +35,21 @@
                                 {{ parent() }}
                             {% endblock %}
 
-                            {% block sku %}{{ parent() }}{% endblock %}
+                            {% block sku %}
+                                {{ parent() }}
+                            {% endblock %}
 
                             {% block rating %}
                                 {{ parent() }}
                             {% endblock %}
-
                         {% endblock %}
 
                         {% block actionsContainer %}
                             {{ parent() }}
                         {% endblock %}
-                </div>
-                {% endblock %}
-            {% endembed %}
+                    {% endblock %}
+                {% endembed %}
+            </div>
         {% endfor %}
     </div>
 {% endblock %}

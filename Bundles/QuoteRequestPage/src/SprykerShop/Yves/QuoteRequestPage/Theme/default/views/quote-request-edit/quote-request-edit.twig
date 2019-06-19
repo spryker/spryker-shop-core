@@ -22,9 +22,9 @@
                 },
                 {
                     label: 'quote_request_page.quote_request.actions.edit' | trans,
-                }
-            ]
-        }
+                },
+            ],
+        },
     } only %}
 {% endblock %}
 
@@ -36,8 +36,8 @@
                 modifiers: ['biggest'],
                 class: 'text-alt',
                 data: {
-                    name: 'shopping-cart'
-                }
+                    name: 'shopping-cart',
+                },
             } only %}
             <h6>{{ 'cart.empty' | trans }}</h6>
         </div>
@@ -88,20 +88,52 @@
                     <div class="box">
                         {% include molecule('price-mode') with {
                             data: {
-                                priceMode: quote.priceMode
-                            }
+                                priceMode: quote.priceMode,
+                            },
                         } only %}
                     </div>
                 {% endif %}
                 {% for cartItem in quote.items %}
-                    {% include molecule('quote-request-cart-item', 'QuoteRequestPage') with {
-                        class: 'box',
+                    {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
                         data: {
+                            product: cartItem,
+                        },
+                        embed: {
                             priceMode: quote.priceMode,
-                            cartItem: cartItem,
                             currency: quote.currency,
-                        }
+                        },
                     } only %}
+                        {% block specificInformation %}
+                            {% include molecule('quote-request-item-summary', 'QuoteRequestPage') with {
+                                data: {
+                                    priceMode: embed.priceMode,
+                                    unitPrice: data.product.unitPrice | money(true, embed.currency.code),
+                                    subtotalPrice: data.product.sumSubtotalAggregation | money(true, embed.currency.code),
+                                    cartItem: data.product,
+                                    currency: embed.currency,
+                                },
+                            } only %}
+                        {% endblock %}
+
+                        {% block actions %}
+                            {% if data.product.amountSalesUnit is empty %}
+                                {{ 'cart.item_quantity' | trans }}:
+                                <strong>{{ data.product.quantity }}</strong>
+
+                                {% if data.product.quantitySalesUnit %}
+                                    {% set value = data.product.quantitySalesUnit.value %}
+                                    {% set precision = data.product.quantitySalesUnit.precision %}
+                                    {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+
+                                    <p>
+                                        <small class="text-secondary">
+                                            [= {{ value / precision }} {{ salesUnitName | trans }}]
+                                        </small>
+                                    </p>
+                                {% endif %}
+                            {% endif %}
+                        {% endblock %}
+                    {% endembed %}
                 {% endfor %}
             </div>
 
@@ -109,8 +141,8 @@
                 <div class="box">
                     {% include molecule('quote-request-cart-summary', 'QuoteRequestPage') with {
                         data: {
-                            cart: quote
-                        }
+                            cart: quote,
+                        },
                     } only %}
                 </div>
                 <div class="box">
@@ -136,6 +168,5 @@
         </div>
 
         {{ form_end(data.quoteRequestForm) }}
-
     {% endif %}
 {% endblock %}
