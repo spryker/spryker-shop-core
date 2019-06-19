@@ -8,8 +8,6 @@
 namespace SprykerShop\Yves\CommentWidget\Form\DataProvider;
 
 use Generated\Shared\Transfer\CommentThreadTransfer;
-use Generated\Shared\Transfer\CommentTransfer;
-use SprykerShop\Yves\CommentWidget\CommentWidgetConfig;
 
 class CommentFormDataProvider
 {
@@ -36,26 +34,6 @@ class CommentFormDataProvider
      */
     protected function expandCommentThread(CommentThreadTransfer $commentThreadTransfer): CommentThreadTransfer
     {
-        foreach ($commentThreadTransfer->getComments() as $commentTransfer) {
-            $commentTransfer->setIsAttached($this->isCommentAttached($commentTransfer));
-        }
-
         return $commentThreadTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
-     *
-     * @return bool
-     */
-    protected function isCommentAttached(CommentTransfer $commentTransfer): bool
-    {
-        foreach ($commentTransfer->getTags() as $commentTagTransfer) {
-            if ($commentTagTransfer->getName() === CommentWidgetConfig::COMMENT_TAG_ATTACHED) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

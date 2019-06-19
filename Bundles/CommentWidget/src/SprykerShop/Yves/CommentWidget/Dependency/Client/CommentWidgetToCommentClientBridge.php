@@ -8,6 +8,8 @@
 namespace SprykerShop\Yves\CommentWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
+use Generated\Shared\Transfer\CommentResponseTransfer;
+use Generated\Shared\Transfer\CommentTagRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 
 class CommentWidgetToCommentClientBridge implements CommentWidgetToCommentClientInterface
@@ -63,5 +65,25 @@ class CommentWidgetToCommentClientBridge implements CommentWidgetToCommentClient
     public function removeComment(CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
     {
         return $this->commentClient->removeComment($commentRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     */
+    public function addCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer
+    {
+        return $this->commentClient->addCommentTag($commentTagRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentResponseTransfer
+     */
+    public function removeCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentResponseTransfer
+    {
+        return $this->commentClient->removeCommentTag($commentTagRequestTransfer);
     }
 }

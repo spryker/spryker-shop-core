@@ -7,10 +7,6 @@
 
 namespace SprykerShop\Yves\CommentWidget\Controller;
 
-use Generated\Shared\Transfer\CommentRequestTransfer;
-use Generated\Shared\Transfer\CommentTagTransfer;
-use Generated\Shared\Transfer\CommentTransfer;
-use SprykerShop\Yves\CommentWidget\CommentWidgetConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,91 +15,54 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CommentTagController extends CommentWidgetAbstractController
 {
-    protected const PARAMETER_UUID = 'uuid';
+    protected const PARAMETER_NAME = 'name';
     protected const PARAMETER_RETURN_URL = 'returnUrl';
 
     /**
+     * @param string $uuid
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function attachAction(Request $request): RedirectResponse
+    public function addAction(string $uuid, Request $request): RedirectResponse
     {
-        $response = $this->executeAttachAction($request);
+        $response = $this->executeAddAction($uuid, $request);
 
         return $response;
     }
 
     /**
+     * @param string $uuid
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function unattachAction(Request $request): RedirectResponse
+    public function removeAction(string $uuid, Request $request): RedirectResponse
     {
-        $response = $this->executeUnattachAction($request);
+        $response = $this->executeRemoveAction($uuid, $request);
 
         return $response;
     }
 
     /**
+     * @param string $uuid
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeAttachAction(Request $request): RedirectResponse
+    protected function executeAddAction(string $uuid, Request $request): RedirectResponse
     {
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
-
-        $commentTransfer = (new CommentTransfer())
-            ->setUuid($request->request->get(static::PARAMETER_UUID))
-            ->setCustomer($customerTransfer)
-            ->addCommentTag((new CommentTagTransfer())->setName(CommentWidgetConfig::COMMENT_TAG_ATTACHED));
-
-        $commentThreadRequestTransfer = $this->getFactory()
-            ->getCommentClient()
-            ->updateCommentTags((new CommentRequestTransfer())->setComment($commentTransfer));
-
-        if ($commentThreadRequestTransfer->getIsSuccessful()) {
-            $this->getFactory()
-                ->createCommentOperation()
-                ->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
-        }
-
-        $this->handleResponseErrors($commentThreadRequestTransfer);
-
         return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
     }
 
     /**
+     * @param string $uuid
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeUnattachAction(Request $request): RedirectResponse
+    protected function executeRemoveAction(string $uuid, Request $request): RedirectResponse
     {
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
-
-        $commentTransfer = (new CommentTransfer())
-            ->setUuid($request->request->get(static::PARAMETER_UUID))
-            ->setCustomer($customerTransfer);
-
-        $commentThreadRequestTransfer = $this->getFactory()
-            ->getCommentClient()
-            ->updateCommentTags((new CommentRequestTransfer())->setComment($commentTransfer));
-
-        if ($commentThreadRequestTransfer->getIsSuccessful()) {
-            $this->getFactory()
-                ->createCommentOperation()
-                ->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
-        }
-
-        $this->handleResponseErrors($commentThreadRequestTransfer);
-
         return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
     }
 }

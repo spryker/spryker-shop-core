@@ -12,7 +12,15 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class CommentWidgetConfig extends AbstractBundleConfig
 {
     /**
-     * @uses \Spryker\Zed\Comment\CommentConfig::COMMENT_TAG_ATTACHED
+     * @see \Spryker\Shared\Comment\CommentConfig::COMMENT_AVAILABLE_TAGS
      */
-    public const COMMENT_TAG_ATTACHED = 'attached';
+    protected const COMMENT_AVAILABLE_TAGS = [];
+
+    /**
+     * @return string[]
+     */
+    public function getCommentAvailableTags(): array
+    {
+        return static::COMMENT_AVAILABLE_TAGS;
+    }
 }
