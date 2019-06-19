@@ -1,1 +1,1 @@
-Displays price value field and checkbox of the use default price.
+Displays a price value field and a checkbox to use a default price.
