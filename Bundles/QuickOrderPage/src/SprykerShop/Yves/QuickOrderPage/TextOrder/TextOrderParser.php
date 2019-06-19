@@ -45,7 +45,7 @@ class TextOrderParser implements TextOrderParserInterface
         $quickOrderItemTransfers = [];
         foreach ($rows as $row) {
             [$sku, $quantity] = explode($separator, trim($row));
-            $quantity = (int)$quantity;
+            $quantity = (float)$quantity;
 
             if (empty($sku)) {
                 continue;
@@ -60,11 +60,11 @@ class TextOrderParser implements TextOrderParserInterface
     /**
      * @param \Generated\Shared\Transfer\QuickOrderItemTransfer[] $quickOrderItemTransfers
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer[]
      */
-    protected function addQuickOrderItemTransfer(array $quickOrderItemTransfers, string $sku, int $quantity): array
+    protected function addQuickOrderItemTransfer(array $quickOrderItemTransfers, string $sku, float $quantity): array
     {
         if (!isset($quickOrderItemTransfers[$sku])) {
             $quickOrderItemTransfers[$sku] = $this->createQuickOrderItemTransfer($sku, 0);
@@ -77,11 +77,11 @@ class TextOrderParser implements TextOrderParserInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\QuickOrderItemTransfer
      */
-    protected function createQuickOrderItemTransfer(string $sku, int $quantity): QuickOrderItemTransfer
+    protected function createQuickOrderItemTransfer(string $sku, float $quantity): QuickOrderItemTransfer
     {
         $quickOrderItemTransfer = (new QuickOrderItemTransfer())
             ->setSku($sku)
