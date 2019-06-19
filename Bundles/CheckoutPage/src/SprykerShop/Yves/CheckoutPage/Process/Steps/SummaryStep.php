@@ -174,9 +174,8 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     protected function haveItemsShipmentTransfers(QuoteTransfer $quoteTransfer): bool
     {
-        $shipmentGroupsCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
-        foreach ($shipmentGroupsCollection as $shipmentGroupTransfer) {
-            if ($shipmentGroupTransfer->getShipment() === null) {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
                 return false;
             }
         }
