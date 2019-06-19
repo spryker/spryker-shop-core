@@ -13,10 +13,6 @@
     </transfer>
 
     <transfer name="CompanyUnitAddress">
-        <property name="idCompanyUnitAddress" type="int" />
-        <property name="fkCompanyBusinessUnit" type="int" />
-        <property name="fkCompany" type="int" />
-        <property name="isDefaultBilling" type="bool" />
         <property name="address1" type="string" />
     </transfer>
 
