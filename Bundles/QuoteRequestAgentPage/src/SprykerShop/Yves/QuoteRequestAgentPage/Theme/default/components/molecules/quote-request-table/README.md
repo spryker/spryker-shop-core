@@ -1,1 +1,1 @@
-Displays quote requests as a table with action links (view, cancel).
+Displays quote requests as a table with the action buttons (View, Cancel).
