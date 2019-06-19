@@ -1,1 +1,1 @@
-Displays a subtotal price in the Shopping list page.
+Displays a subtotal price on the Shopping list page.
