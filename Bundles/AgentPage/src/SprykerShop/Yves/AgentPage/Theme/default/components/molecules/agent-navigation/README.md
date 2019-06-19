@@ -1,1 +1,1 @@
-Displays the agent navigation links sub-page.
+Displays a navigation list on the Agent account sub-page.
