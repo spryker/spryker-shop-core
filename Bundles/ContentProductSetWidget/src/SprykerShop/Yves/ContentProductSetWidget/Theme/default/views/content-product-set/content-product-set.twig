@@ -10,6 +10,7 @@
 {% block body %}
     {% embed organism('product-set-cms-content', 'ProductSetWidget') ignore missing with {
         data: {
+            buttonClass: 'float-right',
             products: data.products,
             name: data.name,
             description: data.description,
