@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ErrorPage\Controller;
 
 use Spryker\Yves\Kernel\Controller\AbstractController;
+use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -24,11 +25,29 @@ class Error404Controller extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $exception = $request->query->get(static::REQUEST_PARAM_EXCEPTION);
-
         return $this->viewResponse([
-            'error' => $this->getFactory()->createErrorMessage()->getNotFoundMessage($exception),
+            'error' => $this->getErrorMessage($request),
             'hideUserMenu' => true,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return string
+     */
+    protected function getErrorMessage(Request $request)
+    {
+        if (!$this->getFactory()->getConfig()->isErrorStackTraceEnabled()) {
+            return '';
+        }
+
+        $exception = $request->query->get(static::REQUEST_PARAM_EXCEPTION);
+
+        if ($exception instanceof FlattenException) {
+            return $exception->getMessage();
+        }
+
+        return '';
     }
 }
