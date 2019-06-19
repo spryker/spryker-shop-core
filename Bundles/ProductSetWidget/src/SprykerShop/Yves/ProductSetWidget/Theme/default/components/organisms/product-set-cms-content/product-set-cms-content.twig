@@ -5,25 +5,23 @@
 } %}
 
 {% define data = {
+    formClass: '',
+    buttonClass: '',
     name: '',
     products: required,
     description: '',
     images: [],
 } %}
 
-{% block product_set_title %}
+{% block productSetTitle %}
     <h5>{{ 'product.set.detail.set-contents' | trans }}</h5>
-{% endblock %}
-
-{% block title %}
-    {{ block('product_set_title') }}
 {% endblock %}
 
 {% block body %}
     <hr />
     {% block header %}
-        {% block add_to_cart_form %}
-            <form method="POST" class="{{ add_to_cart_form_class|default('') }}" action="{{ path('cart/add-items') }}">
+        {% block addToCartForm %}
+            <form method="POST" class="{{ data.formClass }}" action="{{ path('cart/add-items') }}">
                 {% set isDisabled = false %}
 
                 {% for product in data.products %}
@@ -37,11 +35,13 @@
                     {% endif %}
                 {% endfor %}
 
-                <button type="submit" class="button {{ add_all_button_class|default('float-right') }}" {{ isDisabled ? 'disabled' : 'data-init-single-click' }}>
+                <button type="submit" class="button {{ data.buttonClass }}" {{ isDisabled ? 'disabled' : 'data-init-single-click' }}>
                     {{ 'product.set.detail.add-all-to-cart' | trans }}
                 </button>
 
-                {{ block('title') }}
+                {% block title %}
+                    {{ block('productSetTitle') }}
+                {% endblock %}
             </form>
         {% endblock %}
 

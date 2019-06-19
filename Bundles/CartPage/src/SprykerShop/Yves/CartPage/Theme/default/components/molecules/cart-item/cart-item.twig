@@ -81,6 +81,13 @@
                 {% if canEditCart %}
                     {% widget 'CartProductMeasurementUnitQuantitySelectorWidget' args [data.cartItem] only %}
                     {% elsewidget 'QuantitySalesUnitWidgetPlugin' args [data.cartItem] only %} {# @deprecated Use CartProductMeasurementUnitQuantitySelectorWidget instead. #}
+                    {% elsewidget 'ProductQuantityWidget' args [data.cartItem.quantity, data.cartItem.id, data.cartItem.sku, data.cartItem.groupKey] only %}
+                        {% block body %}
+                            <form method="POST" action="{{ path('cart/change/quantity', {'sku': data.sku }) }}">
+                                {{ parent() }}
+                                <input type="hidden" value="{{ data.groupKey }}" name="groupKey" />
+                            </form>
+                        {% endblock %}
                     {% nowidget %}
                         {% include molecule('cart-quantity-input', 'CartPage') with {
                             data: {
