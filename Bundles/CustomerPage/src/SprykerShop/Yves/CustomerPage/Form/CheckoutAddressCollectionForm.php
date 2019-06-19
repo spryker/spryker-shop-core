@@ -170,8 +170,7 @@ class CheckoutAddressCollectionForm extends AbstractType
         $itemTransfer = $quoteTransfer->getItems()[0];
 
         if ($itemTransfer->getShipment() === null
-            || $itemTransfer->getShipment()->getShippingAddress() === null
-        ) {
+            || $itemTransfer->getShipment()->getShippingAddress() === null) {
             return;
         }
 

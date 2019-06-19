@@ -23,7 +23,13 @@ class ShipmentGroupForm extends AbstractType
     public const BLOCK_PREFIX = 'shipmentGroupForm';
     public const FIELD_SHIPMENT = 'shipment';
     public const FIELD_HASH = 'hash';
+    public const OPTION_SHIPMENT_GROUP_TRANSFER = 'shipmentGroupTransfer';
     public const OPTION_SHIPMENT_LABEL = 'shipmentLabel';
+
+    /**
+     * @var \Generated\Shared\Transfer\ShipmentGroupTransfer
+     */
+    protected $shipmentGroupTransfer;
 
     /**
      * @return string
@@ -39,9 +45,17 @@ class ShipmentGroupForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addShipmentMethods($builder, $options);
+        $this->shipmentGroupTransfer = $this->findShipmentGroupTransfer($builder, $options);
+        if ($this->shipmentGroupTransfer === null) {
+            return;
+        }
+
+        $this
+            ->addShipmentSubForm($builder, $options)
+            ->addShipmentGroupHashField($builder)
+            ->addFormSubmitEventListener($builder);
     }
 
     /**
@@ -50,35 +64,105 @@ class ShipmentGroupForm extends AbstractType
      *
      * @return $this
      */
-    protected function addShipmentMethods(FormBuilderInterface $builder, array $options)
+    protected function addShipmentSubForm(FormBuilderInterface $builder, array $options)
+    {
+        $shipmentGroupHash = $this->shipmentGroupTransfer->getHash();
+        $availableShipmentMethods = $options[ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP][$shipmentGroupHash] ?? [];
+        $shippingAddressLabel = $options[ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST][$shipmentGroupHash] ?? '';
+
+        $builder->add(static::FIELD_SHIPMENT, MultiShipmentForm::class, [
+            'required' => true,
+            'label' => $shippingAddressLabel,
+            MultiShipmentForm::OPTION_SHIPMENT_METHODS => $availableShipmentMethods,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addShipmentGroupHashField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_HASH, HiddenType::class, ['required' => true]);
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
-            /**
-             * @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-             */
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addFormSubmitEventListener(FormBuilderInterface $builder)
+    {
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
             $shipmentGroupTransfer = $event->getData();
             if (!($shipmentGroupTransfer instanceof ShipmentGroupTransfer)) {
-                return;
+                return $shipmentGroupTransfer;
             }
 
-            $form = $event->getForm();
-            $options = $form->getConfig()->getOptions();
-
-            $availableShipmentMethods = $options[ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP][$shipmentGroupTransfer->getHash()] ?? [];
-            $shippingAddressLabel = $options[ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST][$shipmentGroupTransfer->getHash()] ?? '';
-
-            $options = [
-                'required' => true,
-                'label' => $shippingAddressLabel,
-                MultiShipmentForm::OPTION_SHIPMENT_METHODS => $availableShipmentMethods,
-            ];
-
-            $form->add(static::FIELD_SHIPMENT, MultiShipmentForm::class, $options);
+            $shipmentGroupTransfer = $this->mapSubmittedShipmentSubFormDataToItemLevelShipments($shipmentGroupTransfer);
+            $event->setData($shipmentGroupTransfer);
         });
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer|null
+     */
+    protected function findShipmentGroupTransfer(FormBuilderInterface $builder, array $options): ?ShipmentGroupTransfer
+    {
+        /** @var \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection */
+        $shipmentGroupCollection = $options[ShipmentCollectionForm::OPTION_SHIPMENT_GROUPS];
+        $shipmentGroupIndex = $this->findShipmentGroupIndex($builder);
+
+        if (!isset($shipmentGroupCollection[$shipmentGroupIndex])) {
+            return null;
+        }
+
+        return $shipmentGroupCollection[$shipmentGroupIndex];
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return string|null
+     */
+    protected function findShipmentGroupIndex(FormBuilderInterface $builder): ?string
+    {
+        $propertyPath = $builder->getPropertyPath();
+        if ($propertyPath === null) {
+            return null;
+        }
+
+        return $propertyPath->getElement(0);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
+     */
+    protected function mapSubmittedShipmentSubFormDataToItemLevelShipments(
+        ShipmentGroupTransfer $shipmentGroupTransfer
+    ): ShipmentGroupTransfer {
+        $shipmentTransfer = $shipmentGroupTransfer->getShipment();
+        if ($shipmentTransfer === null) {
+            return $shipmentGroupTransfer;
+        }
+
+        foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setShipment($shipmentTransfer);
+        }
+
+        return $shipmentGroupTransfer;
     }
 
     /**
@@ -94,6 +178,7 @@ class ShipmentGroupForm extends AbstractType
             ->setDefaults([
                 'data_class' => ShipmentGroupTransfer::class,
             ])
+            ->setRequired(ShipmentCollectionForm::OPTION_SHIPMENT_GROUPS)
             ->setRequired(ShipmentCollectionForm::OPTION_SHIPMENT_METHODS_BY_GROUP)
             ->setRequired(ShipmentCollectionForm::OPTION_SHIPMENT_ADDRESS_LABEL_LIST);
     }

@@ -23,8 +23,6 @@ use SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapper;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapperInterface;
-use SprykerShop\Yves\CustomerPage\Model\ShipmentGroups\ShipmentGroupsBuilder;
-use SprykerShop\Yves\CustomerPage\Model\ShipmentGroups\ShipmentGroupsBuilderInterface;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\AccessDeniedHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationSuccessHandler;
@@ -334,14 +332,6 @@ class CustomerPageFactory extends AbstractFactory
     public function getShipmentService(): ShipmentServiceInterface
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_SHIPMENT);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CustomerPage\Model\ShipmentGroups\ShipmentGroupsBuilderInterface
-     */
-    public function createShipmentGroupsBuilder(): ShipmentGroupsBuilderInterface
-    {
-        return new ShipmentGroupsBuilder();
     }
 
     /**

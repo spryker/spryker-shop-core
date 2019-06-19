@@ -103,8 +103,6 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
             }
         }
 
-        $quoteTransfer = $this->setQuoteShipmentGroups($quoteTransfer);
-
         $quoteTransfer = $this->setQuoteShipment($quoteTransfer);
 
         return $quoteTransfer;
@@ -362,19 +360,6 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         }
 
         return $this->translate('page.checkout.shipping.days');
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function setQuoteShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
-        $quoteTransfer->setShipmentGroups($shipmentGroupTransfers);
-
-        return $quoteTransfer;
     }
 
     /**

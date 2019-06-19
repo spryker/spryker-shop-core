@@ -57,13 +57,34 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return false;
         }
 
-        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
+        if ($this->hasItemsWithEmptyShipment($quoteTransfer)) {
+            return false;
+        }
+
+        $shipmentGroupsCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+        foreach ($shipmentGroupsCollection as $shipmentGroupTransfer) {
             if (!$this->checkShipmentExpenseSetInQuote($quoteTransfer, $shipmentGroupTransfer)) {
                 return false;
             }
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function hasItemsWithEmptyShipment(AbstractTransfer $quoteTransfer): bool
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

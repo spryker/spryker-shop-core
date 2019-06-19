@@ -49,8 +49,8 @@ class MultiShipmentForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addShipmentMethods($builder, $options)
-            ->addRequestedDeliveryDate($builder);
+            ->addShipmentMethodsField($builder, $options)
+            ->addRequestedDeliveryDateField($builder);
     }
 
     /**
@@ -59,7 +59,7 @@ class MultiShipmentForm extends AbstractType
      *
      * @return $this
      */
-    protected function addShipmentMethods(FormBuilderInterface $builder, array $options)
+    protected function addShipmentMethodsField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(ShipmentTransfer::SHIPMENT_SELECTION, ChoiceType::class, [
             'choices' => $options[static::OPTION_SHIPMENT_METHODS],
@@ -81,7 +81,7 @@ class MultiShipmentForm extends AbstractType
      *
      * @return $this
      */
-    protected function addRequestedDeliveryDate(FormBuilderInterface $builder)
+    protected function addRequestedDeliveryDateField(FormBuilderInterface $builder)
     {
         $builder->add(ShipmentTransfer::REQUESTED_DELIVERY_DATE, DateType::class, [
             'label' => 'page.checkout.shipment.requested_delivery_date.label',

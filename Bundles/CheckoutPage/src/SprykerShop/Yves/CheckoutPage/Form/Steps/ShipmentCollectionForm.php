@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ShipmentCollectionForm extends AbstractType
 {
     public const BLOCK_PREFIX = 'shipmentCollectionForm';
-    public const FIELD_SHIPMENT_COLLECTION_GROUP = 'shipmentGroups';
+    public const FIELD_SHIPMENT_GROUP_COLLECTION = 'shipmentGroups';
     public const OPTION_SHIPMENT_METHODS_BY_GROUP = 'shipmentMethodsByGroup';
     public const OPTION_SHIPMENT_ADDRESS_LABEL_LIST = 'shippingAddressLabelList';
     public const OPTION_SHIPMENT_GROUPS = 'shipmentGroups';
@@ -39,9 +39,9 @@ class ShipmentCollectionForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addShipmentGroups($builder, $options);
+        $this->addShipmentGroupsSubForm($builder, $options);
     }
 
     /**
@@ -50,14 +50,17 @@ class ShipmentCollectionForm extends AbstractType
      *
      * @return $this
      */
-    protected function addShipmentGroups(FormBuilderInterface $builder, array $options)
+    protected function addShipmentGroupsSubForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_SHIPMENT_COLLECTION_GROUP, CollectionType::class, [
+        /** @var \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupCollection */
+        $shipmentGroupCollection = $options[static::OPTION_SHIPMENT_GROUPS];
+
+        $builder->add(static::FIELD_SHIPMENT_GROUP_COLLECTION, CollectionType::class, [
             'entry_type' => ShipmentGroupForm::class,
-            'allow_add' => true,
-            'allow_delete' => false,
-//            'mapped' => false,
+            'data' => $shipmentGroupCollection->getArrayCopy(),
+            'mapped' => false,
             'entry_options' => [
+                static::OPTION_SHIPMENT_GROUPS => $shipmentGroupCollection,
                 static::OPTION_SHIPMENT_METHODS_BY_GROUP => $options[static::OPTION_SHIPMENT_METHODS_BY_GROUP],
                 static::OPTION_SHIPMENT_ADDRESS_LABEL_LIST => $options[static::OPTION_SHIPMENT_ADDRESS_LABEL_LIST],
             ],

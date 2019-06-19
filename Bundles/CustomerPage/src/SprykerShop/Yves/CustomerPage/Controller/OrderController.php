@@ -150,8 +150,8 @@ class OrderController extends AbstractCustomerController
         }
 
         $shipmentGroupCollection = $this->getFactory()
-            ->createShipmentGroupsBuilder()
-            ->buildShipmentGroups($orderTransfer);
+            ->getShipmentService()
+            ->groupItemsByShipment($orderTransfer->getItems());
 
         return [
             'order' => $orderTransfer,
