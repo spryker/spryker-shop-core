@@ -53,7 +53,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
      */
     protected function isShipmentSet(QuoteTransfer $quoteTransfer): bool
     {
-        if ($quoteTransfer->getItems()->count() === 0) {
+        if (count($quoteTransfer->getItems()) < 1) {
             return false;
         }
 
@@ -136,7 +136,8 @@ class PostConditionChecker implements PostConditionCheckerInterface
     protected function checkShipmentExpenseKey(ExpenseTransfer $expenseTransfer, string $itemShipmentKey): bool
     {
         return $expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
+            && $expenseTransfer->getShipment() !== null
             && $this->shipmentService
-                ->isShipmentEqualToShipmentHash($expenseTransfer->requireShipment()->getShipment(), $itemShipmentKey);
+                ->isShipmentEqualToShipmentHash($expenseTransfer->getShipment(), $itemShipmentKey);
     }
 }

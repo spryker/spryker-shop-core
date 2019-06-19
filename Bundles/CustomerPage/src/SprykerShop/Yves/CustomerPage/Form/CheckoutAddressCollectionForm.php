@@ -163,11 +163,11 @@ class CheckoutAddressCollectionForm extends AbstractType
             return;
         }
 
-        if (!isset($quoteTransfer->getItems()[0])) {
+        $itemTransfer = current($quoteTransfer->getItems());
+
+        if (!$itemTransfer) {
             return;
         }
-
-        $itemTransfer = $quoteTransfer->getItems()[0];
 
         if ($itemTransfer->getShipment() === null
             || $itemTransfer->getShipment()->getShippingAddress() === null) {
@@ -189,10 +189,6 @@ class CheckoutAddressCollectionForm extends AbstractType
         FormInterface $form
     ): QuoteTransfer {
         if ($this->getSubmittedValueDeliverToMultipleAddresses($form)) {
-            return $quoteTransfer;
-        }
-
-        if (!isset($quoteTransfer->getItems()[0])) {
             return $quoteTransfer;
         }
 
