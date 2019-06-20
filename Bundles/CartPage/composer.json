@@ -23,6 +23,7 @@
     "spryker-shop/discount-widget": "*",
     "spryker-shop/gift-card-widget": "*",
     "spryker-shop/multi-cart-widget": "*",
+    "spryker-shop/product-measurement-unit-widget": "*",
     "spryker-shop/product-option-widget": "*",
     "spryker-shop/product-packaging-unit-widget": "*",
     "spryker/code-sniffer": "*",
