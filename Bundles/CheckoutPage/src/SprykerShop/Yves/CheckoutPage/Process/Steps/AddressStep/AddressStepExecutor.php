@@ -60,7 +60,7 @@ class AddressStepExecutor implements StepExecutorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function execute(Request $request, AbstractTransfer $quoteTransfer): AbstractTransfer
+    public function execute(Request $request, AbstractTransfer $quoteTransfer): QuoteTransfer
     {
         $customerTransfer = $this->getCustomerTransfer();
 
