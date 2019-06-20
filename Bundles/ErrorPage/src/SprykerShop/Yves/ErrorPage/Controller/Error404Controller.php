@@ -12,6 +12,7 @@ use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @method \SprykerShop\Yves\ErrorPage\ErrorPageConfig getConfig()
  * @method \SprykerShop\Yves\ErrorPage\ErrorPageFactory getFactory()
  */
 class Error404Controller extends AbstractController

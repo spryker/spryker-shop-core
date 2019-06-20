@@ -12,6 +12,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Client\Calculation\CalculationClientInterface getClient()
+ * @method \SprykerShop\Yves\CalculationPage\CalculationPageConfig getConfig()
  * @method \SprykerShop\Yves\CalculationPage\CalculationPageFactory getFactory()
  */
 class DebugController extends AbstractController
