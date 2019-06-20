@@ -77,7 +77,7 @@
                                 {{parent()}}
                                 {% set isNotAvailable = data.product.idProductConcrete and not data.product.available %}
 
-                                {% embed molecule('variant-configurator', 'ProductDetailPage') with {
+                                {% embed molecule('variant-configurator', 'ProductDetailPage') ignore missing with {
                                     data: {
                                         superAttributes: data.product.attributeMap.superAttributes,
                                         selectedAttributes: data.product.selectedAttributes,

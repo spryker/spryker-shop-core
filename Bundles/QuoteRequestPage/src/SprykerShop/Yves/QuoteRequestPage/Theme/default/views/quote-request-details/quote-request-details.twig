@@ -168,7 +168,7 @@
                     {% if data.isQuoteRequestCancelable %}
                         <hr>
                         <a class="button button--expand button--cancel"
-                           href="{{ path('quote-request/cancel', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                           href="{{ path('quote-request/cancel', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
                             {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
                         </a>
                     {% endif %}
@@ -176,12 +176,12 @@
                     {% if data.isQuoteRequestReady %}
                         <hr>
                         <a class="button button--expand button--hollow"
-                           href="{{ path('quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                           href="{{ path('quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
                             {{ 'quote_request_page.quote_request.actions.revise' | trans }}
                         </a>
                         <hr>
                         <a class="button button--expand button--success"
-                           href="{{ path('quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                           href="{{ path('quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
                             {{ 'quote_request_page.quote_request.actions.convert_to_cart' | trans }}
                         </a>
                     {% endif %}
@@ -189,12 +189,12 @@
                     {% if data.isQuoteRequestEditable %}
                         <hr>
                         <a class="button button--expand button--success"
-                           href="{{ path('quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                           href="{{ path('quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
                             {{ 'quote_request_page.quote_request.actions.edit' | trans }}
                         </a>
                         <hr>
                         <a class="button button--expand button--success"
-                           href="{{ path('quote-request/send-to-user', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                           href="{{ path('quote-request/send-to-user', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
                             {{ 'quote_request_page.quote_request.actions.send_to_agent' | trans }}
                         </a>
                     {% endif %}

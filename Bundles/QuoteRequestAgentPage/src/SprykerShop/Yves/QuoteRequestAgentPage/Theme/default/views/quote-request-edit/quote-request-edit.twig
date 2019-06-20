@@ -168,12 +168,12 @@
             {% endif %}
             <div class="box">
                 <a class="button button--expand button--hollow"
-                   href="{{ url('agent/quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference}) }}">
+                   href="{{ url('agent/quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference}) }}" data-init-single-click>
                     {{ 'quote_request_page.quote_request.actions.back_to_view' | trans }}
                 </a>
                 <hr>
                 <a class="button button--expand button--edit-items"
-                   href="{{ url('agent/quote-request/edit-items', {quoteRequestReference: data.quoteRequest.quoteRequestReference}) }}">
+                   href="{{ url('agent/quote-request/edit-items', {quoteRequestReference: data.quoteRequest.quoteRequestReference}) }}" data-init-single-click>
                     {{ 'quote_request_page.quote_request.actions.edit_items' | trans }}
                 </a>
                 <hr>
@@ -182,7 +182,7 @@
                 </button>
                 {% if data.quoteRequest.latestVersion.quote.items | length %}
                     <hr>
-                    <button type="submit" name="sendToCustomer" class="button button--expand button--success">
+                    <button type="submit" name="sendToCustomer" class="button button--expand button--success" data-init-single-click>
                         {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
                     </button>
                 {% endif %}
