@@ -113,7 +113,7 @@ class CommentThreadWidget extends AbstractWidget
     protected function expandCommentsWithPlainTags(CommentThreadTransfer $commentThreadTransfer): CommentThreadTransfer
     {
         foreach ($commentThreadTransfer->getComments() as $commentTransfer) {
-            $commentTransfer->setTags($this->mapCommentTags($commentTransfer));
+            $commentTransfer->setTagNames($this->mapCommentTags($commentTransfer));
         }
 
         return $commentThreadTransfer;

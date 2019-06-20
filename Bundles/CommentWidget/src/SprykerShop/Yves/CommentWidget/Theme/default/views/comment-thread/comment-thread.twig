@@ -29,14 +29,14 @@
                     },
                     embed: {
                         commentAvailableTags: data.commentAvailableTags,
-                        tags: comment.tags,
+                        tagNames: comment.tagNames,
                     },
                 } only %}
                     {% block options %}
                         <option value="">{{ 'comment_widget.form.tags' | trans }}</option>
 
                         {% for availableTag in embed.commentAvailableTags %}
-                            {% if availableTag not in embed.tags %}
+                            {% if availableTag not in embed.tagNames %}
                                 <option value="{{ availableTag }}">{{ availableTag }}</option>
                             {% endif %}
                         {% endfor %}
@@ -62,9 +62,9 @@
             {% else %}
                 <p>{{ comment.message }}</p>
             {% endif %}
-            {% for tag in comment.tags %}
+            {% for tagName in comment.tagNames %}
                 <p>
-                    <a href="{{ path('comment/tag/remove', {'uuid': comment.uuid, 'name': tag, 'returnUrl': data.returnUrl }) }}">{{ tag }}</a>
+                    <a href="{{ path('comment/tag/remove', {'uuid': comment.uuid, 'name': tagName, 'returnUrl': data.returnUrl }) }}">{{ tagName }}</a>
                 </p>
             {% endfor %}
         {% endfor %}
