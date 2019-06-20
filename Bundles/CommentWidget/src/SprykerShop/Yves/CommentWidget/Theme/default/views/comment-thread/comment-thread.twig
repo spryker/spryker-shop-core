@@ -3,43 +3,80 @@
 {% define data = {
     returnUrl: _widget.returnUrl,
     commentThread: _widget.commentThread,
-    createCommentForm: _widget.createCommentForm,
-    allCommentForms: _widget.allCommentForms,
-    attachCommentForms: _widget.attachCommentForms,
+    customer: _widget.customer,
+    commentAvailableTags: _widget.commentAvailableTags,
 } %}
-
-{% set attachedComments = [] %}
-
-{% for comment in data.commentThread.comments %}
-    {% if comment.isAttached %}
-        {% set attachedComments = attachedComments|merge([comment]) %}
-    {% endif %}
-{% endfor %}
 
 {% block body %}
     <h6>{{ 'comment_widget.comments_to_cart' | trans }}</h6>
     <hr>
-    {% include molecule('cart-comments', 'CommentWidget') with {
-        data: {
-            returnUrl: data.returnUrl,
-            commentThread: data.commentThread,
-            createCommentForm: data.createCommentForm,
-            allCommentForms: data.allCommentForms,
-            attachCommentForms: data.attachCommentForms,
-        },
-    } only %}
-    <div class="spacing-top spacing-top--inner">
-        {{ form_start(data.createCommentForm, {
-            action: url('comment/add'),
-            attr: {'id': ''},
-        }) }}
+    <div>
+        {% for comment in data.commentThread.comments %}
 
-        {{ form_widget(data.createCommentForm) }}
-        <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
-        <input type="hidden" name="ownerId" value="{{ data.commentThread.ownerId }}">
-        <input type="hidden" name="ownerType" value="{{ data.commentThread.ownerType }}">
-        <button type="submit" class="button button--primary">{{ 'comment_widget.form.add_comment' | trans }}</button>
-        {{ form_end(data.createCommentForm) }}
+            <p>{{ comment.customer.firstName }} {{ comment.customer.lastName }}</p>
+            <p class="text-secondary">
+                {{ comment.createdAt | formatDateTime }}
+                {% if comment.isUpdated %}
+                    ({{ 'comment_widget.form.edited' | trans }})
+                {% endif %}
+            </p>
+
+            <form method="GET" action="{{ path('comment/tag/add', {'uuid': comment.uuid }) }}">
+                {% embed atom('select') with {
+                    attributes: {
+                        name: 'name',
+                        onchange: 'this.form.submit();',
+                    },
+                    embed: {
+                        commentAvailableTags: data.commentAvailableTags,
+                        tags: comment.tags,
+                    },
+                } only %}
+                    {% block options %}
+                        <option value="">{{ 'comment_widget.form.tags' | trans }}</option>
+
+                        {% for availableTag in embed.commentAvailableTags %}
+                            {% if availableTag not in embed.tags %}
+                                <option value="{{ availableTag }}">{{ availableTag }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% endblock %}
+                {% endembed %}
+
+                <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
+            </form>
+            {% if comment.customer.idCustomer == data.customer.idCustomer %}
+                <form method="POST" action="{{ path('comment/update') }}">
+                    <textarea name="message" required="required" class="textarea textarea--expand">{{ comment.message }}</textarea>
+                    <input type="hidden" name="uuid" value="{{ comment.uuid }}">
+                    <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
+                    <button type="submit" class="button button--primary">{{ 'comment_widget.form.update_comment' | trans }}</button>
+                </form>
+                <form method="POST" action="{{ path('comment/remove') }}">
+                    <input type="hidden" name="uuid" value="{{ comment.uuid }}">
+                    <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
+                    <button type="submit" class="button button--success float-right">
+                        {{ 'comment_widget.form.remove_comment' | trans }}
+                    </button>
+                </form>
+            {% else %}
+                <p>{{ comment.message }}</p>
+            {% endif %}
+            {% for tag in comment.tags %}
+                <p>
+                    <a href="{{ path('comment/tag/remove', {'uuid': comment.uuid, 'name': tag, 'returnUrl': data.returnUrl }) }}">{{ tag }}</a>
+                </p>
+            {% endfor %}
+        {% endfor %}
+    </div>
+    <div class="spacing-top spacing-top--inner">
+        <form method="POST" action="{{ path('comment/add') }}">
+            <textarea name="message" required="required" class="textarea textarea--expand"></textarea>
+            <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
+            <input type="hidden" name="ownerId" value="{{ data.commentThread.ownerId }}">
+            <input type="hidden" name="ownerType" value="{{ data.commentThread.ownerType }}">
+            <button type="submit" class="button button--primary">{{ 'comment_widget.form.add_comment' | trans }}</button>
+        </form>
     </div>
     <hr>
 {% endblock %}

@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CommentWidget\Controller;
 
+use Generated\Shared\Transfer\CommentTagRequestTransfer;
+use Generated\Shared\Transfer\CommentTransfer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -16,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 class CommentTagController extends CommentWidgetAbstractController
 {
     protected const PARAMETER_NAME = 'name';
-    protected const PARAMETER_RETURN_URL = 'returnUrl';
 
     /**
      * @param string $uuid
@@ -52,7 +53,18 @@ class CommentTagController extends CommentWidgetAbstractController
      */
     protected function executeAddAction(string $uuid, Request $request): RedirectResponse
     {
-        return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
+        $commentTagRequestTransfer = (new CommentTagRequestTransfer())
+            ->setComment((new CommentTransfer())->setUuid($uuid))
+            ->setName($request->query->get(static::PARAMETER_NAME));
+
+        $this->getFactory()
+            ->getCommentClient()
+            ->addCommentTag($commentTagRequestTransfer);
+
+        // TODO: afterOperationPlugins
+        // TODO: handleErrorMessages
+
+        return $this->redirectResponseExternal($request->query->get(static::PARAMETER_RETURN_URL));
     }
 
     /**
@@ -63,6 +75,17 @@ class CommentTagController extends CommentWidgetAbstractController
      */
     protected function executeRemoveAction(string $uuid, Request $request): RedirectResponse
     {
-        return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
+        $commentTagRequestTransfer = (new CommentTagRequestTransfer())
+            ->setComment((new CommentTransfer())->setUuid($uuid))
+            ->setName($request->query->get(static::PARAMETER_NAME));
+
+        $this->getFactory()
+            ->getCommentClient()
+            ->removeCommentTag($commentTagRequestTransfer);
+
+        // TODO: afterOperationPlugins
+        // TODO: handleErrorMessages
+
+        return $this->redirectResponseExternal($request->query->get(static::PARAMETER_RETURN_URL));
     }
 }

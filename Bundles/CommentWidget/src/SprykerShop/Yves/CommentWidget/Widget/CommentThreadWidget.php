@@ -9,19 +9,19 @@ namespace SprykerShop\Yves\CommentWidget\Widget;
 
 use Generated\Shared\Transfer\CommentThreadTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
  * @method \SprykerShop\Yves\CommentWidget\CommentWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\CommentWidget\CommentWidgetConfig getConfig()
  */
 class CommentThreadWidget extends AbstractWidget
 {
     protected const PARAMETER_RETURN_URL = 'returnUrl';
     protected const PARAMETER_COMMENT_THREAD = 'commentThread';
-
-    protected const PARAMETER_ALL_COMMENT_FORMS = 'allCommentForms';
-    protected const PARAMETER_ATTACH_COMMENT_FORMS = 'attachCommentForms';
-    protected const PARAMETER_CREATE_COMMENT_FORM = 'createCommentForm';
+    protected const PARAMETER_CUSTOMER = 'customer';
+    protected const PARAMETER_COMMENT_AVAILABLE_TAGS = 'commentAvailableTags';
 
     /**
      * @param int $ownerId
@@ -35,19 +35,20 @@ class CommentThreadWidget extends AbstractWidget
         string $returnUrl,
         ?CommentThreadTransfer $commentThreadTransfer
     ) {
-        $commentThreadTransfer = $this->getFactory()
-            ->createCommentFormDataProvider()
-            ->getData($commentThreadTransfer);
-
-        $commentThreadTransfer
+        $commentThreadTransfer = $commentThreadTransfer ?: (new CommentThreadTransfer())
             ->setOwnerId($ownerId)
             ->setOwnerType($ownerType);
 
+        $this->expandCommentsWithPlainTags($commentThreadTransfer);
+
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
         $this->addReturnUrlParameter($returnUrl);
         $this->addCommentThreadParameter($commentThreadTransfer);
-        $this->addALlCommentFormsParameter($commentThreadTransfer);
-        $this->addAttachCommentFormsParameter($commentThreadTransfer);
-        $this->addCreateCommentFormParameter();
+        $this->addCustomerParameter($customerTransfer);
+        $this->addCommentAvailableTags();
     }
 
     /**
@@ -87,56 +88,50 @@ class CommentThreadWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
-    protected function addAllCommentFormsParameter(CommentThreadTransfer $commentThreadTransfer): void
+    protected function addCustomerParameter(CustomerTransfer $customerTransfer): void
     {
-        $allCommentForms = [];
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
-
-        foreach ($commentThreadTransfer->getComments() as $commentTransfer) {
-            if ($customerTransfer->getIdCustomer() === $commentTransfer->getCustomer()->getIdCustomer()) {
-                $allCommentForms[$commentTransfer->getIdComment()] = $this->getFactory()->getCommentForm($commentTransfer)->createView();
-            }
-        }
-
-        $this->addParameter(static::PARAMETER_ALL_COMMENT_FORMS, $allCommentForms);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
-     *
-     * @return void
-     */
-    protected function addAttachCommentFormsParameter(CommentThreadTransfer $commentThreadTransfer): void
-    {
-        $attachCommentForms = [];
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
-
-        foreach ($commentThreadTransfer->getComments() as $commentTransfer) {
-            if ($customerTransfer->getIdCustomer() === $commentTransfer->getCustomer()->getIdCustomer()
-            && $commentTransfer->getIsAttached()) {
-                $attachCommentForms[$commentTransfer->getIdComment()] = $this->getFactory()->getCommentForm($commentTransfer)->createView();
-            }
-        }
-
-        $this->addParameter(static::PARAMETER_ATTACH_COMMENT_FORMS, $attachCommentForms);
+        $this->addParameter(static::PARAMETER_CUSTOMER, $customerTransfer);
     }
 
     /**
      * @return void
      */
-    protected function addCreateCommentFormParameter(): void
+    protected function addCommentAvailableTags(): void
     {
-        $this->addParameter(
-            static::PARAMETER_CREATE_COMMENT_FORM,
-            $this->getFactory()->getCommentForm(new CommentTransfer())->createView()
-        );
+        $this->addParameter(static::PARAMETER_COMMENT_AVAILABLE_TAGS, $this->getConfig()->getCommentAvailableTags());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentThreadTransfer
+     */
+    protected function expandCommentsWithPlainTags(CommentThreadTransfer $commentThreadTransfer): CommentThreadTransfer
+    {
+        foreach ($commentThreadTransfer->getComments() as $commentTransfer) {
+            $commentTransfer->setTags($this->mapCommentTags($commentTransfer));
+        }
+
+        return $commentThreadTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     *
+     * @return array
+     */
+    protected function mapCommentTags(CommentTransfer $commentTransfer): array
+    {
+        $tags = [];
+
+        foreach ($commentTransfer->getCommentTags() as $commentTagTransfer) {
+            $tags[] = $commentTagTransfer->getName();
+        }
+
+        return $tags;
     }
 }

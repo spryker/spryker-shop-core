@@ -9,8 +9,6 @@ namespace SprykerShop\Yves\CommentWidget\Controller;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
-use SprykerShop\Yves\CommentWidget\Form\CommentForm;
-use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,11 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CommentController extends CommentWidgetAbstractController
 {
-    protected const PARAMETER_UUID = 'uuid';
-    protected const PARAMETER_RETURN_URL = 'returnUrl';
-    protected const PARAMETER_OWNER_ID = 'ownerId';
-    protected const PARAMETER_OWNER_TYPE = 'ownerType';
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -69,26 +62,16 @@ class CommentController extends CommentWidgetAbstractController
     {
         $commentTransfer = $this->createCommentTransferFromRequest($request);
 
-        if (!$this->validateCommentForm($request, $commentTransfer)) {
-            return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
-        }
-
         $commentRequestTransfer = (new CommentRequestTransfer())
-            ->setComment($commentTransfer)
-            ->setOwnerId($request->request->get(static::PARAMETER_OWNER_ID))
-            ->setOwnerType($request->request->get(static::PARAMETER_OWNER_TYPE));
+            ->fromArray($request->request->all(), true)
+            ->setComment($commentTransfer);
 
-        $commentThreadRequestTransfer = $this->getFactory()
+        $commentThreadResponseTransfer = $this->getFactory()
             ->getCommentClient()
             ->addComment($commentRequestTransfer);
 
-        if ($commentThreadRequestTransfer->getIsSuccessful()) {
-            $this->getFactory()
-                ->createCommentOperation()
-                ->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
-        }
-
-        $this->handleResponseErrors($commentThreadRequestTransfer);
+        $this->executeCommentThreadAfterOperation($commentThreadResponseTransfer);
+        $this->handleResponseErrors($commentThreadResponseTransfer);
 
         return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
     }
@@ -102,21 +85,12 @@ class CommentController extends CommentWidgetAbstractController
     {
         $commentTransfer = $this->createCommentTransferFromRequest($request);
 
-        if (!$this->validateCommentForm($request, $commentTransfer)) {
-            return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
-        }
-
-        $commentThreadRequestTransfer = $this->getFactory()
+        $commentThreadResponseTransfer = $this->getFactory()
             ->getCommentClient()
             ->updateComment((new CommentRequestTransfer())->setComment($commentTransfer));
 
-        if ($commentThreadRequestTransfer->getIsSuccessful()) {
-            $this->getFactory()
-                ->createCommentOperation()
-                ->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
-        }
-
-        $this->handleResponseErrors($commentThreadRequestTransfer);
+        $this->executeCommentThreadAfterOperation($commentThreadResponseTransfer);
+        $this->handleResponseErrors($commentThreadResponseTransfer);
 
         return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
     }
@@ -128,25 +102,14 @@ class CommentController extends CommentWidgetAbstractController
      */
     protected function executeRemoveAction(Request $request): RedirectResponse
     {
-        $customerTransfer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
+        $commentTransfer = $this->createCommentTransferFromRequest($request);
 
-        $commentTransfer = (new CommentTransfer())
-            ->setUuid($request->request->get(static::PARAMETER_UUID))
-            ->setCustomer($customerTransfer);
-
-        $commentThreadRequestTransfer = $this->getFactory()
+        $commentThreadResponseTransfer = $this->getFactory()
             ->getCommentClient()
             ->removeComment((new CommentRequestTransfer())->setComment($commentTransfer));
 
-        if ($commentThreadRequestTransfer->getIsSuccessful()) {
-            $this->getFactory()
-                ->createCommentOperation()
-                ->executeCommentThreadAfterOperationPlugins($commentThreadRequestTransfer->getCommentThread());
-        }
-
-        $this->handleResponseErrors($commentThreadRequestTransfer);
+        $this->executeCommentThreadAfterOperation($commentThreadResponseTransfer);
+        $this->handleResponseErrors($commentThreadResponseTransfer);
 
         return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
     }
@@ -163,42 +126,9 @@ class CommentController extends CommentWidgetAbstractController
             ->getCustomer();
 
         $commentTransfer = (new CommentTransfer())
-            ->fromArray($request->request->get(CommentForm::COMMENT_FORM), true)
+            ->fromArray($request->request->all(), true)
             ->setCustomer($customerTransfer);
 
         return $commentTransfer;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
-     *
-     * @return bool
-     */
-    protected function validateCommentForm(Request $request, CommentTransfer $commentTransfer): bool
-    {
-        $commentForm = $this->getFactory()
-            ->getCommentForm($commentTransfer)
-            ->handleRequest($request);
-
-        $this->addFormErrorMessages($commentForm->getErrors(true));
-
-        return $commentForm->isValid();
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormErrorIterator $formErrorIterator
-     *
-     * @return void
-     */
-    protected function addFormErrorMessages(FormErrorIterator $formErrorIterator): void
-    {
-        if (!$formErrorIterator->count()) {
-            return;
-        }
-
-        foreach ($formErrorIterator as $formError) {
-            $this->addErrorMessage($formError->getMessage());
-        }
     }
 }

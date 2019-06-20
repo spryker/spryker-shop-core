@@ -3,12 +3,6 @@
            xmlns="spryker:transfer-01"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="CommentThreadResponse">
-        <property name="commentThread" type="CommentThread" />
-        <property name="isSuccessful" type="bool" />
-        <property name="messages" type="Message[]"  singular="message" />
-    </transfer>
-
     <transfer name="CommentThread">
         <property name="idCommentThread" type="int"/>
         <property name="uuid" type="string"/>
@@ -23,9 +17,8 @@
         <property name="uuid" type="string"/>
         <property name="customer" type="Customer"/>
         <property name="message" type="string"/>
-        <property name="tags" type="CommentTag[]" singular="commentTag"/>
+        <property name="commentTags" type="CommentTag[]" singular="commentTag"/>
         <property name="isUpdated" type="bool"/>
-        <property name="isAttached" type="bool"/>
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>
     </transfer>
@@ -40,6 +33,27 @@
         <property name="ownerId" type="int"/>
         <property name="ownerType" type="string"/>
         <property name="comment" type="Comment"/>
+    </transfer>
+
+    <transfer name="CommentTagRequest">
+        <property name="name" type="string"/>
+        <property name="comment" type="Comment"/>
+    </transfer>
+
+    <transfer name="CommentThreadResponse">
+        <property name="commentThread" type="CommentThread"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="CommentResponse">
+        <property name="comment" type="Comment"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="Quote">
