@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/cart-page": "^2.1.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker/kernel": "^3.24.0",
     "spryker/persistent-cart-share": "^1.0.0",
@@ -12,15 +13,13 @@
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
-    "spryker-shop/cart-page": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/discount-widget": "If you want to use components from module DiscountWidget or DiscountSummaryWidgetPlugin",
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
-    "spryker-shop/cart-page": "The main page view is based on template from the cart page. Please redefine the template if you would like to use a custom behavior."
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {
