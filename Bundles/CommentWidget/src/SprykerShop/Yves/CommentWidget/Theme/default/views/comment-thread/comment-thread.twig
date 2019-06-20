@@ -1,9 +1,11 @@
 {% extends template('widget') %}
 
 {% define data = {
+    ownerId: _widget.ownerId,
+    ownerType: _widget.ownerType,
     returnUrl: _widget.returnUrl,
-    commentThread: _widget.commentThread,
     customer: _widget.customer,
+    taggedComments: _widget.taggedComments,
     commentAvailableTags: _widget.commentAvailableTags,
 } %}
 
@@ -11,7 +13,7 @@
     <h6>{{ 'comment_widget.comments_to_cart' | trans }}</h6>
     <hr>
     <div>
-        {% for comment in data.commentThread.comments %}
+        {% for comment in data.taggedComments['all'] %}
 
             <p>{{ comment.customer.firstName }} {{ comment.customer.lastName }}</p>
             <p class="text-secondary">
@@ -73,8 +75,8 @@
         <form method="POST" action="{{ path('comment/add') }}">
             <textarea name="message" required="required" class="textarea textarea--expand"></textarea>
             <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
-            <input type="hidden" name="ownerId" value="{{ data.commentThread.ownerId }}">
-            <input type="hidden" name="ownerType" value="{{ data.commentThread.ownerType }}">
+            <input type="hidden" name="ownerId" value="{{ data.ownerId }}">
+            <input type="hidden" name="ownerType" value="{{ data.ownerType }}">
             <button type="submit" class="button button--primary">{{ 'comment_widget.form.add_comment' | trans }}</button>
         </form>
     </div>

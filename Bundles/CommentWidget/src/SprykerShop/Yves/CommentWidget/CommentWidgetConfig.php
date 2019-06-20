@@ -17,6 +17,8 @@ class CommentWidgetConfig extends AbstractBundleConfig
     protected const COMMENT_AVAILABLE_TAGS = [];
 
     /**
+     * @see \Spryker\Shared\Comment\CommentConfig::getCommentAvailableTags()
+     *
      * @return string[]
      */
     public function getCommentAvailableTags(): array

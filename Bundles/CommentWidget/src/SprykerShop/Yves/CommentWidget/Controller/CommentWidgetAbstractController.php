@@ -36,7 +36,7 @@ class CommentWidgetAbstractController extends AbstractController
      */
     protected function executeCommentThreadAfterOperation(CommentThreadResponseTransfer $commentThreadResponseTransfer): void
     {
-        if ($commentThreadResponseTransfer->getIsSuccessful()) {
+        if (!$commentThreadResponseTransfer->getIsSuccessful()) {
             return;
         }
 

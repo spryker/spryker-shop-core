@@ -18,9 +18,11 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class CommentThreadWidget extends AbstractWidget
 {
+    protected const PARAMETER_OWNER_ID = 'ownerId';
+    protected const PARAMETER_OWNER_TYPE = 'ownerType';
     protected const PARAMETER_RETURN_URL = 'returnUrl';
-    protected const PARAMETER_COMMENT_THREAD = 'commentThread';
     protected const PARAMETER_CUSTOMER = 'customer';
+    protected const PARAMETER_TAGGED_COMMENTS = 'taggedComments';
     protected const PARAMETER_COMMENT_AVAILABLE_TAGS = 'commentAvailableTags';
 
     /**
@@ -35,19 +37,20 @@ class CommentThreadWidget extends AbstractWidget
         string $returnUrl,
         ?CommentThreadTransfer $commentThreadTransfer
     ) {
-        $commentThreadTransfer = $commentThreadTransfer ?: (new CommentThreadTransfer())
-            ->setOwnerId($ownerId)
-            ->setOwnerType($ownerType);
-
+        $commentThreadTransfer = $commentThreadTransfer ?: new CommentThreadTransfer();
         $this->expandCommentsWithPlainTags($commentThreadTransfer);
 
         $customerTransfer = $this->getFactory()
             ->getCustomerClient()
             ->getCustomer();
 
+        $taggedComments = $this->prepareTaggedComments($commentThreadTransfer);
+
+        $this->addOwnerIdParameter($ownerId);
+        $this->addOwnerTypeParameter($ownerType);
         $this->addReturnUrlParameter($returnUrl);
-        $this->addCommentThreadParameter($commentThreadTransfer);
         $this->addCustomerParameter($customerTransfer);
+        $this->addTaggedCommentsParameter($taggedComments);
         $this->addCommentAvailableTags();
     }
 
@@ -78,13 +81,23 @@ class CommentThreadWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
+     * @param int $ownerId
      *
      * @return void
      */
-    protected function addCommentThreadParameter(CommentThreadTransfer $commentThreadTransfer): void
+    protected function addOwnerIdParameter(int $ownerId): void
     {
-        $this->addParameter(static::PARAMETER_COMMENT_THREAD, $commentThreadTransfer);
+        $this->addParameter(static::PARAMETER_OWNER_ID, $ownerId);
+    }
+
+    /**
+     * @param string $ownerType
+     *
+     * @return void
+     */
+    protected function addOwnerTypeParameter(string $ownerType): void
+    {
+        $this->addParameter(static::PARAMETER_OWNER_TYPE, $ownerType);
     }
 
     /**
@@ -103,6 +116,16 @@ class CommentThreadWidget extends AbstractWidget
     protected function addCommentAvailableTags(): void
     {
         $this->addParameter(static::PARAMETER_COMMENT_AVAILABLE_TAGS, $this->getConfig()->getCommentAvailableTags());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTransfer[][] $taggedComments
+     *
+     * @return void
+     */
+    protected function addTaggedCommentsParameter(array $taggedComments): void
+    {
+        $this->addParameter(static::PARAMETER_TAGGED_COMMENTS, $taggedComments);
     }
 
     /**
@@ -133,5 +156,25 @@ class CommentThreadWidget extends AbstractWidget
         }
 
         return $tags;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentTransfer[][]
+     */
+    protected function prepareTaggedComments(CommentThreadTransfer $commentThreadTransfer): array
+    {
+        $taggedComments = [];
+
+        foreach ($commentThreadTransfer->getComments() as $comment) {
+            $taggedComments['all'][] = $comment;
+
+            foreach ($comment->getTagNames() as $tagName) {
+                $taggedComments[$tagName][] = $comment;
+            }
+        }
+
+        return $taggedComments;
     }
 }

@@ -57,12 +57,12 @@ class CommentTagController extends CommentWidgetAbstractController
             ->setComment((new CommentTransfer())->setUuid($uuid))
             ->setName($request->query->get(static::PARAMETER_NAME));
 
-        $this->getFactory()
+        $commentThreadResponseTransfer = $this->getFactory()
             ->getCommentClient()
             ->addCommentTag($commentTagRequestTransfer);
 
-        // TODO: afterOperationPlugins
-        // TODO: handleErrorMessages
+        $this->executeCommentThreadAfterOperation($commentThreadResponseTransfer);
+        $this->handleResponseErrors($commentThreadResponseTransfer);
 
         return $this->redirectResponseExternal($request->query->get(static::PARAMETER_RETURN_URL));
     }
@@ -79,12 +79,12 @@ class CommentTagController extends CommentWidgetAbstractController
             ->setComment((new CommentTransfer())->setUuid($uuid))
             ->setName($request->query->get(static::PARAMETER_NAME));
 
-        $this->getFactory()
+        $commentThreadResponseTransfer = $this->getFactory()
             ->getCommentClient()
             ->removeCommentTag($commentTagRequestTransfer);
 
-        // TODO: afterOperationPlugins
-        // TODO: handleErrorMessages
+        $this->executeCommentThreadAfterOperation($commentThreadResponseTransfer);
+        $this->handleResponseErrors($commentThreadResponseTransfer);
 
         return $this->redirectResponseExternal($request->query->get(static::PARAMETER_RETURN_URL));
     }
