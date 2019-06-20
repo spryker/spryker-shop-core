@@ -91,18 +91,11 @@
                 {% else %}
                     {{ 'cart.item_quantity' | trans }}:
                     <strong>{{ data.cartItem.quantity }}</strong>
-
-                    {% if data.cartItem.quantitySalesUnit is not empty %}
-                        {% set value = data.cartItem.quantitySalesUnit.value %}
-                        {% set precision = data.cartItem.quantitySalesUnit.precision %}
-                        {% set salesUnitName = data.cartItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
-
-                        <p>
-                            <small class="text-secondary">
-                                [= {{ value / precision }} {{ salesUnitName | trans }}]
-                            </small>
-                        </p>
-                    {% endif %}
+                    {% include molecule('measurement-unit-item', 'ProductMeasurementUnitWidget') ignore missing with {
+                        data: {
+                            cartItem: data.cartItem,
+                        },
+                    } only %}
                 {% endif %}
             {% endif %}
 
