@@ -137,7 +137,6 @@ class PostConditionChecker implements PostConditionCheckerInterface
     {
         return $expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
             && $expenseTransfer->getShipment() !== null
-            && $this->shipmentService
-                ->isShipmentEqualToShipmentHash($expenseTransfer->getShipment(), $itemShipmentKey);
+            && $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment()) === $itemShipmentKey;
     }
 }

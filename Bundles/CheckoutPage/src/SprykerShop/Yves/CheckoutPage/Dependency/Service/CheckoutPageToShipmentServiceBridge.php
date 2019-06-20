@@ -44,15 +44,4 @@ class CheckoutPageToShipmentServiceBridge implements CheckoutPageToShipmentServi
     {
         return $this->shipmentService->getShipmentHashKey($shipmentTransfer);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     * @param string $shipmentHashKey
-     *
-     * @return string
-     */
-    public function isShipmentEqualToShipmentHash(ShipmentTransfer $shipmentTransfer, string $shipmentHashKey): bool
-    {
-        return $this->shipmentService->isShipmentEqualToShipmentHash($shipmentTransfer, $shipmentHashKey);
-    }
 }
