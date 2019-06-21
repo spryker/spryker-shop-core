@@ -56,7 +56,7 @@ export default class ClipboardCopy extends Component {
      */
     showMessage(message: HTMLElement, duration: number): void {
         message.classList.remove(this.hideClassName);
-        this.durationTimeoutId = setTimeout(() => this.hideMessage(message), duration);
+        this.durationTimeoutId = window.setTimeout(() => this.hideMessage(message), duration);
     }
 
     /**
