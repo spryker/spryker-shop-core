@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 interface PostConditionCheckerInterface
 {

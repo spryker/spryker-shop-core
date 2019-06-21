@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
