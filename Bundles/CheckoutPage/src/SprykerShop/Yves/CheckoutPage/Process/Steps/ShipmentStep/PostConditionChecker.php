@@ -37,7 +37,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
      *
      * @return bool
      */
-    public function check(AbstractTransfer $quoteTransfer): bool
+    public function check(QuoteTransfer $quoteTransfer): bool
     {
         if ($this->hasOnlyGiftCardItems($quoteTransfer)) {
             return true;

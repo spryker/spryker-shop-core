@@ -56,7 +56,7 @@ class AddressStepExecutor implements StepExecutorInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -165,10 +165,6 @@ class AddressStepExecutor implements StepExecutorInterface
      */
     protected function copyShippingAddress(AddressTransfer $addressTransfer): AddressTransfer
     {
-        if ($addressTransfer === null) {
-            return null;
-        }
-
         return (clone $addressTransfer);
     }
 

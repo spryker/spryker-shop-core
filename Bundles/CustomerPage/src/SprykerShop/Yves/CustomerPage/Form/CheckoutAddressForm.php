@@ -17,6 +17,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
+ */
 class CheckoutAddressForm extends AddressForm
 {
     public const FIELD_IS_ADDRESS_SAVING_SKIPPED = 'isAddressSavingSkipped';

@@ -173,7 +173,7 @@ class MultiShipmentHandler extends ShipmentHandler
     protected function findAvailableShipmentMethodsByShipmentGroup(
         ArrayObject $availableShippingMethodsGroupedByShipment,
         ShipmentGroupTransfer $shipmentGroupTransfer
-    ): ShipmentMethodsTransfer {
+    ): ?ShipmentMethodsTransfer {
         $shipmentGroupTransfer->requireHash();
 
         foreach ($availableShippingMethodsGroupedByShipment as $availableShipmentMethodsShipmentGroupTransfer) {
@@ -200,7 +200,7 @@ class MultiShipmentHandler extends ShipmentHandler
 
             $shipmentMethodTransfer = $this->findShipmentMethodById(
                 $shipmentGroupTransfer->getAvailableShipmentMethods(),
-                $shipmentTransfer->getShipmentSelection()
+                (int)$shipmentTransfer->getShipmentSelection()
             );
             $shipmentTransfer->setMethod($shipmentMethodTransfer);
         }

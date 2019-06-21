@@ -154,7 +154,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer[]|\ArrayObject $shipmentGroups
      *
-     * @return array
+     * @return int
      */
     protected function getTotalCosts(ArrayObject $shipmentGroups): int
     {

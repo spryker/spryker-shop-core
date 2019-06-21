@@ -33,7 +33,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
      *
      * @return bool
      */
-    public function check(AbstractTransfer $quoteTransfer): bool
+    public function check(QuoteTransfer $quoteTransfer): bool
     {
         if ($quoteTransfer->getBillingAddress() === null) {
             return false;
@@ -120,14 +120,9 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return true;
         }
 
-//        if ($addressTransfer->getIdCustomerAddress() !== null || $addressTransfer->getIdCompanyUnitAddress() !== null) {
-//            return false;
-//        }
-
         $firstName = trim($addressTransfer->getFirstName());
         $lastName = trim($addressTransfer->getLastName());
 
-        return ($firstName === null || $firstName === '')
-            && ($lastName === null || $lastName === '');
+        return empty($firstName) && empty($lastName);
     }
 }
