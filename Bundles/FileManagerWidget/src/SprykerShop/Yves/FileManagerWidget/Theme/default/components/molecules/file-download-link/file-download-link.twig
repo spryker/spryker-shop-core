@@ -1,0 +1,41 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'file-download-link',
+} %}
+
+{% define data = {
+    idFile: required,
+    fileName: required,
+    fileUrl: fileUrl | default(path('files/download', {'id-file': data.idFile})),
+    fileIcon: '',
+    fileSize: '',
+} %}
+
+{% block body %}
+    <a class="{{ config.name }}__link {% if data.fileIcon %}{{ config.name }}__link--icon{% endif %}" href="{{ data.fileUrl }}">
+        {% if data.fileIcon %}
+            <span class="{{ config.name }}__icon">
+                {% include atom('icon') with {
+                    modifiers: ['bigger'],
+                    data: {
+                        name: data.fileIcon,
+                    },
+                } only %}
+            </span>
+
+            {% set fileName = data.fileName | split('.') | slice(0, -1) | join('.') %}
+            {% set fileExtension = data.fileName | split('.') | last %}
+            <span class="{{ config.name }}__name-wrapper">
+                <span class="{{ config.name }}__name {{ config.name }}__name--icon">{{ fileName }}</span>
+                <span class="{{ config.name }}__extension">.{{ fileExtension }}</span>
+            </span>
+        {% else %}
+            <span class="{{ config.name }}__name">{{ data.fileName }}</span>
+        {% endif %}
+
+        {% if data.fileIcon %}
+            <span class="{{ config.name }}__size">{{ data.fileSize }}</span>
+        {% endif %}
+    </a>
+{% endblock %}
