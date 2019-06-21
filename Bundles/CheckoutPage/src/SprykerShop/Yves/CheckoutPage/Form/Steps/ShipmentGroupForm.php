@@ -101,7 +101,7 @@ class ShipmentGroupForm extends AbstractType
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
             $shipmentGroupTransfer = $event->getData();
             if (!($shipmentGroupTransfer instanceof ShipmentGroupTransfer)) {
-                return $shipmentGroupTransfer;
+                return;
             }
 
             $shipmentGroupTransfer = $this->mapSubmittedShipmentSubFormDataToItemLevelShipments($shipmentGroupTransfer);

@@ -84,7 +84,9 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         return [
             CheckoutAddressCollectionForm::OPTION_ADDRESS_CHOICES => $this->getAddressChoices(),
             CheckoutAddressCollectionForm::OPTION_COUNTRY_CHOICES => $this->getAvailableCountries(),
-            CheckoutAddressCollectionForm::OPTION_IS_MULTI_SHIPMENT_ENABLED => $this->isMultiShipmentEnabled($quoteTransfer),
+            CheckoutAddressCollectionForm::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES => $this->canDeliverToMultipleShippingAddresses($quoteTransfer),
+            CheckoutAddressCollectionForm::OPTION_IS_MULTI_SHIPMENT_ENABLED => $quoteTransfer->getIsMultipleShipmentEnabled(),
+            CheckoutAddressCollectionForm::OPTION_IS_CUSTOMER_LOGGED_IN => $this->customerClient->isLoggedIn(),
         ];
     }
 
@@ -185,7 +187,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
 
         $customerAddressesTransfer = $this->customerTransfer->getAddresses();
 
-        if ($customerAddressesTransfer === null) {
+        if ($customerAddressesTransfer === null || count($customerAddressesTransfer->getAddresses()) < 1) {
             return [];
         }
 
@@ -249,10 +251,10 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function getFirstItemLevelShippingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
     {
-        $firstItemTransfer = $quoteTransfer->getItems()[0];
-        $firstItemTransfer->requireShipment();
+        $itemTransfer = current($quoteTransfer->getItems());
+        $itemTransfer->requireShipment();
 
-        return $firstItemTransfer->getShipment()->getShippingAddress();
+        return $itemTransfer->getShipment()->getShippingAddress();
     }
 
     /**
@@ -298,8 +300,8 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      *
      * @return bool
      */
-    protected function isMultiShipmentEnabled(QuoteTransfer $quoteTransfer): bool
+    protected function canDeliverToMultipleShippingAddresses(QuoteTransfer $quoteTransfer): bool
     {
-        return $quoteTransfer->getItems()->count() > 1 && $quoteTransfer->getIsMultipleShipmentEnabled();
+        return ($quoteTransfer->getItems()->count() > 1) && $quoteTransfer->getIsMultipleShipmentEnabled();
     }
 }

@@ -181,6 +181,9 @@ class MultiShipmentHandler extends ShipmentHandler
                 continue;
             }
 
+            /**
+             * @todo Try getting rid of ShipmentGroupTransfer.availableMethods.
+             */
             return $availableShipmentMethodsShipmentGroupTransfer->getAvailableShipmentMethods();
         }
 

@@ -58,8 +58,8 @@
                                         'form-selector': '.js-form-handler__item-shipping-' ~ embed.index,
                                         'data-selector': '.' ~ embed.jsName ~ '__trigger--' ~ embed.index,
                                         'default-address-selector': '.js-form-default-address__item-shipping-' ~ embed.index,
-                                        'address-hidden-input-selector': 'addressesForm[items][' ~ index0 ~ '][shippingAddress][id_customer_address]',
-                                        'company-address-hidden-input-selector': 'addressesForm[items][' ~ index0 ~ '][shippingAddress][id_company_unit_address]',
+                                        'address-hidden-input-selector': 'addressesForm[multiShippingAddresses][' ~ index0 ~ '][shippingAddress][id_customer_address]',
+                                        'company-address-hidden-input-selector': 'addressesForm[multiShippingAddresses][' ~ index0 ~ '][shippingAddress][id_company_unit_address]',
                                         'addresses': data.addresses,
                                     },
                                 } only %}
@@ -67,8 +67,8 @@
 
                             {% block hiddenFields %}
                                 {% set index0 = embed.index - 1 %}
-                                <input type="hidden" name="addressesForm[items][{{ index0 }}][shippingAddress][id_customer_address]">
-                                <input type="hidden" name="addressesForm[items][{{ index0 }}][shippingAddress][id_company_unit_address]">
+                                <input type="hidden" name="addressesForm[multiShippingAddresses][{{ index0 }}][shippingAddress][id_customer_address]">
+                                <input type="hidden" name="addressesForm[multiShippingAddresses][{{ index0 }}][shippingAddress][id_company_unit_address]">
                                 <input type="hidden" class="js-form-default-address__item-shipping-{{ embed.index }}" value="{{ defaultAddressKey }}">
                             {% endblock %}
                         {% endwidget %}

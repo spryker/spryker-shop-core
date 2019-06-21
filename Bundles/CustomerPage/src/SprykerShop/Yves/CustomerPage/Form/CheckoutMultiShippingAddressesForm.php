@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CustomerPage\Form;
 
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -24,6 +23,8 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
 
     public const OPTION_ADDRESS_CHOICES = 'address_choices';
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
+    public const OPTION_IS_CUSTOMER_LOGGED_IN = 'is_customer_logged_in';
+    public const OPTION_VALIDATION_GROUP = 'validation_group';
 
     protected const PROPERTY_PATH_SHIPPING_ADDRESS = 'shipment.shippingAddress';
 
@@ -45,11 +46,13 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'data_class' => ItemTransfer::class,
+            static::OPTION_ADDRESS_CHOICES => [],
         ]);
 
-        $resolver->setDefined(static::OPTION_ADDRESS_CHOICES);
-        $resolver->setDefined(static::OPTION_COUNTRY_CHOICES);
+        $resolver->setDefined(static::OPTION_ADDRESS_CHOICES)
+            ->setRequired(static::OPTION_COUNTRY_CHOICES)
+            ->setRequired(static::OPTION_IS_CUSTOMER_LOGGED_IN)
+            ->setRequired(static::OPTION_VALIDATION_GROUP);
     }
 
     /**
@@ -81,19 +84,22 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
                     ->getParent()
                     ->get(CheckoutAddressCollectionForm::FIELD_SHIPPING_ADDRESS);
 
-                if (!$this->isIdCustomerOrCompanyUnitAddressesExist($customerAddressForm)) {
+                if ($this->isNewCustomerAddress($customerAddressForm)
+                    || $this->isIdCustomerAddressEmpty($customerAddressForm)
+                    || $this->isIdCompanyUnitAddressEmpty($customerAddressForm)) {
                     return false;
                 }
 
-                if ($this->isIdCustomerAddressEmpty($customerAddressForm) && $this->isIdCompanyUnitAddressEmpty($customerAddressForm)) {
-                    return [CheckoutAddressCollectionForm::GROUP_SHIPPING_ADDRESS];
+                if (!$this->isDeliverToMultipleAddressesEnabled($customerAddressForm)) {
+                    return false;
                 }
 
-                return $this->isDeliverToMultipleAddressesEnabled($customerAddressForm);
+                return [CheckoutAddressCollectionForm::GROUP_SHIPPING_ADDRESS];
             },
-            CheckoutAddressForm::OPTION_VALIDATION_GROUP => CheckoutAddressCollectionForm::GROUP_SHIPPING_ADDRESS,
+            CheckoutAddressForm::OPTION_VALIDATION_GROUP => $options[static::OPTION_VALIDATION_GROUP],
             CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
             CheckoutAddressForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
+            CheckoutAddressForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
         ]);
 
         return $this;
@@ -131,10 +137,21 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
      *
      * @return bool
      */
+    protected function isNewCustomerAddress(FormInterface $form): bool
+    {
+        return $form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
+            && $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() === null;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool
+     */
     protected function isIdCustomerAddressEmpty(FormInterface $form): bool
     {
-        return $form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS) === true
-            && $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() === null;
+        return $form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
+            && $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() === CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS;
     }
 
     /**
@@ -144,7 +161,7 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
      */
     protected function isIdCompanyUnitAddressEmpty(FormInterface $form): bool
     {
-        return $form->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS) === true
+        return $form->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)
             && $form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData() === null;
     }
 }

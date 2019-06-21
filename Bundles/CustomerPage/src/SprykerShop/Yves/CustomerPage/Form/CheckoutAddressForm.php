@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CustomerPage\Form;
 
 use Closure;
-use Generated\Shared\Transfer\AddressTransfer;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -19,12 +18,15 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CheckoutAddressForm extends AddressForm
 {
+    public const FIELD_ID_COMPANY_UNIT_ADDRESS = 'id_company_unit_address';
     public const FIELD_IS_ADDRESS_SAVING_SKIPPED = 'isAddressSavingSkipped';
 
     public const OPTION_VALIDATION_GROUP = 'validation_group';
     public const OPTION_ADDRESS_CHOICES = 'addresses_choices';
+    public const OPTION_IS_CUSTOMER_LOGGED_IN = 'is_customer_logged_in';
 
-    public const VALUE_DELIVER_TO_MULTIPLE_ADDRESSES = -1;
+    public const VALUE_DELIVER_TO_MULTIPLE_ADDRESSES = "-1";
+    public const VALUE_ADD_NEW_ADDRESS = "0";
 
     protected const GLOSSARY_KEY_SAVE_NEW_ADDRESS = 'customer.address.save_new_address';
 
@@ -39,12 +41,12 @@ class CheckoutAddressForm extends AddressForm
 
         $resolver->setDefaults([
             static::OPTION_ADDRESS_CHOICES => [],
-            'data_class' => AddressTransfer::class,
             'allow_extra_fields' => true,
         ]);
 
-        $resolver->setRequired(static::OPTION_VALIDATION_GROUP);
-        $resolver->setDefined(static::OPTION_ADDRESS_CHOICES);
+        $resolver->setDefined(static::OPTION_ADDRESS_CHOICES)
+            ->setRequired(static::OPTION_IS_CUSTOMER_LOGGED_IN)
+            ->setRequired(static::OPTION_VALIDATION_GROUP);
     }
 
     /**
@@ -68,8 +70,8 @@ class CheckoutAddressForm extends AddressForm
             ->addCityField($builder, $options)
             ->addIso2CodeField($builder, $options)
             ->addPhoneField($builder)
-            ->addIdCompanyUnitAddressTextField($builder)
-            ->addIsAddressSavingSkippedField($builder);
+            ->addIdCompanyUnitAddressTextField($builder, $options)
+            ->addIsAddressSavingSkippedField($builder, $options);
     }
 
     /**
@@ -80,10 +82,6 @@ class CheckoutAddressForm extends AddressForm
      */
     protected function addAddressSelectField(FormBuilderInterface $builder, array $options)
     {
-        if (count($options[static::OPTION_ADDRESS_CHOICES]) === 0) {
-            return $this;
-        }
-
         $choices = $options[static::OPTION_ADDRESS_CHOICES];
 
         $builder->add(static::FIELD_ID_CUSTOMER_ADDRESS, ChoiceType::class, [
@@ -111,16 +109,13 @@ class CheckoutAddressForm extends AddressForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addIsAddressSavingSkippedField(FormBuilderInterface $builder)
+    protected function addIsAddressSavingSkippedField(FormBuilderInterface $builder, array $options)
     {
-        $isLoggedIn = $this->getFactory()
-            ->getCustomerClient()
-            ->isLoggedIn();
-
-        if (!$isLoggedIn) {
+        if (!$options[static::OPTION_IS_CUSTOMER_LOGGED_IN]) {
             return $this;
         }
 

@@ -58,7 +58,7 @@ class AddressStepExecutor implements StepExecutorInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer): AbstractTransfer
     {
@@ -110,7 +110,7 @@ class AddressStepExecutor implements StepExecutorInterface
     protected function hydrateBillingAddress(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): QuoteTransfer
     {
         if ($quoteTransfer->getBillingSameAsShipping() === true) {
-            $firstItemTransfer = $quoteTransfer->getItems()[0];
+            $firstItemTransfer = current($quoteTransfer->getItems());
             $billingAddressTransfer = $this->copyShippingAddress($firstItemTransfer->getShipment()->getShippingAddress());
             $quoteTransfer->setBillingAddress($billingAddressTransfer);
 
@@ -208,7 +208,7 @@ class AddressStepExecutor implements StepExecutorInterface
             return $quoteTransfer;
         }
 
-        $firstItemTransfer = $quoteTransfer->getItems()[0];
+        $firstItemTransfer = current($quoteTransfer->getItems());
         $firstItemTransfer->requireShipment();
 
         return $quoteTransfer->setShippingAddress($firstItemTransfer->getShipment()->getShippingAddress());
