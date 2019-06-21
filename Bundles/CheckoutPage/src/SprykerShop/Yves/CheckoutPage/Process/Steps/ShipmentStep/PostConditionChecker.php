@@ -72,7 +72,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
