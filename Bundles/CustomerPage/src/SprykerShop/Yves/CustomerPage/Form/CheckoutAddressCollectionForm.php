@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -33,11 +34,12 @@ class CheckoutAddressCollectionForm extends AbstractType
     public const FIELD_BILLING_ADDRESS = 'billingAddress';
     public const FIELD_BILLING_SAME_AS_SHIPPING = 'billingSameAsShipping';
     public const FIELD_MULTI_SHIPPING_ADDRESSES = 'multiShippingAddresses';
+    public const FIELD_IS_MULTIPLE_SHIPMENT_ENABLED = 'isMultipleShipmentEnabled';
 
     public const OPTION_ADDRESS_CHOICES = 'address_choices';
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
     public const OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES = 'can_deliver_to_multiple_shipping_addresses';
-    public const OPTION_IS_MULTI_SHIPMENT_ENABLED = 'is_multi_shipment_enabled';
+    public const OPTION_IS_MULTIPLE_SHIPMENT_ENABLED = 'is_multi_shipment_enabled';
     public const OPTION_IS_CUSTOMER_LOGGED_IN = 'is_customer_logged_in';
 
     public const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
@@ -83,7 +85,7 @@ class CheckoutAddressCollectionForm extends AbstractType
         $resolver->setDefined(static::OPTION_ADDRESS_CHOICES)
             ->setRequired(static::OPTION_COUNTRY_CHOICES)
             ->setRequired(static::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES)
-            ->setRequired(static::OPTION_IS_MULTI_SHIPMENT_ENABLED)
+            ->setRequired(static::OPTION_IS_MULTIPLE_SHIPMENT_ENABLED)
             ->setRequired(static::OPTION_IS_CUSTOMER_LOGGED_IN);
     }
 
@@ -99,7 +101,8 @@ class CheckoutAddressCollectionForm extends AbstractType
             ->addShippingAddressSubForm($builder, $options)
             ->addItemShippingAddressSubForm($builder, $options)
             ->addSameAsShippingCheckboxField($builder)
-            ->addBillingAddressSubForm($builder, $options);
+            ->addBillingAddressSubForm($builder, $options)
+            ->addIsMultipleShipmentEnabledField($builder, $options);
     }
 
     /**
@@ -311,11 +314,27 @@ class CheckoutAddressCollectionForm extends AbstractType
                 CheckoutMultiShippingAddressesForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
             ],
         ];
-        if (!$options[static::OPTION_IS_MULTI_SHIPMENT_ENABLED]) {
+        if (!$options[static::OPTION_IS_MULTIPLE_SHIPMENT_ENABLED]) {
             $fieldOptions['data'] = new ArrayObject();
         }
 
         $builder->add(static::FIELD_MULTI_SHIPPING_ADDRESSES, CollectionType::class, $fieldOptions);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addIsMultipleShipmentEnabledField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_IS_MULTIPLE_SHIPMENT_ENABLED, HiddenType::class, [
+            'mapped' => false,
+            'data' => $options[static::OPTION_IS_MULTIPLE_SHIPMENT_ENABLED],
+        ]);
 
         return $this;
     }

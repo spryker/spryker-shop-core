@@ -70,7 +70,7 @@ class CheckoutAddressForm extends AddressForm
             ->addCityField($builder, $options)
             ->addIso2CodeField($builder, $options)
             ->addPhoneField($builder)
-            ->addIdCompanyUnitAddressTextField($builder, $options)
+            ->addIdCompanyUnitAddressTextField($builder)
             ->addIsAddressSavingSkippedField($builder, $options);
     }
 

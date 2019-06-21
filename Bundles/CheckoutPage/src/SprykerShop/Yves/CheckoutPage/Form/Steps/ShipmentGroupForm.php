@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\CheckoutPage\Form\Steps;
 
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -22,7 +21,6 @@ class ShipmentGroupForm extends AbstractType
 {
     public const BLOCK_PREFIX = 'shipmentGroupForm';
     public const FIELD_SHIPMENT = 'shipment';
-    public const FIELD_HASH = 'hash';
     public const OPTION_SHIPMENT_GROUP_TRANSFER = 'shipmentGroupTransfer';
     public const OPTION_SHIPMENT_LABEL = 'shipmentLabel';
 
@@ -54,7 +52,6 @@ class ShipmentGroupForm extends AbstractType
 
         $this
             ->addShipmentSubForm($builder, $options)
-            ->addShipmentGroupHashField($builder)
             ->addFormSubmitEventListener($builder);
     }
 
@@ -75,18 +72,6 @@ class ShipmentGroupForm extends AbstractType
             'label' => $shippingAddressLabel,
             MultiShipmentForm::OPTION_SHIPMENT_METHODS => $availableShipmentMethods,
         ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addShipmentGroupHashField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_HASH, HiddenType::class, ['required' => true]);
 
         return $this;
     }
