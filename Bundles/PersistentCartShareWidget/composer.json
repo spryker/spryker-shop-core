@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker-shop/shop-application": "^1.0.0",
-    "spryker-shop/shop-ui": "^1.24.0",
+    "spryker-shop/shop-ui": "^1.25.0",
     "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/persistent-cart-share": "^1.0.0"
