@@ -42,7 +42,7 @@
             {% set hasCompanyUnitAddresses = data.form.shippingAddress.id_company_unit_address is defined %}
             {% set hasShippingAddressesAndApplicable = embed.isCompanyBusinessUnitShippingAddressApplicable ? true : hasShippingAddresses %}
 
-            <div class="grid col col--sm-12 js-form-handler__shippingAddress">
+            <div class="grid col col--sm-12 js-address__form-handler-shippingAddress">
                 {% if hasShippingAddressesAndApplicable %}
                     <div class="form__field col col--sm-6">
                         <ul class="list spacing-y">
@@ -118,7 +118,7 @@
                 }) }}
             </div>
 
-            <div class="grid col col--sm-12 js-form-handler__billingAddress">
+            <div class="grid col col--sm-12 js-address__form-handler-billingAddress">
                 {% embed molecule('form') with {
                     class: 'is-hidden form--extend spacing-top spacing-top--big js-address__billing-same-as-shipping',
                     data: {
@@ -189,8 +189,8 @@
                         {% set existingShippingAddressSelectSelector = embed.forms.shipping.id_customer_address is defined ? '[name="' ~ embed.forms.shipping.id_customer_address.vars.full_name ~ '"]' : '' %}
                         {% set existingBillingAddressSelectSelector = embed.forms.billing.id_customer_address is defined ? '[name="' ~ embed.forms.billing.id_customer_address.vars.full_name ~ '"]' : '' %}
                     {% else %}
-                        {% set existingShippingAddressSelectSelector = '.js-form-select-address__shippingAddress' %}
-                        {% set existingBillingAddressSelectSelector = '.js-form-select-address__billingAddress' %}
+                        {% set existingShippingAddressSelectSelector = '.js-company-business-unit-address__form-select-shippingAddress' %}
+                        {% set existingBillingAddressSelectSelector = '.js-company-business-unit-address__form-select-billingAddress' %}
                     {% endif %}
 
                     {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
