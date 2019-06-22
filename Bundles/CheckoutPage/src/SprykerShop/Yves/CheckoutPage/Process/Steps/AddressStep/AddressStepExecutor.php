@@ -62,17 +62,15 @@ class AddressStepExecutor implements StepExecutorInterface
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer): AbstractTransfer
     {
+        if ($quoteTransfer->getItems()->count() === 0) {
+            return $quoteTransfer;
+        }
+
         $customerTransfer = $this->getCustomerTransfer();
-
-        if ($customerTransfer === null) {
-            return $quoteTransfer;
+        if ($customerTransfer !== null) {
+            $quoteTransfer = $this->hydrateItemLevelShippingAddresses($quoteTransfer, $customerTransfer);
         }
 
-        if ($quoteTransfer->getItems()->count() < 1) {
-            return $quoteTransfer;
-        }
-
-        $quoteTransfer = $this->hydrateItemLevelShippingAddresses($quoteTransfer, $customerTransfer);
         $quoteTransfer = $this->hydrateBillingAddress($quoteTransfer, $customerTransfer);
         $quoteTransfer = $this->setQuoteShippingAddress($quoteTransfer);
 
@@ -85,8 +83,10 @@ class AddressStepExecutor implements StepExecutorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function hydrateItemLevelShippingAddresses(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): QuoteTransfer
-    {
+    protected function hydrateItemLevelShippingAddresses(
+        QuoteTransfer $quoteTransfer,
+        CustomerTransfer $customerTransfer
+    ): QuoteTransfer {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->requireShipment();
             $itemTransfer->getShipment()->requireShippingAddress();
@@ -103,11 +103,11 @@ class AddressStepExecutor implements StepExecutorInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function hydrateBillingAddress(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): QuoteTransfer
+    protected function hydrateBillingAddress(QuoteTransfer $quoteTransfer, ?CustomerTransfer $customerTransfer): QuoteTransfer
     {
         if ($quoteTransfer->getBillingSameAsShipping() === true) {
             $firstItemTransfer = current($quoteTransfer->getItems());
@@ -122,10 +122,11 @@ class AddressStepExecutor implements StepExecutorInterface
             return $quoteTransfer;
         }
 
-        $billingAddressTransfer = $this->expandAddressTransfer($billingAddressTransfer, $customerTransfer);
-        $quoteTransfer->setBillingAddress($billingAddressTransfer);
+        if($customerTransfer !== null) {
+            $billingAddressTransfer = $this->expandAddressTransfer($billingAddressTransfer, $customerTransfer);
+        }
 
-        return $quoteTransfer;
+        return $quoteTransfer->setBillingAddress($billingAddressTransfer);
     }
 
     /**
@@ -134,9 +135,11 @@ class AddressStepExecutor implements StepExecutorInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    protected function getShipmentWithUniqueShippingAddress(ShipmentTransfer $shipmentTransfer, CustomerTransfer $customerTransfer): ShipmentTransfer
-    {
-        $shippingAddressTransfer = $shipmentTransfer->getShippingAddress();
+    protected function getShipmentWithUniqueShippingAddress(
+        ShipmentTransfer $shipmentTransfer,
+        CustomerTransfer $customerTransfer
+    ): ShipmentTransfer {
+        $shippingAddressTransfer = $shipmentTransfer->requireShippingAddress()->getShippingAddress();
         $shippingAddressTransfer = $this->expandAddressTransfer($shippingAddressTransfer, $customerTransfer);
         $addressHash = $this->customerService->getUniqueAddressKey($shippingAddressTransfer);
 
@@ -186,8 +189,10 @@ class AddressStepExecutor implements StepExecutorInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function expandAddressTransfer(AddressTransfer $addressTransfer, CustomerTransfer $customerTransfer): AddressTransfer
-    {
+    protected function expandAddressTransfer(
+        AddressTransfer $addressTransfer,
+        CustomerTransfer $customerTransfer
+    ): AddressTransfer {
         foreach ($this->addressTransferExpanderPlugins as $addressTransferExpanderPlugin) {
             $addressTransfer = $addressTransferExpanderPlugin->expand($addressTransfer, $customerTransfer);
         }
