@@ -238,10 +238,6 @@
         <property name="items" type="Item[]" singular="item" />
     </transfer>
 
-    <transfer name="ShipmentGroupCollection">
-        <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
-    </transfer>
-
     <transfer name="Customer">
         <property name="idCustomer" type="int" />
     </transfer>

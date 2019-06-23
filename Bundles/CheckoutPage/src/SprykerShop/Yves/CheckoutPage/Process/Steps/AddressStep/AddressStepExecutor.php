@@ -136,15 +136,15 @@ class AddressStepExecutor implements StepExecutorInterface
      */
     protected function getShipmentWithUniqueShippingAddress(ShipmentTransfer $shipmentTransfer, CustomerTransfer $customerTransfer): ShipmentTransfer
     {
-        $shippingAddressTransfer = $shipmentTransfer->getShippingAddress();
-        $shippingAddressTransfer = $this->expandAddressTransfer($shippingAddressTransfer, $customerTransfer);
-        $addressHash = $this->customerService->getUniqueAddressKey($shippingAddressTransfer);
+        $addressTransfer = $shipmentTransfer->getShippingAddress();
+        $addressTransfer = $this->expandAddressTransfer($addressTransfer, $customerTransfer);
+        $addressHash = $this->getUniqueAddressKeyWithoutIdCustomerAddress($addressTransfer);
 
         if (isset($this->createdShipmentsWithShippingAddressesList[$addressHash])) {
             return $this->createdShipmentsWithShippingAddressesList[$addressHash];
         }
 
-        $shipmentTransfer->setShippingAddress($shippingAddressTransfer);
+        $shipmentTransfer->setShippingAddress($addressTransfer);
         $this->createdShipmentsWithShippingAddressesList[$addressHash] = $shipmentTransfer;
 
         return $shipmentTransfer;
@@ -193,6 +193,23 @@ class AddressStepExecutor implements StepExecutorInterface
         }
 
         return $addressTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return string
+     */
+    protected function getUniqueAddressKeyWithoutIdCustomerAddress(AddressTransfer $addressTransfer): string
+    {
+        $idCustomerAddress = $addressTransfer->getIdCustomerAddress();
+        $addressTransfer->setIdCustomerAddress(null);
+
+        $addressHash = $this->customerService->getUniqueAddressKey($addressTransfer);
+
+        $addressTransfer->setIdCustomerAddress($idCustomerAddress);
+
+        return $addressHash;
     }
 
     /**
