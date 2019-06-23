@@ -158,12 +158,16 @@ class AddressStepExecutor implements StepExecutorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    protected function copyShippingAddress(AddressTransfer $addressTransfer): AddressTransfer
+    protected function copyShippingAddress(?AddressTransfer $addressTransfer): ?AddressTransfer
     {
+        if ($addressTransfer === null) {
+            return null;
+        }
+
         return (clone $addressTransfer);
     }
 
