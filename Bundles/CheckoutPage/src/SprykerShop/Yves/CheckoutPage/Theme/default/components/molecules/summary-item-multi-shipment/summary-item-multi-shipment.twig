@@ -25,7 +25,7 @@
         {% include [
             molecule('summary-product-packaging-unit-multi-shipment', 'CheckoutPage'),
             molecule('summary-product-packaging-unit-default', 'CheckoutPage')
-        ] ignore missing with {
+        ] with {
             data: {
                 name: data.name,
                 quantity: data.quantity,
