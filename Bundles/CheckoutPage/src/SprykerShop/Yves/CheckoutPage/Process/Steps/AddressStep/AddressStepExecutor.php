@@ -57,21 +57,19 @@ class AddressStepExecutor implements StepExecutorInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer
      */
     public function execute(Request $request, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
+        if ($quoteTransfer->getItems()->count() === 0) {
+            return $quoteTransfer;
+        }
+
         $customerTransfer = $this->getCustomerTransfer();
-
-        if ($customerTransfer === null) {
-            return $quoteTransfer;
+        if ($customerTransfer !== null) {
+            $quoteTransfer = $this->hydrateItemLevelShippingAddresses($quoteTransfer, $customerTransfer);
         }
 
-        if ($quoteTransfer->getItems()->count() < 1) {
-            return $quoteTransfer;
-        }
-
-        $quoteTransfer = $this->hydrateItemLevelShippingAddresses($quoteTransfer, $customerTransfer);
         $quoteTransfer = $this->hydrateBillingAddress($quoteTransfer, $customerTransfer);
         $quoteTransfer = $this->setQuoteShippingAddress($quoteTransfer);
 
@@ -84,8 +82,10 @@ class AddressStepExecutor implements StepExecutorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function hydrateItemLevelShippingAddresses(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): QuoteTransfer
-    {
+    protected function hydrateItemLevelShippingAddresses(
+        QuoteTransfer $quoteTransfer,
+        CustomerTransfer $customerTransfer
+    ): QuoteTransfer {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->requireShipment();
             $itemTransfer->getShipment()->requireShippingAddress();
@@ -102,14 +102,14 @@ class AddressStepExecutor implements StepExecutorInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function hydrateBillingAddress(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): QuoteTransfer
+    protected function hydrateBillingAddress(QuoteTransfer $quoteTransfer, ?CustomerTransfer $customerTransfer): QuoteTransfer
     {
         if ($quoteTransfer->getBillingSameAsShipping() === true) {
-            $firstItemTransfer = $quoteTransfer->getItems()[0];
+            $firstItemTransfer = current($quoteTransfer->getItems());
             $billingAddressTransfer = $this->copyShippingAddress($firstItemTransfer->getShipment()->getShippingAddress());
             $quoteTransfer->setBillingAddress($billingAddressTransfer);
 
@@ -121,10 +121,11 @@ class AddressStepExecutor implements StepExecutorInterface
             return $quoteTransfer;
         }
 
-        $billingAddressTransfer = $this->expandAddressTransfer($billingAddressTransfer, $customerTransfer);
-        $quoteTransfer->setBillingAddress($billingAddressTransfer);
+        if($customerTransfer !== null) {
+            $billingAddressTransfer = $this->expandAddressTransfer($billingAddressTransfer, $customerTransfer);
+        }
 
-        return $quoteTransfer;
+        return $quoteTransfer->setBillingAddress($billingAddressTransfer);
     }
 
     /**
@@ -133,17 +134,19 @@ class AddressStepExecutor implements StepExecutorInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    protected function getShipmentWithUniqueShippingAddress(ShipmentTransfer $shipmentTransfer, CustomerTransfer $customerTransfer): ShipmentTransfer
-    {
-        $shippingAddressTransfer = $shipmentTransfer->getShippingAddress();
-        $shippingAddressTransfer = $this->expandAddressTransfer($shippingAddressTransfer, $customerTransfer);
-        $addressHash = $this->customerService->getUniqueAddressKey($shippingAddressTransfer);
+    protected function getShipmentWithUniqueShippingAddress(
+        ShipmentTransfer $shipmentTransfer,
+        CustomerTransfer $customerTransfer
+    ): ShipmentTransfer {
+        $addressTransfer = $shipmentTransfer->requireShippingAddress()->getShippingAddress();
+        $addressTransfer = $this->expandAddressTransfer($addressTransfer, $customerTransfer);
+        $addressHash = $this->getUniqueAddressKeyWithoutIdCustomerAddress($addressTransfer);
 
         if (isset($this->createdShipmentsWithShippingAddressesList[$addressHash])) {
             return $this->createdShipmentsWithShippingAddressesList[$addressHash];
         }
 
-        $shipmentTransfer->setShippingAddress($shippingAddressTransfer);
+        $shipmentTransfer->setShippingAddress($addressTransfer);
         $this->createdShipmentsWithShippingAddressesList[$addressHash] = $shipmentTransfer;
 
         return $shipmentTransfer;
@@ -185,13 +188,32 @@ class AddressStepExecutor implements StepExecutorInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function expandAddressTransfer(AddressTransfer $addressTransfer, CustomerTransfer $customerTransfer): AddressTransfer
-    {
+    protected function expandAddressTransfer(
+        AddressTransfer $addressTransfer,
+        CustomerTransfer $customerTransfer
+    ): AddressTransfer {
         foreach ($this->addressTransferExpanderPlugins as $addressTransferExpanderPlugin) {
             $addressTransfer = $addressTransferExpanderPlugin->expand($addressTransfer, $customerTransfer);
         }
 
         return $addressTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return string
+     */
+    protected function getUniqueAddressKeyWithoutIdCustomerAddress(AddressTransfer $addressTransfer): string
+    {
+        $idCustomerAddress = $addressTransfer->getIdCustomerAddress();
+        $addressTransfer->setIdCustomerAddress(null);
+
+        $addressHash = $this->customerService->getUniqueAddressKey($addressTransfer);
+
+        $addressTransfer->setIdCustomerAddress($idCustomerAddress);
+
+        return $addressHash;
     }
 
     /**
@@ -207,7 +229,7 @@ class AddressStepExecutor implements StepExecutorInterface
             return $quoteTransfer;
         }
 
-        $firstItemTransfer = $quoteTransfer->getItems()[0];
+        $firstItemTransfer = current($quoteTransfer->getItems());
         $firstItemTransfer->requireShipment();
 
         return $quoteTransfer->setShippingAddress($firstItemTransfer->getShipment()->getShippingAddress());

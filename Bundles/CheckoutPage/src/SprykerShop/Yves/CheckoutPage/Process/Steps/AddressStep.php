@@ -76,8 +76,6 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function preCondition(AbstractTransfer $quoteTransfer)
     {
-        $quoteTransfer->setIsMultipleShipmentEnabled($this->checkoutPageConfig->isMultiShipmentEnabled());
-
         return parent::preCondition($quoteTransfer);
     }
 

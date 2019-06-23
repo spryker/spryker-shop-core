@@ -14,7 +14,7 @@
     {% set isCompanyBusinessUnitShippingAddressApplicable = companyBusinessUnitShippingAddressWidget and companyBusinessUnitShippingAddressWidget.isApplicable %}
 
     {% for item in data.items %}
-        <div class="grid grid--middle js-form-handler__item-shipping-{{ loop.index }}">
+        <div class="grid grid--middle {{ config.jsName }}__item-shipping-{{ loop.index }}">
             {% set hasShippingAddresses = item.shippingAddress.id_customer_address is defined %}
             {% set hasCompanyUnitAddresses = item.shippingAddress.id_company_unit_address is defined %}
             {% set hasShippingAddressesAndApplicable = isCompanyBusinessUnitShippingAddressApplicable ? true : hasShippingAddresses %}
@@ -55,11 +55,11 @@
                                 {% set index0 = embed.index - 1 %}
                                 {% include molecule('company-business-unit-address-handler', 'CompanyWidget') ignore missing with {
                                     attributes: {
-                                        'form-selector': '.js-form-handler__item-shipping-' ~ embed.index,
+                                        'form-selector': '.' ~ embed.jsName ~ '__item-shipping-' ~ embed.index,
                                         'data-selector': '.' ~ embed.jsName ~ '__trigger--' ~ embed.index,
-                                        'default-address-selector': '.js-form-default-address__item-shipping-' ~ embed.index,
-                                        'address-hidden-input-selector': 'addressesForm[items][' ~ index0 ~ '][shippingAddress][id_customer_address]',
-                                        'company-address-hidden-input-selector': 'addressesForm[items][' ~ index0 ~ '][shippingAddress][id_company_unit_address]',
+                                        'default-address-selector': '.' ~ embed.jsName ~ '__default-address-item-shipping-' ~ embed.index,
+                                        'address-hidden-input-selector': 'addressesForm[multiShippingAddresses][' ~ index0 ~ '][shippingAddress][id_customer_address]',
+                                        'company-address-hidden-input-selector': 'addressesForm[multiShippingAddresses][' ~ index0 ~ '][shippingAddress][id_company_unit_address]',
                                         'addresses': data.addresses,
                                     },
                                 } only %}
@@ -67,9 +67,9 @@
 
                             {% block hiddenFields %}
                                 {% set index0 = embed.index - 1 %}
-                                <input type="hidden" name="addressesForm[items][{{ index0 }}][shippingAddress][id_customer_address]">
-                                <input type="hidden" name="addressesForm[items][{{ index0 }}][shippingAddress][id_company_unit_address]">
-                                <input type="hidden" class="js-form-default-address__item-shipping-{{ embed.index }}" value="{{ defaultAddressKey }}">
+                                <input type="hidden" name="addressesForm[multiShippingAddresses][{{ index0 }}][shippingAddress][id_customer_address]">
+                                <input type="hidden" name="addressesForm[multiShippingAddresses][{{ index0 }}][shippingAddress][id_company_unit_address]">
+                                <input type="hidden" class="{{ embed.jsName }}__default-address-item-shipping-{{ embed.index }}" value="{{ defaultAddressKey }}">
                             {% endblock %}
                         {% endwidget %}
 
@@ -126,12 +126,13 @@
 
     {% include molecule('is-next-checkout-step-enabled', 'CheckoutPage') with {
         attributes: {
-            'trigger-selector': isCompanyBusinessUnitShippingAddressApplicable ? '.js-form-select-address__shippingAddress' : '[name="addressesForm[shippingAddress][id_customer_address]"]',
-            'target-selector': '.js-validate-next-checkout-step',
+            'trigger-selector': isCompanyBusinessUnitShippingAddressApplicable ? '.js-company-business-unit-address__form-select-shippingAddress' : '[name="addressesForm[shippingAddress][id_customer_address]"]',
+            'target-selector': '.' ~ config.jsName ~ '__validate-next-checkout-step',
         },
     } only %}
 
     {% include molecule('validate-next-checkout-step', 'CheckoutPage') with {
+        class: config.jsName ~ '__validate-next-checkout-step',
         attributes: {
             'form-selector': '.' ~ config.jsName ~ '__item-shipping',
             'target-selector': '.js-address__form-submit',

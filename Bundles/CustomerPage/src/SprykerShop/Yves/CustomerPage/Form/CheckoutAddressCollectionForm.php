@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerPage\Form;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -14,6 +15,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -31,15 +33,14 @@ class CheckoutAddressCollectionForm extends AbstractType
     public const FIELD_SHIPPING_ADDRESS = 'shippingAddress';
     public const FIELD_BILLING_ADDRESS = 'billingAddress';
     public const FIELD_BILLING_SAME_AS_SHIPPING = 'billingSameAsShipping';
-    /**
-     * @deprecated Use Address level field instead.
-     */
-    public const FIELD_IS_ADDRESS_SAVING_SKIPPED = 'isAddressSavingSkipped';
     public const FIELD_MULTI_SHIPPING_ADDRESSES = 'multiShippingAddresses';
+    public const FIELD_IS_MULTIPLE_SHIPMENT_ENABLED = 'isMultipleShipmentEnabled';
 
     public const OPTION_ADDRESS_CHOICES = 'address_choices';
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
-    public const OPTION_IS_MULTI_SHIPMENT_ENABLED = 'is_multi_shipment_enabled';
+    public const OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES = 'can_deliver_to_multiple_shipping_addresses';
+    public const OPTION_IS_MULTIPLE_SHIPMENT_ENABLED = 'is_multi_shipment_enabled';
+    public const OPTION_IS_CUSTOMER_LOGGED_IN = 'is_customer_logged_in';
 
     public const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
     public const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
@@ -81,9 +82,11 @@ class CheckoutAddressCollectionForm extends AbstractType
             static::OPTION_ADDRESS_CHOICES => [],
         ]);
 
-        $resolver->setDefined(static::OPTION_ADDRESS_CHOICES);
-        $resolver->setRequired(static::OPTION_COUNTRY_CHOICES);
-        $resolver->setRequired(static::OPTION_IS_MULTI_SHIPMENT_ENABLED);
+        $resolver->setDefined(static::OPTION_ADDRESS_CHOICES)
+            ->setRequired(static::OPTION_COUNTRY_CHOICES)
+            ->setRequired(static::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES)
+            ->setRequired(static::OPTION_IS_MULTIPLE_SHIPMENT_ENABLED)
+            ->setRequired(static::OPTION_IS_CUSTOMER_LOGGED_IN);
     }
 
     /**
@@ -97,8 +100,9 @@ class CheckoutAddressCollectionForm extends AbstractType
         $this
             ->addShippingAddressSubForm($builder, $options)
             ->addItemShippingAddressSubForm($builder, $options)
-            ->addSameAsShipmentCheckbox($builder)
-            ->addBillingAddressSubForm($builder, $options);
+            ->addSameAsShippingCheckboxField($builder)
+            ->addBillingAddressSubForm($builder, $options)
+            ->addIsMultipleShipmentEnabledField($builder, $options);
     }
 
     /**
@@ -114,52 +118,47 @@ class CheckoutAddressCollectionForm extends AbstractType
             'required' => true,
             'mapped' => false,
             'validation_groups' => function (FormInterface $form) {
-                if ($this->isIdCustomerAddressFieldEmpty($form) && $this->isIdCompanyUnitAddressFieldEmpty($form)) {
-                    return [static::GROUP_SHIPPING_ADDRESS];
+                if ($this->isIdCustomerAddressFieldNotEmpty($form)
+                    || $this->isIdCompanyUnitAddressFieldNotEmpty($form)) {
+                    return false;
                 }
 
-                return false;
+                return [static::GROUP_SHIPPING_ADDRESS];
             },
             CheckoutAddressForm::OPTION_VALIDATION_GROUP => static::GROUP_SHIPPING_ADDRESS,
             CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $this->getShippingAddressChoices($options),
             CheckoutAddressForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
+            CheckoutAddressForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
         ];
 
         $builder->add(static::FIELD_SHIPPING_ADDRESS, CheckoutAddressForm::class, $options);
 
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
-            $quoteTransfer = $event->getData();
-            if (!($quoteTransfer instanceof QuoteTransfer)) {
-                return;
-            }
-
-            $this->hydrateShippingAddressSubFormDataFromItemLevelShippingAddresses($quoteTransfer, $event->getForm());
+            $this->hydrateShippingAddressSubFormDataFromItemLevelShippingAddresses($event);
         });
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-            $quoteTransfer = $event->getData();
-            if (!($quoteTransfer instanceof QuoteTransfer)) {
-                return;
-            }
-
-            $quoteTransfer = $this->mapSubmittedShippingAddressSubFormDataToItemLevelShippingAddresses($quoteTransfer, $event->getForm());
-            $event->setData($quoteTransfer);
+            $this->mapSubmittedShippingAddressSubFormDataToItemLevelShippingAddresses($event);
         });
 
         return $this;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Symfony\Component\Form\FormEvent $event
      *
      * @return void
      */
-    protected function hydrateShippingAddressSubFormDataFromItemLevelShippingAddresses(
-        QuoteTransfer $quoteTransfer,
-        FormInterface $form
-    ): void {
-        if ($this->getSubmittedValueDeliverToMultipleAddresses($form)) {
+    protected function hydrateShippingAddressSubFormDataFromItemLevelShippingAddresses(FormEvent $event): void
+    {
+        $quoteTransfer = $event->getData();
+        if (!($quoteTransfer instanceof QuoteTransfer)) {
+            return;
+        }
+
+        $form = $event->getForm();
+        $shippingAddressFrom = $form->get(static::FIELD_SHIPPING_ADDRESS);
+        if ($this->isDeliverToMultipleAddressesEnabled($shippingAddressFrom)) {
             return;
         }
 
@@ -174,25 +173,28 @@ class CheckoutAddressCollectionForm extends AbstractType
             return;
         }
 
-        $itemTransfer = $quoteTransfer->getItems()[0];
-        $form->get(static::FIELD_SHIPPING_ADDRESS)->setData($itemTransfer->getShipment()->getShippingAddress());
+        $shippingAddressFrom->setData(clone $itemTransfer->getShipment()->getShippingAddress());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Symfony\Component\Form\FormEvent $event
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Symfony\Component\Form\FormEvent
      */
-    protected function mapSubmittedShippingAddressSubFormDataToItemLevelShippingAddresses(
-        QuoteTransfer $quoteTransfer,
-        FormInterface $form
-    ): QuoteTransfer {
-        if ($this->getSubmittedValueDeliverToMultipleAddresses($form)) {
-            return $quoteTransfer;
+    protected function mapSubmittedShippingAddressSubFormDataToItemLevelShippingAddresses(FormEvent $event): FormEvent
+    {
+        $quoteTransfer = $event->getData();
+        if (!($quoteTransfer instanceof QuoteTransfer)) {
+            return $event;
         }
 
-        $shippingAddressTransfer = $form->get(static::FIELD_SHIPPING_ADDRESS)->getData();
+        $form = $event->getForm();
+        $shippingAddressFrom = $form->get(static::FIELD_SHIPPING_ADDRESS);
+        if ($this->isDeliverToMultipleAddressesEnabled($shippingAddressFrom)) {
+            return $event;
+        }
+
+        $shippingAddressTransfer = $shippingAddressFrom->getData();
         $shipmentTransfer = (new ShipmentTransfer())
             ->setShippingAddress($shippingAddressTransfer);
 
@@ -200,7 +202,9 @@ class CheckoutAddressCollectionForm extends AbstractType
             $itemTransfer->setShipment($shipmentTransfer);
         }
 
-        return $quoteTransfer;
+        $event->setData($quoteTransfer);
+
+        return $event;
     }
 
     /**
@@ -208,13 +212,13 @@ class CheckoutAddressCollectionForm extends AbstractType
      *
      * @return bool
      */
-    protected function getSubmittedValueDeliverToMultipleAddresses(FormInterface $form): bool
+    protected function isDeliverToMultipleAddressesEnabled(FormInterface $form): bool
     {
-        if (!$form->get(static::FIELD_SHIPPING_ADDRESS)->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)) {
+        if (!$form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)) {
             return false;
         }
 
-        $idCustomerAddress = (int)$form->get(static::FIELD_SHIPPING_ADDRESS)->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
+        $idCustomerAddress = $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getViewData();
 
         return $idCustomerAddress === CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES;
     }
@@ -224,7 +228,7 @@ class CheckoutAddressCollectionForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSameAsShipmentCheckbox(FormBuilderInterface $builder)
+    protected function addSameAsShippingCheckboxField(FormBuilderInterface $builder)
     {
         $builder->add(
             static::FIELD_BILLING_SAME_AS_SHIPPING,
@@ -243,28 +247,16 @@ class CheckoutAddressCollectionForm extends AbstractType
                         return false;
                     }
 
-                    return $this->isDeliverToMultipleAddressesEnabled($shippingAddressForm);
+                    if (!$this->isDeliverToMultipleAddressesEnabled($shippingAddressForm)) {
+                        return false;
+                    }
+
+                    return [static::GROUP_BILLING_SAME_AS_SHIPPING];
                 },
             ]
         );
 
         return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
-     * @return bool
-     */
-    protected function isDeliverToMultipleAddressesEnabled(FormInterface $form): bool
-    {
-        if ($form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS) !== true) {
-            return false;
-        }
-
-        $idCustomerAddress = $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
-
-        return $idCustomerAddress == CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES;
     }
 
     /**
@@ -282,16 +274,18 @@ class CheckoutAddressCollectionForm extends AbstractType
                     return false;
                 }
 
-                if ($this->isIdCustomerAddressAbsentOrEmpty($form) && $this->isIdCompanyUnitAddressFieldAbsentOrEmpty($form)) {
-                    return [static::GROUP_BILLING_ADDRESS];
+                if ($this->isIdCustomerAddressExistAndNotEmpty($form)
+                    || $this->isIdCompanyUnitAddressFieldExistAndNotEmpty($form)) {
+                    return false;
                 }
 
-                return false;
+                return [static::GROUP_BILLING_ADDRESS];
             },
             'required' => true,
             CheckoutAddressForm::OPTION_VALIDATION_GROUP => static::GROUP_BILLING_ADDRESS,
             CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
             CheckoutAddressForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
+            CheckoutAddressForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
         ];
 
         $builder->add(static::FIELD_BILLING_ADDRESS, CheckoutAddressForm::class, $options);
@@ -307,20 +301,39 @@ class CheckoutAddressCollectionForm extends AbstractType
      */
     protected function addItemShippingAddressSubForm(FormBuilderInterface $builder, array $options)
     {
-        if (!$options[static::OPTION_IS_MULTI_SHIPMENT_ENABLED]) {
-            return $this;
-        }
-
-        $builder->add(static::FIELD_MULTI_SHIPPING_ADDRESSES, CollectionType::class, [
+        $fieldOptions = [
             'label' => false,
             'property_path' => static::PROPERTY_PATH_MULTI_SHIPPING_ADDRESSES,
             'entry_type' => CheckoutMultiShippingAddressesForm::class,
             'entry_options' => [
                 'data_class' => ItemTransfer::class,
                 'label' => false,
+                CheckoutMultiShippingAddressesForm::OPTION_VALIDATION_GROUP => static::GROUP_SHIPPING_ADDRESS,
                 CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
                 CheckoutMultiShippingAddressesForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
+                CheckoutMultiShippingAddressesForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
             ],
+        ];
+        if (!$options[static::OPTION_IS_MULTIPLE_SHIPMENT_ENABLED]) {
+            $fieldOptions['data'] = new ArrayObject();
+        }
+
+        $builder->add(static::FIELD_MULTI_SHIPPING_ADDRESSES, CollectionType::class, $fieldOptions);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addIsMultipleShipmentEnabledField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_IS_MULTIPLE_SHIPMENT_ENABLED, HiddenType::class, [
+            'mapped' => false,
+            'data' => $options[static::OPTION_IS_MULTIPLE_SHIPMENT_ENABLED],
         ]);
 
         return $this;
@@ -333,7 +346,7 @@ class CheckoutAddressCollectionForm extends AbstractType
      */
     protected function getShippingAddressChoices(array $options): array
     {
-        if (!$options[static::OPTION_IS_MULTI_SHIPMENT_ENABLED]) {
+        if (!$options[static::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES]) {
             return $options[static::OPTION_ADDRESS_CHOICES];
         }
 
@@ -359,32 +372,10 @@ class CheckoutAddressCollectionForm extends AbstractType
      *
      * @return bool
      */
-    protected function isIdCustomerAddressFieldEmpty(FormInterface $form): bool
-    {
-        return $form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
-            && !$form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
-     * @return bool
-     */
-    protected function isIdCompanyUnitAddressFieldEmpty(FormInterface $form): bool
-    {
-        return $form->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)
-            && !$form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData();
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
-     * @return bool
-     */
-    protected function isIdCustomerAddressAbsentOrEmpty(FormInterface $form): bool
+    protected function isIdCustomerAddressFieldNotEmpty(FormInterface $form): bool
     {
         return !$form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
-            || !$form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData();
+            || $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() !== CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS;
     }
 
     /**
@@ -392,9 +383,31 @@ class CheckoutAddressCollectionForm extends AbstractType
      *
      * @return bool
      */
-    protected function isIdCompanyUnitAddressFieldAbsentOrEmpty(FormInterface $form): bool
+    protected function isIdCompanyUnitAddressFieldNotEmpty(FormInterface $form): bool
     {
         return !$form->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)
-            || !$form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData();
+            || $form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData();
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool
+     */
+    protected function isIdCustomerAddressExistAndNotEmpty(FormInterface $form): bool
+    {
+        return $form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
+            && $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() !== CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool
+     */
+    protected function isIdCompanyUnitAddressFieldExistAndNotEmpty(FormInterface $form): bool
+    {
+        return $form->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)
+            && $form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData();
     }
 }

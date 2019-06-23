@@ -1,9 +1,9 @@
-$shop-ui-icon-size: 1rem;
-$shop-ui-icon-size-small: 0.75rem;
-$shop-ui-icon-size-smaller: 0.5rem;
-$shop-ui-icon-size-big: 1.5rem;
-$shop-ui-icon-size-bigger: 2rem;
-$shop-ui-icon-size-biggest: 3rem;
+$shop-ui-icon-size: map-get($setting-icon-sizes, 'icon-size-default');
+$shop-ui-icon-size-smaller: map-get($setting-icon-sizes, 'icon-size-smaller');
+$shop-ui-icon-size-small: map-get($setting-icon-sizes, 'icon-size-small');
+$shop-ui-icon-size-big: map-get($setting-icon-sizes, 'icon-size-big');
+$shop-ui-icon-size-bigger: map-get($setting-icon-sizes, 'icon-size-bigger');
+$shop-ui-icon-size-biggest: map-get($setting-icon-sizes, 'icon-size-biggest');
 
 @mixin shop-ui-icon($name: '.icon') {
     #{$name} {

@@ -29,7 +29,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
@@ -60,7 +60,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
      *
      * @return bool
      */
-    protected function hasItemsWithEmptyShippingAddresses(AbstractTransfer $quoteTransfer): bool
+    protected function hasItemsWithEmptyShippingAddresses(QuoteTransfer $quoteTransfer): bool
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() === null
@@ -78,7 +78,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
      *
      * @return bool
      */
-    protected function hasMultipleShippingAddresses(AbstractTransfer $quoteTransfer): bool
+    protected function hasMultipleShippingAddresses(QuoteTransfer $quoteTransfer): bool
     {
         if ($quoteTransfer->getItems()->count() === 1) {
             return false;
