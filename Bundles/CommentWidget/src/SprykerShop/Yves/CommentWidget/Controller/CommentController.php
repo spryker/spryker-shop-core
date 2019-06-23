@@ -18,6 +18,18 @@ use Symfony\Component\HttpFoundation\Request;
 class CommentController extends CommentWidgetAbstractController
 {
     /**
+     * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::COMMENT_MESSAGE_MIN_LENGTH
+     */
+    protected const COMMENT_MESSAGE_MIN_LENGTH = 1;
+
+    /**
+     * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::COMMENT_MESSAGE_MAX_LENGTH
+     */
+    protected const COMMENT_MESSAGE_MAX_LENGTH = 5000;
+
+    protected const GLOSSARY_KEY_COMMENT_INVALID_MESSAGE_LENGTH = 'comment.validation.error.invalid_message_length';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -62,6 +74,12 @@ class CommentController extends CommentWidgetAbstractController
     {
         $commentTransfer = $this->createCommentTransferFromRequest($request);
 
+        if (!$this->checkCommentMessageLength($commentTransfer)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_COMMENT_INVALID_MESSAGE_LENGTH);
+
+            return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
+        }
+
         $commentRequestTransfer = (new CommentRequestTransfer())
             ->fromArray($request->request->all(), true)
             ->setComment($commentTransfer);
@@ -84,6 +102,12 @@ class CommentController extends CommentWidgetAbstractController
     protected function executeUpdateAction(Request $request): RedirectResponse
     {
         $commentTransfer = $this->createCommentTransferFromRequest($request);
+
+        if (!$this->checkCommentMessageLength($commentTransfer)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_COMMENT_INVALID_MESSAGE_LENGTH);
+
+            return $this->redirectResponseExternal($request->request->get(static::PARAMETER_RETURN_URL));
+        }
 
         $commentThreadResponseTransfer = $this->getFactory()
             ->getCommentClient()
@@ -130,5 +154,17 @@ class CommentController extends CommentWidgetAbstractController
             ->setCustomer($customerTransfer);
 
         return $commentTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     *
+     * @return bool
+     */
+    protected function checkCommentMessageLength(CommentTransfer $commentTransfer): bool
+    {
+        $messageLength = mb_strlen($commentTransfer->getMessage());
+
+        return $messageLength >= static::COMMENT_MESSAGE_MIN_LENGTH && $messageLength <= static::COMMENT_MESSAGE_MAX_LENGTH;
     }
 }

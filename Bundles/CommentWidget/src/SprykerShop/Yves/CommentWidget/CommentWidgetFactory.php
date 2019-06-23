@@ -29,6 +29,14 @@ class CommentWidgetFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\CommentWidget\CommentWidgetConfig
+     */
+    public function getModuleConfig(): CommentWidgetConfig
+    {
+        return $this->getConfig();
+    }
+
+    /**
      * @return \SprykerShop\Yves\CommentWidget\Dependency\Client\CommentWidgetToCommentClientInterface
      */
     public function getCommentClient(): CommentWidgetToCommentClientInterface

@@ -19,6 +19,8 @@ class CommentTagController extends CommentWidgetAbstractController
 {
     protected const PARAMETER_NAME = 'name';
 
+    protected const GLOSSARY_KEY_COMMENT_TAG_NOT_AVAILABLE = 'comment.validation.error.comment_tag_not_available';
+
     /**
      * @param string $uuid
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -57,6 +59,12 @@ class CommentTagController extends CommentWidgetAbstractController
             ->setComment((new CommentTransfer())->setUuid($uuid))
             ->setName($request->query->get(static::PARAMETER_NAME));
 
+        if (!$this->isCommentTagAvailable($commentTagRequestTransfer)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_COMMENT_TAG_NOT_AVAILABLE);
+
+            return $this->redirectResponseExternal($request->query->get(static::PARAMETER_RETURN_URL));
+        }
+
         $commentThreadResponseTransfer = $this->getFactory()
             ->getCommentClient()
             ->addCommentTag($commentTagRequestTransfer);
@@ -79,6 +87,12 @@ class CommentTagController extends CommentWidgetAbstractController
             ->setComment((new CommentTransfer())->setUuid($uuid))
             ->setName($request->query->get(static::PARAMETER_NAME));
 
+        if (!$this->isCommentTagAvailable($commentTagRequestTransfer)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_COMMENT_TAG_NOT_AVAILABLE);
+
+            return $this->redirectResponseExternal($request->query->get(static::PARAMETER_RETURN_URL));
+        }
+
         $commentThreadResponseTransfer = $this->getFactory()
             ->getCommentClient()
             ->removeCommentTag($commentTagRequestTransfer);
@@ -87,5 +101,15 @@ class CommentTagController extends CommentWidgetAbstractController
         $this->handleResponseErrors($commentThreadResponseTransfer);
 
         return $this->redirectResponseExternal($request->query->get(static::PARAMETER_RETURN_URL));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isCommentTagAvailable(CommentTagRequestTransfer $commentTagRequestTransfer): bool
+    {
+        return in_array($commentTagRequestTransfer->getName(), $this->getFactory()->getModuleConfig()->getCommentAvailableTags(), true);
     }
 }

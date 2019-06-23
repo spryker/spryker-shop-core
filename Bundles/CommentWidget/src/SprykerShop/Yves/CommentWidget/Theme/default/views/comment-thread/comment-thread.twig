@@ -13,63 +13,65 @@
     <h6>{{ 'comment_widget.comments_to_cart' | trans }}</h6>
     <hr>
     <div>
-        {% for comment in data.taggedComments['all'] %}
+        {% if data.taggedComments['all'] is defined %}
+            {% for comment in data.taggedComments['all'] %}
 
-            <p>{{ comment.customer.firstName }} {{ comment.customer.lastName }}</p>
-            <p class="text-secondary">
-                {{ comment.createdAt | formatDateTime }}
-                {% if comment.isUpdated %}
-                    ({{ 'comment_widget.form.edited' | trans }})
-                {% endif %}
-            </p>
-
-            <form method="GET" action="{{ path('comment/tag/add', {'uuid': comment.uuid }) }}">
-                {% embed atom('select') with {
-                    attributes: {
-                        name: 'name',
-                        onchange: 'this.form.submit();',
-                    },
-                    embed: {
-                        commentAvailableTags: data.commentAvailableTags,
-                        tagNames: comment.tagNames,
-                    },
-                } only %}
-                    {% block options %}
-                        <option value="">{{ 'comment_widget.form.tags' | trans }}</option>
-
-                        {% for availableTag in embed.commentAvailableTags %}
-                            {% if availableTag not in embed.tagNames %}
-                                <option value="{{ availableTag }}">{{ availableTag }}</option>
-                            {% endif %}
-                        {% endfor %}
-                    {% endblock %}
-                {% endembed %}
-
-                <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
-            </form>
-            {% if comment.customer.idCustomer == data.customer.idCustomer %}
-                <form method="POST" action="{{ path('comment/update') }}">
-                    <textarea name="message" required="required" class="textarea textarea--expand">{{ comment.message }}</textarea>
-                    <input type="hidden" name="uuid" value="{{ comment.uuid }}">
-                    <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
-                    <button type="submit" class="button button--primary">{{ 'comment_widget.form.update_comment' | trans }}</button>
-                </form>
-                <form method="POST" action="{{ path('comment/remove') }}">
-                    <input type="hidden" name="uuid" value="{{ comment.uuid }}">
-                    <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
-                    <button type="submit" class="button button--success float-right">
-                        {{ 'comment_widget.form.remove_comment' | trans }}
-                    </button>
-                </form>
-            {% else %}
-                <p>{{ comment.message }}</p>
-            {% endif %}
-            {% for tagName in comment.tagNames %}
-                <p>
-                    <a href="{{ path('comment/tag/remove', {'uuid': comment.uuid, 'name': tagName, 'returnUrl': data.returnUrl }) }}">{{ tagName }}</a>
+                <p>{{ comment.customer.firstName }} {{ comment.customer.lastName }}</p>
+                <p class="text-secondary">
+                    {{ comment.createdAt | formatDateTime }}
+                    {% if comment.isUpdated %}
+                        ({{ 'comment_widget.form.edited' | trans }})
+                    {% endif %}
                 </p>
+
+                <form method="GET" action="{{ path('comment/tag/add', {'uuid': comment.uuid }) }}">
+                    {% embed atom('select') with {
+                        attributes: {
+                            name: 'name',
+                            onchange: 'this.form.submit();',
+                        },
+                        embed: {
+                            commentAvailableTags: data.commentAvailableTags,
+                            tagNames: comment.tagNames,
+                        },
+                    } only %}
+                        {% block options %}
+                            <option value="">{{ 'comment_widget.form.tags' | trans }}</option>
+
+                            {% for availableTag in embed.commentAvailableTags %}
+                                {% if availableTag not in embed.tagNames %}
+                                    <option value="{{ availableTag }}">{{ availableTag }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        {% endblock %}
+                    {% endembed %}
+
+                    <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
+                </form>
+                {% if comment.customer.idCustomer == data.customer.idCustomer %}
+                    <form method="POST" action="{{ path('comment/update') }}">
+                        <textarea name="message" required="required" class="textarea textarea--expand">{{ comment.message }}</textarea>
+                        <input type="hidden" name="uuid" value="{{ comment.uuid }}">
+                        <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
+                        <button type="submit" class="button button--primary">{{ 'comment_widget.form.update_comment' | trans }}</button>
+                    </form>
+                    <form method="POST" action="{{ path('comment/remove') }}">
+                        <input type="hidden" name="uuid" value="{{ comment.uuid }}">
+                        <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
+                        <button type="submit" class="button button--success float-right">
+                            {{ 'comment_widget.form.remove_comment' | trans }}
+                        </button>
+                    </form>
+                {% else %}
+                    <p>{{ comment.message }}</p>
+                {% endif %}
+                {% for tagName in comment.tagNames %}
+                    <p>
+                        <a href="{{ path('comment/tag/remove', {'uuid': comment.uuid, 'name': tagName, 'returnUrl': data.returnUrl }) }}">{{ tagName }}</a>
+                    </p>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
+        {% endif %}
     </div>
     <div class="spacing-top spacing-top--inner">
         <form method="POST" action="{{ path('comment/add') }}">
