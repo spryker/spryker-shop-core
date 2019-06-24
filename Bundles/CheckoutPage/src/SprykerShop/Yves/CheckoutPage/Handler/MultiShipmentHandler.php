@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Handler;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
@@ -63,11 +64,11 @@ class MultiShipmentHandler extends ShipmentHandler
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
      *
-     * @return iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    protected function updateShipmentGroupItemsShipment(iterable $shipmentGroupCollection): iterable
+    protected function updateShipmentGroupItemsShipment(ArrayObject $shipmentGroupCollection): ArrayObject
     {
         foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
             $shipmentTransfer = $shipmentGroupTransfer->getShipment();
@@ -81,15 +82,15 @@ class MultiShipmentHandler extends ShipmentHandler
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function updateQuoteItemsWithShipmentGroupsItems(
         QuoteTransfer $quoteTransfer,
-        iterable $shipmentGroupCollection
+        ArrayObject $shipmentGroupCollection
     ): QuoteTransfer {
-        $quoteItemsCollection = new iterable();
+        $quoteItemsCollection = new ArrayObject();
 
         foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
             foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
@@ -124,13 +125,13 @@ class MultiShipmentHandler extends ShipmentHandler
 
     /**
      * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
-     * @param iterable|\Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer $availableShipmentMethodsGroupedByShipment
+     * @param \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer $availableShipmentMethodsGroupedByShipment
      *
      * @return iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
     protected function setShipmentMethodsToShipmentGroups(
         iterable $shipmentGroupCollection,
-        iterable $availableShipmentMethodsGroupedByShipment
+        ShipmentMethodsCollectionTransfer $availableShipmentMethodsGroupedByShipment
     ): iterable {
         foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
             $availableShipmentMethodsTransfer = $this->findAvailableShipmentMethodsByShipmentGroup(
@@ -167,13 +168,13 @@ class MultiShipmentHandler extends ShipmentHandler
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer $availableShipmentMethodsGroupedByShipment
+     * @param \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer $availableShipmentMethodsGroupedByShipment
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer|null
      */
     protected function findAvailableShipmentMethodsByShipmentGroup(
-        iterable $availableShipmentMethodsGroupedByShipment,
+        ShipmentMethodsCollectionTransfer $availableShipmentMethodsGroupedByShipment,
         ShipmentGroupTransfer $shipmentGroupTransfer
     ): ShipmentMethodsTransfer {
         $shipmentHashKey = $shipmentGroupTransfer->requireHash()->getHash();
