@@ -113,22 +113,50 @@ class AddressStepExecutor implements StepExecutorInterface
         QuoteTransfer $quoteTransfer,
         ?CustomerTransfer $customerTransfer
     ): QuoteTransfer {
-        if ($quoteTransfer->getBillingSameAsShipping() === true) {
-            if ($this->hasQuoteDataItemLevelShippingAddresses($quoteTransfer)) {
-                $firstItemTransfer = current($quoteTransfer->getItems());
-                $shippingAddressTransfer = $firstItemTransfer->getShipment()->getShippingAddress();
-            } else {
-                /**
-                 * @deprecated Exists for Backward Compatibility reasons only.
-                 */
-                $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
-            }
-            $billingAddressTransfer = $this->copyShippingAddress($shippingAddressTransfer);
-            $quoteTransfer->setBillingAddress($billingAddressTransfer);
-
-            return $quoteTransfer;
+        if ($quoteTransfer->getBillingSameAsShipping()) {
+            return $quoteTransfer = $this->hydrateBillingAddressSameAsShipping($quoteTransfer, $customerTransfer);
         }
 
+        return $quoteTransfer = $this->hydrateBillingAddressSameAsShipping($quoteTransfer, $customerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function hydrateBillingAddressSameAsShipping(
+        QuoteTransfer $quoteTransfer,
+        ?CustomerTransfer $customerTransfer
+    ): QuoteTransfer {
+        if ($this->hasQuoteDataItemLevelShippingAddresses($quoteTransfer)) {
+            $firstItemTransfer = current($quoteTransfer->getItems());
+            $shippingAddressTransfer = $firstItemTransfer->getShipment()->getShippingAddress();
+        } else {
+            /**
+             * @deprecated Exists for Backward Compatibility reasons only.
+             */
+            $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
+            $shippingAddressTransfer = $this->expandAddressTransfer($shippingAddressTransfer, $customerTransfer);
+        }
+
+        $billingAddressTransfer = $this->copyShippingAddress($shippingAddressTransfer);
+        $quoteTransfer->setBillingAddress($billingAddressTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function hydrateBillingAddressWithQuoteLevelData(
+        QuoteTransfer $quoteTransfer,
+        ?CustomerTransfer $customerTransfer
+    ): QuoteTransfer {
         $billingAddressTransfer = $quoteTransfer->getBillingAddress();
         if ($billingAddressTransfer === null) {
             return $quoteTransfer;
