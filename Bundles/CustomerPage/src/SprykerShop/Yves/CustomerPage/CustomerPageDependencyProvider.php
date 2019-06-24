@@ -406,15 +406,15 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addShipmentService(Container $container): Container
     {
-        $container[static::SERVICE_SHIPMENT] = function (Container $container) {
+        $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
             return $container->getLocator()->shipment()->service();
-        };
+        });
 
         return $container;
     }

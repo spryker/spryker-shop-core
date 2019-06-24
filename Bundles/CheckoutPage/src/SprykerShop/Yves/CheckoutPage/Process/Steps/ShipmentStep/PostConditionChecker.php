@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
@@ -33,11 +32,11 @@ class PostConditionChecker implements PostConditionCheckerInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function check(AbstractTransfer $quoteTransfer): bool
+    public function check(QuoteTransfer $quoteTransfer): bool
     {
         if ($this->hasOnlyGiftCardItems($quoteTransfer)) {
             return true;

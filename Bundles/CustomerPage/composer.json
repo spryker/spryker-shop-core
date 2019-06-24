@@ -27,7 +27,6 @@
     "spryker-shop/cart-note-widget": "*",
     "spryker-shop/customer-reorder-widget": "*",
     "spryker-shop/home-page": "*",
-    "spryker-shop/product-packaging-unit-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/container": "*",

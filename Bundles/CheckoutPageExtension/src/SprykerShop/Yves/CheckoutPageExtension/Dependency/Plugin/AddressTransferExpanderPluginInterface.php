@@ -19,9 +19,9 @@ interface AddressTransferExpanderPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function expand(AddressTransfer $addressTransfer, CustomerTransfer $customerTransfer): AddressTransfer;
+    public function expand(AddressTransfer $addressTransfer, ?CustomerTransfer $customerTransfer): AddressTransfer;
 }

@@ -16,6 +16,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
+ */
 class CheckoutAddressForm extends AddressForm
 {
     public const FIELD_ID_COMPANY_UNIT_ADDRESS = 'id_company_unit_address';
