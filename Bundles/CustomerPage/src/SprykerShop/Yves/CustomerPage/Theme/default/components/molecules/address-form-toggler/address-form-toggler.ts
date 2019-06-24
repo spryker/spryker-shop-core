@@ -11,7 +11,7 @@ export default class AddressFormToggler extends Component {
      */
     form: HTMLFormElement;
     protected subForm: HTMLFormElement;
-    protected formBillingAddress: HTMLElement;
+    protected containerBillingAddress: HTMLElement;
     protected billingSameAsShipping: HTMLElement;
     protected billingSameAsShippingToggler: HTMLInputElement;
 
@@ -19,7 +19,7 @@ export default class AddressFormToggler extends Component {
         if (this.triggerSelector) {
             this.toggler = <HTMLSelectElement>document.querySelector(this.triggerSelector);
             this.form = <HTMLFormElement>document.querySelector(this.targetSelector);
-            this.formBillingAddress = <HTMLElement>document.querySelector(this.formBillingAddressSelector);
+            this.containerBillingAddress = <HTMLElement>document.querySelector(this.containerBillingAddressSelector);
             this.billingSameAsShipping = <HTMLElement>document.querySelector(this.billingSameAsShippingSelector);
             this.billingSameAsShippingToggler = <HTMLInputElement>document.querySelector(
                 this.billingSameAsShippingTogglerSelector
@@ -35,7 +35,7 @@ export default class AddressFormToggler extends Component {
     }
 
     protected mapEvents(): void {
-        this.toggler.addEventListener('change', () => this.onTogglerChange());
+        this.toggler.addEventListener('change', () => this.onTogglerChange());  
     }
 
     protected onTogglerChange(): void {
@@ -53,7 +53,7 @@ export default class AddressFormToggler extends Component {
 
         if (this.subForm) {
             this.subForm.classList.remove(this.classToToggle);
-            this.formBillingAddress.classList.remove(this.classToToggle);
+            this.containerBillingAddress.classList.remove(this.classToToggle);
             this.billingSameAsShipping.classList.add(this.classToToggle);
             this.billingSameAsShippingToggler.checked = false;
         }
@@ -92,8 +92,8 @@ export default class AddressFormToggler extends Component {
     /**
      * Gets a querySelector of the billing address form element.
      */
-    get formBillingAddressSelector(): string {
-        return this.getAttribute('form-billing-address-selector');
+    get containerBillingAddressSelector(): string {
+        return this.getAttribute('container-billing-address-selector');
     }
 
     /**

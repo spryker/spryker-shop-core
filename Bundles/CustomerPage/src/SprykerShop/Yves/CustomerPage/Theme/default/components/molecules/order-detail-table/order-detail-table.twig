@@ -2,18 +2,19 @@
 
 {% define config = {
     name: 'order-detail-table',
-    tag: 'div'
 } %}
 
+{# @deprecated property 'items' is deprecated: use 'shipmentGroups' instead #}
 {% define data = {
+    items: [],
     currencyIsoCode: required,
-    shipmentGroups: required,
+    shipmentGroups: data.items | default([]),
     order: required,
 } %}
 
 {% block body %}
     {% for shipmentGroup in data.shipmentGroups %}
-        <h4>{{ 'customer.order.shipment' | trans }} n°{{ loop.index }}</h4>
+        <h4>{{ 'customer.order.shipment' | trans }} n&#176;{{ loop.index }}</h4>
 
         <div class="box grid grid--justify spacing-bottom spacing-bottom--big">
             <div class="col col--sm-12 col--lg-6">

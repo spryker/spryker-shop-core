@@ -1,80 +1,33 @@
-/* tslint:disable:max-file-line-count */
+/* tslint:disable */
 import Component from 'ShopUi/models/component';
 
+const EVENT_ADD_NEW_ADDRESS = 'add-new-address';
+
 export default class SaveNewAddress extends Component {
-    /**
-     * The select/input address element which triggers toggling of the shipping address form.
-     */
     customerShippingAddresses: HTMLFormElement;
-    protected companyShippingAddresses: HTMLFormElement;
-    /**
-     * The select/input address element which triggers toggling of the billing address form.
-     */
     customerBillingAddresses: HTMLFormElement;
-    protected companyBillingAddresses: HTMLFormElement;
-    /**
-     * The input checkbox element which shows/hides if specified address need to be save/unsave.
-     */
     saveNewAddressToggler: HTMLInputElement;
-    /**
-     * The input checkbox element which toggle billing address form.
-     */
     sameAsShippingToggler: HTMLInputElement;
-    /**
-     * The select business unit address element which toggling the shipping addresses.
-     */
-    businessUnitShippingAddressToggler: HTMLSelectElement;
-    /**
-     * Checks if the shipping adress is selected.
-     */
+    addNewShippingAddress: HTMLButtonElement;
+    addNewBillingAddress: HTMLButtonElement;
+
     newShippingAddressChecked: boolean = false;
-    /**
-     * Checks if the billing adress is selected.
-     */
     newBillingAddressChecked: boolean = false;
-    /**
-     * Html class for hides element.
-     */
     readonly hideClass: string = 'is-hidden';
 
     protected readyCallback(): void {
-        if (this.shippingAddressTogglerSelector) {
-            this.customerShippingAddresses = <HTMLFormElement>document.querySelector(
-                this.shippingAddressTogglerSelector
-            );
-        }
-
-        if (this.shippingCompanyAddressTogglerSelector) {
-            this.companyShippingAddresses = <HTMLFormElement>document.querySelector(
-                this.shippingCompanyAddressTogglerSelector
-            );
-        }
-
-        if (this.billingAddressTogglerSelector) {
+        if (this.shippingAddressTogglerSelector && this.billingAddressTogglerSelector) {
+            this.customerShippingAddresses = <HTMLFormElement>document.querySelector(this.shippingAddressTogglerSelector);
             this.customerBillingAddresses = <HTMLFormElement>document.querySelector(this.billingAddressTogglerSelector);
         }
 
-        if (this.billingCompanyAddressTogglerSelector) {
-            this.companyBillingAddresses = <HTMLFormElement>document.querySelector(
-                this.billingCompanyAddressTogglerSelector
-            );
+        if (this.addNewShippingAddressSelector && this.addNewBillingAddressSelector) {
+            this.addNewShippingAddress = <HTMLButtonElement>document.querySelector(this.addNewShippingAddressSelector);
+            this.addNewBillingAddress = <HTMLButtonElement>document.querySelector(this.addNewBillingAddressSelector);
         }
 
-        if (this.billingSameAsShippingAddressTogglerSelector) {
-            this.sameAsShippingToggler = <HTMLInputElement>document.querySelector(
-                this.billingSameAsShippingAddressTogglerSelector
-            );
-        }
-
-        if (this.businessUnitShippingAddressTogglerSelector) {
-            this.businessUnitShippingAddressToggler = <HTMLSelectElement>document.querySelector(
-                this.businessUnitShippingAddressTogglerSelector
-            );
-        }
-
-        if (this.saveAddressTogglerSelector) {
-            this.saveNewAddressToggler = <HTMLInputElement>document.querySelector(this.saveAddressTogglerSelector);
-        }
+        this.saveNewAddressToggler = <HTMLInputElement>document.querySelector(this.saveAddressTogglerSelector);
+        this.sameAsShippingToggler = <HTMLInputElement>document.querySelector(this.billingSameAsShippingAddressTogglerSelector);
 
         this.customerAddressesExists();
     }
@@ -82,7 +35,6 @@ export default class SaveNewAddress extends Component {
     protected customerAddressesExists(): void {
         if (!this.customerShippingAddresses) {
             this.showSaveNewAddress();
-
             return;
         }
 
@@ -91,200 +43,84 @@ export default class SaveNewAddress extends Component {
     }
 
     protected mapEvents(): void {
-        if (this.customerShippingAddresses) {
-            this.customerShippingAddresses.addEventListener('change', () => this.shippingTogglerOnChange());
+        if (this.addNewShippingAddress && this.addNewBillingAddress) {
+            this.addNewShippingAddress.addEventListener(EVENT_ADD_NEW_ADDRESS, () => this.shippingTogglerOnChange());
+            this.addNewBillingAddress.addEventListener(EVENT_ADD_NEW_ADDRESS, () => this.billingTogglerOnChange());
         }
 
-        if (this.companyShippingAddresses) {
-            this.companyShippingAddresses.addEventListener('change', () => this.shippingTogglerOnChange());
-        }
-
-        if (this.customerBillingAddresses) {
-            this.customerBillingAddresses.addEventListener('change', () => this.billingTogglerOnChange());
-        }
-
-        if (this.companyBillingAddresses) {
-            this.companyBillingAddresses.addEventListener('change', () => this.billingTogglerOnChange());
-        }
-
-        if (this.sameAsShippingToggler) {
-            this.sameAsShippingToggler.addEventListener('change', () => this.toggleSaveNewAddress());
-        }
-
-        if (this.businessUnitShippingAddressToggler) {
-            this.businessUnitShippingAddressToggler.addEventListener('change', () => {
-                this.splitDeliveryTogglerOnChange();
-            });
-        }
-    }
-
-    protected splitDeliveryTogglerOnChange(): void {
-        const selectedValue = this.businessUnitShippingAddressToggler.value;
-
-        if (selectedValue === this.optionValueDeliverToMultipleAddresses) {
-            this.newShippingAddressChecked = !selectedValue;
-            this.toggleSaveNewAddress();
-
-            return;
-        }
-
-        this.saveNewShippingAddressChecked();
-        this.toggleSaveNewAddress();
-    }
-
-    protected initSplitDeliveryToggler(): void {
-        const isDeliverToMultipleAddresses =
-            this.customerShippingAddresses.value === this.optionValueDeliverToMultipleAddresses;
-
-        if (!this.customerBillingAddresses && isDeliverToMultipleAddresses) {
-            this.newBillingAddressChecked = true;
-        }
+        this.customerShippingAddresses.addEventListener('change', () => this.shippingTogglerOnChange());
+        this.customerBillingAddresses.addEventListener('change', () => this.billingTogglerOnChange());
+        this.sameAsShippingToggler.addEventListener('change', () => this.toggleSaveNewAddress());
     }
 
     protected shippingTogglerOnChange(): void {
-        if (this.customerShippingAddresses) {
-            this.initSplitDeliveryToggler();
-        }
-
-        this.saveNewShippingAddressChecked();
+        this.newShippingAddressChecked = this.addressTogglerChange(this.customerShippingAddresses);
         this.toggleSaveNewAddress();
     }
 
     protected billingTogglerOnChange(): void {
-        this.saveNewBillingAddressChecked();
+        this.newBillingAddressChecked = this.addressTogglerChange(this.customerBillingAddresses);
         this.toggleSaveNewAddress();
     }
 
     protected initSaveNewAddressState(): void {
-        if (this.customerBillingAddresses) {
-            this.saveNewBillingAddressChecked();
-        }
-        if (this.customerShippingAddresses) {
-            this.initSplitDeliveryToggler();
-        }
-        if (this.businessUnitShippingAddressToggler) {
-            this.splitDeliveryTogglerOnChange();
-        }
-
-        this.saveNewShippingAddressChecked();
+        this.newShippingAddressChecked = this.isSaveNewAddressOptionSelected(this.customerShippingAddresses);
+        this.newBillingAddressChecked = this.isSaveNewAddressOptionSelected(this.customerBillingAddresses);
         this.toggleSaveNewAddress();
     }
 
-    protected saveNewBillingAddressChecked(): void {
-        this.newBillingAddressChecked = this.isSaveNewAddressOptionSelected(
-            this.companyBillingAddresses && this.companyBillingAddresses.value ?
-                this.companyBillingAddresses :
-                this.customerBillingAddresses
-        );
-    }
-
-    protected saveNewShippingAddressChecked(): void {
-        this.newShippingAddressChecked = this.isSaveNewAddressOptionSelected(
-            this.companyShippingAddresses && this.companyShippingAddresses.value ?
-                this.companyShippingAddresses :
-                this.customerShippingAddresses
-        );
+    protected addressTogglerChange(toggler): boolean {
+        return this.isSaveNewAddressOptionSelected(toggler);
     }
 
     protected isSaveNewAddressOptionSelected(toggler: HTMLFormElement): boolean {
-        if (toggler) {
-            return !toggler.value;
-        }
+        return !toggler.value;
     }
 
-    /**
-     * Toggles 'save new address' checkbox.
-     */
     toggleSaveNewAddress(): void {
         if (this.newShippingAddressChecked || (this.newBillingAddressChecked && !this.sameAsShippingChecked)) {
             this.showSaveNewAddress();
-
             return;
         }
 
         this.hideSaveNewAddress();
     }
 
-    /**
-     * Hides 'save new address' checkbox.
-     */
     hideSaveNewAddress(): void {
         this.classList.add(this.hideClass);
         this.saveNewAddressToggler.disabled = true;
     }
 
-    /**
-     * Shows 'save new address' checkbox.
-     */
     showSaveNewAddress(): void {
         this.classList.remove(this.hideClass);
-        if (this.saveNewAddressToggler) {
-            this.saveNewAddressToggler.disabled = false;
-        }
+        this.saveNewAddressToggler.disabled = false;
     }
 
-    /**
-     * Checks if 'billing same as shipping' checkbox is checked.
-     */
     get sameAsShippingChecked(): boolean {
-        if (this.sameAsShippingToggler) {
-            return this.sameAsShippingToggler.checked;
-        }
+        return this.sameAsShippingToggler.checked;
     }
 
-    /**
-     * Gets a querySelector of the shipping customer address toggler element.
-     */
     get shippingAddressTogglerSelector(): string {
         return this.getAttribute('shipping-address-toggler-selector');
     }
 
-    /**
-     * Gets a querySelector of the shipping company address toggler element.
-     */
-    get shippingCompanyAddressTogglerSelector(): string {
-        return this.getAttribute('shipping-company-address-toggler-selector');
-    }
-
-    /**
-     * Gets a querySelector of the billing customer address toggler element.
-     */
     get billingAddressTogglerSelector(): string {
         return this.getAttribute('billing-address-toggler-selector');
     }
 
-    /**
-     * Gets a querySelector of the billing company address toggler element.
-     */
-    get billingCompanyAddressTogglerSelector(): string {
-        return this.getAttribute('billing-company-address-toggler-selector');
+    get addNewShippingAddressSelector(): string {
+        return this.getAttribute('add-new-shipping-address-selector');
     }
 
-    /**
-     * Gets a querySelector of the 'billing same as shipping' checkbox element.
-     */
+    get addNewBillingAddressSelector(): string {
+        return this.getAttribute('add-new-billing-address-selector');
+    }
+
     get billingSameAsShippingAddressTogglerSelector(): string {
         return this.getAttribute('billing-same-as-shipping-toggler-selector');
     }
 
-    /**
-     * Gets a querySelector of the trigger checkbox element.
-     */
     get saveAddressTogglerSelector(): string {
         return this.getAttribute('save-address-toggler-selector');
-    }
-
-    /**
-     * Gets a querySelector of the business unit shipping address toggler element.
-     */
-    get businessUnitShippingAddressTogglerSelector(): string {
-        return this.getAttribute('business-unit-shipping-address-toggler-selector');
-    }
-
-    /**
-     * Gets if the split delivery form is defined.
-     */
-    get optionValueDeliverToMultipleAddresses(): string {
-        return this.getAttribute('toggle-option-value');
     }
 }

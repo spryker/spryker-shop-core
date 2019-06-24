@@ -7,6 +7,7 @@
 {% define data = {
     form: required,
     shippingForm: required,
+    jsAddressClass: '',
 } %}
 
 {% block body %}
@@ -29,6 +30,7 @@
         embed: {
             jsName: config.jsName,
             shippingForm: data.shippingForm,
+            jsAddressClass: data.jsAddressClass,
         },
     } only %}
         {% block fields %}
@@ -37,6 +39,7 @@
                     data: {
                         items: data.form,
                         shippingForm: embed.shippingForm,
+                        jsAddressClass: embed.jsAddressClass,
                     },
                 } only %}
             </div>

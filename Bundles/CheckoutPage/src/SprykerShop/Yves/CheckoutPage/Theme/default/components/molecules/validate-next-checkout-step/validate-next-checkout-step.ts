@@ -1,19 +1,14 @@
 import Component from 'ShopUi/models/component';
 
 export default class ValidateNextCheckoutStep extends Component {
-    protected forms: HTMLElement[];
+    protected containers: HTMLElement[];
     protected triggers: HTMLFormElement[];
     protected target: HTMLButtonElement;
     protected dropdownTriggers: HTMLSelectElement[];
     protected readonly requiredFormFieldSelectors: string = 'select[required], input[required]';
 
-    protected readyCallback(): void {}
-
-    /**
-     * Default callback, which is called when all web components are ready for use.
-     */
-    mountCallback(): void {
-        this.forms = <HTMLElement[]>Array.from(document.querySelectorAll(this.formSelector));
+    protected readyCallback(): void {
+        this.containers = <HTMLElement[]>Array.from(document.querySelectorAll(this.containerSelector));
         this.target = <HTMLButtonElement>document.querySelector(this.targetSelector);
         if (this.dropdownTriggerSelector) {
             this.dropdownTriggers = <HTMLSelectElement[]>Array.from(document.querySelectorAll(
@@ -55,11 +50,11 @@ export default class ValidateNextCheckoutStep extends Component {
     protected fillFormFieldsCollection(): void {
         this.triggers = [];
 
-        if (!this.forms) {
+        if (!this.containers) {
             return;
         }
 
-        this.triggers = <HTMLFormElement[]>this.forms.reduce((collection: HTMLElement[], element: HTMLElement) => {
+        this.triggers = <HTMLFormElement[]>this.containers.reduce((collection: HTMLElement[], element: HTMLElement) => {
             if (!element.classList.contains(this.classToToggle)) {
                 collection.push(...<HTMLFormElement[]>Array.from(element.querySelectorAll(
                     this.requiredFormFieldSelectors
@@ -120,8 +115,8 @@ export default class ValidateNextCheckoutStep extends Component {
     /**
      * Gets a querySelector name of the form element.
      */
-    get formSelector(): string {
-        return this.getAttribute('form-selector');
+    get containerSelector(): string {
+        return this.getAttribute('container-selector');
     }
 
     /**

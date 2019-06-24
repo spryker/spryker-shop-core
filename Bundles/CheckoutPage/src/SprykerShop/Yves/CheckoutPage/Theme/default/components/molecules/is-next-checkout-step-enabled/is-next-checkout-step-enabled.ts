@@ -5,12 +5,7 @@ export default class IsNextCheckoutStepEnabled extends Component {
     protected trigger: HTMLSelectElement;
     protected target: ValidateNextCheckoutStep;
 
-    protected readyCallback(): void {}
-
-    /**
-     * Default callback, which is called when all web components are ready for use.
-     */
-    mountCallback(): void {
+    protected readyCallback(): void {
         if (this.triggerSelector) {
             this.trigger = <HTMLSelectElement>document.querySelector(this.triggerSelector);
         }

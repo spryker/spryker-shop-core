@@ -10,7 +10,6 @@
     expenses: [],
     voucherDiscounts: [],
     cartRuleDiscounts: [],
-    cartQuantity: cartQuantity is defined ? cartQuantity : app['cart.quantity'] | default,
     shipmentGroups: required,
 
     prices: {
@@ -22,14 +21,21 @@
     },
 } %}
 
-{% block body %}
-    {% block overview %}
+{% macro itemDiscounts(discounts, title) %}
+    {% if discounts | length %}
         <li>
-            <span class="float-right">{{ data.cartQuantity }} {{ 'checkout.step.summary.items' | trans }}</span>
-            <h6>{{ 'checkout.step.summary.overview' | trans }}</h6>
+            <strong>{{ title | trans }}</strong>
+            {% for discount in discounts %}
+                <div class="grid grid--justify">
+                    <span class="col col--sm-10">{{ discount.displayName }}</span>
+                    <span class="col col--expand text-right">- {{ discount.amount | money }}</span>
+                </div>
+            {% endfor %}
         </li>
-    {% endblock %}
+    {% endif %}
+{% endmacro %}
 
+{% block body %}
     {% if can('SeePricePermissionPlugin') %}
         <li>
             <strong class="float-right">{{ data.prices.subTotal | money }}</strong>
@@ -43,30 +49,8 @@
         {% endblock %}
 
         {% if data.prices.discountTotal %}
-            {% if data.voucherDiscounts | length %}
-                <li>
-                    <strong>{{ 'cart.vouchers' | trans }}</strong>
-                    {% for voucherDiscount in data.voucherDiscounts %}
-                        <div class="grid grid--justify">
-                            <span class="col col--sm-10">{{ voucherDiscount.displayName }}</span>
-                            <span class="col col--expand text-right">- {{ voucherDiscount.amount | money }}</span>
-                        </div>
-                    {% endfor %}
-                </li>
-            {% endif %}
-
-            {% if data.cartRuleDiscounts | length %}
-                <li>
-                    <strong>{{ 'cart.discounts' | trans }}</strong>
-                    {% for ruleDiscount in data.cartRuleDiscounts %}
-                        <div class="grid grid--justify">
-                            <span class="col col--sm-10">{{ ruleDiscount.displayName }}</span>
-                            <span class="col col--expand text-right">- {{ ruleDiscount.amount | money }}</span>
-                        </div>
-                    {% endfor %}
-                </li>
-            {% endif %}
-
+            {{ _self.itemDiscounts(data.voucherDiscounts, 'cart.vouchers') }}
+            {{ _self.itemDiscounts(data.cartRuleDiscounts, 'cart.discounts') }}
             {{ block('separator') }}
         {% endif %}
 
@@ -108,7 +92,7 @@
         {{ block('separator') }}
 
         <li>
-            <h6 class="float-right"><strong>{{ data.prices.grandTotal | money }}</strong></h6>
+            <strong class="{{ config.name }}__grand-total-price float-right">{{ data.prices.grandTotal | money }}</strong>
             <h6><strong>{{ 'checkout.step.summary.grand_total' | trans }}</strong></h6>
         </li>
     {% else %}

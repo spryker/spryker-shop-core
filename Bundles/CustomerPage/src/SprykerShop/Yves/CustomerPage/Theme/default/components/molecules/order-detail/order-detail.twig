@@ -4,8 +4,10 @@
     name: 'order-detail',
 } %}
 
+{# @deprecated property 'orderItems' is deprecated: use 'shipmentGroups' instead #}
 {% define data = {
-    shipmentGroups: required,
+    orderItems: [],
+    shipmentGroups: data.orderItems | default([]),
     order: required,
 } %}
 
@@ -46,7 +48,7 @@
                         },
                     } only %}
                 </div>
-                <div class="ol col--sm-12 col--lg-5 spacing-left spacing-left--inner">
+                <div class="col col--sm-12 col--lg-5 spacing-left spacing-left--inner">
                     <strong>{{ 'customer.order.billing_address' | trans }}</strong>
                     {% include molecule('display-address') with {
                         data: {

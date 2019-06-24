@@ -29,12 +29,17 @@
         {% set amountPerQuantity = data.amount / data.quantity %}
 
         <strong class="float-right">{{ can('SeePricePermissionPlugin') ? data.price : 'customer.access.cannot_see_price' | trans }}</strong>
-        <div>{{data.quantity}} <span class="text-secondary">&times;</span> {{data.name}} {% if salesUnitSummary %}(={{ salesUnitSummary }}){% endif %}</div>
-        <div>{{ 'packaging_units.cart.quantity' | trans }}: {{data.quantity}}</div>
+        <div>{{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }} {% if salesUnitSummary %}(={{ salesUnitSummary }}){% endif %}</div>
+        <div>{{ 'packaging_units.cart.quantity' | trans }}: {{ data.quantity }}</div>
 
-        {% if data.amountSalesUnit is defined and data.amountSalesUnit is not empty %}
+        {% if data.amountSalesUnit is not empty %}
             {% set amountSalesUnitName = data.amountSalesUnit.productMeasurementUnit.name | default('') %}
-            <div><span class="text-secondary">&times;</span> {{ amountPerQuantity }} {{ 'packaging_units.cart.item' | trans }} (= {{ amountPerQuantity / data.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.amount }} {{ 'packaging_units.cart.item' | trans }}</div>
+            <div>
+                <span class="text-secondary">&times;</span>
+                {{ amountPerQuantity }} {{ 'packaging_units.cart.item' | trans }}
+                (= {{ amountPerQuantity / data.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }})
+                = {{ data.amount }} {{ 'packaging_units.cart.item' | trans }}
+            </div>
         {% endif %}
     </div>
 {% endblock %}

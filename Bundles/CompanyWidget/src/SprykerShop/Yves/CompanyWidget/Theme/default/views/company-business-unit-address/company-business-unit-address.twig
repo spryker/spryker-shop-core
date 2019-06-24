@@ -9,6 +9,7 @@
     isMultipleShipmentEnabled: false,
     itemShippingTriggerJsClass: null,
     items: null,
+    jsAddressClass: '',
 } %}
 
 {% block body %}
@@ -61,10 +62,11 @@
             itemShippingTriggerJsClass: data.itemShippingTriggerJsClass,
             items: data.items,
             shippingAddress: shippingAddress,
+            jsAddressClass: data.jsAddressClass,
         },
     } only %}
         {% block selectClass -%}
-            js-company-business-unit-address__form-select-{{ embed.formType }}
+            {{ embed.jsAddressClass }}__form-select-{{ embed.formType }}
             {{ embed.itemShippingTriggerJsClass ? embed.itemShippingTriggerJsClass }}
         {%- endblock %}
         {% block option %}
@@ -115,14 +117,14 @@
     {% block addressHandler %}
         {% include molecule('company-business-unit-address-handler', 'CompanyWidget') with {
             attributes: {
-                'form-selector': '.js-address__form-handler-' ~ data.formType,
-                'data-selector': '.js-company-business-unit-address__form-select-' ~ data.formType,
-                'shipping-address-toggler-selector': '.js-company-business-unit-address__form-select-' ~ shippingAddress,
-                'default-address-selector': '.js-company-business-unit-address__default-address-' ~ data.formType,
-                'address-hidden-input-selector': 'addressesForm[' ~ data.formType ~ '][id_customer_address]',
-                'company-address-hidden-input-selector': 'addressesForm[' ~ data.formType ~ '][id_company_unit_address]',
-                'shipping-address-hidden-input-selector': 'addressesForm[' ~ shippingAddress ~ '][id_customer_address]',
-                'shipping-company-address-hidden-input-selector': 'addressesForm[' ~ shippingAddress ~ '][id_company_unit_address]',
+                'form-selector': '.' ~ data.jsAddressClass ~ '__form-handler-' ~ data.formType,
+                'data-selector': '.' ~ data.jsAddressClass ~ '__form-select-' ~ data.formType,
+                'shipping-address-toggler-selector': '.' ~ data.jsAddressClass ~ '__form-select-' ~ shippingAddress,
+                'default-address-selector': '.' ~ data.jsAddressClass ~ '__default-address-' ~ data.formType,
+                'address-hidden-input-selector': '[name="addressesForm[' ~ data.formType ~ '][id_customer_address]"]',
+                'company-address-hidden-input-selector': '[name="addressesForm[' ~ data.formType ~ '][id_company_unit_address]"]',
+                'shipping-address-hidden-input-selector': '[name="addressesForm[' ~ shippingAddress ~ '][id_customer_address]"]',
+                'shipping-company-address-hidden-input-selector': '[name="addressesForm[' ~ shippingAddress ~ '][id_company_unit_address]"]',
                 'addresses': data.addresses,
                 'toggle-option-value': optionValueDeliverToMultipleAddresses,
             },
@@ -132,6 +134,6 @@
     {% block hiddenFields %}
         <input type="hidden" name="addressesForm[{{ data.formType }}][id_customer_address]">
         <input type="hidden" name="addressesForm[{{ data.formType }}][id_company_unit_address]">
-        <input type="hidden" class="js-company-business-unit-address__default-address-{{ data.formType }}" value="{{ defaultAddressKey }}">
+        <input type="hidden" class="{{ data.jsAddressClass }}__default-address-{{ data.formType }}" value="{{ defaultAddressKey }}">
     {% endblock %}
 {% endblock %}
