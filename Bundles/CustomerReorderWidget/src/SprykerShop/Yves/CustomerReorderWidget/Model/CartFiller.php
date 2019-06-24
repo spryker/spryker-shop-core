@@ -146,7 +146,7 @@ class CartFiller implements CartFillerInterface
 
         $cartChangeTransfer = new CartChangeTransfer();
         $cartChangeTransfer->setQuote($this->cartClient->getQuote());
-        $orderItemsObject = $this->createOrderItemsObject($orderItems);
+        $orderItemsObject = $this->sanitizeOrderItems($orderItems);
         $cartChangeTransfer->setItems($orderItemsObject);
 
         $this->cartClient->addValidItems($cartChangeTransfer, [static::PARAM_ORDER_REFERENCE => $orderTransfer->getOrderReference()]);
@@ -155,16 +155,16 @@ class CartFiller implements CartFillerInterface
     /**
      * @param array $orderItems
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]|ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function createOrderItemsObject(array $orderItems): ArrayObject
+    protected function sanitizeOrderItems(array $orderItems): ArrayObject
     {
-        $orderItemsObject = new ArrayObject();
+        $orderItemsSanitized = new ArrayObject();
         foreach ($orderItems as $itemTransfer) {
-            $orderItemsObject->append($this->removeIdSalesShipmentFromItem($itemTransfer));
+            $orderItemsSanitized->append($this->removeIdSalesShipmentFromItem($itemTransfer));
         }
 
-        return $orderItemsObject;
+        return $orderItemsSanitized;
     }
 
     /**

@@ -8,6 +8,7 @@
 {% define data = {
     orderItems: [],
     shipmentGroups: data.orderItems | default([]),
+    orderShipmentExpenses: data.orderShipmentExpenses | default([]),
     order: required,
 } %}
 
@@ -31,6 +32,7 @@
             {% include molecule('order-detail-table', 'CustomerPage') with {
                 data: {
                     shipmentGroups: data.shipmentGroups,
+                    orderShipmentExpenses: data.orderShipmentExpenses,
                     currencyIsoCode: data.order.currencyIsoCode,
                     order: data.order,
                 },

@@ -7,10 +7,12 @@
 
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -153,9 +155,62 @@ class OrderController extends AbstractCustomerController
             ->getShipmentService()
             ->groupItemsByShipment($orderTransfer->getItems());
 
+        $orderShipmentExpenses = $this->prepareOrderShipmentExpenses($orderTransfer, $shipmentGroupCollection);
+
         return [
             'order' => $orderTransfer,
             'shipmentGroups' => $shipmentGroupCollection,
+            'orderShipmentExpenses' => $orderShipmentExpenses,
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     *
+     * @return iterable|\Generated\Shared\Transfer\ExpenseTransfer[]
+     */
+    protected function prepareOrderShipmentExpenses(
+        OrderTransfer $orderTransfer,
+        iterable $shipmentGroupCollection
+    ): iterable {
+        $orderShipmentExpenses = [];
+        foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
+            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE
+                || $expenseTransfer->getShipment() === null) {
+                continue;
+            }
+
+            $shipmentHashKey = $this->findShipmentHashKeyByShipmentExpense($shipmentGroupCollection, $expenseTransfer);
+            if ($shipmentHashKey === null) {
+                $orderShipmentExpenses[] = $expenseTransfer;
+                continue;
+            }
+
+            $orderShipmentExpenses[$shipmentHashKey] = $expenseTransfer;
+        }
+
+        return $orderShipmentExpenses;
+    }
+
+    /**
+     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return string|null
+     */
+    protected function findShipmentHashKeyByShipmentExpense(
+        iterable $shipmentGroupCollection,
+        ExpenseTransfer $expenseTransfer
+    ): ?string {
+        foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
+            if ($expenseTransfer->getShipment()->getIdSalesShipment() !== $shipmentGroupTransfer->getShipment()->getIdSalesShipment()) {
+                continue;
+            }
+
+            return $shipmentGroupTransfer->getHash();
+        }
+
+        return null;
     }
 }

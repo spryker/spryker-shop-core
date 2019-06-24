@@ -9,6 +9,7 @@
     items: [],
     currencyIsoCode: required,
     shipmentGroups: data.items | default([]),
+    orderShipmentExpenses: data.orderShipmentExpenses | default([]),
     order: required,
 } %}
 
@@ -131,27 +132,24 @@
                     </div>
                 </div>
 
-                {% for expense in data.order.expenses %}
-                    {% if expense.type == 'SHIPMENT_EXPENSE_TYPE'
-                        and expense.shipment
-                        and expense.shipment.idSalesShipment == shipmentGroup.shipment.idSalesShipment %}
+                {% if data.orderShipmentExpenses[shipmentGroup.hash] is not empty %}
+                    {% set expense = data.orderShipmentExpenses[shipmentGroup.hash] %}
 
-                        <div class="spacing-bottom spacing-bottom--big">
-                            <h5>{{ 'customer.order.delivery_method' | trans }}</h5>
-                            <div class="spacing-y spacing-y--inner">
-                                {% include molecule('display-delivery-method') with {
-                                    class: 'text-small',
-                                    data: {
-                                        carrierName: expense.shipment.method.carrierName,
-                                        name: expense.name,
-                                        storeCurrencyPrice: expense.sumPrice,
-                                        currencyIsoCode: data.currencyIsoCode,
-                                    },
-                                } only %}
-                            </div>
+                    <div class="spacing-bottom spacing-bottom--big">
+                        <h5>{{ 'customer.order.delivery_method' | trans }}</h5>
+                        <div class="spacing-y spacing-y--inner">
+                            {% include molecule('display-delivery-method') with {
+                                class: 'text-small',
+                                data: {
+                                    carrierName: expense.shipment.method.carrierName,
+                                    name: expense.name,
+                                    storeCurrencyPrice: expense.sumPrice,
+                                    currencyIsoCode: data.currencyIsoCode,
+                                },
+                            } only %}
                         </div>
-                    {% endif %}
-                {% endfor %}
+                    </div>
+                {% endif %}
 
                 {% if shipmentGroup.shipment.requestedDeliveryDate is not empty %}
                     <div class="spacing-bottom spacing-bottom--big">

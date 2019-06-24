@@ -3,8 +3,9 @@
 {# @deprecated property 'orderItems' is deprecated: use 'shipmentGroups' instead #}
 {% define data = {
     order: _view.order,
-    orderItems: _view.items,
+    orderItems: _view.items | default([]),
     shipmentGroups: _view.shipmentGroups,
+    orderShipmentExpenses: _view.orderShipmentExpenses,
 
     title: 'customer.account.order_history' | trans,
     activePage: 'order',
@@ -18,6 +19,7 @@
         data: {
             idSalesOrder: data.order.idSalesOrder,
             shipmentGroups: data.shipmentGroups,
+            orderShipmentExpenses: data.orderShipmentExpenses | default([]),
             order: data.order,
         },
     } only %}
@@ -26,6 +28,7 @@
                 data: {
                     order: data.order,
                     shipmentGroups: data.shipmentGroups,
+                    orderShipmentExpenses: data.orderShipmentExpenses,
                 },
             } only %}
         {% endblock %}
