@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToAvailabilityStorageClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
@@ -146,7 +145,7 @@ class CartFiller implements CartFillerInterface
         $this->updateItemsQuantity($orderItems);
 
         $cartChangeTransfer = new CartChangeTransfer();
-        $cartChangeTransfer->setQuote(new QuoteTransfer());
+        $cartChangeTransfer->setQuote($this->cartClient->getQuote());
         $orderItemsObject = new ArrayObject($orderItems);
         $cartChangeTransfer->setItems($orderItemsObject);
 
