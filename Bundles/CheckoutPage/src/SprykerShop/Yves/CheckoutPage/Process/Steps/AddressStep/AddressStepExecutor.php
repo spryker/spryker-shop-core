@@ -109,8 +109,10 @@ class AddressStepExecutor implements StepExecutorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function hydrateBillingAddress(QuoteTransfer $quoteTransfer, ?CustomerTransfer $customerTransfer): QuoteTransfer
-    {
+    protected function hydrateBillingAddress(
+        QuoteTransfer $quoteTransfer,
+        ?CustomerTransfer $customerTransfer
+    ): QuoteTransfer {
         if ($quoteTransfer->getBillingSameAsShipping() === true) {
             if ($this->hasQuoteDataItemLevelShippingAddresses($quoteTransfer)) {
                 $firstItemTransfer = current($quoteTransfer->getItems());
@@ -174,17 +176,20 @@ class AddressStepExecutor implements StepExecutorInterface
 
         if ($quoteTransfer->getItems()->count() < 1) {
             $this->hasQuoteDataItemLevelShippingAddresses = false;
+
             return false;
         }
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() === null) {
                 $this->hasQuoteDataItemLevelShippingAddresses = false;
+
                 return false;
             }
         }
 
         $this->hasQuoteDataItemLevelShippingAddresses = true;
+
         return true;
     }
 
