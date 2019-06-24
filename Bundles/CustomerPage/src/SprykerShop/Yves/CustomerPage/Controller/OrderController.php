@@ -166,7 +166,7 @@ class OrderController extends AbstractCustomerController
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
      *
      * @return iterable|\Generated\Shared\Transfer\ExpenseTransfer[]
      */
