@@ -275,9 +275,6 @@ class AddressStepExecutor implements StepExecutorInterface
             $firstItemTransfer = current($quoteTransfer->getItems());
             $shippingAddressTransfer = $firstItemTransfer->getShipment()->getShippingAddress();
         } else {
-            /**
-             * @deprecated Exists for Backward Compatibility reasons only.
-             */
             $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
         }
 
