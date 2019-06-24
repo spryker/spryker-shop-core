@@ -6,7 +6,6 @@
     cartItems: _view.cartItems,
     shippingAddress: _view.quoteTransfer.shippingAddress,
     billingAddress: _view.quoteTransfer.billingAddress,
-    shipmentMethod: _view.quoteTransfer.items[0].shipment.method.name,
     paymentMethod: _view.quoteTransfer.payment.paymentMethod,
     shipmentGroups: _view.shipmentGroups,
 
@@ -23,7 +22,6 @@
 
         prices: {
             subTotal: _view.quoteTransfer.totals.subtotal,
-            storeCurrency: _view.quoteTransfer.items[0].shipment.method.storeCurrencyPrice,
             grandTotal: _view.quoteTransfer.totals.grandtotal,
             tax: _view.quoteTransfer.totals.taxtotal.amount,
             discountTotal: _view.quoteTransfer.totals.discounttotal | default,
