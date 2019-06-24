@@ -52,6 +52,10 @@ class PostConditionChecker implements PostConditionCheckerInterface
      */
     protected function isShipmentSet(QuoteTransfer $quoteTransfer): bool
     {
+        if ($this->hasItemsWithEmptyShipment($quoteTransfer)) {
+            return $this->isQuoteLevelShipmentSet($quoteTransfer);
+        }
+
         if (count($quoteTransfer->getItems()) < 1) {
             return false;
         }
@@ -137,5 +141,27 @@ class PostConditionChecker implements PostConditionCheckerInterface
         return $expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
             && $expenseTransfer->getShipment() !== null
             && $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment()) === $itemShipmentKey;
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteLevelShipmentSet(QuoteTransfer $quoteTransfer): bool
+    {
+        if (!$quoteTransfer->getShipment()) {
+            return false;
+        }
+
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
+            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+                return $quoteTransfer->getShipment()->getShipmentSelection() !== null;
+            }
+        }
+
+        return false;
     }
 }
