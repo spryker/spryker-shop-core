@@ -70,7 +70,7 @@ class AddressStepExecutor implements StepExecutorInterface
 
         $quoteTransfer = $this->hydrateItemLevelShippingAddresses($quoteTransfer, $customerTransfer);
         $quoteTransfer = $this->hydrateBillingAddress($quoteTransfer, $customerTransfer);
-        $quoteTransfer = $this->setQuoteShippingAddress($quoteTransfer);
+        $quoteTransfer = $this->setQuoteShippingAddress($quoteTransfer, $customerTransfer);
 
         return $quoteTransfer;
     }
@@ -256,22 +256,28 @@ class AddressStepExecutor implements StepExecutorInterface
      * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function setQuoteShippingAddress(QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function setQuoteShippingAddress(QuoteTransfer $quoteTransfer, ?CustomerTransfer $customerTransfer): QuoteTransfer
     {
         if ($this->hasQuoteMultiShippingAddresses()) {
             return $quoteTransfer;
         }
 
-        $firstItemTransfer = current($quoteTransfer->getItems());
-        if (!$firstItemTransfer) {
-            return $quoteTransfer;
+        if ($this->hasQuoteDataItemLevelShippingAddresses($quoteTransfer)) {
+            $firstItemTransfer = current($quoteTransfer->getItems());
+            $shippingAddressTransfer = $firstItemTransfer->getShipment()->getShippingAddress();
+        } else {
+            /**
+             * @deprecated Exists for Backward Compatibility reasons only.
+             */
+            $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
         }
 
-        $firstItemTransfer->requireShipment();
+        $shippingAddressTransfer = $this->expandAddressTransfer($shippingAddressTransfer, $customerTransfer);
 
-        return $quoteTransfer->setShippingAddress($firstItemTransfer->getShipment()->getShippingAddress());
+        return $quoteTransfer->setShippingAddress($shippingAddressTransfer);
     }
 }
