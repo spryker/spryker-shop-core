@@ -48,7 +48,7 @@ class RouterSslRedirectEventDispatcherPlugin extends AbstractPlugin implements E
      */
     protected function addListener(EventDispatcherInterface $eventDispatcher): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::REQUEST, function (GetResponseEvent $event) {
+        $eventDispatcher->addListener(KernelEvents::REQUEST, function (GetResponseEvent $event): void {
             $request = $event->getRequest();
             if ($this->shouldBeSsl($request)) {
                 $fakeRequest = clone $request;
