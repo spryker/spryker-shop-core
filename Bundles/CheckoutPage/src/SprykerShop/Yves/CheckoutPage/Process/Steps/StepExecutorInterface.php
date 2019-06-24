@@ -7,16 +7,16 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
 interface StepExecutorInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function execute(Request $request, AbstractTransfer $quoteTransfer): AbstractTransfer;
+    public function execute(Request $request, QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

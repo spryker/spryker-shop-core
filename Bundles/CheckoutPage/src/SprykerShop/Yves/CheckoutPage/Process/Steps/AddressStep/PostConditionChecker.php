@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
 
@@ -29,11 +28,11 @@ class PostConditionChecker implements PostConditionCheckerInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function check(AbstractTransfer $quoteTransfer): bool
+    public function check(QuoteTransfer $quoteTransfer): bool
     {
         if ($quoteTransfer->getBillingAddress() === null) {
             return false;
@@ -123,7 +122,6 @@ class PostConditionChecker implements PostConditionCheckerInterface
         $firstName = trim($addressTransfer->getFirstName());
         $lastName = trim($addressTransfer->getLastName());
 
-        return ($firstName === null || $firstName === '')
-            && ($lastName === null || $lastName === '');
+        return empty($firstName) && empty($lastName);
     }
 }
