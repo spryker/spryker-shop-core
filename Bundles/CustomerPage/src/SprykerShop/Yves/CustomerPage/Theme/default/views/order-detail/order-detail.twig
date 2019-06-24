@@ -1,7 +1,9 @@
 {% extends template('page-layout-customer', 'CustomerPage') %}
 
+{# @deprecated property 'orderItems' is deprecated: use 'shipmentGroups' instead #}
 {% define data = {
     order: _view.order,
+    orderItems: _view.items,
     shipmentGroups: _view.shipmentGroups,
 
     title: 'customer.account.order_history' | trans,

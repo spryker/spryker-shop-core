@@ -38,7 +38,7 @@
         {% for shipmentGroup in data.shipmentGroups %}
             <div class="col col--sm-12 col--lg-6">
                 <div class="box">
-                    <h4>{{ 'checkout.step.shipment.title' | trans }} n°{{ loop.index }}</h4>
+                    <h4>{{ 'checkout.step.shipment.title' | trans }} n&#176;{{ loop.index }}</h4>
                     <hr>
                     <h6><strong>{{ 'checkout.step.summary.products' | trans }}</strong></h6>
 
@@ -232,14 +232,9 @@
                 },
             } only %}
                 {% block body %}
-                    {% embed molecule('summary-overview-multi-shipment', 'CheckoutPage') with {
+                    {% include molecule('summary-overview-multi-shipment', 'CheckoutPage') with {
                         data: embed.overview,
                     } only %}
-                        {% block body %}
-                            {% block overview %}{% endblock %}
-                            {{ parent() }}
-                        {% endblock %}
-                    {% endembed %}
 
                     <hr>
                     {{ parent() }}

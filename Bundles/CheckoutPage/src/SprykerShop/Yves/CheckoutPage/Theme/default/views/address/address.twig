@@ -14,6 +14,7 @@
 {% block content %}
     {% set companyBusinessUnitShippingAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', data.forms.shipping.vars.data]) %}
     {% set isCompanyBusinessUnitShippingAddressApplicable = companyBusinessUnitShippingAddressWidget and companyBusinessUnitShippingAddressWidget.isApplicable %}
+    {% set jsAddressClass = 'js-address' %}
 
     {% embed molecule('form') with {
         class: 'box',
@@ -23,7 +24,7 @@
             submit: {
                 enable: true,
                 text: 'checkout.step.shipment' | trans,
-                class: 'button button--saccess js-address__form-submit',
+                class: 'button button--saccess ' ~ jsAddressClass ~ '__form-submit',
             },
         },
         embed: {
@@ -35,6 +36,7 @@
             isMultipleShipmentEnabled: data.isMultipleShipmentEnabled,
             companyBusinessUnitShippingAddressWidget: companyBusinessUnitShippingAddressWidget,
             isCompanyBusinessUnitShippingAddressApplicable: isCompanyBusinessUnitShippingAddressApplicable,
+            jsAddressClass: jsAddressClass,
         },
     } only %}
         {% block fields %}
@@ -42,7 +44,7 @@
             {% set hasCompanyUnitAddresses = data.form.shippingAddress.id_company_unit_address is defined %}
             {% set hasShippingAddressesAndApplicable = embed.isCompanyBusinessUnitShippingAddressApplicable ? true : hasShippingAddresses %}
 
-            <div class="grid col col--sm-12 js-address__form-handler-shippingAddress">
+            <div class="grid col col--sm-12 {{ embed.jsAddressClass }}__form-handler-shippingAddress">
                 {% if hasShippingAddressesAndApplicable %}
                     <div class="form__field col col--sm-6">
                         <ul class="list spacing-y">
@@ -51,6 +53,7 @@
                                     data: {
                                         isMultipleShipmentEnabled: embed.isMultipleShipmentEnabled,
                                         items: embed.forms.items,
+                                        jsAddressClass: embed.jsAddressClass,
                                     },
                                 } only %}
                                 {% endwidget %}
@@ -78,7 +81,7 @@
                 {% endif %}
 
                 {% include molecule('form') with {
-                    class: 'js-address__shipping' ~ (hasShippingAddressesAndApplicable ? ' is-hidden'),
+                    class: embed.jsAddressClass ~ '__shipping' ~ (hasShippingAddressesAndApplicable ? ' is-hidden'),
                     data: {
                         form: embed.forms.shipping,
                         enableStart: false,
@@ -99,28 +102,30 @@
 
             {% if embed.isMultipleShipmentEnabled %}
                 {% include molecule('address-item-form', 'CheckoutPage') with {
-                    class: 'js-address__items-target col col--sm-12 is-hidden',
+                    class: embed.jsAddressClass ~ '__items-target col col--sm-12 is-hidden',
                     data: {
                         form: embed.forms.items,
                         shippingForm: embed.forms.shipping,
+                        jsAddressClass: embed.jsAddressClass,
                     },
                 } only %}
             {% endif %}
 
-            <div class="form__field col col--sm-12 js-address__billingSameAsShipping">
+            <div class="form__field col col--sm-12 {{ embed.jsAddressClass }}__form-handler-billingSameAsShipping">
                 {{ form_row(data.form.billingSameAsShipping, {
                     component: molecule('toggler-checkbox'),
                     attributes: {
-                        'target-selector': '.js-address__billing-same-as-shipping',
+                        'target-selector': '.' ~ embed.jsAddressClass ~ '__billing-same-as-shipping',
                         'class-to-toggle': 'is-hidden',
                         'add-class-when-checked': true,
+                        'checked': true,
                     },
                 }) }}
             </div>
 
-            <div class="grid col col--sm-12 js-address__form-handler-billingAddress">
+            <div class="grid col col--sm-12 {{ embed.jsAddressClass }}__form-handler-billingAddress">
                 {% embed molecule('form') with {
-                    class: 'is-hidden form--extend spacing-top spacing-top--big js-address__billing-same-as-shipping',
+                    class: embed.jsAddressClass ~ '__billing-same-as-shipping is-hidden form--extend spacing-top spacing-top--big',
                     data: {
                         title: 'page.checkout.address.billing-address' | trans,
                         form: embed.forms.billing,
@@ -137,6 +142,9 @@
                             iso2_code: 'col col--sm-12 col--lg-4',
                         },
                     },
+                    embed: {
+                        jsAddressClass: embed.jsAddressClass,
+                    }
                 } only %}
                     {% block fields %}
                         {% set companyBusinessUnitBillingAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['billingAddress', data.form.vars.data]) %}
@@ -149,7 +157,12 @@
                             <div class="form__field col col--sm-6">
                                 <ul class="list spacing-y">
                                     {% if isCompanyBusinessUnitBillingAddressApplicable %}
-                                        {% widget companyBusinessUnitBillingAddressWidget %}{% endwidget %}
+                                        {% widget companyBusinessUnitBillingAddressWidget with {
+                                            data: {
+                                                jsAddressClass: embed.jsAddressClass,
+                                            }
+                                        } only %}
+                                        {% endwidget %}
 
                                         {% if hasBillingAddresses %}
                                             {% do data.form.id_customer_address.setRendered %}
@@ -173,7 +186,7 @@
                             </div>
                         {% endif %}
 
-                        <div class="js-address__billing {{ hasBillingAddressesAndApplicable ? ' is-hidden' }}">
+                        <div class="{{ embed.jsAddressClass }}__billing {{ hasBillingAddressesAndApplicable ? ' is-hidden' }}">
                             {{parent()}}
                         </div>
                     {% endblock %}
@@ -189,17 +202,17 @@
                         {% set existingShippingAddressSelectSelector = embed.forms.shipping.id_customer_address is defined ? '[name="' ~ embed.forms.shipping.id_customer_address.vars.full_name ~ '"]' : '' %}
                         {% set existingBillingAddressSelectSelector = embed.forms.billing.id_customer_address is defined ? '[name="' ~ embed.forms.billing.id_customer_address.vars.full_name ~ '"]' : '' %}
                     {% else %}
-                        {% set existingShippingAddressSelectSelector = '.js-company-business-unit-address__form-select-shippingAddress' %}
-                        {% set existingBillingAddressSelectSelector = '.js-company-business-unit-address__form-select-billingAddress' %}
+                        {% set existingShippingAddressSelectSelector = '.' ~ embed.jsAddressClass ~ '__form-select-shippingAddress' %}
+                        {% set existingBillingAddressSelectSelector = '.' ~ embed.jsAddressClass ~ '__form-select-billingAddress' %}
                     {% endif %}
 
                     {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
                         attributes: {
                             'trigger-selector': existingShippingAddressSelectSelector | default(''),
-                            'target-selector': '.js-address__shipping',
-                            'sub-target-selector': '.js-address__items-target',
-                            'form-billing-address-selector': '.js-address__billing-same-as-shipping',
-                            'billing-same-as-shipping-selector': '.js-address__billingSameAsShipping',
+                            'target-selector': '.' ~ embed.jsAddressClass ~ '__shipping',
+                            'sub-target-selector': '.' ~ embed.jsAddressClass ~ '__items-target',
+                            'container-billing-address-selector': '.' ~ embed.jsAddressClass ~ '__billing-same-as-shipping',
+                            'billing-same-as-shipping-selector': '.' ~ embed.jsAddressClass ~ '__form-handler-billingSameAsShipping',
                             'billing-same-as-shipping-toggler-selector': '[name="addressesForm[billingSameAsShipping]"]',
                             'toggle-option-value': optionValueDeliverToMultipleAddresses,
                         },
@@ -208,7 +221,7 @@
                     {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
                         attributes: {
                             'trigger-selector': existingBillingAddressSelectSelector | default(''),
-                            'target-selector': '.js-address__billing',
+                            'target-selector': '.' ~ embed.jsAddressClass ~ '__billing',
                         },
                     } only %}
                 </div>

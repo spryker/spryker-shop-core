@@ -75,10 +75,10 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
 
     protected toggleSplitDeliveryAddressFormValue(): void {
         const hiddenInputIdCustomerShippingAddress = <HTMLInputElement>document.querySelector(
-            `[name="${this.shippingAddressHiddenInputSelector}"]`
+            this.shippingAddressHiddenInputSelector
         );
         const hiddenInputIdCompanyShippingAddress = <HTMLInputElement>document.querySelector(
-            `[name="${this.shippingCompanyAddressHiddenInputSelector}"]`
+            this.shippingCompanyAddressHiddenInputSelector
         );
         if (this.shippingAddressToggler.value === this.optionValueDeliverToMultipleAddresses) {
             hiddenInputIdCustomerShippingAddress.value = this.optionValueDeliverToMultipleAddresses;
@@ -92,14 +92,15 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
 
     protected fillHiddenInputsWithNewAddress(): void {
         const currentAddressList = this.addressesDataObject[this.currentAddress];
-        const hiddenInputIdCustomerAddress = <HTMLInputElement>this.form.querySelector(
-            `[name="${this.addressHiddenInputSelector}"]`
-        );
+        const hiddenInputIdCustomerAddress = <HTMLInputElement>this.form.querySelector(this.addressHiddenInputSelector);
         const hiddenInputIdCompanyAddress = <HTMLInputElement>this.form.querySelector(
-            `[name="${this.companyAddressHiddenInputSelector}"]`
+            this.companyAddressHiddenInputSelector
         );
         this.hiddenDefaultAddressInput.value = this.currentAddress;
-        this.fillHiddenInputAddressesFields(currentAddressList);
+        this.fillHiddenInputAddressesFields(currentAddressList, this.addressHiddenInputSelector, 'id_customer_address');
+        this.fillHiddenInputAddressesFields(
+            currentAddressList, this.companyAddressHiddenInputSelector, 'id_company_unit_address'
+        );
         hiddenInputIdCustomerAddress.dispatchEvent(this.hiddenAddressInputChangeEvent);
         hiddenInputIdCompanyAddress.dispatchEvent(this.hiddenAddressInputChangeEvent);
     }
@@ -116,17 +117,9 @@ export default class CompanyBusinessUnitAddressHandler extends Component {
      * Fills the form element's value with an address value.
      * @param address A data object for filling the fields.
      */
-    fillHiddenInputAddressesFields(address: object): void {
-        const hiddenInputIdCustomerAddress = <HTMLInputElement>this.form.querySelector(
-            `[name="${this.addressHiddenInputSelector}"]`
-        );
-        const hiddenInputIdCompanyAddress = <HTMLInputElement>this.form.querySelector(
-            `[name="${this.companyAddressHiddenInputSelector}"]`
-        );
-        const idCustomerAddress = 'id_customer_address';
-        const idCompanyAddress = 'id_company_unit_address';
-        hiddenInputIdCustomerAddress.value = address ? address[idCustomerAddress] : '';
-        hiddenInputIdCompanyAddress.value = address ? address[idCompanyAddress] : '';
+    fillHiddenInputAddressesFields(address: object, selector: string, idAddressKey: string): void {
+        const hiddenInputIdAddress = <HTMLInputElement>this.form.querySelector(selector);
+        hiddenInputIdAddress.value = address ? address[idAddressKey] : '';
     }
 
     protected initAddressesData(): void {

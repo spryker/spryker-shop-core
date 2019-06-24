@@ -7,6 +7,7 @@
 {% define data = {
     items: required,
     shippingForm: required,
+    jsAddressClass: '',
 } %}
 
 {% block body %}
@@ -58,8 +59,8 @@
                                         'form-selector': '.' ~ embed.jsName ~ '__item-shipping-' ~ embed.index,
                                         'data-selector': '.' ~ embed.jsName ~ '__trigger--' ~ embed.index,
                                         'default-address-selector': '.' ~ embed.jsName ~ '__default-address-item-shipping-' ~ embed.index,
-                                        'address-hidden-input-selector': 'addressesForm[multiShippingAddresses][' ~ index0 ~ '][shippingAddress][id_customer_address]',
-                                        'company-address-hidden-input-selector': 'addressesForm[multiShippingAddresses][' ~ index0 ~ '][shippingAddress][id_company_unit_address]',
+                                        'address-hidden-input-selector': '[name="addressesForm[multiShippingAddresses][' ~ index0 ~ '][shippingAddress][id_customer_address]"]',
+                                        'company-address-hidden-input-selector': '[name="addressesForm[multiShippingAddresses][' ~ index0 ~ '][shippingAddress][id_company_unit_address]"]',
                                         'addresses': data.addresses,
                                     },
                                 } only %}
@@ -126,7 +127,7 @@
 
     {% include molecule('is-next-checkout-step-enabled', 'CheckoutPage') with {
         attributes: {
-            'trigger-selector': isCompanyBusinessUnitShippingAddressApplicable ? '.js-company-business-unit-address__form-select-shippingAddress' : '[name="addressesForm[shippingAddress][id_customer_address]"]',
+            'trigger-selector': isCompanyBusinessUnitShippingAddressApplicable ? '.' ~ data.jsAddressClass ~ '__form-select-shippingAddress' : '[name="addressesForm[shippingAddress][id_customer_address]"]',
             'target-selector': '.' ~ config.jsName ~ '__validate-next-checkout-step',
         },
     } only %}
@@ -134,8 +135,8 @@
     {% include molecule('validate-next-checkout-step', 'CheckoutPage') with {
         class: config.jsName ~ '__validate-next-checkout-step',
         attributes: {
-            'form-selector': '.' ~ config.jsName ~ '__item-shipping',
-            'target-selector': '.js-address__form-submit',
+            'container-selector': '.' ~ config.jsName ~ '__item-shipping',
+            'target-selector': '.' ~ data.jsAddressClass ~ '__form-submit',
             'dropdown-trigger-selector': '.' ~ config.jsName ~ '__trigger',
             'is-enable': false,
         },
