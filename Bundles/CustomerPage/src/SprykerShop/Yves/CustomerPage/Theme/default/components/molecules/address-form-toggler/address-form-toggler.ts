@@ -35,7 +35,7 @@ export default class AddressFormToggler extends Component {
     }
 
     protected mapEvents(): void {
-        this.toggler.addEventListener('change', () => this.onTogglerChange());  
+        this.toggler.addEventListener('change', () => this.onTogglerChange());
     }
 
     protected onTogglerChange(): void {
