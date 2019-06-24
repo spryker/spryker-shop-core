@@ -1,37 +1,4 @@
-{% embed organism('product-set-cms-content', 'ProductSetWidget') ignore missing with {
-    data: {
-        products: productViews,
-        name: productSet.name,
-        description: productSet.description,
-        images: productSet.imageSets.0.images | default([])
-    }
-} only %}
-
-    {% block product_set_title %}
-        <h5>{{ data.name }}</h5>
-    {% endblock %}
-
-    {% block title %}{% endblock %}
-
-    {% set add_to_cart_form_class = 'text-center' %}
-    {% set add_all_button_class = 'float-none' %}
-
-    {% block description %}
-        {% if data.description is not empty %}
-            <p>{{ data.description }}</p>
-        {% endif %}
-    {% endblock %}
-
-    {% block header %}
-        {{ block('product_set_title') }}
-
-        {{ block('description') }}
-    {% endblock %}
-
-    {% block productSet %}
-        {{ parent() }}
-        {{ block('add_to_cart_form') }}
-        <hr />
-    {% endblock %}
-
-{% endembed %}
+{#
+    @deprecated Use `@ContentProductSetWidget/views/content-product-set-alternative/content-product-set-alternative.twig` instead.
+#}
+{% include '@ContentProductSetWidget/views/content-product-set-alternative/content-product-set-alternative.twig' %}
