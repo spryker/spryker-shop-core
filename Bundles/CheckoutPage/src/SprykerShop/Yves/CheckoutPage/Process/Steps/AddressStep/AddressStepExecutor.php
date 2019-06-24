@@ -62,7 +62,7 @@ class AddressStepExecutor implements StepExecutorInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function execute(Request $request, QuoteTransfer $quoteTransfer): QuoteTransfer
     {

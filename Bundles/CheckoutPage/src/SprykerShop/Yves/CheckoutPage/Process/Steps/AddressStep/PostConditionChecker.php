@@ -28,7 +28,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
@@ -122,7 +122,6 @@ class PostConditionChecker implements PostConditionCheckerInterface
         $firstName = trim($addressTransfer->getFirstName());
         $lastName = trim($addressTransfer->getLastName());
 
-        return ($firstName === null || $firstName === '')
-            && ($lastName === null || $lastName === '');
+        return empty($firstName) && empty($lastName);
     }
 }
