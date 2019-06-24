@@ -176,7 +176,7 @@ class MultiShipmentHandler extends ShipmentHandler
     protected function findAvailableShipmentMethodsByShipmentGroup(
         ShipmentMethodsCollectionTransfer $availableShipmentMethodsGroupedByShipment,
         ShipmentGroupTransfer $shipmentGroupTransfer
-    ): ShipmentMethodsTransfer {
+    ): ?ShipmentMethodsTransfer {
         $shipmentHashKey = $shipmentGroupTransfer->requireHash()->getHash();
 
         foreach ($availableShipmentMethodsGroupedByShipment->getShipmentMethods() as $shipmentMethodsTransfer) {
