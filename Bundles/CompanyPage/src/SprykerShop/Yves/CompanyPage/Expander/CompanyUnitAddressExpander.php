@@ -31,17 +31,21 @@ class CompanyUnitAddressExpander implements CompanyUnitAddressExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function expandWithCompanyUnitAddress(AddressTransfer $addressTransfer, CustomerTransfer $customerTransfer): AddressTransfer
+    public function expandWithCompanyUnitAddress(AddressTransfer $addressTransfer, ?CustomerTransfer $customerTransfer): AddressTransfer
     {
         if ($addressTransfer->getIdCompanyUnitAddress() === null) {
             return $addressTransfer;
         }
 
         $addressTransfer = $this->convertIdCompanyUnitAddressToInt($addressTransfer);
+
+        if ($customerTransfer === null) {
+            return $addressTransfer;
+        }
 
         foreach ($this->getCompanyUnitAddresses($customerTransfer) as $companyUnitAddressTransfer) {
             if ($addressTransfer->getIdCompanyUnitAddress() !== $companyUnitAddressTransfer->getIdCompanyUnitAddress()) {
