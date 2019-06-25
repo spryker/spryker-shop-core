@@ -36,7 +36,7 @@ class ContentBannerTwigPluginTest extends Unit
 {
     protected const LOCALE = 'de_DE';
 
-    protected const DEFAULT_TEMPLATE = 'default';
+    protected const DEFAULT_TEMPLATE = 'top-title';
     protected const WRONG_TEMPLATE = 'wrong';
 
     protected const CONTENT_KEY = '0';
