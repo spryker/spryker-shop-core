@@ -132,41 +132,34 @@
                 class: 'box',
                 data: {
                     form: data.forms.summary,
+                    submit: {
+                        enable: can('SeeOrderPlaceSubmitPermissionPlugin'),
+                        text: 'checkout.step.place.order' | trans
+                    },
+                    cancel: {
+                        enable: true,
+                        url: data.backUrl,
+                        text: 'general.back.button' | trans
+                    }
                 },
                 embed: {
                     overview: data.overview,
-                    cart: data.cart,
-                    url: data.backUrl,
-                },
+                    cart: data.cart
+                }
             } only %}
-                {% block actions %}
+                {% block body %}
                     {% include molecule('summary-overview', 'CheckoutPage') with {
-                        class: 'text-left',
-                        data: embed.overview,
+                        data: embed.overview
                     } only %}
 
                     {% include molecule('gift-card-payment-summary', 'GiftCardWidget') ignore missing with {
                         data: {
-                            cart: embed.cart,
-                        },
+                            cart: embed.cart
+                        }
                     } only %}
 
-                    <hr>
-
-                    <a href="{{ embed.url }}" class="form__action button button--secondary button--hollow" {{ qa('cancel-button') }}>
-                        {% include atom('icon') with {
-                            modifiers: ['small'],
-                            data: {
-                                name: 'chevron-left',
-                            },
-                        } only %}
-                        {{ 'general.back.button' | trans }}
-                    </a>
-                    {% if can('SeeOrderPlaceSubmitPermissionPlugin') %}
-                        <button type="submit" class="form__action button button--success" data-init-single-click {{ qa('submit-button') }}>
-                            {{ 'checkout.step.place.order' | trans }}
-                        </button>
-                    {% endif %}
+                    <hr />
+                    {{parent()}}
                 {% endblock %}
             {% endembed %}
         </div>
