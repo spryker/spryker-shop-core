@@ -46,8 +46,9 @@ class CheckoutAddressCollectionForm extends AbstractType
     public const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
     public const GROUP_BILLING_SAME_AS_SHIPPING = self::FIELD_BILLING_SAME_AS_SHIPPING;
 
-    public const VALIDATION_BILLING_SAME_AS_SHIPPING_MESSAGE = 'Billing address should be specified when shipping to multiple addresses.';
+    public const VALIDATION_BILLING_SAME_AS_SHIPPING_MESSAGE = 'Billing address should not be specified when shipping to multiple addresses.';
 
+    protected const GLOSSARY_KEY_ADD_NEW_ADDRESS = 'customer.address.add_new_address';
     protected const GLOSSARY_KEY_SAVE_NEW_ADDRESS = 'customer.address.save_new_address';
     protected const GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES = 'customer.account.deliver_to_multiple_addresses';
 
@@ -309,7 +310,7 @@ class CheckoutAddressCollectionForm extends AbstractType
                 'data_class' => ItemTransfer::class,
                 'label' => false,
                 CheckoutMultiShippingAddressesForm::OPTION_VALIDATION_GROUP => static::GROUP_SHIPPING_ADDRESS,
-                CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
+                CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $this->getMultiShippingAddressChoices($options),
                 CheckoutMultiShippingAddressesForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
                 CheckoutMultiShippingAddressesForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
             ],
@@ -352,6 +353,23 @@ class CheckoutAddressCollectionForm extends AbstractType
 
         $addressChoices = $options[static::OPTION_ADDRESS_CHOICES];
         $addressChoices[CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES] = static::GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES;
+
+        return $addressChoices;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return string[]
+     */
+    protected function getMultiShippingAddressChoices(array $options): array
+    {
+        return $options[static::OPTION_ADDRESS_CHOICES];
+        /**
+         * @todo This code is part of https://spryker.atlassian.net/browse/CC-5250.
+         */
+        $addressChoices = $options[static::OPTION_ADDRESS_CHOICES];
+        $addressChoices[CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS] = static::GLOSSARY_KEY_ADD_NEW_ADDRESS;
 
         return $addressChoices;
     }

@@ -84,13 +84,15 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
                     ->getParent()
                     ->get(CheckoutAddressCollectionForm::FIELD_SHIPPING_ADDRESS);
 
-                if ($this->isNewCustomerAddress($customerAddressForm)
-                    || $this->isIdCustomerAddressEmpty($customerAddressForm)
-                    || $this->isIdCompanyUnitAddressEmpty($customerAddressForm)) {
+                if (!$this->isDeliverToMultipleAddressesEnabled($customerAddressForm)) {
                     return false;
                 }
 
-                if (!$this->isDeliverToMultipleAddressesEnabled($customerAddressForm)) {
+                if ($this->isNewAddressFormShouldNotBeValidated($customerAddressForm)) {
+                    return false;
+                }
+
+                if ($this->isNewAddressFormShouldNotBeValidated($form)) {
                     return false;
                 }
 
@@ -163,5 +165,21 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
     {
         return $form->has(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)
             && $form->get(CheckoutAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS)->getData() === null;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool
+     */
+    protected function isNewAddressFormShouldNotBeValidated(FormInterface $form): bool
+    {
+        if ($this->isNewCustomerAddress($form)
+            || $this->isIdCustomerAddressEmpty($form)
+            || $this->isIdCompanyUnitAddressEmpty($form)) {
+            return true;
+        }
+
+        return false;
     }
 }
