@@ -115,7 +115,10 @@ class CommentThreadWidget extends AbstractWidget
      */
     protected function addCommentAvailableTags(): void
     {
-        $this->addParameter(static::PARAMETER_COMMENT_AVAILABLE_TAGS, $this->getConfig()->getCommentAvailableTags());
+        $this->addParameter(
+            static::PARAMETER_COMMENT_AVAILABLE_TAGS,
+            $this->getFactory()->getCommentClient()->getCommentAvailableTags()
+        );
     }
 
     /**

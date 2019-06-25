@@ -52,6 +52,7 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="commentThread" type="CommentThread" />
+        <property name="commentThread" type="CommentThread"/>
     </transfer>
+
 </transfers>

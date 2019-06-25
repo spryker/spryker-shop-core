@@ -17,7 +17,7 @@ class CommentWidgetDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_COMMENT = 'CLIENT_COMMENT';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
-    public const PLUGINS_COMMENT_THREAD_AFTER_OPERATION = 'PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT';
+    public const PLUGINS_COMMENT_THREAD_AFTER_OPERATION = 'PLUGINS_COMMENT_THREAD_AFTER_OPERATION';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

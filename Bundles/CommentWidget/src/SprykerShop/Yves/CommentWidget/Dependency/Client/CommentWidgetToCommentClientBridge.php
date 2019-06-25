@@ -85,4 +85,12 @@ class CommentWidgetToCommentClientBridge implements CommentWidgetToCommentClient
     {
         return $this->commentClient->removeCommentTag($commentTagRequestTransfer);
     }
+
+    /**
+     * @return string[]
+     */
+    public function getCommentAvailableTags(): array
+    {
+        return $this->commentClient->getCommentAvailableTags();
+    }
 }

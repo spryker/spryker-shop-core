@@ -16,9 +16,6 @@ use SprykerShop\Yves\CommentWidgetExtension\Dependency\Plugin\CommentThreadAfter
  */
 class CartCommentThreadAfterOperationStrategyPlugin extends AbstractPlugin implements CommentThreadAfterOperationStrategyPluginInterface
 {
-    /**
-     * @uses \Spryker\Zed\Comment\CommentConfig::COMMENT_THREAD_QUOTE_OWNER_TYPE
-     */
     protected const COMMENT_THREAD_QUOTE_OWNER_TYPE = 'quote';
 
     /**

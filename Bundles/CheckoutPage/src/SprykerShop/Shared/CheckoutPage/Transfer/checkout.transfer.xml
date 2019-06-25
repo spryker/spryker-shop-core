@@ -5,6 +5,7 @@
 
     <transfer name="Quote">
         <property name="checkoutConfirmed" type="bool" />
+        <property name="commentThread" type="CommentThread" />
     </transfer>
 
     <transfer name="CheckoutError">
@@ -23,6 +24,10 @@
 
     <transfer name="GiftCardMetadata">
         <property name="isGiftCard" type="bool" />
+    </transfer>
+
+    <transfer name="CommentThread">
+        <property name="idCommentThread" type="int" />
     </transfer>
 
 </transfers>
