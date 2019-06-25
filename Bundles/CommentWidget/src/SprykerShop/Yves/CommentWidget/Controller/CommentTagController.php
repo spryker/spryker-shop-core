@@ -55,7 +55,7 @@ class CommentTagController extends CommentWidgetAbstractController
      */
     protected function executeAddAction(string $uuid, Request $request): RedirectResponse
     {
-        $returnUrl = $request->request->get(static::PARAMETER_RETURN_URL);
+        $returnUrl = $request->query->get(static::PARAMETER_RETURN_URL);
         $name = $request->query->get(static::PARAMETER_NAME);
 
         $commentTagRequestTransfer = (new CommentTagRequestTransfer())
@@ -86,7 +86,7 @@ class CommentTagController extends CommentWidgetAbstractController
      */
     protected function executeRemoveAction(string $uuid, Request $request): RedirectResponse
     {
-        $returnUrl = $request->request->get(static::PARAMETER_RETURN_URL);
+        $returnUrl = $request->query->get(static::PARAMETER_RETURN_URL);
         $name = $request->query->get(static::PARAMETER_NAME);
 
         $commentTagRequestTransfer = (new CommentTagRequestTransfer())
