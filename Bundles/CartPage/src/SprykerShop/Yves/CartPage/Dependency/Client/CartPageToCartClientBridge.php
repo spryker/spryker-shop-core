@@ -72,11 +72,11 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     /**
      * @param string $sku
      * @param string|null $groupKey
-     * @param float $quantity
+     * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1.0)
+    public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
         return $this->cartClient->increaseItemQuantity($sku, $groupKey, $quantity);
     }
@@ -84,11 +84,11 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     /**
      * @param string $sku
      * @param string|null $groupKey
-     * @param float $quantity
+     * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1.0)
+    public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
         return $this->cartClient->decreaseItemQuantity($sku, $groupKey, $quantity);
     }
@@ -96,11 +96,11 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     /**
      * @param string $sku
      * @param string|null $groupKey
-     * @param float $quantity
+     * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1.0)
+    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
         return $this->cartClient->changeItemQuantity($sku, $groupKey, $quantity);
     }

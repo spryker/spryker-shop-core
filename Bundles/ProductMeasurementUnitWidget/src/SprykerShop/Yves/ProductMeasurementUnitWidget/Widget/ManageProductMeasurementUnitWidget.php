@@ -20,14 +20,14 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param bool $isAddToCartDisabled
+     * @param array $quantityOptions
      */
-    public function __construct(ProductViewTransfer $productViewTransfer, bool $isAddToCartDisabled)
+    public function __construct(ProductViewTransfer $productViewTransfer, bool $isAddToCartDisabled, array $quantityOptions = [])
     {
         $salesUnits = null;
         $idBaseUnit = null;
         $baseUnit = null;
         $productQuantityStorageTransfer = null;
-        $productConcreteAvailabilityTransfer = null;
 
         if ($productViewTransfer->getIdProductConcrete()) {
             $baseUnit = $this->getFactory()
@@ -55,6 +55,7 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
         $minQuantityInSalesUnits = $this->getMinQuantityInSalesUnits($minQuantityInBaseUnits, $salesUnits);
 
         $this->addParameter('product', $productViewTransfer)
+            ->addParameter('quantityOptions', $quantityOptions)
             ->addParameter('minQuantityInBaseUnits', $minQuantityInBaseUnits)
             ->addParameter('minQuantityInSalesUnits', $minQuantityInSalesUnits)
             ->addParameter('baseUnit', $baseUnit)
@@ -70,41 +71,16 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
                     $productQuantityStorageTransfer
                 )
             );
-        $this->setQuantityRestrictions($productQuantityStorageTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
      *
-     * @return void
-     */
-    protected function setQuantityRestrictions(
-        ?ProductQuantityStorageTransfer $productQuantityStorageTransfer
-    ): void {
-        if ($productQuantityStorageTransfer === null) {
-            $this->addParameter('minQuantity', 1)
-                ->addParameter('maxQuantity', null)
-                ->addParameter('quantityInterval', 1);
-
-            return;
-        }
-        $minQuantity = $productQuantityStorageTransfer->getQuantityMin() ?? 1;
-        $maxQuantity = $productQuantityStorageTransfer->getQuantityMax();
-        $quantityInterval = $productQuantityStorageTransfer->getQuantityInterval() ?? 1;
-
-        $this->addParameter('minQuantity', $minQuantity)
-            ->addParameter('maxQuantity', $maxQuantity)
-            ->addParameter('quantityInterval', $quantityInterval);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
-     *
-     * @return float
+     * @return int
      */
     protected function getMinQuantityInBaseUnits(
         ?ProductQuantityStorageTransfer $productQuantityStorageTransfer = null
-    ): float {
+    ): int {
         $quantityMin = 1;
         if ($productQuantityStorageTransfer !== null) {
             $quantityMin = $productQuantityStorageTransfer->getQuantityMin() ?: 1;
@@ -161,12 +137,12 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
     }
 
     /**
-     * @param float $minQuantityInBaseUnits
+     * @param int $minQuantityInBaseUnits
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null $salesUnits
      *
      * @return float
      */
-    protected function getMinQuantityInSalesUnits(float $minQuantityInBaseUnits, ?array $salesUnits = null): float
+    protected function getMinQuantityInSalesUnits(int $minQuantityInBaseUnits, ?array $salesUnits = null): float
     {
         if ($salesUnits !== null) {
             foreach ($salesUnits as $salesUnit) {
