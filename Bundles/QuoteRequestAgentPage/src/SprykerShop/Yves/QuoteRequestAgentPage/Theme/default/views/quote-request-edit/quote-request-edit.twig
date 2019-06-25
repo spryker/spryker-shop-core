@@ -106,7 +106,7 @@
                         itemChild: itemChild,
                     },
                 } only %}
-                    {% block specificInformation %}
+                    {% block additionalInformation %}
                         {% include molecule('quote-request-item-summary', 'QuoteRequestPage') ignore missing with {
                             data: {
                                 priceMode: embed.priceMode,

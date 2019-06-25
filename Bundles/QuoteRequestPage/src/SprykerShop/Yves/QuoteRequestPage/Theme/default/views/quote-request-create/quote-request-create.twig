@@ -90,7 +90,7 @@
                             currency: quote.currency,
                         },
                     } only %}
-                        {% block specificInformation %}
+                        {% block additionalInformation %}
                             {% include molecule('quote-request-item-summary', 'QuoteRequestPage') with {
                                 data: {
                                     priceMode: embed.priceMode,

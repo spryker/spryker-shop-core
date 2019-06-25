@@ -128,7 +128,7 @@
                             currency: quote.currency,
                         },
                     } only %}
-                        {% block specificInformation %}
+                        {% block additionalInformation %}
                             {% include molecule('quote-request-item-summary', 'QuoteRequestPage') ignore missing with {
                                 data: {
                                     priceMode: embed.priceMode,
@@ -164,7 +164,7 @@
         </div>
 
         <div class="col col--sm-12 col--xl-4">
-            {% if quote and quote.items is not empty %}
+            {% if quote and quote.items | length %}
                 <div class="box">
                     {% include molecule('quote-request-cart-summary', 'QuoteRequestPage') ignore missing with {
                         data: {
