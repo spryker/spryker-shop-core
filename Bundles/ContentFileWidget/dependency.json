@@ -1,0 +1,5 @@
+{
+  "include": {
+    "FileManagerWidget": "FileManagerWidget provides molecule for download files."
+  }
+}

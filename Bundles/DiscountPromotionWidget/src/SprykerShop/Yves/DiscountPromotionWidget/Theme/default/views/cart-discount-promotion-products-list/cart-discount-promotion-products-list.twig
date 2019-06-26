@@ -1,6 +1,7 @@
 {% extends template('widget') %}
 
 {% define data = {
+    cart: _widget.cart,
     promotionProducts: _widget.promotionProducts,
 } %}
 
@@ -12,73 +13,75 @@
 
         <div class="grid">
             {% for product in data.promotionProducts %}
-                <div class="col col--sm-12 col--md-6">
-                    {% embed molecule('product-item') with {
-                        data: {
-                            product: product,
-                        },
-                    } only %}
-                        {% block sku %}
-                            <div class="text-secondary">
-                                {{ 'cart.item.sku' | trans }}
-                                {{ data.sku }}
-                            </div>
-                        {% endblock %}
+                {% block product %}
+                    <div class="col col--sm-12 col--md-6">
+                        {% embed molecule('product-item') with {
+                            data: {
+                                product: product,
+                            },
+                        } only %}
+                            {% block sku %}
+                                <div class="text-secondary">
+                                    {{ 'cart.item.sku' | trans }}
+                                    {{ data.sku }}
+                                </div>
+                            {% endblock %}
 
-                        {% block content %}
-                            {{parent()}}
+                            {% block content %}
+                                {{parent()}}
 
-                            {% if data.product.promotionItem.discount.description %}
+                                {% if data.product.promotionItem.discount.description %}
+                                    <hr>
+                                    {{ data.product.promotionItem.discount.description }}
+                                {% endif %}
+
                                 <hr>
-                                {{ data.product.promotionItem.discount.description }}
-                            {% endif %}
+                                {% include molecule('variant-configurator', 'DiscountPromotionWidget') with {
+                                    data: {
+                                        sku: data.sku,
+                                        superAttributes: data.product.attributeMap.superAttributes,
+                                        selectedAttributes: data.product.selectedAttributes,
+                                        availableAttributes: data.product.availableAttributes,
+                                    },
+                                } only %}
+                                <hr>
+                            {% endblock %}
 
-                            <hr>
-                            {% include molecule('variant-configurator', 'DiscountPromotionWidget') with {
-                                data: {
-                                    sku: data.sku,
-                                    superAttributes: data.product.attributeMap.superAttributes,
-                                    selectedAttributes: data.product.selectedAttributes,
-                                    availableAttributes: data.product.availableAttributes,
-                                },
-                            } only %}
-                            <hr>
-                        {% endblock %}
+                            {% block actionsContainer %}
+                                <div class="{{ config.name }}__actions {{ config.name }}__actions--spacingless">
+                                    {% block actions %}
+                                        {% set disabled = data.product.idProductConcrete is empty %}
 
-                        {% block actionsContainer %}
-                            <div class="{{ config.name }}__actions {{ config.name }}__actions--spacingless">
-                                {% block actions %}
-                                    {% set disabled = data.product.idProductConcrete is empty %}
-
-                                    <form method="POST" action="/cart/add/{{ data.sku }}" class="grid grid--bottom grid--justify">
-                                        <div class="col col--sm-5">
-                                            {% include molecule('quantity-selector') with {
-                                                data: {
-                                                    maxQuantity: data.product.promotionItem.maxQuantity,
-                                                    hasUpdateButton: false,
-                                                },
-                                            } only %}
-                                        </div>
-
-                                        <div class="col col--sm-6">
-                                            <input type="hidden" value="{{ data.sku }}" name="groupKey">
-                                            <input type="hidden" value="{{ data.product.promotionItem.discount.discountPromotion.idDiscountPromotion }}" name="idDiscountPromotion">
-
-                                            <button type="submit" class="button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' }}>
-                                                {% include atom('icon') with {
+                                        <form method="POST" action="/cart/add/{{ data.sku }}" class="grid grid--bottom grid--justify">
+                                            <div class="col col--sm-5">
+                                                {% include molecule('quantity-selector') with {
                                                     data: {
-                                                        name: 'cart-plus',
+                                                        maxQuantity: data.product.promotionItem.maxQuantity,
+                                                        hasUpdateButton: false,
                                                     },
                                                 } only %}
-                                                {{ 'page.detail.add-to-cart' | trans }}
-                                            </button>
-                                        </div>
-                                    </form>
-                                {% endblock %}
-                            </div>
-                        {% endblock %}
-                    {% endembed %}
-                </div>
+                                            </div>
+
+                                            <div class="col col--sm-6">
+                                                <input type="hidden" value="{{ data.sku }}" name="groupKey">
+                                                <input type="hidden" value="{{ data.product.promotionItem.discount.discountPromotion.idDiscountPromotion }}" name="idDiscountPromotion">
+
+                                                <button type="submit" class="button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' }}>
+                                                    {% include atom('icon') with {
+                                                        data: {
+                                                            name: 'cart-plus',
+                                                        },
+                                                    } only %}
+                                                    {{ 'page.detail.add-to-cart' | trans }}
+                                                </button>
+                                            </div>
+                                        </form>
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
+                        {% endembed %}
+                    </div>
+                {% endblock %}
             {% endfor %}
         </div>
     {% endif %}
