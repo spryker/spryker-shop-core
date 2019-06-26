@@ -1,13 +1,13 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'display-delivery-method',
+    name: 'delivery-information',
     tag: 'ul',
 } %}
 
 {% define data = {
     carrierName: required,
-    name: required,
+    methodName: required,
     storeCurrencyPrice: required,
     currencyIsoCode: required,
 } %}
@@ -20,7 +20,7 @@
 {% block body %}
     <li class="list__item">{{ data.carrierName }}</li>
     <li class="list__item">
-        {{ data.name }}
+        {{ data.methodName }}
         {{ data.storeCurrencyPrice | money(true, data.currencyIsoCode) }}
     </li>
 {% endblock %}

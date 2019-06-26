@@ -102,10 +102,10 @@
                 <div class="box">
                     <h6>{{ 'checkout.step.summary.delivery_method' | trans }}</h6>
                     <hr>
-                    {% include molecule('display-delivery-method') with {
+                    {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
                         data: {
                             carrierName: shipmentGroup.shipment.method.carrierName,
-                            name: shipmentGroup.shipment.method.name,
+                            methodName: shipmentGroup.shipment.method.name,
                             storeCurrencyPrice: shipmentGroup.shipment.method.storeCurrencyPrice,
                             currencyIsoCode: shipmentGroup.shipment.method.currencyIsoCode,
                         },

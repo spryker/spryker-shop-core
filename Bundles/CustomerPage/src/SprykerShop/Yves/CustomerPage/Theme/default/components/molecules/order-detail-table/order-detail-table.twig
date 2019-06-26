@@ -138,11 +138,10 @@
                     <div class="spacing-bottom spacing-bottom--big">
                         <h5>{{ 'customer.order.delivery_method' | trans }}</h5>
                         <div class="spacing-y spacing-y--inner">
-                            {% include molecule('display-delivery-method') with {
-                                class: 'text-small',
+                            {% include molecule('delivery-information', 'CustomerPage') with {
                                 data: {
                                     carrierName: expense.shipment.method.carrierName,
-                                    name: expense.name,
+                                    methodName: expense.name,
                                     storeCurrencyPrice: expense.sumPrice,
                                     currencyIsoCode: data.currencyIsoCode,
                                 },

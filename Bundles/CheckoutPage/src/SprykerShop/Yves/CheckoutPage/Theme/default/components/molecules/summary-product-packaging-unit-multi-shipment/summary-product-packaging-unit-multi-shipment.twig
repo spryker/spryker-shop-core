@@ -15,13 +15,22 @@
 } %}
 
 {% block body %}
+    {% set imageUrl = data.images ? (data.images | first) : null %}
+
     <div class="col col--sm-12 col--lg-3">
-        {% include molecule('summary-image', 'CheckoutPage') with {
-            data: {
-                name: data.name | default(''),
-                image: data.images ? (data.images | first) : null,
-            },
-        } only %}
+        {% if imageUrl %}
+            {% include atom('thumbnail') with {
+                modifiers: ['small'],
+                attributes: {
+                    alt: data.name | default(''),
+                    src: imageUrl.externalUrlLarge,
+                },
+            } only %}
+        {% else %}
+            <div class="text-center">
+                <small>{{ 'global.no_image_available' | trans }}</small>
+            </div>
+        {% endif %}
     </div>
     <div class="col col--sm-12 col--lg-9">
         {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default('') %}
