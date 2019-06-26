@@ -12,4 +12,12 @@
         <property name="isSuccess" type="bool" />
     </transfer>
 
+    <transfer name="Quote">
+        <property name="commentThread" type="CommentThread"/>
+    </transfer>
+
+    <transfer name="CommentThread">
+        <property name="idCommentThread" type="int"/>
+    </transfer>
+
 </transfers>
