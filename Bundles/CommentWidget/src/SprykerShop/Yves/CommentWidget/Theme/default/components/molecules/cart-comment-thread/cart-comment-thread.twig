@@ -1,0 +1,29 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-comment-thread',
+} %}
+
+{% define data = {
+    commentThread: required,
+    commentAvailableTags: required,
+    returnUrl: required,
+    idCustomer: required,
+} %}
+
+{% define attributes = {
+    'name': required,
+} %}
+
+{% block body %}
+    {% for comment in data.commentThread %}
+        {% include molecule('cart-comment', 'CommentWidget') with {
+            data: {
+                comment: comment,
+                commentAvailableTags: data.commentAvailableTags,
+                returnUrl: data.returnUrl,
+                idCustomer: data.idCustomer,
+            },
+        } only %}
+    {% endfor %}
+{% endblock %}

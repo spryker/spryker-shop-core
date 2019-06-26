@@ -1,0 +1,39 @@
+@mixin comment-widget-cart-comment-form($name: '.cart-comment-form') {
+    #{$name} {
+        &__tag {
+            position: relative;
+            margin-right: 0.5rem;
+            padding: 0.1rem 1.4rem 0.1rem 0.5rem;
+            background-color: helper-color-light(map-get($setting-color-actions, 'success'));
+            color: map-get($setting-color-actions, 'success');
+
+            &:hover {
+                text-decoration: none;
+            }
+
+            &::before,
+            &::after {
+                position: absolute;
+                right: 0.5rem;
+                top: 50%;
+                width: 0.6rem;
+                height: 0.1rem;
+                background-color: map-get($setting-color-actions, 'success');
+                content: '';
+            }
+
+            &::before {
+                transform: translateY(-50%) rotate(-45deg);
+            }
+
+            &::after {
+                transform: translateY(-50%) rotate(45deg);
+            }
+        }
+
+        &__handlers {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}

@@ -1,0 +1,34 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'cart-comment-thread-list',
+    tag: 'cart-comment-thread-list',
+} %}
+
+{% define data = {
+    commentsThreadList: required,
+    commentAvailableTags: required,
+    returnUrl: required,
+    idCustomer: required,
+} %}
+
+{% define attributes = {
+    'comment-thread-select': required,
+    'cart-comment-thread': 'cart-comment-thread',
+} %}
+
+{% block body %}
+    {% for key, commentThread in data.commentsThreadList %}
+        {% include molecule('cart-comment-thread', 'CommentWidget') with {
+            attributes: {
+                'name': key,
+            },
+            data: {
+                commentThread: commentThread,
+                commentAvailableTags: data.commentAvailableTags,
+                returnUrl: data.returnUrl,
+                idCustomer: data.idCustomer,
+            },
+        } only %}
+    {% endfor %}
+{% endblock %}
