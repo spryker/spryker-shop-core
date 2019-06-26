@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
+use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 
 class SharedCartPageToSharedCartClientBridge implements SharedCartPageToSharedCartClientInterface
 {
@@ -86,5 +87,15 @@ class SharedCartPageToSharedCartClientBridge implements SharedCartPageToSharedCa
     public function getQuoteAccessLevel(QuoteTransfer $quoteTransfer): ?string
     {
         return $this->sharedCartClient->getQuoteAccessLevel($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
+     */
+    public function getShareDetailsByIdQuoteAction(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer
+    {
+        return $this->sharedCartClient->getShareDetailsByIdQuoteAction($quoteTransfer);
     }
 }
