@@ -19,13 +19,14 @@ export default class CartCommentThreadList extends Component {
         const commentThreadSelect: HTMLSelectElement = this.commentThreadSelectComponent.getElementsByTagName('select')[0];
         const commentThreadSelectValue = commentThreadSelect.value;
         this.onShowCartCommentThread(commentThreadSelectValue);
+        this.cartCommentThreadScrollDown();
     }
 
     protected onSelectChange(event: Event): void {
         const commentThreadSelect: HTMLSelectElement = (event.target as HTMLSelectElement);
         const commentThreadSelectValue = commentThreadSelect.value;
         this.onShowCartCommentThread(commentThreadSelectValue);
-        this.cartCommentThreadScrollUp();
+        this.cartCommentThreadScrollDown();
     }
 
     protected onShowCartCommentThread(showNameComment: string) {
@@ -40,9 +41,9 @@ export default class CartCommentThreadList extends Component {
         });
     }
 
-    protected cartCommentThreadScrollUp(): void {
-        if (this.scrollTop > 0) {
-            this.scrollTop = 0;
+    protected cartCommentThreadScrollDown(): void {
+        if (this.scrollHeight > this.clientHeight) {
+            this.scrollTop = this.scrollHeight - this.clientHeight;
         }
     }
 
