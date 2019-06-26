@@ -42,7 +42,7 @@
 
     {% set messageField %}
         <textarea name="message" required="required" class="textarea textarea--expand spacing-bottom spacing-bottom-small">
-            {%- if isUpdateFormView == 'update' -%}
+            {%- if isUpdateFormView -%}
                 {{ data.comment.message }}
             {%- endif -%}
         </textarea>
@@ -83,7 +83,7 @@
                         {{ data.edit.text }}
                     </button>
 
-                    {% if isUpdateFormView == 'update' %}
+                    {% if isUpdateFormView %}
                         <button action="{{ data.remove.action }}" class="{{ data.remove.class }} {{ config.jsName }}__remove-button">
                             {{ data.remove.text }}
                         </button>
