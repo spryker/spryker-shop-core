@@ -21,36 +21,38 @@
         <h5>{{ 'comment_widget.comments_to_cart' | trans }}</h5>
     {% endblock %}
 
-    {% block selectCommentThread %}
-        {% embed atom('select') with {
-            modifiers: ['expand'],
-            class: commentThreadSelectClass ~ ' spacing-bottom spacing-bottom--big',
-            embed: {
-                commentListOptions: commentListOptions,
-            },
-        } only %}
-            {% block options %}
-                {% for commentOption in embed.commentListOptions %}
-                    <option value="{{ commentOption }}">{{ commentOption }}</option>
-                {% endfor %}
-            {% endblock %}
-        {% endembed %}
-    {% endblock %}
+    {% if data.taggedComments is not empty %}
+        {% block selectCommentThread %}
+            {% embed atom('select') with {
+                modifiers: ['expand'],
+                class: commentThreadSelectClass ~ ' spacing-bottom spacing-bottom--big',
+                embed: {
+                    commentListOptions: commentListOptions,
+                },
+            } only %}
+                {% block options %}
+                    {% for commentOption in embed.commentListOptions %}
+                        <option value="{{ commentOption }}">{{ commentOption }}</option>
+                    {% endfor %}
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
 
-    {% block commentThreadList %}
-        {% include molecule('cart-comment-thread-list', 'CommentWidget') with {
-            class: 'spacing-bottom spacing-bottom--big',
-            attributes: {
-                'comment-thread-select': commentThreadSelectClass,
-            },
-            data: {
-                commentsThreadList: data.taggedComments,
-                commentAvailableTags: data.commentAvailableTags,
-                returnUrl: data.returnUrl,
-                idCustomer: data.customer.idCustomer,
-            },
-        } only %}
-    {% endblock %}
+        {% block commentThreadList %}
+            {% include molecule('cart-comment-thread-list', 'CommentWidget') with {
+                class: 'spacing-bottom spacing-bottom--medium',
+                attributes: {
+                    'comment-thread-select': commentThreadSelectClass,
+                },
+                data: {
+                    commentsThreadList: data.taggedComments,
+                    commentAvailableTags: data.commentAvailableTags,
+                    returnUrl: data.returnUrl,
+                    idCustomer: data.customer.idCustomer,
+                },
+            } only %}
+        {% endblock %}
+    {% endif %}
 
     {% block newCommentForm %}
         {% include molecule('cart-comment-form', 'CommentWidget') with {

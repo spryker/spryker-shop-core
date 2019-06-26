@@ -40,7 +40,7 @@
     {% endblock %}
 
     {% block comment %}
-        <div class="grid spacing-bottom spacing-bottom--small">
+        <div class="grid">
             {% if data.comment.customer.idCustomer == data.idCustomer %}
                 {% block commentUpdate %}
                     {% include molecule('cart-comment-form', 'CommentWidget') with {

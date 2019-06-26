@@ -18,6 +18,7 @@
 {% block body %}
     {% for comment in data.commentThread %}
         {% include molecule('cart-comment', 'CommentWidget') with {
+            class: 'spacing-bottom spacing-bottom--medium',
             data: {
                 comment: comment,
                 commentAvailableTags: data.commentAvailableTags,

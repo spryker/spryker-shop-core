@@ -69,7 +69,7 @@
 
             {% block tags %}
                 {% if data.comment.tagNames is defined %}
-                    <div class="spacing-bottom spacing-bottom--medium">
+                    <div class="{{ config.name }}__tag-container">
                         {% for tagName in data.comment.tagNames %}
                             <a class="{{ config.name }}__tag" href="{{ path('comment/tag/remove', {'uuid': data.comment.uuid, 'name': tagName, 'returnUrl': data.returnUrl }) }}">
                                 {{ tagName }}
