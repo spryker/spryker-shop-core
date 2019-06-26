@@ -70,7 +70,7 @@ class ShopApplicationConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getTwigEnvironmentName(): string
+    protected function getTwigEnvironmentName(): string
     {
         return $this->get(ShopApplicationConstants::TWIG_ENVIRONMENT_NAME, APPLICATION_ENV);
     }

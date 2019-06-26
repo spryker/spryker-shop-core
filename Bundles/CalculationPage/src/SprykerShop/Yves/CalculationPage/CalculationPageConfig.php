@@ -17,7 +17,7 @@ class CalculationPageConfig extends AbstractBundleConfig
      */
     public function isCartDebugEnabled(): bool
     {
-        return $this->get(CalculationPageConstants::ENABLE_CART_DEBUG, $this->getCartDefaultDefaultValue());
+        return $this->get(CalculationPageConstants::ENABLE_CART_DEBUG, $this->getCartDebugDefaultValue());
     }
 
     /**
@@ -25,7 +25,7 @@ class CalculationPageConfig extends AbstractBundleConfig
      *
      * @return bool
      */
-    protected function getCartDefaultDefaultValue(): bool
+    protected function getCartDebugDefaultValue(): bool
     {
         return APPLICATION_ENV === 'development';
     }
