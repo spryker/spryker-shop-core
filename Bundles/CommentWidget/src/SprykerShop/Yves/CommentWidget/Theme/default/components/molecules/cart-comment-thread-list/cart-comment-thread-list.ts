@@ -35,9 +35,8 @@ export default class CartCommentThreadList extends Component {
                 cartComment.classList.add(this.classToToggle);
 
                 return;
-            } else {
-                cartComment.classList.remove(this.classToToggle);
             }
+            cartComment.classList.remove(this.classToToggle);
         });
     }
 

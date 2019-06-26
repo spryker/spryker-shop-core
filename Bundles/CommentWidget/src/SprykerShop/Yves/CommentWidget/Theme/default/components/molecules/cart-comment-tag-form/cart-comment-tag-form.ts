@@ -11,6 +11,8 @@ export default class CartCommentTagForm extends Component {
     }
 
     protected mapEvents(): void {
-        this.cartCommentTagSelectComponent.addEventListener('change', () => this.cartCommentTagForm.submit());
+        this.cartCommentTagSelectComponent.addEventListener('change', () => {
+            this.cartCommentTagForm.submit();
+        });
     }
 }

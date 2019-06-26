@@ -13,10 +13,14 @@ export default class CartCommentForm extends Component {
     }
 
     protected mapEvents(): void {
-        this.editButtonForm.addEventListener('click', (event: Event) => this.onButtonFormClick(event, this.editFormActionAttribute));
+        this.editButtonForm.addEventListener('click', (event: Event) => {
+            this.onButtonFormClick(event, this.editFormActionAttribute);
+        });
 
         if (this.removeButtonForm) {
-            this.removeButtonForm.addEventListener('click', (event: Event) => this.onButtonFormClick(event, this.removeFormActionAttribute));
+            this.removeButtonForm.addEventListener('click', (event: Event) => {
+                this.onButtonFormClick(event, this.removeFormActionAttribute);
+            });
         }
     }
 
