@@ -20,9 +20,9 @@
     },
 
     edit: {
-        text: data.submit.text | default(''),
-        class: data.submit.class | default(''),
-        action: data.submit.action | default(''),
+        text: data.submit.text | default,
+        class: data.submit.class | default,
+        action: data.submit.action | default,
     },
 
     remove: {
@@ -32,9 +32,12 @@
     },
 } %}
 
+{% set isAddFormView = data.formView == 'add' %}
+{% set isUpdateFormView = data.formView == 'update' %}
+
 {% block body %}
     {% set uuidField %}
-        <input type="hidden" name="uuid" value="{{ data.comment is not null ? data.comment.uuid : '' }}">
+        <input type="hidden" name="uuid" value="{{ data.comment is not null ? data.comment.uuid }}">
     {% endset %}
 
     {% set messageField %}
@@ -51,18 +54,13 @@
 
     {% block form %}
         <form class="{{ config.jsName }}__element" method="{{ data.method }}">
-            {% if data.formView == 'add' or data.formView == 'update' %}
-                {% if data.formView == 'add' %}
-                    {{ messageField }}
-                    {{ returnUrlField }}
-                    <input type="hidden" name="ownerId" value="{{ data.ownerId }}">
-                    <input type="hidden" name="ownerType" value="{{ data.ownerType }}">
-                {% else %}
-                    {{ messageField }}
-                    {{ uuidField }}
-                    {{ returnUrlField }}
-                {% endif %}
-            {% else %}
+            {% if isAddFormView %}
+                {{ messageField }}
+                {{ returnUrlField }}
+                <input type="hidden" name="ownerId" value="{{ data.ownerId }}">
+                <input type="hidden" name="ownerType" value="{{ data.ownerType }}">
+            {% elseif isUpdateFormView %}
+                {{ messageField }}
                 {{ uuidField }}
                 {{ returnUrlField }}
             {% endif %}

@@ -11,20 +11,25 @@
     idCustomer: required,
 } %}
 
+{% set commentTagLenght = data.comment.tagNames | length %}
+{% set commentAvailableTagLenght = data.commentAvailableTags | length %}
+
 {% block body %}
     {% block header %}
         <div class="grid grid--middle spacing-bottom spacing-bottom--small">
             <span class="col col--sm-9">{{ data.comment.customer.firstName }} {{ data.comment.customer.lastName }}</span>
 
-            {% include molecule('cart-comment-tag-form', 'CommentWidget') with {
-                class: 'col col--sm-3',
-                data: {
-                    action: path('comment/tag/add', {'uuid': data.comment.uuid }),
-                    commentAvailableTags: data.commentAvailableTags,
-                    tagNames: data.comment.tagNames,
-                    returnUrl: data.returnUrl,
-                },
-            } only %}
+            {% if commentTagLenght != commentAvailableTagLenght %}
+                {% include molecule('cart-comment-tag-form', 'CommentWidget') with {
+                    class: 'col col--sm-3',
+                    data: {
+                        action: path('comment/tag/add', {'uuid': data.comment.uuid }),
+                        commentAvailableTags: data.commentAvailableTags,
+                        tagNames: data.comment.tagNames,
+                        returnUrl: data.returnUrl,
+                    },
+                } only %}
+            {% endif %}
         </div>
     {% endblock %}
 
@@ -40,11 +45,10 @@
     {% endblock %}
 
     {% block comment %}
-        <div class="grid">
+        <div>
             {% if data.comment.customer.idCustomer == data.idCustomer %}
                 {% block commentUpdate %}
                     {% include molecule('cart-comment-form', 'CommentWidget') with {
-                        class: 'col col--sm-12',
                         data: {
                             formView: 'update',
                             comment: data.comment,
@@ -64,7 +68,7 @@
                 {% endblock %}
             {% else %}
                 {% block commentMessgae %}
-                    <p class="col col--sm-12">{{ data.comment.message }}</p>
+                    <p>{{ data.comment.message }}</p>
                 {% endblock %}
             {% endif %}
         </div>

@@ -5,8 +5,8 @@ export default class CartCommentTagForm extends Component {
     protected cartCommentTagSelectComponent: HTMLElement;
 
     protected readyCallback(): void {
-        this.cartCommentTagForm = <HTMLFormElement>this.getElementsByClassName(`${this.jsName}__element`)[0];
-        this.cartCommentTagSelectComponent = <HTMLElement>this.getElementsByClassName(`${this.jsName}__select`)[0];
+        this.cartCommentTagForm = <HTMLFormElement>this.querySelector(`.${this.jsName}__element`);
+        this.cartCommentTagSelectComponent = <HTMLElement>this.querySelector(`.${this.jsName}__select`);
         this.mapEvents();
     }
 

@@ -13,34 +13,30 @@
 } %}
 
 {% define attributes = {
-    'name': 'name',
+    name: 'name',
 } %}
 
 {% block body %}
-    {% block form %}
-        <form class="{{ config.jsName }}__element" method="GET" action="{{ data.action }}">
-            {% embed atom('select') with {
-                class: config.jsName ~ '__select',
-                attributes: {
-                    name: attributes['name'],
-                },
-                embed: {
-                    commentAvailableTags: data.commentAvailableTags,
-                    tagNames: data.tagNames,
-                },
-            } only %}
-                {% block options %}
-                    <option value="">{{ 'comment_widget.form.tags' | trans }}</option>
+    <form class="{{ config.jsName }}__element" method="GET" action="{{ data.action }}">
+        {% embed atom('select') with {
+            class: config.jsName ~ '__select',
+            attributes: {
+                name: attributes.name,
+            },
+            embed: {
+                commentAvailableTags: data.commentAvailableTags,
+                tagNames: data.tagNames,
+            },
+        } only %}
+            {% block options %}
+                <option value="">{{ 'comment_widget.form.tags' | trans }}</option>
 
-                    {% for availableTag in embed.commentAvailableTags %}
-                        {% if availableTag not in embed.tagNames %}
-                            <option value="{{ availableTag }}">{{ availableTag }}</option>
-                        {% endif %}
-                    {% endfor %}
-                {% endblock %}
-            {% endembed %}
+                {% for availableTag in embed.commentAvailableTags if not (availableTag in embed.tagNames) %}
+                    <option value="{{ availableTag }}">{{ availableTag }}</option>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
 
-            <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
-        </form>
-    {% endblock %}
+        <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
+    </form>
 {% endblock %}

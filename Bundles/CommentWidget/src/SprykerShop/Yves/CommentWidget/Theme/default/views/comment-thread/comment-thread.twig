@@ -42,7 +42,7 @@
             {% include molecule('cart-comment-thread-list', 'CommentWidget') with {
                 class: 'spacing-bottom spacing-bottom--medium',
                 attributes: {
-                    'comment-thread-select': commentThreadSelectClass,
+                    'comment-thread-select': '.' ~ commentThreadSelectClass,
                 },
                 data: {
                     commentsThreadList: data.taggedComments,

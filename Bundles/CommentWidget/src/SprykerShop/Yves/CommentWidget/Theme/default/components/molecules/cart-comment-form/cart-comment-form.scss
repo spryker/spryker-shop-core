@@ -14,16 +14,13 @@
 
             &::before,
             &::after {
+                content: '';
                 position: absolute;
                 right: 0.5rem;
                 top: 50%;
                 width: 0.6rem;
                 height: 0.1rem;
                 background-color: map-get($setting-color-actions, 'success');
-                content: '';
-            }
-
-            &::before {
                 transform: translateY(-50%) rotate(-45deg);
             }
 
@@ -36,5 +33,7 @@
             display: flex;
             justify-content: space-between;
         }
+
+        @content;
     }
 }
