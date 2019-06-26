@@ -11,18 +11,4 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class CommentWidgetConfig extends AbstractBundleConfig
 {
-    /**
-     * @see \Spryker\Shared\Comment\CommentConfig::COMMENT_AVAILABLE_TAGS
-     */
-    protected const COMMENT_AVAILABLE_TAGS = [];
-
-    /**
-     * @see \Spryker\Shared\Comment\CommentConfig::getCommentAvailableTags()
-     *
-     * @return string[]
-     */
-    public function getCommentAvailableTags(): array
-    {
-        return static::COMMENT_AVAILABLE_TAGS;
-    }
 }

@@ -22,8 +22,12 @@ class CommentWidgetAbstractController extends AbstractController
      *
      * @return void
      */
-    protected function handleResponseErrors(CommentThreadResponseTransfer $commentThreadResponseTransfer): void
+    protected function handleResponseMessages(CommentThreadResponseTransfer $commentThreadResponseTransfer): void
     {
+        if ($commentThreadResponseTransfer->getIsSuccessful()) {
+            return;
+        }
+
         foreach ($commentThreadResponseTransfer->getMessages() as $messageTransfer) {
             $this->addErrorMessage($messageTransfer->getValue());
         }
@@ -34,7 +38,7 @@ class CommentWidgetAbstractController extends AbstractController
      *
      * @return void
      */
-    protected function executeCommentThreadAfterOperation(CommentThreadResponseTransfer $commentThreadResponseTransfer): void
+    protected function executeCommentThreadAfterSuccessfulOperation(CommentThreadResponseTransfer $commentThreadResponseTransfer): void
     {
         if (!$commentThreadResponseTransfer->getIsSuccessful()) {
             return;

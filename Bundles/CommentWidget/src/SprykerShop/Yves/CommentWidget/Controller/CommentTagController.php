@@ -55,24 +55,27 @@ class CommentTagController extends CommentWidgetAbstractController
      */
     protected function executeAddAction(string $uuid, Request $request): RedirectResponse
     {
+        $returnUrl = $request->query->get(static::PARAMETER_RETURN_URL);
+        $name = $request->query->get(static::PARAMETER_NAME);
+
         $commentTagRequestTransfer = (new CommentTagRequestTransfer())
             ->setComment((new CommentTransfer())->setUuid($uuid))
-            ->setName($request->query->get(static::PARAMETER_NAME));
+            ->setName($name);
 
-        if (!$this->isCommentTagAvailable($commentTagRequestTransfer)) {
+        if (!$this->getFactory()->createCommentTagChecker()->isCommentTagAvailable($commentTagRequestTransfer)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_COMMENT_TAG_NOT_AVAILABLE);
 
-            return $this->redirectResponseExternal($request->query->get(static::PARAMETER_RETURN_URL));
+            return $this->redirectResponseExternal($returnUrl);
         }
 
         $commentThreadResponseTransfer = $this->getFactory()
             ->getCommentClient()
             ->addCommentTag($commentTagRequestTransfer);
 
-        $this->executeCommentThreadAfterOperation($commentThreadResponseTransfer);
-        $this->handleResponseErrors($commentThreadResponseTransfer);
+        $this->executeCommentThreadAfterSuccessfulOperation($commentThreadResponseTransfer);
+        $this->handleResponseMessages($commentThreadResponseTransfer);
 
-        return $this->redirectResponseExternal($request->query->get(static::PARAMETER_RETURN_URL));
+        return $this->redirectResponseExternal($returnUrl);
     }
 
     /**
@@ -83,33 +86,26 @@ class CommentTagController extends CommentWidgetAbstractController
      */
     protected function executeRemoveAction(string $uuid, Request $request): RedirectResponse
     {
+        $returnUrl = $request->query->get(static::PARAMETER_RETURN_URL);
+        $name = $request->query->get(static::PARAMETER_NAME);
+
         $commentTagRequestTransfer = (new CommentTagRequestTransfer())
             ->setComment((new CommentTransfer())->setUuid($uuid))
-            ->setName($request->query->get(static::PARAMETER_NAME));
+            ->setName($name);
 
-        if (!$this->isCommentTagAvailable($commentTagRequestTransfer)) {
+        if (!$this->getFactory()->createCommentTagChecker()->isCommentTagAvailable($commentTagRequestTransfer)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_COMMENT_TAG_NOT_AVAILABLE);
 
-            return $this->redirectResponseExternal($request->query->get(static::PARAMETER_RETURN_URL));
+            return $this->redirectResponseExternal($returnUrl);
         }
 
         $commentThreadResponseTransfer = $this->getFactory()
             ->getCommentClient()
             ->removeCommentTag($commentTagRequestTransfer);
 
-        $this->executeCommentThreadAfterOperation($commentThreadResponseTransfer);
-        $this->handleResponseErrors($commentThreadResponseTransfer);
+        $this->executeCommentThreadAfterSuccessfulOperation($commentThreadResponseTransfer);
+        $this->handleResponseMessages($commentThreadResponseTransfer);
 
-        return $this->redirectResponseExternal($request->query->get(static::PARAMETER_RETURN_URL));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CommentTagRequestTransfer $commentTagRequestTransfer
-     *
-     * @return bool
-     */
-    protected function isCommentTagAvailable(CommentTagRequestTransfer $commentTagRequestTransfer): bool
-    {
-        return in_array($commentTagRequestTransfer->getName(), $this->getFactory()->getModuleConfig()->getCommentAvailableTags(), true);
+        return $this->redirectResponseExternal($returnUrl);
     }
 }

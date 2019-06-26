@@ -8,6 +8,10 @@
 namespace SprykerShop\Yves\CommentWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CommentWidget\Checker\CommentChecker;
+use SprykerShop\Yves\CommentWidget\Checker\CommentCheckerInterface;
+use SprykerShop\Yves\CommentWidget\Checker\CommentTagChecker;
+use SprykerShop\Yves\CommentWidget\Checker\CommentTagCheckerInterface;
 use SprykerShop\Yves\CommentWidget\Dependency\Client\CommentWidgetToCommentClientInterface;
 use SprykerShop\Yves\CommentWidget\Dependency\Client\CommentWidgetToCustomerClientInterface;
 use SprykerShop\Yves\CommentWidget\Operation\CommentOperation;
@@ -29,11 +33,21 @@ class CommentWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CommentWidget\CommentWidgetConfig
+     * @return \SprykerShop\Yves\CommentWidget\Checker\CommentCheckerInterface
      */
-    public function getModuleConfig(): CommentWidgetConfig
+    public function createCommentChecker(): CommentCheckerInterface
     {
-        return $this->getConfig();
+        return new CommentChecker();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CommentWidget\Checker\CommentTagCheckerInterface
+     */
+    public function createCommentTagChecker(): CommentTagCheckerInterface
+    {
+        return new CommentTagChecker(
+            $this->getCommentClient()
+        );
     }
 
     /**
