@@ -11,14 +11,14 @@
     idCustomer: required,
 } %}
 
-{% set isShowTagForm = data.comment.tagNames | length != data.commentAvailableTags | length %}
+{% set shouldShowTagForm = data.comment.tagNames | length != data.commentAvailableTags | length %}
 
 {% block body %}
     {% block header %}
         <div class="grid grid--middle spacing-bottom spacing-bottom--small">
             <span class="col col--sm-9">{{ data.comment.customer.firstName }} {{ data.comment.customer.lastName }}</span>
 
-            {% if isShowTagForm %}
+            {% if shouldShowTagForm %}
                 {% include molecule('comment-tag-form', 'CommentWidget') with {
                     class: 'col col--sm-3',
                     data: {

@@ -2,23 +2,23 @@ import Component from 'ShopUi/models/component';
 
 export default class CommentForm extends Component {
     protected commentForm: HTMLFormElement;
-    protected editButtonForm: HTMLButtonElement;
-    protected removeButtonForm: HTMLButtonElement;
+    protected submitButton: HTMLButtonElement;
+    protected removeButton: HTMLButtonElement;
 
     protected readyCallback(): void {
         this.commentForm = <HTMLFormElement>this.querySelector(`.${this.jsName}__form`);
-        this.editButtonForm = <HTMLButtonElement>this.querySelector(`.${this.jsName}__submit-button`);
-        this.removeButtonForm = <HTMLButtonElement>this.querySelector(`.${this.jsName}__remove-button`);
+        this.submitButton = <HTMLButtonElement>this.querySelector(`.${this.jsName}__submit-button`);
+        this.removeButton = <HTMLButtonElement>this.querySelector(`.${this.jsName}__remove-button`);
         this.mapEvents();
     }
 
     protected mapEvents(): void {
-        this.editButtonForm.addEventListener('click', (event: Event) => {
+        this.submitButton.addEventListener('click', (event: Event) => {
             this.onButtonFormClick(event, this.editFormActionAttribute);
         });
 
-        if (this.removeButtonForm) {
-            this.removeButtonForm.addEventListener('click', (event: Event) => {
+        if (this.removeButton) {
+            this.removeButton.addEventListener('click', (event: Event) => {
                 this.onButtonFormClick(event, this.removeFormActionAttribute);
             });
         }
@@ -34,13 +34,13 @@ export default class CommentForm extends Component {
      * Gets an attribute name for form element.
      */
     get editFormActionAttribute(): string {
-        return this.editButtonForm.getAttribute('action');
+        return this.submitButton.getAttribute('action');
     }
 
     /**
      * Gets an attribute name for form element.
      */
     get removeFormActionAttribute(): string {
-        return this.removeButtonForm.getAttribute('action');
+        return this.removeButton.getAttribute('action');
     }
 }
