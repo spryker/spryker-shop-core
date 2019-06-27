@@ -32,7 +32,7 @@
             } only %}
                 {% block options %}
                     {% for commentOption in embed.commentListOptions %}
-                        <option value="{{ commentOption }}">{{ commentOption }}</option>
+                        <option value="{{ commentOption }}">{{ ('comment_widget.tags.' ~ commentOption) | trans }}</option>
                     {% endfor %}
                 {% endblock %}
             {% endembed %}
