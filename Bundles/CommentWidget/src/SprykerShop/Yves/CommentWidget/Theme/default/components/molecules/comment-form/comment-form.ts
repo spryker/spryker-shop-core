@@ -1,13 +1,13 @@
 import Component from 'ShopUi/models/component';
 
-export default class CartCommentForm extends Component {
-    protected cartCommentForm: HTMLFormElement;
+export default class CommentForm extends Component {
+    protected commentForm: HTMLFormElement;
     protected editButtonForm: HTMLButtonElement;
     protected removeButtonForm: HTMLButtonElement;
 
     protected readyCallback(): void {
-        this.cartCommentForm = <HTMLFormElement>this.querySelector(`.${this.jsName}__element`);
-        this.editButtonForm = <HTMLButtonElement>this.querySelector(`.${this.jsName}__edit-button`);
+        this.commentForm = <HTMLFormElement>this.querySelector(`.${this.jsName}__form`);
+        this.editButtonForm = <HTMLButtonElement>this.querySelector(`.${this.jsName}__submit-button`);
         this.removeButtonForm = <HTMLButtonElement>this.querySelector(`.${this.jsName}__remove-button`);
         this.mapEvents();
     }
@@ -26,8 +26,8 @@ export default class CartCommentForm extends Component {
 
     protected onButtonFormClick(event: Event, action: string): void {
         event.preventDefault();
-        this.cartCommentForm.setAttribute('action', action);
-        this.cartCommentForm.submit();
+        this.commentForm.setAttribute('action', action);
+        this.commentForm.submit();
     }
 
     /**

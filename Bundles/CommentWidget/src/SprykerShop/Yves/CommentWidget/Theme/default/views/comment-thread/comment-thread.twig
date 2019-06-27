@@ -10,7 +10,7 @@
 } %}
 
 {% set commentListOptions = [] %}
-{% set commentThreadSelectClass = 'comments-cart' %}
+{% set commentThreadSelectClass = 'js-comments-cart' %}
 
 {% for key, comments in data.taggedComments %}
     {% set commentListOptions = commentListOptions | merge([key]) %}
@@ -39,10 +39,10 @@
         {% endblock %}
 
         {% block commentThreadList %}
-            {% include molecule('cart-comment-thread-list', 'CommentWidget') with {
+            {% include molecule('comment-thread-list', 'CommentWidget') with {
                 class: 'spacing-bottom spacing-bottom--medium',
                 attributes: {
-                    'comment-thread-select': '.' ~ commentThreadSelectClass,
+                    'comment-thread-select-selector': '.' ~ commentThreadSelectClass,
                 },
                 data: {
                     commentsThreadList: data.taggedComments,
@@ -55,7 +55,7 @@
     {% endif %}
 
     {% block newCommentForm %}
-        {% include molecule('cart-comment-form', 'CommentWidget') with {
+        {% include molecule('comment-form', 'CommentWidget') with {
             data: {
                 formView: 'add',
                 returnUrl: data.returnUrl,

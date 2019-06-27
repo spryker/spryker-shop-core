@@ -1,4 +1,4 @@
-@mixin comment-widget-cart-comment-thread-list($name: '.cart-comment-thread-list') {
+@mixin comment-widget-comment-thread-list($name: '.comment-thread-list') {
     #{$name} {
         max-height: 16rem;
         overflow: hidden auto;

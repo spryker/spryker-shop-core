@@ -1,8 +1,8 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'cart-comment-thread-list',
-    tag: 'cart-comment-thread-list',
+    name: 'comment-thread-list',
+    tag: 'comment-thread-list',
 } %}
 
 {% define data = {
@@ -13,14 +13,14 @@
 } %}
 
 {% define attributes = {
-    'comment-thread-select': required,
-    'cart-comment-thread': '.cart-comment-thread',
+    'comment-thread-select-selector': required,
+    'comment-thread-selector': 'comment-thread',
     'class-to-toggle': 'is-hidden',
 } %}
 
 {% block body %}
     {% for key, commentThread in data.commentsThreadList %}
-        {% include molecule('cart-comment-thread', 'CommentWidget') with {
+        {% include molecule('comment-thread', 'CommentWidget') with {
             attributes: {
                 'name': key,
             },

@@ -1,28 +1,22 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'cart-comment-form',
-    tag: 'cart-comment-form',
+    name: 'comment-form',
+    tag: 'comment-form',
 } %}
 
 {% define data = {
     method: 'POST',
     formView: 'add',
-    comment: null,
+    comment: {},
     returnUrl: required,
-    ownerId: null,
-    ownerType: null,
+    ownerId: '',
+    ownerType: '',
 
     submit: {
         text: '',
         class: '',
         action: '',
-    },
-
-    edit: {
-        text: data.submit.text | default,
-        class: data.submit.class | default,
-        action: data.submit.action | default,
     },
 
     remove: {
@@ -37,7 +31,7 @@
 
 {% block body %}
     {% set uuidField %}
-        <input type="hidden" name="uuid" value="{{ data.comment is not null ? data.comment.uuid }}">
+        <input type="hidden" name="uuid" value="{{ data.comment ? data.comment.uuid }}">
     {% endset %}
 
     {% set messageField %}
@@ -53,13 +47,14 @@
     {% endset %}
 
     {% block form %}
-        <form class="{{ config.jsName }}__element" method="{{ data.method }}">
+        <form class="{{ config.jsName }}__form" method="{{ data.method }}">
             {% if isAddFormView %}
                 {{ messageField }}
                 {{ returnUrlField }}
                 <input type="hidden" name="ownerId" value="{{ data.ownerId }}">
                 <input type="hidden" name="ownerType" value="{{ data.ownerType }}">
-            {% elseif isUpdateFormView %}
+            {% endif %}
+            {% if isUpdateFormView %}
                 {{ messageField }}
                 {{ uuidField }}
                 {{ returnUrlField }}
@@ -67,20 +62,22 @@
 
             {% block tags %}
                 {% if data.comment.tagNames is defined %}
-                    <div class="{{ config.name }}__tag-container">
+                    <ul class="{{ config.name }}__tag-list">
                         {% for tagName in data.comment.tagNames %}
-                            <a class="{{ config.name }}__tag" href="{{ path('comment/tag/remove', {'uuid': data.comment.uuid, 'name': tagName, 'returnUrl': data.returnUrl }) }}">
-                                {{ tagName }}
-                            </a>
+                            <li class="{{ config.name }}__tag-list-item">
+                                <a class="{{ config.name }}__tag" href="{{ path('comment/tag/remove', {'uuid': data.comment.uuid, 'name': tagName, 'returnUrl': data.returnUrl }) }}">
+                                    {{ tagName }}
+                                </a>
+                            </li>
                         {% endfor %}
-                    </div>
+                    </ul>
                 {% endif %}
             {% endblock %}
 
             {% block formHandlers %}
                 <div class="{{ config.name }}__handlers">
-                    <button action="{{ data.edit.action }}" class="{{ data.edit.class }} {{ config.jsName }}__edit-button">
-                        {{ data.edit.text }}
+                    <button action="{{ data.submit.action }}" class="{{ data.submit.class }} {{ config.jsName }}__submit-button">
+                        {{ data.submit.text }}
                     </button>
 
                     {% if isUpdateFormView %}

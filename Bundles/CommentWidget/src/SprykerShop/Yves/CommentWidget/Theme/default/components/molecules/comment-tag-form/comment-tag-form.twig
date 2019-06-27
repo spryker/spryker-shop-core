@@ -1,13 +1,13 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'cart-comment-tag-form',
-    tag: 'cart-comment-tag-form',
+    name: 'comment-tag-form',
+    tag: 'comment-tag-form',
 } %}
 
 {% define data = {
     action: required,
-    commentAvailableTags: required,
+    availableTags: required,
     tagNames: required,
     returnUrl: required,
 } %}
@@ -17,21 +17,21 @@
 } %}
 
 {% block body %}
-    <form class="{{ config.jsName }}__element" method="GET" action="{{ data.action }}">
+    <form class="{{ config.jsName }}__form" method="GET" action="{{ data.action }}">
         {% embed atom('select') with {
             class: config.jsName ~ '__select',
             attributes: {
                 name: attributes.name,
             },
             embed: {
-                commentAvailableTags: data.commentAvailableTags,
+                availableTags: data.availableTags,
                 tagNames: data.tagNames,
             },
         } only %}
             {% block options %}
                 <option value="">{{ 'comment_widget.form.tags' | trans }}</option>
 
-                {% for availableTag in embed.commentAvailableTags if not (availableTag in embed.tagNames) %}
+                {% for availableTag in embed.availableTags if not (availableTag in embed.tagNames) %}
                     <option value="{{ availableTag }}">{{ availableTag }}</option>
                 {% endfor %}
             {% endblock %}
