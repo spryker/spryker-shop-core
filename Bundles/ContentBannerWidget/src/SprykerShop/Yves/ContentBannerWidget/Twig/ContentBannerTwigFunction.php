@@ -24,9 +24,9 @@ class ContentBannerTwigFunction extends TwigFunction
     protected const MESSAGE_BANNER_WRONG_TEMPLATE = '<b>"%s" is not supported name of template.</b>';
 
     /**
-     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE
      */
-    protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+    protected const WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE = 'bottom-title';
 
     /**
      * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE
@@ -104,8 +104,8 @@ class ContentBannerTwigFunction extends TwigFunction
     protected function getAvailableTemplates(): array
     {
         return [
-            static::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT => '@ContentBannerWidget/views/banner/banner.twig',
-            static::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE => '@ContentBannerWidget/views/banner/banner-top-title.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE => '@ContentBannerWidget/views/banner/banner.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE => '@ContentBannerWidget/views/banner-alternative/banner-alternative.twig',
         ];
     }
 

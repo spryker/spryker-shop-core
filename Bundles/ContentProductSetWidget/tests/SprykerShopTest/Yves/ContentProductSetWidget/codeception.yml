@@ -1,0 +1,21 @@
+namespace: SprykerShopTest\Yves\ContentProductSetWidget
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Yes:
+        path: .
+        class_name: ContentProductSetWidgetYvesTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
