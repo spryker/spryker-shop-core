@@ -8,7 +8,8 @@
 {% define data = {
     unitPrice: required,
     subtotalPrice: required,
-    cartItem: required
+    cartItem: required,
+    currencyIsoCode: null,
 } %}
 
 {% block class %}{{ parent() }} list{% endblock %}
@@ -28,8 +29,9 @@
             {% else %}
                 {% include molecule('product-options', 'ProductOptionWidget') ignore missing with {
                     data: {
-                        options: data.cartItem.productOptions | default([])
-                    }
+                        options: data.cartItem.productOptions | default([]),
+                        currencyIsoCode: data.currencyIsoCode,
+                    },
                 } only %}
             {% endif %}
         </li>
