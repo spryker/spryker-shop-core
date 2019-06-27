@@ -103,8 +103,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
             return false;
         }
 
-        $shippingAddressData = $quoteTransfer->getShippingAddress()->toArray();
-        if (!count(array_filter($shippingAddressData))) {
+        if ($this->isEmptyAddress($quoteTransfer->getShippingAddress())) {
             return false;
         }
 
@@ -141,12 +140,21 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
             return false;
         }
 
-        $billingAddressData = $quoteTransfer->getBillingAddress()->toArray();
-        if (!count(array_filter($billingAddressData))) {
+        if ($this->isEmptyAddress($quoteTransfer->getBillingAddress())) {
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return bool
+     */
+    protected function isEmptyAddress(AddressTransfer $addressTransfer): bool
+    {
+        return !count(array_filter($addressTransfer->toArray()));
     }
 
     /**
