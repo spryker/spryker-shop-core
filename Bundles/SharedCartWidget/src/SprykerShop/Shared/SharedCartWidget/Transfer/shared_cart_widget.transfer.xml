@@ -8,4 +8,9 @@
         <property name="isLocked" type="bool" defaultValue="false"/>
     </transfer>
 
+    <transfer name="Customer">
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+    </transfer>
+
 </transfers>
