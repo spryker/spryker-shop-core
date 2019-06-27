@@ -1,0 +1,12 @@
+@mixin checkout-page-summary-overview($name: '.summary-overview') {
+    #{$name} {
+        &__grand-total-price {
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
+        @content;
+    }
+}
+
+@include checkout-page-summary-overview();
