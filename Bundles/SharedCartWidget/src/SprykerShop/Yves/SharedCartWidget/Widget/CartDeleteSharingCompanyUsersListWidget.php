@@ -11,18 +11,16 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @deprecated Use \SprykerShop\Yves\SharedCartWidget\Widget\CartDeleteSharingCompanyUsersListWidget instead.
- *
  * @method \SprykerShop\Yves\SharedCartWidget\SharedCartWidgetFactory getFactory()
  */
-class CartDeleteCompanyUsersListWidget extends AbstractWidget
+class CartDeleteSharingCompanyUsersListWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      */
     public function __construct(QuoteTransfer $quoteTransfer)
     {
-        $this->addQuoteShareDetailsParameter($quoteTransfer);
+        $this->addSharingQuoteCustomerCollectionParameter($quoteTransfer);
     }
 
     /**
@@ -30,7 +28,7 @@ class CartDeleteCompanyUsersListWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'CartDeleteCompanyUsersListWidget';
+        return 'CartDeleteSharingCompanyUsersListWidget';
     }
 
     /**
@@ -38,7 +36,7 @@ class CartDeleteCompanyUsersListWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@SharedCartWidget/views/shared-cart-users/shared-cart-users.twig';
+        return '@SharedCartWidget/views/shared-cart-sharing-users/shared-cart-sharing-users.twig';
     }
 
     /**
@@ -46,11 +44,11 @@ class CartDeleteCompanyUsersListWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function addQuoteShareDetailsParameter(QuoteTransfer $quoteTransfer): void
+    protected function addSharingQuoteCustomerCollectionParameter(QuoteTransfer $quoteTransfer): void
     {
         $this->addParameter(
-            'quoteShareDetails',
-            $this->getFactory()->getSharedCartClient()->getShareDetailsByIdQuoteAction($quoteTransfer)->getShareDetails()
+            'sharingQuoteCustomerCollection',
+            $this->getFactory()->getSharedCartClient()->getSharingSameQuoteCustomerCollection($quoteTransfer)->getCustomers()
         );
     }
 }
