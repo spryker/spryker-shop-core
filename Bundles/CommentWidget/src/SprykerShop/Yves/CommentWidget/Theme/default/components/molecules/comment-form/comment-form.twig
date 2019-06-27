@@ -15,13 +15,11 @@
 
     submit: {
         text: '',
-        class: 'button button--primary',
         action: '',
     },
 
     remove: {
         text: '',
-        class: 'button button--success',
         action: '',
     },
 } %}
@@ -76,12 +74,12 @@
 
             {% block formHandlers %}
                 <div class="{{ config.name }}__handlers">
-                    <button action="{{ data.submit.action }}" class="{{ data.submit.class }} {{ config.jsName }}__submit-button">
+                    <button action="{{ data.submit.action }}" class="button button--primary {{ config.jsName }}__submit-button">
                         {{ data.submit.text }}
                     </button>
 
                     {% if isUpdateFormView %}
-                        <button action="{{ data.remove.action }}" class="{{ data.remove.class }} {{ config.jsName }}__remove-button">
+                        <button action="{{ data.remove.action }}" class="button button--success {{ config.jsName }}__remove-button">
                             {{ data.remove.text }}
                         </button>
                     {% endif %}
