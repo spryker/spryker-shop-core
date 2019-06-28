@@ -49,7 +49,6 @@ class QuoteApproveRequestForm extends AbstractType
     {
         $builder->add(static::FILED_APPROVER, ChoiceType::class, [
             'choices' => $options[static::OPTION_APPROVERS_LIST],
-            'choices_as_values' => true,
             'expanded' => false,
             'required' => true,
             'label' => false,

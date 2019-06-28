@@ -104,7 +104,6 @@ class AddressForm extends AbstractType
                 'Mrs' => 'customer.salutation.mrs',
                 'Dr' => 'customer.salutation.dr',
             ]),
-            'choices_as_values' => true,
             'label' => 'profile.form.salutation',
             'required' => true,
             'constraints' => [
@@ -276,7 +275,6 @@ class AddressForm extends AbstractType
             'label' => 'customer.address.country',
             'required' => true,
             'choices' => array_flip($options[self::OPTION_COUNTRY_CHOICES]),
-            'choices_as_values' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
             ],
