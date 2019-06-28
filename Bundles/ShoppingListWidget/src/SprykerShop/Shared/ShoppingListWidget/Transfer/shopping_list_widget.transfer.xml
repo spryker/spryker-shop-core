@@ -12,16 +12,4 @@
         <property name="shoppingLists" type="ShoppingList[]" singular="shoppingList" />
     </transfer>
 
-    <transfer name="ProductQuantityStorage">
-        <property name="quantityMin" type="float"/>
-        <property name="quantityMax" type="float"/>
-        <property name="quantityInterval" type="float"/>
-    </transfer>
-
-    <transfer name="ProductView">
-        <property name="quantityMin" type="float"/>
-        <property name="quantityMax" type="float"/>
-        <property name="quantityInterval" type="float"/>
-    </transfer>
-
 </transfers>
