@@ -26,7 +26,7 @@ class CommentWidgetFactory extends AbstractFactory
     public function createCommentOperation(): CommentOperationInterface
     {
         return new CommentOperation(
-            $this->getCommentThreadAfterOperationPlugins()
+            $this->getCommentThreadAfterOperationStrategyPlugins()
         );
     }
 
@@ -57,8 +57,8 @@ class CommentWidgetFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CommentWidgetExtension\Dependency\Plugin\CommentThreadAfterOperationStrategyPluginInterface[]
      */
-    public function getCommentThreadAfterOperationPlugins(): array
+    public function getCommentThreadAfterOperationStrategyPlugins(): array
     {
-        return $this->getProvidedDependency(CommentWidgetDependencyProvider::PLUGINS_COMMENT_THREAD_AFTER_OPERATION);
+        return $this->getProvidedDependency(CommentWidgetDependencyProvider::PLUGINS_COMMENT_THREAD_AFTER_OPERATION_STRATEGY);
     }
 }

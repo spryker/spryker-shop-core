@@ -17,7 +17,7 @@ class CommentWidgetDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_COMMENT = 'CLIENT_COMMENT';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
-    public const PLUGINS_COMMENT_THREAD_AFTER_OPERATION = 'PLUGINS_COMMENT_THREAD_AFTER_OPERATION';
+    public const PLUGINS_COMMENT_THREAD_AFTER_OPERATION_STRATEGY = 'PLUGINS_COMMENT_THREAD_AFTER_OPERATION_STRATEGY';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -29,7 +29,7 @@ class CommentWidgetDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideDependencies($container);
         $container = $this->addCommentClient($container);
         $container = $this->addCustomerClient($container);
-        $container = $this->addCommentThreadAfterOperationPlugins($container);
+        $container = $this->addCommentThreadAfterOperationStrategyPlugins($container);
 
         return $container;
     }
@@ -67,10 +67,10 @@ class CommentWidgetDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCommentThreadAfterOperationPlugins(Container $container): Container
+    protected function addCommentThreadAfterOperationStrategyPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_COMMENT_THREAD_AFTER_OPERATION, function () {
-            return $this->getCommentThreadAfterOperationPlugins();
+        $container->set(static::PLUGINS_COMMENT_THREAD_AFTER_OPERATION_STRATEGY, function () {
+            return $this->getCommentThreadAfterOperationStrategyPlugins();
         });
 
         return $container;
@@ -79,7 +79,7 @@ class CommentWidgetDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \SprykerShop\Yves\CommentWidgetExtension\Dependency\Plugin\CommentThreadAfterOperationStrategyPluginInterface[]
      */
-    protected function getCommentThreadAfterOperationPlugins(): array
+    protected function getCommentThreadAfterOperationStrategyPlugins(): array
     {
         return [];
     }

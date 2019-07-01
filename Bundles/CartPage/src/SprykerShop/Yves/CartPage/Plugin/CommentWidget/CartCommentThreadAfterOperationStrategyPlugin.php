@@ -35,7 +35,7 @@ class CartCommentThreadAfterOperationStrategyPlugin extends AbstractPlugin imple
 
     /**
      * {@inheritdoc}
-     *  - Sync comment thread with quote session storage.
+     *  - Updates session quote with comment thread.
      *
      * @api
      *

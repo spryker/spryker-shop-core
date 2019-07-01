@@ -13,7 +13,7 @@ interface CommentThreadAfterOperationStrategyPluginInterface
 {
     /**
      * Specification:
-     *  - Checks if this plugin is applicable for provided owner type.
+     *  - Checks if this plugin is applicable for provided comment thread.
      *
      * @api
      *
