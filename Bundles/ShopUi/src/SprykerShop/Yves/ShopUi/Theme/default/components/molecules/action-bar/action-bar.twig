@@ -21,7 +21,7 @@
         {% block actions %}
             {% for action in data.actions %}
                 <a class="{{ component.renderClass('button', modifiers) }} {{ config.name }}__action" href="{{ action.url }}">
-                    {% if action.icon | default(false) %}
+                    {% if action.icon is defined and action.icon %}
                         {% include atom('icon') with {
                             class: config.name ~ '__icon',
                             data: {
