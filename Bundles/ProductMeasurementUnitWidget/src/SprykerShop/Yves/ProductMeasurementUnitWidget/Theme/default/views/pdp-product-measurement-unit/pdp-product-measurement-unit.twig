@@ -13,7 +13,7 @@
     isAddToCartDisabled : _widget.isAddToCartDisabled | default(false),
     minQuantity: _widget.minQuantity,
     maxQuantity: _widget.maxQuantity,
-    quantityInterrval: _widget.quantityInterval,
+    quantityInterval: _widget.quantityInterval,
 } %}
 
 {% set hasProductMeasurementUnit = data.salesUnitCount >= 1 %}
@@ -46,7 +46,7 @@
                     value: hasProductMeasurementUnit ? data.minQuantityInSalesUnits : data.minQuantity,
                     readOnly: data.isAddToCartDisabled,
                     hasUpdateButton: false,
-                    minQuantity: data.minQuantity
+                    minQuantity: data.minQuantity,
                     maxQuantity: data.maxQuantity,
                     step: data.quantityInterval,
                 },

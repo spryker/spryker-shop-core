@@ -5,7 +5,8 @@
 } %}
 
 {% define data = {
-    options: null
+    options: null,
+    currencyIsoCode: null,
 } %}
 
 {% block component %}
@@ -21,7 +22,7 @@
                 {{ option.value | trans }}
 
                 {% if can('SeePricePermissionPlugin') %}
-                    <span class="float-right">{{ option.unitPrice | money }}</span>
+                    <span class="float-right">{{ option.unitPrice | money(true, data.currencyIsoCode) }}</span>
                 {% endif %}
             </li>
         {% endfor %}

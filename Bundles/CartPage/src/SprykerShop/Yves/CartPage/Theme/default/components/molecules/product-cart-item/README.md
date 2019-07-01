@@ -1,0 +1,1 @@
+Displays detailed product information: product image, product name, product SKU, a drop-down menu with product variants, list of bundles, price, packaging unit information, quantity input, "delete" link, and a comment box.

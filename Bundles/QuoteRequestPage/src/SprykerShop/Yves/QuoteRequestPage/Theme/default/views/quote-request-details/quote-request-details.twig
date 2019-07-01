@@ -28,9 +28,9 @@
                 },
                 {
                     label: '#' ~ data.quoteRequest.quoteRequestReference,
-                }
-            ]
-        }
+                },
+            ],
+        },
     } only %}
 {% endblock %}
 
@@ -74,16 +74,16 @@
                         modifiers: ['naked'],
                         attributes: {
                             name: 'quote-request-versions',
-                            onchange: 'this.options[this.selectedIndex].value && (window.location.search = "quote-request-version-reference=" + this.options[this.selectedIndex].value);'
+                            onchange: 'this.options[this.selectedIndex].value && (window.location.search = "quote-request-version-reference=" + this.options[this.selectedIndex].value);',
                         },
                         embed: {
                             versionReferences: data.quoteRequestVersionReferences,
-                            currentVersionReference: data.version ? data.version.versionReference : null
-                        }
+                            currentVersionReference: data.version ? data.version.versionReference : null,
+                        },
                     } only %}
                         {% block options %}
                             {% for versionReference in embed.versionReferences %}
-                                <option value="{{ versionReference }}" {{ (versionReference == embed.currentVersionReference) ? 'selected' : '' }}>{{ versionReference }}</option>
+                                <option value="{{ versionReference }}" {{ (versionReference == embed.currentVersionReference) ? 'selected'}}>{{ versionReference }}</option>
                             {% endfor %}
                         {% endblock %}
                     {% endembed %}
@@ -97,21 +97,53 @@
                 <div class="box">
                     {% include molecule('price-mode') with {
                         data: {
-                            priceMode: quote.priceMode
-                        }
+                            priceMode: quote.priceMode,
+                        },
                     } only %}
                 </div>
             {% endif %}
             {% if quote %}
                 {% for cartItem in quote.items %}
-                    {% include molecule('quote-request-cart-item', 'QuoteRequestPage') with {
-                        class: 'box spacing-top spacing-top--big',
+                    {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
                         data: {
+                            product: cartItem,
+                        },
+                        embed: {
                             priceMode: quote.priceMode,
-                            cartItem: cartItem,
                             currency: quote.currency,
-                        }
+                        },
                     } only %}
+                        {% block additionalInformation %}
+                            {% include molecule('quote-request-item-summary', 'QuoteRequestPage') with {
+                                data: {
+                                    priceMode: embed.priceMode,
+                                    unitPrice: data.product.unitPrice | money(true, embed.currency.code),
+                                    subtotalPrice: data.product.sumSubtotalAggregation | money(true, embed.currency.code),
+                                    cartItem: data.product,
+                                    currency: embed.currency,
+                                },
+                            } only %}
+                        {% endblock %}
+
+                        {% block actions %}
+                            {% if data.product.amountSalesUnit is empty %}
+                                {{ 'cart.item_quantity' | trans }}:
+                                <strong>{{ data.product.quantity }}</strong>
+
+                                {% if data.product.quantitySalesUnit %}
+                                    {% set value = data.product.quantitySalesUnit.value %}
+                                    {% set precision = data.product.quantitySalesUnit.precision %}
+                                    {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+
+                                    <p>
+                                        <small class="text-secondary">
+                                            [= {{ value / precision }} {{ salesUnitName | trans }}]
+                                        </small>
+                                    </p>
+                                {% endif %}
+                            {% endif %}
+                        {% endblock %}
+                    {% endembed %}
                 {% endfor %}
             {% endif %}
         </div>
@@ -121,8 +153,8 @@
                 <div class="box">
                     {% include molecule('quote-request-cart-summary', 'QuoteRequestPage') with {
                         data: {
-                            cart: quote
-                        }
+                            cart: quote,
+                        },
                     } only %}
                 </div>
             {% endif %}
@@ -136,7 +168,7 @@
                     {% if data.isQuoteRequestCancelable %}
                         <hr class="box__separator">
                         <a class="button button--expand button--cancel"
-                           href="{{ path('quote-request/cancel', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                           href="{{ path('quote-request/cancel', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
                             {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
                         </a>
                     {% endif %}
@@ -144,12 +176,12 @@
                     {% if data.isQuoteRequestReady %}
                         <hr class="box__separator">
                         <a class="button button--expand button--hollow"
-                           href="{{ path('quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                           href="{{ path('quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
                             {{ 'quote_request_page.quote_request.actions.revise' | trans }}
                         </a>
                         <hr class="box__separator">
                         <a class="button button--expand button--success"
-                           href="{{ path('quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                           href="{{ path('quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
                             {{ 'quote_request_page.quote_request.actions.convert_to_cart' | trans }}
                         </a>
                     {% endif %}
@@ -157,12 +189,12 @@
                     {% if data.isQuoteRequestEditable %}
                         <hr class="box__separator">
                         <a class="button button--expand button--success"
-                           href="{{ path('quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                           href="{{ path('quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
                             {{ 'quote_request_page.quote_request.actions.edit' | trans }}
                         </a>
                         <hr class="box__separator">
                         <a class="button button--expand button--success"
-                           href="{{ path('quote-request/send-to-user', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                           href="{{ path('quote-request/send-to-user', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
                             {{ 'quote_request_page.quote_request.actions.send_to_agent' | trans }}
                         </a>
                     {% endif %}

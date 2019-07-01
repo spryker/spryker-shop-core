@@ -1,0 +1,21 @@
+{% extends template('widget') %}
+
+{% define data = {
+    cartShareLinks: _view.cartShareLinks,
+    cartShareLinkLabels: _view.cartShareLinkLabels,
+} %}
+
+{% block body %}
+    <div class="form form--inline">
+        {% for shareOption, cartShareLink in data.cartShareLinks %}
+            {% include molecule('share-link' , 'PersistentCartShareWidget') with {
+                class: 'form__container',
+                data: {
+                    shareOption: shareOption,
+                    cartShareLink: cartShareLink,
+                    cartShareLinkLabel: data.cartShareLinkLabels[shareOption],
+                }
+            } only %}
+        {% endfor %}
+    </div>
+{% endblock %}

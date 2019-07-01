@@ -1,15 +1,16 @@
+{# @deprecated Use molecule product-cart-item instead. #}
 {% extends model('component') %}
 
 {% define config = {
     name: 'cart-item',
-    tag: 'article'
+    tag: 'article',
 } %}
 
 {% define data = {
     cart: required,
     isQuoteEditable: required,
     cartItem: required,
-    attributes: required
+    attributes: required,
 } %}
 
 {% set canEditCart = not is_granted('ROLE_USER') or data.isQuoteEditable %}
@@ -20,8 +21,8 @@
             {% include molecule('cart-image', 'CartPage') with {
                 data: {
                     name: data.cartItem.name | default(''),
-                    image: data.cartItem.images is empty ? null : (data.cartItem.images | first)
-                }
+                    image: data.cartItem.images is empty ? null : (data.cartItem.images | first),
+                },
             } only %}
         </div>
 
@@ -38,8 +39,8 @@
                     data: {
                         cartItem: data.cartItem,
                         cartItemAttributes: data.attributes,
-                        canEditCart: canEditCart
-                    }
+                        canEditCart: canEditCart,
+                    },
                 } only %}
             {% endif %}
 
@@ -49,10 +50,11 @@
 
             {% include molecule('cart-item-summary', 'CartPage') with {
                 data: {
-                    unitPrice: data.cartItem.unitPrice | money,
-                    subtotalPrice: data.cartItem.sumSubtotalAggregation | money,
-                    cartItem: data.cartItem
-                }
+                    unitPrice: data.cartItem.unitPrice | money(true, data.cart.currency.code),
+                    subtotalPrice: data.cartItem.sumSubtotalAggregation | money(true, data.cart.currency.code),
+                    cartItem: data.cartItem,
+                    currencyIsoCode: data.cart.currency.code,
+                },
             } only %}
 
         </div>
@@ -80,6 +82,13 @@
                 {% if canEditCart %}
                     {% widget 'CartProductMeasurementUnitQuantitySelectorWidget' args [data.cartItem] only %}
                     {% elsewidget 'QuantitySalesUnitWidgetPlugin' args [data.cartItem] only %} {# @deprecated Use CartProductMeasurementUnitQuantitySelectorWidget instead. #}
+                    {% elsewidget 'ProductQuantityWidget' args [data.cartItem.quantity, data.cartItem.id, data.cartItem.sku, data.cartItem.groupKey] only %}
+                        {% block body %}
+                            <form method="POST" action="{{ path('cart/change/quantity', {'sku': data.sku }) }}">
+                                {{ parent() }}
+                                <input type="hidden" value="{{ data.groupKey }}" name="groupKey" />
+                            </form>
+                        {% endblock %}
                     {% nowidget %}
                         {% include molecule('cart-quantity-input', 'CartPage') with {
                             data: {
@@ -90,6 +99,11 @@
                 {% else %}
                     {{ 'cart.item_quantity' | trans }}:
                     <strong>{{ data.cartItem.quantity }}</strong>
+                    {% include molecule('measurement-unit-item', 'ProductMeasurementUnitWidget') ignore missing with {
+                        data: {
+                            cartItem: data.cartItem,
+                        },
+                    } only %}
                 {% endif %}
             {% endif %}
 
@@ -99,9 +113,11 @@
                 </a>
             {% endif %}
 
-            {% widget 'CartItemNoteFormWidget' args [data.cartItem, data.cart] only %}
-            {% elsewidget 'CartNoteQuoteItemWidgetPlugin' args [data.cartItem, data.cart] only %} {# @deprecated Use CartItemNoteFormWidget instead. #}
-            {% endwidget %}
+            {% block cartItemNote %}
+                {% widget 'CartItemNoteFormWidget' args [data.cartItem, data.cart] only %}
+                {% elsewidget 'CartNoteQuoteItemWidgetPlugin' args [data.cartItem, data.cart] only %} {# @deprecated Use CartItemNoteFormWidget instead. #}
+                {% endwidget %}
+            {% endblock %}
         </div>
     </div>
 {% endblock %}

@@ -22,9 +22,9 @@
                 },
                 {
                     label: 'quote_request_page.quote_request.actions.edit' | trans,
-                }
-            ]
-        }
+                },
+            ],
+        },
     } only %}
 {% endblock %}
 
@@ -36,8 +36,8 @@
                 modifiers: ['biggest'],
                 class: 'text-alt',
                 data: {
-                    name: 'shopping-cart'
-                }
+                    name: 'shopping-cart',
+                },
             } only %}
             <h6>{{ 'cart.empty' | trans }}</h6>
         </div>
@@ -88,20 +88,52 @@
                     <div class="box">
                         {% include molecule('price-mode') with {
                             data: {
-                                priceMode: quote.priceMode
-                            }
+                                priceMode: quote.priceMode,
+                            },
                         } only %}
                     </div>
                 {% endif %}
                 {% for cartItem in quote.items %}
-                    {% include molecule('quote-request-cart-item', 'QuoteRequestPage') with {
-                        class: 'box spacing-top spacing-top--big',
+                    {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
                         data: {
+                            product: cartItem,
+                        },
+                        embed: {
                             priceMode: quote.priceMode,
-                            cartItem: cartItem,
                             currency: quote.currency,
-                        }
+                        },
                     } only %}
+                        {% block additionalInformation %}
+                            {% include molecule('quote-request-item-summary', 'QuoteRequestPage') with {
+                                data: {
+                                    priceMode: embed.priceMode,
+                                    unitPrice: data.product.unitPrice | money(true, embed.currency.code),
+                                    subtotalPrice: data.product.sumSubtotalAggregation | money(true, embed.currency.code),
+                                    cartItem: data.product,
+                                    currency: embed.currency,
+                                },
+                            } only %}
+                        {% endblock %}
+
+                        {% block actions %}
+                            {% if data.product.amountSalesUnit is empty %}
+                                {{ 'cart.item_quantity' | trans }}:
+                                <strong>{{ data.product.quantity }}</strong>
+
+                                {% if data.product.quantitySalesUnit %}
+                                    {% set value = data.product.quantitySalesUnit.value %}
+                                    {% set precision = data.product.quantitySalesUnit.precision %}
+                                    {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+
+                                    <p>
+                                        <small class="text-secondary">
+                                            [= {{ value / precision }} {{ salesUnitName | trans }}]
+                                        </small>
+                                    </p>
+                                {% endif %}
+                            {% endif %}
+                        {% endblock %}
+                    {% endembed %}
                 {% endfor %}
             </div>
 
@@ -109,18 +141,18 @@
                 <div class="box">
                     {% include molecule('quote-request-cart-summary', 'QuoteRequestPage') with {
                         data: {
-                            cart: quote
-                        }
+                            cart: quote,
+                        },
                     } only %}
                 </div>
                 <div class="box spacing-top spacing-top--big">
                     <a class="button button--expand button--hollow"
-                       href="{{ url('quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference}) }}">
+                       href="{{ url('quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference}) }}" data-init-single-click>
                         {{ 'quote_request_page.quote_request.actions.back_to_view' | trans }}
                     </a>
                     <hr class="box__separator">
                     <a class="button button--expand button--edit-items"
-                       href="{{ url('quote-request/edit-items', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                       href="{{ url('quote-request/edit-items', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
                         {{ 'quote_request_page.quote_request.actions.edit_items' | trans }}
                     </a>
                     <hr class="box__separator">
@@ -136,6 +168,5 @@
         </div>
 
         {{ form_end(data.quoteRequestForm) }}
-
     {% endif %}
 {% endblock %}

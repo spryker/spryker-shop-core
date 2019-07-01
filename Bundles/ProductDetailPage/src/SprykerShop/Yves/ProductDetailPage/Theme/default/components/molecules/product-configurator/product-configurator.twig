@@ -92,10 +92,15 @@
                 <div class="grid grid--bottom grid--justify">
                     <div class="col col--sm-5">
                         {% include molecule('quantity-input') with {
+                            inputAttributes: {
+                                class: 'input input--expand js-volume-price__quantity',
+                            },
                             data: {
-                                readOnly: isDisabled,
+                                maxQuantity: data.product.quantityMax,
+                                value: data.product.quantityMin ?? 1,
+                                minQuantity: data.product.quantityMin ?? 1,
+                                step: data.product.quantityInterval ?? 1,
                                 hasUpdateButton: false,
-                                maxQuantity: data.maxQuantity,
                             },
                         } only %}
                     </div>
