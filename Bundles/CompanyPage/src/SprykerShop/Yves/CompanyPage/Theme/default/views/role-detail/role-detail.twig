@@ -18,7 +18,7 @@
     </div>
     
     {% include molecule('role-table', 'CompanyPage') with {
-            class: 'box',
+            class: 'box spacing-top spacing-top--big',
             data: {
                 roles: [data.role],
                 actions: {
@@ -29,13 +29,13 @@
             }
     } only %}
 
-    <div class="box">
+    <div class="box spacing-top spacing-top--big">
         <a class="float-right" href="{{ url('company/company-role/user/manage', {'id': data.role.idCompanyRole}) }}">
             {{ 'company.account.company_role.user.manage' | trans }}
         </a>
         <h5>{{ 'company.account.company_role.users' | trans }}</h5>
         {% if data.users is not empty %}
-            <hr/>
+            <hr class="box__separator">
             {% include molecule('user-table', 'CompanyPage') with {
                 data: {
                     users: data.users,
@@ -49,13 +49,13 @@
         {% endif %}
     </div>
     
-    <div class="box">
+    <div class="box spacing-top spacing-top--big">
         <a class="float-right" href="{{ url('company/company-role/update', {'id': data.role.idCompanyRole}) }}">
             {{ 'company.account.company_role.permission.manage' | trans }}
         </a>
         <h5>{{ 'company.account.company_role.permissions' | trans }}</h5>
         {% if data.permissions is not empty %}
-            <hr/>
+            <hr class="box__separator">
             {% include molecule('permission-table', 'CompanyPage') with {
                 data: {
                     permissions: data.permissions,

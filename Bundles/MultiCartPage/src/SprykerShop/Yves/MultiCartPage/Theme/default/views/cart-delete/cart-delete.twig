@@ -26,9 +26,9 @@
 {% block customerContent %}
     <div class="box">
         <h5>{{ "multi_cart_page.cart_delete_confirmation.warning" | trans }}</h5>
-        <hr />
+        <hr class="box__separator">
         {{ "multi_cart_page.cart_delete_confirmation.trying_to_delete" | trans }}: <strong>{{ data.cartName }}</strong>
-        <br/><br/>
+        <br><br>
 
         {% widget 'CartDeleteCompanyUsersListWidget' args [data.cart] only %}{% endwidget %}
 

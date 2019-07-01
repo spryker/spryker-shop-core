@@ -54,17 +54,17 @@
                             }
                         } only %}
                     </label>
-                    <input name="selectedAttributes[{{ attributeName }}]" type="hidden" />
+                    <input name="selectedAttributes[{{ attributeName }}]" type="hidden">
                 </li>
             {% endfor %}
         </ul>
 
-        <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey" />
-        <input type="hidden" value="{{ data.cartItem.quantity }}" name="quantity" />
+        <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey">
+        <input type="hidden" value="{{ data.cartItem.quantity }}" name="quantity">
 
         {% if data.cartItem.productOptions is not empty %}
             {% for productOption in data.cartItem.productOptions %}
-                <input name="product-option[{{ productOption.groupName }}]" type="hidden" value="{{ productOption.idProductOptionValue }}" />
+                <input name="product-option[{{ productOption.groupName }}]" type="hidden" value="{{ productOption.idProductOptionValue }}">
             {% endfor %}
         {% endif %}
     </form>

@@ -24,16 +24,16 @@
     <div class="product-packaging-new-price is-hidden" id="product-packaging-new-price-block">
         <span>{{ "measurement_units.new-price" | trans}}:</span>
         <div id="product-packaging-new-price-value-block"></div>
-        <hr />
+        <hr>
     </div>
     <input id="item-base-price"
            type="hidden"
            value="{{ data.product.price }}"
-    />
+    >
     <input id="item-money-symbol"
            type="hidden"
            value="{{  moneySymbol() }}"
-    />
+    >
 
     <div class="grid grid--bottom grid--justify">
         <div class="col {% if data.salesUnitCount %}col--sm-7{% else %}col--sm-5{% endif %}">
@@ -126,18 +126,18 @@
                            value="{{ data.productPackagingUnit.defaultAmount }}"
                            {% if not data.packagingUnitIsVariable %}disabled{% endif %}
                            name="amount-sales-unit[{{ data.product.sku }}]"
-                    />
+                    >
                     <input id="default-amount"
                            class="input input--expand"
                            type="hidden"
                            value="{{ data.productPackagingUnit.defaultAmount }}"
-                    />
+                    >
                     <input id="amount"
                            class="input input--expand"
                            type="hidden"
                            value="{{ data.productPackagingUnit.defaultAmount }}"
                            name="amount[{{ data.product.sku }}]"
-                    />
+                    >
                 </label>
             </div>
             <div class="col {% if data.salesUnitCount %}col--sm-4{% else %}col--sm-6{% endif %}">
@@ -174,7 +174,7 @@
             } only %}
 
             <div class="text-small is-hidden packaging-unit-choice">
-                <hr />
+                <hr>
 
                 <div class="packaging-unit-notifications">
 
@@ -201,7 +201,7 @@
         {% endif %}
 
         {% if data.salesUnitCount %}
-            <hr />
+            <hr>
             <button type="submit" id="add-to-cart-button" class="button button--success button--expand" data-init-single-click {{ data.isAddToCartDisabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
                 {% include atom('icon') with {
                     data: {

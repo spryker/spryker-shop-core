@@ -23,10 +23,10 @@
         <div class="grid grid--justify grid--bottom">
             <div class="col col--sm-5">
                 <label>{{ 'shopping_list.item_quantity' | trans }}</label>
-                <input class="input js-volume-price__quantity" name="quantity" value="{{ data.minQuantity }}"/>
+                <input class="input js-volume-price__quantity" name="quantity" value="{{ data.minQuantity }}">
             </div>
             <div class="col col--sm-6">
-                <input type="hidden" name="sku" value="{{ data.sku }}" />
+                <input type="hidden" name="sku" value="{{ data.sku }}">
 
                 {% include molecule('form-data-injector', 'ShoppingListWidget') with {
                     attributes: {
