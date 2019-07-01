@@ -28,14 +28,14 @@ class ShopUiTwigExtension extends TwigExtension
     public const DEFAULT_MODULE = 'ShopUi';
 
     /**
-     * @var \SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface
+     * @var \SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface|null
      */
     protected $assetsUrlProvider;
 
     /**
-     * @param \SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface $assetsUrlProvider
+     * @param \SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface|null $assetsUrlProvider
      */
-    public function __construct(AssetsUrlProviderInterface $assetsUrlProvider)
+    public function __construct(?AssetsUrlProviderInterface $assetsUrlProvider = null)
     {
         $this->assetsUrlProvider = $assetsUrlProvider;
     }
@@ -150,7 +150,11 @@ class ShopUiTwigExtension extends TwigExtension
      */
     protected function getPublicFolderPath(): string
     {
-        return $this->assetsUrlProvider->getAssetsUrl();
+        if ($this->assetsUrlProvider) {
+            return $this->assetsUrlProvider->getAssetsUrl();
+        }
+
+        return '/assets/';
     }
 
     /**

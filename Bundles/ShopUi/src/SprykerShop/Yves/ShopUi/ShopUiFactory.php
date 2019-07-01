@@ -35,17 +35,8 @@ class ShopUiFactory extends AbstractFactory
     {
         return new AssetsUrlProvider(
             $this->getConfig(),
-            $this->getTwigClient(),
-            $this->getStoreName()
+            $this->getTwigClient()
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function getStoreName(): string
-    {
-        return $this->getProvidedDependency(ShopUiDependencyProvider::STORE_NAME);
     }
 
     /**

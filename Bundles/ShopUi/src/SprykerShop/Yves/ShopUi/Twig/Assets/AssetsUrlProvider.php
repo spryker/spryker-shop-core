@@ -12,18 +12,12 @@ use SprykerShop\Yves\ShopUi\ShopUiConfig;
 
 class AssetsUrlProvider implements AssetsUrlProviderInterface
 {
-    protected const STORE_KEY = '%store%';
     protected const THEME_KEY = '%theme%';
 
     /**
      * @var \SprykerShop\Yves\ShopUi\ShopUiConfig
      */
-    protected $shopUiConfig;
-
-    /**
-     * @var string
-     */
-    protected $storeName;
+    protected $config;
 
     /**
      * @var \SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientInterface
@@ -31,17 +25,14 @@ class AssetsUrlProvider implements AssetsUrlProviderInterface
     protected $twigClient;
 
     /**
-     * @param \SprykerShop\Yves\ShopUi\ShopUiConfig $shopUiConfig
+     * @param \SprykerShop\Yves\ShopUi\ShopUiConfig $config
      * @param \SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientInterface $twigClient
-     * @param string $storeName
      */
     public function __construct(
-        ShopUiConfig $shopUiConfig,
-        ShopUiToTwigClientInterface $twigClient,
-        string $storeName
+        ShopUiConfig $config,
+        ShopUiToTwigClientInterface $twigClient
     ) {
-        $this->shopUiConfig = $shopUiConfig;
-        $this->storeName = $storeName;
+        $this->config = $config;
         $this->twigClient = $twigClient;
     }
 
@@ -50,14 +41,11 @@ class AssetsUrlProvider implements AssetsUrlProviderInterface
      */
     public function getAssetsUrl(): string
     {
-        $yvesAssetsUrl = strtr($this->shopUiConfig->getYvesAssetsUrlPattern(), [
-            static::STORE_KEY => $this->getStoreKey(),
+        $yvesAssetsUrl = strtr($this->config->getYvesAssetsUrlPattern(), [
             static::THEME_KEY => $this->getThemeKey(),
         ]);
 
-        $yvesAssetsUrl = rtrim($yvesAssetsUrl, '/');
-
-        return $yvesAssetsUrl . '/';
+        return rtrim($yvesAssetsUrl, '/') . '/';
     }
 
     /**
@@ -71,14 +59,6 @@ class AssetsUrlProvider implements AssetsUrlProviderInterface
             $themeName = $this->twigClient->getYvesThemeNameDefault();
         }
 
-        return strtolower($themeName);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreKey(): string
-    {
-        return strtolower($this->storeName);
+        return $themeName;
     }
 }
