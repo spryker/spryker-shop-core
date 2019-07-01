@@ -138,9 +138,9 @@ class QuoteRequestAgentPageControllerProvider extends AbstractYvesControllerProv
     }
 
     /**
-     * @deprecated Use QuoteRequestAgentPageControllerProvider::addQuoteRequestSendQuoteRequestToCustomerRoute() instead.
-     *
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentEditController::editAction()
+     *
+     * @deprecated Use QuoteRequestAgentPageControllerProvider::addQuoteRequestSendQuoteRequestToCustomerRoute() instead.
      *
      * @return $this
      */
