@@ -24,7 +24,7 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER = 'quote_request_page.quote_request.sent_to_customer';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
 
-    protected const URL_PARAM_REFERER = 'referer';
+    protected const REQUEST_HEADER_REFERER = 'referer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -118,9 +118,14 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
-        return $this->redirectResponseExternal(
-            $request->headers->get(static::URL_PARAM_REFERER) ?: static::ROUTE_QUOTE_REQUEST_AGENT_DETAILS
-        );
+        $refererUrl = $request->headers->get(static::REQUEST_HEADER_REFERER);
+        if ($refererUrl) {
+            return $this->redirectResponseExternal($refererUrl);
+        }
+
+        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_DETAILS, [
+            static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
+        ]);
     }
 
     /**
