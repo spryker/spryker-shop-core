@@ -60,10 +60,6 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return false;
         }
 
-        if ($this->hasItemsWithEmptyShipment($quoteTransfer)) {
-            return false;
-        }
-
         $shipmentGroupsCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
         foreach ($shipmentGroupsCollection as $shipmentGroupTransfer) {
             if (!$this->checkShipmentExpenseSetInQuote($quoteTransfer, $shipmentGroupTransfer)) {
