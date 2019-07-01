@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToAvailabilityStorageClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
-use SprykerShop\Yves\CustomerReorderWidget\Dependency\Service\CustomerReorderWidgetToUtilQuantityServiceInterface;
 
 class CartFiller implements CartFillerInterface
 {
@@ -36,26 +35,18 @@ class CartFiller implements CartFillerInterface
     protected $availabilityStorageClient;
 
     /**
-     * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Service\CustomerReorderWidgetToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Model\ItemFetcherInterface $itemsFetcher
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToAvailabilityStorageClientInterface $availabilityStorageClient
-     * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Service\CustomerReorderWidgetToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         CustomerReorderWidgetToCartClientInterface $cartClient,
         ItemFetcherInterface $itemsFetcher,
-        CustomerReorderWidgetToAvailabilityStorageClientInterface $availabilityStorageClient,
-        CustomerReorderWidgetToUtilQuantityServiceInterface $utilQuantityService
+        CustomerReorderWidgetToAvailabilityStorageClientInterface $availabilityStorageClient
     ) {
         $this->cartClient = $cartClient;
         $this->itemsFetcher = $itemsFetcher;
         $this->availabilityStorageClient = $availabilityStorageClient;
-        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -65,34 +56,9 @@ class CartFiller implements CartFillerInterface
      */
     public function fillFromOrder(OrderTransfer $orderTransfer): void
     {
-        $orderTransfer = $this->groupAllOrderItemsBySku($orderTransfer);
         $items = $this->itemsFetcher->getAll($orderTransfer);
 
         $this->updateCart($items, $orderTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    protected function groupAllOrderItemsBySku(OrderTransfer $orderTransfer): OrderTransfer
-    {
-        $groupedOrderItems = $this->groupItemsByGroupKey($orderTransfer->getItems());
-        $orderTransfer->setItems(new ArrayObject($groupedOrderItems));
-
-        return $orderTransfer;
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return float
-     */
-    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
-    {
-        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 
     /**
@@ -104,34 +70,8 @@ class CartFiller implements CartFillerInterface
     public function fillSelectedFromOrder(OrderTransfer $orderTransfer, array $idOrderItems): void
     {
         $items = $this->itemsFetcher->getByIds($orderTransfer, $idOrderItems);
-        $items = $this->groupItemsByGroupKey($items);
 
         $this->updateCart($items, $orderTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function groupItemsByGroupKey(iterable $orderItems): array
-    {
-        $groupedOrderItems = [];
-
-        foreach ($orderItems as $itemTransfer) {
-            if (!array_key_exists($itemTransfer->getGroupKey(), $groupedOrderItems)) {
-                $groupedOrderItems[$itemTransfer->getGroupKey()] = $itemTransfer;
-                continue;
-            }
-
-            $newQuantity = $this->sumQuantities(
-                $groupedOrderItems[$itemTransfer->getGroupKey()]->getQuantity(),
-                $itemTransfer->getQuantity()
-            );
-            $groupedOrderItems[$itemTransfer->getGroupKey()]->setQuantity($newQuantity);
-        }
-
-        return $groupedOrderItems;
     }
 
     /**
@@ -171,39 +111,17 @@ class CartFiller implements CartFillerInterface
                     continue;
                 }
 
-                if ($this->utilQuantityService->isQuantityEqual((float)$spyAvailability->getQuantity(), 0)) {
+                if ($spyAvailability->getQuantity() === 0) {
                     continue;
                 }
 
-                if ($this->isQuantityGreaterOrEqual((float)$spyAvailability->getQuantity(), (float)$item->getQuantity())) {
+                if ($spyAvailability->getQuantity() >= $item->getQuantity()) {
                     continue;
                 }
 
-                $item->setQuantity((float)$spyAvailability->getQuantity());
+                $item->setQuantity($spyAvailability->getQuantity());
             }
         }
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return bool
-     */
-    protected function isQuantityGreaterOrEqual(float $firstQuantity, float $secondQuantity): bool
-    {
-        return $this->utilQuantityService->isQuantityGreaterOrEqual($firstQuantity, $secondQuantity);
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return bool
-     */
-    protected function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool
-    {
-        return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
     }
 
     /**

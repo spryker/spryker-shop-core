@@ -35,7 +35,6 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY = 'PLUGINS_QUICK_ORDER_FORM_HANDLER_STRATEGY';
     public const PLUGINS_QUICK_ORDER_FORM_COLUMN = 'PLUGINS_QUICK_ORDER_FORM_ADDITIONAL_DATA_COLUMN_PROVIDER';
     public const PLUGINS_QUICK_ORDER_ITEM_FILTER = 'PLUGINS_QUICK_ORDER_ITEM_FILTER';
-    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
     public const PLUGINS_QUICK_ORDER_UPLOADED_FILE_PARSER = 'PLUGINS_QUICK_ORDER_UPLOADED_FILE_PARSER';
     public const PLUGINS_QUICK_ORDER_UPLOADED_FILE_VALIDATOR = 'PLUGINS_QUICK_ORDER_UPLOADED_FILE_VALIDATOR';
     public const PLUGINS_QUICK_ORDER_FILE_TEMPLATE = 'PLUGINS_QUICK_ORDER_FILE_TEMPLATE';
@@ -62,9 +61,9 @@ class QuickOrderPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductStorageClient($container);
         $container = $this->addPriceProductStorageClient($container);
         $container = $this->addProductQuantityStorageClient($container);
-        $container = $this->addQuickOrderUploadedFileValidatorPlugins($container);
         $container = $this->addQuickOrderFileTemplatePlugins($container);
         $container = $this->addQuickOrderUploadedFileParserPlugins($container);
+        $container = $this->addQuickOrderUploadedFileValidatorPlugins($container);
 
         return $container;
     }
