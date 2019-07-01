@@ -24,6 +24,8 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER = 'quote_request_page.quote_request.sent_to_customer';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
 
+    protected const URL_PARAM_REFERER = 'referer';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $quoteRequestReference
@@ -42,6 +44,8 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
     }
 
     /**
+     * @deprecated Use QuoteRequestAgentEditController::sendQuoteRequestToCustomerAction() instead.
+     *
      * @param string $quoteRequestReference
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -49,6 +53,19 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
     public function sendToCustomerAction(string $quoteRequestReference): RedirectResponse
     {
         $response = $this->executeSendToCustomerAction($quoteRequestReference);
+
+        return $response;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $quoteRequestReference
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function sendQuoteRequestToCustomerAction(Request $request, string $quoteRequestReference): RedirectResponse
+    {
+        $response = $this->executeSendQuoteRequestToCustomerAction($request, $quoteRequestReference);
 
         return $response;
     }
@@ -77,6 +94,33 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
         return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_DETAILS, [
             static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $quoteRequestReference
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeSendQuoteRequestToCustomerAction(Request $request, string $quoteRequestReference): RedirectResponse
+    {
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setWithHidden(true)
+            ->setQuoteRequestReference($quoteRequestReference);
+
+        $quoteRequestResponseTransfer = $this->getFactory()
+            ->getQuoteRequestAgentClient()
+            ->sendQuoteRequestToCustomer($quoteRequestFilterTransfer);
+
+        if ($quoteRequestResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER);
+        }
+
+        $this->handleResponseErrors($quoteRequestResponseTransfer);
+
+        return $this->redirectResponseExternal(
+            $request->headers->get(static::URL_PARAM_REFERER) ?: static::ROUTE_QUOTE_REQUEST_AGENT_DETAILS
+        );
     }
 
     /**
@@ -170,7 +214,7 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
         if ($request->get(QuoteRequestAgentForm::SUBMIT_BUTTON_SEND_TO_CUSTOMER) !== null && $quoteRequestResponseTransfer->getIsSuccessful()) {
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_SEND_TO_CUSTOMER, [
+            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_SEND_QUOTE_REQUEST_TO_CUSTOMER, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
             ]);
         }

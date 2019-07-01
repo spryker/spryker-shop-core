@@ -54,9 +54,16 @@ class QuoteRequestAgentAbstractController extends AbstractController
     protected const ROUTE_QUOTE_REQUEST_AGENT_REVISE = 'agent/quote-request/revise';
 
     /**
+     * @deprecated Use QuoteRequestAgentAbstractController::ROUTE_QUOTE_REQUEST_AGENT_SEND_QUOTE_REQUEST_TO_CUSTOMER instead.
+     *
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Provider\QuoteRequestAgentPageControllerProvider::ROUTE_QUOTE_REQUEST_AGENT_SEND_TO_CUSTOMER
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_SEND_TO_CUSTOMER = 'agent/quote-request/send-to-customer';
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Provider\QuoteRequestAgentPageControllerProvider::ROUTE_QUOTE_REQUEST_AGENT_SEND_QUOTE_REQUEST_TO_CUSTOMER
+     */
+    protected const ROUTE_QUOTE_REQUEST_AGENT_SEND_QUOTE_REQUEST_TO_CUSTOMER = 'agent/quote-request/send-quote-request-to-customer';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Provider\QuoteRequestAgentPageControllerProvider::ROUTE_QUOTE_REQUEST_AGENT

@@ -165,7 +165,7 @@
                         {% if data.quoteRequest.latestVersion.quote.items is not empty %}
                             <hr/>
                             <a class="button button--expand button--success"
-                               href="{{ path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
+                               href="{{ path('agent/quote-request/send-quote-request-to-customer', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}">
                                 {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
                             </a>
                         {% endif %}
