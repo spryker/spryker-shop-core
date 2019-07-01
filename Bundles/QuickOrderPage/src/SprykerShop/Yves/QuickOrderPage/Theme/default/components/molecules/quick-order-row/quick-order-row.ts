@@ -61,7 +61,7 @@ export default class QuickOrderRow extends Component {
      * @param sku A product SKU used for reloading autocomplete field.
      */
     async reloadField(sku: string = '') {
-        const quantityInputValue = parseFloat(this.quantityValue);
+        const quantityInputValue = this.quantityValue;
 
         this.ajaxProvider.queryParams.set('sku', sku);
         this.ajaxProvider.queryParams.set('index', this.ajaxProvider.getAttribute('class')

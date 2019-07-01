@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ProductMeasurementUnitWidget\Widget;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -24,44 +23,6 @@ class CartProductMeasurementUnitQuantitySelectorWidget extends AbstractWidget
         $this->addParameter('itemTransfer', $itemTransfer)
             ->addParameter('isBaseUnit', $this->isBaseUnit($itemTransfer))
             ->addParameter('hasSalesUnit', $this->hasSalesUnit($itemTransfer));
-        $this->setQuantityRestrictions($itemTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
-    protected function setQuantityRestrictions(ItemTransfer $itemTransfer): void
-    {
-        $productQuantityStorageTransfer = $this->getProductQuantityStorageTransfer($itemTransfer);
-        if ($productQuantityStorageTransfer === null) {
-            $this->addParameter('minQuantity', 1)
-                ->addParameter('maxQuantity', null)
-                ->addParameter('quantityInterval', 1);
-
-            return;
-        }
-
-        $minQuantity = $productQuantityStorageTransfer->getQuantityMin() ?? 1;
-        $maxQuantity = $productQuantityStorageTransfer->getQuantityMax();
-        $quantityInterval = $productQuantityStorageTransfer->getQuantityInterval() ?? 1;
-
-        $this->addParameter('minQuantity', $minQuantity)
-            ->addParameter('maxQuantity', $maxQuantity)
-            ->addParameter('quantityInterval', $quantityInterval);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
-     */
-    protected function getProductQuantityStorageTransfer(ItemTransfer $itemTransfer): ?ProductQuantityStorageTransfer
-    {
-        return $this->getFactory()
-            ->getProductQuantityStorageClient()
-            ->findProductQuantityStorage($itemTransfer->getId());
     }
 
     /**

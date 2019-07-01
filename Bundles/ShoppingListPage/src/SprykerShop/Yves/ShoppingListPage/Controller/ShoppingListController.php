@@ -248,12 +248,12 @@ class ShoppingListController extends AbstractShoppingListController
 
     /**
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function quickAddToShoppingListAction(string $sku, float $quantity, Request $request): RedirectResponse
+    public function quickAddToShoppingListAction(string $sku, int $quantity, Request $request): RedirectResponse
     {
         $idShoppingList = $this->getShoppingListIdFromRequest($request);
         if ($idShoppingList === null) {
@@ -312,18 +312,14 @@ class ShoppingListController extends AbstractShoppingListController
 
     /**
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      * @param int $idShoppingList
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    protected function executeQuickAddToShoppingListAction(
-        string $sku,
-        float $quantity,
-        int $idShoppingList,
-        Request $request
-    ): ShoppingListItemTransfer {
+    protected function executeQuickAddToShoppingListAction(string $sku, int $quantity, int $idShoppingList, Request $request): ShoppingListItemTransfer
+    {
         $customerTransfer = $this->getCustomer();
 
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
