@@ -60,15 +60,13 @@
 
             {% block tags %}
                 {% if data.comment.tagNames is defined %}
-                    <ul class="{{ config.name }}__tag-list">
-                        {% for tagName in data.comment.tagNames %}
-                            <li class="{{ config.name }}__tag-list-item">
-                                <a class="{{ config.name }}__tag" href="{{ path('comment/tag/remove', {'uuid': data.comment.uuid, 'name': tagName, 'returnUrl': data.returnUrl }) }}">
-                                    {{ tagName }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                    {% include molecule('tag-list', 'CommentWidget') with {
+                        data: {
+                            tagNames: data.comment.tagNames,
+                            uuid: data.comment.uuid,
+                            returnUrl: data.returnUrl,
+                        },
+                    } only %}
                 {% endif %}
             {% endblock %}
 
