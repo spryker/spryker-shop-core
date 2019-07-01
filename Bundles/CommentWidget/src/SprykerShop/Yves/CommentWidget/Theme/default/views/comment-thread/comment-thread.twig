@@ -13,7 +13,10 @@
 {% set commentThreadSelectClass = 'js-comments-cart' %}
 
 {% for key, comments in data.taggedComments %}
-    {% set commentListOptions = commentListOptions | merge([key]) %}
+    {% set commentListOptions = commentListOptions | merge([{
+        value: key,
+        count: comments | length,
+    }]) %}
 {% endfor %}
 
 {% block body %}
@@ -32,7 +35,9 @@
             } only %}
                 {% block options %}
                     {% for commentOption in embed.commentListOptions %}
-                        <option value="{{ commentOption }}">{{ ('comment_widget.tags.' ~ commentOption) | trans }}</option>
+                        <option value="{{ commentOption.value }}">
+                            {{ ('comment_widget.tags.' ~ commentOption.value) | trans ~ ' ' ~ commentOption.count }}
+                        </option>
                     {% endfor %}
                 {% endblock %}
             {% endembed %}
