@@ -15,8 +15,9 @@ interface ShopUiConstants
     /**
      * Specification:
      * - Yves assets url.
-     * - %store% will be replaced with current store.
      * - %theme% will be replaced with current theme.
+     *
+     * @example '/assets/%theme%/'
      *
      * @api
      */
