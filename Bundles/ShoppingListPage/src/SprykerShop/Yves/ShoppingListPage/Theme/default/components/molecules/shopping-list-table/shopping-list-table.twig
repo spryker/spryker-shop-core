@@ -52,13 +52,19 @@
                         <li class="list__item">
                             <small class="text-secondary">{{ item.sku }}</small>
                         </li>
-                        {% for attribute in item.superAttributesDefinition %}
-                            {% if item.attributes[attribute] is defined %}
-                                <li class="list__item">
-                                    {{ ('product.attribute.' ~ attribute) | trans }}: {{ item.attributes[attribute] }}
-                                </li>
-                            {% endif %}
-                        {% endfor %}
+
+                        <li class="list__item">
+                            {% set listOfAttributes = {} %}
+                            {% for attribute in item.superAttributesDefinition if item.attributes[attribute] is defined %}
+                                {% set listOfAttributes = listOfAttributes|merge({ ('product.attribute.' ~ attribute) | trans: item.attributes[attribute] }) %}
+                            {% endfor %}
+
+                            {% include molecule('product-item-attributes') with {
+                                data: {
+                                    list: listOfAttributes,
+                                },
+                            } only %}
+                        </li>
 
                         {% widget 'ShoppingListItemNoteWidget' args [item.shoppingListItem] only %}
                         {% elsewidget 'ShoppingListItemNoteWidgetPlugin' args [item.shoppingListItem] only %} {# @deprecated Use ShoppingListItemNoteWidget instead. #}
