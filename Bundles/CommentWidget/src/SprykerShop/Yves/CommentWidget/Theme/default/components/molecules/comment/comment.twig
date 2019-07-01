@@ -64,18 +64,18 @@
             {% block commentMessage %}
                 <p>{{ data.comment.message }}</p>
             {% endblock %}
-        {% endif %}
-    {% endblock %}
 
-    {% block tags %}
-        {% if data.comment.tagNames is defined and not shouldShowTagForm %}
-            {% include molecule('tag-list', 'CommentWidget') with {
-                data: {
-                    tagNames: data.comment.tagNames,
-                    uuid: data.comment.uuid,
-                    returnUrl: data.returnUrl,
-                },
-            } only %}
+            {% block tags %}
+                {% if data.comment.tagNames is defined %}
+                    {% include molecule('tag-list', 'CommentWidget') with {
+                        data: {
+                            tagNames: data.comment.tagNames,
+                            uuid: data.comment.uuid,
+                            returnUrl: data.returnUrl,
+                        },
+                    } only %}
+                {% endif %}
+            {% endblock %}
         {% endif %}
     {% endblock %}
 {% endblock %}
