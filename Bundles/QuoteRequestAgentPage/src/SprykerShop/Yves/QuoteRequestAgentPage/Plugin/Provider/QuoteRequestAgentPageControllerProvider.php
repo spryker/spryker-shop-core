@@ -17,7 +17,12 @@ class QuoteRequestAgentPageControllerProvider extends AbstractYvesControllerProv
     protected const ROUTE_QUOTE_REQUEST_AGENT_DETAILS = 'agent/quote-request/details';
     protected const ROUTE_QUOTE_REQUEST_AGENT_EDIT = 'agent/quote-request/edit';
     protected const ROUTE_QUOTE_REQUEST_AGENT_CREATE = 'agent/quote-request/create';
+
+    /**
+     * @deprecated Use QuoteRequestAgentPageControllerProvider::ROUTE_QUOTE_REQUEST_AGENT_SEND_QUOTE_REQUEST_TO_CUSTOMER instead.
+     */
     protected const ROUTE_QUOTE_REQUEST_AGENT_SEND_TO_CUSTOMER = 'agent/quote-request/send-to-customer';
+
     protected const ROUTE_QUOTE_REQUEST_AGENT_SEND_QUOTE_REQUEST_TO_CUSTOMER = 'agent/quote-request/send-quote-request-to-customer';
     protected const ROUTE_QUOTE_REQUEST_AGENT_EDIT_ITEMS = 'agent/quote-request/edit-items';
     protected const ROUTE_QUOTE_REQUEST_AGENT_EDIT_ITEMS_CONFIRM = 'agent/quote-request/edit-items-confirm';
