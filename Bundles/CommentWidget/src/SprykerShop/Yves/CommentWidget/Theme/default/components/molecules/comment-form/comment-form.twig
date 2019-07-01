@@ -12,6 +12,7 @@
     returnUrl: required,
     ownerId: '',
     ownerType: '',
+    idCustomer: null,
 
     submit: {
         text: '',
@@ -65,6 +66,7 @@
                             tagNames: data.comment.tagNames,
                             uuid: data.comment.uuid,
                             returnUrl: data.returnUrl,
+                            idCustomer: data.idCustomer,
                         },
                     } only %}
                 {% endif %}

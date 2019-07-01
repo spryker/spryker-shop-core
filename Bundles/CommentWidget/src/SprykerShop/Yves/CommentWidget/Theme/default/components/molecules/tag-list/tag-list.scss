@@ -31,6 +31,20 @@
             &::after {
                 transform: translateY(-50%) rotate(45deg);
             }
+
+            &--disabled {
+                background-color: $setting-color-dark;
+                color: $setting-color-darker;
+                cursor: default;
+                pointer-events: none;
+                user-select: none;
+                opacity: 0.5;
+
+                &::before,
+                &::after {
+                    background-color: $setting-color-darker;
+                }
+            }
         }
 
         @content;
