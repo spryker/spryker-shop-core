@@ -15,7 +15,6 @@ class ShopUiConfig extends AbstractBundleConfig
     /**
      * Specification:
      * - Provides Yves assets url.
-     * - %store% will be replaced with current store.
      * - %theme% will be replaced with current theme.
      *
      * @api
