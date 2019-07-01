@@ -6,7 +6,7 @@
     returnUrl: _widget.returnUrl,
     customer: _widget.customer,
     taggedComments: _widget.taggedComments,
-    commentAvailableTags: _widget.commentAvailableTags,
+    availableCommentTags: _widget.availableCommentTags,
 } %}
 
 {% set commentListOptions = [] %}
@@ -36,7 +36,7 @@
                 {% block options %}
                     {% for commentOption in embed.commentListOptions %}
                         <option value="{{ commentOption.value }}">
-                            {{ ('comment_widget.tags.' ~ commentOption.value) | trans ~ ' ' ~ commentOption.count }}
+                            {{ ('comment_widget.tags.' ~ commentOption.value) | trans ~ ' (' ~ commentOption.count ~ ')' }}
                         </option>
                     {% endfor %}
                 {% endblock %}
@@ -51,26 +51,28 @@
                 },
                 data: {
                     commentsThreadList: data.taggedComments,
-                    commentAvailableTags: data.commentAvailableTags,
+                    availableCommentTags: data.availableCommentTags,
                     returnUrl: data.returnUrl,
-                    idCustomer: data.customer.idCustomer,
+                    idCustomer: data.customer ? data.customer.idCustomer : null,
                 },
             } only %}
         {% endblock %}
     {% endif %}
 
     {% block newCommentForm %}
-        {% include molecule('comment-form', 'CommentWidget') with {
-            data: {
-                formView: 'add',
-                returnUrl: data.returnUrl,
-                ownerId: data.ownerId,
-                ownerType: data.ownerType,
-                submit: {
-                    text: 'comment_widget.form.add_comment' | trans,
-                    action: path('comment/add'),
+        {% if data.customer %}
+            {% include molecule('comment-form', 'CommentWidget') with {
+                data: {
+                    formView: 'add',
+                    returnUrl: data.returnUrl,
+                    ownerId: data.ownerId,
+                    ownerType: data.ownerType,
+                    submit: {
+                        text: 'comment_widget.form.add_comment' | trans,
+                        action: path('comment/add'),
+                    },
                 },
-            },
-        } only %}
+            } only %}
+        {% endif %}
     {% endblock %}
 {% endblock %}

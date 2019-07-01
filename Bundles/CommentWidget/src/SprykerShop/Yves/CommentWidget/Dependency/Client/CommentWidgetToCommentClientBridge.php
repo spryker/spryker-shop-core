@@ -89,8 +89,8 @@ class CommentWidgetToCommentClientBridge implements CommentWidgetToCommentClient
     /**
      * @return string[]
      */
-    public function getCommentAvailableTags(): array
+    public function getAvailableCommentTags(): array
     {
-        return $this->commentClient->getCommentAvailableTags();
+        return $this->commentClient->getAvailableCommentTags();
     }
 }

@@ -23,7 +23,7 @@ class CommentThreadWidget extends AbstractWidget
     protected const PARAMETER_RETURN_URL = 'returnUrl';
     protected const PARAMETER_CUSTOMER = 'customer';
     protected const PARAMETER_TAGGED_COMMENTS = 'taggedComments';
-    protected const PARAMETER_COMMENT_AVAILABLE_TAGS = 'commentAvailableTags';
+    protected const PARAMETER_AVAILABLE_COMMENT_TAGS = 'availableCommentTags';
 
     /**
      * @param int $ownerId
@@ -51,7 +51,7 @@ class CommentThreadWidget extends AbstractWidget
         $this->addReturnUrlParameter($returnUrl);
         $this->addCustomerParameter($customerTransfer);
         $this->addTaggedCommentsParameter($taggedComments);
-        $this->addCommentAvailableTags();
+        $this->addAvailableCommentTags();
     }
 
     /**
@@ -101,11 +101,11 @@ class CommentThreadWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      *
      * @return void
      */
-    protected function addCustomerParameter(CustomerTransfer $customerTransfer): void
+    protected function addCustomerParameter(?CustomerTransfer $customerTransfer): void
     {
         $this->addParameter(static::PARAMETER_CUSTOMER, $customerTransfer);
     }
@@ -113,11 +113,11 @@ class CommentThreadWidget extends AbstractWidget
     /**
      * @return void
      */
-    protected function addCommentAvailableTags(): void
+    protected function addAvailableCommentTags(): void
     {
         $this->addParameter(
-            static::PARAMETER_COMMENT_AVAILABLE_TAGS,
-            $this->getFactory()->getCommentClient()->getCommentAvailableTags()
+            static::PARAMETER_AVAILABLE_COMMENT_TAGS,
+            $this->getFactory()->getCommentClient()->getAvailableCommentTags()
         );
     }
 

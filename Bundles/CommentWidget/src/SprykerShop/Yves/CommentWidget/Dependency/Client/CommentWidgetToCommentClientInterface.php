@@ -58,5 +58,5 @@ interface CommentWidgetToCommentClientInterface
     /**
      * @return string[]
      */
-    public function getCommentAvailableTags(): array;
+    public function getAvailableCommentTags(): array;
 }

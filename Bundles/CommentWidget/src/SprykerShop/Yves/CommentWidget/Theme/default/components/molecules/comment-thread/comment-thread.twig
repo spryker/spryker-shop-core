@@ -6,9 +6,9 @@
 
 {% define data = {
     commentThread: required,
-    commentAvailableTags: required,
+    availableCommentTags: required,
     returnUrl: required,
-    idCustomer: required,
+    idCustomer: null,
 } %}
 
 {% define attributes = {
@@ -21,7 +21,7 @@
             class: 'spacing-bottom spacing-bottom--medium',
             data: {
                 comment: comment,
-                commentAvailableTags: data.commentAvailableTags,
+                availableCommentTags: data.availableCommentTags,
                 returnUrl: data.returnUrl,
                 idCustomer: data.idCustomer,
             },

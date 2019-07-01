@@ -63,7 +63,7 @@
                 } only %}
             </div>
 
-            {% if is_granted('ROLE_USER') and data.cart.idQuote is not empty %}
+            {% if data.cart.idQuote is not empty %}
                 <div class="box">
                     {% widget 'CommentThreadWidget' args [
                         data.cart.idQuote,

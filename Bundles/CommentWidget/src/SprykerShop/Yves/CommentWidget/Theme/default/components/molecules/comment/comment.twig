@@ -6,12 +6,12 @@
 
 {% define data = {
     comment: required,
-    commentAvailableTags: required,
+    availableCommentTags: required,
     returnUrl: required,
-    idCustomer: required,
+    idCustomer: null,
 } %}
 
-{% set shouldShowTagForm = data.comment.tagNames | length != data.commentAvailableTags | length %}
+{% set shouldShowTagForm = data.comment.tagNames | length != data.availableCommentTags | length and data.idCustomer is not null %}
 
 {% block body %}
     {% block header %}
@@ -23,7 +23,7 @@
                     class: 'col col--sm-3',
                     data: {
                         action: path('comment/tag/add', {'uuid': data.comment.uuid }),
-                        availableTags: data.commentAvailableTags,
+                        availableTags: data.availableCommentTags,
                         tagNames: data.comment.tagNames,
                         returnUrl: data.returnUrl,
                     },
@@ -42,7 +42,7 @@
     {% endblock %}
 
     {% block comment %}
-        {% if data.comment.customer.idCustomer == data.idCustomer %}
+        {% if data.idCustomer is not null and data.comment.customer.idCustomer == data.idCustomer %}
             {% block commentUpdate %}
                 {% include molecule('comment-form', 'CommentWidget') with {
                     data: {

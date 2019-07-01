@@ -7,7 +7,7 @@
 
 {% define data = {
     commentsThreadList: required,
-    commentAvailableTags: required,
+    availableCommentTags: required,
     returnUrl: required,
     idCustomer: required,
 } %}
@@ -26,7 +26,7 @@
             },
             data: {
                 commentThread: commentThread,
-                commentAvailableTags: data.commentAvailableTags,
+                availableCommentTags: data.availableCommentTags,
                 returnUrl: data.returnUrl,
                 idCustomer: data.idCustomer,
             },
