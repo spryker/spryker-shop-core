@@ -33,14 +33,19 @@ class ShoppingListItemProductOptionFormExpanderPlugin extends AbstractPlugin imp
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $option[ShoppingListItemProductOptionForm::PRODUCT_OPTION_GROUP_KEY] = $this->getFactory()
+            $productOptionGroupsByShoppingListItem = $this->getFactory()
                 ->createShoppingListItemProductOptionFormDataProvider()
                 ->findProductOptionGroupsByShoppingListItem($event->getData());
-            $event->getForm()->add(
-                ShoppingListItemTransfer::PRODUCT_OPTIONS,
-                ShoppingListItemProductOptionForm::class,
-                $option
-            );
+
+            if ($productOptionGroupsByShoppingListItem->count()) {
+                $option[ShoppingListItemProductOptionForm::PRODUCT_OPTION_GROUP_KEY] = $productOptionGroupsByShoppingListItem;
+
+                $event->getForm()->add(
+                    ShoppingListItemTransfer::PRODUCT_OPTIONS,
+                    ShoppingListItemProductOptionForm::class,
+                    $option
+                );
+            }
         });
     }
 }
