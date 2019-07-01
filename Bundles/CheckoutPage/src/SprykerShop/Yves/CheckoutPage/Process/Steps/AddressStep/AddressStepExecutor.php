@@ -192,36 +192,6 @@ class AddressStepExecutor implements StepExecutorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function hasQuoteDataItemLevelShippingAddresses(QuoteTransfer $quoteTransfer): bool
-    {
-        if ($this->hasQuoteDataItemLevelShippingAddresses !== null) {
-            return $this->hasQuoteDataItemLevelShippingAddresses;
-        }
-
-        if ($quoteTransfer->getItems()->count() < 1) {
-            $this->hasQuoteDataItemLevelShippingAddresses = false;
-
-            return false;
-        }
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null) {
-                $this->hasQuoteDataItemLevelShippingAddresses = false;
-
-                return false;
-            }
-        }
-
-        $this->hasQuoteDataItemLevelShippingAddresses = true;
-
-        return true;
-    }
-
-    /**
      * @return bool
      */
     protected function hasQuoteMultiShippingAddresses(): bool
@@ -283,6 +253,38 @@ class AddressStepExecutor implements StepExecutorInterface
         $addressTransfer->setIdCustomerAddress($idCustomerAddress);
 
         return $addressHash;
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function hasQuoteDataItemLevelShippingAddresses(QuoteTransfer $quoteTransfer): bool
+    {
+        if ($this->hasQuoteDataItemLevelShippingAddresses !== null) {
+            return $this->hasQuoteDataItemLevelShippingAddresses;
+        }
+
+        if ($quoteTransfer->getItems()->count() < 1) {
+            $this->hasQuoteDataItemLevelShippingAddresses = false;
+
+            return false;
+        }
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                $this->hasQuoteDataItemLevelShippingAddresses = false;
+
+                return false;
+            }
+        }
+
+        $this->hasQuoteDataItemLevelShippingAddresses = true;
+
+        return true;
     }
 
     /**
