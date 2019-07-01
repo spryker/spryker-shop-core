@@ -117,7 +117,7 @@ class AddressStepExecutor implements StepExecutorInterface
             return $quoteTransfer = $this->hydrateBillingAddressSameAsShipping($quoteTransfer, $customerTransfer);
         }
 
-        return $quoteTransfer = $this->hydrateBillingAddressSameAsShipping($quoteTransfer, $customerTransfer);
+        return $quoteTransfer = $this->hydrateBillingAddressWithQuoteLevelData($quoteTransfer, $customerTransfer);
     }
 
     /**

@@ -365,13 +365,6 @@ class CheckoutAddressCollectionForm extends AbstractType
     protected function getMultiShippingAddressChoices(array $options): array
     {
         return $options[static::OPTION_ADDRESS_CHOICES];
-        /**
-         * @todo This code is part of https://spryker.atlassian.net/browse/CC-5250.
-         */
-        $addressChoices = $options[static::OPTION_ADDRESS_CHOICES];
-        $addressChoices[CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS] = static::GLOSSARY_KEY_ADD_NEW_ADDRESS;
-
-        return $addressChoices;
     }
 
     /**

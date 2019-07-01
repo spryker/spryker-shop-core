@@ -1,5 +1,10 @@
 {% extends template('page-layout-checkout', 'CheckoutPage') %}
 
+{#
+    @deprecated property 'overview.shipmentMethod' is deprecated
+    @deprecated property 'overview.payments' is deprecated
+    @deprecated property 'overview.prices.storeCurrency' is deprecated
+#}
 {% define data = {
     backUrl: _view.previousStepUrl,
     transfer: _view.quoteTransfer,
@@ -14,6 +19,8 @@
     },
 
     overview: {
+        shipmentMethod: _view.quoteTransfer.shipment.method.name | default,
+        payments: _view.quoteTransfer.payments | default([]),
         expenses: _view.quoteTransfer.expenses,
         voucherDiscounts: _view.quoteTransfer.voucherDiscounts,
         cartRuleDiscounts: _view.quoteTransfer.cartRuleDiscounts,
@@ -22,6 +29,7 @@
 
         prices: {
             subTotal: _view.quoteTransfer.totals.subtotal,
+            storeCurrency: _view.quoteTransfer.shipment.method.storeCurrencyPrice | default([]),
             grandTotal: _view.quoteTransfer.totals.grandtotal,
             tax: _view.quoteTransfer.totals.taxtotal.amount,
             discountTotal: _view.quoteTransfer.totals.discounttotal | default,
@@ -43,7 +51,7 @@
                     {% for item in shipmentGroup.items %}
                         {% set item = item.bundleProduct ?? item %}
 
-                        {% embed molecule('summary-item-multi-shipment', 'CheckoutPage') with {
+                        {% embed molecule('summary-item', 'CheckoutPage') with {
                             data: {
                                 name: item.name,
                                 quantity: item.quantity,
@@ -230,7 +238,7 @@
                 },
             } only %}
                 {% block body %}
-                    {% include molecule('summary-overview-multi-shipment', 'CheckoutPage') with {
+                    {% include molecule('summary-overview', 'CheckoutPage') with {
                         data: embed.overview,
                     } only %}
 
