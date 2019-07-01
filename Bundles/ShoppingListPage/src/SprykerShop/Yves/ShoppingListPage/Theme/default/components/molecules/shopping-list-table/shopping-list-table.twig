@@ -7,7 +7,7 @@
 
 {% define data = {
     shoppingList: required,
-    shoppingListItems: required,
+    shoppingListItems: required
 } %}
 
 {% block body %}
@@ -39,8 +39,8 @@
                             attributes: {
                                 alt: item.name | default(''),
                                 src: item.images.0.externalUrlSmall | default,
-                                title: item.name | default,
-                            },
+                                title: item.name | default
+                            }
                         } only %}
                     {% endif %}
                 </td>
@@ -76,8 +76,8 @@
                             {% include molecule('shopping-list-item-product-option-display', 'ProductOptionWidget') with {
                                 class: 'list list--expand',
                                 data: {
-                                    options: item.shoppingListItem.productOptions,
-                                },
+                                    options: item.shoppingListItem.productOptions
+                                }
                             } only %}
                         {% endif %}
                     </ul>
@@ -87,28 +87,15 @@
                         {% include molecule('money-price') with {
                             data: {
                                 amount: item.price,
-                                originalAmount: item.prices.ORIGINAL is not defined or item.prices.ORIGINAL is empty ? null : (item.prices.ORIGINAL | money),
-                            },
+                                originalAmount: item.prices.ORIGINAL is not defined or item.prices.ORIGINAL is empty ? null : item.prices.ORIGINAL
+                            }
                         } only %}
                     {% else %}
                         {{ 'shopping_list.not_applicable' | trans }}
                     {% endif %}
                 </td>
                 <td class="{{ config.name }}__cell text-center">
-                    {% widget 'ShoppingListItemQuantityInputWidget' args [item, isItemAvailable] only %}
-                    {% nowidget %}
-                        {% include molecule('quantity-input') with {
-                            inputAttributes: {
-                                name: ('shoppingListItem[quantity][' ~ item.idShoppingListItem ~ ']'),
-                            },
-                            data: {
-                                value: item.quantity,
-                                readOnly: not isItemAvailable,
-                                hasUpdateButton: false,
-                                step: 'any',
-                            },
-                        } only %}
-                    {% endwidget %}
+                    <input class="input" {{ isItemAvailable ? '' : 'disabled' }} type="number" name="shoppingListItem[quantity][{{ item.idShoppingListItem }}]" value="{{ item.quantity }}"/>
                 </td>
                 <td class="{{ config.name }}__cell text-center">
                     {% if isItemAvailable %}

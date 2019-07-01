@@ -2,10 +2,7 @@
 
 {% define data = {
     cartItem: _widget.itemTransfer,
-    isBaseUnit: _widget.isBaseUnit ?? true,
-    minQuantity: _widget.minQuantity,
-    maxQuantity: _widget.maxQuantity,
-    quantityInterval: _widget.quantityInterval,
+    isBaseUnit: _widget.isBaseUnit ?? true
 } %}
 
 {%- block hasSalesUnit -%}
@@ -18,11 +15,8 @@
     {% include molecule('cart-quantity-input', 'CartPage') with {
         data: {
             cartItem: data.cartItem,
-            readOnly: hasQuantitySalesUnit,
-            minQuantity: data.minQuantity,
-            maxQuantity: data.maxQuantity,
-            quantityInterval: data.quantityInterval,
-        },
+            readOnly: hasQuantitySalesUnit
+        }
     } only %}
 
     {% if hasQuantitySalesUnit %}

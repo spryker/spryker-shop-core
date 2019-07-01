@@ -16,7 +16,7 @@
         {% set salesUnitQuantity = data.concreteItem.quantity / data.concreteItem.quantitySalesUnit.conversion %}
         {% set salesUnitSummary = '' %}
         {% if salesUnitName %}
-            {% set salesUnitSummary = salesUnitQuantity ~ ' ' ~ salesUnitName | trans %}
+            {% set salesUnitSummary = salesUnitQuantity | round(data.concreteItem.quantitySalesUnit.precision, 'floor') ~ ' ' ~ salesUnitName | trans %}
         {% endif %}
 
         {% set amountSalesUnitName = data.concreteItem.amountSalesUnit.productMeasurementUnit.name | default('') %}
@@ -38,6 +38,6 @@
         {{ data.concreteItem.quantity }} {% if salesUnitSummary is defined and salesUnitSummary is not empty %}(={{ salesUnitSummary }}){% endif %}
     </td>
     <td>
-        {{ data.concreteItem.sumPriceToPayAggregation | money(true, data.currencyIsoCode) }}
+        {{ data.concreteItem.unitPriceToPayAggregation | money(true, data.currencyIsoCode) }}
     </td>
 {% endblock body %}

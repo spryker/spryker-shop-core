@@ -4,11 +4,20 @@
     shoppingListCollection: _widget.shoppingListCollection,
     sku: _widget.sku,
     isDisabled: _widget.isDisabled,
-    minQuantity: 1,
+    maxQuantity: 10,
     labels: {
         shoppingListNameLabel: 'customer.account.shopping_list.overview.name' | trans
     }
 } %}
+
+{% set quantities = [] %}
+
+{% for index in 1..data.maxQuantity %}
+    {% set quantities = quantities | merge([{
+        label: index,
+        value: index
+    }]) %}
+{% endfor %}
 
 {% set shoppingListOptions = [] %}
 
@@ -23,7 +32,15 @@
         <div class="grid grid--justify grid--bottom">
             <div class="col col--sm-5">
                 <label>{{ 'shopping_list.item_quantity' | trans }}</label>
-                <input class="input js-volume-price__quantity" name="quantity" value="{{ data.minQuantity }}">
+                {% include atom('select') with {
+                    modifiers: ['expand'],
+                    attributes: {
+                        name: 'quantity'
+                    },
+                    data: {
+                        options: quantities
+                    }
+                } only %}
             </div>
             <div class="col col--sm-6">
                 <input type="hidden" name="sku" value="{{ data.sku }}">
