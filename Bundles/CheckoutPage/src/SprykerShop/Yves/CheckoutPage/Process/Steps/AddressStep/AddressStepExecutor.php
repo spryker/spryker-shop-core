@@ -85,7 +85,7 @@ class AddressStepExecutor implements StepExecutorInterface
         QuoteTransfer $quoteTransfer,
         ?CustomerTransfer $customerTransfer
     ): QuoteTransfer {
-        if ($quoteTransfer->getItems()->count() < 1) {
+        if ($quoteTransfer->getItems()->count() === 0) {
             return $quoteTransfer;
         }
 
@@ -99,6 +99,26 @@ class AddressStepExecutor implements StepExecutorInterface
             );
             $itemTransfer->setShipment($shipmentTransfer);
         }
+
+        return $this->setDefaultShippingAddress($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setDefaultShippingAddress(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = current($quoteTransfer->getItems());
+        if (!$itemTransfer) {
+            return $quoteTransfer;
+        }
+
+        $itemTransfer->getShipment()
+            ->getShippingAddress()
+            ->setIsDefaultShipping(true);
 
         return $quoteTransfer;
     }
@@ -114,10 +134,10 @@ class AddressStepExecutor implements StepExecutorInterface
         ?CustomerTransfer $customerTransfer
     ): QuoteTransfer {
         if ($quoteTransfer->getBillingSameAsShipping()) {
-            return $quoteTransfer = $this->hydrateBillingAddressSameAsShipping($quoteTransfer, $customerTransfer);
+            return $this->hydrateBillingAddressSameAsShipping($quoteTransfer, $customerTransfer);
         }
 
-        return $quoteTransfer = $this->hydrateBillingAddressWithQuoteLevelData($quoteTransfer, $customerTransfer);
+        return $this->hydrateBillingAddressWithQuoteLevelData($quoteTransfer, $customerTransfer);
     }
 
     /**
@@ -142,6 +162,7 @@ class AddressStepExecutor implements StepExecutorInterface
         }
 
         $billingAddressTransfer = $this->copyShippingAddress($shippingAddressTransfer);
+        $billingAddressTransfer->setIsDefaultBilling(true);
         $quoteTransfer->setBillingAddress($billingAddressTransfer);
 
         return $quoteTransfer;
@@ -163,6 +184,7 @@ class AddressStepExecutor implements StepExecutorInterface
         }
 
         $billingAddressTransfer = $this->expandAddressTransfer($billingAddressTransfer, $customerTransfer);
+        $billingAddressTransfer->setIsDefaultBilling(true);
 
         return $quoteTransfer->setBillingAddress($billingAddressTransfer);
     }
@@ -268,7 +290,7 @@ class AddressStepExecutor implements StepExecutorInterface
             return $this->hasQuoteDataItemLevelShippingAddresses;
         }
 
-        if ($quoteTransfer->getItems()->count() < 1) {
+        if ($quoteTransfer->getItems()->count() === 0) {
             $this->hasQuoteDataItemLevelShippingAddresses = false;
 
             return false;

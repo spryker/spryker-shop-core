@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -114,6 +115,8 @@ class CheckoutAddressCollectionForm extends AbstractType
      */
     protected function addShippingAddressSubForm(FormBuilderInterface $builder, array $options)
     {
+        $shipmentService = $this->getFactory()->getShipmentService();
+
         $options = [
             'data_class' => AddressTransfer::class,
             'required' => true,
@@ -134,8 +137,8 @@ class CheckoutAddressCollectionForm extends AbstractType
 
         $builder->add(static::FIELD_SHIPPING_ADDRESS, CheckoutAddressForm::class, $options);
 
-        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
-            $this->hydrateShippingAddressSubFormDataFromItemLevelShippingAddresses($event);
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($shipmentService) {
+            $this->hydrateShippingAddressSubFormDataFromItemLevelShippingAddresses($event, $shipmentService);
         });
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
@@ -147,34 +150,53 @@ class CheckoutAddressCollectionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormEvent $event
+     * @param \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface $shipmentService
      *
      * @return void
      */
-    protected function hydrateShippingAddressSubFormDataFromItemLevelShippingAddresses(FormEvent $event): void
-    {
+    protected function hydrateShippingAddressSubFormDataFromItemLevelShippingAddresses(
+        FormEvent $event,
+        CustomerPageToShipmentServiceInterface $shipmentService
+    ): void {
         $quoteTransfer = $event->getData();
         if (!($quoteTransfer instanceof QuoteTransfer)) {
             return;
         }
 
+        $shipmentGroupCollection = $shipmentService->groupItemsByShipment($quoteTransfer->getItems());
         $form = $event->getForm();
         $shippingAddressFrom = $form->get(static::FIELD_SHIPPING_ADDRESS);
+
+        if ($shipmentGroupCollection->count() > 1) {
+            $shippingAddressFrom = $this->setDeliverToMultipleAddressesEnabled($shippingAddressFrom);
+        }
+
         if ($this->isDeliverToMultipleAddressesEnabled($shippingAddressFrom)) {
             return;
         }
 
-        $itemTransfer = current($quoteTransfer->getItems());
-
-        if (!$itemTransfer) {
+        if ($shipmentGroupCollection->count() < 1) {
             return;
         }
 
-        if ($itemTransfer->getShipment() === null
-            || $itemTransfer->getShipment()->getShippingAddress() === null) {
+        /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer */
+        $shipmentGroupTransfer = current($shipmentGroupCollection);
+
+        if (!$shipmentGroupTransfer) {
             return;
         }
 
-        $shippingAddressFrom->setData(clone $itemTransfer->getShipment()->getShippingAddress());
+        $shipmentTransfer = $shipmentGroupTransfer->getShipment();
+        if ($shipmentTransfer === null) {
+            return;
+        }
+
+        $shippingAddressTransfer = $shipmentTransfer->getShippingAddress();
+        if ($shippingAddressTransfer === null) {
+            return;
+        }
+
+        $shippingAddressFrom->setData(clone $shippingAddressTransfer);
     }
 
     /**
@@ -206,6 +228,28 @@ class CheckoutAddressCollectionForm extends AbstractType
         $event->setData($quoteTransfer);
 
         return $event;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function setDeliverToMultipleAddressesEnabled(FormInterface $form): FormInterface
+    {
+        if (!$form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)) {
+            return $form;
+        }
+
+        $seletedDeliverToMultiShipmentAddressTransfer = (new AddressTransfer())
+            ->setIdCustomerAddress(CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES);
+
+        $form->setData($seletedDeliverToMultiShipmentAddressTransfer);
+
+//        $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
+//            ->setData(CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES);
+
+        return $form;
     }
 
     /**

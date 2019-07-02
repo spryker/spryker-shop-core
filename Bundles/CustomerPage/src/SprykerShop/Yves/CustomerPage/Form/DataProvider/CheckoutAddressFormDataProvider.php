@@ -108,11 +108,11 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function getShippingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
     {
-        $addressTransfer = new AddressTransfer();
         if ($this->isShippingAddressInQuote($quoteTransfer)) {
-            $addressTransfer = $quoteTransfer->getShippingAddress();
+            return $quoteTransfer->getShippingAddress();
         }
 
+        $addressTransfer = new AddressTransfer();
         if ($this->customerTransfer !== null) {
             $addressTransfer->setIdCustomerAddress($this->customerTransfer->getDefaultShippingAddress());
         }
@@ -146,11 +146,11 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function getBillingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
     {
-        $addressTransfer = new AddressTransfer();
         if ($this->isBillingAddressInQuote($quoteTransfer)) {
-            $addressTransfer = $quoteTransfer->getBillingAddress();
+            return $quoteTransfer->getBillingAddress();
         }
 
+        $addressTransfer = new AddressTransfer();
         if ($this->customerTransfer !== null) {
             $addressTransfer->setIdCustomerAddress($this->customerTransfer->getDefaultBillingAddress());
         }
@@ -172,7 +172,8 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         }
 
         return $billingAddressTransfer->getIdCustomerAddress() !== null
-            || $billingAddressTransfer->getIdCompanyUnitAddress() !== null;
+            || $billingAddressTransfer->getIdCompanyUnitAddress() !== null
+            || !$this->isAddressEmpty($billingAddressTransfer);
     }
 
     /**
@@ -302,5 +303,22 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     protected function canDeliverToMultipleShippingAddresses(QuoteTransfer $quoteTransfer): bool
     {
         return ($quoteTransfer->getItems()->count() > 1) && $this->isMultipleShipmentEnabled;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
+     *
+     * @return bool
+     */
+    public function isAddressEmpty(?AddressTransfer $addressTransfer = null): bool
+    {
+        if ($addressTransfer === null) {
+            return true;
+        }
+
+        $firstName = trim($addressTransfer->getFirstName());
+        $lastName = trim($addressTransfer->getLastName());
+
+        return empty($firstName) && empty($lastName);
     }
 }

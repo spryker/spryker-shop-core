@@ -17,6 +17,7 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientBri
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToUtilValidateServiceBridge;
 use SprykerShop\Yves\CustomerPage\Plugin\AuthenticationHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\GuestCheckoutAuthenticationHandlerPlugin;
@@ -413,7 +414,7 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addShipmentService(Container $container): Container
     {
         $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
-            return $container->getLocator()->shipment()->service();
+            return new CustomerPageToShipmentServiceBridge($container->getLocator()->shipment()->service());
         });
 
         return $container;

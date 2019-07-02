@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CustomerPage;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Twig\TwigFunction;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
@@ -18,6 +17,7 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClient
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
 use SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpander;
 use SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
@@ -327,9 +327,9 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Service\Shipment\ShipmentServiceInterface
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface
      */
-    public function getShipmentService(): ShipmentServiceInterface
+    public function getShipmentService(): CustomerPageToShipmentServiceInterface
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_SHIPMENT);
     }
