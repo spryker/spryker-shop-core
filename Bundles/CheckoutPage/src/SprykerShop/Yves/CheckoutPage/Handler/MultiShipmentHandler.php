@@ -266,12 +266,15 @@ class MultiShipmentHandler extends ShipmentHandler
      */
     protected function removeAllShipmentExpensesFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        foreach ($quoteTransfer->getExpenses() as $index => $expenseTransfer) {
-            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                continue;
+        $quoteExpenseForRemoveIndexes = [];
+        foreach ($quoteTransfer->getExpenses() as $expenseTransferIndex => $expenseTransfer) {
+            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+                $quoteExpenseForRemoveIndexes[] = $expenseTransferIndex;
             }
+        }
 
-            $quoteTransfer->getExpenses()->offsetUnset($index);
+        foreach ($quoteExpenseForRemoveIndexes as $quoteExpenseForRemoveIndex) {
+            $quoteTransfer->getExpenses()->offsetUnset($quoteExpenseForRemoveIndex);
         }
 
         return $quoteTransfer;
