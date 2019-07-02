@@ -47,7 +47,7 @@ class ProductQuantityFilterPlugin extends AbstractPlugin implements QuickOrderIt
 
         $nearestQuantity = $this->getFactory()
             ->getProductQuantityStorageClient()
-            ->getNearestQuantity($idProduct, $quickOrderItemTransfer->getQuantity());
+            ->getNearestQuantity($idProduct, (int)$quickOrderItemTransfer->getQuantity());
         $quickOrderItemTransfer->setQuantity($nearestQuantity);
 
         return $quickOrderItemTransfer;
