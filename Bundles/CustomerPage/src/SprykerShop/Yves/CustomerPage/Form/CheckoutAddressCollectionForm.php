@@ -246,9 +246,6 @@ class CheckoutAddressCollectionForm extends AbstractType
 
         $form->setData($seletedDeliverToMultiShipmentAddressTransfer);
 
-//        $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
-//            ->setData(CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES);
-
         return $form;
     }
 
