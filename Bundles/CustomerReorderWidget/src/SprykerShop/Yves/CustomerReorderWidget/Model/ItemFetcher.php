@@ -189,12 +189,12 @@ class ItemFetcher implements ItemFetcherInterface
     protected function cleanUpItemShipmentAddress(ItemTransfer $itemTransfer): ItemTransfer
     {
         $shipmentTransfer = $itemTransfer->getShipment();
-        if($shipmentTransfer === null) {
+        if ($shipmentTransfer === null) {
             return $itemTransfer;
         }
 
         $shippingAddressTransfer = $shipmentTransfer->getShippingAddress();
-        if($shippingAddressTransfer === null) {
+        if ($shippingAddressTransfer === null) {
             return $itemTransfer;
         }
 
