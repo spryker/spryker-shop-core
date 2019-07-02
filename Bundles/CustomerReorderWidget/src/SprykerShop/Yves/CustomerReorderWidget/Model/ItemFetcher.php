@@ -129,6 +129,7 @@ class ItemFetcher implements ItemFetcherInterface
             $itemTransfer->setIdSalesOrderItem(null);
             $itemTransfer->setIsOrdered(false);
             $itemTransfer = $this->cleanUpProductOptions($itemTransfer);
+            $itemTransfer = $this->cleanUpItemShipmentAddress($itemTransfer);
 
             $cleanItems[$idSaleOrderItem] = $itemTransfer;
         }
@@ -178,5 +179,27 @@ class ItemFetcher implements ItemFetcherInterface
         $filteredItems = array_intersect_key($itemTransfers, $allowed_keys);
 
         return $filteredItems;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function cleanUpItemShipmentAddress(ItemTransfer $itemTransfer): ItemTransfer
+    {
+        $itemShipmentTransfer = $itemTransfer->getShipment();
+        if($itemShipmentTransfer === null) {
+            return $itemTransfer;
+        }
+
+        $itemShipmentAddressTransfer = $itemShipmentTransfer->getShippingAddress();
+        if($itemShipmentAddressTransfer === null) {
+            return $itemTransfer;
+        }
+
+        $itemShipmentAddressTransfer->setIdSalesOrderAddress(null);
+
+        return $itemTransfer;
     }
 }
