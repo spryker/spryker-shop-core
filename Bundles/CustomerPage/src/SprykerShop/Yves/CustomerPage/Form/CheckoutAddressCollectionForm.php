@@ -182,7 +182,7 @@ class CheckoutAddressCollectionForm extends AbstractType
         /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer */
         $shipmentGroupTransfer = current($shipmentGroupCollection);
 
-        if (!$shipmentGroupTransfer) {
+        if ($shipmentGroupTransfer === false) {
             return;
         }
 
@@ -241,10 +241,10 @@ class CheckoutAddressCollectionForm extends AbstractType
             return $form;
         }
 
-        $seletedDeliverToMultiShipmentAddressTransfer = (new AddressTransfer())
+        $selectedDeliverToMultiShipmentAddressTransfer = (new AddressTransfer())
             ->setIdCustomerAddress(CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES);
 
-        $form->setData($seletedDeliverToMultiShipmentAddressTransfer);
+        $form->setData($selectedDeliverToMultiShipmentAddressTransfer);
 
         return $form;
     }

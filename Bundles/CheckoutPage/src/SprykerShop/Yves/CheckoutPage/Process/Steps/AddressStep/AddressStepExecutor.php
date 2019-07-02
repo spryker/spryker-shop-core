@@ -112,7 +112,7 @@ class AddressStepExecutor implements StepExecutorInterface
     {
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = current($quoteTransfer->getItems());
-        if (!$itemTransfer) {
+        if ($itemTransfer === false) {
             return $quoteTransfer;
         }
 
