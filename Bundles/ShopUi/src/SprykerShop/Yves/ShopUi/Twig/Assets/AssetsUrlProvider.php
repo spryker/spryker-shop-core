@@ -42,7 +42,7 @@ class AssetsUrlProvider implements AssetsUrlProviderInterface
     public function getAssetsUrl(): string
     {
         $yvesAssetsUrl = strtr($this->config->getYvesAssetsUrlPattern(), [
-            static::THEME_KEY => $this->getThemeKey(),
+            static::THEME_KEY => $this->getThemeName(),
         ]);
 
         return rtrim($yvesAssetsUrl, '/') . '/';
@@ -51,7 +51,7 @@ class AssetsUrlProvider implements AssetsUrlProviderInterface
     /**
      * @return string
      */
-    protected function getThemeKey(): string
+    protected function getThemeName(): string
     {
         $themeName = $this->twigClient->getYvesThemeName();
 
