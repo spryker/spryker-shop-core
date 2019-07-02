@@ -116,7 +116,9 @@ class AddressStepExecutor implements StepExecutorInterface
             return $quoteTransfer;
         }
 
-        $itemTransfer->getShipment()
+        $itemTransfer->requireShipment()
+            ->getShipment()
+            ->requireShippingAddress()
             ->getShippingAddress()
             ->setIsDefaultShipping(true);
 
