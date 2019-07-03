@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\SharedCartWidget\Widget;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
@@ -46,9 +49,39 @@ class CartDeleteSharingCompanyUsersListWidget extends AbstractWidget
      */
     protected function addSharingQuoteCustomerCollectionParameter(QuoteTransfer $quoteTransfer): void
     {
+        $customerCollectionTransfer = $this->getFactory()
+            ->getSharedCartClient()
+            ->getSharingSameQuoteCustomerCollection($quoteTransfer);
+        $customerCollectionTransfer = $this->excludeCustomerFromCustomerCollection(
+            $customerCollectionTransfer,
+            $quoteTransfer->getCustomer()
+        );
+
         $this->addParameter(
             'sharingQuoteCustomerCollection',
-            $this->getFactory()->getSharedCartClient()->getSharingSameQuoteCustomerCollection($quoteTransfer)->getCustomers()
+            $customerCollectionTransfer->getCustomers()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $excludingCustomerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    protected function excludeCustomerFromCustomerCollection(
+        CustomerCollectionTransfer $customerCollectionTransfer,
+        CustomerTransfer $excludingCustomerTransfer
+    ): CustomerCollectionTransfer {
+        $customersCollection = new ArrayObject();
+        foreach ($customerCollectionTransfer->getCustomers() as $customerTransfer) {
+            if ($customerTransfer->getCustomerReference() === $excludingCustomerTransfer->getCustomerReference()) {
+                continue;
+            }
+
+            $customersCollection->append($customerTransfer);
+        }
+
+        return $customerCollectionTransfer->setCustomers($customersCollection);
     }
 }
