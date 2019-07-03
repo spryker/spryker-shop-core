@@ -34,7 +34,7 @@
     {% endset %}
 
     {% set messageField %}
-        <textarea name="message" placeholder="{{ 'comment_widget.form.placeholder.add_comment' | trans }}" required="required" class="textarea textarea--expand spacing-bottom spacing-bottom-small">
+        <textarea name="message" placeholder="{{ 'comment_widget.form.placeholder.add_comment' | trans }}" required="required" class="textarea textarea--expand spacing-bottom spacing-bottom--small">
             {%- if isUpdateFormView -%}
                 {{ data.comment.message }}
             {%- endif -%}
