@@ -110,9 +110,10 @@ class AddressStepExecutor implements StepExecutorInterface
      */
     protected function setDefaultShippingAddress(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        /** @var \Generated\Shared\Transfer\ItemTransfer|false $itemTransfer */
         $itemTransfer = current($quoteTransfer->getItems());
-        if ($itemTransfer === false) {
+
+        if (!$itemTransfer) {
             return $quoteTransfer;
         }
 
