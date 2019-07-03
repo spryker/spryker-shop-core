@@ -12,6 +12,7 @@ use SprykerShop\Yves\CalculationPage\Dependency\Client\CalculationPageToCalculat
 
 /**
  * @method \Spryker\Client\Calculation\CalculationClientInterface getClient()
+ * @method \SprykerShop\Yves\CalculationPage\CalculationPageConfig getConfig()
  */
 class CalculationPageFactory extends AbstractFactory
 {

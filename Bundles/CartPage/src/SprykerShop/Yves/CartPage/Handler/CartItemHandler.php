@@ -64,7 +64,7 @@ class CartItemHandler implements CartItemHandlerInterface
     /**
      * @param string $currentItemSku
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param float $quantity
+     * @param int $quantity
      * @param string $groupKey
      * @param array $optionValueIds
      *
