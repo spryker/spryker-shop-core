@@ -11,8 +11,7 @@
 } %}
 
 {% block body %}
-    {% set isUserLoggedIn = is_granted('ROLE_USER') %}
-    {% if isUserLoggedIn %}
+    {% if is_granted('ROLE_USER') %}
         <div class="text-right spacing spacing--inner">
             <hr>
             <a href="{{url('customer/address')}}">{{ 'page.checkout.address.manage_your_addresses' | trans }}</a>
