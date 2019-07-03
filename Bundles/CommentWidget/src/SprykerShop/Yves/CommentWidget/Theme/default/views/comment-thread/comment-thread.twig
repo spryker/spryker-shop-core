@@ -45,7 +45,6 @@
 
         {% block commentThreadList %}
             {% include molecule('comment-thread-list', 'CommentWidget') with {
-                class: 'spacing-bottom spacing-bottom--medium',
                 attributes: {
                     'comment-thread-select-selector': '.' ~ commentThreadSelectClass,
                 },
