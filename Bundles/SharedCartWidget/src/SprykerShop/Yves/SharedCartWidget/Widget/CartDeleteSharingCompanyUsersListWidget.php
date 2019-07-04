@@ -51,7 +51,7 @@ class CartDeleteSharingCompanyUsersListWidget extends AbstractWidget
     {
         $customerCollectionTransfer = $this->getFactory()
             ->getSharedCartClient()
-            ->getCustomersSharingSameQuote($quoteTransfer);
+            ->getCustomerCollectionByQuote($quoteTransfer);
         $customerCollectionTransfer = $this->excludeCustomerFromCustomerCollection(
             $customerCollectionTransfer,
             $quoteTransfer->getCustomer()
