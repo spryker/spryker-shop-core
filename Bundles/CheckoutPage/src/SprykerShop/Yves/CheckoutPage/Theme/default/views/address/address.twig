@@ -5,7 +5,7 @@
         address: _view.addressesForm,
         shipping: _view.addressesForm.shippingAddress,
         billing: _view.addressesForm.billingAddress,
-        items: _view.addressesForm.multiShippingAddresses,
+        items: _view.addressesForm.multiShippingAddresses | default([]),
     },
     isMultipleShipmentEnabled: _view.addressesForm.isMultipleShipmentEnabled.vars.value,
     title: 'checkout.step.address.title' | trans,
