@@ -20,6 +20,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies.",
     "spryker-shop/quick-order-page": "Use this module when using plugins that need QuickOrderPage dependencies.",
     "spryker/router": "If you want to use RouteProviderPlugins to be added to the Route Module.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."

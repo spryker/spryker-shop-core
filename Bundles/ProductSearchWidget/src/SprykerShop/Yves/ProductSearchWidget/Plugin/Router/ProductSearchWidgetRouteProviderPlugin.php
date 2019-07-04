@@ -14,7 +14,6 @@ class ProductSearchWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
     protected const ROUTE_PRODUCT_CONCRETE_SEARCH = 'product-search/product-concrete-search';
     protected const ROUTE_PRODUCT_QUICK_ADD = 'product-quick-add';
-    protected const ROUTE_RENDER_PRODUCT_QUICK_ADD_FORM = 'render-product-quick-add-form';
 
     /**
      * Specification:
@@ -30,7 +29,6 @@ class ProductSearchWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $routeCollection = $this->addCartQuickAddRoute($routeCollection);
         $routeCollection = $this->addProductConcreteSearchRoute($routeCollection);
-        $routeCollection = $this->addRenderProductQuickAddFormRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -46,19 +44,6 @@ class ProductSearchWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/product-search/product-quick-add', 'ProductSearchWidget', 'ProductConcreteAdd', 'indexAction');
         $routeCollection->add(static::ROUTE_PRODUCT_QUICK_ADD, $route);
-
-        return $routeCollection;
-    }
-
-    /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
-     *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
-     */
-    protected function addRenderProductQuickAddFormRoute(RouteCollection $routeCollection): RouteCollection
-    {
-        $route = $this->buildRoute('/product-search/render-product-quick-add-form', 'ProductSearchWidget', 'QuickAddToCart', 'renderProductQuickAddFormAction');
-        $routeCollection->add(static::ROUTE_RENDER_PRODUCT_QUICK_ADD_FORM, $route);
 
         return $routeCollection;
     }
