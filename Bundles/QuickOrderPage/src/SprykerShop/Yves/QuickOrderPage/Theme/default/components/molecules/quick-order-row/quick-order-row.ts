@@ -20,16 +20,16 @@ export default class QuickOrderRow extends Component {
     quantityInput: HTMLInputElement;
 
     protected readyCallback(): void {
-        this.ajaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider`);
-        this.autocompleteInput = <AutocompleteForm>this.querySelector('autocomplete-form');
+        this.ajaxProvider = <AjaxProvider>this.getElementsByClassName(`${this.jsName}__provider`)[0];
+        this.autocompleteInput = <AutocompleteForm>this.getElementsByTagName('autocomplete-form')[0];
         this.registerQuantityInput();
         this.mapEvents();
     }
 
     protected registerQuantityInput(): void {
-        this.quantityInput = <HTMLInputElement>this.querySelector(
-            `.${this.jsName}__quantity, .${this.jsName}-partial__quantity`
-        );
+        this.quantityInput = <HTMLInputElement>this.getElementsByClassName(
+            `${this.jsName}__quantity ${this.jsName}-partial__quantity`
+        )[0];
     }
 
     protected mapEvents(): void {

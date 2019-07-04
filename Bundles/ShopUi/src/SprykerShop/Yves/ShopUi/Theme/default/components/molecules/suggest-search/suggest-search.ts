@@ -51,9 +51,13 @@ export default class SuggestSearch extends Component {
     navigationActiveClass: string;
 
     protected readyCallback(): void {
-        this.ajaxProvider = <AjaxProvider> this.querySelector(`.${this.jsName}__ajax-provider`);
-        this.suggestionsContainer = <HTMLElement> this.querySelector(`.${this.jsName}__container`);
-        this.searchInput = <HTMLInputElement> document.querySelector(this.searchInputSelector);
+        this.ajaxProvider = <AjaxProvider> this.getElementsByClassName(`${this.jsName}__ajax-provider`)[0];
+        this.suggestionsContainer = <HTMLElement> this.getElementsByClassName(`${this.jsName}__container`)[0];
+        /* tslint:disable: deprecation */
+        this.searchInput = <HTMLInputElement> (this.searchInputClassName ?
+            document.getElementsByClassName(this.searchInputClassName)[0] :
+            document.querySelector(this.searchInputSelector));
+        /* tslint:enable: deprecation */
         this.navigationActiveClass = `${this.name}__item--active`;
         this.createHintInput();
         this.mapEvents();
@@ -284,8 +288,13 @@ export default class SuggestSearch extends Component {
 
     /**
      * Gets a querySelector of the search input field.
+     *
+     * @deprecated Use searchInputClassName() instead.
      */
     get searchInputSelector(): string {
         return <string> this.getAttribute('input-selector');
+    }
+    protected get searchInputClassName(): string {
+        return this.getAttribute('input-class-name');
     }
 }

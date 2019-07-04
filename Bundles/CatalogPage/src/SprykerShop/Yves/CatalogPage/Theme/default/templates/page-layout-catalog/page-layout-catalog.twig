@@ -66,13 +66,13 @@
                         modifiers: ['expand'],
                         class: 'box is-hidden-lg-xl',
                         data: {
-                            label: 'Show/Hide filters'
+                            label: 'Show/Hide filters',
                         },
                         attributes: {
-                            'target-selector': '.js-catalog__filters-toggle',
+                            'target-class-name': 'js-catalog__filters-toggle',
                             'class-to-toggle': 'is-hidden-sm-md',
-                            checked: true
-                        }
+                            checked: true,
+                        },
                     } only %}
 
                     {% include organism('filter-section', 'CatalogPage') with {

@@ -112,10 +112,10 @@
         </label>
         {% include molecule('form-clear') with {
             attributes: {
-                'form-selector': '.js-form-clear__' ~ data.formType ~ '-form',
-                'trigger-selector': '.js-form-clear__' ~ data.formType ~ '-toggler',
-                'ignore-selector': '.js-form-clear__ignore-element'
-            }
+                'form-class-name': 'js-form-clear__' ~ data.formType ~ '-form',
+                'trigger-class-name': 'js-form-clear__' ~ data.formType ~ '-toggler',
+                'ignore-class-name': 'js-form-clear__ignore-element',
+            },
         } only %}
     </div>
 

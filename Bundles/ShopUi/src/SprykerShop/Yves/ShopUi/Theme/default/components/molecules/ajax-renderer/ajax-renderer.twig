@@ -2,11 +2,14 @@
 
 {% define config = {
     name: 'ajax-renderer',
-    tag: 'ajax-renderer'
+    tag: 'ajax-renderer',
 } %}
 
+{# @deprecated properties "provider-selector" and "target-selector" are deprecated: use "provider-class-name" and "target-class-name" instead. #}
 {% define attributes = {
-    'provider-selector': required,
-    'target-selector': null,
-    'render-if-response-is-empty': false
+    'provider-selector': '',
+    'provider-class-name': '',
+    'target-selector': '',
+    'target-class-name': '',
+    'render-if-response-is-empty': false,
 } %}

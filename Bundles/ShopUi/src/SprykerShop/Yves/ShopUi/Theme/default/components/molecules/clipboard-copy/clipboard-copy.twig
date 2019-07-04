@@ -5,9 +5,12 @@
     tag: 'clipboard-copy',
 } %}
 
+{# @deprecated properties "trigger-selector" and "target-selector" are deprecated: use "trigger-class-name" and "target-class-name" instead. #}
 {% define attributes = {
-    'trigger-selector': required,
-    'target-selector': required,
+    'trigger-selector': '',
+    'trigger-class-name': '',
+    'target-selector': '',
+    'target-class-name': '',
     'class-to-toggle': 'is-hidden',
 } %}
 
