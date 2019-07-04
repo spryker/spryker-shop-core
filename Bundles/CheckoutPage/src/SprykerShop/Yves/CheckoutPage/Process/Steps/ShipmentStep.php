@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
@@ -31,14 +30,21 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     protected $shipmentPlugins;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface
+     */
+    protected $postConditionChecker;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection $shipmentPlugins
+     * @param \SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface $postConditionChecker
      * @param string $stepRoute
      * @param string $escapeRoute
      */
     public function __construct(
         CheckoutPageToCalculationClientInterface $calculationClient,
         StepHandlerPluginCollection $shipmentPlugins,
+        PostConditionCheckerInterface $postConditionChecker,
         $stepRoute,
         $escapeRoute
     ) {
@@ -46,6 +52,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
 
         $this->calculationClient = $calculationClient;
         $this->shipmentPlugins = $shipmentPlugins;
+        $this->postConditionChecker = $postConditionChecker;
     }
 
     /**
@@ -83,35 +90,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
-        if ($this->hasOnlyGiftCardItems($quoteTransfer)) {
-            return true;
-        }
-
-        if (!$this->isShipmentSet($quoteTransfer)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isShipmentSet(QuoteTransfer $quoteTransfer): bool
-    {
-        if (!$quoteTransfer->getShipment()) {
-            return false;
-        }
-
-        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                return $quoteTransfer->getShipment()->getShipmentSelection() !== null;
-            }
-        }
-
-        return false;
+        return $this->postConditionChecker->check($quoteTransfer);
     }
 
     /**

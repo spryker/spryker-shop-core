@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CheckoutPage\Handler;
 use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
@@ -18,6 +19,9 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClient
 use SprykerShop\Yves\CheckoutPage\Exception\NotAvailableShipmentMethodException;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\CheckoutPage\Handler\ShipmentStepExecutor instead.
+ */
 class ShipmentHandler implements ShipmentHandlerInterface
 {
     /**
@@ -48,7 +52,7 @@ class ShipmentHandler implements ShipmentHandlerInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addShipmentToQuote(Request $request, QuoteTransfer $quoteTransfer)
+    public function addShipmentToQuote(Request $request, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $shipmentTransfer = $quoteTransfer->getShipment();
 
@@ -56,7 +60,10 @@ class ShipmentHandler implements ShipmentHandlerInterface
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
         $shipmentExpenseTransfer = $this->createShippingExpenseTransfer($shipmentMethodTransfer, $quoteTransfer->getPriceMode());
+        $shipmentExpenseTransfer->setShipment($shipmentTransfer);
         $this->replaceShipmentExpenseInQuote($quoteTransfer, $shipmentExpenseTransfer);
+
+        $quoteTransfer = $this->clearItemsShipment($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -125,7 +132,12 @@ class ShipmentHandler implements ShipmentHandlerInterface
      */
     protected function getAvailableShipmentMethods(QuoteTransfer $quoteTransfer)
     {
-        return $this->shipmentClient->getAvailableMethods($quoteTransfer);
+        $shipmentMethodsTransfer = current($this->shipmentClient->getAvailableMethodsByShipment($quoteTransfer)->getShipmentMethods());
+        if (!$shipmentMethodsTransfer) {
+            return new ShipmentMethodsTransfer();
+        }
+
+        return $shipmentMethodsTransfer;
     }
 
     /**
@@ -192,5 +204,21 @@ class ShipmentHandler implements ShipmentHandlerInterface
     protected function createExpenseTransfer()
     {
         return new ExpenseTransfer();
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function clearItemsShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setShipment(null);
+        }
+
+        return $quoteTransfer;
     }
 }

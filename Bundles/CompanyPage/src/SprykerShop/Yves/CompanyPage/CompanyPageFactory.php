@@ -20,7 +20,11 @@ use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageC
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientInterface;
 use SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToStoreClientInterface;
+use SprykerShop\Yves\CompanyPage\Expander\CompanyUnitAddressExpander;
+use SprykerShop\Yves\CompanyPage\Expander\CompanyUnitAddressExpanderInterface;
 use SprykerShop\Yves\CompanyPage\Form\FormFactory;
+use SprykerShop\Yves\CompanyPage\Mapper\CompanyUnitMapper;
+use SprykerShop\Yves\CompanyPage\Mapper\CompanyUnitMapperInterface;
 use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAddressReader;
 use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAddressReaderInterface;
 use SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAddressSaver;
@@ -195,5 +199,21 @@ class CompanyPageFactory extends AbstractFactory
     public function createCompanyUserValidator(): CompanyUserValidatorInterface
     {
         return new CompanyUserValidator();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Mapper\CompanyUnitMapperInterface
+     */
+    public function createCompanyUnitMapper(): CompanyUnitMapperInterface
+    {
+        return new CompanyUnitMapper();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyPage\Expander\CompanyUnitAddressExpanderInterface
+     */
+    public function createCompanyUnitAddressExpander(): CompanyUnitAddressExpanderInterface
+    {
+        return new CompanyUnitAddressExpander($this->createCompanyUnitMapper());
     }
 }

@@ -14,11 +14,15 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorag
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilter;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilterInterface;
 use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
+use SprykerShop\Yves\CheckoutPage\Handler\MultiShipmentHandler;
+use SprykerShop\Yves\CheckoutPage\Handler\MultiShipmentHandlerInterface;
 use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
+use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandlerInterface;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
 
 /**
@@ -157,18 +161,34 @@ class CheckoutPageFactory extends AbstractFactory
             $this->getShipmentClient(),
             $this->getGlossaryStorageClient(),
             $this->getStore(),
-            $this->getMoneyPlugin()
+            $this->getMoneyPlugin(),
+            $this->getShippingService(),
+            $this->getConfig()
         );
     }
 
     /**
+     * @deprecated Use createShipmentHandlerWithMultipleShipment() instead.
+     *
      * @return \SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandlerInterface
      */
-    public function createShipmentHandler()
+    public function createShipmentHandler(): ShipmentHandlerInterface
     {
         return new ShipmentHandler(
             $this->getShipmentClient(),
             $this->getPriceClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Handler\MultiShipmentHandlerInterface
+     */
+    public function createShipmentHandlerWithMultipleShipment(): MultiShipmentHandlerInterface
+    {
+        return new MultiShipmentHandler(
+            $this->getShipmentClient(),
+            $this->getPriceClient(),
+            $this->getShippingService()
         );
     }
 
@@ -210,6 +230,14 @@ class CheckoutPageFactory extends AbstractFactory
     public function getStore()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
+     */
+    public function getShippingService(): CheckoutPageToShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_SHIPMENT);
     }
 
     /**
