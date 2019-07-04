@@ -1,0 +1,8 @@
+@mixin comment-widget-comment($name: '.comment') {
+    #{$name} {
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid $setting-color-lighter;
+
+        @content;
+    }
+}

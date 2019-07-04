@@ -20,6 +20,7 @@
     <form class="{{ config.jsName }}__form" method="GET" action="{{ data.action }}">
         {% embed atom('select') with {
             class: config.jsName ~ '__select',
+            modifiers: ['expand'],
             attributes: {
                 name: attributes.name,
             },
