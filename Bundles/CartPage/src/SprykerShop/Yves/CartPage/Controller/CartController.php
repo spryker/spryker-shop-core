@@ -92,7 +92,7 @@ class CartController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function addAction(Request $request, $sku, $quantity = 1.00, array $optionValueIds = [])
+    public function addAction(Request $request, $sku, $quantity = 1, array $optionValueIds = [])
     {
         if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
@@ -139,11 +139,10 @@ class CartController extends AbstractController
     /**
      * @param string $sku
      * @param int $quantity
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeQuickAddAction(string $sku, int $quantity, Request $request): RedirectResponse
+    protected function executeQuickAddAction(string $sku, int $quantity): RedirectResponse
     {
         $itemTransfer = (new ItemTransfer())
             ->setSku($sku)
@@ -194,7 +193,7 @@ class CartController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function changeAction($sku, $quantity = 1.00, $groupKey = null)
+    public function changeAction($sku, $quantity = 1, $groupKey = null)
     {
         if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
@@ -250,7 +249,7 @@ class CartController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function updateAction($sku, $quantity = 1.00, array $selectedAttributes = [], array $preselectedAttributes = [], $groupKey = null, array $optionValueIds = [])
+    public function updateAction($sku, $quantity = 1, array $selectedAttributes = [], array $preselectedAttributes = [], $groupKey = null, array $optionValueIds = [])
     {
         if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
