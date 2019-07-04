@@ -31,6 +31,6 @@ class CustomerPageToShipmentServiceBridge implements CustomerPageToShipmentServi
      */
     public function groupItemsByShipment(iterable $itemTransferCollection): ArrayObject
     {
-        return $this->shipmentService->groupItemsByShipment($itemTransfersCollection);
+        return $this->shipmentService->groupItemsByShipment($itemTransferCollection);
     }
 }
