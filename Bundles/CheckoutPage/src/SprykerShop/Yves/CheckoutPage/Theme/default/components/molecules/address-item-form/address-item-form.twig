@@ -11,11 +11,13 @@
 } %}
 
 {% block body %}
-    <div class="text-right spacing spacing--inner">
-        <hr>
-        <a href="{{url('customer/address')}}">{{ 'page.checkout.address.manage_your_addresses' | trans }}</a>
-        <hr>
-    </div>
+    {% if is_granted('ROLE_USER') %}
+        <div class="text-right spacing spacing--inner">
+            <hr>
+            <a href="{{url('customer/address')}}">{{ 'page.checkout.address.manage_your_addresses' | trans }}</a>
+            <hr>
+        </div>
+    {% endif %}
     {% embed molecule('form') with {
         data: {
             form: data.form,
