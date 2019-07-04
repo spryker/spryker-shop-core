@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -341,6 +342,10 @@ class CheckoutAddressCollectionForm extends AbstractType
      */
     protected function addItemShippingAddressSubForm(FormBuilderInterface $builder, array $options)
     {
+        if (!$options[static::OPTION_IS_MULTIPLE_SHIPMENT_ENABLED]) {
+            return $this;
+        }
+
         $fieldOptions = [
             'label' => false,
             'property_path' => static::PROPERTY_PATH_MULTI_SHIPPING_ADDRESSES,
@@ -354,6 +359,8 @@ class CheckoutAddressCollectionForm extends AbstractType
                 CheckoutMultiShippingAddressesForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
             ],
         ];
+
+        $builder->add(static::FIELD_MULTI_SHIPPING_ADDRESSES, CollectionType::class, $fieldOptions);
 
         return $this;
     }
