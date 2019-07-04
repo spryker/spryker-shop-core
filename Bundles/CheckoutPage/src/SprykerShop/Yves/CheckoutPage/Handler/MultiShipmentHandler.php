@@ -104,13 +104,13 @@ class MultiShipmentHandler extends ShipmentHandler
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransferCollection
      *
      * @return iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    protected function groupItemsByShipment(iterable $itemTransfers): iterable
+    protected function groupItemsByShipment(iterable $itemTransferCollection): iterable
     {
-        return $this->shipmentService->groupItemsByShipment($itemTransfers);
+        return $this->shipmentService->groupItemsByShipment($itemTransferCollection);
     }
 
     /**
