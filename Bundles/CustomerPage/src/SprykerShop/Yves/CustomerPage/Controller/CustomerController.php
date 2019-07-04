@@ -19,7 +19,7 @@ class CustomerController extends AbstractCustomerController
 {
     public const ORDER_LIST_LIMIT = 5;
     public const ORDER_LIST_SORT_FIELD = 'created_at';
-    public const ORDER_LIST_SORT_DIRECTION = '';
+    public const ORDER_LIST_SORT_DIRECTION = 'DESC';
 
     public const KEY_BILLING = 'billing';
     public const KEY_SHIPPING = 'shipping';

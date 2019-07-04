@@ -61,7 +61,7 @@ class SharedCartWidgetToSharedCartClientBridge implements SharedCartWidgetToShar
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function getSharingSameQuoteCustomerCollection(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
+    public function getCustomersSharingSameQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
     {
         return $this->sharedCartClient->getCustomersSharingSameQuote($quoteTransfer);
     }

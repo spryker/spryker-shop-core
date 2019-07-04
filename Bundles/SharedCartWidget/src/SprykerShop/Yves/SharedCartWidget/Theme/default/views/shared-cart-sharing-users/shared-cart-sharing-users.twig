@@ -1,15 +1,15 @@
 {% extends template('widget') %}
 
 {% define data = {
-    sharingQuoteCustomerCollection: _widget.sharingQuoteCustomerCollection,
+    customerCollection: _widget.customerCollection,
 } %}
 
 {% block body %}
-    {% if data.sharingQuoteCustomerCollection is not empty %}
+    {% if data.customerCollection is not empty %}
         <div class="box">
             {{ "multi_cart_page.cart_delete_confirmation.shared_with" | trans }}:
             <ul class="list list--bullet">
-                {% for customer in data.sharingQuoteCustomerCollection %}
+                {% for customer in data.customerCollection %}
                     <li class="list__item">
                         <strong>{{ customer.firstName }} {{ customer.lastName }}</strong>
                     </li>

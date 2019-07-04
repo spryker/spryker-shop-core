@@ -23,7 +23,7 @@ class CartDeleteSharingCompanyUsersListWidget extends AbstractWidget
      */
     public function __construct(QuoteTransfer $quoteTransfer)
     {
-        $this->addSharingQuoteCustomerCollectionParameter($quoteTransfer);
+        $this->addCustomerCollectionParameter($quoteTransfer);
     }
 
     /**
@@ -47,18 +47,18 @@ class CartDeleteSharingCompanyUsersListWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function addSharingQuoteCustomerCollectionParameter(QuoteTransfer $quoteTransfer): void
+    protected function addCustomerCollectionParameter(QuoteTransfer $quoteTransfer): void
     {
         $customerCollectionTransfer = $this->getFactory()
             ->getSharedCartClient()
-            ->getSharingSameQuoteCustomerCollection($quoteTransfer);
+            ->getCustomersSharingSameQuote($quoteTransfer);
         $customerCollectionTransfer = $this->excludeCustomerFromCustomerCollection(
             $customerCollectionTransfer,
             $quoteTransfer->getCustomer()
         );
 
         $this->addParameter(
-            'sharingQuoteCustomerCollection',
+            'customerCollection',
             $customerCollectionTransfer->getCustomers()
         );
     }
