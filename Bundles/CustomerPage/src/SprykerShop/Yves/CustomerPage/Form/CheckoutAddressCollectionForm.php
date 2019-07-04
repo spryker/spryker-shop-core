@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerPage\Form;
 
-use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -343,6 +342,10 @@ class CheckoutAddressCollectionForm extends AbstractType
      */
     protected function addItemShippingAddressSubForm(FormBuilderInterface $builder, array $options)
     {
+        if (!$options[static::OPTION_IS_MULTIPLE_SHIPMENT_ENABLED]) {
+            return $this;
+        }
+
         $fieldOptions = [
             'label' => false,
             'property_path' => static::PROPERTY_PATH_MULTI_SHIPPING_ADDRESSES,
@@ -356,9 +359,6 @@ class CheckoutAddressCollectionForm extends AbstractType
                 CheckoutMultiShippingAddressesForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
             ],
         ];
-        if (!$options[static::OPTION_IS_MULTIPLE_SHIPMENT_ENABLED]) {
-            $fieldOptions['data'] = new ArrayObject();
-        }
 
         $builder->add(static::FIELD_MULTI_SHIPPING_ADDRESSES, CollectionType::class, $fieldOptions);
 
