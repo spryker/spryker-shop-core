@@ -4,12 +4,12 @@ export default class ToggleSelectForm extends Component {
     /**
      * Element triggering the toggle action.
      */
-    readonly trigger: HTMLSelectElement
+    readonly trigger: HTMLSelectElement;
 
     /**
      * Elements targeted by the toggle action.
      */
-    readonly targets: HTMLElement[]
+    readonly targets: HTMLElement[];
 
     constructor() {
         super();

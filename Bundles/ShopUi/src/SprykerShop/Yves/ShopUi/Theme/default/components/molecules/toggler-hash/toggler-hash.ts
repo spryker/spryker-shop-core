@@ -4,7 +4,7 @@ export default class TogglerHash extends Component {
     /**
      * Elements targeted by the toggle action.
      */
-    readonly targets: HTMLElement[]
+    readonly targets: HTMLElement[];
 
     constructor() {
         super();
@@ -30,6 +30,7 @@ export default class TogglerHash extends Component {
     checkHash(): void {
         if (this.triggerHash === this.hash) {
             this.toggle(this.addClassWhenHashInUrl);
+
             return;
         }
 

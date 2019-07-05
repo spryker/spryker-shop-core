@@ -4,16 +4,16 @@ export default class FlashMessage extends Component {
     /**
      * Default flash message show duration.
      */
-    readonly defaultDuration: number = 5000
+    readonly defaultDuration: number = 5000;
 
     /**
      * The id of flash message timeout.
      */
-    durationTimeoutId: any
+    durationTimeoutId: number;
 
     protected readyCallback(): void {
         this.mapEvents();
-        setTimeout(() => this.showFor(this.defaultDuration));
+        window.setTimeout(() => this.showFor(this.defaultDuration));
     }
 
     protected mapEvents(): void {
@@ -31,7 +31,7 @@ export default class FlashMessage extends Component {
      */
     showFor(duration: number) {
         this.classList.add(`${this.name}--show`);
-        this.durationTimeoutId = setTimeout(() => this.hide(), duration);
+        this.durationTimeoutId = window.setTimeout(() => this.hide(), duration);
     }
 
     /**
