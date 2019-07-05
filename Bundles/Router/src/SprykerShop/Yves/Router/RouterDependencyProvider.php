@@ -72,7 +72,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     * @return \SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
      */
     protected function getRouterEnhancerPlugins(): array
     {

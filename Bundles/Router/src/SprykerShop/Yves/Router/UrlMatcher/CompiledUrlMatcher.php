@@ -9,10 +9,10 @@ namespace SprykerShop\Yves\Router\UrlMatcher;
 
 use SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouterEnhancerAwareInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Matcher\CompiledUrlMatcher;
+use Symfony\Component\Routing\Matcher\CompiledUrlMatcher as SymfonyCompiledUrlMatcher;
 use Symfony\Component\Routing\Matcher\RedirectableUrlMatcherInterface;
 
-class UrlMatcher extends CompiledUrlMatcher implements RouterEnhancerAwareInterface, RedirectableUrlMatcherInterface
+class CompiledUrlMatcher extends SymfonyCompiledUrlMatcher implements RouterEnhancerAwareInterface, RedirectableUrlMatcherInterface
 {
     /**
      * @var \SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
@@ -20,7 +20,7 @@ class UrlMatcher extends CompiledUrlMatcher implements RouterEnhancerAwareInterf
     protected $routerEnhancerPlugins;
 
     /**
-     * @param array $routerEnhancerPlugins
+     * @param \SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[] $routerEnhancerPlugins
      *
      * @return void
      */
