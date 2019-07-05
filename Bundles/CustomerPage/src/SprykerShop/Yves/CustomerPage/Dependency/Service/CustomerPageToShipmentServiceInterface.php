@@ -17,4 +17,9 @@ interface CustomerPageToShipmentServiceInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
     public function groupItemsByShipment(iterable $itemTransferCollection): ArrayObject;
+
+    /**
+     * @return string
+     */
+    public function getShipmentExpenseType(): string;
 }
