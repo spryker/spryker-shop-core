@@ -8,13 +8,13 @@
 namespace SprykerShop\Yves\Router\Plugin\RouteManipulator;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouteManipulatorPluginInterface;
+use SprykerShop\Yves\RouterExtension\Dependency\Plugin\PostAddRouteManipulatorPluginInterface;
 use Symfony\Component\Routing\Route;
 
 /**
  * @method \SprykerShop\Yves\Router\RouterConfig getConfig()
  */
-class LanguageDefaultRouteManipulatorPlugin extends AbstractPlugin implements RouteManipulatorPluginInterface
+class LanguageDefaultPostAddRouteManipulatorPlugin extends AbstractPlugin implements PostAddRouteManipulatorPluginInterface
 {
     /**
      * @var string

@@ -9,7 +9,7 @@ namespace SprykerShopTest\Yves\Router\Plugin;
 
 use Codeception\Test\Unit;
 use SprykerShop\Shared\Router\RouterConstants;
-use SprykerShop\Yves\Router\Plugin\RouteManipulator\LanguageDefaultRouteManipulatorPlugin;
+use SprykerShop\Yves\Router\Plugin\RouteManipulator\LanguageDefaultPostAddRouteManipulatorPlugin;
 use SprykerShop\Yves\Router\Plugin\Router\YvesRouterPlugin;
 use SprykerShop\Yves\Router\Plugin\RouterEnhancer\LanguagePrefixRouterEnhancerPlugin;
 use SprykerShopTest\Yves\Router\Plugin\Fixtures\RouteProviderPlugin;
@@ -44,7 +44,7 @@ class YvesRouterPluginWithLanguagePrefixRouterEnhancerTest extends Unit
         ]);
 
         $this->tester->mockFactoryMethod('getRouteManipulatorPlugins', [
-            new LanguageDefaultRouteManipulatorPlugin(),
+            new LanguageDefaultPostAddRouteManipulatorPlugin(),
         ]);
 
         $this->tester->mockFactoryMethod('getRouterEnhancerPlugins', [

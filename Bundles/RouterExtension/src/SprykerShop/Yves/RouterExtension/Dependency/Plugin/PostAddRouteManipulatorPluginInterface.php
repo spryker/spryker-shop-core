@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\RouterExtension\Dependency\Plugin;
 
 use Symfony\Component\Routing\Route;
 
-interface RouteManipulatorPluginInterface
+interface PostAddRouteManipulatorPluginInterface
 {
     /**
      * Specification:

@@ -8,13 +8,13 @@
 namespace SprykerShop\Yves\Router\Plugin\RouteManipulator;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouteManipulatorPluginInterface;
+use SprykerShop\Yves\RouterExtension\Dependency\Plugin\PostAddRouteManipulatorPluginInterface;
 use Symfony\Component\Routing\Route;
 
 /**
  * @method \SprykerShop\Yves\Router\RouterConfig getConfig()
  */
-class SslRouteManipulatorPlugin extends AbstractPlugin implements RouteManipulatorPluginInterface
+class SslPostAddRouteManipulatorPlugin extends AbstractPlugin implements PostAddRouteManipulatorPluginInterface
 {
     protected const SCHEME_HTTPS = 'https';
     protected const SCHEME_HTTP = 'http';

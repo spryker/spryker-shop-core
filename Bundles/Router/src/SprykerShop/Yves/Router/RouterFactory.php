@@ -92,11 +92,11 @@ class RouterFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouteManipulatorPluginInterface[]
+     * @return \SprykerShop\Yves\RouterExtension\Dependency\Plugin\PostAddRouteManipulatorPluginInterface[]
      */
     protected function getRouteManipulatorPlugins(): array
     {
-        return $this->getProvidedDependency(RouterDependencyProvider::ROUTER_ROUTE_MANIPULATOR);
+        return $this->getProvidedDependency(RouterDependencyProvider::POST_ADD_ROUTE_MANIPULATOR);
     }
 
     /**
@@ -124,7 +124,7 @@ class RouterFactory extends AbstractFactory
             $this->createClosureLoader(),
             $this->createResource(),
             $this->getRouterEnhancerPlugins(),
-            $this->getConfig()->getFallbackRouterConfiguration()
+            $this->getConfig()->getDevelopmentRouterConfiguration()
         );
     }
 

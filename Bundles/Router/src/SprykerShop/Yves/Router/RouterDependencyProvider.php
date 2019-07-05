@@ -17,7 +17,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const ROUTER_PLUGINS = 'router-plugins';
     public const ROUTER_ROUTE_PROVIDER = 'router-controller-provider';
-    public const ROUTER_ROUTE_MANIPULATOR = 'route manipulator';
+    public const POST_ADD_ROUTE_MANIPULATOR = 'route manipulator';
     public const ROUTER_ENHANCER_PLUGINS = 'router enhancer plugin';
 
     /**
@@ -30,7 +30,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRouterPlugins($container);
         $container = $this->addRouterEnhancerPlugins($container);
         $container = $this->addRouteProvider($container);
-        $container = $this->addRouteManipulator($container);
+        $container = $this->addPostAddRouteManipulator($container);
 
         return $container;
     }
@@ -106,19 +106,19 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addRouteManipulator(Container $container): Container
+    protected function addPostAddRouteManipulator(Container $container): Container
     {
-        $container->set(static::ROUTER_ROUTE_MANIPULATOR, function () {
-            return $this->getRouteManipulator();
+        $container->set(static::POST_ADD_ROUTE_MANIPULATOR, function () {
+            return $this->getPostAddRouteManipulator();
         });
 
         return $container;
     }
 
     /**
-     * @return \SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouteManipulatorPluginInterface[]
+     * @return \SprykerShop\Yves\RouterExtension\Dependency\Plugin\PostAddRouteManipulatorPluginInterface[]
      */
-    protected function getRouteManipulator(): array
+    protected function getPostAddRouteManipulator(): array
     {
         return [];
     }

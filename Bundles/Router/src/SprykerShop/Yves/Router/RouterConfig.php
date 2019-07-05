@@ -15,6 +15,11 @@ use SprykerShop\Yves\Router\UrlMatcher\CompiledUrlMatcher;
 class RouterConfig extends AbstractBundleConfig
 {
     /**
+     * Specification:
+     * - Returns a Router configuration which makes use of a Router cache.
+     *
+     * @api
+     *
      * @return array
      */
     public function getRouterConfiguration(): array
@@ -28,9 +33,15 @@ class RouterConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns a Router configuration which does not make use of a Router cache.
+     * - Fallback for development which is executed when the cached Router is not able to match.
+     *
+     * @api
+     *
      * @return array
      */
-    public function getFallbackRouterConfiguration(): array
+    public function getDevelopmentRouterConfiguration(): array
     {
         $routerConfiguration = $this->getRouterConfiguration();
         $routerConfiguration['cache_dir'] = null;
@@ -53,6 +64,12 @@ class RouterConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns if the SSl is enabled.
+     * - When it is enabled and the current request is not secure, the Router will redirect to a secured URL.
+     *
+     * @api
+     *
      * @return bool
      */
     public function isSslEnabled(): bool
@@ -61,6 +78,12 @@ class RouterConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns SSl excluded Route names.
+     * - When SSL is enabled and the current Route name is excluded, the Router will not redirect to a secured URL.
+     *
+     * @api
+     *
      * @return string[]
      */
     public function getSslExcludedRouteNames(): array
@@ -69,7 +92,12 @@ class RouterConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string[]
+     * Specification:
+     * - Returns a list of supported languages for Route manipulation.
+     *
+     * @api
+     *
+     * @return array
      */
     public function getAllowedLanguages(): array
     {
@@ -80,6 +108,9 @@ class RouterConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns a list of supported stores for Route manipulation.
+     *
      * @return string[]
      */
     public function getAllowedStores(): array
