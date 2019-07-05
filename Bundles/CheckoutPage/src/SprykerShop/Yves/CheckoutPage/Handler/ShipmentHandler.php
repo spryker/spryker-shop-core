@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use SprykerShop\Shared\CheckoutPage\CheckoutPageConstants;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
@@ -150,7 +150,7 @@ class ShipmentHandler implements ShipmentHandlerInterface
     {
         $shipmentExpenseTransfer = $this->createExpenseTransfer();
         $shipmentExpenseTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
-        $shipmentExpenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+        $shipmentExpenseTransfer->setType(CheckoutPageConstants::SHIPMENT_EXPENSE_TYPE);
         $this->setPrice($shipmentExpenseTransfer, $shipmentMethodTransfer->getStoreCurrencyPrice(), $priceMode);
         $shipmentExpenseTransfer->setQuantity(1);
 
@@ -189,7 +189,7 @@ class ShipmentHandler implements ShipmentHandlerInterface
     {
         $otherExpenseCollection = new ArrayObject();
         foreach ($quoteTransfer->getExpenses() as $expense) {
-            if ($expense->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+            if ($expense->getType() !== CheckoutPageConstants::SHIPMENT_EXPENSE_TYPE) {
                 $otherExpenseCollection->append($expense);
             }
         }

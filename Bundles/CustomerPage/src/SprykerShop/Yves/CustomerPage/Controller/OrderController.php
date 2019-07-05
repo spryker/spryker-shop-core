@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -175,8 +174,12 @@ class OrderController extends AbstractCustomerController
         iterable $shipmentGroupCollection
     ): iterable {
         $orderShipmentExpenses = [];
+        $shipmentExpenseType = $this->getFactory()
+            ->getShipmentService()
+            ->getShipmentExpenseType();
+
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE
+            if ($expenseTransfer->getType() !== $shipmentExpenseType
                 || $expenseTransfer->getShipment() === null) {
                 continue;
             }

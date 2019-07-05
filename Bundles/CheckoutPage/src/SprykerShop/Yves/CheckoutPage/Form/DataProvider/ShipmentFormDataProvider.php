@@ -33,8 +33,6 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected const ONE_DAY = 1;
     protected const SECONDS_IN_ONE_DAY = 86400;
 
-    public const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
-
     /**
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface
      */

@@ -44,4 +44,12 @@ class CheckoutPageToShipmentServiceBridge implements CheckoutPageToShipmentServi
     {
         return $this->shipmentService->getShipmentHashKey($shipmentTransfer);
     }
+
+    /**
+     * @return string
+     */
+    public function getShipmentExpenseType(): string
+    {
+        return $this->shipmentService->getShipmentExpenseType();
+    }
 }
