@@ -1,1 +1,1 @@
-This view is deprecated. Use molecules customer-reorder-form and customer-reorder-link instead.
+This view is deprecated. Use molecule('customer-reorder-form', 'CustomerReorderWidget') and molecule('customer-reorder-link', 'CustomerReorderWidget') instead.
