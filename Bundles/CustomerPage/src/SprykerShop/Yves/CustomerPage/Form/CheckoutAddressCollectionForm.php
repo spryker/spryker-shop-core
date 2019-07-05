@@ -393,7 +393,7 @@ class CheckoutAddressCollectionForm extends AbstractType
         }
 
         $addressChoices = $options[static::OPTION_ADDRESS_CHOICES];
-        $addressChoices[CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES] = static::GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES;
+        $addressChoices[static::GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES] = CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES;
 
         return $addressChoices;
     }
