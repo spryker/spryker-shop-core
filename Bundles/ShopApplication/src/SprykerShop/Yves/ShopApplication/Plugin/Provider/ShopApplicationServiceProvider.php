@@ -12,7 +12,6 @@ use Silex\ServiceProviderInterface;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Application\Environment as ApplicationEnvironment;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
@@ -28,6 +27,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @see \Spryker\Yves\Locale\Plugin\Application\LocaleApplicationPlugin
  *
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
+ * @method \SprykerShop\Yves\ShopApplication\ShopApplicationConfig getConfig()
  */
 class ShopApplicationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -57,7 +57,7 @@ class ShopApplicationServiceProvider extends AbstractPlugin implements ServicePr
         $this->setLogLevel();
 
         $this->addGlobalTemplateVariables($app, [
-            'environment' => Environment::getEnvironment(),
+            'environment' => $this->getConfig()->getTwigEnvironmentName(),
         ]);
     }
 

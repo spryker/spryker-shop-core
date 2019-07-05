@@ -99,11 +99,13 @@
                 <div class="box">
                     <h6>{{ 'checkout.step.summary.delivery_address' | trans }}</h6>
                     <hr>
-                    {% include molecule('display-address') with {
+                    {% embed molecule('display-address') with {
                         data: {
                             address: shipmentGroup.shipment.shippingAddress,
                         },
                     } only %}
+                        {% block addressBadgeLabel %}{% endblock %}
+                    {% endembed %}
 
                     <a href="{{ url('checkout-address') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-address') }}>
                         {{ 'general.edit.button' | trans }}
@@ -181,11 +183,13 @@
                 <div class="box">
                     <h6>{{ 'checkout.step.summary.billing_address' | trans }}</h6>
                     <hr>
-                    {% include molecule('display-address') with {
+                    {% embed molecule('display-address') with {
                         data: {
                             address: data.billingAddress,
                         },
                     } only %}
+                        {% block addressBadgeLabel %}{% endblock %}
+                    {% endembed %}
 
                     <a href="{{ url('checkout-address') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-address') }}>
                         {{ 'general.edit.button' | trans }}
