@@ -16,7 +16,7 @@ use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AfterCustomerAuthen
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Role\RoleInterface;
+use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\Role\SwitchUserRole;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -106,9 +106,9 @@ class FixAgentTokenAfterCustomerAuthenticationSuccessPlugin extends AbstractPlug
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
-     * @return \Symfony\Component\Security\Core\Role\RoleInterface
+     * @return \Symfony\Component\Security\Core\Role\Role
      */
-    protected function createSwitchUserRole(UserTransfer $userTransfer): RoleInterface
+    protected function createSwitchUserRole(UserTransfer $userTransfer): Role
     {
         $agent = $this->getFactory()->createSecurityUser($userTransfer);
 
