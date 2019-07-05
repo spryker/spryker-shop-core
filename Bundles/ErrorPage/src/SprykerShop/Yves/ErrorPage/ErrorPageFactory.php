@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\ErrorPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 
+/**
+ * @method \SprykerShop\Yves\ErrorPage\ErrorPageConfig getConfig()
+ */
 class ErrorPageFactory extends AbstractFactory
 {
     /**
