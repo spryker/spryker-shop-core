@@ -19,6 +19,8 @@ use SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilter;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilterInterface;
 use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
+use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsChecker;
+use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface;
 use SprykerShop\Yves\CheckoutPage\Handler\MultiShipmentHandler;
 use SprykerShop\Yves\CheckoutPage\Handler\MultiShipmentHandlerInterface;
 use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
@@ -163,7 +165,8 @@ class CheckoutPageFactory extends AbstractFactory
             $this->getStore(),
             $this->getMoneyPlugin(),
             $this->getShippingService(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->createGiftCardItemsChecker()
         );
     }
 
@@ -273,5 +276,13 @@ class CheckoutPageFactory extends AbstractFactory
     protected function getSubFormFilterPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_SUB_FORM_FILTERS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface
+     */
+    public function createGiftCardItemsChecker(): GiftCardItemsCheckerInterface
+    {
+        return new GiftCardItemsChecker();
     }
 }

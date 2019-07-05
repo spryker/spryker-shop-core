@@ -13,7 +13,9 @@ use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
+use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
@@ -196,13 +198,11 @@ class MultiShipmentHandler extends ShipmentHandler
     protected function setShipmentGroupsSelectedMethodTransfer(iterable $shipmentGroupCollection): iterable
     {
         foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
-            $shipmentTransfer = $shipmentGroupTransfer->requireShipment()
-                ->getShipment()
-                ->requireShipmentSelection();
+            $shipmentTransfer = $shipmentGroupTransfer->requireShipment()->getShipment()->requireShipmentSelection();
 
-            $shipmentMethodTransfer = $this->findShipmentMethodById(
+            $shipmentMethodTransfer = $this->findShipmentMethod(
                 $shipmentGroupTransfer->getAvailableShipmentMethods(),
-                (int)$shipmentTransfer->getShipmentSelection()
+                $shipmentTransfer
             );
             $shipmentTransfer->setMethod($shipmentMethodTransfer);
         }
@@ -212,16 +212,38 @@ class MultiShipmentHandler extends ShipmentHandler
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
-     * @param int $idShipmentMethod
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function findShipmentMethodById(
+    protected function findShipmentMethod(
         ShipmentMethodsTransfer $shipmentMethodsTransfer,
-        int $idShipmentMethod
+        ShipmentTransfer $shipmentTransfer
     ): ?ShipmentMethodTransfer {
+        $shipmentSelection = $shipmentTransfer->getShipmentSelection();
+        if($shipmentSelection === CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT) {
+            return $this->findNoShipmentMethod($shipmentMethodsTransfer);
+        }
+
+        $shipmentSelection = (int)$shipmentSelection;
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
-            if ($shipmentMethodTransfer->getIdShipmentMethod() === $idShipmentMethod) {
+            if ($shipmentMethodTransfer->getIdShipmentMethod() === $shipmentSelection) {
+                return $shipmentMethodTransfer;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    protected function findNoShipmentMethod(ShipmentMethodsTransfer $shipmentMethodsTransfer): ?ShipmentMethodTransfer
+    {
+        foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
+            if($shipmentMethodTransfer->getName() === CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT) {
                 return $shipmentMethodTransfer;
             }
         }

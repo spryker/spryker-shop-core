@@ -40,6 +40,8 @@
 } %}
 
 {% block content %}
+    {% set isGiftCardExists = null %}
+
     <div class="grid grid--stretch grid--justify">
         {% for shipmentGroup in data.shipmentGroups %}
             <div class="col col--sm-12 col--lg-6">
@@ -49,6 +51,7 @@
                     <h6><strong>{{ 'checkout.step.summary.products' | trans }}</strong></h6>
 
                     {% for item in shipmentGroup.items %}
+                        {% set isGiftCardExists = item.giftCardMetadata is not null and item.giftCardMetadata.isGiftCard %}
                         {% set item = item.bundleProduct ?? item %}
 
                         {% embed molecule('summary-item', 'CheckoutPage') with {
@@ -107,32 +110,35 @@
                     </a>
                 </div>
 
-                <div class="box">
-                    <h6>{{ 'checkout.step.summary.delivery_method' | trans }}</h6>
-                    <hr>
-                    {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
-                        data: {
-                            carrierName: shipmentGroup.shipment.method.carrierName,
-                            methodName: shipmentGroup.shipment.method.name,
-                            storeCurrencyPrice: shipmentGroup.shipment.method.storeCurrencyPrice,
-                            currencyIsoCode: shipmentGroup.shipment.method.currencyIsoCode,
-                        },
-                    } only %}
+                {% if not isGiftCardExists %}
+                    <div class="box">
+                        <h6>{{ 'checkout.step.summary.delivery_method' | trans }}</h6>
+                        <hr>
+                        {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
+                            data: {
+                                carrierName: shipmentGroup.shipment.method.carrierName,
+                                methodName: shipmentGroup.shipment.method.name,
+                                storeCurrencyPrice: shipmentGroup.shipment.method.storeCurrencyPrice,
+                                currencyIsoCode: shipmentGroup.shipment.method.currencyIsoCode,
+                            },
+                        } only %}
 
-                    <a href="{{ url('checkout-shipment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
-                        {{ 'general.edit.button' | trans }}
-                    </a>
-                </div>
-                <div class="box">
-                    <h6>{{ 'checkout.step.summary.requested_delivery_date' | trans }}</h6>
-                    <hr>
-                    <ul class="list">
-                        <li class="list__item">{{ shipmentGroup.shipment.requestedDeliveryDate }}</li>
-                    </ul>
-                    <a href="{{ url('checkout-shipment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
-                        {{ 'general.edit.button' | trans }}
-                    </a>
-                </div>
+                        <a href="{{ url('checkout-shipment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
+                            {{ 'general.edit.button' | trans }}
+                        </a>
+                    </div>
+
+                    <div class="box">
+                        <h6>{{ 'checkout.step.summary.requested_delivery_date' | trans }}</h6>
+                        <hr>
+                        <ul class="list">
+                            <li class="list__item">{{ shipmentGroup.shipment.requestedDeliveryDate }}</li>
+                        </ul>
+                        <a href="{{ url('checkout-shipment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
+                            {{ 'general.edit.button' | trans }}
+                        </a>
+                    </div>
+                {% endif %}
             </div>
         {% endfor %}
     </div>

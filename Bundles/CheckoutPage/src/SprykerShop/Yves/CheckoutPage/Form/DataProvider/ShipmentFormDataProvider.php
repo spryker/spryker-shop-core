@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Form\DataProvider;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
@@ -25,6 +26,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClient
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentCollectionForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
+use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface;
 
 class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
 {
@@ -66,12 +68,18 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected $checkoutPageConfig;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface
+     */
+    protected $giftCardItemsChecker;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface $glossaryStorageClient
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
      * @param \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig $checkoutPageConfig
+     * @param \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface $giftCardItemsChecker
      */
     public function __construct(
         CheckoutPageToShipmentClientInterface $shipmentClient,
@@ -79,7 +87,8 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         Store $store,
         MoneyPluginInterface $moneyPlugin,
         CheckoutPageToShipmentServiceInterface $shipmentService,
-        CheckoutPageConfig $checkoutPageConfig
+        CheckoutPageConfig $checkoutPageConfig,
+        GiftCardItemsCheckerInterface $giftCardItemsChecker
     ) {
         $this->shipmentClient = $shipmentClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
@@ -87,6 +96,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         $this->moneyPlugin = $moneyPlugin;
         $this->shipmentService = $shipmentService;
         $this->checkoutPageConfig = $checkoutPageConfig;
+        $this->giftCardItemsChecker = $giftCardItemsChecker;
     }
 
     /**
@@ -118,6 +128,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
         $shipmentGroupCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+        $shipmentGroupCollection = $this->filterGiftCardForShipmentGroupCollection($shipmentGroupCollection);
 
         $options = [
             ShipmentCollectionForm::OPTION_SHIPMENT_GROUPS => $shipmentGroupCollection,
@@ -404,5 +415,26 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected function setQuoteShipment(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $quoteTransfer->setShipment(new ShipmentTransfer());
+    }
+
+    /**
+     * @param $shipmentGroupCollection \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    protected function filterGiftCardForShipmentGroupCollection(ArrayObject $shipmentGroupCollection): ArrayObject
+    {
+        $shipmentGroupForRemoveIndexes = [];
+        foreach ($shipmentGroupCollection as $shipmentGroupIndex => $shipmentGroupTransfer) {
+            if($this->giftCardItemsChecker->hasOnlyGiftCardItems($shipmentGroupTransfer->getItems())) {
+                $shipmentGroupForRemoveIndexes[] = $shipmentGroupIndex;
+            }
+        }
+
+        foreach ($shipmentGroupForRemoveIndexes as $shipmentGroupForRemoveIndex) {
+            $shipmentGroupCollection->offsetUnset($shipmentGroupForRemoveIndex);
+        }
+
+        return $shipmentGroupCollection;
     }
 }
