@@ -44,25 +44,25 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $quoteRequestReference
+     * @param \Symfony\Component\HttpFoundation\Request|null $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function sendToCustomerAction(Request $request, string $quoteRequestReference): RedirectResponse
+    public function sendToCustomerAction(string $quoteRequestReference, ?Request $request = null): RedirectResponse
     {
-        $response = $this->executeSendToCustomerAction($request, $quoteRequestReference);
+        $response = $this->executeSendToCustomerAction($quoteRequestReference, $request);
 
         return $response;
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $quoteRequestReference
+     * @param \Symfony\Component\HttpFoundation\Request|null $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeSendToCustomerAction(Request $request, string $quoteRequestReference): RedirectResponse
+    protected function executeSendToCustomerAction(string $quoteRequestReference, ?Request $request = null): RedirectResponse
     {
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setWithHidden(true)
@@ -78,7 +78,7 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
-        $refererUrl = $request->headers->get(static::REQUEST_HEADER_REFERER);
+        $refererUrl = $request ? $request->headers->get(static::REQUEST_HEADER_REFERER) : null;
         if ($refererUrl) {
             return $this->redirectResponseExternal($refererUrl);
         }
