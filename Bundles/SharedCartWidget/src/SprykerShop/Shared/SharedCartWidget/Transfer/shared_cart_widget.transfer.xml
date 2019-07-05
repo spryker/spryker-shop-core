@@ -16,7 +16,7 @@
     </transfer>
 
     <transfer name="CustomerCollection">
-        <property name="customers" type="Customer" singular="customer"/>
+        <property name="customers" type="Customer[]" singular="customer"/>
     </transfer>
 
 </transfers>
