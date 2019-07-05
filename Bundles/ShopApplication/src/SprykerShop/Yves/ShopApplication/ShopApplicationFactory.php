@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ShopApplication;
 
 use Silex\Provider\TwigServiceProvider;
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Twig\Loader\FilesystemLoader;
 use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
@@ -207,14 +206,6 @@ class ShopApplicationFactory extends AbstractFactory
     public function createFilesystemLoader(): FilesystemLoaderInterface
     {
         return new FilesystemLoader($this->getConfig()->getShopApplicationResources());
-    }
-
-    /**
-     * @return \Spryker\Shared\Config\Environment
-     */
-    public function getEnvironment(): Environment
-    {
-        return $this->getProvidedDependency(ShopApplicationDependencyProvider::ENVIRONMENT);
     }
 
     /**
