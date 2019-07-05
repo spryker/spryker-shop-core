@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ShipmentHandler implements ShipmentHandlerInterface
 {
     protected const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
-    
+
     /**
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface
      */
