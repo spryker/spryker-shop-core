@@ -34,17 +34,11 @@ export default class FormSubmitter extends Component {
         form.submit();
     }
 
-    /**
-     * Gets a querySelector of the triggers.
-     */
-    get triggerSelector(): string {
+    protected get triggerSelector(): string {
         return this.getAttribute('trigger-selector');
     }
 
-    /**
-     * Gets a name of the event.
-     */
-    get eventName(): string {
+    protected get eventName(): string {
         return this.getAttribute('event');
     }
 }
