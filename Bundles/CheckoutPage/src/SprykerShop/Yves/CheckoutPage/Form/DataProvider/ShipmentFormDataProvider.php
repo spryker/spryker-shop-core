@@ -416,7 +416,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     }
 
     /**
-     * @param $shipmentGroupCollection \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
@@ -424,7 +424,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     {
         $shipmentGroupForRemoveIndexes = [];
         foreach ($shipmentGroupCollection as $shipmentGroupIndex => $shipmentGroupTransfer) {
-            if($this->giftCardItemsChecker->hasOnlyGiftCardItems($shipmentGroupTransfer->getItems())) {
+            if ($this->giftCardItemsChecker->hasOnlyGiftCardItems($shipmentGroupTransfer->getItems())) {
                 $shipmentGroupForRemoveIndexes[] = $shipmentGroupIndex;
             }
         }

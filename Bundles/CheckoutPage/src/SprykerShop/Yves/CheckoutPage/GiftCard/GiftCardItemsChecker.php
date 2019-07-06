@@ -20,12 +20,12 @@ class GiftCardItemsChecker implements GiftCardItemsCheckerInterface
     {
         foreach ($itemTransfers as $itemTransfer) {
             $giftCardMetadata = $itemTransfer->getGiftCardMetadata();
-            if($giftCardMetadata === null) {
+            if ($giftCardMetadata === null) {
                 return false;
             }
 
             $isGiftCard = $giftCardMetadata->getIsGiftCard();
-            if($isGiftCard === false || $isGiftCard === null) {
+            if ($isGiftCard === false || $isGiftCard === null) {
                 return false;
             }
         }
@@ -42,12 +42,12 @@ class GiftCardItemsChecker implements GiftCardItemsCheckerInterface
     {
         foreach ($itemTransfers as $itemTransfer) {
             $giftCardMetadata = $itemTransfer->getGiftCardMetadata();
-            if($giftCardMetadata === null) {
+            if ($giftCardMetadata === null) {
                 continue;
             }
 
             $isGiftCard = $giftCardMetadata->getIsGiftCard();
-            if($isGiftCard === true) {
+            if ($isGiftCard === true) {
                 return true;
             }
         }

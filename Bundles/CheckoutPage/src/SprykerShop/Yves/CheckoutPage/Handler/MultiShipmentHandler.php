@@ -220,7 +220,7 @@ class MultiShipmentHandler extends ShipmentHandler
         ShipmentTransfer $shipmentTransfer
     ): ?ShipmentMethodTransfer {
         $shipmentSelection = $shipmentTransfer->getShipmentSelection();
-        if($shipmentSelection === CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT) {
+        if ($shipmentSelection === CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT) {
             return $this->findNoShipmentMethod($shipmentMethodsTransfer);
         }
 
@@ -242,7 +242,7 @@ class MultiShipmentHandler extends ShipmentHandler
     protected function findNoShipmentMethod(ShipmentMethodsTransfer $shipmentMethodsTransfer): ?ShipmentMethodTransfer
     {
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
-            if($shipmentMethodTransfer->getName() === CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT) {
+            if ($shipmentMethodTransfer->getName() === CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT) {
                 return $shipmentMethodTransfer;
             }
         }
