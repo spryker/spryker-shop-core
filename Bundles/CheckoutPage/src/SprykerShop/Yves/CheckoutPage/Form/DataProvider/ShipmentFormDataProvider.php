@@ -76,8 +76,8 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
-     * @param \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig $checkoutPageConfig
      * @param \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface $giftCardItemsChecker
+     * @param \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig $checkoutPageConfig
      */
     public function __construct(
         CheckoutPageToShipmentClientInterface $shipmentClient,
@@ -85,16 +85,16 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         Store $store,
         MoneyPluginInterface $moneyPlugin,
         CheckoutPageToShipmentServiceInterface $shipmentService,
-        CheckoutPageConfig $checkoutPageConfig,
-        GiftCardItemsCheckerInterface $giftCardItemsChecker
+        GiftCardItemsCheckerInterface $giftCardItemsChecker,
+        CheckoutPageConfig $checkoutPageConfig
     ) {
         $this->shipmentClient = $shipmentClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
         $this->store = $store;
         $this->moneyPlugin = $moneyPlugin;
         $this->shipmentService = $shipmentService;
-        $this->checkoutPageConfig = $checkoutPageConfig;
         $this->giftCardItemsChecker = $giftCardItemsChecker;
+        $this->checkoutPageConfig = $checkoutPageConfig;
     }
 
     /**
