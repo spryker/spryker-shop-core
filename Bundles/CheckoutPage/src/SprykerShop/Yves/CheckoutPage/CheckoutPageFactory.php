@@ -164,9 +164,9 @@ class CheckoutPageFactory extends AbstractFactory
             $this->getGlossaryStorageClient(),
             $this->getStore(),
             $this->getMoneyPlugin(),
-            $this->getShippingService(),
-            $this->getConfig(),
-            $this->createGiftCardItemsChecker()
+            $this->getShipmentService(),
+            $this->createGiftCardItemsChecker(),
+            $this->getConfig()
         );
     }
 
@@ -191,7 +191,7 @@ class CheckoutPageFactory extends AbstractFactory
         return new MultiShipmentHandler(
             $this->getShipmentClient(),
             $this->getPriceClient(),
-            $this->getShippingService()
+            $this->getShipmentService()
         );
     }
 
@@ -238,7 +238,7 @@ class CheckoutPageFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
      */
-    public function getShippingService(): CheckoutPageToShipmentServiceInterface
+    public function getShipmentService(): CheckoutPageToShipmentServiceInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_SHIPMENT);
     }

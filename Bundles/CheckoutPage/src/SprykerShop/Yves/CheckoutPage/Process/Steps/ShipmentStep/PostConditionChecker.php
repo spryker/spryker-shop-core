@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
@@ -144,7 +143,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
      */
     protected function checkShipmentExpenseKey(ExpenseTransfer $expenseTransfer, string $itemShipmentKey): bool
     {
-        return $expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
+        return $expenseTransfer->getType() === $this->shipmentService->getShipmentExpenseType()
             && $expenseTransfer->getShipment() !== null
             && $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment()) === $itemShipmentKey;
     }
@@ -163,7 +162,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
         }
 
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+            if ($expenseTransfer->getType() === $this->shipmentService->getShipmentExpenseType()) {
                 return $quoteTransfer->getShipment()->getShipmentSelection() !== null;
             }
         }

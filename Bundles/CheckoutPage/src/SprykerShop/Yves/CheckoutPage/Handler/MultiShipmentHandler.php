@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
@@ -290,7 +289,7 @@ class MultiShipmentHandler extends ShipmentHandler
     {
         $quoteExpenseForRemoveIndexes = [];
         foreach ($quoteTransfer->getExpenses() as $expenseTransferIndex => $expenseTransfer) {
-            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+            if ($expenseTransfer->getType() === $this->shipmentService->getShipmentExpenseType()) {
                 $quoteExpenseForRemoveIndexes[] = $expenseTransferIndex;
             }
         }

@@ -20,6 +20,9 @@ use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
 
 class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider implements StepEngineFormDataProviderInterface
 {
+    protected const ADDRESS_LABEL_PATTERN = '%s %s %s, %s %s, %s %s';
+    protected const SANITIZED_CUSTOMER_ADDRESS_LABEL_PATTERN = '%s - %s';
+
     /**
      * @var \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface
      */
@@ -55,7 +58,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
@@ -74,7 +77,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
@@ -187,25 +190,93 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
 
         $customerAddressesTransfer = $this->customerTransfer->getAddresses();
 
-        if ($customerAddressesTransfer === null || count($customerAddressesTransfer->getAddresses()) < 1) {
+        if ($customerAddressesTransfer === null || count($customerAddressesTransfer->getAddresses()) === 0) {
             return [];
         }
 
+        $choices = $this->getCustomerAddressChoices($customerAddressesTransfer->getAddresses());
+
+        return $this->sanitizeDuplicatedCustomerAddressChoices($choices);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return string
+     */
+    protected function getAddressLabel(AddressTransfer $addressTransfer): string
+    {
+        return sprintf(
+            static::ADDRESS_LABEL_PATTERN,
+            $addressTransfer->getSalutation(),
+            $addressTransfer->getFirstName(),
+            $addressTransfer->getLastName(),
+            $addressTransfer->getAddress1(),
+            $addressTransfer->getAddress2(),
+            $addressTransfer->getZipCode(),
+            $addressTransfer->getCity()
+        );
+    }
+
+    /**
+     * @param iterable|\ArrayObject|\Generated\Shared\Transfer\AddressTransfer[] $customerAddressesCollection
+     *
+     * @return string[]
+     */
+    protected function getCustomerAddressChoices(iterable $customerAddressesCollection): array
+    {
         $choices = [];
-        foreach ($customerAddressesTransfer->getAddresses() as $address) {
-            $choices[$address->getIdCustomerAddress()] = sprintf(
-                '%s %s %s, %s %s, %s %s',
-                $address->getSalutation(),
-                $address->getFirstName(),
-                $address->getLastName(),
-                $address->getAddress1(),
-                $address->getAddress2(),
-                $address->getZipCode(),
-                $address->getCity()
-            );
+
+        foreach ($customerAddressesCollection as $addressTransfer) {
+            $idCustomerAddress = $addressTransfer->getIdCustomerAddress();
+            if ($idCustomerAddress === null) {
+                continue;
+            }
+
+            $choices[$idCustomerAddress] = $this->getAddressLabel($addressTransfer);
         }
 
         return $choices;
+    }
+
+    /**
+     * @param iterable|string[] $choices
+     *
+     * @return string[]
+     */
+    protected function sanitizeDuplicatedCustomerAddressChoices(iterable $choices): array
+    {
+        $sanitizedChoices = [];
+        $choicesCounts = [];
+
+        foreach ($choices as $idAddress => $addressLabel) {
+            if (isset($sanitizedChoices[$addressLabel])) {
+                $originAddressLabel = $addressLabel;
+                if (!isset($choicesCounts[$originAddressLabel])) {
+                    $choicesCounts[$originAddressLabel] = 1;
+                }
+
+                $addressLabel = $this->getSanitizedCustomerAddressChoices($addressLabel, $choicesCounts[$originAddressLabel]);
+                $choicesCounts[$originAddressLabel]++;
+            }
+
+            $sanitizedChoices[$addressLabel] = $idAddress;
+        }
+
+        ksort($sanitizedChoices, SORT_NATURAL);
+
+        return $sanitizedChoices;
+    }
+
+    /**
+     * @param string $addressLabel
+     * @param int $itemNumber
+     *
+     * @return string
+     */
+    protected function getSanitizedCustomerAddressChoices(string $addressLabel, int $itemNumber): string
+    {
+        return sprintf(static::SANITIZED_CUSTOMER_ADDRESS_LABEL_PATTERN, $addressLabel, $itemNumber);
     }
 
     /**
