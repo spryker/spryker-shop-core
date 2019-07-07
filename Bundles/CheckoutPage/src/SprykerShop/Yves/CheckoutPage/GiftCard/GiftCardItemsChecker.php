@@ -32,26 +32,4 @@ class GiftCardItemsChecker implements GiftCardItemsCheckerInterface
 
         return true;
     }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return bool
-     */
-    public function hasGiftCardItems(ArrayObject $itemTransfers): bool
-    {
-        foreach ($itemTransfers as $itemTransfer) {
-            $giftCardMetadata = $itemTransfer->getGiftCardMetadata();
-            if ($giftCardMetadata === null) {
-                continue;
-            }
-
-            $isGiftCard = $giftCardMetadata->getIsGiftCard();
-            if ($isGiftCard === true) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 }

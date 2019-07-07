@@ -17,11 +17,4 @@ interface GiftCardItemsCheckerInterface
      * @return bool
      */
     public function hasOnlyGiftCardItems(ArrayObject $itemTransfers): bool;
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return bool
-     */
-    public function hasGiftCardItems(ArrayObject $itemTransfers): bool;
 }
