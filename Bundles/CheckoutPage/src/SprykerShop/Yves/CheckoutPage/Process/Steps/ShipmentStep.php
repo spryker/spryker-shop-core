@@ -150,7 +150,6 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer)
     {
-        return $dataTransfer->getItems()->count() === 0
-            || $this->giftCardItemsChecker->hasOnlyGiftCardItems($dataTransfer->getItems());
+        return !$this->requireInput($dataTransfer);
     }
 }

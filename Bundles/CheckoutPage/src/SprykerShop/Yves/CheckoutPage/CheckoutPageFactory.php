@@ -191,7 +191,8 @@ class CheckoutPageFactory extends AbstractFactory
         return new MultiShipmentHandler(
             $this->getShipmentClient(),
             $this->getPriceClient(),
-            $this->getShipmentService()
+            $this->getShipmentService(),
+            $this->createGiftCardItemsChecker()
         );
     }
 
