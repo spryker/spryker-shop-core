@@ -29,7 +29,7 @@ class CheckoutAddressForm extends AddressForm
     public const OPTION_IS_CUSTOMER_LOGGED_IN = 'is_customer_logged_in';
 
     public const VALUE_DELIVER_TO_MULTIPLE_ADDRESSES = "-1";
-    public const VALUE_ADD_NEW_ADDRESS = "0";
+    public const VALUE_ADD_NEW_ADDRESS = null;
 
     protected const GLOSSARY_KEY_SAVE_NEW_ADDRESS = 'customer.address.save_new_address';
 
