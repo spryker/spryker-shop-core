@@ -46,8 +46,7 @@ export default class QuickOrderForm extends Component {
 
     protected registerRemoveRowTriggers(): void {
         this.removeRowTriggers = <HTMLElement[]>Array.from(this.getElementsByClassName(
-            `${this.jsName}__remove-row-trigger`)
-        );
+            `${this.jsName}__remove-row-trigger`));
     }
 
     protected mapEvents(): void {
