@@ -13,9 +13,12 @@ use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
+use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
+use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class MultiShipmentHandler extends ShipmentHandler
@@ -26,18 +29,26 @@ class MultiShipmentHandler extends ShipmentHandler
     protected $shipmentService;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface
+     */
+    protected $giftCardItemsChecker;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface $priceClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
+     * @param \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface $giftCardItemsChecker
      */
     public function __construct(
         CheckoutPageToShipmentClientInterface $shipmentClient,
         CheckoutPageToPriceClientInterface $priceClient,
-        CheckoutPageToShipmentServiceInterface $shipmentService
+        CheckoutPageToShipmentServiceInterface $shipmentService,
+        GiftCardItemsCheckerInterface $giftCardItemsChecker
     ) {
         parent::__construct($shipmentClient, $priceClient);
 
         $this->shipmentService = $shipmentService;
+        $this->giftCardItemsChecker = $giftCardItemsChecker;
     }
 
     /**
@@ -50,7 +61,13 @@ class MultiShipmentHandler extends ShipmentHandler
     {
         $shipmentGroupCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
 
-        $shipmentGroupCollection = $this->updateShipmentGroupItemsShipment($shipmentGroupCollection);
+        if ($this->haveShipmentGroupsNotSanitizedOnlyGiftCardItems($shipmentGroupCollection)) {
+            $shipmentGroupCollection = $this->sanitizeShipmentGroupsContainedOnlyGiftCardItems($shipmentGroupCollection);
+            $quoteTransfer = $this->updateQuoteItemsWithShipmentGroupsItems($quoteTransfer, $shipmentGroupCollection);
+            $shipmentGroupCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+        }
+
+        $shipmentGroupCollection = $this->sanitizeShipmentGroupsItemsShipment($shipmentGroupCollection);
         $quoteTransfer = $this->updateQuoteItemsWithShipmentGroupsItems($quoteTransfer, $shipmentGroupCollection);
 
         $shipmentGroupCollection = $this->setAvailableShipmentMethodsToShipmentGroups($quoteTransfer, $shipmentGroupCollection);
@@ -65,18 +82,94 @@ class MultiShipmentHandler extends ShipmentHandler
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return bool
      */
-    protected function updateShipmentGroupItemsShipment(ArrayObject $shipmentGroupCollection): ArrayObject
+    protected function haveShipmentGroupsNotSanitizedOnlyGiftCardItems(ArrayObject $shipmentGroupCollection): bool
     {
         foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
-            $shipmentTransfer = $shipmentGroupTransfer->getShipment();
-            foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
-                $itemTransfer->setShipment($shipmentTransfer);
+            if ($this->shouldShipmentGroupBeSanitized($shipmentGroupTransfer)) {
+                return true;
             }
         }
 
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return bool
+     */
+    protected function shouldShipmentGroupBeSanitized(ShipmentGroupTransfer $shipmentGroupTransfer): bool
+    {
+        if ($this->giftCardItemsChecker->hasOnlyGiftCardItems($shipmentGroupTransfer->getItems()) === true
+            && $shipmentGroupTransfer->getShipment()->getShipmentSelection() !== CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    protected function sanitizeShipmentGroupsContainedOnlyGiftCardItems(ArrayObject $shipmentGroupCollection): ArrayObject
+    {
+        foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
+            if ($this->shouldShipmentGroupBeSanitized($shipmentGroupTransfer) === false) {
+                continue;
+            }
+
+            $this->sanitizeOnlyGiftCardItemsShipment($shipmentGroupTransfer);
+        }
+
         return $shipmentGroupCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return void
+     */
+    protected function sanitizeOnlyGiftCardItemsShipment(ShipmentGroupTransfer $shipmentGroupTransfer): void
+    {
+        $shipmentTransfer = $shipmentGroupTransfer->getShipment()
+            ->setMethod(null)
+            ->setShipmentSelection(CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT);
+
+        foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setShipment($shipmentTransfer);
+        }
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    protected function sanitizeShipmentGroupsItemsShipment(ArrayObject $shipmentGroupCollection): ArrayObject
+    {
+        foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
+            $this->sanitizeShipmentGroupItemsShipment($shipmentGroupTransfer);
+        }
+
+        return $shipmentGroupCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return void
+     */
+    protected function sanitizeShipmentGroupItemsShipment(ShipmentGroupTransfer $shipmentGroupTransfer): void
+    {
+        $shipmentTransfer = $shipmentGroupTransfer->getShipment();
+
+        foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setShipment($shipmentTransfer);
+        }
     }
 
     /**
@@ -195,13 +288,11 @@ class MultiShipmentHandler extends ShipmentHandler
     protected function setShipmentGroupsSelectedMethodTransfer(iterable $shipmentGroupCollection): iterable
     {
         foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
-            $shipmentTransfer = $shipmentGroupTransfer->requireShipment()
-                ->getShipment()
-                ->requireShipmentSelection();
+            $shipmentTransfer = $shipmentGroupTransfer->requireShipment()->getShipment()->requireShipmentSelection();
 
-            $shipmentMethodTransfer = $this->findShipmentMethodById(
+            $shipmentMethodTransfer = $this->findShipmentMethod(
                 $shipmentGroupTransfer->getAvailableShipmentMethods(),
-                (int)$shipmentTransfer->getShipmentSelection()
+                $shipmentTransfer
             );
             $shipmentTransfer->setMethod($shipmentMethodTransfer);
         }
@@ -211,16 +302,38 @@ class MultiShipmentHandler extends ShipmentHandler
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
-     * @param int $idShipmentMethod
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function findShipmentMethodById(
+    protected function findShipmentMethod(
         ShipmentMethodsTransfer $shipmentMethodsTransfer,
-        int $idShipmentMethod
+        ShipmentTransfer $shipmentTransfer
     ): ?ShipmentMethodTransfer {
+        $shipmentSelection = $shipmentTransfer->getShipmentSelection();
+        if ($shipmentSelection === CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT) {
+            return $this->findNoShipmentMethod($shipmentMethodsTransfer);
+        }
+
+        $shipmentSelection = (int)$shipmentSelection;
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
-            if ($shipmentMethodTransfer->getIdShipmentMethod() === $idShipmentMethod) {
+            if ($shipmentMethodTransfer->getIdShipmentMethod() === $shipmentSelection) {
+                return $shipmentMethodTransfer;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    protected function findNoShipmentMethod(ShipmentMethodsTransfer $shipmentMethodsTransfer): ?ShipmentMethodTransfer
+    {
+        foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
+            if ($shipmentMethodTransfer->getName() === CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT) {
                 return $shipmentMethodTransfer;
             }
         }

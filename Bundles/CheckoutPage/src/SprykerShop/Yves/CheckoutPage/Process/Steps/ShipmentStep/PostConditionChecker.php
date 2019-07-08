@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
+use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
 
 class PostConditionChecker implements PostConditionCheckerInterface
@@ -23,11 +24,20 @@ class PostConditionChecker implements PostConditionCheckerInterface
     protected $shipmentService;
 
     /**
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
+     * @var \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface
      */
-    public function __construct(CheckoutPageToShipmentServiceInterface $shipmentService)
-    {
+    protected $giftCardItemsChecker;
+
+    /**
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
+     * @param \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface $giftCardItemsChecker
+     */
+    public function __construct(
+        CheckoutPageToShipmentServiceInterface $shipmentService,
+        GiftCardItemsCheckerInterface $giftCardItemsChecker
+    ) {
         $this->shipmentService = $shipmentService;
+        $this->giftCardItemsChecker = $giftCardItemsChecker;
     }
 
     /**
@@ -37,7 +47,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
      */
     public function check(QuoteTransfer $quoteTransfer): bool
     {
-        if ($this->hasOnlyGiftCardItems($quoteTransfer)) {
+        if ($this->giftCardItemsChecker->hasOnlyGiftCardItems($quoteTransfer->getItems())) {
             return true;
         }
 
@@ -55,7 +65,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return $this->isQuoteLevelShipmentSet($quoteTransfer);
         }
 
-        if (count($quoteTransfer->getItems()) < 1) {
+        if ($quoteTransfer->getItems()->count() === 0) {
             return false;
         }
 
