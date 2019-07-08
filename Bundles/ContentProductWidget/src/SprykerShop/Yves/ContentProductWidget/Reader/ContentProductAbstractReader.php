@@ -35,14 +35,14 @@ class ContentProductAbstractReader implements ContentProductAbstractReaderInterf
     }
 
     /**
-     * @param int $idContent
+     * @param string $contentKey
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]|null
      */
-    public function findProductAbstractCollection(int $idContent, string $localeName): ?array
+    public function findProductAbstractCollection(string $contentKey, string $localeName): ?array
     {
-        $contentProductAbstractListTypeTransfer = $this->contentProductClient->executeProductAbstractListTypeById($idContent, $localeName);
+        $contentProductAbstractListTypeTransfer = $this->contentProductClient->executeProductAbstractListTypeByKey($contentKey, $localeName);
 
         if ($contentProductAbstractListTypeTransfer === null) {
             return null;

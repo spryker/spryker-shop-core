@@ -7,7 +7,7 @@
 
 {% define data = {
     product: required,
-    maxQuantity: 10
+    maxQuantity: 10,
 } %}
 
 {% set options = [] %}
@@ -21,7 +21,7 @@
 {% for index in 1..data.maxQuantity %}
     {% set options = options | merge([{
         label: index,
-        value: index
+        value: index,
     }]) %}
 {% endfor %}
 
@@ -57,7 +57,7 @@
                 {% include molecule('money-price') with {
                     data: {
                         amount: data.product.price,
-                        originalAmount: data.product.prices.ORIGINAL | default
+                        originalAmount: data.product.prices.ORIGINAL | default,
                     }
                 } only %}
             </p>
@@ -79,7 +79,7 @@
         data: {
             superAttributes: data.product.attributeMap.superAttributes,
             selectedAttributes: data.product.selectedAttributes,
-            availableAttributes: data.product.availableAttributes
+            availableAttributes: data.product.availableAttributes,
         }
     } only %}
         {% block body %}<hr />{{parent()}}{% endblock %}
@@ -104,22 +104,22 @@
                             {% include atom('select') with {
                                 modifiers: ['expand'],
                                 data: {
-                                    options: options
+                                    options: options,
                                 },
                                 attributes: {
                                     name: 'quantity',
-                                    disabled: isDisabled
-                                }
+                                    disabled: isDisabled,
+                                },
                             } only %}
                         </label>
                     </div>
 
                     <div class="col col--sm-6">
-                        <button type="submit" class="button button--success button--expand" data-init-single-click {{ isDisabled ? 'disabled' : '' }} {{qa('add-to-cart-button')}}>
+                        <button type="submit" class="button button--success button--expand" data-init-single-click {{ isDisabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
                             {% include atom('icon') with {
                                 data: {
-                                    name: 'cart-plus'
-                                }
+                                    name: 'cart-plus',
+                                },
                             } only %}
                             {{ 'page.detail.add-to-cart' | trans }}
                         </button>
@@ -138,8 +138,8 @@
             {% include molecule('availability-product', 'AvailabilityWidget') ignore missing with {
                 data: {
                     idProductConcrete: data.product.idProductConcrete,
-                    isAvailable: data.product.available
-                }
+                    isAvailable: data.product.available,
+                },
             } only %}
         {% endif %}
     </form>
@@ -170,8 +170,8 @@
             {% include molecule('wishlist-selector-for-pdp', 'WishlistWidget') ignore missing with {
                 data: {
                     sku: data.product.sku,
-                    idProductConcrete: data.product.idProductConcrete | default
-                }
+                    idProductConcrete: data.product.idProductConcrete | default,
+                },
             } only %}
         {% endif %}
     {% endif %}
