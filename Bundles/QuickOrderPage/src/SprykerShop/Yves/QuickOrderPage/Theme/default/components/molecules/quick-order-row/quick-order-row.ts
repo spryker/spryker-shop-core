@@ -27,11 +27,8 @@ export default class QuickOrderRow extends Component {
     }
 
     protected registerQuantityInput(): void {
-        this.quantityInput = <HTMLInputElement>(this.getElementsByClassName(
-            `${this.jsName}__quantity`
-        )[0] || this.getElementsByClassName(
-            `${this.jsName}-partial__quantity`
-        )[0]);
+        this.quantityInput = <HTMLInputElement>(this.getElementsByClassName(`${this.jsName}__quantity`)[0] ||
+            this.getElementsByClassName(`${this.jsName}-partial__quantity`)[0]);
     }
 
     protected mapEvents(): void {
