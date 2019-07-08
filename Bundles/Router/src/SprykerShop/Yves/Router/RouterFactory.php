@@ -118,7 +118,7 @@ class RouterFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\Router\Router\RouterInterface
      */
-    public function createYvesFallbackRouter(): RouterInterface
+    public function createYvesDevelopmentRouter(): RouterInterface
     {
         return new Router(
             $this->createClosureLoader(),

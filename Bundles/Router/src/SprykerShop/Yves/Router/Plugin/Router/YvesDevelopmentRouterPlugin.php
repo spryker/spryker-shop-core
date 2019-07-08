@@ -15,7 +15,7 @@ use Symfony\Component\Routing\RouterInterface;
  * @method \SprykerShop\Yves\Router\RouterConfig getConfig()
  * @method \SprykerShop\Yves\Router\RouterFactory getFactory()
  */
-class YvesFallbackRouterPlugin extends AbstractPlugin implements RouterPluginInterface
+class YvesDevelopmentRouterPlugin extends AbstractPlugin implements RouterPluginInterface
 {
     /**
      * @api
@@ -24,6 +24,6 @@ class YvesFallbackRouterPlugin extends AbstractPlugin implements RouterPluginInt
      */
     public function getRouter(): RouterInterface
     {
-        return $this->getFactory()->createYvesFallbackRouter();
+        return $this->getFactory()->createYvesDevelopmentRouter();
     }
 }
