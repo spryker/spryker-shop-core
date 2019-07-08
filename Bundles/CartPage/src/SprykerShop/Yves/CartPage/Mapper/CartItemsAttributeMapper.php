@@ -58,7 +58,9 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
             return $itemTransfer->getIdProductAbstract();
         }, $items->getArrayCopy());
 
-        $abstractProductData = $this->getAttributesMapByProductAbstractIds($productAbstractIds, $localeName);
+        $abstractProductData = $this
+            ->productStorageClient
+            ->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
 
         foreach ($items as $item) {
             if (!isset($abstractProductData[$item->getIdProductAbstract()])) {
@@ -124,17 +126,6 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     protected function getAttributesMapByProductAbstract(ItemTransfer $item, $localeName)
     {
         return $this->productStorageClient->findProductAbstractStorageData($item->getIdProductAbstract(), $localeName);
-    }
-
-    /**
-     * @param int[] $productAbstractIds
-     * @param string $localeName
-     *
-     * @return array
-     */
-    protected function getAttributesMapByProductAbstractIds(array $productAbstractIds, $localeName): array
-    {
-        return $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
     }
 
     /**
