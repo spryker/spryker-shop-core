@@ -9,7 +9,7 @@
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/application": "^3.8.0",
     "spryker/customer": "^7.4.0",
-    "spryker/kernel": "^3.24.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/product-review": "^1.1.0 || ^2.0.0",
     "spryker/product-review-storage": "^1.0.0",
     "spryker/storage": "^3.4.0",
