@@ -1,0 +1,10 @@
+@mixin comment-widget-comment-form($name: '.comment-form') {
+    #{$name} {
+        &__handlers {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        @content;
+    }
+}
