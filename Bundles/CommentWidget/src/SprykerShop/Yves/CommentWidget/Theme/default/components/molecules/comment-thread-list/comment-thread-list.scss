@@ -1,0 +1,8 @@
+@mixin comment-widget-comment-thread-list($name: '.comment-thread-list') {
+    #{$name} {
+        max-height: 16rem;
+        overflow: auto;
+
+        @content;
+    }
+}
