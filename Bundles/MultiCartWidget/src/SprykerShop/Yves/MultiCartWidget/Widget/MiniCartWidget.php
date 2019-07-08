@@ -23,8 +23,10 @@ class MiniCartWidget extends AbstractWidget
      */
     public function __construct($cartQuantity)
     {
-        $this->addParameter('cartQuantity', $cartQuantity)
-            ->addParameter('activeCart', $this->getActiveCart())
+        $activeCart = $this->getActiveCart();
+
+        $this->addParameter('cartQuantity', $activeCart->getItems()->count())
+            ->addParameter('activeCart', $activeCart)
             ->addParameter('cartList', $this->getInActiveQuoteList())
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());
 
