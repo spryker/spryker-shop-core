@@ -1,16 +1,19 @@
 {% extends template('page-layout-checkout', 'CheckoutPage') %}
 
 {#
+    @deprecated property 'shipmentMethod' is deprecated
     @deprecated property 'overview.shipmentMethod' is deprecated
     @deprecated property 'overview.payments' is deprecated
     @deprecated property 'overview.prices.storeCurrency' is deprecated
 #}
 {% define data = {
+    cart: _view.quoteTransfer,
     backUrl: _view.previousStepUrl,
     transfer: _view.quoteTransfer,
     cartItems: _view.cartItems,
     shippingAddress: _view.quoteTransfer.shippingAddress,
     billingAddress: _view.quoteTransfer.billingAddress,
+    shipmentMethod: _view.quoteTransfer.shipment.method.name | default,
     paymentMethod: _view.quoteTransfer.payment.paymentMethod,
     shipmentGroups: _view.shipmentGroups,
 
@@ -201,6 +204,18 @@
 
     <div class="grid">
         <div class="col col--sm-12">
+            {% if data.cart.idQuote is not empty %}
+                <div class="box">
+                    {% widget 'CommentThreadWidget' args [
+                        data.cart.idQuote,
+                        'quote',
+                        app.request.requestUri,
+                        data.cart.commentThread
+                    ] only %}
+                    {% endwidget %}
+                </div>
+            {% endif %}
+
             {% if data.transfer.cartNote %}
                 {% if widgetExists('CartNoteQuoteNoteWidgetPlugin') %}
                     <div class="box">

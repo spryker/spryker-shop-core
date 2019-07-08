@@ -12,6 +12,7 @@
 } %}
 
 {% block customerContent %}
+
     {% embed [
         molecule('customer-reorder-form', 'CustomerReorderWidget'),
         molecule('order-detail', 'CustomerPage'),
@@ -42,4 +43,14 @@
             {{ widgetBlock('CustomerReorderWidgetPlugin', 'formEnd', data.order) }} {# @deprecated Use molecule('customer-reorder-form', 'CustomerReorderWidget') instead. #}
         {% endblock %}
     {% endembed %}
+
+    <div class="box">
+        {% widget 'CommentThreadWidget' args [
+            data.order.idSalesOrder,
+            'sales_order',
+            app.request.requestUri,
+            data.order.commentThread
+        ] only %}
+        {% endwidget %}
+    </div>
 {% endblock %}

@@ -6,7 +6,8 @@
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
         <property name="quoteApprovals" type="QuoteApproval[]" singular="quoteApproval"/>
-        <property name="quoteRequestVersionReference" type="string" />
+        <property name="quoteRequestVersionReference" type="string"/>
+        <property name="commentThread" type="CommentThread"/>
     </transfer>
 
     <transfer name="QuoteApproval">
@@ -23,11 +24,11 @@
 
     <transfer name="QuoteResponse">
         <property name="quoteTransfer" type="Quote"/>
-        <property name="isSuccessful" type="bool" />
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 
     <transfer name="ProductOption">
-        <property name="idProductOptionValue" type="int" />
+        <property name="idProductOptionValue" type="int"/>
     </transfer>
 
     <transfer name="StorageAvailability">
@@ -35,13 +36,17 @@
     </transfer>
 
     <transfer name="ProductView">
-        <property name="idProductConcrete" type="int" />
+        <property name="idProductConcrete" type="int"/>
         <property name="availableAttributes" type="array" singular="availableAttribute"/>
-        <property name="sku" type="string" />
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="ProductConcreteAvailabilityRequest">
-        <property name="sku" type="string" />
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="CommentThread">
+        <property name="idCommentThread" type="int"/>
     </transfer>
 
 </transfers>

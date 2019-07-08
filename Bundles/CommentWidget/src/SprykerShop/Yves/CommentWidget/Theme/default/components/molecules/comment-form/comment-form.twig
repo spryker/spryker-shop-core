@@ -1,0 +1,90 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'comment-form',
+    tag: 'comment-form',
+} %}
+
+{% define data = {
+    method: 'POST',
+    formView: 'add',
+    comment: {},
+    returnUrl: required,
+    ownerId: '',
+    ownerType: '',
+    idCustomer: null,
+
+    submit: {
+        text: '',
+        action: '',
+    },
+
+    remove: {
+        text: '',
+        action: '',
+    },
+} %}
+
+{% set isAddFormView = data.formView == 'add' %}
+{% set isUpdateFormView = data.formView == 'update' %}
+
+{% block body %}
+    {% set uuidField %}
+        <input type="hidden" name="uuid" value="{{ data.comment ? data.comment.uuid }}">
+    {% endset %}
+
+    {% set messageField %}
+        <textarea name="message" placeholder="{{ 'comment_widget.form.placeholder.add_comment' | trans }}" required="required" class="textarea textarea--expand spacing-bottom spacing-bottom--small">
+            {%- if isUpdateFormView -%}
+                {{ data.comment.message }}
+            {%- endif -%}
+        </textarea>
+    {% endset %}
+
+    {% set returnUrlField %}
+        <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
+    {% endset %}
+
+    {% block form %}
+        <form class="{{ config.jsName }}__form" method="{{ data.method }}">
+            {% if isAddFormView %}
+                {{ messageField }}
+                {{ returnUrlField }}
+                <input type="hidden" name="ownerId" value="{{ data.ownerId }}">
+                <input type="hidden" name="ownerType" value="{{ data.ownerType }}">
+            {% endif %}
+            {% if isUpdateFormView %}
+                {{ messageField }}
+                {{ uuidField }}
+                {{ returnUrlField }}
+            {% endif %}
+
+            {% block tags %}
+                {% if data.comment.tagNames is defined %}
+                    {% include molecule('tag-list', 'CommentWidget') with {
+                        data: {
+                            tagNames: data.comment.tagNames,
+                            uuid: data.comment.uuid,
+                            returnUrl: data.returnUrl,
+                            idCustomer: data.idCustomer,
+                        },
+                    } only %}
+                {% endif %}
+            {% endblock %}
+
+            {% block formHandlers %}
+                <div class="{{ config.name }}__handlers">
+                    <button action="{{ data.submit.action }}" class="button button--primary {{ config.jsName }}__submit-button">
+                        {{ data.submit.text }}
+                    </button>
+
+                    {% if isUpdateFormView %}
+                        <button action="{{ data.remove.action }}" class="button button--success {{ config.jsName }}__remove-button">
+                            {{ data.remove.text }}
+                        </button>
+                    {% endif %}
+                </div>
+            {% endblock %}
+        </form>
+    {% endblock %}
+{% endblock %}
