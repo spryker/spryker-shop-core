@@ -158,9 +158,11 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
             return;
         }
 
-        /** @var \Twig\Environment $twig */
-        $twig = $application['twig'];
-        $twig->addGlobal('_view', $result);
+        if ($event->isMasterRequest()) {
+            /** @var \Twig\Environment $twig */
+            $twig = $application['twig'];
+            $twig->addGlobal('_view', $result);
+        }
 
         $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
         $widgetContainerRegistry->add($result);

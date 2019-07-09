@@ -84,7 +84,7 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
     {
         $result = $event->getControllerResult();
 
-        if ($result instanceof ViewInterface) {
+        if ($result instanceof ViewInterface && $event->isMasterRequest()) {
             $this->addGlobalView($result);
         }
 
