@@ -14,8 +14,8 @@ interface ShopUiConstants
 {
     /**
      * Specification:
-     * - Yves assets url.
-     * - %theme% will be replaced with current theme.
+     * - Returns the path pattern to be used to build the path for Yves assets.
+     * - When the path pattern contains the placeholder %theme% it will be replaced with the current theme name e.g. default.
      *
      * @example '/assets/%theme%/'
      *
