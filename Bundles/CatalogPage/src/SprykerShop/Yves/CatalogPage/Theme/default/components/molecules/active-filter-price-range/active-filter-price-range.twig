@@ -7,16 +7,20 @@
 {% define data = {
     filter: required,
     min: required,
-    activeMin: required,
     max: required,
-    activeMax: required
+    activeMin: required,
+    activeMax: required,
+    defaultMin: required,
+    defaultMax: required
 } %}
 
-{% set defaultValue = data.min | money  ~ ' - ' ~ data.max | money %}
+{% set defaultValue = data.defaultMin | money  ~ ' - ' ~ data.defaultMin | money %}
 {% set currentValue = data.activeMin | money  ~ ' - ' ~ data.activeMax | money %}
 
 {% block component %}
-    {% if app.request.query.has(data.filter.config.parameterName) and can('SeePricePermissionPlugin') %}
+    {% if app.request.query.has(data.filter.config.parameterName)
+        and can('SeePricePermissionPlugin')
+        and defaultValue != currentValue %}
         {% include molecule('active-filter', 'CatalogPage') with {
             data: {
                 filter: data.filter,
