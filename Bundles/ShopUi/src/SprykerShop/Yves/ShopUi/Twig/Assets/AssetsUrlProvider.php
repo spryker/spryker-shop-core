@@ -12,7 +12,7 @@ use SprykerShop\Yves\ShopUi\ShopUiConfig;
 
 class AssetsUrlProvider implements AssetsUrlProviderInterface
 {
-    protected const THEME_KEY = '%theme%';
+    protected const PLACEHOLDER_THEME = '%theme%';
 
     /**
      * @var \SprykerShop\Yves\ShopUi\ShopUiConfig
@@ -42,7 +42,7 @@ class AssetsUrlProvider implements AssetsUrlProviderInterface
     public function getAssetsUrl(): string
     {
         $yvesAssetsUrl = strtr($this->config->getYvesAssetsUrlPattern(), [
-            static::THEME_KEY => $this->getThemeName(),
+            static::PLACEHOLDER_THEME => $this->getThemeName(),
         ]);
 
         return rtrim($yvesAssetsUrl, '/') . '/';
