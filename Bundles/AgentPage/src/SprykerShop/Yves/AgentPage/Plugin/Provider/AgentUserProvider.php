@@ -51,7 +51,7 @@ class AgentUserProvider extends AbstractPlugin implements UserProviderInterface
 
         $userTransfer = $this->getUserTransfer($user);
 
-        return  $this->getFactory()->createSecurityUser($userTransfer);
+        return $this->getFactory()->createSecurityUser($userTransfer);
     }
 
     /**
