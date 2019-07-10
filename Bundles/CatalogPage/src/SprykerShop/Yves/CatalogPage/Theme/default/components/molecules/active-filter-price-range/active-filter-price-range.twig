@@ -14,13 +14,14 @@
     defaultMax: required,
 } %}
 
-{% set defaultValue = data.defaultMin | money  ~ ' - ' ~ data.defaultMin | money %}
 {% set currentValue = data.activeMin | money  ~ ' - ' ~ data.activeMax | money %}
 
 {% block component %}
     {% if app.request.query.has(data.filter.config.parameterName)
         and can('SeePricePermissionPlugin')
-        and defaultValue != currentValue %}
+        and data.defaultMin != data.activeMin
+        and data.defaultMax != data.activeMax
+    %}
         {% include molecule('active-filter', 'CatalogPage') with {
             data: {
                 filter: data.filter,
