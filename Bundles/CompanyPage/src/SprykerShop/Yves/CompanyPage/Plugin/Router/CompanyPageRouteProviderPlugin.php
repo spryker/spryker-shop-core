@@ -55,6 +55,8 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_COMPANY_USER_STATUS_ENABLE = 'company/company-user-status/enable';
     protected const ROUTE_COMPANY_USER_STATUS_DISABLE = 'company/company-user-status/disable';
 
+    protected const ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_UPDATE = 'company/business-unit/address/update';
+
     /**
      * Specification:
      * - Adds Routes to the RouteCollection.
@@ -70,6 +72,7 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection = $this->addCompanyRoutes($routeCollection);
         $routeCollection = $this->addCompanyAddressRoutes($routeCollection);
         $routeCollection = $this->addCompanyBusinessUnitRoutes($routeCollection);
+        $routeCollection = $this->addCompanyBusinessUnitAddressRoutes($routeCollection);
         $routeCollection = $this->addCompanyRoleRoutes($routeCollection);
         $routeCollection = $this->addPermissionRoutes($routeCollection);
         $routeCollection = $this->addCompanyUserRoutes($routeCollection);
@@ -134,8 +137,45 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_DELETE, $route);
         $route = $this->buildRoute('/company/business-unit/delete-confirmation', 'CompanyPage', 'BusinessUnit', 'confirmDeleteAction');
         $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     */
+    protected function addCompanyBusinessUnitAddressRoutes(RouteCollection $routeCollection): RouteCollection
+    {
+        $routeCollection = $this->addCompanyBusinessUnitAddressCreateRoute($routeCollection);
+        $routeCollection = $this->addCompanyBusinessUnitAddressUpdateRoute($routeCollection);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     */
+    protected function addCompanyBusinessUnitAddressCreateRoute(RouteCollection $routeCollection): RouteCollection
+    {
         $route = $this->buildRoute('/company/business-unit/address/create', 'CompanyPage', 'BusinessUnitAddress', 'createAction');
         $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     */
+    protected function addCompanyBusinessUnitAddressUpdateRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute('/company/business-unit/address/update', 'CompanyPage', 'BusinessUnitAddress', 'updateAction');
+        $routeCollection->add(static::ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_UPDATE, $route);
 
         return $routeCollection;
     }
