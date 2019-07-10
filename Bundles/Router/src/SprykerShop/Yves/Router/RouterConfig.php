@@ -55,7 +55,7 @@ class RouterConfig extends AbstractBundleConfig
     protected function getCachePathIfCacheEnabled(): ?string
     {
         if ($this->get(RouterConstants::IS_CACHE_ENABLED, true)) {
-            $defaultCachePath = APPLICATION_ROOT_DIR . '/data/' . APPLICATION_STORE . '/cache/Yves/routing';
+            $defaultCachePath = APPLICATION_ROOT_DIR . '/data/' . APPLICATION_STORE . '/cache/YVES/routing';
 
             return $this->get(RouterConstants::CACHE_PATH, $defaultCachePath);
         }
