@@ -19,6 +19,9 @@ class AddressProvider implements AddressProviderInterface
     protected const COMPANY_BUSINESS_UNIT_ADDRESS_KEY_PATTERN = 'company_business_unit_address_%s';
     protected const CUSTOMER_ADDRESS_KEY_PATTERN = 'customer_address_%s';
 
+    protected const KEY_IS_DEFAULT_SHIPPING = 'is_default_shipping';
+    protected const KEY_IS_DEFAULT_BILLING = 'is_default_billing';
+
     /**
      * @var \SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCustomerClientInterface
      */
@@ -72,6 +75,72 @@ class AddressProvider implements AddressProviderInterface
         }
 
         return $addressTransferList;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $formAddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer[] $companyBusinessUnitAddresses
+     *
+     * @return string|null
+     */
+    public function findSelectedCompanyBusinessUnitAddressKey(AddressTransfer $formAddressTransfer, array $companyBusinessUnitAddresses): ?string
+    {
+        foreach ($companyBusinessUnitAddresses as $companyBusinessUnitAddressTransfer) {
+            if ($this->isSameCompanyBusinessUnitAddress($formAddressTransfer, $companyBusinessUnitAddressTransfer)) {
+                return $companyBusinessUnitAddressTransfer->getKey();
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $formAddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $companyBusinessUnitAddressTransfer
+     *
+     * @return bool
+     */
+    protected function isSameCompanyBusinessUnitAddress(AddressTransfer $formAddressTransfer, AddressTransfer $companyBusinessUnitAddressTransfer): bool
+    {
+        $formAddressData = $this->prepareFormAddressData($formAddressTransfer->modifiedToArray());
+        if ($this->isAddressFormDataEmpty($formAddressData)) {
+            return false;
+        }
+
+        $companyBusinessUnitAddressData = $companyBusinessUnitAddressTransfer->toArray();
+
+        foreach ($formAddressData as $formAddressKey => $formAddressValue) {
+            if ($companyBusinessUnitAddressData[$formAddressKey] !== $formAddressValue) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param array $formAddressData
+     *
+     * @return array
+     */
+    protected function prepareFormAddressData(array $formAddressData): array
+    {
+        $ignoredFormAddressDataFields = [
+            static::KEY_IS_DEFAULT_SHIPPING => null,
+            static::KEY_IS_DEFAULT_BILLING => null,
+        ];
+
+        return array_merge($formAddressData, $ignoredFormAddressDataFields);
+    }
+
+    /**
+     * @param array $formAddressData
+     *
+     * @return bool
+     */
+    protected function isAddressFormDataEmpty(array $formAddressData): bool
+    {
+        return !count(array_filter($formAddressData));
     }
 
     /**

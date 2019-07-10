@@ -39,6 +39,9 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
         $this->addAddressesParameter($customerAddresses, $companyBusinessUnitAddresses);
         $this->addCustomerAddressesParameter($customerAddresses);
         $this->addCompanyBusinessUnitAddressesParameter($companyBusinessUnitAddresses);
+        $this->addSelectedCompanyBusinessUnitAddressKey(
+            $addressProvider->findSelectedCompanyBusinessUnitAddressKey($formAddressTransfer, $companyBusinessUnitAddresses)
+        );
     }
 
     /**
@@ -107,6 +110,16 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     protected function addCompanyBusinessUnitAddressesParameter(array $companyBusinessUnitAddresses): void
     {
         $this->addParameter('companyBusinessUnitAddresses', $companyBusinessUnitAddresses);
+    }
+
+    /**
+     * @param string|null $selectedBusinessUnitAddressKey
+     *
+     * @return void
+     */
+    protected function addSelectedCompanyBusinessUnitAddressKey(?string $selectedBusinessUnitAddressKey): void
+    {
+        $this->addParameter('selectedCompanyBusinessUnitAddressKey', $selectedBusinessUnitAddressKey);
     }
 
     /**
