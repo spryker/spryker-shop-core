@@ -18,10 +18,7 @@ class MiniCartWidget extends AbstractWidget
 {
     use PermissionAwareTrait;
 
-    /**
-     * @param int $cartQuantity
-     */
-    public function __construct($cartQuantity)
+    public function __construct()
     {
         $activeCart = $this->getActiveCart();
 
