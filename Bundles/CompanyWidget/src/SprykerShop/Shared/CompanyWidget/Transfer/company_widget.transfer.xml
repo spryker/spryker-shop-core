@@ -10,7 +10,7 @@
     </transfer>
 
     <transfer name="CompanyUnitAddressCollection">
-        <property name="companyUnitAddresses" type="CompanyUnitAddress" singular="companyUnitAddress" />
+        <property name="companyUnitAddresses" type="CompanyUnitAddress[]" singular="companyUnitAddress" />
     </transfer>
 
     <transfer name="CompanyUnitAddress">
