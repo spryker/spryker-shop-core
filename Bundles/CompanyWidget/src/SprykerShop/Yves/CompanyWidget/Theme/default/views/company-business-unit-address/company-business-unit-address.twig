@@ -8,7 +8,7 @@
     customerAddresses: _widget.customerAddresses,
     companyBusinessUnitAddresses: _widget.companyBusinessUnitAddresses,
     isCustomAddress: app.request.get('customAddress')[_widget.formType]  | default(not _widget.formAddressTransfer.idCustomerAddress),
-    selectedCompanyBusinessUnitAddressKey: _widget.selectedCompanyBusinessUnitAddressKey,
+    persistentCompanyBusinessUnitAddress: _widget.persistentCompanyBusinessUnitAddress,
 } %}
 
 {% block template %}
@@ -25,10 +25,14 @@
                 {% set defaultAddressKey = address.key %}
             {% endif %}
         {% endfor %}
-    {% endif %}
-
-    {% if not defaultAddressKey and data.selectedCompanyBusinessUnitAddressKey %}
-        {% set defaultAddressKey = data.selectedCompanyBusinessUnitAddressKey %}
+    {% elseif not data.persistentCompanyBusinessUnitAddress %}
+        {% for companyBusinessUnitAddress in data.companyBusinessUnitAddresses %}
+            {% if data.formType == 'billingAddress' and companyBusinessUnitAddress.isDefaultBilling %}
+                {% set defaultAddressKey = companyBusinessUnitAddress.key %}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        {% set defaultAddressKey = data.persistentCompanyBusinessUnitAddress.key %}
     {% endif %}
 
     {% embed atom('select') with {

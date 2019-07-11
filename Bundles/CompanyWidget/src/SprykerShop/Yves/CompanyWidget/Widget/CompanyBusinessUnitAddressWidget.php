@@ -39,8 +39,8 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
         $this->addAddressesParameter($customerAddresses, $companyBusinessUnitAddresses);
         $this->addCustomerAddressesParameter($customerAddresses);
         $this->addCompanyBusinessUnitAddressesParameter($companyBusinessUnitAddresses);
-        $this->addSelectedCompanyBusinessUnitAddressKey(
-            $addressProvider->findSelectedCompanyBusinessUnitAddressKey($formAddressTransfer, $companyBusinessUnitAddresses)
+        $this->addPersistentCompanyBusinessUnitAddressParameter(
+            $addressProvider->findPersistentCompanyBusinessUnitAddress($formAddressTransfer, $companyBusinessUnitAddresses)
         );
     }
 
@@ -113,13 +113,13 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     }
 
     /**
-     * @param string|null $selectedBusinessUnitAddressKey
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $persistentCompanyBusinessUnitAddressTransfer
      *
      * @return void
      */
-    protected function addSelectedCompanyBusinessUnitAddressKey(?string $selectedBusinessUnitAddressKey): void
+    protected function addPersistentCompanyBusinessUnitAddressParameter(?AddressTransfer $persistentCompanyBusinessUnitAddressTransfer): void
     {
-        $this->addParameter('selectedCompanyBusinessUnitAddressKey', $selectedBusinessUnitAddressKey);
+        $this->addParameter('persistentCompanyBusinessUnitAddress', $persistentCompanyBusinessUnitAddressTransfer);
     }
 
     /**

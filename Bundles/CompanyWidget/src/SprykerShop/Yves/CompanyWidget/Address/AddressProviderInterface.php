@@ -30,7 +30,7 @@ interface AddressProviderInterface
      * @param \Generated\Shared\Transfer\AddressTransfer $formAddressTransfer
      * @param \Generated\Shared\Transfer\AddressTransfer[] $companyBusinessUnitAddresses
      *
-     * @return string|null
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findSelectedCompanyBusinessUnitAddressKey(AddressTransfer $formAddressTransfer, array $companyBusinessUnitAddresses): ?string;
+    public function findPersistentCompanyBusinessUnitAddress(AddressTransfer $formAddressTransfer, array $companyBusinessUnitAddresses): ?AddressTransfer;
 }

@@ -81,13 +81,13 @@ class AddressProvider implements AddressProviderInterface
      * @param \Generated\Shared\Transfer\AddressTransfer $formAddressTransfer
      * @param \Generated\Shared\Transfer\AddressTransfer[] $companyBusinessUnitAddresses
      *
-     * @return string|null
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findSelectedCompanyBusinessUnitAddressKey(AddressTransfer $formAddressTransfer, array $companyBusinessUnitAddresses): ?string
+    public function findPersistentCompanyBusinessUnitAddress(AddressTransfer $formAddressTransfer, array $companyBusinessUnitAddresses): ?AddressTransfer
     {
         foreach ($companyBusinessUnitAddresses as $companyBusinessUnitAddressTransfer) {
             if ($this->isSameCompanyBusinessUnitAddress($formAddressTransfer, $companyBusinessUnitAddressTransfer)) {
-                return $companyBusinessUnitAddressTransfer->getKey();
+                return $companyBusinessUnitAddressTransfer;
             }
         }
 
@@ -125,12 +125,12 @@ class AddressProvider implements AddressProviderInterface
      */
     protected function prepareFormAddressData(array $formAddressData): array
     {
-        $ignoredFormAddressDataFields = [
-            static::KEY_IS_DEFAULT_SHIPPING => null,
-            static::KEY_IS_DEFAULT_BILLING => null,
-        ];
+        unset(
+            $formAddressData[static::KEY_IS_DEFAULT_SHIPPING],
+            $formAddressData[static::KEY_IS_DEFAULT_BILLING]
+        );
 
-        return array_merge($formAddressData, $ignoredFormAddressDataFields);
+        return $formAddressData;
     }
 
     /**
@@ -212,7 +212,35 @@ class AddressProvider implements AddressProviderInterface
             return new ArrayObject();
         }
 
-        return $companyBusinessUnitAddressCollection->getCompanyUnitAddresses();
+        $companyUnitAddressTransfers = $companyBusinessUnitAddressCollection->getCompanyUnitAddresses();
+
+        $idCompanyUnitAddress = $companyBusinessUnitTransfer->getDefaultBillingAddress();
+        if (!$idCompanyUnitAddress) {
+            return $companyUnitAddressTransfers;
+        }
+
+        return $this->markDefaultBillingCompanyBusinessUnitAddress($idCompanyUnitAddress, $companyUnitAddressTransfers);
+    }
+
+    /**
+     * @param int $idCompanyUnitAddress
+     * @param \ArrayObject|\Generated\Shared\Transfer\CompanyUnitAddressTransfer[] $companyUnitAddressTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\CompanyUnitAddressTransfer[]
+     */
+    protected function markDefaultBillingCompanyBusinessUnitAddress(
+        int $idCompanyUnitAddress,
+        ArrayObject $companyUnitAddressTransfers
+    ): ArrayObject {
+        foreach ($companyUnitAddressTransfers as $companyUnitAddressTransfer) {
+            if ($companyUnitAddressTransfer->getIdCompanyUnitAddress() === $idCompanyUnitAddress) {
+                $companyUnitAddressTransfer->setIsDefaultBilling(true);
+
+                return $companyUnitAddressTransfers;
+            }
+        }
+
+        return $companyUnitAddressTransfers;
     }
 
     /**
