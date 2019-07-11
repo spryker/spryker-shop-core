@@ -38,7 +38,7 @@ class CartController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $viewData = $this->executeIndexAction($this->getSelectedAttributes($request));
+        $viewData = $this->executeIndexAction($request->get('selectedAttributes', []));
 
         return $this->view(
             $viewData,
@@ -104,7 +104,7 @@ class CartController extends AbstractController
             ->setSku($sku)
             ->setQuantity($quantity);
 
-        $this->addProductOptions($this->getProductOptions($request), $itemTransfer);
+        $this->addProductOptions($request->get('product-option', []), $itemTransfer);
 
         $this->getFactory()
             ->getCartClient()
@@ -201,7 +201,7 @@ class CartController extends AbstractController
 
         $this->getFactory()
             ->getCartClient()
-            ->changeItemQuantity($sku, $this->getGroupKey($request), $quantity);
+            ->changeItemQuantity($sku, $request->get('groupKey'), $quantity);
 
         $this->getFactory()
             ->getZedRequestClient()
@@ -261,10 +261,10 @@ class CartController extends AbstractController
             ->tryToReplaceItem(
                 $sku,
                 $quantity,
-                array_replace($this->getSelectedAttributes($request), $this->getPreSelectedAttributes($request)),
+                array_replace($request->get('selectedAttributes', []), $request->get('preselectedAttributes', [])),
                 $quoteTransfer->getItems(),
-                $this->getGroupKey($request),
-                $this->getProductOptions($request),
+                $request->get('groupKey'),
+                $request->get('product-option', []),
                 $this->getLocale()
             );
 
@@ -278,7 +278,7 @@ class CartController extends AbstractController
             CartControllerProvider::ROUTE_CART,
             $this->getFactory()
                 ->createCartItemsAttributeProvider()
-                ->formatUpdateActionResponse($sku, $this->getSelectedAttributes($request))
+                ->formatUpdateActionResponse($sku, $request->get('selectedAttributes', []))
         );
     }
 
@@ -387,62 +387,6 @@ class CartController extends AbstractController
             return $request->request->get('groupKey');
         }
 
-        return $request->query->get('groupKey');
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return int
-     */
-    protected function getQuantity(Request $request)
-    {
-        if ($request->isMethod('POST')) {
-            return $request->request->getInt('quantity', 1);
-        }
-
-        return $request->query->getInt('quantity', 1);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    protected function getSelectedAttributes(Request $request): array
-    {
-        if ($request->isMethod('POST')) {
-            return $request->request->get('selectedAttributes', []);
-        }
-
-        return $request->query->get('selectedAttributes', []);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    protected function getPreSelectedAttributes(Request $request): array
-    {
-        if ($request->isMethod('POST')) {
-            return $request->request->get('preselectedAttributes', []);
-        }
-
-        return $request->query->get('preselectedAttributes', []);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    protected function getProductOptions(Request $request): array
-    {
-        if ($request->isMethod('POST')) {
-            return $request->request->get('product-option', []);
-        }
-
-        return $request->query->get('product-option', []);
+        return $request->get('groupKey');
     }
 }
