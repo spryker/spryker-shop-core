@@ -5,6 +5,17 @@
 
     <transfer name="Address">
         <property name="key" type="string" />
+        <property name="isDefaultShipping" type="bool" />
+        <property name="isDefaultBilling" type="bool" />
+    </transfer>
+
+    <transfer name="CompanyUnitAddressCollection">
+        <property name="companyUnitAddresses" type="CompanyUnitAddress" singular="companyUnitAddress" />
+    </transfer>
+
+    <transfer name="CompanyUnitAddress">
+        <property name="idCompanyUnitAddress" type="int" />
+        <property name="isDefaultBilling" type="bool" />
     </transfer>
 
 </transfers>
