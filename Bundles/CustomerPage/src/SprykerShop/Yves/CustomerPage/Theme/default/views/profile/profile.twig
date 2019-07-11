@@ -42,6 +42,7 @@
         <h5>{{ "customer.profile.delete" | trans }}</h5>
         <hr>
         {{ "customer.profile.delete.description" | trans }}
-        <a href="{{url('customer/delete')}}" class="button button--alert float-right">{{ "customer.profile.delete" | trans }}</a>
+        <a data-init-single-click href="{{ url('customer/delete') }}"
+           class="button button--alert float-right">{{ "customer.profile.delete" | trans }}</a>
     </div>
 {% endblock %}
