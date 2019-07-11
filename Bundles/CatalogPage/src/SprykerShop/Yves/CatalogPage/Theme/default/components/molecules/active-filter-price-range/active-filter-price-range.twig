@@ -7,11 +7,9 @@
 {% define data = {
     filter: required,
     min: required,
-    max: required,
     activeMin: required,
-    activeMax: required,
-    defaultMin: required,
-    defaultMax: required,
+    max: required,
+    activeMax: required
 } %}
 
 {% set currentValue = data.activeMin | money  ~ ' - ' ~ data.activeMax | money %}
@@ -19,8 +17,8 @@
 {% block component %}
     {% if app.request.query.has(data.filter.config.parameterName)
         and can('SeePricePermissionPlugin')
-        and data.defaultMin != data.activeMin
-        and data.defaultMax != data.activeMax
+        and data.min != data.activeMin
+        and data.max != data.activeMax
     %}
         {% include molecule('active-filter', 'CatalogPage') with {
             data: {
