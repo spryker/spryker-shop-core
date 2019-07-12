@@ -56,6 +56,17 @@
                         ] only %}
                         {% endwidget %}
                     </div>
+                    {% if data.cart.idQuote is not empty %}
+                        <div class="box">
+                            {% widget 'CommentThreadWidget' args [
+                                data.cart.idQuote,
+                                'quote',
+                                app.request.requestUri,
+                                data.cart.commentThread
+                            ] only %}
+                            {% endwidget %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         {% endblock %}
@@ -147,6 +158,18 @@
                                     <hr>
                                 {% endblock %}
                             {% endwidget %}
+                        {% endif %}
+
+                        {% if data.cart.idQuote is not empty %}
+                            <div class="box">
+                                {% widget 'CommentThreadWidget' args [
+                                    data.cart.idQuote,
+                                    'quote',
+                                    app.request.requestUri,
+                                    data.cart.commentThread
+                                ] only %}
+                                {% endwidget %}
+                            </div>
                         {% endif %}
 
                         {% if data.isQuoteEditable and data.cart.idQuote %}

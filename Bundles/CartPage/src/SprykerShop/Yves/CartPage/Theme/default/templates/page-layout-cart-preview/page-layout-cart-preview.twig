@@ -44,8 +44,21 @@
 
 {% block emptyCart %}
     <div class="grid">
-        <div class="col col--sm-12">
+        <div class="col col--sm-9">
             {{ block('emptyCartMessage') }}
+        </div>
+        <div class="col col--xl-3">
+            {% if data.cart.idQuote is not empty %}
+                <div class="box">
+                    {% widget 'CommentThreadWidget' args [
+                        data.cart.idQuote,
+                        'quote',
+                        app.request.requestUri,
+                        data.cart.commentThread
+                    ] only %}
+                    {% endwidget %}
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
@@ -144,4 +157,18 @@
     {% endwidget %}
 {% endblock %}
 
-{% block cartActions %}{% endblock %}
+{% block cartActions %}
+
+    {% if data.cart.idQuote is not empty %}
+        <div class="box">
+            {% widget 'CommentThreadWidget' args [
+                data.cart.idQuote,
+                'quote',
+                app.request.requestUri,
+                data.cart.commentThread
+            ] only %}
+            {% endwidget %}
+        </div>
+    {% endif %}
+
+{% endblock %}

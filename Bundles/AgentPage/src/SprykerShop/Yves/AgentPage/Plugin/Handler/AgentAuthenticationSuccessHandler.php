@@ -42,7 +42,10 @@ class AgentAuthenticationSuccessHandler extends AbstractPlugin implements Authen
      */
     protected function getSecurityUser(TokenInterface $token): Agent
     {
-        return $token->getUser();
+        /** @var \SprykerShop\Yves\AgentPage\Security\Agent $user */
+        $user = $token->getUser();
+
+        return $user;
     }
 
     /**

@@ -4,12 +4,20 @@
         xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Customer">
-        <property name="idCustomer" type="int" />
+        <property name="idCustomer" type="int"/>
     </transfer>
 
     <transfer name="CustomerResponse">
-        <property name="customerTransfer" type="Customer" />
-        <property name="isSuccess" type="bool" />
+        <property name="customerTransfer" type="Customer"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="commentThread" type="CommentThread"/>
+    </transfer>
+
+    <transfer name="CommentThread">
+        <property name="idCommentThread" type="int"/>
     </transfer>
 
 </transfers>
