@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\ResourceSharePage\Plugin\Router;
 
-use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
-use SprykerShop\Yves\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Spryker\Yves\Router\Route\RouteCollection;
 
 class ResourceSharePageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -20,9 +20,9 @@ class ResourceSharePageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @api
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -34,9 +34,9 @@ class ResourceSharePageRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses \SprykerShop\Yves\ResourceSharePage\Controller\LinkController::indexAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addLinkRoute(RouteCollection $routeCollection): RouteCollection
     {

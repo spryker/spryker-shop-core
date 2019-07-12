@@ -54,7 +54,7 @@ class ShopApplicationApplicationPlugin extends AbstractPlugin implements Applica
     }
 
     /**
-     * @deprected Use `spryker-shop/router` instead.
+     * @deprected Use `spryker/router` instead.
      *
      * @param \Spryker\Service\Container\ContainerInterface $container
      *

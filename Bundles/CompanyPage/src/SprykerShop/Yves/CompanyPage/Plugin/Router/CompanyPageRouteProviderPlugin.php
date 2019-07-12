@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CompanyPage\Plugin\Router;
 
-use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
-use SprykerShop\Yves\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Spryker\Yves\Router\Route\RouteCollection;
 
 class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -63,9 +63,9 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @api
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -83,9 +83,9 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCompanyRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -98,9 +98,9 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCompanyAddressRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -119,9 +119,9 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCompanyBusinessUnitRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -142,9 +142,9 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCompanyBusinessUnitAddressRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -155,9 +155,9 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCompanyBusinessUnitAddressCreateRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -168,9 +168,9 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCompanyBusinessUnitAddressUpdateRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -181,9 +181,9 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCompanyRoleRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -204,9 +204,9 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addPermissionRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -221,9 +221,9 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCompanyUserRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -244,9 +244,9 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCompanyRoleUserRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -261,9 +261,9 @@ class CompanyPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCompanyUserStatusRoutes(RouteCollection $routeCollection): RouteCollection
     {

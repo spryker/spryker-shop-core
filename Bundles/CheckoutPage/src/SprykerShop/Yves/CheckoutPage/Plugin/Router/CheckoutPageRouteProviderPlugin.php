@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Plugin\Router;
 
-use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
-use SprykerShop\Yves\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Spryker\Yves\Router\Route\RouteCollection;
 
 class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -28,9 +28,9 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @api
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -48,9 +48,9 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCheckoutIndexRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -62,9 +62,9 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCustomerStepRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -76,9 +76,9 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addAddressStepRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -90,9 +90,9 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addShipmentStepRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -104,9 +104,9 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addPaymentStepRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -118,9 +118,9 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCheckoutSummaryStepRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -132,9 +132,9 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addPlaceOrderStepRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -146,9 +146,9 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCheckoutErrorRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -160,9 +160,9 @@ class CheckoutPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCheckoutSuccessRoute(RouteCollection $routeCollection): RouteCollection
     {

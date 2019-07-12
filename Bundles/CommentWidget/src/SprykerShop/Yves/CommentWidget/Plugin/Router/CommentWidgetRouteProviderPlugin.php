@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CommentWidget\Plugin\Router;
 
-use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
-use SprykerShop\Yves\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Spryker\Yves\Router\Route\RouteCollection;
 
 class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -26,9 +26,9 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @api
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -44,9 +44,9 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses \SprykerShop\Yves\CommentWidget\Controller\CommentController::addAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addAddCommentRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -59,9 +59,9 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses \SprykerShop\Yves\CommentWidget\Controller\CommentController::updateAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addUpdateCommentRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -74,9 +74,9 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses \SprykerShop\Yves\CommentWidget\Controller\CommentController::removeAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addRemoveCommentRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -89,9 +89,9 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses \SprykerShop\Yves\CommentWidget\Controller\CommentTagController::addAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addAddCommentTagRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -105,9 +105,9 @@ class CommentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses \SprykerShop\Yves\CommentWidget\Controller\CommentTagController::removeAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addRemoveCommentTagRoute(RouteCollection $routeCollection): RouteCollection
     {

@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\StorageRouter\Plugin\Router;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\RouterExtension\Dependency\Plugin\RouterPluginInterface;
+use Spryker\Yves\RouterExtension\Dependency\Plugin\RouterPluginInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**

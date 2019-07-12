@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\ShopRouter\Dependency\Client\ShopRouterToUrlStorageClientBridge;
 
 /**
- * @deprecated Use `spryker-shop/router` instead.
+ * @deprecated Use `spryker/router` instead.
  * @deprecated Use `spryker-shop/storage-router` instead.
  */
 class ShopRouterDependencyProvider extends AbstractBundleDependencyProvider

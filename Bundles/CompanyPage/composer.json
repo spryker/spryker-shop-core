@@ -29,7 +29,7 @@
   "require-dev": {
     "spryker-shop/company-user-invitation-page": "*",
     "spryker-shop/customer-page": "*",
-    "spryker-shop/router": "*",
+    "spryker/router": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
@@ -37,7 +37,7 @@
   "suggest": {
     "spryker-shop/company-user-invitation-page": "If you want to import new invitations from file: ^2.1.0",
     "spryker-shop/customer-page": "If you want to have profile page for customers: ^1.3.2",
-    "spryker-shop/router": "Use this module when you want to use the Router.",
+    "spryker/router": "Use this module when you want to use the Router.",
     "spryker/silex": "*"
   },
   "autoload": {

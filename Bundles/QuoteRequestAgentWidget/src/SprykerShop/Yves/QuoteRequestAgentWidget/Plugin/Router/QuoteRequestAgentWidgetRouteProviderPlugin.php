@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentWidget\Plugin\Router;
 
-use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
-use SprykerShop\Yves\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Spryker\Yves\Router\Route\RouteCollection;
 
 class QuoteRequestAgentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -21,9 +21,9 @@ class QuoteRequestAgentWidgetRouteProviderPlugin extends AbstractRouteProviderPl
      *
      * @api
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -36,9 +36,9 @@ class QuoteRequestAgentWidgetRouteProviderPlugin extends AbstractRouteProviderPl
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentWidget\Controller\QuoteRequestAgentCartController::saveAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuoteRequestSaveCartRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -51,9 +51,9 @@ class QuoteRequestAgentWidgetRouteProviderPlugin extends AbstractRouteProviderPl
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentWidget\Controller\QuoteRequestAgentCartController::clearAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuoteRequestClearCartRoute(RouteCollection $routeCollection): RouteCollection
     {

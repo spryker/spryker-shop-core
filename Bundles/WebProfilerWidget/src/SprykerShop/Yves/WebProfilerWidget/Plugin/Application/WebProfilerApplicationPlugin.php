@@ -14,8 +14,8 @@ use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPlu
 use Spryker\Shared\EventDispatcher\EventDispatcher;
 use Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin;
 use Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin;
-use SprykerShop\Yves\Router\Plugin\Application\RouterApplicationPlugin;
 use Symfony\Bridge\Twig\Extension\CodeExtension;
 use Symfony\Bridge\Twig\Extension\ProfilerExtension;
 use Symfony\Bundle\WebProfilerBundle\Controller\ExceptionController;

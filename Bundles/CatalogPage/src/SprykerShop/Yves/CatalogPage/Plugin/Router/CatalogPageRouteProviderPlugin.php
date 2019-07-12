@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CatalogPage\Plugin\Router;
 
-use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
-use SprykerShop\Yves\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Spryker\Yves\Router\Route\RouteCollection;
 
 class CatalogPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -22,9 +22,9 @@ class CatalogPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @api
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -36,9 +36,9 @@ class CatalogPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addFulltextSearchRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -49,9 +49,9 @@ class CatalogPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addSuggestionRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -62,9 +62,9 @@ class CatalogPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addChangeViewRoute(RouteCollection $routeCollection): RouteCollection
     {

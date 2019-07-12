@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CustomerPage\Plugin\Router;
 
-use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
-use SprykerShop\Yves\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Spryker\Yves\Router\Route\RouteCollection;
 
 class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -38,9 +38,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @api
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -66,9 +66,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addLoginRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -79,9 +79,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addLogoutRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -92,9 +92,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addRegisterRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -105,9 +105,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addForgottenPasswordRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -118,9 +118,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addRestorePasswordRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -131,9 +131,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCustomerOverviewRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -144,9 +144,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCustomerProfileRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -157,9 +157,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCustomerAddressRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -170,9 +170,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addNewCustomerAddressRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -183,9 +183,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addUpdateCustomerAddressRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -196,9 +196,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addDeleteCustomerAddressRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -209,9 +209,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addRefreshCustomerAddressRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -222,9 +222,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCustomerOrderRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -235,9 +235,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCustomerOrderDetailsRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -248,9 +248,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCustomerDeleteRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -261,9 +261,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCustomerDeleteConfirmRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -276,9 +276,9 @@ class CustomerPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses \SprykerShop\Yves\CustomerPage\Controller\AccessTokenController::indexAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addAccessTokenRoute(RouteCollection $routeCollection): RouteCollection
     {

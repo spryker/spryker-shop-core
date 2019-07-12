@@ -24,7 +24,7 @@
     "spryker-shop/customer-page": "*",
     "spryker-shop/product-option-widget": "*",
     "spryker-shop/product-packaging-unit-widget": "*",
-    "spryker-shop/router": "*",
+    "spryker/router": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
@@ -35,7 +35,7 @@
     "spryker-shop/discount-widget": "If you want to use discount widget functionality: ^1.2.0",
     "spryker-shop/product-option-widget": "If you want to use product option widget functionality",
     "spryker-shop/product-packaging-unit-widget": "If you want to use product packaging unit widget functionality",
-    "spryker-shop/router": "Use this module if you want use the RouterProviderPlugin.",
+    "spryker/router": "Use this module if you want use the RouterProviderPlugin.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

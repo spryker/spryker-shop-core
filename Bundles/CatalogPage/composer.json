@@ -24,14 +24,14 @@
     "spryker/util-text": "^1.2.0"
   },
   "require-dev": {
-    "spryker-shop/router": "*",
+    "spryker/router": "*",
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/router": "Use this module when you want to use the Router.",
+    "spryker/router": "Use this module when you want to use the Router.",
     "spryker/container": "If you want to use Twig Plugins",
     "spryker/permission": "If you want to use permissions plugins.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."

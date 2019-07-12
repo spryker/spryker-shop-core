@@ -14,7 +14,7 @@
   },
   "require-dev": {
     "spryker-shop/quote-request-agent-widget": "*",
-    "spryker-shop/router": "*",
+    "spryker/router": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
@@ -22,7 +22,7 @@
   "suggest": {
     "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
     "spryker-shop/quote-request-agent-widget": "If you want to use QuoteRequestAgentOverviewWidget and QuoteRequestAgentCancelWidget widgets.",
-    "spryker-shop/router": "Use this module when you want to use the Router."
+    "spryker/router": "Use this module when you want to use the Router."
   },
   "autoload": {
     "psr-4": {

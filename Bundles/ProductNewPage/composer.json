@@ -14,7 +14,7 @@
   },
   "require-dev": {
     "spryker-shop/catalog-page": "*",
-    "spryker-shop/router": "*",
+    "spryker/router": "*",
     "spryker-shop/shop-application": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
@@ -22,7 +22,7 @@
   },
   "suggest": {
     "spryker-shop/catalog-page": "Use this module when you want to use CatalogPage plugins.",
-    "spryker-shop/router": "Use this module when you want to use the Router.",
+    "spryker/router": "Use this module when you want to use the Router.",
     "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },

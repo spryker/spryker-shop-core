@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\PersistentCartSharePage\Plugin\Router;
 
-use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
-use SprykerShop\Yves\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Spryker\Yves\Router\Route\RouteCollection;
 
 class PersistentCartSharePageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -23,9 +23,9 @@ class PersistentCartSharePageRouteProviderPlugin extends AbstractRouteProviderPl
      *
      * @api
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -37,9 +37,9 @@ class PersistentCartSharePageRouteProviderPlugin extends AbstractRouteProviderPl
     /**
      * @uses \SprykerShop\Yves\PersistentCartSharePage\Controller\CartController::previewAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addPersistentCartSharePagePreviewRoute(RouteCollection $routeCollection): RouteCollection
     {

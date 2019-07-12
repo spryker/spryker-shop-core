@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CompanyUserAgentWidget\Plugin\Router;
 
-use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
-use SprykerShop\Yves\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Spryker\Yves\Router\Route\RouteCollection;
 
 class CompanyUserAgentWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -20,9 +20,9 @@ class CompanyUserAgentWidgetRouteProviderPlugin extends AbstractRouteProviderPlu
      *
      * @api
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -34,9 +34,9 @@ class CompanyUserAgentWidgetRouteProviderPlugin extends AbstractRouteProviderPlu
     /**
      * @uses \SprykerShop\Yves\CompanyUserAgentWidget\Controller\CompanyUserAutocompleteController::indexAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCompanyUserAutocompleteRoute(RouteCollection $routeCollection): RouteCollection
     {

@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CompanyUserInvitationPage\Plugin\Router;
 
-use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
-use SprykerShop\Yves\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Spryker\Yves\Router\Route\RouteCollection;
 
 class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -33,9 +33,9 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
      *
      * @api
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -53,9 +53,9 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addUserInvitationRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -66,9 +66,9 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addUserInvitationErrorsRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -79,9 +79,9 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addUserInvitationSendRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -92,9 +92,9 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addUserInvitationSendAllRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -105,9 +105,9 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addUserInvitationResendRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -118,9 +118,9 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addUserInvitationResendConfirmRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -131,9 +131,9 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addUserInvitationDeleteRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -144,9 +144,9 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addUserInvitationDeleteConfirmRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -157,9 +157,9 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addUserInvitationAcceptRoute(RouteCollection $routeCollection): RouteCollection
     {

@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Plugin\Router;
 
-use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
-use SprykerShop\Yves\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Spryker\Yves\Router\Route\RouteCollection;
 
 class QuickOrderPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -25,9 +25,9 @@ class QuickOrderPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @api
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -45,9 +45,9 @@ class QuickOrderPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses QuickOrderController::indexAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuickOrderRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -60,9 +60,9 @@ class QuickOrderPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses QuickOrderController::addRowsAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuickOrderAddRowsRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -75,9 +75,9 @@ class QuickOrderPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses QuickOrderController::deleteRowAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuickOrderDeleteRowRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -90,9 +90,9 @@ class QuickOrderPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses QuickOrderController::clearAllRowsAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuickOrderClearAllRowsRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -105,9 +105,9 @@ class QuickOrderPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses QuickOrderController::productAdditionalDataAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuickOrderProductAdditionalDataRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -120,9 +120,9 @@ class QuickOrderPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses QuickOrderController::downloadTemplateAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuickOrderDownloadTemplateRoute(RouteCollection $routeCollection): RouteCollection
     {

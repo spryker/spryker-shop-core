@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
- * @deprecated Use `spryker-shop/router` instead.
+ * @deprecated Use `spryker/router` instead.
  */
 class UrlGenerator extends SymfonyUrlGenerator
 {

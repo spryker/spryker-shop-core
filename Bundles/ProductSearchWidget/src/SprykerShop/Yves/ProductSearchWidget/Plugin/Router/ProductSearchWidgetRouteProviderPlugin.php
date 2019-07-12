@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\ProductSearchWidget\Plugin\Router;
 
-use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
-use SprykerShop\Yves\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Spryker\Yves\Router\Route\RouteCollection;
 
 class ProductSearchWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -21,9 +21,9 @@ class ProductSearchWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @api
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -36,9 +36,9 @@ class ProductSearchWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses ProductConcreteAddController::indexAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCartQuickAddRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -51,9 +51,9 @@ class ProductSearchWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses ProductConcreteSearchController::indexAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addProductConcreteSearchRoute(RouteCollection $routeCollection): RouteCollection
     {

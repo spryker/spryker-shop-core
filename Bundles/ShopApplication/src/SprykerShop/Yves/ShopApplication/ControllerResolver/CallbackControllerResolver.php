@@ -11,7 +11,7 @@ use InvalidArgumentException;
 use Spryker\Service\Container\ContainerInterface;
 
 /**
- * @deprecated Use `spryker-shop/router` instead.
+ * @deprecated Use `spryker/router` instead.
  */
 class CallbackControllerResolver implements CallbackControllerResolverInterface
 {

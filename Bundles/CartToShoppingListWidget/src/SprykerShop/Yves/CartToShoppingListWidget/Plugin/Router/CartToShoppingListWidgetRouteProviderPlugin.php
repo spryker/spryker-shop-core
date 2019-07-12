@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CartToShoppingListWidget\Plugin\Router;
 
-use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
-use SprykerShop\Yves\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Spryker\Yves\Router\Route\RouteCollection;
 
 class CartToShoppingListWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -20,9 +20,9 @@ class CartToShoppingListWidgetRouteProviderPlugin extends AbstractRouteProviderP
      *
      * @api
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -32,9 +32,9 @@ class CartToShoppingListWidgetRouteProviderPlugin extends AbstractRouteProviderP
     }
 
     /**
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCreateShoppingListFromCartRoute(RouteCollection $routeCollection): RouteCollection
     {

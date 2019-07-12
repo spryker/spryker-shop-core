@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\QuoteApprovalWidget\Plugin\Router;
 
-use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
-use SprykerShop\Yves\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Spryker\Yves\Router\Route\RouteCollection;
 
 class QuoteApprovalWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -25,9 +25,9 @@ class QuoteApprovalWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @api
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -42,9 +42,9 @@ class QuoteApprovalWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses \SprykerShop\Yves\QuoteApprovalWidget\Controller\QuoteApprovalController::approveAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuoteApprovalApproveRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -58,9 +58,9 @@ class QuoteApprovalWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses \SprykerShop\Yves\QuoteApprovalWidget\Controller\QuoteApprovalController::declineAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuoteApprovalDeclineRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -74,9 +74,9 @@ class QuoteApprovalWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses \SprykerShop\Yves\QuoteApprovalWidget\Controller\QuoteApprovalController::createQuoteApprovalAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCreateQuoteApprovalRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -89,9 +89,9 @@ class QuoteApprovalWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
     /**
      * @uses \SprykerShop\Yves\QuoteApprovalWidget\Controller\QuoteApprovalController::removeQuoteApprovalAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addRemoveQuoteApprovalRoute(RouteCollection $routeCollection): RouteCollection
     {

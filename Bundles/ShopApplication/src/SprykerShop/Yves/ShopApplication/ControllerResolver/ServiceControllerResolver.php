@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 
 /**
- * @deprecated Use `spryker-shop/router` instead.
+ * @deprecated Use `spryker/router` instead.
  */
 class ServiceControllerResolver implements ControllerResolverInterface, ArgumentResolverInterface
 {

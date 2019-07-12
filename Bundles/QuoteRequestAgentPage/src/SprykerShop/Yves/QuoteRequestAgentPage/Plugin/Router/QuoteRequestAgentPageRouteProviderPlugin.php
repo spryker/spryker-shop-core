@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router;
 
-use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
-use SprykerShop\Yves\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Spryker\Yves\Router\Route\RouteCollection;
 
 class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -33,9 +33,9 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
      *
      * @api
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -57,9 +57,9 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentViewController::indexAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuoteRequestAgentRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -72,9 +72,9 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentDeleteController::cancelAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuoteRequestAgentCancelRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -88,9 +88,9 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentViewController::detailsAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuoteRequestDetailsRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -104,9 +104,9 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentEditController::startEditAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuoteRequestReviseRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -120,9 +120,9 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentEditController::editAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuoteRequestEditRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -136,9 +136,9 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentEditController::editAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuoteRequestCreateRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -151,9 +151,9 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentEditController::editAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuoteRequestSendToCustomerRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -167,9 +167,9 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentEditItemsController::indexAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuoteRequestEditItemsRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -183,9 +183,9 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentEditItemsController::indexAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuoteRequestEditItemsConfirmRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -199,9 +199,9 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
     /**
      * @uses \SprykerShop\Yves\QuoteRequestPage\Controller\QuoteRequestCheckoutController::convertToCartAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addQuoteRequestConvertToCartRoute(RouteCollection $routeCollection): RouteCollection
     {

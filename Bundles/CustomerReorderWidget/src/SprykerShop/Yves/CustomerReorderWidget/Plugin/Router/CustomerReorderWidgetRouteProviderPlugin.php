@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Plugin\Router;
 
-use SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
-use SprykerShop\Yves\Router\Route\RouteCollection;
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Spryker\Yves\Router\Route\RouteCollection;
 
 class CustomerReorderWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
@@ -22,9 +22,9 @@ class CustomerReorderWidgetRouteProviderPlugin extends AbstractRouteProviderPlug
      *
      * @api
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
@@ -37,9 +37,9 @@ class CustomerReorderWidgetRouteProviderPlugin extends AbstractRouteProviderPlug
     /**
      * @uses \SprykerShop\Yves\CustomerReorderWidget\Controller\OrderController::reorderAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addReorderRoute(RouteCollection $routeCollection): RouteCollection
     {
@@ -53,9 +53,9 @@ class CustomerReorderWidgetRouteProviderPlugin extends AbstractRouteProviderPlug
     /**
      * @uses \SprykerShop\Yves\CustomerReorderWidget\Controller\OrderController::reorderItemsAction()
      *
-     * @param \SprykerShop\Yves\Router\Route\RouteCollection $routeCollection
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
-     * @return \SprykerShop\Yves\Router\Route\RouteCollection
+     * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addReorderItemsRoute(RouteCollection $routeCollection): RouteCollection
     {
