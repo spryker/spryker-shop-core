@@ -17,8 +17,8 @@
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
-    "spryker/router": "*",
     "spryker/code-sniffer": "*",
+    "spryker/router": "*",
     "spryker/silex": "^2.0.0",
     "spryker/testify": "*"
   },

@@ -18,9 +18,9 @@
     "spryker/twig-extension": "^1.0.0"
   },
   "require-dev": {
-    "spryker/router": "*",
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/twig": "*"
