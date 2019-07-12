@@ -81,4 +81,14 @@ class CompanyPageToCompanyUnitAddressClientBridge implements CompanyPageToCompan
     ): void {
         $this->companyUnitAddressClient->saveCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function updateCompanyUnitAddress(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
+    {
+        return $this->companyUnitAddressClient->updateCompanyUnitAddress($companyUnitAddressTransfer);
+    }
 }
