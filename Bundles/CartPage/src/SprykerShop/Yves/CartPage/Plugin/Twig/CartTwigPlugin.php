@@ -65,7 +65,7 @@ class CartTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     }
 
     /**
-     * @deprecated Use getMoneySymbolFunction instead
+     * @deprecated Use getCartQuantityFunction instead
      *
      * @param \Twig\Environment $twig
      *
