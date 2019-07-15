@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\SharedCartWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 
@@ -32,4 +33,11 @@ interface SharedCartWidgetToSharedCartClientInterface
      * @return bool
      */
     public function isQuoteDeletable(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function getCustomerCollectionByQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer;
 }

@@ -1,0 +1,43 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'comment-tag-form',
+    tag: 'comment-tag-form',
+} %}
+
+{% define data = {
+    action: required,
+    availableTags: required,
+    tagNames: required,
+    returnUrl: required,
+} %}
+
+{% define attributes = {
+    name: 'name',
+} %}
+
+{% block body %}
+    <form class="{{ config.jsName }}__form" method="GET" action="{{ data.action }}">
+        {% embed atom('select') with {
+            class: config.jsName ~ '__select',
+            modifiers: ['expand'],
+            attributes: {
+                name: attributes.name,
+            },
+            embed: {
+                availableTags: data.availableTags,
+                tagNames: data.tagNames,
+            },
+        } only %}
+            {% block options %}
+                <option value="">{{ 'comment_widget.form.tags' | trans }}</option>
+
+                {% for availableTag in embed.availableTags if not (availableTag in embed.tagNames) %}
+                    <option value="{{ availableTag }}">{{ ('comment_widget.tags.' ~ availableTag) | trans }}</option>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+
+        <input type="hidden" name="returnUrl" value="{{ data.returnUrl }}">
+    </form>
+{% endblock %}

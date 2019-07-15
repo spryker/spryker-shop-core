@@ -63,6 +63,7 @@
     {% endif %}
     <div>
         <a href="{{ data.backUrl }}" class="button button--hollow">{{ 'general.cancel.button' | trans }}</a>
-        <a href="{{ url('shopping-list/delete', {'idShoppingList': data.idShoppingList})}}" class="button button--alert spacing-left">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
+        <a data-init-single-click href="{{ url('shopping-list/delete', {'idShoppingList': data.idShoppingList}) }}"
+           class="button button--alert spacing-left">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
     </div>
 {% endblock %}

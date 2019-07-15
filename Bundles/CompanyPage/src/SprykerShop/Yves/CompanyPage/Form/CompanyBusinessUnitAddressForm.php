@@ -9,10 +9,14 @@ namespace SprykerShop\Yves\CompanyPage\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class CompanyBusinessUnitAddressForm extends CompanyUnitAddressForm
 {
     public const FIELD_IS_DEFAULT_BILLING = 'is_default_billing';
+
+    protected const FIELD_LABEL_IS_DEFAULT_BILLING = 'company.account.address.is_default_billing';
 
     /**
      * @return string
@@ -32,22 +36,26 @@ class CompanyBusinessUnitAddressForm extends CompanyUnitAddressForm
     {
         parent::buildForm($builder, $options);
 
-        $this->addIsDefaultBillingField($builder, $options);
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            $this->getCompanyBusinessUnitAddressIsDefaultBillingFormPreSetDataCallback()
+        );
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
+     * @return \Closure
      */
-    protected function addIsDefaultBillingField(FormBuilderInterface $builder, array $options)
+    protected function getCompanyBusinessUnitAddressIsDefaultBillingFormPreSetDataCallback(): callable
     {
-        $builder->add(static::FIELD_IS_DEFAULT_BILLING, CheckboxType::class, [
-            'label' => 'company.account.address.is_default_billing',
-            'required' => false,
-        ]);
+        return function (FormEvent $event) {
+            $form = $event->getForm();
+            $data = $event->getData();
 
-        return $this;
+            $form->add(static::FIELD_IS_DEFAULT_BILLING, CheckboxType::class, [
+                'required' => false,
+                'label' => static::FIELD_LABEL_IS_DEFAULT_BILLING,
+                'disabled' => isset($data[static::FIELD_IS_DEFAULT_BILLING]),
+            ]);
+        };
     }
 }

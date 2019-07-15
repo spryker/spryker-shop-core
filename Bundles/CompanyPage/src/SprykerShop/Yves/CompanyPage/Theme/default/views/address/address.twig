@@ -21,7 +21,8 @@
                     </a>
                 </li>
                 <li class="menu__item">
-                    <a href="{{ url('company/address/delete', {'id': address.idCompanyUnitAddress }) }}">
+                    <a data-init-single-click
+                       href="{{ url('company/address/delete', {'id': address.idCompanyUnitAddress }) }}">
                         {{ "company.account.address.delete" | trans }}
                     </a>
                 </li>
