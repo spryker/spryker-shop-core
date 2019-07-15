@@ -86,7 +86,7 @@ class StorageRouterFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\StorageRouter\ParameterMerger\ParameterMergerInterface
      */
-    protected function createParameterMerger(): ParameterMergerInterface
+    public function createParameterMerger(): ParameterMergerInterface
     {
         return new ParameterMerger();
     }
