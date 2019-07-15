@@ -154,7 +154,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function isEmptyAddress(AddressTransfer $addressTransfer): bool
     {
-        return !count(array_filter($addressTransfer->toArray()));
+        return !array_filter($addressTransfer->toArray());
     }
 
     /**
@@ -165,7 +165,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function isSameAddress(AddressTransfer $shippingAddressTransfer, AddressTransfer $billingAddressTransfer): bool
     {
-        return !count(array_diff($shippingAddressTransfer->toArray(), $billingAddressTransfer->toArray()));
+        return !array_diff($shippingAddressTransfer->toArray(), $billingAddressTransfer->toArray());
     }
 
     /**

@@ -86,7 +86,7 @@ class AddressProvider implements AddressProviderInterface
     public function findPersistentCompanyBusinessUnitAddress(AddressTransfer $formAddressTransfer, array $companyBusinessUnitAddresses): ?AddressTransfer
     {
         foreach ($companyBusinessUnitAddresses as $companyBusinessUnitAddressTransfer) {
-            if ($this->isSameCompanyBusinessUnitAddress($formAddressTransfer, $companyBusinessUnitAddressTransfer)) {
+            if ($this->isSameCompanyUnitAddress($formAddressTransfer, $companyBusinessUnitAddressTransfer)) {
                 return $companyBusinessUnitAddressTransfer;
             }
         }
@@ -100,7 +100,7 @@ class AddressProvider implements AddressProviderInterface
      *
      * @return bool
      */
-    protected function isSameCompanyBusinessUnitAddress(AddressTransfer $formAddressTransfer, AddressTransfer $companyBusinessUnitAddressTransfer): bool
+    protected function isSameCompanyUnitAddress(AddressTransfer $formAddressTransfer, AddressTransfer $companyBusinessUnitAddressTransfer): bool
     {
         $formAddressData = $this->prepareFormAddressData($formAddressTransfer->modifiedToArray());
         if ($this->isAddressFormDataEmpty($formAddressData)) {
@@ -140,7 +140,7 @@ class AddressProvider implements AddressProviderInterface
      */
     protected function isAddressFormDataEmpty(array $formAddressData): bool
     {
-        return !count(array_filter($formAddressData));
+        return !array_filter($formAddressData);
     }
 
     /**
