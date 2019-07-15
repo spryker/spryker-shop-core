@@ -18,12 +18,13 @@ class MiniCartWidget extends AbstractWidget
 {
     use PermissionAwareTrait;
 
-    public function __construct()
+    /**
+     * @param int $cartQuantity
+     */
+    public function __construct($cartQuantity)
     {
-        $activeCart = $this->getActiveCart();
-
-        $this->addParameter('cartQuantity', $activeCart->getItems()->count())
-            ->addParameter('activeCart', $activeCart)
+        $this->addParameter('cartQuantity', $cartQuantity)
+            ->addParameter('activeCart', $this->getActiveCart())
             ->addParameter('cartList', $this->getInActiveQuoteList())
             ->addParameter('isMultiCartAllowed', $this->isMultiCartAllowed());
 
