@@ -1,0 +1,22 @@
+{% extends template('widget') %}
+
+{% define data = {
+    customerCollection: _widget.customerCollection,
+} %}
+
+{% block body %}
+    {% if data.customerCollection is not empty %}
+        <div class="box">
+            {{ "multi_cart_page.cart_delete_confirmation.shared_with" | trans }}:
+            <ul class="list list--bullet">
+                {% for customer in data.customerCollection %}
+                    <li class="list__item">
+                        <strong>{{ customer.firstName }} {{ customer.lastName }}</strong>
+                    </li>
+                {% endfor %}
+            </ul>
+            <span class="text-alert">{{ "multi_cart_page.cart_delete_confirmation.from_all_of_them" | trans }}</span>
+            <br/><br/>
+        </div>
+    {% endif %}
+{% endblock %}
