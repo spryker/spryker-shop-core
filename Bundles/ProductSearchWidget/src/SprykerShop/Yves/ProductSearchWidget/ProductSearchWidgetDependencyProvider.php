@@ -10,13 +10,11 @@ namespace SprykerShop\Yves\ProductSearchWidget;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientBridge;
-use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToProductStorageClientBridge;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Service\ProductSearchWidgetToUtilEncodingServiceBridge;
 
 class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CATALOG = 'CLIENT_CATALOG';
-    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
@@ -29,23 +27,6 @@ class ProductSearchWidgetDependencyProvider extends AbstractBundleDependencyProv
         $container = parent::provideDependencies($container);
         $container = $this->addCatalogClient($container);
         $container = $this->addUtilEncodingService($container);
-        $container = $this->addProductStorageClient($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addProductStorageClient(Container $container): Container
-    {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
-            return new ProductSearchWidgetToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
-            );
-        };
 
         return $container;
     }

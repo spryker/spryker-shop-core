@@ -7,12 +7,12 @@
 
 namespace SprykerShop\Yves\CalculationPage\Controller;
 
-use Spryker\Shared\Config\Environment;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Client\Calculation\CalculationClientInterface getClient()
+ * @method \SprykerShop\Yves\CalculationPage\CalculationPageConfig getConfig()
  * @method \SprykerShop\Yves\CalculationPage\CalculationPageFactory getFactory()
  */
 class DebugController extends AbstractController
@@ -24,7 +24,7 @@ class DebugController extends AbstractController
      */
     public function cartAction()
     {
-        if (!Environment::isDevelopment()) {
+        if (!$this->getFactory()->getConfig()->isCartDebugEnabled()) {
             throw new NotFoundHttpException();
         }
 

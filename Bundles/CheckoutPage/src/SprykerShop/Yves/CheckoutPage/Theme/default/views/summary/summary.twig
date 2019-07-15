@@ -62,6 +62,18 @@
                     }
                 } only %}
             </div>
+
+            {% if data.cart.idQuote is not empty %}
+                <div class="box">
+                    {% widget 'CommentThreadWidget' args [
+                        data.cart.idQuote,
+                        'quote',
+                        app.request.requestUri,
+                        data.cart.commentThread
+                    ] only %}
+                    {% endwidget %}
+                </div>
+            {% endif %}
         </div>
 
         <div class="col col--sm-12 col--lg-8">

@@ -14,7 +14,6 @@ class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvid
 {
     protected const ROUTE_PRODUCT_CONCRETE_SEARCH = 'product-search/product-concrete-search';
     protected const ROUTE_PRODUCT_QUICK_ADD = 'product-quick-add';
-    protected const ROUTE_RENDER_PRODUCT_QUICK_ADD_FORM = 'render-product-quick-add-form';
 
     /**
      * {@inheritdoc}
@@ -39,7 +38,6 @@ class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvid
     {
         $this->addCartQuickAddRoute();
         $this->addProductConcreteSearchRoute();
-        $this->addRenderProductQuickAddForm();
     }
 
     /**
@@ -50,16 +48,6 @@ class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvid
     protected function addCartQuickAddRoute(): void
     {
         $this->createPostController('/{productSearch}/product-quick-add', static::ROUTE_PRODUCT_QUICK_ADD, 'ProductSearchWidget', 'ProductConcreteAdd')
-            ->assert('productSearch', $this->allowedLocalesPattern . 'product-search|product-search')
-            ->value('productSearch', 'product-search');
-    }
-
-    /**
-     * @return void
-     */
-    protected function addRenderProductQuickAddForm(): void
-    {
-        $this->createController('{productSearch}/render-product-quick-add-form', static::ROUTE_RENDER_PRODUCT_QUICK_ADD_FORM, 'ProductSearchWidget', 'QuickAddToCart', 'renderProductQuickAddForm')
             ->assert('productSearch', $this->allowedLocalesPattern . 'product-search|product-search')
             ->value('productSearch', 'product-search');
     }
