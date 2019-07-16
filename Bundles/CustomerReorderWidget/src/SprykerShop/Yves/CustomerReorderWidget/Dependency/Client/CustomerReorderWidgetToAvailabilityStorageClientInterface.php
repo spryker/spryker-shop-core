@@ -17,6 +17,8 @@ interface CustomerReorderWidgetToAvailabilityStorageClientInterface
     public function getProductAvailabilityByIdProductAbstract($idProductAbstract);
 
     /**
+     * @deprecated Will be removed with next major release.
+     *
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
