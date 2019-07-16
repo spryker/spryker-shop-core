@@ -22,7 +22,7 @@ export default class ActionSingleClickEnforcer extends Component {
         const isDisabled: boolean = targetElement.hasAttribute('disabled');
         const form: HTMLFormElement = targetElement.closest('form');
         const submit = form ? <HTMLButtonElement | HTMLInputElement>form.querySelector('[type="submit"]')
-            || <HTMLButtonElement>form.getElementsByTagName('button')[0] : null;
+            || <HTMLButtonElement>form.getElementsByTagName('button')[0] : undefined;
 
         if (isDisabled) {
             event.preventDefault();
