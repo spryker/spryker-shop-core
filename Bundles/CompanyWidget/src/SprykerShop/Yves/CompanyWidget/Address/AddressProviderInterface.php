@@ -32,5 +32,5 @@ interface AddressProviderInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findPersistentCompanyBusinessUnitAddress(AddressTransfer $formAddressTransfer, array $companyBusinessUnitAddresses): ?AddressTransfer;
+    public function findCurrentCompanyBusinessUnitAddress(AddressTransfer $formAddressTransfer, array $companyBusinessUnitAddresses): ?AddressTransfer;
 }

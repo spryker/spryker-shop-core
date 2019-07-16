@@ -83,10 +83,12 @@ class AddressProvider implements AddressProviderInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findPersistentCompanyBusinessUnitAddress(AddressTransfer $formAddressTransfer, array $companyBusinessUnitAddresses): ?AddressTransfer
+    public function findCurrentCompanyBusinessUnitAddress(AddressTransfer $formAddressTransfer, array $companyBusinessUnitAddresses): ?AddressTransfer
     {
+        $formAddressData = $this->cleanAddressDefaultFlags($formAddressTransfer->modifiedToArray());
+
         foreach ($companyBusinessUnitAddresses as $companyBusinessUnitAddressTransfer) {
-            if ($this->isSameCompanyUnitAddress($formAddressTransfer, $companyBusinessUnitAddressTransfer)) {
+            if ($this->isSameCompanyUnitAddress($formAddressData, $companyBusinessUnitAddressTransfer)) {
                 return $companyBusinessUnitAddressTransfer;
             }
         }
@@ -95,14 +97,13 @@ class AddressProvider implements AddressProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $formAddressTransfer
+     * @param array $formAddressData
      * @param \Generated\Shared\Transfer\AddressTransfer $companyBusinessUnitAddressTransfer
      *
      * @return bool
      */
-    protected function isSameCompanyUnitAddress(AddressTransfer $formAddressTransfer, AddressTransfer $companyBusinessUnitAddressTransfer): bool
+    protected function isSameCompanyUnitAddress(array $formAddressData, AddressTransfer $companyBusinessUnitAddressTransfer): bool
     {
-        $formAddressData = $this->prepareFormAddressData($formAddressTransfer->modifiedToArray());
         if ($this->isAddressFormDataEmpty($formAddressData)) {
             return false;
         }
@@ -110,6 +111,10 @@ class AddressProvider implements AddressProviderInterface
         $companyBusinessUnitAddressData = $companyBusinessUnitAddressTransfer->toArray();
 
         foreach ($formAddressData as $formAddressKey => $formAddressValue) {
+            if (!isset($companyBusinessUnitAddressData[$formAddressKey])) {
+                continue;
+            }
+
             if ($companyBusinessUnitAddressData[$formAddressKey] !== $formAddressValue) {
                 return false;
             }
@@ -123,7 +128,7 @@ class AddressProvider implements AddressProviderInterface
      *
      * @return array
      */
-    protected function prepareFormAddressData(array $formAddressData): array
+    protected function cleanAddressDefaultFlags(array $formAddressData): array
     {
         unset(
             $formAddressData[static::KEY_IS_DEFAULT_SHIPPING],

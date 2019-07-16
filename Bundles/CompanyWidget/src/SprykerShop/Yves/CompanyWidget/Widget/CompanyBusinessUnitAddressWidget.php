@@ -16,7 +16,7 @@ use SprykerShop\Yves\CompanyWidget\Address\AddressProviderInterface;
  */
 class CompanyBusinessUnitAddressWidget extends AbstractWidget
 {
-    protected const PARAMETER_PERSISTENT_COMPANY_BUSINESS_UNIT_ADDRESS = 'persistentCompanyBusinessUnitAddress';
+    protected const PARAMETER_CURRENT_COMPANY_BUSINESS_UNIT_ADDRESS = 'currentCompanyBusinessUnitAddress';
 
     /**
      * @param string $formType
@@ -41,8 +41,8 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
         $this->addAddressesParameter($customerAddresses, $companyBusinessUnitAddresses);
         $this->addCustomerAddressesParameter($customerAddresses);
         $this->addCompanyBusinessUnitAddressesParameter($companyBusinessUnitAddresses);
-        $this->addPersistentCompanyBusinessUnitAddressParameter(
-            $addressProvider->findPersistentCompanyBusinessUnitAddress($formAddressTransfer, $companyBusinessUnitAddresses)
+        $this->addCurrentCompanyBusinessUnitAddressParameter(
+            $addressProvider->findCurrentCompanyBusinessUnitAddress($formAddressTransfer, $companyBusinessUnitAddresses)
         );
     }
 
@@ -115,13 +115,13 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer|null $persistentCompanyBusinessUnitAddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $currentCompanyBusinessUnitAddressTransfer
      *
      * @return void
      */
-    protected function addPersistentCompanyBusinessUnitAddressParameter(?AddressTransfer $persistentCompanyBusinessUnitAddressTransfer): void
+    protected function addCurrentCompanyBusinessUnitAddressParameter(?AddressTransfer $currentCompanyBusinessUnitAddressTransfer): void
     {
-        $this->addParameter(static::PARAMETER_PERSISTENT_COMPANY_BUSINESS_UNIT_ADDRESS, $persistentCompanyBusinessUnitAddressTransfer);
+        $this->addParameter(static::PARAMETER_CURRENT_COMPANY_BUSINESS_UNIT_ADDRESS, $currentCompanyBusinessUnitAddressTransfer);
     }
 
     /**
