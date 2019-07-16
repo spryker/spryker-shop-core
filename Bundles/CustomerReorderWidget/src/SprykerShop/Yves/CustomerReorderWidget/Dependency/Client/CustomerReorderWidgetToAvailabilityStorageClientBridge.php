@@ -33,7 +33,7 @@ class CustomerReorderWidgetToAvailabilityStorageClientBridge implements Customer
     }
 
     /**
-     * @deprecated Will be removed with next major release.
+     * @deprecated Not used anymore. Will be removed with next major release.
      *
      * @param int $idProductAbstract
      *
