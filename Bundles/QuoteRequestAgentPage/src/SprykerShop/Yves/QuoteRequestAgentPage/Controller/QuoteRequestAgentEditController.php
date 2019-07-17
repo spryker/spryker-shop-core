@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentForm;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -23,8 +24,6 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
     protected const GLOSSARY_KEY_QUOTE_REQUEST_UPDATED = 'quote_request_page.quote_request.updated';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER = 'quote_request_page.quote_request.sent_to_customer';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
-
-    protected const REQUEST_HEADER_REFERER = 'referer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -74,19 +73,15 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
 
         if ($quoteRequestResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER);
+
+            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_DETAILS, [
+                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
+            ]);
         }
 
-        if ($quoteRequestResponseTransfer->getMessages()->count()) {
-            $this->handleResponseErrors($quoteRequestResponseTransfer);
+        $this->handleResponseErrors($quoteRequestResponseTransfer);
 
-            $refererUrl = $request ? $request->headers->get(static::REQUEST_HEADER_REFERER) : null;
-
-            if ($refererUrl) {
-                return $this->redirectResponseExternal($refererUrl);
-            }
-        }
-
-        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_DETAILS, [
+        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT, [
             static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
         ]);
     }
