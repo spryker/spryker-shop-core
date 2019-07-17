@@ -76,11 +76,14 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
             $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SENT_TO_CUSTOMER);
         }
 
-        $this->handleResponseErrors($quoteRequestResponseTransfer);
+        if ($quoteRequestResponseTransfer->getMessages()->count()) {
+            $this->handleResponseErrors($quoteRequestResponseTransfer);
 
-        $refererUrl = $request ? $request->headers->get(static::REQUEST_HEADER_REFERER) : null;
-        if ($refererUrl) {
-            return $this->redirectResponseExternal($refererUrl);
+            $refererUrl = $request ? $request->headers->get(static::REQUEST_HEADER_REFERER) : null;
+
+            if ($refererUrl) {
+                return $this->redirectResponseExternal($refererUrl);
+            }
         }
 
         return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_DETAILS, [
