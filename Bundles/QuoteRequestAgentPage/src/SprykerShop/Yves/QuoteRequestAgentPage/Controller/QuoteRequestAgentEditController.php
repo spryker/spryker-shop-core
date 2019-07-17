@@ -43,24 +43,22 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
 
     /**
      * @param string $quoteRequestReference
-     * @param \Symfony\Component\HttpFoundation\Request|null $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function sendToCustomerAction(string $quoteRequestReference, ?Request $request = null): RedirectResponse
+    public function sendToCustomerAction(string $quoteRequestReference): RedirectResponse
     {
-        $response = $this->executeSendToCustomerAction($quoteRequestReference, $request);
+        $response = $this->executeSendToCustomerAction($quoteRequestReference);
 
         return $response;
     }
 
     /**
      * @param string $quoteRequestReference
-     * @param \Symfony\Component\HttpFoundation\Request|null $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeSendToCustomerAction(string $quoteRequestReference, ?Request $request = null): RedirectResponse
+    protected function executeSendToCustomerAction(string $quoteRequestReference): RedirectResponse
     {
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setWithHidden(true)
