@@ -21,6 +21,7 @@ class AddressProvider implements AddressProviderInterface
 
     protected const KEY_IS_DEFAULT_SHIPPING = 'is_default_shipping';
     protected const KEY_IS_DEFAULT_BILLING = 'is_default_billing';
+    protected const KEY_ID_CUSTOMER_ADDRESS = 'id_customer_address';
 
     /**
      * @var \SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCustomerClientInterface
@@ -90,7 +91,7 @@ class AddressProvider implements AddressProviderInterface
             return null;
         }
 
-        $formAddressData = $this->cleanAddressDefaultFlags($formAddressData);
+        $formAddressData = $this->cleanAddressDefaultFields($formAddressData);
 
         foreach ($companyBusinessUnitAddresses as $companyBusinessUnitAddressTransfer) {
             if ($this->isSameCompanyUnitAddress($formAddressData, $companyBusinessUnitAddressTransfer)) {
@@ -112,11 +113,9 @@ class AddressProvider implements AddressProviderInterface
         $companyBusinessUnitAddressData = $companyBusinessUnitAddressTransfer->toArray();
 
         foreach ($formAddressData as $formAddressKey => $formAddressValue) {
-            if (!isset($companyBusinessUnitAddressData[$formAddressKey])) {
-                continue;
-            }
-
-            if ($companyBusinessUnitAddressData[$formAddressKey] !== $formAddressValue) {
+            if (!isset($companyBusinessUnitAddressData[$formAddressKey])
+                || $companyBusinessUnitAddressData[$formAddressKey] !== $formAddressValue
+            ) {
                 return false;
             }
         }
@@ -129,11 +128,12 @@ class AddressProvider implements AddressProviderInterface
      *
      * @return array
      */
-    protected function cleanAddressDefaultFlags(array $formAddressData): array
+    protected function cleanAddressDefaultFields(array $formAddressData): array
     {
         unset(
             $formAddressData[static::KEY_IS_DEFAULT_SHIPPING],
-            $formAddressData[static::KEY_IS_DEFAULT_BILLING]
+            $formAddressData[static::KEY_IS_DEFAULT_BILLING],
+            $formAddressData[static::KEY_ID_CUSTOMER_ADDRESS]
         );
 
         return $formAddressData;
