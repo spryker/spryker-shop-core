@@ -85,7 +85,12 @@ class AddressProvider implements AddressProviderInterface
      */
     public function findCurrentCompanyBusinessUnitAddress(AddressTransfer $formAddressTransfer, array $companyBusinessUnitAddresses): ?AddressTransfer
     {
-        $formAddressData = $this->cleanAddressDefaultFlags($formAddressTransfer->modifiedToArray());
+        $formAddressData = $formAddressTransfer->modifiedToArray();
+        if ($this->isAddressFormDataEmpty($formAddressData)) {
+            return null;
+        }
+
+        $formAddressData = $this->cleanAddressDefaultFlags($formAddressData);
 
         foreach ($companyBusinessUnitAddresses as $companyBusinessUnitAddressTransfer) {
             if ($this->isSameCompanyUnitAddress($formAddressData, $companyBusinessUnitAddressTransfer)) {
@@ -104,10 +109,6 @@ class AddressProvider implements AddressProviderInterface
      */
     protected function isSameCompanyUnitAddress(array $formAddressData, AddressTransfer $companyBusinessUnitAddressTransfer): bool
     {
-        if ($this->isAddressFormDataEmpty($formAddressData)) {
-            return false;
-        }
-
         $companyBusinessUnitAddressData = $companyBusinessUnitAddressTransfer->toArray();
 
         foreach ($formAddressData as $formAddressKey => $formAddressValue) {
