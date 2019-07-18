@@ -8,8 +8,14 @@
 namespace SprykerShop\Yves\ShopUi;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientInterface;
+use SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProvider;
+use SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface;
 use SprykerShop\Yves\ShopUi\Twig\ShopUiTwigExtension;
 
+/**
+ * @method \SprykerShop\Yves\ShopUi\ShopUiConfig getConfig()
+ */
 class ShopUiFactory extends AbstractFactory
 {
     /**
@@ -17,6 +23,27 @@ class ShopUiFactory extends AbstractFactory
      */
     public function createShopUiTwigExtension()
     {
-        return new ShopUiTwigExtension();
+        return new ShopUiTwigExtension(
+            $this->createAssetsUrlProvider()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface
+     */
+    public function createAssetsUrlProvider(): AssetsUrlProviderInterface
+    {
+        return new AssetsUrlProvider(
+            $this->getConfig(),
+            $this->getTwigClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientInterface
+     */
+    public function getTwigClient(): ShopUiToTwigClientInterface
+    {
+        return $this->getProvidedDependency(ShopUiDependencyProvider::CLIENT_TWIG);
     }
 }
