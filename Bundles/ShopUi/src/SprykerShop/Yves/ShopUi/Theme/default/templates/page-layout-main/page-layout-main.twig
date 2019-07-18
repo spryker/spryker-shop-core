@@ -12,8 +12,8 @@
             class: 'is-hidden-lg-xl',
             attributes: {
                 'container-selector': 'js-page-layout-main__side-drawer-container',
-                'trigger-selector': 'js-page-layout-main__side-drawer-trigger'
-            }
+                'trigger-selector': 'js-page-layout-main__side-drawer-trigger',
+            },
         } only %}
     {% endblock %}
 
@@ -28,8 +28,8 @@
                     {% include atom('icon') with {
                         modifiers: ['big'],
                         data: {
-                            name: 'bars'
-                        }
+                            name: 'bars',
+                        },
                     } only %}
                 </a>
             {% endblock %}
@@ -43,7 +43,7 @@
                     {% include molecule('breadcrumb') only %}
                 {% endblock %}
 
-                <hr />
+                <hr class="box__separator">
 
                 {% block title %}
                     <h3>{{data.title}}</h3>
@@ -71,15 +71,21 @@
     {% block globalComponents %}
         {% include molecule('action-single-click-enforcer') with {
             attributes: {
-                'target-selector': '[data-init-single-click]'
-            }
+                'target-selector': '[data-init-single-click]',
+            },
         } only %}
 
         {% include molecule('form-input-default-value-disabler') with {
             attributes: {
                 'form-selector': '[data-init-default-value-form]',
-                'input-selector': '[data-default-value-disabler]'
-            }
+                'input-selector': '[data-default-value-disabler]',
+            },
+        } only %}
+
+        {% include molecule('form-submitter') with {
+            attributes: {
+                'trigger-selector': '[data-form-submitter]',
+            },
         } only %}
     {% endblock %}
 
