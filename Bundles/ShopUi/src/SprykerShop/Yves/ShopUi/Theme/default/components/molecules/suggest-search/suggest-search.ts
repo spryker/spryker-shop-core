@@ -238,7 +238,7 @@ export default class SuggestSearch extends Component {
 
     protected createHintInput(): void {
         this.hintInput = document.createElement('input');
-        this.hintInput.classList.add(`${this.name}__hint`, 'input', 'input--expand');
+        this.hintInput.classList.add(`${this.name}__hint`);
         this.searchInput.parentNode.appendChild(this.hintInput).setAttribute('readonly', 'readonly');
         this.searchInput.classList.add(`${this.name}__input--transparent`);
     }

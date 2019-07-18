@@ -79,7 +79,6 @@ class RegisterForm extends AbstractType
                 'Mrs' => 'customer.salutation.mrs',
                 'Dr' => 'customer.salutation.dr',
             ]),
-            'choices_as_values' => true,
             'required' => true,
             'label' => 'address.salutation',
             'constraints' => [
