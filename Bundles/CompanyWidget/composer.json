@@ -14,7 +14,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/shop-ui": "To add widget customer navigation menu: ^1.1.0."
+    "spryker-shop/shop-ui": "To add widget customer navigation menu: ^1.27.0."
   },
   "autoload": {
     "psr-4": {
