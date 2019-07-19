@@ -291,7 +291,7 @@ class AddressForm extends AbstractType
      */
     protected function addPhoneField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PHONE, TelType::class, [
+        $builder->add(static::FIELD_PHONE, TelType::class, [
             'label' => 'customer.address.phone',
             'required' => false,
         ]);
