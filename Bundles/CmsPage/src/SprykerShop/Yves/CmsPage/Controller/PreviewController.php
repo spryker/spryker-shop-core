@@ -65,7 +65,7 @@ class PreviewController extends AbstractController
     /**
      * @param int $idCmsPage
      *
-     * @throws \Spryker\Shared\ZedRequest\Client\Exception\RequestException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return array
      */
