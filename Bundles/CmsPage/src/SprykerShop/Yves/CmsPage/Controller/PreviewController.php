@@ -71,15 +71,15 @@ class PreviewController extends AbstractController
      */
     protected function getMetaData($idCmsPage)
     {
-        try {
-            $localeCmsPageDataRequestTransfer = $this->getFactory()
-                ->getCmsClient()
-                ->getFlattenedLocaleCmsPageData(
-                    (new FlattenedLocaleCmsPageDataRequestTransfer())
-                        ->setIdCmsPage($idCmsPage)
-                        ->setLocale((new LocaleTransfer())->setLocaleName($this->getLocale()))
-                );
-        } catch (RequestException $e) {
+        $localeCmsPageDataRequestTransfer = $this->getFactory()
+            ->getCmsClient()
+            ->getFlattenedLocaleCmsPageData(
+                (new FlattenedLocaleCmsPageDataRequestTransfer())
+                    ->setIdCmsPage($idCmsPage)
+                    ->setLocale((new LocaleTransfer())->setLocaleName($this->getLocale()))
+            );
+
+        if ($localeCmsPageDataRequestTransfer->getIdCmsPage() !== $idCmsPage) {
             throw new NotFoundHttpException(sprintf('There is no valid Cms page with this id: %d.', $idCmsPage));
         }
 
