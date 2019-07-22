@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CmsPage\Controller;
 
 use Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use SprykerShop\Yves\CmsPage\Plugin\Provider\PreviewControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,17 +65,23 @@ class PreviewController extends AbstractController
     /**
      * @param int $idCmsPage
      *
+     * @throws \Spryker\Shared\ZedRequest\Client\Exception\RequestException
+     *
      * @return array
      */
     protected function getMetaData($idCmsPage)
     {
-        $localeCmsPageDataRequestTransfer = $this->getFactory()
-            ->getCmsClient()
-            ->getFlattenedLocaleCmsPageData(
-                (new FlattenedLocaleCmsPageDataRequestTransfer())
-                ->setIdCmsPage($idCmsPage)
-                ->setLocale((new LocaleTransfer())->setLocaleName($this->getLocale()))
-            );
+        try {
+            $localeCmsPageDataRequestTransfer = $this->getFactory()
+                ->getCmsClient()
+                ->getFlattenedLocaleCmsPageData(
+                    (new FlattenedLocaleCmsPageDataRequestTransfer())
+                        ->setIdCmsPage($idCmsPage)
+                        ->setLocale((new LocaleTransfer())->setLocaleName($this->getLocale()))
+                );
+        } catch (RequestException $e) {
+            throw new NotFoundHttpException(sprintf('There is no valid Cms page with this id: %d.', $idCmsPage));
+        }
 
         return $localeCmsPageDataRequestTransfer->getFlattenedLocaleCmsPageData();
     }
