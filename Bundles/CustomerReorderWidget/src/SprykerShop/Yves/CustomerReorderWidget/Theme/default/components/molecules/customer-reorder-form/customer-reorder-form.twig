@@ -11,7 +11,7 @@
 
 {% block body %}
     <form action="{{ path('customer/order/reorder-items') }}" method="post">
-        <input type="hidden" name="id" value="{{ data.idSalesOrder }}" />
+        <input type="hidden" name="id" value="{{ data.idSalesOrder }}">
 
         {% block formContent %}{% endblock %}
 

@@ -1,21 +1,18 @@
 {% extends template('widget') %}
 
 {% define data = {
-    product: required
+    product: required,
 } %}
 
-{% set class = class | default('') %}
+{% set class = class | default %}
 
 {% block body %}
-    {% include molecule('product-card') with {
-        class: class,
-        data: {
-            name: data.product.name,
-            abstractId: data.product.idProductAbstract,
-            url: data.product.url,
-            imageUrl: data.product.images is empty ? '' : data.product.images.0.externalUrlSmall,
-            price: data.product.prices.DEFAULT | default(null),
-            originalPrice: data.product.prices.ORIGINAL is defined ? data.product.prices.ORIGINAL : null
-        }
-    } only %}
+    <div class="{{ class }}">
+        {% include molecule('product-item') with {
+            data: {
+                product: data.product,
+                sku: '',
+            },
+        } only %}
+    </div>
 {% endblock %}
