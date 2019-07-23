@@ -28,7 +28,6 @@ $setting-color-lighter: #f0f0f0 !default;
  */
 $setting-color-lightest: #f4f4f4 !default;
 
-
 /**
  * Defines the shade of the black color. Usage: as a base of black color for semi-transparent elements.
  */
@@ -53,7 +52,6 @@ $setting-color-darkest: #333333 !default;
  * Defines a transparent color. Usage: elements' background, border.
  */
 $setting-color-transparent: rgba($setting-color-white, 0) !default;
-
 
 /**
  * Defines the main background color. Usage: body and side-drawer background.

@@ -1,6 +1,7 @@
 /**
- * Provides keyframe for simple rotation animation.
+ * Implements simple rotation animation..
  */
+
 @mixin basic-animation() {
     @keyframes spin-to {
         from {

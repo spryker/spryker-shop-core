@@ -1,6 +1,7 @@
 /**
  * Forces element visibility.
  */
+
 @mixin helper-visibility-visible {
     pointer-events: all;
     visibility: visible;
@@ -10,6 +11,7 @@
 /**
  * Forces element invisibility.
  */
+
 @mixin helper-visibility-invisible {
     pointer-events: none;
     visibility: hidden;

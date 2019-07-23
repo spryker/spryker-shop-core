@@ -4,6 +4,7 @@
  * @param {Number} $duration [$setting-effect-default-duration]
  * @param {String} $ease [$setting-effect-default-ease]
  */
+
 @mixin helper-effect-transition(
     $props: opacity visibility,
     $duration: $setting-effect-default-duration,
