@@ -23,7 +23,7 @@
 
             &--has-children-dropdown {
                 position: relative;
-                z-index: $setting-zi-element;
+                z-index: $setting-zi-element + 1;
 
                 & > #{$name} {
                     @include helper-ui-shadow;
