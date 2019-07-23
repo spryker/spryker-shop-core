@@ -78,7 +78,7 @@ class PreviewController extends AbstractController
                     ->setLocale((new LocaleTransfer())->setLocaleName($this->getLocale()))
             );
 
-        if ($localeCmsPageDataRequestTransfer->getIdCmsPage() !== $idCmsPage) {
+        if (!$localeCmsPageDataRequestTransfer->getFlattenedLocaleCmsPageData()) {
             throw new NotFoundHttpException(sprintf('There is no valid Cms page with this id: %d.', $idCmsPage));
         }
 
