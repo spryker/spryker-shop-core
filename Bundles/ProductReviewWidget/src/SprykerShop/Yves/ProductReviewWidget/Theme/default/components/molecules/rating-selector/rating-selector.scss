@@ -76,7 +76,7 @@ $product-review-rating-selector-icon-size: 20px;
 }
 
 /**
- * @deprecated product-review-rating-selector use product-review-widget-rating-selector mixin instead.
+ * @deprecated use product-review-widget-rating-selector mixin instead.
  */
 
 @mixin product-review-rating-selector($name: '.packaging-unit-cart') {
