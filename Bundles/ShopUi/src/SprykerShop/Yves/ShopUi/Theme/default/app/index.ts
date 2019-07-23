@@ -78,7 +78,9 @@ export async function mount(): Promise<void> {
         /**
          * @deprecated Use events.mount instead.
          */
+        /* tslint:disable: deprecation */
         dispatchCustomEvent(config().events.ready);
+        /* tslint:enable: deprecation */
 
         if (isBootstrap) {
             dispatchCustomEvent(config().events.bootstrap);
