@@ -101,7 +101,7 @@ class AddressController extends AbstractCompanyController
             $addressForm->setData($dataProvider->getData($this->findCurrentCompanyUserTransfer()));
         }
 
-        if ($addressForm->isValid()) {
+        if ($addressForm->isSubmitted() === true && $addressForm->isValid() === true) {
             $data = $addressForm->getData();
             $data[CompanyUnitAddressTransfer::COMPANY_BUSINESS_UNITS][CompanyBusinessUnitCollectionTransfer::COMPANY_BUSINESS_UNITS][][CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT] = $idCompanyBusinessUnit;
 
@@ -177,7 +177,7 @@ class AddressController extends AbstractCompanyController
             $addressForm->setData($data);
         }
 
-        if ($addressForm->isValid()) {
+        if ($addressForm->isSubmitted() === true && $addressForm->isValid() === true) {
             $data = $addressForm->getData();
             $data[CompanyUnitAddressTransfer::COMPANY_BUSINESS_UNITS][CompanyBusinessUnitCollectionTransfer::COMPANY_BUSINESS_UNITS][][CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT] = $idCompanyBusinessUnit;
 
