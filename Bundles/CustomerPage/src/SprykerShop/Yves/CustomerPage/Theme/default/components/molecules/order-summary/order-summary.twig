@@ -34,4 +34,13 @@
         <strong>{{ 'customer.order.grandTotal' | trans }}:
         {{ data.order.totals.grandTotal | money(true, data.order.currencyIsoCode) }}</strong>
     </li>
+    {% embed molecule('gift-card-order-summary', 'GiftCardWidget') ignore missing with {
+        data: {
+            order: data.order,
+        },
+    } only %}
+        {% block body %}
+            <li class="menu__item">{{ parent() }}</li>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

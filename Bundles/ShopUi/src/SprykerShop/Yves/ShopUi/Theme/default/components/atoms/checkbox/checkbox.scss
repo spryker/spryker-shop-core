@@ -18,11 +18,6 @@
             vertical-align: top;
         }
 
-        &__input {
-            @include helper-visibility-invisible;
-            position: absolute;
-        }
-
         &__check {
             @include helper-visibility-invisible;
             @include helper-effect-transition;
@@ -34,8 +29,21 @@
             background-color: $setting-color-main;
         }
 
-        &__input:checked + &__check {
-            @include helper-visibility-visible;
+        &__input {
+            @include helper-visibility-invisible;
+            position: absolute;
+
+            &:active {
+                & + #{$name}__box {
+                    border-color: $setting-color-main;
+                }
+            }
+
+            &:checked {
+                & ~ #{$name}__check {
+                    @include helper-visibility-visible;
+                }
+            }
         }
 
         &--expand {
@@ -44,6 +52,11 @@
 
         &--error &__box {
             border-color: map-get($setting-color-actions, alert);
+        }
+
+        &:active &__box,
+        &--active &__box {
+            border-color: $setting-color-main;
         }
 
         &[disabled] &__box,

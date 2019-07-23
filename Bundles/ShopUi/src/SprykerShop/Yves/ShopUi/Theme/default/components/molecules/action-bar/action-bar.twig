@@ -1,0 +1,38 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'action-bar',
+    tag: 'nav',
+} %}
+
+{% define data = {
+    title: '',
+    titleClass: '',
+    actions: [],
+} %}
+
+{% block body %}
+    {% if data.title %}
+        <h3 {% if data.titleClass %}class="{{ data.titleClass }}"{% endif %}>
+            {{- data.title -}}
+        </h3>
+    {% endif %}
+    <div class="{{ config.name }}__actions">
+        {% block actions %}
+            {% for action in data.actions %}
+                <a class="{{ component.renderClass('button', modifiers) }} {{ config.name }}__action" href="{{ action.url }}">
+                    {% if action.icon is defined and action.icon %}
+                        {% include atom('icon') with {
+                            class: config.name ~ '__icon',
+                            data: {
+                                name: action.icon,
+                            },
+                        } only %}
+                    {% endif %}
+
+                    {{ action.title }}
+                </a>
+            {% endfor %}
+        {% endblock %}
+    </div>
+{% endblock %}
