@@ -1,4 +1,4 @@
-@mixin shop-ui-volume-price($name: '.volume-price') {
+@mixin price-product-volume-widget-volume-price($name: '.volume-price') {
     #{$name} {
         @include helper-font-size(big);
 
@@ -26,6 +26,18 @@
             }
         }
 
+        @content;
+    }
+}
+
+/**
+ * @deprecated shop-ui-volume-price use price-product-volume-widget-volume-price mixin instead.
+ */
+
+@mixin shop-ui-volume-price($name: '.volume-price') {
+    @include price-product-volume-widget-volume-price();
+
+    #{$name} {
         @content;
     }
 }

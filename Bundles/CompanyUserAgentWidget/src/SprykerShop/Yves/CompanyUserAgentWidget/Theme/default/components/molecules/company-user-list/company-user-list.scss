@@ -1,6 +1,5 @@
-@mixin agent-widget-company-user-list($name: '.company-user-list') {
+@mixin company-user-agent-widget-company-user-list($name: '.company-user-list') {
     #{$name} {
-
         &__container-item {
             cursor: pointer;
             padding: map-get($setting-spacing, 'default');
@@ -10,6 +9,18 @@
             }
         }
 
+        @content;
+    }
+}
+
+/**
+ * @deprecated agent-widget-company-user-list use company-user-agent-widget-company-user-list mixin instead.
+ */
+
+@mixin agent-widget-company-user-list($name: '.company-user-list') {
+    @include company-user-agent-widget-company-user-list();
+
+    #{$name} {
         @content;
     }
 }

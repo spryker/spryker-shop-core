@@ -1,4 +1,4 @@
-@mixin product-packaging-unit-packaging-unit-cart($name: '.packaging-unit-cart') {
+@mixin product-packaging-unit-widget-packaging-unit-cart($name: '.packaging-unit-cart') {
     #{$name} {
         &__item {
             &:not(:last-child) {
@@ -11,6 +11,18 @@
             border: 1px solid $setting-color-input-border;
         }
 
+        @content;
+    }
+}
+
+/**
+ * @deprecated product-packaging-unit-packaging-unit-cart use product-packaging-unit-widget-packaging-unit-cart mixin instead.
+ */
+
+@mixin product-packaging-unit-packaging-unit-cart($name: '.packaging-unit-cart') {
+    @include product-packaging-unit-widget-packaging-unit-cart();
+
+    #{$name} {
         @content;
     }
 }
