@@ -19,7 +19,7 @@ $product-label-widget-tag-burst-size: 2rem;
             height: $product-label-widget-tag-burst-size;
             width: $product-label-widget-tag-burst-size;
             background: $setting-color-alt;
-            z-index: 1;
+            z-index: $setting-zi-element;
         }
 
         &::before {
@@ -38,7 +38,7 @@ $product-label-widget-tag-burst-size: 2rem;
             width: 100%;
             color: $setting-color-white;
             text-align: center;
-            z-index: 2;
+            z-index: $setting-zi-element + 1;
         }
 
         @content;
