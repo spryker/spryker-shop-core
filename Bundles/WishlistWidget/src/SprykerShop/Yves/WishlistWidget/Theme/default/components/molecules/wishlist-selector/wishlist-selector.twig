@@ -2,12 +2,11 @@
 
 {% define config = {
     name: 'wishlist-selector',
-    tag: 'div'
 } %}
 
 {% define data = {
     sku: required,
-    idProductConcrete: required
+    idProductConcrete: required,
 } %}
 
 {% set isUserLoggedIn = is_granted('ROLE_USER') %}
