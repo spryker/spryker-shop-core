@@ -43,7 +43,6 @@ class QuoteRequestAgentPageControllerProvider extends AbstractYvesControllerProv
             ->addQuoteRequestEditItemsRoute()
             ->addQuoteRequestEditItemsConfirmRoute()
             ->addQuoteRequestCreateRoute()
-            ->addQuoteRequestSendToCustomerRoute()
             ->addQuoteRequestConvertToCartRoute();
     }
 
@@ -136,7 +135,7 @@ class QuoteRequestAgentPageControllerProvider extends AbstractYvesControllerProv
     }
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentEditController::editAction()
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentEditController::sendToCustomerAction()
      *
      * @return $this
      */
@@ -166,7 +165,7 @@ class QuoteRequestAgentPageControllerProvider extends AbstractYvesControllerProv
     }
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentEditItemsController::indexAction()
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentEditItemsController::confirmAction()
      *
      * @return $this
      */

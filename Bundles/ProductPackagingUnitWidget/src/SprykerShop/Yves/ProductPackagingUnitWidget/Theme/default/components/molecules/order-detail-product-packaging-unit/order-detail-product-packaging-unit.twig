@@ -26,7 +26,7 @@
         {{ data.concreteItem.sku }}
     </td>
     <td>
-        {{ data.concreteItem.name }}<br/>
+        {{ data.concreteItem.name }}<br>
         {% if data.concreteItem.amount and data.concreteItem.quantity %}
             <span class="text-secondary">&times;</span> {{ data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }} (= {{ data.concreteItem.amount / data.concreteItem.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.concreteItem.quantity * data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }}
         {% endif %}

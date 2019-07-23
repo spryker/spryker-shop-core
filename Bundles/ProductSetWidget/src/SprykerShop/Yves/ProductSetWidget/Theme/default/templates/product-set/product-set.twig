@@ -3,15 +3,15 @@
 {% define data = {
     products: required,
     description: '',
-    images: []
+    images: [],
 } %}
 
 {% block body %}
     {% block carousel %}
         {% embed molecule('simple-carousel') with {
             data: {
-                slides: data.images
-            }
+                slides: data.images,
+            },
         } only %}
             {% block slide %}
                 <div class="text-center">
@@ -19,8 +19,8 @@
                         modifiers: ['bigger'],
                         attributes: {
                             itemprop: 'image',
-                            src: slide.externalUrlLarge
-                        }
+                            src: slide.externalUrlLarge,
+                        },
                     } only %}
                 </div>
             {% endblock %}
@@ -34,8 +34,8 @@
             {% for product in data.products %}
                 {% if product.idProductConcrete is not empty %}
                     {% if product.available %}
-                        <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ product.sku }}" />
-                        <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1" />
+                        <input type="hidden" name="items[{{ loop.index }}][sku]" value="{{ product.sku }}">
+                        <input type="hidden" name="items[{{ loop.index }}][quantity]" value="1">
                     {% endif %}
                 {% else %}
                     {% set isDisabled = true %}
@@ -43,7 +43,7 @@
             {% endfor %}
 
             {% if can('SeeAddToCartPermissionPlugin') %}
-                <button type="submit" class="button float-right" data-init-single-click {% if isDisabled %}disabled{% endif %}>
+                <button type="submit" class="button float-right" {{ isDisabled ? 'disabled' : 'data-init-single-click' }}>
                     {{ 'product.set.detail.add-all-to-cart' | trans }}
                 </button>
             {% endif %}
@@ -54,7 +54,7 @@
         </form>
 
         {% block description %}
-            {% if data.description is not empty %}
+            {% if data.description %}
                 <h6>{{ 'product.attribute.long_description' | trans }}</h6>
                 <p>{{ data.description }}</p>
             {% endif %}
@@ -66,32 +66,27 @@
             <div class="grid grid--stretch">
                 {% for product in data.products %}
                     <div class="col col--sm-12 col--lg-4">
-                        {% embed molecule('product-card') with {
-                            modifiers: ['stretch'],
+                        {% embed molecule('product-item') with {
+                            class: 'box--stretch',
                             data: {
-                                name: product.name,
-                                abstractId: product.idProductAbstract,
-                                url: product.url,
-                                imageUrl: product.images.0.externalUrlSmall | default,
-                                price: product.price,
-                                originalPrice: product.prices['ORIGINAL'] | default
+                                product: product,
+                                sku: '',
                             },
-                            embed: {
-                                product: product
-                            }
                         } only %}
                             {% block content %}
                                 {{parent()}}
-                                {% set isNotAvailable = embed.product.idProductConcrete and not embed.product.available %}
+                                {% set isNotAvailable = data.product.idProductConcrete and not data.product.available %}
 
-                                {% embed molecule('variant-configurator', 'ProductDetailPage') with {
+                                {% embed molecule('variant-configurator', 'ProductDetailPage') ignore missing with {
                                     data: {
-                                        superAttributes: embed.product.attributeMap.superAttributes,
-                                        selectedAttributes: embed.product.selectedAttributes,
-                                        availableAttributes: embed.product.availableAttributes,
-                                        useExternalForm: true
+                                        superAttributes: data.product.attributeMap.superAttributes,
+                                        selectedAttributes: data.product.selectedAttributes,
+                                        availableAttributes: data.product.availableAttributes,
+                                        useExternalForm: true,
                                     },
-                                    embed: embed
+                                    embed: {
+                                        product: data.product,
+                                    },
                                 } only %}
                                     {% block variant %}
                                         <li class="list__item">
@@ -102,8 +97,8 @@
                                                     values: values,
                                                     selectedValue: selectedValue,
                                                     label: ('product.attribute.' ~ name) | trans,
-                                                    isAvailable: isAvailable
-                                                }
+                                                    isAvailable: isAvailable,
+                                                },
                                             } only %}
                                         </li>
                                     {% endblock %}
@@ -117,26 +112,24 @@
                             {% endblock %}
 
                             {% block actions %}
-                                {% set isDisabled = not embed.product.idProductConcrete or not embed.product.available %}
+                                {% set isDisabled = not data.product.idProductConcrete or not data.product.available %}
+                                {% set buttonContent %}
+                                    {% include atom('icon') with {
+                                        data: {
+                                            name: 'cart-plus',
+                                        },
+                                    } only %}
+                                    {{- 'page.detail.add-to-cart' | trans -}}
+                                {% endset %}
 
                                 {% if can('SeeAddToCartPermissionPlugin') %}
                                     {% if isDisabled %}
                                         <button type="button" class="button button--expand" disabled>
-                                            {% include atom('icon') with {
-                                                data: {
-                                                    name: 'cart-plus'
-                                                }
-                                            } only %}
-                                            {{ 'page.detail.add-to-cart' | trans }}
+                                            {{- buttonContent -}}
                                         </button>
                                     {% else %}
-                                        <a href="{{ path('cart/add', {sku: embed.product.sku}) }}" class="button button--expand" data-init-single-click>
-                                            {% include atom('icon') with {
-                                                data: {
-                                                    name: 'cart-plus'
-                                                }
-                                            } only %}
-                                            {{ 'page.detail.add-to-cart' | trans }}
+                                        <a href="{{ path('cart/add', {sku: data.product.sku}) }}" class="button button--expand" data-init-single-click>
+                                            {{- buttonContent -}}
                                         </a>
                                     {% endif %}
                                 {% endif %}

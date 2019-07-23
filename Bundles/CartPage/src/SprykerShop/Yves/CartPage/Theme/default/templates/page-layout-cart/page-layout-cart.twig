@@ -84,12 +84,11 @@
                 {% endif %}
                 {% for cartItem in data.cartItems %}
                     {% block cartItem %}
-                        {% include molecule('cart-item', 'CartPage') with {
-                            class: 'box',
+                        {% include molecule('product-cart-item', 'CartPage') with {
                             data: {
+                                product: cartItem,
                                 cart: data.cart,
                                 isQuoteEditable: data.isQuoteEditable,
-                                cartItem: cartItem,
                                 attributes: data.attributes[cartItem.sku] | default([]),
                             },
                         } only %}

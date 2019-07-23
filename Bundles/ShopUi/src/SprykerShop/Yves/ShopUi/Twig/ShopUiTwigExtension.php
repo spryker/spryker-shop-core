@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ShopUi\Twig;
 
 use Spryker\Shared\Twig\TwigExtension;
+use SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface;
 use SprykerShop\Yves\ShopUi\Twig\Node\ShopUiDefineTwigNode;
 use SprykerShop\Yves\ShopUi\Twig\TokenParser\ShopUiDefineTwigTokenParser;
 use Twig\TwigFunction;
@@ -25,6 +26,19 @@ class ShopUiTwigExtension extends TwigExtension
     public const FUNCTION_GET_UI_TEMPLATE_COMPONENT_TEMPLATE = 'template';
     public const FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE = 'view';
     public const DEFAULT_MODULE = 'ShopUi';
+
+    /**
+     * @var \SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface|null
+     */
+    protected $assetsUrlProvider;
+
+    /**
+     * @param \SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface|null $assetsUrlProvider
+     */
+    public function __construct(?AssetsUrlProviderInterface $assetsUrlProvider = null)
+    {
+        $this->assetsUrlProvider = $assetsUrlProvider;
+    }
 
     /**
      * @return string[]
@@ -136,6 +150,10 @@ class ShopUiTwigExtension extends TwigExtension
      */
     protected function getPublicFolderPath(): string
     {
+        if ($this->assetsUrlProvider) {
+            return $this->assetsUrlProvider->getAssetsUrl();
+        }
+
         return '/assets/';
     }
 

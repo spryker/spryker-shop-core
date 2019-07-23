@@ -1,4 +1,4 @@
-$shop-ui-simple-carousel-icon-size: $shop-ui-icon-size-big;
+$shop-ui-simple-carousel-icon-size: map-get($setting-icon-sizes, 'icon-size-big');
 
 @mixin shop-ui-simple-carousel($name: '.simple-carousel') {
     #{$name} {
