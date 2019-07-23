@@ -22,14 +22,14 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
      */
     protected const FUNCTION_CONTENT_PRODUCT_ABSTRACT_LIST = 'content_product_abstract_list';
 
-    protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<strong>Content product abstract list with ID %s not found.</strong>';
-    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<strong>Content product abstract list widget could not be rendered because the content item with ID %s is not an abstract product list.</strong>';
+    protected const MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND = '<strong>Content product abstract list with content key "%s" not found.</strong>';
+    protected const MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE = '<strong>Content product abstract list widget could not be rendered because the content item with key "%s" is not an abstract product list.</strong>';
     protected const MESSAGE_NOT_SUPPORTED_TEMPLATE = '<strong>"%s" is not supported name of template.</strong>';
 
     /**
-     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT
+     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE
      */
-    protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+    protected const WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE = 'bottom-title';
 
     /**
      * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE
@@ -81,7 +81,7 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
      */
     public function getFunction(): callable
     {
-        return function (int $idContent, string $templateIdentifier): ?string {
+        return function (string $contentKey, string $templateIdentifier): ?string {
 
             if (!isset($this->getAvailableTemplates()[$templateIdentifier])) {
                 return $this->getMessageProductAbstractWrongTemplate($templateIdentifier);
@@ -89,13 +89,13 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
 
             try {
                 $productAbstractViewCollection = $this->contentProductAbstractReader
-                    ->findProductAbstractCollection($idContent, $this->localeName);
+                    ->findProductAbstractCollection($contentKey, $this->localeName);
             } catch (InvalidProductAbstractListTermException $exception) {
-                return $this->getMessageProductAbstractWrongType($idContent);
+                return $this->getMessageProductAbstractWrongType($contentKey);
             }
 
             if ($productAbstractViewCollection === null) {
-                return $this->getMessageProductAbstractNotFound($idContent);
+                return $this->getMessageProductAbstractNotFound($contentKey);
             }
 
             return $this->twig->render(
@@ -113,19 +113,19 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
     protected function getAvailableTemplates(): array
     {
         return [
-            static::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT => '@ContentProductWidget/views/cms-product-abstract/cms-product-abstract.twig',
-            static::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE => '@ContentProductWidget/views/cms-product-abstract/cms-product-abstract-top.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE => '@ContentProductWidget/views/cms-product-abstract-list/cms-product-abstract-list.twig',
+            static::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE => '@ContentProductWidget/views/cms-product-abstract-list-alternative/cms-product-abstract-list-alternative.twig',
         ];
     }
 
     /**
-     * @param int $idContent
+     * @param string $contentKey
      *
      * @return string
      */
-    protected function getMessageProductAbstractNotFound(int $idContent): string
+    protected function getMessageProductAbstractNotFound(string $contentKey): string
     {
-        return sprintf(static::MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND, $idContent);
+        return sprintf(static::MESSAGE_CONTENT_PRODUCT_ABSTRACT_LIST_NOT_FOUND, $contentKey);
     }
 
     /**
@@ -139,12 +139,12 @@ class ContentProductAbstractListTwigFunction extends TwigFunction
     }
 
     /**
-     * @param int $idContent
+     * @param string $contentKey
      *
      * @return string
      */
-    protected function getMessageProductAbstractWrongType(int $idContent): string
+    protected function getMessageProductAbstractWrongType(string $contentKey): string
     {
-        return sprintf(static::MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE, $idContent);
+        return sprintf(static::MESSAGE_WRONG_CONTENT_PRODUCT_ABSTRACT_LIST_TYPE, $contentKey);
     }
 }

@@ -16,14 +16,14 @@
         {% endwidget %}
     </h6>
     <h6>{{ 'cart.your-order' | trans }}</h6>
-    <hr />
+    <hr>
 
     {% widget 'SalesOrderThresholdWidget' args [data.cart.expenses] only %}
         {% block body %}
             <li class="list__item spacing-y">
                 {{ parent() }}
             </li>
-            <hr/>
+            <hr>
         {% endblock %}
     {% endwidget %}
 

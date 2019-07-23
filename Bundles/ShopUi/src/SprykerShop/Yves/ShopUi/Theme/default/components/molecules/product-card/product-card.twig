@@ -1,3 +1,4 @@
+{# @deprecated Use molecule product-item instead. #}
 {% extends molecule('card') %}
 
 {% define config = {
@@ -11,7 +12,8 @@
     url: required,
     imageUrl: required,
     price: null,
-    originalPrice: null
+    originalPrice: null,
+    currencyIsoCode: null,
 } %}
 
 {% block content %}
@@ -45,7 +47,8 @@
                 {% include molecule('money-price') with {
                     data: {
                         amount: data.price,
-                        originalAmount: data.originalPrice is empty ? null : data.originalPrice
+                        originalAmount: data.originalPrice is empty ? null : data.originalPrice,
+                        currencyIsoCode: data.currencyIsoCode,
                     }
                 } only %}
             {% else %}

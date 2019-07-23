@@ -8,7 +8,39 @@
 namespace SprykerShop\Yves\ShopUi;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Yves\Kernel\Container;
+use SprykerShop\Yves\ShopUi\Dependency\Client\ShopUiToTwigClientBridge;
 
 class ShopUiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const CLIENT_TWIG = 'CLIENT_TWIG';
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    public function provideDependencies(Container $container): Container
+    {
+        $container = parent::provideDependencies($container);
+        $container = $this->addTwigClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addTwigClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_TWIG, function (Container $container) {
+            return new ShopUiToTwigClientBridge(
+                $container->getLocator()->twig()->client()
+            );
+        });
+
+        return $container;
+    }
 }

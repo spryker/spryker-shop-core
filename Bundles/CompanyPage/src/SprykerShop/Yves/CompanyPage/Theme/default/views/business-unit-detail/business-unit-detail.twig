@@ -16,7 +16,7 @@
     </div>
     
     {% include molecule('business-unit-table', 'CompanyPage') with {
-            class: 'box',
+            class: 'box spacing-top spacing-top--big',
             data: {
                 businessUnits: [data.businessUnit],
                 actions: {
@@ -27,13 +27,13 @@
             }
     } only %}
 
-    <div class="box">
+    <div class="box spacing-top spacing-top--big">
         <a class="float-right" href="{{ url('company/business-unit/address/create', {'id': data.businessUnit.idCompanyBusinessUnit}) }}">
             {{ 'company.account.add_new_address' | trans }}
         </a>
         <h5>{{ 'company.account.business_unit.address' | trans }}</h5>
         {% if data.addresses is not empty %}
-            <hr/>
+            <hr class="box__separator">
             {% for address in data.addresses %}
                 <ul class="menu menu--inline float-right">
                     <li class="menu__item">
@@ -42,7 +42,8 @@
                         </a>
                     </li>
                     <li class="menu__item">
-                        <a href="{{ url('company/address/delete', {'id': address.idCompanyUnitAddress, 'idBusinessUnit': data.businessUnit.idCompanyBusinessUnit }) }}">
+                        <a data-init-single-click
+                           href="{{ url('company/address/delete', {'id': address.idCompanyUnitAddress, 'idBusinessUnit': data.businessUnit.idCompanyBusinessUnit }) }}">
                             {{ "company.account.address.delete" | trans }}
                         </a>
                     </li>
@@ -54,7 +55,7 @@
                     }
                 } only %}
                 
-                {% if not loop.last %}<hr />{% endif %}
+                {% if not loop.last %}<hr class="box__separator">{% endif %}
             {% endfor %}
         {% endif %}
     </div>

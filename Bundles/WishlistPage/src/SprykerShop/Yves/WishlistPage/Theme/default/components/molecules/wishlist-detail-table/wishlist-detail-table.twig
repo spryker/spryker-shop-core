@@ -48,11 +48,18 @@
                         <ul>
                             <li><a href="{{ item.url }}">{{ item.name }}</a></li>
                             <li>{{ item.sku }}</li>
-                            {% for attribute in item.superAttributesDefinition %}
-                                {% if item.attributes[attribute] is defined %}
-                                    <li>{{ ('product.attribute.'~attribute) | trans }}: {{ item.attributes[attribute] }}</li>
-                                {% endif %}
-                            {% endfor %}
+                            <li>
+                                {% set listOfAttributes = {} %}
+                                {% for attribute in item.superAttributesDefinition if item.attributes[attribute] is defined %}
+                                    {% set listOfAttributes = listOfAttributes|merge({ ('product.attribute.' ~ attribute) | trans: item.attributes[attribute] }) %}
+                                {% endfor %}
+
+                                {% include molecule('product-item-attributes') with {
+                                    data: {
+                                        list: listOfAttributes,
+                                    },
+                                } only %}
+                            </li>
                         </ul>
                     </td>
                     <td nowrap="nowrap">

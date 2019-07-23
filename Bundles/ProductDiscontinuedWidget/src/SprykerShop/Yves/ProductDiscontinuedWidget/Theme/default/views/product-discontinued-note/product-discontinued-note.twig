@@ -10,8 +10,8 @@
 
 {% block body %}
     {% if data.discontinuedProduct.note is defined and data.discontinuedProduct.note is not empty %}
-        <hr/>
-        <strong>{{ 'product_discontinued_widget.note' | trans }}</strong><br/>
+        <hr>
+        <strong>{{ 'product_discontinued_widget.note' | trans }}</strong><br>
         {{ data.discontinuedProduct.note }}
     {% endif %}
 {% endblock %}
