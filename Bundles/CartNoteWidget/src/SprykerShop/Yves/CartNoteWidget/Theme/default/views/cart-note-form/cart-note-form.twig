@@ -21,9 +21,9 @@
                 }
             }
         } only %}
-        <hr />
+        <hr>
     {% elseif data.form.cartNote.vars.value is not empty  %}
         {{ 'cart_note.checkout_page.quote_note' | trans }}: {{ data.form.cartNote.vars.value }}
-        <hr />
+        <hr>
     {% endif %}
 {% endblock %}

@@ -66,7 +66,10 @@ class FixAgentTokenAfterCustomerAuthenticationSuccessPlugin extends AbstractPlug
      */
     protected function changeToken(TokenStorageInterface $tokenStorage): void
     {
-        $token = $this->createUsernamePasswordToken($tokenStorage->getToken()->getUser());
+        /** @var \SprykerShop\Yves\CustomerPage\Security\Customer $customer */
+        $customer = $tokenStorage->getToken()->getUser();
+
+        $token = $this->createUsernamePasswordToken($customer);
 
         $tokenStorage->setToken($token);
     }
