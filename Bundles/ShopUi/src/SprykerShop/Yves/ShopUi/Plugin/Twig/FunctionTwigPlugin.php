@@ -60,7 +60,7 @@ class FunctionTwigPlugin extends AbstractPlugin implements TwigPluginInterface
         return new TwigFunction(
             static::TWIG_FUNCTION_NAME_WIDGET_EXISTS,
             function (string $name) use ($twig) {
-                return $twig->getFunction($name) === false;
+                return $twig->getFunction($name) !== false;
             },
             [
                 'needs_context' => false,
