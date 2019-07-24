@@ -339,7 +339,7 @@ class CartController extends AbstractController
      *
      * @return bool
      */
-    protected function canChangeCartItem(int $itemQuantity = null): bool
+    protected function canChangeCartItem(?int $itemQuantity = null): bool
     {
         if ($itemQuantity === 0) {
             return $this->canRemoveCartItem();
