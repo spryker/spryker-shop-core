@@ -157,6 +157,7 @@ class ImportController extends AbstractController
     {
         /** @var \SplFileInfo $uploadedFile */
         $uploadedFile = $companyUserInvitationForm->getData()[CompanyUserInvitationForm::FIELD_INVITATIONS_LIST];
+
         return $uploadedFile->getPathname();
     }
 

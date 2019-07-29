@@ -22,7 +22,7 @@
             transform: translateZ(0);
 
             &--highlighted {
-                animation: priceHighlight 0.4s linear 2;
+                animation: price-highlight 0.4s linear 2;
             }
         }
 
@@ -30,13 +30,13 @@
     }
 }
 
-@keyframes priceHighlight {
-    0 {
+@keyframes price-highlight {
+    0% {
         transform: scale(1);
     }
 
     50% {
-          transform: scale(1.2);
+        transform: scale(1.2);
     }
 
     100% {

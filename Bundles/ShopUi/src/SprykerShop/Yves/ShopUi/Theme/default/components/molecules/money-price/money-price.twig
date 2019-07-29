@@ -1,0 +1,34 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'money-price',
+    tag: 'span',
+} %}
+
+{# @deprecated property "noPriceText" is deprecate: kept for BC reasons, will be removed in next major. #}
+{% define data = {
+    amount: required,
+    originalAmount: null,
+    noPriceText: '---',
+    currencyIsoCode: null,
+} %}
+
+{% block body %}
+    {% if data.originalAmount is not empty and data.originalAmount > data.amount -%}
+        <span class="{{ config.name }}__amount {{ config.name }}__amount--original">{{ data.originalAmount | money(true, data.currencyIsoCode) }}</span>
+    {%- endif -%}
+
+    {% if data.amount is empty -%}
+        {{ data.noPriceText }}
+    {%- else -%}
+        <span class="{{config.name}}__amount">
+            {% include atom('icon') with {
+                class: config.name ~ '__tag',
+                data: {
+                    name: 'tag',
+                },
+            } only %}
+            {{ data.amount | money(true, data.currencyIsoCode) }}
+        </span>
+    {%- endif -%}
+{% endblock %}

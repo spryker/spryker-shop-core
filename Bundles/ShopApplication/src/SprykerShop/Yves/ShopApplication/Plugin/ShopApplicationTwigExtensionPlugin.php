@@ -12,6 +12,7 @@ use Twig\TwigFunction;
 
 /**
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
+ * @method \SprykerShop\Yves\ShopApplication\ShopApplicationConfig getConfig()
  */
 class ShopApplicationTwigExtensionPlugin extends AbstractTwigExtensionPlugin
 {
@@ -74,7 +75,7 @@ class ShopApplicationTwigExtensionPlugin extends AbstractTwigExtensionPlugin
     public function getGlobals(): array
     {
         return [
-            'environment' => $this->getFactory()->getEnvironment()->getEnvironment(),
+            'environment' => $this->getConfig()->getTwigEnvironmentName(),
         ];
     }
 }

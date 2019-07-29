@@ -1,16 +1,15 @@
 @mixin agent-widget-customer-list($name: '.customer-list') {
     #{$name} {
 
-       &__container-item {
-           cursor: pointer;
-           padding: map-get($setting-spacing, 'default');
+        &__container-item {
+            cursor: pointer;
+            padding: map-get($setting-spacing, 'default');
 
-           &:hover {
-               background-color: $setting-color-lightest;
-           }
-       }
+            &:hover {
+                background-color: $setting-color-lightest;
+            }
+        }
 
         @content;
     }
 }
-

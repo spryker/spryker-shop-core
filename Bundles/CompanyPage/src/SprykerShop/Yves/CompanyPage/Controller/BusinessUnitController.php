@@ -97,7 +97,7 @@ class BusinessUnitController extends AbstractCompanyController
             $companyBusinessUnitForm->setData($dataProvider->getData($this->findCurrentCompanyUserTransfer()));
         }
 
-        if ($companyBusinessUnitForm->isValid()) {
+        if ($companyBusinessUnitForm->isSubmitted() === true && $companyBusinessUnitForm->isValid() === true) {
             $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitSave($companyBusinessUnitForm->getData());
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
@@ -170,7 +170,7 @@ class BusinessUnitController extends AbstractCompanyController
             $companyBusinessUnitForm->setData($data);
         }
 
-        if ($companyBusinessUnitForm->isValid()) {
+        if ($companyBusinessUnitForm->isSubmitted() === true && $companyBusinessUnitForm->isValid() === true) {
             $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitSave($companyBusinessUnitForm->getData());
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
@@ -264,6 +264,7 @@ class BusinessUnitController extends AbstractCompanyController
         if (!$this->isCurrentCustomerRelatedToCompany($companyBusinessUnitTransfer->getFkCompany())) {
             throw new NotFoundHttpException();
         }
+
         return [
             'companyBusinessUnit' => $companyBusinessUnitTransfer,
         ];

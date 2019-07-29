@@ -21,7 +21,7 @@
       <strong>{{ quote.priceMode }}</strong>
     </div>
 
-    <hr />
+    <hr>
 
     <div class="small-12 columns">
         <strong>Items + product options</strong>
@@ -149,8 +149,8 @@
         </table>
     </div>
 
-    <hr />
-    <hr />
+    <hr>
+    <hr>
 
     <div class="small-12 columns">
 
@@ -198,12 +198,12 @@
                 <th>SKU</th>
                 <th>group key</th>
                 <th>quantity</th>
-                <th>quantity sales unit<br/>(conversion / precision)</th>
+                <th>quantity sales unit<br>(conversion / precision)</th>
                 <th>quantity base unit</th>
 
                 <!-- amount -->
-                <th>amount<br/> (quantity * amount)</th>
-                <th>amount sales unit<br/>(conversion / precision)</th>
+                <th>amount<br> (quantity * amount)</th>
+                <th>amount sales unit<br>(conversion / precision)</th>
                 <th>amount base unit</th>
                 <th>lead product</th>
 
@@ -225,7 +225,7 @@
                 <td>{{ item.quantity }}</td>
                 {% if item.quantitySalesUnit %}
                     <td>
-                        {{ item.quantitySalesUnit.value }} {{ item.quantitySalesUnit.productMeasurementUnit.code }} <br/>
+                        {{ item.quantitySalesUnit.value }} {{ item.quantitySalesUnit.productMeasurementUnit.code }} <br>
                         ({{ item.quantitySalesUnit.conversion }} / {{ item.quantitySalesUnit.precision }})
                     </td>
                     <td>{{ item.quantitySalesUnit.productMeasurementBaseUnit.productMeasurementUnit.code }}</td>
@@ -238,7 +238,7 @@
                 <td>{{ item.amount }}</td>
                 {% if item.amountSalesUnit %}
                     <td>
-                        {{ item.amountSalesUnit.value }} {{ item.amountSalesUnit.productMeasurementUnit.code }} <br/>
+                        {{ item.amountSalesUnit.value }} {{ item.amountSalesUnit.productMeasurementUnit.code }} <br>
                         ({{ item.amountSalesUnit.conversion }} / {{ item.amountSalesUnit.precision }})
                     </td>
                     <td>

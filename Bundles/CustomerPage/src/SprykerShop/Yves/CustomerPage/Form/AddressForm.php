@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -104,7 +105,6 @@ class AddressForm extends AbstractType
                 'Mrs' => 'customer.salutation.mrs',
                 'Dr' => 'customer.salutation.dr',
             ]),
-            'choices_as_values' => true,
             'label' => 'profile.form.salutation',
             'required' => true,
             'constraints' => [
@@ -276,7 +276,6 @@ class AddressForm extends AbstractType
             'label' => 'customer.address.country',
             'required' => true,
             'choices' => array_flip($options[self::OPTION_COUNTRY_CHOICES]),
-            'choices_as_values' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
             ],
@@ -292,7 +291,7 @@ class AddressForm extends AbstractType
      */
     protected function addPhoneField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PHONE, TextType::class, [
+        $builder->add(static::FIELD_PHONE, TelType::class, [
             'label' => 'customer.address.phone',
             'required' => false,
         ]);
@@ -411,6 +410,7 @@ class AddressForm extends AbstractType
         if (!empty($options['validation_group'])) {
             $validationGroup = $options['validation_group'];
         }
+
         return $validationGroup;
     }
 }

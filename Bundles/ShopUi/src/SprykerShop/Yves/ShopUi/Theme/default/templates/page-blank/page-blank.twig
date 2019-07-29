@@ -13,16 +13,16 @@
     <html lang="{{ data.locale }}">
         <head>
             {% block meta %}
-                <meta charset="utf-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-                <meta name="title" content="{% block metaTitle %}{{ data.metaTitle }}{% endblock %}" />
-                <meta name="description" content="{% block metaDescription %}{{ data.metaDescription }}{% endblock %}" />
-                <meta name="keywords" content="{% block metaKeywords %}{{ data.metaKeywords }}{% endblock %}" />
-                <meta name="generator" content="spryker" />
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+                <meta name="title" content="{% block metaTitle %}{{ data.metaTitle }}{% endblock %}">
+                <meta name="description" content="{% block metaDescription %}{{ data.metaDescription }}{% endblock %}">
+                <meta name="keywords" content="{% block metaKeywords %}{{ data.metaKeywords }}{% endblock %}">
+                <meta name="generator" content="spryker">
             {% endblock %}
 
             {% block headStyles %}
-                <link rel="stylesheet" href="{{publicPath('css/yves_default.app.css')}}" />
+                <link rel="stylesheet" href="{{publicPath('css/yves_default.app.css')}}">
             {% endblock %}
 
             {% block headScripts %}
@@ -32,7 +32,7 @@
             <title>{% block headTitle %}{{ data.title }}{% endblock %}</title>
         </head>
         <body {%- if block('class') is not empty %} class="{%- block class -%}{%- endblock -%}"{%- endif %}
-            {%- block attributes -%}{{qa('page')}}{%- endblock -%}>
+            {%- block attributes %} {{qa('page')}} {% endblock -%}>
 
             {{parent()}}
 

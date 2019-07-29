@@ -72,13 +72,12 @@ class CartController extends AbstractController
             ->createCartItemsAttributeProvider()
             ->getItemsAttributes($quoteTransfer, $this->getLocale(), $selectedAttributes);
 
-        $isQuoteEditable = $this->getFactory()
-            ->getQuoteClient()
-            ->isQuoteEditable($quoteTransfer);
+        $quoteClient = $this->getFactory()->getQuoteClient();
 
         return [
             'cart' => $quoteTransfer,
-            'isQuoteEditable' => $isQuoteEditable,
+            'isQuoteEditable' => $quoteClient->isQuoteEditable($quoteTransfer),
+            'isQuoteLocked' => $quoteClient->isQuoteLocked($quoteTransfer),
             'cartItems' => $cartItems,
             'attributes' => $itemAttributesBySku,
             'isQuoteValid' => $validateQuoteResponseTransfer->getIsSuccessful(),
@@ -197,7 +196,7 @@ class CartController extends AbstractController
      */
     public function changeAction($sku, $quantity, $groupKey = null)
     {
-        if (!$this->canChangeCartItem()) {
+        if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
@@ -253,7 +252,7 @@ class CartController extends AbstractController
      */
     public function updateAction($sku, $quantity, array $selectedAttributes, array $preselectedAttributes, $groupKey = null, array $optionValueIds = [])
     {
-        if (!$this->canChangeCartItem()) {
+        if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
@@ -336,10 +335,16 @@ class CartController extends AbstractController
     }
 
     /**
+     * @param int|null $itemQuantity
+     *
      * @return bool
      */
-    protected function canChangeCartItem(): bool
+    protected function canChangeCartItem(?int $itemQuantity = null): bool
     {
+        if ($itemQuantity === 0) {
+            return $this->canRemoveCartItem();
+        }
+
         return $this->canPerformCartItemAction(ChangeCartItemPermissionPlugin::KEY);
     }
 

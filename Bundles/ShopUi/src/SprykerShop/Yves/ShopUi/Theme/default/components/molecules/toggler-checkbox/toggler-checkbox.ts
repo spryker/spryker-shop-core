@@ -7,12 +7,13 @@ export default class TogglerCheckbox extends Component {
     /**
      * Element triggering the toggle action.
      */
-    readonly trigger: HTMLInputElement
+    readonly trigger: HTMLInputElement;
 
     /**
      * Elements targeted by the toggle action.
      */
-    readonly targets: HTMLElement[]
+    readonly targets: HTMLElement[];
+    protected event: CustomEvent;
 
     constructor() {
         super();
@@ -48,8 +49,8 @@ export default class TogglerCheckbox extends Component {
      *  Creates an instance of the custom toggle event and triggers it.
      */
     fireToggleEvent(): void {
-        const event = new CustomEvent('toggle');
-        this.dispatchEvent(event);
+        this.event = new CustomEvent('toggle');
+        this.dispatchEvent(this.event);
     }
 
     /**

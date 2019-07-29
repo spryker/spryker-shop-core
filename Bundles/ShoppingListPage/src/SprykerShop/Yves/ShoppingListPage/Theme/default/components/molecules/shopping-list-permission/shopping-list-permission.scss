@@ -6,6 +6,6 @@
             color: map-get($setting-color-actions, 'success');
         }
 
-        @content
+        @content;
     }
 }

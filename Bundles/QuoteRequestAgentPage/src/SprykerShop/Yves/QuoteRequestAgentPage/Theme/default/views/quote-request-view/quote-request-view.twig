@@ -1,0 +1,38 @@
+{% extends template('page-layout-quote-request', 'QuoteRequestAgentPage') %}
+
+{% define data = {
+    quoteRequests: _view.quoteRequests,
+
+    pagination: {
+        parameters: {},
+        currentPage: _view.pagination.page,
+        paginationPath: 'agent/quote-request',
+        maxPage: _view.pagination.lastPage,
+        showAlwaysFirstAndLast: true
+    },
+
+    title: 'agent.account.quote_request' | trans,
+} %}
+
+{% block agentContent %}
+    <div class="box">
+        <div class="text-right">
+            <a class="button"
+               href="{{ url('agent/quote-request/create') }}">{{ 'quote_request_agent_widget.create_new_request' | trans }}</a>
+        </div>
+
+        {% if data.quoteRequests is not empty %}
+            {% include molecule('quote-request-table', 'QuoteRequestAgentPage') with {
+                data: {
+                    quoteRequests: data.quoteRequests
+                }
+            } only %}
+            <hr>
+            {% include molecule('pagination') with {
+                data: data.pagination
+            } only %}
+        {% else %}
+            {{ 'quote_request_page.quote_request.view.empty' | trans }}
+        {% endif %}
+    </div>
+{% endblock %}

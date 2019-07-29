@@ -12,19 +12,20 @@
     "spryker/agent": "^1.0.0",
     "spryker/application": "^3.9.0",
     "spryker/customer": "^7.10.0",
-    "spryker/kernel": "^3.23.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/messenger": "^3.1.0",
     "spryker/quote": "^2.0.0",
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
-    "spryker-shop/home-page": "*",
+    "spryker-shop/quote-request-agent-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/home-page": "Widget plugins are available for this module.",
+    "spryker-shop/quote-request-agent-widget": "If you want to use quote quote-request-menu-item.twig molecule.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

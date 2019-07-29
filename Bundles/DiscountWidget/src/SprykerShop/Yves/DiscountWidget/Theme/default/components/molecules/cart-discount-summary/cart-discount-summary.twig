@@ -9,7 +9,8 @@
     voucherDiscounts: null,
     ruleDiscounts: null,
     discountTotal: null,
-    isQuoteEditable: false
+    isQuoteEditable: false,
+    currencyIsoCode: null,
 } %}
 
 {% block component %}
@@ -21,17 +22,13 @@
 {% block body %}
     {% if data.voucherDiscounts is not empty %}
         <li class="list__item">
-            {% if data.isQuoteEditable %}
-                <a class="float-right text-small" href="{{ url('discount/voucher/clear') }}">
-                    {% include atom('icon') with {
-                        modifiers: ['smaller'],
-                        data: {
-                            name: 'times'
-                        }
-                    } only %}
-                    {{ 'cart.vouchers.clear-all' | trans }}
-                </a>
-            {% endif %}
+            {% include [molecule('cart-code-clear-link', 'CartCodeWidget'), molecule('voucher-clear-link', 'DiscountWidget')] with {
+                class: 'float-right text-small',
+                data: {
+                    isQuoteEditable: data.isQuoteEditable
+                }
+            } only %}
+
             <strong>{{ 'cart.vouchers' | trans }}</strong>
 
             <ul>
@@ -39,24 +36,20 @@
                     <li class="grid grid--justify">
                         <span class="col col--sm-8">
                             {{ voucherDiscount.displayName }}
-                            {% if data.isQuoteEditable %}
-                                <br/>
-                                <a class="text-small" href="{{ url('discount/voucher/remove', {'code': voucherDiscount.voucherCode}) }}">
-                                    {% include atom('icon') with {
-                                        modifiers: ['smaller'],
-                                        data: {
-                                            name: 'times'
-                                        }
-                                    } only %}
-                                    {{ 'cart.voucher.remove' | trans }}
-                                </a>
-                            {% endif %}
+
+                            {% include [molecule('cart-code-remove-link', 'CartCodeWidget'), molecule('voucher-remove-link', 'DiscountWidget')] with {
+                                class: 'text-small',
+                                data: {
+                                    isQuoteEditable: data.isQuoteEditable,
+                                    code: voucherDiscount.voucherCode
+                                }
+                            } only %}
                         </span>
-                        <span class="col col--expand text-right">- {{ voucherDiscount.amount | money }}</span>
+                        <span class="col col--expand text-right">- {{ voucherDiscount.amount | money(true, data.currencyIsoCode) }}</span>
                     </li>
                 {% endfor %}
             </ul>
-            <hr />
+            <hr>
         </li>
     {% endif %}
 
@@ -67,11 +60,11 @@
                 {% for ruleDiscount in data.ruleDiscounts %}
                     <li class="grid grid--justify">
                         <span class="col col--sm-8">{{ ruleDiscount.displayName }}</span>
-                        <span class="col col--expand text-right">- {{ ruleDiscount.amount | money }}</span>
+                        <span class="col col--expand text-right">- {{ ruleDiscount.amount | money(true, data.currencyIsoCode) }}</span>
                     </li>
                 {% endfor %}
             </ul>
-            <hr />
+            <hr>
         </li>
     {% endif %}
 {% endblock %}

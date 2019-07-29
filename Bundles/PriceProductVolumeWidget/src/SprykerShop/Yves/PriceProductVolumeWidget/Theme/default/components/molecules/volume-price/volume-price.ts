@@ -1,58 +1,91 @@
 import Component from 'ShopUi/models/component';
 
+interface VolumePricesData {
+    price: string;
+    count: number;
+}
+
 export default class VolumePrice extends Component {
+    /**
+     * The product price text element.
+     */
     productPriceElement: HTMLElement;
-    volumePricesData: Object[];
+
+    /**
+     * Data object of the volume prices list.
+     */
+    volumePricesData: VolumePricesData[];
+
+    /**
+     * The volume select/input element.
+     */
     quantityElement: HTMLFormElement;
+
+    /**
+     * The custom class for price animation.
+     */
     highLightedClass: string;
-    currentQuantityValue: Number;
+
+    /**
+     * The current quantity select/input value.
+     */
+    currentQuantityValue: number;
+    protected timeout: number = 400;
 
     protected readyCallback(): void {
         this.productPriceElement = <HTMLElement>this.querySelector(`.${this.jsName}__price`);
-        this.volumePricesData = <Object[]>JSON.parse(this.dataset.json).reverse();
+        this.volumePricesData = <VolumePricesData[]>JSON.parse(this.dataset.json).reverse();
         this.quantityElement = <HTMLFormElement>document.querySelector(`.${this.jsName}__quantity`);
         this.highLightedClass = <string>`${this.name}__price--highlighted`;
 
         this.mapEvents();
     }
 
-    private mapEvents(): void {
-        this.quantityElement.addEventListener('change', this.quantityChangeHandler.bind(this));
+    protected mapEvents(): void {
+        if (!this.quantityElement) {
+            return;
+        }
+
+        this.quantityElement.addEventListener('change', (event: Event) => {
+            this.quantityChangeHandler(event);
+        });
     }
 
-    private quantityChangeHandler(event): void {
-        this.currentQuantityValue = <Number> Number(event.target.value);
+    protected quantityChangeHandler(event: Event): void {
+        this.currentQuantityValue = Number((<HTMLInputElement>event.target).value);
         this.checkQuantityValue();
     }
 
-    private checkQuantityValue(): void {
-        this.volumePricesData.every(this.checkQuantityValueCallback.bind(this))
+    protected checkQuantityValue(): void {
+        this.volumePricesData.every((item: VolumePricesData) => {
+            return this.checkQuantityValueCallback(item);
+        });
     }
 
-    private checkQuantityValueCallback(priceData) {
-        const volumePrice: String = priceData.price;
-        const volumePriceCount: Number = priceData.count;
+    protected checkQuantityValueCallback(priceData: VolumePricesData): boolean {
+        const volumePrice: string = priceData.price;
+        const volumePriceCount: number = priceData.count;
 
-        if(this.currentQuantityValue >= volumePriceCount) {
+        if (this.currentQuantityValue >= volumePriceCount) {
             this.changePrice(volumePrice);
+
             return false;
         }
 
         return true;
     }
 
-    private changePrice(price): void {
-        if(this.productPriceElement.innerText !== price) {
+    protected changePrice(price: string): void {
+        if (this.productPriceElement.innerText !== price) {
             this.productPriceElement.innerHTML = price;
             this.highlight();
         }
     }
 
-    private highlight(): void {
+    protected highlight(): void {
         const classList = this.productPriceElement.classList;
 
-        classList.remove(this.highLightedClass);
-        this.productPriceElement.offsetWidth;
         classList.add(this.highLightedClass);
+        setTimeout(() => classList.remove(this.highLightedClass), this.timeout);
     }
 }
