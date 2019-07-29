@@ -1,10 +1,11 @@
 {% extends template('page-layout-checkout', 'CheckoutPage') %}
 
 {#
-    @deprecated property 'shipmentMethod' is deprecated
-    @deprecated property 'overview.shipmentMethod' is deprecated
-    @deprecated property 'overview.payments' is deprecated
-    @deprecated property 'overview.prices.storeCurrency' is deprecated
+    @deprecated property "data.shipmentMethod" is deprecated.
+    @deprecated property "data.overview.shipmentMethod" is deprecated.
+    @deprecated property "data.overview.payments" is deprecated.
+    @deprecated property "data.overview.prices.storeCurrency" is deprecated.
+    @deprecated property "data.overview.prices.priceToPay" is deprecated.
 #}
 {% define data = {
     cart: _view.quoteTransfer,
@@ -34,6 +35,7 @@
             subTotal: _view.quoteTransfer.totals.subtotal,
             storeCurrency: _view.quoteTransfer.shipment.method.storeCurrencyPrice | default([]),
             grandTotal: _view.quoteTransfer.totals.grandtotal,
+            priceToPay: _view.quoteTransfer.totals.priceToPay,
             tax: _view.quoteTransfer.totals.taxtotal.amount,
             discountTotal: _view.quoteTransfer.totals.discounttotal | default,
         },
@@ -267,7 +269,7 @@
                         data: embed.overview,
                     } only %}
 
-                    <hr>
+                    <hr class="box__separator">
                     {{ parent() }}
                 {% endblock %}
             {% endembed %}

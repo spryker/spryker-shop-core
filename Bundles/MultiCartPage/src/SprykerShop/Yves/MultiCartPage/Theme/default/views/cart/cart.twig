@@ -14,7 +14,7 @@
         <a class="button float-right" href="{{ url('multi-cart/create') }}">{{ 'page.multi_cart.shopping_cart.list.create_link' | trans }}</a>
         <h4>{{ 'customer.account.shopping_cart.list.title' | trans }}</h4>
 
-        <hr />
+        <hr class="box__separator">
         {% if data.quotes is not empty %}
             {% include molecule('quote-table', 'MultiCartPage') with {
                 data: {

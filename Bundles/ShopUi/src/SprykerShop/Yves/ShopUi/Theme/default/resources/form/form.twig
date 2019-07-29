@@ -11,7 +11,7 @@
         placeholder: attr.placeholder | default(label)
     }) -%}
 
-    <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} />
+    <input {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}>
 {%- endblock -%}
 
 {%- block textarea_widget -%}

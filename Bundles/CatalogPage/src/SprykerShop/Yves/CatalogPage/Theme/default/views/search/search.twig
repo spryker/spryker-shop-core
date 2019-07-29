@@ -45,7 +45,7 @@
         }
     } only %}
         {% block body %}
-            <hr />
+            <hr>
             {{parent()}}
         {% endblock %}
     {% endembed %}
@@ -58,6 +58,6 @@
 
     {{parent()}}
     {% if data.searchString is not empty %}
-        <input type="hidden" name="q" value="{{ data.searchString }}" />
+        <input type="hidden" name="q" value="{{ data.searchString }}">
     {% endif %}
 {% endblock %}

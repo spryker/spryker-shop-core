@@ -43,7 +43,7 @@
                 <a class="button button--success" href="{{ path('shopping-list/print', {idShoppingList: data.shoppingList.idShoppingList}) }}" target="_blank">{{ 'customer.account.shopping_list.print_shopping_list' | trans }}</a>
             </div>
         </div>
-        <hr>
+        <hr class="box__separator">
 
         {% include molecule('shopping-list-info', 'ShoppingListPage') with {
             data: {
@@ -51,7 +51,7 @@
             }
         } only %}
 
-        <hr>
+        <hr class="box__separator">
 
         {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
             {% include molecule('shopping-list-product-quick-add', 'ShoppingListPage') with {
@@ -76,7 +76,7 @@
                     </div>
                 </div>
 
-                <input type="hidden" value="{{ data.shoppingList.idShoppingList }}" name="idShoppingList"/>
+                <input type="hidden" value="{{ data.shoppingList.idShoppingList }}" name="idShoppingList">
 
                 <div class="is-scrollable-x">
                     {% include molecule('shopping-list-table', 'ShoppingListPage') with {

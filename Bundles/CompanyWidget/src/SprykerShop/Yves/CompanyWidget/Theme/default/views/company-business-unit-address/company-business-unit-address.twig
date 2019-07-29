@@ -1,8 +1,15 @@
 {% extends template('widget') %}
 
+{#
+    @deprecated property "data.formAddressTransfer" is deprecated.
+    @deprecated property "data.isCustomAddress" is deprecated.
+    @deprecated property "data.currentCompanyBusinessUnitAddress" is deprecated.
+#}
+
 {% define data = {
     formType: _widget.formType,
     currentAddressId: _widget.formAddressTransfer.idCustomerAddress | default,
+    formAddressTransfer: _widget.formAddressTransfer,
     addresses: _widget.addresses,
     customerAddresses: _widget.customerAddresses,
     companyBusinessUnitAddresses: _widget.companyBusinessUnitAddresses,
@@ -10,6 +17,8 @@
     itemShippingTriggerJsClass: null,
     items: null,
     jsAddressClass: '',
+    isCustomAddress: app.request.get('customAddress')[_widget.formType]  | default(not _widget.formAddressTransfer.idCustomerAddress),
+    currentCompanyBusinessUnitAddress: _widget.currentCompanyBusinessUnitAddress,
 } %}
 
 {% block body %}

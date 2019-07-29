@@ -9,10 +9,7 @@ namespace SprykerShop\Yves\CustomerReorderWidget\Model;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer;
-use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToAvailabilityStorageClientInterface;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
 
 class CartFiller implements CartFillerInterface
@@ -30,23 +27,15 @@ class CartFiller implements CartFillerInterface
     protected $itemsFetcher;
 
     /**
-     * @var \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToAvailabilityStorageClientInterface
-     */
-    protected $availabilityStorageClient;
-
-    /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Model\ItemFetcherInterface $itemsFetcher
-     * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToAvailabilityStorageClientInterface $availabilityStorageClient
      */
     public function __construct(
         CustomerReorderWidgetToCartClientInterface $cartClient,
-        ItemFetcherInterface $itemsFetcher,
-        CustomerReorderWidgetToAvailabilityStorageClientInterface $availabilityStorageClient
+        ItemFetcherInterface $itemsFetcher
     ) {
         $this->cartClient = $cartClient;
         $this->itemsFetcher = $itemsFetcher;
-        $this->availabilityStorageClient = $availabilityStorageClient;
     }
 
     /**
@@ -82,14 +71,16 @@ class CartFiller implements CartFillerInterface
      */
     protected function updateCart(array $orderItems, OrderTransfer $orderTransfer): void
     {
-        $this->updateItemsQuantity($orderItems);
+        $cartChangeTransfer = $this->createCartChangeTransfer($orderItems);
 
         $cartChangeTransfer = new CartChangeTransfer();
         $cartChangeTransfer->setQuote($this->cartClient->getQuote());
         $orderItemsObject = $this->sanitizeOrderItems($orderItems);
         $cartChangeTransfer->setItems($orderItemsObject);
 
-        $this->cartClient->addValidItems($cartChangeTransfer, [static::PARAM_ORDER_REFERENCE => $orderTransfer->getOrderReference()]);
+        $this->cartClient->addValidItems($cartChangeTransfer, [
+            static::PARAM_ORDER_REFERENCE => $orderTransfer->getOrderReference(),
+        ]);
     }
 
     /**
@@ -126,44 +117,12 @@ class CartFiller implements CartFillerInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function updateItemsQuantity(array $orderItems): void
+    protected function createCartChangeTransfer(array $orderItems): CartChangeTransfer
     {
-        foreach ($orderItems as $item) {
-            $spyAvailabilityAbstractTransfer = $this->getAvailabilityAbstractByItemTransfer($item);
-
-            foreach ($spyAvailabilityAbstractTransfer->getSpyAvailabilities() as $spyAvailability) {
-                if ($spyAvailability->getSku() !== $item->getSku()) {
-                    continue;
-                }
-
-                if ($spyAvailability->getIsNeverOutOfStock()) {
-                    continue;
-                }
-
-                if ($spyAvailability->getQuantity() === 0) {
-                    continue;
-                }
-
-                if ($spyAvailability->getQuantity() >= $item->getQuantity()) {
-                    continue;
-                }
-
-                $item->setQuantity($spyAvailability->getQuantity());
-            }
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
-     */
-    protected function getAvailabilityAbstractByItemTransfer(ItemTransfer $itemTransfer): SpyAvailabilityAbstractEntityTransfer
-    {
-        $itemTransfer->requireIdProductAbstract();
-
-        return $this->availabilityStorageClient->getAvailabilityAbstract($itemTransfer->getIdProductAbstract());
+        return (new CartChangeTransfer())
+            ->setQuote($this->cartClient->getQuote())
+            ->setItems(new ArrayObject($orderItems));
     }
 }
