@@ -14,7 +14,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  * @method \SprykerShop\Yves\ConfigurableBundleWidget\ConfigurableBundleWidgetFactory getFactory()
  * @method \SprykerShop\Yves\ConfigurableBundleWidget\ConfigurableBundleWidgetConfig getConfig()
  */
-class OrderConfiguredBundleCartItemWidget extends AbstractWidget
+class OrderConfiguredBundleWidget extends AbstractWidget
 {
     protected const PARAMETER_ORDER = 'order';
 
@@ -31,7 +31,7 @@ class OrderConfiguredBundleCartItemWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'OrderConfiguredBundleCartItemWidget';
+        return 'OrderConfiguredBundleWidget';
     }
 
     /**

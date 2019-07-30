@@ -15,7 +15,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  * @method \SprykerShop\Yves\ConfigurableBundleWidget\ConfigurableBundleWidgetFactory getFactory()
  * @method \SprykerShop\Yves\ConfigurableBundleWidget\ConfigurableBundleWidgetConfig getConfig()
  */
-class QuoteConfiguredBundleCartItemWidget extends AbstractWidget
+class QuoteConfiguredBundleWidget extends AbstractWidget
 {
     protected const PARAMETER_CONFIGURED_BUNDLES = 'configuredBundles';
 
@@ -36,7 +36,7 @@ class QuoteConfiguredBundleCartItemWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'QuoteConfiguredBundleCartItemWidget';
+        return 'QuoteConfiguredBundleWidget';
     }
 
     /**
