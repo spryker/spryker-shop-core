@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\ConfigurableBundleWidget\Widget;
 
+use Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -15,9 +17,18 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class QuoteConfiguredBundleCartItemWidget extends AbstractWidget
 {
-    public function __construct()
+    protected const PARAMETER_CONFIGURED_BUNDLES = 'configuredBundles';
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function __construct(QuoteTransfer $quoteTransfer)
     {
-        // TODO: TBD
+        $configuredBundleCollectionTransfer = $this->getFactory()
+            ->getConfigurableBundleClient()
+            ->getConfiguredBundlesFromQuote($quoteTransfer);
+
+        $this->addConfiguredBundlesParameter($configuredBundleCollectionTransfer);
     }
 
     /**
@@ -34,5 +45,15 @@ class QuoteConfiguredBundleCartItemWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@ConfigurableBundleWidget/views/quote-configured-bundle-cart-item-widget/quote-configured-bundle-cart-item-widget.twig';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer $configuredBundleCollectionTransfer
+     *
+     * @return void
+     */
+    protected function addConfiguredBundlesParameter(ConfiguredBundleCollectionTransfer $configuredBundleCollectionTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_CONFIGURED_BUNDLES, $configuredBundleCollectionTransfer->getConfiguredBundles());
     }
 }
