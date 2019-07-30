@@ -158,11 +158,16 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
             return;
         }
 
-        if ($event->isMasterRequest()) {
-            /** @var \Twig\Environment $twig */
-            $twig = $application['twig'];
-            $twig->addGlobal('_view', $result);
+        $masterGlobalView = null;
+
+        /** @var \Twig\Environment $twig */
+        $twig = $application['twig'];
+
+        if (!$event->isMasterRequest()) {
+            $masterGlobalView = $this->getGlobalView($twig);
         }
+
+        $twig->addGlobal('_view', $result);
 
         $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
         $widgetContainerRegistry->add($result);
@@ -177,6 +182,26 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
 
         $event->setResponse($response);
         $widgetContainerRegistry->removeLastAdded();
+
+        if ($masterGlobalView) {
+            $twig->addGlobal('_view', $masterGlobalView);
+        }
+    }
+
+    /**
+     * @param \Twig\Environment $twig
+     *
+     * @return \Spryker\Yves\Kernel\View\ViewInterface|null
+     */
+    protected function getGlobalView(Environment $twig): ?ViewInterface
+    {
+        $twigGlobals = $twig->getGlobals();
+
+        if (!isset($twigGlobals['_view'])) {
+            return null;
+        }
+
+        return $twigGlobals['_view'];
     }
 
     /**

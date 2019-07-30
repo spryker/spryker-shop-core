@@ -83,8 +83,13 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
     public function onKernelView(GetResponseForControllerResultEvent $event): void
     {
         $result = $event->getControllerResult();
+        $masterGlobalView = null;
 
-        if ($result instanceof ViewInterface && $event->isMasterRequest()) {
+        if ($result instanceof ViewInterface) {
+            if (!$event->isMasterRequest()) {
+                $masterGlobalView = $this->getGlobalView();
+            }
+
             $this->addGlobalView($result);
         }
 
@@ -94,6 +99,10 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
 
         $event->setResponse($this->getResponse($result));
         $this->widgetContainerRegistry->removeLastAdded();
+
+        if ($masterGlobalView) {
+            $this->addGlobalView($masterGlobalView);
+        }
     }
 
     /**
@@ -105,6 +114,20 @@ class ShopApplicationTwigEventSubscriber implements EventSubscriberInterface
     {
         $twig = $this->getTwig();
         $twig->addGlobal(static::TWIG_GLOBAL_VARIABLE_NAME_VIEW, $view);
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\View\ViewInterface|null
+     */
+    protected function getGlobalView(): ?ViewInterface
+    {
+        $twigGlobals = $this->getTwig()->getGlobals();
+
+        if (!isset($twigGlobals[static::TWIG_GLOBAL_VARIABLE_NAME_VIEW])) {
+            return null;
+        }
+
+        return $twigGlobals[static::TWIG_GLOBAL_VARIABLE_NAME_VIEW];
     }
 
     /**
