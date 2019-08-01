@@ -86,10 +86,6 @@ class CartController extends AbstractController
             return true;
         }
 
-        if ($quoteTransfer->getCustomer()->getCompanyUserTransfer() === null) {
-            return true;
-        }
-
         if ($this->can(static::REMOVE_CART_ITEM_PERMISSION_PLUGIN_KEY)) {
             return true;
         }
