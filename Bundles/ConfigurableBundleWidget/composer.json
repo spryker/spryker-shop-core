@@ -35,6 +35,6 @@
     "sort-packages": true
   },
   "suggest": {
-    "spryker/silex": "ADD SUGGEST DESCRIPTION"
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   }
 }
