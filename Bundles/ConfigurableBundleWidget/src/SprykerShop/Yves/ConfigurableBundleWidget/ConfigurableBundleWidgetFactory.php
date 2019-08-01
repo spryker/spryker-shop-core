@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ConfigurableBundleWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToCartClientInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToConfigurableBundleClientInterface;
+use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToQuoteClientInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToZedRequestClientInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Reader\QuoteReader;
 use SprykerShop\Yves\ConfigurableBundleWidget\Reader\QuoteReaderInterface;
@@ -51,5 +52,13 @@ class ConfigurableBundleWidgetFactory extends AbstractFactory
     public function getCartClient(): ConfigurableBundleWidgetToCartClientInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleWidgetDependencyProvider::CLIENT_CART);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToQuoteClientInterface
+     */
+    public function getQuoteClient(): ConfigurableBundleWidgetToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleWidgetDependencyProvider::CLIENT_QUOTE);
     }
 }

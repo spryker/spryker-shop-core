@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToCartClientBridge;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToConfigurableBundleClientBridge;
+use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToQuoteClientBridge;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToZedRequestClientBridge;
 
 class ConfigurableBundleWidgetDependencyProvider extends AbstractBundleDependencyProvider
@@ -18,6 +19,7 @@ class ConfigurableBundleWidgetDependencyProvider extends AbstractBundleDependenc
     public const CLIENT_CONFIGURABLE_BUNDLE = 'CLIENT_CONFIGURABLE_BUNDLE';
     public const CLIENT_CART = 'CLIENT_CART';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -30,6 +32,7 @@ class ConfigurableBundleWidgetDependencyProvider extends AbstractBundleDependenc
         $container = $this->addConfigurableBundleClient($container);
         $container = $this->addCartClient($container);
         $container = $this->addZedRequestClient($container);
+        $container = $this->addQuoteClient($container);
 
         return $container;
     }
@@ -71,6 +74,20 @@ class ConfigurableBundleWidgetDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new ConfigurableBundleWidgetToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuoteClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
+            return new ConfigurableBundleWidgetToQuoteClientBridge($container->getLocator()->quote()->client());
         });
 
         return $container;

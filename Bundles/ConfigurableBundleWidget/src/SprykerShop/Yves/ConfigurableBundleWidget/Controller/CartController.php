@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ConfigurableBundleWidget\Controller;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -82,14 +83,18 @@ class CartController extends AbstractController
             ->getCartClient()
             ->getQuote();
 
-        if ($quoteTransfer->getCustomer() === null) {
-            return true;
-        }
+        return $this->isQuoteEditable($quoteTransfer) && $this->can(static::REMOVE_CART_ITEM_PERMISSION_PLUGIN_KEY);
+    }
 
-        if ($this->can(static::REMOVE_CART_ITEM_PERMISSION_PLUGIN_KEY)) {
-            return true;
-        }
-
-        return false;
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->getQuoteClient()
+            ->isQuoteEditable($quoteTransfer);
     }
 }
