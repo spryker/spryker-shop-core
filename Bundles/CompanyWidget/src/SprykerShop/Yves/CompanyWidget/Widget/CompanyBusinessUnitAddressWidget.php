@@ -16,6 +16,8 @@ use SprykerShop\Yves\CompanyWidget\Address\AddressProviderInterface;
  */
 class CompanyBusinessUnitAddressWidget extends AbstractWidget
 {
+    protected const PARAMETER_CURRENT_COMPANY_BUSINESS_UNIT_ADDRESS = 'currentCompanyBusinessUnitAddress';
+
     /**
      * @param string $formType
      * @param \Generated\Shared\Transfer\AddressTransfer $formAddressTransfer
@@ -39,6 +41,9 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
         $this->addAddressesParameter($customerAddresses, $companyBusinessUnitAddresses);
         $this->addCustomerAddressesParameter($customerAddresses);
         $this->addCompanyBusinessUnitAddressesParameter($companyBusinessUnitAddresses);
+        $this->addCurrentCompanyBusinessUnitAddressParameter(
+            $addressProvider->findCurrentCompanyBusinessUnitAddress($formAddressTransfer, $companyBusinessUnitAddresses)
+        );
     }
 
     /**
@@ -107,6 +112,16 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     protected function addCompanyBusinessUnitAddressesParameter(array $companyBusinessUnitAddresses): void
     {
         $this->addParameter('companyBusinessUnitAddresses', $companyBusinessUnitAddresses);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $currentCompanyBusinessUnitAddressTransfer
+     *
+     * @return void
+     */
+    protected function addCurrentCompanyBusinessUnitAddressParameter(?AddressTransfer $currentCompanyBusinessUnitAddressTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_CURRENT_COMPANY_BUSINESS_UNIT_ADDRESS, $currentCompanyBusinessUnitAddressTransfer);
     }
 
     /**

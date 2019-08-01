@@ -41,7 +41,7 @@
                         <span class="col col--sm-8">
                             {{ voucherDiscount.displayName }}
                             {% if data.isQuoteEditable %}
-                                <br/>
+                                <br>
                                 <a class="text-small" href="{{ url('discount/voucher/remove', {'code': voucherDiscount.voucherCode}) }}">
                                     {% include atom('icon') with {
                                         modifiers: ['smaller'],
@@ -57,7 +57,7 @@
                     </li>
                 {% endfor %}
             </ul>
-            <hr />
+            <hr>
         </li>
     {% endif %}
 
@@ -72,7 +72,7 @@
                     </li>
                 {% endfor %}
             </ul>
-            <hr />
+            <hr>
         </li>
     {% endif %}
 {% endblock %}

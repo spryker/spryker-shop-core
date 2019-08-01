@@ -20,4 +20,14 @@
         <property name="idCommentThread" type="int"/>
     </transfer>
 
+    <transfer name="Quote">
+        <property name="billingAddress" type="Address" />
+        <property name="shippingAddress" type="Address" />
+        <property name="billingSameAsShipping" type="bool" />
+    </transfer>
+
+    <transfer name="Address">
+        <property name="idCustomerAddress" type="int" />
+    </transfer>
+
 </transfers>

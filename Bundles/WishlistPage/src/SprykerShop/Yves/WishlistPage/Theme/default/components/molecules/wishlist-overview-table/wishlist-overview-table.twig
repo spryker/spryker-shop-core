@@ -62,7 +62,8 @@
                             </li>
                             <li class="menu__item">
                                 <form method="POST" action="{{ path('wishlist/delete', {wishlistName: wishlist.name}) }}">
-                                    <button type="submit" class="link" title="{{ 'customer.account.wishlist.overview.delete' | trans }}">
+                                    <button data-init-single-click type="submit" class="link"
+                                            title="{{ 'customer.account.wishlist.overview.delete' | trans }}">
                                         {% include atom('icon') with {
                                             data: {
                                                 name: 'remove'
