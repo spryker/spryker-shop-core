@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ConfigurableBundleWidget\Controller;
 
 use Spryker\Yves\Kernel\PermissionAwareTrait;
-use SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +20,11 @@ class CartController extends AbstractController
     use PermissionAwareTrait;
 
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+
+    /**
+     * @uses \SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin::KEY
+     */
+    protected const REMOVE_CART_ITEM_PERMISSION_PLUGIN_KEY = 'RemoveCartItemPermissionPlugin';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
@@ -74,16 +78,6 @@ class CartController extends AbstractController
      */
     protected function canRemoveCartItem(): bool
     {
-        return $this->canPerformCartItemAction(RemoveCartItemPermissionPlugin::KEY);
-    }
-
-    /**
-     * @param string $permissionPluginKey
-     *
-     * @return bool
-     */
-    protected function canPerformCartItemAction(string $permissionPluginKey): bool
-    {
         $quoteTransfer = $this->getFactory()
             ->getCartClient()
             ->getQuote();
@@ -96,7 +90,7 @@ class CartController extends AbstractController
             return true;
         }
 
-        if ($this->can($permissionPluginKey)) {
+        if ($this->can(static::REMOVE_CART_ITEM_PERMISSION_PLUGIN_KEY)) {
             return true;
         }
 
