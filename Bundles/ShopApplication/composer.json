@@ -8,6 +8,7 @@
     "spryker-shop/shop-application-extension": "^1.0.0",
     "spryker/application": "^3.13.0",
     "spryker/application-extension": "^1.0.0",
+    "spryker/config": "^3.2.0",
     "spryker/container": "^1.0.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
@@ -20,13 +21,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/config": "^3.0.0",
     "spryker/event-dispatcher": "*",
     "spryker/log": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/config": "Use this module when using plugins that need Config dependency.",
     "spryker/event-dispatcher": "If you want to use the ShopApplicationEventDispatcherPlugin.",
     "spryker/log": "Use this module when using plugins that need Log dependencies."
   },
