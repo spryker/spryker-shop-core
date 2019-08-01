@@ -8,7 +8,11 @@
 namespace SprykerShop\Yves\ConfigurableBundleWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToCartClientInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToConfigurableBundleClientInterface;
+use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToZedRequestClientInterface;
+use SprykerShop\Yves\ConfigurableBundleWidget\Reader\QuoteReader;
+use SprykerShop\Yves\ConfigurableBundleWidget\Reader\QuoteReaderInterface;
 
 /**
  * @method \SprykerShop\Yves\ConfigurableBundleWidget\ConfigurableBundleWidgetConfig getConfig()
@@ -16,10 +20,36 @@ use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBund
 class ConfigurableBundleWidgetFactory extends AbstractFactory
 {
     /**
+     * @return \SprykerShop\Yves\ConfigurableBundleWidget\Reader\QuoteReaderInterface
+     */
+    public function createQuoteReader(): QuoteReaderInterface
+    {
+        return new QuoteReader(
+            $this->getCartClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToZedRequestClientInterface
+     */
+    public function getZedRequestClient(): ConfigurableBundleWidgetToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleWidgetDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
      * @return \SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToConfigurableBundleClientInterface
      */
     public function getConfigurableBundleClient(): ConfigurableBundleWidgetToConfigurableBundleClientInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleWidgetDependencyProvider::CLIENT_CONFIGURABLE_BUNDLE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToCartClientInterface
+     */
+    public function getCartClient(): ConfigurableBundleWidgetToCartClientInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleWidgetDependencyProvider::CLIENT_CART);
     }
 }
