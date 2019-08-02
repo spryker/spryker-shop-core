@@ -11,7 +11,8 @@
     minQuantity: 1,
     value: 1,
     readOnly: false,
-    hasUpdateButton: true
+    hasUpdateButton: true,
+    step: 1,
 } %}
 
 {% set maxQuantity = data.maxQuantity < 0 or data.maxQuantity < data.minQuantity ? null : data.maxQuantity %}
@@ -23,7 +24,8 @@
     min: data.minQuantity,
     max: maxQuantity is empty ? false : maxQuantity,
     value: data.value,
-    disabled: data.readOnly
+    step: data.step,
+    disabled: data.readOnly,
 } %}
 
 {% block body %}
@@ -34,7 +36,7 @@
     <span class="grid">
         <span class="col col--expand">
             {% block input %}
-                <input {{component.renderAttributes(inputAttributes)}} {{qa('quantity-input')}} />
+                <input {{component.renderAttributes(inputAttributes)}} {{qa('quantity-input')}}>
             {% endblock %}
         </span>
 
@@ -45,8 +47,8 @@
                         modifiers: ['small'],
                         class: config.name ~ '__sync',
                         data: {
-                            name: 'sync'
-                        }
+                            name: 'sync',
+                        },
                     } only %}
                 </button>
             </span>

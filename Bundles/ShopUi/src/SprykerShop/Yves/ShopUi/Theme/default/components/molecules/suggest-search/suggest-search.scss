@@ -12,9 +12,14 @@
         &__input {
             position: relative;
             z-index: $setting-zi-search-suggestions + 2;
+            min-height: 1.925rem;
 
             &--transparent {
                 background-color: $setting-color-transparent;
+            }
+
+            &::-ms-clear {
+                display: none;
             }
         }
 
@@ -27,9 +32,12 @@
         &__hint {
             position: absolute;
             top: 0;
+            height: 100%;
+            width: 100%;
             border-color: $setting-color-transparent;
             z-index: $setting-zi-search-suggestions + 1;
             color: $setting-color-light;
+            padding: 0.25rem 0.5rem;
         }
 
         @content;

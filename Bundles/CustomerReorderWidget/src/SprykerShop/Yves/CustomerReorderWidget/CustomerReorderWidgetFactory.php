@@ -34,11 +34,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
      */
     public function createCartFiller(): CartFillerInterface
     {
-        return new CartFiller(
-            $this->getCartClient(),
-            $this->createItemsFetcher(),
-            $this->getAvailabilityStorageClient()
-        );
+        return new CartFiller($this->getCartClient(), $this->createItemsFetcher());
     }
 
     /**

@@ -4,7 +4,8 @@
     voucherDiscounts: _widget.cart.voucherDiscounts,
     ruleDiscounts: _widget.cart.cartRuleDiscounts,
     discountTotal: _widget.cart.totals.discounttotal,
-    isQuoteEditable: _widget.cart.isLocked
+    isQuoteEditable: _widget.cart.isLocked,
+    currencyIsoCode: _widget.cart.currency.code,
 } %}
 
 {% block body %}
@@ -34,11 +35,11 @@
                                     }
                                 } only %}
                             </span>
-                            <span class="col col--expand text-right">- {{ voucherDiscount.amount | money }}</span>
+                            <span class="col col--expand text-right">- {{ voucherDiscount.amount | money(true, data.currencyIsoCode) }}</span>
                         </li>
                     {% endfor %}
                 </ul>
-                <hr />
+                <hr>
             </li>
         {% endif %}
 
@@ -49,11 +50,11 @@
                     {% for ruleDiscount in data.ruleDiscounts %}
                         <li class="grid grid--justify">
                             <span class="col col--sm-8">{{ ruleDiscount.displayName }}</span>
-                            <span class="col col--expand text-right">- {{ ruleDiscount.amount | money }}</span>
+                            <span class="col col--expand text-right">- {{ ruleDiscount.amount | money(true, data.currencyIsoCode) }}</span>
                         </li>
                     {% endfor %}
                 </ul>
-                <hr />
+                <hr>
             </li>
         {% endif %}
     {% endif %}

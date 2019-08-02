@@ -4,7 +4,8 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd" >
 
     <transfer name="Quote">
-        <property name="checkoutConfirmed" type="bool" />
+        <property name="checkoutConfirmed" type="bool"/>
+        <property name="commentThread" type="CommentThread"/>
     </transfer>
 
     <transfer name="CheckoutError">
@@ -13,16 +14,20 @@
     </transfer>
 
     <transfer name="QuoteValidationResponse">
-        <property name="isSuccessful" type="bool" />
-        <property name="messages" type="Message[]"  singular="message" />
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]"  singular="message"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="giftCardMetadata" type="GiftCardMetadata" />
+        <property name="giftCardMetadata" type="GiftCardMetadata"/>
     </transfer>
 
     <transfer name="GiftCardMetadata">
-        <property name="isGiftCard" type="bool" />
+        <property name="isGiftCard" type="bool"/>
+    </transfer>
+
+    <transfer name="CommentThread">
+        <property name="idCommentThread" type="int"/>
     </transfer>
 
 </transfers>

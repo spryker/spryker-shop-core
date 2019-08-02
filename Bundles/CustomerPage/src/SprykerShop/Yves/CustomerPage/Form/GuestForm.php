@@ -75,7 +75,6 @@ class GuestForm extends AbstractType
                 'Mrs' => 'customer.salutation.mrs',
                 'Dr' => 'customer.salutation.dr',
             ]),
-            'choices_as_values' => true,
             'label' => 'address.salutation',
             'constraints' => [
                 $this->createNotBlankConstraint(),

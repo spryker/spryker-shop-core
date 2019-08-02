@@ -1,0 +1,52 @@
+@mixin comment-widget-tag-list($name: '.tag-list') {
+    #{$name} {
+        &__item {
+            display: inline-block;
+            margin: 0 0.5rem 0.5rem 0;
+        }
+
+        &__item-link {
+            position: relative;
+            display: inline-block;
+            padding: 0.1rem 1.4rem 0.1rem 0.5rem;
+            background-color: helper-color-light(map-get($setting-color-actions, 'success'));
+            color: map-get($setting-color-actions, 'success');
+
+            &:hover {
+                text-decoration: none;
+            }
+
+            &::before,
+            &::after {
+                content: '';
+                position: absolute;
+                right: 0.5rem;
+                top: 50%;
+                width: 0.6rem;
+                height: 0.1rem;
+                background-color: map-get($setting-color-actions, 'success');
+                transform: translateY(-50%) rotate(-45deg);
+            }
+
+            &::after {
+                transform: translateY(-50%) rotate(45deg);
+            }
+
+            &--disabled {
+                background-color: $setting-color-dark;
+                color: $setting-color-darker;
+                cursor: default;
+                pointer-events: none;
+                user-select: none;
+                opacity: 0.5;
+
+                &::before,
+                &::after {
+                    background-color: $setting-color-darker;
+                }
+            }
+        }
+
+        @content;
+    }
+}

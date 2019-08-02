@@ -1,0 +1,23 @@
+{% extends template('widget') %}
+
+{% define data = {
+    fileViewCollection: fileViewCollection,
+} %}
+
+{% block body %}
+    <ul class="list list--inline">
+        {% for fileView in data.fileViewCollection %}
+            <li class="list__item">
+                {% include molecule('file-download-link', 'FileManagerWidget') with {
+                    modifiers: ['icon'],
+                    data: {
+                        idFile: fileView.fkFile,
+                        fileName: fileView.fileName,
+                        fileIcon: fileView.iconName,
+                        fileSize: fileView.size | readable_bytesize
+                    }
+                } only %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

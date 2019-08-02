@@ -12,6 +12,8 @@ use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Use `\Spryker\Yves\Translator\Plugin\Application\TranslatorApplicationPlugin` instead.
+ *
  * @method \SprykerShop\Yves\ShopTranslator\ShopTranslatorFactory getFactory()
  * @method \Spryker\Client\Glossary\GlossaryClientInterface getClient()
  */

@@ -5,9 +5,9 @@
 } %}
 
 {% block body %}
-    <li class="menu__item">
-        <a href="{{ path('multi-cart/clear', {idQuote: data.idQuote}) }}" class="button clear">
+    <div class="box box--borderless">
+        <a href="{{ path('multi-cart/clear', {idQuote: data.idQuote}) }}" class="button clear" data-init-single-click>
             {{ "multi_cart_widget.cart.action.clear" | trans }}
         </a>
-    </li>
+    </div>
 {% endblock %}
