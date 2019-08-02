@@ -17,6 +17,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class QuoteConfiguredBundleWidget extends AbstractWidget
 {
+    protected const PARAMETER_QUOTE = 'quote';
     protected const PARAMETER_CONFIGURED_BUNDLES = 'configuredBundles';
 
     /**
@@ -28,6 +29,7 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
             ->getConfigurableBundleClient()
             ->getConfiguredBundlesFromQuote($quoteTransfer);
 
+        $this->addQuoteParameter($quoteTransfer);
         $this->addConfiguredBundlesParameter($configuredBundleCollectionTransfer);
     }
 
@@ -45,6 +47,16 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@ConfigurableBundleWidget/views/quote-configured-bundle-cart-item-widget/quote-configured-bundle-cart-item-widget.twig';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addQuoteParameter(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_QUOTE, $quoteTransfer);
     }
 
     /**
