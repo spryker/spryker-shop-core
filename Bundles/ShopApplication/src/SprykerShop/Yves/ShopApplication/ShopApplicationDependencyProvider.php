@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ShopApplication;
 
-use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
@@ -26,7 +25,6 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const STORE = 'STORE';
     public const PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER = 'PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER';
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
-    public const ENVIRONMENT = 'ENVIRONMENT';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -41,7 +39,6 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilTextService($container);
         $container = $this->addFilterControllerEventSubscriberPlugins($container);
         $container = $this->addApplicationPlugins($container);
-        $container = $this->addEnvironment($container);
 
         return $container;
     }
@@ -181,27 +178,5 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     protected function getFilterControllerEventSubscriberPlugins()
     {
         return [];
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addEnvironment(Container $container): Container
-    {
-        $container->set(static::ENVIRONMENT, function () {
-            return $this->getEnvironment();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Shared\Config\Environment
-     */
-    protected function getEnvironment(): Environment
-    {
-        return Environment::getInstance();
     }
 }
