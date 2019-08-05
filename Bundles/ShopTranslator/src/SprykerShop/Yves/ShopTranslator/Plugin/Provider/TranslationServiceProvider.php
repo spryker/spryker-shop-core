@@ -35,8 +35,6 @@ class TranslationServiceProvider extends AbstractPlugin implements ServiceProvid
 
             return $twigTranslator;
         });
-
-        $app->configure(static::SERVICE_TRANSLATOR, ['isGlobal' => true]);
     }
 
     /**
