@@ -1,0 +1,41 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-configured-bundle',
+    tag: 'tr',
+} %}
+
+{% define data = {
+    bundle: required,
+    currencyIsoCode: null,
+} %}
+
+{% block body %}
+    <td class="{{ config.name }}__col"></td>
+    <td class="{{ config.name }}__col">
+        {%- block name -%}
+            {{ data.bundle.name | trans }}
+        {%- endblock -%}
+        <br>
+        <small class="text-secondary">
+            {%- block id -%}
+                {{ 'configured_bundle.id' | trans }} {{ data.bundle.configurableBundleTemplateUuid }}
+            {%- endblock -%}
+        </small>
+    </td>
+    <td class="{{ config.name }}__col">
+        {%- block price -%}
+            {{ 1000 | money(true, data.currencyIsoCode) }}
+        {%- endblock -%}
+    </td>
+    <td class="{{ config.name }}__col">
+        {%- block quantity -%}
+            {{ data.bundle.quantity }}
+        {%- endblock -%}
+    </td>
+    <td class="{{ config.name }}__col">
+        {%- block total -%}
+            {{ 10000 | money(true, data.currencyIsoCode) }}
+        {%- endblock -%}
+    </td>
+{% endblock %}

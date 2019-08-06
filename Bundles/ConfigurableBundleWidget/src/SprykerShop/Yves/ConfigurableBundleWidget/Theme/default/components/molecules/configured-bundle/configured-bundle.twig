@@ -1,0 +1,122 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'configured-bundle',
+    tag: 'article',
+} %}
+
+{% define data = {
+    bundle: required,
+    bundleItems: data.bundle.items | default({}),
+    currencyIsoCode: null,
+} %}
+
+{%- block extraClass %} box{% endblock -%}
+
+{% block body %}
+    {% block bundle %}
+        <div class="{{ config.name }}__content {{ config.name }}__container {{ config.name }}__container--mobile-column">
+            {% block bundleInner %}
+                {% block bundleGeneralInformation %}
+                    <div class="{{ config.name }}__col col col--sm-12 col--lg-7">
+                        {% block bundleName %}
+                            <h6 class="spacing-right spacing-right--big">
+                                {%- block bundleNameText -%}
+                                    {{ data.bundle.template.name | trans }}
+                                {%- endblock -%}
+                            </h6>
+                        {% endblock %}
+                        {% block bundleId %}
+                            <small class="text-secondary">{{ 'configured_bundle.id' | trans }} {{ data.bundle.template.uuid }}</small>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+                {% block bundlePriceInformation %}
+                    <div class="{{ config.name }}__col {{ config.name }}__container col col--sm-12 col--lg-5">
+                        {% block bundlePriceInformationInner %}
+                            {% block bundlePriceCol %}
+                                <div class="{{ config.name }}__col col col--sm-4">
+                                    {% block bundlePrice %}
+                                        <span class="{{ config.name }}__text">
+                                            {%- block bundlePriceInner -%}
+                                                {% if can('SeePricePermissionPlugin') %}
+                                                    {%- block bundlePriceTitle -%}
+                                                        {{ 'configured_bundle.price' | trans }}<br>
+                                                    {%- endblock -%}
+                                                    {%- block bundlePriceText -%}
+                                                        {{ 10000 | money(true, data.currencyIsoCode) }}
+                                                    {%- endblock -%}
+                                                {% else %}
+                                                    {{ 'customer.access.cannot_see_price' | trans }}
+                                                {% endif %}
+                                            {%- endblock -%}
+                                        </span>
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
+                            {% block bundleQuantityCol %}
+                                <div class="{{ config.name }}__col col col--sm-4 text-center">
+                                    {% block bundleQuantity %}
+                                        <span class="{{ config.name }}__text">
+                                            {%- block bundleQuantityInner -%}
+                                                {{ 'configured_bundle.quantity' | trans }}
+                                                {%- block bundleQuantitySeparator %}<br>{% endblock -%}
+                                                {{ data.bundle.quantity }}
+                                            {%- endblock -%}
+                                        </span>
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
+                            {% block bundleTotalCol %}
+                                <div class="{{ config.name }}__col col col--sm-4 text-right">
+                                    {% block bundleTotal %}
+                                        <strong class="{{ config.name }}__text">
+                                            {%- block bundleTotalInner -%}
+                                                {% if can('SeePricePermissionPlugin') %}
+                                                    {%- block bundleTotalTitle -%}
+                                                        {{ 'configured_bundle.total' | trans }}<br>
+                                                    {%- endblock -%}
+                                                    {%- block bundleTotalText -%}
+                                                        {{ 100000 | money(true, data.currencyIsoCode) }}
+                                                    {%- endblock -%}
+                                                {% else %}
+                                                    {{ 'customer.access.cannot_see_price' | trans }}
+                                                {% endif %}
+                                            {%- endblock -%}
+                                        </strong>
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block bundleProductList %}
+        <div class="{{ config.name }}__products">
+            {% block bundleProductListInner %}
+                {% for item in data.bundleItems %}
+                    {% block bundleProductItem %}
+                        {% include molecule('configured-bundle-product', 'ConfigurableBundleWidget') with {
+                            data: {
+                                product: item,
+                                quantity: item.quantity / data.bundle.quantity,
+                                currencyIsoCode: data.currencyIsoCode,
+                            },
+                        } only %}
+                    {% endblock %}
+                {% endfor %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+    {% set bundleActionClassName = 'float-right spacing-y' %}
+    {% block bundleAction %}
+        <a class="{{ bundleActionClassName }}" href="cart/remove" data-init-single-click>
+            {% block bundleActionInner %}
+                {{- 'configured_bundle.remove' | trans | raw -}}
+            {% endblock %}
+        </a>
+    {% endblock %}
+{% endblock %}

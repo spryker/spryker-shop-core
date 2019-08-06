@@ -1,0 +1,46 @@
+@mixin configurable-bundle-widget-configured-bundle($name: '.configured-bundle') {
+    #{$name} {
+        &__content {
+            padding: 0 map-get($setting-spacing, 'default') map-get($setting-spacing, 'default');
+            margin: 0 -#{map-get($setting-spacing, 'default')};
+            border-bottom: 1px solid $setting-color-lighter;
+        }
+
+        &__container {
+            position: relative;
+            display: flex;
+
+            @include helper-breakpoint(lg) {
+                justify-content: space-between;
+            }
+
+            &--mobile-column {
+                flex-direction: column;
+
+                @include helper-breakpoint(lg) {
+                    flex-direction: initial;
+                }
+            }
+        }
+
+        &__col {
+            margin-right: auto;
+            margin-left: auto;
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        &__text {
+            display: inline-block;
+            text-align: left;
+        }
+
+        @content;
+    }
+}

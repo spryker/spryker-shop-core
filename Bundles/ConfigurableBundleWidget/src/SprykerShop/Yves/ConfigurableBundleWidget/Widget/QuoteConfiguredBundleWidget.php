@@ -44,7 +44,7 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ConfigurableBundleWidget/views/quote-configured-bundle-cart-item-widget/quote-configured-bundle-cart-item-widget.twig';
+        return '@ConfigurableBundleWidget/views/quote-configured-bundle-widget/quote-configured-bundle-widget.twig';
     }
 
     /**

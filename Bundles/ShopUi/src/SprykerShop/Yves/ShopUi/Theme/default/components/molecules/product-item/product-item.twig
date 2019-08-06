@@ -15,9 +15,7 @@
     currencyIsoCode: null,
 } %}
 
-{% block class -%}
-    {{ parent() }} box
-{%- endblock %}
+{%- block extraClass %} box{% endblock -%}
 
 {% block body %}
     {% block imageContainer %}
