@@ -18,7 +18,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class OrderConfiguredBundleWidget extends AbstractWidget
 {
     protected const PARAMETER_ORDER = 'order';
-    protected const PARAMETER_ITENS = 'items';
+    protected const PARAMETER_ITEMS = 'items';
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -62,7 +62,7 @@ class OrderConfiguredBundleWidget extends AbstractWidget
      */
     protected function addItemsParameter(OrderTransfer $orderTransfer): void
     {
-        $this->addParameter(static::PARAMETER_ITENS, $this->mapOrederItems($orderTransfer));
+        $this->addParameter(static::PARAMETER_ITEMS, $this->mapOrederItems($orderTransfer));
     }
 
     /**
