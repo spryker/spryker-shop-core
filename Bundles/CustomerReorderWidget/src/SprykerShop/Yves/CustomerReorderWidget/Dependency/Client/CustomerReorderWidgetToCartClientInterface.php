@@ -13,6 +13,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface CustomerReorderWidgetToCartClientInterface
 {
     /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote();
+
+    /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param array $params
      *

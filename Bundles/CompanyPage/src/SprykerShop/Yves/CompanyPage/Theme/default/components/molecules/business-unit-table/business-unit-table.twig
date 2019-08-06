@@ -55,7 +55,8 @@
                                 {% endif %}
                                 {% if data.actions.delete %}
                                     <li class="menu__item">
-                                        <a href="{{ url('company/business-unit/delete', {'id': unit.idCompanyBusinessUnit }) }}">
+                                        <a data-init-single-click
+                                           href="{{ url('company/business-unit/delete', {'id': unit.idCompanyBusinessUnit }) }}">
                                             {{ "company.account.business_unit.delete" | trans }}
                                         </a>
                                     </li>

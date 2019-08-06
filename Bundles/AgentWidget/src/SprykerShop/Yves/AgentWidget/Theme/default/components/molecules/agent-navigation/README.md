@@ -1,11 +1,1 @@
-Displays the agent navigation links sub-page.
-
-## Code sample
-
-```
-{% include molecule('agent-navigation', 'AgentWidget') with {
-    data: {
-        agent: data.agent,
-    }
-} only %}
-```
+Displays basic agent control bar functionality on the top-page navigation, which includes an agent name, a drop-down menu, and a logout button.

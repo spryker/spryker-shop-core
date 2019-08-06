@@ -11,7 +11,7 @@
     salesUnits: _widget.salesUnits | default([]),
     jsonScheme: _widget.jsonScheme | default(''),
     salesUnitCount : _widget.salesUnits|length,
-    isAddToCartDisabled : _widget.isAddToCartDisabled | default(false)
+    isAddToCartDisabled : _widget.isAddToCartDisabled | default(false),
 } %}
 
 {% set hasProductMeasurementUnit = data.salesUnitCount >= 1 %}
@@ -29,7 +29,7 @@
                 {% endif %}
             {% endfor %}
         </ul>
-        <hr />
+        <hr>
     {% endif %}
 
     <div class="grid grid--bottom grid--justify">
@@ -44,11 +44,11 @@
                     {% embed atom('select') with {
                         modifiers: ['expand'],
                         data: {
-                            options: data.quantityOptions
+                            options: data.quantityOptions,
                         },
                         attributes: {
-                            name: 'quantity'
-                        }
+                            name: 'quantity',
+                        },
                     } only %}
                         {% block selectClass %}js-volume-price__quantity{% endblock %}
                     {% endembed %}
@@ -63,11 +63,11 @@
                     {% embed atom('select') with {
                         modifiers: ['expand'],
                         attributes: {
-                            name: 'id-product-measurement-sales-unit'
+                            name: 'id-product-measurement-sales-unit',
                         },
                         embed: {
-                            salesUnits: data.salesUnits
-                        }
+                            salesUnits: data.salesUnits,
+                        },
                     } only %}
                         {% block selectClass %}select-measurement-unit{% endblock %}
                         {% block options %}
@@ -81,8 +81,8 @@
                 <button type="submit" id="add-to-cart-button" class="button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
                     {% include atom('icon') with {
                         data: {
-                            name: 'cart-plus'
-                        }
+                            name: 'cart-plus',
+                        },
                     } only %}
                     {{ 'page.detail.add-to-cart' | trans }}
                 </button>
@@ -93,12 +93,12 @@
     {% if hasProductMeasurementUnit %}
         {% include molecule('measurement-quantity-selector', 'ProductMeasurementUnitWidget') with {
             data: {
-                json: data.jsonScheme
-            }
+                json: data.jsonScheme,
+            },
         } only %}
 
         <div class="text-small is-hidden measurement-unit-choice">
-            <hr />
+            <hr>
 
             <div class="measurement-unit-notifications">
                 <div id="quantity-between-units" class="is-hidden">
@@ -120,12 +120,12 @@
     {% endif %}
 
     {% if hasProductMeasurementUnit %}
-        <hr />
+        <hr>
         <button type="submit" id="add-to-cart-button" class="button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
             {% include atom('icon') with {
                 data: {
-                    name: 'cart-plus'
-                }
+                    name: 'cart-plus',
+                },
             } only %}
             {{ 'page.detail.add-to-cart' | trans }}
         </button>
