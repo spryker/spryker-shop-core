@@ -26,11 +26,13 @@
                                 {%- endblock -%}
                             </h6>
                         {% endblock %}
+
                         {% block bundleId %}
                             <small class="text-secondary">{{ 'configured_bundle.id' | trans }} {{ data.bundle.template.uuid }}</small>
                         {% endblock %}
                     </div>
                 {% endblock %}
+
                 {% block bundlePriceInformation %}
                     <div class="{{ config.name }}__col {{ config.name }}__container col col--sm-12 col--lg-5">
                         {% block bundlePriceInformationInner %}
@@ -43,6 +45,7 @@
                                                     {%- block bundlePriceTitle -%}
                                                         {{ 'configured_bundle.price' | trans }}<br>
                                                     {%- endblock -%}
+
                                                     {%- block bundlePriceText -%}
                                                         {{ 10000 | money(true, data.currencyIsoCode) }}
                                                     {%- endblock -%}
@@ -54,6 +57,7 @@
                                     {% endblock %}
                                 </div>
                             {% endblock %}
+
                             {% block bundleQuantityCol %}
                                 <div class="{{ config.name }}__col col col--sm-4 text-center">
                                     {% block bundleQuantity %}
@@ -67,6 +71,7 @@
                                     {% endblock %}
                                 </div>
                             {% endblock %}
+
                             {% block bundleTotalCol %}
                                 <div class="{{ config.name }}__col col col--sm-4 text-right">
                                     {% block bundleTotal %}
@@ -76,6 +81,7 @@
                                                     {%- block bundleTotalTitle -%}
                                                         {{ 'configured_bundle.total' | trans }}<br>
                                                     {%- endblock -%}
+
                                                     {%- block bundleTotalText -%}
                                                         {{ 100000 | money(true, data.currencyIsoCode) }}
                                                     {%- endblock -%}
@@ -111,10 +117,11 @@
             {% endblock %}
         </div>
     {% endblock %}
+
     {% set bundleActionClassName = 'float-right spacing-y' %}
-    {% block bundleAction %}
+    {% block bundleActions %}
         <a class="{{ bundleActionClassName }}" href="cart/remove" data-init-single-click>
-            {% block bundleActionInner %}
+            {% block removeLinkInner %}
                 {{- 'configured_bundle.remove' | trans | raw -}}
             {% endblock %}
         </a>

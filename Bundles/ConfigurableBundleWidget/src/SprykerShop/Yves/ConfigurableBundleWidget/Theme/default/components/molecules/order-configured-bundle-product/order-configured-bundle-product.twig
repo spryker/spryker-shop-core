@@ -19,6 +19,7 @@
                     {%- block bulletInner -%}-{%- endblock -%}
                 </span>
             {%- endblock -%}
+
             {%- block generalColInner -%}
                 <span class="{{ config.name }}__content">
                     {%- block name -%}
@@ -27,7 +28,7 @@
                     <br>
                     <small class="text-secondary">
                         {{- 'configured_bundle.item_sku' | trans }}
-                        {% block id -%}
+                        {% block sku -%}
                             {{ data.item.sku }}
                         {%- endblock -%}
                     </small>
@@ -35,19 +36,22 @@
             {%- endblock -%}
         </td>
     {% endblock %}
-    <td class="{{ config.name }}__col">
-        {%- block price -%}
-            {{ data.item.unitPrice | money(true, data.currencyIsoCode) }}
-        {%- endblock -%}
-    </td>
-    <td class="{{ config.name }}__col">
-        {%- block quantity -%}
-            {{ data.quantity }}
-        {%- endblock -%}
-    </td>
-    <td class="{{ config.name }}__col">
-        {%- block total -%}
-            {{ data.item.sumPrice | money(true, data.currencyIsoCode) }}
-        {%- endblock -%}
-    </td>
+
+    {% block secondaryCols %}
+        <td class="{{ config.name }}__col">
+            {%- block price -%}
+                {{ data.item.unitPrice | money(true, data.currencyIsoCode) }}
+            {%- endblock -%}
+        </td>
+        <td class="{{ config.name }}__col">
+            {%- block quantity -%}
+                {{ data.quantity }}
+            {%- endblock -%}
+        </td>
+        <td class="{{ config.name }}__col">
+            {%- block total -%}
+                {{ data.item.sumPrice | money(true, data.currencyIsoCode) }}
+            {%- endblock -%}
+        </td>
+    {% endblock %}
 {% endblock %}
