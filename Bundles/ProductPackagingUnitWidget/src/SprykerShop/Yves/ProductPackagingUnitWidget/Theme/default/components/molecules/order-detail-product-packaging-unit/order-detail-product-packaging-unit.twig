@@ -16,7 +16,7 @@
         {% set salesUnitQuantity = data.concreteItem.quantity / data.concreteItem.quantitySalesUnit.conversion %}
         {% set salesUnitSummary = '' %}
         {% if salesUnitName %}
-            {% set salesUnitSummary = salesUnitQuantity ~ ' ' ~ salesUnitName | trans %}
+            {% set salesUnitSummary = salesUnitQuantity | round(data.concreteItem.quantitySalesUnit.precision, 'floor') ~ ' ' ~ salesUnitName | trans %}
         {% endif %}
 
         {% set amountSalesUnitName = data.concreteItem.amountSalesUnit.productMeasurementUnit.name | default('') %}
@@ -26,9 +26,9 @@
         {{ data.concreteItem.sku }}
     </td>
     <td>
-        {{ data.concreteItem.name }}<br/>
+        {{ data.concreteItem.name }}<br>
         {% if data.concreteItem.amount and data.concreteItem.quantity %}
-            <span class="text-secondary">&times;</span> {{ data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }} (= {{ data.concreteItem.amount / data.concreteItem.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.concreteItem.quantity * data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }}
+            <span class="text-secondary">&times;</span> {{ data.concreteItem.amount / data.concreteItem.quantity }} {{ 'packaging_units.cart.item' | trans }} (= {{ (data.concreteItem.amount / data.concreteItem.quantity) / data.concreteItem.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }}
         {% endif %}
     </td>
     <td>
@@ -38,6 +38,6 @@
         {{ data.concreteItem.quantity }} {% if salesUnitSummary is defined and salesUnitSummary is not empty %}(={{ salesUnitSummary }}){% endif %}
     </td>
     <td>
-        {{ data.concreteItem.sumPriceToPayAggregation | money(true, data.currencyIsoCode) }}
+        {{ data.concreteItem.unitPriceToPayAggregation | money(true, data.currencyIsoCode) }}
     </td>
 {% endblock body %}

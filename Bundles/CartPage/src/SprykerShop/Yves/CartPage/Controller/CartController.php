@@ -86,7 +86,7 @@ class CartController extends AbstractController
 
     /**
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      * @param array $optionValueIds
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -120,12 +120,12 @@ class CartController extends AbstractController
 
     /**
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function quickAddAction(string $sku, float $quantity, Request $request): RedirectResponse
+    public function quickAddAction(string $sku, int $quantity, Request $request): RedirectResponse
     {
         if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
@@ -138,12 +138,12 @@ class CartController extends AbstractController
 
     /**
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeQuickAddAction(string $sku, float $quantity, Request $request): RedirectResponse
+    protected function executeQuickAddAction(string $sku, int $quantity, Request $request): RedirectResponse
     {
         $itemTransfer = (new ItemTransfer())
             ->setSku($sku)
@@ -189,14 +189,14 @@ class CartController extends AbstractController
 
     /**
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      * @param string|null $groupKey
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function changeAction($sku, $quantity, $groupKey = null)
     {
-        if (!$this->canChangeCartItem()) {
+        if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
@@ -242,7 +242,7 @@ class CartController extends AbstractController
 
     /**
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      * @param array $selectedAttributes
      * @param array $preselectedAttributes
      * @param string|null $groupKey
@@ -252,7 +252,7 @@ class CartController extends AbstractController
      */
     public function updateAction($sku, $quantity, array $selectedAttributes, array $preselectedAttributes, $groupKey = null, array $optionValueIds = [])
     {
-        if (!$this->canChangeCartItem()) {
+        if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
@@ -335,10 +335,16 @@ class CartController extends AbstractController
     }
 
     /**
+     * @param int|null $itemQuantity
+     *
      * @return bool
      */
-    protected function canChangeCartItem(): bool
+    protected function canChangeCartItem(?int $itemQuantity = null): bool
     {
+        if ($itemQuantity === 0) {
+            return $this->canRemoveCartItem();
+        }
+
         return $this->canPerformCartItemAction(ChangeCartItemPermissionPlugin::KEY);
     }
 

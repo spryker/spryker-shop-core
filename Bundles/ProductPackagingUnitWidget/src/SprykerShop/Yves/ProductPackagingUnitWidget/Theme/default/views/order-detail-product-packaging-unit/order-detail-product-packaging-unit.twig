@@ -2,8 +2,7 @@
 
 {% define data = {
     concreteItem: _widget.item,
-    currencyIsoCode: _widget.currencyIsoCode,
-    salesUnitQuantity: _widget.salesUnitQuantity | default(''),
+    currencyIsoCode: _widget.currencyIsoCode
 } %}
 
 {% block body %}
@@ -12,7 +11,7 @@
             {% set salesUnitName = data.concreteItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
             {% set salesUnitSummary = '' %}
             {% if salesUnitName %}
-                {% set salesUnitSummary = data.salesUnitQuantity ~ ' ' ~ salesUnitName | trans %}
+                {% set salesUnitSummary = data.concreteItem.quantity / data.concreteItem.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
             {% endif %}
 
             {% set amountSalesUnitName = data.concreteItem.amountSalesUnit.productMeasurementUnit.name | default('') %}
@@ -21,7 +20,7 @@
             {{ data.concreteItem.sku }}
         </td>
         <td>
-            {{ data.concreteItem.name }}<br/>
+            {{ data.concreteItem.name }}<br>
             {% if data.concreteItem.amount and data.concreteItem.quantity %}
                 <span class="text-secondary">&times;</span> {{ data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }} (= {{ data.concreteItem.amount / data.concreteItem.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.concreteItem.quantity * data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }}
             {% endif %}

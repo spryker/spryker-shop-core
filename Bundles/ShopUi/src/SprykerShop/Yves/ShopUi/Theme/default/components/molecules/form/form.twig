@@ -95,7 +95,7 @@
 
                 {% if data.submit.enable %}
                     {% block submit %}
-                        <button type="submit" class="{{config.name}}__action {{data.submit.class}}" {{qa(data.submit.qa)}}>
+                        <button type="submit" class="{{config.name}}__action {{data.submit.class}}" data-init-single-click {{qa(data.submit.qa)}}>
                             {% if data.submit.icon is not empty %}
                                 {% include atom('icon') with {
                                     modifiers: ['small'],

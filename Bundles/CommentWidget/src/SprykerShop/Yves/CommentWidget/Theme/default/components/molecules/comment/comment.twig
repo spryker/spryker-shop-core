@@ -1,0 +1,83 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'comment',
+} %}
+
+{% define data = {
+    comment: required,
+    availableCommentTags: required,
+    returnUrl: required,
+    idCustomer: null,
+} %}
+
+{% set shouldShowTagForm = data.comment.tagNames | length != data.availableCommentTags | length and data.idCustomer is not null %}
+
+{% block body %}
+    {% block header %}
+        <div class="grid grid--middle spacing-bottom spacing-bottom--small">
+            <span class="col col--sm-9">{{ data.comment.customer.firstName }} {{ data.comment.customer.lastName }}</span>
+
+            {% if shouldShowTagForm %}
+                {% include molecule('comment-tag-form', 'CommentWidget') with {
+                    class: 'col col--sm-3',
+                    data: {
+                        action: path('comment/tag/add', {'uuid': data.comment.uuid }),
+                        availableTags: data.availableCommentTags,
+                        tagNames: data.comment.tagNames,
+                        returnUrl: data.returnUrl,
+                    },
+                } only %}
+            {% endif %}
+        </div>
+    {% endblock %}
+
+    {% block commentCreated %}
+        <div class="grid col col--sm-12 spacing-bottom spacing-bottom--small text-secondary">
+            {{ data.comment.createdAt | formatDateTime }}
+            {% if data.comment.isUpdated %}
+                ({{ 'comment_widget.form.edited' | trans }})
+            {% endif %}
+        </div>
+    {% endblock %}
+
+    {% block comment %}
+        {% if data.idCustomer is not null and data.comment.customer.idCustomer == data.idCustomer %}
+            {% block commentUpdate %}
+                {% include molecule('comment-form', 'CommentWidget') with {
+                    data: {
+                        formView: 'update',
+                        comment: data.comment,
+                        returnUrl: data.returnUrl,
+                        idCustomer: data.idCustomer,
+                        submit: {
+                            text: 'comment_widget.form.update_comment' | trans,
+                            action: path('comment/update'),
+                        },
+                        remove: {
+                            text: 'comment_widget.form.remove_comment' | trans,
+                            action: path('comment/remove'),
+                        },
+                    },
+                } only %}
+            {% endblock %}
+        {% else %}
+            {% block commentMessage %}
+                <p>{{ data.comment.message }}</p>
+            {% endblock %}
+
+            {% block tags %}
+                {% if data.comment.tagNames is defined %}
+                    {% include molecule('tag-list', 'CommentWidget') with {
+                        data: {
+                            tagNames: data.comment.tagNames,
+                            uuid: data.comment.uuid,
+                            returnUrl: data.returnUrl,
+                            idCustomer: data.idCustomer,
+                        },
+                    } only %}
+                {% endif %}
+            {% endblock %}
+        {% endif %}
+    {% endblock %}
+{% endblock %}

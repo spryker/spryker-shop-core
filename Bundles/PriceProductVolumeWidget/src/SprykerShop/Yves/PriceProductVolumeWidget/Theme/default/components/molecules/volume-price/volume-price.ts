@@ -42,6 +42,10 @@ export default class VolumePrice extends Component {
     }
 
     protected mapEvents(): void {
+        if (!this.quantityElement) {
+            return;
+        }
+
         this.quantityElement.addEventListener('change', (event: Event) => {
             this.quantityChangeHandler(event);
         });

@@ -1,0 +1,11 @@
+@mixin shop-ui-product-item-list($name: '.product-item-list') {
+    @include shop-ui-product-item($name) {
+        flex-direction: row;
+
+        &__actions {
+            flex-grow: 0;
+        }
+
+        @content;
+    }
+}

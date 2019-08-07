@@ -7,15 +7,23 @@
 
 {% define data = {
     product: required,
-    maxQuantity: null,
+    maxQuantity: 10,
 } %}
 
+{% set options = [] %}
 {% set brand = data.product.attributes.brand | default %}
 {% set sku = data.product.sku %}
 {% set availabilityWidget = '' %}
 {% set isProductAbstract = data.product.idProductConcrete is empty %}
 {% set isDisabled = data.product.idProductConcrete is empty or data.product.price is empty %}
 {% set isProductAvailable = true %}
+
+{% for index in 1..data.maxQuantity %}
+    {% set options = options | merge([{
+        label: index,
+        value: index,
+    }]) %}
+{% endfor %}
 
 {% if widgetExists('AvailabilityWidgetPlugin') %} {# @deprecated Use molecule('availability-product', 'AvailabilityWidget') instead of AvailabilityWidgetPlugin. #}
     {% set isAvailable = widgetBlock('AvailabilityWidgetPlugin', 'isAvailable', data.product) %}
@@ -38,7 +46,7 @@
     {% endif %}
     <small>{{ 'product.attribute.sku' | trans }}: {{sku}}</small>
 
-    <hr />
+    <hr>
     {% widget 'ProductPriceVolumeWidget' args [data.product] only %}
     {% elsewidget 'PriceProductVolumeWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductPriceVolumeWidget instead. #}
     {% nowidget %}
@@ -50,7 +58,7 @@
                     data: {
                         amount: data.product.price,
                         originalAmount: data.product.prices.ORIGINAL | default,
-                    },
+                    }
                 } only %}
             </p>
         {% endif %}
@@ -72,37 +80,38 @@
             superAttributes: data.product.attributeMap.superAttributes,
             selectedAttributes: data.product.selectedAttributes,
             availableAttributes: data.product.availableAttributes,
-        },
+        }
     } only %}
-        {% block body %}<hr />{{parent()}}{% endblock %}
+        {% block body %}<hr>{{parent()}}{% endblock %}
     {% endembed %}
 
-    <hr />
+    <hr>
     <form method="POST" class="{{ config.jsName }}__form" action="{{ path("cart/add", {"sku": sku}) }}">
         {% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}
         {% elsewidget 'ProductOptionWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductOptionConfiguratorWidget instead. #}
         {% endwidget %}
 
         {% if can('SeeAddToCartPermissionPlugin') %}
-            {% widget 'ProductPackagingUnitWidget' args [data.product, isDisabled] only %}
-            {% elsewidget 'ProductPackagingUnitWidgetPlugin' args [data.product, isDisabled] only %} {# @deprecated Use ProductPackagingUnitWidget instead. #}
-            {% elsewidget 'ManageProductMeasurementUnitWidget' args [data.product, isDisabled] only %}
-            {% elsewidget 'ProductMeasurementUnitWidgetPlugin' args [data.product, isDisabled] only %} {# @deprecated Use ManageProductMeasurementUnitWidget instead. #}
+            {% widget 'ProductPackagingUnitWidget' args [data.product, isDisabled, options] only %}
+            {% elsewidget 'ProductPackagingUnitWidgetPlugin' args [data.product, isDisabled, options] only %} {# @deprecated Use ProductPackagingUnitWidget instead. #}
+            {% elsewidget 'ManageProductMeasurementUnitWidget' args [data.product, isDisabled, options] only %}
+            {% elsewidget 'ProductMeasurementUnitWidgetPlugin' args [data.product, isDisabled, options] only %} {# @deprecated Use ManageProductMeasurementUnitWidget instead. #}
             {% nowidget %}
                 <div class="grid grid--bottom grid--justify">
                     <div class="col col--sm-5">
-                        {% include molecule('quantity-input') with {
-                            inputAttributes: {
-                                class: 'input input--expand js-volume-price__quantity',
-                            },
-                            data: {
-                                maxQuantity: data.product.quantityMax,
-                                value: data.product.quantityMin ?? 1,
-                                minQuantity: data.product.quantityMin ?? 1,
-                                step: data.product.quantityInterval ?? 1,
-                                hasUpdateButton: false,
-                            },
-                        } only %}
+                        <label>
+                            {{'cart.item_quantity' | trans}}
+                            {% include atom('select') with {
+                                modifiers: ['expand'],
+                                data: {
+                                    options: options,
+                                },
+                                attributes: {
+                                    name: 'quantity',
+                                    disabled: isDisabled,
+                                },
+                            } only %}
+                        </label>
                     </div>
 
                     <div class="col col--sm-6">
@@ -142,12 +151,12 @@
     {% if can('SeeShoppingListPermissionPlugin') and isProductAvailable %}
         {% widget 'AddToShoppingListWidget' args [sku, isDisabled] only %}
             {% block body %}
-                <hr />
+                <hr>
                 {{ parent() }}
             {% endblock %}
         {% elsewidget 'ShoppingListWidgetPlugin' args [sku, isDisabled] only %} {# @deprecated Use AddToShoppingListWidget instead. #}
             {% block body %}
-                <hr />
+                <hr>
                 {{ parent() }}
             {% endblock %}
         {% endwidget %}
@@ -155,7 +164,7 @@
 
     {% if can('SeeWishlistPermissionPlugin') and isProductAvailable %}
         {% if widgetExists('WishlistWidgetPlugin') %}
-            <hr />
+            <hr>
             {{ widget('WishlistWidgetPlugin', data.product) }} {# @deprecated Use molecule('wishlist-selector', 'WishlistWidget') instead. #}
         {% else %}
             {% include molecule('wishlist-selector-for-pdp', 'WishlistWidget') ignore missing with {
