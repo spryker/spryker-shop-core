@@ -96,7 +96,11 @@
                     {% endblock %}
                 {% endfor %}
 
-                {% widget 'QuoteConfiguredBundleWidget' args [data.cart] only %}
+                {% widget 'QuoteConfiguredBundleWidget' args [data.cart] with {
+                    data: {
+                        isEditable: data.isQuoteEditable,
+                    },
+                } only %}
                 {% endwidget %}
 
                 {% block promotionalItems %}

@@ -25,7 +25,7 @@
     </td>
     <td class="{{ config.name }}__col">
         {%- block price -%}
-            {{ 1000 | money(true, data.currencyIsoCode) }}
+            {{ data.bundle.price.unitPrice | money(true, data.currencyIsoCode) }}
         {%- endblock -%}
     </td>
     <td class="{{ config.name }}__col">
@@ -35,7 +35,7 @@
     </td>
     <td class="{{ config.name }}__col">
         {%- block total -%}
-            {{ 10000 | money(true, data.currencyIsoCode) }}
+            {{ data.bundle.price.sumPrice | money(true, data.currencyIsoCode) }}
         {%- endblock -%}
     </td>
 {% endblock %}

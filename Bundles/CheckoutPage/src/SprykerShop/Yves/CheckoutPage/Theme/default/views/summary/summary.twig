@@ -118,8 +118,11 @@
                     {% endfor %}
                 </div>
             {% endif %}
-
-            {% widget 'QuoteConfiguredBundleWidget' args [data.cart] only %}
+            {% widget 'QuoteConfiguredBundleWidget' args [data.cart] with {
+                data: {
+                    isEditable: false,
+                },
+            } only %}
             {% endwidget %}
 
             {% if data.transfer.cartNote is not empty %}

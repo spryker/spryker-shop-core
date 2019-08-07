@@ -9,6 +9,7 @@
     bundle: required,
     bundleItems: data.bundle.items | default({}),
     currencyIsoCode: null,
+    isEditable: true,
 } %}
 
 {%- block extraClass %} box{% endblock -%}
@@ -47,7 +48,7 @@
                                                     {%- endblock -%}
 
                                                     {%- block bundlePriceText -%}
-                                                        {{ 10000 | money(true, data.currencyIsoCode) }}
+                                                        {{ data.bundle.price.unitPrice | money(true, data.currencyIsoCode) }}
                                                     {%- endblock -%}
                                                 {% else %}
                                                     {{ 'customer.access.cannot_see_price' | trans }}
@@ -83,7 +84,7 @@
                                                     {%- endblock -%}
 
                                                     {%- block bundleTotalText -%}
-                                                        {{ 100000 | money(true, data.currencyIsoCode) }}
+                                                        {{ data.bundle.price.sumPrice | money(true, data.currencyIsoCode) }}
                                                     {%- endblock -%}
                                                 {% else %}
                                                     {{ 'customer.access.cannot_see_price' | trans }}
@@ -120,10 +121,14 @@
 
     {% set bundleActionClassName = 'float-right spacing-y' %}
     {% block bundleActions %}
-        <a class="{{ bundleActionClassName }}" href="cart/remove" data-init-single-click>
-            {% block removeLinkInner %}
-                {{- 'configured_bundle.remove' | trans | raw -}}
+        {% if data.isEditable %}
+            {% block bundleActionsInner %}
+                <a class="{{ bundleActionClassName }}" href="{{ path('cart/configured-bundle/remove', {'configuredBundleGroupKey': data.bundle.groupKey}) }}" data-init-single-click>
+                    {% block removeLinkInner %}
+                        {{- 'configured_bundle.remove' | trans | raw -}}
+                    {% endblock %}
+                </a>
             {% endblock %}
-        </a>
+        {% endif %}
     {% endblock %}
 {% endblock %}
