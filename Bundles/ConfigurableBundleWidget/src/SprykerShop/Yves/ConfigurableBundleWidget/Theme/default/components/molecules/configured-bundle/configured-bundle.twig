@@ -47,7 +47,7 @@
                                                         {{ 'configured_bundle.price' | trans }}<br>
                                                     {%- endblock -%}
 
-                                                    {%- block bundlePriceText -%}
+                                                    {%- block bundlePriceValue -%}
                                                         {{ data.bundle.price.unitPrice | money(true, data.currencyIsoCode) }}
                                                     {%- endblock -%}
                                                 {% else %}
