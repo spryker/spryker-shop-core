@@ -3,7 +3,7 @@
 {% define data = {
     items: _widget.items,
     salesOrderConfiguredBundles: _widget.order.salesOrderConfiguredBundles,
-    currencyIsoCode: null,
+    currencyIsoCode: _widget.order.currencyIsoCode,
 } %}
 
 {% set extraClassesConfiguredBundle = 'table__row table__row--backgroungless' %}
@@ -32,7 +32,7 @@
                 class: extraClassesConfiguredBundleProduct,
                 data: {
                     item: data.items[item.IdSalesOrderItem],
-                    quantity: data.items[item.IdSalesOrderItem].quantity / bundle.quantity,
+                    quantity: data.items[item.IdSalesOrderItem].quantity,
                     currencyIsoCode: data.currencyIsoCode,
                 },
             } only %}
