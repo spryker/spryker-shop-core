@@ -9,18 +9,8 @@
         &__container {
             position: relative;
             display: flex;
-
-            @include helper-breakpoint(lg) {
-                justify-content: space-between;
-            }
-
-            &--mobile-column {
-                flex-direction: column;
-
-                @include helper-breakpoint(lg) {
-                    flex-direction: initial;
-                }
-            }
+            justify-content: space-between;
+            align-items: center;
         }
 
         &__col {

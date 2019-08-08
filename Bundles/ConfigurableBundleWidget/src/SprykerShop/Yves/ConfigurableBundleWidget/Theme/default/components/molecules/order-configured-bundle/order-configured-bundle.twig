@@ -16,23 +16,9 @@
         {%- block name -%}
             {{ data.bundle.name | trans }}
         {%- endblock -%}
-        <br>
-        <small class="text-secondary">
-            {%- block id -%}
-                {{ 'configured_bundle.id' | trans }} {{ data.bundle.configurableBundleTemplateUuid }}
-            {%- endblock -%}
-        </small>
     </td>
-    <td class="{{ config.name }}__col">
-        {%- block price -%}
-            {{ data.bundle.price.unitPrice | money(true, data.currencyIsoCode) }}
-        {%- endblock -%}
-    </td>
-    <td class="{{ config.name }}__col">
-        {%- block quantity -%}
-            {{ data.bundle.quantity }}
-        {%- endblock -%}
-    </td>
+    <td class="{{ config.name }}__col"></td>
+    <td class="{{ config.name }}__col"></td>
     <td class="{{ config.name }}__col">
         {%- block total -%}
             {{ data.bundle.price.sumPrice | money(true, data.currencyIsoCode) }}
