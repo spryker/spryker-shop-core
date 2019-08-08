@@ -82,7 +82,8 @@
                         } only %}
                     </div>
                 {% endif %}
-                {% for cartItem in data.cartItems %}
+
+                {% for cartItem in data.cartItems if not cartItem.configuredBundleItem %}
                     {% block cartItem %}
                         {% include molecule('product-cart-item', 'CartPage') with {
                             data: {
@@ -94,6 +95,13 @@
                         } only %}
                     {% endblock %}
                 {% endfor %}
+
+                {% widget 'QuoteConfiguredBundleWidget' args [data.cart] with {
+                    data: {
+                        isEditable: data.isQuoteEditable,
+                    },
+                } only %}
+                {% endwidget %}
 
                 {% block promotionalItems %}
                     {% if data.isQuoteEditable %}

@@ -24,7 +24,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in data.items %}
+            {% for item in data.items if not item.salesOrderConfiguredBundleItem %}
                 {% set isBundle = item.bundleItems is defined %}
                 {% set concreteItem = item.bundleProduct | default(item) %}
 
@@ -126,6 +126,9 @@
                     {% endif %}
                 {% endif %}
             {% endfor %}
+
+            {% widget 'OrderConfiguredBundleWidget' args [data.order] only %}
+            {% endwidget %}
         </tbody>
     </table>
 {% endblock %}
