@@ -83,7 +83,7 @@
                                                         {{ 'configured_bundle.total' | trans }}<br>
                                                     {%- endblock -%}
 
-                                                    {%- block bundleTotalText -%}
+                                                    {%- block bundleTotalValue -%}
                                                         {{ data.bundle.price.sumPrice | money(true, data.currencyIsoCode) }}
                                                     {%- endblock -%}
                                                 {% else %}
