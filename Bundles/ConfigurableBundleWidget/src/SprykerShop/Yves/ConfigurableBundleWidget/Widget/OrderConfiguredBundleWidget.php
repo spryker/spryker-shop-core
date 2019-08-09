@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ConfigurableBundleWidget\Widget;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
@@ -62,7 +61,7 @@ class OrderConfiguredBundleWidget extends AbstractWidget
      */
     protected function addItemsParameter(OrderTransfer $orderTransfer): void
     {
-        $this->addParameter(static::PARAMETER_ITEMS, $this->mapOrederItems($orderTransfer));
+        $this->addParameter(static::PARAMETER_ITEMS, $this->mapOrderItems($orderTransfer));
     }
 
     /**
@@ -70,7 +69,7 @@ class OrderConfiguredBundleWidget extends AbstractWidget
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function mapOrederItems(OrderTransfer $orderTransfer): array
+    protected function mapOrderItems(OrderTransfer $orderTransfer): array
     {
         $items = [];
 
