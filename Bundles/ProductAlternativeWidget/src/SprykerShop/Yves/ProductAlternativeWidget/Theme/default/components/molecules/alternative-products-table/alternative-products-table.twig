@@ -68,7 +68,7 @@
                 {% endif %}
             </td>
             <td>
-                <input class="input" disabled type="number" value="{{ data.item.quantity }}"/>
+                <input class="input" disabled type="number" value="{{ data.item.quantity }}">
             </td>
             <td>
                 <a class="button button--success" href="{{ url('shopping-list/add-item', {quantity: data.item.quantity, sku: item.sku, idShoppingList: data.shoppingList.idShoppingList}) }}">

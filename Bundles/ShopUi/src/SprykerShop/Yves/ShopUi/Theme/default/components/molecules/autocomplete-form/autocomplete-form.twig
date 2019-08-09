@@ -55,12 +55,12 @@
                        class="input input--expand {{ config.jsName }}__text-input"
                        placeholder="{{ data.placeholder | trans }}"
                        value="{{ data.value }}"
-                       autocomplete="off" />
+                       autocomplete="off">
 
                 <input {% if data.name is not empty %}name="{{data.name}}"{% endif %}
                        type="hidden"
                        class="{{ config.jsName }}__value-input"
-                       value="{{ data.hiddenValue }}"/>
+                       value="{{ data.hiddenValue }}">
             </div>
 
             {% if data.showCleanButton %}

@@ -48,7 +48,7 @@
                             <div><small>{{ item.sku }}</small></div>
                             {% for attribute in item.superAttributesDefinition %}
                                 {% if item.attributes[attribute] is defined %}
-                                    {{ ('product.attribute.'~attribute) | trans }}: {{ item.attributes[attribute] }} <br/>
+                                    {{ ('product.attribute.'~attribute) | trans }}: {{ item.attributes[attribute] }} <br>
                                 {% endif %}
                             {% endfor %}
                             <span class="text-alert">{{ 'product_alternative_widget.alternative_for' | trans({name: data.item.name}) }}</span>

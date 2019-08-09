@@ -9,14 +9,14 @@
     <div class="box">
         <h4>{{ 'customer.account.wishlist.overview.title' | trans }}</h4>
 
-        <hr />
+        <hr class="box__separator">
         {% include molecule('add-wishlist', 'WishlistPage') with {
             data: {
                 wishlistForm: data.wishlistForm
             }
         }  only %}
 
-        <hr />
+        <hr class="box__separator">
         {% if data.wishlists is empty %}
             <div class="text-center">
                 <h6>{{ 'customer.account.wishlist.overview.empty' | trans }}</h6>

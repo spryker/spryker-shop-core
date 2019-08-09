@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\ShopTranslator\Dependency\Client;
 
+/**
+ * @deprecated Use `spryker/translator` instead.
+ */
 interface ShopTranslatorToGlossaryStorageClientInterface
 {
     /**

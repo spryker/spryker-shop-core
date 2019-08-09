@@ -43,7 +43,7 @@
                 } only %}
             </div>
             <div class="col col--sm-6">
-                <input type="hidden" name="sku" value="{{ data.sku }}" />
+                <input type="hidden" name="sku" value="{{ data.sku }}">
 
                 {% include molecule('form-data-injector', 'ShoppingListWidget') with {
                     attributes: {
