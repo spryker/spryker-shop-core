@@ -20,7 +20,7 @@ class NewsletterSubscriptionForm extends AbstractType
     public const FIELD_SUBSCRIBE = 'subscribe';
     public const FORM_ID = 'subscription';
 
-    protected const MAX_COUNT_CHARACTERS_EMAIL = 64;
+    protected const MAX_EMAIL_LENGTH_VALUE = 64;
 
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
     protected const VALIDATION_EMAIL_MESSAGE = 'validation.email';
@@ -102,6 +102,6 @@ class NewsletterSubscriptionForm extends AbstractType
      */
     protected function createLengthConstraint(): Length
     {
-        return new Length(['max' => static::MAX_COUNT_CHARACTERS_EMAIL]);
+        return new Length(['max' => static::MAX_EMAIL_LENGTH_VALUE]);
     }
 }
