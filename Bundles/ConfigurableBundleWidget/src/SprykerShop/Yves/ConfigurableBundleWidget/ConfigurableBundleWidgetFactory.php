@@ -8,10 +8,13 @@
 namespace SprykerShop\Yves\ConfigurableBundleWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ConfigurableBundleWidget\Calculator\ConfiguredBundlePriceCalculator;
+use SprykerShop\Yves\ConfigurableBundleWidget\Calculator\ConfiguredBundlePriceCalculatorInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToCartClientInterface;
-use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToConfigurableBundleClientInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToQuoteClientInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToZedRequestClientInterface;
+use SprykerShop\Yves\ConfigurableBundleWidget\Mapper\ConfiguredBundleMapper;
+use SprykerShop\Yves\ConfigurableBundleWidget\Mapper\ConfiguredBundleMapperInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Reader\QuoteReader;
 use SprykerShop\Yves\ConfigurableBundleWidget\Reader\QuoteReaderInterface;
 
@@ -30,20 +33,27 @@ class ConfigurableBundleWidgetFactory extends AbstractFactory
         );
     }
 
+    public function createConfiguredBundleMapper(): ConfiguredBundleMapperInterface
+    {
+        return new ConfiguredBundleMapper(
+            $this->createConfiguredBundlePriceCalculator()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ConfigurableBundleWidget\Calculator\ConfiguredBundlePriceCalculatorInterface
+     */
+    public function createConfiguredBundlePriceCalculator(): ConfiguredBundlePriceCalculatorInterface
+    {
+        return new ConfiguredBundlePriceCalculator();
+    }
+
     /**
      * @return \SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToZedRequestClientInterface
      */
     public function getZedRequestClient(): ConfigurableBundleWidgetToZedRequestClientInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleWidgetDependencyProvider::CLIENT_ZED_REQUEST);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToConfigurableBundleClientInterface
-     */
-    public function getConfigurableBundleClient(): ConfigurableBundleWidgetToConfigurableBundleClientInterface
-    {
-        return $this->getProvidedDependency(ConfigurableBundleWidgetDependencyProvider::CLIENT_CONFIGURABLE_BUNDLE);
     }
 
     /**

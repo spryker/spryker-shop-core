@@ -65,7 +65,7 @@ class OrderConfiguredBundleWidget extends AbstractWidget
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */

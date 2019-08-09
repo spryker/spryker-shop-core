@@ -79,13 +79,13 @@
                                 {% block total %}
                                     <strong class="{{ config.name }}__text">
                                         {% block totalInner %}
-                                            {% if can('SeePricePermissionPlugin') and data.product.sumPrice %}
+                                            {% if can('SeePricePermissionPlugin') and data.product.sumSubtotalAggregation %}
                                                 {%- block totalTitle -%}
                                                     {{ 'configured_bundle.total' | trans }}
                                                 {% endblock %}
 
                                                 {%- block totalValue -%}
-                                                    {{ data.product.sumPrice | money(true, data.currencyIsoCode) }}
+                                                    {{ data.product.sumSubtotalAggregation | money(true, data.currencyIsoCode) }}
                                                 {% endblock %}
                                             {% else %}
                                                 {{ 'customer.access.cannot_see_price' | trans }}

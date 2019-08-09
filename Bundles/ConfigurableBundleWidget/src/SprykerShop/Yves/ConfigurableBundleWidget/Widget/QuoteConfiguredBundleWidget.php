@@ -26,8 +26,8 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
     public function __construct(QuoteTransfer $quoteTransfer)
     {
         $configuredBundleCollectionTransfer = $this->getFactory()
-            ->getConfigurableBundleClient()
-            ->getConfiguredBundlesFromQuote($quoteTransfer);
+            ->createConfiguredBundleMapper()
+            ->mapQuoteToConfiguredBundles($quoteTransfer);
 
         $this->addQuoteParameter($quoteTransfer);
         $this->addConfiguredBundlesParameter($configuredBundleCollectionTransfer);

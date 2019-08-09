@@ -50,7 +50,7 @@
         </td>
         <td class="{{ config.name }}__col">
             {%- block total -%}
-                {{ data.item.sumPrice | money(true, data.currencyIsoCode) }}
+                {{ data.item.unitPriceToPayAggregation | money(true, data.currencyIsoCode) }}
             {%- endblock -%}
         </td>
     {% endblock %}

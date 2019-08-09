@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client;
+namespace SprykerShop\Yves\ConfigurableBundleWidget\Mapper;
 
 use Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface ConfigurableBundleWidgetToConfigurableBundleClientInterface
+interface ConfiguredBundleMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer
      */
-    public function getConfiguredBundlesFromQuote(QuoteTransfer $quoteTransfer): ConfiguredBundleCollectionTransfer;
+    public function mapQuoteToConfiguredBundles(QuoteTransfer $quoteTransfer): ConfiguredBundleCollectionTransfer;
 }

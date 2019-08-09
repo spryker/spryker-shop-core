@@ -21,7 +21,7 @@
     <td class="{{ config.name }}__col"></td>
     <td class="{{ config.name }}__col">
         {%- block total -%}
-            {{ data.bundle.price.sumPrice | money(true, data.currencyIsoCode) }}
+            {{ data.bundle.price.unitPriceToPayAggregation | money(true, data.currencyIsoCode) }}
         {%- endblock -%}
     </td>
 {% endblock %}
