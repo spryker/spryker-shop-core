@@ -6,7 +6,7 @@
 } %}
 
 {% define data = {
-    cartQuantity: cartQuantity is defined ? cartQuantity : app['cart.quantity'] | default,
+    cartQuantity: functionExists('getCartQuantity') ? getCartQuantity() : (cartQuantity is defined ? cartQuantity : app['cart.quantity'] | default),
     showUserMenu: not (hideUserMenu | default(false)),
     isInline: true,
     withSeparators: true,
