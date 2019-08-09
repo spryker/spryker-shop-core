@@ -33,7 +33,6 @@
 /**
  * @deprecated use price-product-volume-widget-volume-price mixin instead.
  */
-
 @mixin shop-ui-volume-price($name: '.volume-price') {
     @include price-product-volume-widget-volume-price();
 

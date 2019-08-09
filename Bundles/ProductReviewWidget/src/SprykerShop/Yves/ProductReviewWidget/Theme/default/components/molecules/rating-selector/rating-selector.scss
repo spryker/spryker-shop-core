@@ -78,7 +78,6 @@ $product-review-rating-selector-icon-size: 20px;
 /**
  * @deprecated use product-review-widget-rating-selector mixin instead.
  */
-
 @mixin product-review-rating-selector($name: '.packaging-unit-cart') {
     @include product-review-widget-rating-selector();
 

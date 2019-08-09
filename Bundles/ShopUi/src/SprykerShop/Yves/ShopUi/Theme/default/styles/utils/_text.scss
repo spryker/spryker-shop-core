@@ -1,7 +1,6 @@
 /**
  * Provides global class names for text styling.
  */
-
 @mixin util-text() {
     .text-small {
         @include helper-font-size(small);
@@ -46,7 +45,6 @@
  * @param {Color} $setting-color-action Sets color property.
  * @content Extendable mixin.
  */
-
 @mixin util-text-action($action, $setting-color-action) {
     .text-#{$action} {
         color: $setting-color-action;

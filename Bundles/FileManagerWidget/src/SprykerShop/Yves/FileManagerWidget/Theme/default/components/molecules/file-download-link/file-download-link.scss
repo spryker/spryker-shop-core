@@ -57,7 +57,6 @@
 /**
  * @deprecated use file-manager-widget-file-download-link mixin instead.
  */
-
 @mixin file-download-link($name: '.file-download-link') {
     @include file-manager-widget-file-download-link();
 

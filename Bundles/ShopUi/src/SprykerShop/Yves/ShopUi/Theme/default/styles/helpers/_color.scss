@@ -3,7 +3,6 @@
  * @param {Color} $setting-color
  * @param {Number} $degree [10]
  */
-
 @function helper-color-dark($setting-color, $degree: 10) {
     @return darken($setting-color, $degree);
 }
@@ -13,7 +12,6 @@
  * @param {Color} $setting-color
  * @param {Number} $degree [10]
  */
-
 @function helper-color-light($setting-color, $degree: 35) {
     @return lighten($setting-color, $degree);
 }

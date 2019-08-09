@@ -31,7 +31,6 @@
 /**
  * @deprecated use price-product-volume-widget-volume-price-table mixin instead.
  */
-
 @mixin shop-ui-volume-price-table($name: '.volume-price-table') {
     @include price-product-volume-widget-volume-price-table();
 

@@ -16,7 +16,6 @@
 /**
  * @deprecated use company-user-agent-widget-company-user-list mixin instead.
  */
-
 @mixin agent-widget-company-user-list($name: '.company-user-list') {
     @include company-user-agent-widget-company-user-list();
 

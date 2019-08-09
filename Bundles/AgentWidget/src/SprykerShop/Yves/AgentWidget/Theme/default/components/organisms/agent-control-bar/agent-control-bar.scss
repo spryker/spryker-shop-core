@@ -10,7 +10,6 @@
 /**
  * @deprecated use agent-widget-agent-control-bar mixin instead.
  */
-
 @mixin agent-control-bar($name: '.agent-control-bar') {
     @include agent-widget-agent-control-bar();
 

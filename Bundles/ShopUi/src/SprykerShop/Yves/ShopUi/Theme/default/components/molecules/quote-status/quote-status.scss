@@ -1,5 +1,4 @@
 /* fe-sniffer:disabled correct-scss-component-structure */
-
 @mixin shop-ui-quote-status($name: '.quote-status') {
     #{$name} {
         border-radius: 1rem;
@@ -35,7 +34,6 @@
 /**
  * @deprecated use shop-ui-quote-status-color mixin instead.
  */
-
 @mixin status-color($action-color, $opacity: 1) {
     @include shop-ui-quote-status-color($action-color, $opacity);
 

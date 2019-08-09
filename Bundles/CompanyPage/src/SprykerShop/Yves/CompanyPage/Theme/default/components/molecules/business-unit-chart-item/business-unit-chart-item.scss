@@ -20,7 +20,6 @@
 /**
  * @deprecated use company-page-business-unit-chart-item mixin instead.
  */
-
 @mixin business-unit-chart-item($name: '.business-unit-chart-item') {
     @include company-page-business-unit-chart-item();
 

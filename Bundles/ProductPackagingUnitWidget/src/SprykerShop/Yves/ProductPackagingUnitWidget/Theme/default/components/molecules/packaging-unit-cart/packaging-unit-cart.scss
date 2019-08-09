@@ -5,7 +5,7 @@
                 margin-bottom: map-get($setting-spacing, 'small');
             }
         }
-        
+
         &__value {
             padding: 0.25rem 0.5rem;
             border: 1px solid $setting-color-input-border;
@@ -18,7 +18,6 @@
 /**
  * @deprecated use product-packaging-unit-widget-packaging-unit-cart mixin instead.
  */
-
 @mixin product-packaging-unit-packaging-unit-cart($name: '.packaging-unit-cart') {
     @include product-packaging-unit-widget-packaging-unit-cart();
 

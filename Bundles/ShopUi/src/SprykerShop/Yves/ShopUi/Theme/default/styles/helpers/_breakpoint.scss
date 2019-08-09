@@ -3,7 +3,6 @@
  * @param {List} $edges [$setting-breakpoints] List length must be less than or equal to 2.
  * @return {Base}
  */
-
 @function helper-breakpoint-edge-min($edges) {
     @if length($edges) > 0 {
         @return nth($edges, 1);
@@ -17,7 +16,6 @@
  * @param {List} $edges [$setting-breakpoints] List length must be less than or equal to 2.
  * @return {Base}
  */
-
 @function helper-breakpoint-edge-max($edges) {
     @if length($edges) > 1 {
         @return nth($edges, 2);
@@ -31,7 +29,6 @@
  * @param $min {Number} [0]
  * @content Extends mixin with properties for media query.
  */
-
 @mixin helper-breakpoint-media-min($min: 0) {
     @media only screen and (min-width: $min) {
         @content;
@@ -44,7 +41,6 @@
  * @param {Number} $max [$setting-grid-max-width]
  * @content Extends mixin with properties for media query.
  */
-
 @mixin helper-breakpoint-media-between($min: 0, $max: $setting-grid-max-width) {
     @media only screen and (min-width: $min) and (max-width: $max) {
         @content;
@@ -56,7 +52,6 @@
  * @param {Number} $max [$setting-grid-max-width]
  * @content Extends mixin with properties for media query.
  */
-
 @mixin helper-breakpoint-media-max($max: $setting-grid-max-width) {
     @media only screen and (max-width: $max) {
         @content;
@@ -69,7 +64,6 @@
  * @param {Number} $max [$setting-grid-max-width]
  * @content Extends mixin with properties for media query.
  */
-
 @mixin helper-breakpoint($min-bp, $max-bp: null) {
     $edges-min: map-get($setting-breakpoints, $min-bp);
     $edge-min: helper-breakpoint-edge-min($edges-min);
