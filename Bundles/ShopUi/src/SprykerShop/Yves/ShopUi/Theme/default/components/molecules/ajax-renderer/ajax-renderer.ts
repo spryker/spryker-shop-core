@@ -7,8 +7,12 @@ export default class AjaxRenderer extends Component {
     protected target: HTMLElement;
 
     protected readyCallback(): void {
-        this.provider = <AjaxProvider>document.querySelector(this.providerSelector);
-        this.target = !!this.targetSelector ? <HTMLElement>document.querySelector(this.targetSelector) : undefined;
+        /* tslint:disable: deprecation */
+        this.provider = <AjaxProvider> (this.providerClassName ?
+            document.getElementsByClassName(this.providerClassName)[0] : document.querySelector(this.providerSelector));
+        this.target = <HTMLElement> (this.targetClassName ?
+            document.getElementsByClassName(this.targetClassName)[0] : document.querySelector(this.targetSelector));
+        /* tslint:enable: deprecation */
         this.mapEvents();
     }
 
@@ -30,7 +34,7 @@ export default class AjaxRenderer extends Component {
             return;
         }
 
-        if (!!this.target) {
+        if (this.target) {
             this.target.innerHTML = response;
 
             return;
@@ -41,16 +45,26 @@ export default class AjaxRenderer extends Component {
 
     /**
      * Gets a querySelector name of the provider element.
+     *
+     * @deprecated Use providerClassName() instead.
      */
     get providerSelector(): string {
         return this.getAttribute('provider-selector');
     }
+    protected get providerClassName(): string {
+        return this.getAttribute('provider-class-name');
+    }
 
     /**
      * Gets a querySelector name of the target element.
+     *
+     * @deprecated Use targetClassName() instead.
      */
     get targetSelector(): string {
         return this.getAttribute('target-selector');
+    }
+    protected get targetClassName(): string {
+        return this.getAttribute('target-class-name');
     }
 
     /**

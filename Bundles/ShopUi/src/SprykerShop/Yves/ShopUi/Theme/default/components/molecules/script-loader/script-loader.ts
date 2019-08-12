@@ -31,7 +31,7 @@ export default class ScriptLoader extends Component {
             return;
         }
 
-        this.head = <HTMLHeadElement>document.querySelector('head');
+        this.head = <HTMLHeadElement>document.getElementsByTagName('head')[0];
         this.script = <HTMLScriptElement>document.createElement('script');
 
         this.mapEvents();
