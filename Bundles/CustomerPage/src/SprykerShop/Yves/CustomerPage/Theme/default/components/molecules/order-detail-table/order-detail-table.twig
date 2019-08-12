@@ -24,7 +24,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in data.items if not item.salesOrderConfiguredBundleItem|default %}
+            {% for item in data.items if not item.salesOrderConfiguredBundleItem | default %}
                 {% set isBundle = item.bundleItems is defined %}
                 {% set concreteItem = item.bundleProduct | default(item) %}
 
