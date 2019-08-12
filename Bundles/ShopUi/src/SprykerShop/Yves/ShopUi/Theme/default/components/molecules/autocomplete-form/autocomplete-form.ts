@@ -49,11 +49,11 @@ export default class AutocompleteForm extends Component {
     lastSelectedItem: HTMLElement;
 
     protected readyCallback(): void {
-        this.ajaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider`);
-        this.textInput = <HTMLInputElement>this.querySelector(`.${this.jsName}__text-input`);
-        this.valueInput = <HTMLInputElement>this.querySelector(`.${this.jsName}__value-input`);
-        this.suggestionsContainer = <HTMLElement>this.querySelector(`.${this.jsName}__suggestions`);
-        this.cleanButton = <HTMLButtonElement>this.querySelector(`.${this.jsName}__clean-button`);
+        this.ajaxProvider = <AjaxProvider>this.getElementsByClassName(`${this.jsName}__provider`)[0];
+        this.textInput = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__text-input`)[0];
+        this.valueInput = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__value-input`)[0];
+        this.suggestionsContainer = <HTMLElement>this.getElementsByClassName(`${this.jsName}__suggestions`)[0];
+        this.cleanButton = <HTMLButtonElement>this.getElementsByClassName(`${this.jsName}__clean-button`)[0];
 
         if (this.autoInitEnabled) {
             this.autoLoadInit();
@@ -123,7 +123,10 @@ export default class AutocompleteForm extends Component {
         this.showSuggestions();
         this.ajaxProvider.queryParams.set(this.queryString, this.inputText);
         await this.ajaxProvider.fetch();
-        this.suggestionItems = Array.from(this.suggestionsContainer.querySelectorAll(this.suggestedItemSelector));
+        /* tslint:disable: deprecation */
+        this.suggestionItems = <HTMLElement[]>Array.from(this.suggestionsContainer.getElementsByClassName(
+            this.suggestedItemClassName || this.suggestedItemSelector));
+        /* tslint:enable: deprecation */
         this.lastSelectedItem = this.suggestionItems[0];
         this.mapSuggestionItemsEvents();
         this.dispatchCustomEvent(Events.FETCHED);
@@ -198,7 +201,9 @@ export default class AutocompleteForm extends Component {
      * Gets the css query selector of the selected suggestion items.
      */
     get selectedInputClass(): string {
-        return `${this.suggestedItemSelector}--selected`.substr(1);
+        /* tslint:disable: deprecation */
+        return `${this.suggestedItemClassName || this.suggestedItemSelector}--selected`.substr(1);
+        /* tslint:enable: deprecation */
     }
 
     /**
@@ -246,9 +251,14 @@ export default class AutocompleteForm extends Component {
 
     /**
      * Gets the css query selector of the suggestion items.
+     *
+     * @deprecated Use suggestedItemClassName() instead.
      */
     get suggestedItemSelector(): string {
         return this.getAttribute('suggested-item-selector');
+    }
+    protected get suggestedItemClassName(): string {
+        return this.getAttribute('suggested-item-class-name');
     }
 
     /**
