@@ -11,7 +11,7 @@
 
 {% block body %}
     {% for bundle in data.salesOrderConfiguredBundles %}
-        {% include molecule('order-configured-bundle', 'ConfigurableBundleWidget') with {
+        {% include molecule('order-configured-bundle', 'SalesConfigurableBundleWidget') with {
             class: extraClassesConfiguredBundle,
             data: {
                 bundle: bundle,
@@ -28,7 +28,7 @@
         {% endblock %}
 
         {% for item in bundle.salesOrderConfiguredBundleItems if data.items[item.IdSalesOrderItem] is defined %}
-            {% include molecule('order-configured-bundle-product', 'ConfigurableBundleWidget') with {
+            {% include molecule('order-configured-bundle-product', 'SalesConfigurableBundleWidget') with {
                 class: extraClassesConfiguredBundleProduct,
                 data: {
                     item: data.items[item.IdSalesOrderItem],

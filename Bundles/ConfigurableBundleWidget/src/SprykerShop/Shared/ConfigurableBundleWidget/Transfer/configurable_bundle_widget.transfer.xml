@@ -5,22 +5,12 @@
 
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item" />
-        <property name="customer" type="Customer" />
-    </transfer>
-
-    <transfer name="Customer">
-        <property name="idCustomer" type="int" />
     </transfer>
 
     <transfer name="Item">
         <property name="configuredBundleItem" type="ConfiguredBundleItem" />
         <property name="configuredBundle" type="ConfiguredBundle" />
-        <property name="salesOrderConfiguredBundleItem" type="SalesOrderConfiguredBundleItem" />
         <property name="sumSubtotalAggregation" type="int" />
-    </transfer>
-
-    <transfer name="Order">
-        <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle" />
     </transfer>
 
     <transfer name="ConfiguredBundleCollection">
@@ -53,17 +43,6 @@
     <transfer name="ConfigurableBundleTemplateSlot">
         <property name="idConfigurableBundleTemplateSlot" type="int" />
         <property name="uuid" type="string" />
-    </transfer>
-
-    <transfer name="SalesOrderConfiguredBundle">
-        <property name="name" type="string" />
-        <property name="quantity" type="int" />
-        <property name="price" type="ConfiguredBundlePrice" />
-        <property name="salesOrderConfiguredBundleItems" type="SalesOrderConfiguredBundleItem[]" singular="salesOrderConfiguredBundleItem" />
-    </transfer>
-
-    <transfer name="SalesOrderConfiguredBundleItem">
-        <property name="idSalesOrderItem" type="int" />
     </transfer>
 
 </transfers>

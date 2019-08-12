@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ConfigurableBundleWidget\Widget;
+namespace SprykerShop\Yves\SalesConfigurableBundleWidget\Widget;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
- * @method \SprykerShop\Yves\ConfigurableBundleWidget\ConfigurableBundleWidgetFactory getFactory()
- * @method \SprykerShop\Yves\ConfigurableBundleWidget\ConfigurableBundleWidgetConfig getConfig()
+ * @method \SprykerShop\Yves\SalesConfigurableBundleWidget\SalesConfigurableBundleWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\SalesConfigurableBundleWidget\SalesConfigurableBundleWidgetConfig getConfig()
  */
 class OrderConfiguredBundleWidget extends AbstractWidget
 {
@@ -41,7 +41,7 @@ class OrderConfiguredBundleWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ConfigurableBundleWidget/views/order-configured-bundle-widget/order-configured-bundle-widget.twig';
+        return '@SalesConfigurableBundleWidget/views/order-configured-bundle-widget/order-configured-bundle-widget.twig';
     }
 
     /**
