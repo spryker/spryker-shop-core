@@ -33,6 +33,9 @@ class ConfigurableBundleWidgetFactory extends AbstractFactory
         );
     }
 
+    /**
+     * @return \SprykerShop\Yves\ConfigurableBundleWidget\Mapper\ConfiguredBundleMapperInterface
+     */
     public function createConfiguredBundleMapper(): ConfiguredBundleMapperInterface
     {
         return new ConfiguredBundleMapper(
