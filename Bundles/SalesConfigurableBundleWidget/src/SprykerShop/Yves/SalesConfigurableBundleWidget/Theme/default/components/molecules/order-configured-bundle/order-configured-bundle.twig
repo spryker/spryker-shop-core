@@ -7,6 +7,7 @@
 
 {% define data = {
     bundle: required,
+    items: required,
     currencyIsoCode: null,
 } %}
 
@@ -21,7 +22,14 @@
     <td class="{{ config.name }}__col"></td>
     <td class="{{ config.name }}__col">
         {%- block total -%}
-            {{ data.bundle.price.unitPriceToPayAggregation | money(true, data.currencyIsoCode) }}
+            {% set bundleUnitPriceToPayAggregation = 0 %}
+
+            {% for item in data.bundle.salesOrderConfiguredBundleItems if data.items[item.IdSalesOrderItem] is defined %}
+                {% set product = data.items[item.IdSalesOrderItem] %}
+                {% set bundleUnitPriceToPayAggregation = bundleUnitPriceToPayAggregation + product.unitPriceToPayAggregation %}
+            {% endfor %}
+
+            {{ bundleUnitPriceToPayAggregation | money(true, data.currencyIsoCode) }}
         {%- endblock -%}
     </td>
 {% endblock %}

@@ -12,23 +12,9 @@ use Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use SprykerShop\Yves\ConfigurableBundleWidget\Calculator\ConfiguredBundlePriceCalculatorInterface;
 
 class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
 {
-    /**
-     * @var \SprykerShop\Yves\ConfigurableBundleWidget\Calculator\ConfiguredBundlePriceCalculatorInterface
-     */
-    protected $configuredBundlePriceCalculator;
-
-    /**
-     * @param \SprykerShop\Yves\ConfigurableBundleWidget\Calculator\ConfiguredBundlePriceCalculatorInterface $configuredBundlePriceCalculator
-     */
-    public function __construct(ConfiguredBundlePriceCalculatorInterface $configuredBundlePriceCalculator)
-    {
-        $this->configuredBundlePriceCalculator = $configuredBundlePriceCalculator;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -43,8 +29,6 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
                 $configuredBundleTransfers = $this->mapConfiguredBundle($itemTransfer, $configuredBundleTransfers);
             }
         }
-
-        $configuredBundleTransfers = $this->expandConfiguredBundlesWithPrices($configuredBundleTransfers);
 
         return (new ConfiguredBundleCollectionTransfer())
             ->setConfiguredBundles(new ArrayObject(array_values($configuredBundleTransfers)));
@@ -80,22 +64,6 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
         }
 
         $configuredBundleTransfers[$configuredBundleTransfer->getGroupKey()]->addItem($itemTransfer);
-
-        return $configuredBundleTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer[] $configuredBundleTransfers
-     *
-     * @return \Generated\Shared\Transfer\ConfiguredBundleTransfer[]
-     */
-    protected function expandConfiguredBundlesWithPrices(array $configuredBundleTransfers): array
-    {
-        foreach ($configuredBundleTransfers as $configuredBundleTransfer) {
-            $configuredBundleTransfer->setPrice(
-                $this->configuredBundlePriceCalculator->calculateConfiguredBundlePrice($configuredBundleTransfer)
-            );
-        }
 
         return $configuredBundleTransfers;
     }

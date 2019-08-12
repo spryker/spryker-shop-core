@@ -8,8 +8,6 @@
 namespace SprykerShop\Yves\ConfigurableBundleWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ConfigurableBundleWidget\Calculator\ConfiguredBundlePriceCalculator;
-use SprykerShop\Yves\ConfigurableBundleWidget\Calculator\ConfiguredBundlePriceCalculatorInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToCartClientInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToQuoteClientInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToZedRequestClientInterface;
@@ -38,17 +36,7 @@ class ConfigurableBundleWidgetFactory extends AbstractFactory
      */
     public function createConfiguredBundleMapper(): ConfiguredBundleMapperInterface
     {
-        return new ConfiguredBundleMapper(
-            $this->createConfiguredBundlePriceCalculator()
-        );
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ConfigurableBundleWidget\Calculator\ConfiguredBundlePriceCalculatorInterface
-     */
-    public function createConfiguredBundlePriceCalculator(): ConfiguredBundlePriceCalculatorInterface
-    {
-        return new ConfiguredBundlePriceCalculator();
+        return new ConfiguredBundleMapper();
     }
 
     /**

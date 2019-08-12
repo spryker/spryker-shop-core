@@ -15,15 +15,9 @@
         <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle" />
     </transfer>
 
-    <transfer name="ConfiguredBundlePrice">
-        <property name="sumSubtotalAggregation" type="int" />
-        <property name="unitPriceToPayAggregation" type="int" />
-    </transfer>
-
     <transfer name="SalesOrderConfiguredBundle">
         <property name="name" type="string" />
         <property name="quantity" type="int" />
-        <property name="price" type="ConfiguredBundlePrice" />
         <property name="salesOrderConfiguredBundleItems" type="SalesOrderConfiguredBundleItem[]" singular="salesOrderConfiguredBundleItem" />
     </transfer>
 
