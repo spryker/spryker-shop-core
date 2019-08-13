@@ -14,11 +14,12 @@ export default class ScriptLoader extends Component {
     /**
      * The <head> tag on the page.
      */
-    head: HTMLHeadElement
+    head: HTMLHeadElement;
+
     /**
      * The <script> tag o the page.
      */
-    script: HTMLScriptElement
+    script: HTMLScriptElement;
 
     protected readyCallback(): void {
         this.script = <HTMLScriptElement>document.querySelector(`script[src="${this.src}"]`);
@@ -26,10 +27,11 @@ export default class ScriptLoader extends Component {
         if (!!this.script) {
             this.mapEvents();
             debug(`${this.name}: "${this.src}" is already in the DOM`);
+
             return;
         }
 
-        this.head = <HTMLHeadElement>document.querySelector('head');
+        this.head = <HTMLHeadElement>document.getElementsByTagName('head')[0];
         this.script = <HTMLScriptElement>document.createElement('script');
 
         this.mapEvents();
@@ -63,12 +65,13 @@ export default class ScriptLoader extends Component {
     }
 
     /**
-     * Gets an array of the attribute names.
+     * Gets the array of ignored attributes that are not copied from the current component
+     * to the script tag when created.
      */
     get ignoredAttributes(): string[] {
         return [
             ...defaultIgnoredAttributes
-        ]
+        ];
     }
 
     /**

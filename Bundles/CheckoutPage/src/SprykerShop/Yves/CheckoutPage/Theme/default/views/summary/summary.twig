@@ -1,6 +1,7 @@
 {% extends template('page-layout-checkout', 'CheckoutPage') %}
 
 {% define data = {
+    cart: _view.quoteTransfer,
     backUrl: _view.previousStepUrl,
     transfer: _view.quoteTransfer,
     cartItems: _view.cartItems,
@@ -15,6 +16,7 @@
 
     overview: {
         shipmentMethod: _view.quoteTransfer.shipment.method.name,
+        payments: _view.quoteTransfer.payments,
         expenses: _view.quoteTransfer.expenses,
         voucherDiscounts: _view.quoteTransfer.voucherDiscounts,
         cartRuleDiscounts: _view.quoteTransfer.cartRuleDiscounts,
@@ -23,6 +25,7 @@
             subTotal: _view.quoteTransfer.totals.subtotal,
             storeCurrency: _view.quoteTransfer.shipment.method.storeCurrencyPrice,
             grandTotal: _view.quoteTransfer.totals.grandtotal,
+            priceToPay: _view.quoteTransfer.totals.priceToPay,
             tax: _view.quoteTransfer.totals.taxtotal.amount,
             discountTotal: _view.quoteTransfer.totals.discounttotal | default
         }
@@ -37,7 +40,7 @@
             <div class="box">
                 <span class="float-right">{{ 'checkout.step.summary.with_method' | trans }} <strong>{{data.paymentMethod}}</strong></span>
                 <h6>{{ 'checkout.step.summary.payment' | trans }}</h6>
-                <hr/>
+                <hr class="box__separator">
 
                 {% include molecule('display-address') with {
                     class: 'text-small',
@@ -50,7 +53,7 @@
             <div class="box">
                 <span class="float-right">{{ 'checkout.step.summary.with_method' | trans }} <strong>{{ data.shipmentMethod }}</strong></span>
                 <h6>{{ 'checkout.step.summary.shipping' | trans }}</h6>
-                <hr/>
+                <hr class="box__separator">
 
                 {% include molecule('display-address') with {
                     class: 'text-small',
@@ -59,6 +62,18 @@
                     }
                 } only %}
             </div>
+
+            {% if data.cart.idQuote is not empty %}
+                <div class="box">
+                    {% widget 'CommentThreadWidget' args [
+                        data.cart.idQuote,
+                        'quote',
+                        app.request.requestUri,
+                        data.cart.commentThread
+                    ] only %}
+                    {% endwidget %}
+                </div>
+            {% endif %}
         </div>
 
         <div class="col col--sm-12 col--lg-8">
@@ -95,7 +110,7 @@
                                     }
                                 } only %}
                             {% endif %}
-                            {% if embed.isLast %}<hr/>{% endif %}
+                            {% if embed.isLast %}<hr class="box__separator">{% endif %}
                         {% endblock %}
                     {% endembed %}
                 {% endfor %}
@@ -119,7 +134,8 @@
             {% endif %}
 
             <div class="box">
-                {% widget 'CheckoutVoucherFormWidget' args [data.transfer] only %}
+                {% widget 'CartCodeFormWidget' args [data.transfer] only %}
+                {% elsewidget 'CheckoutVoucherFormWidget' args [data.transfer] only %} {# @deprecated Use CartCodeFormWidget instead. #}
                 {% elsewidget 'CheckoutVoucherFormWidgetPlugin' args [data.transfer] only %} {# @deprecated Use CheckoutVoucherFormWidget instead. #}
                 {% endwidget %}
             </div>
@@ -139,7 +155,8 @@
                     }
                 },
                 embed: {
-                    overview: data.overview
+                    overview: data.overview,
+                    cart: data.cart
                 }
             } only %}
                 {% block body %}
@@ -147,7 +164,13 @@
                         data: embed.overview
                     } only %}
 
-                    <hr />
+                    {% include molecule('gift-card-payment-summary', 'GiftCardWidget') ignore missing with {
+                        data: {
+                            cart: embed.cart
+                        }
+                    } only %}
+
+                    <hr class="box__separator">
                     {{parent()}}
                 {% endblock %}
             {% endembed %}

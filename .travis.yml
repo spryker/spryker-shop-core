@@ -1,10 +1,14 @@
 language: php
+dist: trusty
+
+git:
+  depth: 3
+
 php:
   - 7.1
 
 cache:
   directories:
-    - vendor
     - $HOME/.composer/cache
 
 env:
@@ -12,11 +16,17 @@ env:
     - APPLICATION_ENV=development
     - APPLICATION_STORE=DE
 
+before_install:
+  - phpenv config-rm xdebug.ini
+  - nvm install 10
+
 install:
-  - composer update --no-interaction --prefer-dist --no-autoloader
+  - composer install --no-interaction --prefer-dist --optimize-autoloader
+  - npm install -g git+https://github.com/spryker-sdk/frontend-sniffer.git#semver:^0.1.0
 
 script:
   - composer cs-check
+  - frontend-sniffer --config ./ --path ./Bundles
 
 notifications:
   email: false

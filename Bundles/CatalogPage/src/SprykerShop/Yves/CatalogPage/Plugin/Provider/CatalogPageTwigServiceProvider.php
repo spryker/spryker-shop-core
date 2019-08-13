@@ -10,9 +10,11 @@ namespace SprykerShop\Yves\CatalogPage\Plugin\Provider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
+ * @deprecated Use `SprykerShop\Yves\CatalogPage\Plugin\Twig\CatalogPageTwigPlugin` instead.
+ *
  * @method \SprykerShop\Yves\CatalogPage\CatalogPageFactory getFactory()
  */
 class CatalogPageTwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
@@ -27,7 +29,7 @@ class CatalogPageTwigServiceProvider extends AbstractPlugin implements ServicePr
         $twigExtension = $this->getFactory()->createProductAbstractReviewTwigExtension();
 
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) use ($twigExtension) {
+            $app->extend('twig', function (Environment $twig) use ($twigExtension) {
                 $twig->addExtension($twigExtension);
 
                 return $twig;

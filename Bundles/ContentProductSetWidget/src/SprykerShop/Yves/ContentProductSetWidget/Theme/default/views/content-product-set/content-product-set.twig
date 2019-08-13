@@ -1,0 +1,30 @@
+{% extends template('widget') %}
+
+{% define data = {
+    products: productViews,
+    name: productSet.name,
+    description: productSet.description,
+    images: productSet.imageSets.0.images | default([]),
+} %}
+
+{% block body %}
+    {% embed organism('product-set-cms-content', 'ProductSetWidget') ignore missing with {
+        data: {
+            buttonClass: 'float-right',
+            products: data.products,
+            name: data.name,
+            description: data.description,
+            images: data.images,
+        },
+    } only %}
+        {% block productSetTitle %}
+            <h5>{{ data.name }}</h5>
+        {% endblock %}
+
+        {% block description %}
+            {% if data.description %}
+                <p>{{ data.description }}</p>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

@@ -72,7 +72,6 @@ class ProductReviewForm extends AbstractType
             ChoiceType::class,
             [
                 'choices' => array_flip($this->getRatingFieldChoices()),
-                'choices_as_values' => true,
                 'label' => 'product_review.submit.rating',
                 'required' => true,
                 'expanded' => false,

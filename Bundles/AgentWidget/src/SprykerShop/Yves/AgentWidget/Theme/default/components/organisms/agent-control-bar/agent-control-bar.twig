@@ -13,7 +13,7 @@
 {% block body %}
     <div class="container">
         <div class="box grid grid--middle">
-            <div class="col col--md-5 col--sm-12">
+            <div class="col col--sm-12 col--xl-7">
                 {% if not is_granted('ROLE_PREVIOUS_ADMIN') %}
                     <form method="GET" action="/">
                         <div class="grid">
@@ -25,10 +25,10 @@
                                         name: '_switch_user',
                                     },
                                     attributes: {
-                                        'suggested-item-selector': '.customer-list__container-item',
+                                        'suggested-item-class-name': 'customer-list__container-item',
                                         'value-data-attribute': 'data-value',
-                                        'show-clean-button': true
-                                    }
+                                        'show-clean-button': true,
+                                    },
                                 } only %}
                             </div>
 
@@ -40,22 +40,32 @@
                         </div>
                     </form>
                 {% endif %}
+
+                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                     {{ 'agent.control_bar.customer_name' | trans({
+                         '%username%': "#{data.customer.firstName} #{data.customer.lastName}"
+                     }) }}
+                     <a href="/?_switch_user=_exit" class="button" title="{{ 'agent.control_bar.logout_as_customer' | trans }}">{{ 'agent.control_bar.logout_as_customer' | trans }}</a>
+                 {% endif %}
+
             </div>
-            <div class="col col--md-7 col--sm-12 text-right">
-                <div>
-                    {{ 'agent.control_bar.username' | trans({
-                        '%username%': "#{data.agent.firstName} #{data.agent.lastName}"
-                    }) }}
-                    <a href="{{ path('agent_logout') }}" class="button">{{ 'agent.control_bar.logout' | trans }}</a>
-                </div>
-                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                    <div class="spacing-top spacing-top--big">
-                        {{ 'agent.control_bar.customer_name' | trans({
-                            '%username%': "#{data.customer.firstName} #{data.customer.lastName}"
-                        }) }}
-                        <a href="/?_switch_user=_exit" class="button">{{ 'agent.control_bar.logout_as_customer' | trans }}</a>
-                    </div>
-                {% endif %}
+            <div class="col col--sm-12 col--xl-5 text-right">
+                {% include molecule('agent-navigation', 'AgentWidget') with {
+                    data: {
+                        agent: data.agent
+                    }
+                } only %}
+            </div>
+        </div>
+        <div class="grid grid--middle spacing-bottom spacing-bottom--big">
+            <div class="col col--sm-12">
+                {% widget 'QuoteRequestAgentOverviewWidget' only %}
+                    {% block body %}
+                        <div class="box box--dark">
+                            {{ parent() }}
+                        </div>
+                    {% endblock %}
+                {% endwidget %}
             </div>
         </div>
     </div>

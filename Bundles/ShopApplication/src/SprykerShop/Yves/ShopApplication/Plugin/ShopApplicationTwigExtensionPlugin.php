@@ -10,6 +10,10 @@ namespace SprykerShop\Yves\ShopApplication\Plugin;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
+/**
+ * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
+ * @method \SprykerShop\Yves\ShopApplication\ShopApplicationConfig getConfig()
+ */
 class ShopApplicationTwigExtensionPlugin extends AbstractTwigExtensionPlugin
 {
     /**
@@ -62,6 +66,16 @@ class ShopApplicationTwigExtensionPlugin extends AbstractTwigExtensionPlugin
             new TwigFilter('int', function ($value) {
                 return (int)$value;
             }),
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getGlobals(): array
+    {
+        return [
+            'environment' => $this->getConfig()->getTwigEnvironmentName(),
         ];
     }
 }

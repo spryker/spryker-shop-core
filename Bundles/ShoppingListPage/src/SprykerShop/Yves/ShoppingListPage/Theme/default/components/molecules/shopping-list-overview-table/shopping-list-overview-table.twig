@@ -32,10 +32,10 @@
             <tr>
                 <td>
                     {% if data.enableTableForm %}
-                        <input title="{{ 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans }}" type="checkbox" name="shoppingLists[]" value="{{ shoppingList.idShoppingList }}" />
+                        <input title="{{ 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans }}" type="checkbox" name="shoppingLists[]" value="{{ shoppingList.idShoppingList }}">
                     {% endif %}
                 </td>
-                <td>
+                <td class="{{ config.name }}__name">
                     <a class="text-center" href="{{ path('shopping-list/details', { idShoppingList: shoppingList.idShoppingList }) }}">{{ shoppingList.name }}</a>
                 </td>
                 <td class="text-center">{{ shoppingList.owner }}</td>

@@ -218,26 +218,6 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return string[]
-     */
-    public function getPrintShoppingListWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_WIDGETS);
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return string[]
-     */
-    public function getShoppingListViewWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_VIEW_WIDGETS);
-    }
-
-    /**
      * @return \SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListFormDataProviderMapperPluginInterface[]
      */
     public function getShoppingListFormDataProviderMapperPlugins(): array
@@ -261,6 +241,7 @@ class ShoppingListPageFactory extends AbstractFactory
     public function getCartFromShoppingListForm(?int $idQuote): FormInterface
     {
         $formDataProvider = $this->createCartFromShoppingListFormDataProvider();
+
         return $this->getFormFactory()->create(ShoppingListFromCartForm::class, $formDataProvider->getData($idQuote), $formDataProvider->getOptions());
     }
 
@@ -278,26 +259,6 @@ class ShoppingListPageFactory extends AbstractFactory
     public function createCreateFromCartHandler(): CreateFromCartHandlerInterface
     {
         return new CreateFromCartHandler($this->getShoppingListClient(), $this->getCustomerClient());
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return string[]
-     */
-    public function getShoppingListEditWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_EDIT_WIDGETS);
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return string[]
-     */
-    public function getShoppingListOverviewWidgetPlugins(): array
-    {
-        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::PLUGIN_SHOPPING_LIST_OVERVIEW_WIDGETS);
     }
 
     /**

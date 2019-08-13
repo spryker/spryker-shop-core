@@ -1,0 +1,22 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'product-item-attributes',
+    tag: 'ul',
+} %}
+
+{% define data = {
+    list: required,
+} %}
+
+{% block body %}
+    {% for key, attribute in data.list %}
+        {% block listItem %}
+            <li>
+                {%- block listItemContent -%}
+                    {{ key }}: {{ attribute }}
+                {%- endblock -%}
+            </li>
+        {% endblock %}
+    {% endfor %}
+{% endblock %}

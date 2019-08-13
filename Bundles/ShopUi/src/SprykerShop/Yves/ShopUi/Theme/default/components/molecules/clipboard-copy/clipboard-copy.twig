@@ -1,0 +1,21 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'clipboard-copy',
+    tag: 'clipboard-copy',
+} %}
+
+{# @deprecated property "trigger-selector" is deprecated: use "trigger-class-name" instead. #}
+{# @deprecated property "target-selector" is deprecated: use "target-class-name" instead. #}
+{% define attributes = {
+    'trigger-selector': '',
+    'trigger-class-name': '',
+    'target-selector': '',
+    'target-class-name': '',
+    'class-to-toggle': 'is-hidden',
+} %}
+
+{% block body %}
+    <p class="{{ config.jsName }}__success-message text-success text-small is-hidden">{{ 'clipboard.copy.success' | trans }}</p>
+    <p class="{{ config.jsName }}__error-message text-warning text-small is-hidden">{{ 'clipboard.copy.error' | trans }}</p>
+{% endblock %}

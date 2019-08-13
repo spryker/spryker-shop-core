@@ -7,7 +7,8 @@
     addresses: _widget.addresses,
     customerAddresses: _widget.customerAddresses,
     companyBusinessUnitAddresses: _widget.companyBusinessUnitAddresses,
-    isCustomAddress: app.request.get('customAddress')[_widget.formType]  | default(not _widget.formAddressTransfer.idCustomerAddress)
+    isCustomAddress: app.request.get('customAddress')[_widget.formType]  | default(not _widget.formAddressTransfer.idCustomerAddress),
+    currentCompanyBusinessUnitAddress: _widget.currentCompanyBusinessUnitAddress,
 } %}
 
 {% block template %}
@@ -24,6 +25,14 @@
                 {% set defaultAddressKey = address.key %}
             {% endif %}
         {% endfor %}
+    {% elseif not data.currentCompanyBusinessUnitAddress %}
+        {% for companyBusinessUnitAddress in data.companyBusinessUnitAddresses %}
+            {% if data.formType == 'billingAddress' and companyBusinessUnitAddress.isDefaultBilling %}
+                {% set defaultAddressKey = companyBusinessUnitAddress.key %}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        {% set defaultAddressKey = data.currentCompanyBusinessUnitAddress.key %}
     {% endif %}
 
     {% embed atom('select') with {
@@ -112,10 +121,10 @@
         </label>
         {% include molecule('form-clear') with {
             attributes: {
-                'form-selector': '.js-form-clear__' ~ data.formType ~ '-form',
-                'trigger-selector': '.js-form-clear__' ~ data.formType ~ '-toggler',
-                'ignore-selector': '.js-form-clear__ignore-element'
-            }
+                'form-class-name': 'js-form-clear__' ~ data.formType ~ '-form',
+                'trigger-class-name': 'js-form-clear__' ~ data.formType ~ '-toggler',
+                'ignore-class-name': 'js-form-clear__ignore-element',
+            },
         } only %}
     </div>
 

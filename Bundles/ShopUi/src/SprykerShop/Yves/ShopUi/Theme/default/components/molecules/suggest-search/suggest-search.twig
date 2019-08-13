@@ -2,15 +2,17 @@
 
 {% define config = {
     name: 'suggest-search',
-    tag: 'suggest-search'
+    tag: 'suggest-search',
 } %}
 
+{# @deprecated property "input-selector" is deprecated: use "input-class-name" instead. #}
 {% define attributes = {
     'suggestion-url': required,
-    'input-selector': required,
+    'input-selector': '',
+    'input-class-name': '',
     'debounce-delay': 500,
     'throttle-delay': 200,
-    'letters-trashold': 2
+    'letters-trashold': 2,
 } %}
 
 {% block body %}
@@ -20,14 +22,14 @@
         class: config.jsName ~ '__ajax-provider',
         attributes: {
             method: 'post',
-            url: attributes['suggestion-url']
-        }
+            url: attributes['suggestion-url'],
+        },
     } only %}
 
     {% include molecule('ajax-loader') with {
         modifiers: ['big'],
         attributes: {
-            'provider-selector': '.' ~ config.jsName ~ '__ajax-provider'
-        }
+            'provider-class-name': config.jsName ~ '__ajax-provider',
+        },
     } only %}
 {% endblock %}

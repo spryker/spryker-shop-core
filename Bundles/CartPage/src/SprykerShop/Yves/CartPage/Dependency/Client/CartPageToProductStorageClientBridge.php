@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CartPage\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
+
 class CartPageToProductStorageClientBridge implements CartPageToProductStorageClientInterface
 {
     /**
@@ -23,31 +25,6 @@ class CartPageToProductStorageClientBridge implements CartPageToProductStorageCl
     }
 
     /**
-     * @deprecated Use findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
-     *
-     * @param int $idProductAbstract
-     * @param string $localeName
-     *
-     * @return array
-     */
-    public function getProductAbstractStorageData($idProductAbstract, $localeName)
-    {
-        return $this->productStorageClient->getProductAbstractStorageData($idProductAbstract, $localeName);
-    }
-
-    /**
-     * @param array $data
-     * @param string $localeName
-     * @param array $selectedAttributes
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = [])
-    {
-        return $this->productStorageClient->mapProductStorageData($data, $localeName, $selectedAttributes);
-    }
-
-    /**
      * @param int $idProductAbstract
      * @param string $localeName
      *
@@ -56,5 +33,17 @@ class CartPageToProductStorageClientBridge implements CartPageToProductStorageCl
     public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
     {
         return $this->productStorageClient->findProductAbstractStorageData($idProductAbstract, $localeName);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    public function findProductAbstractViewTransfer(int $idProductAbstract, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer
+    {
+        return $this->productStorageClient->findProductAbstractViewTransfer($idProductAbstract, $localeName, $selectedAttributes);
     }
 }

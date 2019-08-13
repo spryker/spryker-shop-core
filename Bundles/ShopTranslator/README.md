@@ -1,6 +1,6 @@
 # ShopTranslator Module
 
-{{ADD DESCRIPTION HERE}}
+ShopTranslator module.
 
 ## Installation
 

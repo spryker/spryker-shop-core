@@ -7,31 +7,31 @@
 
 namespace SprykerShop\Yves\ShopUi\Twig\Node;
 
-use Twig_Compiler;
-use Twig_Node;
-use Twig_Node_Expression;
+use Twig\Compiler;
+use Twig\Node\Expression\AbstractExpression;
+use Twig\Node\Node;
 
-class ShopUiDefineTwigNode extends Twig_Node
+class ShopUiDefineTwigNode extends Node
 {
     public const REQUIRED_VALUE = '___REQUIRED___';
 
     /**
      * @param string $name
-     * @param \Twig_Node_Expression $value
+     * @param \Twig\Node\Expression\AbstractExpression $value
      * @param int $line
      * @param string|null $tag
      */
-    public function __construct(string $name, Twig_Node_Expression $value, int $line, ?string $tag = null)
+    public function __construct(string $name, AbstractExpression $value, int $line, ?string $tag = null)
     {
         parent::__construct(['value' => $value], ['name' => $name], $line, $tag);
     }
 
     /**
-     * @param \Twig_Compiler $compiler
+     * @param \Twig\Compiler $compiler
      *
      * @return void
      */
-    public function compile(Twig_Compiler $compiler): void
+    public function compile(Compiler $compiler): void
     {
         $key = "'" . $this->getAttribute('name') . "'";
         $requiredValue = "'" . self::REQUIRED_VALUE . "'";
@@ -46,7 +46,7 @@ class ShopUiDefineTwigNode extends Twig_Node
             ->raw(', $context[' . $key . ']);')
             ->raw('array_walk_recursive($context[' . $key . '], function($value, $key) {')
             ->raw('if ($value === ' . $requiredValue . ') {')
-            ->raw('throw new Twig_Error_Runtime(\'required <em>' . $this->getAttribute('name') . '</em> property "\'.$key.\'" is not defined for "' . $this->getTemplateName() . ':' . $this->getTemplateLine() . '"\'); }')
+            ->raw('throw new RuntimeError(\'required <em>' . $this->getAttribute('name') . '</em> property "\'.$key.\'" is not defined for "' . $this->getTemplateName() . ':' . $this->getTemplateLine() . '"\'); }')
             ->raw('});');
     }
 }

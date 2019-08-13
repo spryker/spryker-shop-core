@@ -53,7 +53,7 @@
                 {% if field.vars.name == 'address_collection' %}
                     {% do field.setRendered %}
                     <div class="form__field col col--sm-12">
-                        <hr />
+                        <hr class="box__separator">
                         {% include molecule('business-unit-address-list', 'CompanyPage') with {
                             data: {
                                 field: field,

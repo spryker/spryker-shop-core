@@ -2,10 +2,13 @@ import Component from '../../../models/component';
 import AjaxProvider from '../ajax-provider/ajax-provider';
 
 export default class AjaxLoader extends Component {
-    protected providers: AjaxProvider[]
+    protected providers: AjaxProvider[];
 
     protected readyCallback(): void {
-        this.providers = <AjaxProvider[]>Array.from(document.querySelectorAll(this.providerSelector));
+        /* tslint:disable: deprecation */
+        this.providers = <AjaxProvider[]>Array.from(this.providerClassName ?
+            document.getElementsByClassName(this.providerClassName) : document.querySelectorAll(this.providerSelector));
+        /* tslint:enable: deprecation */
         this.mapEvents();
     }
 
@@ -26,9 +29,14 @@ export default class AjaxLoader extends Component {
 
     /**
      * Gets a querySelector name of the provider element.
+     *
+     * @deprecated Use providerClassName() instead.
      */
     get providerSelector(): string {
         return this.getAttribute('provider-selector');
     }
 
+    protected get providerClassName(): string {
+        return this.getAttribute('provider-class-name');
+    }
 }

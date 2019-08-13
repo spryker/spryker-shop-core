@@ -1,0 +1,14 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'catalog-cms-block'
+} %}
+
+{% define data = {
+    idCategory: required,
+    position: null
+} %}
+
+{% block body %}
+    {{ spyCmsBlock({ category: data.idCategory, position: data.position }) }}
+{% endblock %}
