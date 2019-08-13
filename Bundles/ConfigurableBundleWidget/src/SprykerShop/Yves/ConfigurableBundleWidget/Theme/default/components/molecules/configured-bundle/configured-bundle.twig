@@ -46,7 +46,7 @@
                                             {% for bundleItem in data.bundle.items %}
                                                 {% set bundleSumSubtotalAggregation = bundleSumSubtotalAggregation + bundleItem.sumSubtotalAggregation %}
                                             {% endfor %}
-S
+
                                             {{ bundleSumSubtotalAggregation | money(true, data.currencyIsoCode) }}
                                         {%- endblock -%}
                                     {% else %}
