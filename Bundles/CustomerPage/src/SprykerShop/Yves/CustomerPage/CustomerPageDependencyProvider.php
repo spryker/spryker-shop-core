@@ -12,6 +12,8 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientBridge;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientBridge;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToLocaleClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientBridge;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientBridge;
@@ -27,6 +29,8 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_SALES = 'CLIENT_SALES';
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
     public const PLUGIN_AUTHENTICATION_HANDLER = 'PLUGIN_AUTHENTICATION_HANDLER';
     public const PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER = 'PLUGIN_PRE_REGISTRATION_CUSTOMER_TRANSFER_EXPANDER';
@@ -56,6 +60,8 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSalesClient($container);
         $container = $this->addProductGroupClient($container);
         $container = $this->addQuoteClient($container);
+        $container = $this->addGlossaryStorageClient($container);
+        $container = $this->addLocaleClient($container);
         $container = $this->addApplication($container);
         $container = $this->addAuthenticationHandlerPlugin($container);
         $container = $this->addLoginCheckoutAuthenticationHandlerPlugin($container);
@@ -333,6 +339,38 @@ class CustomerPageDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::PLUGIN_AFTER_LOGIN_CUSTOMER_REDIRECT] = function () {
             return $this->getAfterLoginCustomerRedirectPlugins();
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addGlossaryStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
+            return new CustomerPageToGlossaryStorageClientBridge(
+                $container->getLocator()->glossaryStorage()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new CustomerPageToLocaleClientBridge(
+                $container->getLocator()->locale()->client()
+            );
+        });
 
         return $container;
     }
