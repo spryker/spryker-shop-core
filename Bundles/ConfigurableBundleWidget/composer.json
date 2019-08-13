@@ -19,6 +19,9 @@
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+  },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
@@ -33,8 +36,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   }
 }
