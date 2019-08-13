@@ -77,6 +77,13 @@
         </div>
 
         <div class="col col--sm-12 col--lg-8">
+            {% widget 'QuoteConfiguredBundleWidget' args [data.cart] with {
+                data: {
+                    isEditable: false,
+                },
+            } only %}
+            {% endwidget %}
+
             {% set itemsExceptConfiguredBundles = data.cartItems | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}
             {% if itemsExceptConfiguredBundles %}
                 <div class="box">
@@ -118,12 +125,6 @@
                     {% endfor %}
                 </div>
             {% endif %}
-            {% widget 'QuoteConfiguredBundleWidget' args [data.cart] with {
-                data: {
-                    isEditable: false,
-                },
-            } only %}
-            {% endwidget %}
 
             {% if data.transfer.cartNote is not empty %}
                 {% if widgetExists('CartNoteQuoteNoteWidgetPlugin') %}
