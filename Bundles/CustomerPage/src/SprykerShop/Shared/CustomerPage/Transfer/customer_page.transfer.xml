@@ -10,6 +10,12 @@
     <transfer name="CustomerResponse">
         <property name="customerTransfer" type="Customer"/>
         <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CustomerError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CustomerError">
+        <property name="message" type="string"/>
+        <property name="params" type="array"/>
     </transfer>
 
     <transfer name="Quote">
