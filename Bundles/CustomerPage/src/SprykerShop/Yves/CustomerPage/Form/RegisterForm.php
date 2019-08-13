@@ -39,7 +39,7 @@ class RegisterForm extends AbstractType
 
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
     protected const VALIDATION_MIN_LENGTH_MESSAGE = 'validation.min_length';
-    protected const VALIDATION_MAX_LENGTH_MESSAGE = 'validation.max_length.plural';
+    protected const VALIDATION_MAX_LENGTH_MESSAGE = 'validation.max_length.singular';
 
     /**
      * @return string
