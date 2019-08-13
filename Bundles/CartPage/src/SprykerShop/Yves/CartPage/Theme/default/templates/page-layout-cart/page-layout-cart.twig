@@ -83,7 +83,7 @@
                     </div>
                 {% endif %}
 
-                {% for cartItem in data.cartItems if not cartItem.configuredBundleItem %}
+                {% for cartItem in data.cartItems if not cartItem.configuredBundleItem | default %}
                     {% block cartItem %}
                         {% include molecule('product-cart-item', 'CartPage') with {
                             data: {
