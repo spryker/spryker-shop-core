@@ -9,6 +9,11 @@
 
     <transfer name="Item">
         <property name="salesOrderConfiguredBundleItem" type="SalesOrderConfiguredBundleItem" />
+        <property name="sku" type="string"/>
+        <property name="unitPrice" type="int" />
+        <property name="unitPriceToPayAggregation" type="int" />
+        <property name="quantity" type="int"/>
+        <property name="name" type="string" />
     </transfer>
 
     <transfer name="Order">
