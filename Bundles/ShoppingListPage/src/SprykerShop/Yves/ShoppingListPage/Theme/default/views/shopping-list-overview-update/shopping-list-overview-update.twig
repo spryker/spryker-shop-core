@@ -38,6 +38,14 @@
 
     {% set hasWritePermission = can('WriteShoppingListPermissionPlugin', data.idShoppingList) %}
     <div class="box">
+        {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
+            {% include molecule('shopping-list-product-quick-add', 'ShoppingListPage') with {
+                data: {
+                    activeShoppingListId: data.shoppingList.idShoppingList
+                }
+            } only %}
+        {% endif %}
+
         {% embed molecule('form') with {
             data: {
                 form: data.form,
