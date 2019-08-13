@@ -12,10 +12,13 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class CustomerPageConfig extends AbstractBundleConfig
 {
+    /**
+     * @uses \Spryker\Zed\Customer\CustomerConfig::MIN_LENGTH_CUSTOMER_PASSWORD
+     */
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;
 
     /**
-     * @var int restriction is based on symfony BCryptPasswordEncoder limitation
+     * @uses \Spryker\Zed\Customer\CustomerConfig::MAX_LENGTH_CUSTOMER_PASSWORD
      */
     protected const MAX_LENGTH_CUSTOMER_PASSWORD = 72;
 
