@@ -8,7 +8,10 @@ export default class TogglerHash extends Component {
 
     constructor() {
         super();
-        this.targets = <HTMLElement[]>Array.from(document.querySelectorAll(this.targetSelector));
+        /* tslint:disable: deprecation */
+        this.targets = <HTMLElement[]>Array.from(this.targetClassName ?
+            document.getElementsByClassName(this.targetClassName) : document.querySelectorAll(this.targetSelector));
+        /* tslint:enable: deprecation */
     }
 
     protected readyCallback(): void {
@@ -61,9 +64,14 @@ export default class TogglerHash extends Component {
 
     /**
      * Gets a querySelector of the target element.
+     *
+     * @deprecated Use targetClassName() instead.
      */
     get targetSelector(): string {
         return this.getAttribute('target-selector');
+    }
+    protected get targetClassName(): string {
+        return this.getAttribute('target-class-name');
     }
 
     /**

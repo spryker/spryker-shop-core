@@ -64,6 +64,8 @@ class PreviewController extends AbstractController
     /**
      * @param int $idCmsPage
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array
      */
     protected function getMetaData($idCmsPage)
@@ -72,9 +74,13 @@ class PreviewController extends AbstractController
             ->getCmsClient()
             ->getFlattenedLocaleCmsPageData(
                 (new FlattenedLocaleCmsPageDataRequestTransfer())
-                ->setIdCmsPage($idCmsPage)
-                ->setLocale((new LocaleTransfer())->setLocaleName($this->getLocale()))
+                    ->setIdCmsPage($idCmsPage)
+                    ->setLocale((new LocaleTransfer())->setLocaleName($this->getLocale()))
             );
+
+        if (!$localeCmsPageDataRequestTransfer->getFlattenedLocaleCmsPageData()) {
+            throw new NotFoundHttpException(sprintf('There is no valid Cms page with this id: %d.', $idCmsPage));
+        }
 
         return $localeCmsPageDataRequestTransfer->getFlattenedLocaleCmsPageData();
     }
