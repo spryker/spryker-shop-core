@@ -39,7 +39,9 @@
         {% endfor %}
     {% endfor %}
 
-    <tr class="table__row--backgroungless">
-        <td colspan="5">&nbsp;</td>
-    </tr>
+    {% if data.salesOrderConfiguredBundles is not empty %}
+        <tr class="table__row--backgroungless">
+            <td colspan="5">&nbsp;</td>
+        </tr>
+    {% endif %}
 {% endblock %}
