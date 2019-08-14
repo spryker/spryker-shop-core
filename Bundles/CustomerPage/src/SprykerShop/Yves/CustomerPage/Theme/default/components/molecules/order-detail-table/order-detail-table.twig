@@ -27,10 +27,6 @@
             {% widget 'OrderConfiguredBundleWidget' args [data.order] only %}
             {% endwidget %}
 
-            <tr class="table__row--backgroungless">
-                <td colspan="5">&nbsp;</td>
-            </tr>
-
             {% for item in data.items if not item.salesOrderConfiguredBundleItem | default %}
                 {% set isBundle = item.bundleItems is defined %}
                 {% set concreteItem = item.bundleProduct | default(item) %}
