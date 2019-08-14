@@ -22,14 +22,14 @@
     <td class="{{ config.name }}__col"></td>
     <td class="{{ config.name }}__col">
         {%- block total -%}
-            {% set bundleUnitPriceToPayAggregation = 0 %}
+            {% set bundleSumPriceToPayAggregation = 0 %}
 
             {% for item in data.bundle.salesOrderConfiguredBundleItems if data.items[item.IdSalesOrderItem] is defined %}
                 {% set product = data.items[item.IdSalesOrderItem] %}
-                {% set bundleUnitPriceToPayAggregation = bundleUnitPriceToPayAggregation + product.unitPriceToPayAggregation %}
+                {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + product.sumPriceToPayAggregation %}
             {% endfor %}
 
-            {{ bundleUnitPriceToPayAggregation | money(true, data.currencyIsoCode) }}
+            {{ bundleSumPriceToPayAggregation | money(true, data.currencyIsoCode) }}
         {%- endblock -%}
     </td>
 {% endblock %}
