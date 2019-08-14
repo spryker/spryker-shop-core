@@ -77,44 +77,54 @@
         </div>
 
         <div class="col col--sm-12 col--lg-8">
-            <div class="box">
-                {% for item in data.cartItems %}
-                    {% set item = item.bundleProduct is defined ? item.bundleProduct : item %}
-                    {% embed molecule('summary-item', 'CheckoutPage') with {
-                        data: {
-                            name: item.name,
-                            quantity: item.quantity,
-                            price: item.sumPrice | money,
-                            options: item.productOptions | default({}),
-                            bundleItems: item.bundleItems | default([]),
-                            quantitySalesUnit: item.quantitySalesUnit,
-                            amountSalesUnit: item.amountSalesUnit,
-                            amount: item.amount
-                        },
-                        embed: {
-                            isLast: not loop.last,
-                            item: item
-                        }
-                    } only %}
-                        {% block body %}
-                            {{parent()}}
-                            {% if widgetExists('CartNoteQuoteItemNoteWidgetPlugin') %}
-                                {% if embed.item.cartNote is not empty %}
-                                    {{ widget('CartNoteQuoteItemNoteWidgetPlugin', embed.item) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
+            {% widget 'QuoteConfiguredBundleWidget' args [data.cart] with {
+                data: {
+                    isEditable: false,
+                },
+            } only %}
+            {% endwidget %}
+
+            {% set itemsExceptConfiguredBundles = data.cartItems | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}
+            {% if itemsExceptConfiguredBundles %}
+                <div class="box">
+                    {% for item in itemsExceptConfiguredBundles %}
+                        {% set item = item.bundleProduct is defined ? item.bundleProduct : item %}
+                        {% embed molecule('summary-item', 'CheckoutPage') with {
+                            data: {
+                                name: item.name,
+                                quantity: item.quantity,
+                                price: item.sumPrice | money,
+                                options: item.productOptions | default({}),
+                                bundleItems: item.bundleItems | default([]),
+                                quantitySalesUnit: item.quantitySalesUnit,
+                                amountSalesUnit: item.amountSalesUnit,
+                                amount: item.amount,
+                            },
+                            embed: {
+                                isLast: not loop.last,
+                                item: item,
+                            },
+                        } only %}
+                            {% block body %}
+                                {{parent()}}
+                                {% if widgetExists('CartNoteQuoteItemNoteWidgetPlugin') %}
+                                    {% if embed.item.cartNote is not empty %}
+                                        {{ widget('CartNoteQuoteItemNoteWidgetPlugin', embed.item) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
+                                    {% endif %}
+                                {% elseif embed.item.cartNote is not empty %}
+                                    {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                                        data: {
+                                            label: 'cart_note.checkout_page.item_note',
+                                            note: embed.item.cartNote,
+                                        },
+                                    } only %}
                                 {% endif %}
-                            {% elseif embed.item.cartNote is not empty %}
-                                {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
-                                    data: {
-                                        label: 'cart_note.checkout_page.item_note',
-                                        note: embed.item.cartNote
-                                    }
-                                } only %}
-                            {% endif %}
-                            {% if embed.isLast %}<hr class="box__separator">{% endif %}
-                        {% endblock %}
-                    {% endembed %}
-                {% endfor %}
-            </div>
+                                {% if embed.isLast %}<hr class="box__separator">{% endif %}
+                            {% endblock %}
+                        {% endembed %}
+                    {% endfor %}
+                </div>
+            {% endif %}
 
             {% if data.transfer.cartNote is not empty %}
                 {% if widgetExists('CartNoteQuoteNoteWidgetPlugin') %}

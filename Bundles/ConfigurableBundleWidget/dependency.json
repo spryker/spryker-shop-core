@@ -1,0 +1,6 @@
+{
+  "include": {
+    "ShopUi": "ShopUi provides basic frontend infrastructure.",
+    "ConfigurableBundle": "ConfigurableBundleWidget depends on ConfigurableBundle functionality."
+  }
+}

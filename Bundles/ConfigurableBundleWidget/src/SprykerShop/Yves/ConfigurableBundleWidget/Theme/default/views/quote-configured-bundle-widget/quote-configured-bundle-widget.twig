@@ -1,0 +1,21 @@
+{% extends template('widget') %}
+
+{% define data = {
+    configuredBundles: _widget.configuredBundles,
+    currencyIsoCode: _widget.quote.currency.code,
+    isEditable: true,
+} %}
+
+{% block body %}
+    {% for bundle in data.configuredBundles %}
+        {% block bundleItem %}
+            {% include molecule('configured-bundle', 'ConfigurableBundleWidget') with {
+                data: {
+                    bundle: bundle,
+                    currencyIsoCode: data.currencyIsoCode,
+                    isEditable: data.isEditable,
+                },
+            } only %}
+        {% endblock %}
+    {% endfor %}
+{% endblock %}
