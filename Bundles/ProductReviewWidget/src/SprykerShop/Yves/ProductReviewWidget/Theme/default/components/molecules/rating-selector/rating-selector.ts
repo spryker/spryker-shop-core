@@ -12,7 +12,7 @@ export default class RatingSelector extends Component {
     steps: HTMLElement[];
 
     protected readyCallback(): void {
-        this.input = <HTMLInputElement>this.querySelector(`.${this.jsName}__input`);
+        this.input = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__input`)[0];
         this.steps = <HTMLElement[]>Array.from(this.getElementsByClassName(`${this.jsName}__step`));
 
         if (!this.readOnly) {

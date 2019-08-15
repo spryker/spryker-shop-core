@@ -5,7 +5,11 @@ export default class FormDataInjector extends Component {
     fieldsToInject: HTMLElement[];
 
     protected readyCallback(): void {
-        this.destinationForm = <HTMLFormElement>document.querySelector(this.destinationFormSelector);
+        /* tslint:disable: deprecation */
+        this.destinationForm = <HTMLFormElement>(this.destinationFormClassName ?
+            document.getElementsByClassName(this.destinationFormClassName)[0] :
+            document.querySelector(this.destinationFormSelector));
+        /* tslint:enable: deprecation */
         this.fieldsToInject = <HTMLElement[]>Array.from(document.querySelectorAll(this.fieldsSelector));
 
         this.mapEvents();
@@ -46,9 +50,14 @@ export default class FormDataInjector extends Component {
 
     /**
      * Gets a querySelector name of the destination form.
+     *
+     * @deprecated Use destinationFormClassName() instead.
      */
     get destinationFormSelector(): string {
         return this.getAttribute('destination-form-selector');
+    }
+    protected get destinationFormClassName(): string {
+        return this.getAttribute('destination-form-class-name');
     }
 
     /**

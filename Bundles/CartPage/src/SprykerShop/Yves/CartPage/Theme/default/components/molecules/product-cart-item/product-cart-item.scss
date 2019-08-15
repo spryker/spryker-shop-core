@@ -1,7 +1,9 @@
 @mixin cart-page-product-cart-item($name: '.product-cart-item') {
     @include shop-ui-product-item($name) {
-        flex-direction: row;
-        justify-content: space-between;
+        @include helper-breakpoint(lg) {
+            flex-direction: row;
+            justify-content: space-between;
+        }
 
         &__col {
             margin-right: auto;
