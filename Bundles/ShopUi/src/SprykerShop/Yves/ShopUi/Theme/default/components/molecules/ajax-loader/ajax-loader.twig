@@ -2,16 +2,18 @@
 
 {% define config = {
     name: 'ajax-loader',
-    tag: 'ajax-loader'
+    tag: 'ajax-loader',
 } %}
 
 {% define data = {
     label: null,
-    showSpinnerOnLoad: false
+    showSpinnerOnLoad: false,
 } %}
 
+{# @deprecated property "provider-selector" is deprecated: use "provider-class-name" instead. #}
 {% define attributes = {
-    'provider-selector': 'ajax-provider'
+    'provider-selector': 'ajax-provider',
+    'provider-class-name': '',
 } %}
 
 {% block class %}{{parent()}} {% if not data.showSpinnerOnLoad %}is-invisible{% endif %} grid grid--center grid--middle{% endblock %}
@@ -24,10 +26,10 @@
             class: config.name ~ '__spinner',
             modifiers: spinnerModifiers,
             data: {
-                name: 'spinner'
-            }
+                name: 'spinner',
+            },
         } only %}
-        {% if data.label is not empty %}
+        {% if data.label %}
             <span class="{{config.name}}__label">{{data.label}}</span>
         {% endif %}
     </span>

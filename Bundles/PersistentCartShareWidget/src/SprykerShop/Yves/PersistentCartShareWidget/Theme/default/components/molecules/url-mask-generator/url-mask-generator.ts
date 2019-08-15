@@ -8,8 +8,12 @@ export default class UrlMaskGenerator extends Component {
     protected isActionsRendered: boolean = false;
 
     protected readyCallback(): void {
-        this.provider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider-${this.shareOptionGroup}`);
-        this.trigger = <HTMLInputElement>this.querySelector(this.triggerSelector);
+        this.provider = <AjaxProvider>this.getElementsByClassName(
+            `${this.jsName}__provider-${this.shareOptionGroup}`)[0];
+        /* tslint:disable: deprecation */
+        this.trigger = <HTMLInputElement>(this.triggerClassName ?
+            this.getElementsByClassName(this.triggerClassName)[0] : this.querySelector(this.triggerSelector));
+        /* tslint:enable: deprecation */
         this.mapEvents();
     }
 
@@ -41,8 +45,13 @@ export default class UrlMaskGenerator extends Component {
 
     /**
      * Gets a css query selector to address the html element that will trigger the render of the form.
+     *
+     * @deprecated Use triggerClassName() instead.
      */
     get triggerSelector(): string {
         return this.getAttribute('trigger-selector');
+    }
+    protected get triggerClassName(): string {
+        return this.getAttribute('trigger-class-name');
     }
 }

@@ -25,8 +25,8 @@
     {% include molecule('clipboard-copy') with {
         class: 'col col--sm-12',
         attributes: {
-            'trigger-selector': '.' ~ config.jsName ~ '__trigger-' ~ data.shareOption,
-            'target-selector': '.' ~ config.jsName ~ '__target-' ~ data.shareOption,
-        }
+            'trigger-class-name': config.jsName ~ '__trigger-' ~ data.shareOption,
+            'target-class-name': config.jsName ~ '__target-' ~ data.shareOption,
+        },
     } only %}
 {% endblock %}

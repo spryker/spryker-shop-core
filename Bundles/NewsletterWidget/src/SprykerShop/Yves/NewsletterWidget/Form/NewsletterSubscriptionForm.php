@@ -12,12 +12,15 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class NewsletterSubscriptionForm extends AbstractType
 {
     public const FIELD_SUBSCRIBE = 'subscribe';
     public const FORM_ID = 'subscription';
+
+    protected const MAX_EMAIL_LENGTH_VALUE = 254;
 
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
     protected const VALIDATION_EMAIL_MESSAGE = 'validation.email';
@@ -71,6 +74,7 @@ class NewsletterSubscriptionForm extends AbstractType
             'constraints' => [
                 $this->createNotBlankConstraint(),
                 $this->createEmailConstraint(),
+                $this->createLengthConstraint(),
             ],
         ]);
 
@@ -91,5 +95,13 @@ class NewsletterSubscriptionForm extends AbstractType
     protected function createEmailConstraint(): Email
     {
         return new Email(['message' => static::VALIDATION_EMAIL_MESSAGE]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Length
+     */
+    protected function createLengthConstraint(): Length
+    {
+        return new Length(['max' => static::MAX_EMAIL_LENGTH_VALUE]);
     }
 }
