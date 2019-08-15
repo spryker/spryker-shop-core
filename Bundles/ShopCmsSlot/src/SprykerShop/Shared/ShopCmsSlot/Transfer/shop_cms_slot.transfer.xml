@@ -5,9 +5,7 @@
 
     <transfer name="CmsSlotRequest">
         <property name="key" type="string"/>
-        <property name="autofulfil" type="array"/>
-        <property name="required" type="array"/>
-        <property name="provided" type="array"/>
+        <property name="params" type="array"/>
     </transfer>
 
 </transfers>

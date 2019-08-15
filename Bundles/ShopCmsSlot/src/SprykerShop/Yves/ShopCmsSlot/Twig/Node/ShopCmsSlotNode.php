@@ -56,7 +56,7 @@ class ShopCmsSlotNode extends Node
         $compiler->raw(', ');
         $this->compileRequiredNode($compiler);
         $compiler->raw(', ');
-        $this->compileAutofulfilledNode($compiler);
+        $this->compileAutoFilledNode($compiler);
         $compiler->raw(');');
     }
 
@@ -97,14 +97,14 @@ class ShopCmsSlotNode extends Node
      *
      * @return void
      */
-    protected function compileAutofulfilledNode(Compiler $compiler): void
+    protected function compileAutoFilledNode(Compiler $compiler): void
     {
-        if (!$this->hasNode(ShopCmsSlotTokenParser::NODE_AUTOFULFILLED)) {
+        if (!$this->hasNode(ShopCmsSlotTokenParser::NODE_AUTOFILLED)) {
             $compiler->raw('[]');
 
             return;
         }
 
-        $compiler->subcompile($this->getNode(ShopCmsSlotTokenParser::NODE_AUTOFULFILLED));
+        $compiler->subcompile($this->getNode(ShopCmsSlotTokenParser::NODE_AUTOFILLED));
     }
 }

@@ -15,10 +15,10 @@ use Twig\TokenStream;
 
 class ShopCmsSlotTokenParser extends AbstractTokenParser
 {
-    public const NODE_AUTOFULFILLED = 'autofulfilled';
+    public const NODE_AUTOFILLED = 'autoFilled';
     public const NODE_REQUIRED = 'required';
     public const NODE_WITH = 'with';
-    protected const PARAMETER_NAME_AUTOFULFILLED = 'autofulfilled';
+    protected const PARAMETER_NAME_AUTOFILLED = 'autofilled';
     protected const PARAMETER_NAME_REQUIRED = 'required';
     protected const PARAMETER_NAME_WITH = 'with';
 
@@ -43,10 +43,10 @@ class ShopCmsSlotTokenParser extends AbstractTokenParser
 
         $cmsSlotKey = $stream->expect(Token::STRING_TYPE)->getValue();
 
-        $parameterAutofulfilled = $this->parseAutofulfilled($stream);
+        $parameterAutoFilled = $this->parseAutoFilled($stream);
 
-        if ($parameterAutofulfilled) {
-            $nodes[static::NODE_AUTOFULFILLED] = $parameterAutofulfilled;
+        if ($parameterAutoFilled) {
+            $nodes[static::NODE_AUTOFILLED] = $parameterAutoFilled;
         }
 
         $parameterRequired = $this->parseRequired($stream);
@@ -71,9 +71,9 @@ class ShopCmsSlotTokenParser extends AbstractTokenParser
      *
      * @return \Twig\Node\Node|null
      */
-    protected function parseAutofulfilled(TokenStream $stream): ?Node
+    protected function parseAutoFilled(TokenStream $stream): ?Node
     {
-        if (!$stream->nextIf(Token::NAME_TYPE, static::PARAMETER_NAME_AUTOFULFILLED)) {
+        if (!$stream->nextIf(Token::NAME_TYPE, static::PARAMETER_NAME_AUTOFILLED)) {
             return null;
         }
 

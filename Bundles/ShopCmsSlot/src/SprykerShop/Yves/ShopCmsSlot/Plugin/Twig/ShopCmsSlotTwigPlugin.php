@@ -7,9 +7,13 @@
 
 namespace SprykerShop\Yves\ShopCmsSlot\Plugin\Twig;
 
+use RuntimeException;
+use Spryker\Shared\ErrorHandler\ErrorLogger;
 use SprykerShop\Yves\ShopApplication\Plugin\AbstractTwigExtensionPlugin;
+use SprykerShop\Yves\ShopCmsSlot\Exception\MissingRequiredParameterException;
 
 /**
+ * @method \SprykerShop\Yves\ShopCmsSlot\ShopCmsSlotConfig getConfig()
  * @method \SprykerShop\Yves\ShopCmsSlot\ShopCmsSlotFactory getFactory()
  */
 class ShopCmsSlotTwigPlugin extends AbstractTwigExtensionPlugin
@@ -28,12 +32,25 @@ class ShopCmsSlotTwigPlugin extends AbstractTwigExtensionPlugin
      * @param string $cmsSlotKey
      * @param array $provided
      * @param string[] $required
-     * @param string[] $autofulfil
+     * @param string[] $autoFilled
      *
      * @return string
      */
-    public function getSlotContent(string $cmsSlotKey, array $provided, array $required, array $autofulfil): string
+    public function getSlotContent(string $cmsSlotKey, array $provided, array $required, array $autoFilled): string
     {
-        return $this->getFactory()->createCmsSlotExecutor()->getSlotContent($cmsSlotKey, $provided, $required, $autofulfil);
+        $cmsSlotContent = '';
+
+        try {
+            $cmsSlotDataTransfer = $this->getFactory()
+                ->createCmsSlotExecutor()
+                ->getSlotContent($cmsSlotKey, $provided, $required, $autoFilled);
+            $cmsSlotContent = $cmsSlotDataTransfer->getFragmentData();
+        } catch (RuntimeException | MissingRequiredParameterException $e) {
+            if ($this->getConfig()->isDebugModeEnabled()) {
+                ErrorLogger::getInstance()->log($e);
+            }
+        }
+
+        return $cmsSlotContent;
     }
 }

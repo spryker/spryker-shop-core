@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/shop-cms-slot-extension.svg)](https://travis-ci.org/spryker-shop/shop-cms-slot-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/shop-cms-slot-extension/badge.svg)](https://coveralls.io/github/spryker-shop/shop-cms-slot-extension)
 
-{{ADD DESCRIPTION HERE}}
+Provides plugin interfaces that are executed by ShopCmsSlot module.
 
 ## Installation
 
