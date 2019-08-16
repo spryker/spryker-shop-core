@@ -7,7 +7,7 @@ export default class MiniCartRadio extends Component {
     radio: HTMLElement;
 
     protected readyCallback(): void {
-        this.radio = this.querySelector(`input`);
+        this.radio = <HTMLElement>this.getElementsByClassName(`${this.jsName}__input`)[0];
 
         this.mapEvents();
     }

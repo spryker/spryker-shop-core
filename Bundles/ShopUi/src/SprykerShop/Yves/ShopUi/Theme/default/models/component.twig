@@ -42,6 +42,7 @@
 
         {%- block class -%}
             {{- component.renderClass(config.name, modifiers, class) -}}
+            {% block extraClass %}{% endblock %}
         {%- endblock -%}"
 
         {{qa(
