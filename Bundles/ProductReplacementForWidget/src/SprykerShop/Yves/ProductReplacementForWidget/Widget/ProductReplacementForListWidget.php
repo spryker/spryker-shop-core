@@ -50,13 +50,16 @@ class ProductReplacementForListWidget extends AbstractWidget
     protected function findReplacementForProducts(string $sku): array
     {
         $productViewTransferList = [];
-        $productReplacementForStorage = $this->getFactory()->getProductAlternativeStorageClient()
-            ->findProductReplacementForStorage($sku);
+        $productAlternativeStorageClient = $this->getFactory()->getProductAlternativeStorageClient();
+        $productReplacementForStorage = $productAlternativeStorageClient->findProductReplacementForStorage($sku);
         if (!$productReplacementForStorage) {
             return $productViewTransferList;
         }
         foreach ($productReplacementForStorage->getProductConcreteIds() as $idProduct) {
-            $productViewTransferList[] = $this->getProductViewTransfer($idProduct);
+            $productViewTransfer = $this->getProductViewTransfer($idProduct);
+            if ($productAlternativeStorageClient->isAlternativeProductApplicable($productViewTransfer)) {
+                $productViewTransferList[] = $productViewTransfer;
+            }
         }
 
         return array_filter($productViewTransferList);
