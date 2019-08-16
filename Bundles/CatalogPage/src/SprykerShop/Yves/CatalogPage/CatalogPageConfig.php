@@ -11,6 +11,8 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class CatalogPageConfig extends AbstractBundleConfig
 {
+    protected const CATALOG_PAGE_LIMIT = 10000;
+
     /**
      * Specification:
      * - Choose, how handel blacklisted category.
@@ -22,5 +24,13 @@ class CatalogPageConfig extends AbstractBundleConfig
     public function isEmptyCategoryFilterValueVisible(): bool
     {
         return true;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCatalogPageLimit(): int
+    {
+        return static::CATALOG_PAGE_LIMIT;
     }
 }
