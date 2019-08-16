@@ -1,0 +1,3 @@
+@include helper-import(molecule, configured-bundle) {
+    @include configurable-bundle-widget-configured-bundle;
+}
