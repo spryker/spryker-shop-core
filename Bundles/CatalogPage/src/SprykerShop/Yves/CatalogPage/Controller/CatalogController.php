@@ -34,21 +34,6 @@ class CatalogController extends AbstractController
     protected const PRICE_SORTING_DIRECTIONS = ['price_desc', 'price_asc'];
 
     /**
-     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::DEFAULT_ITEMS_PER_PAGE;
-     */
-    protected const DEFAULT_ITEMS_PER_PAGE = 12;
-
-    /**
-     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_PAGE;
-     */
-    protected const PARAMETER_NAME_PAGE = 'page';
-
-    /**
-     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_ITEMS_PER_PAGE;
-     */
-    protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
-
-    /**
      * @param array $categoryNode
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -244,7 +229,7 @@ class CatalogController extends AbstractController
      */
     protected function reduceRestrictedParameters(array $parameters): array
     {
-        if (!$this->arePageParametersValid($parameters)) {
+        if (!$this->getFactory()->createPageParametersValidator()->validatePageParameters($parameters)) {
             unset($parameters[static::PARAMETER_NAME_PAGE]);
             $this->addErrorMessage(static::MESSAGE_PAGE_NOT_FOUND);
 
@@ -264,28 +249,6 @@ class CatalogController extends AbstractController
         }
 
         return $parameters;
-    }
-
-    /**
-     * @param array $parameters
-     *
-     * @return bool
-     */
-    protected function arePageParametersValid($parameters): bool
-    {
-        $catalogPageLimit = $this->getFactory()
-            ->getModuleConfig()
-            ->getCatalogPageLimit();
-
-        $divider = isset($parameters[static::PARAMETER_NAME_ITEMS_PER_PAGE])
-            ? $parameters[static::PARAMETER_NAME_ITEMS_PER_PAGE]
-            : static::DEFAULT_ITEMS_PER_PAGE;
-
-        if (isset($parameters[static::PARAMETER_NAME_PAGE]) && $parameters[static::PARAMETER_NAME_PAGE] > $catalogPageLimit / $divider) {
-            return false;
-        }
-
-        return true;
     }
 
     /**

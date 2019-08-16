@@ -9,6 +9,9 @@ namespace SprykerShop\Yves\CatalogPage;
 
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\Search\SearchConfig getSharedConfig()
+ */
 class CatalogPageConfig extends AbstractBundleConfig
 {
     protected const CATALOG_PAGE_LIMIT = 10000;
