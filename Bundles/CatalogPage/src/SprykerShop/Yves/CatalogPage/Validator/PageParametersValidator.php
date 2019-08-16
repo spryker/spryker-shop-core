@@ -12,21 +12,6 @@ use SprykerShop\Yves\CatalogPage\CatalogPageConfig;
 class PageParametersValidator implements PageParametersValidatorInterface
 {
     /**
-     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::DEFAULT_ITEMS_PER_PAGE;
-     */
-    protected const DEFAULT_ITEMS_PER_PAGE = 12;
-
-    /**
-     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_PAGE;
-     */
-    protected const PARAMETER_NAME_PAGE = 'page';
-
-    /**
-     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_ITEMS_PER_PAGE;
-     */
-    protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
-
-    /**
      * @var \SprykerShop\Yves\CatalogPage\CatalogPageConfig
      */
     protected $config;
@@ -47,12 +32,15 @@ class PageParametersValidator implements PageParametersValidatorInterface
     public function validatePageParameters(array $parameters): bool
     {
         $catalogPageLimit = $this->config->getCatalogPageLimit();
+        $page = $this->config->getPage();
+        $defaultItemsPerPage = $this->config->getDefaultItemsPerPage();
+        $itemsPerPage = $this->config->getItemsPerPage();
 
-        $divider = isset($parameters[static::PARAMETER_NAME_ITEMS_PER_PAGE])
-            ? $parameters[static::PARAMETER_NAME_ITEMS_PER_PAGE]
-            : static::DEFAULT_ITEMS_PER_PAGE;
+        $divider = isset($parameters[$itemsPerPage])
+            ? $parameters[$itemsPerPage]
+            : $defaultItemsPerPage;
 
-        if (isset($parameters[static::PARAMETER_NAME_PAGE]) && $parameters[static::PARAMETER_NAME_PAGE] > $catalogPageLimit / $divider) {
+        if (isset($parameters[$page]) && $parameters[$page] > $catalogPageLimit / $divider) {
             return false;
         }
 

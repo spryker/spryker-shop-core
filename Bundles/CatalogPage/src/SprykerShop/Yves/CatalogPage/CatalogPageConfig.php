@@ -14,6 +14,21 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
  */
 class CatalogPageConfig extends AbstractBundleConfig
 {
+    /**
+     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::DEFAULT_ITEMS_PER_PAGE;
+     */
+    protected const DEFAULT_ITEMS_PER_PAGE = 12;
+
+    /**
+     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_PAGE;
+     */
+    protected const PARAMETER_NAME_PAGE = 'page';
+
+    /**
+     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_ITEMS_PER_PAGE;
+     */
+    protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
+
     protected const CATALOG_PAGE_LIMIT = 10000;
 
     /**
@@ -35,5 +50,29 @@ class CatalogPageConfig extends AbstractBundleConfig
     public function getCatalogPageLimit(): int
     {
         return static::CATALOG_PAGE_LIMIT;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultItemsPerPage(): string
+    {
+        return static::DEFAULT_ITEMS_PER_PAGE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getItemsPerPage(): string
+    {
+        return static::PARAMETER_NAME_ITEMS_PER_PAGE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPage(): string
+    {
+        return static::PARAMETER_NAME_PAGE;
     }
 }
