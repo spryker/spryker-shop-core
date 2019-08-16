@@ -230,10 +230,8 @@ class CatalogController extends AbstractController
     protected function reduceRestrictedParameters(array $parameters): array
     {
         if (!$this->getFactory()->createPageParametersValidator()->validatePageParameters($parameters)) {
-            unset($parameters[$this->getFactory()->getModuleConfig()->getPage()]);
+            unset($parameters[$this->getFactory()->getModuleConfig()->getParameterNamePage()]);
             $this->addErrorMessage(static::MESSAGE_PAGE_NOT_FOUND);
-
-            return $parameters;
         }
 
         if ($this->can('SeePricePermissionPlugin')) {

@@ -53,9 +53,9 @@ class CatalogPageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getDefaultItemsPerPage(): string
+    public function getDefaultItemsPerPage(): int
     {
         return static::DEFAULT_ITEMS_PER_PAGE;
     }
@@ -63,7 +63,7 @@ class CatalogPageConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getItemsPerPage(): string
+    public function getParameterItemsPerPage(): string
     {
         return static::PARAMETER_NAME_ITEMS_PER_PAGE;
     }
@@ -71,7 +71,7 @@ class CatalogPageConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getPage(): string
+    public function getParameterNamePage(): string
     {
         return static::PARAMETER_NAME_PAGE;
     }

@@ -25,20 +25,18 @@ class PageParametersValidator implements PageParametersValidatorInterface
     }
 
     /**
-     * @param array $parameters
+     * @param string[] $parameters
      *
      * @return bool
      */
     public function validatePageParameters(array $parameters): bool
     {
         $catalogPageLimit = $this->config->getCatalogPageLimit();
-        $page = $this->config->getPage();
+        $page = $this->config->getParameterNamePage();
         $defaultItemsPerPage = $this->config->getDefaultItemsPerPage();
-        $itemsPerPage = $this->config->getItemsPerPage();
+        $itemsPerPage = $this->config->getParameterItemsPerPage();
 
-        $divider = isset($parameters[$itemsPerPage])
-            ? $parameters[$itemsPerPage]
-            : $defaultItemsPerPage;
+        $divider = $parameters[$itemsPerPage] ?? $defaultItemsPerPage;
 
         if (isset($parameters[$page]) && $parameters[$page] > $catalogPageLimit / $divider) {
             return false;
