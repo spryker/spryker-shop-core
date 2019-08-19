@@ -18,7 +18,7 @@ use Twig\Environment;
 use Twig\TwigFunction;
 
 /**
- * @deprecated Use `SprykerShop\Yves\CmsBlockWidget\Plugin\Twig\TwigCmsBlockWidgetPlugin` instead.
+ * @deprecated Use `SprykerShop\Yves\CmsBlockWidget\Plugin\Twig\CmsBlockWidgetTwigPlugin` instead.
  *
  * @method \SprykerShop\Yves\CmsBlockWidget\CmsBlockWidgetFactory getFactory()
  */

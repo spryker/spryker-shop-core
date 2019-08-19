@@ -32,4 +32,35 @@ interface CmsBlockWidgetToCmsBlockStorageClientInterface
      * @return string
      */
     public function generateBlockNameKey($name);
+
+    /**
+     * @param string[] $blockKeys
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function findBlocksByKeys(array $blockKeys, string $localeName, string $storeName): array;
+
+    /**
+     * @param string $blockName
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function findMappingDataByBlockName(string $blockName, string $localeName, string $storeName): array;
+
+    /**
+     * @param array $options
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function findBlockKeysByOptions(array $options, string $localeName): array;
+
+    /**
+     * @return bool
+     */
+    public function isUseKeyInCmsBlockSearch(): bool;
 }

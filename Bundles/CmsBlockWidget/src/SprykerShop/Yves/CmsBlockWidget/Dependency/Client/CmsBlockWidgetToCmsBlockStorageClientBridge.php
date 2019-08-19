@@ -54,4 +54,47 @@ class CmsBlockWidgetToCmsBlockStorageClientBridge implements CmsBlockWidgetToCms
     {
         return $this->cmsBlockStorageClient->generateBlockNameKey($name);
     }
+
+    /**
+     * @param string[] $blockKeys
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function findBlocksByKeys(array $blockKeys, string $localeName, string $storeName): array
+    {
+        return $this->cmsBlockStorageClient->findBlocksByKeys($blockKeys, $localeName, $storeName);
+    }
+
+    /**
+     * @param string $blockName
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function findMappingDataByBlockName(string $blockName, string $localeName, string $storeName): array
+    {
+        return $this->cmsBlockStorageClient->findMappingDataByBlockName($blockName, $localeName, $storeName);
+    }
+
+    /**
+     * @param array $options
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function findBlockKeysByOptions(array $options, string $localeName): array
+    {
+        return $this->cmsBlockStorageClient->findBlockKeysByOptions($options, $localeName);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUseKeyInCmsBlockSearch(): bool
+    {
+        return method_exists($this->cmsBlockStorageClient, 'findBlocksByKeys');
+    }
 }
