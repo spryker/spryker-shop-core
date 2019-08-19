@@ -1,6 +1,6 @@
 {
   "include": {
-    "ShopUi": "ShopUi provides basic frontend infrastructure.",
-    "CustomerPage": "AgentPage components are depending on CustomerPage functionality."
+    "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure.",
+    "spryker-shop/customer-page": "AgentPage components are depending on CustomerPage functionality."
   }
 }
