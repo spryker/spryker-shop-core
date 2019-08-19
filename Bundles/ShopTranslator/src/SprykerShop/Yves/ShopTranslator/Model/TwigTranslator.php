@@ -11,6 +11,9 @@ use InvalidArgumentException;
 use SprykerShop\Yves\ShopTranslator\Dependency\Client\ShopTranslatorToGlossaryStorageClientInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
+/**
+ * @deprecated Use `spryker/translator` instead.
+ */
 class TwigTranslator implements TranslatorInterface
 {
     /**

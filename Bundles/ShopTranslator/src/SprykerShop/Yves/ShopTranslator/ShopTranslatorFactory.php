@@ -11,6 +11,9 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ShopTranslator\Dependency\Client\ShopTranslatorToGlossaryStorageClientInterface;
 use SprykerShop\Yves\ShopTranslator\Model\TwigTranslator;
 
+/**
+ * @deprecated Use `spryker/translator` instead.
+ */
 class ShopTranslatorFactory extends AbstractFactory
 {
     /**

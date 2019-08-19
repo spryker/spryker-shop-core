@@ -30,6 +30,7 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
     public const WIDGET_TAG_SERVICE = 'widget_tag_service';
 
     protected const TWIG_FUNCTION_FIND_WIDGET = 'findWidget';
+    protected const TWIG_GLOBAL_VARIABLE_NAME_VIEW = '_view';
 
     /**
      * @param \Silex\Application $application
@@ -158,9 +159,16 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
             return;
         }
 
+        $masterGlobalView = null;
+
         /** @var \Twig\Environment $twig */
         $twig = $application['twig'];
-        $twig->addGlobal('_view', $result);
+
+        if (!$event->isMasterRequest()) {
+            $masterGlobalView = $this->getGlobalView($twig);
+        }
+
+        $twig->addGlobal(static::TWIG_GLOBAL_VARIABLE_NAME_VIEW, $result);
 
         $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
         $widgetContainerRegistry->add($result);
@@ -175,6 +183,26 @@ class WidgetTagServiceProvider extends AbstractPlugin implements ServiceProvider
 
         $event->setResponse($response);
         $widgetContainerRegistry->removeLastAdded();
+
+        if ($masterGlobalView) {
+            $twig->addGlobal(static::TWIG_GLOBAL_VARIABLE_NAME_VIEW, $masterGlobalView);
+        }
+    }
+
+    /**
+     * @param \Twig\Environment $twig
+     *
+     * @return \Spryker\Yves\Kernel\View\ViewInterface|null
+     */
+    protected function getGlobalView(Environment $twig): ?ViewInterface
+    {
+        $twigGlobals = $twig->getGlobals();
+
+        if (!isset($twigGlobals[static::TWIG_GLOBAL_VARIABLE_NAME_VIEW])) {
+            return null;
+        }
+
+        return $twigGlobals[static::TWIG_GLOBAL_VARIABLE_NAME_VIEW];
     }
 
     /**
