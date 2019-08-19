@@ -24,6 +24,8 @@ class CatalogController extends AbstractController
 
     public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL;
 
+    public const MESSAGE_PAGE_NOT_FOUND = 'catalog.page.not_found';
+
     public const URL_PARAM_VIEW_MODE = 'mode';
     public const URL_PARAM_REFERER_URL = 'referer-url';
 
@@ -227,6 +229,11 @@ class CatalogController extends AbstractController
      */
     protected function reduceRestrictedParameters(array $parameters): array
     {
+        if (!$this->getFactory()->createPageParametersValidator()->validatePageParameters($parameters)) {
+            unset($parameters[$this->getFactory()->getModuleConfig()->getParameterNamePage()]);
+            $this->addErrorMessage(static::MESSAGE_PAGE_NOT_FOUND);
+        }
+
         if ($this->can('SeePricePermissionPlugin')) {
             return $parameters;
         }
