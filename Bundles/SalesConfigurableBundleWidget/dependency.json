@@ -1,6 +1,6 @@
 {
   "include": {
-    "ShopUi": "ShopUi provides basic frontend infrastructure.",
-    "SalesConfigurableBundle": "SalesConfigurableBundleWidget depends on SalesConfigurableBundle functionality."
+    "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure.",
+    "spryker/sales-configurable-bundle": "SalesConfigurableBundleWidget depends on SalesConfigurableBundle functionality."
   }
 }

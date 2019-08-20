@@ -1,5 +1,5 @@
 {
   "include": {
-    "FileManagerWidget": "FileManagerWidget provides molecule for download files."
+    "spryker-shop/file-manager-widget": "FileManagerWidget provides molecule for download files."
   }
 }
