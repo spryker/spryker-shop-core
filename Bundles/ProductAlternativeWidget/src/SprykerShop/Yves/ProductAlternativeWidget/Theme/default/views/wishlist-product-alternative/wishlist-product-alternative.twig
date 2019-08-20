@@ -25,10 +25,9 @@
                         </tr>
                         {% include molecule('toggler-click') with {
                             attributes: {
-                                'trigger-selector': '.js-product-alternative-' ~ wishlistItemSku ~ '__show-all-trigger',
-                                'target-selector': '.js-product-alternative-' ~ wishlistItemSku ~ '__show-all-target',
-                                'class-to-toggle': 'is-hidden'
-                            }
+                                'trigger-class-name': 'js-product-alternative-' ~ wishlistItemSku ~ '__show-all-trigger',
+                                'target-class-name': 'js-product-alternative-' ~ wishlistItemSku ~ '__show-all-target',
+                            },
                         } only %}
                     {% endif %}
                     <tr class="{{ loop.index > 3 ? 'js-product-alternative-' ~ wishlistItemSku ~ '__show-all-target is-hidden' : '' }}">
@@ -49,17 +48,17 @@
                             <div><small>{{ item.sku }}</small></div>
                             {% for attribute in item.superAttributesDefinition %}
                                 {% if item.attributes[attribute] is defined %}
-                                    {{ ('product.attribute.'~attribute) | trans }}: {{ item.attributes[attribute] }} <br/>
+                                    {{ ('product.attribute.'~attribute) | trans }}: {{ item.attributes[attribute] }} <br>
                                 {% endif %}
                             {% endfor %}
                             <span class="text-alert">{{ 'product_alternative_widget.alternative_for' | trans({name: data.item.name}) }}</span>
                         </td>
                         <td class="text-center">
                             {% if item.price is not null %}
-                                {% include molecule('price') with {
+                                {% include molecule('money-price') with {
                                     data: {
-                                        amount: item.price | money,
-                                        originalAmount: item.prices.ORIGINAL is not defined or item.prices.ORIGINAL is empty ? null : (item.prices.ORIGINAL | money)
+                                        amount: item.price,
+                                        originalAmount: item.prices.ORIGINAL is not defined or item.prices.ORIGINAL is empty ? null : item.prices.ORIGINAL
                                     }
                                 } only %}
                             {% else %}

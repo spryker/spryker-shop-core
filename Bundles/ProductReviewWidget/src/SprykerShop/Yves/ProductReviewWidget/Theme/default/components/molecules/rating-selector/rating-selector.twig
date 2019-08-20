@@ -40,7 +40,7 @@
                 {% endif %}
 
                 {% if data.useHalfSteps %}
-                    <a
+                    <span
                         data-step-value="{{currentStepValue}}"
                         class="
                             {{config.name}}__step
@@ -54,14 +54,14 @@
                                 name: 'star-half'
                             }
                         } only %}
-                    </a>
+                    </span>
 
                     {% set currentStepValue = (step - 0.5) * singleStepValue %}
                     {% if value >= currentStepValue %}
                         {% set isActive = true %}
                     {% endif %}
 
-                    <a
+                    <span
                         data-step-value="{{currentStepValue}}"
                         class="
                             {{config.name}}__step
@@ -75,9 +75,9 @@
                                 name: 'star-half'
                             }
                         } only %}
-                    </a>
+                    </span>
                 {% else %}
-                    <a
+                    <span
                         data-step-value="{{currentStepValue}}"
                         class="
                             {{config.name}}__step
@@ -91,7 +91,7 @@
                                 name: 'star'
                             }
                         } only %}
-                    </a>
+                    </span>
                 {% endif %}
             {% endfor %}
         {% endspaceless %}
@@ -105,7 +105,7 @@
                 {% if data.inputId is not empty %}id="{{data.inputId}}"{% endif %}
                 name="{{data.inputName}}"
                 value="{{data.value}}"
-                {% if attributes['disable-if-empty-value'] and data.value is empty %}disabled{% endif %} />
+                {% if attributes['disable-if-empty-value'] and data.value is empty %}disabled{% endif %}>
         {% endblock %}
     {% endif %}
 {% endblock %}

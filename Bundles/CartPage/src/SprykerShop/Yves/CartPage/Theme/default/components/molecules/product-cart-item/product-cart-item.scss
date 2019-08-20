@@ -1,0 +1,27 @@
+@mixin cart-page-product-cart-item($name: '.product-cart-item') {
+    @include shop-ui-product-item($name) {
+        @include helper-breakpoint(lg) {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        &__col {
+            margin-right: auto;
+            margin-left: auto;
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        &__actions {
+            flex-grow: 0;
+        }
+
+        @content;
+    }
+}

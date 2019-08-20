@@ -4,15 +4,19 @@
     expenses: _widget.expenses | default,
 } %}
 
-{% block body %}
+{% block template %}
     {% if data.expenses is not empty %}
-        <strong>{{ 'cart.sales-order-threshold' | trans }}</strong>
-        <ul class="list">
-            {% for expense in data.expenses %}
-                {% include molecule('sales-order-threshold-expense', 'SalesOrderThresholdWidget') with {
-                    data: {'expense': expense}
-                } only %}
-            {% endfor %}
-        </ul>
+        {{ parent() }}
     {% endif %}
+{% endblock %}
+
+{% block body %}
+    <strong>{{ 'cart.sales-order-threshold' | trans }}</strong>
+    <ul class="list">
+        {% for expense in data.expenses %}
+            {% include molecule('sales-order-threshold-expense', 'SalesOrderThresholdWidget') with {
+                data: {'expense': expense}
+            } only %}
+        {% endfor %}
+    </ul>
 {% endblock %}

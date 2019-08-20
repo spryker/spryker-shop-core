@@ -24,7 +24,10 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in data.items %}
+            {% widget 'OrderConfiguredBundleWidget' args [data.order] only %}
+            {% endwidget %}
+
+            {% for item in data.items if not item.salesOrderConfiguredBundleItem | default %}
                 {% set isBundle = item.bundleItems is defined %}
                 {% set concreteItem = item.bundleProduct | default(item) %}
 
@@ -37,7 +40,7 @@
                             molecule('order-detail-product-packaging-unit-default', 'CustomerPage'),
                         ] ignore missing with {
                             data: {
-                                concreteItem: item,
+                                concreteItem: concreteItem,
                                 currencyIsoCode: data.currencyIsoCode,
                                 concreteItemDefault: concreteItem
                             },
@@ -46,11 +49,13 @@
                                 concreteItem: concreteItem
                             }
                         } only %}
-                            {% block body %}
+                            {% block actions %}
                                 {% if embed.order is not empty %}
-                                    <td>{{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', embed.order, embed.concreteItem) }}</td>
+                                    {% widget 'CustomerReorderItemCheckboxWidget' args [embed.concreteItem] only %}
+                                    {% nowidget %}
+                                        {{ widgetBlock('CustomerReorderWidgetPlugin', 'formCheckbox', embed.order, embed.concreteItem) }} {# @deprecated Use widget 'CustomerReorderItemCheckboxWidget' instead. #}
+                                    {% endwidget %}
                                 {% endif %}
-                                {{ parent() }}
                             {% endblock %}
                         {% endembed %}
                     {% endif %}
@@ -60,15 +65,15 @@
                     <tr>
                         {% block bundleDetailRow %}
                             <td colspan="5">
-                                {{ "customer.order.bundled_items" | trans }} <br />
+                                {{ "customer.order.bundled_items" | trans }} <br>
                                 {% for bundledItem in item.bundleItems %}
-                                    - {{ bundledItem.quantity }} x {{ bundledItem.name }} <br />
+                                    - {{ bundledItem.quantity }} x {{ bundledItem.name }} <br>
                                 {% endfor %}
 
                                 {% if concreteItem.productOptions is not empty %}
-                                    {{ "customer.order.options" | trans }} <br />
+                                    {{ "customer.order.options" | trans }} <br>
                                     {% for productOption in concreteItem.productOptions %}
-                                        &nbsp; - {{ productOption.value | trans }} {{ productOption.sumPrice | money(true, data.currencyIsoCode) }}  <br />
+                                        &nbsp; - {{ productOption.value | trans }} {{ (productOption.sumPrice | default(productOption.unitPrice)) | money(true, data.currencyIsoCode) }}  <br>
                                     {% endfor %}
                                 {% endif %}
                             </td>
@@ -92,7 +97,7 @@
                                         <small>{{ productOption.value | trans }}</small>
                                     </td>
                                     <td>
-                                        <small>{{ productOption.sumPrice | money(true, data.currencyIsoCode) }}</small>
+                                        <small>{{ (productOption.sumPrice | default(productOption.unitPrice)) | money(true, data.currencyIsoCode) }}</small>
                                     </td>
                                     <td colspan="2"></td>
                                 {% endblock %}

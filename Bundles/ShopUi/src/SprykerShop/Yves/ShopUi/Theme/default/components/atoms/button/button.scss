@@ -1,10 +1,11 @@
 @mixin shop-ui-button($name: '.button') {
     #{$name} {
-        @include helper-effect-transition(background-color);
+        @include helper-effect-transition(background-color box-shadow);
         display: inline-block;
-        padding: calc(.25rem + 1px) calc(.5rem + 1px);
+        padding: calc(0.25rem + 1px) calc(0.5rem + 1px);
         background-color: $setting-color-main;
         border: none;
+        border-radius: 0;
         color: $setting-color-white;
         text-align: center;
         cursor: pointer;
@@ -13,6 +14,12 @@
         &:focus {
             background-color: helper-color-dark($setting-color-main);
             text-decoration: none;
+        }
+
+        &:active {
+            background-color: $setting-color-main;
+            text-decoration: none;
+            box-shadow: inset 0 2px 7px 0 helper-color-dark($setting-color-main);
         }
 
         &--hollow {
@@ -24,6 +31,11 @@
             &:hover,
             &:focus {
                 background-color: helper-color-light($setting-color-main);
+            }
+
+            &:active {
+                background-color: helper-color-light($setting-color-main);
+                box-shadow: inset 0 2px 7px 0 rgba($setting-color-main, 0.7);
             }
         }
 
@@ -59,6 +71,11 @@
         &:focus {
             background-color: helper-color-dark($setting-color-action);
         }
+
+        &:active {
+            background-color: $setting-color-action;
+            box-shadow: inset 0 2px 7px 0 helper-color-dark($setting-color-action);
+        }
     }
 
     &--#{$action}#{&}--hollow {
@@ -69,6 +86,11 @@
         &:hover,
         &:focus {
             background-color: helper-color-light($setting-color-action);
+        }
+
+        &:active {
+            background-color: helper-color-light($setting-color-action);
+            box-shadow: inset 0 2px 7px 0 rgba($setting-color-action, 0.7);
         }
     }
 

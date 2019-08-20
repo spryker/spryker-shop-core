@@ -18,7 +18,6 @@ use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
-use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 
@@ -37,13 +36,6 @@ interface ShoppingListPageToShoppingListClientInterface
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
     public function clearShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
-     */
-    public function shareShoppingList(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
@@ -105,13 +97,6 @@ interface ShoppingListPageToShoppingListClientInterface
      * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
      */
     public function getShoppingListOverviewWithoutProductDetails(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
-     */
-    public function getShoppingListOverview(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer

@@ -71,7 +71,6 @@ class ShoppingListFromCartForm extends AbstractType
     {
         $builder->add(static::FIELD_ID_SHOPPING_LIST, ChoiceType::class, [
             'choices' => $options[static::OPTION_SHOPPING_LISTS],
-            'choices_as_values' => true,
             'expanded' => false,
             'required' => true,
             'label' => false,

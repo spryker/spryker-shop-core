@@ -2,7 +2,7 @@
 
 {% define config = {
     name: 'quick-order-form',
-    tag: 'quick-order-form'
+    tag: 'quick-order-form',
 } %}
 
 {% define data = {
@@ -12,7 +12,7 @@
     additionalColumns: [],
     fileTemplateExtensions: [],
     textOrderForm: required,
-    uploadOrderForm: required
+    uploadOrderForm: required,
 } %}
 
 {% block body %}
@@ -20,23 +20,23 @@
         class: config.jsName ~ '__provider ' ~ config.jsName ~ '__add-row-provider',
         attributes: {
             method: 'POST',
-            url: url('quick-order/add-rows')
-        }
+            url: url('quick-order/add-rows'),
+        },
     } only %}
 
     {% include molecule('ajax-provider') with {
         class: config.jsName ~ '__provider ' ~ config.jsName ~ '__remove-row-provider',
         attributes: {
             method: 'POST',
-            url: url('quick-order/delete-row')
-        }
+            url: url('quick-order/delete-row'),
+        },
     } only %}
 
     {% include molecule('ajax-loader') with {
         modifiers: ['big'],
         attributes: {
-            'provider-selector': '.' ~ config.jsName ~ '__provider'
-        }
+            'provider-class-name': config.jsName ~ '__provider',
+        },
     } only %}
 
     {% embed molecule('form') with {
@@ -52,13 +52,13 @@
                 }
             },
             textOrderForm: data.textOrderForm,
-            uploadOrderForm: data.uploadOrderForm
+            uploadOrderForm: data.uploadOrderForm,
         },
         embed: {
             name: config.name,
             jsName: config.jsName,
-            additionalColumns: data.additionalColumns
-        }
+            additionalColumns: data.additionalColumns,
+        },
     } only %}
         {% block fieldset %}
             <div class="{{ config.name }}__fields grid">
@@ -71,8 +71,8 @@
                                         rows: data.form.items,
                                         products: data.products,
                                         prices: data.prices,
-                                        additionalColumns: embed.additionalColumns
-                                    }
+                                        additionalColumns: embed.additionalColumns,
+                                    },
                                 } only %}
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                             {% include molecule('quick-order-text-order-form', 'QuickOrderPage') with {
                                 data: {
                                     textOrderForm: data.textOrderForm,
-                                }
+                                },
                             } only %}
 
                             <hr>
@@ -90,8 +90,8 @@
                             {% include molecule('quick-order-file-upload', 'QuickOrderPage') with {
                                 data: {
                                     uploadOrderForm: data.uploadOrderForm,
-                                    fileTemplateExtensions: data.fileTemplateExtensions
-                                }
+                                    fileTemplateExtensions: data.fileTemplateExtensions,
+                                },
                             } only %}
                         </div>
                     </div>
@@ -100,7 +100,7 @@
         {% endblock %}
 
         {% block actions %}
-            <hr/>
+            <hr>
             <div class="grid grid--bottom grid--justify">
                 <div class="col col--sm-12 col--md-3">
                     <a href="#add-more" class="{{embed.jsName}}__add-row-trigger button button--hollow button--expand">
@@ -137,8 +137,8 @@
                         {% include atom('icon') with {
                             modifiers: ['small'],
                             data: {
-                                name: 'times'
-                            }
+                                name: 'times',
+                            },
                         } only %}
                     </a>
                 </div>

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 /**
- * @deprecated Use molecule('price') instead.
+ * @deprecated Use molecule('money-price') instead.
  */
 interface PriceWidgetPluginInterface extends WidgetPluginInterface
 {

@@ -1,0 +1,3 @@
+parameters:
+    ignoreErrors:
+    - '#Return type \(void\) of method .+doHealthCheck\(\) should be compatible with return type .+ of method .+HealthIndicatorInterface::doHealthCheck\(\)#'

@@ -9,6 +9,11 @@
             overflow-y: auto;
         }
 
+        &__title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         &__name {
             color: $setting-color-black;
             padding-right: map-get($setting-spacing, 'small');

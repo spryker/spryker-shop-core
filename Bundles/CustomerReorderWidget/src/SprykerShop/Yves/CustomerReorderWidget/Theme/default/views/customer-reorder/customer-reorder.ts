@@ -4,17 +4,17 @@ export default class CustomerReorder extends Component {
     /**
      * Elements enabling/disabling the trigger.
      */
-    readonly selections: HTMLInputElement[]
+    readonly selections: HTMLInputElement[];
 
     /**
      * Element enabled/disabled by selections changes.
      */
-    readonly trigger: HTMLElement
+    readonly trigger: HTMLElement;
 
     constructor() {
         super();
-        this.selections = <HTMLInputElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__selection`));
-        this.trigger = <HTMLElement>this.querySelector(`.${this.jsName}__trigger`);
+        this.selections = <HTMLInputElement[]>Array.from(this.getElementsByClassName(`${this.jsName}__selection`));
+        this.trigger = <HTMLElement>this.getElementsByClassName(`${this.jsName}__trigger`)[0];
     }
 
     protected readyCallback(): void {
@@ -28,17 +28,18 @@ export default class CustomerReorder extends Component {
     }
 
     protected onSelectionChange(event: Event): void {
-        const enable = this.selections.some((selection: HTMLInputElement) => selection.checked);
-        this.enableTrigger(enable);
+        const isEnabled = this.selections.some((selection: HTMLInputElement) => selection.checked);
+        this.enableTrigger(isEnabled);
     }
 
     /**
      * Sets or removes the disabled attribute from the trigger element.
      * @param enable A boolean value for checking if the trigger is available for changing.
      */
-    enableTrigger(enable: boolean): void {
-        if (enable) {
+    enableTrigger(isEnabled: boolean): void {
+        if (isEnabled) {
             this.trigger.removeAttribute('disabled');
+
             return;
         }
 

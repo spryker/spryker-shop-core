@@ -11,6 +11,9 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ShopTranslator\Dependency\Client\ShopTranslatorToGlossaryStorageClientBridge;
 
+/**
+ * @deprecated Use `spryker/translator` instead.
+ */
 class ShopTranslatorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';

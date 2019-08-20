@@ -1,3 +1,4 @@
+/* tslint:disable */
 import Component from 'ShopUi/models/component';
 
 export default class MeasurementQuantitySelector extends Component {
@@ -43,9 +44,9 @@ export default class MeasurementQuantitySelector extends Component {
     translations: any;
 
     protected readyCallback(event?: Event): void {
-        this.qtyInSalesUnitInput = <HTMLInputElement>document.querySelector('#sales-unit-quantity');
-        this.qtyInBaseUnitInput = <HTMLInputElement>document.querySelector('#base-unit-quantity');
-        this.measurementUnitInput = <HTMLSelectElement>document.querySelector('.select-measurement-unit');
+        this.qtyInSalesUnitInput = <HTMLInputElement>document.getElementById('sales-unit-quantity');
+        this.qtyInBaseUnitInput = <HTMLInputElement>document.getElementById('base-unit-quantity');
+        this.measurementUnitInput = <HTMLSelectElement>document.getElementsByClassName('select-measurement-unit')[0];
         this.addToCartButton = <HTMLButtonElement>document.getElementById('add-to-cart-button');
 
         this.initJson();
@@ -125,14 +126,14 @@ export default class MeasurementQuantitySelector extends Component {
     }
 
     private hideNotifications() {
-        document.querySelector('.measurement-unit-choice').classList.add('is-hidden');
+        document.getElementsByClassName('measurement-unit-choice')[0].classList.add('is-hidden');
         document.getElementById('quantity-between-units').classList.add('is-hidden');
         document.getElementById('minimum-quantity').classList.add('is-hidden');
         document.getElementById('maximum-quantity').classList.add('is-hidden');
     }
 
     private askCustomerForCorrectInput(qtyInSalesUnits: number) {
-        let choicesList = document.querySelector('#measurement-unit-choices .list');
+        let choicesList = document.getElementById('measurement-unit-choices').getElementsByClassName('list')[0];
         let currentChoice = document.querySelector('.measurement-unit-choice #current-choice');
         let minChoice = this.getMinChoice(qtyInSalesUnits);
         let maxChoice = this.getMaxChoice(qtyInSalesUnits, minChoice);
@@ -148,7 +149,7 @@ export default class MeasurementQuantitySelector extends Component {
 
         choiceElements.forEach((element) => (element !== null) ? choicesList.appendChild(element) : null);
 
-        document.querySelector('.measurement-unit-choice').classList.remove('is-hidden');
+        document.getElementsByClassName('measurement-unit-choice')[0].classList.remove('is-hidden');
     }
 
     private createChoiceElement(qtyInBaseUnits: number) {
@@ -181,7 +182,7 @@ export default class MeasurementQuantitySelector extends Component {
         this.qtyInBaseUnitInput.value = qtyInBaseUnits.toString();
         this.qtyInSalesUnitInput.value = this.round(qtyInSalesUnits, 4).toString().toString();
         this.addToCartButton.removeAttribute("disabled");
-        document.querySelector('.measurement-unit-choice').classList.add('is-hidden');
+        document.getElementsByClassName('measurement-unit-choice')[0].classList.add('is-hidden');
     }
 
     private getMinChoice(qtyInSalesUnits: number) {

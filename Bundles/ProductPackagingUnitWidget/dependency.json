@@ -1,8 +1,8 @@
 {
   "include": {
-    "ShopUi": "ShopUi provides basic frontend infrastructure."
+    "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure."
   },
   "include-dev": {
-    "MoneyWidget": "MoneyWidget provides moneySymbol twig method for twig files."
+    "spryker-shop/money-widget": "MoneyWidget provides moneySymbol twig method for twig files."
   }
 }

@@ -1,4 +1,5 @@
 language: php
+dist: trusty
 
 git:
   depth: 3
@@ -17,12 +18,15 @@ env:
 
 before_install:
   - phpenv config-rm xdebug.ini
+  - nvm install 10
 
 install:
-  - composer install --no-interaction --prefer-dist --no-autoloader
+  - composer install --no-interaction --prefer-dist --optimize-autoloader
+  - npm install -g git+https://github.com/spryker-sdk/frontend-sniffer.git#semver:^0.1.0
 
 script:
   - composer cs-check
+  - frontend-sniffer --config ./ --path ./Bundles
 
 notifications:
   email: false

@@ -1,32 +1,37 @@
 @mixin shop-ui-box($name: '.box') {
     #{$name} {
         @include helper-ui-clearfix;
-        padding: 0.5rem;
-        margin: 0.5rem;
+        padding: map-get($setting-spacing, 'default');
+        margin: map-get($setting-spacing, 'default');
         background-color: $setting-color-white;
         border: 1px solid $setting-color-lighter;
 
-        hr,
         &__separator {
-            position: relative;
             display: block;
-            margin-top: 0.5rem;
-            margin-bottom: 0.5rem;
+            margin: map-get($setting-spacing, 'default') -#{map-get($setting-spacing, 'default')};
             border-bottom: 1px solid $setting-color-lighter;
-            left: - 0.5rem;
-            width: calc(100% + #{1rem});
         }
 
         &--borderless {
             border-color: $setting-color-transparent;
         }
 
+        &--spacingless {
+            padding: 0;
+            margin: 0;
+
+            #{$name}__separator {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+
         &--stretch {
             height: calc(100% - 1rem);
         }
 
-        & + & {
-            margin-top: 1rem;
+        &--dark {
+            background-color: $setting-color-lightest;
         }
 
         @each $action, $setting-color-action in $setting-color-actions {

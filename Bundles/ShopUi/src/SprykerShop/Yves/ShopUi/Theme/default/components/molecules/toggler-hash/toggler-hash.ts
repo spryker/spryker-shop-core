@@ -4,11 +4,14 @@ export default class TogglerHash extends Component {
     /**
      * Elements targeted by the toggle action.
      */
-    readonly targets: HTMLElement[]
+    readonly targets: HTMLElement[];
 
     constructor() {
         super();
-        this.targets = <HTMLElement[]>Array.from(document.querySelectorAll(this.targetSelector));
+        /* tslint:disable: deprecation */
+        this.targets = <HTMLElement[]>Array.from(this.targetClassName ?
+            document.getElementsByClassName(this.targetClassName) : document.querySelectorAll(this.targetSelector));
+        /* tslint:enable: deprecation */
     }
 
     protected readyCallback(): void {
@@ -30,6 +33,7 @@ export default class TogglerHash extends Component {
     checkHash(): void {
         if (this.triggerHash === this.hash) {
             this.toggle(this.addClassWhenHashInUrl);
+
             return;
         }
 
@@ -37,7 +41,7 @@ export default class TogglerHash extends Component {
     }
 
     /**
-     * Toggles the class names.
+     * Toggles the class names in the target elements.
      * @param addClass A boolean value for a more flexible toggling action.
      */
     toggle(addClass: boolean): void {
@@ -60,9 +64,14 @@ export default class TogglerHash extends Component {
 
     /**
      * Gets a querySelector of the target element.
+     *
+     * @deprecated Use targetClassName() instead.
      */
     get targetSelector(): string {
         return this.getAttribute('target-selector');
+    }
+    protected get targetClassName(): string {
+        return this.getAttribute('target-class-name');
     }
 
     /**

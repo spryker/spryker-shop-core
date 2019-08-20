@@ -11,7 +11,7 @@ use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProv
 use Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\FileManagerWidget\Dependency\Client\FileManagerWidgetToFileManagerStorageClientInterface;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
  * @method \SprykerShop\Yves\FileManagerWidget\FileManagerWidgetFactory getFactory()
@@ -42,14 +42,14 @@ class FileManagerWidgetPlugin extends AbstractPlugin implements CmsContentWidget
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param array $context
      * @param string|int|array $idFiles
      * @param string|null $templateIdentifier
      *
      * @return string
      */
-    public function contentWidgetFunction(Twig_Environment $twig, array $context, $idFiles, ?string $templateIdentifier = null): string
+    public function contentWidgetFunction(Environment $twig, array $context, $idFiles, ?string $templateIdentifier = null): string
     {
         return $twig->render(
             $this->resolveTemplatePath($templateIdentifier),

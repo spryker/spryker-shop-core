@@ -1,0 +1,56 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'url-mask-generator',
+    tag: 'url-mask-generator',
+} %}
+
+{% define data = {
+    group: required,
+    label: required,
+} %}
+
+{# @deprecated property "trigger-selector" is deprecated: use "trigger-class-name" instead. #}
+{% define attributes = {
+    idQuote: required,
+    shareOptionGroup: required,
+    'trigger-selector': '.js-toggler-radio__trigger',
+    'trigger-class-name': 'js-toggler-radio__trigger',
+} %}
+
+{% block body %}
+    {% include molecule('ajax-provider') with {
+        class: config.jsName ~ '__provider-' ~ attributes.shareOptionGroup,
+        attributes: {
+            method: 'POST',
+            url: path('cart/create-link', { idQuote:attributes.idQuote, shareOptionGroup: attributes.shareOptionGroup, }),
+        },
+    } only %}
+
+    {% include molecule('ajax-loader') with {
+        modifiers: ['big'],
+        attributes: {
+            'provider-class-name': config.jsName ~ '__provider-' ~ attributes.shareOptionGroup,
+        },
+    } only %}
+
+    {% include molecule('ajax-renderer') with {
+        attributes: {
+            'provider-class-name': config.jsName ~ '__provider-' ~ attributes.shareOptionGroup,
+            'target-class-name': config.jsName ~ '__actions-' ~ attributes.shareOptionGroup,
+        },
+    } only %}
+
+    {% include molecule('toggler-radio') with {
+        data: {
+            label: data.label,
+        },
+        attributes: {
+            checked: false,
+            name: data.group,
+            'target-class-name': config.jsName ~ '__actions-' ~ attributes.shareOptionGroup,
+        },
+    } only %}
+
+    <div class="{{ config.jsName }}__actions-{{ attributes.shareOptionGroup }}"></div>
+{% endblock %}

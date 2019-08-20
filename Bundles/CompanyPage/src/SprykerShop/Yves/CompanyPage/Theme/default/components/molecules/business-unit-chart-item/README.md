@@ -1,12 +1,1 @@
-Displays a business unit chart item link.
-
-## Code sample
-
-```
-{% include molecule('business-unit-chart-item', 'CompanyPage') with {
-     data: {
-         node: node,
-         level: level
-     }
- } only %}
-```
+Displays a link to the business unit chart item.

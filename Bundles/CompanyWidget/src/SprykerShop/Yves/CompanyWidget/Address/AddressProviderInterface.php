@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CompanyWidget\Address;
 
+use Generated\Shared\Transfer\AddressTransfer;
+
 interface AddressProviderInterface
 {
     /**
@@ -23,4 +25,12 @@ interface AddressProviderInterface
      * @return \Generated\Shared\Transfer\AddressTransfer[]
      */
     public function getIndexedCompanyBusinessUnitAddressList(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $formAddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer[] $companyBusinessUnitAddresses
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCurrentCompanyBusinessUnitAddress(AddressTransfer $formAddressTransfer, array $companyBusinessUnitAddresses): ?AddressTransfer;
 }
