@@ -93,6 +93,8 @@ class CompanyUserSaver implements CompanyUserSaverInterface
         $customerTransfer = $this->customerClient->getCustomer();
 
         if (empty($idCompanyUserSelected)) {
+            $this->businessOnBehalfClient->unsetDefaultCompanyUser($companyUser->getCustomer());
+
             $this->updateCustomerInSession($customerTransfer, null);
 
             return true;
