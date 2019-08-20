@@ -10,9 +10,9 @@ namespace SprykerShop\Yves\ShopCmsSlot\Dependency\Client;
 interface ShopCmsSlotToCmsSlotClientInterface
 {
     /**
-     * @param string[] $fillingKeys
+     * @param string[] $dataKeys
      *
      * @return array
      */
-    public function fetchCmsSlotAutoFilled(array $fillingKeys): array;
+    public function getCmsSlotExternalDataByKeys(array $dataKeys): array;
 }

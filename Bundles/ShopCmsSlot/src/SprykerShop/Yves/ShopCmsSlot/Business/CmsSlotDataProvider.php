@@ -52,7 +52,7 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
         array $autoFillingKeys
     ): CmsSlotDataTransfer {
         if ($autoFillingKeys) {
-            $autoFilledData = $this->cmsSlotClient->fetchCmsSlotAutoFilled($autoFillingKeys);
+            $autoFilledData = $this->cmsSlotClient->getCmsSlotExternalDataByKeys($autoFillingKeys);
             $providedData = $autoFilledData + $providedData;
         }
 

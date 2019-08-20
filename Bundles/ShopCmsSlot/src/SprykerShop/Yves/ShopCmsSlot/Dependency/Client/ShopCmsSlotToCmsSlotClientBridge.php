@@ -23,12 +23,12 @@ class ShopCmsSlotToCmsSlotClientBridge implements ShopCmsSlotToCmsSlotClientInte
     }
 
     /**
-     * @param string[] $fillingKeys
+     * @param string[] $dataKeys
      *
      * @return array
      */
-    public function fetchCmsSlotAutoFilled(array $fillingKeys): array
+    public function getCmsSlotExternalDataByKeys(array $dataKeys): array
     {
-        return $this->cmsSlotClient->fetchCmsSlotAutoFilled($fillingKeys);
+        return $this->cmsSlotClient->getCmsSlotExternalDataByKeys($dataKeys);
     }
 }
