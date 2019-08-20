@@ -2,14 +2,15 @@
 
 {% define data = {
     product: product | default,
-    products: products | default([])
+    products: products | default([]),
+    showNotAvailableProducts: showNotAvailableProducts | default(false),
 } %}
 
 {% block body %}
     <div class="grid grid--stretch">
-        {% for availableProduct in data.products %}
-            {% widget 'CmsProductGroupWidget' args [availableProduct] only %}
-            {% elsewidget 'ProductGroupWidgetPlugin' args [availableProduct] only %} {# @deprecated Use CmsProductGroupWidget instead. #}
+        {% for product in data.products if (data.showNotAvailableProducts or product.available) %}
+            {% widget 'CmsProductGroupWidget' args [product] only %}
+            {% elsewidget 'ProductGroupWidgetPlugin' args [product] only %} {# @deprecated Use CmsProductGroupWidget instead. #}
             {% endwidget %}
         {% endfor %}
     </div>
