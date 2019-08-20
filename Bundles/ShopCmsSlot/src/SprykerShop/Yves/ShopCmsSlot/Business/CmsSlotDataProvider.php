@@ -11,14 +11,14 @@ use Generated\Shared\Transfer\CmsSlotDataTransfer;
 use Generated\Shared\Transfer\CmsSlotRequestTransfer;
 use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientInterface;
 use SprykerShop\Yves\ShopCmsSlot\Exception\MissingRequiredParameterException;
-use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotPluginInterface;
+use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface;
 
-class CmsSlotExecutor implements CmsSlotExecutorInterface
+class CmsSlotDataProvider implements CmsSlotDataProviderInterface
 {
     /**
-     * @var \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotPluginInterface
+     * @var \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface
      */
-    protected $cmsSlotPlugin;
+    protected $cmsSlotContentPlugin;
 
     /**
      * @var \SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientInterface
@@ -26,14 +26,14 @@ class CmsSlotExecutor implements CmsSlotExecutorInterface
     protected $cmsSlotClient;
 
     /**
-     * @param \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotPluginInterface $cmsSlotPlugin
+     * @param \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface $cmsSlotContentPlugin
      * @param \SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientInterface $cmsSlotClient
      */
     public function __construct(
-        CmsSlotPluginInterface $cmsSlotPlugin,
+        CmsSlotContentPluginInterface $cmsSlotContentPlugin,
         ShopCmsSlotToCmsSlotClientInterface $cmsSlotClient
     ) {
-        $this->cmsSlotPlugin = $cmsSlotPlugin;
+        $this->cmsSlotContentPlugin = $cmsSlotContentPlugin;
         $this->cmsSlotClient = $cmsSlotClient;
     }
 
@@ -61,10 +61,10 @@ class CmsSlotExecutor implements CmsSlotExecutorInterface
         }
 
         $cmsSlotRequestTransfer = (new CmsSlotRequestTransfer())
-            ->setKey($cmsSlotKey)
+            ->setCmsSlotKey($cmsSlotKey)
             ->setParams($providedData);
 
-        return $this->cmsSlotPlugin->getSlotContent($cmsSlotRequestTransfer);
+        return $this->cmsSlotContentPlugin->getSlotContent($cmsSlotRequestTransfer);
     }
 
     /**

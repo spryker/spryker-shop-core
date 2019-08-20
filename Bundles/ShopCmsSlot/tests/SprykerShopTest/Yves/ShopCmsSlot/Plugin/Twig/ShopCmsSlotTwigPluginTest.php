@@ -11,11 +11,11 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CmsSlotDataTransfer;
 use SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin;
 use SprykerShop\Yves\ShopCmsSlot\ShopCmsSlotDependencyProvider;
-use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotPluginInterface;
+use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface;
 
 class ShopCmsSlotTwigPluginTest extends Unit
 {
-    protected const FRAGMENT_DATA = 'test fragment data';
+    protected const CONTENT = 'test content';
     protected const SLOT_KEY = 'test-slot-key';
     protected const PROVIDED_DATA = [
         'provided-key' => 'data-value',
@@ -36,15 +36,15 @@ class ShopCmsSlotTwigPluginTest extends Unit
     public function testShopCmsSlotTwigPluginReturnsExpectedStringOnValidData(): void
     {
         $cmsSlotDataTransfer = $this->tester->getCmsSlotDataTransfer([
-            CmsSlotDataTransfer::FRAGMENT_DATA => static::FRAGMENT_DATA,
+            CmsSlotDataTransfer::CONTENT => static::CONTENT,
         ]);
 
-        $cmsSlotPluginMock = $this->getCmsSlotPluginMock();
-        $cmsSlotPluginMock->method('getSlotContent')->willReturn($cmsSlotDataTransfer);
+        $cmsSlotContentPluginMock = $this->getCmsSlotContentPluginMock();
+        $cmsSlotContentPluginMock->method('getSlotContent')->willReturn($cmsSlotDataTransfer);
 
         $this->tester->setDependency(
-            ShopCmsSlotDependencyProvider::PLUGIN_SHOP_CMS_SLOT_HANDLER,
-            $cmsSlotPluginMock
+            ShopCmsSlotDependencyProvider::PLUGIN_CMS_SLOT_CONTENT,
+            $cmsSlotContentPluginMock
         );
 
         $shopCmsSlotContent = (new ShopCmsSlotTwigPlugin())
@@ -55,7 +55,7 @@ class ShopCmsSlotTwigPluginTest extends Unit
                 static::AUTO_FILLED_DATA
             );
 
-        $this->assertEquals(static::FRAGMENT_DATA, $shopCmsSlotContent);
+        $this->assertEquals(static::CONTENT, $shopCmsSlotContent);
     }
 
     /**
@@ -64,15 +64,15 @@ class ShopCmsSlotTwigPluginTest extends Unit
     public function testShopCmsSlotTwigPluginReturnsEmptyStringOnMissingRequiredData(): void
     {
         $cmsSlotDataTransfer = $this->tester->getCmsSlotDataTransfer([
-            CmsSlotDataTransfer::FRAGMENT_DATA => static::FRAGMENT_DATA,
+            CmsSlotDataTransfer::CONTENT => static::CONTENT,
         ]);
 
-        $cmsSlotPluginMock = $this->getCmsSlotPluginMock();
-        $cmsSlotPluginMock->method('getSlotContent')->willReturn($cmsSlotDataTransfer);
+        $cmsSlotContentPluginMock = $this->getCmsSlotContentPluginMock();
+        $cmsSlotContentPluginMock->method('getSlotContent')->willReturn($cmsSlotDataTransfer);
 
         $this->tester->setDependency(
-            ShopCmsSlotDependencyProvider::PLUGIN_SHOP_CMS_SLOT_HANDLER,
-            $cmsSlotPluginMock
+            ShopCmsSlotDependencyProvider::PLUGIN_CMS_SLOT_CONTENT,
+            $cmsSlotContentPluginMock
         );
 
         $shopCmsSlotContent = (new ShopCmsSlotTwigPlugin())
@@ -87,10 +87,10 @@ class ShopCmsSlotTwigPluginTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface
      */
-    protected function getCmsSlotPluginMock(): CmsSlotPluginInterface
+    protected function getCmsSlotContentPluginMock(): CmsSlotContentPluginInterface
     {
-        return $this->getMockBuilder(CmsSlotPluginInterface::class)->getMock();
+        return $this->getMockBuilder(CmsSlotContentPluginInterface::class)->getMock();
     }
 }

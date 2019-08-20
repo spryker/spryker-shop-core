@@ -18,6 +18,7 @@ class ShopCmsSlotTokenParser extends AbstractTokenParser
     public const NODE_AUTOFILLED = 'autoFilled';
     public const NODE_REQUIRED = 'required';
     public const NODE_WITH = 'with';
+
     protected const PARAMETER_NAME_AUTOFILLED = 'autofilled';
     protected const PARAMETER_NAME_REQUIRED = 'required';
     protected const PARAMETER_NAME_WITH = 'with';

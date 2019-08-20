@@ -11,12 +11,12 @@ use RuntimeException;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientBridge;
-use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotPluginInterface;
+use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface;
 
 class ShopCmsSlotDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CMS_SLOT = 'CLIENT_CMS_SLOT';
-    public const PLUGIN_SHOP_CMS_SLOT_HANDLER = 'PLUGIN_SHOP_CMS_SLOT_HANDLER';
+    public const PLUGIN_CMS_SLOT_CONTENT = 'PLUGIN_CMS_SLOT_CONTENT';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -25,7 +25,7 @@ class ShopCmsSlotDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container): Container
     {
-        $container = $this->addCmsSlotPlugin($container);
+        $container = $this->addCmsSlotContentPlugin($container);
         $container = $this->addCmsSlotClient($container);
 
         return $container;
@@ -36,10 +36,10 @@ class ShopCmsSlotDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCmsSlotPlugin(Container $container): Container
+    protected function addCmsSlotContentPlugin(Container $container): Container
     {
-        $container->set(static::PLUGIN_SHOP_CMS_SLOT_HANDLER, function () {
-            return $this->getCmsSlotPlugin();
+        $container->set(static::PLUGIN_CMS_SLOT_CONTENT, function () {
+            return $this->getCmsSlotContentPlugin();
         });
 
         return $container;
@@ -62,10 +62,10 @@ class ShopCmsSlotDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @throws \RuntimeException
      *
-     * @return \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotPluginInterface
+     * @return \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface
      */
-    protected function getCmsSlotPlugin(): CmsSlotPluginInterface
+    protected function getCmsSlotContentPlugin(): CmsSlotContentPluginInterface
     {
-        throw new RuntimeException('Implement getCmsSlotPlugin().');
+        throw new RuntimeException('Implement getCmsSlotContentPlugin().');
     }
 }

@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\ShopCmsSlot\Business;
 
 use Generated\Shared\Transfer\CmsSlotDataTransfer;
 
-interface CmsSlotExecutorInterface
+interface CmsSlotDataProviderInterface
 {
     /**
      * @param string $cmsSlotKey

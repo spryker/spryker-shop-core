@@ -42,9 +42,9 @@ class ShopCmsSlotTwigPlugin extends AbstractTwigExtensionPlugin
 
         try {
             $cmsSlotDataTransfer = $this->getFactory()
-                ->createCmsSlotExecutor()
+                ->createCmsSlotDataProvider()
                 ->getSlotContent($cmsSlotKey, $provided, $required, $autoFilled);
-            $cmsSlotContent = $cmsSlotDataTransfer->getFragmentData();
+            $cmsSlotContent = $cmsSlotDataTransfer->getContent();
         } catch (RuntimeException | MissingRequiredParameterException $e) {
             if ($this->getConfig()->isDebugModeEnabled()) {
                 ErrorLogger::getInstance()->log($e);
