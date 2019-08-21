@@ -52,59 +52,28 @@ class ShopCmsSlotNode extends Node
                 $this->cmsSlotKey
             )
         );
-        $this->compileWithNode($compiler);
+        $this->compileArrayNode($compiler, ShopCmsSlotTokenParser::NODE_WITH);
         $compiler->raw(', ');
-        $this->compileRequiredNode($compiler);
+        $this->compileArrayNode($compiler, ShopCmsSlotTokenParser::NODE_REQUIRED);
         $compiler->raw(', ');
-        $this->compileAutoFilledNode($compiler);
+        $this->compileArrayNode($compiler, ShopCmsSlotTokenParser::NODE_AUTOFILLED);
         $compiler->raw(');');
     }
 
     /**
      * @param \Twig\Compiler $compiler
+     * @param string $nodeName
      *
      * @return void
      */
-    protected function compileWithNode(Compiler $compiler): void
+    protected function compileArrayNode(Compiler $compiler, string $nodeName): void
     {
-        if (!$this->hasNode(ShopCmsSlotTokenParser::NODE_WITH)) {
+        if (!$this->hasNode($nodeName)) {
             $compiler->raw('[]');
 
             return;
         }
 
-        $compiler->subcompile($this->getNode(ShopCmsSlotTokenParser::NODE_WITH));
-    }
-
-    /**
-     * @param \Twig\Compiler $compiler
-     *
-     * @return void
-     */
-    protected function compileRequiredNode(Compiler $compiler): void
-    {
-        if (!$this->hasNode(ShopCmsSlotTokenParser::NODE_REQUIRED)) {
-            $compiler->raw('[]');
-
-            return;
-        }
-
-        $compiler->subcompile($this->getNode(ShopCmsSlotTokenParser::NODE_REQUIRED));
-    }
-
-    /**
-     * @param \Twig\Compiler $compiler
-     *
-     * @return void
-     */
-    protected function compileAutoFilledNode(Compiler $compiler): void
-    {
-        if (!$this->hasNode(ShopCmsSlotTokenParser::NODE_AUTOFILLED)) {
-            $compiler->raw('[]');
-
-            return;
-        }
-
-        $compiler->subcompile($this->getNode(ShopCmsSlotTokenParser::NODE_AUTOFILLED));
+        $compiler->subcompile($this->getNode($nodeName));
     }
 }

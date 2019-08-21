@@ -69,18 +69,18 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
 
     /**
      * @param array $provided
-     * @param array $required
+     * @param array $requiredKeys
      *
      * @throws \SprykerShop\Yves\ShopCmsSlot\Exception\MissingRequiredParameterException
      *
      * @return void
      */
-    protected function assureProvidedHasRequiredKeys(array $provided, array $required): void
+    protected function assureProvidedHasRequiredKeys(array $provided, array $requiredKeys): void
     {
-        foreach ($required as $requiredParamName) {
-            if (!isset($provided[$requiredParamName])) {
+        foreach ($requiredKeys as $requiredKey) {
+            if (!isset($provided[$requiredKey])) {
                 throw new MissingRequiredParameterException(
-                    sprintf('The "%s" param is missing in the provided data', $requiredParamName)
+                    sprintf('The "%s" param is missing in the provided data', $requiredKey)
                 );
             }
         }
