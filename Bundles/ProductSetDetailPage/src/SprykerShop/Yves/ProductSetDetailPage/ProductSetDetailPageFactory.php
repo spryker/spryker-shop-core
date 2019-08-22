@@ -40,7 +40,7 @@ class ProductSetDetailPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductSetDetailPage\OptionsResetUrlGenerator\OptionsResetUrlGenerator
+     * @return \SprykerShop\Yves\ProductSetDetailPage\OptionsResetUrlGenerator\OptionsResetUrlGeneratorInterface
      */
     public function createOptionsResetUrlGenerator(): OptionsResetUrlGeneratorInterface
     {

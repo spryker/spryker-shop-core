@@ -34,7 +34,7 @@ class DetailController extends AbstractController
         $data = [
             'productSet' => $productSetDataStorageTransfer,
             'productViews' => $productViewTransfers,
-            'optionResetUrls' => $this->generateOptionResetUrls($request, $productViewTransfers, static::PARAM_ATTRIBUTE)
+            'optionResetUrls' => $this->generateOptionResetUrls($request, $productViewTransfers)
         ];
 
         return $this->view(
