@@ -12,16 +12,19 @@
 {% block body %}
     {% if data.products is not empty %}
         {% for product in data.products %}
-            {% set productDiscontinuedWidget = findWidget('ProductDiscontinuedWidget', [product.sku]) %}
-            {% set isDiscontinued = productDiscontinuedWidget.isDiscontinued %}
-            {% set discontinuedPrefix = isDiscontinued ? 'product_search_widget.search.product_discontinued_prefix' | trans : '' %}
-
             {% set selectedItem = loop.first ? config.name ~ '__item--selected' : '' %}
             <li class="list__item spacing-y spacing-y--inner {{ config.name }}__item {{ selectedItem }}" data-value="{{ product.sku }}">
-                {{ discontinuedPrefix }} {{ product.name }} ({{ product.sku }})
+                {% widget 'ProductDiscontinuedWidget' args [product.sku] with { product: product } only %}
+                    {% block body %}
+                        {% if data.discontinuedProduct is not empty %}
+                            {{ 'product_search_widget.search.product_discontinued_prefix' | trans }}
+                        {% endif %}
+                        {{ product.name }} ({{ product.sku }})
+                    {% endblock %}
+                {% endwidget %}
             </li>
         {% endfor %}
     {% else %}
-        <li class="list__item spacing-y">{{ 'product_search_widget.search.no_results' | trans }}</li>
+        <li class="list__item spacing-y">{{ 'quick-order.search.no_results' | trans }}</li>
     {% endif %}
 {% endblock %}
