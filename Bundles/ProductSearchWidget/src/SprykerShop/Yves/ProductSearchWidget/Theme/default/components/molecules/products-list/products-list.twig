@@ -21,6 +21,8 @@
                         {% endif %}
                         {{ product.name }} ({{ product.sku }})
                     {% endblock %}
+                {% nowidget %}
+                    {{ product.name }} ({{ product.sku }})
                 {% endwidget %}
             </li>
         {% endfor %}
