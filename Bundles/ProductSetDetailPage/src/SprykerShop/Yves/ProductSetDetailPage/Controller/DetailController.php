@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ProductSetDetailPage\Controller;
 
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
+use Symfony\Component\HttpFoundation\Request;
 use SprykerShop\Yves\ProductSetDetailPage\Exception\ProductSetAccessDeniedException;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 
@@ -22,16 +23,18 @@ class DetailController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
      * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function indexAction(ProductSetDataStorageTransfer $productSetDataStorageTransfer, array $productViewTransfers)
+    public function indexAction(ProductSetDataStorageTransfer $productSetDataStorageTransfer, array $productViewTransfers, Request $request)
     {
         $this->assertProductRestrictions($productSetDataStorageTransfer, $productViewTransfers);
 
         $data = [
             'productSet' => $productSetDataStorageTransfer,
             'productViews' => $productViewTransfers,
+            'optionResetUrls' => $this->generateOptionResetUrls($request, $productViewTransfers, static::PARAM_ATTRIBUTE)
         ];
 
         return $this->view(
@@ -39,6 +42,19 @@ class DetailController extends AbstractController
             $this->getFactory()->getProductSetDetailPageWidgetPlugins(),
             '@ProductSetDetailPage/views/set-detail/set-detail.twig'
         );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     *
+     * @return array
+     */
+    protected function generateOptionResetUrls(Request $request, array $productViewTransfers): array
+    {
+        $optionsResetUrlGenerator = $this->getFactory()->createOptionsResetUrlGenerator();
+
+        return $optionsResetUrlGenerator->generateOptionResetUrls($request, $productViewTransfers);
     }
 
     /**

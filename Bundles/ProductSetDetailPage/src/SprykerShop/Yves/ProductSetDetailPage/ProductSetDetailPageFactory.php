@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\ProductSetDetailPage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductSetDetailPage\Dependency\Client\ProductSetDetailPageToProductSetStorageClientInterface;
 use SprykerShop\Yves\ProductSetDetailPage\Dependency\Client\ProductSetDetailPageToProductStorageClientInterface;
+use SprykerShop\Yves\ProductSetDetailPage\OptionsResetUrlGenerator\OptionsResetUrlGenerator;
+use SprykerShop\Yves\ProductSetDetailPage\OptionsResetUrlGenerator\OptionsResetUrlGeneratorInterface;
 
 class ProductSetDetailPageFactory extends AbstractFactory
 {
@@ -35,5 +37,13 @@ class ProductSetDetailPageFactory extends AbstractFactory
     public function getProductSetDetailPageWidgetPlugins(): array
     {
         return $this->getProvidedDependency(ProductSetDetailPageDependencyProvider::PLUGIN_PRODUCT_SET_DETAIL_PAGE_WIDGETS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductSetDetailPage\OptionsResetUrlGenerator\OptionsResetUrlGenerator
+     */
+    public function createOptionsResetUrlGenerator(): OptionsResetUrlGeneratorInterface
+    {
+        return new OptionsResetUrlGenerator();
     }
 }
