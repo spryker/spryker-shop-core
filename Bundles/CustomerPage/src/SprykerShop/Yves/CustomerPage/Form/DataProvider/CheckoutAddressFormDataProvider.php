@@ -373,23 +373,42 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function canDeliverToMultipleShippingAddresses(QuoteTransfer $quoteTransfer): bool
     {
-        return ($quoteTransfer->getItems()->count() > 1) && $this->isMultipleShipmentEnabled;
+        return $quoteTransfer->getItems()->count() > 1
+            && $this->isMultipleShipmentEnabled
+            && !$this->hasQuoteGiftCardItems($quoteTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return bool
      */
-    public function isAddressEmpty(?AddressTransfer $addressTransfer = null): bool
+    protected function isAddressEmpty(AddressTransfer $addressTransfer): bool
     {
-        if ($addressTransfer === null) {
-            return true;
-        }
-
         $firstName = trim($addressTransfer->getFirstName());
         $lastName = trim($addressTransfer->getLastName());
 
         return empty($firstName) && empty($lastName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function hasQuoteGiftCardItems(QuoteTransfer $quoteTransfer): bool
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $giftCardMetadataTransfer = $itemTransfer->getGiftCardMetadata();
+            if ($giftCardMetadataTransfer === null) {
+                continue;
+            }
+
+            if ($giftCardMetadataTransfer->getIsGiftCard()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
