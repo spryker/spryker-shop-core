@@ -48,13 +48,13 @@ class DetailController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
      *
-     * @return array
+     * @return string[][]
      */
     protected function generateOptionResetUrls(Request $request, array $productViewTransfers): array
     {
-        $optionsResetUrlGenerator = $this->getFactory()->createOptionsResetUrlGenerator();
+        $optionResetUrlGenerator = $this->getFactory()->createOptionResetUrlGenerator();
 
-        return $optionsResetUrlGenerator->generateOptionResetUrls($request, $productViewTransfers);
+        return $optionResetUrlGenerator->generateOptionResetUrls($request, $productViewTransfers);
     }
 
     /**

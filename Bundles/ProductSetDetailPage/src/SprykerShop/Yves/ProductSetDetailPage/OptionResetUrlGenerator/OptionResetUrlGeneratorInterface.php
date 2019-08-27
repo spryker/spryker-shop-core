@@ -1,17 +1,16 @@
 <?php
 
-
-namespace SprykerShop\Yves\ProductSetDetailPage\OptionsResetUrlGenerator;
+namespace SprykerShop\Yves\ProductSetDetailPage\OptionResetUrlGenerator;
 
 use Symfony\Component\HttpFoundation\Request;
 
-interface OptionsResetUrlGeneratorInterface
+interface OptionResetUrlGeneratorInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
      *
-     * @return array
+     * @return string[][]
      */
     public function generateOptionResetUrls(Request $request, array $productViewTransfers): array;
 }
