@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerShop\Yves\ProductSetDetailPage\OptionResetUrlGenerator;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -12,6 +17,7 @@ class OptionResetUrlGenerator implements OptionResetUrlGeneratorInterface
      * @uses \SprykerShop\Yves\ProductSetDetailPage\Controller\DetailController::PARAM_ATTRIBUTE
      */
     public const PARAM_ATTRIBUTE = DetailController::PARAM_ATTRIBUTE;
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
@@ -54,7 +60,7 @@ class OptionResetUrlGenerator implements OptionResetUrlGeneratorInterface
     }
 
     /**
-     * @param array $queryParamsArray
+     * @param string[] $queryParamsArray
      * @param int $idProduct
      * @param string $optionName
      *

@@ -8,9 +8,9 @@
 namespace SprykerShop\Yves\ProductSetDetailPage\Controller;
 
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
-use Symfony\Component\HttpFoundation\Request;
 use SprykerShop\Yves\ProductSetDetailPage\Exception\ProductSetAccessDeniedException;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\ProductSetDetailPage\ProductSetDetailPageFactory getFactory()
@@ -34,7 +34,7 @@ class DetailController extends AbstractController
         $data = [
             'productSet' => $productSetDataStorageTransfer,
             'productViews' => $productViewTransfers,
-            'optionResetUrls' => $this->generateOptionResetUrls($request, $productViewTransfers)
+            'optionResetUrls' => $this->generateOptionResetUrls($request, $productViewTransfers),
         ];
 
         return $this->view(
