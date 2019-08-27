@@ -40,7 +40,7 @@ class OptionResetUrlGenerator implements OptionResetUrlGeneratorInterface
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param array $queryParamsArray
      *
-     * @return string[]
+     * @return string[][]
      */
     protected function productViewTransferToOptionResetUrls(
         ProductViewTransfer $productViewTransfer,
