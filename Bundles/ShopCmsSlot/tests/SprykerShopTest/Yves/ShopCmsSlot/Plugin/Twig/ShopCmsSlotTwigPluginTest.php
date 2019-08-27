@@ -39,13 +39,7 @@ class ShopCmsSlotTwigPluginTest extends Unit
             CmsSlotDataTransfer::CONTENT => static::CONTENT,
         ]);
 
-        $cmsSlotContentPluginMock = $this->getCmsSlotContentPluginMock();
-        $cmsSlotContentPluginMock->method('getSlotContent')->willReturn($cmsSlotDataTransfer);
-
-        $this->tester->setDependency(
-            ShopCmsSlotDependencyProvider::PLUGIN_CMS_SLOT_CONTENT,
-            $cmsSlotContentPluginMock
-        );
+        $this->setCmsSlotContentPluginDependency($cmsSlotDataTransfer);
 
         $shopCmsSlotContent = (new ShopCmsSlotTwigPlugin())
             ->getSlotContent(
@@ -67,13 +61,7 @@ class ShopCmsSlotTwigPluginTest extends Unit
             CmsSlotDataTransfer::CONTENT => static::CONTENT,
         ]);
 
-        $cmsSlotContentPluginMock = $this->getCmsSlotContentPluginMock();
-        $cmsSlotContentPluginMock->method('getSlotContent')->willReturn($cmsSlotDataTransfer);
-
-        $this->tester->setDependency(
-            ShopCmsSlotDependencyProvider::PLUGIN_CMS_SLOT_CONTENT,
-            $cmsSlotContentPluginMock
-        );
+        $this->setCmsSlotContentPluginDependency($cmsSlotDataTransfer);
 
         $shopCmsSlotContent = (new ShopCmsSlotTwigPlugin())
             ->getSlotContent(
@@ -87,10 +75,28 @@ class ShopCmsSlotTwigPluginTest extends Unit
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CmsSlotDataTransfer $cmsSlotDataTransfer
+     *
      * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface
      */
-    protected function getCmsSlotContentPluginMock(): CmsSlotContentPluginInterface
+    protected function getCmsSlotContentPluginMock(CmsSlotDataTransfer $cmsSlotDataTransfer): CmsSlotContentPluginInterface
     {
-        return $this->getMockBuilder(CmsSlotContentPluginInterface::class)->getMock();
+        $cmsSlotContentPluginMock = $this->getMockBuilder(CmsSlotContentPluginInterface::class)->getMock();
+        $cmsSlotContentPluginMock->method('getSlotContent')->willReturn($cmsSlotDataTransfer);
+
+        return $cmsSlotContentPluginMock;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsSlotDataTransfer $cmsSlotDataTransfer
+     *
+     * @return void
+     */
+    protected function setCmsSlotContentPluginDependency(CmsSlotDataTransfer $cmsSlotDataTransfer): void
+    {
+        $this->tester->setDependency(
+            ShopCmsSlotDependencyProvider::PLUGIN_CMS_SLOT_CONTENT,
+            $this->getCmsSlotContentPluginMock($cmsSlotDataTransfer)
+        );
     }
 }
