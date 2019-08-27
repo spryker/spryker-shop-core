@@ -23,6 +23,8 @@ class CmsBlockWidgetToCmsBlockStorageClientBridge implements CmsBlockWidgetToCms
     }
 
     /**
+     * @deprecated Use \SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientBridge::findBlocksByKeys() instead.
+     *
      * @param string[] $blockNames
      * @param string $localeName
      * @param string $storeName
@@ -35,6 +37,8 @@ class CmsBlockWidgetToCmsBlockStorageClientBridge implements CmsBlockWidgetToCms
     }
 
     /**
+     * @deprecated Use \SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientBridge::findBlockKeysByOptions() instead.
+     *
      * @param array $options
      * @param string $localName
      *
@@ -46,6 +50,8 @@ class CmsBlockWidgetToCmsBlockStorageClientBridge implements CmsBlockWidgetToCms
     }
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param string $name
      *
      * @return string
@@ -68,32 +74,19 @@ class CmsBlockWidgetToCmsBlockStorageClientBridge implements CmsBlockWidgetToCms
     }
 
     /**
-     * @param string $blockName
-     * @param string $localeName
-     * @param string $storeName
-     *
-     * @return array
-     */
-    public function findMappingDataByBlockName(string $blockName, string $localeName, string $storeName): array
-    {
-        return $this->cmsBlockStorageClient->findMappingDataByBlockName($blockName, $localeName, $storeName);
-    }
-
-    /**
      * @param array $options
-     * @param string $localeName
      *
      * @return array
      */
-    public function findBlockKeysByOptions(array $options, string $localeName): array
+    public function findBlockKeysByOptions(array $options): array
     {
-        return $this->cmsBlockStorageClient->findBlockKeysByOptions($options, $localeName);
+        return $this->cmsBlockStorageClient->findBlockKeysByOptions($options);
     }
 
     /**
      * @return bool
      */
-    public function isUseKeyInCmsBlockSearch(): bool
+    public function isCmsBlockKeySupported(): bool
     {
         return method_exists($this->cmsBlockStorageClient, 'findBlocksByKeys');
     }

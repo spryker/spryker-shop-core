@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\CmsBlockWidget\Dependency\Client;
 interface CmsBlockWidgetToCmsBlockStorageClientInterface
 {
     /**
+     * @deprecated Use \SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface::findBlocksByNames() instead.
+     *
      * @param string[] $blockNames
      * @param string $localeName
      * @param string $storeName
@@ -19,6 +21,8 @@ interface CmsBlockWidgetToCmsBlockStorageClientInterface
     public function findBlocksByNames($blockNames, $localeName, $storeName);
 
     /**
+     * @deprecated Use \SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface::findBlockKeysByOptions() instead.
+     *
      * @param array $options
      * @param string $localName
      *
@@ -27,6 +31,8 @@ interface CmsBlockWidgetToCmsBlockStorageClientInterface
     public function findBlockNamesByOptions(array $options, $localName);
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param string $name
      *
      * @return string
@@ -43,24 +49,14 @@ interface CmsBlockWidgetToCmsBlockStorageClientInterface
     public function findBlocksByKeys(array $blockKeys, string $localeName, string $storeName): array;
 
     /**
-     * @param string $blockName
-     * @param string $localeName
-     * @param string $storeName
-     *
-     * @return array
-     */
-    public function findMappingDataByBlockName(string $blockName, string $localeName, string $storeName): array;
-
-    /**
      * @param array $options
-     * @param string $localeName
      *
      * @return array
      */
-    public function findBlockKeysByOptions(array $options, string $localeName): array;
+    public function findBlockKeysByOptions(array $options): array;
 
     /**
      * @return bool
      */
-    public function isUseKeyInCmsBlockSearch(): bool;
+    public function isCmsBlockKeySupported(): bool;
 }

@@ -22,7 +22,7 @@ class CmsBlockWidgetTwigPlugin extends AbstractTwigExtensionPlugin
 {
     public const OPTION_NAME = 'name';
     public const OPTION_POSITION = 'position';
-    public const OPTION_KEY = 'key';
+    protected const OPTION_KEY = 'key';
 
     protected const SERVICE_STORE = 'store';
     protected const SERVICE_LOCALE = 'locale';
@@ -83,37 +83,33 @@ class CmsBlockWidgetTwigPlugin extends AbstractTwigExtensionPlugin
         $localeName = $this->getLocaleName();
         $storeName = $this->getStoreName();
 
-        if ($this->getFactory()->getCmsBlockStorageClient()->isUseKeyInCmsBlockSearch()) {
-            $cmsBlockKey = $this->extractBlockKeyOption($blockOptions);
-
-            if ($cmsBlockKey) {
-                return $this->getFactory()->getCmsBlockStorageClient()->findBlocksByKeys([$cmsBlockKey], $localeName, $storeName);
-            }
-
+        if (!$this->getFactory()->getCmsBlockStorageClient()->isCmsBlockKeySupported()) {
             $blockName = $this->extractBlockNameOption($blockOptions);
+            $positionName = $this->extractPositionOption($blockOptions);
 
-            if ($blockName) {
-                $mappingData = $this->getFactory()->getCmsBlockStorageClient()->findMappingDataByBlockName($blockName, $localeName, $storeName);
-                if ($mappingData) {
-                    $cmsBlockKey = $mappingData['id'];
+            $availableBlockNames = $this->getFactory()->getCmsBlockStorageClient()->findBlockNamesByOptions($blockOptions, $localeName);
+            $availableBlockNames = $this->filterPosition($positionName, $availableBlockNames);
+            $availableBlockNames = $this->filterAvailableBlockNames($blockName, $availableBlockNames);
 
-                    return $this->getFactory()->getCmsBlockStorageClient()->findBlocksByKeys([$cmsBlockKey], $localeName, $storeName);
-                }
-            }
-
-            $availableBlockKeys = $this->getFactory()->getCmsBlockStorageClient()->findBlockKeysByOptions($blockOptions, $localeName);
-
-            return $this->getFactory()->getCmsBlockStorageClient()->findBlocksByKeys($availableBlockKeys, $localeName, $storeName);
+            return $this->getFactory()->getCmsBlockStorageClient()->findBlocksByNames($availableBlockNames, $localeName, $storeName);
         }
 
-        $blockName = $this->extractBlockNameOption($blockOptions);
-        $positionName = $this->extractPositionOption($blockOptions);
+        $cmsBlockKey = $this->extractBlockKeyOption($blockOptions);
 
-        $availableBlockNames = $this->getFactory()->getCmsBlockStorageClient()->findBlockNamesByOptions($blockOptions, $localeName);
-        $availableBlockNames = $this->filterPosition($positionName, $availableBlockNames);
-        $availableBlockNames = $this->filterAvailableBlockNames($blockName, $availableBlockNames);
+        if ($cmsBlockKey) {
+            return $this->getFactory()->getCmsBlockStorageClient()->findBlocksByKeys([$cmsBlockKey], $localeName, $storeName);
+        }
 
-        return $this->getFactory()->getCmsBlockStorageClient()->findBlocksByNames($availableBlockNames, $localeName, $storeName);
+        //This method is for BC to support finding blocks by Name.
+        $cmsBlockName = $this->extractBlockNameOption($blockOptions);
+
+        if ($cmsBlockName) {
+            return $this->getFactory()->getCmsBlockStorageClient()->findBlocksByNames([$cmsBlockName], $localeName, $storeName);
+        }
+
+        $availableBlockKeys = $this->getFactory()->getCmsBlockStorageClient()->findBlockKeysByOptions($blockOptions);
+
+        return $this->getFactory()->getCmsBlockStorageClient()->findBlocksByKeys($availableBlockKeys, $localeName, $storeName);
     }
 
     /**
