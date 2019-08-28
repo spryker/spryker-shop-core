@@ -14,8 +14,6 @@ use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Authenticator\CustomerAuthenticator;
 use SprykerShop\Yves\CustomerPage\Authenticator\CustomerAuthenticatorInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
-use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientInterface;
-use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToLocaleClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
@@ -321,21 +319,5 @@ class CustomerPageFactory extends AbstractFactory
     public function createIsLoggedTwigFunction(): TwigFunction
     {
         return new IsLoggedTwigFunction($this->getCustomerClient());
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientInterface
-     */
-    public function getGlossaryStorageClient(): CustomerPageToGlossaryStorageClientInterface
-    {
-        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToLocaleClientInterface
-     */
-    public function getLocaleClient(): CustomerPageToLocaleClientInterface
-    {
-        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_LOCALE);
     }
 }

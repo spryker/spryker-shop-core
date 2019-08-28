@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
-use Generated\Shared\Transfer\MessageTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 
 /**
@@ -44,37 +43,7 @@ abstract class AbstractCustomerController extends AbstractController
     protected function processResponseErrors(CustomerResponseTransfer $customerResponseTransfer)
     {
         foreach ($customerResponseTransfer->getErrors() as $errorTransfer) {
-            $translatableMessageTransfer = $errorTransfer->getTranslatableMessage();
-
-            if ($translatableMessageTransfer) {
-                $this->addErrorMessage(
-                    $this->getTranslatedMessage($translatableMessageTransfer)
-                );
-
-                continue;
-            }
-
             $this->addErrorMessage($errorTransfer->getMessage());
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
-     *
-     * @return string
-     */
-    protected function getTranslatedMessage(MessageTransfer $messageTransfer): string
-    {
-        $localeName = $this->getFactory()
-            ->getLocaleClient()
-            ->getCurrentLocale();
-
-        return $this->getFactory()
-            ->getGlossaryStorageClient()
-            ->translate(
-                $messageTransfer->getValue(),
-                $localeName,
-                $messageTransfer->getParameters()
-            );
     }
 }
