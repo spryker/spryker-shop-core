@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ShopCmsSlot\Twig\TokenParser;
 
-use SprykerShop\Yves\ShopCmsSlot\Twig\Node\ShopCmsSlotNode;
+use SprykerShop\Yves\ShopCmsSlot\Twig\Node\ShopCmsSlotNodeBuilderInterface;
 use Twig\Node\Node;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
@@ -22,6 +22,19 @@ class ShopCmsSlotTokenParser extends AbstractTokenParser
     protected const PARAMETER_NAME_AUTOFILLED = 'autofilled';
     protected const PARAMETER_NAME_REQUIRED = 'required';
     protected const PARAMETER_NAME_WITH = 'with';
+
+    /**
+     * @var \SprykerShop\Yves\ShopCmsSlot\Twig\Node\ShopCmsSlotNodeBuilderInterface
+     */
+    protected $shopCmsSlotNodeBuilderInterface;
+
+    /**
+     * @param \SprykerShop\Yves\ShopCmsSlot\Twig\Node\ShopCmsSlotNodeBuilderInterface $shopCmsSlotNodeBuilderInterface
+     */
+    public function __construct(ShopCmsSlotNodeBuilderInterface $shopCmsSlotNodeBuilderInterface)
+    {
+        $this->shopCmsSlotNodeBuilderInterface = $shopCmsSlotNodeBuilderInterface;
+    }
 
     /**
      * @return string
@@ -64,7 +77,8 @@ class ShopCmsSlotTokenParser extends AbstractTokenParser
 
         $stream->expect(Token::BLOCK_END_TYPE);
 
-        return new ShopCmsSlotNode($cmsSlotKey, $nodes, $attributes, $token->getLine(), $this->getTag());
+        return $this->shopCmsSlotNodeBuilderInterface
+            ->createShopCmsSlotNode($cmsSlotKey, $nodes, $attributes, $token->getLine(), $this->getTag());
     }
 
     /**

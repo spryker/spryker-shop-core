@@ -11,6 +11,8 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ShopCmsSlot\Business\CmsSlotDataProvider;
 use SprykerShop\Yves\ShopCmsSlot\Business\CmsSlotDataProviderInterface;
 use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientInterface;
+use SprykerShop\Yves\ShopCmsSlot\Twig\Node\ShopCmsSlotNodeBuilder;
+use SprykerShop\Yves\ShopCmsSlot\Twig\Node\ShopCmsSlotNodeBuilderInterface;
 use SprykerShop\Yves\ShopCmsSlot\Twig\TokenParser\ShopCmsSlotTokenParser;
 use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface;
 
@@ -21,7 +23,15 @@ class ShopCmsSlotFactory extends AbstractFactory
      */
     public function createShopCmsSlotTokenParser(): ShopCmsSlotTokenParser
     {
-        return new ShopCmsSlotTokenParser();
+        return new ShopCmsSlotTokenParser($this->createShopCmsSlotNodeBuilder());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShopCmsSlot\Twig\Node\ShopCmsSlotNodeBuilderInterface
+     */
+    public function createShopCmsSlotNodeBuilder(): ShopCmsSlotNodeBuilderInterface
+    {
+        return new ShopCmsSlotNodeBuilder();
     }
 
     /**

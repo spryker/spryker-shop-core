@@ -12,4 +12,11 @@
         <property name="params" type="array"/>
     </transfer>
 
+    <transfer name="CmsSlotContentRequest">
+        <property name="cmsSlotKey" type="string"/>
+        <property name="providedData" type="array"/>
+        <property name="requiredKeys" type="array"/>
+        <property name="autoFillingKeys" type="array"/>
+    </transfer>
+
 </transfers>
