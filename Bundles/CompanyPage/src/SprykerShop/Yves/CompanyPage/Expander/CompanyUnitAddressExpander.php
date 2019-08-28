@@ -41,6 +41,7 @@ class CompanyUnitAddressExpander implements CompanyUnitAddressExpanderInterface
             return $addressTransfer;
         }
 
+        $addressTransfer->setIsAddressSavingSkipped(true);
         $addressTransfer = $this->convertIdCompanyUnitAddressToInt($addressTransfer);
 
         if ($customerTransfer === null) {

@@ -33,12 +33,4 @@ class CustomerPageToShipmentServiceBridge implements CustomerPageToShipmentServi
     {
         return $this->shipmentService->groupItemsByShipment($itemTransferCollection);
     }
-
-    /**
-     * @return string
-     */
-    public function getShipmentExpenseType(): string
-    {
-        return $this->shipmentService->getShipmentExpenseType();
-    }
 }
