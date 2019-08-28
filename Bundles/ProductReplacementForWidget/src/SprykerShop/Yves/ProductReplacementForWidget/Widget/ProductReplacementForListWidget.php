@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
  * @method \SprykerShop\Yves\ProductReplacementForWidget\ProductReplacementForWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\ProductReplacementForWidget\ProductReplacementForWidgetConfig getConfig()
  */
 class ProductReplacementForListWidget extends AbstractWidget
 {
@@ -50,14 +51,14 @@ class ProductReplacementForListWidget extends AbstractWidget
     protected function findReplacementForProducts(string $sku): array
     {
         $productViewTransferList = [];
-        $productAlternativeStorageClient = $this->getFactory()->getProductAlternativeStorageClient();
-        $productReplacementStorageTransfer = $productAlternativeStorageClient->findProductReplacementForStorage($sku);
+        $productReplacementStorageTransfer = $this->getFactory()->getProductAlternativeStorageClient()
+            ->findProductReplacementForStorage($sku);
         if (!$productReplacementStorageTransfer) {
             return $productViewTransferList;
         }
         foreach ($productReplacementStorageTransfer->getProductConcreteIds() as $idProduct) {
             $productViewTransfer = $this->getProductViewTransfer($idProduct);
-            if ($productViewTransfer && $productAlternativeStorageClient->isAlternativeProductApplicable($productViewTransfer)) {
+            if ($productViewTransfer && $this->canShowProductReplacementFor($productViewTransfer)) {
                 $productViewTransferList[] = $productViewTransfer;
             }
         }
@@ -75,5 +76,20 @@ class ProductReplacementForListWidget extends AbstractWidget
         return $this->getFactory()
             ->getProductStorageClient()
             ->findProductConcreteViewTransfer($idProduct, $this->getLocale());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return bool
+     */
+    protected function canShowProductReplacementFor(ProductViewTransfer $productViewTransfer): bool
+    {
+        if (!$this->getConfig()->checkShowApplicableAlternativeProductsOnly()) {
+            return true;
+        }
+
+        return $this->getFactory()->getProductAlternativeStorageClient()
+            ->isAlternativeProductApplicable($productViewTransfer);
     }
 }
