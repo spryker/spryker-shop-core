@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerPage\Form;
 
-use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider;
@@ -106,13 +105,5 @@ class FormFactory extends AbstractFactory
     public function getStore()
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::STORE);
-    }
-
-    /**
-     * @return \Spryker\Service\Shipment\ShipmentServiceInterface
-     */
-    public function getShipmentService(): ShipmentServiceInterface
-    {
-        return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_SHIPMENT);
     }
 }

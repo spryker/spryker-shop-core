@@ -34,4 +34,12 @@ class CheckoutPageToShipmentClientBridge implements CheckoutPageToShipmentClient
     {
         return $this->shipmentClient->getAvailableMethodsByShipment($quoteTransfer);
     }
+
+    /**
+     * @return bool
+     */
+    public function isMultiShipmentSelectionEnabled(): bool
+    {
+        return $this->shipmentClient->isMultiShipmentSelectionEnabled();
+    }
 }

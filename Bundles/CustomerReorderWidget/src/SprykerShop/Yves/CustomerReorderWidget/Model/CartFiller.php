@@ -73,11 +73,9 @@ class CartFiller implements CartFillerInterface
     protected function updateCart(array $orderItems, OrderTransfer $orderTransfer): void
     {
         $cartChangeTransfer = $this->createCartChangeTransfer($orderItems);
-
-        $cartChangeTransfer = new CartChangeTransfer();
         $cartChangeTransfer->setQuote($this->cartClient->getQuote());
-        $orderItemsObject = $this->sanitizeOrderItems($orderItems);
-        $cartChangeTransfer->setItems($orderItemsObject);
+        $orderItemTransfers = $this->sanitizeOrderItems($orderItems);
+        $cartChangeTransfer->setItems($orderItemTransfers);
 
         $this->cartClient->addValidItems($cartChangeTransfer, [
             static::PARAM_ORDER_REFERENCE => $orderTransfer->getOrderReference(),

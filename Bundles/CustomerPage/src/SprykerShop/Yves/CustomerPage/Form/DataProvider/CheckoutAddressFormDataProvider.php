@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
 use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
@@ -34,27 +35,27 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     protected $customerTransfer;
 
     /**
-     * @var bool
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface
      */
-    protected $isMultipleShipmentEnabled;
+    protected $shipmentClient;
 
     /**
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface $customerClient
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface $customerService
-     * @param bool $isMultipleShipmentEnabled
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
      */
     public function __construct(
         CustomerPageToCustomerClientInterface $customerClient,
         Store $store,
         CustomerPageToCustomerServiceInterface $customerService,
-        bool $isMultipleShipmentEnabled
+        CheckoutPageToShipmentClientInterface $shipmentClient
     ) {
         parent::__construct($customerClient, $store);
 
         $this->customerService = $customerService;
         $this->customerTransfer = $this->getCustomer();
-        $this->isMultipleShipmentEnabled = $isMultipleShipmentEnabled;
+        $this->shipmentClient = $shipmentClient;
     }
 
     /**
@@ -87,7 +88,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
             CheckoutAddressCollectionForm::OPTION_ADDRESS_CHOICES => $this->getAddressChoices(),
             CheckoutAddressCollectionForm::OPTION_COUNTRY_CHOICES => $this->getAvailableCountries(),
             CheckoutAddressCollectionForm::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES => $this->canDeliverToMultipleShippingAddresses($quoteTransfer),
-            CheckoutAddressCollectionForm::OPTION_IS_MULTIPLE_SHIPMENT_ENABLED => $this->isMultipleShipmentEnabled,
+            CheckoutAddressCollectionForm::OPTION_IS_MULTIPLE_SHIPMENT_ENABLED => $this->shipmentClient->isMultiShipmentSelectionEnabled(),
             CheckoutAddressCollectionForm::OPTION_IS_CUSTOMER_LOGGED_IN => $this->customerClient->isLoggedIn(),
         ];
     }
@@ -374,7 +375,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     protected function canDeliverToMultipleShippingAddresses(QuoteTransfer $quoteTransfer): bool
     {
         return $quoteTransfer->getItems()->count() > 1
-            && $this->isMultipleShipmentEnabled
+            && $this->shipmentClient->isMultiShipmentSelectionEnabled()
             && !$this->hasQuoteGiftCardItems($quoteTransfer);
     }
 

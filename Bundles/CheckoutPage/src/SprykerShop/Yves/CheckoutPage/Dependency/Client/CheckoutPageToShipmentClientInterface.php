@@ -18,4 +18,9 @@ interface CheckoutPageToShipmentClientInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer
      */
     public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentMethodsCollectionTransfer;
+
+    /**
+     * @return bool
+     */
+    public function isMultiShipmentSelectionEnabled(): bool;
 }
