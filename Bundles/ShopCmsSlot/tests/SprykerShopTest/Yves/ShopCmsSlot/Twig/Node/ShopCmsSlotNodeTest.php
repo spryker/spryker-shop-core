@@ -42,7 +42,7 @@ class ShopCmsSlotNodeTest extends NodeTestCase
         $node = new ShopCmsSlotNode('cms-slot-key', [], [], 1, 'cms_slot');
 
         $expectedCode = <<<EOF
-echo \$this->env->getExtension('SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin')->getSlotContent('cms-slot-key', [], [], []);
+echo \$this->env->getExtension('SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin')->getSlotContent((new Generated\Shared\Transfer\CmsSlotContextTransfer())->setCmsSlotKey('cms-slot-key')->setProvidedData([])->setRequiredKeys([])->setAutoFillingKeys([]));
 EOF;
 
         return [$node, $expectedCode];
@@ -65,7 +65,7 @@ EOF;
         $node = new ShopCmsSlotNode('cms-slot-key', $nodes, [], 1, 'cms_slot');
 
         $expectedCode = <<<EOF
-echo \$this->env->getExtension('SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin')->getSlotContent('cms-slot-key', ["idProduct" => 123], [], []);
+echo \$this->env->getExtension('SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin')->getSlotContent((new Generated\Shared\Transfer\CmsSlotContextTransfer())->setCmsSlotKey('cms-slot-key')->setProvidedData(["idProduct" => 123])->setRequiredKeys([])->setAutoFillingKeys([]));
 EOF;
 
         return [$node, $expectedCode];
@@ -88,7 +88,7 @@ EOF;
         $node = new ShopCmsSlotNode('cms-slot-key', $nodes, [], 1, 'cms_slot');
 
         $expectedCode = <<<EOF
-echo \$this->env->getExtension('SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin')->getSlotContent('cms-slot-key', [], [0 => "idProduct"], []);
+echo \$this->env->getExtension('SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin')->getSlotContent((new Generated\Shared\Transfer\CmsSlotContextTransfer())->setCmsSlotKey('cms-slot-key')->setProvidedData([])->setRequiredKeys([0 => "idProduct"])->setAutoFillingKeys([]));
 EOF;
 
         return [$node, $expectedCode];
@@ -111,7 +111,7 @@ EOF;
         $node = new ShopCmsSlotNode('cms-slot-key', $nodes, [], 1, 'cms_slot');
 
         $expectedCode = <<<EOF
-echo \$this->env->getExtension('SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin')->getSlotContent('cms-slot-key', [], [], [0 => "user"]);
+echo \$this->env->getExtension('SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin')->getSlotContent((new Generated\Shared\Transfer\CmsSlotContextTransfer())->setCmsSlotKey('cms-slot-key')->setProvidedData([])->setRequiredKeys([])->setAutoFillingKeys([0 => "user"]));
 EOF;
 
         return [$node, $expectedCode];
@@ -138,7 +138,7 @@ EOF;
         $node = new ShopCmsSlotNode('cms-slot-key', $nodes, [], 1, 'cms_slot');
 
         $expectedCode = <<<EOF
-echo \$this->env->getExtension('SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin')->getSlotContent('cms-slot-key', ["idProduct" => 123], [0 => "idProduct"], []);
+echo \$this->env->getExtension('SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin')->getSlotContent((new Generated\Shared\Transfer\CmsSlotContextTransfer())->setCmsSlotKey('cms-slot-key')->setProvidedData(["idProduct" => 123])->setRequiredKeys([0 => "idProduct"])->setAutoFillingKeys([]));
 EOF;
 
         return [$node, $expectedCode];
@@ -165,7 +165,7 @@ EOF;
         $node = new ShopCmsSlotNode('cms-slot-key', $nodes, [], 1, 'cms_slot');
 
         $expectedCode = <<<EOF
-echo \$this->env->getExtension('SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin')->getSlotContent('cms-slot-key', [], [0 => "idProduct"], [0 => "user"]);
+echo \$this->env->getExtension('SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin')->getSlotContent((new Generated\Shared\Transfer\CmsSlotContextTransfer())->setCmsSlotKey('cms-slot-key')->setProvidedData([])->setRequiredKeys([0 => "idProduct"])->setAutoFillingKeys([0 => "user"]));
 EOF;
 
         return [$node, $expectedCode];
@@ -192,7 +192,7 @@ EOF;
         $node = new ShopCmsSlotNode('cms-slot-key', $nodes, [], 1, 'cms_slot');
 
         $expectedCode = <<<EOF
-echo \$this->env->getExtension('SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin')->getSlotContent('cms-slot-key', ["idProduct" => 123], [], [0 => "user"]);
+echo \$this->env->getExtension('SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin')->getSlotContent((new Generated\Shared\Transfer\CmsSlotContextTransfer())->setCmsSlotKey('cms-slot-key')->setProvidedData(["idProduct" => 123])->setRequiredKeys([])->setAutoFillingKeys([0 => "user"]));
 EOF;
 
         return [$node, $expectedCode];
@@ -223,7 +223,7 @@ EOF;
         $node = new ShopCmsSlotNode('cms-slot-key', $nodes, [], 1, 'cms_slot');
 
         $expectedCode = <<<EOF
-echo \$this->env->getExtension('SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin')->getSlotContent('cms-slot-key', ["idProduct" => 123], [0 => "idProduct"], [0 => "user"]);
+echo \$this->env->getExtension('SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin')->getSlotContent((new Generated\Shared\Transfer\CmsSlotContextTransfer())->setCmsSlotKey('cms-slot-key')->setProvidedData(["idProduct" => 123])->setRequiredKeys([0 => "idProduct"])->setAutoFillingKeys([0 => "user"]));
 EOF;
 
         return [$node, $expectedCode];

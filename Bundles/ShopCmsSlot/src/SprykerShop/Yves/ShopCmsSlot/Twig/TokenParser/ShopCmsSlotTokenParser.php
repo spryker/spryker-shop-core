@@ -26,14 +26,14 @@ class ShopCmsSlotTokenParser extends AbstractTokenParser
     /**
      * @var \SprykerShop\Yves\ShopCmsSlot\Twig\Node\ShopCmsSlotNodeBuilderInterface
      */
-    protected $shopCmsSlotNodeBuilderInterface;
+    protected $shopCmsSlotNodeBuilder;
 
     /**
-     * @param \SprykerShop\Yves\ShopCmsSlot\Twig\Node\ShopCmsSlotNodeBuilderInterface $shopCmsSlotNodeBuilderInterface
+     * @param \SprykerShop\Yves\ShopCmsSlot\Twig\Node\ShopCmsSlotNodeBuilderInterface $shopCmsSlotNodeBuilder
      */
-    public function __construct(ShopCmsSlotNodeBuilderInterface $shopCmsSlotNodeBuilderInterface)
+    public function __construct(ShopCmsSlotNodeBuilderInterface $shopCmsSlotNodeBuilder)
     {
-        $this->shopCmsSlotNodeBuilderInterface = $shopCmsSlotNodeBuilderInterface;
+        $this->shopCmsSlotNodeBuilder = $shopCmsSlotNodeBuilder;
     }
 
     /**
@@ -77,7 +77,7 @@ class ShopCmsSlotTokenParser extends AbstractTokenParser
 
         $stream->expect(Token::BLOCK_END_TYPE);
 
-        return $this->shopCmsSlotNodeBuilderInterface
+        return $this->shopCmsSlotNodeBuilder
             ->createShopCmsSlotNode($cmsSlotKey, $nodes, $attributes, $token->getLine(), $this->getTag());
     }
 

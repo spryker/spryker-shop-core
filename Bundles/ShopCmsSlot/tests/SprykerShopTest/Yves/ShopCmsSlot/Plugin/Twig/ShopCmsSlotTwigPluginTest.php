@@ -41,13 +41,14 @@ class ShopCmsSlotTwigPluginTest extends Unit
 
         $this->setCmsSlotContentPluginDependency($cmsSlotDataTransfer);
 
+        $cmsSlotContextTransfer = $this->tester->getCmsSlotContextTransfer(
+            static::SLOT_KEY,
+            static::PROVIDED_DATA,
+            static::REQUIRED_DATA,
+            static::AUTO_FILLED_DATA
+        );
         $shopCmsSlotContent = (new ShopCmsSlotTwigPlugin())
-            ->getSlotContent(
-                static::SLOT_KEY,
-                static::PROVIDED_DATA,
-                static::REQUIRED_DATA,
-                static::AUTO_FILLED_DATA
-            );
+            ->getSlotContent($cmsSlotContextTransfer);
 
         $this->assertEquals(static::CONTENT, $shopCmsSlotContent);
     }
@@ -63,13 +64,14 @@ class ShopCmsSlotTwigPluginTest extends Unit
 
         $this->setCmsSlotContentPluginDependency($cmsSlotDataTransfer);
 
+        $cmsSlotContextTransfer = $this->tester->getCmsSlotContextTransfer(
+            static::SLOT_KEY,
+            static::PROVIDED_DATA,
+            ['missing-provided-key'] + static::REQUIRED_DATA,
+            static::AUTO_FILLED_DATA
+        );
         $shopCmsSlotContent = (new ShopCmsSlotTwigPlugin())
-            ->getSlotContent(
-                static::SLOT_KEY,
-                static::PROVIDED_DATA,
-                ['missing-provided-key'] + static::REQUIRED_DATA,
-                static::AUTO_FILLED_DATA
-            );
+            ->getSlotContent($cmsSlotContextTransfer);
 
         $this->assertEquals('', $shopCmsSlotContent);
     }

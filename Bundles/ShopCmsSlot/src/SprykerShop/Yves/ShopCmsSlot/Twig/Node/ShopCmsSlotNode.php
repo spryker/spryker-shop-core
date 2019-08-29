@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ShopCmsSlot\Twig\Node;
 
-use Generated\Shared\Transfer\CmsSlotContentRequestTransfer;
+use Generated\Shared\Transfer\CmsSlotContextTransfer;
 use SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin;
 use SprykerShop\Yves\ShopCmsSlot\Twig\TokenParser\ShopCmsSlotTokenParser;
 use Twig\Compiler;
@@ -50,7 +50,7 @@ class ShopCmsSlotNode extends Node
             sprintf(
                 'echo $this->env->getExtension(\'%s\')->getSlotContent((new %s())->setCmsSlotKey(\'%s\')',
                 ShopCmsSlotTwigPlugin::class,
-                CmsSlotContentRequestTransfer::class,
+                CmsSlotContextTransfer::class,
                 $this->cmsSlotKey
             )
         );

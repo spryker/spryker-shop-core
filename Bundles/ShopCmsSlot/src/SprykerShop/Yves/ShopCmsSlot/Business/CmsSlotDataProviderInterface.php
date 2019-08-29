@@ -7,15 +7,15 @@
 
 namespace SprykerShop\Yves\ShopCmsSlot\Business;
 
-use Generated\Shared\Transfer\CmsSlotContentRequestTransfer;
+use Generated\Shared\Transfer\CmsSlotContextTransfer;
 use Generated\Shared\Transfer\CmsSlotDataTransfer;
 
 interface CmsSlotDataProviderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotContextTransfer $cmsSlotContextTransfer
      *
      * @return \Generated\Shared\Transfer\CmsSlotDataTransfer
      */
-    public function getSlotContent(CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer): CmsSlotDataTransfer;
+    public function getSlotContent(CmsSlotContextTransfer $cmsSlotContextTransfer): CmsSlotDataTransfer;
 }
