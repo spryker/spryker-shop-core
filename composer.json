@@ -6,7 +6,7 @@
     "php": ">=7.1"
   },
   "require-dev": {
-    "spryker/code-sniffer": "dev-bugfix/method-spacing",
+    "spryker/code-sniffer": "dev-master",
     "spryker/spryker": "dev-master"
   },
   "minimum-stability": "dev",
