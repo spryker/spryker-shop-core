@@ -23,4 +23,11 @@ interface CheckoutPageToShipmentClientInterface
      * @return bool
      */
     public function isMultiShipmentSelectionEnabled(): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteWithShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }
