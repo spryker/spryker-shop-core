@@ -16,7 +16,7 @@ class OptionResetUrlGenerator implements OptionResetUrlGeneratorInterface
     /**
      * @uses \SprykerShop\Yves\ProductSetDetailPage\Controller\DetailController::PARAM_ATTRIBUTE
      */
-    public const PARAM_ATTRIBUTE = DetailController::PARAM_ATTRIBUTE;
+    protected const PARAM_ATTRIBUTE = DetailController::PARAM_ATTRIBUTE;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -46,29 +46,29 @@ class OptionResetUrlGenerator implements OptionResetUrlGeneratorInterface
         ProductViewTransfer $productViewTransfer,
         array $queryParamsArray
     ): array {
-        $idProduct = $productViewTransfer->getIdProductAbstract();
+        $idProductAbstract = $productViewTransfer->getIdProductAbstract();
         $superAttributes = $productViewTransfer
             ->getAttributeMap()
             ->getSuperAttributes();
-        $result = [];
+        $productOptionResetUrls = [];
 
         foreach (array_keys($superAttributes) as $optionName) {
-            $result[$optionName] = $this->getOptionResetUrl($queryParamsArray, $idProduct, $optionName);
+            $productOptionResetUrls[$optionName] = $this->getOptionResetUrl($queryParamsArray, $idProductAbstract, $optionName);
         }
 
-        return [$idProduct => $result];
+        return [$idProductAbstract => $productOptionResetUrls];
     }
 
     /**
      * @param array $queryParamsArray
-     * @param int $idProduct
+     * @param int $idProductAbstract
      * @param string $optionName
      *
      * @return string
      */
-    protected function getOptionResetUrl(array $queryParamsArray, int $idProduct, string $optionName): string
+    protected function getOptionResetUrl(array $queryParamsArray, int $idProductAbstract, string $optionName): string
     {
-        unset($queryParamsArray[static::PARAM_ATTRIBUTE][$idProduct][$optionName]);
+        unset($queryParamsArray[static::PARAM_ATTRIBUTE][$idProductAbstract][$optionName]);
 
         return http_build_query($queryParamsArray);
     }

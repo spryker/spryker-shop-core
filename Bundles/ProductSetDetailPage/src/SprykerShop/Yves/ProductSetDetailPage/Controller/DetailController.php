@@ -52,9 +52,9 @@ class DetailController extends AbstractController
      */
     protected function generateOptionResetUrls(Request $request, array $productViewTransfers): array
     {
-        $optionResetUrlGenerator = $this->getFactory()->createOptionResetUrlGenerator();
-
-        return $optionResetUrlGenerator->generateOptionResetUrls($request, $productViewTransfers);
+        return $this->getFactory()
+            ->createOptionResetUrlGenerator()
+            ->generateOptionResetUrls($request, $productViewTransfers);
     }
 
     /**
