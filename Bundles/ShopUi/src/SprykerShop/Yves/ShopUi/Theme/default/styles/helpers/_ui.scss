@@ -1,3 +1,6 @@
+/**
+ * Adds clearing for element with floated child elements.
+ */
 @mixin helper-ui-clearfix {
     &::after {
         content: '';
@@ -6,6 +9,9 @@
     }
 }
 
+/**
+ * Adds a box-shadow with basic values.
+ */
 @mixin helper-ui-shadow() {
     box-shadow: 0 2px 5px 1px $setting-color-shadow;
 }

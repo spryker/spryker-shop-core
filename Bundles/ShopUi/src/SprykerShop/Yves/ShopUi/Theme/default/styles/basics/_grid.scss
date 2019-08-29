@@ -1,3 +1,9 @@
+/**
+ * Provides global class names for the custom responsive grid system with flexible columns
+ * and configurable columns count, container with maximum content width
+ * and modifiers for alignment.
+ * Grid system parameters can be customized in grid settings file.
+ */
 @mixin basic-grid() {
     .container {
         display: block;
