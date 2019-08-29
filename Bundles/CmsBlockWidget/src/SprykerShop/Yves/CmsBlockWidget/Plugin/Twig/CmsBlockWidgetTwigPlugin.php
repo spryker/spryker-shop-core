@@ -82,34 +82,34 @@ class CmsBlockWidgetTwigPlugin extends AbstractTwigExtensionPlugin
     {
         $localeName = $this->getLocaleName();
         $storeName = $this->getStoreName();
+        $cmsBlockStorageClient = $this->getFactory()->getCmsBlockStorageClient();
 
-        if (!$this->getFactory()->getCmsBlockStorageClient()->isCmsBlockKeySupported()) {
+        if (!$cmsBlockStorageClient->isCmsBlockKeySupported()) {
             $blockName = $this->extractBlockNameOption($blockOptions);
             $positionName = $this->extractPositionOption($blockOptions);
 
-            $availableBlockNames = $this->getFactory()->getCmsBlockStorageClient()->findBlockNamesByOptions($blockOptions, $localeName);
+            $availableBlockNames = $cmsBlockStorageClient->findBlockNamesByOptions($blockOptions, $localeName);
             $availableBlockNames = $this->filterPosition($positionName, $availableBlockNames);
             $availableBlockNames = $this->filterAvailableBlockNames($blockName, $availableBlockNames);
 
-            return $this->getFactory()->getCmsBlockStorageClient()->findBlocksByNames($availableBlockNames, $localeName, $storeName);
+            return $cmsBlockStorageClient->findBlocksByNames($availableBlockNames, $localeName, $storeName);
         }
 
         $cmsBlockKey = $this->extractBlockKeyOption($blockOptions);
 
         if ($cmsBlockKey) {
-            return $this->getFactory()->getCmsBlockStorageClient()->findBlocksByKeys([$cmsBlockKey], $localeName, $storeName);
+            return $cmsBlockStorageClient->findBlocksByKeys([$cmsBlockKey], $localeName, $storeName);
         }
 
-        //This method is for BC to support finding blocks by Name.
         $cmsBlockName = $this->extractBlockNameOption($blockOptions);
 
         if ($cmsBlockName) {
-            return $this->getFactory()->getCmsBlockStorageClient()->findBlocksByNames([$cmsBlockName], $localeName, $storeName);
+            return $cmsBlockStorageClient->findBlocksByNames([$cmsBlockName], $localeName, $storeName);
         }
 
-        $availableBlockKeys = $this->getFactory()->getCmsBlockStorageClient()->findBlockKeysByOptions($blockOptions);
+        $availableBlockKeys = $cmsBlockStorageClient->findBlockKeysByOptions($blockOptions);
 
-        return $this->getFactory()->getCmsBlockStorageClient()->findBlocksByKeys($availableBlockKeys, $localeName, $storeName);
+        return $cmsBlockStorageClient->findBlocksByKeys($availableBlockKeys, $localeName, $storeName);
     }
 
     /**
