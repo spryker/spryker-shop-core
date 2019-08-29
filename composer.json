@@ -6,7 +6,7 @@
     "php": ">=7.1"
   },
   "require-dev": {
-    "spryker/code-sniffer": "dev-master",
+    "spryker/code-sniffer": "dev-bugfix/method-spacing",
     "spryker/spryker": "dev-master"
   },
   "minimum-stability": "dev",
@@ -21,7 +21,7 @@
     ]
   },
   "scripts": {
-    "cs-check": "phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p -v"
+    "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"
   },
   "replace": {
     "spryker-shop/availability-widget": "*",

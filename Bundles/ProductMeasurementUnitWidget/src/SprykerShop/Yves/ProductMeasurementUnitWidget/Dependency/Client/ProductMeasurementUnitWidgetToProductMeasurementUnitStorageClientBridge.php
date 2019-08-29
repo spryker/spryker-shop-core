@@ -35,7 +35,6 @@ class ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientBridge im
     public function findProductMeasurementUnitStorage(
         int $idProductMeasurementUnit
     ): ?ProductMeasurementUnitStorageTransfer {
-
         return $this->productMeasurementUnitStorageClient->findProductMeasurementUnitStorage($idProductMeasurementUnit);
     }
 
