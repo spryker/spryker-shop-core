@@ -14,29 +14,27 @@
         <li class="list__item spacing-y">
             {% include molecule('toggler-radio') with {
                 data: {
-                    label: 'checkout.customer.proceed_as_user' | trans
+                    label: 'checkout.customer.proceed_as_user' | trans,
                 },
                 attributes: {
                     id: 'register',
                     checked: not data.isGuest,
                     name: 'checkoutProceedAs',
-                    'target-selector': '.js-login__register',
-                    'class-to-toggle': 'is-hidden'
-                }
+                    'target-class-name': 'js-login__register',
+                },
             } only %}
         </li>
         <li class="list__item">
             {% include molecule('toggler-radio') with {
                 data: {
-                    label: 'checkout.customer.proceed_as_guest' | trans
+                    label: 'checkout.customer.proceed_as_guest' | trans,
                 },
                 attributes: {
                     id: 'guest',
                     checked: data.isGuest,
                     name: 'checkoutProceedAs',
-                    'target-selector': '.js-login__guest',
-                    'class-to-toggle': 'is-hidden'
-                }
+                    'target-class-name': 'js-login__guest',
+                },
             } only %}
         </li>
     </ul>

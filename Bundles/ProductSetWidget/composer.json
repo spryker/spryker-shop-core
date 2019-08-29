@@ -9,16 +9,16 @@
     "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
+    "spryker-shop/cms-content-widget-product-set-connector": "*",
     "spryker-shop/product-detail-page": "*",
     "spryker-shop/product-set-detail-page": "*",
-    "spryker/cms-content-widget-product-set-connector": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/product-detail-page": "ADD SUGGEST DESCRIPTION",
-    "spryker-shop/product-set-detail-page": "Widget plugins are available for this module.",
-    "spryker/cms-content-widget-product-set-connector": "Use this module when using plugins that need CmsContentWidgetProductSetConnector dependencies."
+    "spryker-shop/cms-content-widget-product-set-connector": "Use this module when using plugins that need CmsContentWidgetProductSetConnector dependencies.",
+    "spryker-shop/product-detail-page": "Use this module when using plugins that need ProductDetailPage dependencies.",
+    "spryker-shop/product-set-detail-page": "Widget plugins are available for this module."
   },
   "autoload": {
     "psr-4": {

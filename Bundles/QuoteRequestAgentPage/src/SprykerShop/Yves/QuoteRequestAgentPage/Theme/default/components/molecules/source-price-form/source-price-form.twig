@@ -20,8 +20,7 @@
 {% block body %}
     <div class="row">
         <div class="col col--sm-12 col--xl-12">
-            {% include atom('checkbox') with {
-                class: config.jsName ~ '__checkbox-container',
+            {% embed atom('checkbox') with {
                 attributes: {
                     name: data.checkboxName,
                     value: data.checkboxValue,
@@ -29,9 +28,14 @@
                     disabled: data.priceFiled.vars.disabled,
                 },
                 data: {
-                    label: data.checkboxLabel
-                }
+                    label: data.checkboxLabel,
+                },
+                embed: {
+                    inputClass: config.jsName ~ '__checkbox-container',
+                },
             } only %}
+                {% block inputClass %}{{ embed.inputClass }}{% endblock %}
+            {% endembed %}
         </div>
         <div class="col col--sm-12 col--xl-10">
             {{ form_row(data.priceFiled, {'attr': {'class': config.jsName ~ '__input-container is-hidden spacing-top spacing-top--small'}}) }}

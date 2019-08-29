@@ -23,7 +23,10 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in data.items %}
+            {% widget 'OrderConfiguredBundleWidget' args [data.order] only %}
+            {% endwidget %}
+
+            {% for item in data.items if not item.salesOrderConfiguredBundleItem | default %}
                 {% set isBundle = item.bundleItems is defined %}
                 {% set concreteItem = item.bundleProduct | default(item) %}
 
@@ -69,7 +72,7 @@
                                 {% if concreteItem.productOptions is not empty %}
                                     {{ "customer.order.options" | trans }} <br>
                                     {% for productOption in concreteItem.productOptions %}
-                                        &nbsp; - {{ productOption.value | trans }} {{ productOption.sumPrice | money(true, data.currencyIsoCode) }}  <br>
+                                        &nbsp; - {{ productOption.value | trans }} {{ (productOption.sumPrice | default(productOption.unitPrice)) | money(true, data.currencyIsoCode) }}  <br>
                                     {% endfor %}
                                 {% endif %}
                             </td>
@@ -93,7 +96,7 @@
                                         <small>{{ productOption.value | trans }}</small>
                                     </td>
                                     <td>
-                                        <small>{{ productOption.sumPrice | money(true, data.currencyIsoCode) }}</small>
+                                        <small>{{ (productOption.sumPrice | default(productOption.unitPrice)) | money(true, data.currencyIsoCode) }}</small>
                                     </td>
                                     <td colspan="2"></td>
                                 {% endblock %}

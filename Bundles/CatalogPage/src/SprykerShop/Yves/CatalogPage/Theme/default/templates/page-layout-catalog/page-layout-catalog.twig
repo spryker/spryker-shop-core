@@ -59,20 +59,20 @@
             <div class="col col--sm-12 col--lg-4 col--xl-3">
                 {% block filterBar %}
                     {% include molecule('view-mode-switch', 'CatalogPage') with {
-                        class: 'box'
+                        class: 'box',
                     } only %}
 
                     {% include molecule('toggler-checkbox') with {
                         modifiers: ['expand'],
                         class: 'box spacing-top spacing-top--big is-hidden-lg-xl',
                         data: {
-                            label: 'Show/Hide filters'
+                            label: 'catalog.filter.show_hide_button' | trans,
                         },
                         attributes: {
-                            'target-selector': '.js-catalog__filters-toggle',
+                            'target-class-name': 'js-catalog__filters-toggle',
                             'class-to-toggle': 'is-hidden-sm-md',
-                            checked: true
-                        }
+                            checked: true,
+                        },
                     } only %}
 
                     {% include organism('filter-section', 'CatalogPage') with {
