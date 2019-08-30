@@ -2,7 +2,6 @@
 
 {% define config = {
     name: 'quote-table',
-    tag: 'div'
 } %}
 
 {% define data = {
@@ -10,9 +9,9 @@
     actions: {
         update: false,
         delete: false,
-        duplicate: false
+        duplicate: false,
     },
-    isQuoteDeletable: required
+    isQuoteDeletable: required,
 } %}
 
 {% set showActions = data.actions.update or data.actions.delete or data.actions.duplicate %}
