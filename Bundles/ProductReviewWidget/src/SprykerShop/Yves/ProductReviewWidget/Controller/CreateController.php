@@ -18,10 +18,11 @@ use Symfony\Component\HttpFoundation\Request;
 class CreateController extends AbstractController
 {
     public const ERROR_MESSAGE_NO_CUSTOMER = 'Only customers can use this feature. Please log in.';
-    public const SUCCESS_MESSAGE = 'Review was submitted';
 
     public const REQUEST_HEADER_REFERER = 'referer';
     public const URL_MAIN = '/';
+
+    protected const GLOSSARY_KEY_SUCCESS_PRODUCT_REVIEW_SUBMITTED = 'product_review.submit.success';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -81,7 +82,7 @@ class CreateController extends AbstractController
             return;
         }
 
-        $this->addSuccessMessage(static::SUCCESS_MESSAGE);
+        $this->addSuccessMessage(static::GLOSSARY_KEY_SUCCESS_PRODUCT_REVIEW_SUBMITTED);
     }
 
     /**
