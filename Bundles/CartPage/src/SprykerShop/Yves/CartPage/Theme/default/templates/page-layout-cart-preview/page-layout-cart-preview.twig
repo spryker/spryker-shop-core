@@ -73,7 +73,7 @@
         },
     } only %}
         {% block cartItemNote %}
-            {% widget 'CartItemNoteFormWidget' args [data.cartItem, data.cart] only %}
+            {% widget 'CartItemNoteFormWidget' args [data.product, data.cart] only %}
                 {% block body %}
                     {% set canWrite = false %}
                     {{ parent() }}
