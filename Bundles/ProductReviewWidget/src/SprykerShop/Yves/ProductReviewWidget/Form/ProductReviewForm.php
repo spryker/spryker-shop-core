@@ -32,7 +32,7 @@ class ProductReviewForm extends AbstractType
     public const UNSELECTED_RATING = -1;
     public const MINIMUM_RATING = 1;
 
-    protected const VALIDATION_RATING_MESSAGE = 'validation.choice';
+    protected const GLOSSARY_KEY_ERROR_PRODUCT_RATING_IS_NOT_SET = 'product_review.submit.error.rating';
 
     /**
      * @return string
@@ -80,7 +80,7 @@ class ProductReviewForm extends AbstractType
                     new GreaterThanOrEqual(['value' => static::MINIMUM_RATING]),
                     new LessThanOrEqual(['value' => $this->getFactory()->getProductReviewClient()->getMaximumRating()]),
                 ],
-                'invalid_message' => static::VALIDATION_RATING_MESSAGE,
+                'invalid_message' => static::GLOSSARY_KEY_ERROR_PRODUCT_RATING_IS_NOT_SET,
             ]
         );
 
