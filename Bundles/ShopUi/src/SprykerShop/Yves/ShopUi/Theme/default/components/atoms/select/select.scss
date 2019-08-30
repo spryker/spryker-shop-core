@@ -16,7 +16,7 @@
             border: 0.25rem solid $setting-color-transparent;
             border-right-width: 1.5rem;
             border-radius: 0;
-            z-index: 2;
+            z-index: $setting-zi-element + 1;
             appearance: none;
 
             &::-ms-expand {
@@ -37,7 +37,7 @@
             right: 0.25rem;
             margin: auto;
             color: $setting-color-darker;
-            z-index: 1;
+            z-index: $setting-zi-element;
             pointer-events: none;
         }
 

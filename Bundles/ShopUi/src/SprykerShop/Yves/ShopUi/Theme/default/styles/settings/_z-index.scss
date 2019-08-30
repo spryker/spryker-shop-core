@@ -1,8 +1,39 @@
-$setting-zi-element: initial !default;
+/**
+ * Defines default z-index value.
+ */
+$setting-zi-element: 1 !default;
+
+/**
+ * Defines z-index value for the floating elements.
+ */
 $setting-zi-element-floating: 350 !default;
+
+/**
+ * Defines z-index value for the notification area context.
+ */
 $setting-zi-notification-area: 600 !default;
+
+/**
+ * Defines z-index value for the side drawer context.
+ */
 $setting-zi-side-drawer: 500 !default;
+
+/**
+ * Defines z-index value for the header context.
+ */
 $setting-zi-header: 400 !default;
+
+/**
+ * Defines z-index value for the search suggestions context.
+ */
 $setting-zi-search-suggestions: 700 !default;
+
+/**
+ * Defines z-index value for the ajax loader.
+ */
 $setting-zi-ajax-loader: 750 !default;
+
+/**
+ * Defines z-index value for the top navigation context.
+ */
 $setting-zi-navigation-top: 800 !default;

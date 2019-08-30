@@ -124,9 +124,12 @@ class CompanyUserSaver implements CompanyUserSaverInterface
      */
     protected function updateCustomerInSession(CustomerTransfer $customerTransfer, ?CompanyUserTransfer $companyUserTransfer): void
     {
-        $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
-        $updateCustomerTransfer = $this->customerClient->getCustomerByEmail($customerTransfer);
+        $updatedCustomerTransfer = (new CustomerTransfer())
+            ->setIdCustomer($customerTransfer->getIdCustomer())
+            ->setCompanyUserTransfer($companyUserTransfer);
 
-        $this->customerClient->setCustomer($updateCustomerTransfer);
+        $updatedCustomerTransfer = $this->customerClient->getCustomerByEmail($updatedCustomerTransfer);
+
+        $this->customerClient->setCustomer($updatedCustomerTransfer);
     }
 }
