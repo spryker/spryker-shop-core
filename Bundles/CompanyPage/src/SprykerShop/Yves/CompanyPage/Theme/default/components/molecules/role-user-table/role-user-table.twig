@@ -2,15 +2,14 @@
 
 {% define config = {
     name: 'role-user-table',
-    tag: 'div'
 } %}
 
 {% define data = {
     users: required,
     idCompanyRole: required,
     actions: {
-        switch: false
-    }
+        switch: false,
+    },
 } %}
 
 {% set showActions = data.actions.switch %}

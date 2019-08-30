@@ -2,7 +2,6 @@
 
 {% define config = {
     name: 'user-table',
-    tag: 'div'
 } %}
 
 {% define data = {
@@ -10,8 +9,8 @@
     users: required,
     actions: {
         update: false,
-        delete: false
-    }
+        delete: false,
+    },
 } %}
 
 {% set showActions = data.actions.update or data.actions.delete %}

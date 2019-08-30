@@ -2,7 +2,6 @@
 
 {% define config = {
     name: 'form',
-    tag: 'div'
 } %}
 
 {% define data = {
@@ -12,8 +11,8 @@
     layout: {},
     options: {
         attr: {
-            novalidate: 'novalidate'
-        }
+            novalidate: 'novalidate',
+        },
     },
 
     title: null,
@@ -23,7 +22,7 @@
         class: 'button button--success',
         icon: null,
         enable: false,
-        qa: 'submit-button'
+        qa: 'submit-button',
     },
 
     cancel: {
@@ -32,8 +31,8 @@
         icon: 'chevron-left',
         url: '#',
         enable: false,
-        qa: 'cancel-button'
-    }
+        qa: 'cancel-button',
+    },
 } %}
 
 {% block body %}

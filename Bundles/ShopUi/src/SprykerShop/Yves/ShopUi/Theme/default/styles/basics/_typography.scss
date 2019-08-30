@@ -1,3 +1,6 @@
+/**
+ * Sets font and basic typography styles for the main HTML elements.
+ */
 @mixin basic-typography() {
     html {
         font-size: $setting-font-size-base;
