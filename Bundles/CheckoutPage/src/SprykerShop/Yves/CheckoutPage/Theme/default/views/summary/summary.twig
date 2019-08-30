@@ -180,6 +180,13 @@
                         }
                     } only %}
 
+                    {% widget 'QuoteApproveRequestWidget' args [embed.cart] %}
+                        {% block body %}
+                            <hr>
+                            {{ parent() }}
+                        {% endblock %}
+                    {% endwidget %}
+
                     <hr class="box__separator">
                     {{parent()}}
                 {% endblock %}

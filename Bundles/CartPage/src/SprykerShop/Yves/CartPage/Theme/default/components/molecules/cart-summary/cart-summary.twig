@@ -103,7 +103,7 @@
     {% endblock %}
 
     {% if data.isQuoteValid %}
-        {% widget 'QuoteApproveRequestWidget' args [data.cart] %}
+        {% widget 'QuoteApproveRequestWidget' args [data.cart] %} {# @deprecated - This widget will be removed with next release. Content will be placed on summary page of checkout. #}
             {% block body %}
                 <hr>
                 {{ parent() }}
