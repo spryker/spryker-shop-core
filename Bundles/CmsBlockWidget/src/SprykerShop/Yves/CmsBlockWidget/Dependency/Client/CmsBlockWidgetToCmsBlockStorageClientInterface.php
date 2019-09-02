@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CmsBlockWidget\Dependency\Client;
 interface CmsBlockWidgetToCmsBlockStorageClientInterface
 {
     /**
-     * @deprecated Use \SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface::findBlocksByNames() instead.
+     * @deprecated Use `\SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface::findBlocksByNames()` instead.
      *
      * @param string[] $blockNames
      * @param string $localeName
@@ -18,26 +18,7 @@ interface CmsBlockWidgetToCmsBlockStorageClientInterface
      *
      * @return array
      */
-    public function findBlocksByNames($blockNames, $localeName, $storeName);
-
-    /**
-     * @deprecated Use \SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface::findBlockKeysByOptions() instead.
-     *
-     * @param array $options
-     * @param string $localName
-     *
-     * @return array
-     */
-    public function findBlockNamesByOptions(array $options, $localName);
-
-    /**
-     * @deprecated Will be removed in the next major release.
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    public function generateBlockNameKey($name);
+    public function findBlocksByNames($blockNames, $localeName, $storeName): array;
 
     /**
      * @param string[] $blockKeys
@@ -54,9 +35,4 @@ interface CmsBlockWidgetToCmsBlockStorageClientInterface
      * @return array
      */
     public function findBlockKeysByOptions(array $options): array;
-
-    /**
-     * @return bool
-     */
-    public function isCmsBlockKeySupported(): bool;
 }

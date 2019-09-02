@@ -23,7 +23,7 @@ class CmsBlockWidgetToCmsBlockStorageClientBridge implements CmsBlockWidgetToCms
     }
 
     /**
-     * @deprecated Use \SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientBridge::findBlocksByKeys() instead.
+     * @deprecated Use `\SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientBridge::findBlocksByKeys()` instead.
      *
      * @param string[] $blockNames
      * @param string $localeName
@@ -31,34 +31,9 @@ class CmsBlockWidgetToCmsBlockStorageClientBridge implements CmsBlockWidgetToCms
      *
      * @return array
      */
-    public function findBlocksByNames($blockNames, $localeName, $storeName)
+    public function findBlocksByNames($blockNames, $localeName, $storeName): array
     {
         return $this->cmsBlockStorageClient->findBlocksByNames($blockNames, $localeName, $storeName);
-    }
-
-    /**
-     * @deprecated Use \SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientBridge::findBlockKeysByOptions() instead.
-     *
-     * @param array $options
-     * @param string $localName
-     *
-     * @return array
-     */
-    public function findBlockNamesByOptions(array $options, $localName)
-    {
-        return $this->cmsBlockStorageClient->findBlockNamesByOptions($options, $localName);
-    }
-
-    /**
-     * @deprecated Will be removed in the next major release.
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    public function generateBlockNameKey($name)
-    {
-        return $this->cmsBlockStorageClient->generateBlockNameKey($name);
     }
 
     /**
@@ -81,13 +56,5 @@ class CmsBlockWidgetToCmsBlockStorageClientBridge implements CmsBlockWidgetToCms
     public function findBlockKeysByOptions(array $options): array
     {
         return $this->cmsBlockStorageClient->findBlockKeysByOptions($options);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isCmsBlockKeySupported(): bool
-    {
-        return method_exists($this->cmsBlockStorageClient, 'findBlocksByKeys');
     }
 }

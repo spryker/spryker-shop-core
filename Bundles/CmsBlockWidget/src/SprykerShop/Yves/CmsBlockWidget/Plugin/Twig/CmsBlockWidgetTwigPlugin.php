@@ -20,8 +20,7 @@ use Twig\TwigFunction;
  */
 class CmsBlockWidgetTwigPlugin extends AbstractTwigExtensionPlugin
 {
-    public const OPTION_NAME = 'name';
-    public const OPTION_POSITION = 'position';
+    protected const OPTION_NAME = 'name';
     protected const OPTION_KEY = 'key';
 
     protected const SERVICE_STORE = 'store';
@@ -84,24 +83,13 @@ class CmsBlockWidgetTwigPlugin extends AbstractTwigExtensionPlugin
         $storeName = $this->getStoreName();
         $cmsBlockStorageClient = $this->getFactory()->getCmsBlockStorageClient();
 
-        if (!$cmsBlockStorageClient->isCmsBlockKeySupported()) {
-            $blockName = $this->extractBlockNameOption($blockOptions);
-            $positionName = $this->extractPositionOption($blockOptions);
-
-            $availableBlockNames = $cmsBlockStorageClient->findBlockNamesByOptions($blockOptions, $localeName);
-            $availableBlockNames = $this->filterPosition($positionName, $availableBlockNames);
-            $availableBlockNames = $this->filterAvailableBlockNames($blockName, $availableBlockNames);
-
-            return $cmsBlockStorageClient->findBlocksByNames($availableBlockNames, $localeName, $storeName);
-        }
-
-        $cmsBlockKey = $this->extractBlockKeyOption($blockOptions);
+        $cmsBlockKey = $blockOptions[static::OPTION_KEY] ?? null;
 
         if ($cmsBlockKey) {
             return $cmsBlockStorageClient->findBlocksByKeys([$cmsBlockKey], $localeName, $storeName);
         }
 
-        $cmsBlockName = $this->extractBlockNameOption($blockOptions);
+        $cmsBlockName = $blockOptions[static::OPTION_NAME] ?? null;
 
         if ($cmsBlockName) {
             return $cmsBlockStorageClient->findBlocksByNames([$cmsBlockName], $localeName, $storeName);
@@ -113,79 +101,6 @@ class CmsBlockWidgetTwigPlugin extends AbstractTwigExtensionPlugin
     }
 
     /**
-     * @param array $blockOptions
-     *
-     * @return string
-     */
-    protected function extractPositionOption(array &$blockOptions): string
-    {
-        $positionName = $blockOptions[static::OPTION_POSITION] ?? '';
-        $positionName = strtolower($positionName);
-        unset($blockOptions[static::OPTION_POSITION]);
-
-        return $positionName;
-    }
-
-    /**
-     * @param string $positionName
-     * @param array $availableBlockNames
-     *
-     * @return array
-     */
-    protected function filterPosition(string $positionName, array $availableBlockNames): array
-    {
-        if (is_array(current($availableBlockNames))) {
-            return $availableBlockNames[$positionName] ?? [];
-        }
-
-        return $availableBlockNames;
-    }
-
-    /**
-     * @param string|null $blockName
-     * @param array $availableBlockNames
-     *
-     * @return array
-     */
-    protected function filterAvailableBlockNames(?string $blockName, array $availableBlockNames): array
-    {
-        $blockNameKey = $this->generateBlockNameKey($blockName);
-
-        if ($blockNameKey) {
-            if (!$availableBlockNames || in_array($blockNameKey, $availableBlockNames)) {
-                $availableBlockNames = [$blockNameKey];
-            } else {
-                $availableBlockNames = [];
-            }
-        }
-
-        return $availableBlockNames;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer
-     */
-    protected function createBlockTransfer(): CmsBlockTransfer
-    {
-        $cmsBlockTransfer = new CmsBlockTransfer();
-
-        return $cmsBlockTransfer;
-    }
-
-    /**
-     * @param array $blockOptions
-     *
-     * @return string|null
-     */
-    protected function extractBlockNameOption(array &$blockOptions): ?string
-    {
-        $blockName = $blockOptions[static::OPTION_NAME] ?? null;
-        unset($blockOptions[static::OPTION_NAME]);
-
-        return $blockName;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $cmsBlockData
      *
      * @return bool
@@ -193,16 +108,6 @@ class CmsBlockWidgetTwigPlugin extends AbstractTwigExtensionPlugin
     protected function validateBlock(SpyCmsBlockEntityTransfer $cmsBlockData): bool
     {
         return $cmsBlockData->getCmsBlockTemplate() !== null;
-    }
-
-    /**
-     * @param string|null $blockName
-     *
-     * @return string
-     */
-    protected function generateBlockNameKey(?string $blockName): string
-    {
-        return $this->getFactory()->getCmsBlockStorageClient()->generateBlockNameKey($blockName);
     }
 
     /**
@@ -272,18 +177,5 @@ class CmsBlockWidgetTwigPlugin extends AbstractTwigExtensionPlugin
     protected function getStoreName(): string
     {
         return $this->getApplication()->get(static::SERVICE_STORE);
-    }
-
-    /**
-     * @param array $blockOptions
-     *
-     * @return mixed|null
-     */
-    protected function extractBlockKeyOption(array &$blockOptions)
-    {
-        $blockKey = $blockOptions[static::OPTION_KEY] ?? null;
-        unset($blockOptions[static::OPTION_KEY]);
-
-        return $blockKey;
     }
 }
