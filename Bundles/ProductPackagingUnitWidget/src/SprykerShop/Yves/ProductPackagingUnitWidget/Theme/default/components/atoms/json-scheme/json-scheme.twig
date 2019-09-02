@@ -1,15 +1,15 @@
+{# fe-sniffer:disabled correct-twig-component-structure #}
 {% extends model('component') %}
 
 {% define config = {
     name: data.name ~ '__json',
-    tag: 'div'
 } %}
 
 {% define data = {
     name: required,
-    json: required
+    json: required,
 } %}
 
 {% define attributes = {
-    json: data.json
+    json: data.json,
 } %}

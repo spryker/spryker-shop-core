@@ -1,3 +1,6 @@
+/**
+ * Provides global class names for display behavior with additional responsive modifiers.
+ */
 @mixin util-visibility() {
     .is-hidden {
         display: none;

@@ -2,11 +2,10 @@
 
 {% define config = {
     name: 'quote-request-detail',
-    tag: 'div',
 } %}
 
 {% define data = {
-    quoteRequest: required
+    quoteRequest: required,
 } %}
 
 {% set quote = data.quoteRequest.latestVersion ? data.quoteRequest.latestVersion.quote : null %}
