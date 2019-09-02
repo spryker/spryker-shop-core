@@ -169,7 +169,7 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use createShipmentHandlerWithMultipleShipment() instead.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @return \SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandlerInterface
      */

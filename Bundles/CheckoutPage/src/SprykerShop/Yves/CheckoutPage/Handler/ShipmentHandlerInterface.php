@@ -7,9 +7,19 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Handler;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Symfony\Component\HttpFoundation\Request;
+
 /**
- * @deprecated Use \SprykerShop\Yves\CheckoutPage\Handler\MultiShipmentHandlerInterface instead.
+ * @deprecated Exists for Backward Compatibility reasons only.
  */
-interface ShipmentHandlerInterface extends MultiShipmentHandlerInterface
+interface ShipmentHandlerInterface
 {
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addShipmentToQuote(Request $request, QuoteTransfer $quoteTransfer);
 }
