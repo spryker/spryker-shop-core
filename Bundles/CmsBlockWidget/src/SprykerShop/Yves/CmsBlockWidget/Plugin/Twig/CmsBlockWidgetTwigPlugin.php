@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\CmsBlockWidget\Plugin\Twig;
 
 use ArrayObject;
 use DateTime;
-use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\SpyCmsBlockEntityTransfer;
 use SprykerShop\Yves\ShopApplication\Plugin\AbstractTwigExtensionPlugin;
 use Twig\Environment;
