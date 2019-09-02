@@ -142,6 +142,9 @@
                     </div>
                 {% endif %}
             {% endif %}
+            <div class="box">
+                {% widget 'QuoteApprovalWidget' args [data.cart] only %}{% endwidget %}
+            </div>
 
             <div class="box">
                 {% widget 'CartCodeFormWidget' args [data.transfer] only %}

@@ -14,6 +14,7 @@
 {% set canProceedToCheckout = data.cart.items is not empty
     and data.isQuoteValid
     and (not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote))
+    and not data.cart.isLocked
 %}
 
 {% block body %}
@@ -23,7 +24,7 @@
         <hr>
     {% endblock %}
 
-    {% widget 'QuoteApprovalWidget' args [data.cart] only %}{% endwidget %}
+    {% widget 'QuoteApprovalWidget' args [data.cart] only %}{% endwidget %}  {# @deprecated - This widget will be removed with next release. Content will be placed on summary page of checkout. #}
 
     {% block cartSummaryContent %}
         {% if can('SeePricePermissionPlugin') %}
