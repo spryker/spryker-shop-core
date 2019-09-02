@@ -1,3 +1,9 @@
+/**
+ * Returns column ratio in relation to columns count.
+ * @param {Number} $column
+ * @param {Number} $columns [$setting-grid-columns]
+ * @return {Number}
+ */
 @function helper-grid-span($column, $columns: $setting-grid-columns) {
     @return (100% / $columns) * $column;
 }

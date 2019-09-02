@@ -2,7 +2,6 @@
 
 {% define config = {
     name: 'cart-table',
-    tag: 'div'
 } %}
 
 {% define data = {
@@ -12,8 +11,8 @@
         view: true,
         update: false,
         set_default: true,
-        delete: true
-    }
+        delete: true,
+    },
 } %}
 
 {% set showActions = data.actions.view or data.actions.update or data.actions.delete or data.actions.set_default %}

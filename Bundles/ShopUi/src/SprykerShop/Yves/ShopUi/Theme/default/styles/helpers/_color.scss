@@ -1,7 +1,17 @@
+/**
+ * Wrapper function for the darken sass function with a default degree parameter.
+ * @param {Color} $setting-color
+ * @param {Number} $degree [10]
+ */
 @function helper-color-dark($setting-color, $degree: 10) {
     @return darken($setting-color, $degree);
 }
 
+/**
+ * Wrapper function for the lighten sass function with a default degree parameter.
+ * @param {Color} $setting-color
+ * @param {Number} $degree [10]
+ */
 @function helper-color-light($setting-color, $degree: 35) {
     @return lighten($setting-color, $degree);
 }
