@@ -22,11 +22,11 @@ before_install:
 
 install:
   - composer install --no-interaction --prefer-dist --optimize-autoloader
-  - npm install -g git+https://github.com/spryker-sdk/frontend-sniffer.git#semver:^0.1.0
+  - npm install -g git+https://github.com/spryker-sdk/frontend-sniffer.git#semver:^0.2.1
 
 script:
   - composer cs-check
-  - frontend-sniffer --config ./ --path ./Bundles
+  - frontend-sniffer --config ./ --path ../../ --level-restriction core
 
 notifications:
   email: false
