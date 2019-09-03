@@ -158,7 +158,7 @@
                 data: {
                     form: data.forms.summary,
                     submit: {
-                        enable: can('SeeOrderPlaceSubmitPermissionPlugin'),
+                        enable: can('SeeOrderPlaceSubmitPermissionPlugin') and not data.cart.isLocked,
                         text: 'checkout.step.place.order' | trans
                     },
                     cancel: {
