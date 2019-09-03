@@ -19,7 +19,7 @@ class ProductReplacementForWidgetConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isReplacementsVisibleForProductsWithAlternativesApplicableOnly(): bool
+    public function isProductReplacementFilterActive(): bool
     {
         return false;
     }
