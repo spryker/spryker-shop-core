@@ -17,12 +17,21 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const ERROR_MESSAGE_NO_CUSTOMER = 'Only customers can use this feature. Please log in.';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
+    public const SUCCESS_MESSAGE = 'Review was submitted';
 
     public const REQUEST_HEADER_REFERER = 'referer';
     public const URL_MAIN = '/';
 
     protected const GLOSSARY_KEY_SUCCESS_PRODUCT_REVIEW_SUBMITTED = 'product_review.submit.success';
+    protected const GLOSSARY_KEY_ERROR_NO_CUSTOMER = 'product_review.error.no_customer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -55,7 +64,7 @@ class CreateController extends AbstractController
         $customer = $this->getFactory()->getCustomerClient()->getCustomer();
 
         if ($customer === null) {
-            $this->addErrorMessage(static::ERROR_MESSAGE_NO_CUSTOMER);
+            $this->addErrorMessage(static::GLOSSARY_KEY_ERROR_NO_CUSTOMER);
 
             return;
         }
