@@ -86,11 +86,8 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
         $quoteTransfer = $this->setDefaultNoShipmentMethod($quoteTransfer);
 
         $shipmentHandler = $this->shipmentPlugins->get(CheckoutPageDependencyProvider::PLUGIN_SHIPMENT_STEP_HANDLER);
-        $shipmentHandler->addToDataClass($request, $quoteTransfer);
 
-        $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
-
-        return $quoteTransfer;
+        return $shipmentHandler->addToDataClass($request, $quoteTransfer);
     }
 
     /**
