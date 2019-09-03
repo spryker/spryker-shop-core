@@ -1,0 +1,35 @@
+@mixin configurable-bundle-widget-configured-bundle-product($name: '.configured-bundle-product') {
+    @include shop-ui-product-item($name) {
+        @include helper-breakpoint(lg) {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        &__container {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.188rem;
+        }
+
+        &__col {
+            margin-right: auto;
+            margin-left: auto;
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        &__text {
+            display: inline-block;
+            text-align: left;
+        }
+
+        @content;
+    }
+}

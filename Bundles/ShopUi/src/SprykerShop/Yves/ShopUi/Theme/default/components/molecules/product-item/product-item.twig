@@ -15,9 +15,7 @@
     currencyIsoCode: null,
 } %}
 
-{% block class -%}
-    {{ parent() }} box
-{%- endblock %}
+{%- block extraClass %} box{% endblock -%}
 
 {% block body %}
     {% block imageContainer %}
@@ -61,10 +59,10 @@
         {% block priceContainer %}
             <div class="spacing-y">
                 {% block price %}
-                    {% if can('SeePricePermissionPlugin') and data.product.prices %}
+                    {% if can('SeePricePermissionPlugin') %}
                         {% include molecule('money-price') with {
                             data: {
-                                amount: data.product.prices.DEFAULT,
+                                amount: data.product.prices.DEFAULT | default(null),
                                 originalAmount: data.product.prices.ORIGINAL | default(null),
                                 currencyIsoCode: data.currencyIsoCode,
                             },
