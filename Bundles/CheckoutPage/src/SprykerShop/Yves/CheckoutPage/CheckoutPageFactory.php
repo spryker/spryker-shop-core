@@ -21,8 +21,6 @@ use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilterInterface;
 use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
 use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsChecker;
 use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface;
-use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
-use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandlerInterface;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
 
 /**
@@ -165,19 +163,6 @@ class CheckoutPageFactory extends AbstractFactory
             $this->getShipmentService(),
             $this->createGiftCardItemsChecker(),
             $this->getConfig()
-        );
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @return \SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandlerInterface
-     */
-    public function createShipmentHandler(): ShipmentHandlerInterface
-    {
-        return new ShipmentHandler(
-            $this->getShipmentClient(),
-            $this->getPriceClient()
         );
     }
 
