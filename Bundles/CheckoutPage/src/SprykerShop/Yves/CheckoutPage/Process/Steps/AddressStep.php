@@ -99,7 +99,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
-         return $this->postConditionChecker->check($quoteTransfer);
+        return $this->postConditionChecker->check($quoteTransfer);
     }
 
     /**
