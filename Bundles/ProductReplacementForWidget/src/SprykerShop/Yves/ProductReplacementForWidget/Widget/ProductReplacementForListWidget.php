@@ -85,7 +85,7 @@ class ProductReplacementForListWidget extends AbstractWidget
      */
     protected function canShowProductReplacementFor(ProductViewTransfer $productViewTransfer): bool
     {
-        if (!$this->getConfig()->isShowReplacementForNotAvailableProductsOnly()) {
+        if (!$this->getConfig()->isReplacementsVisibleForProductsWithAlternativesApplicableOnly()) {
             return true;
         }
 
