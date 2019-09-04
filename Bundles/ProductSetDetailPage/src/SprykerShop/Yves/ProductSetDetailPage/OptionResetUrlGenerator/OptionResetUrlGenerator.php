@@ -30,7 +30,7 @@ class OptionResetUrlGenerator implements OptionResetUrlGeneratorInterface
         $optionResetUrls = [];
 
         foreach ($productViewTransfers as $productViewTransfer) {
-            $optionResetUrls += $this->getProductViewTransferToOptionResetUrls($productViewTransfer, $queryParamsArray);
+            $optionResetUrls += $this->getProductOptionResetUrls($productViewTransfer, $queryParamsArray);
         }
 
         return $optionResetUrls;
@@ -42,7 +42,7 @@ class OptionResetUrlGenerator implements OptionResetUrlGeneratorInterface
      *
      * @return string[][]
      */
-    protected function getProductViewTransferToOptionResetUrls(
+    protected function getProductOptionResetUrls(
         ProductViewTransfer $productViewTransfer,
         array $queryParamsArray
     ): array {
