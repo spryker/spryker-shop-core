@@ -14,6 +14,13 @@
         {% for product in data.products %}
             {% set selectedItem = loop.first ? config.name ~ '__item--selected' : '' %}
             <li class="list__item spacing-y spacing-y--inner {{ config.name }}__item {{ selectedItem }}" data-value="{{ product.sku }}">
+                {% widget 'ProductDiscontinuedWidget' args [product.sku] only %}
+                    {% block body %}
+                        {% if data.discontinuedProduct is not empty %}
+                            {{ 'product_search_widget.search.product_discontinued_prefix' | trans }}
+                        {% endif %}
+                    {% endblock %}
+                {% endwidget %}
                 {{ product.name }} ({{ product.sku }})
             </li>
         {% endfor %}

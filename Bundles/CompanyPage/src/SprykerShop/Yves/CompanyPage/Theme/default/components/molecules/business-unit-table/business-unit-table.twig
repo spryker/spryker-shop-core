@@ -2,7 +2,6 @@
 
 {% define config = {
     name: 'business-unit-table',
-    tag: 'div'
 } %}
 
 {% define data = {
@@ -10,8 +9,8 @@
     actions: {
         view: true,
         update: false,
-        delete: false
-    }
+        delete: false,
+    },
 } %}
 
 {% set showActions = data.actions.view or data.actions.update or data.actions.delete %}
