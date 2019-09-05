@@ -128,7 +128,7 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \SprykerShop\Yves\CommentWidgetExtension\Dependency\Plugin\CommentThreadAfterOperationStrategyPluginInterface[]
+     * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\QuoteApprovalAfterOperationPluginInterface[]
      */
     protected function getQuoteApprovalAfterOperationPlugins(): array
     {
