@@ -1,7 +1,21 @@
+/**
+ * Defines font family setting. Usage: body global font styles.
+ */
 $setting-font-family: 'Arial', sans-serif !default;
+
+/**
+ * Defines font family setting for code. Can be used for code and pre elements.
+ */
 $setting-font-family-code: 'Menlo', monospace !default;
+
+/**
+ * Defines basic font size. Usage: global basic font size.
+ */
 $setting-font-size-base: 16px !default;
 
+/**
+ * Font size values map. Usage: mixins providing styles for headings, text elements etc.
+ */
 $setting-font-size: (
     1: 38px,
     2: 34px,
@@ -14,12 +28,18 @@ $setting-font-size: (
     small: 12px
 ) !default;
 
+/**
+ * Font weight values map. Usage: mixin to set font weight property.
+ */
 $setting-font-weight: (
     light: 300,
     regular: 400,
     bold: 900
 ) !default;
 
+/**
+ * Font line height values map. Usage: mixins providing styles for headings, text elements etc.
+ */
 $setting-font-line-height: (
     1: 1.1,
     2: 1.2,

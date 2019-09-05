@@ -1,11 +1,24 @@
 $shopping-list-product-option-list-padding: map-get($setting-spacing, 'small');
 
-@mixin shopping-list-product-option-list($name: '.shopping-list-product-option-list') {
+@mixin product-option-widget-shopping-list-product-option-list($name: '.shopping-list-product-option-list') {
     #{$name} {
         margin: 0 -$shopping-list-product-option-list-padding;
 
         &__item {
             padding: 0 $shopping-list-product-option-list-padding map-get($setting-spacing, 'default');
         }
+
+        @content;
+    }
+}
+
+/**
+ * @deprecated use product-option-widget-shopping-list-product-option-list mixin instead.
+ */
+@mixin shopping-list-product-option-list($name: '.shopping-list-product-option-list') {
+    @include product-option-widget-shopping-list-product-option-list();
+
+    #{$name} {
+        @content;
     }
 }

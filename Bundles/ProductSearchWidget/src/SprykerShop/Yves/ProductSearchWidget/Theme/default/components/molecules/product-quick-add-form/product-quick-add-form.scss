@@ -1,4 +1,4 @@
-@mixin product-quick-add-widget-product-quick-add-form($name: '.product-quick-add-form') {
+@mixin product-search-widget-product-quick-add-form($name: '.product-quick-add-form') {
     #{$name} {
         &--row {
             padding: map-get($setting-spacing, 'default');
@@ -11,5 +11,18 @@
                 font-weight: bold;
             }
         }
+
+        @content;
+    }
+}
+
+/**
+ * @deprecated use product-search-widget-product-quick-add-form mixin instead.
+ */
+@mixin product-quick-add-widget-product-quick-add-form($name: '.product-quick-add-form') {
+    @include product-search-widget-product-quick-add-form();
+
+    #{$name} {
+        @content;
     }
 }
