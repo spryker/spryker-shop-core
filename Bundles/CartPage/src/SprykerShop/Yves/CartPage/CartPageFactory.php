@@ -17,6 +17,8 @@ use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAvailabilityMapper;
 use SprykerShop\Yves\CartPage\Model\CartItemReader;
+use SprykerShop\Yves\CartPage\Model\QuoteApprovalToQuoteSynchronizer;
+use SprykerShop\Yves\CartPage\Model\QuoteApprovalToQuoteSynchronizerInterface;
 use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
 
 class CartPageFactory extends AbstractFactory
@@ -173,5 +175,16 @@ class CartPageFactory extends AbstractFactory
     public function createCartItemsAvailabilityMapper()
     {
         return new CartItemsAvailabilityMapper($this->getAvailabilityStorageClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPage\Model\QuoteApprovalToQuoteSynchronizerInterface
+     */
+    public function createQuoteApprovalToQuoteSynchronizer(): QuoteApprovalToQuoteSynchronizerInterface
+    {
+        return new QuoteApprovalToQuoteSynchronizer(
+            $this->getCartClient(),
+            $this->getQuoteClient()
+        );
     }
 }

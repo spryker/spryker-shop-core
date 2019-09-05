@@ -18,6 +18,7 @@ use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetTo
 use SprykerShop\Yves\QuoteApprovalWidget\Form\QuoteApproveRequestForm;
 use SprykerShop\Yves\QuoteApprovalWidget\Form\QuoteApproveRequestFormDataProvider;
 use SprykerShop\Yves\QuoteApprovalWidget\Form\QuoteApproveRequestFormDataProviderInterface;
+use SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\QuoteApprovalAfterOperationPluginInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -99,5 +100,13 @@ class QuoteApprovalWidgetFactory extends AbstractFactory
     public function getGlossaryStorageClient(): QuoteApprovalWidgetToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(QuoteApprovalWidgetDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\QuoteApprovalAfterOperationPluginInterface[]
+     */
+    public function getQuoteApprovalAfterOperationPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteApprovalWidgetDependencyProvider::PLUGINS_QUOTE_APPROVAL_AFTER_OPERATION);
     }
 }
