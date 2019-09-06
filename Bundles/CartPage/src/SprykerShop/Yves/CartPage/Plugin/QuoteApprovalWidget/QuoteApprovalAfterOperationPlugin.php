@@ -23,13 +23,14 @@ class QuoteApprovalAfterOperationPlugin extends AbstractPlugin implements QuoteA
      * @api
      *
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
+     * @param int|null $idQuoteApproval
      *
      * @return void
      */
-    public function execute(QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer): void
+    public function execute(QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer, ?int $idQuoteApproval = null): void
     {
         $this->getFactory()
             ->createQuoteApprovalToQuoteSynchronizer()
-            ->synchronizeQuoteApprovals($quoteApprovalResponseTransfer);
+            ->synchronizeQuoteApprovals($quoteApprovalResponseTransfer, $idQuoteApproval);
     }
 }

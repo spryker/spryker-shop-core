@@ -18,8 +18,9 @@ interface QuoteApprovalAfterOperationPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer
+     * @param int|null $idQuoteApproval
      *
      * @return void
      */
-    public function execute(QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer): void;
+    public function execute(QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer,  ?int $idQuoteApproval = null): void;
 }

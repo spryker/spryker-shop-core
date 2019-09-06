@@ -18,7 +18,6 @@ use SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client\QuoteApprovalWidgetTo
 use SprykerShop\Yves\QuoteApprovalWidget\Form\QuoteApproveRequestForm;
 use SprykerShop\Yves\QuoteApprovalWidget\Form\QuoteApproveRequestFormDataProvider;
 use SprykerShop\Yves\QuoteApprovalWidget\Form\QuoteApproveRequestFormDataProviderInterface;
-use SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\QuoteApprovalAfterOperationPluginInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 

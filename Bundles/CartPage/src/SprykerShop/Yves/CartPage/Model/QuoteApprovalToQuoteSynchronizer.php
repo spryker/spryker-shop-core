@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CartPage\Model;
 
-
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -43,11 +42,14 @@ class QuoteApprovalToQuoteSynchronizer implements QuoteApprovalToQuoteSynchroniz
 
     /**
      * @param \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer
+     * @param int|null $idQuoteApproval
      *
      * @return void
      */
-    public function synchronizeQuoteApprovals(QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer): void
-    {
+    public function synchronizeQuoteApprovals(
+        QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer,
+        ?int $idQuoteApproval = null
+    ): void {
         $quoteTransfer = $this->cartClient->getQuote();
 
         $quoteApprovalTransfer = $quoteApprovalResponseTransfer->getQuoteApproval();
@@ -59,10 +61,8 @@ class QuoteApprovalToQuoteSynchronizer implements QuoteApprovalToQuoteSynchroniz
             $this->updateQuoteApprovalInQuote($quoteApprovalTransfer, $quoteTransfer);
         }
 
-        if (!$quoteApprovalTransfer) {
-            // @ToDo Zed does not return $quoteApprovalTransferafter deletion
-            // NEED TO REFACTOR
-            $this->removeQuoteApprovalFromQuote($quoteApprovalTransfer, $quoteTransfer);
+        if (!$quoteApprovalTransfer && $idQuoteApproval) {
+            $this->removeQuoteApprovalFromQuote($quoteTransfer, $idQuoteApproval);
         }
 
         $this->quoteClient->setQuote($quoteTransfer);
@@ -126,17 +126,17 @@ class QuoteApprovalToQuoteSynchronizer implements QuoteApprovalToQuoteSynchroniz
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteApprovalTransfer $quoteApprovalTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idQuoteApproval
      *
      * @return void
      */
     protected function removeQuoteApprovalFromQuote(
-        QuoteApprovalTransfer $quoteApprovalTransfer,
-        QuoteTransfer $quoteTransfer
+        QuoteTransfer $quoteTransfer,
+        int $idQuoteApproval
     ): void {
         $correspondedQuoteApprovalIndexInSessionQuote = $this->getCorrespondedQuoteApprovalIndexInSessionQuote(
-            $quoteApprovalTransfer->getIdQuoteApproval(),
+            $idQuoteApproval,
             $quoteTransfer
         );
         if ($correspondedQuoteApprovalIndexInSessionQuote === null) {

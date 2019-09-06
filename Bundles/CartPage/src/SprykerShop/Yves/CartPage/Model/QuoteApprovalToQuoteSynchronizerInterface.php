@@ -13,8 +13,12 @@ interface QuoteApprovalToQuoteSynchronizerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer
+     * @param int|null $idQuoteApproval
      *
      * @return void
      */
-    public function synchronizeQuoteApprovals(QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer): void;
+    public function synchronizeQuoteApprovals(
+        QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer,
+        ?int $idQuoteApproval = null
+    ): void;
 }

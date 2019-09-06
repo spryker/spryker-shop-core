@@ -72,7 +72,7 @@ class QuoteApprovalController extends AbstractController
             ->getQuoteApprovalClient()
             ->removeQuoteApproval($quoteApprovalRequestTransfer);
 
-        $this->executeQuoteApprovalPluginsAfterSuccessfulOperation($quoteApprovalResponseTransfer);
+        $this->executeQuoteApprovalPluginsAfterSuccessfulOperation($quoteApprovalResponseTransfer, $idQuoteApproval);
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectToReferer($request);
@@ -100,7 +100,7 @@ class QuoteApprovalController extends AbstractController
             ->getQuoteApprovalClient()
             ->approveQuoteApproval($quoteApprovalRequestTransfer);
 
-        $this->executeQuoteApprovalPluginsAfterSuccessfulOperation($quoteApprovalResponseTransfer);
+        $this->executeQuoteApprovalPluginsAfterSuccessfulOperation($quoteApprovalResponseTransfer, $idQuoteApproval);
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectToReferer($request);
@@ -128,7 +128,7 @@ class QuoteApprovalController extends AbstractController
             ->getQuoteApprovalClient()
             ->declineQuoteApproval($quoteApprovalRequestTransfer);
 
-        $this->executeQuoteApprovalPluginsAfterSuccessfulOperation($quoteApprovalResponseTransfer);
+        $this->executeQuoteApprovalPluginsAfterSuccessfulOperation($quoteApprovalResponseTransfer, $idQuoteApproval);
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectToReferer($request);
@@ -168,20 +168,21 @@ class QuoteApprovalController extends AbstractController
     }
 
     /**
-     * @param int $idQuoteApproval
      * @param \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer
+     * @param int|null $idQuoteApproval
      *
      * @return void
      */
     protected function executeQuoteApprovalPluginsAfterSuccessfulOperation(
-        QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer
+        QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer,
+        ?int $idQuoteApproval = null
     ): void {
         if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
             return;
         }
 
         foreach ($this->getFactory()->getQuoteApprovalAfterOperationPlugins() as $plugin) {
-            $plugin->execute($quoteApprovalResponseTransfer);
+            $plugin->execute($quoteApprovalResponseTransfer, $idQuoteApproval);
         }
     }
 
