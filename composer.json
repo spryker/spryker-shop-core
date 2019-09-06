@@ -67,6 +67,7 @@
     "spryker-shop/redirect-page": "*",
     "spryker-shop/shop-application": "*",
     "spryker-shop/shop-application-extension": "*",
+    "spryker-shop/shop-cms-slot-extension": "*",
     "spryker-shop/shop-layout": "*",
     "spryker-shop/shop-router": "*",
     "spryker-shop/shop-translator": "*",
