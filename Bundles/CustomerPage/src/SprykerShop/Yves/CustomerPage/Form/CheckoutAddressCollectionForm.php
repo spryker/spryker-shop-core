@@ -39,7 +39,6 @@ class CheckoutAddressCollectionForm extends AbstractType
     public const OPTION_ADDRESS_CHOICES = 'address_choices';
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
     public const OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES = 'can_deliver_to_multiple_shipping_addresses';
-    public const OPTION_IS_MULTIPLE_SHIPMENT_ENABLED = 'is_multi_shipment_enabled';
     public const OPTION_IS_CUSTOMER_LOGGED_IN = 'is_customer_logged_in';
 
     public const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
@@ -86,7 +85,6 @@ class CheckoutAddressCollectionForm extends AbstractType
         $resolver->setDefined(static::OPTION_ADDRESS_CHOICES)
             ->setRequired(static::OPTION_COUNTRY_CHOICES)
             ->setRequired(static::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES)
-            ->setRequired(static::OPTION_IS_MULTIPLE_SHIPMENT_ENABLED)
             ->setRequired(static::OPTION_IS_CUSTOMER_LOGGED_IN);
     }
 
@@ -342,7 +340,7 @@ class CheckoutAddressCollectionForm extends AbstractType
      */
     protected function addItemShippingAddressSubForm(FormBuilderInterface $builder, array $options)
     {
-        if (!$options[static::OPTION_IS_MULTIPLE_SHIPMENT_ENABLED]) {
+        if (!$options[static::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES]) {
             return $this;
         }
 
@@ -375,7 +373,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     {
         $builder->add(static::FIELD_IS_MULTIPLE_SHIPMENT_ENABLED, HiddenType::class, [
             'mapped' => false,
-            'data' => $options[static::OPTION_IS_MULTIPLE_SHIPMENT_ENABLED],
+            'data' => $options[static::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES],
         ]);
 
         return $this;

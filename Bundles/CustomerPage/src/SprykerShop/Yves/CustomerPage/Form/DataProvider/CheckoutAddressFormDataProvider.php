@@ -88,7 +88,6 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
             CheckoutAddressCollectionForm::OPTION_ADDRESS_CHOICES => $this->getAddressChoices(),
             CheckoutAddressCollectionForm::OPTION_COUNTRY_CHOICES => $this->getAvailableCountries(),
             CheckoutAddressCollectionForm::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES => $this->canDeliverToMultipleShippingAddresses($quoteTransfer),
-            CheckoutAddressCollectionForm::OPTION_IS_MULTIPLE_SHIPMENT_ENABLED => $this->shipmentClient->isMultiShipmentSelectionEnabled(),
             CheckoutAddressCollectionForm::OPTION_IS_CUSTOMER_LOGGED_IN => $this->customerClient->isLoggedIn(),
         ];
     }
@@ -374,9 +373,11 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function canDeliverToMultipleShippingAddresses(QuoteTransfer $quoteTransfer): bool
     {
-        return $quoteTransfer->getItems()->count() > 1
+        $a =  $quoteTransfer->getItems()->count() > 1
             && $this->shipmentClient->isMultiShipmentSelectionEnabled()
             && !$this->hasQuoteGiftCardItems($quoteTransfer);
+
+        return $a;
     }
 
     /**
