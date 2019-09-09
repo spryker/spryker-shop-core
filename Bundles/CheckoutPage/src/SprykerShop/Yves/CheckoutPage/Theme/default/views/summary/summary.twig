@@ -269,6 +269,12 @@
                         data: embed.overview,
                     } only %}
 
+                    {% include molecule('gift-card-payment-summary', 'GiftCardWidget') ignore missing with {
+                        data: {
+                            cart: embed.cart,
+                        },
+                    } only %}
+
                     <hr class="box__separator">
                     {{ parent() }}
                 {% endblock %}
