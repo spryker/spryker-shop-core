@@ -21,7 +21,7 @@
             {% set hasShippingAddressesAndApplicable = isCompanyBusinessUnitShippingAddressApplicable ? true : hasShippingAddresses %}
             {% set itemName = item.vars.data.name | default %}
             {% set itemQuantity = item.vars.data.quantity | default %}
-            {% set imageUrl = item.vars.data.images ? item.vars.data.images[0].externalUrlSmall %}
+            {% set imageUrl = item.vars.data.images[0].externalUrlSmall ?? '' %}
 
             <div class="col col--sm-1 spacing spacing--inner">
                 {% include atom('thumbnail') with {
