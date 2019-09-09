@@ -9,12 +9,12 @@ namespace SprykerShop\Yves\CartPage\Plugin\QuoteApprovalWidget;
 
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\QuoteApprovalExpanderPluginInterface;
+use SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\QuoteApprovalAfterOperationPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
  */
-class QuoteApprovalExpanderPlugin extends AbstractPlugin implements QuoteApprovalExpanderPluginInterface
+class QuoteApprovalAfterOperationPlugin extends AbstractPlugin implements QuoteApprovalAfterOperationPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -22,7 +22,7 @@ class QuoteApprovalExpanderPlugin extends AbstractPlugin implements QuoteApprova
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
+     * @param \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer
      * @param int|null $idQuoteApproval
      *
      * @return void
