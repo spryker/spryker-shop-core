@@ -40,7 +40,7 @@ class QuoteApprovalController extends AbstractController
                 ->getQuoteApprovalClient()
                 ->createQuoteApproval($quoteApproveRequestForm->getData());
 
-            $this->executeQuoteApprovalExpanderPlugins($quoteApprovalResponseTransfer);
+            $this->executeQuoteApprovalAfterOperationPlugins($quoteApprovalResponseTransfer);
             $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
         }
 
@@ -72,7 +72,7 @@ class QuoteApprovalController extends AbstractController
             ->getQuoteApprovalClient()
             ->removeQuoteApproval($quoteApprovalRequestTransfer);
 
-        $this->executeQuoteApprovalExpanderPlugins($quoteApprovalResponseTransfer, $idQuoteApproval);
+        $this->executeQuoteApprovalAfterOperationPlugins($quoteApprovalResponseTransfer, $idQuoteApproval);
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectToReferer($request);
@@ -100,7 +100,7 @@ class QuoteApprovalController extends AbstractController
             ->getQuoteApprovalClient()
             ->approveQuoteApproval($quoteApprovalRequestTransfer);
 
-        $this->executeQuoteApprovalExpanderPlugins($quoteApprovalResponseTransfer, $idQuoteApproval);
+        $this->executeQuoteApprovalAfterOperationPlugins($quoteApprovalResponseTransfer, $idQuoteApproval);
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectToReferer($request);
@@ -128,7 +128,7 @@ class QuoteApprovalController extends AbstractController
             ->getQuoteApprovalClient()
             ->declineQuoteApproval($quoteApprovalRequestTransfer);
 
-        $this->executeQuoteApprovalExpanderPlugins($quoteApprovalResponseTransfer, $idQuoteApproval);
+        $this->executeQuoteApprovalAfterOperationPlugins($quoteApprovalResponseTransfer, $idQuoteApproval);
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectToReferer($request);
@@ -173,7 +173,7 @@ class QuoteApprovalController extends AbstractController
      *
      * @return void
      */
-    protected function executeQuoteApprovalExpanderPlugins(
+    protected function executeQuoteApprovalAfterOperationPlugins(
         QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer,
         ?int $idQuoteApproval = null
     ): void {
@@ -181,7 +181,7 @@ class QuoteApprovalController extends AbstractController
             return;
         }
 
-        foreach ($this->getFactory()->getQuoteApprovalExpanderPlugins() as $plugin) {
+        foreach ($this->getFactory()->getQuoteApprovalAfterOperationPlugins() as $plugin) {
             $plugin->execute($quoteApprovalResponseTransfer, $idQuoteApproval);
         }
     }

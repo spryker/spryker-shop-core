@@ -9,11 +9,11 @@ namespace SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 
-interface QuoteApprovalExpanderPluginInterface
+interface QuoteApprovalAfterOperationPluginInterface
 {
     /**
      * Specification:
-     *  - Sync quote approval changes.
+     *  - Synchronize quote approval changes.
      *
      * @api
      *
