@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
-use SprykerShop\Shared\CustomerPage\CustomerPageConstants;
+use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -177,7 +177,7 @@ class OrderController extends AbstractCustomerController
         $orderShipmentExpenses = [];
 
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() !== CustomerPageConstants::SHIPMENT_EXPENSE_TYPE
+            if ($expenseTransfer->getType() !== CustomerPageConfig::SHIPMENT_EXPENSE_TYPE
                 || $expenseTransfer->getShipment() === null) {
                 continue;
             }
