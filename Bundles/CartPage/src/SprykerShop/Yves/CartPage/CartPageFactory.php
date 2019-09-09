@@ -17,8 +17,8 @@ use SprykerShop\Yves\CartPage\Handler\CartItemHandler;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper;
 use SprykerShop\Yves\CartPage\Mapper\CartItemsAvailabilityMapper;
 use SprykerShop\Yves\CartPage\Model\CartItemReader;
-use SprykerShop\Yves\CartPage\Model\QuoteApprovalToQuoteSynchronizer;
-use SprykerShop\Yves\CartPage\Model\QuoteApprovalToQuoteSynchronizerInterface;
+use SprykerShop\Yves\CartPage\Expander\QuoteApprovalExpander;
+use SprykerShop\Yves\CartPage\Expander\QuoteApprovalExpanderInterface;
 use SprykerShop\Yves\CartPage\Plugin\Provider\AttributeVariantsProvider;
 
 class CartPageFactory extends AbstractFactory
@@ -178,11 +178,11 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CartPage\Model\QuoteApprovalToQuoteSynchronizerInterface
+     * @return \SprykerShop\Yves\CartPage\Expander\QuoteApprovalExpanderInterface
      */
-    public function createQuoteApprovalToQuoteSynchronizer(): QuoteApprovalToQuoteSynchronizerInterface
+    public function createQuoteApprovalExpander(): QuoteApprovalExpanderInterface
     {
-        return new QuoteApprovalToQuoteSynchronizer(
+        return new QuoteApprovalExpander(
             $this->getCartClient(),
             $this->getQuoteClient()
         );

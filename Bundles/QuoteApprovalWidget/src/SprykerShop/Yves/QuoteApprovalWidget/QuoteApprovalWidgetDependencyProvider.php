@@ -23,7 +23,7 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
-    public const PLUGINS_QUOTE_APPROVAL_AFTER_OPERATION = 'PLUGINS_QUOTE_APPROVAL_AFTER_OPERATION';
+    public const PLUGINS_QUOTE_APPROVAL_EXPANDER = 'PLUGINS_QUOTE_APPROVAL_EXPANDER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -38,7 +38,7 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addCustomerClient($container);
         $container = $this->addMoneyClient($container);
         $container = $this->addGlossaryStorageClient($container);
-        $container = $this->addQuoteApprovalAfterOperationPlugins($container);
+        $container = $this->addQuoteApprovalExpanderPlugins($container);
 
         return $container;
     }
@@ -118,19 +118,19 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addQuoteApprovalAfterOperationPlugins(Container $container): Container
+    protected function addQuoteApprovalExpanderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_QUOTE_APPROVAL_AFTER_OPERATION, function () {
-            return $this->getQuoteApprovalAfterOperationPlugins();
+        $container->set(static::PLUGINS_QUOTE_APPROVAL_EXPANDER, function () {
+            return $this->getQuoteApprovalExpanderPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\QuoteApprovalAfterOperationPluginInterface[]
+     * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\QuoteApprovalExpanderPluginInterface[]
      */
-    protected function getQuoteApprovalAfterOperationPlugins(): array
+    protected function getQuoteApprovalExpanderPlugins(): array
     {
         return [];
     }

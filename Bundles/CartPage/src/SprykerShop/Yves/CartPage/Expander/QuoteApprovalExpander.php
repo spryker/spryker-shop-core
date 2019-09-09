@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CartPage\Model;
+namespace SprykerShop\Yves\CartPage\Expander;
 
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToCartClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToQuoteClientInterface;
 
-class QuoteApprovalToQuoteSynchronizer implements QuoteApprovalToQuoteSynchronizerInterface
+class QuoteApprovalExpander implements QuoteApprovalExpanderInterface
 {
     /**
      * @uses \Spryker\Shared\QuoteApproval\QuoteApprovalConfig::STATUS_WAITING
@@ -46,7 +46,7 @@ class QuoteApprovalToQuoteSynchronizer implements QuoteApprovalToQuoteSynchroniz
      *
      * @return void
      */
-    public function synchronizeQuoteApprovals(
+    public function expandQuoteApprovals(
         QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer,
         ?int $idQuoteApproval = null
     ): void {
@@ -74,7 +74,7 @@ class QuoteApprovalToQuoteSynchronizer implements QuoteApprovalToQuoteSynchroniz
      *
      * @return int|null
      */
-    protected function getCorrespondedQuoteApprovalIndexInSessionQuote(
+    protected function findQuoteApprovalIndexInSessionQuote(
         int $idQuoteApproval,
         QuoteTransfer $quoteTransfer
     ): ?int {
@@ -110,17 +110,17 @@ class QuoteApprovalToQuoteSynchronizer implements QuoteApprovalToQuoteSynchroniz
         QuoteApprovalTransfer $quoteApprovalTransfer,
         QuoteTransfer $quoteTransfer
     ): void {
-        $correspondedQuoteApprovalIndexInSessionQuote = $this->getCorrespondedQuoteApprovalIndexInSessionQuote(
+        $quoteApprovalIndex = $this->findQuoteApprovalIndexInSessionQuote(
             $quoteApprovalTransfer->getIdQuoteApproval(),
             $quoteTransfer
         );
-        if ($correspondedQuoteApprovalIndexInSessionQuote === null) {
+        if ($quoteApprovalIndex === null) {
             return;
         }
 
-        $quoteTransfer->getQuoteApprovals()->offsetUnset($correspondedQuoteApprovalIndexInSessionQuote);
+        $quoteTransfer->getQuoteApprovals()->offsetUnset($quoteApprovalIndex);
         $quoteTransfer->getQuoteApprovals()->offsetSet(
-            $correspondedQuoteApprovalIndexInSessionQuote,
+            $quoteApprovalIndex,
             $quoteApprovalTransfer
         );
     }
@@ -135,14 +135,14 @@ class QuoteApprovalToQuoteSynchronizer implements QuoteApprovalToQuoteSynchroniz
         QuoteTransfer $quoteTransfer,
         int $idQuoteApproval
     ): void {
-        $correspondedQuoteApprovalIndexInSessionQuote = $this->getCorrespondedQuoteApprovalIndexInSessionQuote(
+        $quoteApprovalIndex = $this->findQuoteApprovalIndexInSessionQuote(
             $idQuoteApproval,
             $quoteTransfer
         );
-        if ($correspondedQuoteApprovalIndexInSessionQuote === null) {
+        if ($quoteApprovalIndex === null) {
             return;
         }
 
-        $quoteTransfer->getQuoteApprovals()->offsetUnset($correspondedQuoteApprovalIndexInSessionQuote);
+        $quoteTransfer->getQuoteApprovals()->offsetUnset($quoteApprovalIndex);
     }
 }

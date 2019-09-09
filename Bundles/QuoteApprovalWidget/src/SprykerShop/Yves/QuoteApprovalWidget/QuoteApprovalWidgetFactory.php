@@ -102,10 +102,10 @@ class QuoteApprovalWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\QuoteApprovalAfterOperationPluginInterface[]
+     * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\QuoteApprovalExpanderPluginInterface[]
      */
-    public function getQuoteApprovalAfterOperationPlugins(): array
+    public function getQuoteApprovalExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(QuoteApprovalWidgetDependencyProvider::PLUGINS_QUOTE_APPROVAL_AFTER_OPERATION);
+        return $this->getProvidedDependency(QuoteApprovalWidgetDependencyProvider::PLUGINS_QUOTE_APPROVAL_EXPANDER);
     }
 }

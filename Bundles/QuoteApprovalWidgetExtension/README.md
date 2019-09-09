@@ -1,8 +1,8 @@
 # QuoteApprovalWidgetExtension Module
-[![Build Status](https://travis-ci.org/spryker-shop/quote-approval-widget-extension.svg)](https://travis-ci.org/spryker-shop/comment-widget-extension)
-[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/quote-approval-widget-extension/badge.svg)](https://coveralls.io/github/spryker-shop/comment-widget-extension)
+[![Build Status](https://travis-ci.org/spryker-shop/quote-approval-widget-extension.svg)](https://travis-ci.org/spryker-shop/quote-approval-widget-extension)
+[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/quote-approval-widget-extension/badge.svg)](https://coveralls.io/github/spryker-shop/quote-approval-widget-extension)
 
-The module provides plugin interfaces for extending comment widget module functionality.
+The module provides plugin interfaces for extending quote approval widget module functionality.
 
 ## Installation
 
