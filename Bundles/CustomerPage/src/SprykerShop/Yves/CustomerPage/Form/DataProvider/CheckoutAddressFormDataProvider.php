@@ -373,11 +373,9 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function canDeliverToMultipleShippingAddresses(QuoteTransfer $quoteTransfer): bool
     {
-        $a =  $quoteTransfer->getItems()->count() > 1
+        return $quoteTransfer->getItems()->count() > 1
             && $this->shipmentClient->isMultiShipmentSelectionEnabled()
             && !$this->hasQuoteGiftCardItems($quoteTransfer);
-
-        return $a;
     }
 
     /**
