@@ -1,3 +1,8 @@
+/**
+ * Provides global class names with spacing properties set from $setting-spacing map.
+ * @param {String} $name Main selector name.
+ * @param {List} $sides [[]] List of sides to set properties.
+ */
 @mixin helper-spacing($name, $sides: []) {
     #{$name} {
         @each $spacing-name, $spacing-value in $setting-spacing {

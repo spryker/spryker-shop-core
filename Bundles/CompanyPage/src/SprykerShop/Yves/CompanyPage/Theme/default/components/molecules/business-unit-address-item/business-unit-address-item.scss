@@ -5,5 +5,7 @@
                 text-align: right;
             }
         }
+
+        @content;
     }
 }

@@ -23,7 +23,6 @@ class ChartWidgetPlugin extends AbstractWidgetPlugin implements ChartWidgetPlugi
      */
     public function initialize(string $chartPluginName, ?string $dataIdentifier = null): void
     {
-
         $this
             ->addParameter('chartPluginName', $chartPluginName)
             ->addParameter('dataIdentifier', $dataIdentifier);

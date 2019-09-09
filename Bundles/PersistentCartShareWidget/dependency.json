@@ -1,5 +1,5 @@
 {
   "include": {
-    "ShopUi": "ShopUi provides basic frontend infrastructure and uses clipboard-copy molecule."
+    "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure and uses clipboard-copy molecule."
   }
 }
