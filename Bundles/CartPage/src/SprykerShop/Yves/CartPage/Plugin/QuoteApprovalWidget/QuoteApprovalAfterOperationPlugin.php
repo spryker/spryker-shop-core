@@ -23,14 +23,19 @@ class QuoteApprovalAfterOperationPlugin extends AbstractPlugin implements QuoteA
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer
-     * @param int|null $idQuoteApproval
      *
      * @return void
      */
-    public function execute(QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer, ?int $idQuoteApproval = null): void
+    public function execute(QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer): void
     {
+        $quoteTransfer = $this->getFactory()
+            ->getCartClient()
+            ->getQuote();
+
+        $quoteTransfer->setQuoteApprovals($quoteApprovalResponseTransfer->getQuote()->getQuoteApprovals());
+
         $this->getFactory()
-            ->createQuoteApprovalExpander()
-            ->expandQuoteApprovals($quoteApprovalResponseTransfer, $idQuoteApproval);
+            ->getQuoteClient()
+            ->setQuote($quoteTransfer);
     }
 }
