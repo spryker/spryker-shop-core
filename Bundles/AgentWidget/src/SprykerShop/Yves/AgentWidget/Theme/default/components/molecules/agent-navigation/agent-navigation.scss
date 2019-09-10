@@ -1,4 +1,4 @@
-@mixin agent-navigation($name: '.agent-navigation') {
+@mixin agent-widget-agent-navigation($name: '.agent-navigation') {
     #{$name} {
         &__dropdown > &__dropdown-item[position-right] {
             left: auto;
@@ -17,6 +17,17 @@
             transform: translateY(-50%);
         }
 
+        @content;
+    }
+}
+
+/**
+ * @deprecated use agent-widget-agent-navigation mixin instead.
+ */
+@mixin agent-navigation($name: '.agent-navigation') {
+    @include agent-widget-agent-navigation();
+
+    #{$name} {
         @content;
     }
 }

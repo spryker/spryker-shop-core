@@ -1,3 +1,4 @@
+{# fe-sniffer:disabled correct-twig-component-structure #}
 {% extends molecule('shopping-list-table', 'ShoppingListPage') %}
 
 {% define data = {
@@ -5,7 +6,7 @@
     idShoppingList: required,
     shoppingList: required,
     shoppingListItemProducts: required,
-    form: required
+    form: required,
 } %}
 
 {% block body %}

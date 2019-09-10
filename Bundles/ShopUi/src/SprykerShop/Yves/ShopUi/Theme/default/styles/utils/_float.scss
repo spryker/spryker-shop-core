@@ -1,3 +1,6 @@
+/**
+ * Provides global class names for the elements' float alignment.
+ */
 @mixin util-float() {
     .clear {
         @include helper-ui-clearfix;
@@ -5,12 +8,10 @@
 
     .float-left {
         float: left;
-        z-index: $setting-zi-element + 1;
     }
 
     .float-right {
         float: right;
-        z-index: $setting-zi-element + 1;
     }
 
     .float-none {
