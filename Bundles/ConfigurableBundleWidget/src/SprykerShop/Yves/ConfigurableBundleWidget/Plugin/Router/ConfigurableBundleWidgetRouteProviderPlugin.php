@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\ConfigurableBundleWidget\src\SprykerShop\Yves\ConfigurableBundleWidget\Plugin\Router;
+namespace SprykerShop\Yves\ConfigurableBundleWidget\Plugin\Router;
 
 use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 use Spryker\Yves\Router\Route\RouteCollection;
@@ -31,14 +31,15 @@ class ConfigurableBundleWidgetRouteProviderPlugin extends AbstractRouteProviderP
     }
 
     /**
+     * @uses \SprykerShop\Yves\ConfigurableBundleWidget\Controller\CartController::removeConfiguredBundleAction()
+     *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
      */
     protected function addCartConfiguredBundleRemoveRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/cart/configured-bundle/remove/{configuredBundleGroupKey}', 'ConfigurableBundleWidget', 'ConfiguredBundle', 'remove');
-        $route = $route->setDefault('configuredBundleGroupKey', '');
+        $route = $this->buildRoute('/cart/configured-bundle/remove/{configuredBundleGroupKey}', 'ConfigurableBundleWidget', 'Cart', 'removeConfiguredBundleAction');
         $routeCollection->add(static::ROUTE_CART_CONFIGURED_BUNDLE_REMOVE, $route);
 
         return $routeCollection;
