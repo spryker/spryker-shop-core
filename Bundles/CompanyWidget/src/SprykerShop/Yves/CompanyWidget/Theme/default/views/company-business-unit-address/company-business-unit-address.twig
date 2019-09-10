@@ -115,7 +115,7 @@
                 </optgroup>
             {% endif %}
 
-            {% if embed.formType == embed.shippingAddress and embed.isMultipleShipmentEnabled and embed.items | length > 1 %}
+            {% if embed.formType == embed.shippingAddress and embed.isMultipleShipmentEnabled %}
                 <option value="{{ embed.optionValueDeliverToMultipleAddresses }}" {% if embed.defaultAddressKey == embed.optionValueDeliverToMultipleAddresses %}selected{% endif %}>
                     {{ 'customer.account.deliver_to_multiple_addresses' | trans }}
                 </option>
