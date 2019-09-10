@@ -183,8 +183,8 @@ class QuoteApprovalController extends AbstractController
             return;
         }
 
-        foreach ($this->getFactory()->getQuoteApprovalAfterOperationPlugins() as $plugin) {
-            $plugin->execute($quoteApprovalResponseTransfer);
+        foreach ($this->getFactory()->getQuoteApprovalAfterOperationPlugins() as $quoteApprovalAfterOperationPlugin) {
+            $quoteApprovalAfterOperationPlugin->execute($quoteApprovalResponseTransfer);
         }
     }
 
