@@ -13,7 +13,7 @@ interface QuoteApprovalAfterOperationPluginInterface
 {
     /**
      * Specification:
-     *  - Synchronize quote approval changes.
+     *  - Executed after a successful operation with quote approval requests.
      *
      * @api
      *

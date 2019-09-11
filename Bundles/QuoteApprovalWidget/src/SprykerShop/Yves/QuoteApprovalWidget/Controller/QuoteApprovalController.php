@@ -62,11 +62,9 @@ class QuoteApprovalController extends AbstractController
         }
         $customerTransfer->requireCompanyUserTransfer();
 
-        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
         $quoteApprovalRequestTransfer = new QuoteApprovalRequestTransfer();
 
         $quoteApprovalRequestTransfer
-            ->setIdQuote($quoteTransfer->getIdQuote())
             ->setIdQuoteApproval($idQuoteApproval)
             ->setRequesterCompanyUserId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
@@ -93,10 +91,10 @@ class QuoteApprovalController extends AbstractController
         if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer()) {
             return $this->redirectToReferer($request);
         }
-        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+//        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
 
         $quoteApprovalRequestTransfer = (new QuoteApprovalRequestTransfer())
-            ->setIdQuote($quoteTransfer->getIdQuote())
+//            ->setQuote($quoteTransfer)
             ->setIdQuoteApproval($idQuoteApproval)
             ->setApproverCompanyUserId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 

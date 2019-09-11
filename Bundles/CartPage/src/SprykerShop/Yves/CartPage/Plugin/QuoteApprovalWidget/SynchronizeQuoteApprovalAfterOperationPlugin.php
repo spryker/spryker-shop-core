@@ -14,11 +14,11 @@ use SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\QuoteApprova
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
  */
-class QuoteApprovalAfterOperationPlugin extends AbstractPlugin implements QuoteApprovalAfterOperationPluginInterface
+class SynchronizeQuoteApprovalAfterOperationPlugin extends AbstractPlugin implements QuoteApprovalAfterOperationPluginInterface
 {
     /**
      * {@inheritdoc}
-     *  - Updates session quote with quote approvals.
+     *  - Saves quote approvals to session quote.
      *
      * @api
      *
