@@ -46,7 +46,7 @@ class ShopCmsSlotNode extends Node
      */
     public function compile(Compiler $compiler): void
     {
-        $compiler->raw(
+        $compiler->addDebugInfo($this)->raw(
             sprintf(
                 'echo $this->env->getExtension(\'%s\')->getSlotContent((new %s())->setCmsSlotKey(\'%s\')',
                 ShopCmsSlotTwigPlugin::class,

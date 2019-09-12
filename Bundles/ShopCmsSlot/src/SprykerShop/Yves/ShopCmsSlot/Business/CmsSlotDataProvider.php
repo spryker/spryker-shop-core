@@ -45,15 +45,16 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
      */
     public function getSlotContent(CmsSlotContextTransfer $cmsSlotContextTransfer): CmsSlotDataTransfer
     {
-        $autoFillingKeys = $cmsSlotContextTransfer->getAutoFillingKeys();
         $providedData = $cmsSlotContextTransfer->getProvidedData();
+
+        $this->assureProvidedHasRequiredKeys($providedData, $cmsSlotContextTransfer->getRequiredKeys());
+
+        $autoFillingKeys = $cmsSlotContextTransfer->getAutoFillingKeys();
 
         if ($autoFillingKeys) {
             $autoFilledData = $this->cmsSlotClient->getCmsSlotExternalDataByKeys($autoFillingKeys);
             $providedData = $autoFilledData + $providedData;
         }
-
-        $this->assureProvidedHasRequiredKeys($providedData, $cmsSlotContextTransfer->getRequiredKeys());
 
         $cmsSlotContentRequestTransfer = (new CmsSlotContentRequestTransfer())
             ->setCmsSlotKey($cmsSlotContextTransfer->getCmsSlotKey())

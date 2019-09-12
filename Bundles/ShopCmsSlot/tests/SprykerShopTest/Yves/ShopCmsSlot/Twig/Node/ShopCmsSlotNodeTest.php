@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShopTest\Yves\ShopApplication\Twig\Node;
+namespace SprykerShopTest\Yves\ShopCmsSlot\Twig\Node;
 
 use SprykerShop\Yves\ShopCmsSlot\Twig\Node\ShopCmsSlotNode;
 use SprykerShop\Yves\ShopCmsSlot\Twig\TokenParser\ShopCmsSlotTokenParser;

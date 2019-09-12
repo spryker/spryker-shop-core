@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShopTest\Yves\ShopApplication\Plugin\Twig;
+namespace SprykerShopTest\Yves\ShopCmsSlot\Plugin\Twig;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CmsSlotDataTransfer;

@@ -1,6 +1,5 @@
 # ShopCmsSlot Module
 [![Build Status](https://travis-ci.org/spryker-shop/shop-cms-slot.svg)](https://travis-ci.org/spryker-shop/shop-cms-slot)
-[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/shop-cms-slot/badge.svg)](https://coveralls.io/github/spryker-shop/shop-cms-slot)
 
 The module provides the functionality for ShopApplication to work with CMS slots.
 
