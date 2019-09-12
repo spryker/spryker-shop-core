@@ -14,7 +14,7 @@ use SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\QuoteApprova
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
  */
-class SynchronizeQuoteApprovalAfterOperationPlugin extends AbstractPlugin implements QuoteApprovalAfterOperationPluginInterface
+class UpdateQuoteSessionQuoteApprovalAfterOperationPlugin extends AbstractPlugin implements QuoteApprovalAfterOperationPluginInterface
 {
     /**
      * {@inheritdoc}
