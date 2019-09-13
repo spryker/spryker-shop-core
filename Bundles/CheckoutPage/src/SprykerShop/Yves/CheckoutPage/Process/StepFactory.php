@@ -147,7 +147,8 @@ class StepFactory extends AbstractFactory
             $this->getCalculationClient(),
             $this->getShipmentPlugins(),
             CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
-            HomePageControllerProvider::ROUTE_HOME
+            HomePageControllerProvider::ROUTE_HOME,
+            $this->getShipmentStepHideBreadcrumbItemPlugins()
         );
     }
 
@@ -330,5 +331,13 @@ class StepFactory extends AbstractFactory
     public function getAddressStepHideBreadcrumbItemPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_ADDRESS_STEP_HIDE_BREADCRUMB_ITEM);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\HideBreadcrumbItemPluginInterface[]
+     */
+    public function getShipmentStepHideBreadcrumbItemPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_SHIPMENT_STEP_HIDE_BREADCRUMB_ITEM);
     }
 }

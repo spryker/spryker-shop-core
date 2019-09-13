@@ -31,21 +31,29 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     protected $shipmentPlugins;
 
     /**
+     * @var \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\HideBreadcrumbItemPluginInterface[]
+     */
+    protected $hideBreadcrumbItemPlugins;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection $shipmentPlugins
      * @param string $stepRoute
      * @param string $escapeRoute
+     * @param \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\HideBreadcrumbItemPluginInterface[] $hideBreadcrumbItemPlugins
      */
     public function __construct(
         CheckoutPageToCalculationClientInterface $calculationClient,
         StepHandlerPluginCollection $shipmentPlugins,
         $stepRoute,
-        $escapeRoute
+        $escapeRoute,
+        $hideBreadcrumbItemPlugins
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->calculationClient = $calculationClient;
         $this->shipmentPlugins = $shipmentPlugins;
+        $this->hideBreadcrumbItemPlugins = $hideBreadcrumbItemPlugins;
     }
 
     /**
@@ -168,6 +176,22 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer)
     {
-        return !$this->requireInput($dataTransfer);
+        return !$this->requireInput($dataTransfer)|| $this->executeHideBreadcrumbItemPluginInterface($dataTransfer);
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $abstractTransfer
+     *
+     * @return bool
+     */
+    public function executeHideBreadcrumbItemPluginInterface(AbstractTransfer $abstractTransfer): bool
+    {
+        foreach ($this->hideBreadcrumbItemPlugins as $hideBreadcrumbItemPlugin) {
+            if ($hideBreadcrumbItemPlugin->isBreadcrumbItemHidden($abstractTransfer)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

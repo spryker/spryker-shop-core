@@ -73,6 +73,8 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_SUB_FORM_FILTERS = 'PLUGIN_SUB_FORM_FILTERS';
 
     public const PLUGIN_ADDRESS_STEP_HIDE_BREADCRUMB_ITEM = 'PLUGIN_ADDRESS_STEP_HIDE_BREADCRUMB_ITEM';
+    public const PLUGIN_SHIPMENT_STEP_HIDE_BREADCRUMB_ITEM = 'PLUGIN_SHIPMENT_STEP_HIDE_BREADCRUMB_ITEM';
+    public const PLUGIN_PAYMENT_STEP_HIDE_BREADCRUMB_ITEM = 'PLUGIN_PAYMENT_STEP_HIDE_BREADCRUMB_ITEM';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -110,6 +112,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSummaryPageWidgetPlugins($container);
         $container = $this->addSuccessPageWidgetPlugins($container);
         $container = $this->addAddressStepHideBreadcrumbItemPlugins($container);
+        $container = $this->addShipmentStepHideBreadcrumbItemPlugins($container);
 
         $container = $this->addCustomerStepSubForms($container);
         $container = $this->addAddressStepSubForms($container);
@@ -653,9 +656,9 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAddressStepHideBreadcrumbItemPlugins(Container $container): Container
     {
-        $container[self::PLUGIN_ADDRESS_STEP_HIDE_BREADCRUMB_ITEM] = function () {
+        $container->set(self::PLUGIN_ADDRESS_STEP_HIDE_BREADCRUMB_ITEM, function () {
             return $this->getAddressStepHideBreadcrumbItemPlugins();
-        };
+        });
 
         return $container;
     }
@@ -664,6 +667,28 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\HideBreadcrumbItemPluginInterface[]
      */
     protected function getAddressStepHideBreadcrumbItemPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addShipmentStepHideBreadcrumbItemPlugins(Container $container): Container
+    {
+        $container->set(self::PLUGIN_SHIPMENT_STEP_HIDE_BREADCRUMB_ITEM, function () {
+            return $this->getShipmentStepHideBreadcrumbItemPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\HideBreadcrumbItemPluginInterface[]
+     */
+    protected function getShipmentStepHideBreadcrumbItemPlugins(): array
     {
         return [];
     }
