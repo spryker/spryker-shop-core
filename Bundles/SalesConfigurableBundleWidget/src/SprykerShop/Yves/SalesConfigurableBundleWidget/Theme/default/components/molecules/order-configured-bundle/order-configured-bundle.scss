@@ -1,4 +1,4 @@
-@mixin configurable-bundle-widget-order-configured-bundle($name: '.order-configured-bundle') {
+@mixin sales-configurable-bundle-widget-order-configured-bundle($name: '.order-configured-bundle') {
     #{$name} {
         border-top: 1px solid $setting-color-light;
         background: none;
@@ -7,6 +7,17 @@
             vertical-align: top;
         }
 
+        @content;
+    }
+}
+
+/**
+ * @deprecated use configurable-bundle-widget-order-configured-bundle mixin instead.
+ */
+@mixin configurable-bundle-widget-order-configured-bundle($name: '.order-configured-bundle') {
+    @include sales-configurable-bundle-widget-order-configured-bundle();
+
+    #{$name} {
         @content;
     }
 }

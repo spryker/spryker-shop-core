@@ -1,5 +1,3 @@
 module.exports = {
-    enable: [
-        'dummy'
-    ]
+    enable: []
 }
