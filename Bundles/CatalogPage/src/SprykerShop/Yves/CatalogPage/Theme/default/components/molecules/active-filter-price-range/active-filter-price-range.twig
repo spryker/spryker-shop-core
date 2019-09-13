@@ -12,11 +12,15 @@
     activeMax: required
 } %}
 
-{% set defaultValue = data.min | money  ~ ' - ' ~ data.max | money %}
 {% set currentValue = data.activeMin | money  ~ ' - ' ~ data.activeMax | money %}
 
 {% block component %}
-    {% if app.request.query.has(data.filter.config.parameterName) and can('SeePricePermissionPlugin') %}
+    {% set isNotDefault = app.request.query.has(data.filter.config.parameterName)
+        and data.min != data.activeMin
+        and data.max != data.activeMax
+        and can('SeePricePermissionPlugin') %}
+
+    {% if isNotDefault %}
         {% include molecule('active-filter', 'CatalogPage') with {
             data: {
                 filter: data.filter,
