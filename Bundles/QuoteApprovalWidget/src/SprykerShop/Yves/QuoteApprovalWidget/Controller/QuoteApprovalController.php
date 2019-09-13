@@ -40,6 +40,7 @@ class QuoteApprovalController extends AbstractController
                 ->getQuoteApprovalClient()
                 ->createQuoteApproval($quoteApproveRequestForm->getData());
 
+            $this->executeQuoteApprovalAfterOperationPlugins($quoteApprovalResponseTransfer);
             $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
         }
 
@@ -59,18 +60,19 @@ class QuoteApprovalController extends AbstractController
         if (!$customerTransfer) {
             return $this->redirectToReferer($request);
         }
-
         $customerTransfer->requireCompanyUserTransfer();
 
         $quoteApprovalRequestTransfer = new QuoteApprovalRequestTransfer();
 
-        $quoteApprovalRequestTransfer->setIdQuoteApproval($idQuoteApproval)
+        $quoteApprovalRequestTransfer
+            ->setIdQuoteApproval($idQuoteApproval)
             ->setRequesterCompanyUserId($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
         $quoteApprovalResponseTransfer = $this->getFactory()
             ->getQuoteApprovalClient()
             ->removeQuoteApproval($quoteApprovalRequestTransfer);
 
+        $this->executeQuoteApprovalAfterOperationPlugins($quoteApprovalResponseTransfer);
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectToReferer($request);
@@ -99,6 +101,7 @@ class QuoteApprovalController extends AbstractController
             ->getQuoteApprovalClient()
             ->approveQuoteApproval($quoteApprovalRequestTransfer);
 
+        $this->executeQuoteApprovalAfterOperationPlugins($quoteApprovalResponseTransfer);
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectToReferer($request);
@@ -126,6 +129,7 @@ class QuoteApprovalController extends AbstractController
             ->getQuoteApprovalClient()
             ->declineQuoteApproval($quoteApprovalRequestTransfer);
 
+        $this->executeQuoteApprovalAfterOperationPlugins($quoteApprovalResponseTransfer);
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectToReferer($request);
@@ -161,6 +165,23 @@ class QuoteApprovalController extends AbstractController
             }
 
             $this->addErrorMessage($translatedMessage);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer
+     *
+     * @return void
+     */
+    protected function executeQuoteApprovalAfterOperationPlugins(
+        QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer
+    ): void {
+        if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
+            return;
+        }
+
+        foreach ($this->getFactory()->getQuoteApprovalAfterOperationPlugins() as $quoteApprovalAfterOperationPlugin) {
+            $quoteApprovalAfterOperationPlugin->execute($quoteApprovalResponseTransfer);
         }
     }
 
