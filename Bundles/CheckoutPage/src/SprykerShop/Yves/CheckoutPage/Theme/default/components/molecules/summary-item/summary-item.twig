@@ -7,6 +7,9 @@
 {% define data = {
     name: required,
     quantity: required,
+    images: required,
+    groupKey: required,
+    sku: required,
     price: 0,
     options: [],
     bundleItems: [],
@@ -21,7 +24,7 @@
     {% else %}
         {% include [
             molecule('summary-product-packaging-unit', 'ProductPackagingUnitWidget'),
-            molecule('summary-product-packaging-unit-default', 'CheckoutPage')
+            molecule('summary-product-packaging-unit-by-default', 'ProductPackagingUnitWidget')
         ] ignore missing with {
             data: {
                 name: data.name,
@@ -29,8 +32,11 @@
                 amount: data.amount,
                 price: data.price,
                 quantitySalesUnit: data.quantitySalesUnit,
-                amountSalesUnit: data.amountSalesUnit
-            }
+                amountSalesUnit: data.amountSalesUnit,
+                images: data.images,
+                groupKey: data.groupKey,
+                sku: data.sku,
+            },
         } only %}
     {% endif %}
 
