@@ -661,7 +661,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return string[]
+     * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\HideBreadcrumbItemPluginInterface[]
      */
     protected function getAddressStepHideBreadcrumbItemPlugins(): array
     {
