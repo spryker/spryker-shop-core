@@ -110,4 +110,11 @@ interface QuoteApprovalWidgetToQuoteApprovalClientInterface
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
     public function declineQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteApplicableForApprovalProcess(QuoteTransfer $quoteTransfer): bool;
 }

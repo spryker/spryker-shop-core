@@ -162,4 +162,14 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
     {
         return $this->quoteApprovalClient->declineQuoteApproval($quoteApprovalRequestTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteApplicableForApprovalProcess(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteApprovalClient->isQuoteApplicableForApprovalProcess($quoteTransfer);
+    }
 }
