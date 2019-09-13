@@ -169,14 +169,6 @@ class QuoteApproveRequestWidget extends AbstractWidget
             return false;
         }
 
-        $isQuoteApplicableForApproval = $this->getFactory()
-            ->getQuoteApprovalClient()
-            ->isQuoteApplicableForApprovalProcess($quoteTransfer);
-
-        if (!$isQuoteApplicableForApproval) {
-            return false;
-        }
-
         return $this->can('RequestQuoteApprovalPermissionPlugin');
     }
 
