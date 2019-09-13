@@ -72,6 +72,8 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PLUGIN_SUB_FORM_FILTERS = 'PLUGIN_SUB_FORM_FILTERS';
 
+    public const PLUGIN_ADDRESS_STEP_HIDE_BREADCRUMB_ITEM = 'PLUGIN_ADDRESS_STEP_HIDE_BREADCRUMB_ITEM';
+
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
@@ -107,6 +109,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPaymentPageWidgetPlugins($container);
         $container = $this->addSummaryPageWidgetPlugins($container);
         $container = $this->addSuccessPageWidgetPlugins($container);
+        $container = $this->addAddressStepHideBreadcrumbItemPlugins($container);
 
         $container = $this->addCustomerStepSubForms($container);
         $container = $this->addAddressStepSubForms($container);
@@ -639,6 +642,28 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface[]
      */
     protected function getSubFormFilterPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addAddressStepHideBreadcrumbItemPlugins(Container $container): Container
+    {
+        $container[self::PLUGIN_ADDRESS_STEP_HIDE_BREADCRUMB_ITEM] = function () {
+            return $this->getAddressStepHideBreadcrumbItemPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAddressStepHideBreadcrumbItemPlugins(): array
     {
         return [];
     }

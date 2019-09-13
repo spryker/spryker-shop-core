@@ -28,21 +28,29 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $calculationClient;
 
     /**
+     * @var \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\HideBreadcrumbItemPluginInterface[]
+     */
+    protected $hideBreadcrumbItemPlugins;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
-     * @param string $stepRoute
-     * @param string $escapeRoute
+     * @param $stepRoute
+     * @param $escapeRoute
+     * @param array $hideBreadcrumbItemPlugins
      */
     public function __construct(
         CheckoutPageToCustomerClientInterface $customerClient,
         CheckoutPageToCalculationClientInterface $calculationClient,
         $stepRoute,
-        $escapeRoute
+        $escapeRoute,
+        array $hideBreadcrumbItemPlugins
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->calculationClient = $calculationClient;
         $this->customerClient = $customerClient;
+        $this->hideBreadcrumbItemPlugins = $hideBreadcrumbItemPlugins;
     }
 
     /**
@@ -185,6 +193,22 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer)
     {
-        return !$this->requireInput($dataTransfer);
+        return !$this->requireInput($dataTransfer) || $this->executeHideBreadcrumbItemPluginInterface($dataTransfer);
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $abstractTransfer
+     *
+     * @return bool
+     */
+    public function executeHideBreadcrumbItemPluginInterface(AbstractTransfer $abstractTransfer): bool
+    {
+        foreach ($this->hideBreadcrumbItemPlugins as $hideBreadcrumbItemPlugin) {
+            if ($hideBreadcrumbItemPlugin->isBreadcrumbItemHidden($abstractTransfer)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
