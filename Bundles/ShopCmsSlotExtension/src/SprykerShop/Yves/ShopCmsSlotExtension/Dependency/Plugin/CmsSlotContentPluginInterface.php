@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\CmsSlotDataTransfer;
 use Generated\Shared\Transfer\CmsSlotContentRequestTransfer;
+use Generated\Shared\Transfer\CmsSlotDataTransfer;
 
 interface CmsSlotContentPluginInterface
 {
