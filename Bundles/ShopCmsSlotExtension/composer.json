@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/shop-cms-slot-extension",
+  "type": "library",
   "description": "ShopCmsSlotExtension module",
   "license": "proprietary",
   "require": {
