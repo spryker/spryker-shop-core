@@ -12,6 +12,12 @@
         <property name="idProductAbstract" type="int" />
         <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit" />
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
+        <property name="shipment" type="Shipment" />
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="idSalesShipment" type="int"/>
+        <property name="shippingAddress" type="Address"/>
     </transfer>
 
     <transfer name="ProductMeasurementSalesUnit">
@@ -47,4 +53,7 @@
         <property name="concreteProductAvailableItems" type="array" singular="concreteProductAvailableItem"/>
     </transfer>
 
+    <transfer name="Address">
+        <property name="idSalesOrderAddress" type="int" />
+    </transfer>
 </transfers>
