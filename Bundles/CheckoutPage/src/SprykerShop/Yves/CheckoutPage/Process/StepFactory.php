@@ -189,7 +189,8 @@ class StepFactory extends AbstractFactory
         return new SummaryStep(
             $this->getProductBundleClient(),
             CheckoutPageControllerProvider::CHECKOUT_SUMMARY,
-            HomePageControllerProvider::ROUTE_HOME
+            HomePageControllerProvider::ROUTE_HOME,
+            $this->getCheckoutClient()
         );
     }
 

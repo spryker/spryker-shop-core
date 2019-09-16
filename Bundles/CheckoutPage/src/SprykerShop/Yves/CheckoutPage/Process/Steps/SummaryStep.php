@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,18 +22,26 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $productBundleClient;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface
+     */
+    protected $checkoutClient;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface $productBundleClient
      * @param string $stepRoute
      * @param string $escapeRoute
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface $checkoutClient
      */
     public function __construct(
         CheckoutPageToProductBundleClientInterface $productBundleClient,
         $stepRoute,
-        $escapeRoute
+        $escapeRoute,
+        CheckoutPageToCheckoutClientInterface $checkoutClient
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->productBundleClient = $productBundleClient;
+        $this->checkoutClient = $checkoutClient;
     }
 
     /**
@@ -89,6 +98,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
                 $quoteTransfer->getItems(),
                 $quoteTransfer->getBundleItems()
             ),
+            'checkoutResponseTransfer' => $this->checkoutClient->isOrderPlaceable($quoteTransfer),
         ];
     }
 

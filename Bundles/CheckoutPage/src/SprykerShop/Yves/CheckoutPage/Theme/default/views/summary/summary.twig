@@ -9,6 +9,8 @@
     billingAddress: _view.quoteTransfer.billingAddress,
     shipmentMethod: _view.quoteTransfer.shipment.method.name,
     paymentMethod: _view.quoteTransfer.payment.paymentMethod,
+    checkoutIsSuccess: _view.checkoutResponseTransfer.IsSuccess,
+    checkoutErrors: _view.checkoutResponseTransfer.errors,
 
     forms: {
         summary: _view.summaryForm
@@ -158,7 +160,7 @@
                 data: {
                     form: data.forms.summary,
                     submit: {
-                        enable: can('SeeOrderPlaceSubmitPermissionPlugin') and can('WriteSharedCartPermissionPlugin', data.cart.idQuote),
+                        enable: data.checkoutIsSuccess and can('SeeOrderPlaceSubmitPermissionPlugin') and can('WriteSharedCartPermissionPlugin', data.cart.idQuote),
                         text: 'checkout.step.place.order' | trans
                     },
                     cancel: {
@@ -191,9 +193,18 @@
                     {% endwidget %}
 
                     <hr class="box__separator">
+
                     {{parent()}}
                 {% endblock %}
             {% endembed %}
+
+            {% if data.checkoutErrors is not empty %}
+                <ul class="list list--bullet list--alert">
+                    {% for error in data.checkoutErrors %}
+                        <li class="list__item">{{ error.message | trans }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
