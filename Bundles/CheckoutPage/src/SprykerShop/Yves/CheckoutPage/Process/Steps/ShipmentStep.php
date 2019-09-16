@@ -176,7 +176,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer)
     {
-        return !$this->requireInput($dataTransfer)|| $this->executeBreadcrumbItemHiderPlugins($dataTransfer);
+        return !$this->requireInput($dataTransfer) || $this->executeBreadcrumbItemHiderPlugins($dataTransfer);
     }
 
     /**

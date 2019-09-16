@@ -114,6 +114,7 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return int|null
      */

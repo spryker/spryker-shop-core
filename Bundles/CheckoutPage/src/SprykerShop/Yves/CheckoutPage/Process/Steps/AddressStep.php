@@ -35,8 +35,8 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
-     * @param $stepRoute
-     * @param $escapeRoute
+     * @param string $stepRoute
+     * @param string $escapeRoute
      * @param \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[] $breadcrumbItemHiderPlugins
      */
     public function __construct(
