@@ -28,29 +28,29 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $calculationClient;
 
     /**
-     * @var \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\HideBreadcrumbItemPluginInterface[]
+     * @var \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[]
      */
-    protected $hideBreadcrumbItemPlugins;
+    protected $breadcrumbItemHiderPlugins;
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
      * @param $stepRoute
      * @param $escapeRoute
-     * @param \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\HideBreadcrumbItemPluginInterface[] $hideBreadcrumbItemPlugins
+     * @param \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[] $breadcrumbItemHiderPlugins
      */
     public function __construct(
         CheckoutPageToCustomerClientInterface $customerClient,
         CheckoutPageToCalculationClientInterface $calculationClient,
         $stepRoute,
         $escapeRoute,
-        array $hideBreadcrumbItemPlugins
+        array $breadcrumbItemHiderPlugins
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->calculationClient = $calculationClient;
         $this->customerClient = $customerClient;
-        $this->hideBreadcrumbItemPlugins = $hideBreadcrumbItemPlugins;
+        $this->breadcrumbItemHiderPlugins = $breadcrumbItemHiderPlugins;
     }
 
     /**
@@ -193,18 +193,18 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer)
     {
-        return !$this->requireInput($dataTransfer) || $this->executeHideBreadcrumbItemPluginInterface($dataTransfer);
+        return !$this->requireInput($dataTransfer) || $this->executeBreadcrumbItemHiderPlugins($dataTransfer);
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $abstractTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return bool
      */
-    public function executeHideBreadcrumbItemPluginInterface(AbstractTransfer $abstractTransfer): bool
+    public function executeBreadcrumbItemHiderPlugins(AbstractTransfer $abstractTransfer): bool
     {
-        foreach ($this->hideBreadcrumbItemPlugins as $hideBreadcrumbItemPlugin) {
-            if ($hideBreadcrumbItemPlugin->isBreadcrumbItemHidden($abstractTransfer)) {
+        foreach ($this->breadcrumbItemHiderPlugins as $breadcrumbItemHiderPlugin) {
+            if ($breadcrumbItemHiderPlugin->isBreadcrumbItemHidden($abstractTransfer)) {
                 return true;
             }
         }

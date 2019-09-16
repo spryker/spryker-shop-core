@@ -44,12 +44,18 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $calculationClient;
 
     /**
+     * @var \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\CheckoutPaymentStepBreadcrumbItemHiderPluginInterface[]
+     */
+    protected $breadcrumbItemHiderPlugins;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPaymentClientInterface $paymentClient
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection $paymentPlugins
      * @param string $stepRoute
      * @param string $escapeRoute
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
+     * @param \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\CheckoutPaymentStepBreadcrumbItemHiderPluginInterface[] $breadcrumbItemHiderPlugins
      */
     public function __construct(
         CheckoutPageToPaymentClientInterface $paymentClient,
@@ -57,7 +63,8 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         $stepRoute,
         $escapeRoute,
         FlashMessengerInterface $flashMessenger,
-        CheckoutPageToCalculationClientInterface $calculationClient
+        CheckoutPageToCalculationClientInterface $calculationClient,
+        array $breadcrumbItemHiderPlugins
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
@@ -65,6 +72,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         $this->paymentPlugins = $paymentPlugins;
         $this->flashMessenger = $flashMessenger;
         $this->calculationClient = $calculationClient;
+        $this->breadcrumbItemHiderPlugins = $breadcrumbItemHiderPlugins;
     }
 
     /**
@@ -227,6 +235,22 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer)
     {
-        return !$this->requireInput($dataTransfer);
+        return !$this->requireInput($dataTransfer) || $this->executeBreadcrumbItemHiderPlugins($dataTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     *
+     * @return bool
+     */
+    protected function executeBreadcrumbItemHiderPlugins(AbstractTransfer $dataTransfer): bool
+    {
+        foreach ($this->breadcrumbItemHiderPlugins as $breadcrumbItemHiderPlugin) {
+            if ($breadcrumbItemHiderPlugin->isBreadcrumbItemHidden($dataTransfer)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

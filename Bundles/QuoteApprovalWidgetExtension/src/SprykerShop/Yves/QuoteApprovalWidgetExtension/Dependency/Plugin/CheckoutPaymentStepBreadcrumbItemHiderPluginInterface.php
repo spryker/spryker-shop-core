@@ -9,8 +9,18 @@ namespace SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface HideBreadcrumbItemPluginInterface
+interface CheckoutPaymentStepBreadcrumbItemHiderPluginInterface
 {
-    public const STATUS_DECLINED = 'declined';
+    /**
+     * Specification:
+     * - Decides whether to show breadcrumb item of a checkout payment step or not.
+     * - Breadcrumb item will be hidden if at least one plugin returns true.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
     public function isBreadcrumbItemHidden(QuoteTransfer $quoteTransfer): bool;
 }

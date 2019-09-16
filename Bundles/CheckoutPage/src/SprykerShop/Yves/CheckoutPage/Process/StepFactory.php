@@ -134,7 +134,7 @@ class StepFactory extends AbstractFactory
             $this->getCalculationClient(),
             CheckoutPageControllerProvider::CHECKOUT_ADDRESS,
             HomePageControllerProvider::ROUTE_HOME,
-            $this->getAddressStepHideBreadcrumbItemPlugins()
+            $this->getAddressStepBreadcrumbItemHiderPlugins()
         );
     }
 
@@ -148,7 +148,7 @@ class StepFactory extends AbstractFactory
             $this->getShipmentPlugins(),
             CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
             HomePageControllerProvider::ROUTE_HOME,
-            $this->getShipmentStepHideBreadcrumbItemPlugins()
+            $this->getShipmentStepBreadcrumbItemHiderPlugins()
         );
     }
 
@@ -179,7 +179,8 @@ class StepFactory extends AbstractFactory
             CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
             HomePageControllerProvider::ROUTE_HOME,
             $this->getFlashMessenger(),
-            $this->getCalculationClient()
+            $this->getCalculationClient(),
+            $this->getPaymentStepBreadcrumbItemHiderPlugins()
         );
     }
 
@@ -326,18 +327,26 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\HideBreadcrumbItemPluginInterface[]
+     * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[]
      */
-    public function getAddressStepHideBreadcrumbItemPlugins(): array
+    public function getAddressStepBreadcrumbItemHiderPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_ADDRESS_STEP_HIDE_BREADCRUMB_ITEM);
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\HideBreadcrumbItemPluginInterface[]
+     * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\CheckoutShipmentStepBreadcrumbItemHiderPluginInterface[]
      */
-    public function getShipmentStepHideBreadcrumbItemPlugins(): array
+    public function getShipmentStepBreadcrumbItemHiderPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_SHIPMENT_STEP_HIDE_BREADCRUMB_ITEM);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\CheckoutPaymentStepBreadcrumbItemHiderPluginInterface[]
+     */
+    public function getPaymentStepBreadcrumbItemHiderPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_PAYMENT_STEP_HIDE_BREADCRUMB_ITEM);
     }
 }
