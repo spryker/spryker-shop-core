@@ -18,8 +18,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class QuoteApprovalWidget extends AbstractWidget
 {
-    protected const PARAMETER_IS_VISIBLE = 'isVisible';
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      */
@@ -27,9 +25,9 @@ class QuoteApprovalWidget extends AbstractWidget
     {
         $this->addParameter('quoteTransfer', $quoteTransfer);
         $this->addParameter('quoteOwner', $this->getQuoteOwner($quoteTransfer));
+        $this->addParameter('isVisible', $this->hasQuoteApprovalsForCurrentCompanyUser($quoteTransfer));
         $this->addParameter('waitingQuoteApproval', $this->getWaitingQuoteApprovalByCurrentCompanyUser($quoteTransfer));
         $this->addParameter('canQuoteBeApprovedByCurrentCustomer', $this->canQuoteBeApprovedByCurrentCustomer($quoteTransfer));
-        $this->addIsVisibleParameter($quoteTransfer);
     }
 
     /**
@@ -46,23 +44,6 @@ class QuoteApprovalWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@QuoteApprovalWidget/views/quote-approval-widget/quote-approval-widget.twig';
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    protected function addIsVisibleParameter(QuoteTransfer $quoteTransfer): void
-    {
-        $isQuoteApplicableForApproval = $this->getFactory()
-            ->getQuoteApprovalClient()
-            ->isQuoteApplicableForApprovalProcess($quoteTransfer);
-
-        $this->addParameter(
-            static::PARAMETER_IS_VISIBLE,
-            $isQuoteApplicableForApproval && $this->hasQuoteApprovalsForCurrentCompanyUser($quoteTransfer)
-        );
     }
 
     /**
