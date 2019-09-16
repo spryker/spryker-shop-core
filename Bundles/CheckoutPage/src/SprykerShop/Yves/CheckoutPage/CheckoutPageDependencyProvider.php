@@ -113,6 +113,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSuccessPageWidgetPlugins($container);
         $container = $this->addAddressStepHideBreadcrumbItemPlugins($container);
         $container = $this->addShipmentStepHideBreadcrumbItemPlugins($container);
+        $container = $this->addPaymentStepHideBreadcrumbItemPlugins($container);
 
         $container = $this->addCustomerStepSubForms($container);
         $container = $this->addAddressStepSubForms($container);
