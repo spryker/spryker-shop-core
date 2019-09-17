@@ -204,11 +204,11 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     public function executeBreadcrumbItemHiderPlugins(AbstractTransfer $dataTransfer): bool
     {
         foreach ($this->breadcrumbItemHiderPlugins as $breadcrumbItemHiderPlugin) {
-            if ($breadcrumbItemHiderPlugin->isBreadcrumbItemHidden($dataTransfer)) {
-                return true;
+            if (!$breadcrumbItemHiderPlugin->isBreadcrumbItemHidden($dataTransfer)) {
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 }
