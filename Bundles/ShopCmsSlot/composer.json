@@ -9,6 +9,7 @@
     "spryker-shop/shop-cms-slot-extension": "^0.1.0",
     "spryker/cms-slot": "^0.1.1",
     "spryker/kernel": "^3.30.0",
+    // todo cr https://github.com/spryker/spryker-shop/pull/1164/files/ceb820ede247765a7531bf2cbb9542cabb41ecd1#diff-6240444fe7389ab2283cc927a299b9fb
     "spryker/twig": "^3.2.3"
   },
   "require-dev": {

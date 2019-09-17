@@ -66,6 +66,7 @@ class ShopCmsSlotDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getCmsSlotContentPlugin(): CmsSlotContentPluginInterface
     {
+        // todo CR improve exception description
         throw new RuntimeException('Implement getCmsSlotContentPlugin().');
     }
 }
