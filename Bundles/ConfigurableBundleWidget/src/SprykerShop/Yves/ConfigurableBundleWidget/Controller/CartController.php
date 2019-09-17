@@ -55,16 +55,16 @@ class CartController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $configuredBundleGroupKey
-     * @param int $configuredBundleQuantity
+     * @param int $quantity
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function changeConfiguredBundleQuantityAction(
         Request $request,
         string $configuredBundleGroupKey,
-        int $configuredBundleQuantity
+        int $quantity
     ): Response {
-        $response = $this->executeChangeConfiguredBundleQuantityAction($request, $configuredBundleGroupKey, $configuredBundleQuantity);
+        $response = $this->executeChangeConfiguredBundleQuantityAction($request, $configuredBundleGroupKey, $quantity);
 
         return $response;
     }
@@ -99,16 +99,16 @@ class CartController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $configuredBundleGroupKey
-     * @param int $configuredBundleQuantity
+     * @param int $quantity
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function executeChangeConfiguredBundleQuantityAction(
         Request $request,
         string $configuredBundleGroupKey,
-        int $configuredBundleQuantity
+        int $quantity
     ): Response {
-        if (!$this->canChangeCartItem($configuredBundleQuantity)) {
+        if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
@@ -116,7 +116,7 @@ class CartController extends AbstractController
 
         $quoteResponseTransfer = $this->getFactory()
             ->getConfigurableBundleClient()
-            ->updateConfiguredBundleQuantity($configuredBundleGroupKey, $configuredBundleQuantity);
+            ->updateConfiguredBundleQuantity($configuredBundleGroupKey, $quantity);
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_UPDATED);

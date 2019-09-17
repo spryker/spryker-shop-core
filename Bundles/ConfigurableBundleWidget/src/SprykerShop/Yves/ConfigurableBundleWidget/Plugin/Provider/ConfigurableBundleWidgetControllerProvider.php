@@ -52,7 +52,7 @@ class ConfigurableBundleWidgetControllerProvider extends AbstractYvesControllerP
         $this->createPostController('/{cart}/configured-bundle/change/{configuredBundleGroupKey}', self::ROUTE_CART_CONFIGURED_BUNDLE_CHANGE_QUANTITY, 'ConfigurableBundleWidget', 'Cart', 'changeConfiguredBundleQuantity')
             ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart')
-            ->convert('configuredBundleQuantity', [$this, 'getConfiguredBundleQuantityFromRequest']);
+            ->convert('quantity', [$this, 'getQuantityFromRequest']);
 
         return $this;
     }
@@ -63,8 +63,8 @@ class ConfigurableBundleWidgetControllerProvider extends AbstractYvesControllerP
      *
      * @return int
      */
-    public function getConfiguredBundleQuantityFromRequest($unusedParameter, Request $request)
+    public function getQuantityFromRequest($unusedParameter, Request $request)
     {
-        return $request->request->getInt('configuredBundleQuantity', 1);
+        return $request->request->getInt('quantity', 1);
     }
 }

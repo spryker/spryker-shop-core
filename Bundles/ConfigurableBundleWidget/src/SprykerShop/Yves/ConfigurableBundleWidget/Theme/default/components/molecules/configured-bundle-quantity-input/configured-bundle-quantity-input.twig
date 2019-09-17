@@ -1,0 +1,21 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'configured-bundle-quantity-input',
+} %}
+
+{% define data = {
+    configuredBundle: required,
+    readOnly: false,
+} %}
+
+{% block body %}
+    <form method="POST" action="{{ path('cart/configured-bundle/change', {'configuredBundleGroupKey': data.configuredBundle.groupKey }) }}">
+        {% include molecule('quantity-input') with {
+            data: {
+                value: data.configuredBundle.quantity,
+                readOnly: data.readOnly
+            }
+        } only %}
+    </form>
+{% endblock %}

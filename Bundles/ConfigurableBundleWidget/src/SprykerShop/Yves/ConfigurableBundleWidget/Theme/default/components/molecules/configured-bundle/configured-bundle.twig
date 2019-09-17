@@ -27,6 +27,12 @@
                                 {%- endblock -%}
                             </h6>
                         {% endblock %}
+                        {% include molecule('configured-bundle-quantity-input', 'ConfigurableBundleWidget') with {
+                            data: {
+                                configuredBundle: data.bundle,
+                                readOnly: not data.isEditable
+                            }
+                        } only %}
                     </div>
                 {% endblock %}
 
