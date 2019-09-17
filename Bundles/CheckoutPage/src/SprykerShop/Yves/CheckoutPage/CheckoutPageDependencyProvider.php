@@ -72,9 +72,9 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PLUGIN_SUB_FORM_FILTERS = 'PLUGIN_SUB_FORM_FILTERS';
 
-    public const PLUGIN_ADDRESS_STEP_HIDE_BREADCRUMB_ITEM = 'PLUGIN_ADDRESS_STEP_HIDE_BREADCRUMB_ITEM';
-    public const PLUGIN_SHIPMENT_STEP_HIDE_BREADCRUMB_ITEM = 'PLUGIN_SHIPMENT_STEP_HIDE_BREADCRUMB_ITEM';
-    public const PLUGIN_PAYMENT_STEP_HIDE_BREADCRUMB_ITEM = 'PLUGIN_PAYMENT_STEP_HIDE_BREADCRUMB_ITEM';
+    public const PLUGINS_ADDRESS_STEP_HIDE_BREADCRUMB_ITEM = 'PLUGINS_ADDRESS_STEP_HIDE_BREADCRUMB_ITEM';
+    public const PLUGINS_SHIPMENT_STEP_HIDE_BREADCRUMB_ITEM = 'PLUGINS_SHIPMENT_STEP_HIDE_BREADCRUMB_ITEM';
+    public const PLUGINS_PAYMENT_STEP_HIDE_BREADCRUMB_ITEM = 'PLUGINS_PAYMENT_STEP_HIDE_BREADCRUMB_ITEM';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -657,7 +657,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAddressStepHideBreadcrumbItemPlugins(Container $container): Container
     {
-        $container->set(self::PLUGIN_ADDRESS_STEP_HIDE_BREADCRUMB_ITEM, function () {
+        $container->set(static::PLUGINS_ADDRESS_STEP_HIDE_BREADCRUMB_ITEM, function () {
             return $this->getAddressStepHideBreadcrumbItemPlugins();
         });
 
@@ -665,7 +665,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[]
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[]
      */
     protected function getAddressStepHideBreadcrumbItemPlugins(): array
     {
@@ -679,7 +679,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addShipmentStepHideBreadcrumbItemPlugins(Container $container): Container
     {
-        $container->set(self::PLUGIN_SHIPMENT_STEP_HIDE_BREADCRUMB_ITEM, function () {
+        $container->set(static::PLUGINS_SHIPMENT_STEP_HIDE_BREADCRUMB_ITEM, function () {
             return $this->getShipmentStepHideBreadcrumbItemPlugins();
         });
 
@@ -687,7 +687,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[]
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[]
      */
     protected function getShipmentStepHideBreadcrumbItemPlugins(): array
     {
@@ -701,7 +701,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPaymentStepHideBreadcrumbItemPlugins(Container $container): Container
     {
-        $container->set(self::PLUGIN_PAYMENT_STEP_HIDE_BREADCRUMB_ITEM, function () {
+        $container->set(static::PLUGINS_PAYMENT_STEP_HIDE_BREADCRUMB_ITEM, function () {
             return $this->getPaymentStepHideBreadcrumbItemPlugins();
         });
 
@@ -709,7 +709,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[]
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[]
      */
     protected function getPaymentStepHideBreadcrumbItemPlugins(): array
     {

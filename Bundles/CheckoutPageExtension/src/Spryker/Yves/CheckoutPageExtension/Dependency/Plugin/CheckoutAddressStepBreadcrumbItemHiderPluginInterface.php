@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin;
+namespace SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CheckoutPaymentStepBreadcrumbItemHiderPluginInterface
+interface CheckoutAddressStepBreadcrumbItemHiderPluginInterface
 {
     /**
      * Specification:
-     * - Decides whether to show breadcrumb item of a checkout payment step or not.
+     * - Decides whether to show breadcrumb item of a checkout step or not.
      * - Breadcrumb item will be hidden if at least one plugin returns true.
      *
      * @api

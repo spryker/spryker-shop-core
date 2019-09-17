@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\QuoteApprovalWidget\Plugin\CheckoutPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\CheckoutPaymentStepBreadcrumbItemHiderPluginInterface;
+use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepBreadcrumbItemHiderPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\QuoteApprovalWidget\QuoteApprovalWidgetFactory getFactory()
@@ -18,7 +18,7 @@ class CheckoutPaymentStepBreadcrumbItemHiderPlugin extends AbstractPlugin implem
 {
     /**
      * {@inheritdoc}
-     * - Makes call to quote client to get quote lock.
+     * - Makes a call to quote client to get quote lock.
      * - Makes a call to quote approval client to determine that quote status is not declined.
      * - Makes a call to quote approval client to determine that quote status is not declined.
      * - Applied on breadcrumb item to shipment step.

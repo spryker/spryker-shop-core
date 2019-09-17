@@ -31,7 +31,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     protected $shipmentPlugins;
 
     /**
-     * @var \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\CheckoutShipmentStepBreadcrumbItemHiderPluginInterface[]
+     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepBreadcrumbItemHiderPluginInterface[]
      */
     protected $breadcrumbItemHiderPlugins;
 
@@ -40,7 +40,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection $shipmentPlugins
      * @param string $stepRoute
      * @param string $escapeRoute
-     * @param \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\CheckoutShipmentStepBreadcrumbItemHiderPluginInterface[] $breadcrumbItemHiderPlugins
+     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepBreadcrumbItemHiderPluginInterface[] $breadcrumbItemHiderPlugins
      */
     public function __construct(
         CheckoutPageToCalculationClientInterface $calculationClient,

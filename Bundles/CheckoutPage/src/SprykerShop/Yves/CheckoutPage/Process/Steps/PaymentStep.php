@@ -44,7 +44,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $calculationClient;
 
     /**
-     * @var \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\CheckoutPaymentStepBreadcrumbItemHiderPluginInterface[]
+     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepBreadcrumbItemHiderPluginInterface[]
      */
     protected $breadcrumbItemHiderPlugins;
 
@@ -55,7 +55,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      * @param string $escapeRoute
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
-     * @param \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\CheckoutPaymentStepBreadcrumbItemHiderPluginInterface[] $breadcrumbItemHiderPlugins
+     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepBreadcrumbItemHiderPluginInterface[] $breadcrumbItemHiderPlugins
      */
     public function __construct(
         CheckoutPageToPaymentClientInterface $paymentClient,

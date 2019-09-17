@@ -28,7 +28,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $calculationClient;
 
     /**
-     * @var \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[]
+     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[]
      */
     protected $breadcrumbItemHiderPlugins;
 
@@ -37,7 +37,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
      * @param string $stepRoute
      * @param string $escapeRoute
-     * @param \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[] $breadcrumbItemHiderPlugins
+     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[] $breadcrumbItemHiderPlugins
      */
     public function __construct(
         CheckoutPageToCustomerClientInterface $customerClient,
@@ -201,10 +201,10 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return bool
      */
-    public function executeBreadcrumbItemHiderPlugins(AbstractTransfer $abstractTransfer): bool
+    public function executeBreadcrumbItemHiderPlugins(AbstractTransfer $dataTransfer): bool
     {
         foreach ($this->breadcrumbItemHiderPlugins as $breadcrumbItemHiderPlugin) {
-            if ($breadcrumbItemHiderPlugin->isBreadcrumbItemHidden($abstractTransfer)) {
+            if ($breadcrumbItemHiderPlugin->isBreadcrumbItemHidden($dataTransfer)) {
                 return true;
             }
         }
