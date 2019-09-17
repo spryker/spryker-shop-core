@@ -15,11 +15,9 @@
             {% block meta %}
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-                {% block mainMetadata %}
-                    <meta name="title" content="{% block metaTitle %}{{ data.metaTitle }}{% endblock %}">
-                    <meta name="description" content="{% block metaDescription %}{{ data.metaDescription }}{% endblock %}">
-                    <meta name="keywords" content="{% block metaKeywords %}{{ data.metaKeywords }}{% endblock %}">
-                {% endblock %}
+                <meta name="title" content="{% block metaTitle %}{{ data.metaTitle }}{% endblock %}">
+                <meta name="description" content="{% block metaDescription %}{{ data.metaDescription }}{% endblock %}">
+                <meta name="keywords" content="{% block metaKeywords %}{{ data.metaKeywords }}{% endblock %}">
                 <meta name="generator" content="spryker">
             {% endblock %}
 
