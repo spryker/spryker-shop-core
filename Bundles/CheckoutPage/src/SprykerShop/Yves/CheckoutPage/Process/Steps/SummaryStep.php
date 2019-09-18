@@ -98,7 +98,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
                 $quoteTransfer->getItems(),
                 $quoteTransfer->getBundleItems()
             ),
-            'isOrderPlaceable' => $this->checkoutClient->isOrderPlaceable($quoteTransfer)->getIsSuccess(),
+            'checkoutResponseTransfer' => $this->checkoutClient->isOrderPlaceable($quoteTransfer),
         ];
     }
 
