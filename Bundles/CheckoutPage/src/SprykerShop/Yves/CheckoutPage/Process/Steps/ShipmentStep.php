@@ -31,29 +31,29 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     protected $shipmentPlugins;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepBreadcrumbItemHiderPluginInterface[]
+     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepPreCheckPluginInterface[]
      */
-    protected $breadcrumbItemHiderPlugins;
+    protected $shipmentStepPreCheckPlugins;
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection $shipmentPlugins
      * @param string $stepRoute
      * @param string $escapeRoute
-     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepBreadcrumbItemHiderPluginInterface[] $breadcrumbItemHiderPlugins
+     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepPreCheckPluginInterface[] $shipmentStepPreCheckPlugins
      */
     public function __construct(
         CheckoutPageToCalculationClientInterface $calculationClient,
         StepHandlerPluginCollection $shipmentPlugins,
         $stepRoute,
         $escapeRoute,
-        array $breadcrumbItemHiderPlugins
+        array $shipmentStepPreCheckPlugins
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->calculationClient = $calculationClient;
         $this->shipmentPlugins = $shipmentPlugins;
-        $this->breadcrumbItemHiderPlugins = $breadcrumbItemHiderPlugins;
+        $this->shipmentStepPreCheckPlugins = $shipmentStepPreCheckPlugins;
     }
 
     /**
@@ -63,7 +63,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function requireInput(AbstractTransfer $quoteTransfer)
     {
-        return $quoteTransfer->getItems()->count() && $this->hasOnlyGiftCardItems($quoteTransfer) === false;
+        return !$this->executeShipmentStepPreCheckPlugins($quoteTransfer) && $quoteTransfer->getItems()->count() && $this->hasOnlyGiftCardItems($quoteTransfer) === false;
     }
 
     /**
@@ -74,7 +74,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
-        if (!$this->requireInput($quoteTransfer)) {
+        if (!$this->requireInput($quoteTransfer) && $this->executeShipmentStepPreCheckPlugins($quoteTransfer)) {
             $quoteTransfer = $this->setDefaultNoShipmentMethod($quoteTransfer);
         }
 
@@ -176,7 +176,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer)
     {
-        return !$this->requireInput($dataTransfer) || $this->executeBreadcrumbItemHiderPlugins($dataTransfer);
+        return !$this->requireInput($dataTransfer);
     }
 
     /**
@@ -184,14 +184,15 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      *
      * @return bool
      */
-    protected function executeBreadcrumbItemHiderPlugins(AbstractTransfer $dataTransfer): bool
+    protected function executeShipmentStepPreCheckPlugins(AbstractTransfer $dataTransfer): bool
     {
-        foreach ($this->breadcrumbItemHiderPlugins as $breadcrumbItemHiderPlugin) {
-            if (!$breadcrumbItemHiderPlugin->isBreadcrumbItemHidden($dataTransfer)) {
-                return false;
-            }
-        }
-
-        return true;
+        return $this->shipmentStepPreCheckPlugins[0]->isHidden($dataTransfer);
+//        foreach ($this->shipmentStepPreCheckPlugins as $shipmentStepPreCheckPlugin) {
+//            if (!$shipmentStepPreCheckPlugin->isHidden($dataTransfer)) {
+//                return false;
+//            }
+//        }
+//
+//        return true;
     }
 }

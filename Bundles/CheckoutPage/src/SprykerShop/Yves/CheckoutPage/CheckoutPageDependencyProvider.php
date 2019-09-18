@@ -72,9 +72,9 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PLUGIN_SUB_FORM_FILTERS = 'PLUGIN_SUB_FORM_FILTERS';
 
-    public const PLUGINS_ADDRESS_STEP_HIDE_BREADCRUMB_ITEM = 'PLUGINS_ADDRESS_STEP_HIDE_BREADCRUMB_ITEM';
-    public const PLUGINS_SHIPMENT_STEP_HIDE_BREADCRUMB_ITEM = 'PLUGINS_SHIPMENT_STEP_HIDE_BREADCRUMB_ITEM';
-    public const PLUGINS_PAYMENT_STEP_HIDE_BREADCRUMB_ITEM = 'PLUGINS_PAYMENT_STEP_HIDE_BREADCRUMB_ITEM';
+    public const PLUGINS_ADDRESS_STEP_PRE_CHECK = 'PLUGINS_ADDRESS_STEP_PRE_CHECK';
+    public const PLUGINS_SHIPMENT_STEP_PRE_CHECK = 'PLUGINS_SHIPMENT_STEP_PRE_CHECK';
+    public const PLUGINS_PAYMENT_STEP_PRE_CHECK = 'PLUGINS_PAYMENT_STEP_PRE_CHECK';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -111,9 +111,9 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPaymentPageWidgetPlugins($container);
         $container = $this->addSummaryPageWidgetPlugins($container);
         $container = $this->addSuccessPageWidgetPlugins($container);
-        $container = $this->addAddressStepHideBreadcrumbItemPlugins($container);
-        $container = $this->addShipmentStepHideBreadcrumbItemPlugins($container);
-        $container = $this->addPaymentStepHideBreadcrumbItemPlugins($container);
+        $container = $this->addAddressStepPreCheckPlugins($container);
+        $container = $this->addShipmentStepPreCheckPlugins($container);
+        $container = $this->addPaymentStepHidePreCheckPlugins($container);
 
         $container = $this->addCustomerStepSubForms($container);
         $container = $this->addAddressStepSubForms($container);
@@ -655,19 +655,19 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addAddressStepHideBreadcrumbItemPlugins(Container $container): Container
+    protected function addAddressStepPreCheckPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_ADDRESS_STEP_HIDE_BREADCRUMB_ITEM, function () {
-            return $this->getAddressStepHideBreadcrumbItemPlugins();
+        $container->set(static::PLUGINS_ADDRESS_STEP_PRE_CHECK, function () {
+            return $this->getAddressStepPreCheckPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[]
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepPreCheckPluginInterface[]
      */
-    protected function getAddressStepHideBreadcrumbItemPlugins(): array
+    protected function getAddressStepPreCheckPlugins(): array
     {
         return [];
     }
@@ -677,19 +677,19 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addShipmentStepHideBreadcrumbItemPlugins(Container $container): Container
+    protected function addShipmentStepPreCheckPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_SHIPMENT_STEP_HIDE_BREADCRUMB_ITEM, function () {
-            return $this->getShipmentStepHideBreadcrumbItemPlugins();
+        $container->set(static::PLUGINS_SHIPMENT_STEP_PRE_CHECK, function () {
+            return $this->getShipmentStepPreCheckPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[]
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepPreCheckPluginInterface[]
      */
-    protected function getShipmentStepHideBreadcrumbItemPlugins(): array
+    protected function getShipmentStepPreCheckPlugins(): array
     {
         return [];
     }
@@ -699,19 +699,19 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addPaymentStepHideBreadcrumbItemPlugins(Container $container): Container
+    protected function addPaymentStepHidePreCheckPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_PAYMENT_STEP_HIDE_BREADCRUMB_ITEM, function () {
-            return $this->getPaymentStepHideBreadcrumbItemPlugins();
+        $container->set(static::PLUGINS_PAYMENT_STEP_PRE_CHECK, function () {
+            return $this->getPaymentStepPreCheckPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[]
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepPreCheckPluginInterface[]
      */
-    protected function getPaymentStepHideBreadcrumbItemPlugins(): array
+    protected function getPaymentStepPreCheckPlugins(): array
     {
         return [];
     }

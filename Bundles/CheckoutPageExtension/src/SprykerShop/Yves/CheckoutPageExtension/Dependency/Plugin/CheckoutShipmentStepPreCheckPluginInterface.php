@@ -9,11 +9,11 @@ namespace SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CheckoutPaymentStepBreadcrumbItemHiderPluginInterface
+interface CheckoutShipmentStepPreCheckPluginInterface
 {
     /**
      * Specification:
-     * - Decides whether to show breadcrumb item of a checkout payment step or not.
+     * - Decides whether to show breadcrumb item of a checkout shipment step or not.
      * - Breadcrumb item will be hidden if at least one plugin returns true.
      *
      * @api
@@ -22,5 +22,5 @@ interface CheckoutPaymentStepBreadcrumbItemHiderPluginInterface
      *
      * @return bool
      */
-    public function isBreadcrumbItemHidden(QuoteTransfer $quoteTransfer): bool;
+    public function isHidden(QuoteTransfer $quoteTransfer): bool;
 }

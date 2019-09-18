@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CheckoutAddressStepBreadcrumbItemHiderPluginInterface
+interface CheckoutAddressStepPreCheckPluginInterface
 {
     /**
      * Specification:
@@ -22,5 +22,5 @@ interface CheckoutAddressStepBreadcrumbItemHiderPluginInterface
      *
      * @return bool
      */
-    public function isBreadcrumbItemHidden(QuoteTransfer $quoteTransfer): bool;
+    public function isHidden(QuoteTransfer $quoteTransfer): bool;
 }

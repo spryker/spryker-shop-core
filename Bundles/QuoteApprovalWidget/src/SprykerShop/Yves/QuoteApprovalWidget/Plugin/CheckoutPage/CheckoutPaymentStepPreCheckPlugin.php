@@ -9,12 +9,12 @@ namespace SprykerShop\Yves\QuoteApprovalWidget\Plugin\CheckoutPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepBreadcrumbItemHiderPluginInterface;
+use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepPreCheckPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\QuoteApprovalWidget\QuoteApprovalWidgetFactory getFactory()
  */
-class CheckoutPaymentStepBreadcrumbItemHiderPlugin extends AbstractPlugin implements CheckoutPaymentStepBreadcrumbItemHiderPluginInterface
+class CheckoutPaymentStepPreCheckPlugin extends AbstractPlugin implements CheckoutPaymentStepPreCheckPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -28,7 +28,7 @@ class CheckoutPaymentStepBreadcrumbItemHiderPlugin extends AbstractPlugin implem
      *
      * @return bool
      */
-    public function isBreadcrumbItemHidden(QuoteTransfer $quoteTransfer): bool
+    public function isHidden(QuoteTransfer $quoteTransfer): bool
     {
         $isQuoteLocked = $this->getFactory()
             ->getQuoteClient()

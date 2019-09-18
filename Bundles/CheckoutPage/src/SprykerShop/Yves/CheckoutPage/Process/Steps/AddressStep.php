@@ -28,29 +28,29 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $calculationClient;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[]
+     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepPreCheckPluginInterface[]
      */
-    protected $breadcrumbItemHiderPlugins;
+    protected $addressStepPreCheckPlugins;
 
     /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
      * @param string $stepRoute
      * @param string $escapeRoute
-     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepBreadcrumbItemHiderPluginInterface[] $breadcrumbItemHiderPlugins
+     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepPreCheckPluginInterface[] $addressStepPreCheckPlugins
      */
     public function __construct(
         CheckoutPageToCustomerClientInterface $customerClient,
         CheckoutPageToCalculationClientInterface $calculationClient,
         $stepRoute,
         $escapeRoute,
-        array $breadcrumbItemHiderPlugins
+        array $addressStepPreCheckPlugins
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->calculationClient = $calculationClient;
         $this->customerClient = $customerClient;
-        $this->breadcrumbItemHiderPlugins = $breadcrumbItemHiderPlugins;
+        $this->addressStepPreCheckPlugins = $addressStepPreCheckPlugins;
     }
 
     /**
@@ -60,7 +60,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function requireInput(AbstractTransfer $dataTransfer)
     {
-        return true;
+        return !$this->executeAddressStepPreCheckPlugins($dataTransfer);
     }
 
     /**
@@ -193,7 +193,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer)
     {
-        return !$this->requireInput($dataTransfer) || $this->executeBreadcrumbItemHiderPlugins($dataTransfer);
+        return !$this->requireInput($dataTransfer);
     }
 
     /**
@@ -201,10 +201,10 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return bool
      */
-    public function executeBreadcrumbItemHiderPlugins(AbstractTransfer $dataTransfer): bool
+    public function executeAddressStepPreCheckPlugins(AbstractTransfer $dataTransfer): bool
     {
-        foreach ($this->breadcrumbItemHiderPlugins as $breadcrumbItemHiderPlugin) {
-            if (!$breadcrumbItemHiderPlugin->isBreadcrumbItemHidden($dataTransfer)) {
+        foreach ($this->addressStepPreCheckPlugins as $addressStepPreCheckPlugin) {
+            if (!$addressStepPreCheckPlugin->isHidden($dataTransfer)) {
                 return false;
             }
         }

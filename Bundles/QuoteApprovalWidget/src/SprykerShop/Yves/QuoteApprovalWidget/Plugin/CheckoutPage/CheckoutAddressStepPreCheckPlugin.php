@@ -9,25 +9,25 @@ namespace SprykerShop\Yves\QuoteApprovalWidget\Plugin\CheckoutPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepBreadcrumbItemHiderPluginInterface;
+use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepPreCheckPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\QuoteApprovalWidget\QuoteApprovalWidgetFactory getFactory()
  */
-class CheckoutShipmentStepBreadcrumbItemHiderPlugin extends AbstractPlugin implements CheckoutShipmentStepBreadcrumbItemHiderPluginInterface
+class CheckoutAddressStepPreCheckPlugin extends AbstractPlugin implements CheckoutAddressStepPreCheckPluginInterface
 {
     /**
      * {@inheritdoc}
      * - Makes a call to quote client to get quote lock.
      * - Makes a call to quote approval client to determine that quote status is not declined.
-     * - Applied on breadcrumb item to shipment step.
+     * - Applied on breadcrumb item to address step.
      * - Returns true if quote is locked and not in status declined.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isBreadcrumbItemHidden(QuoteTransfer $quoteTransfer): bool
+    public function isHidden(QuoteTransfer $quoteTransfer): bool
     {
         $isQuoteLocked = $this->getFactory()
             ->getQuoteClient()
