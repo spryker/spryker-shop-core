@@ -58,8 +58,7 @@ class ShopCmsSlotNode extends TwigNode
         $this->compileArrayNode($compiler, ShopCmsSlotTokenParser::NODE_WITH);
         $compiler->raw(')->setRequiredKeys(');
         $this->compileArrayNode($compiler, ShopCmsSlotTokenParser::NODE_REQUIRED);
-        // TODO  CR note setAutoFilledKeys
-        $compiler->raw(')->setAutoFillingKeys(');
+        $compiler->raw(')->setAutoFilledKeys(');
         $this->compileArrayNode($compiler, ShopCmsSlotTokenParser::NODE_AUTOFILLED);
         $compiler->raw('));');
     }

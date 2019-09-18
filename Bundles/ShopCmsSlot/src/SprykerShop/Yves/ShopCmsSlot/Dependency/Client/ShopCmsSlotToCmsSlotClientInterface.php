@@ -8,12 +8,14 @@
 
 namespace SprykerShop\Yves\ShopCmsSlot\Dependency\Client;
 
+use Generated\Shared\Transfer\CmsSlotExternalDataTransfer;
+
 interface ShopCmsSlotToCmsSlotClientInterface
 {
     /**
      * @param string[] $dataKeys
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CmsSlotExternalDataTransfer
      */
-    public function getCmsSlotExternalDataByKeys(array $dataKeys): array;
+    public function getCmsSlotExternalDataByKeys(array $dataKeys): CmsSlotExternalDataTransfer;
 }
