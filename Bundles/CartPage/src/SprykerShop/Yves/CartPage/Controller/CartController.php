@@ -87,12 +87,13 @@ class CartController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $sku
-     * @param int $quantity
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function addAction(Request $request, $sku, $quantity = 1)
+    public function addAction(Request $request, $sku)
     {
+        $quantity = $request->get('quantity', 1);
+
         if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
@@ -118,13 +119,15 @@ class CartController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $sku
-     * @param int $quantity
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function quickAddAction(string $sku, int $quantity = 1): RedirectResponse
+    public function quickAddAction(Request $request, string $sku): RedirectResponse
     {
+        $quantity = $request->get('quantity', 1);
+
         if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
@@ -140,7 +143,7 @@ class CartController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeQuickAddAction(string $sku, int $quantity = 1): RedirectResponse
+    protected function executeQuickAddAction(string $sku, int $quantity): RedirectResponse
     {
         $itemTransfer = (new ItemTransfer())
             ->setSku($sku)
@@ -160,13 +163,15 @@ class CartController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $sku
-     * @param string|null $groupKey
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function removeAction($sku, $groupKey = null)
+    public function removeAction(Request $request, $sku)
     {
+        $groupKey = $request->get('groupKey', null);
+
         if (!$this->canRemoveCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
@@ -187,12 +192,13 @@ class CartController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $sku
-     * @param int $quantity
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function changeAction(Request $request, $sku, $quantity = 1)
+    public function changeAction(Request $request, $sku)
     {
+        $quantity = $request->get('quantity', 1);
+
         if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
@@ -240,12 +246,13 @@ class CartController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $sku
-     * @param int $quantity
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function updateAction(Request $request, $sku, $quantity = 1)
+    public function updateAction(Request $request, $sku)
     {
+        $quantity = $request->get('quantity', 1);
+
         if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
@@ -374,19 +381,5 @@ class CartController extends AbstractController
         }
 
         return false;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return mixed
-     */
-    protected function getGroupKey(Request $request)
-    {
-        if ($request->isMethod('POST')) {
-            return $request->request->get('groupKey');
-        }
-
-        return $request->get('groupKey');
     }
 }
