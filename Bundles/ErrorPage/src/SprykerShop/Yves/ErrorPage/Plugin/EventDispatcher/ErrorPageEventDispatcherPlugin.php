@@ -5,10 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ErrorPage\Plugin\Provider;
+namespace SprykerShop\Yves\ErrorPage\Plugin\EventDispatcher;
 
-use Silex\Application;
-use Silex\ServiceProviderInterface;
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
+use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,29 +18,29 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\ErrorPage\Plugin\EventDispatcher\ErrorPageEventDispatcherPlugin` instead.
- *
  * @method \SprykerShop\Yves\ErrorPage\ErrorPageFactory getFactory()
  */
-class ErrorPageServiceProvider extends AbstractPlugin implements ServiceProviderInterface
+class ErrorPageEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     /**
-     * @param \Silex\Application $app
+     * {@inheritDoc}
+     * - Adds a listener for the `\Symfony\Component\HttpKernel\KernelEvents::EXCEPTION` event.
+     * - Executes `\SprykerShop\Yves\ErrorPage\Dependency\Plugin\ExceptionHandlerPluginInterface` which is able to handle the current status code.
      *
-     * @return void
+     * @api
+     *
+     * @param \Spryker\Shared\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
      */
-    public function register(Application $app)
+    public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-    }
+        $eventDispatcher->addListener(KernelEvents::EXCEPTION, function (GetResponseForExceptionEvent $event) {
+            $this->onKernelException($event);
+        }, 50);
 
-    /**
-     * @param \Silex\Application $app
-     *
-     * @return void
-     */
-    public function boot(Application $app)
-    {
-        $app['dispatcher']->addListener(KernelEvents::EXCEPTION, [$this, 'onKernelException'], 50);
+        return $eventDispatcher;
     }
 
     /**
@@ -47,7 +48,7 @@ class ErrorPageServiceProvider extends AbstractPlugin implements ServiceProvider
      *
      * @return void
      */
-    public function onKernelException(GetResponseForExceptionEvent $event)
+    public function onKernelException(GetResponseForExceptionEvent $event): void
     {
         $exception = $event->getException();
 
