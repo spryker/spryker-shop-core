@@ -124,7 +124,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return \Symfony\Component\Form\FormTypeInterface[]
      */
     public function getCustomerFormTypes()
     {
