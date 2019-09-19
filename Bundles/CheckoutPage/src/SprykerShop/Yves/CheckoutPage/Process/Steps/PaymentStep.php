@@ -246,7 +246,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected function executeBreadcrumbItemHiderPlugins(AbstractTransfer $dataTransfer): bool
     {
         foreach ($this->paymentStepPreCheckPlugins as $paymentStepPreCheckPlugin) {
-            if (!$paymentStepPreCheckPlugin->isHidden($dataTransfer)) {
+            if (!$paymentStepPreCheckPlugin->check($dataTransfer)) {
                 return false;
             }
         }

@@ -75,7 +75,8 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
-        if (!$this->requireInput($quoteTransfer) && !$this->isShipmentSet($quoteTransfer)) {
+        $isStepHidden = $this->executeShipmentStepPreCheckPlugins($quoteTransfer);
+        if (!$this->requireInput($quoteTransfer) && $isStepHidden === true) {
             $quoteTransfer = $this->setDefaultNoShipmentMethod($quoteTransfer);
         }
 
@@ -188,7 +189,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     protected function executeShipmentStepPreCheckPlugins(AbstractTransfer $dataTransfer): bool
     {
         foreach ($this->shipmentStepPreCheckPlugins as $shipmentStepPreCheckPlugin) {
-            if (!$shipmentStepPreCheckPlugin->isHidden($dataTransfer)) {
+            if (!$shipmentStepPreCheckPlugin->check($dataTransfer)) {
                 return false;
             }
         }

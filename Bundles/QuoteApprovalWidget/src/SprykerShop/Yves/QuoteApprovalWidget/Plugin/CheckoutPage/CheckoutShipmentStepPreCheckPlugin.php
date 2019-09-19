@@ -26,7 +26,7 @@ class CheckoutShipmentStepPreCheckPlugin extends AbstractPlugin implements Check
      *
      * @return bool
      */
-    public function isHidden(QuoteTransfer $quoteTransfer): bool
+    public function check(QuoteTransfer $quoteTransfer): bool
     {
         $isQuoteLocked = $this->getFactory()
             ->getQuoteClient()

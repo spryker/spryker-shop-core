@@ -22,5 +22,5 @@ interface CheckoutPaymentStepPreCheckPluginInterface
      *
      * @return bool
      */
-    public function isHidden(QuoteTransfer $quoteTransfer): bool;
+    public function check(QuoteTransfer $quoteTransfer): bool;
 }

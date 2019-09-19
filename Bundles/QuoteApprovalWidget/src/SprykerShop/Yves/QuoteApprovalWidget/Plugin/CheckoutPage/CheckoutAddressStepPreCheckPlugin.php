@@ -26,7 +26,7 @@ class CheckoutAddressStepPreCheckPlugin extends AbstractPlugin implements Checko
      *
      * @return bool
      */
-    public function isHidden(QuoteTransfer $quoteTransfer): bool
+    public function check(QuoteTransfer $quoteTransfer): bool
     {
         $isQuoteLocked = $this->getFactory()
             ->getQuoteClient()
