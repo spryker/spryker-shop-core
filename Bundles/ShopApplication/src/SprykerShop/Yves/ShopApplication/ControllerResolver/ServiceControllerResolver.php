@@ -34,9 +34,7 @@ class ServiceControllerResolver implements ControllerResolverInterface, Argument
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @inheritdoc
      */
     public function getController(Request $request)
     {
@@ -54,6 +52,8 @@ class ServiceControllerResolver implements ControllerResolverInterface, Argument
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param callable $controller
+     * 
+     * @return array
      */
     public function getArguments(Request $request, $controller)
     {

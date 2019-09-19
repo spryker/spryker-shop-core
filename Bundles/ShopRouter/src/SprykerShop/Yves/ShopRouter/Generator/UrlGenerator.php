@@ -41,7 +41,7 @@ class UrlGenerator extends SymfonyUrlGenerator
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
