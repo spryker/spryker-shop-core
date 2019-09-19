@@ -84,7 +84,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     {
         $totals = $quoteTransfer->getTotals();
 
-        return !$this->executeBreadcrumbItemHiderPlugins($quoteTransfer) && (!$totals || $totals->getPriceToPay() > 0);
+        return !$this->executePaymentStepPreCheckPlugins($quoteTransfer) && (!$totals || $totals->getPriceToPay() > 0);
     }
 
     /**
@@ -243,7 +243,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return bool
      */
-    protected function executeBreadcrumbItemHiderPlugins(AbstractTransfer $dataTransfer): bool
+    protected function executePaymentStepPreCheckPlugins(AbstractTransfer $dataTransfer): bool
     {
         foreach ($this->paymentStepPreCheckPlugins as $paymentStepPreCheckPlugin) {
             if (!$paymentStepPreCheckPlugin->check($dataTransfer)) {

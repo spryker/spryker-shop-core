@@ -113,7 +113,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSuccessPageWidgetPlugins($container);
         $container = $this->addAddressStepPreCheckPlugins($container);
         $container = $this->addShipmentStepPreCheckPlugins($container);
-        $container = $this->addPaymentStepHidePreCheckPlugins($container);
+        $container = $this->addPaymentStepPreCheckPlugins($container);
 
         $container = $this->addCustomerStepSubForms($container);
         $container = $this->addAddressStepSubForms($container);
@@ -699,7 +699,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addPaymentStepHidePreCheckPlugins(Container $container): Container
+    protected function addPaymentStepPreCheckPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_PAYMENT_STEP_PRE_CHECK, function () {
             return $this->getPaymentStepPreCheckPlugins();
