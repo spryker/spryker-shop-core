@@ -76,11 +76,14 @@ class StorageUrlGenerator implements UrlGeneratorInterface
         }
 
         parse_str($this->getContext()->getQueryString(), $requestParameter);
-        $queryString = '?' . http_build_query($this->parameterMerger->mergeParameters($requestParameter, $parameters));
 
-        $pathInfo = $name . $queryString;
+        $queryString = http_build_query($this->parameterMerger->mergeParameters($requestParameter, $parameters));
 
-        return $this->getUrlOrPathForType($pathInfo, $referenceType);
+        if ($queryString) {
+            $name .= '?' . $queryString;
+        }
+
+        return $this->getUrlOrPathForType($name, $referenceType);
     }
 
     /**
