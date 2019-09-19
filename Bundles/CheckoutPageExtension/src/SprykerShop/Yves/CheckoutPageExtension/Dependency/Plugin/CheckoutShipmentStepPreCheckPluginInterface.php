@@ -13,8 +13,8 @@ interface CheckoutShipmentStepPreCheckPluginInterface
 {
     /**
      * Specification:
-     * - Decides whether to show breadcrumb item of a checkout shipment step or not.
-     * - Breadcrumb item will be hidden if at least one plugin returns true.
+     * - Decides whether to expose checkout step or not.
+     * - Breadcrumb item will not be hidden if at least one plugin returns false.
      *
      * @api
      *

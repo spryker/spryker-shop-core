@@ -20,7 +20,6 @@ class CheckoutAddressStepPreCheckPlugin extends AbstractPlugin implements Checko
      * {@inheritdoc}
      * - Makes a call to quote client to get quote lock.
      * - Makes a call to quote approval client to determine that quote status is not declined.
-     * - Applied on breadcrumb item to address step.
      * - Returns true if quote is locked and not in status declined.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

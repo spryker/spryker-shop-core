@@ -201,7 +201,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return bool
      */
-    public function executeAddressStepPreCheckPlugins(AbstractTransfer $dataTransfer): bool
+    protected function executeAddressStepPreCheckPlugins(AbstractTransfer $dataTransfer): bool
     {
         foreach ($this->addressStepPreCheckPlugins as $addressStepPreCheckPlugin) {
             if (!$addressStepPreCheckPlugin->isHidden($dataTransfer)) {
