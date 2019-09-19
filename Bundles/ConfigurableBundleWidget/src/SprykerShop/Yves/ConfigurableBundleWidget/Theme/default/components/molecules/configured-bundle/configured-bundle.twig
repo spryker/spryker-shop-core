@@ -32,12 +32,14 @@
 
                 {% block bundleQuantity %}
                     <div class="{{ config.name }}__col col col--lg-4">
-                        {% include molecule('configured-bundle-quantity-input', 'ConfigurableBundleWidget') with {
-                            data: {
-                                configuredBundle: data.bundle,
-                                readOnly: not data.isEditable
-                            }
-                        } only %}
+                        {% block bundleQuantityInner %}
+                            {% include molecule('configured-bundle-quantity-input', 'ConfigurableBundleWidget') with {
+                                data: {
+                                    configuredBundle: data.bundle,
+                                    readOnly: not data.isEditable
+                                }
+                            } only %}
+                        {% endblock %}
                     </div>
                 {% endblock %}
 
