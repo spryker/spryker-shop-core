@@ -1,13 +1,13 @@
 # CheckoutPageExtension Module
-[![Build Status](https://travis-ci.org/spryker/checkout-page-extension.svg)](https://travis-ci.org/spryker/checkout-page-extension)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/checkout-page-extension/badge.svg)](https://coveralls.io/github/spryker/checkout-page-extension)
+[![Build Status](https://travis-ci.org/spryker-shop/checkout-page-extension.svg)](https://travis-ci.org/spryker-shop/checkout-page-extension)
+[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/checkout-page-extension/badge.svg)](https://coveralls.io/github/spryker-shop/checkout-page-extension)
 
 The module provides plugin interfaces for extending checkout page module functionality.
 
 ## Installation
 
 ```
-composer require spryker/checkout-page-extension
+composer require spryker-shop/checkout-page-extension
 ```
 
 ## Documentation

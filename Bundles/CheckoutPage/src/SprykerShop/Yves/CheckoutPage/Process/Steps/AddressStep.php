@@ -60,7 +60,11 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function requireInput(AbstractTransfer $dataTransfer)
     {
-        return !$this->executeAddressStepPreCheckPlugins($dataTransfer);
+        if (!$this->executeAddressStepPreCheckPlugins($dataTransfer)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

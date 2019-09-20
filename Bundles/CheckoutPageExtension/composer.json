@@ -1,18 +1,21 @@
 {
-  "name": "spryker/checkout-page-extension",
+  "name": "spryker-shop/checkout-page-extension",
+  "type": "library",
   "description": "CheckoutPageExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/kernel": "^3.0.0"
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/symfony": "If you want to use plugins with symfony components."
+  },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "SprykerShop\\": "src/SprykerShop/"
     }
   },
   "minimum-stability": "dev",

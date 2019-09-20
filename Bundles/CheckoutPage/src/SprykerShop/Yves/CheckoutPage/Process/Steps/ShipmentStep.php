@@ -63,8 +63,9 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function requireInput(AbstractTransfer $quoteTransfer)
     {
-        $isStepHidden = $this->executeShipmentStepPreCheckPlugins($quoteTransfer);
-        return $isStepHidden === false  && $quoteTransfer->getItems()->count() && $this->hasOnlyGiftCardItems($quoteTransfer) === false;
+        return $this->executeShipmentStepPreCheckPlugins($quoteTransfer) === false
+            && $quoteTransfer->getItems()->count()
+            && $this->hasOnlyGiftCardItems($quoteTransfer) === false;
     }
 
     /**
@@ -75,8 +76,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
-        $isStepHidden = $this->executeShipmentStepPreCheckPlugins($quoteTransfer);
-        if (!$this->requireInput($quoteTransfer) && $isStepHidden === true) {
+        if (!$this->requireInput($quoteTransfer) && $this->executeShipmentStepPreCheckPlugins($quoteTransfer) === true) {
             $quoteTransfer = $this->setDefaultNoShipmentMethod($quoteTransfer);
         }
 
