@@ -23,5 +23,7 @@ interface CmsSlotContentPluginInterface
      *
      * @return \Generated\Shared\Transfer\CmsSlotContentResponseTransfer
      */
-    public function getSlotContent(CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer): CmsSlotContentResponseTransfer;
+    public function getSlotContent(
+        CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer
+    ): CmsSlotContentResponseTransfer;
 }
