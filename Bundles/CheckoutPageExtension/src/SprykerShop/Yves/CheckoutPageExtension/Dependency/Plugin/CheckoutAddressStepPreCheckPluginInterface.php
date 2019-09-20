@@ -14,7 +14,7 @@ interface CheckoutAddressStepPreCheckPluginInterface
     /**
      * Specification:
      * - Decides whether to expose checkout step or not.
-     * - Breadcrumb item will not be hidden if at least one plugin returns false.
+     * - Checkout address step will be exposed if at least one plugin returns false.
      *
      * @api
      *

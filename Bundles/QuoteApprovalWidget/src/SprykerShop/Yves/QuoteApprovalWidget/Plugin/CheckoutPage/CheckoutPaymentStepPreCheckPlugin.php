@@ -22,6 +22,8 @@ class CheckoutPaymentStepPreCheckPlugin extends AbstractPlugin implements Checko
      * - Makes a call to quote approval client to determine that quote status is not declined.
      * - Returns true if quote is locked and not in status declined.
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
