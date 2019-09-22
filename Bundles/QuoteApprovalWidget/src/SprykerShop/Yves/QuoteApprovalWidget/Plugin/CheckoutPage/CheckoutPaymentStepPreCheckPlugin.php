@@ -38,6 +38,6 @@ class CheckoutPaymentStepPreCheckPlugin extends AbstractPlugin implements Checko
             ->getQuoteApprovalClient()
             ->isQuoteDeclined($quoteTransfer);
 
-        return $isQuoteLocked && !$isQuoteDeclined;
+        return $quoteTransfer->getQuoteApprovals()->count() && $isQuoteLocked && !$isQuoteDeclined;
     }
 }

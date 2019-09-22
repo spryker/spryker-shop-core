@@ -38,6 +38,6 @@ class CheckoutShipmentStepPreCheckPlugin extends AbstractPlugin implements Check
             ->getQuoteApprovalClient()
             ->isQuoteDeclined($quoteTransfer);
 
-        return $isQuoteLocked && !$isQuoteDeclined;
+        return $quoteTransfer->getQuoteApprovals()->count() && $isQuoteLocked && !$isQuoteDeclined;
     }
 }
