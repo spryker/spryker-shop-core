@@ -133,7 +133,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
      */
     public function isQuoteLevelShippingAddressEmpty(QuoteTransfer $quoteTransfer, bool $hasMultipleShippingAddresses): bool
     {
-        return ($hasMultipleShippingAddresses || $quoteTransfer->getItems()->count() === 0)
+        return ($hasMultipleShippingAddresses === false || $quoteTransfer->getItems()->count() === 0)
             && $this->isAddressEmpty($quoteTransfer->getShippingAddress());
     }
 }
