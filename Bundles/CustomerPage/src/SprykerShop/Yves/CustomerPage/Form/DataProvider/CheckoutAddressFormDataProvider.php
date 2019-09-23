@@ -8,29 +8,54 @@
 namespace SprykerShop\Yves\CustomerPage\Form\DataProvider;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
 use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
 
 class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider implements StepEngineFormDataProviderInterface
 {
+    protected const ADDRESS_LABEL_PATTERN = '%s %s %s, %s %s, %s %s';
+    protected const SANITIZED_CUSTOMER_ADDRESS_LABEL_PATTERN = '%s - %s';
+
+    /**
+     * @var \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface
+     */
+    protected $customerService;
+
     /**
      * @var \Generated\Shared\Transfer\CustomerTransfer
      */
     protected $customerTransfer;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface
+     */
+    protected $shipmentClient;
+
+    /**
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface $customerClient
      * @param \Spryker\Shared\Kernel\Store $store
+     * @param \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface $customerService
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
      */
-    public function __construct(CustomerPageToCustomerClientInterface $customerClient, Store $store)
-    {
+    public function __construct(
+        CustomerPageToCustomerClientInterface $customerClient,
+        Store $store,
+        CustomerPageToCustomerServiceInterface $customerService,
+        CheckoutPageToShipmentClientInterface $shipmentClient
+    ) {
         parent::__construct($customerClient, $store);
 
+        $this->customerService = $customerService;
         $this->customerTransfer = $this->getCustomer();
+        $this->shipmentClient = $shipmentClient;
     }
 
     /**
@@ -40,12 +65,14 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     public function getData(AbstractTransfer $quoteTransfer)
     {
+        /**
+         * @deprecated Exists for Backward Compatibility reasons only.
+         */
         $quoteTransfer->setShippingAddress($this->getShippingAddress($quoteTransfer));
-        $quoteTransfer->setBillingAddress($this->getBillingAddress($quoteTransfer));
 
-        $quoteTransfer->setBillingSameAsShipping(
-            $this->isSameAddress($quoteTransfer->getShippingAddress(), $quoteTransfer->getBillingAddress())
-        );
+        $quoteTransfer->setBillingAddress($this->getBillingAddress($quoteTransfer));
+        $quoteTransfer = $this->setItemLevelShippingAddresses($quoteTransfer);
+        $quoteTransfer = $this->setBillingSameAsShipping($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -60,6 +87,8 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         return [
             CheckoutAddressCollectionForm::OPTION_ADDRESS_CHOICES => $this->getAddressChoices(),
             CheckoutAddressCollectionForm::OPTION_COUNTRY_CHOICES => $this->getAvailableCountries(),
+            CheckoutAddressCollectionForm::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES => $this->canDeliverToMultipleShippingAddresses($quoteTransfer),
+            CheckoutAddressCollectionForm::OPTION_IS_CUSTOMER_LOGGED_IN => $this->customerClient->isLoggedIn(),
         ];
     }
 
@@ -74,17 +103,19 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     }
 
     /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     protected function getShippingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
     {
-        $addressTransfer = new AddressTransfer();
         if ($this->isShippingAddressInQuote($quoteTransfer)) {
-            $addressTransfer = $quoteTransfer->getShippingAddress();
+            return $quoteTransfer->getShippingAddress();
         }
 
+        $addressTransfer = new AddressTransfer();
         if ($this->customerTransfer !== null) {
             $addressTransfer->setIdCustomerAddress($this->customerTransfer->getDefaultShippingAddress());
         }
@@ -93,21 +124,22 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     }
 
     /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
     protected function isShippingAddressInQuote(QuoteTransfer $quoteTransfer): bool
     {
-        if ($quoteTransfer->getShippingAddress() === null) {
+        $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
+
+        if ($shippingAddressTransfer === null) {
             return false;
         }
 
-        if ($this->isEmptyAddress($quoteTransfer->getShippingAddress())) {
-            return false;
-        }
-
-        return true;
+        return $shippingAddressTransfer->getIdCustomerAddress() !== null
+            || $shippingAddressTransfer->getIdCompanyUnitAddress() !== null;
     }
 
     /**
@@ -117,11 +149,11 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function getBillingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
     {
-        $addressTransfer = new AddressTransfer();
         if ($this->isBillingAddressInQuote($quoteTransfer)) {
-            $addressTransfer = $quoteTransfer->getBillingAddress();
+            return $quoteTransfer->getBillingAddress();
         }
 
+        $addressTransfer = new AddressTransfer();
         if ($this->customerTransfer !== null) {
             $addressTransfer->setIdCustomerAddress($this->customerTransfer->getDefaultBillingAddress());
         }
@@ -136,36 +168,15 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function isBillingAddressInQuote(QuoteTransfer $quoteTransfer): bool
     {
-        if ($quoteTransfer->getBillingAddress() === null) {
+        $billingAddressTransfer = $quoteTransfer->getBillingAddress();
+
+        if ($billingAddressTransfer === null) {
             return false;
         }
 
-        if ($this->isEmptyAddress($quoteTransfer->getBillingAddress())) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return bool
-     */
-    protected function isEmptyAddress(AddressTransfer $addressTransfer): bool
-    {
-        return !array_filter($addressTransfer->toArray());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $shippingAddressTransfer
-     * @param \Generated\Shared\Transfer\AddressTransfer $billingAddressTransfer
-     *
-     * @return bool
-     */
-    protected function isSameAddress(AddressTransfer $shippingAddressTransfer, AddressTransfer $billingAddressTransfer): bool
-    {
-        return !array_diff($shippingAddressTransfer->toArray(), $billingAddressTransfer->toArray());
+        return $billingAddressTransfer->getIdCustomerAddress() !== null
+            || $billingAddressTransfer->getIdCompanyUnitAddress() !== null
+            || !$this->isAddressEmpty($billingAddressTransfer);
     }
 
     /**
@@ -179,24 +190,225 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
 
         $customerAddressesTransfer = $this->customerTransfer->getAddresses();
 
-        if ($customerAddressesTransfer === null) {
+        if ($customerAddressesTransfer === null || count($customerAddressesTransfer->getAddresses()) === 0) {
             return [];
         }
 
+        $choices = $this->getCustomerAddressChoices($customerAddressesTransfer->getAddresses());
+
+        return $this->sanitizeDuplicatedCustomerAddressChoices($choices);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return string
+     */
+    protected function getAddressLabel(AddressTransfer $addressTransfer): string
+    {
+        return sprintf(
+            static::ADDRESS_LABEL_PATTERN,
+            $addressTransfer->getSalutation(),
+            $addressTransfer->getFirstName(),
+            $addressTransfer->getLastName(),
+            $addressTransfer->getAddress1(),
+            $addressTransfer->getAddress2(),
+            $addressTransfer->getZipCode(),
+            $addressTransfer->getCity()
+        );
+    }
+
+    /**
+     * @param iterable|\ArrayObject|\Generated\Shared\Transfer\AddressTransfer[] $customerAddressesCollection
+     *
+     * @return string[]
+     */
+    protected function getCustomerAddressChoices(iterable $customerAddressesCollection): array
+    {
         $choices = [];
-        foreach ($customerAddressesTransfer->getAddresses() as $address) {
-            $choices[$address->getIdCustomerAddress()] = sprintf(
-                '%s %s %s, %s %s, %s %s',
-                $address->getSalutation(),
-                $address->getFirstName(),
-                $address->getLastName(),
-                $address->getAddress1(),
-                $address->getAddress2(),
-                $address->getZipCode(),
-                $address->getCity()
-            );
+
+        foreach ($customerAddressesCollection as $addressTransfer) {
+            $idCustomerAddress = $addressTransfer->getIdCustomerAddress();
+            if ($idCustomerAddress === null) {
+                continue;
+            }
+
+            $choices[$idCustomerAddress] = $this->getAddressLabel($addressTransfer);
         }
 
         return $choices;
+    }
+
+    /**
+     * @param iterable|string[] $choices
+     *
+     * @return string[]
+     */
+    protected function sanitizeDuplicatedCustomerAddressChoices(iterable $choices): array
+    {
+        $sanitizedChoices = [];
+        $choicesCounts = [];
+
+        foreach ($choices as $idAddress => $addressLabel) {
+            if (isset($sanitizedChoices[$addressLabel])) {
+                $originAddressLabel = $addressLabel;
+                if (!isset($choicesCounts[$originAddressLabel])) {
+                    $choicesCounts[$originAddressLabel] = 1;
+                }
+
+                $addressLabel = $this->getSanitizedCustomerAddressChoices($addressLabel, $choicesCounts[$originAddressLabel]);
+                $choicesCounts[$originAddressLabel]++;
+            }
+
+            $sanitizedChoices[$addressLabel] = $idAddress;
+        }
+
+        ksort($sanitizedChoices, SORT_NATURAL);
+
+        return $sanitizedChoices;
+    }
+
+    /**
+     * @param string $addressLabel
+     * @param int $itemNumber
+     *
+     * @return string
+     */
+    protected function getSanitizedCustomerAddressChoices(string $addressLabel, int $itemNumber): string
+    {
+        return sprintf(static::SANITIZED_CUSTOMER_ADDRESS_LABEL_PATTERN, $addressLabel, $itemNumber);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    protected function getItemShipment(ItemTransfer $itemTransfer): ShipmentTransfer
+    {
+        $shipmentTransfer = $itemTransfer->getShipment();
+        if ($shipmentTransfer === null) {
+            $shipmentTransfer = new ShipmentTransfer();
+        }
+
+        $shipmentTransfer->setShippingAddress($this->getShipmentShippingAddress($shipmentTransfer));
+
+        return $shipmentTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function getShipmentShippingAddress(ShipmentTransfer $shipmentTransfer): AddressTransfer
+    {
+        $addressTransfer = new AddressTransfer();
+        if ($shipmentTransfer->getShippingAddress() !== null) {
+            $addressTransfer = $shipmentTransfer->getShippingAddress();
+        }
+
+        if ($this->customerTransfer !== null && $shipmentTransfer->getShippingAddress() === null) {
+            $addressTransfer->setIdCustomerAddress($this->customerTransfer->getDefaultShippingAddress());
+        }
+
+        return $addressTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function getFirstItemLevelShippingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
+    {
+        $itemTransfer = current($quoteTransfer->getItems());
+        $itemTransfer->requireShipment();
+
+        return $itemTransfer->getShipment()->getShippingAddress();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setItemLevelShippingAddresses(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() !== null
+                && $itemTransfer->getShipment()->getShippingAddress() !== null
+            ) {
+                continue;
+            }
+
+            $itemTransfer->setShipment($this->getItemShipment($itemTransfer));
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setBillingSameAsShipping(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $shippingAddressTransfer = $this->getFirstItemLevelShippingAddress($quoteTransfer);
+        $shippingAddressHashKey = $this->customerService->getUniqueAddressKey($shippingAddressTransfer);
+        $billingAddressHashKey = $this->customerService->getUniqueAddressKey($quoteTransfer->getBillingAddress());
+
+        if ($billingAddressHashKey === $shippingAddressHashKey) {
+            $quoteTransfer->setBillingSameAsShipping(true);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function canDeliverToMultipleShippingAddresses(QuoteTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->getItems()->count() > 1
+            && $this->shipmentClient->isMultiShipmentSelectionEnabled()
+            && !$this->hasQuoteGiftCardItems($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return bool
+     */
+    protected function isAddressEmpty(AddressTransfer $addressTransfer): bool
+    {
+        $firstName = trim($addressTransfer->getFirstName());
+        $lastName = trim($addressTransfer->getLastName());
+
+        return empty($firstName) && empty($lastName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function hasQuoteGiftCardItems(QuoteTransfer $quoteTransfer): bool
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $giftCardMetadataTransfer = $itemTransfer->getGiftCardMetadata();
+            if ($giftCardMetadataTransfer === null) {
+                continue;
+            }
+
+            if ($giftCardMetadataTransfer->getIsGiftCard()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -17,9 +17,13 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClient
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Form\DataProvider\SubFormDataProviders;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\PaymentForm;
+use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentCollectionForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\SummaryForm;
 
+/**
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
+ */
 class FormFactory extends AbstractFactory
 {
     /**
@@ -60,16 +64,26 @@ class FormFactory extends AbstractFactory
     public function getShipmentFormTypes()
     {
         return [
-            $this->getShipmentForm(),
+            $this->getShipmentCollectionForm(),
         ];
     }
 
     /**
+     * @deprecated Use getShipmentCollectionForm() instead.
+     *
      * @return string
      */
     public function getShipmentForm()
     {
         return ShipmentForm::class;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShipmentCollectionForm(): string
+    {
+        return ShipmentCollectionForm::class;
     }
 
     /**
