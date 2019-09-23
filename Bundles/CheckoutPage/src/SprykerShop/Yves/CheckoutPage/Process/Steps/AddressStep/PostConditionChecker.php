@@ -38,6 +38,10 @@ class PostConditionChecker implements PostConditionCheckerInterface
             return false;
         }
 
+        if ($quoteTransfer->getItems()->count() === 0 && $this->isAddressEmpty($quoteTransfer->getShippingAddress())) {
+            return false;
+        }
+
         if ($this->hasItemsWithEmptyShippingAddresses($quoteTransfer)) {
             return false;
         }
