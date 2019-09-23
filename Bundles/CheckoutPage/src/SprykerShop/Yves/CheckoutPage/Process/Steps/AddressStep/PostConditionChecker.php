@@ -127,7 +127,6 @@ class PostConditionChecker implements PostConditionCheckerInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param bool $hasMultipleShippingAddresses
      *
      * @return bool
      */
