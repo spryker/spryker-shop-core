@@ -34,20 +34,16 @@ class PostConditionChecker implements PostConditionCheckerInterface
      */
     public function check(QuoteTransfer $quoteTransfer): bool
     {
-        if ($quoteTransfer->getBillingAddress() === null) {
-            return false;
-        }
-
-        if ($quoteTransfer->getItems()->count() === 0 && $this->isAddressEmpty($quoteTransfer->getShippingAddress())) {
-            return false;
-        }
-
         if ($this->hasItemsWithEmptyShippingAddresses($quoteTransfer)) {
             return false;
         }
 
         $hasMultipleShippingAddresses = $this->hasMultipleShippingAddresses($quoteTransfer);
         if ($hasMultipleShippingAddresses && $quoteTransfer->getBillingSameAsShipping()) {
+            return false;
+        }
+
+        if ($this->isQuoteLevelShippingAddressEmpty($quoteTransfer, $hasMultipleShippingAddresses)) {
             return false;
         }
 
@@ -83,7 +79,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
      */
     protected function hasMultipleShippingAddresses(QuoteTransfer $quoteTransfer): bool
     {
-        if ($quoteTransfer->getItems()->count() === 1) {
+        if ($quoteTransfer->getItems()->count() <= 1) {
             return false;
         }
 
@@ -108,7 +104,7 @@ class PostConditionChecker implements PostConditionCheckerInterface
      */
     public function isBillingAddressEmpty(QuoteTransfer $quoteTransfer): bool
     {
-        return $quoteTransfer->getBillingSameAsShipping() === false
+        return $quoteTransfer->getBillingSameAsShipping() !== true
             && $this->isAddressEmpty($quoteTransfer->getBillingAddress());
     }
 
@@ -127,5 +123,17 @@ class PostConditionChecker implements PostConditionCheckerInterface
         $lastName = trim($addressTransfer->getLastName());
 
         return empty($firstName) && empty($lastName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param bool $hasMultipleShippingAddresses
+     *
+     * @return bool
+     */
+    public function isQuoteLevelShippingAddressEmpty(QuoteTransfer $quoteTransfer, bool $hasMultipleShippingAddresses): bool
+    {
+        return ($hasMultipleShippingAddresses || $quoteTransfer->getItems()->count() === 0)
+            && $this->isAddressEmpty($quoteTransfer->getShippingAddress());
     }
 }
