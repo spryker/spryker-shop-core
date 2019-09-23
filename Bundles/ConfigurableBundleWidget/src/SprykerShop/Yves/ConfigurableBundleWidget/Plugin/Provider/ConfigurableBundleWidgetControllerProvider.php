@@ -49,7 +49,7 @@ class ConfigurableBundleWidgetControllerProvider extends AbstractYvesControllerP
      */
     protected function addCartConfiguredBundleChangeQuantityRoute()
     {
-        $this->createPostController('/{cart}/configured-bundle/change/{configuredBundleGroupKey}', self::ROUTE_CART_CONFIGURED_BUNDLE_CHANGE_QUANTITY, 'ConfigurableBundleWidget', 'Cart', 'changeConfiguredBundleQuantity')
+        $this->createPostController('/{cart}/configured-bundle/change/{configuredBundleGroupKey}', static::ROUTE_CART_CONFIGURED_BUNDLE_CHANGE_QUANTITY, 'ConfigurableBundleWidget', 'Cart', 'changeConfiguredBundleQuantity')
             ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart')
             ->convert('quantity', [$this, 'getQuantityFromRequest']);
