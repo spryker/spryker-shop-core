@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CustomerReorderWidget\Model;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
 
@@ -72,10 +73,44 @@ class CartFiller implements CartFillerInterface
     protected function updateCart(array $orderItems, OrderTransfer $orderTransfer): void
     {
         $cartChangeTransfer = $this->createCartChangeTransfer($orderItems);
+        $cartChangeTransfer->setQuote($this->cartClient->getQuote());
+        $orderItemTransfers = $this->sanitizeOrderItems($orderItems);
+        $cartChangeTransfer->setItems($orderItemTransfers);
 
         $this->cartClient->addValidItems($cartChangeTransfer, [
             static::PARAM_ORDER_REFERENCE => $orderTransfer->getOrderReference(),
         ]);
+    }
+
+    /**
+     * @param array $orderItems
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function sanitizeOrderItems(array $orderItems): ArrayObject
+    {
+        $orderItemsSanitized = new ArrayObject();
+        foreach ($orderItems as $itemTransfer) {
+            $orderItemsSanitized->append($this->removeIdSalesShipmentFromItem($itemTransfer));
+        }
+
+        return $orderItemsSanitized;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function removeIdSalesShipmentFromItem(ItemTransfer $itemTransfer): ItemTransfer
+    {
+        if ($itemTransfer->getShipment() === null) {
+            return $itemTransfer;
+        }
+
+        $itemTransfer->getShipment()->setIdSalesShipment(null);
+
+        return $itemTransfer;
     }
 
     /**

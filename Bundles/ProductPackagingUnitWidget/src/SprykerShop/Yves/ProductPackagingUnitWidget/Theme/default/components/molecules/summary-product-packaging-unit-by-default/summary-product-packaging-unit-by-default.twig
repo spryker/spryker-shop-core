@@ -1,0 +1,20 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'summary-product-packaging-unit-by-default',
+} %}
+
+{% define data = {
+    name: required,
+    quantity: required,
+    price: required,
+    quantitySalesUnit: required,
+} %}
+
+{% block body %}
+    {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+    {% set salesUnitSummary = salesUnitName ? data.quantity / data.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
+
+    <strong class="float-right">{{ can('SeePricePermissionPlugin') ? data.price : 'customer.access.cannot_see_price' | trans }}</strong>
+    <div>{{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }} {% if salesUnitSummary is not empty %}(= {{ salesUnitSummary }}){% endif %}</div>
+{% endblock %}
