@@ -21,7 +21,9 @@ class CompanyUserInvitationPageRouteProviderPlugin extends AbstractRouteProvider
     protected const ROUTE_INVITATION_RESEND = 'company/user-invitation/resend';
     protected const ROUTE_INVITATION_RESEND_CONFIRM = 'company/user-invitation/resend/confirm';
 
-    /** @see \Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants::ROUTE_INVITATION_ACCEPT */
+    /**
+     * @see \Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants::ROUTE_INVITATION_ACCEPT
+     */
     protected const ROUTE_INVITATION_ACCEPT = 'invitation/accept';
 
     protected const ROUTE_INVITATION_DELETE = 'company/user-invitation/delete';

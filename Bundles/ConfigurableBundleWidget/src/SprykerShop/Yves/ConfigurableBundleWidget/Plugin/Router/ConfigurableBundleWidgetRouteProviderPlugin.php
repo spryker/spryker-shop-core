@@ -15,7 +15,8 @@ class ConfigurableBundleWidgetRouteProviderPlugin extends AbstractRouteProviderP
     protected const ROUTE_CART_CONFIGURED_BUNDLE_REMOVE = 'cart/configured-bundle/remove';
 
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Adds Routes to the RouteCollection.
      *
      * @api
      *
