@@ -3,6 +3,7 @@
 {% define data = {
     products: required,
     facets: required,
+    activeFacets: [],
     category: null,
     categories: [],
     categoryId: null,
@@ -95,7 +96,7 @@
                 {% include organism('active-filter-section', 'CatalogPage') with {
                     class: 'spacing-top spacing-top--big',
                     data: {
-                        facets: data.facets,
+                        activeFacets: data.activeFacets,
                     },
                 } only %}
 
