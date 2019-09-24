@@ -52,7 +52,7 @@ class ServiceControllerResolver implements ControllerResolverInterface, Argument
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param callable $controller
-     * 
+     *
      * @return array
      */
     public function getArguments(Request $request, $controller)
