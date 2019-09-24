@@ -20,7 +20,7 @@ class FileManagerWidgetControllerProvider extends AbstractYvesControllerProvider
     protected $allowedLocalesPattern;
 
     /**
-     * {@inheritdoc}
+     * @param bool|null $sslEnabled
      */
     public function __construct(?bool $sslEnabled = null)
     {
