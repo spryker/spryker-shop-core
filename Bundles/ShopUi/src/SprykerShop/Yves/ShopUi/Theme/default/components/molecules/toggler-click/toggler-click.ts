@@ -10,7 +10,7 @@ export default class TogglerClick extends Component {
     protected triggersList: HTMLElement[];
 
     /**
-     * Elements targeted by the toggle action
+     * Elements targeted by the toggle action.
      *
      * @deprecated Use targetsList instead.
      */
@@ -46,9 +46,9 @@ export default class TogglerClick extends Component {
      * Toggles the class names in the target elements.
      */
     toggle(): void {
-        this.targetsList.forEach((goal: HTMLElement) => {
-            const addClass = !goal.classList.contains(this.classToToggle);
-            goal.classList.toggle(this.classToToggle, addClass);
+        this.targetsList.forEach((target: HTMLElement) => {
+            const addClass = !target.classList.contains(this.classToToggle);
+            target.classList.toggle(this.classToToggle, addClass);
         });
     }
 
