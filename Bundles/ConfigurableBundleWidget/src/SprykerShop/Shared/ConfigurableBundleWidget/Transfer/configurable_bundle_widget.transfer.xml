@@ -4,40 +4,40 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Quote">
-        <property name="items" type="Item[]" singular="item" />
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="configuredBundleItem" type="ConfiguredBundleItem" />
-        <property name="configuredBundle" type="ConfiguredBundle" />
-        <property name="sumSubtotalAggregation" type="int" />
-        <property name="unitPrice" type="int" />
+        <property name="configuredBundleItem" type="ConfiguredBundleItem"/>
+        <property name="configuredBundle" type="ConfiguredBundle"/>
+        <property name="sumSubtotalAggregation" type="int"/>
+        <property name="unitPrice" type="int"/>
     </transfer>
 
     <transfer name="ConfiguredBundleCollection">
-        <property name="configuredBundles" type="ConfiguredBundle[]" singular="configuredBundle" />
+        <property name="configuredBundles" type="ConfiguredBundle[]" singular="configuredBundle"/>
     </transfer>
 
     <transfer name="ConfiguredBundle">
-        <property name="template" type="ConfigurableBundleTemplate" />
-        <property name="quantity" type="int" />
-        <property name="groupKey" type="string" />
-        <property name="items" type="Item[]" singular="item" />
+        <property name="template" type="ConfigurableBundleTemplate"/>
+        <property name="quantity" type="int"/>
+        <property name="groupKey" type="string"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="ConfiguredBundleItem">
-        <property name="slot" type="ConfigurableBundleTemplateSlot" />
+        <property name="slot" type="ConfigurableBundleTemplateSlot"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplate">
-        <property name="idConfigurableBundleTemplate" type="int" />
-        <property name="uuid" type="string" />
-        <property name="name" type="string" />
+        <property name="idConfigurableBundleTemplate" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlot">
-        <property name="idConfigurableBundleTemplateSlot" type="int" />
-        <property name="uuid" type="string" />
+        <property name="idConfigurableBundleTemplateSlot" type="int"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
 </transfers>

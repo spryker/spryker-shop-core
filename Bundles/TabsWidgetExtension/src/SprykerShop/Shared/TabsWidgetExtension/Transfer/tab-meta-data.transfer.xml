@@ -4,8 +4,8 @@
         xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
         <transfer name="TabMetaData">
-            <property name="name" type="string" />
-            <property name="title" type="string" />
-            <property name="route" type="string" />
+            <property name="name" type="string"/>
+            <property name="title" type="string"/>
+            <property name="route" type="string"/>
         </transfer>
 </transfers>
