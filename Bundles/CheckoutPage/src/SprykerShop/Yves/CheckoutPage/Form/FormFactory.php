@@ -124,7 +124,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return string[]
+     * @return (\Symfony\Component\Form\FormTypeInterface|string)[]
      */
     public function getCustomerFormTypes()
     {
@@ -158,7 +158,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @param \Symfony\Component\Form\FormTypeInterface[]|string[] $formTypes
+     * @param (\Symfony\Component\Form\FormTypeInterface|string)[] $formTypes
      * @param \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface|null $dataProvider
      *
      * @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
