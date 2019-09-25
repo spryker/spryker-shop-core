@@ -9,8 +9,8 @@ namespace SprykerShopTest\Yves\ShopCmsSlot\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CmsSlotDataBuilder;
-use Generated\Shared\Transfer\CmsSlotContextTransfer;
 use Generated\Shared\Transfer\CmsSlotContentResponseTransfer;
+use Generated\Shared\Transfer\CmsSlotContextTransfer;
 
 class ShopCmsSlotHelper extends Module
 {

@@ -8,8 +8,8 @@
 namespace SprykerShop\Yves\ShopCmsSlot\Business;
 
 use Generated\Shared\Transfer\CmsSlotContentRequestTransfer;
-use Generated\Shared\Transfer\CmsSlotContextTransfer;
 use Generated\Shared\Transfer\CmsSlotContentResponseTransfer;
+use Generated\Shared\Transfer\CmsSlotContextTransfer;
 use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientInterface;
 use SprykerShop\Yves\ShopCmsSlot\Exception\MissingRequiredParameterException;
 use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface;

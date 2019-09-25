@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\ShopCmsSlot\Business;
 
-use Generated\Shared\Transfer\CmsSlotContextTransfer;
 use Generated\Shared\Transfer\CmsSlotContentResponseTransfer;
+use Generated\Shared\Transfer\CmsSlotContextTransfer;
 
 interface CmsSlotDataProviderInterface
 {
