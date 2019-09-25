@@ -204,7 +204,8 @@ class StepFactory extends AbstractFactory
             $this->getShipmentService(),
             $this->getConfig(),
             CheckoutPageControllerProvider::CHECKOUT_SUMMARY,
-            HomePageControllerProvider::ROUTE_HOME
+            HomePageControllerProvider::ROUTE_HOME,
+            $this->getCheckoutClient()
         );
     }
 
