@@ -46,19 +46,16 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
     public function getSlotContent(CmsSlotContextTransfer $cmsSlotContextTransfer): CmsSlotContentResponseTransfer
     {
         $providedData = $cmsSlotContextTransfer->getProvidedData();
+        $autoFilledKeys = $cmsSlotContextTransfer->getAutoFilledKeys();
 
         $this->assureProvidedHasRequiredKeys($providedData, $cmsSlotContextTransfer->getRequiredKeys());
 
-        $autoFilledKeys = $cmsSlotContextTransfer->getAutoFilledKeys();
-
         if ($autoFilledKeys) {
             $autoFilledData = $this->cmsSlotClient->getCmsSlotExternalDataByKeys($autoFilledKeys)->getValues();
-            $providedData = $autoFilledData + $providedData;
+            $providedData = $this->mergeProvidedData($autoFilledData, $providedData);
         }
 
-        $cmsSlotContentRequestTransfer = (new CmsSlotContentRequestTransfer())
-            ->setCmsSlotKey($cmsSlotContextTransfer->getCmsSlotKey())
-            ->setParams($providedData);
+        $cmsSlotContentRequestTransfer = $this->createCmsSlotContentRequestTransfer($cmsSlotContextTransfer, $providedData);
 
         return $this->cmsSlotContentPlugin->getSlotContent($cmsSlotContentRequestTransfer);
     }
@@ -80,9 +77,35 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
         foreach ($requiredKeys as $requiredKey) {
             if (!isset($provided[$requiredKey])) {
                 throw new MissingRequiredParameterException(
-                    sprintf('The "%s" param is missing in the provided data', $requiredKey)
+                    sprintf('Unable to find provided data for the key "%s"', $requiredKey)
                 );
             }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsSlotContextTransfer $cmsSlotContextTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotExternalDataTransfer[] $providedData
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotContentRequestTransfer
+     */
+    protected function createCmsSlotContentRequestTransfer(
+        CmsSlotContextTransfer $cmsSlotContextTransfer,
+        array $providedData
+    ): CmsSlotContentRequestTransfer {
+        return (new CmsSlotContentRequestTransfer())
+            ->setCmsSlotKey($cmsSlotContextTransfer->getCmsSlotKey())
+            ->setParams($providedData);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsSlotExternalDataTransfer[] $autoFilledData
+     * @param \Generated\Shared\Transfer\CmsSlotExternalDataTransfer[] $providedData
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotExternalDataTransfer[]
+     */
+    protected function mergeProvidedData(array $autoFilledData, array $providedData): array
+    {
+        return array_merge($autoFilledData, $providedData);
     }
 }
