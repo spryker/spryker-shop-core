@@ -7,11 +7,14 @@
 
 namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
+use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
@@ -27,13 +30,27 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $checkoutClient;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
+     */
+    protected $shipmentService;
+
+    /**
+     * @var \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig
+     */
+    protected $checkoutPageConfig;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface $productBundleClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
+     * @param \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig $checkoutPageConfig
      * @param string $stepRoute
      * @param string $escapeRoute
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface $checkoutClient
      */
     public function __construct(
         CheckoutPageToProductBundleClientInterface $productBundleClient,
+        CheckoutPageToShipmentServiceInterface $shipmentService,
+        CheckoutPageConfig $checkoutPageConfig,
         $stepRoute,
         $escapeRoute,
         CheckoutPageToCheckoutClientInterface $checkoutClient
@@ -41,6 +58,8 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->productBundleClient = $productBundleClient;
+        $this->shipmentService = $shipmentService;
+        $this->checkoutPageConfig = $checkoutPageConfig;
         $this->checkoutClient = $checkoutClient;
     }
 
@@ -74,15 +93,10 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
-        if ($quoteTransfer->getBillingAddress() === null
-            || $quoteTransfer->getShipment() === null
-            || $quoteTransfer->getPayment() === null
-            || $quoteTransfer->getPayment()->getPaymentProvider() === null
-        ) {
-            return false;
-        }
-
-        return true;
+        return $quoteTransfer->getBillingAddress() !== null
+            && $this->haveItemsShipmentTransfers($quoteTransfer)
+            && $quoteTransfer->getPayment() !== null
+            && $quoteTransfer->getPayment()->getPaymentProvider() !== null;
     }
 
     /**
@@ -92,12 +106,16 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function getTemplateVariables(AbstractTransfer $quoteTransfer)
     {
+        $shipmentGroups = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+
         return [
             'quoteTransfer' => $quoteTransfer,
             'cartItems' => $this->productBundleClient->getGroupedBundleItems(
                 $quoteTransfer->getItems(),
                 $quoteTransfer->getBundleItems()
             ),
+            'shipmentGroups' => $shipmentGroups,
+            'totalCosts' => $this->getTotalCosts($shipmentGroups),
             'isOrderPlaceableResponse' => $this->checkoutClient->isOrderPlaceable($quoteTransfer),
         ];
     }
@@ -141,5 +159,37 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         if ($request->isMethod('POST')) {
             $quoteTransfer->setCheckoutConfirmed(true);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer[]|\ArrayObject $shipmentGroups
+     *
+     * @return int
+     */
+    protected function getTotalCosts(ArrayObject $shipmentGroups): int
+    {
+        $totalCosts = 0;
+
+        foreach ($shipmentGroups as $shipmentGroup) {
+            $totalCosts += $shipmentGroup->getShipment()->getMethod()->getStoreCurrencyPrice();
+        }
+
+        return $totalCosts;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function haveItemsShipmentTransfers(QuoteTransfer $quoteTransfer): bool
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

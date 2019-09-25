@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ProductReplacementForWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductReplacementStorageTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 
 interface ProductReplacementForWidgetToProductAlternativeStorageClientInterface
 {
@@ -17,4 +18,11 @@ interface ProductReplacementForWidgetToProductAlternativeStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductReplacementStorageTransfer|null
      */
     public function findProductReplacementForStorage(string $sku): ?ProductReplacementStorageTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return bool
+     */
+    public function isAlternativeProductApplicable(ProductViewTransfer $productViewTransfer): bool;
 }

@@ -21,7 +21,9 @@ class CompanyUserInvitationPageControllerProvider extends AbstractYvesController
     public const ROUTE_INVITATION_RESEND = 'company/user-invitation/resend';
     public const ROUTE_INVITATION_RESEND_CONFIRM = 'company/user-invitation/resend/confirm';
 
-    /** @see \Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants::ROUTE_INVITATION_ACCEPT */
+    /**
+     * @see \Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants::ROUTE_INVITATION_ACCEPT
+     */
     public const ROUTE_INVITATION_ACCEPT = 'invitation/accept';
 
     public const ROUTE_INVITATION_DELETE = 'company/user-invitation/delete';

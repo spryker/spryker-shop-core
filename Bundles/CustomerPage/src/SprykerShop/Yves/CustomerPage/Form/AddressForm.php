@@ -107,6 +107,7 @@ class AddressForm extends AbstractType
             ]),
             'label' => 'profile.form.salutation',
             'required' => true,
+            'trim' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
             ],
@@ -126,6 +127,7 @@ class AddressForm extends AbstractType
         $builder->add(self::FIELD_FIRST_NAME, TextType::class, [
             'label' => 'customer.address.first_name',
             'required' => true,
+            'trim' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
                 $this->createMinLengthConstraint($options),
@@ -146,6 +148,7 @@ class AddressForm extends AbstractType
         $builder->add(self::FIELD_LAST_NAME, TextType::class, [
             'label' => 'customer.address.last_name',
             'required' => true,
+            'trim' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
                 $this->createMinLengthConstraint($options),
@@ -165,6 +168,7 @@ class AddressForm extends AbstractType
         $builder->add(self::FIELD_COMPANY, TextType::class, [
             'label' => 'customer.address.company',
             'required' => false,
+            'trim' => true,
         ]);
 
         return $this;
@@ -181,6 +185,7 @@ class AddressForm extends AbstractType
         $builder->add(self::FIELD_ADDRESS_1, TextType::class, [
             'label' => 'customer.address.address1',
             'required' => true,
+            'trim' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
                 $this->createMinLengthConstraint($options),
@@ -201,6 +206,7 @@ class AddressForm extends AbstractType
         $builder->add(self::FIELD_ADDRESS_2, TextType::class, [
             'label' => 'customer.address.number',
             'required' => true,
+            'trim' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
                 $this->createAddressNumberConstraint($options),
@@ -220,6 +226,7 @@ class AddressForm extends AbstractType
         $builder->add(self::FIELD_ADDRESS_3, TextType::class, [
             'label' => 'customer.address.address3',
             'required' => false,
+            'trim' => true,
         ]);
 
         return $this;
@@ -236,6 +243,7 @@ class AddressForm extends AbstractType
         $builder->add(self::FIELD_ZIP_CODE, TextType::class, [
             'label' => 'customer.address.zip_code',
             'required' => true,
+            'trim' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
             ],
@@ -255,6 +263,7 @@ class AddressForm extends AbstractType
         $builder->add(self::FIELD_CITY, TextType::class, [
             'label' => 'customer.address.city',
             'required' => true,
+            'trim' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
                 $this->createMinLengthConstraint($options),
@@ -294,6 +303,7 @@ class AddressForm extends AbstractType
         $builder->add(static::FIELD_PHONE, TelType::class, [
             'label' => 'customer.address.phone',
             'required' => false,
+            'trim' => true,
         ]);
 
         return $this;
