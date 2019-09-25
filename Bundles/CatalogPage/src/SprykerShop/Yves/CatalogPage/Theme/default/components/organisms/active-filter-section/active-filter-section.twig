@@ -6,7 +6,7 @@
 } %}
 
 {% define data = {
-    activeFacets: [],
+    facets: [],
 } %}
 
 {%- block class -%}
@@ -16,7 +16,7 @@
 {% block component %}
     {% set activeFilters = [] %}
 
-    {% for filter in data.activeFacets %}
+    {% for filter in data.facets %}
         {% set activeFilter = include(
             [
                 molecule('active-filter-' ~ filter.config.name, 'CatalogPage'),
@@ -53,7 +53,7 @@
     <hr>
 
     <div class="text-right">
-        <a class="link link--small" href="{{ generateUrlWithoutAllActiveSearchFilters(data.activeFacets) }}">
+        <a class="link link--small" href="{{ generateUrlWithoutAllActiveSearchFilters(data.facets) }}">
             {{ 'catalog.filter.resetAllFilters' | trans }} &times;
         </a>
     </div>
