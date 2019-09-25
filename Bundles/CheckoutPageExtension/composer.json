@@ -11,7 +11,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/symfony": "If you want to use plugins with symfony components."
+    "spryker/symfony": "If you want to use CheckoutPage expander plugins."
   },
   "autoload": {
     "psr-4": {

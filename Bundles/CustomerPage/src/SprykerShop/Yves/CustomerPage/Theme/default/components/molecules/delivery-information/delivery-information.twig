@@ -1,0 +1,26 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'delivery-information',
+    tag: 'ul',
+} %}
+
+{% define data = {
+    carrierName: required,
+    methodName: required,
+    storeCurrencyPrice: required,
+    currencyIsoCode: required,
+} %}
+
+{% block class -%}
+    {{ parent() }}
+    list
+{%- endblock %}
+
+{% block body %}
+    <li class="list__item">{{ data.carrierName }}</li>
+    <li class="list__item">
+        {{ data.methodName }}
+        {{ data.storeCurrencyPrice | money(true, data.currencyIsoCode) }}
+    </li>
+{% endblock %}

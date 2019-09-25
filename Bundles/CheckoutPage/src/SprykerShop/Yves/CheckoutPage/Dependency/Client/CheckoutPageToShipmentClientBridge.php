@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CheckoutPage\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 
 class CheckoutPageToShipmentClientBridge implements CheckoutPageToShipmentClientInterface
 {
@@ -27,10 +28,28 @@ class CheckoutPageToShipmentClientBridge implements CheckoutPageToShipmentClient
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer
      */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer)
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentMethodsCollectionTransfer
     {
-        return $this->shipmentClient->getAvailableMethods($quoteTransfer);
+        return $this->shipmentClient->getAvailableMethodsByShipment($quoteTransfer);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMultiShipmentSelectionEnabled(): bool
+    {
+        return $this->shipmentClient->isMultiShipmentSelectionEnabled();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteWithShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->shipmentClient->expandQuoteWithShipmentGroups($quoteTransfer);
     }
 }
