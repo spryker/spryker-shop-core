@@ -8,7 +8,7 @@
 namespace SprykerShopTest\Yves\ShopCmsSlot\Helper;
 
 use Codeception\Module;
-use Generated\Shared\DataBuilder\CmsSlotDataBuilder;
+use Generated\Shared\DataBuilder\CmsSlotContentResponseBuilder;
 use Generated\Shared\Transfer\CmsSlotContentResponseTransfer;
 use Generated\Shared\Transfer\CmsSlotContextTransfer;
 
@@ -21,7 +21,7 @@ class ShopCmsSlotHelper extends Module
      */
     public function getCmsSlotContentResponseTransfer(array $seedData = []): CmsSlotContentResponseTransfer
     {
-        return (new CmsSlotDataBuilder($seedData))->build();
+        return (new CmsSlotContentResponseBuilder($seedData))->build();
     }
 
     /**
