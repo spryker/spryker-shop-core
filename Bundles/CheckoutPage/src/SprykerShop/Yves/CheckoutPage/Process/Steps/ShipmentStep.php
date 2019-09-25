@@ -79,10 +79,8 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function requireInput(AbstractTransfer $quoteTransfer)
     {
-//        return $this->executeShipmentStepPreCheckPlugins($quoteTransfer) === false
-//            && $quoteTransfer->getItems()->count()
-//            && $this->hasOnlyGiftCardItems($quoteTransfer) === false;
         return $quoteTransfer->getItems()->count() !== 0
+            && $this->executeShipmentStepPreCheckPlugins($quoteTransfer) === false
             && $this->giftCardItemsChecker->hasOnlyGiftCardItems($quoteTransfer->getItems()) === false;
     }
 
