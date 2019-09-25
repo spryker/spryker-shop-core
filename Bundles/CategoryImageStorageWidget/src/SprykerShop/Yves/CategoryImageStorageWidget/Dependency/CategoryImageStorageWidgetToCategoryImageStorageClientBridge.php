@@ -25,7 +25,7 @@ class CategoryImageStorageWidgetToCategoryImageStorageClientBridge implements Ca
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param int $categoryId
      * @param string $localeName

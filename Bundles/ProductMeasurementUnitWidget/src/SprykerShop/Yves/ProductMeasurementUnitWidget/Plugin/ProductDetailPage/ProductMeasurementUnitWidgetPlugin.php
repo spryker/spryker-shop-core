@@ -34,7 +34,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,7 +46,7 @@ class ProductMeasurementUnitWidgetPlugin extends AbstractWidgetPlugin implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -22,7 +22,7 @@ class FullTextSearchProductsTabPlugin extends AbstractPlugin implements FullText
     protected const TAB_TRANSLATED_TITLE = 'global.search.suggestion.in_products';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Calculates total hits for catalog page tab via Catalog module's method call
      *
      * @api
@@ -41,7 +41,7 @@ class FullTextSearchProductsTabPlugin extends AbstractPlugin implements FullText
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

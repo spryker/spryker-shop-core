@@ -19,7 +19,7 @@ class CartCommentThreadAfterOperationStrategyPlugin extends AbstractPlugin imple
     protected const COMMENT_THREAD_QUOTE_OWNER_TYPE = 'quote';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Checks if provided owner type related to quote.
      *
      * @api
@@ -34,7 +34,7 @@ class CartCommentThreadAfterOperationStrategyPlugin extends AbstractPlugin imple
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Updates session quote with comment thread.
      *
      * @api

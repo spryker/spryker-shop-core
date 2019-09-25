@@ -18,7 +18,7 @@ use Twig\Environment;
 class ContentProductSetTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - The plugin displays a content product set.
      *
      * @api

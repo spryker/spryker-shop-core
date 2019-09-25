@@ -23,7 +23,7 @@ class ShopApplicationApplicationPlugin extends AbstractPlugin implements Applica
     protected const DEBUG = 'debug';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

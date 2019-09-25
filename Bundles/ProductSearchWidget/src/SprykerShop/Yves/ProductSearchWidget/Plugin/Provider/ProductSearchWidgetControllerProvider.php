@@ -16,7 +16,7 @@ class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvid
     protected const ROUTE_PRODUCT_QUICK_ADD = 'product-quick-add';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param bool|null $sslEnabled
      */

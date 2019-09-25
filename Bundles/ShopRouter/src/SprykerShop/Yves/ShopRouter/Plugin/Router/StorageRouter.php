@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
 class StorageRouter extends AbstractRouter
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      */
@@ -51,7 +51,7 @@ class StorageRouter extends AbstractRouter
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
      */
