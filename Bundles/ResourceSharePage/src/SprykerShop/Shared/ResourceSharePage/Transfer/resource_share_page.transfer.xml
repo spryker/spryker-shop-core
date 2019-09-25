@@ -33,8 +33,4 @@
         <property name="uuid" type="string"/>
     </transfer>
 
-    <transfer name="Message">
-        <property name="value" type="string"/>
-    </transfer>
-
 </transfers>
