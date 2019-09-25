@@ -39,27 +39,21 @@ class ProductPackagingUnitWidget extends AbstractWidget
             $baseUnit = $productMeasurementUnitStorageClient->findProductMeasurementBaseUnitByIdProductConcrete($productViewTransfer->getIdProductConcrete());
 
             $productConcretePackagingStorageTransfer = $productPackagingUnitStorageClient->findProductConcretePackagingById(
-                $productViewTransfer->getIdProductAbstract(),
                 $productViewTransfer->getIdProductConcrete()
-            );
-
-            $productAbstractPackaging = $productPackagingUnitStorageClient->findProductAbstractPackagingById(
-                $productViewTransfer->getIdProductAbstract()
             );
 
             $salesUnits = $productMeasurementUnitStorageClient->findProductMeasurementSalesUnitByIdProductConcrete(
                 $productViewTransfer->getIdProductConcrete()
             );
 
-            if ($productAbstractPackaging) {
+            if ($productConcretePackagingStorageTransfer) {
                 $leadProductSalesUnits = $productMeasurementUnitStorageClient->findProductMeasurementSalesUnitByIdProductConcrete(
-                    $productAbstractPackaging->getLeadProduct()
+                    $productConcretePackagingStorageTransfer->getIdLeadProduct()
                 );
 
                 $isAmountBlockEnabled = $this->isAmountBlockEnabled(
                     $productViewTransfer->getIdProductConcrete(),
-                    $productAbstractPackaging->getLeadProduct(),
-                    $productConcretePackagingStorageTransfer->getHasLeadProduct()
+                    $productConcretePackagingStorageTransfer->getIdLeadProduct()
                 );
             }
 
@@ -201,13 +195,12 @@ class ProductPackagingUnitWidget extends AbstractWidget
 
     /**
      * @param int $idProduct
-     * @param int $idLeadProduct
-     * @param bool $hasLeadProduct
+     * @param int|null $idLeadProduct
      *
      * @return bool
      */
-    protected function isAmountBlockEnabled(int $idProduct, int $idLeadProduct, bool $hasLeadProduct): bool
+    protected function isAmountBlockEnabled(int $idProduct, ?int $idLeadProduct): bool
     {
-        return ($idProduct !== $idLeadProduct) && $hasLeadProduct;
+        return ($idProduct !== $idLeadProduct) && $idLeadProduct !== null;
     }
 }

@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer;
 use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
 
 class ProductPackagingUnitWidgetToProductPackagingUnitStorageClientBridge implements ProductPackagingUnitWidgetToProductPackagingUnitStorageClientInterface
@@ -21,31 +20,19 @@ class ProductPackagingUnitWidgetToProductPackagingUnitStorageClientBridge implem
     /**
      * @param \Spryker\Client\ProductPackagingUnitStorage\ProductPackagingUnitStorageClientInterface $productPackagingUnitStorageClient
      */
-    public function __construct(
-        $productPackagingUnitStorageClient
-    ) {
+    public function __construct($productPackagingUnitStorageClient)
+    {
         $this->productPackagingUnitStorageClient = $productPackagingUnitStorageClient;
     }
 
     /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer|null
-     */
-    public function findProductAbstractPackagingById(int $idProductAbstract): ?ProductAbstractPackagingStorageTransfer
-    {
-        return $this->productPackagingUnitStorageClient->findProductAbstractPackagingById($idProductAbstract);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param int $idProduct
+     * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer|null
      */
-    public function findProductConcretePackagingById(int $idProductAbstract, int $idProduct): ?ProductConcretePackagingStorageTransfer
+    public function findProductConcretePackagingById(int $idProductConcrete): ?ProductConcretePackagingStorageTransfer
     {
-        return $this->productPackagingUnitStorageClient->findProductConcretePackagingById($idProductAbstract, $idProduct);
+        return $this->productPackagingUnitStorageClient->findProductConcretePackagingById($idProductConcrete);
     }
 
     /**
