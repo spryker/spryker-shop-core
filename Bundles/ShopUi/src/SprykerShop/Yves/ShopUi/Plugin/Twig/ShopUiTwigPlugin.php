@@ -18,7 +18,7 @@ use Twig\Environment;
 class ShopUiTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

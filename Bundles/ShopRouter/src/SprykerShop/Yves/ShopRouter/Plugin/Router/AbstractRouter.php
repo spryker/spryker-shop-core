@@ -32,7 +32,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     private $sslEnabled;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function setContext(RequestContext $context)
     {
@@ -40,7 +40,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getContext()
     {
@@ -48,7 +48,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRouteCollection()
     {

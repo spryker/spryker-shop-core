@@ -30,7 +30,7 @@ class CartProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implemen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -42,7 +42,7 @@ class CartProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implemen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

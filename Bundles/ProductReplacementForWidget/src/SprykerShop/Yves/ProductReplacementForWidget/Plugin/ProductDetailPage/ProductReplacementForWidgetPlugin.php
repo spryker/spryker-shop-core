@@ -33,7 +33,7 @@ class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +45,7 @@ class ProductReplacementForWidgetPlugin extends AbstractWidgetPlugin implements 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -23,7 +23,7 @@ class RedirectUriCustomerRedirectStrategyPlugin extends AbstractPlugin implement
     protected const PARAM_REDIRECT_URI = 'redirectUri';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Checks if application request has param Redirect Uri.
      *
      * @api
@@ -38,7 +38,7 @@ class RedirectUriCustomerRedirectStrategyPlugin extends AbstractPlugin implement
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

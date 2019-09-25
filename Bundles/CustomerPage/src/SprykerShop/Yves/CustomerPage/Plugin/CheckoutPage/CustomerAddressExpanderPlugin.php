@@ -18,7 +18,7 @@ use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\AddressTransferExpa
 class CustomerAddressExpanderPlugin extends AbstractPlugin implements AddressTransferExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands address transfer with customer address data.
      *
      * @api
