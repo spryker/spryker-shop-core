@@ -52,6 +52,7 @@ export default class AjaxProvider extends Component {
      */
     /* tslint:disable: no-any */
     async fetch<T = string>(data?: any): Promise<T> {
+        /* tslint:enable */
         debug(this.method, this.url, 'fetching...');
         this.isFetchingRequest = true;
         this.dispatchCustomEvent(EVENT_FETCHING);
@@ -66,7 +67,6 @@ export default class AjaxProvider extends Component {
             this.xhr.send(data);
         });
     }
-    /* tslint:enable */
 
     protected onRequestLoad(resolve: Function, reject: Function, loadEvent: Event): void {
         this.isFetchingRequest = false;
