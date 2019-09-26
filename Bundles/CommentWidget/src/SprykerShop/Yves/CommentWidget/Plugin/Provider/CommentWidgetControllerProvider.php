@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CommentWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CommentWidget\Plugin\Router\CommentWidgetRouteProviderPlugin` instead.
+ */
 class CommentWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     protected const ROUTE_COMMENT_ADD = 'comment/add';

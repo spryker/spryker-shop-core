@@ -34,7 +34,7 @@ class ShoppingListMenuItemWidgetPlugin extends AbstractWidgetPlugin implements S
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,7 +46,7 @@ class ShoppingListMenuItemWidgetPlugin extends AbstractWidgetPlugin implements S
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

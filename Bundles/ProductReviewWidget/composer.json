@@ -20,6 +20,7 @@
     "spryker-shop/product-detail-page": "*",
     "spryker-shop/product-widget": "*",
     "spryker/code-sniffer": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
@@ -27,6 +28,7 @@
     "spryker-shop/catalog-page": "Widget plugins are available for this module.",
     "spryker-shop/product-detail-page": "Widget plugins are available for this module.",
     "spryker-shop/product-widget": "Widget plugins are available for this module.",
+    "spryker/router": "Use this module when you want to use the Router.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

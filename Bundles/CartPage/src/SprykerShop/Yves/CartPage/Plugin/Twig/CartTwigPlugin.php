@@ -26,7 +26,7 @@ class CartTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected const FUNCTION_NAME_GET_CART_QUANTITY = 'getCartQuantity';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

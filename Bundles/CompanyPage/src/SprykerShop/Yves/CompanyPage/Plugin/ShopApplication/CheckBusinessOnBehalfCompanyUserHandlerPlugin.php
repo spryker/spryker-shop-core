@@ -21,7 +21,7 @@ class CheckBusinessOnBehalfCompanyUserHandlerPlugin extends AbstractPlugin imple
     protected const COMPANY_REDIRECT_ROUTE = 'company/user/select';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Verifies if customer is logged-in and has isOnBehalf flag without a selected company for current session.
      * - Redirects verified customer to the pre-configured route if the requested page is a company management pages.
      *

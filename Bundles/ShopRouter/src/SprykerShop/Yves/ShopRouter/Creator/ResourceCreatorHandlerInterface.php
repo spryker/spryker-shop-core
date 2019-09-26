@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\ShopRouter\Creator;
 
+/**
+ * @deprecated Use `spryker-shop/storage-router` instead.
+ */
 interface ResourceCreatorHandlerInterface
 {
     /**

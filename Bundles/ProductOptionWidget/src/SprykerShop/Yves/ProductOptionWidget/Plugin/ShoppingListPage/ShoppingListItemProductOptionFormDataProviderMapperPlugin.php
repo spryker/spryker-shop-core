@@ -17,7 +17,7 @@ use SprykerShop\Yves\ShoppingListPageExtension\Dependency\Plugin\ShoppingListFor
 class ShoppingListItemProductOptionFormDataProviderMapperPlugin extends AbstractPlugin implements ShoppingListFormDataProviderMapperPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Maps provided parameters into ShoppingLisTransfer to populate product option params.
      *
      * @api

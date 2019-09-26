@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ShopApplication\ControllerResolver;
 use InvalidArgumentException;
 use Spryker\Service\Container\ContainerInterface;
 
+/**
+ * @deprecated Use `spryker/router` instead.
+ */
 class CallbackControllerResolver implements CallbackControllerResolverInterface
 {
     protected const SERVICE_PATTERN = "/[A-Za-z0-9\._\-]+:[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/";

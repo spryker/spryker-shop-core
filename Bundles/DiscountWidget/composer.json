@@ -19,11 +19,13 @@
   "require-dev": {
     "spryker-shop/cart-code-widget": "*",
     "spryker/code-sniffer": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/cart-code-widget": "If you want to use components from module CartCodeWidget.",
+    "spryker/router": "Use this module when you want to use the Router.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
