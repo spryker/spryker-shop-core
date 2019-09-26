@@ -279,6 +279,7 @@
                 embed: {
                     overview: data.overview,
                     cart: data.cart,
+                    checkoutErrors: data.checkoutErrors,
                 },
             } only %}
                 {% block body %}
@@ -301,16 +302,17 @@
 
                     <hr class="box__separator">
                     {{ parent() }}
+
+                    {% if embed.checkoutErrors is not empty %}
+                        <hr class="box__separator">
+                        <ul class="list list--alert">
+                            {% for error in embed.checkoutErrors %}
+                                <li class="list__item">{{ error.message | trans }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 {% endblock %}
             {% endembed %}
-
-            {% if data.checkoutErrors is not empty %}
-                <ul class="list list--alert">
-                    {% for error in data.checkoutErrors %}
-                        <li class="list__item">{{ error.message | trans }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
         </div>
     </div>
 {% endblock %}
