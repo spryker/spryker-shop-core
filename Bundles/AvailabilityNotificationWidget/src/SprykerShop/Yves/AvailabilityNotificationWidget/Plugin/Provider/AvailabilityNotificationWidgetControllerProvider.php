@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\AvailabilityNotificationWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\AvailabilityNotificationWidget\Plugin\Router\AvailabilityNotificationWidgetRouteProviderPlugin` instead.
+ */
 class AvailabilityNotificationWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_AVAILABILITY_NOTIFICATION_UNSUBSCRIBE = 'availability-notification/unsubscribe';

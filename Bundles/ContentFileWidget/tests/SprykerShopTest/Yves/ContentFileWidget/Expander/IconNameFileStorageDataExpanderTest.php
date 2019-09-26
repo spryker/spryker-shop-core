@@ -15,6 +15,7 @@ use SprykerShop\Yves\ContentFileWidget\Expander\IconNameFileStorageDataExpander;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerShop
  * @group Yves
  * @group ContentFileWidget

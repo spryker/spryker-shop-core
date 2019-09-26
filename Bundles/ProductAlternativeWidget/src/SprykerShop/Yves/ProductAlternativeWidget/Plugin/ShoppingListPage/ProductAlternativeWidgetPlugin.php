@@ -34,7 +34,7 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,7 +46,7 @@ class ProductAlternativeWidgetPlugin extends AbstractWidgetPlugin implements Pro
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

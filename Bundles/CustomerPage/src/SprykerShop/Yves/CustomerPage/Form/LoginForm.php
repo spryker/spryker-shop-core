@@ -25,7 +25,7 @@ class LoginForm extends AbstractType
     public const FIELD_PASSWORD = 'password';
 
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
-    protected const VALIODATION_EMAIL_MESSAGE = 'validation.email';
+    protected const VALIDATION_EMAIL_MESSAGE = 'validation.email';
 
     /**
      * @return string
@@ -99,6 +99,6 @@ class LoginForm extends AbstractType
      */
     protected function createEmailConstraint(): Email
     {
-        return new Email(['message' => static::VALIODATION_EMAIL_MESSAGE]);
+        return new Email(['message' => static::VALIDATION_EMAIL_MESSAGE]);
     }
 }

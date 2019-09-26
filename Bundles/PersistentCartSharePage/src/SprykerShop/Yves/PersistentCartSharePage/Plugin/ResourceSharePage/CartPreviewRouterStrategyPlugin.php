@@ -37,7 +37,7 @@ class CartPreviewRouterStrategyPlugin extends AbstractPlugin implements Resource
     protected const PARAM_RESOURCE_SHARE_UUID = 'resourceShareUuid';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns true if resource type is 'quote' and cart share option is 'PREVIEW'.
      * - Returns false otherwise.
      *
@@ -63,7 +63,7 @@ class CartPreviewRouterStrategyPlugin extends AbstractPlugin implements Resource
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns route for the cart preview share page.
      *
      * @api

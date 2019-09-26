@@ -19,6 +19,9 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
+/**
+ * @deprecated Use `spryker/router` instead.
+ */
 abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
 {
     /**
@@ -32,9 +35,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     private $sslEnabled;
 
     /**
-     * {@inheritdoc}
-     *
-     * @return void
+     * @inheritDoc
      */
     public function setContext(RequestContext $context)
     {
@@ -42,7 +43,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function getContext()
     {
@@ -50,7 +51,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function getRouteCollection()
     {

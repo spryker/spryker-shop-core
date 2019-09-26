@@ -32,7 +32,7 @@ class PriceProductVolumeWidgetPlugin extends AbstractWidgetPlugin implements Pri
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,7 +44,7 @@ class PriceProductVolumeWidgetPlugin extends AbstractWidgetPlugin implements Pri
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -3,30 +3,36 @@ import Component from '../../../models/component';
 export default class TogglerClick extends Component {
     /**
      * Elements triggering the toggle action.
+     *
+     * @deprecated Use triggersList instead.
      */
-    readonly triggers: HTMLElement[];
+    triggers: HTMLElement[];
+    protected triggersList: HTMLElement[];
 
     /**
      * Elements targeted by the toggle action.
+     *
+     * @deprecated Use targetsList instead.
      */
-    readonly targets: HTMLElement[];
+    targets: HTMLElement[];
+    protected targetsList: HTMLElement[];
 
-    constructor() {
-        super();
+    protected readyCallback(): void {}
+
+    protected init(): void {
         /* tslint:disable: deprecation */
-        this.triggers = <HTMLElement[]>Array.from(this.triggerClassName ?
+        this.triggersList = <HTMLElement[]>Array.from(this.triggerClassName ?
             document.getElementsByClassName(this.triggerClassName) : document.querySelectorAll(this.triggerSelector));
-        this.targets = <HTMLElement[]>Array.from(this.targetClassName ?
+        this.targetsList = <HTMLElement[]>Array.from(this.targetClassName ?
             document.getElementsByClassName(this.targetClassName) : document.querySelectorAll(this.targetSelector));
+        [this.triggers, this.targets] = [this.triggersList, this.targetsList];
         /* tslint:enable: deprecation */
-    }
 
-    protected readyCallback(): void {
         this.mapEvents();
     }
 
     protected mapEvents(): void {
-        this.triggers.forEach((trigger: HTMLElement) => {
+        this.triggersList.forEach((trigger: HTMLElement) => {
             trigger.addEventListener('click', (event: Event) => this.onTriggerClick(event));
         });
     }
@@ -40,7 +46,7 @@ export default class TogglerClick extends Component {
      * Toggles the class names in the target elements.
      */
     toggle(): void {
-        this.targets.forEach((target: HTMLElement) => {
+        this.targetsList.forEach((target: HTMLElement) => {
             const addClass = !target.classList.contains(this.classToToggle);
             target.classList.toggle(this.classToToggle, addClass);
         });

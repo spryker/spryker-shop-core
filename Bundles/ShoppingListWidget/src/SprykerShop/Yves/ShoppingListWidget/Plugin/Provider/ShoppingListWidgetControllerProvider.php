@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ShoppingListWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\ShoppingListWidget\Plugin\Router\ShoppingListWidgetRouteProviderPlugin` instead.
+ */
 class ShoppingListWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_ADD_ITEM = 'shopping-list/add-item';

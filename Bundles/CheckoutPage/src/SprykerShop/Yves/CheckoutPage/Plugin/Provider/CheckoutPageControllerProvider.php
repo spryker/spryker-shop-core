@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CheckoutPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin` instead.
+ */
 class CheckoutPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const CHECKOUT_CUSTOMER = 'checkout-customer';

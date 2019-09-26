@@ -34,7 +34,7 @@
             {% endif %}
             {% if (quantity > 0) or (quantity <= 0 and data.isEmptyCategoryFilterValueVisible == true) %}
                 <li class="menu__item {% if hasChildren %}menu__item--has-children-list{% endif %}">
-                    <button class="link" onclick="this.form.action='{{ categoryUrl }}'" {% if quantity == 0 %}disabled="disabled"{% endif %}>
+                    <button class="link" type="button" onclick="this.form.action='{{ categoryUrl }}';this.form.submit();" {% if quantity == 0 %}disabled="disabled"{% endif %}>
                         {{ categoryNode.name }} ({{ quantity }})
                     </button>
 

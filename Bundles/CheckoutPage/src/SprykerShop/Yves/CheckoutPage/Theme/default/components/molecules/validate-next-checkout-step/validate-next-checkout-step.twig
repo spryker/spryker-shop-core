@@ -1,0 +1,18 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'validate-next-checkout-step',
+    tag: 'validate-next-checkout-step',
+} %}
+
+{% define attributes = {
+    'container-selector': required,
+    'target-selector': required,
+    'dropdown-trigger-selector': required,
+    'is-enable': true,
+    'class-to-toggle': 'is-hidden',
+} %}
+
+{%- block class -%}
+    {{parent()}} {{ config.jsName }}
+{%- endblock -%}
