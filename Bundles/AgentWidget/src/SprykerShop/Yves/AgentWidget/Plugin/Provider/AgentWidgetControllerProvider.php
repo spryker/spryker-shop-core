@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\AgentWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\AgentWidget\Plugin\Router\AgentWidgetRouteProviderPlugin` instead.
+ */
 class AgentWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_CUSTOMER_AUTOCOMPLETE = 'agent-widget/customer-autocomplete';

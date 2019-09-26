@@ -8,6 +8,7 @@
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-router-extension": "^1.0.0",
     "spryker-shop/shop-ui": "^1.27.0",
+    "spryker-shop/storage-router-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/product-storage": "^1.1.0",
     "spryker/storage": "^3.4.0",

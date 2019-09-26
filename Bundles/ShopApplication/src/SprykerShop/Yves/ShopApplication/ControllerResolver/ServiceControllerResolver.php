@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 
+/**
+ * @deprecated Use `spryker/router` instead.
+ */
 class ServiceControllerResolver implements ControllerResolverInterface, ArgumentResolverInterface
 {
     /**
@@ -53,10 +56,12 @@ class ServiceControllerResolver implements ControllerResolverInterface, Argument
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param callable $controller
      *
-     * @return array
+     * @return array|void
      */
     public function getArguments(Request $request, $controller)
     {
-        return $this->controllerResolver->getArguments($request, $controller);
+        if (method_exists($this->controllerResolver, 'getArguments')) {
+            return $this->controllerResolver->getArguments($request, $controller);
+        }
     }
 }
