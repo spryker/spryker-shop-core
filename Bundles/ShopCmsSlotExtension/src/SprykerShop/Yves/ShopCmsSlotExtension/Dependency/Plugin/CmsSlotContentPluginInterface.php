@@ -8,20 +8,22 @@
 namespace SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CmsSlotContentRequestTransfer;
-use Generated\Shared\Transfer\CmsSlotDataTransfer;
+use Generated\Shared\Transfer\CmsSlotContentResponseTransfer;
 
 interface CmsSlotContentPluginInterface
 {
     /**
      * Specification:
      * - Resolves a CMS slot content by CmsSlotContentRequestTransfer.
-     * - Returns a CmsSlotDataTransfer with data for CmsSlot rendering.
+     * - Returns a CmsSlotContentResponseTransfer with data for CmsSlot rendering.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsSlotDataTransfer
+     * @return \Generated\Shared\Transfer\CmsSlotContentResponseTransfer
      */
-    public function getSlotContent(CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer): CmsSlotDataTransfer;
+    public function getSlotContent(
+        CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer
+    ): CmsSlotContentResponseTransfer;
 }
