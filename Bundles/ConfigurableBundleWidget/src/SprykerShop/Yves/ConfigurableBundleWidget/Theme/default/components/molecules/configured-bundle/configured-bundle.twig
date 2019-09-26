@@ -9,6 +9,7 @@
     bundle: required,
     bundleItems: data.bundle.items | default({}),
     currencyIsoCode: null,
+    priceMode: null,
     isEditable: true,
 } %}
 
@@ -70,6 +71,7 @@
                             data: {
                                 product: item,
                                 currencyIsoCode: data.currencyIsoCode,
+                                priceMode: data.priceMode,
                             },
                         } only %}
                     {% endblock %}

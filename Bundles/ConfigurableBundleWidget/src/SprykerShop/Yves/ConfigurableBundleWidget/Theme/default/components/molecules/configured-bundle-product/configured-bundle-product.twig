@@ -53,7 +53,13 @@
                                                 {% endblock %}
 
                                                 {%- block priceValue -%}
-                                                    {{ data.product.unitPrice | money(true, data.currencyIsoCode) }}
+                                                    {% if data.product.sourceUnitGrossPrice is not null or data.product.sourceUnitNetPrice is not null %}
+                                                        {% set priceModeGross = 'GROSS_MODE' %}
+                                                        {% set originUnitPrice = (data.priceMode == priceModeGross) ? data.product.originUnitGrossPrice : data.product.originUnitNetPrice %}
+
+                                                        <s>{{ originUnitPrice | money(true, data.currencyIsoCode) }}</s>
+                                                    {% endif %}
+                                                    &nbsp;{{ data.product.unitPrice | money(true, data.currencyIsoCode) }}
                                                 {% endblock %}
                                             {% else %}
                                                 {{ 'customer.access.cannot_see_price' | trans }}
