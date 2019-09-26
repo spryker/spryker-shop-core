@@ -57,9 +57,11 @@
                                                         {% set priceModeGross = 'GROSS_MODE' %}
                                                         {% set originUnitPrice = (data.priceMode == priceModeGross) ? data.product.originUnitGrossPrice : data.product.originUnitNetPrice %}
 
-                                                        <s>{{ originUnitPrice | money(true, data.currencyIsoCode) }}</s>
+                                                        <del>{{ originUnitPrice | money(true, data.currencyIsoCode) }}</del>
                                                     {% endif %}
-                                                    &nbsp;{{ data.product.unitPrice | money(true, data.currencyIsoCode) }}
+                                                    <span class="spacing-right spacing--inner">
+                                                        {{ data.product.unitPrice | money(true, data.currencyIsoCode) }}
+                                                    </span>
                                                 {% endblock %}
                                             {% else %}
                                                 {{ 'customer.access.cannot_see_price' | trans }}
