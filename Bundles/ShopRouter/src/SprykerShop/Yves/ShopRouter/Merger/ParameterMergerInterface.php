@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\ShopRouter\Merger;
 
+/**
+ * @deprecated Use `spryker/router` instead.
+ */
 interface ParameterMergerInterface
 {
     /**

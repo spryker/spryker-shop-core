@@ -13,6 +13,8 @@ use SprykerShop\Yves\ProductDetailPage\Controller\ProductController;
 use SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
 
 /**
+ * @deprecated Use `\SprykerShop\Yves\ProductDetailPage\Plugin\StorageRouter\ProductDetailPageResourceCreatorPlugin` instead.
+ *
  * @method \SprykerShop\Yves\ProductDetailPage\ProductDetailPageFactory getFactory()
  */
 class ProductDetailPageResourceCreatorPlugin extends AbstractPlugin implements ResourceCreatorPluginInterface

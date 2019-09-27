@@ -27,7 +27,7 @@ class SummaryProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin imple
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -39,7 +39,7 @@ class SummaryProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin imple
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CustomerReorderWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CustomerReorderWidget\Plugin\Router\CustomerReorderWidgetRouteProviderPlugin` instead.
+ */
 class CustomerReorderControllerProvider extends AbstractYvesControllerProvider
 {
     protected const ROUTE_CART_ORDER_REPEAT = 'customer/order/reorder';

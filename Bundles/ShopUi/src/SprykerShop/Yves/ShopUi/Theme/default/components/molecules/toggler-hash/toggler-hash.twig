@@ -2,12 +2,14 @@
 
 {% define config = {
     name: 'toggler-hash',
-    tag: 'toggler-hash'
+    tag: 'toggler-hash',
 } %}
 
+{# @deprecated property "target-selector" is deprecated: use "target-class-name" instead. #}
 {% define attributes = {
     'trigger-hash': required,
-    'target-selector': required,
-    'class-to-toggle': required,
-    'add-class-when-hash-in-url': true
+    'target-selector': '',
+    'target-class-name': '',
+    'class-to-toggle': 'is-hidden',
+    'add-class-when-hash-in-url': true,
 } %}

@@ -16,6 +16,8 @@ use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryF
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryFilterStorageClientInterface;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface;
 use SprykerShop\Yves\CatalogPage\Twig\CatalogPageTwigExtension;
+use SprykerShop\Yves\CatalogPage\Validator\PageParametersValidator;
+use SprykerShop\Yves\CatalogPage\Validator\PageParametersValidatorInterface;
 
 /**
  * @method \SprykerShop\Yves\CatalogPage\CatalogPageConfig getConfig()
@@ -28,6 +30,14 @@ class CatalogPageFactory extends AbstractFactory
     public function createActiveSearchFilterUrlGenerator()
     {
         return new UrlGenerator($this->getSearchClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CatalogPage\Validator\PageParametersValidatorInterface
+     */
+    public function createPageParametersValidator(): PageParametersValidatorInterface
+    {
+        return new PageParametersValidator($this->getConfig());
     }
 
     /**

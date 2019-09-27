@@ -35,7 +35,7 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

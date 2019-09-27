@@ -21,7 +21,7 @@ class CartDeleteCompanyUsersListWidgetPlugin extends AbstractWidgetPlugin
     public const NAME = 'CartDeleteCompanyUsersListWidgetPlugin';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +37,7 @@ class CartDeleteCompanyUsersListWidgetPlugin extends AbstractWidgetPlugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class CartDeleteCompanyUsersListWidgetPlugin extends AbstractWidgetPlugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

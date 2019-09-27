@@ -12,6 +12,8 @@ use Spryker\Yves\Application\Plugin\Provider\YvesControllerProvider as SprykerYv
 
 /**
  * @SuppressWarnings(PHPMD.NumberOfChildren)
+ *
+ * @deprecated Use `\Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin` instead.
  */
 abstract class AbstractYvesControllerProvider extends SprykerYvesControllerProvider
 {

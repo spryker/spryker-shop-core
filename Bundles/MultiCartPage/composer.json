@@ -19,11 +19,13 @@
     "spryker-shop/shared-cart-widget": "*",
     "spryker-shop/shopping-list-widget": "*",
     "spryker/code-sniffer": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/customer-page": "if you want to use customer layout templates: ^1.0.0",
+    "spryker/router": "Use this module when you want to use the Router.",
     "spryker-shop/shared-cart-widget": "If you want to use CartListPermissionGroupWidget",
     "spryker-shop/shopping-list-widget": "If you want to use components from module ShoppingListWidget",
     "spryker/permission": "If you want to use permissions plugins",

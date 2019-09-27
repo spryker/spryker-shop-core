@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker-shop/cart-page": "^1.0.0 || ^3.0.0",
-    "spryker-shop/checkout-page": "^1.0.0 || ^2.0.0",
+    "spryker-shop/checkout-page": "^1.0.0 || ^2.0.0 || ^3.0.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/application": "^3.8.0",
@@ -19,11 +19,13 @@
   "require-dev": {
     "spryker-shop/cart-code-widget": "*",
     "spryker/code-sniffer": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/cart-code-widget": "If you want to use components from module CartCodeWidget.",
+    "spryker/router": "Use this module when you want to use the Router.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

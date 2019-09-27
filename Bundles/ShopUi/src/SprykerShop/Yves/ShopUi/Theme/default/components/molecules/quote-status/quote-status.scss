@@ -1,8 +1,4 @@
-@mixin status-color($action-color, $opacity: 1) {
-    background-color: rgba(helper-color-light(map-get($setting-color-actions, $action-color), 10), $opacity);
-    color: map-get($setting-color-actions, $action-color);
-}
-
+/* fe-sniffer:disabled correct-scss-component-structure */
 @mixin shop-ui-quote-status($name: '.quote-status') {
     #{$name} {
         border-radius: 1rem;
@@ -23,5 +19,23 @@
         &--small {
             padding: 0.15rem map-get($setting-spacing, 'default');
         }
+
+        @content;
     }
+}
+
+@mixin shop-ui-quote-status-color($action-color, $opacity: 1) {
+    background-color: rgba(helper-color-light(map-get($setting-color-actions, $action-color), 10), $opacity);
+    color: map-get($setting-color-actions, $action-color);
+
+    @content;
+}
+
+/**
+ * @deprecated use shop-ui-quote-status-color mixin instead.
+ */
+@mixin status-color($action-color, $opacity: 1) {
+    @include shop-ui-quote-status-color($action-color, $opacity);
+
+    @content;
 }

@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\WishlistPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\WishlistPage\Plugin\Router\WishlistPageRouteProviderPlugin` instead.
+ */
 class WishlistPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_ADD_TO_WISHLIST = 'wishlist/add-to-wishlist';
@@ -21,6 +24,8 @@ class WishlistPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_REMOVE_ITEM = 'wishlist/remove-item';
     public const ROUTE_MOVE_TO_CART = 'wishlist/move-to-cart';
     public const ROUTE_MOVE_ALL_AVAILABLE_TO_CART = 'wishlist/move-all-available-to-cart';
+    protected const WISHLIST_NAME_PATTERN = '.+';
+    protected const SKU_PATTERN = '[a-zA-Z0-9-_.]+';
 
     /**
      * @param \Silex\Application $app
@@ -72,7 +77,7 @@ class WishlistPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{wishlist}/update/{wishlistName}', static::ROUTE_WISHLIST_UPDATE, 'WishlistPage', 'WishlistOverview', 'update')
             ->assert('wishlist', $this->getAllowedLocalesPattern() . 'wishlist|wishlist')
             ->value('wishlist', 'wishlist')
-            ->assert('wishlistName', '.+');
+            ->assert('wishlistName', static::WISHLIST_NAME_PATTERN);
 
         return $this;
     }
@@ -85,7 +90,7 @@ class WishlistPageControllerProvider extends AbstractYvesControllerProvider
         $this->createPostController('/{wishlist}/delete/{wishlistName}', static::ROUTE_WISHLIST_DELETE, 'WishlistPage', 'WishlistOverview', 'delete')
             ->assert('wishlist', $this->getAllowedLocalesPattern() . 'wishlist|wishlist')
             ->value('wishlist', 'wishlist')
-            ->assert('wishlistName', '.+');
+            ->assert('wishlistName', static::WISHLIST_NAME_PATTERN);
 
         return $this;
     }
@@ -98,7 +103,7 @@ class WishlistPageControllerProvider extends AbstractYvesControllerProvider
         $this->createGetController('/{wishlist}/details/{wishlistName}', static::ROUTE_WISHLIST_DETAILS, 'WishlistPage', 'Wishlist')
             ->assert('wishlist', $this->getAllowedLocalesPattern() . 'wishlist|wishlist')
             ->value('wishlist', 'wishlist')
-            ->assert('wishlistName', '.+');
+            ->assert('wishlistName', static::WISHLIST_NAME_PATTERN);
 
         return $this;
     }
@@ -135,7 +140,7 @@ class WishlistPageControllerProvider extends AbstractYvesControllerProvider
         $this->createPostController('/{wishlist}/move-to-cart', static::ROUTE_MOVE_TO_CART, 'WishlistPage', 'Wishlist', 'moveToCart')
             ->assert('wishlist', $this->getAllowedLocalesPattern() . 'wishlist|wishlist')
             ->value('wishlist', 'wishlist')
-            ->assert('sku', '[a-zA-Z0-9-_]+');
+            ->assert('sku', static::SKU_PATTERN);
 
         return $this;
     }
@@ -148,7 +153,7 @@ class WishlistPageControllerProvider extends AbstractYvesControllerProvider
         $this->createPostController('/{wishlist}/move-all-available-to-cart/{wishlistName}', static::ROUTE_MOVE_ALL_AVAILABLE_TO_CART, 'WishlistPage', 'Wishlist', 'moveAllAvailableToCart')
             ->assert('wishlist', $this->getAllowedLocalesPattern() . 'wishlist|wishlist')
             ->value('wishlist', 'wishlist')
-            ->assert('wishlistName', '.+');
+            ->assert('wishlistName', static::WISHLIST_NAME_PATTERN);
 
         return $this;
     }

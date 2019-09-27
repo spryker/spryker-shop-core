@@ -3,26 +3,36 @@ import Component from '../../../models/component';
 export default class TogglerClick extends Component {
     /**
      * Elements triggering the toggle action.
+     *
+     * @deprecated Use triggersList instead.
      */
-    readonly triggers: HTMLElement[];
+    triggers: HTMLElement[];
+    protected triggersList: HTMLElement[];
 
     /**
      * Elements targeted by the toggle action.
+     *
+     * @deprecated Use targetsList instead.
      */
-    readonly targets: HTMLElement[];
+    targets: HTMLElement[];
+    protected targetsList: HTMLElement[];
 
-    constructor() {
-        super();
-        this.triggers = <HTMLElement[]>Array.from(document.querySelectorAll(this.triggerSelector));
-        this.targets = <HTMLElement[]>Array.from(document.querySelectorAll(this.targetSelector));
-    }
+    protected readyCallback(): void {}
 
-    protected readyCallback(): void {
+    protected init(): void {
+        /* tslint:disable: deprecation */
+        this.triggersList = <HTMLElement[]>Array.from(this.triggerClassName ?
+            document.getElementsByClassName(this.triggerClassName) : document.querySelectorAll(this.triggerSelector));
+        this.targetsList = <HTMLElement[]>Array.from(this.targetClassName ?
+            document.getElementsByClassName(this.targetClassName) : document.querySelectorAll(this.targetSelector));
+        [this.triggers, this.targets] = [this.triggersList, this.targetsList];
+        /* tslint:enable: deprecation */
+
         this.mapEvents();
     }
 
     protected mapEvents(): void {
-        this.triggers.forEach((trigger: HTMLElement) => {
+        this.triggersList.forEach((trigger: HTMLElement) => {
             trigger.addEventListener('click', (event: Event) => this.onTriggerClick(event));
         });
     }
@@ -36,7 +46,7 @@ export default class TogglerClick extends Component {
      * Toggles the class names in the target elements.
      */
     toggle(): void {
-        this.targets.forEach((target: HTMLElement) => {
+        this.targetsList.forEach((target: HTMLElement) => {
             const addClass = !target.classList.contains(this.classToToggle);
             target.classList.toggle(this.classToToggle, addClass);
         });
@@ -44,16 +54,26 @@ export default class TogglerClick extends Component {
 
     /**
      * Gets a querySelector of the trigger element.
+     *
+     * @deprecated Use triggerClassName() instead.
      */
     get triggerSelector(): string {
         return this.getAttribute('trigger-selector');
     }
+    protected get triggerClassName(): string {
+        return this.getAttribute('trigger-class-name');
+    }
 
     /**
      * Gets a querySelector of the target element.
+     *
+     * @deprecated Use targetClassName() instead.
      */
     get targetSelector(): string {
         return this.getAttribute('target-selector');
+    }
+    protected get targetClassName(): string {
+        return this.getAttribute('target-class-name');
     }
 
     /**

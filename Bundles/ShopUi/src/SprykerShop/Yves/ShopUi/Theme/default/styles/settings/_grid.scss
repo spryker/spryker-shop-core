@@ -1,3 +1,14 @@
+/**
+ * Defines grid system columns count.
+ */
 $setting-grid-columns: 12 !default;
+
+/**
+ * Defines grid container max width.
+ */
 $setting-grid-max-width: 1160px !default;
+
+/**
+ * Defines gutters' size for grid "with-gutter" modifier.
+ */
 $setting-grid-gutter: 0 !default;

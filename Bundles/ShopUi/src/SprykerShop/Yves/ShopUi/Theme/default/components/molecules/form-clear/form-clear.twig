@@ -2,13 +2,19 @@
 
 {% define config = {
     name: 'form-clear',
-    tag: 'form-clear'
+    tag: 'form-clear',
 } %}
 
+{# @deprecated property "form-selector" is deprecated: use "form-class-name" instead. #}
+{# @deprecated property "trigger-selector" is deprecated: use "trigger-class-name" instead. #}
+{# @deprecated property "ignore-selector" is deprecated: use "ignore-class-name" instead. #}
 {% define attributes = {
-    'form-selector': required,
-    'trigger-selector': required,
-    'ignore-selector': ''
+    'form-selector': '',
+    'form-class-name': '',
+    'trigger-selector': '',
+    'trigger-class-name': '',
+    'ignore-selector': '',
+    'ignore-class-name': '',
 } %}
 
 {% block class %}{{ parent() }} {{ config.jsName }}{% endblock %}

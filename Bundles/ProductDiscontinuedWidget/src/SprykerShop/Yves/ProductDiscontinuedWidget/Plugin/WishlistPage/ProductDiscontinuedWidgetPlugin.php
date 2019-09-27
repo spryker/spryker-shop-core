@@ -31,7 +31,7 @@ class ProductDiscontinuedWidgetPlugin extends AbstractWidgetPlugin implements Pr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -43,7 +43,7 @@ class ProductDiscontinuedWidgetPlugin extends AbstractWidgetPlugin implements Pr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
