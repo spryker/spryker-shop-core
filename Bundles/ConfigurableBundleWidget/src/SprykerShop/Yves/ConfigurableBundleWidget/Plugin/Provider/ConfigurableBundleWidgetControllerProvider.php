@@ -34,10 +34,10 @@ class ConfigurableBundleWidgetControllerProvider extends AbstractYvesControllerP
      */
     protected function addCartConfiguredBundleRemoveRoute()
     {
-        $this->createController('/{cart}/configured-bundle/remove/{configuredBundleGroupKey}', static::ROUTE_CART_CONFIGURED_BUNDLE_REMOVE, 'ConfigurableBundleWidget', 'Cart', 'removeConfiguredBundle')
+        $this->createController('/{cart}/configured-bundle/remove/{groupKey}', static::ROUTE_CART_CONFIGURED_BUNDLE_REMOVE, 'ConfigurableBundleWidget', 'Cart', 'removeConfiguredBundle')
             ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart')
-            ->value('configuredBundleGroupKey', '');
+            ->value('groupKey', '');
 
         return $this;
     }
@@ -49,9 +49,10 @@ class ConfigurableBundleWidgetControllerProvider extends AbstractYvesControllerP
      */
     protected function addCartConfiguredBundleChangeQuantityRoute()
     {
-        $this->createPostController('/{cart}/configured-bundle/change/{configuredBundleGroupKey}', static::ROUTE_CART_CONFIGURED_BUNDLE_CHANGE_QUANTITY, 'ConfigurableBundleWidget', 'Cart', 'changeConfiguredBundleQuantity')
+        $this->createPostController('/{cart}/configured-bundle/change/{groupKey}', static::ROUTE_CART_CONFIGURED_BUNDLE_CHANGE_QUANTITY, 'ConfigurableBundleWidget', 'Cart', 'changeConfiguredBundleQuantity')
             ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart')
+            ->value('groupKey', '')
             ->convert('quantity', [$this, 'getQuantityFromRequest']);
 
         return $this;

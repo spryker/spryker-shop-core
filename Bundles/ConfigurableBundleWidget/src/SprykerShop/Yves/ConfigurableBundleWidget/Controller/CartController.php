@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ConfigurableBundleWidget\Controller;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,41 +42,38 @@ class CartController extends AbstractController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $configuredBundleGroupKey
+     * @param string $groupKey
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function removeConfiguredBundleAction(Request $request, string $configuredBundleGroupKey): Response
+    public function removeConfiguredBundleAction(Request $request, string $groupKey): Response
     {
-        $response = $this->executeRemoveConfiguredBundleAction($request, $configuredBundleGroupKey);
+        $response = $this->executeRemoveConfiguredBundleAction($request, $groupKey);
 
         return $response;
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $configuredBundleGroupKey
+     * @param string $groupKey
      * @param int $quantity
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function changeConfiguredBundleQuantityAction(
-        Request $request,
-        string $configuredBundleGroupKey,
-        int $quantity
-    ): Response {
-        $response = $this->executeChangeConfiguredBundleQuantityAction($request, $configuredBundleGroupKey, $quantity);
+    public function changeConfiguredBundleQuantityAction(Request $request, string $groupKey, int $quantity): Response
+    {
+        $response = $this->executeChangeConfiguredBundleQuantityAction($request, $groupKey, $quantity);
 
         return $response;
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $configuredBundleGroupKey
+     * @param string $groupKey
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function executeRemoveConfiguredBundleAction(Request $request, string $configuredBundleGroupKey): Response
+    protected function executeRemoveConfiguredBundleAction(Request $request, string $groupKey): Response
     {
         if (!$this->canRemoveCartItem()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
@@ -83,9 +81,11 @@ class CartController extends AbstractController
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
+        $updateConfiguredBundleRequestTransfer = $this->createUpdateConfiguredBundleRequest($groupKey);
+
         $quoteResponseTransfer = $this->getFactory()
             ->getConfigurableBundleClient()
-            ->removeConfiguredBundle($configuredBundleGroupKey);
+            ->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_REMOVED);
@@ -98,25 +98,24 @@ class CartController extends AbstractController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $configuredBundleGroupKey
+     * @param string $groupKey
      * @param int $quantity
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function executeChangeConfiguredBundleQuantityAction(
-        Request $request,
-        string $configuredBundleGroupKey,
-        int $quantity
-    ): Response {
+    protected function executeChangeConfiguredBundleQuantityAction(Request $request, string $groupKey, int $quantity): Response
+    {
         if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
 
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
+        $updateConfiguredBundleRequestTransfer = $this->createUpdateConfiguredBundleRequest($groupKey, $quantity);
+
         $quoteResponseTransfer = $this->getFactory()
             ->getConfigurableBundleClient()
-            ->updateConfiguredBundleQuantity($configuredBundleGroupKey, $quantity);
+            ->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_UPDATED);
@@ -125,6 +124,20 @@ class CartController extends AbstractController
         $this->handleResponseErrors($quoteResponseTransfer);
 
         return $this->redirectResponseInternal(static::ROUTE_CART);
+    }
+
+    /**
+     * @param string $groupKey
+     * @param int|null $quantity
+     *
+     * @return \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer
+     */
+    protected function createUpdateConfiguredBundleRequest(string $groupKey, ?int $quantity = null): UpdateConfiguredBundleRequestTransfer
+    {
+        return (new UpdateConfiguredBundleRequestTransfer())
+            ->setQuote($this->getFactory()->getQuoteClient()->getQuote())
+            ->setGroupKey($groupKey)
+            ->setQuantity($quantity);
     }
 
     /**

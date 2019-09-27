@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
 
 class ConfigurableBundleWidgetToConfigurableBundleCartClientBridge implements ConfigurableBundleWidgetToConfigurableBundleCartClientInterface
 {
@@ -25,23 +26,22 @@ class ConfigurableBundleWidgetToConfigurableBundleCartClientBridge implements Co
     }
 
     /**
-     * @param string $configuredBundleGroupKey
+     * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function removeConfiguredBundle(string $configuredBundleGroupKey): QuoteResponseTransfer
+    public function removeConfiguredBundle(UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer): QuoteResponseTransfer
     {
-        return $this->configurableBundleCartClient->removeConfiguredBundle($configuredBundleGroupKey);
+        return $this->configurableBundleCartClient->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
     }
 
     /**
-     * @param string $configuredBundleGroupKey
-     * @param int $configuredBundleQuantity
+     * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateConfiguredBundleQuantity(string $configuredBundleGroupKey, int $configuredBundleQuantity): QuoteResponseTransfer
+    public function updateConfiguredBundleQuantity(UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer): QuoteResponseTransfer
     {
-        return $this->configurableBundleCartClient->updateConfiguredBundleQuantity($configuredBundleGroupKey, $configuredBundleQuantity);
+        return $this->configurableBundleCartClient->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
     }
 }

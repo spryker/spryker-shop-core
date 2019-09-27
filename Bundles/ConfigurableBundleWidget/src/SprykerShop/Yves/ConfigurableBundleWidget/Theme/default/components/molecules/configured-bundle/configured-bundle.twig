@@ -95,7 +95,7 @@
     {% block bundleActions %}
         {% if data.isEditable %}
             {% block bundleActionsInner %}
-                <a class="{{ bundleActionClassName }}" href="{{ path('cart/configured-bundle/remove', {'configuredBundleGroupKey': data.bundle.groupKey}) }}" data-init-single-click>
+                <a class="{{ bundleActionClassName }}" href="{{ path('cart/configured-bundle/remove', {'groupKey': data.bundle.groupKey}) }}" data-init-single-click>
                     {% block removeLinkInner %}
                         {{- 'configured_bundle.remove' | trans | raw -}}
                     {% endblock %}
