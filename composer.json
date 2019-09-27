@@ -125,6 +125,8 @@
     "spryker-shop/shopping-list-page": "*",
     "spryker-shop/shopping-list-page-extension": "*",
     "spryker-shop/shopping-list-widget": "*",
+    "spryker-shop/storage-router": "*",
+    "spryker-shop/storage-router-extension": "*",
     "spryker-shop/tabs-widget": "*",
     "spryker-shop/tabs-widget-extension": "*",
     "spryker-shop/web-profiler-widget": "*",
