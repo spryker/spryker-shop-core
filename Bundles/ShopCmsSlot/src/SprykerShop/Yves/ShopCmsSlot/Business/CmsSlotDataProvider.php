@@ -99,7 +99,7 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotExternalDataTransfer[] $autoFilledData
+     * @param string[] $autoFilledData
      * @param \Generated\Shared\Transfer\CmsSlotExternalDataTransfer[] $providedData
      *
      * @return \Generated\Shared\Transfer\CmsSlotExternalDataTransfer[]
