@@ -57,7 +57,9 @@
                                                         {% set priceModeGross = 'GROSS_MODE' %}
                                                         {% set originUnitPrice = (data.priceMode == priceModeGross) ? data.product.originUnitGrossPrice : data.product.originUnitNetPrice %}
 
-                                                        <del class="spacing-right">{{ originUnitPrice | money(true, data.currencyIsoCode) }}</del>
+                                                        {%- block oldPriceValue -%}
+                                                            <del class="spacing-right">{{ originUnitPrice | money(true, data.currencyIsoCode) }}</del>
+                                                        {% endblock %}
                                                     {% endif %}
 
                                                     {{ data.product.unitPrice | money(true, data.currencyIsoCode) }}
