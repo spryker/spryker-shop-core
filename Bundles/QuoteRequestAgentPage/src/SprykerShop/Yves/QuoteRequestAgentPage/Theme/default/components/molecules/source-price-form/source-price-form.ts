@@ -19,7 +19,7 @@ export default class SourcePriceForm extends Component {
     }
 
     protected setSourcePrice(): void {
-        if (this.sourcePrice.length === 0) {
+        if (!this.sourcePrice.length) {
             return;
         }
 
