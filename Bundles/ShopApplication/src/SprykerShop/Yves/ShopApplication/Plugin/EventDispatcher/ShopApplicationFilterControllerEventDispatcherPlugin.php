@@ -21,7 +21,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class ShopApplicationFilterControllerEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds a listener for the FilterControllerEvent.
      * - Executes FilterControllerEventHandlerPluginInterface's.
      *
@@ -36,7 +36,7 @@ class ShopApplicationFilterControllerEventDispatcherPlugin extends AbstractPlugi
     {
         $eventDispatcher->addListener(KernelEvents::CONTROLLER, function (FilterControllerEvent $event) {
             $this->onKernelController($event);
-        }, 0);
+        });
 
         return $eventDispatcher;
     }
@@ -46,7 +46,7 @@ class ShopApplicationFilterControllerEventDispatcherPlugin extends AbstractPlugi
      *
      * @return void
      */
-    public function onKernelController(FilterControllerEvent $event)
+    protected function onKernelController(FilterControllerEvent $event)
     {
         foreach ($this->getFactory()->getFilterControllerEventSubscriberPlugins() as $filterControllerEventListenerPlugin) {
             $filterControllerEventListenerPlugin->handle($event);

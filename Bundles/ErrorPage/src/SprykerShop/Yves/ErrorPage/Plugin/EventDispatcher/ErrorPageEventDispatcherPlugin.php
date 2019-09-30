@@ -22,6 +22,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class ErrorPageEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
+    protected const PRIORITY = 50;
+
     /**
      * {@inheritDoc}
      * - Adds a listener for the `\Symfony\Component\HttpKernel\KernelEvents::EXCEPTION` event.
@@ -38,7 +40,7 @@ class ErrorPageEventDispatcherPlugin extends AbstractPlugin implements EventDisp
     {
         $eventDispatcher->addListener(KernelEvents::EXCEPTION, function (GetResponseForExceptionEvent $event) {
             $this->onKernelException($event);
-        }, 50);
+        }, static::PRIORITY);
 
         return $eventDispatcher;
     }
@@ -48,7 +50,7 @@ class ErrorPageEventDispatcherPlugin extends AbstractPlugin implements EventDisp
      *
      * @return void
      */
-    public function onKernelException(GetResponseForExceptionEvent $event): void
+    protected function onKernelException(GetResponseForExceptionEvent $event): void
     {
         $exception = $event->getException();
 

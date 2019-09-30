@@ -20,8 +20,10 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class ShopApplicationExceptionEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
+    protected const PRIORITY = -8;
+
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds a listener for the `\Symfony\Component\HttpKernel\KernelEvents::EXCEPTION` event.
      * - Throws previously catched exception.
      *
@@ -35,21 +37,9 @@ class ShopApplicationExceptionEventDispatcherPlugin extends AbstractPlugin imple
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
         $eventDispatcher->addListener(KernelEvents::EXCEPTION, function (GetResponseForExceptionEvent $event) {
-            $this->onKernelException($event);
-        }, -8);
+            throw $event->getException();
+        }, static::PRIORITY);
 
         return $eventDispatcher;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent $event
-     *
-     * @throws \Exception
-     *
-     * @return void
-     */
-    public function onKernelException(GetResponseForExceptionEvent $event)
-    {
-        throw $event->getException();
     }
 }
