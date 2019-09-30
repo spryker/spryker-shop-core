@@ -13,8 +13,8 @@ interface CheckoutPaymentStepEnterPreCheckPluginInterface
 {
     /**
      * Specification:
-     * - Decides whether to expose checkout step or not.
-     * - Checkout payment step will be exposed if at least one plugin returns false.
+     * - Decides whether to disable checkout step or not.
+     * - Checkout payment step will be disable if at least one plugin returns false.
      *
      * @api
      *
