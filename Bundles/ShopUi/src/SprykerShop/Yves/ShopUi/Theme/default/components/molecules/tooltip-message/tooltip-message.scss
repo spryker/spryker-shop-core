@@ -4,7 +4,6 @@ $shop-ui-tooltip-message-arrow-size: 0.5rem;
     #{$name} {
         @include helper-visibility-invisible;
         @include helper-effect-transition;
-
         display: block;
         position: absolute;
         min-width: 20rem;
