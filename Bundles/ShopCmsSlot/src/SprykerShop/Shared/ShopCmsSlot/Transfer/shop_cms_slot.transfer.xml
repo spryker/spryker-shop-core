@@ -3,7 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="CmsSlotData">
+    <transfer name="CmsSlotContentResponse">
         <property name="content" type="string"/>
     </transfer>
 
@@ -16,7 +16,10 @@
         <property name="cmsSlotKey" type="string"/>
         <property name="providedData" type="array"/>
         <property name="requiredKeys" type="string[]"/>
-        <property name="autoFillingKeys" type="string[]"/>
+        <property name="autoFilledKeys" type="string[]"/>
     </transfer>
 
+    <transfer name="CmsSlotExternalData">
+        <property name="values" type="string[]" associative="true" />
+    </transfer>
 </transfers>
