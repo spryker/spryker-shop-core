@@ -9,12 +9,12 @@ namespace SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CheckoutAddressStepPreCheckPluginInterface
+interface CheckoutPaymentStepEnterPreCheckPluginInterface
 {
     /**
      * Specification:
      * - Decides whether to expose checkout step or not.
-     * - Checkout address step will be exposed if at least one plugin returns false.
+     * - Checkout payment step will be exposed if at least one plugin returns false.
      *
      * @api
      *

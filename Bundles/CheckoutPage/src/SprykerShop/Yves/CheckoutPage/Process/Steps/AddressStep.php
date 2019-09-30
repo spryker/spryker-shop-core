@@ -21,9 +21,9 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $calculationClient;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepPreCheckPluginInterface[]
+     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepEnterPreCheckPluginInterface[]
      */
-    protected $addressStepPreCheckPlugins;
+    protected $checkoutAddressStepEnterPreCheckPlugins;
 
     /**
      * @var \SprykerShop\Yves\CheckoutPage\Process\Steps\StepExecutorInterface
@@ -47,7 +47,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      * @param \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig $checkoutPageConfig
      * @param string $stepRoute
      * @param string $escapeRoute
-     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepPreCheckPluginInterface[] $addressStepPreCheckPlugins
+     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepEnterPreCheckPluginInterface[] $checkoutAddressStepEnterPreCheckPlugins
      */
     public function __construct(
         CheckoutPageToCalculationClientInterface $calculationClient,
@@ -56,7 +56,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         CheckoutPageConfig $checkoutPageConfig,
         $stepRoute,
         $escapeRoute,
-        array $addressStepPreCheckPlugins
+        array $checkoutAddressStepEnterPreCheckPlugins
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
@@ -64,7 +64,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         $this->stepExecutor = $stepExecutor;
         $this->postConditionChecker = $postConditionChecker;
         $this->checkoutPageConfig = $checkoutPageConfig;
-        $this->addressStepPreCheckPlugins = $addressStepPreCheckPlugins;
+        $this->checkoutAddressStepEnterPreCheckPlugins = $checkoutAddressStepEnterPreCheckPlugins;
     }
 
     /**
@@ -74,7 +74,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function requireInput(AbstractTransfer $dataTransfer)
     {
-        return !$this->executeAddressStepPreCheckPlugins($dataTransfer);
+        return !$this->executeCheckoutAddressStepEnterPreCheckPlugins($dataTransfer);
     }
 
     /**
@@ -143,14 +143,14 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      *
      * @return bool
      */
-    protected function executeAddressStepPreCheckPlugins(AbstractTransfer $dataTransfer): bool
+    protected function executeCheckoutAddressStepEnterPreCheckPlugins(AbstractTransfer $dataTransfer): bool
     {
-        foreach ($this->addressStepPreCheckPlugins as $addressStepPreCheckPlugin) {
-            if (!$addressStepPreCheckPlugin->check($dataTransfer)) {
-                return false;
+        foreach ($this->checkoutAddressStepEnterPreCheckPlugins as $checkoutAddressStepEnterPreCheckPlugin) {
+            if ($checkoutAddressStepEnterPreCheckPlugin->check($dataTransfer)) {
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 }

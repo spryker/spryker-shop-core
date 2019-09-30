@@ -34,6 +34,36 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
      *
      * @return bool
      */
+    public function checkPaymentStepAccessibility(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteApprovalClient->checkPaymentStepAccessibility($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function checkShipmentStepAccessibility(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteApprovalClient->checkShipmentStepAccessibility($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function checkAddressStepAccessibility(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteApprovalClient->checkAddressStepAccessibility($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
     public function isQuoteDeclined(QuoteTransfer $quoteTransfer): bool
     {
         return $this->quoteApprovalClient->isQuoteDeclined($quoteTransfer);
@@ -114,7 +144,6 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return int|null
      */
