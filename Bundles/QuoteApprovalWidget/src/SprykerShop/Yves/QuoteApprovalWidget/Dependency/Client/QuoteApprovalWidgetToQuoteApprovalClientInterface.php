@@ -20,8 +20,6 @@ interface QuoteApprovalWidgetToQuoteApprovalClientInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
-     * @api
-     *
      */
     public function checkPaymentStepAccessibility(QuoteTransfer $quoteTransfer): bool;
 
@@ -29,8 +27,6 @@ interface QuoteApprovalWidgetToQuoteApprovalClientInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
-     * @api
-     *
      */
     public function checkShipmentStepAccessibility(QuoteTransfer $quoteTransfer): bool;
 
@@ -38,8 +34,6 @@ interface QuoteApprovalWidgetToQuoteApprovalClientInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
-     * @api
-     *
      */
     public function checkAddressStepAccessibility(QuoteTransfer $quoteTransfer): bool;
 

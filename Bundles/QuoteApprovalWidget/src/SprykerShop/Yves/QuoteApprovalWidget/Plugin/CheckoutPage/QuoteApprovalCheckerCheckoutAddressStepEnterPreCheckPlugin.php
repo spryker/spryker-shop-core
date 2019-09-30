@@ -17,7 +17,7 @@ use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStep
 class QuoteApprovalCheckerCheckoutAddressStepEnterPreCheckPlugin extends AbstractPlugin implements CheckoutAddressStepEnterPreCheckPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Makes a call to quote approval client to determine if step is accessible.
      * - Returns true if quote is locked and has at least one quote approval not in status declined, false otherwise.
      *
