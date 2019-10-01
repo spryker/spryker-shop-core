@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\QuoteApprovalWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-
 class QuoteApprovalWidgetToQuoteClientBridge implements QuoteApprovalWidgetToQuoteClientInterface
 {
     /**
@@ -22,16 +20,6 @@ class QuoteApprovalWidgetToQuoteClientBridge implements QuoteApprovalWidgetToQuo
     public function __construct($quoteClient)
     {
         $this->quoteClient = $quoteClient;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
-    {
-        return $this->quoteClient->isQuoteLocked($quoteTransfer);
     }
 
     /**
