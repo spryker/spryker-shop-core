@@ -20,7 +20,7 @@ use SprykerShop\Yves\ProductPackagingUnitWidget\Widget\ProductPackagingUnitWidge
 class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements ProductPackagingUnitWidgetPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class ProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin implements P
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

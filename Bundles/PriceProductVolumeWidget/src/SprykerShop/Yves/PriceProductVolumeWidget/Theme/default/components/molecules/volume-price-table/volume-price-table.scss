@@ -1,7 +1,7 @@
-@mixin shop-ui-volume-price-table($name: '.volume-price-table') {
+@mixin price-product-volume-widget-volume-price-table($name: '.volume-price-table') {
     #{$name} {
-        margin-bottom: 0.5rem;
         @include helper-font-size(big);
+        margin-bottom: 0.5rem;
 
         &__table,
         &__title,
@@ -24,6 +24,17 @@
             padding: 0.5rem 0.75rem;
         }
 
+        @content;
+    }
+}
+
+/**
+ * @deprecated use price-product-volume-widget-volume-price-table mixin instead.
+ */
+@mixin shop-ui-volume-price-table($name: '.volume-price-table') {
+    @include price-product-volume-widget-volume-price-table();
+
+    #{$name} {
         @content;
     }
 }

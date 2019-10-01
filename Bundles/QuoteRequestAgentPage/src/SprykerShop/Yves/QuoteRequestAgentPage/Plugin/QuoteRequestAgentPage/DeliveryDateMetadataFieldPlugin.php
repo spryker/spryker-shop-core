@@ -27,7 +27,7 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
     protected const GLOSSARY_KEY_DATE_VIOLATION = 'quote_request_page.quote_request.violations.invalid_date';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds delivery date to metadata for QuoteRequestAgent form.
      *
      * @api

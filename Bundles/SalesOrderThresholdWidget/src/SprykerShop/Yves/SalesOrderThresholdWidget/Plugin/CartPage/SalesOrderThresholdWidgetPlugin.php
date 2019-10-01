@@ -34,7 +34,7 @@ class SalesOrderThresholdWidgetPlugin extends AbstractWidgetPlugin implements Sa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,7 +46,7 @@ class SalesOrderThresholdWidgetPlugin extends AbstractWidgetPlugin implements Sa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -22,7 +22,7 @@ class QuickOrderCsvFileTemplateStrategyPlugin extends AbstractPlugin implements 
     protected const CSV_FILE_EXTENSION = 'csv';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns true if provided file extension matches the expected file extension.
      *
      * @api
@@ -37,7 +37,7 @@ class QuickOrderCsvFileTemplateStrategyPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class QuickOrderCsvFileTemplateStrategyPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns template with header row and example rows.
      *
      * @api
@@ -62,7 +62,7 @@ class QuickOrderCsvFileTemplateStrategyPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

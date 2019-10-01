@@ -7,6 +7,9 @@
 
 namespace SprykerShop\Yves\ShopRouter\Dependency\Client;
 
+/**
+ * @deprecated Use `spryker-shop/storage-router` instead.
+ */
 interface ShopRouterToUrlStorageClientInterface
 {
     /**

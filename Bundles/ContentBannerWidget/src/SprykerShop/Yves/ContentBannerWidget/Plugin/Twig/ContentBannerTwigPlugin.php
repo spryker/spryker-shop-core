@@ -18,7 +18,7 @@ use Twig\Environment;
 class ContentBannerTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - The plugin displays a content banner.
      *
      * @api

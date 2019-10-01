@@ -24,6 +24,7 @@ use Twig\Loader\FilesystemLoader;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerShop
  * @group Yves
  * @group ContentProductWidget

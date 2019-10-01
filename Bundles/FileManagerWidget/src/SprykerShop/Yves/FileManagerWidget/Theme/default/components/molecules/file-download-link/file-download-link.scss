@@ -1,4 +1,4 @@
-@mixin file-download-link($name: '.file-download-link') {
+@mixin file-manager-widget-file-download-link($name: '.file-download-link') {
     #{$name} {
         &--icon {
             width: 8.5rem;
@@ -50,6 +50,17 @@
             opacity: 0.5;
         }
 
+        @content;
+    }
+}
+
+/**
+ * @deprecated use file-manager-widget-file-download-link mixin instead.
+ */
+@mixin file-download-link($name: '.file-download-link') {
+    @include file-manager-widget-file-download-link();
+
+    #{$name} {
         @content;
     }
 }

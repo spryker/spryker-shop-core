@@ -19,7 +19,7 @@ class QuickOrderCsvUploadedFileValidatorStrategyPlugin extends AbstractPlugin im
     protected const CSV_FILE_MIME_TYPE = 'text/csv';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns true if the provided mime type matches the expected mime type.
      *
      * @api
@@ -34,7 +34,7 @@ class QuickOrderCsvUploadedFileValidatorStrategyPlugin extends AbstractPlugin im
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns false if less than 1 row was provided (header row).
      * - Returns false if mandatory columns are not present based by header row.
      *
@@ -52,7 +52,7 @@ class QuickOrderCsvUploadedFileValidatorStrategyPlugin extends AbstractPlugin im
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

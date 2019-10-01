@@ -17,13 +17,13 @@ use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CustomerRedirectStr
 class RedirectUriCustomerRedirectStrategyPlugin extends AbstractPlugin implements CustomerRedirectStrategyPluginInterface
 {
     /**
-     * @uses \Spryker\Shared\Kernel\Communication\Application::REQUEST
+     * @uses \Spryker\Shared\Application\Application::SERVICE_REQUEST
      */
     protected const REQUEST = 'request';
     protected const PARAM_REDIRECT_URI = 'redirectUri';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Checks if application request has param Redirect Uri.
      *
      * @api
@@ -38,7 +38,7 @@ class RedirectUriCustomerRedirectStrategyPlugin extends AbstractPlugin implement
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

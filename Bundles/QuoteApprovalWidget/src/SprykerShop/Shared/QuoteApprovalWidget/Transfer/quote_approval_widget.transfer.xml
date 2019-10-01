@@ -25,8 +25,8 @@
 
     <transfer name="QuoteApprovalResponse">
         <property name="quoteApproval" type="QuoteApproval"/>
-        <property name="isSuccessful" type="bool" />
-        <property name="messages" type="Message[]" singular="message" />
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="Message">
@@ -39,9 +39,9 @@
     </transfer>
 
     <transfer name="Customer">
-        <property name="companyUserTransfer" type="CompanyUser" />
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string" />
+        <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
     </transfer>
 
     <transfer name="CompanyUser">

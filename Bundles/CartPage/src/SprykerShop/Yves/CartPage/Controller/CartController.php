@@ -32,13 +32,13 @@ class CartController extends AbstractController
     protected const FIELD_QUANTITY_TO_NORMALIZE = 'quantity';
 
     /**
-     * @param array|null $selectedAttributes
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function indexAction(?array $selectedAttributes = null)
+    public function indexAction(Request $request)
     {
-        $viewData = $this->executeIndexAction($selectedAttributes);
+        $viewData = $this->executeIndexAction($request->get('selectedAttributes', []));
 
         return $this->view(
             $viewData,
@@ -48,11 +48,11 @@ class CartController extends AbstractController
     }
 
     /**
-     * @param array|null $selectedAttributes
+     * @param array $selectedAttributes
      *
      * @return array
      */
-    protected function executeIndexAction(?array $selectedAttributes): array
+    protected function executeIndexAction(array $selectedAttributes = []): array
     {
         $validateQuoteResponseTransfer = $this->getFactory()
             ->getCartClient()
@@ -85,15 +85,15 @@ class CartController extends AbstractController
     }
 
     /**
-     * @param string $sku
-     * @param int $quantity
-     * @param array $optionValueIds
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $sku
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function addAction($sku, $quantity, array $optionValueIds, Request $request)
+    public function addAction(Request $request, $sku)
     {
+        $quantity = $request->get('quantity', 1);
+
         if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
@@ -105,7 +105,7 @@ class CartController extends AbstractController
             ->setSku($sku)
             ->setQuantity($quantity);
 
-        $this->addProductOptions($optionValueIds, $itemTransfer);
+        $this->addProductOptions($request->get('product-option', []), $itemTransfer);
 
         $this->getFactory()
             ->getCartClient()
@@ -119,31 +119,31 @@ class CartController extends AbstractController
     }
 
     /**
-     * @param string $sku
-     * @param int $quantity
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $sku
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function quickAddAction(string $sku, int $quantity, Request $request): RedirectResponse
+    public function quickAddAction(Request $request, string $sku): RedirectResponse
     {
+        $quantity = $request->get('quantity', 1);
+
         if (!$this->canAddCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
             return $this->redirectResponseInternal(CartControllerProvider::ROUTE_CART);
         }
 
-        return $this->executeQuickAddAction($sku, $quantity, $request);
+        return $this->executeQuickAddAction($sku, $quantity);
     }
 
     /**
      * @param string $sku
      * @param int $quantity
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeQuickAddAction(string $sku, int $quantity, Request $request): RedirectResponse
+    protected function executeQuickAddAction(string $sku, int $quantity): RedirectResponse
     {
         $itemTransfer = (new ItemTransfer())
             ->setSku($sku)
@@ -163,13 +163,15 @@ class CartController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $sku
-     * @param string|null $groupKey
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function removeAction($sku, $groupKey = null)
+    public function removeAction(Request $request, $sku)
     {
+        $groupKey = $request->get('groupKey', null);
+
         if (!$this->canRemoveCartItem()) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
@@ -188,14 +190,15 @@ class CartController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $sku
-     * @param int $quantity
-     * @param string|null $groupKey
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function changeAction($sku, $quantity, $groupKey = null)
+    public function changeAction(Request $request, $sku)
     {
+        $quantity = $request->get('quantity', 1);
+
         if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
@@ -204,7 +207,7 @@ class CartController extends AbstractController
 
         $this->getFactory()
             ->getCartClient()
-            ->changeItemQuantity($sku, $groupKey, $quantity);
+            ->changeItemQuantity($sku, $request->get('groupKey'), $quantity);
 
         $this->getFactory()
             ->getZedRequestClient()
@@ -241,17 +244,15 @@ class CartController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $sku
-     * @param int $quantity
-     * @param array $selectedAttributes
-     * @param array $preselectedAttributes
-     * @param string|null $groupKey
-     * @param array $optionValueIds
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function updateAction($sku, $quantity, array $selectedAttributes, array $preselectedAttributes, $groupKey = null, array $optionValueIds = [])
+    public function updateAction(Request $request, $sku)
     {
+        $quantity = $request->get('quantity', 1);
+
         if (!$this->canChangeCartItem($quantity)) {
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
@@ -267,10 +268,10 @@ class CartController extends AbstractController
             ->tryToReplaceItem(
                 $sku,
                 $quantity,
-                array_replace($selectedAttributes, $preselectedAttributes),
+                array_replace($request->get('selectedAttributes', []), $request->get('preselectedAttributes', [])),
                 $quoteTransfer->getItems(),
-                $groupKey,
-                $optionValueIds,
+                $request->get('groupKey'),
+                $request->get('product-option', []),
                 $this->getLocale()
             );
 
@@ -284,7 +285,7 @@ class CartController extends AbstractController
             CartControllerProvider::ROUTE_CART,
             $this->getFactory()
                 ->createCartItemsAttributeProvider()
-                ->formatUpdateActionResponse($sku, $selectedAttributes)
+                ->formatUpdateActionResponse($sku, $request->get('selectedAttributes', []))
         );
     }
 

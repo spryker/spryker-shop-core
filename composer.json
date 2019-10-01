@@ -21,7 +21,7 @@
     ]
   },
   "scripts": {
-    "cs-check": "phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p -v"
+    "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"
   },
   "replace": {
     "spryker-shop/availability-widget": "*",
@@ -67,6 +67,7 @@
     "spryker-shop/redirect-page": "*",
     "spryker-shop/shop-application": "*",
     "spryker-shop/shop-application-extension": "*",
+    "spryker-shop/shop-cms-slot-extension": "*",
     "spryker-shop/shop-layout": "*",
     "spryker-shop/shop-router": "*",
     "spryker-shop/shop-translator": "*",

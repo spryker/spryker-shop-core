@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker-shop/cart-page": "^1.0.0 || ^3.0.0",
-    "spryker-shop/checkout-page": "^1.0.0 || ^2.0.0",
+    "spryker-shop/checkout-page": "^1.0.0 || ^2.0.0 || ^3.0.0",
     "spryker-shop/quick-order-page-extension": "^1.1.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.28.1",
@@ -24,10 +24,12 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/router": "If you want to use RouteProviderPlugins to be added to the Route Module.",
     "spryker/silex": "If you want to use ServiceProvider."
   },
   "autoload": {

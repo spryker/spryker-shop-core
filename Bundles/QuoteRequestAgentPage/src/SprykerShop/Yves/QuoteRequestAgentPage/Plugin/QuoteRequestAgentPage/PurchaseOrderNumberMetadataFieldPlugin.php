@@ -23,7 +23,7 @@ class PurchaseOrderNumberMetadataFieldPlugin extends AbstractPlugin implements Q
     protected const MAX_LENGTH_NUMBER = 128;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds purchase order number to metadata for QuoteRequestAgent form.
      *
      * @api

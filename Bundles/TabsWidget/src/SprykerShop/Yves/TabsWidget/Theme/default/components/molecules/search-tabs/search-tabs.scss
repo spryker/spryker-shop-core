@@ -1,6 +1,6 @@
 $search-tab-border: 1px solid $setting-color-lighter;
 
-@mixin catalog-page-search-tabs($name: '.search-tabs') {
+@mixin tabs-widget-search-tabs($name: '.search-tabs') {
     #{$name} {
         text-align: center;
         border-left: $search-tab-border;
@@ -33,6 +33,17 @@ $search-tab-border: 1px solid $setting-color-lighter;
             }
         }
 
+        @content;
+    }
+}
+
+/**
+ * @deprecated use tabs-widget-search-tabs mixin instead.
+ */
+@mixin catalog-page-search-tabs($name: '.search-tabs') {
+    @include tabs-widget-search-tabs();
+
+    #{$name} {
         @content;
     }
 }

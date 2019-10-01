@@ -32,7 +32,7 @@ class WidgetTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected const TWIG_GLOBAL_VARIABLE_NAME_WIDGET = '_widget';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

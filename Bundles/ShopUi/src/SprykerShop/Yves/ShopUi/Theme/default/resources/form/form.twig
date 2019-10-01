@@ -31,6 +31,7 @@
     {%- endif -%}
 
     {%- set modifiers = errors is empty ? ['expand'] : ['expand', 'error'] -%}
+    {%- set attr = attr | merge({class: attr.class | default('') | trim}) -%}
 
     {% embed atom('select') with {
         modifiers: modifiers,
@@ -41,6 +42,7 @@
         },
         embed: {
             attributes: block('widget_attributes'),
+            class: attr.class,
             value: value,
             translation_domain: translation_domain,
             preferred_choices: preferred_choices,
@@ -52,6 +54,11 @@
         {% block selectAttributes %}
             {{parent()}}
             {{embed.attributes | raw}}
+        {% endblock %}
+
+        {% block selectClass %}
+            {{parent()}}
+            {{embed.class | raw}}
         {% endblock %}
 
         {% block options %}

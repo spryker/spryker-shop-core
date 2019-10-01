@@ -1,15 +1,15 @@
+{# @deprecated This component is deprecated. Use molecule('summary-product-packaging-unit-by-default', 'ProductPackagingUnitWidget') instead. #}
 {% extends model('component') %}
 
 {% define config = {
     name: 'summary-product-packaging-unit-default',
-    tag: 'div'
 } %}
 
 {% define data = {
     name: required,
     quantity: required,
     price: required,
-    quantitySalesUnit: required
+    quantitySalesUnit: required,
 } %}
 
 {% block body %}
