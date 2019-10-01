@@ -31,6 +31,6 @@ class QuoteApprovalCheckerCheckoutShipmentStepEnterPreCheckPlugin extends Abstra
     {
         return $this->getFactory()
             ->getQuoteApprovalClient()
-            ->checkShipmentStepAccessibility($quoteTransfer);
+            ->checkCheckoutStepAccessibility($quoteTransfer);
     }
 }

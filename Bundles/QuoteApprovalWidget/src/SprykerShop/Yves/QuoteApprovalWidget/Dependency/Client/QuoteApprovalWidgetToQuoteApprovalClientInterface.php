@@ -21,28 +21,7 @@ interface QuoteApprovalWidgetToQuoteApprovalClientInterface
      *
      * @return bool
      */
-    public function checkPaymentStepAccessibility(QuoteTransfer $quoteTransfer): bool;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function checkShipmentStepAccessibility(QuoteTransfer $quoteTransfer): bool;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function checkAddressStepAccessibility(QuoteTransfer $quoteTransfer): bool;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isQuoteDeclined(QuoteTransfer $quoteTransfer): bool;
+    public function checkCheckoutStepAccessibility(QuoteTransfer $quoteTransfer): bool;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
