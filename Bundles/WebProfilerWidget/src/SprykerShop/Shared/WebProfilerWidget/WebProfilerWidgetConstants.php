@@ -18,7 +18,7 @@ interface WebProfilerWidgetConstants
      *
      * @api
      */
-    public const IS_WEB_PROFILER_ENABLED = 'WEB_PROFILER_WIDGET_YVES:IS_WEB_PROFILER_ENABLED';
+    public const IS_WEB_PROFILER_ENABLED = 'WEB_PROFILER_WIDGET:IS_WEB_PROFILER_ENABLED';
 
     /**
      * Specification:
@@ -26,5 +26,5 @@ interface WebProfilerWidgetConstants
      *
      * @api
      */
-    public const PROFILER_CACHE_DIRECTORY = 'WEB_PROFILER_WIDGET_YVES:PROFILER_CACHE_DIRECTORY';
+    public const PROFILER_CACHE_DIRECTORY = 'WEB_PROFILER_WIDGET:PROFILER_CACHE_DIRECTORY';
 }

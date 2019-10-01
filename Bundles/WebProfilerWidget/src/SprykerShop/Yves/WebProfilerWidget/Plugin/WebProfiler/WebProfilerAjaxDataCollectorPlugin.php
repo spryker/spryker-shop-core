@@ -43,7 +43,7 @@ class WebProfilerAjaxDataCollectorPlugin implements WebProfilerDataCollectorPlug
 
     /**
      * {@inheritDoc}
-     * - Adds a AjaxDataCollector.
+     * - Adds a AjaxDataCollector which collects information about asynchronous requests.
      *
      * @api
      *

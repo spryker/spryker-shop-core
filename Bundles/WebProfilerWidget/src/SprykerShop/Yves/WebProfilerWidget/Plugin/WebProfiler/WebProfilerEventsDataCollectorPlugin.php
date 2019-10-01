@@ -44,7 +44,7 @@ class WebProfilerEventsDataCollectorPlugin implements WebProfilerDataCollectorPl
 
     /**
      * {@inheritDoc}
-     * - Adds a EventDataCollector.
+     * - Adds a EventDataCollector which collects information about the triggered events.
      *
      * @api
      *

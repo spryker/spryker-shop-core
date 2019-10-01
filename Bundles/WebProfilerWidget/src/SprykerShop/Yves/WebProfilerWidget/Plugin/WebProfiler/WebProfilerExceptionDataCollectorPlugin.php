@@ -43,7 +43,7 @@ class WebProfilerExceptionDataCollectorPlugin implements WebProfilerDataCollecto
 
     /**
      * {@inheritDoc}
-     * - Adds an ExceptionDataCollector.
+     * - Adds an ExceptionDataCollector which collects information about exceptions.
      *
      * @api
      *

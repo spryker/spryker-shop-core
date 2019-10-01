@@ -43,7 +43,7 @@ class WebProfilerRequestDataCollectorPlugin implements WebProfilerDataCollectorP
 
     /**
      * {@inheritDoc}
-     * - Adds a RequestDataCollector.
+     * - Adds a RequestDataCollector which collects information about the request.
      *
      * @api
      *

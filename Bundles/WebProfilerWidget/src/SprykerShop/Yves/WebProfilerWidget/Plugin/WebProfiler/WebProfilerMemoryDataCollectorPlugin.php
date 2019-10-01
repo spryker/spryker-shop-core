@@ -43,7 +43,7 @@ class WebProfilerMemoryDataCollectorPlugin implements WebProfilerDataCollectorPl
 
     /**
      * {@inheritDoc}
-     * - Adds a MemoryDataCollector.
+     * - Adds a MemoryDataCollector which collects information about the consumed memory.
      *
      * @api
      *

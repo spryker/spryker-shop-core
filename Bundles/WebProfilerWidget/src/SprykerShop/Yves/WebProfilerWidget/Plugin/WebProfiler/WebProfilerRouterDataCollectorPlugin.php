@@ -43,7 +43,7 @@ class WebProfilerRouterDataCollectorPlugin implements WebProfilerDataCollectorPl
 
     /**
      * {@inheritDoc}
-     * - Adds a RouterDataCollector.
+     * - Adds a RouterDataCollector which collects information from the router.
      *
      * @api
      *

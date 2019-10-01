@@ -44,7 +44,7 @@ class WebProfilerTwigDataCollectorPlugin implements WebProfilerDataCollectorPlug
 
     /**
      * {@inheritDoc}
-     * - Adds a TwigDataCollector.
+     * - Adds a TwigDataCollector which collect information about twig templates.
      *
      * @api
      *
