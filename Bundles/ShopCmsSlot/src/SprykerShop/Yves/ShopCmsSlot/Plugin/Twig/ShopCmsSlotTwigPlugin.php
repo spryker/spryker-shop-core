@@ -38,6 +38,14 @@ class ShopCmsSlotTwigPlugin extends AbstractTwigExtensionPlugin
     {
         $cmsSlotContent = '';
 
+        $cmsSlotStorageTransfer = $this->getFactory()->getCmsSlotStorageClient()->findSlotByKey(
+            $cmsSlotContextTransfer->getCmsSlotKey()
+        );
+
+        if (!$cmsSlotStorageTransfer) {
+            return $cmsSlotContent;
+        }
+
         try {
             $cmsSlotDataTransfer = $this->getFactory()
                 ->createCmsSlotDataProvider()
