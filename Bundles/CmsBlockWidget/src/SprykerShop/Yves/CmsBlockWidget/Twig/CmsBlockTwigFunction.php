@@ -72,7 +72,7 @@ class CmsBlockTwigFunction extends TwigFunction
 
             foreach ($blocks as $block) {
                 $blockData = $this->getCmsBlockTransfer($block);
-                $isActive = $this->validateBlock($blockData);
+                $isActive = $this->validateBlockTemplate($blockData);
                 $isActive &= $this->validateDates($blockData);
 
                 if ($isActive) {
@@ -129,7 +129,7 @@ class CmsBlockTwigFunction extends TwigFunction
      *
      * @return bool
      */
-    protected function validateBlock(SpyCmsBlockEntityTransfer $cmsBlockData): bool
+    protected function validateBlockTemplate(SpyCmsBlockEntityTransfer $cmsBlockData): bool
     {
         return $cmsBlockData->getCmsBlockTemplate() !== null;
     }
