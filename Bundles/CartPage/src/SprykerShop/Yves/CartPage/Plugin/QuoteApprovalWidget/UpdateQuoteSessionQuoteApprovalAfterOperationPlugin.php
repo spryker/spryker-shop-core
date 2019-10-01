@@ -33,6 +33,7 @@ class UpdateQuoteSessionQuoteApprovalAfterOperationPlugin extends AbstractPlugin
             ->getQuote();
 
         $quoteTransfer->setQuoteApprovals($quoteApprovalResponseTransfer->getQuote()->getQuoteApprovals());
+        $quoteTransfer->setIsLocked($quoteApprovalResponseTransfer->getQuote()->getIsLocked());
 
         $this->getFactory()
             ->getQuoteClient()

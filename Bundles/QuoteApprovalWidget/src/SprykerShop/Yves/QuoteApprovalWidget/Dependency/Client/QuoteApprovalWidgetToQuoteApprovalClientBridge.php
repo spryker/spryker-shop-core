@@ -34,6 +34,16 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
      *
      * @return bool
      */
+    public function checkCheckoutStepAccessibility(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteApprovalClient->checkCheckoutStepAccessibility($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
     public function canQuoteBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool
     {
         return $this->quoteApprovalClient->canQuoteBeApprovedByCurrentCustomer($quoteTransfer);
@@ -104,7 +114,6 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return int|null
      */
