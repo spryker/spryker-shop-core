@@ -20,8 +20,10 @@
                 <input class="input input--expand"
                        type="number"
                        name="{{ data.parameter }}[min]"
-                       value="{{ data.activeMin }}"
-                       required="required"
+                       {% if data.activeMin != data.min %}
+                          value="{{ data.activeMin }}"
+                       {% endif %}
+                       placeholder="{{ data.min }}"
                        min="{{ data.min }}"
                        max="{{ data.max }}"
                        data-default-value-disabler
@@ -36,8 +38,10 @@
                 <input class="input input--expand"
                        type="number"
                        name="{{ data.parameter }}[max]"
-                       value="{{ data.activeMax }}"
-                       required="required"
+                       {% if data.activeMax != data.max %}
+                          value="{{ data.activeMax }}"
+                       {% endif %}
+                       placeholder="{{ data.max }}"
                        min="{{ data.min }}"
                        max="{{ data.max }}"
                        data-default-value-disabler

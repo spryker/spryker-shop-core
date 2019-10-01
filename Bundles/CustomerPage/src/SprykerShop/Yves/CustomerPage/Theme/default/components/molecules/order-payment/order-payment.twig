@@ -1,0 +1,23 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-payment',
+    tag: 'ul',
+} %}
+
+{% define data = {
+    payments: required,
+    currencyIsoCode: required,
+} %}
+
+{%- block class -%}
+    {{ parent() }} list
+{%- endblock -%}
+
+{% block body %}
+    {% for payment in data.payments %}
+        <li class="list__item">{{ payment.paymentProvider | trans }}</li>
+        <li class="list__item">{{ 'customer.order.payment_method' | trans }}: {{ payment.paymentMethod | trans }}</li>
+        <li class="list__item">{{ payment.amount | money(true, data.currencyIsoCode) }}</li>
+    {% endfor %}
+{% endblock %}

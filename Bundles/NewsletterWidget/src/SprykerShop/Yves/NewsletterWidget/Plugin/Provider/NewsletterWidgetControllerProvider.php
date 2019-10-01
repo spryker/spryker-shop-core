@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\NewsletterWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\NewsletterWidget\Plugin\Router\NewsletterWidgetRouteProviderPlugin` instead.
+ */
 class NewsletterWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_NEWSLETTER_SUBSCRIBE = 'newsletter/subscribe';

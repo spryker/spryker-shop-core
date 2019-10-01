@@ -34,7 +34,7 @@ class CartOperationsWidgetPlugin extends AbstractWidgetPlugin implements CartOpe
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,7 +46,7 @@ class CartOperationsWidgetPlugin extends AbstractWidgetPlugin implements CartOpe
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

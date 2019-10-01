@@ -19,7 +19,7 @@ class QuickOrderCsvUploadedFileParserStrategyPlugin extends AbstractPlugin imple
     protected const CSV_FILE_MIME_TYPE = 'text/csv';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns true if the provided mime type matches the expected mime type.
      *
      * @api
@@ -34,7 +34,7 @@ class QuickOrderCsvUploadedFileParserStrategyPlugin extends AbstractPlugin imple
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expects first row to contain the header.
      *
      * @api

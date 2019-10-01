@@ -12,6 +12,8 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
 
 /**
+ * @deprecated Use `\SprykerShop\Yves\CatalogPage\Plugin\StorageRouter\CatalogPageResourceCreatorPlugin` instead.
+ *
  * @method \SprykerShop\Yves\CatalogPage\CatalogPageFactory getFactory()
  */
 class CatalogPageResourceCreatorPlugin extends AbstractPlugin implements ResourceCreatorPluginInterface

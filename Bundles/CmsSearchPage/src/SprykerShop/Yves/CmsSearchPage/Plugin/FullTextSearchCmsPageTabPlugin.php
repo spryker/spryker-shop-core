@@ -22,7 +22,7 @@ class FullTextSearchCmsPageTabPlugin extends AbstractPlugin implements FullTextS
     protected const TAB_TRANSLATED_TITLE = 'global.search.pages';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Calculates total hist for cms pages tab via CmsPageSearch client module's method call
      *
      * @api
@@ -41,7 +41,7 @@ class FullTextSearchCmsPageTabPlugin extends AbstractPlugin implements FullTextS
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
