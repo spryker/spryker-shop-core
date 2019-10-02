@@ -47,7 +47,7 @@
                                 {% block price %}
                                     <span class="{{ config.name }}__text">
                                         {% block priceInner %}
-                                            {% if can('SeePricePermissionPlugin') and data.product.unitPrice %}
+                                            {% if can('SeePricePermissionPlugin') and data.product.unitPrice is not empty %}
                                                 {%- block priceTitle -%}
                                                     {{ 'configured_bundle.price' | trans }}
                                                 {% endblock %}
@@ -88,7 +88,7 @@
                                 {% block total %}
                                     <strong class="{{ config.name }}__text">
                                         {% block totalInner %}
-                                            {% if can('SeePricePermissionPlugin') and data.product.sumSubtotalAggregation %}
+                                            {% if can('SeePricePermissionPlugin') and data.product.sumSubtotalAggregation is not empty %}
                                                 {%- block totalTitle -%}
                                                     {{ 'configured_bundle.total' | trans }}
                                                 {% endblock %}
