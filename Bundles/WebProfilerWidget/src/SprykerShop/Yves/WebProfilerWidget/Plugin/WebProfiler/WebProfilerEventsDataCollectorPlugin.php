@@ -8,8 +8,8 @@
 namespace SprykerShop\Yves\WebProfilerWidget\Plugin\WebProfiler;
 
 use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface;
 use Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin;
-use SprykerShop\Yves\WebProfilerWidgetExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 use Symfony\Component\HttpKernel\DataCollector\EventDataCollector;
 

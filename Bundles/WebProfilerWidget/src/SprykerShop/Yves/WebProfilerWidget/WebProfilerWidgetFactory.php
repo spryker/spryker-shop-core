@@ -40,7 +40,7 @@ class WebProfilerWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\WebProfilerWidgetExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface[]
+     * @return \Spryker\Shared\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface[]
      */
     public function getDataCollectorPlugins(): array
     {

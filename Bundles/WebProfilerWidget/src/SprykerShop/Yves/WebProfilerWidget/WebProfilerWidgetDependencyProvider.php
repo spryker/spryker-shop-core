@@ -28,9 +28,9 @@ class WebProfilerWidgetDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container = $this->addDataCollectorPlugins($container);
 
-        $container[static::PLUGINS_WEB_PROFILER] = function () {
+        $container->set(static::PLUGINS_WEB_PROFILER, function () {
             return $this->getWebProfilerPlugins();
-        };
+        });
 
         return $container;
     }
@@ -42,15 +42,15 @@ class WebProfilerWidgetDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addDataCollectorPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_DATA_COLLECTORS] = function () {
+        $container->set(static::PLUGINS_DATA_COLLECTORS, function () {
             return $this->getDataCollectorPlugins();
-        };
+        });
 
         return $container;
     }
 
     /**
-     * @return \SprykerShop\Yves\WebProfilerWidgetExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface[]
+     * @return \Spryker\Shared\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface[]
      */
     public function getDataCollectorPlugins()
     {
