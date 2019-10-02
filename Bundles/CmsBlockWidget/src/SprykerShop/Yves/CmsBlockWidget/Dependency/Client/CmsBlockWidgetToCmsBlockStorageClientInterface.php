@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\CmsBlockWidget\Dependency\Client;
 interface CmsBlockWidgetToCmsBlockStorageClientInterface
 {
     /**
+     * @deprecated Use `\SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface::findBlocksByNames()` instead.
+     *
      * @param string[] $blockNames
      * @param string $localeName
      * @param string $storeName
@@ -19,17 +21,18 @@ interface CmsBlockWidgetToCmsBlockStorageClientInterface
     public function findBlocksByNames($blockNames, $localeName, $storeName);
 
     /**
-     * @param array $options
-     * @param string $localName
+     * @param string[] $blockKeys
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return array
      */
-    public function findBlockNamesByOptions(array $options, $localName);
+    public function findBlocksByKeys(array $blockKeys, string $localeName, string $storeName): array;
 
     /**
-     * @param string $name
+     * @param array $options
      *
-     * @return string
+     * @return array
      */
-    public function generateBlockNameKey($name);
+    public function findBlockKeysByOptions(array $options): array;
 }

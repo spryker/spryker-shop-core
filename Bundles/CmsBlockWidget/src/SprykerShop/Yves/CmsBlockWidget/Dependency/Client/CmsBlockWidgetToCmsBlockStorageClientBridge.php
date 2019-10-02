@@ -23,6 +23,8 @@ class CmsBlockWidgetToCmsBlockStorageClientBridge implements CmsBlockWidgetToCms
     }
 
     /**
+     * @deprecated Use `\SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientBridge::findBlocksByKeys()` instead.
+     *
      * @param string[] $blockNames
      * @param string $localeName
      * @param string $storeName
@@ -35,23 +37,24 @@ class CmsBlockWidgetToCmsBlockStorageClientBridge implements CmsBlockWidgetToCms
     }
 
     /**
-     * @param array $options
-     * @param string $localName
+     * @param string[] $blockKeys
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return array
      */
-    public function findBlockNamesByOptions(array $options, $localName)
+    public function findBlocksByKeys(array $blockKeys, string $localeName, string $storeName): array
     {
-        return $this->cmsBlockStorageClient->findBlockNamesByOptions($options, $localName);
+        return $this->cmsBlockStorageClient->findBlocksByKeys($blockKeys, $localeName, $storeName);
     }
 
     /**
-     * @param string $name
+     * @param array $options
      *
-     * @return string
+     * @return array
      */
-    public function generateBlockNameKey($name)
+    public function findBlockKeysByOptions(array $options): array
     {
-        return $this->cmsBlockStorageClient->generateBlockNameKey($name);
+        return $this->cmsBlockStorageClient->findBlockKeysByOptions($options);
     }
 }

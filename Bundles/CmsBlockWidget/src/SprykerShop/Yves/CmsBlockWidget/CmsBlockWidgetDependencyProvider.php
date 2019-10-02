@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CmsBlockWidget;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientBridge;
+use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToStoreClientBridge;
 
 class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -20,6 +21,7 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
 
     public const TWIG_EXTENSION_PLUGINS = 'TWIG_EXTENSION_PLUGINS';
     public const CLIENT_CMS_BLOCK_STORAGE = 'CLIENT_CMS_BLOCK_STORAGE';
+    public const CLIENT_STORE = 'CLIENT_STORE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -31,6 +33,7 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addTwigFunctionPlugins($container);
         $container = $this->addTwigExtensionPlugins($container);
         $container = $this->addCmsBlockStorageClient($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -93,6 +96,20 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CLIENT_CMS_BLOCK_STORAGE] = function (Container $container) {
             return new CmsBlockWidgetToCmsBlockStorageClientBridge($container->getLocator()->cmsBlockStorage()->client());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new CmsBlockWidgetToStoreClientBridge($container->getLocator()->store()->client());
+        });
 
         return $container;
     }

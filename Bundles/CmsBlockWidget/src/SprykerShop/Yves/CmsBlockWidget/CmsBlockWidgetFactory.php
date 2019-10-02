@@ -8,9 +8,33 @@
 namespace SprykerShop\Yves\CmsBlockWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToStoreClientInterface;
+use SprykerShop\Yves\CmsBlockWidget\Twig\CmsBlockTwigFunction;
 
 class CmsBlockWidgetFactory extends AbstractFactory
 {
+    /**
+     * @param string $localeName
+     *
+     * @return \SprykerShop\Yves\CmsBlockWidget\Twig\CmsBlockTwigFunction
+     */
+    public function createCmsBlockTwigFunction(string $localeName): CmsBlockTwigFunction
+    {
+        return new CmsBlockTwigFunction(
+            $this->getCmsBlockStorageClient(),
+            $this->getStoreClient(),
+            $localeName
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToStoreClientInterface
+     */
+    public function getStoreClient(): CmsBlockWidgetToStoreClientInterface
+    {
+        return $this->getProvidedDependency(CmsBlockWidgetDependencyProvider::CLIENT_STORE);
+    }
+
     /**
      * @deprecated Use `getTwigExtensionPlugins` instead.
      *
