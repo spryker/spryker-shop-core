@@ -11,6 +11,8 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 /**
+ * @deprecated Use `spryker-shop/storage-router` instead.
+ *
  * @method \SprykerShop\Yves\ShopRouter\ShopRouterFactory getFactory()
  */
 class StorageRouter extends AbstractRouter

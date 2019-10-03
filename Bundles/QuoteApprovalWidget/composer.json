@@ -20,10 +20,12 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/router": "*",
     "spryker/silex": "^2.0.0",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/router": "Use this module when you want to use the Router.",
     "spryker/silex": "^2.0.0"
   },
   "autoload": {

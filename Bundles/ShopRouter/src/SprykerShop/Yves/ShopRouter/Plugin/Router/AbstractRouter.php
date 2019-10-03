@@ -19,6 +19,9 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
+/**
+ * @deprecated Use `spryker/router` instead.
+ */
 abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
 {
     /**

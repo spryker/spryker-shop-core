@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CartNoteWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CartNoteWidget\Plugin\Router\CartNoteWidgetRouteProviderPlugin` instead.
+ */
 class CartNoteWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_CART_NOTE_QUOTE = 'cart-note/quote';

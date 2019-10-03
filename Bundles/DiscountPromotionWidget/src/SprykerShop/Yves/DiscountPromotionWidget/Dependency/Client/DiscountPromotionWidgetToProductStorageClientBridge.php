@@ -35,4 +35,16 @@ class DiscountPromotionWidgetToProductStorageClientBridge implements DiscountPro
     {
         return $this->productStorageClient->findProductAbstractViewTransfer($idProductAbstract, $localeName, $selectedAttributes);
     }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function getProductAbstractViewTransfers(array $productAbstractIds, string $localeName, array $selectedAttributes = []): array
+    {
+        return $this->productStorageClient->getProductAbstractViewTransfers($productAbstractIds, $localeName, $selectedAttributes);
+    }
 }
