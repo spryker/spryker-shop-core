@@ -1,6 +1,6 @@
 import Component from 'ShopUi/models/component';
 
-const EVENT_TOGGLE_FORM = 'toggleForm';
+export const EVENT_TOGGLE_FORM = 'toggleForm';
 
 /**
  * @event toggleForm An event emitted when the component performs a toggle of form container.

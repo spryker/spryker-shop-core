@@ -1,12 +1,10 @@
 import Component from 'ShopUi/models/component';
-import AddressFormToggler from 'CustomerPage/components/molecules/address-form-toggler/address-form-toggler';
+import AddressFormToggler, { EVENT_TOGGLE_FORM } from 'CustomerPage/components/molecules/address-form-toggler/address-form-toggler';
 
-const EVENT_INIT = 'initComponent';
-const EVENT_TOGGLE_FORM = 'toggleForm';
+export const EVENT_INIT = 'afterInit';
 
 /**
- * @event initComponent An event emitted when the component has been initialized.
- * @event toggleForm An event emitted when the component performs a toggle of form container.
+ * @event afterInit An event emitted when the component has been initialized.
  */
 export default class ValidateNextCheckoutStep extends Component {
     protected containers: HTMLElement[];

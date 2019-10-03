@@ -1,11 +1,6 @@
 import Component from 'ShopUi/models/component';
-import ValidateNextCheckoutStep from '../validate-next-checkout-step/validate-next-checkout-step';
+import ValidateNextCheckoutStep, { EVENT_INIT } from '../validate-next-checkout-step/validate-next-checkout-step';
 
-const EVENT_INIT = 'initComponent';
-
-/**
- * @event initComponent An event emitted when the component has been initialized.
- */
 export default class IsNextCheckoutStepEnabled extends Component {
     protected trigger: HTMLSelectElement;
     protected target: ValidateNextCheckoutStep;
