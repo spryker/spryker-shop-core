@@ -56,26 +56,19 @@ class ProductReplacementForListWidget extends AbstractWidget
         if (!$productReplacementStorageTransfer) {
             return $productViewTransferList;
         }
-        foreach ($productReplacementStorageTransfer->getProductConcreteIds() as $idProduct) {
-            $productViewTransfer = $this->getProductViewTransfer($idProduct);
-            if ($productViewTransfer && $this->canShowProductReplacementFor($productViewTransfer)) {
-                $productViewTransferList[] = $productViewTransfer;
+
+        $productViewTransferList = $this->getFactory()
+            ->getProductStorageClient()
+            ->getProductConcreteViewTransfers($productReplacementStorageTransfer->getProductConcreteIds(), $this->getLocale());
+
+        $filteredProductViewTransferList = [];
+        foreach ($productViewTransferList as $productViewTransfer) {
+            if ($this->canShowProductReplacementFor($productViewTransfer)) {
+                $filteredProductViewTransferList[] = $productViewTransfer;
             }
         }
 
-        return array_filter($productViewTransferList);
-    }
-
-    /**
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
-     */
-    protected function getProductViewTransfer(int $idProduct): ?ProductViewTransfer
-    {
-        return $this->getFactory()
-            ->getProductStorageClient()
-            ->findProductConcreteViewTransfer($idProduct, $this->getLocale());
+        return $filteredProductViewTransferList;
     }
 
     /**

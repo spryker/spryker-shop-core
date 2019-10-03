@@ -15,6 +15,8 @@ use SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPlugin
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Use `\SprykerShop\Yves\ProductSetDetailPage\Plugin\StorageRouter\ProductSetDetailPageResourceCreatorPlugin` instead.
+ *
  * @method \SprykerShop\Yves\ProductSetDetailPage\ProductSetDetailPageFactory getFactory()
  */
 class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implements ResourceCreatorPluginInterface
@@ -76,20 +78,14 @@ class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implement
      */
     protected function mapProductViewTransfer(ProductSetDataStorageTransfer $productSetDataStorageTransfer): array
     {
-        $productViewTransfers = [];
+        $selectedAttributes = [];
         foreach ($productSetDataStorageTransfer->getProductAbstractIds() as $idProductAbstract) {
-            $productViewTransfer = $this->getFactory()->getProductStorageClient()->findProductAbstractViewTransfer(
-                $idProductAbstract,
-                $this->getLocale(),
-                $this->getSelectedAttributes($idProductAbstract)
-            );
-
-            if ($productViewTransfer === null) {
-                continue;
-            }
-
-            $productViewTransfers[] = $productViewTransfer;
+            $selectedAttributes[$idProductAbstract] = $this->getSelectedAttributes($idProductAbstract);
         }
+
+        $productViewTransfers = $this->getFactory()
+            ->getProductStorageClient()
+            ->getProductAbstractViewTransfers($productSetDataStorageTransfer->getProductAbstractIds(), $this->getLocale(), $selectedAttributes);
 
         return $productViewTransfers;
     }

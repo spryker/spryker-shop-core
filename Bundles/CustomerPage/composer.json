@@ -32,6 +32,7 @@
     "spryker/config": "*",
     "spryker/container": "*",
     "spryker/messenger": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
@@ -42,6 +43,7 @@
     "spryker-shop/gift-card-widget": "If you want to use components from module GiftCardWidget.",
     "spryker-shop/home-page": "Widget plugins are available for this module.",
     "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or OrderDetailProductPackagingUnitWidgetPlugin.",
+    "spryker/router": "Use this module when you want to use the Router.",
     "spryker/config": "Use this module when using plugins that need Config dependencies.",
     "spryker/container": "If you want to use twig plugins.",
     "spryker/messenger": "Use this module when using plugins that need Messenger dependencies.",

@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\PersistentCartShareWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\PersistentCartShareWidget\Plugin\Router\PersistentCartShareWidgetRouteProviderPlugin` instead.
+ */
 class ShareCartByLinkWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     public const CART_CREATE_LINK = 'cart/create-link';

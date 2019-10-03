@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CartCodeWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CartCodeWidget\Plugin\Router\CartCodeWidgetRouteProviderPlugin` instead.
+ */
 class CartCodeWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_CART_CODE_ADD = 'cart-code/code/add';

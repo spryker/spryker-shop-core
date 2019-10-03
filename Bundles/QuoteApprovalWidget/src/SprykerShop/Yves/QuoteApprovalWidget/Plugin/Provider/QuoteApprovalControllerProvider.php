@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\QuoteApprovalWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\QuoteApprovalWidget\Plugin\Router\QuoteApprovalWidgetRouteProviderPlugin` instead.
+ */
 class QuoteApprovalControllerProvider extends AbstractYvesControllerProvider
 {
     protected const ROUTE_QUOTE_APPROVAL_APPROVE = 'quote-approval-approve';

@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ProductSearchWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\ProductSearchWidget\Plugin\Router\ProductSearchWidgetRouteProviderPlugin` instead.
+ */
 class ProductSearchWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     protected const ROUTE_PRODUCT_CONCRETE_SEARCH = 'product-search/product-concrete-search';

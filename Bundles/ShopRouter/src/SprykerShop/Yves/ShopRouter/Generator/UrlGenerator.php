@@ -16,6 +16,9 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
+/**
+ * @deprecated Use `spryker/router` instead.
+ */
 class UrlGenerator extends SymfonyUrlGenerator
 {
     public const HOME = 'home';
