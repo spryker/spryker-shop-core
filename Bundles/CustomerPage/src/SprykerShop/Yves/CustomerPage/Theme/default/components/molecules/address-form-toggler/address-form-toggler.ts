@@ -1,5 +1,10 @@
 import Component from 'ShopUi/models/component';
 
+const EVENT_TOGGLE_FORM = 'toggleForm';
+
+/**
+ * @event toggleForm An event emitted when the component performs a toggle of form container.
+ */
 export default class AddressFormToggler extends Component {
     /**
      * Element triggering the toggle action.
@@ -66,6 +71,8 @@ export default class AddressFormToggler extends Component {
             this.subForm.classList.add(this.classToToggle);
             this.billingSameAsShipping.classList.remove(this.classToToggle);
         }
+
+        this.dispatchCustomEvent(EVENT_TOGGLE_FORM);
     }
 
     /**
