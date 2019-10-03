@@ -32,7 +32,7 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
     protected const PARAM_ADD_TO_SHOPPING_LIST = 'addToShoppingList';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns true if "add to shopping list" button was pressed.
      *
      * @api
@@ -48,7 +48,7 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds products to shopping list.
      * - Returns with a route if all items were successfully added.
      *

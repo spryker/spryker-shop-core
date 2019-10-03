@@ -35,4 +35,16 @@ class ProductReplacementForWidgetToProductStorageClientBridge implements Product
     {
         return $this->productStorageClient->findProductConcreteViewTransfer($idProductConcrete, $localeName, $selectedAttributes);
     }
+
+    /**
+     * @param int[] $productConcreteIds
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function getProductConcreteViewTransfers(array $productConcreteIds, string $localeName, array $selectedAttributes = []): array
+    {
+        return $this->productStorageClient->getProductConcreteViewTransfers($productConcreteIds, $localeName, $selectedAttributes);
+    }
 }

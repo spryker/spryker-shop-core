@@ -26,6 +26,7 @@
     "spryker-shop/cart-page": "*",
     "spryker-shop/quote-request-page": "*",
     "spryker/code-sniffer": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
@@ -34,6 +35,7 @@
     "spryker-shop/cart-page": "If you want to use cart page molecules: ^3.2.0",
     "spryker-shop/company-user-agent-widget": "If you want to use company user auto-complete form: ^1.0.0",
     "spryker-shop/quote-request-page": "If you want to use quote request page molecules: ^2.0.0",
+    "spryker/router": "Use this module if you want use the RouterProviderPlugin.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

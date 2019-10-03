@@ -17,7 +17,7 @@ use Twig\Environment;
 class CmsBlockTwigPlugin extends AbstractTwigExtensionPlugin
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

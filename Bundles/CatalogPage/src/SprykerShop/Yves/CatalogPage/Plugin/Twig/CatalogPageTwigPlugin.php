@@ -18,7 +18,7 @@ use Twig\Environment;
 class CatalogPageTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

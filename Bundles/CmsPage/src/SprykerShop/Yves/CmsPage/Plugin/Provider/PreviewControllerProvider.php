@@ -10,10 +10,14 @@ namespace SprykerShop\Yves\CmsPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CmsPage\Plugin\Router\CmsPageRouteProviderPlugin` instead.
+ */
 class PreviewControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_PREVIEW = 'cms-preview';
     public const PARAM_PAGE = 'page';
+    public const PAGE_NUMBER_PATTERN = '[0-9]+';
 
     /**
      * @param \Silex\Application $app
@@ -30,10 +34,10 @@ class PreviewControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addCmsPreviewRoute()
     {
-        $this->createController(sprintf('/{cms}/preview/{%s}', static::PARAM_PAGE), self::ROUTE_PREVIEW, 'CmsPage', 'Preview', 'index')
+        $this->createController('/{cms}/preview/{page}', static::ROUTE_PREVIEW, 'CmsPage', 'Preview', 'index')
             ->assert('cms', $this->getAllowedLocalesPattern() . 'cms|cms')
             ->value('cms', 'cms')
-            ->assert(static::PARAM_PAGE, '[0-9]+');
+            ->assert(static::PARAM_PAGE, static::PAGE_NUMBER_PATTERN);
 
         return $this;
     }

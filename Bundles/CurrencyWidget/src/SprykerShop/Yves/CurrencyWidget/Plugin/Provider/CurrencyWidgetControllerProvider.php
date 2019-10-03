@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CurrencyWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CurrencyWidget\Plugin\Router\CurrencyWidgetRouteProviderPlugin` instead.
+ */
 class CurrencyWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_CART = 'currency-switch';

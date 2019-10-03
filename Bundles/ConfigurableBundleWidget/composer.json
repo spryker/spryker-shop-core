@@ -16,10 +16,12 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/router": "Use this module if you want use the RouterProviderPlugin.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {

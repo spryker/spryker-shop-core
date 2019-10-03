@@ -51,19 +51,9 @@ class ProductGroupWidget extends AbstractWidget
     protected function getProductGroups(int $idProductAbstract): array
     {
         $productGroup = $this->getFactory()->getProductGroupStorageClient()->findProductGroupItemsByIdProductAbstract($idProductAbstract);
-        $productViewTransfers = [];
-
-        foreach ($productGroup->getGroupProductAbstractIds() as $idProductAbstract) {
-            $productViewTransfer = $this->getFactory()
-                ->getProductStorageClient()
-                ->findProductAbstractViewTransfer($idProductAbstract, $this->getLocale());
-
-            if ($productViewTransfer === null) {
-                continue;
-            }
-
-            $productViewTransfers[] = $productViewTransfer;
-        }
+        $productViewTransfers = $this->getFactory()
+            ->getProductStorageClient()
+            ->getProductAbstractViewTransfers($productGroup->getGroupProductAbstractIds(), $this->getLocale());
 
         return $productViewTransfers;
     }

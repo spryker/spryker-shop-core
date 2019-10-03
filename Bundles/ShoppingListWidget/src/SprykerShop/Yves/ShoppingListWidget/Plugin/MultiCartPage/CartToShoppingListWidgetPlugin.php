@@ -18,7 +18,7 @@ class CartToShoppingListWidgetPlugin extends AbstractWidgetPlugin
     public const NAME = 'CartToShoppingListWidgetPlugin';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class CartToShoppingListWidgetPlugin extends AbstractWidgetPlugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class CartToShoppingListWidgetPlugin extends AbstractWidgetPlugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\PriceWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\PriceWidget\Plugin\Router\PriceWidgetRouteProviderPlugin` instead.
+ */
 class PriceControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_PRICE_SWITCH = 'price-mode-switch';

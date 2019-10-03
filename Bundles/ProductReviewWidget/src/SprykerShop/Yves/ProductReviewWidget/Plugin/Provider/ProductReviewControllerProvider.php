@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ProductReviewWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\ProductReviewWidget\Plugin\Router\ProductReviewWidgetRouteProviderPlugin` instead.
+ */
 class ProductReviewControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_PRODUCT_REVIEW_INDEX = 'product-review/index';

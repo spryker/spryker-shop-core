@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Quote">
         <property name="quoteApprovals" type="QuoteApproval[]" singular="quoteApproval"/>
@@ -25,8 +25,8 @@
 
     <transfer name="QuoteApprovalResponse">
         <property name="quoteApproval" type="QuoteApproval"/>
-        <property name="isSuccessful" type="bool" />
-        <property name="messages" type="Message[]" singular="message" />
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="Message">
@@ -39,9 +39,9 @@
     </transfer>
 
     <transfer name="Customer">
-        <property name="companyUserTransfer" type="CompanyUser" />
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string" />
+        <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
     </transfer>
 
     <transfer name="CompanyUser">

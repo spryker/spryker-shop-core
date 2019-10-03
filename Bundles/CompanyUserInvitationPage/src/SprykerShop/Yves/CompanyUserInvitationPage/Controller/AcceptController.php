@@ -47,7 +47,8 @@ class AcceptController extends AbstractController
         }
 
         if ($companyUserInvitationTransfer->getCompanyUserInvitationStatusKey()
-            === CompanyUserInvitationConfig::INVITATION_STATUS_DELETED) {
+            === CompanyUserInvitationConfig::INVITATION_STATUS_DELETED
+        ) {
             return $this->redirectToRouteWithErrorMessage(
                 static::REDIRECT_URL,
                 'company.user.invitation.expired'
@@ -55,7 +56,8 @@ class AcceptController extends AbstractController
         }
 
         if ($companyUserInvitationTransfer->getCompanyUserInvitationStatusKey()
-            === CompanyUserInvitationConfig::INVITATION_STATUS_ACCEPTED) {
+            === CompanyUserInvitationConfig::INVITATION_STATUS_ACCEPTED
+        ) {
             return $this->redirectToRouteWithErrorMessage(
                 static::REDIRECT_URL,
                 'company.user.invitation.accepted'

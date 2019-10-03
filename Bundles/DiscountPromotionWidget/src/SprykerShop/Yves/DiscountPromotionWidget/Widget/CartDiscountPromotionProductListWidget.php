@@ -54,22 +54,35 @@ class CartDiscountPromotionProductListWidget extends AbstractWidget
      */
     protected function getPromotionProducts(QuoteTransfer $quoteTransfer, Request $request): array
     {
-        $promotionProducts = [];
+        $selectedAttributes = [];
+        $productAbstractIds = [];
+        $promotionItemTransfersIndexedByProductId = [];
         foreach ($quoteTransfer->getPromotionItems() as $promotionItemTransfer) {
-            $promotionItemTransfer->requireAbstractSku();
+            $productAbstractIds[] = $promotionItemTransfer->getIdProductAbstract();
+            $selectedAttributes[$promotionItemTransfer->getIdProductAbstract()] = $this->getSelectedAttributes($request, $promotionItemTransfer->getAbstractSku());
+            $promotionItemTransfersIndexedByProductId[$promotionItemTransfer->getIdProductAbstract()] = $promotionItemTransfer;
+        }
 
-            $productViewTransfer = $this->getFactory()->getProductStorageClient()->findProductAbstractViewTransfer(
-                $promotionItemTransfer->getIdProductAbstract(),
-                $this->getLocale(),
-                $this->getSelectedAttributes($request, $promotionItemTransfer->getAbstractSku())
-            );
+        $productViewTransfers = $this->getFactory()
+            ->getProductStorageClient()
+            ->getProductAbstractViewTransfers($productAbstractIds, $this->getLocale(), $selectedAttributes);
 
-            if ($productViewTransfer === null) {
-                continue;
-            }
+        return $this->mapPromotionProducts($productViewTransfers, $promotionItemTransfersIndexedByProductId);
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     * @param \Generated\Shared\Transfer\PromotionItemTransfer[] $promotionItemTransfersIndexedByProductId
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    protected function mapPromotionProducts(array $productViewTransfers, array $promotionItemTransfersIndexedByProductId): array
+    {
+        $promotionProducts = [];
+
+        foreach ($productViewTransfers as $productViewTransfer) {
+            $promotionItemTransfer = $promotionItemTransfersIndexedByProductId[$productViewTransfer->getIdProductAbstract()];
             $productViewTransfer->setPromotionItem($promotionItemTransfer);
-
             $promotionProducts[$this->createPromotionProductBucketIdentifier($promotionItemTransfer)] = $productViewTransfer;
         }
 
