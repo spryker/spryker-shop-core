@@ -1,0 +1,130 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    merchantProfile: _view.merchantProfile
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: data.merchantProfile.contactPersonFirstName ~ ' ' ~ data.merchantProfile.contactPersonLastName,
+                    withChevron: false,
+                }
+            ]
+        }
+    } only %}
+{% endblock %}
+
+{% block title %}
+    <div>
+        <h2>{{ data.merchantProfile.contactPersonFirstName ~ ' ' ~ data.merchantProfile.contactPersonLastName }}</h2>
+    </div>
+{% endblock %}
+
+{% block content %}
+{% set merchantName = data.merchantProfile.contactPersonFirstName ~ ' ' ~ data.merchantProfile.contactPersonLastName %}
+<div class="grid">
+    <div class="row">
+        <div class="col col--sm-5 col--lg-5 col--xl-5">
+            {% include atom('thumbnail') with {
+                modifiers: ['bigger'],
+                attributes: {
+                    alt: merchantName | default(''),
+                    src: (data.merchantProfile.bannerUrlGlossaryKey | trans),
+                },
+            } only %}
+        </div>
+        <div class="col col--sm-7 col--lg-7 col--xl-7">
+            <div class="row">
+                <div class="col col--sm-10 col--lg-10 col--xl-10">
+                    <div class="row">
+                        <div class="col col--sm-12 col--lg-12 col--xl-12">
+                            <p>
+                                {{ data.merchantProfile.descriptionGlossaryKey | trans }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col--sm-6 col--lg-6 col--xl-6">
+                            <p>
+                                <strong>{{ 'mearchant_profile.email' | trans }}</strong>
+                                <br>
+                                <span>{{ data.merchantProfile.publicEmail | trans }}</span>
+                            </p>
+                        </div>
+                        <div class="col col--sm-6 col--lg-6 col--xl-6">
+                            <p>
+                                <strong>{{ 'mearchant_profile.address' | trans }}</strong>
+                                <br>
+                                <span>+++++++</span>
+                                <br>
+                                <span>+++++++</span>
+                                <br>
+                                <span>+++++++</span>
+                            </p>
+                        </div>
+                        <div class="col col--sm-6 col--lg-6 col--xl-6">
+                            <p>
+                                <strong>{{ 'mearchant_profile.phone' | trans }}</strong>
+                                <br>
+                                <span>{{ data.merchantProfile.publicPhone }}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col--sm-2 col--lg-2 col--xl-2">
+                    {% include atom('thumbnail') with {
+                        modifiers: ['small'],
+                        attributes: {
+                            alt: merchantName | default(''),
+                            src: (data.merchantProfile.logoUrl | trans),
+                        },
+                    } only %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col--sm-12 col--lg-12 col--xl-12">
+            <h5>{{ 'mearchant_profile.terms_and_conditions' | trans }}</h5>
+            <p>
+                {{ data.merchantProfile.termsConditionsGlossaryKey | trans }}
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col--sm-12 col--lg-12 col--xl-12">
+            <h5>{{ 'mearchant_profile.cancellation_policy' | trans }}</h5>
+            <p>
+                {{ data.merchantProfile.cancellationPolicyGlossaryKey | trans }}
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col--sm-12 col--lg-12 col--xl-12">
+            <h5>{{ 'mearchant_profile.imprint' | trans }}</h5>
+            <p>
+                {{ data.merchantProfile.imprintGlossaryKey | trans }}
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col--sm-12 col--lg-12 col--xl-12">
+            <h5>{{ 'mearchant_profile.privacy' | trans }}</h5>
+            <p>
+                {{ data.merchantProfile.dataPrivacyGlossaryKey | trans }}
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col--sm-12 col--lg-12 col--xl-12">
+            <h5>{{ 'mearchant_profile.delivery_time' | trans }}</h5>
+            <p>
+                {{ data.merchantProfile.deliveryTimeGlossaryKey | trans }}
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
