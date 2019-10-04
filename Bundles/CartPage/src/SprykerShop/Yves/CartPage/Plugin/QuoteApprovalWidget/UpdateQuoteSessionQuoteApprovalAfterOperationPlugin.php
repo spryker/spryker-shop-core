@@ -17,7 +17,7 @@ use SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\QuoteApprova
 class UpdateQuoteSessionQuoteApprovalAfterOperationPlugin extends AbstractPlugin implements QuoteApprovalAfterOperationPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Saves quote approvals to session quote.
      *
      * @api

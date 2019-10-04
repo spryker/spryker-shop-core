@@ -6,6 +6,7 @@
     quote: _widget.quote,
     limit: _widget.limit,
     isVisible: _widget.isVisible,
+    isQuoteApplicable: _widget.isQuoteApplicable,
     quoteStatus: _widget.quoteStatus,
     canSendApprovalRequest: _widget.canSendApprovalRequest,
     quoteApprovalRequestFormOptions: {
@@ -58,7 +59,7 @@
         {% endif %}
     {% endif %}
 
-    {% if data.canSendApprovalRequest and data.hasApprovers %}
+    {% if data.canSendApprovalRequest and data.hasApprovers and data.isQuoteApplicable %}
         {% include molecule('approve-request-form', 'QuoteApprovalWidget') with {
             data: {
                 quoteApprovalRequestForm: data.quoteApprovalRequestForm,

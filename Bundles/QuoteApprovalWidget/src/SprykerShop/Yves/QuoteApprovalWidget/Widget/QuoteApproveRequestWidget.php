@@ -30,6 +30,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
     protected const PARAMETER_LIMIT = 'limit';
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
     protected const PARAMETER_IS_VISIBLE_ON_CART_PAGE = 'isVisibleOnCartPage';
+    protected const PARAMETER_IS_QUOTE_APPLICABLE = 'isQuoteApplicable';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -42,7 +43,8 @@ class QuoteApproveRequestWidget extends AbstractWidget
         $this->addLimitParameter($quoteTransfer);
         $this->addCanSendApprovalRequestParameter($quoteTransfer);
         $this->addQuoteApprovalRequestFormParameter($quoteTransfer);
-        $this->addParameter(static::PARAMETER_IS_VISIBLE_ON_CART_PAGE, $this->getConfig()->isWidgetVisibleOnCartPage());
+        $this->addIsQuoteApplicableParameter($quoteTransfer);
+        $this->addIsWidgetVisibleOnCartPageParameter();
     }
 
     /**
@@ -172,14 +174,6 @@ class QuoteApproveRequestWidget extends AbstractWidget
             return false;
         }
 
-        $isQuoteApplicableForApproval = $this->getFactory()
-            ->getQuoteApprovalClient()
-            ->isQuoteApplicableForApprovalProcess($quoteTransfer);
-
-        if (!$isQuoteApplicableForApproval) {
-            return false;
-        }
-
         return $this->can('RequestQuoteApprovalPermissionPlugin');
     }
 
@@ -245,5 +239,28 @@ class QuoteApproveRequestWidget extends AbstractWidget
     protected function getQuoteApprovalClient(): QuoteApprovalWidgetToQuoteApprovalClientInterface
     {
         return $this->getFactory()->getQuoteApprovalClient();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addIsQuoteApplicableParameter(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addParameter(
+            static::PARAMETER_IS_QUOTE_APPLICABLE,
+            $this->getFactory()
+                ->getQuoteApprovalClient()
+                ->isQuoteApplicableForApprovalProcess($quoteTransfer)
+        );
+    }
+
+    /**
+     * @return void
+     */
+    protected function addIsWidgetVisibleOnCartPageParameter(): void
+    {
+        $this->addParameter(static::PARAMETER_IS_VISIBLE_ON_CART_PAGE, $this->getConfig()->isWidgetVisibleOnCartPage());
     }
 }

@@ -114,7 +114,7 @@ class StepFactory extends AbstractFactory
     public function createEntryStep()
     {
         return new EntryStep(
-            CheckoutPageControllerProvider::CHECKOUT_INDEX,
+            static::ROUTE_CART,
             HomePageControllerProvider::ROUTE_HOME
         );
     }

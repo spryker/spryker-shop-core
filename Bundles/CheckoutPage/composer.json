@@ -11,7 +11,6 @@
     "spryker-shop/money-widget": "^1.0.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.28.1",
-    "spryker-shop/checkout-page-extension": "^1.0.0",
     "spryker/application": "^3.8.0",
     "spryker/calculation": "^4.2.0",
     "spryker/cart": "^4.3.0 || ^5.0.0 || ^7.0.0",
