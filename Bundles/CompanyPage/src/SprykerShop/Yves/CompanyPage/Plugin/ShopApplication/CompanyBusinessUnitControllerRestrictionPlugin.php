@@ -38,7 +38,7 @@ class CompanyBusinessUnitControllerRestrictionPlugin extends AbstractPlugin impl
     protected const GLOSSARY_KEY_COMPANY_PAGE_RESTRICTED = 'company_page.company_business_unit_restricted_message';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Verifies if customer could perform a BusinessUnitController "denied action" for a given business unit.
      * - Throws exception if customer has no permissions for such company business unit.
      *

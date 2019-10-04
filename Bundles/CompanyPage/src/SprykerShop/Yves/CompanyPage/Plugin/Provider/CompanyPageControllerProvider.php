@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CompanyPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin` instead.
+ */
 class CompanyPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_COMPANY_LOGIN = 'company/login';
@@ -80,9 +83,6 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addCompanyRoutes()
     {
-        $this->createController('/{company}/login', static::ROUTE_COMPANY_LOGIN, 'CompanyPage', 'Auth', 'login')
-            ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
-            ->value('company', 'company');
         $this->createController('/{company}/register', static::ROUTE_COMPANY_REGISTER, 'CompanyPage', 'Register', 'index')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');

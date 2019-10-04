@@ -176,7 +176,8 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
     {
         if ($this->isNewCustomerAddress($form)
             || $this->isIdCustomerAddressEmpty($form)
-            || $this->isIdCompanyUnitAddressEmpty($form)) {
+            || $this->isIdCompanyUnitAddressEmpty($form)
+        ) {
             return true;
         }
 

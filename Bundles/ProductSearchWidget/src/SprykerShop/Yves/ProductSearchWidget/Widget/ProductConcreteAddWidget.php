@@ -47,7 +47,7 @@ class ProductConcreteAddWidget extends AbstractWidget implements WidgetInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -59,7 +59,7 @@ class ProductConcreteAddWidget extends AbstractWidget implements WidgetInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -6,6 +6,7 @@ export default class FormSubmitter extends Component {
     protected triggers: HTMLElement[];
 
     protected readyCallback(): void {}
+
     protected init(): void {
         this.triggers = <HTMLElement[]>Array.from(document.querySelectorAll(this.triggerSelector));
         this.mapEvents();

@@ -1,7 +1,7 @@
 @mixin price-product-volume-widget-volume-price-table($name: '.volume-price-table') {
     #{$name} {
-        margin-bottom: 0.5rem;
         @include helper-font-size(big);
+        margin-bottom: 0.5rem;
 
         &__table,
         &__title,

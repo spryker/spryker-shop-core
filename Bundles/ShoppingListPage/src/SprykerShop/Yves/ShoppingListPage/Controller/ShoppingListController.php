@@ -247,14 +247,15 @@ class ShoppingListController extends AbstractShoppingListController
     }
 
     /**
-     * @param string $sku
-     * @param int $quantity
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $sku
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function quickAddToShoppingListAction(string $sku, int $quantity, Request $request): RedirectResponse
+    public function quickAddToShoppingListAction(Request $request, string $sku): RedirectResponse
     {
+        $quantity = $request->get('quantity', 1);
+
         $idShoppingList = $this->getShoppingListIdFromRequest($request);
         if ($idShoppingList === null) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_SELECT_LIST);

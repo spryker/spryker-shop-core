@@ -23,7 +23,7 @@ class NoteMetadataFieldPlugin extends AbstractPlugin implements QuoteRequestForm
     protected const MAX_LENGTH_NOTE = 1024;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds note to metadata for QuoteRequest form.
      *
      * @api

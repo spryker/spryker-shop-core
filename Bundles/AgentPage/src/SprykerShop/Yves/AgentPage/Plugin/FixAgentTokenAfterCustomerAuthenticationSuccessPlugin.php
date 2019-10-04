@@ -26,7 +26,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class FixAgentTokenAfterCustomerAuthenticationSuccessPlugin extends AbstractPlugin implements AfterCustomerAuthenticationSuccessPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

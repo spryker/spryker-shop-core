@@ -20,7 +20,7 @@ use Symfony\Component\Form\FormEvents;
 class ShoppingListItemProductOptionFormExpanderPlugin extends AbstractPlugin implements ShoppingListItemFormExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Extends shopping list item form with product options form.
      *
      * @api

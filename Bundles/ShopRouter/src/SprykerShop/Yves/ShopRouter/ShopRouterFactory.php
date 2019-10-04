@@ -17,6 +17,10 @@ use SprykerShop\Yves\ShopRouter\Merger\ParameterMerger;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
 
+/**
+ * @deprecated Use `spryker/router` instead.
+ * @deprecated Use `spryker-shop/storage-router` instead.
+ */
 class ShopRouterFactory extends AbstractFactory
 {
     /**
