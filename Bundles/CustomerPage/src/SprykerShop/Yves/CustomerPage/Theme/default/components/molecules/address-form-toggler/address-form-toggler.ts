@@ -19,6 +19,8 @@ export default class AddressFormToggler extends Component {
     protected containerBillingAddress: HTMLElement;
     protected billingSameAsShipping: HTMLElement;
     protected billingSameAsShippingToggler: HTMLInputElement;
+    protected parentTarget: HTMLElement;
+    protected eventToggleForm: CustomEvent = new CustomEvent(EVENT_TOGGLE_FORM);
 
     protected readyCallback(): void {
         if (this.triggerSelector) {
@@ -32,6 +34,10 @@ export default class AddressFormToggler extends Component {
 
             if (this.subTargetSelector) {
                 this.subForm = <HTMLFormElement>document.querySelector(this.subTargetSelector);
+            }
+
+            if (this.parentTargetClassName) {
+                this.parentTarget = <HTMLElement>document.getElementsByClassName(this.parentTargetClassName)[0];
             }
 
             this.onTogglerChange();
@@ -72,7 +78,9 @@ export default class AddressFormToggler extends Component {
             this.billingSameAsShipping.classList.remove(this.classToToggle);
         }
 
-        this.dispatchCustomEvent(EVENT_TOGGLE_FORM);
+        if (this.parentTarget) {
+            this.parentTarget.dispatchEvent(this.eventToggleForm);
+        }
     }
 
     /**
@@ -129,5 +137,9 @@ export default class AddressFormToggler extends Component {
      */
     get optionValueDeliverToMultipleAddresses(): string {
         return this.getAttribute('toggle-option-value');
+    }
+
+    protected get parentTargetClassName(): string {
+        return this.getAttribute('parent-target-class-name');
     }
 }

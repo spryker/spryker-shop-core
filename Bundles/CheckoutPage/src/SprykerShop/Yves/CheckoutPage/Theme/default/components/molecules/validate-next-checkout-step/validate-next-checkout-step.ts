@@ -1,5 +1,4 @@
 import Component from 'ShopUi/models/component';
-import AddressFormToggler, { EVENT_TOGGLE_FORM } from 'CustomerPage/components/molecules/address-form-toggler/address-form-toggler';
 
 export const EVENT_INIT = 'afterInit';
 
@@ -11,21 +10,21 @@ export default class ValidateNextCheckoutStep extends Component {
     protected triggers: HTMLFormElement[];
     protected target: HTMLButtonElement;
     protected dropdownTriggers: HTMLSelectElement[];
-    protected addressFormTogglers: AddressFormToggler[];
+    protected parentTarget: HTMLElement;
     protected readonly requiredFormFieldSelectors: string = 'select[required], input[required]';
 
     protected readyCallback(): void {
         this.containers = <HTMLElement[]>Array.from(document.querySelectorAll(this.containerSelector));
         this.target = <HTMLButtonElement>document.querySelector(this.targetSelector);
+
         if (this.dropdownTriggerSelector) {
             this.dropdownTriggers = <HTMLSelectElement[]>Array.from(document.querySelectorAll(
                 this.dropdownTriggerSelector
             ));
         }
-        if (this.addressFormTogglerClassName) {
-            this.addressFormTogglers = <AddressFormToggler[]>Array.from(document.getElementsByClassName(
-                this.addressFormTogglerClassName
-            ));
+
+        if (this.parentTargetClassName) {
+            this.parentTarget = <HTMLElement>document.getElementsByClassName(this.parentTargetClassName)[0];
         }
 
         if (this.isTriggerEnabled) {
@@ -44,10 +43,8 @@ export default class ValidateNextCheckoutStep extends Component {
             });
         }
 
-        if (this.addressFormTogglers) {
-            this.addressFormTogglers.forEach((element: AddressFormToggler) => {
-                element.addEventListener(EVENT_TOGGLE_FORM, () => this.onDropdownTriggerChange());
-            });
+        if (this.parentTarget) {
+            this.parentTarget.addEventListener('toggleForm', () => this.onDropdownTriggerChange());
         }
     }
 
@@ -161,7 +158,7 @@ export default class ValidateNextCheckoutStep extends Component {
         return this.getAttribute('class-to-toggle');
     }
 
-    protected get addressFormTogglerClassName(): string {
-        return this.getAttribute('address-form-toggler-class-name');
+    protected get parentTargetClassName(): string {
+        return this.getAttribute('parent-target-class-name');
     }
 }

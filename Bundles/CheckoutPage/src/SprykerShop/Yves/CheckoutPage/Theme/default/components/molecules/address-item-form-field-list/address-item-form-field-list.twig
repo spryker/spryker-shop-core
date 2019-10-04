@@ -10,6 +10,10 @@
     jsAddressClass: '',
 } %}
 
+{%- block class -%}
+    {{ parent() }} {{ config.jsName }}
+{%- endblock -%}
+
 {% block body %}
     {% set companyBusinessUnitShippingAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', data.shippingForm.vars.data]) %}
     {% set isCompanyBusinessUnitShippingAddressApplicable = companyBusinessUnitShippingAddressWidget and companyBusinessUnitShippingAddressWidget.isApplicable %}
@@ -119,6 +123,7 @@
                         attributes: {
                             'trigger-selector': '.' ~ config.jsName ~ '__trigger--' ~ loop.index,
                             'target-selector': '.' ~ config.jsName ~ '__item-shipping--' ~ loop.index,
+                            'parent-target-class-name': config.jsName,
                         },
                     } only %}
                 {% endif %}
@@ -139,7 +144,7 @@
             'container-selector': '.' ~ config.jsName ~ '__item-shipping',
             'target-selector': '.' ~ data.jsAddressClass ~ '__form-submit',
             'dropdown-trigger-selector': '.' ~ config.jsName ~ '__trigger',
-            'address-form-toggler-class-name': config.jsName ~ '__toggler',
+            'parent-target-class-name': config.jsName,
             'is-enable': false,
         },
     } only %}
