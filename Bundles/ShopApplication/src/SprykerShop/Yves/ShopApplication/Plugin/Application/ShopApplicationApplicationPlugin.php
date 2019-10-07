@@ -42,7 +42,7 @@ class ShopApplicationApplicationPlugin extends AbstractPlugin implements Applica
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Spryker\Service\Container\ContainerInterface $container
+     * @return \Spryker\Service\Container\ContainerInterface
      */
     protected function addDebugMode(ContainerInterface $container): ContainerInterface
     {
@@ -58,7 +58,7 @@ class ShopApplicationApplicationPlugin extends AbstractPlugin implements Applica
      *
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Spryker\Service\Container\ContainerInterface $container
+     * @return \Spryker\Service\Container\ContainerInterface
      */
     protected function addControllerResolver(ContainerInterface $container): ContainerInterface
     {

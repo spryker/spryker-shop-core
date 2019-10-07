@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\ShopCmsSlot\Dependency\Client;
 
+use Generated\Shared\Transfer\CmsSlotExternalDataTransfer;
+
 class ShopCmsSlotToCmsSlotClientBridge implements ShopCmsSlotToCmsSlotClientInterface
 {
     /**
@@ -25,9 +27,9 @@ class ShopCmsSlotToCmsSlotClientBridge implements ShopCmsSlotToCmsSlotClientInte
     /**
      * @param string[] $dataKeys
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CmsSlotExternalDataTransfer
      */
-    public function getCmsSlotExternalDataByKeys(array $dataKeys): array
+    public function getCmsSlotExternalDataByKeys(array $dataKeys): CmsSlotExternalDataTransfer
     {
         return $this->cmsSlotClient->getCmsSlotExternalDataByKeys($dataKeys);
     }
