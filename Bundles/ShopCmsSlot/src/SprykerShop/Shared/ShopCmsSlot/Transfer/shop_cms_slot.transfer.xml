@@ -19,7 +19,7 @@
         <property name="autoFillingKeys" type="string[]"/>
     </transfer>
 
-    <transfer name="CmsSlotStorageTransfer">
+    <transfer name="CmsSlotStorage">
     </transfer>
 
 </transfers>
