@@ -84,7 +84,7 @@ class ShopCmsSlotTwigPluginTest extends Unit
     /**
      * @return void
      */
-    public function testShopCmsSlotTwigPluginReturnsEmptyStringIfSlotWithKeyDoesNotExistInStorage(): void
+    public function testShopCmsSlotTwigPluginReturnsEmptyStringIfSlotKeyIsWrongOrSlotIsInactive(): void
     {
         $cmsSlotDataTransfer = $this->tester->getCmsSlotDataTransfer([
             CmsSlotDataTransfer::CONTENT => static::CONTENT,
@@ -128,7 +128,7 @@ class ShopCmsSlotTwigPluginTest extends Unit
         $cmsSlotStorageClientMock = $this->getMockBuilder(ShopCmsSlotToCmsSlotStorageClientBridge::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $cmsSlotStorageClientMock->method('findSlotByKey')->willReturn($cmsSlotStorageTransfer);
+        $cmsSlotStorageClientMock->method('findCmsSlotByKey')->willReturn($cmsSlotStorageTransfer);
 
         return $cmsSlotStorageClientMock;
     }

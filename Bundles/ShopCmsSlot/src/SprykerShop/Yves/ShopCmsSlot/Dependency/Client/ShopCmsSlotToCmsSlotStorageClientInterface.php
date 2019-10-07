@@ -16,5 +16,5 @@ interface ShopCmsSlotToCmsSlotStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\CmsSlotStorageTransfer|null
      */
-    public function findSlotByKey(string $cmsSlotKey): ?CmsSlotStorageTransfer;
+    public function findCmsSlotByKey(string $cmsSlotKey): ?CmsSlotStorageTransfer;
 }

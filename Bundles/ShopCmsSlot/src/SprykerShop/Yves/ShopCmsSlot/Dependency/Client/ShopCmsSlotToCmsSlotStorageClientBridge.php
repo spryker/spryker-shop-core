@@ -29,8 +29,8 @@ class ShopCmsSlotToCmsSlotStorageClientBridge implements ShopCmsSlotToCmsSlotSto
      *
      * @return \Generated\Shared\Transfer\CmsSlotStorageTransfer|null
      */
-    public function findSlotByKey(string $cmsSlotKey): ?CmsSlotStorageTransfer
+    public function findCmsSlotByKey(string $cmsSlotKey): ?CmsSlotStorageTransfer
     {
-        return $this->cmsSlotStorageClient->findSlotByKey($cmsSlotKey);
+        return $this->cmsSlotStorageClient->findCmsSlotByKey($cmsSlotKey);
     }
 }
