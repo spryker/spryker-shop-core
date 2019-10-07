@@ -17,7 +17,6 @@
   "require-dev": {
     "spryker-shop/customer-page": "*",
     "spryker-shop/product-detail-page": "*",
-    "spryker-shop/router": "*",
     "spryker-shop/shopping-list-page": "*",
     "spryker/code-sniffer": "*",
     "spryker/router": "*",

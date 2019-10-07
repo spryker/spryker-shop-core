@@ -10,10 +10,10 @@ namespace SprykerShop\Yves\ShopCmsSlot\Twig\Node;
 use Generated\Shared\Transfer\CmsSlotContextTransfer;
 use SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin;
 use SprykerShop\Yves\ShopCmsSlot\Twig\TokenParser\ShopCmsSlotTokenParser;
-use Twig\Compiler;
-use Twig\Node\Node;
+use Twig\Compiler as TwigCompiler;
+use Twig\Node\Node as TwigNode;
 
-class ShopCmsSlotNode extends Node
+class ShopCmsSlotNode extends TwigNode
 {
     /**
      * @var string
@@ -44,7 +44,7 @@ class ShopCmsSlotNode extends Node
      *
      * @return void
      */
-    public function compile(Compiler $compiler): void
+    public function compile(TwigCompiler $compiler): void
     {
         $compiler->addDebugInfo($this)->raw(
             sprintf(
@@ -58,7 +58,7 @@ class ShopCmsSlotNode extends Node
         $this->compileArrayNode($compiler, ShopCmsSlotTokenParser::NODE_WITH);
         $compiler->raw(')->setRequiredKeys(');
         $this->compileArrayNode($compiler, ShopCmsSlotTokenParser::NODE_REQUIRED);
-        $compiler->raw(')->setAutoFillingKeys(');
+        $compiler->raw(')->setAutoFilledKeys(');
         $this->compileArrayNode($compiler, ShopCmsSlotTokenParser::NODE_AUTOFILLED);
         $compiler->raw('));');
     }
@@ -69,7 +69,7 @@ class ShopCmsSlotNode extends Node
      *
      * @return void
      */
-    protected function compileArrayNode(Compiler $compiler, string $nodeName): void
+    protected function compileArrayNode(TwigCompiler $compiler, string $nodeName): void
     {
         if (!$this->hasNode($nodeName)) {
             $compiler->raw('[]');
