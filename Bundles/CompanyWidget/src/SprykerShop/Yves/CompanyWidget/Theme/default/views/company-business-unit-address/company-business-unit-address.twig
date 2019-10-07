@@ -9,6 +9,7 @@
 {% define data = {
     formType: _widget.formType,
     currentAddressId: _widget.formAddressTransfer.idCustomerAddress | default,
+    currentCompanyUnitAddressId: _widget.formAddressTransfer.idCompanyUnitAddress | default,
     formAddressTransfer: _widget.formAddressTransfer,
     addresses: _widget.addresses,
     customerAddresses: _widget.customerAddresses,
@@ -36,7 +37,7 @@
             {% if not data.currentAddressId and data.formType == billingAddress and address.isDefaultBilling %}
                 {% set defaultAddressKey = address.key %}
             {% endif %}
-            {% if data.currentAddressId == address.idCustomerAddress %}
+            {% if data.currentAddressId == address.idCustomerAddress or data.currentCompanyUnitAddressId == address.idCompanyUnitAddress %}
                 {% set defaultAddressKey = address.key %}
             {% endif %}
             {% if data.currentAddressId == optionValueDeliverToMultipleAddresses %}
@@ -44,6 +45,7 @@
             {% endif %}
         {% endfor %}
     {% endif %}
+    {{ dump(defaultAddressKey, data.currentCompanyUnitAddressId, data.currentAddressId) }}
 
     {% if data.formType == shippingAddress %}
         <label>{{ 'page.checkout.address.delivery.address_select' | trans }}</label><br>
