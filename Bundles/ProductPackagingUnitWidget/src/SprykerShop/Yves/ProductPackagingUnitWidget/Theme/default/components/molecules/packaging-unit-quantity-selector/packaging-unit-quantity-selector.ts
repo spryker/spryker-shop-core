@@ -102,6 +102,8 @@ export default class PackagingUnitQuantitySelector extends Component {
             let jsonString = jsonSchemaContainer.getAttribute('json');
             let jsonData = JSON.parse(jsonString);
 
+            console.log(jsonData);
+
             if (jsonData.hasOwnProperty('baseUnit')) {
                 this.baseUnit = jsonData.baseUnit;
             }
@@ -162,7 +164,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.qtyInSalesUnitInput.addEventListener('input', (event: Event) => this.qtyInputChange());
         this.measurementUnitInput.addEventListener('change', (event: Event) => this.measurementUnitInputChange(event));
 
-        if(this.isAmountBlockEnabled) {
+        if(this.packagingUnitIsVariable) {
             this.amountInSalesUnitInput.addEventListener('input', (event: Event) => this.amountInputChange());
             this.leadSalesUnitSelect.addEventListener('change', (event: Event) => this.leadSalesUnitSelectChange(event));
         }
@@ -396,7 +398,8 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.productPackagingNewPriceBlock.classList.add('is-hidden');
         this.puError = false;
         let amountInBaseUnits = this.multiply(amountInSalesUnitInput, +this.currentLeadSalesUnit.conversion);
-        amountInBaseUnits = Math.round(amountInBaseUnits);
+        console.log(amountInBaseUnits);
+        // amountInBaseUnits = Math.round(amountInBaseUnits);
 
         if ((amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval() !== 0) {
             this.puError = true;
@@ -625,5 +628,9 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     private isAmountMultipleToInterval(amountInBaseUnits: number) {
         return (amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval() !== 0;
+    }
+
+    protected get packagingUnitIsVariable(): boolean {
+        return this.hasAttribute('packaging-unit-is-variable');
     }
 }

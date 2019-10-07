@@ -19,6 +19,8 @@
 
 {% block body %}
 
+    <pre>{{ dump(data.productPackagingUnit) }}</pre>
+
     <div class="product-packaging-new-price is-hidden" id="product-packaging-new-price-block">
         <span>{{ "measurement_units.new-price" | trans}}:</span>
         <div id="product-packaging-new-price-value-block"></div>
@@ -111,7 +113,7 @@
         </div>
     </div>
 
-    {% if data.isAmountBlockEnabled %}
+    {% if data.packagingUnitIsVariable %}
         <div class="grid grid--bottom grid--justify">
             <div class="col {% if data.salesUnitCount %}col--sm-7{% else %}col--sm-5{% endif %}">
                 <label>
@@ -120,6 +122,9 @@
                            class="input input--expand"
                            type="number"
                            value="{{ data.productPackagingUnit.defaultAmount }}"
+                           min="{{ data.productPackagingUnit.amountMin }}"
+                           max="{{ data.productPackagingUnit.amountMax }}"
+                           step="{{ data.productPackagingUnit.amountInterval }}"
                            {% if not data.packagingUnitIsVariable %}disabled{% endif %}
                            name="amount-sales-unit[{{ data.product.sku }}]"
                     >
@@ -165,8 +170,11 @@
 
             {% include molecule('packaging-unit-quantity-selector', 'ProductPackagingUnitWidget') with {
                 data: {
-                    json: data.jsonScheme
-                }
+                    json: data.jsonScheme,
+                },
+                attributes: {
+                    'packaging-unit-is-variable': data.packagingUnitIsVariable,
+                },
             } only %}
 
             <div class="text-small is-hidden packaging-unit-choice">
