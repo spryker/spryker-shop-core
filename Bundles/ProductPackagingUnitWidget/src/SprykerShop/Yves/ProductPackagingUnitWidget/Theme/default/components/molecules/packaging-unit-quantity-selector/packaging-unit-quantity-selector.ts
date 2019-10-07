@@ -399,7 +399,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.puError = false;
         let amountInBaseUnits = this.multiply(amountInSalesUnitInput, +this.currentLeadSalesUnit.conversion);
         console.log(amountInBaseUnits);
-        // amountInBaseUnits = Math.round(amountInBaseUnits);
+        amountInBaseUnits = Math.round(amountInBaseUnits);
 
         if ((amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval() !== 0) {
             this.puError = true;
