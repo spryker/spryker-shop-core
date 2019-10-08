@@ -22,7 +22,10 @@
             <div class="col col--sm-12 col--lg-6">
                 <h5>{{ 'customer.order.products' | trans }}</h5>
 
-                {% for item in shipmentGroup.items %}
+                {% widget 'OrderConfiguredBundleWidget' args [data.order, shipmentGroup.items] only %}
+                {% endwidget %}
+
+                {% for item in shipmentGroup.items if not item.salesOrderConfiguredBundleItem | default %}
                     {% set isBundle = item.bundleItems is defined %}
                     {% set concreteItem = item.bundleProduct | default(item) %}
 
