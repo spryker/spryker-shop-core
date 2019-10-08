@@ -396,17 +396,16 @@ console.log(jsonData);
         this.productPackagingNewPriceBlock.classList.add('is-hidden');
         this.puError = false;
         const amountInBaseUnits = this.multiply(amountInSalesUnitInput, +this.currentLeadSalesUnit.conversion);
-        // const amountPrecision = +this.currentLeadSalesUnit.precision;
-        // const currentMinusMinimumAmount = this.round(((amountInBaseUnits * amountPrecision) - (this.getMinAmount() * amountPrecision))/amountPrecision, 4);
-        // const amountPercentageOfDivision = this.round(currentMinusMinimumAmount % this.getAmountInterval(), 4);
 
         if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
             this.puError = true;
             this.puIntervalNotificationElement.classList.remove('is-hidden');
-        } else if (amountInBaseUnits < this.getMinAmount()) {
+        }
+        if (amountInBaseUnits < this.getMinAmount()) {
             this.puError = true;
             this.puMinNotificationElement.classList.remove('is-hidden');
-        } else if (this.getMaxAmount() > 0 && amountInBaseUnits > this.getMaxAmount()) {
+        }
+        if (this.getMaxAmount() > 0 && amountInBaseUnits > this.getMaxAmount()) {
             this.puError = true;
             this.puMaxNotificationElement.classList.remove('is-hidden');
         }
@@ -478,7 +477,6 @@ console.log(jsonData);
             let amountInSalesUnits = amountInBaseUnits / this.currentLeadSalesUnit.conversion;
             let measurementSalesUnitName = this.getUnitName(this.currentLeadSalesUnit.product_measurement_unit.code);
             let measurementBaseUnitName = this.getUnitName(this.baseUnit.code);
-            // console.log(amountInBaseUnits);
 
             choiceElem.classList.add('link');
             choiceElem.setAttribute('data-base-unit-amount', amountInBaseUnits.toString());
@@ -603,7 +601,6 @@ console.log(jsonData);
 
         if (this.isAmountGreaterThanMaxAmount(amountInBaseUnits)) {
             amountInBaseUnits = this.getMaxAmount();
-            console.log(111);
 
             if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
                 amountInBaseUnits = amountInBaseUnits - this.getAmountPercentageOfDivision(amountInBaseUnits);
@@ -617,6 +614,7 @@ console.log(jsonData);
         }
 
         if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
+            console.log(amountInBaseUnits); //TODO continue (max 100.5)
             return minChoice + this.getAmountInterval();
         }
 
