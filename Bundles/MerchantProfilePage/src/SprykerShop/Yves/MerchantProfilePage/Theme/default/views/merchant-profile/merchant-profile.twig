@@ -40,83 +40,87 @@
             </div>
 
             <div class="col col--sm-12 col--lg-7">
-                {% block description %}
-                    <div class="grid box">
-                        {% block descriptionInner %}
-                            <div class="col col--sm-12 col--lg-12 col--xl-10">
-                                {% block mainInfo %}
-                                    <p>{{ data.merchantProfile.descriptionGlossaryKey | trans }}</p>
-                                {% endblock %}
+                {% block descriptionContainer %}
+                    <div class="box">
+                        {% block description %}
+                            <div class="grid">
+                                {% block descriptionInner %}
+                                    <div class="col col--sm-12 col--lg-12 col--xl-10">
+                                        {% block mainInfo %}
+                                            <p>{{ data.merchantProfile.descriptionGlossaryKey | trans }}</p>
+                                        {% endblock %}
 
-                                {% block information %}
-                                    <div class="grid">
-                                        {% block informationInner %}
-                                            <div class="col col--sm-12 col--lg-6">
-                                                {% block email %}
-                                                    {% include molecule('information-item', 'MerchantProfilePage') with {
-                                                        data: {
-                                                            title: 'mearchant_profile.email' | trans,
-                                                            text: data.merchantProfile.publicEmail | trans,
-                                                        },
-                                                    } only %}
-                                                {% endblock %}
-                                            </div>
-
-                                            <div class="col col--sm-12 col--lg-6">
-                                                {% block address %}
-                                                    {% embed molecule('information-item', 'MerchantProfilePage') with {
-                                                        class: 'spacing-bottom spacing-bottom--big',
-                                                        data: {
-                                                            title: 'mearchant_profile.address' | trans,
-                                                        },
-                                                    } only %}
-                                                        {% block text %}
-                                                            <div>+++++++</div>
-                                                            <div>+++++++</div>
-                                                            <div>+++++++</div>
+                                        {% block information %}
+                                            <div class="grid">
+                                                {% block informationInner %}
+                                                    <div class="col col--sm-12 col--lg-6">
+                                                        {% block email %}
+                                                            {% include molecule('information-item', 'MerchantProfilePage') with {
+                                                                data: {
+                                                                    title: 'mearchant_profile.email' | trans,
+                                                                    text: data.merchantProfile.publicEmail | trans,
+                                                                },
+                                                            } only %}
                                                         {% endblock %}
-                                                    {% endembed %}
-                                                {% endblock %}
-                                            </div>
+                                                    </div>
 
-                                            <div class="col col--sm-12 col--lg-6">
-                                                {% block phone %}
-                                                    {% include molecule('information-item', 'MerchantProfilePage') with {
-                                                        class: 'spacing-bottom spacing-bottom--big',
-                                                        data: {
-                                                            title: 'mearchant_profile.phone' | trans,
-                                                            text: data.merchantProfile.publicPhone | trans,
-                                                        },
-                                                    } only %}
-                                                {% endblock %}
-                                            </div>
+                                                    <div class="col col--sm-12 col--lg-6">
+                                                        {% block address %}
+                                                            {% embed molecule('information-item', 'MerchantProfilePage') with {
+                                                                class: 'spacing-bottom spacing-bottom--big',
+                                                                data: {
+                                                                    title: 'mearchant_profile.address' | trans,
+                                                                },
+                                                            } only %}
+                                                                {% block text %}
+                                                                    <div>+++++++</div>
+                                                                    <div>+++++++</div>
+                                                                    <div>+++++++</div>
+                                                                {% endblock %}
+                                                            {% endembed %}
+                                                        {% endblock %}
+                                                    </div>
 
-                                            <div class="col col--sm-12 col--lg-6">
-                                                {% block deliveryTime %}
-                                                    {% include molecule('information-item', 'MerchantProfilePage') with {
-                                                        class: 'spacing-bottom spacing-bottom--big',
-                                                        data: {
-                                                            title: 'mearchant_profile.delivery_time' | trans,
-                                                            text: data.merchantProfile.deliveryTimeGlossaryKey | trans,
-                                                        },
-                                                    } only %}
+                                                    <div class="col col--sm-12 col--lg-6">
+                                                        {% block phone %}
+                                                            {% include molecule('information-item', 'MerchantProfilePage') with {
+                                                                class: 'spacing-bottom spacing-bottom--big',
+                                                                data: {
+                                                                    title: 'mearchant_profile.phone' | trans,
+                                                                    text: data.merchantProfile.publicPhone | trans,
+                                                                },
+                                                            } only %}
+                                                        {% endblock %}
+                                                    </div>
+
+                                                    <div class="col col--sm-12 col--lg-6">
+                                                        {% block deliveryTime %}
+                                                            {% include molecule('information-item', 'MerchantProfilePage') with {
+                                                                class: 'spacing-bottom spacing-bottom--big',
+                                                                data: {
+                                                                    title: 'mearchant_profile.delivery_time' | trans,
+                                                                    text: data.merchantProfile.deliveryTimeGlossaryKey | trans,
+                                                                },
+                                                            } only %}
+                                                        {% endblock %}
+                                                    </div>
                                                 {% endblock %}
                                             </div>
                                         {% endblock %}
                                     </div>
-                                {% endblock %}
-                            </div>
 
-                            <div class="col col--sm-3 col--lg-2">
-                                {% block logo %}
-                                    {% include atom('thumbnail') with {
-                                        class: 'box',
-                                        modifiers: ['small'],
-                                        attributes: {
-                                            alt: merchantName | default,
-                                            src: data.merchantProfile.logoUrl | trans,
-                                        },
-                                    } only %}
+                                    <div class="col col--sm-3 col--lg-2">
+                                        {% block logo %}
+                                            {% include atom('thumbnail') with {
+                                                class: 'box',
+                                                modifiers: ['small'],
+                                                attributes: {
+                                                    alt: merchantName | default,
+                                                    src: data.merchantProfile.logoUrl | trans,
+                                                },
+                                            } only %}
+                                        {% endblock %}
+                                    </div>
                                 {% endblock %}
                             </div>
                         {% endblock %}
