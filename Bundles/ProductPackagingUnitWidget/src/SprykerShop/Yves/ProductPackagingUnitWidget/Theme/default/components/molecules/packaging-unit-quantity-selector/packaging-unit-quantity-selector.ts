@@ -395,12 +395,12 @@ console.log(jsonData);
         }
         this.productPackagingNewPriceBlock.classList.add('is-hidden');
         this.puError = false;
-        let amountInBaseUnits = this.multiply(amountInSalesUnitInput, +this.currentLeadSalesUnit.conversion);
-        // amountInBaseUnits = Math.round(amountInBaseUnits);
-        const amountPrecision = +this.currentLeadSalesUnit.precision;
-        const amountPercentageOfDivision = Math.round(Math.round((amountInBaseUnits * amountPrecision) - (this.getMinAmount() * amountPrecision))/amountPrecision % this.getAmountInterval());
+        const amountInBaseUnits = this.multiply(amountInSalesUnitInput, +this.currentLeadSalesUnit.conversion);
+        // const amountPrecision = +this.currentLeadSalesUnit.precision;
+        // const currentMinusMinimumAmount = this.round(((amountInBaseUnits * amountPrecision) - (this.getMinAmount() * amountPrecision))/amountPrecision, 4);
+        // const amountPercentageOfDivision = this.round(currentMinusMinimumAmount % this.getAmountInterval(), 4);
 
-        if (amountPercentageOfDivision !== 0) {
+        if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
             this.puError = true;
             this.puIntervalNotificationElement.classList.remove('is-hidden');
         } else if (amountInBaseUnits < this.getMinAmount()) {
@@ -543,7 +543,7 @@ console.log(jsonData);
             && this.productPackagingUnitStorage.hasOwnProperty('amount_min')
             && this.productPackagingUnitStorage.amount_min !== null
         ) {
-            return this.productPackagingUnitStorage.amount_min;
+            return +this.productPackagingUnitStorage.amount_min;
         }
 
         return 1;
@@ -554,7 +554,7 @@ console.log(jsonData);
             && this.productPackagingUnitStorage.hasOwnProperty('amount_max')
             && this.productPackagingUnitStorage.amount_max !== null
         ) {
-            return this.productPackagingUnitStorage.amount_max;
+            return +this.productPackagingUnitStorage.amount_max;
         }
 
         return 0;
@@ -565,7 +565,7 @@ console.log(jsonData);
             && this.productPackagingUnitStorage.hasOwnProperty('amount_interval')
             && this.productPackagingUnitStorage.amount_interval !== null
         ) {
-            return this.productPackagingUnitStorage.amount_interval;
+            return +this.productPackagingUnitStorage.amount_interval;
         }
 
         return 1;
@@ -576,36 +576,37 @@ console.log(jsonData);
             && this.productPackagingUnitStorage.hasOwnProperty('default_amount')
             && this.productPackagingUnitStorage.default_amount !== null
         ) {
-            return this.productPackagingUnitStorage.default_amount;
+            return +this.productPackagingUnitStorage.default_amount;
         }
     }
 
     private getMinAmountChoice(amountInSalesUnits: number) {
-        let amountInBaseUnits = this.floor(this.multiply(amountInSalesUnits, this.currentLeadSalesUnit.conversion));
+        let amountInBaseUnits = this.multiply(amountInSalesUnits, this.currentLeadSalesUnit.conversion);
 
         if (amountInBaseUnits < this.getMinAmount()) {
             return this.getMinAmount();
         }
 
-        if(this.isAmountGreaterThanMaxAmount(amountInBaseUnits)) {
+        if (this.isAmountGreaterThanMaxAmount(amountInBaseUnits)) {
             return 0;
         }
 
         if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
-            return this.getMinAmountChoice((amountInBaseUnits - 1) / this.currentLeadSalesUnit.conversion);
+            return this.getMinAmountChoice((amountInBaseUnits - this.getAmountPercentageOfDivision(amountInBaseUnits)) / this.currentLeadSalesUnit.conversion);
         }
 
         return amountInBaseUnits;
     }
 
     private getMaxAmountChoice(amountInSalesUnits: number, minChoice: number) {
-        let amountInBaseUnits = this.ceil(this.multiply(amountInSalesUnits, this.currentLeadSalesUnit.conversion));
+        let amountInBaseUnits = this.multiply(amountInSalesUnits, this.currentLeadSalesUnit.conversion);
 
         if (this.isAmountGreaterThanMaxAmount(amountInBaseUnits)) {
             amountInBaseUnits = this.getMaxAmount();
+            console.log(111);
 
             if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
-                amountInBaseUnits = amountInBaseUnits - ((amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval());
+                amountInBaseUnits = amountInBaseUnits - this.getAmountPercentageOfDivision(amountInBaseUnits);
             }
 
             return amountInBaseUnits;
@@ -627,7 +628,14 @@ console.log(jsonData);
     }
 
     private isAmountMultipleToInterval(amountInBaseUnits: number) {
-        return (amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval() !== 0;
+        return this.getAmountPercentageOfDivision(amountInBaseUnits) !== 0;
+    }
+
+    protected getAmountPercentageOfDivision(amountInBaseUnits: number): number {
+        const amountPrecision = +this.currentLeadSalesUnit.precision;
+        const currentMinusMinimumAmount = this.round(((amountInBaseUnits * amountPrecision) - (this.getMinAmount() * amountPrecision))/amountPrecision, 4);
+
+        return this.round(currentMinusMinimumAmount % this.getAmountInterval(), 4);
     }
 
     protected get packagingUnitIsVariable(): boolean {
