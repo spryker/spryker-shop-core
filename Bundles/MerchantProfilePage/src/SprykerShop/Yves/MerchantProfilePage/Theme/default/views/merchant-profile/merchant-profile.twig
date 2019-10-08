@@ -67,7 +67,6 @@
                                                     <div class="col col--sm-12 col--lg-6">
                                                         {% block address %}
                                                             {% embed molecule('information-item', 'MerchantProfilePage') with {
-                                                                class: 'spacing-bottom spacing-bottom--big',
                                                                 data: {
                                                                     title: 'mearchant_profile.address' | trans,
                                                                 },
@@ -84,7 +83,6 @@
                                                     <div class="col col--sm-12 col--lg-6">
                                                         {% block phone %}
                                                             {% include molecule('information-item', 'MerchantProfilePage') with {
-                                                                class: 'spacing-bottom spacing-bottom--big',
                                                                 data: {
                                                                     title: 'mearchant_profile.phone' | trans,
                                                                     text: data.merchantProfile.publicPhone | trans,
@@ -96,7 +94,6 @@
                                                     <div class="col col--sm-12 col--lg-6">
                                                         {% block deliveryTime %}
                                                             {% include molecule('information-item', 'MerchantProfilePage') with {
-                                                                class: 'spacing-bottom spacing-bottom--big',
                                                                 data: {
                                                                     title: 'mearchant_profile.delivery_time' | trans,
                                                                     text: data.merchantProfile.deliveryTimeGlossaryKey | trans,
