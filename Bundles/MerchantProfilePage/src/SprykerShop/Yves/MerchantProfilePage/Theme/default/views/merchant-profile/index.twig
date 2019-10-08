@@ -72,6 +72,13 @@
                                 <span>{{ data.merchantProfile.publicPhone }}</span>
                             </p>
                         </div>
+                        <div class="col col--sm-6 col--lg-6 col--xl-6">
+                            <p>
+                                <strong>{{ 'mearchant_profile.delivery_time' | trans }}</strong>
+                                <br>
+                                <span>{{ data.merchantProfile.deliveryTimeGlossaryKey | trans }}</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div class="col col--sm-2 col--lg-2 col--xl-2">
@@ -115,14 +122,6 @@
             <h5>{{ 'mearchant_profile.privacy' | trans }}</h5>
             <p>
                 {{ data.merchantProfile.dataPrivacyGlossaryKey | trans }}
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col col--sm-12 col--lg-12 col--xl-12">
-            <h5>{{ 'mearchant_profile.delivery_time' | trans }}</h5>
-            <p>
-                {{ data.merchantProfile.deliveryTimeGlossaryKey | trans }}
             </p>
         </div>
     </div>
