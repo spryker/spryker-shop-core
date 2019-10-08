@@ -61,8 +61,8 @@
                     {% block body %}
                         <li class="list__item spacing-y">
                             {{ parent() }}
+                            <hr>
                         </li>
-                        <hr>
                     {% endblock %}
                 {% elsewidget 'SalesOrderThresholdWidgetPlugin' args [data.cart.expenses] only %} {# @deprecated Use SalesOrderThresholdWidget instead. #}
                     {% block body %}
