@@ -101,9 +101,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         if (jsonSchemaContainer.hasAttribute('json')) {
             let jsonString = jsonSchemaContainer.getAttribute('json');
             let jsonData = JSON.parse(jsonString);
-
-            console.log(jsonData);
-
+console.log(jsonData);
             if (jsonData.hasOwnProperty('baseUnit')) {
                 this.baseUnit = jsonData.baseUnit;
             }
@@ -398,10 +396,11 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.productPackagingNewPriceBlock.classList.add('is-hidden');
         this.puError = false;
         let amountInBaseUnits = this.multiply(amountInSalesUnitInput, +this.currentLeadSalesUnit.conversion);
-        console.log(amountInBaseUnits);
-        amountInBaseUnits = Math.round(amountInBaseUnits);
+        // amountInBaseUnits = Math.round(amountInBaseUnits);
+        const amountPrecision = +this.currentLeadSalesUnit.precision;
+        const amountPercentageOfDivision = Math.round(Math.round((amountInBaseUnits * amountPrecision) - (this.getMinAmount() * amountPrecision))/amountPrecision % this.getAmountInterval());
 
-        if ((amountInBaseUnits - this.getMinAmount()) % this.getAmountInterval() !== 0) {
+        if (amountPercentageOfDivision !== 0) {
             this.puError = true;
             this.puIntervalNotificationElement.classList.remove('is-hidden');
         } else if (amountInBaseUnits < this.getMinAmount()) {
@@ -479,6 +478,7 @@ export default class PackagingUnitQuantitySelector extends Component {
             let amountInSalesUnits = amountInBaseUnits / this.currentLeadSalesUnit.conversion;
             let measurementSalesUnitName = this.getUnitName(this.currentLeadSalesUnit.product_measurement_unit.code);
             let measurementBaseUnitName = this.getUnitName(this.baseUnit.code);
+            // console.log(amountInBaseUnits);
 
             choiceElem.classList.add('link');
             choiceElem.setAttribute('data-base-unit-amount', amountInBaseUnits.toString());
