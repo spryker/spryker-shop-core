@@ -678,7 +678,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCheckoutAddressStepEnterPreCheckPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_CHECKOUT_ADDRESS_STEP_ENTER_PRE_CHECK, function (Container $container) {
+        $container->set(static::PLUGINS_CHECKOUT_ADDRESS_STEP_ENTER_PRE_CHECK, function () {
             return $this->getCheckoutAddressStepEnterPreCheckPlugins();
         });
 
@@ -700,7 +700,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCheckoutShipmentStepEnterPreCheckPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_CHECKOUT_SHIPMENT_STEP_ENTER_PRE_CHECK, function (Container $container) {
+        $container->set(static::PLUGINS_CHECKOUT_SHIPMENT_STEP_ENTER_PRE_CHECK, function () {
             return $this->getCheckoutShipmentStepEnterPreCheckPlugins();
         });
 
@@ -722,7 +722,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCheckoutPaymentStepEnterPreCheckPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK, function (Container $container) {
+        $container->set(static::PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK, function () {
             return $this->getCheckoutPaymentStepEnterPreCheckPlugins();
         });
 
