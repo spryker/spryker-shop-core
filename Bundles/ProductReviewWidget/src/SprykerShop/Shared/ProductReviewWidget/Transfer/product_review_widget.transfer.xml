@@ -10,4 +10,13 @@
         <property name="ratingAggregation" type="array"/>
     </transfer>
 
+    <transfer name="RangeSearchResult">
+        <property name="config" type="FacetConfig"/>
+        <property name="activeMin" type="float"/>
+    </transfer>
+
+    <transfer name="FacetConfig">
+        <property name="parameterName" type="string"/>
+    </transfer>
+
 </transfers>

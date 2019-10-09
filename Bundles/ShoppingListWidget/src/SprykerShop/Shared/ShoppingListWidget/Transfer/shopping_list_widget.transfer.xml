@@ -12,4 +12,17 @@
         <property name="shoppingLists" type="ShoppingList[]" singular="shoppingList"/>
     </transfer>
 
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="QuickOrder">
+        <property name="items" type="QuickOrderItem[]"/>
+    </transfer>
+
+    <transfer name="QuickOrderItem">
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
 </transfers>

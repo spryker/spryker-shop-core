@@ -46,6 +46,11 @@
 
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="CompanyUserCollection">
+        <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
     </transfer>
 
 </transfers>

@@ -26,4 +26,12 @@
         <property name="parameters" type="array"/>
     </transfer>
 
+    <transfer name="CurrentProductPrice">
+        <property name="sumPrice" type="int"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="productConcrete" type="ProductConcrete"/>
+    </transfer>
+
 </transfers>

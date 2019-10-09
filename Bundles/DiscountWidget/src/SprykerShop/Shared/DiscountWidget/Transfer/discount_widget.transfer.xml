@@ -5,5 +5,7 @@
 
     <transfer name="Quote">
         <property name="isLocked" type="bool"/>
+        <property name="voucherDiscounts" type="Discount[]"/>
+        <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
     </transfer>
 </transfers>
