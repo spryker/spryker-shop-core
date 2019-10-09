@@ -179,10 +179,20 @@ class QuoteApprovalController extends AbstractController
         if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
             return;
         }
+        $sessionQuoteTransfer = $this->getFactory()
+            ->getQuoteClient()
+            ->getQuote();
+
+        $sessionQuoteTransfer->setIsLocked(
+            $quoteApprovalResponseTransfer->getQuote()->getIsLocked()
+        )
+            ->setQuoteApprovals(
+                $quoteApprovalResponseTransfer->getQuote()->getQuoteApprovals()
+            );
 
         $this->getFactory()
             ->getQuoteClient()
-            ->setQuote($quoteApprovalResponseTransfer->getQuote());
+            ->setQuote($sessionQuoteTransfer);
     }
 
     /**
