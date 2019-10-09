@@ -162,7 +162,7 @@ console.log(jsonData);
         this.qtyInSalesUnitInput.addEventListener('input', (event: Event) => this.qtyInputChange());
         this.measurementUnitInput.addEventListener('change', (event: Event) => this.measurementUnitInputChange(event));
 
-        if(this.packagingUnitIsVariable) {
+        if (this.packagingUnitIsVariable) {
             this.amountInSalesUnitInput.addEventListener('input', (event: Event) => this.amountInputChange());
             this.leadSalesUnitSelect.addEventListener('change', (event: Event) => this.leadSalesUnitSelectChange(event));
         }
@@ -414,7 +414,7 @@ console.log(jsonData);
             this.puMaxNotificationElement.classList.remove('is-hidden');
         }
 
-        if (this.puError || this.muError || this.isAddToCartDisabled) {
+        if ((this.puError || this.muError || this.isAddToCartDisabled) && this.packagingUnitIsVariable) {
             this.askCustomerForCorrectAmountInput(amountInSalesUnitInput);
             this.addToCartButton.setAttribute("disabled", "disabled");
 
@@ -428,15 +428,15 @@ console.log(jsonData);
         this.addToCartButton.removeAttribute("disabled");
         this.hidePackagingUnitRestrictionNotifications();
 
-        // if (this.amountDefaultInBaseUnitInput.value != amountInBaseUnits) {
-        //     let newPrice = (amountInBaseUnits / this.amountDefaultInBaseUnitInput.value) * this.itemBasePriceInput.value;
-        //     newPrice = (newPrice * +this.qtyInBaseUnitInput.value) / 100;
-        //     this.productPackagingNewPriceValueBlock.innerHTML = this.itemMoneySymbolInput.value + newPrice.toFixed(2);
-        //
-        //     this.productPackagingNewPriceBlock.classList.remove('is-hidden');
-        // }
+        if (this.amountDefaultInBaseUnitInput.value != amountInBaseUnits) {
+            let newPrice = (amountInBaseUnits / this.amountDefaultInBaseUnitInput.value) * this.itemBasePriceInput.value;
+            newPrice = (newPrice * +this.qtyInBaseUnitInput.value) / 100;
+            this.productPackagingNewPriceValueBlock.innerHTML = this.itemMoneySymbolInput.value + newPrice.toFixed(2);
 
-        this.priceCalculation(amountInBaseUnits);
+            this.productPackagingNewPriceBlock.classList.remove('is-hidden');
+        }
+
+        // this.priceCalculation(amountInBaseUnits);
     }
 
     protected priceCalculation(amountInBaseUnits: number): void {
@@ -523,13 +523,29 @@ console.log(jsonData);
     }
 
     private leadSalesUnitSelectChange(event: Event) {
-        let salesUnitId = parseInt((event.srcElement as HTMLSelectElement).value);
-        let salesUnit = this.getLeadSalesUnitById(salesUnitId);
-        let amountInSalesUnits = +this.amountInSalesUnitInput.value;
-        let amountInBaseUnits = this.multiply(amountInSalesUnits, this.currentLeadSalesUnit.conversion);
-        amountInSalesUnits = amountInBaseUnits / salesUnit.conversion;
+        const salesUnitId = parseInt((event.srcElement as HTMLSelectElement).value);
+        const salesUnit = this.getLeadSalesUnitById(salesUnitId);
+
+        const amountInSalesUnits = this.multiply(+this.amountInSalesUnitInput.value, this.currentLeadSalesUnit.conversion) / salesUnit.conversion;
+        const amountInSalesUnitsMin = this.multiply(+this.amountInSalesUnitInput.min, this.currentLeadSalesUnit.conversion) / salesUnit.conversion;
+        const amountInSalesUnitsMax = this.multiply(+this.amountInSalesUnitInput.max, this.currentLeadSalesUnit.conversion) / salesUnit.conversion;
+        const amountInSalesUnitsStep = this.multiply(+this.amountInSalesUnitInput.step, this.currentLeadSalesUnit.conversion) / salesUnit.conversion;
+
         this.currentLeadSalesUnit = salesUnit;
+
         this.amountInSalesUnitInput.value = this.round(amountInSalesUnits, 4).toString();
+        if (this.amountInSalesUnitInput.min){
+            this.amountInSalesUnitInput.min = this.round(amountInSalesUnitsMin, 4).toString();
+        }
+
+        if (this.amountInSalesUnitInput.max) {
+            this.amountInSalesUnitInput.max = this.round(amountInSalesUnitsMax, 4).toString();
+        }
+
+        if (this.amountInSalesUnitInput.step) {
+            this.amountInSalesUnitInput.step = this.round(amountInSalesUnitsStep, 4).toString();
+        }
+
         this.amountInputChange(amountInSalesUnits);
     }
 
@@ -644,12 +660,10 @@ console.log(jsonData);
 
     protected getAmountPercentageOfDivision(amountInBaseUnits: number): number {
         const amountPrecision = +this.currentLeadSalesUnit.precision;
-        const currentMinusMinimumAmount = ((amountInBaseUnits * amountPrecision) - (this.getMinAmount() * amountPrecision))/amountPrecision;
-        console.log(currentMinusMinimumAmount, 'currentMinusMinimumAmount');
-        console.log(this.round(currentMinusMinimumAmount % this.getAmountInterval(), 4), 'resultWithRounding');
-        console.log(currentMinusMinimumAmount % this.getAmountInterval(), 'result');
+        const currentMinusMinimumAmount = this.round(((amountInBaseUnits * amountPrecision) - (this.getMinAmount() * amountPrecision))/amountPrecision, 4);
+        const amountPercentageOfDivision = this.round(((currentMinusMinimumAmount * amountPrecision) % (this.getAmountInterval() * amountPrecision))/amountPrecision, 4);
 
-        return this.round(currentMinusMinimumAmount % this.getAmountInterval(), 4);
+        return amountPercentageOfDivision;
     }
 
     protected get packagingUnitIsVariable(): boolean {

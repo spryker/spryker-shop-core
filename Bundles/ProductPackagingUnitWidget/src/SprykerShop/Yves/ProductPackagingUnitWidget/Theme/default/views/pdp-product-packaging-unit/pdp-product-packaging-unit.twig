@@ -38,7 +38,7 @@
             {{ 'cart.item_quantity' | trans }}
 
             {% if data.salesUnitCount %}
-                <input id="sales-unit-quantity" class="input input--expand js-volume-price__quantity" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-quantity"/>
+                <input id="sales-unit-quantity" class="input input--expand js-volume-price__quantity" type="number" value="1" name="sales-unit-quantity"/>
                 <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnit }}" name="quantity"/>
             {% else %}
                 {% embed atom('select') with {
@@ -111,7 +111,7 @@
         </div>
     </div>
 
-    {% if data.isAmountBlockEnabled or data.packagingUnitIsVariable %}
+    {% if data.packagingUnitIsVariable %}
         <div class="grid grid--bottom grid--justify">
             <div class="col {% if data.salesUnitCount %}col--sm-7{% else %}col--sm-5{% endif %}">
                 <label>
@@ -123,7 +123,7 @@
                            min="{{ data.productPackagingUnit.amountMin }}"
                            max="{{ data.productPackagingUnit.amountMax }}"
                            step="{{ data.productPackagingUnit.amountInterval }}"
-                           {% if not data.packagingUnitIsVariable %}disabled{% endif %}
+                           {#{% if not data.packagingUnitIsVariable %}disabled{% endif %}#}
                            name="amount-sales-unit[{{ data.product.sku }}]"
                     >
                     <input id="default-amount"
