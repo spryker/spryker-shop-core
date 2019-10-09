@@ -28,7 +28,7 @@
         {% set canProceedToCheckout = true %}
     {% endif %}
 
-    {% if quoteApprovalWidget and quoteApprovalWidget.isVisibleOnCartPage %}  {# @deprecated - This widget will be removed with next release. Content will be placed on summary page of checkout. #}
+    {% if quoteApprovalWidget %}  {# @deprecated - This widget will be removed with next release. Content will be placed on summary page of checkout. #}
         {% widget quoteApprovalWidget only %}{% endwidget %}
     {% endif %}
 
@@ -111,15 +111,12 @@
     {% endblock %}
 
     {% if data.isQuoteValid %}
-        {% set quoteApproveRequestWidget = findWidget('QuoteApproveRequestWidget', [data.cart]) %}
-        {% if quoteApproveRequestWidget and quoteApproveRequestWidget.isVisibleOnCartPage %}  {# @deprecated - This widget will be removed with next release. Content will be placed on summary page of checkout. #}
-            {% widget quoteApproveRequestWidget only %}
-                {% block body %}
-                    <hr>
-                    {{ parent() }}
-                {% endblock %}
-            {% endwidget %}
-        {% endif %}
+        {% widget 'QuoteApproveRequestWidget' args [data.cart] only %} {# @deprecated - This widget will be removed with next release. Content will be placed on summary page of checkout. #}
+            {% block body %}
+                <hr>
+                {{ parent() }}
+            {% endblock %}
+        {% endwidget %}
     {% endif %}
 
     {% if canProceedToCheckout %}

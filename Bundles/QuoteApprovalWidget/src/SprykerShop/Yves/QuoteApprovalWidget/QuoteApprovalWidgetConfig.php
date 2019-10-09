@@ -11,11 +11,4 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class QuoteApprovalWidgetConfig extends AbstractBundleConfig
 {
-    /**
-     * @return bool
-     */
-    public function isWidgetVisibleOnCartPage(): bool
-    {
-        return true;
-    }
 }

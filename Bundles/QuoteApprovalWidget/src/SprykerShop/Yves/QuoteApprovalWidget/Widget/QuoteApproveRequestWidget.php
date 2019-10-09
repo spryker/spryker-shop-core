@@ -29,7 +29,6 @@ class QuoteApproveRequestWidget extends AbstractWidget
     protected const PARAMETER_CAN_SEND_APPROVAL_REQUEST = 'canSendApprovalRequest';
     protected const PARAMETER_LIMIT = 'limit';
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
-    protected const PARAMETER_IS_VISIBLE_ON_CART_PAGE = 'isVisibleOnCartPage';
     protected const IS_QUOTE_APPLICABLE_FOR_APPROVAL_PROCESS = 'isQuoteApplicableForApprovalProcess';
 
     /**
@@ -44,7 +43,6 @@ class QuoteApproveRequestWidget extends AbstractWidget
         $this->addCanSendApprovalRequestParameter($quoteTransfer);
         $this->addQuoteApprovalRequestFormParameter($quoteTransfer);
         $this->addIsQuoteApplicableForApprovalProcessParameter($quoteTransfer);
-        $this->addIsWidgetVisibleOnCartPageParameter();
     }
 
     /**
@@ -254,13 +252,5 @@ class QuoteApproveRequestWidget extends AbstractWidget
                 ->getQuoteApprovalClient()
                 ->isQuoteApplicableForApprovalProcess($quoteTransfer)
         );
-    }
-
-    /**
-     * @return void
-     */
-    protected function addIsWidgetVisibleOnCartPageParameter(): void
-    {
-        $this->addParameter(static::PARAMETER_IS_VISIBLE_ON_CART_PAGE, $this->getConfig()->isWidgetVisibleOnCartPage());
     }
 }

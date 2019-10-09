@@ -20,7 +20,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class QuoteApprovalWidget extends AbstractWidget
 {
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
-    protected const PARAMETER_IS_VISIBLE_ON_CART_PAGE = 'isVisibleOnCartPage';
     protected const IS_QUOTE_APPLICABLE_FOR_APPROVAL_PROCESS = 'isQuoteApplicableForApprovalProcess';
 
     /**
@@ -34,7 +33,6 @@ class QuoteApprovalWidget extends AbstractWidget
         $this->addParameter('canQuoteBeApprovedByCurrentCustomer', $this->canQuoteBeApprovedByCurrentCustomer($quoteTransfer));
         $this->addIsVisibleParameter($quoteTransfer);
         $this->addIsQuoteApplicableForApprovalProcessParameter($quoteTransfer);
-        $this->addIsWidgetVisibleOnCartPageParameter();
     }
 
     /**
@@ -169,13 +167,5 @@ class QuoteApprovalWidget extends AbstractWidget
                 ->getQuoteApprovalClient()
                 ->isQuoteApplicableForApprovalProcess($quoteTransfer)
         );
-    }
-
-    /**
-     * @return void
-     */
-    protected function addIsWidgetVisibleOnCartPageParameter(): void
-    {
-        $this->addParameter(static::PARAMETER_IS_VISIBLE_ON_CART_PAGE, $this->getConfig()->isWidgetVisibleOnCartPage());
     }
 }
