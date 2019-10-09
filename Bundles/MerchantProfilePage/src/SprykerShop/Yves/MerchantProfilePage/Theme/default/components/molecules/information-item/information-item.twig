@@ -18,7 +18,7 @@
         <strong>{{ data.title }}</strong>
     {% endblock %}
     {% block text %}
-        {% if data.text | trim is not empty %}
+        {% if data.text | trim %}
             <div>{{ data.text }}</div>
         {% endif %}
     {% endblock %}
