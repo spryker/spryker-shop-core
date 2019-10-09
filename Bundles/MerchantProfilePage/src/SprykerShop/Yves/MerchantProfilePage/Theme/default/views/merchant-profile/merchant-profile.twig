@@ -27,11 +27,11 @@
     <div class="grid">
         {% block contentInner %}
             <div class="col col--sm-12 col--lg-5">
-                {% set additionalClass = 'box' %}
+                {% set additionaImageClass = 'box' %}
 
                 {% block image %}
                     {% include atom('thumbnail') with {
-                        class: additionalClass,
+                        class: additionaImageClass,
                         modifiers: ['bigger'],
                         attributes: {
                             alt: merchantName | default,
@@ -109,11 +109,11 @@
                                     </div>
 
                                     <div class="col col--sm-3 col--lg-2">
-                                        {% set additionalClass = 'box' %}
+                                        {% set additionalLogoClass = 'box' %}
 
                                         {% block logo %}
                                             {% include atom('thumbnail') with {
-                                                class: additionalClass,
+                                                class: additionalLogoClass,
                                                 modifiers: ['small'],
                                                 attributes: {
                                                     alt: merchantName | default,
@@ -135,34 +135,33 @@
 
     {% block additional %}
         <div class="{{ additionalClass }}">
-                {% set informationArticles = [
-                    {
-                        'title': 'mearchant_profile.terms_and_conditions' | trans,
-                        'text': data.merchantProfile.termsConditionsGlossaryKey | trans,
-                    },
-                    {
-                        'title': 'mearchant_profile.cancellation_policy' | trans,
-                        'text': data.merchantProfile.cancellationPolicyGlossaryKey | trans,
-                    },
-                    {
-                        'title': 'mearchant_profile.imprint' | trans,
-                        'text': data.merchantProfile.imprintGlossaryKey | trans,
-                    },
-                    {
-                        'title': 'mearchant_profile.privacy' | trans,
-                        'text': data.merchantProfile.dataPrivacyGlossaryKey | trans,
-                    },
-                ] %}
+            {% set informationArticles = [
+                {
+                    'title': 'mearchant_profile.terms_and_conditions' | trans,
+                    'text': data.merchantProfile.termsConditionsGlossaryKey | trans,
+                },
+                {
+                    'title': 'mearchant_profile.cancellation_policy' | trans,
+                    'text': data.merchantProfile.cancellationPolicyGlossaryKey | trans,
+                },
+                {
+                    'title': 'mearchant_profile.imprint' | trans,
+                    'text': data.merchantProfile.imprintGlossaryKey | trans,
+                },
+                {
+                    'title': 'mearchant_profile.privacy' | trans,
+                    'text': data.merchantProfile.dataPrivacyGlossaryKey | trans,
+                },
+            ] %}
 
-                {% for informationArticle in informationArticles %}
-                    {% block additionalInformation %}
-                        <div class="spacing-bottom spacing-bottom--big">
-                            <h5>{{ informationArticle.title }}</h5>
-                            <p>{{ informationArticle.text }}</p>
-                        </div>
-                    {% endblock %}
-                {% endfor %}
-
+            {% for informationArticle in informationArticles %}
+                {% block additionalInformation %}
+                    <div class="spacing-bottom spacing-bottom--big">
+                        <h5>{{ informationArticle.title }}</h5>
+                        <p>{{ informationArticle.text }}</p>
+                    </div>
+                {% endblock %}
+            {% endfor %}
         </div>
     {% endblock %}
 {% endblock %}
