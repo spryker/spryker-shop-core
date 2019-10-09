@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\MerchantProfilePage\Dependency\Client;
 
-use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\MerchantProfileViewTransfer;
 
 class MerchantProfilePageToMerchantProfileStorageClientBridge implements MerchantProfilePageToMerchantProfileStorageClientInterface
 {
@@ -27,10 +27,10 @@ class MerchantProfilePageToMerchantProfileStorageClientBridge implements Merchan
     /**
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     * @return \Generated\Shared\Transfer\MerchantProfileViewTransfer
      */
-    public function mapMerchantProfileStorageData(array $data): MerchantProfileTransfer
+    public function mapMerchantProfileStorageViewData(array $data): MerchantProfileViewTransfer
     {
-        return $this->merchantProfileStorageClient->mapMerchantProfileStorageData($data);
+        return $this->merchantProfileStorageClient->mapMerchantProfileStorageViewData($data);
     }
 }
