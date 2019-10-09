@@ -4,12 +4,14 @@
     merchantProfile: _view.merchantProfile,
 } %}
 
+{% set merchantName = data.merchantProfile.contactPersonFirstName ~ ' ' ~ data.merchantProfile.contactPersonLastName %}
+
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
         data: {
             steps: [
                 {
-                    label: data.merchantProfile.contactPersonFirstName ~ ' ' ~ data.merchantProfile.contactPersonLastName,
+                    label: merchantName,
                     withChevron: false,
                 },
             ],
@@ -18,18 +20,18 @@
 {% endblock %}
 
 {% block title %}
-    <h3>{{ data.merchantProfile.contactPersonFirstName ~ ' ' ~ data.merchantProfile.contactPersonLastName }}</h3>
+    <h3>{{ merchantName }}</h3>
 {% endblock %}
-
-{% set merchantName = data.merchantProfile.contactPersonFirstName ~ ' ' ~ data.merchantProfile.contactPersonLastName %}
 
 {% block content %}
     <div class="grid">
         {% block contentInner %}
             <div class="col col--sm-12 col--lg-5">
                 {% block image %}
+                    {% set additionalClass = 'box' %}
+
                     {% include atom('thumbnail') with {
-                        class: 'box',
+                        class: additionalClass,
                         modifiers: ['bigger'],
                         attributes: {
                             alt: merchantName | default,
@@ -46,7 +48,7 @@
                             <div class="grid">
                                 {% block descriptionInner %}
                                     <div class="col col--sm-12 col--lg-12 col--xl-10">
-                                        {% block mainInfo %}
+                                        {% block mainInformation %}
                                             <p>{{ data.merchantProfile.descriptionGlossaryKey | trans }}</p>
                                         {% endblock %}
 
@@ -108,8 +110,10 @@
 
                                     <div class="col col--sm-3 col--lg-2">
                                         {% block logo %}
+                                            {% set additionalClass = 'box' %}
+
                                             {% include atom('thumbnail') with {
-                                                class: 'box',
+                                                class: additionalClass,
                                                 modifiers: ['small'],
                                                 attributes: {
                                                     alt: merchantName | default,
@@ -127,27 +131,35 @@
         {% endblock %}
     </div>
 
-    {% block additionalInformation %}
+    {% block additional %}
         <div class="box">
-            <div class="spacing-bottom spacing-bottom--big">
-                <h5>{{ 'mearchant_profile.terms_and_conditions' | trans }}</h5>
-                <p>{{ data.merchantProfile.termsConditionsGlossaryKey | trans }}</p>
-            </div>
+            {% set informationArticles = [
+                {
+                    'title': 'mearchant_profile.terms_and_conditions' | trans,
+                    'text': data.merchantProfile.termsConditionsGlossaryKey | trans,
+                },
+                {
+                    'title': 'mearchant_profile.cancellation_policy' | trans,
+                    'text': data.merchantProfile.cancellationPolicyGlossaryKey | trans,
+                },
+                {
+                    'title': 'mearchant_profile.imprint' | trans,
+                    'text': data.merchantProfile.imprintGlossaryKey | trans,
+                },
+                {
+                    'title': 'mearchant_profile.privacy' | trans,
+                    'text': data.merchantProfile.dataPrivacyGlossaryKey | trans,
+                },
+            ] %}
 
-            <div class="spacing-bottom spacing-bottom--big">
-                <h5>{{ 'mearchant_profile.cancellation_policy' | trans }}</h5>
-                <p>{{ data.merchantProfile.cancellationPolicyGlossaryKey | trans }}</p>
-            </div>
-
-            <div class="spacing-bottom spacing-bottom--big">
-                <h5>{{ 'mearchant_profile.imprint' | trans }}</h5>
-                <p>{{ data.merchantProfile.imprintGlossaryKey | trans }}</p>
-            </div>
-
-            <div class="spacing-bottom spacing-bottom--big">
-                <h5>{{ 'mearchant_profile.privacy' | trans }}</h5>
-                <p>{{ data.merchantProfile.dataPrivacyGlossaryKey | trans }}</p>
-            </div>
+            {% for informationArticle in informationArticles %}
+                {% block additionalInformation %}
+                    <div class="spacing-bottom spacing-bottom--big">
+                        <h5>{{ informationArticle.title }}</h5>
+                        <p>{{ informationArticle.text }}</p>
+                    </div>
+                {% endblock %}
+            {% endfor %}
         </div>
     {% endblock %}
 {% endblock %}

@@ -9,13 +9,17 @@
     text: '',
 } %}
 
-{%- block class -%}spacing-bottom spacing-bottom--big{%- endblock -%}
+{%- block class -%}
+    {{ parent() }} spacing-bottom spacing-bottom--big
+{%- endblock -%}
 
 {% block body %}
     {% block title %}
         <strong>{{ data.title }}</strong>
     {% endblock %}
     {% block text %}
-        <div>{{ data.text }}</div>
+        {% if data.text | trim is not empty %}
+            <div>{{ data.text }}</div>
+        {% endif %}
     {% endblock %}
 {% endblock %}
