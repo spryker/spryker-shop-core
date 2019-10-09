@@ -42,13 +42,13 @@
             </div>
 
             <div class="col col--sm-12 col--lg-7">
-                {% block descriptionContainer %}
+                {% block detailContainer %}
                     <div class="box">
-                        {% block description %}
+                        {% block detail %}
                             <div class="grid">
-                                {% block descriptionInner %}
+                                {% block detailInner %}
                                     <div class="col col--sm-12 col--lg-12 col--xl-10">
-                                        {% block mainInformation %}
+                                        {% block description %}
                                             <p>{{ data.merchantProfile.descriptionGlossaryKey | trans }}</p>
                                         {% endblock %}
 
