@@ -1,7 +1,7 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
-    merchantProfile: _view.merchantProfile,
+    merchantProfile: _view.merchantProfileView,
 } %}
 
 {% set merchantName = data.merchantProfile.contactPersonFirstName ~ ' ' ~ data.merchantProfile.contactPersonLastName %}
