@@ -27,9 +27,9 @@
     <div class="grid">
         {% block contentInner %}
             <div class="col col--sm-12 col--lg-5">
-                {% block image %}
-                    {% set additionalClass = 'box' %}
+                {% set additionalClass = 'box' %}
 
+                {% block image %}
                     {% include atom('thumbnail') with {
                         class: additionalClass,
                         modifiers: ['bigger'],
@@ -109,9 +109,9 @@
                                     </div>
 
                                     <div class="col col--sm-3 col--lg-2">
-                                        {% block logo %}
-                                            {% set additionalClass = 'box' %}
+                                        {% set additionalClass = 'box' %}
 
+                                        {% block logo %}
                                             {% include atom('thumbnail') with {
                                                 class: additionalClass,
                                                 modifiers: ['small'],
@@ -131,9 +131,10 @@
         {% endblock %}
     </div>
 
+    {% set additionalClass = 'box' %}
+
     {% block additional %}
-        <div class="box">
-            {% block additionalInner %}
+        <div class="{{ additionalClass }}">
                 {% set informationArticles = [
                     {
                         'title': 'mearchant_profile.terms_and_conditions' | trans,
@@ -161,7 +162,7 @@
                         </div>
                     {% endblock %}
                 {% endfor %}
-            {% endblock %}
+
         </div>
     {% endblock %}
 {% endblock %}
