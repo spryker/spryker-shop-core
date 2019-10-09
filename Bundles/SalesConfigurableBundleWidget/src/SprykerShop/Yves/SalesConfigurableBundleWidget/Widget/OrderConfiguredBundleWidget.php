@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\SalesConfigurableBundleWidget\Widget;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -23,7 +22,7 @@ class OrderConfiguredBundleWidget extends AbstractWidget
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[]|null $itemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[]|null $itemTransfers
      */
     public function __construct(OrderTransfer $orderTransfer, ?iterable $itemTransfers = [])
     {
@@ -32,7 +31,10 @@ class OrderConfiguredBundleWidget extends AbstractWidget
         }
 
         $itemTransfers = $this->mapOrderItems($itemTransfers);
-        $salesOrderConfiguredBundles = $this->mapSalesOrderConfiguredBundles($orderTransfer, $itemTransfers);
+
+        $salesOrderConfiguredBundles = $this->getFactory()
+            ->createSalesOrderConfiguredBundleGrouper()
+            ->getSalesOrderConfiguredBundles($orderTransfer, $itemTransfers);
 
         $this->addItemsParameter($itemTransfers);
         $this->addOrderParameter($orderTransfer);
@@ -66,7 +68,7 @@ class OrderConfiguredBundleWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return void
      */
@@ -76,7 +78,7 @@ class OrderConfiguredBundleWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundles
+     * @param iterable|\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundles
      *
      * @return void
      */
@@ -86,7 +88,7 @@ class OrderConfiguredBundleWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
@@ -99,60 +101,5 @@ class OrderConfiguredBundleWidget extends AbstractWidget
         }
 
         return $items;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[]
-     */
-    protected function mapSalesOrderConfiguredBundles(OrderTransfer $orderTransfer, iterable $itemTransfers): array
-    {
-        $salesOrderConfiguredBundles = [];
-
-        foreach ($orderTransfer->getSalesOrderConfiguredBundles() as $salesOrderConfiguredBundleTransfer) {
-            if ($this->hasSalesOrderItems($salesOrderConfiguredBundleTransfer, $itemTransfers)) {
-                $salesOrderConfiguredBundles[] = $salesOrderConfiguredBundleTransfer;
-            }
-        }
-
-        return $salesOrderConfiguredBundles;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer
-     *
-     * @return int[]
-     */
-    protected function getSalesOrderItemIdsFromConfiguredBundle(
-        SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer
-    ): array {
-        $salesOrderItemIds = [];
-
-        foreach ($salesOrderConfiguredBundleTransfer->getSalesOrderConfiguredBundleItems() as $salesOrderConfiguredBundleItemTransfer) {
-            $salesOrderItemIds[] = $salesOrderConfiguredBundleItemTransfer->getIdSalesOrderItem();
-        }
-
-        return $salesOrderItemIds;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return bool
-     */
-    protected function hasSalesOrderItems(
-        SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer,
-        iterable $itemTransfers
-    ): bool {
-        foreach ($itemTransfers as $itemTransfer) {
-            if (in_array($itemTransfer->getIdSalesOrderItem(), $this->getSalesOrderItemIdsFromConfiguredBundle($salesOrderConfiguredBundleTransfer))) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
