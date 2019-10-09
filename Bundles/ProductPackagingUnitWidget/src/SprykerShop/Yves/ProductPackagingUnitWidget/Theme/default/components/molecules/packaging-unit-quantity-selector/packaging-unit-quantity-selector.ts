@@ -272,6 +272,7 @@ console.log(jsonData);
             this.addToCartButton.removeAttribute("disabled");
         }
         this.muChoiceNotificationElement.classList.add('is-hidden');
+        this.qtyInputChange();
     }
 
     private getMinChoice(qtyInSalesUnits: number) {
@@ -393,6 +394,7 @@ console.log(jsonData);
         if (typeof amountInSalesUnitInput === 'undefined') {
             amountInSalesUnitInput = +this.amountInSalesUnitInput.value;
         }
+
         this.productPackagingNewPriceBlock.classList.add('is-hidden');
         this.puError = false;
         const amountInBaseUnits = this.multiply(amountInSalesUnitInput, +this.currentLeadSalesUnit.conversion);
@@ -401,10 +403,12 @@ console.log(jsonData);
             this.puError = true;
             this.puIntervalNotificationElement.classList.remove('is-hidden');
         }
+
         if (amountInBaseUnits < this.getMinAmount()) {
             this.puError = true;
             this.puMinNotificationElement.classList.remove('is-hidden');
         }
+
         if (this.getMaxAmount() > 0 && amountInBaseUnits > this.getMaxAmount()) {
             this.puError = true;
             this.puMaxNotificationElement.classList.remove('is-hidden');
@@ -424,15 +428,25 @@ console.log(jsonData);
         this.addToCartButton.removeAttribute("disabled");
         this.hidePackagingUnitRestrictionNotifications();
 
+        // if (this.amountDefaultInBaseUnitInput.value != amountInBaseUnits) {
+        //     let newPrice = (amountInBaseUnits / this.amountDefaultInBaseUnitInput.value) * this.itemBasePriceInput.value;
+        //     newPrice = (newPrice * +this.qtyInBaseUnitInput.value) / 100;
+        //     this.productPackagingNewPriceValueBlock.innerHTML = this.itemMoneySymbolInput.value + newPrice.toFixed(2);
+        //
+        //     this.productPackagingNewPriceBlock.classList.remove('is-hidden');
+        // }
+
+        this.priceCalculation(amountInBaseUnits);
+    }
+
+    protected priceCalculation(amountInBaseUnits: number): void {
         if (this.amountDefaultInBaseUnitInput.value != amountInBaseUnits) {
             let newPrice = (amountInBaseUnits / this.amountDefaultInBaseUnitInput.value) * this.itemBasePriceInput.value;
-            newPrice = newPrice / 100;
+            newPrice = (newPrice * +this.qtyInBaseUnitInput.value) / 100;
             this.productPackagingNewPriceValueBlock.innerHTML = this.itemMoneySymbolInput.value + newPrice.toFixed(2);
 
             this.productPackagingNewPriceBlock.classList.remove('is-hidden');
         }
-
-        return;
     }
 
     private askCustomerForCorrectAmountInput(amountInSalesUnits) {
@@ -614,7 +628,6 @@ console.log(jsonData);
         }
 
         if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
-            console.log(amountInBaseUnits); //TODO continue (max 100.5)
             return minChoice + this.getAmountInterval();
         }
 
@@ -631,7 +644,10 @@ console.log(jsonData);
 
     protected getAmountPercentageOfDivision(amountInBaseUnits: number): number {
         const amountPrecision = +this.currentLeadSalesUnit.precision;
-        const currentMinusMinimumAmount = this.round(((amountInBaseUnits * amountPrecision) - (this.getMinAmount() * amountPrecision))/amountPrecision, 4);
+        const currentMinusMinimumAmount = ((amountInBaseUnits * amountPrecision) - (this.getMinAmount() * amountPrecision))/amountPrecision;
+        console.log(currentMinusMinimumAmount, 'currentMinusMinimumAmount');
+        console.log(this.round(currentMinusMinimumAmount % this.getAmountInterval(), 4), 'resultWithRounding');
+        console.log(currentMinusMinimumAmount % this.getAmountInterval(), 'result');
 
         return this.round(currentMinusMinimumAmount % this.getAmountInterval(), 4);
     }

@@ -111,7 +111,7 @@
         </div>
     </div>
 
-    {% if not data.isAmountBlockEnabled %}
+    {% if data.isAmountBlockEnabled or data.packagingUnitIsVariable %}
         <div class="grid grid--bottom grid--justify">
             <div class="col {% if data.salesUnitCount %}col--sm-7{% else %}col--sm-5{% endif %}">
                 <label>
