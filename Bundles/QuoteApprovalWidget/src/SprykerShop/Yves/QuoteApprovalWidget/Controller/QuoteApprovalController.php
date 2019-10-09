@@ -40,7 +40,7 @@ class QuoteApprovalController extends AbstractController
                 ->getQuoteApprovalClient()
                 ->createQuoteApproval($quoteApproveRequestForm->getData());
 
-            $this->executeQuoteApprovalAfterOperationPlugins($quoteApprovalResponseTransfer);
+            $this->updateSessionQuoteOnSuccessfulResponse($quoteApprovalResponseTransfer);
             $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
         }
 
@@ -72,7 +72,7 @@ class QuoteApprovalController extends AbstractController
             ->getQuoteApprovalClient()
             ->removeQuoteApproval($quoteApprovalRequestTransfer);
 
-        $this->executeQuoteApprovalAfterOperationPlugins($quoteApprovalResponseTransfer);
+        $this->updateSessionQuoteOnSuccessfulResponse($quoteApprovalResponseTransfer);
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectToReferer($request);
@@ -101,7 +101,7 @@ class QuoteApprovalController extends AbstractController
             ->getQuoteApprovalClient()
             ->approveQuoteApproval($quoteApprovalRequestTransfer);
 
-        $this->executeQuoteApprovalAfterOperationPlugins($quoteApprovalResponseTransfer);
+        $this->updateSessionQuoteOnSuccessfulResponse($quoteApprovalResponseTransfer);
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectToReferer($request);
@@ -129,7 +129,7 @@ class QuoteApprovalController extends AbstractController
             ->getQuoteApprovalClient()
             ->declineQuoteApproval($quoteApprovalRequestTransfer);
 
-        $this->executeQuoteApprovalAfterOperationPlugins($quoteApprovalResponseTransfer);
+        $this->updateSessionQuoteOnSuccessfulResponse($quoteApprovalResponseTransfer);
         $this->addMessagesFromQuoteApprovalResponse($quoteApprovalResponseTransfer);
 
         return $this->redirectToReferer($request);
@@ -173,16 +173,16 @@ class QuoteApprovalController extends AbstractController
      *
      * @return void
      */
-    protected function executeQuoteApprovalAfterOperationPlugins(
+    protected function updateSessionQuoteOnSuccessfulResponse(
         QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer
     ): void {
         if (!$quoteApprovalResponseTransfer->getIsSuccessful()) {
             return;
         }
 
-        foreach ($this->getFactory()->getQuoteApprovalAfterOperationPlugins() as $quoteApprovalAfterOperationPlugin) {
-            $quoteApprovalAfterOperationPlugin->execute($quoteApprovalResponseTransfer);
-        }
+        $this->getFactory()
+            ->getQuoteClient()
+            ->setQuote($quoteApprovalResponseTransfer->getQuote());
     }
 
     /**

@@ -23,8 +23,6 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
-    public const PLUGINS_QUOTE_APPROVAL_AFTER_OPERATION = 'PLUGINS_QUOTE_APPROVAL_AFTER_OPERATION';
-
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
@@ -38,7 +36,6 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addCustomerClient($container);
         $container = $this->addMoneyClient($container);
         $container = $this->addGlossaryStorageClient($container);
-        $container = $this->addQuoteApprovalAfterOperationPlugins($container);
 
         return $container;
     }
@@ -111,27 +108,5 @@ class QuoteApprovalWidgetDependencyProvider extends AbstractBundleDependencyProv
         };
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addQuoteApprovalAfterOperationPlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_QUOTE_APPROVAL_AFTER_OPERATION, function () {
-            return $this->getQuoteApprovalAfterOperationPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return \SprykerShop\Yves\QuoteApprovalWidgetExtension\Dependency\Plugin\QuoteApprovalAfterOperationPluginInterface[]
-     */
-    protected function getQuoteApprovalAfterOperationPlugins(): array
-    {
-        return [];
     }
 }
