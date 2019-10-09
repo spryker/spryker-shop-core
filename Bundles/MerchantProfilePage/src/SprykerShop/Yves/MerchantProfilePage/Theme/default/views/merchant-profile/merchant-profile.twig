@@ -132,28 +132,27 @@
     </div>
 
     {% set additionalArticlesClass = 'box' %}
+    {% set informationArticles = [
+        {
+            'title': 'mearchant_profile.terms_and_conditions' | trans,
+            'text': data.merchantProfile.termsConditionsGlossaryKey | trans,
+        },
+        {
+            'title': 'mearchant_profile.cancellation_policy' | trans,
+            'text': data.merchantProfile.cancellationPolicyGlossaryKey | trans,
+        },
+        {
+            'title': 'mearchant_profile.imprint' | trans,
+            'text': data.merchantProfile.imprintGlossaryKey | trans,
+        },
+        {
+            'title': 'mearchant_profile.privacy' | trans,
+            'text': data.merchantProfile.dataPrivacyGlossaryKey | trans,
+        },
+    ] %}
 
     {% block additional %}
         <div class="{{ additionalArticlesClass }}">
-            {% set informationArticles = [
-                {
-                    'title': 'mearchant_profile.terms_and_conditions' | trans,
-                    'text': data.merchantProfile.termsConditionsGlossaryKey | trans,
-                },
-                {
-                    'title': 'mearchant_profile.cancellation_policy' | trans,
-                    'text': data.merchantProfile.cancellationPolicyGlossaryKey | trans,
-                },
-                {
-                    'title': 'mearchant_profile.imprint' | trans,
-                    'text': data.merchantProfile.imprintGlossaryKey | trans,
-                },
-                {
-                    'title': 'mearchant_profile.privacy' | trans,
-                    'text': data.merchantProfile.dataPrivacyGlossaryKey | trans,
-                },
-            ] %}
-
             {% for informationArticle in informationArticles %}
                 {% block additionalInformation %}
                     <div class="spacing-bottom spacing-bottom--big">
