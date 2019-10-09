@@ -19,7 +19,7 @@ class QuoteApprovalCheckerCheckoutShipmentStepEnterPreCheckPlugin extends Abstra
     /**
      * {@inheritDoc}
      * - Makes a call to quote approval client to determine if step is accessible.
-     * - Returns true if quote is locked and has at least one quote approval not in status declined, false otherwise.
+     * - Returns false if quote is locked and has at least one quote approval not in status declined, true otherwise.
      *
      * @api
      *

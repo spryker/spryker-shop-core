@@ -80,7 +80,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     public function requireInput(AbstractTransfer $quoteTransfer)
     {
         return $quoteTransfer->getItems()->count() !== 0
-            && $this->executeCheckoutShipmentStepEnterPreCheckPlugins($quoteTransfer)
+            && !$this->executeCheckoutShipmentStepEnterPreCheckPlugins($quoteTransfer)
             && $this->giftCardItemsChecker->hasOnlyGiftCardItems($quoteTransfer->getItems()) === false;
     }
 
@@ -92,7 +92,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
-        if (!$this->executeCheckoutShipmentStepEnterPreCheckPlugins($quoteTransfer)) {
+        if ($this->executeCheckoutShipmentStepEnterPreCheckPlugins($quoteTransfer)) {
             return $quoteTransfer;
         }
         $quoteTransfer = $this->setDefaultNoShipmentMethod($quoteTransfer);
@@ -172,11 +172,11 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     protected function executeCheckoutShipmentStepEnterPreCheckPlugins(AbstractTransfer $dataTransfer): bool
     {
         foreach ($this->checkoutShipmentStepEnterPreCheckPlugins as $checkoutShipmentStepEnterPreCheckPlugin) {
-            if ($checkoutShipmentStepEnterPreCheckPlugin->check($dataTransfer)) {
-                return false;
+            if (!$checkoutShipmentStepEnterPreCheckPlugin->check($dataTransfer)) {
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 }

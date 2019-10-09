@@ -14,7 +14,7 @@ interface CheckoutAddressStepEnterPreCheckPluginInterface
     /**
      * Specification:
      * - Decides whether to disable checkout step or not.
-     * - Checkout address step will be disabled if at least one plugin returns true.
+     * - Checkout address step will be disabled if at least one plugin returns false.
      *
      * @api
      *

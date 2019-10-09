@@ -17,8 +17,8 @@
     shipmentMethod: _view.quoteTransfer.shipment.method.name | default,
     paymentMethod: _view.quoteTransfer.payment.paymentMethod,
     shipmentGroups: _view.shipmentGroups,
-    checkoutIsSuccess: _view.isOrderPlaceableResponse.IsSuccess,
-    checkoutErrors: _view.isOrderPlaceableResponse.errors,
+    checkoutIsSuccess: _view.isPlaceableOrder | default(true),
+    checkoutErrors: _view.unPlaceableOrderErrors | [],
 
     forms: {
         summary: _view.summaryForm,
