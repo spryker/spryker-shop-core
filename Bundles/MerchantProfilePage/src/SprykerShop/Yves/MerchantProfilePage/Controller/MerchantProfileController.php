@@ -24,13 +24,13 @@ class MerchantProfileController extends AbstractController
      */
     public function indexAction(array $merchantProfile, Request $request): View
     {
-        $merchantProfileTransfer = $this->getFactory()
+        $merchantProfileViewTransfer = $this->getFactory()
             ->getMerchantStorageClient()
-            ->mapMerchantProfileStorageData($merchantProfile);
+            ->mapMerchantProfileStorageViewData($merchantProfile);
 
         return $this->view(
             [
-            'merchantProfile' => $merchantProfileTransfer,
+            'merchantProfileView' => $merchantProfileViewTransfer,
             ],
             [],
             '@MerchantProfilePage/views/merchant-profile/index.twig'

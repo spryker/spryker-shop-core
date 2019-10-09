@@ -1,7 +1,7 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
-    merchantProfile: _view.merchantProfile
+    merchantProfileView: _view.merchantProfileView
 } %}
 
 {% block breadcrumbs %}
@@ -9,7 +9,7 @@
         data: {
             steps: [
                 {
-                    label: data.merchantProfile.contactPersonFirstName ~ ' ' ~ data.merchantProfile.contactPersonLastName,
+                    label: data.merchantProfileView.contactPersonFirstName ~ ' ' ~ data.merchantProfileView.contactPersonLastName,
                     withChevron: false,
                 }
             ]
@@ -19,12 +19,12 @@
 
 {% block title %}
     <div>
-        <h2>{{ data.merchantProfile.contactPersonFirstName ~ ' ' ~ data.merchantProfile.contactPersonLastName }}</h2>
+        <h2>{{ data.merchantProfileView.merchantName }}</h2>
     </div>
 {% endblock %}
 
 {% block content %}
-{% set merchantName = data.merchantProfile.contactPersonFirstName ~ ' ' ~ data.merchantProfile.contactPersonLastName %}
+{% set merchantName = data.merchantProfileView.contactPersonFirstName ~ ' ' ~ data.merchantProfileView.contactPersonLastName %}
 <div class="grid">
     <div class="row">
         <div class="col col--sm-5 col--lg-5 col--xl-5">
@@ -32,7 +32,7 @@
                 modifiers: ['bigger'],
                 attributes: {
                     alt: merchantName | default(''),
-                    src: (data.merchantProfile.bannerUrlGlossaryKey | trans),
+                    src: (data.merchantProfileView.bannerUrlGlossaryKey | trans),
                 },
             } only %}
         </div>
@@ -42,7 +42,7 @@
                     <div class="row">
                         <div class="col col--sm-12 col--lg-12 col--xl-12">
                             <p>
-                                {{ data.merchantProfile.descriptionGlossaryKey | trans }}
+                                {{ data.merchantProfileView.descriptionGlossaryKey | trans }}
                             </p>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                             <p>
                                 <strong>{{ 'mearchant_profile.email' | trans }}</strong>
                                 <br>
-                                <span>{{ data.merchantProfile.publicEmail | trans }}</span>
+                                <span>{{ data.merchantProfileView.publicEmail | trans }}</span>
                             </p>
                         </div>
                         <div class="col col--sm-6 col--lg-6 col--xl-6">
@@ -69,14 +69,14 @@
                             <p>
                                 <strong>{{ 'mearchant_profile.phone' | trans }}</strong>
                                 <br>
-                                <span>{{ data.merchantProfile.publicPhone }}</span>
+                                <span>{{ data.merchantProfileView.publicPhone }}</span>
                             </p>
                         </div>
                         <div class="col col--sm-6 col--lg-6 col--xl-6">
                             <p>
                                 <strong>{{ 'mearchant_profile.delivery_time' | trans }}</strong>
                                 <br>
-                                <span>{{ data.merchantProfile.deliveryTimeGlossaryKey | trans }}</span>
+                                <span>{{ data.merchantProfileView.deliveryTimeGlossaryKey | trans }}</span>
                             </p>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                         modifiers: ['small'],
                         attributes: {
                             alt: merchantName | default(''),
-                            src: (data.merchantProfile.logoUrl | trans),
+                            src: (data.merchantProfileView.logoUrl | trans),
                         },
                     } only %}
                 </div>
@@ -97,7 +97,7 @@
         <div class="col col--sm-12 col--lg-12 col--xl-12">
             <h5>{{ 'mearchant_profile.terms_and_conditions' | trans }}</h5>
             <p>
-                {{ data.merchantProfile.termsConditionsGlossaryKey | trans }}
+                {{ data.merchantProfileView.termsConditionsGlossaryKey | trans }}
             </p>
         </div>
     </div>
@@ -105,7 +105,7 @@
         <div class="col col--sm-12 col--lg-12 col--xl-12">
             <h5>{{ 'mearchant_profile.cancellation_policy' | trans }}</h5>
             <p>
-                {{ data.merchantProfile.cancellationPolicyGlossaryKey | trans }}
+                {{ data.merchantProfileView.cancellationPolicyGlossaryKey | trans }}
             </p>
         </div>
     </div>
@@ -113,7 +113,7 @@
         <div class="col col--sm-12 col--lg-12 col--xl-12">
             <h5>{{ 'mearchant_profile.imprint' | trans }}</h5>
             <p>
-                {{ data.merchantProfile.imprintGlossaryKey | trans }}
+                {{ data.merchantProfileView.imprintGlossaryKey | trans }}
             </p>
         </div>
     </div>
@@ -121,7 +121,7 @@
         <div class="col col--sm-12 col--lg-12 col--xl-12">
             <h5>{{ 'mearchant_profile.privacy' | trans }}</h5>
             <p>
-                {{ data.merchantProfile.dataPrivacyGlossaryKey | trans }}
+                {{ data.merchantProfileView.dataPrivacyGlossaryKey | trans }}
             </p>
         </div>
     </div>
