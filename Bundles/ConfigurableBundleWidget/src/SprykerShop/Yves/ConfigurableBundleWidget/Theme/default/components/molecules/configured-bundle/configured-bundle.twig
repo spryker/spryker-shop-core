@@ -7,6 +7,7 @@
 
 {% define data = {
     bundle: required,
+    items: required,
     bundleItems: data.bundle.items | default({}),
     currencyIsoCode: null,
     isEditable: true,
@@ -64,7 +65,7 @@
     {% block bundleProductList %}
         <div class="{{ config.name }}__products">
             {% block bundleProductListInner %}
-                {% for item in data.bundleItems %}
+                {% for item in data.bundleItems if data.items[item.GroupKey] is defined %}
                     {% block bundleProductItem %}
                         {% include molecule('configured-bundle-product', 'ConfigurableBundleWidget') with {
                             data: {

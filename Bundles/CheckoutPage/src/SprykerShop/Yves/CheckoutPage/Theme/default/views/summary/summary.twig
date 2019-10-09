@@ -55,7 +55,7 @@
                     <hr>
                     <h6><strong>{{ 'checkout.step.summary.products' | trans }}</strong></h6>
 
-                    {% widget 'QuoteConfiguredBundleWidget' args [data.cart] with {
+                    {% widget 'QuoteConfiguredBundleWidget' args [data.cart, shipmentGroup.items] with {
                         data: {
                             isEditable: false,
                         },

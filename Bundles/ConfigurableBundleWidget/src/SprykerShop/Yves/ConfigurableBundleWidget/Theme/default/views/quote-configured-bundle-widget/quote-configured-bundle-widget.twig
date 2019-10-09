@@ -1,6 +1,7 @@
 {% extends template('widget') %}
 
 {% define data = {
+    items: _widget.items,
     configuredBundles: _widget.configuredBundles,
     currencyIsoCode: _widget.quote.currency.code,
     isEditable: true,
@@ -12,6 +13,7 @@
             {% include molecule('configured-bundle', 'ConfigurableBundleWidget') with {
                 data: {
                     bundle: bundle,
+                    items: data.items,
                     currencyIsoCode: data.currencyIsoCode,
                     isEditable: data.isEditable,
                 },

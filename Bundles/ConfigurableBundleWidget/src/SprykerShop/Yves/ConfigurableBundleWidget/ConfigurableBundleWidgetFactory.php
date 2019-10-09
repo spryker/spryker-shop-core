@@ -11,6 +11,8 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToCartClientInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToQuoteClientInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToZedRequestClientInterface;
+use SprykerShop\Yves\ConfigurableBundleWidget\Grouper\ConfiguredBundleGrouper;
+use SprykerShop\Yves\ConfigurableBundleWidget\Grouper\ConfiguredBundleGrouperInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Mapper\ConfiguredBundleMapper;
 use SprykerShop\Yves\ConfigurableBundleWidget\Mapper\ConfiguredBundleMapperInterface;
 use SprykerShop\Yves\ConfigurableBundleWidget\Reader\QuoteReader;
@@ -28,6 +30,16 @@ class ConfigurableBundleWidgetFactory extends AbstractFactory
     {
         return new QuoteReader(
             $this->getCartClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ConfigurableBundleWidget\Grouper\ConfiguredBundleGrouperInterface
+     */
+    public function createConfiguredBundleGrouper(): ConfiguredBundleGrouperInterface
+    {
+        return new ConfiguredBundleGrouper(
+            $this->createConfiguredBundleMapper()
         );
     }
 
