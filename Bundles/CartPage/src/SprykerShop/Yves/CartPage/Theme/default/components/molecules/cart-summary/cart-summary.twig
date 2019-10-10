@@ -28,7 +28,7 @@
         {% set canProceedToCheckout = true %}
     {% endif %}
 
-    {% if quoteApprovalWidget %}  {# @deprecated - This widget will be removed with next release. Content will be placed on summary page of checkout. #}
+    {% if quoteApprovalWidget %}  {# @deprecated - This widget is moved to summary page of checkout. #}
         {% widget quoteApprovalWidget only %}{% endwidget %}
     {% endif %}
 
@@ -111,7 +111,7 @@
     {% endblock %}
 
     {% if data.isQuoteValid %}
-        {% widget 'QuoteApproveRequestWidget' args [data.cart] only %} {# @deprecated - This widget will be removed with next release. Content will be placed on summary page of checkout. #}
+        {% widget 'QuoteApproveRequestWidget' args [data.cart] only %} {# @deprecated - This widget is moved to summary page of checkout. #}
             {% block body %}
                 <hr>
                 {{ parent() }}
