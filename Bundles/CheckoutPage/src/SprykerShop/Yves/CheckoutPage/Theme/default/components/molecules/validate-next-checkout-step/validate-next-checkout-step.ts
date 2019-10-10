@@ -1,23 +1,37 @@
 import Component from 'ShopUi/models/component';
 
+export const EVENT_INIT = 'afterInit';
+
+/**
+ * @event afterInit An event emitted when the component has been initialized.
+ */
 export default class ValidateNextCheckoutStep extends Component {
     protected containers: HTMLElement[];
     protected triggers: HTMLFormElement[];
     protected target: HTMLButtonElement;
     protected dropdownTriggers: HTMLSelectElement[];
+    protected parentTarget: HTMLElement;
     protected readonly requiredFormFieldSelectors: string = 'select[required], input[required]';
 
     protected readyCallback(): void {
         this.containers = <HTMLElement[]>Array.from(document.querySelectorAll(this.containerSelector));
         this.target = <HTMLButtonElement>document.querySelector(this.targetSelector);
+
         if (this.dropdownTriggerSelector) {
             this.dropdownTriggers = <HTMLSelectElement[]>Array.from(document.querySelectorAll(
                 this.dropdownTriggerSelector
             ));
         }
+
+        if (this.parentTargetClassName) {
+            this.parentTarget = <HTMLElement>document.getElementsByClassName(this.parentTargetClassName)[0];
+        }
+
         if (this.isTriggerEnabled) {
             this.initTriggerState();
         }
+
+        this.dispatchCustomEvent(EVENT_INIT);
     }
 
     protected mapEvents(): void {
@@ -27,6 +41,10 @@ export default class ValidateNextCheckoutStep extends Component {
             this.dropdownTriggers.forEach((element: HTMLSelectElement) => {
                 element.addEventListener('change', () => this.onDropdownTriggerChange());
             });
+        }
+
+        if (this.parentTarget) {
+            this.parentTarget.addEventListener('toggleForm', () => this.onDropdownTriggerChange());
         }
     }
 
@@ -138,5 +156,9 @@ export default class ValidateNextCheckoutStep extends Component {
      */
     get classToToggle(): string {
         return this.getAttribute('class-to-toggle');
+    }
+
+    protected get parentTargetClassName(): string {
+        return this.getAttribute('parent-target-class-name');
     }
 }
