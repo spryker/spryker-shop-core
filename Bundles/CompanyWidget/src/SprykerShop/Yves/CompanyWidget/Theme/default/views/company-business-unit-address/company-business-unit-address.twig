@@ -31,13 +31,16 @@
 
     {% if fullAddresses %}
         {% for address in fullAddresses %}
-            {% if not data.currentAddressId and data.formType == shippingAddress and address.isDefaultShipping %}
+            {% if not data.currentAddressId and not data.currentCompanyUnitAddressId and data.formType == shippingAddress and address.isDefaultShipping %}
                 {% set defaultAddressKey = address.key %}
             {% endif %}
-            {% if not data.currentAddressId and data.formType == billingAddress and address.isDefaultBilling %}
+            {% if not data.currentAddressId and not data.currentCompanyUnitAddressId and data.formType == billingAddress and address.isDefaultBilling %}
                 {% set defaultAddressKey = address.key %}
             {% endif %}
-            {% if data.currentAddressId == address.idCustomerAddress or data.currentCompanyUnitAddressId == address.idCompanyUnitAddress %}
+            {% if data.currentAddressId and data.currentAddressId == address.idCustomerAddress %}
+                {% set defaultAddressKey = address.key %}
+            {% endif %}
+            {% if data.currentCompanyUnitAddressId and data.currentCompanyUnitAddressId == address.idCompanyUnitAddress %}
                 {% set defaultAddressKey = address.key %}
             {% endif %}
             {% if data.currentAddressId == optionValueDeliverToMultipleAddresses %}
@@ -45,7 +48,6 @@
             {% endif %}
         {% endfor %}
     {% endif %}
-    {{ dump(defaultAddressKey, data.currentCompanyUnitAddressId, data.currentAddressId) }}
 
     {% if data.formType == shippingAddress %}
         <label>{{ 'page.checkout.address.delivery.address_select' | trans }}</label><br>
