@@ -44,7 +44,7 @@
                                         {% block bundleTotalValue -%}
                                             {% set bundleSumSubtotalAggregation = 0 %}
 
-                                            {% for bundleItem in data.bundle.items %}
+                                            {% for bundleItem in data.bundle.items if data.items[bundleItem.GroupKey] is defined %}
                                                 {% set bundleSumSubtotalAggregation = bundleSumSubtotalAggregation + bundleItem.sumSubtotalAggregation %}
                                             {% endfor %}
 
