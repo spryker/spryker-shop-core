@@ -31,6 +31,6 @@ class QuoteApprovalCheckerCheckoutAddressStepEnterPreCheckPlugin extends Abstrac
     {
         return $this->getFactory()
             ->getQuoteApprovalClient()
-            ->checkCheckoutStepAccessibility($quoteTransfer);
+            ->isQuoteInApprovalProcess($quoteTransfer);
     }
 }

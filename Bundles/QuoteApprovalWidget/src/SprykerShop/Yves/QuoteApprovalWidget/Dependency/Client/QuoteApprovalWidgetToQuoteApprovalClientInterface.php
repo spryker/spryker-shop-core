@@ -21,7 +21,7 @@ interface QuoteApprovalWidgetToQuoteApprovalClientInterface
      *
      * @return bool
      */
-    public function checkCheckoutStepAccessibility(QuoteTransfer $quoteTransfer): bool;
+    public function isQuoteInApprovalProcess(QuoteTransfer $quoteTransfer): bool;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

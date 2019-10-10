@@ -31,9 +31,9 @@ class CheckoutPageToCheckoutClientBridge implements CheckoutPageToCheckoutClient
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function isOrderPlaceable(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
+    public function isPlaceableOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
     {
-        return $this->checkoutClient->isOrderPlaceable($quoteTransfer);
+        return $this->checkoutClient->isPlaceableOrder($quoteTransfer);
     }
 
     /**

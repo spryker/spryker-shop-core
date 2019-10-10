@@ -34,9 +34,9 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
      *
      * @return bool
      */
-    public function checkCheckoutStepAccessibility(QuoteTransfer $quoteTransfer): bool
+    public function isQuoteInApprovalProcess(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->quoteApprovalClient->checkCheckoutStepAccessibility($quoteTransfer);
+        return $this->quoteApprovalClient->isQuoteInApprovalProcess($quoteTransfer);
     }
 
     /**

@@ -107,7 +107,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     public function getTemplateVariables(AbstractTransfer $quoteTransfer)
     {
         $shipmentGroups = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
-        $isOrderPlaceableResponseTransfer = $this->checkoutClient->isOrderPlaceable($quoteTransfer);
+        $isPlaceableOrderResponseTransfer = $this->checkoutClient->isPlaceableOrder($quoteTransfer);
 
         return [
             'quoteTransfer' => $quoteTransfer,
@@ -117,8 +117,8 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
             ),
             'shipmentGroups' => $shipmentGroups,
             'totalCosts' => $this->getTotalCosts($shipmentGroups),
-            'isPlaceableOrder' => $isOrderPlaceableResponseTransfer->getIsSuccess(),
-            'unPlaceableOrderErrors' => $isOrderPlaceableResponseTransfer->getErrors(),
+            'isPlaceableOrder' => $isPlaceableOrderResponseTransfer->getIsSuccess(),
+            'unPlaceableOrderErrors' => $isPlaceableOrderResponseTransfer->getErrors(),
         ];
     }
 
