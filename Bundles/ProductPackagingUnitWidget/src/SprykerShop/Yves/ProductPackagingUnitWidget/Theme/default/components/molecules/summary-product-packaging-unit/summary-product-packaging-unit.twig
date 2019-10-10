@@ -36,7 +36,7 @@
         <div class="col col--sm-12 col--lg-9">
             {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default('') %}
             {% set salesUnitSummary = salesUnitName ? data.quantity / data.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
-            {% set amountPerQuantity = data.amount is null ? 0 : data.amount.divide(data.quantity, 2).trim %}
+            {% set amountPerQuantity = data.amount is null ? 0 : data.amount.divide(data.quantity, 5).trim %}
 
             <strong class="float-right">{{ can('SeePricePermissionPlugin') ? data.price : 'customer.access.cannot_see_price' | trans }}</strong>
             <div>{{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }} {% if salesUnitSummary %}(={{ salesUnitSummary }}){% endif %}</div>
@@ -47,7 +47,7 @@
                 <div>
                     <span class="text-secondary">&times;</span>
                     {{ amountPerQuantity }} {{ 'packaging_units.cart.item' | trans }}
-                    (= {{ amountPerQuantity.divide(data.amountSalesUnit.conversion, 2) }}{{ amountSalesUnitName | trans }})
+                    (= {{ amountPerQuantity.divide(data.amountSalesUnit.conversion, 5).trim }}{{ amountSalesUnitName | trans }})
                     = {{ data.amount }} {{ 'packaging_units.cart.item' | trans }}
                 </div>
             {% endif %}

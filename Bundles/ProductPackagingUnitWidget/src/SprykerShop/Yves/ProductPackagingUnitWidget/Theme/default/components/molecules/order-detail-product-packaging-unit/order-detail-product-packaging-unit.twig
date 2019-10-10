@@ -28,7 +28,7 @@
     <td>
         {{ data.concreteItem.name }}<br>
         {% if data.concreteItem.amount and data.concreteItem.quantity %}
-            <span class="text-secondary">&times;</span> {{ data.concreteItem.amount.divide(data.concreteItem.quantity, 2) }} {{ 'packaging_units.cart.item' | trans }} (= {{ (data.concreteItem.amount / data.concreteItem.quantity) / data.concreteItem.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }}
+            <span class="text-secondary">&times;</span> {{ data.concreteItem.amount.divide(data.concreteItem.quantity, 5).trim }} {{ 'packaging_units.cart.item' | trans }} (= {{ (data.concreteItem.amount / data.concreteItem.quantity) / data.concreteItem.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }}
         {% endif %}
     </td>
     <td>
