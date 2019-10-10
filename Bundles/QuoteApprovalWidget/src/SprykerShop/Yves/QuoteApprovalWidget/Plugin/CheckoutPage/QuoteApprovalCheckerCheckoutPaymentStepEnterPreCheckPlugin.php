@@ -18,8 +18,7 @@ class QuoteApprovalCheckerCheckoutPaymentStepEnterPreCheckPlugin extends Abstrac
 {
     /**
      * {@inheritDoc}
-     * - Makes a call to quote approval client to determine if step is accessible.
-     * - Returns false if quote is locked and has at least one quote approval not in status declined, true otherwise.
+     * - Returns false if quote approval status is approved or waiting.
      *
      * @api
      *
@@ -29,7 +28,7 @@ class QuoteApprovalCheckerCheckoutPaymentStepEnterPreCheckPlugin extends Abstrac
      */
     public function check(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->getFactory()
+        return !$this->getFactory()
             ->getQuoteApprovalClient()
             ->isQuoteInApprovalProcess($quoteTransfer);
     }
