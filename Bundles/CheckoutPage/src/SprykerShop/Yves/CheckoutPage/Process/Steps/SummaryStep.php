@@ -118,7 +118,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
             'shipmentGroups' => $shipmentGroups,
             'totalCosts' => $this->getTotalCosts($shipmentGroups),
             'isPlaceableOrder' => $isPlaceableOrderResponseTransfer->getIsSuccess(),
-            'unPlaceableOrderErrors' => $isPlaceableOrderResponseTransfer->getErrors(),
+            'isPlaceableOrderErrors' => $isPlaceableOrderResponseTransfer->getErrors(),
         ];
     }
 

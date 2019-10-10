@@ -39,9 +39,9 @@
                         </div>
                     {% else %}
                         {% if not data.isQuoteApplicableForApprovalProcess %}
-                            <p>
+                            <div class="col">
                                 <b>{{ 'quote_approval_widget.quote_not_applicable_for_approval_process' | trans }}</b>
-                            </p>
+                            <div/>
                         {% endif %}
                         <div class="col">
                             <form method="POST" action="{{ path('quote-approval-remove', {'idQuoteApproval': data.waitingQuoteApproval.idQuoteApproval}) }}">
