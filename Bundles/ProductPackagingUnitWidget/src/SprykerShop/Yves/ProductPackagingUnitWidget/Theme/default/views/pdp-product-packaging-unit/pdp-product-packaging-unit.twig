@@ -56,7 +56,10 @@
         </div>
 
         <div class="col {% if data.salesUnitCount %}col--sm-4{% else %}col--sm-6{% endif %}">
-            {% if data.salesUnitCount and data.salesUnits | length > 1 and data.isAmountBlockEnabled != false %}
+            {% set isProductSharesItsStockAndSalesUnitsIsMultiply = data.salesUnits | length > 1 and data.isAmountBlockEnabled != false %}
+            {% set isProductDoesNotSharesItsStockAndSalesUnitsIsSingle = data.salesUnits | length == 1 and data.isAmountBlockEnabled != false %}
+
+            {% if data.salesUnitCount and isProductSharesItsStockAndSalesUnitsIsMultiply %}
                 <label>
                     {{ 'product.measurement.sales_unit' | trans }}
                     {% embed atom('select') with {
@@ -79,15 +82,9 @@
                 </label>
             {% endif %}
 
-            {% if data.salesUnitCount and data.salesUnits | length == 1 %}
-                {% if data.isAmountBlockEnabled != false %}
-                    <input type="hidden" name="id-product-measurement-sales-unit" value="{{ data.salesUnits[0].idProductMeasurementSalesUnit }}">
-                {% endif %}
-
-                {% if data.isAmountBlockEnabled == false %}
-                    {{ data.salesUnits[0].productMeasurementUnit.name | trans }}
-                    <input type="hidden" name="id-product-measurement-sales-unit" value="{{ data.salesUnits[0].idProductMeasurementSalesUnit }}">
-                {% endif %}
+            {% if data.salesUnitCount and isProductDoesNotSharesItsStockAndSalesUnitsIsSingle %}
+                {{ data.salesUnits[0].productMeasurementUnit.name | trans }}
+                <input type="hidden" name="id-product-measurement-sales-unit" value="{{ data.salesUnits[0].idProductMeasurementSalesUnit }}">
             {% endif %}
 
             {% if not data.salesUnitCount %}
