@@ -33,7 +33,7 @@ class MerchantProfileController extends AbstractController
             'merchantProfileView' => $merchantProfileViewTransfer,
             ],
             [],
-            '@MerchantProfilePage/views/merchant-profile/index.twig'
+            '@MerchantProfilePage/views/merchant-profile/merchant-profile.twig'
         );
     }
 }
