@@ -8,18 +8,15 @@
 namespace SprykerShop\Yves\CmsBlockWidget\Twig;
 
 use ArrayObject;
-use DateTime;
 use Generated\Shared\Transfer\SpyCmsBlockEntityTransfer;
 use Spryker\Shared\Twig\TwigFunction;
+use SprykerShop\CmsBlockWidget\src\SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToStoreClientInterface;
 use Twig\Environment;
 
 class CmsBlockTwigFunction extends TwigFunction
 {
-    protected const OPTION_NAME = 'name';
-    protected const OPTION_KEY = 'key';
-
     protected const SPY_CMS_BLOCK_TWIG_FUNCTION = 'spyCmsBlock';
 
     /**
@@ -33,6 +30,11 @@ class CmsBlockTwigFunction extends TwigFunction
     protected $storeClient;
 
     /**
+     * @var \SprykerShop\CmsBlockWidget\src\SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface
+     */
+    protected $cmsBlockValidator;
+
+    /**
      * @var string
      */
     protected $localeName;
@@ -40,23 +42,26 @@ class CmsBlockTwigFunction extends TwigFunction
     /**
      * @param \SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface $cmsBlockStorageClient
      * @param \SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToStoreClientInterface $storeClient
+     * @param \SprykerShop\CmsBlockWidget\src\SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface $cmsBlockValidator
      * @param string $localeName
      */
     public function __construct(
         CmsBlockWidgetToCmsBlockStorageClientInterface $cmsBlockStorageClient,
         CmsBlockWidgetToStoreClientInterface $storeClient,
+        CmsBlockValidatorInterface $cmsBlockValidator,
         string $localeName
     ) {
         parent::__construct();
         $this->cmsBlockStorageClient = $cmsBlockStorageClient;
         $this->storeClient = $storeClient;
+        $this->cmsBlockValidator = $cmsBlockValidator;
         $this->localeName = $localeName;
     }
 
     /**
      * @return string
      */
-    public function getFunctionName()
+    public function getFunctionName(): string
     {
         return static::SPY_CMS_BLOCK_TWIG_FUNCTION;
     }
@@ -64,23 +69,15 @@ class CmsBlockTwigFunction extends TwigFunction
     /**
      * @return callable
      */
-    public function getFunction()
+    public function getFunction(): callable
     {
-        return function (Environment $twig, array $context, array $blockOptions = []): ?string {
-            $blocks = $this->getBlockDataByOptions($blockOptions);
+        return function (Environment $twig, array $context, array $blockOptions = []): string {
+            $storeName = $this->storeClient->getCurrentStore()->getName();
+            $cmsBlocks = $this->cmsBlockStorageClient->getCmsBlocksByOptions($blockOptions, $this->localeName, $storeName);
             $rendered = '';
 
-            foreach ($blocks as $block) {
-                $blockData = $this->getCmsBlockTransfer($block);
-                $isActive = $this->validateBlockTemplate($blockData);
-                $isActive &= $this->validateDates($blockData);
-
-                if ($isActive) {
-                    $rendered .= $twig->render($blockData->getCmsBlockTemplate()->getTemplatePath(), [
-                        'placeholders' => $this->getPlaceholders($blockData->getSpyCmsBlockGlossaryKeyMappings()),
-                        'cmsContent' => $block,
-                    ]);
-                }
+            foreach ($cmsBlocks as $cmsBlock) {
+                $rendered .= $this->renderCmsBlock($twig, $cmsBlock);
             }
 
             return $rendered;
@@ -90,7 +87,7 @@ class CmsBlockTwigFunction extends TwigFunction
     /**
      * @return array
      */
-    public function getOptions()
+    protected function getOptions(): array
     {
         return [
             'needs_context' => true,
@@ -100,72 +97,31 @@ class CmsBlockTwigFunction extends TwigFunction
     }
 
     /**
-     * @param array $blockOptions
+     * @param \Twig\Environment $twig
+     * @param array $cmsBlock
      *
-     * @return array
+     * @return string
      */
-    protected function getBlockDataByOptions(array $blockOptions): array
+    protected function renderCmsBlock(Environment $twig, array $cmsBlock): string
     {
-        $cmsBlockKey = $blockOptions[static::OPTION_KEY] ?? null;
-        $storeName = $this->storeClient->getCurrentStore()->getName();
+        $spyCmsBlockTransfer = $this->getCmsBlockTransfer($cmsBlock);
 
-        if ($cmsBlockKey) {
-            return $this->cmsBlockStorageClient->findBlocksByKeys([$cmsBlockKey], $this->localeName, $storeName);
+        if (!$this->cmsBlockValidator->isValid($spyCmsBlockTransfer)) {
+            return '';
         }
 
-        $cmsBlockName = $blockOptions[static::OPTION_NAME] ?? null;
+        $placeholders = $this->getPlaceholders($spyCmsBlockTransfer->getSpyCmsBlockGlossaryKeyMappings());
 
-        if ($cmsBlockName) {
-            return $this->cmsBlockStorageClient->findBlocksByNames([$cmsBlockName], $this->localeName, $storeName);
-        }
-
-        $availableBlockKeys = $this->cmsBlockStorageClient->findBlockKeysByOptions($blockOptions);
-
-        return $this->cmsBlockStorageClient->findBlocksByKeys($availableBlockKeys, $this->localeName, $storeName);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $cmsBlockData
-     *
-     * @return bool
-     */
-    protected function validateBlockTemplate(SpyCmsBlockEntityTransfer $cmsBlockData): bool
-    {
-        return $cmsBlockData->getCmsBlockTemplate() !== null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $spyCmsBlockTransfer
-     *
-     * @return bool
-     */
-    protected function validateDates(SpyCmsBlockEntityTransfer $spyCmsBlockTransfer): bool
-    {
-        $dateToCompare = new DateTime();
-
-        if ($spyCmsBlockTransfer->getValidFrom() !== null) {
-            $validFrom = new DateTime($spyCmsBlockTransfer->getValidFrom());
-
-            if ($dateToCompare < $validFrom) {
-                return false;
-            }
-        }
-
-        if ($spyCmsBlockTransfer->getValidTo() !== null) {
-            $validTo = new DateTime($spyCmsBlockTransfer->getValidTo());
-
-            if ($dateToCompare > $validTo) {
-                return false;
-            }
-        }
-
-        return true;
+        return $twig->render($spyCmsBlockTransfer->getCmsBlockTemplate()->getTemplatePath(), [
+            'placeholders' => $placeholders,
+            'cmsContent' => $cmsBlock,
+        ]);
     }
 
     /**
      * @param \ArrayObject $mappings
      *
-     * @return array
+     * @return string[]
      */
     protected function getPlaceholders(ArrayObject $mappings): array
     {
@@ -178,12 +134,12 @@ class CmsBlockTwigFunction extends TwigFunction
     }
 
     /**
-     * @param array $data
+     * @param array $cmsBlock
      *
      * @return \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer
      */
-    protected function getCmsBlockTransfer(array $data): SpyCmsBlockEntityTransfer
+    protected function getCmsBlockTransfer(array $cmsBlock): SpyCmsBlockEntityTransfer
     {
-        return (new SpyCmsBlockEntityTransfer())->fromArray($data, true);
+        return (new SpyCmsBlockEntityTransfer())->fromArray($cmsBlock, true);
     }
 }

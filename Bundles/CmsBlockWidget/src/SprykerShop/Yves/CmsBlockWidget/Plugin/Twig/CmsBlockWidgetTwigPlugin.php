@@ -19,6 +19,10 @@ class CmsBlockWidgetTwigPlugin extends AbstractTwigExtensionPlugin
      */
     public function getFunctions(): array
     {
-        return [$this->getFactory()->createCmsBlockTwigFunction($this->getLocale())];
+        $locale = $this->getLocale();
+
+        return [
+            $this->getFactory()->createCmsBlockTwigFunction($locale),
+        ];
     }
 }

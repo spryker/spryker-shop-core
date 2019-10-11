@@ -8,6 +8,9 @@
 namespace SprykerShop\Yves\CmsBlockWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\CmsBlockWidget\src\SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidator;
+use SprykerShop\CmsBlockWidget\src\SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface;
+use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToStoreClientInterface;
 use SprykerShop\Yves\CmsBlockWidget\Twig\CmsBlockTwigFunction;
 
@@ -23,8 +26,17 @@ class CmsBlockWidgetFactory extends AbstractFactory
         return new CmsBlockTwigFunction(
             $this->getCmsBlockStorageClient(),
             $this->getStoreClient(),
+            $this->createCmsBlockValidator(),
             $localeName
         );
+    }
+
+    /**
+     * @return \SprykerShop\CmsBlockWidget\src\SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface
+     */
+    public function createCmsBlockValidator(): CmsBlockValidatorInterface
+    {
+        return new CmsBlockValidator();
     }
 
     /**
@@ -36,19 +48,9 @@ class CmsBlockWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use `getTwigExtensionPlugins` instead.
-     *
-     * @return \Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface[]
-     */
-    public function getTwigFunctionPlugins()
-    {
-        return $this->getProvidedDependency(CmsBlockWidgetDependencyProvider::TWIG_FUNCTION_PLUGINS);
-    }
-
-    /**
      * @return \Spryker\Shared\Twig\TwigExtensionInterface[]
      */
-    public function getTwigExtensionPlugins()
+    public function getTwigExtensionPlugins(): array
     {
         return $this->getProvidedDependency(CmsBlockWidgetDependencyProvider::TWIG_EXTENSION_PLUGINS);
     }
@@ -56,7 +58,7 @@ class CmsBlockWidgetFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface
      */
-    public function getCmsBlockStorageClient()
+    public function getCmsBlockStorageClient(): CmsBlockWidgetToCmsBlockStorageClientInterface
     {
         return $this->getProvidedDependency(CmsBlockWidgetDependencyProvider::CLIENT_CMS_BLOCK_STORAGE);
     }

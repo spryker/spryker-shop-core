@@ -12,12 +12,9 @@
     "spryker/twig": "^1.0.0 || ^2.0.0 || ^3.0.0"
   },
   "require-dev": {
-    "spryker-shop/catalog-page": "*",
-    "spryker-shop/product-detail-page": "*",
     "spryker-shop/shop-application": "*",
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
