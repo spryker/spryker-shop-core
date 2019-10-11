@@ -96,12 +96,10 @@
                         {% endblock %}
                     {% endembed %}
                 </p>
-                {% if isLatestVersion %}
-                    {% if data.quoteRequest.isLatestVersionVisible %}
-                        <p><b>{{ 'quote_request_page.quote_request.labels.latest_version_is_visible' | trans }}</b></p>
-                    {% else %}
-                        <p><b>{{ 'quote_request_page.quote_request.labels.latest_version_is_hidden' | trans }}</b></p>
-                    {% endif %}
+                {% if data.quoteRequest.isLatestVersionVisible %}
+                    <p><b>{{ 'quote_request_page.quote_request.labels.latest_version_is_visible' | trans }}</b></p>
+                {% else %}
+                    <p><b>{{ 'quote_request_page.quote_request.labels.latest_version_is_hidden' | trans }}</b></p>
                 {% endif %}
             </div>
         </div>
