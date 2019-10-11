@@ -74,7 +74,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function requireInput(AbstractTransfer $dataTransfer)
     {
-        return !$this->executeCheckoutAddressStepEnterPreCheckPlugins($dataTransfer);
+        return $this->executeCheckoutAddressStepEnterPreCheckPlugins($dataTransfer);
     }
 
     /**
@@ -95,7 +95,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
-        if ($this->executeCheckoutAddressStepEnterPreCheckPlugins($quoteTransfer)) {
+        if (!$this->executeCheckoutAddressStepEnterPreCheckPlugins($quoteTransfer)) {
             return $quoteTransfer;
         }
         $quoteTransfer = $this->stepExecutor->execute($request, $quoteTransfer);
@@ -150,10 +150,10 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     {
         foreach ($this->checkoutAddressStepEnterPreCheckPlugins as $checkoutAddressStepEnterPreCheckPlugin) {
             if (!$checkoutAddressStepEnterPreCheckPlugin->check($dataTransfer)) {
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 }
