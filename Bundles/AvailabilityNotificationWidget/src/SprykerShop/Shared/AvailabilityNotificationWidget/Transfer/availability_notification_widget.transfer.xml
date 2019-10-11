@@ -14,7 +14,7 @@
     </transfer>
 
     <transfer name="AvailabilityNotificationSubscriptionResponse">
-        <property name="isSuccess" type="bool" default="true"/>
+        <property name="isSuccess" type="bool"/>
         <property name="errorMessage" type="string"/>
         <property name="availabilityNotificationSubscription" type="AvailabilityNotificationSubscription"/>
     </transfer>
