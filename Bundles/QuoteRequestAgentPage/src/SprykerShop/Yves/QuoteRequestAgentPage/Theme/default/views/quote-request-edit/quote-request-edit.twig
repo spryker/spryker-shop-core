@@ -133,7 +133,7 @@
 
                                                 {% include molecule('source-price-form', 'QuoteRequestAgentPage') with {
                                                     data: {
-                                                        priceFiled: itemForm,
+                                                        priceForm: itemForm,
                                                         checkboxName: 'use_default_price',
                                                         checkboxValue: 1,
                                                         isChecked: unitSourcePrice == null,
@@ -202,7 +202,7 @@
 
                         {% include molecule('source-price-form', 'QuoteRequestAgentPage') with {
                             data: {
-                                priceFiled: embed.itemChild,
+                                priceForm: embed.itemChild,
                                 checkboxName: 'use_default_price',
                                 checkboxValue: 1,
                                 isChecked: unitSourcePrice == null,
