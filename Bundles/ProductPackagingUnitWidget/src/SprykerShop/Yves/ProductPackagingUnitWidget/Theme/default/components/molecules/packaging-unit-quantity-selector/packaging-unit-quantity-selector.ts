@@ -133,16 +133,18 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     private initFormDefaultValues() {
-        if (this.amountInBaseUnitInput) {
-            this.qtyInSalesUnitInput.value = this.getMinQuantity().toString();
+        if (!this.amountInBaseUnitInput) {
+            return;
+        }
 
-            if (this.leadSalesUnitSelect) {
-                this.leadSalesUnitSelect.value = this.currentLeadSalesUnit.id_product_measurement_sales_unit;
-            }
+        this.qtyInSalesUnitInput.value = this.getMinQuantity().toString();
 
-            if (this.measurementUnitInput) {
-                this.measurementUnitInput.value = this.currentSalesUnit.id_product_measurement_sales_unit;
-            }
+        if (this.leadSalesUnitSelect) {
+            this.leadSalesUnitSelect.value = this.currentLeadSalesUnit.id_product_measurement_sales_unit;
+        }
+
+        if (this.measurementUnitInput) {
+            this.measurementUnitInput.value = this.currentSalesUnit.id_product_measurement_sales_unit;
         }
     }
 
@@ -167,22 +169,24 @@ export default class PackagingUnitQuantitySelector extends Component {
             this.measurementUnitInput.addEventListener('change', (event: Event) => this.measurementUnitInputChange(event));
         }
 
-        if (this.packagingUnitIsVariable) {
-            this.amountInSalesUnitInput.addEventListener('input', (event: Event) => this.amountInputChange());
+        if (!this.packagingUnitIsVariable) {
+            return;
+        }
 
-            if (this.leadSalesUnitSelect) {
-                this.leadSalesUnitSelect.addEventListener('change', (event: Event) => this.leadSalesUnitSelectChange(event));
-            }
+        this.amountInSalesUnitInput.addEventListener('input', (event: Event) => this.amountInputChange());
+
+        if (this.leadSalesUnitSelect) {
+            this.leadSalesUnitSelect.addEventListener('change', (event: Event) => this.leadSalesUnitSelectChange(event));
         }
     }
 
     private qtyInputChange(qtyInSalesUnits?: number) {
         if (typeof qtyInSalesUnits === 'undefined') {
-            qtyInSalesUnits = +this.qtyInSalesUnitInput.value;
+            qtyInSalesUnits = Number(this.qtyInSalesUnitInput.value);
         }
 
         this.muError = false;
-        let qtyInBaseUnits = this.multiply(qtyInSalesUnits, +this.currentSalesUnit.conversion);
+        let qtyInBaseUnits = this.multiply(qtyInSalesUnits, Number(this.currentSalesUnit.conversion));
 
         if (qtyInBaseUnits < this.getMinQuantity()) {
             this.muError = true;
@@ -372,7 +376,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     private measurementUnitInputChange(event: Event) {
         let salesUnitId = parseInt((event.srcElement as HTMLSelectElement).value);
         let salesUnit = this.getSalesUnitById(salesUnitId);
-        let qtyInSalesUnits = +this.qtyInSalesUnitInput.value;
+        let qtyInSalesUnits = Number(this.qtyInSalesUnitInput.value);
         let qtyInBaseUnits = this.multiply(qtyInSalesUnits, this.currentSalesUnit.conversion);
         qtyInSalesUnits = qtyInBaseUnits / salesUnit.conversion;
         this.currentSalesUnit = salesUnit;
@@ -400,12 +404,12 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     private amountInputChange(amountInSalesUnitInput?: number) {
         if (typeof amountInSalesUnitInput === 'undefined') {
-            amountInSalesUnitInput = +this.amountInSalesUnitInput.value;
+            amountInSalesUnitInput = Number(this.amountInSalesUnitInput.value);
         }
 
         this.productPackagingNewPriceBlock.classList.add('is-hidden');
         this.puError = false;
-        const amountInBaseUnits = this.multiply(amountInSalesUnitInput, +this.currentLeadSalesUnit.conversion);
+        const amountInBaseUnits = this.multiply(amountInSalesUnitInput, Number(this.currentLeadSalesUnit.conversion));
 
         if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
             this.puError = true;
@@ -429,7 +433,7 @@ export default class PackagingUnitQuantitySelector extends Component {
             return;
         }
 
-        let quantity = +this.qtyInBaseUnitInput.value;
+        let quantity = Number(this.qtyInBaseUnitInput.value);
         let totalAmount = amountInBaseUnits * quantity;
 
         this.amountInBaseUnitInput.value = totalAmount.toString();
@@ -442,7 +446,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     protected priceCalculation(amountInBaseUnits: number): void {
         if (this.amountDefaultInBaseUnitInput.value != amountInBaseUnits) {
             let newPrice = (amountInBaseUnits / this.amountDefaultInBaseUnitInput.value) * this.itemBasePriceInput.value;
-            newPrice = (newPrice * +this.qtyInBaseUnitInput.value) / 100;
+            newPrice = (newPrice * Number(this.qtyInBaseUnitInput.value)) / 100;
             this.productPackagingNewPriceValueBlock.innerHTML = this.itemMoneySymbolInput.value + newPrice.toFixed(2);
 
             this.productPackagingNewPriceBlock.classList.remove('is-hidden');
@@ -526,10 +530,10 @@ export default class PackagingUnitQuantitySelector extends Component {
         const salesUnitId = parseInt((event.srcElement as HTMLSelectElement).value);
         const salesUnit = this.getLeadSalesUnitById(salesUnitId);
 
-        const amountInSalesUnits = this.multiply(+this.amountInSalesUnitInput.value, this.currentLeadSalesUnit.conversion) / salesUnit.conversion;
-        const amountInSalesUnitsMin = this.multiply(+this.amountInSalesUnitInput.min, this.currentLeadSalesUnit.conversion) / salesUnit.conversion;
-        const amountInSalesUnitsMax = this.multiply(+this.amountInSalesUnitInput.max, this.currentLeadSalesUnit.conversion) / salesUnit.conversion;
-        const amountInSalesUnitsStep = this.multiply(+this.amountInSalesUnitInput.step, this.currentLeadSalesUnit.conversion) / salesUnit.conversion;
+        const amountInSalesUnits = this.multiply(Number(this.amountInSalesUnitInput.value), this.currentLeadSalesUnit.conversion) / salesUnit.conversion;
+        const amountInSalesUnitsMin = this.multiply(Number(this.amountInSalesUnitInput.min), this.currentLeadSalesUnit.conversion) / salesUnit.conversion;
+        const amountInSalesUnitsMax = this.multiply(Number(this.amountInSalesUnitInput.max), this.currentLeadSalesUnit.conversion) / salesUnit.conversion;
+        const amountInSalesUnitsStep = this.multiply(Number(this.amountInSalesUnitInput.step), this.currentLeadSalesUnit.conversion) / salesUnit.conversion;
 
         this.currentLeadSalesUnit = salesUnit;
 
@@ -582,7 +586,7 @@ export default class PackagingUnitQuantitySelector extends Component {
             && this.productPackagingUnitStorage.hasOwnProperty('amount_max')
             && this.productPackagingUnitStorage.amount_max !== null
         ) {
-            return +this.productPackagingUnitStorage.amount_max;
+            return Number(this.productPackagingUnitStorage.amount_max);
         }
 
         return 0;
@@ -593,7 +597,7 @@ export default class PackagingUnitQuantitySelector extends Component {
             && this.productPackagingUnitStorage.hasOwnProperty('amount_interval')
             && this.productPackagingUnitStorage.amount_interval !== null
         ) {
-            return +this.productPackagingUnitStorage.amount_interval;
+            return Number(this.productPackagingUnitStorage.amount_interval);
         }
 
         return 1;
@@ -604,12 +608,12 @@ export default class PackagingUnitQuantitySelector extends Component {
             && this.productPackagingUnitStorage.hasOwnProperty('default_amount')
             && this.productPackagingUnitStorage.default_amount !== null
         ) {
-            return +this.productPackagingUnitStorage.default_amount;
+            return Number(this.productPackagingUnitStorage.default_amount);
         }
     }
 
     private getMinAmountChoice(amountInSalesUnits: number) {
-        let amountInBaseUnits = this.multiply(amountInSalesUnits, this.currentLeadSalesUnit.conversion);
+        const amountInBaseUnits = this.multiply(amountInSalesUnits, this.currentLeadSalesUnit.conversion);
 
         if (amountInBaseUnits < this.getMinAmount()) {
             return this.getMinAmount();
@@ -644,7 +648,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
 
         if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
-            const amountPrecision = +this.currentLeadSalesUnit.precision;
+            const amountPrecision = Number(this.currentLeadSalesUnit.precision);
             const nextPossibleInterval = this.round(((minChoice * amountPrecision) + (this.getAmountInterval() * amountPrecision))/amountPrecision, 4);
 
             return nextPossibleInterval;
@@ -662,9 +666,9 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     protected getAmountPercentageOfDivision(amountInBaseUnits: number): number {
-        const amountPrecision = +this.currentLeadSalesUnit.precision;
-        const currentMinusMinimumAmount = this.round(((amountInBaseUnits * amountPrecision) - (this.getMinAmount() * amountPrecision))/amountPrecision, 4);
-        const amountPercentageOfDivision = this.round(((currentMinusMinimumAmount * amountPrecision) % (this.getAmountInterval() * amountPrecision))/amountPrecision, 4);
+        const amountPrecision = Number(this.currentLeadSalesUnit.precision);
+        const currentMinusMinimumAmount = this.round(((amountInBaseUnits * amountPrecision) - (this.getMinAmount() * amountPrecision)) / amountPrecision, 4);
+        const amountPercentageOfDivision = this.round(((currentMinusMinimumAmount * amountPrecision) % (this.getAmountInterval() * amountPrecision)) / amountPrecision, 4);
 
         return amountPercentageOfDivision;
     }

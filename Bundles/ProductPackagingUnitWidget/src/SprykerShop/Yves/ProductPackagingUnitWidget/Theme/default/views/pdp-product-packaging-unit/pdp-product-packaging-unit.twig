@@ -38,7 +38,7 @@
             {{ 'cart.item_quantity' | trans }}
 
             {% if data.salesUnitCount %}
-                <input id="sales-unit-quantity" class="input input--expand js-volume-price__quantity" type="number" value="1" name="sales-unit-quantity"/>
+                <input id="sales-unit-quantity" class="input input--expand js-volume-price__quantity" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-quantity"/>
                 <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnit }}" name="quantity"/>
             {% else %}
                 {% embed atom('select') with {
