@@ -94,9 +94,6 @@
         <property name="permissionCollection" type="PermissionCollection"/>
     </transfer>
 
-    <transfer name="CompanyRole">
-    </transfer>
-
     <transfer name="PermissionCollection">
         <property name="permissions" type="Permission[]" singular="permission"/>
     </transfer>
