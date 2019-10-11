@@ -28,9 +28,8 @@
         {{ data.summary.maximumRating }} {{ 'product_review.summary.stars' | trans }}
         (
             {{- data.summary.totalReview }}
-            {% transchoice data.summary.totalReview %}
-                product_review.summary.review|product_review.summary.reviews
-            {% endtranschoice -%}
+
+            {{ (data.summary.totalReview == 1 ? 'product_review.summary.review' : 'product_review.summary.reviews') | trans -}}
         )
     {% else %}
         {{ 'product_review.no_reviews' | trans }}
