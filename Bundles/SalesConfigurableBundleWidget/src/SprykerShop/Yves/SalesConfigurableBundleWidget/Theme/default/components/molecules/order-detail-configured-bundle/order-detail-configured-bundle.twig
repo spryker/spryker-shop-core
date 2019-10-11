@@ -1,0 +1,47 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-detail-configured-bundle',
+} %}
+
+{% define data = {
+    bundle: required,
+    items: required,
+    currencyIsoCode: null,
+} %}
+
+{% block body %}
+    {% embed molecule('configured-bundle', 'ConfigurableBundleWidget') ignore missing with {
+        data: {
+            bundle: data.bundle,
+            items: data.items,
+            currencyIsoCode: data.currencyIsoCode,
+        },
+    } only %}
+        {%- block bundleNameText -%}{{ data.bundle.name | trans }}{%- endblock -%}
+
+        {%- block bundleTotalValue -%}
+            {% set bundleSumPriceToPayAggregation = 0 %}
+
+            {% for item in data.bundle.salesOrderConfiguredBundleItems if data.items[item.IdSalesOrderItem] is defined %}
+                {% set product = data.items[item.IdSalesOrderItem] %}
+                {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + product.sumPriceToPayAggregation %}
+            {% endfor %}
+
+            {{ bundleSumPriceToPayAggregation | money(true, data.currencyIsoCode) }}
+        {%- endblock -%}
+
+        {% block bundleProductListInner %}
+            {% for item in data.bundle.salesOrderConfiguredBundleItems if data.items[item.IdSalesOrderItem] is defined %}
+                {% include molecule('order-detail-configured-bundle-product', 'SalesConfigurableBundleWidget') with {
+                    data: {
+                        product: data.items[item.IdSalesOrderItem],
+                        currencyIsoCode: data.currencyIsoCode,
+                    },
+                } only %}
+            {% endfor %}
+        {% endblock %}
+
+        {% block bundleActions %}{% endblock %}
+    {% endembed %}
+{% endblock %}

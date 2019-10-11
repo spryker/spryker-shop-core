@@ -19,7 +19,7 @@
         <h4>{{ 'customer.order.shipment' | trans }} n&#176;{{ loop.index }}</h4>
 
         <div class="box grid grid--justify spacing-bottom spacing-bottom--big">
-            <div class="col col--sm-12 col--lg-6">
+            <div class="col col--sm-12 col--lg-8">
                 <h5>{{ 'customer.order.products' | trans }}</h5>
 
                 {% widget 'OrderConfiguredBundleWidget' args [data.order, shipmentGroup.items] only %}
@@ -124,7 +124,7 @@
                 {% endfor %}
             </div>
 
-            <div class="col col--sm-12 col--lg-5 spacing-left spacing-left--inner">
+            <div class="col col--sm-12 col--lg-4 spacing-left spacing-left--inner">
                 <div class="spacing-bottom spacing-bottom--big">
                     <h5>{{ 'customer.order.delivery_address' | trans }}</h5>
                     <div class="spacing-y spacing-y--inner">

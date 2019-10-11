@@ -54,7 +54,7 @@ class OrderConfiguredBundleWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@SalesConfigurableBundleWidget/views/order-configured-bundle-widget/order-configured-bundle-widget.twig';
+        return '@SalesConfigurableBundleWidget/views/order-detail-configured-bundle-widget/order-detail-configured-bundle-widget.twig';
     }
 
     /**

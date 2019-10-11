@@ -1,0 +1,21 @@
+{% extends template('widget') %}
+
+{% define data = {
+    items: _widget.items,
+    salesOrderConfiguredBundles: _widget.salesOrderConfiguredBundles,
+    currencyIsoCode: _widget.order.currencyIsoCode,
+} %}
+
+{% block body %}
+    {% for bundle in data.salesOrderConfiguredBundles %}
+        {% block bundleItem %}
+            {% include molecule('order-detail-configured-bundle', 'SalesConfigurableBundleWidget') with {
+                data: {
+                    bundle: bundle,
+                    items: data.items,
+                    currencyIsoCode: data.currencyIsoCode,
+                },
+            } only %}
+        {% endblock %}
+    {% endfor %}
+{% endblock %}
