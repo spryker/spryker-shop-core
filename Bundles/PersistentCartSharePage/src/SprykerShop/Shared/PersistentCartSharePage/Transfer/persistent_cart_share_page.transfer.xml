@@ -41,4 +41,8 @@
         <property name="resourceShareData" type="ResourceShareData"/>
     </transfer>
 
+    <transfer name="ResourceShareRequest">
+        <property name="resourceShare" type="ResourceShare"/>
+    </transfer>
+
 </transfers>

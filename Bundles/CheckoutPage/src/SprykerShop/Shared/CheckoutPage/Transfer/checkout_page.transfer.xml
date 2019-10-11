@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Quote">
+        <property name="totals" type="Totals"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="billingSameAsShipping" type="bool"/>
+        <property name="customer" type="Customer"/>
+        <property name="payment" type="Payment" deprecated="Use payments property instead."/>
+        <property name="payments" type="Payment[]" singular="payment"/>
+        <property name="orderReference" type="string"/>
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentGroup">
+        <property name="hash" type="string"/>
+    </transfer>
+
+    <transfer name="Address">
+        <property name="isDefaultShipping" type="bool"/>
+        <property name="isDefaultBilling" type="bool"/>
+    </transfer>
+
+    <transfer name="PaymentMethods">
+        <property name="methods" singular="method" type="PaymentMethod[]"/>
+    </transfer>
+
+    <transfer name="Payment">
+        <property name="paymentSelection" type="string"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="isExternalRedirect" type="bool"/>
+        <property name="redirectUrl" type="string"/>
+        <property name="saveOrder" type="SaveOrder"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+    </transfer>
+
+</transfers>

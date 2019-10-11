@@ -7,16 +7,27 @@
         <property name="idQuote" type="int"/>
         <property name="isLocked" type="bool" defaultValue="false"/>
         <property name="customer" type="Customer"/>
+        <property name="customerReference" type="string"/>
+        <property name="isDefault" type="bool"/>
     </transfer>
 
     <transfer name="Customer">
         <property name="customerReference" type="string"/>
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
+        <property name="companyUserTransfer" type="CompanyUser"/>
     </transfer>
 
     <transfer name="CustomerCollection">
         <property name="customers" type="Customer[]" singular="customer"/>
+    </transfer>
+
+    <transfer name="ShareDetailCollection">
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+    </transfer>
+
+    <transfer name="QuoteCollection">
+        <property name="quotes" type="Quote[]" singular="quote"/>
     </transfer>
 
 </transfers>

@@ -11,6 +11,7 @@
         <property name="type" type="string"/>
         <property name="size" type="int"/>
         <property name="iconName" type="string"/>
+        <property name="fileName" type="string"/>
     </transfer>
 
 </transfers>

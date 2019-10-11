@@ -6,6 +6,7 @@
     <transfer name="ShoppingList">
         <property name="idShoppingList" type="int"/>
         <property name="name" type="string"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="ShoppingListCollection">
@@ -14,6 +15,7 @@
 
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="QuickOrder">
@@ -23,6 +25,29 @@
     <transfer name="QuickOrderItem">
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="ShoppingListItem">
+        <property name="idShoppingListItem" type="int"/>
+        <property name="fkShoppingList" type="int"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="QuickOrderFormProcessResponse">
+        <property name="route" type="Route"/>
+    </transfer>
+
+    <transfer name="ShoppingListResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="shoppingList" type="ShoppingList"/>
+    </transfer>
+
+    <transfer name="Route">
+        <property name="route" type="string"/>
     </transfer>
 
 </transfers>

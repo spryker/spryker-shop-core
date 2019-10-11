@@ -8,4 +8,27 @@
         <property name="idCustomer" type="int"/>
     </transfer>
 
+    <transfer name="NewsletterSubscriptionResponse">
+        <property name="subscriptionResults" type="NewsletterSubscriptionResult[]" singular="subscriptionResult"/>
+    </transfer>
+
+    <transfer name="NewsletterSubscriber">
+        <property name="fkCustomer" type="int"/>
+        <property name="email" type="string"/>
+        <property name="subscriberKey" type="string"/>
+    </transfer>
+
+    <transfer name="NewsletterSubscriptionRequest">
+        <property name="newsletterSubscriber" type="NewsletterSubscriber"/>
+    </transfer>
+
+    <transfer name="NewsletterType">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="NewsletterSubscriptionResult">
+        <property name="isSuccess" type="bool"/>
+        <property name="errorMessage" type="string"/>
+    </transfer>
+
 </transfers>

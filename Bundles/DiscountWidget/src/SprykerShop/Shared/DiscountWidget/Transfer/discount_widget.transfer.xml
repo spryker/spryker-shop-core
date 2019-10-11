@@ -7,5 +7,14 @@
         <property name="isLocked" type="bool"/>
         <property name="voucherDiscounts" type="Discount[]"/>
         <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
+        <property name="voucherDiscounts" type="Discount[]"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="Discount">
+        <property name="voucherCode" type="string"/>
     </transfer>
 </transfers>

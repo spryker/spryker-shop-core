@@ -7,4 +7,22 @@
         <property name="sku" type="string"/>
     </transfer>
 
+    <transfer name="Customer">
+        <property name="customerReference" type="string"/>
+        <property name="availabilityNotificationSubscriptionSkus" type="string[]" singular="availabilityNotificationSubscriptionSku"/>
+        <property name="email" type="string"/>
+    </transfer>
+
+    <transfer name="AvailabilityNotificationSubscriptionResponse">
+        <property name="isSuccess" type="bool" default="true"/>
+        <property name="errorMessage" type="string"/>
+        <property name="availabilityNotificationSubscription" type="AvailabilityNotificationSubscription"/>
+    </transfer>
+
+    <transfer name="AvailabilityNotificationSubscription">
+        <property name="customerReference" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="email" type="string"/>
+    </transfer>
+
 </transfers>

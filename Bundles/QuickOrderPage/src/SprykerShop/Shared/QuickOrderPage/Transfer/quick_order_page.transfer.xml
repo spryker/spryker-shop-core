@@ -18,6 +18,7 @@
     <transfer name="ProductConcrete">
         <property name="fkProductAbstract" type="int"/>
         <property name="sku" type="string"/>
+        <property name="idProductConcrete" type="int"/>
     </transfer>
 
     <transfer name="Message">
@@ -32,6 +33,25 @@
 
     <transfer name="Item">
         <property name="productConcrete" type="ProductConcrete"/>
+        <property name="groupKeyPrefix" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="QuickOrderFormProcessResponse">
+        <property name="route" type="Route"/>
+    </transfer>
+
+    <transfer name="PriceProductFilter">
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConcreteStorage">
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="LocalizedAttributes">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>
