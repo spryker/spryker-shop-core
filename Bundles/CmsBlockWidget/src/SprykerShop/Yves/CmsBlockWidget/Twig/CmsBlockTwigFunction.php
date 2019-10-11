@@ -110,7 +110,7 @@ class CmsBlockTwigFunction extends TwigFunction
             return '';
         }
 
-        $placeholders = $this->getPlaceholders($spyCmsBlockTransfer->getSpyCmsBlockGlossaryKeyMappings());
+        $placeholders = $this->mapGlossaryKeysByPlaceholder($spyCmsBlockTransfer->getSpyCmsBlockGlossaryKeyMappings());
 
         return $twig->render($spyCmsBlockTransfer->getCmsBlockTemplate()->getTemplatePath(), [
             'placeholders' => $placeholders,
@@ -123,7 +123,7 @@ class CmsBlockTwigFunction extends TwigFunction
      *
      * @return string[]
      */
-    protected function getPlaceholders(ArrayObject $mappings): array
+    protected function mapGlossaryKeysByPlaceholder(ArrayObject $mappings): array
     {
         $placeholders = [];
         foreach ($mappings as $mapping) {
