@@ -20,6 +20,7 @@
         <property name="groupKeyPrefix" type="string"/>
         <property name="quantity" type="int"/>
         <property name="normalizableFields" type="string[]" singular="normalizableField"/>
+        <property name="productOptions" type="ProductOption[]" singular="productOption"/>
     </transfer>
 
     <transfer name="QuoteResponse">
@@ -47,6 +48,7 @@
 
     <transfer name="CommentThread">
         <property name="idCommentThread" type="int"/>
+        <property name="ownerType" type="string"/>
     </transfer>
 
 </transfers>

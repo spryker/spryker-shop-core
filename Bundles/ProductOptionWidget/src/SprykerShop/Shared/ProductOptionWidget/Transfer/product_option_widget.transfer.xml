@@ -18,6 +18,7 @@
     </transfer>
 
     <transfer name="ShoppingListItem">
+        <property name="idProductAbstract" type="int"/>
         <property name="productOptions" type="ProductOption[]" singular="productOption"/>
     </transfer>
 
@@ -32,5 +33,10 @@
         <property name="unitGrossPrice" type="int"/>
         <property name="groupName" type="string"/>
     </transfer>
+
+    <transfer name="ProductView">
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
 </transfers>
 

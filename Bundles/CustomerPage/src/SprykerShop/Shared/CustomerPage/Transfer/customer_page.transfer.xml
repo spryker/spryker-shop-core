@@ -227,6 +227,7 @@
     </transfer>
 
     <transfer name="Shipment">
+        <property name="idSalesShipment" type="int"/>
         <property name="carrier" type="ShipmentCarrier"/>
         <property name="method" type="ShipmentMethod"/>
         <property name="shipmentSelection" type="string"/>

@@ -25,4 +25,8 @@
         <property name="text" type="string"/>
     </transfer>
 
+    <transfer name="Address">
+        <property name="idCompanyUnitAddress" type="int"/>
+    </transfer>
+
 </transfers>

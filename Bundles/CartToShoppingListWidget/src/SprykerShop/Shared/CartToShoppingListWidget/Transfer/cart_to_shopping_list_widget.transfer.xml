@@ -7,4 +7,8 @@
         <property name="newShoppingListName" type="string"/>
     </transfer>
 
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
 </transfers>

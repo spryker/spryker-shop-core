@@ -25,4 +25,9 @@
     <transfer name="Message">
         <property name="value" type="string"/>
     </transfer>
+
+    <transfer name="QuoteRequestFilter">
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
 </transfers>

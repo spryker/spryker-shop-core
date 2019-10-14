@@ -16,4 +16,8 @@
         <property name="discount" type="Discount"/>
     </transfer>
 
+    <transfer name="Quote">
+        <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
+    </transfer>
+
 </transfers>
