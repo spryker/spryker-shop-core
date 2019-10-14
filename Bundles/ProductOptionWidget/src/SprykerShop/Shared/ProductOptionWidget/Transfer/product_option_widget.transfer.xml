@@ -23,7 +23,7 @@
     </transfer>
 
     <transfer name="ShoppingList">
-        <property name="items" type="ShoppingListItem[]"/>
+        <property name="items" type="ShoppingListItem[]" singular="item"/>
     </transfer>
 
     <transfer name="ProductOption">

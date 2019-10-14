@@ -17,7 +17,7 @@
         <property name="createdAt" type="string"/>
         <property name="isTest" type="string"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
-        <property name="invoice" type="Invoice[]"/>
+        <property name="invoice" type="Invoice[]" singular="invoice"/>
         <property name="invoiceReference" type="string"/>
         <property name="invoiceCreatedAt" type="string"/>
         <property name="fkShipmentMethod" type="int" deprecated="Use item level shipment method (item.shipment.method.fkShipmentMethod) instead."/>
@@ -125,7 +125,7 @@
         <property name="variety" type="string"/>
         <property name="state" type="ItemState"/>
         <property name="canceledAmount" type="int"/>
-        <property name="stateHistory" type="ItemState[]"/>
+        <property name="stateHistory" type="ItemState[]" singular="stateHistory"/>
         <property name="isOrdered" type="bool"/>
         <property name="shipment" type="Shipment"/>
         <property name="giftCardMetadata" type="GiftCardMetadata"/>

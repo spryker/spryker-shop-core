@@ -167,7 +167,7 @@
     </transfer>
 
     <transfer name="CompanyBusinessUnitTreeNodeCollection">
-        <property name="companyBusinessUnitTreeNodes" type="CompanyBusinessUnitTreeNode[]"/>
+        <property name="companyBusinessUnitTreeNodes" type="CompanyBusinessUnitTreeNode[]" singular="companyBusinessUnitTreeNodes"/>
     </transfer>
 
     <transfer name="Store">

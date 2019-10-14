@@ -8,7 +8,7 @@
         <property name="name" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="idCompanyUser" type="int"/>
-        <property name="items" type="ShoppingListItem[]"/>
+        <property name="items" type="ShoppingListItem[]" singular="item"/>
     </transfer>
 
     <transfer name="ShoppingListCollection">
@@ -21,7 +21,7 @@
     </transfer>
 
     <transfer name="QuickOrder">
-        <property name="items" type="QuickOrderItem[]"/>
+        <property name="items" type="QuickOrderItem[]" singular="items"/>
     </transfer>
 
     <transfer name="QuickOrderItem">

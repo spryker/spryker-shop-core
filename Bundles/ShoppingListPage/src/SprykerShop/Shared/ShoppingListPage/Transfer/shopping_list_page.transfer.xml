@@ -21,10 +21,10 @@
         <property name="createdAt" type="string"/>
         <property name="numberOfItems" type="int"/>
         <property name="owner" type="string"/>
-        <property name="sharedCompanyUsers" type="ShoppingListCompanyUser[]"/>
-        <property name="sharedCompanyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]"/>
+        <property name="sharedCompanyUsers" type="ShoppingListCompanyUser[]" singular="sharedCompanyUsers"/>
+        <property name="sharedCompanyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]" singular="sharedCompanyBusinessUnits"/>
         <property name="customerReference" type="string"/>
-        <property name="items" type="ShoppingListItem[]"/>
+        <property name="items" type="ShoppingListItem[]" singular="item"/>
         <property name="name" type="string"/>
     </transfer>
 
