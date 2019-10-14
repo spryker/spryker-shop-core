@@ -26,4 +26,12 @@
         <property name="isActive" type="bool"/>
     </transfer>
 
+    <transfer name="CompanyBusinessUnit">
+        <property name="fkCompany" type="int"/>
+    </transfer>
+
+    <transfer name="Route">
+        <property name="route" type="string"/>
+    </transfer>
+
 </transfers>

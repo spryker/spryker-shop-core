@@ -18,4 +18,22 @@
         <property name="isDefaultBilling" type="bool"/>
     </transfer>
 
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="addressCollection" type="CompanyUnitAddressCollection"/>
+        <property name="defaultBillingAddress" type="int"/>
+        <property name="company" type="Company"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="Company">
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>
