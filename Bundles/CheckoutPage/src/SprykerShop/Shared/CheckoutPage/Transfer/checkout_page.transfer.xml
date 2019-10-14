@@ -33,6 +33,7 @@
 
     <transfer name="Payment">
         <property name="paymentSelection" type="string"/>
+        <property name="paymentProvider" type="string"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
@@ -45,6 +46,24 @@
 
     <transfer name="CheckoutError">
         <property name="message" type="string"/>
+        <property name="errorCode" type="int"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="grandTotal" type="int"/>
+        <property name="priceToPay" type="int"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="isGuest" type="bool"/>
+    </transfer>
+
+    <transfer name="PaymentMethod">
+        <property name="methodName" type="string"/>
+    </transfer>
+
+    <transfer name="SaveOrder">
+        <property name="orderReference" type="string"/>
     </transfer>
 
 </transfers>

@@ -61,4 +61,8 @@
         <property name="customerTransfer" type="Customer"/>
     </transfer>
 
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
 </transfers>

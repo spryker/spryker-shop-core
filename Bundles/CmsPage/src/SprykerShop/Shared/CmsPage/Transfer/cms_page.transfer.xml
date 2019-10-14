@@ -21,6 +21,7 @@
     <transfer name="FlattenedLocaleCmsPageDataRequest">
         <property name="idCmsPage" type="int"/>
         <property name="flattenedLocaleCmsPageData" type="array"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="Customer">

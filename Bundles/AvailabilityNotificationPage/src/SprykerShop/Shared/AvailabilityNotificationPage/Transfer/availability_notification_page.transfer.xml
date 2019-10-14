@@ -5,6 +5,7 @@
 
     <transfer name="AvailabilityNotificationSubscription">
         <property name="subscriptionKey" type="string"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="AvailabilityNotificationSubscriptionResponse">

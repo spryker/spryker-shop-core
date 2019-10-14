@@ -25,6 +25,11 @@
 
     <transfer name="TabMetaData">
         <property name="name" type="string"/>
+        <property name="route" type="string"/>
+    </transfer>
+
+    <transfer name="FacetConfig">
+        <property name="parameterName" type="string"/>
     </transfer>
 
 </transfers>

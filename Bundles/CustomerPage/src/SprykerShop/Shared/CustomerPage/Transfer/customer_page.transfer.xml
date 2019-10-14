@@ -67,6 +67,8 @@
         <property name="country" type="Country"/>
         <property name="isAddressSavingSkipped" type="bool"/>
         <property name="fkCustomer" type="int"/>
+        <property name="isDefaultBilling" type="bool"/>
+        <property name="isDefaultShipping" type="bool"/>
     </transfer>
 
     <transfer name="Comment">
@@ -256,6 +258,7 @@
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
         <property name="isDirty" type="bool"/>
+        <property name="isGuest" type="bool"/>
     </transfer>
 
     <transfer name="CustomerResponse">
@@ -270,6 +273,14 @@
 
     <transfer name="Addresses">
         <property name="addresses" type="Address[]" singular="address"/>
+    </transfer>
+
+    <transfer name="CustomerError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="GiftCardMetadata">
+        <property name="isGiftCard" type="bool"/>
     </transfer>
 
 </transfers>

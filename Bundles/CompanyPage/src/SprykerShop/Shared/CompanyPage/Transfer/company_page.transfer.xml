@@ -17,6 +17,9 @@
         <property name="idCompanyUser" type="int"/>
         <property name="customer" type="Customer"/>
         <property name="company" type="Company"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="companyRoleCollection" type="CompanyRoleCollection"/>
+        <property name="isDefault" type="bool"/>
     </transfer>
 
     <transfer name="Customer">
@@ -48,6 +51,10 @@
         <property name="fkCompany" type="int"/>
         <property name="fkCompanyBusinessUnit" type="int"/>
         <property name="isDefaultBilling" type="bool"/>
+        <property name="iso2Code" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="city" type="string"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressCriteriaFilter">
@@ -73,6 +80,7 @@
         <property name="defaultBillingAddress" type="int"/>
         <property name="addressCollection" type="CompanyUnitAddressCollection"/>
         <property name="company" type="Company"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitCriteriaFilter">
@@ -92,6 +100,7 @@
         <property name="companyUserCollection" type="CompanyUserCollection"/>
         <property name="isDefault" type="bool"/>
         <property name="permissionCollection" type="PermissionCollection"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="PermissionCollection">
@@ -117,6 +126,7 @@
     <transfer name="Permission">
         <property name="idPermission" type="int"/>
         <property name="configurationSignature" type="array"/>
+        <property name="idCompanyRole" type="int"/>
     </transfer>
 
     <transfer name="CompanyRolePermissionResponse">
@@ -143,6 +153,7 @@
         <property name="isAddressSavingSkipped" type="bool"/>
         <property name="company" type="string"/>
         <property name="lastName" type="string"/>
+        <property name="firstName" type="string"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitCollection">

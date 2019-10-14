@@ -12,6 +12,8 @@
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
         <property name="idCustomer" type="int"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -19,6 +21,7 @@
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
         <property name="fkCustomer" type="int"/>
         <property name="customer" type="Customer"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
     </transfer>
 
     <transfer name="ShareDetail">
@@ -42,6 +45,8 @@
 
     <transfer name="ShareCartRequest">
         <property name="idQuote" type="int"/>
+        <property name="idCompanyUser" type="int"/>
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
     </transfer>
 
     <transfer name="QuoteResponse">
@@ -63,10 +68,16 @@
 
     <transfer name="QuotePermissionGroup">
         <property name="idQuotePermissionGroup" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ResourceShareRequest">
         <property name="resourceShare" type="ResourceShare"/>
+    </transfer>
+
+    <transfer name="ResourceShare">
+        <property name="resourceType" type="string"/>
+        <property name="resourceShareData" type="ResourceShareData"/>
     </transfer>
 
 </transfers>

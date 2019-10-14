@@ -10,6 +10,7 @@
         <property name="idCustomerAddress" type="int"/>
         <property name="lastName" type="string"/>
         <property name="company" type="string"/>
+        <property name="firstName" type="string"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressCollection">
@@ -41,6 +42,10 @@
 
     <transfer name="Company">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Addresses">
+        <property name="addresses" type="Address[]" singular="address"/>
     </transfer>
 
 </transfers>

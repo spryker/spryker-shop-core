@@ -14,10 +14,12 @@
         <property name="companyUserInvitationStatusKey" type="string"/>
         <property name="fkCompanyUser" type="int"/>
         <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
     </transfer>
 
     <transfer name="CompanyUserInvitationUpdateStatusRequest">
         <property name="idCompanyUser" type="int"/>
+        <property name="companyUserInvitation" type="CompanyUserInvitation"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -36,6 +38,7 @@
 
     <transfer name="CompanyUserInvitationGetCollectionRequest">
         <property name="idCompanyUser" type="int"/>
+        <property name="criteriaFilter" type="CompanyUserInvitationCriteriaFilter"/>
     </transfer>
 
     <transfer name="CompanyUserInvitationCollection">
@@ -45,22 +48,27 @@
 
     <transfer name="CompanyUserInvitationImportRequest">
         <property name="companyUserInvitationCollection" type="CompanyUserInvitationCollection"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="Filter">
         <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
     <transfer name="CompanyUserInvitationCriteriaFilter">
         <property name="fkCompanyUser" type="int"/>
+        <property name="fkCompany" type="int"/>
     </transfer>
 
     <transfer name="Pagination">
         <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
     </transfer>
 
     <transfer name="CompanyUserInvitationSendRequest">
         <property name="idCompanyUser" type="int"/>
+        <property name="companyUserInvitation" type="CompanyUserInvitation"/>
     </transfer>
 
     <transfer name="CompanyUserInvitationSendResponse">

@@ -7,4 +7,9 @@
         <property name="quotes" type="Quote[]" singular="quote"/>
     </transfer>
 
+    <transfer name="Quote">
+        <property name="isDefault" type="bool"/>
+        <property name="idQuote" type="int"/>
+    </transfer>
+
 </transfers>

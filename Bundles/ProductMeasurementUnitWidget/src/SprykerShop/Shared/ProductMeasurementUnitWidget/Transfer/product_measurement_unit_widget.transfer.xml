@@ -31,4 +31,9 @@
         <property name="quantityMin" type="int"/>
     </transfer>
 
+    <transfer name="ProductConcreteMeasurementBaseUnit">
+        <property name="idProductMeasurementUnit" type="int"/>
+        <property name="idProductMeasurementBaseUnit" type="int"/>
+    </transfer>
+
 </transfers>
