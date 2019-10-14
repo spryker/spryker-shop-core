@@ -5,6 +5,20 @@
 
     <transfer name="ProductView">
         <property name="idProductAbstract" type="int"/>
+        <property name="promotionItem" type="PromotionItem"/>
+    </transfer>
+
+    <transfer name="PromotionItem">
+        <property name="discount" type="Discount"/>
+        <property name="abstractSku" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="maxQuantity" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="idDiscountPromotion" type="int"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
     </transfer>
 
 </transfers>

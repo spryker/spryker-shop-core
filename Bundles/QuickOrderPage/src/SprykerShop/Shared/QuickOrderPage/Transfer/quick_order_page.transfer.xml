@@ -46,6 +46,7 @@
     <transfer name="PriceProductFilter">
         <property name="quantity" type="int"/>
         <property name="idProduct" type="int"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="ProductConcreteStorage">

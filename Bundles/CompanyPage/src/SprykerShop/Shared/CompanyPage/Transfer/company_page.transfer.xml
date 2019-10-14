@@ -29,6 +29,7 @@
         <property name="firstName" type="string"/>
         <property name="salutation" type="string"/>
         <property name="idCustomer" type="int"/>
+        <property name="isOnBehalf" type="bool"/>
     </transfer>
 
     <transfer name="Pagination">
@@ -55,6 +56,7 @@
         <property name="address2" type="string"/>
         <property name="zipCode" type="string"/>
         <property name="city" type="string"/>
+        <property name="address1" type="string"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressCriteriaFilter">
@@ -66,6 +68,8 @@
 
     <transfer name="CompanyUnitAddressResponse">
         <property name="companyUnitAddressTransfer" type="CompanyUnitAddress"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitResponse">
@@ -154,6 +158,8 @@
         <property name="company" type="string"/>
         <property name="lastName" type="string"/>
         <property name="firstName" type="string"/>
+        <property name="idCompanyUnitAddress" type="int"/>
+        <property name="salutation" type="string"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitCollection">
@@ -162,6 +168,15 @@
 
     <transfer name="CompanyBusinessUnitTreeNodeCollection">
         <property name="companyBusinessUnitTreeNodes" type="CompanyBusinessUnitTreeNode[]"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ResponseMessage">
+        <property name="text" type="string"/>
     </transfer>
 
 </transfers>

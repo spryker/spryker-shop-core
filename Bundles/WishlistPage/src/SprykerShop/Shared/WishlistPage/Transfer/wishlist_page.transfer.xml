@@ -43,6 +43,7 @@
     <transfer name="WishlistOverviewRequest">
         <property name="wishlist" type="Wishlist"/>
         <property name="page" type="int"/>
+        <property name="itemsPerPage" type="int"/>
     </transfer>
 
     <transfer name="WishlistOverviewResponse">

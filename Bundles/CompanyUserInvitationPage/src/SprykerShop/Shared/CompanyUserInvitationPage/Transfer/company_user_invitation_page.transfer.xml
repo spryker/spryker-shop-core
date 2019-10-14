@@ -15,11 +15,13 @@
         <property name="fkCompanyUser" type="int"/>
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
+        <property name="email" type="string"/>
     </transfer>
 
     <transfer name="CompanyUserInvitationUpdateStatusRequest">
         <property name="idCompanyUser" type="int"/>
         <property name="companyUserInvitation" type="CompanyUserInvitation"/>
+        <property name="statusKey" type="string"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -59,6 +61,7 @@
     <transfer name="CompanyUserInvitationCriteriaFilter">
         <property name="fkCompanyUser" type="int"/>
         <property name="fkCompany" type="int"/>
+        <property name="companyUserInvitationStatusKeyNotIn" type="array"/>
     </transfer>
 
     <transfer name="Pagination">

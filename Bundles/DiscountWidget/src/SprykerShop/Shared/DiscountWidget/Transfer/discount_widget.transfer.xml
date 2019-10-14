@@ -9,6 +9,7 @@
         <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
         <property name="voucherDiscounts" type="Discount[]"/>
         <property name="voucherDiscounts" type="Discount[]"/>
+        <property name="voucherDiscounts" type="Discount[]"/>
     </transfer>
 
     <transfer name="Message">

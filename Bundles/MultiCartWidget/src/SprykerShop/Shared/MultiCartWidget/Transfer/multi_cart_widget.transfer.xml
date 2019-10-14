@@ -10,6 +10,7 @@
     <transfer name="Quote">
         <property name="isDefault" type="bool"/>
         <property name="idQuote" type="int"/>
+        <property name="isLocked" type="bool"/>
     </transfer>
 
 </transfers>

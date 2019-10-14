@@ -11,6 +11,7 @@
         <property name="lastName" type="string"/>
         <property name="company" type="string"/>
         <property name="firstName" type="string"/>
+        <property name="salutation" type="string"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressCollection">

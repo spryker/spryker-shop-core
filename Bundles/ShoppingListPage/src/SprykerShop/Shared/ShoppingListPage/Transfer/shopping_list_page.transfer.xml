@@ -124,6 +124,7 @@
     <transfer name="ShoppingListCompanyUser">
         <property name="idCompanyUser" type="int"/>
         <property name="idShoppingList" type="int"/>
+        <property name="companyUser" type="CompanyUser"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -135,6 +136,7 @@
     <transfer name="ShoppingListCompanyBusinessUnit">
         <property name="idCompanyBusinessUnit" type="int"/>
         <property name="idShoppingList" type="int"/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">

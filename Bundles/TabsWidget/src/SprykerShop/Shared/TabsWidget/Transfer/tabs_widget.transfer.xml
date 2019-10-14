@@ -6,4 +6,12 @@
     <transfer name="TabMetaData">
     </transfer>
 
+    <transfer name="FullTextSearchTab">
+        <property name="count" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="route" type="string"/>
+        <property name="title" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>

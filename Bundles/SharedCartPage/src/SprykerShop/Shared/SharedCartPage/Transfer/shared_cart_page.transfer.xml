@@ -80,4 +80,8 @@
         <property name="resourceShareData" type="ResourceShareData"/>
     </transfer>
 
+    <transfer name="ResourceShareData">
+        <property name="shareOption" type="string"/>
+    </transfer>
+
 </transfers>
