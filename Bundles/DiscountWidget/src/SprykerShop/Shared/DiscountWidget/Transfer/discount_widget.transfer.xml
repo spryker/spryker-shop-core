@@ -5,11 +5,8 @@
 
     <transfer name="Quote">
         <property name="isLocked" type="bool"/>
-        <property name="voucherDiscounts" type="Discount[]"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
         <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
-        <property name="voucherDiscounts" type="Discount[]"/>
-        <property name="voucherDiscounts" type="Discount[]"/>
-        <property name="voucherDiscounts" type="Discount[]"/>
     </transfer>
 
     <transfer name="Message">
