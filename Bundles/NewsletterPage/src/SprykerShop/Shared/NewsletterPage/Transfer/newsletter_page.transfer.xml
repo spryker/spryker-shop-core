@@ -16,6 +16,7 @@
 
     <transfer name="NewsletterSubscriptionRequest">
         <property name="newsletterSubscriber" type="NewsletterSubscriber"/>
+        <property name="newsletterTypes" type="NewsletterType[]" singular="subscriptionType"/>
     </transfer>
 
     <transfer name="NewsletterType">
