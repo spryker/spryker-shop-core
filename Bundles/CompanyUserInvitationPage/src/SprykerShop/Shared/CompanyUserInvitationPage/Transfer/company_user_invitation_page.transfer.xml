@@ -16,6 +16,7 @@
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
         <property name="email" type="string"/>
+        <property name="companyBusinessUnitName" type="string"/>
     </transfer>
 
     <transfer name="CompanyUserInvitationUpdateStatusRequest">
@@ -61,7 +62,9 @@
     <transfer name="CompanyUserInvitationCriteriaFilter">
         <property name="fkCompanyUser" type="int"/>
         <property name="fkCompany" type="int"/>
-        <property name="companyUserInvitationStatusKeyNotIn" type="array"/>
+        <property name="companyUserInvitationStatusKeyNotIn" type="array" singular="companyUserInvitationStatusKeyNotIn"/>
+        <property name="filter" type="Filter"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="Pagination">

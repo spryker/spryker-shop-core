@@ -7,7 +7,7 @@
         <property name="maximumRating" type="int"/>
         <property name="averageRating" type="float"/>
         <property name="totalReview" type="int"/>
-        <property name="ratingAggregation" type="array"/>
+        <property name="ratingAggregation" type="array" singular="ratingAggregation"/>
     </transfer>
 
     <transfer name="RangeSearchResult">
@@ -36,7 +36,7 @@
 
     <transfer name="ProductReviewSearchRequest">
         <property name="idProductAbstract" type="int"/>
-        <property name="requestParams" type="array"/>
+        <property name="requestParams" type="array" singular="requestParams"/>
     </transfer>
 
 </transfers>

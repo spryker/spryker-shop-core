@@ -5,7 +5,7 @@
 
     <transfer name="ProductSetDataStorage">
         <property name="isActive" type="bool"/>
-        <property name="productAbstractIds" type="array"/>
+        <property name="productAbstractIds" type="array" singular="productAbstractIds"/>
     </transfer>
 
 </transfers>

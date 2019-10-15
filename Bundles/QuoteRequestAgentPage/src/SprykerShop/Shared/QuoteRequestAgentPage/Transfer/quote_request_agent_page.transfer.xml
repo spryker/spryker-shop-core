@@ -39,7 +39,7 @@
         <property name="idQuoteRequestVersion" type="int"/>
         <property name="versionReference" type="string"/>
         <property name="quote" type="Quote"/>
-        <property name="metadata" type="array"/>
+        <property name="metadata" type="array" singular="metadata"/>
     </transfer>
 
     <transfer name="Quote">

@@ -76,7 +76,7 @@
         <property name="message" type="string"/>
         <property name="errorCode" type="int"/>
         <property name="errorType" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="Totals">

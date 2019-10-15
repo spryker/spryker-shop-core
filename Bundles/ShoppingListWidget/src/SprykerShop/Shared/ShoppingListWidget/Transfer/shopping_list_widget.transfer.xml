@@ -35,6 +35,7 @@
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
         <property name="customerReference" type="string"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -52,7 +53,7 @@
 
     <transfer name="Route">
         <property name="route" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
 </transfers>

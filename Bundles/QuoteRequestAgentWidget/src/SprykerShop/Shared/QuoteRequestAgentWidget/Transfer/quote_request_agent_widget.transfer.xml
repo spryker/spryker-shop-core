@@ -33,7 +33,7 @@
 
     <transfer name="QuoteRequestVersion">
         <property name="quote" type="Quote"/>
-        <property name="metadata" type="array"/>
+        <property name="metadata" type="array" singular="metadata"/>
     </transfer>
 
     <transfer name="Quote">
@@ -59,7 +59,7 @@
     <transfer name="QuoteRequestOverviewFilter">
         <property name="quoteRequestReference" type="string"/>
         <property name="pagination" type="Pagination"/>
-        <property name="excludedStatuses" type="array"/>
+        <property name="excludedStatuses" type="array" singular="excludedStatuses"/>
     </transfer>
 
     <transfer name="QuoteRequestResponse">
