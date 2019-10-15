@@ -8,7 +8,7 @@
         <property name="idQuote" type="int"/>
         <property name="currency" type="Currency"/>
         <property name="customerReference" type="string"/>
-        <property name="isLocked" type="bool" defaultValue="false"/>
+        <property name="isLocked" type="bool"/>
     </transfer>
 
     <transfer name="QuoteApproval">
