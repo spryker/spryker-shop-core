@@ -8,6 +8,7 @@
         <property name="idQuote" type="int"/>
         <property name="currency" type="Currency"/>
         <property name="customerReference" type="string"/>
+        <property name="isLocked" type="bool" defaultValue="false"/>
     </transfer>
 
     <transfer name="QuoteApproval">
@@ -31,6 +32,7 @@
         <property name="quoteApproval" type="QuoteApproval"/>
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="Message">
