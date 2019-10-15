@@ -26,33 +26,39 @@
     {% set defaultAddressKey = null %}
     {% set optionValueDeliverToMultipleAddresses = '-1' %}
     {% set fullAddresses = data.customerAddresses ? data.customerAddresses|merge(data.companyBusinessUnitAddresses) : data.companyBusinessUnitAddresses %}
+    {% set isShippingAddressFormType = data.formType == shippingAddress %}
+    {% set isBillingAddressFormType = data.formType == billingAddress %}
     {% set shippingAddress = 'shippingAddress' %}
     {% set billingAddress = 'billingAddress' %}
 
     {% if fullAddresses %}
         {% for address in fullAddresses %}
-            {% if not data.currentAddressId and not data.currentCompanyUnitAddressId and data.formType == shippingAddress and address.isDefaultShipping %}
+            {% set isCurrentCustomerAddress = data.currentAddressId == address.idCustomerAddress %}
+            {% set isCurrentCompanyUnitAddress = data.currentCompanyUnitAddressId == address.idCompanyUnitAddress %}
+            {% set isCurrentValueDeliverToMultipleAddresses = data.currentAddressId == optionValueDeliverToMultipleAddresses %}
+
+            {% if not data.currentAddressId and not data.currentCompanyUnitAddressId and isShippingAddressFormType and address.isDefaultShipping %}
                 {% set defaultAddressKey = address.key %}
             {% endif %}
-            {% if not data.currentAddressId and not data.currentCompanyUnitAddressId and data.formType == billingAddress and address.isDefaultBilling %}
+            {% if not data.currentAddressId and not data.currentCompanyUnitAddressId and isBillingAddressFormType and address.isDefaultBilling %}
                 {% set defaultAddressKey = address.key %}
             {% endif %}
-            {% if data.currentAddressId and data.currentAddressId == address.idCustomerAddress %}
+            {% if data.currentAddressId and isCurrentCustomerAddress %}
                 {% set defaultAddressKey = address.key %}
             {% endif %}
-            {% if data.currentCompanyUnitAddressId and data.currentCompanyUnitAddressId == address.idCompanyUnitAddress %}
+            {% if data.currentCompanyUnitAddressId and isCurrentCompanyUnitAddress %}
                 {% set defaultAddressKey = address.key %}
             {% endif %}
-            {% if data.currentAddressId == optionValueDeliverToMultipleAddresses %}
+            {% if isCurrentValueDeliverToMultipleAddresses %}
                 {% set defaultAddressKey = optionValueDeliverToMultipleAddresses %}
             {% endif %}
         {% endfor %}
     {% endif %}
 
-    {% if data.formType == shippingAddress %}
+    {% if isShippingAddressFormType %}
         <label>{{ 'page.checkout.address.delivery.address_select' | trans }}</label><br>
     {% endif %}
-    {% if data.formType == billingAddress %}
+    {% if isBillingAddressFormType %}
         <label>{{ 'page.checkout.address.billing.address_select' | trans }}</label><br>
     {% endif %}
 
