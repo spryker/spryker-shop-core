@@ -38,6 +38,8 @@
 
     <transfer name="Quote">
         <property name="totals" type="Totals"/>
+        <property name="quoteRequestReference" type="string"/>
+        <property name="quoteRequestVersionReference" type="string"/>
     </transfer>
 
     <transfer name="Totals">
@@ -57,6 +59,17 @@
     <transfer name="QuoteRequestOverviewFilter">
         <property name="quoteRequestReference" type="string"/>
         <property name="pagination" type="Pagination"/>
+        <property name="excludedStatuses" type="array"/>
+    </transfer>
+
+    <transfer name="QuoteRequestResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="quoteRequest" type="QuoteRequest"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>

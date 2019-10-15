@@ -7,6 +7,11 @@
         <property name="key" type="string"/>
         <property name="isDefaultShipping" type="bool"/>
         <property name="isDefaultBilling" type="bool"/>
+        <property name="idCustomerAddress" type="int"/>
+        <property name="lastName" type="string"/>
+        <property name="company" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="salutation" type="string"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressCollection">
@@ -20,6 +25,10 @@
 
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="addresses" type="Addresses" singular="address"/>
+        <property name="lastName" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="salutation" type="string"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
@@ -34,6 +43,10 @@
 
     <transfer name="Company">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Addresses">
+        <property name="addresses" type="Address[]" singular="address"/>
     </transfer>
 
 </transfers>

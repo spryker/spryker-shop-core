@@ -12,7 +12,7 @@
     <transfer name="QuoteResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="quoteTransfer" type="Quote"/>
-        <property name="errors" type="QuoteError[]"/>
+        <property name="errors" type="QuoteError[]" singular="error"/>
     </transfer>
 
     <transfer name="Quote">
@@ -39,6 +39,10 @@
         <property name="uuid" type="string"/>
         <property name="resourceType" type="string"/>
         <property name="resourceShareData" type="ResourceShareData"/>
+    </transfer>
+
+    <transfer name="ResourceShareRequest">
+        <property name="resourceShare" type="ResourceShare"/>
     </transfer>
 
 </transfers>

@@ -5,15 +5,37 @@
 
     <transfer name="ResourceShare">
         <property name="uuid" type="string"/>
+        <property name="resourceType" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="resourceShareData" type="ResourceShareData"/>
     </transfer>
 
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
         <property name="fkCompanyBusinessUnit" type="int"/>
+    </transfer>
+
+    <transfer name="ResourceShareResponse">
+        <property name="resourceShare" type="ResourceShare"/>
+    </transfer>
+
+    <transfer name="ResourceShareRequest">
+        <property name="resourceShare" type="ResourceShare"/>
+    </transfer>
+
+    <transfer name="ResourceShareData">
+        <property name="idQuote" type="int"/>
+        <property name="shareOption" type="string"/>
+        <property name="ownerCompanyUserId" type="int"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="customerReference" type="string"/>
     </transfer>
 
 </transfers>
