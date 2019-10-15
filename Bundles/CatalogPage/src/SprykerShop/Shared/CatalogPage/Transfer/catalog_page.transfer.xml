@@ -20,7 +20,7 @@
     </transfer>
 
     <transfer name="ProductCategoryFilterStorage">
-        <property name="filterData" type="array"/>
+        <property name="filterData" type="array" singular="filterData"/>
     </transfer>
 
     <transfer name="TabMetaData">

@@ -10,7 +10,7 @@
     <transfer name="LocaleCmsPageData">
         <property name="templatePath" type="string"/>
         <property name="isActive" type="bool"/>
-        <property name="placeholders" type="array"/>
+        <property name="placeholders" type="array" singular="placeholders"/>
         <property name="metaTitle" type="string"/>
         <property name="metaDescription" type="string"/>
         <property name="metaKeywords" type="string"/>
@@ -20,7 +20,7 @@
 
     <transfer name="FlattenedLocaleCmsPageDataRequest">
         <property name="idCmsPage" type="int"/>
-        <property name="flattenedLocaleCmsPageData" type="array"/>
+        <property name="flattenedLocaleCmsPageData" type="array" singular="flattenedLocaleCmsPageData"/>
         <property name="locale" type="Locale"/>
     </transfer>
 
