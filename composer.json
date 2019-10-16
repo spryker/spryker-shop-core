@@ -6,7 +6,7 @@
     "php": ">=7.1"
   },
   "require-dev": {
-    "spryker/code-sniffer": "dev-bugfix/return-description"
+    "spryker/code-sniffer": "dev-master"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
