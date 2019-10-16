@@ -42,7 +42,7 @@ class ConfigurableBundleWidgetRouteProviderPlugin extends AbstractRouteProviderP
      */
     protected function addCartConfiguredBundleRemoveRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/cart/configured-bundle/remove/{groupKey}', 'ConfigurableBundleWidget', 'Cart', 'removeConfiguredBundleAction');
+        $route = $this->buildRoute('/cart/configured-bundle/remove/{configuredBundleGroupKey}', 'ConfigurableBundleWidget', 'Cart', 'removeConfiguredBundleAction');
         $routeCollection->add(static::ROUTE_CART_CONFIGURED_BUNDLE_REMOVE, $route);
 
         return $routeCollection;
@@ -57,7 +57,7 @@ class ConfigurableBundleWidgetRouteProviderPlugin extends AbstractRouteProviderP
      */
     protected function addCartConfiguredBundleChangeQuantityRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/cart/configured-bundle/change/{groupKey}', 'ConfigurableBundleWidget', 'Cart', 'changeConfiguredBundleQuantityAction');
+        $route = $this->buildRoute('/cart/configured-bundle/change/{configuredBundleGroupKey}', 'ConfigurableBundleWidget', 'Cart', 'changeConfiguredBundleQuantityAction');
         $route = $route->setMethods(['POST']);
         $routeCollection->add(static::ROUTE_CART_CONFIGURED_BUNDLE_CHANGE_QUANTITY, $route);
 
