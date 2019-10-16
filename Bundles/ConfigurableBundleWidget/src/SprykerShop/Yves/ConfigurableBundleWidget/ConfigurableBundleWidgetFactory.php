@@ -27,6 +27,14 @@ class ConfigurableBundleWidgetFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\ConfigurableBundleWidget\ConfigurableBundleWidgetConfig
+     */
+    public function getModuleConfig(): ConfigurableBundleWidgetConfig
+    {
+        return $this->getConfig();
+    }
+
+    /**
      * @return \SprykerShop\Yves\ConfigurableBundleWidget\Dependency\Client\ConfigurableBundleWidgetToConfigurableBundleCartClientInterface
      */
     public function getConfigurableBundleClient(): ConfigurableBundleWidgetToConfigurableBundleCartClientInterface

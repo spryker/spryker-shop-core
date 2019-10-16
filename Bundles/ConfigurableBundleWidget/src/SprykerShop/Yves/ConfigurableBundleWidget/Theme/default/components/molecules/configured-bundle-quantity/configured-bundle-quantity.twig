@@ -22,7 +22,7 @@
         {% endblock %}
     {% else %}
         {% block form %}
-            <form method="POST" action="{{ path('cart/configured-bundle/change', {'groupKey': data.configuredBundle.groupKey }) }}">
+            <form method="POST" action="{{ path('cart/configured-bundle/change', {'configuredBundleGroupKey': data.configuredBundle.groupKey }) }}">
                 {% include molecule('quantity-input') with {
                     data: {
                         value: data.configuredBundle.quantity,

@@ -10,6 +10,7 @@
     bundleItems: data.bundle.items | default({}),
     currencyIsoCode: null,
     priceMode: null,
+    isQuantityChangeable: false,
     isEditable: true,
 } %}
 
@@ -37,7 +38,7 @@
                             {% include molecule('configured-bundle-quantity', 'ConfigurableBundleWidget') with {
                                 data: {
                                     configuredBundle: data.bundle,
-                                    readOnly: not data.isEditable,
+                                    readOnly: not (data.isEditable and data.isQuantityChangeable),
                                 },
                             } only %}
                         {% endblock %}
@@ -97,7 +98,7 @@
     {% block bundleActions %}
         {% if data.isEditable %}
             {% block bundleActionsInner %}
-                <a class="{{ bundleActionClassName }}" href="{{ path('cart/configured-bundle/remove', {'groupKey': data.bundle.groupKey}) }}" data-init-single-click>
+                <a class="{{ bundleActionClassName }}" href="{{ path('cart/configured-bundle/remove', {'configuredBundleGroupKey': data.bundle.groupKey}) }}" data-init-single-click>
                     {% block removeLinkInner %}
                         {{- 'configured_bundle.remove' | trans | raw -}}
                     {% endblock %}
