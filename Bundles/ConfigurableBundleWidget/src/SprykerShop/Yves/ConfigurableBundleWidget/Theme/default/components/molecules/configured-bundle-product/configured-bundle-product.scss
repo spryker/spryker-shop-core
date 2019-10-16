@@ -23,6 +23,20 @@
             &:last-child {
                 margin-right: 0;
             }
+
+            &-item {
+                display: flex;
+                align-items: center;
+            }
+
+            &--container {
+                display: flex;
+            }
+        }
+
+        &__image-container {
+            position: relative;
+            width: 100%;
         }
 
         &__text {

@@ -21,6 +21,11 @@
             height: 30rem;
         }
 
+        &--static {
+            display: block;
+            position: static;
+        }
+
         &--min-size {
             min-width: 2.5rem;
         }
