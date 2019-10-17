@@ -5,7 +5,7 @@
 
     <transfer name="Quote">
         <property name="idQuote" type="int"/>
-        <property name="isLocked" type="bool" defaultValue="false"/>
+        <property name="isLocked" type="bool"/>
         <property name="customer" type="Customer"/>
         <property name="customerReference" type="string"/>
         <property name="isDefault" type="bool"/>
