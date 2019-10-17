@@ -5,6 +5,24 @@
 
     <transfer name="ShoppingListFromCartRequest">
         <property name="newShoppingListName" type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="idShoppingList" type="int"/>
+        <property name="shoppingListName" type="string"/>
+        <property name="idQuote" type="int"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="ShoppingList">
+        <property name="idShoppingList" type="int"/>
+        <property name="name" type="string"/>
+        <property name="owner" type="string"/>
+    </transfer>
+
+    <transfer name="ShoppingListCollection">
+        <property name="shoppingLists" type="ShoppingList[]" singular="shoppingList"/>
     </transfer>
 
 </transfers>

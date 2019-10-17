@@ -13,6 +13,8 @@ use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Use `\SprykerShop\Yves\WebProfiler\Plugin\Application\WebProfilerApplicationPlugin` instead.
+ *
  * @method \SprykerShop\Yves\WebProfilerWidget\WebProfilerWidgetFactory getFactory()
  * @method \SprykerShop\Yves\WebProfilerWidget\WebProfilerWidgetConfig getConfig()
  */

@@ -7,7 +7,36 @@
         <property name="maximumRating" type="int"/>
         <property name="averageRating" type="float"/>
         <property name="totalReview" type="int"/>
-        <property name="ratingAggregation" type="array"/>
+        <property name="ratingAggregation" type="array" singular="ratingAggregation"/>
+    </transfer>
+
+    <transfer name="RangeSearchResult">
+        <property name="config" type="FacetConfig"/>
+        <property name="activeMin" type="float"/>
+    </transfer>
+
+    <transfer name="FacetConfig">
+        <property name="parameterName" type="string"/>
+    </transfer>
+
+    <transfer name="ProductReviewRequest">
+        <property name="customerReference" type="string"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="ProductReviewResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="ProductReviewError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="ProductReviewSearchRequest">
+        <property name="idProductAbstract" type="int"/>
+        <property name="requestParams" type="array" singular="requestParams"/>
     </transfer>
 
 </transfers>
