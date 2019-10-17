@@ -18,10 +18,8 @@
     {% for shipmentGroup in data.shipmentGroups %}
         <h4>{{ 'customer.order.shipment' | trans }} n&#176;{{ loop.index }}</h4>
 
-        <div class="box grid grid--justify spacing-bottom spacing-bottom--big">
+        <div class="{{ config.name }}__content grid grid--justify">
             <div class="col col--sm-12 col--lg-8">
-                <h5>{{ 'customer.order.products' | trans }}</h5>
-
                 {% widget 'OrderConfiguredBundleWidget' args [data.order, shipmentGroup.items] only %}
                 {% endwidget %}
 
@@ -29,7 +27,7 @@
                     {% set isBundle = item.bundleItems is defined %}
                     {% set concreteItem = item.bundleProduct | default(item) %}
 
-                    <div class="{{ config.name }}__item grid grid--justify spacing-y spacing-y--inner">
+                    <div class="{{ config.name }}__item grid grid--justify">
                         <div class="col col--middle col--sm-1 spacing">
                             {% if data.order is not empty %}
                                 {% widget 'CustomerReorderItemCheckboxWidget' args [concreteItem] only %}
@@ -120,12 +118,11 @@
                             {% endif %}
                         </div>
                     </div>
-                    <hr>
                 {% endfor %}
             </div>
 
-            <div class="col col--sm-12 col--lg-4 spacing-left spacing-left--inner">
-                <div class="spacing-bottom spacing-bottom--big">
+            <div class="col col--sm-12 col--lg-4 spacing-x spacing-x--inner">
+                <div class="{{ config.name }}__column-item">
                     <h5>{{ 'customer.order.delivery_address' | trans }}</h5>
                     <div class="spacing-y spacing-y--inner">
                         {% include molecule('display-address') with {
@@ -139,7 +136,7 @@
                 {% if data.orderShipmentExpenses[shipmentGroup.hash] is not empty %}
                     {% set expense = data.orderShipmentExpenses[shipmentGroup.hash] %}
 
-                    <div class="spacing-bottom spacing-bottom--big">
+                    <div class="{{ config.name }}__column-item">
                         <h5>{{ 'customer.order.delivery_method' | trans }}</h5>
                         <div class="spacing-y spacing-y--inner">
                             {% include molecule('delivery-information', 'CustomerPage') with {

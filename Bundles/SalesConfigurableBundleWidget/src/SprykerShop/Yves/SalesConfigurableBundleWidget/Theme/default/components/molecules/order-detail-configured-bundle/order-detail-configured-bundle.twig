@@ -12,12 +12,14 @@
 
 {% block body %}
     {% embed molecule('configured-bundle', 'ConfigurableBundleWidget') ignore missing with {
+        modifiers: ['history-table'],
         data: {
             bundle: data.bundle,
             items: data.items,
             currencyIsoCode: data.currencyIsoCode,
         },
     } only %}
+        {%- block extraClass -%}{%- endblock -%}
         {%- block bundleNameText -%}{{ data.bundle.name | trans }}{%- endblock -%}
 
         {%- block bundleTotalValue -%}
