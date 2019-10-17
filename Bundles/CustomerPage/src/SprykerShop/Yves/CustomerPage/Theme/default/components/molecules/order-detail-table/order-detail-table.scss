@@ -9,12 +9,11 @@
             padding: 1rem;
             margin: 0 0.5rem 1rem;
             border: 1px solid $setting-color-lighter;
-        }
 
-        &__column-item {
-            border: 1px solid $setting-color-lighter;
-            padding: 1rem;
-            margin-bottom: 1rem;
+            &--column-item {
+                margin-left: 0;
+                margin-right: 0;
+            }
         }
 
         @content;

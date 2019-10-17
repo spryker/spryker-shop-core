@@ -21,9 +21,8 @@
             height: 30rem;
         }
 
-        &--static {
-            display: block;
-            position: static;
+        &--full-width {
+            width: 100%;
         }
 
         &--min-size {

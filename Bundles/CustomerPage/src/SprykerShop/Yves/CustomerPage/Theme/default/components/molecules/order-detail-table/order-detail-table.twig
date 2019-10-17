@@ -23,7 +23,7 @@
                 {% widget 'OrderConfiguredBundleWidget' args [data.order, shipmentGroup.items] only %}
                 {% endwidget %}
 
-                {% for item in shipmentGroup.items if not item.salesOrderConfiguredBundleItem | default %}
+                {% for item in shipmentGroup.items if not item.salesOrderConfiguredBundleItem | default({}) %}
                     {% set isBundle = item.bundleItems is defined %}
                     {% set concreteItem = item.bundleProduct | default(item) %}
 
@@ -122,7 +122,7 @@
             </div>
 
             <div class="col col--sm-12 col--lg-4 spacing-x spacing-x--inner">
-                <div class="{{ config.name }}__column-item">
+                <div class="{{ config.name }}__item {{ config.name }}__item--column-item">
                     <h5>{{ 'customer.order.delivery_address' | trans }}</h5>
                     <div class="spacing-y spacing-y--inner">
                         {% include molecule('display-address') with {
@@ -136,7 +136,7 @@
                 {% if data.orderShipmentExpenses[shipmentGroup.hash] is not empty %}
                     {% set expense = data.orderShipmentExpenses[shipmentGroup.hash] %}
 
-                    <div class="{{ config.name }}__column-item">
+                    <div class="{{ config.name }}__item {{ config.name }}__item--column-item">
                         <h5>{{ 'customer.order.delivery_method' | trans }}</h5>
                         <div class="spacing-y spacing-y--inner">
                             {% include molecule('delivery-information', 'CustomerPage') with {

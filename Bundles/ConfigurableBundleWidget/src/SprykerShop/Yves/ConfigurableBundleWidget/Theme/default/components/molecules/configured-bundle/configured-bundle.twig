@@ -7,7 +7,7 @@
 
 {% define data = {
     bundle: required,
-    items: required,
+    items: [],
     bundleItems: data.bundle.items | default({}),
     currencyIsoCode: null,
     isEditable: true,
