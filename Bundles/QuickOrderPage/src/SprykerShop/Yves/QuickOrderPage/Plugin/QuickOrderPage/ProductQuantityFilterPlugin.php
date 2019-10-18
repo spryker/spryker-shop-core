@@ -21,7 +21,7 @@ use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderItemFil
 class ProductQuantityFilterPlugin extends AbstractPlugin implements QuickOrderItemFilterPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adjusts quantity to the nearest possible value according product quantity restrictions.
      *
      * @api

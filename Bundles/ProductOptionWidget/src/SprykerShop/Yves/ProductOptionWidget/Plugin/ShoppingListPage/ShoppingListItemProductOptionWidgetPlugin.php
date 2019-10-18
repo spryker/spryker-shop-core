@@ -32,7 +32,7 @@ class ShoppingListItemProductOptionWidgetPlugin extends AbstractWidgetPlugin imp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,7 +44,7 @@ class ShoppingListItemProductOptionWidgetPlugin extends AbstractWidgetPlugin imp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

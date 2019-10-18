@@ -21,7 +21,7 @@ class CompanyUserRestrictionHandlerPlugin extends AbstractPlugin implements Filt
     protected const GLOSSARY_KEY_COMPANY_PAGE_RESTRICTED = 'company_page.company_user_restricted_message';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

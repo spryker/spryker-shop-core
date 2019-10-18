@@ -240,12 +240,14 @@ class PriceProductVolumeResolver implements PriceProductVolumeResolverInterface
     protected function isVolumePriceDataValid(array $priceData): bool
     {
         if (!isset($priceData[static::VOLUME_PRICE_QUANTITY])
-            || !is_numeric($priceData[static::VOLUME_PRICE_QUANTITY])) {
+            || !is_numeric($priceData[static::VOLUME_PRICE_QUANTITY])
+        ) {
             return false;
         }
 
         if (!isset($priceData[static::VOLUME_PRICE_MODE_MAPPING[$this->priceClient->getCurrentPriceMode()]])
-            || !is_numeric($priceData[static::VOLUME_PRICE_MODE_MAPPING[$this->priceClient->getCurrentPriceMode()]])) {
+            || !is_numeric($priceData[static::VOLUME_PRICE_MODE_MAPPING[$this->priceClient->getCurrentPriceMode()]])
+        ) {
             return false;
         }
 

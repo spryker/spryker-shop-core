@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CalculationPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CalculationPage\Plugin\Router\CalculationPageRouteProviderPlugin` instead.
+ */
 class CalculationPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_CALCULATION_DEBUG = 'calculation-debug';

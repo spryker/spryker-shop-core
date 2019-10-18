@@ -21,7 +21,7 @@ class CategoryTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected const SERVICE_LOCALE = 'locale';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

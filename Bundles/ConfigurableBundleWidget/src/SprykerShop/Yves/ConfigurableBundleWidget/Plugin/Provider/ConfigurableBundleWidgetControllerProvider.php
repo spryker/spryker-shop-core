@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ConfigurableBundleWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `SprykerShop\Yves\ConfigurableBundleWidget\Plugin\Router\ConfigurableBundleWidgetRouteProviderPlugin` instead.
+ */
 class ConfigurableBundleWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     protected const ROUTE_CART_CONFIGURED_BUNDLE_REMOVE = 'cart/configured-bundle/remove';

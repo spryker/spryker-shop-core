@@ -19,7 +19,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 class ShopApplicationEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

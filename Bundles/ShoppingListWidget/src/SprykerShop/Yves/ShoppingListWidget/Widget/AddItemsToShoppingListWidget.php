@@ -36,7 +36,7 @@ class AddItemsToShoppingListWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class AddItemsToShoppingListWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

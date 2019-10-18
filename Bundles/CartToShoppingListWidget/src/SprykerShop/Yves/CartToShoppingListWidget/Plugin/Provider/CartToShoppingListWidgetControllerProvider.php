@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CartToShoppingListWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CartToShoppingListWidget\Plugin\Router\CartToShoppingListWidgetRouteProviderPlugin` instead.
+ */
 class CartToShoppingListWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_CART_TO_SHOPPING_LIST = 'shopping-list/create-from-cart';
