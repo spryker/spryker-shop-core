@@ -33,6 +33,7 @@
         <property name="fkCustomer" type="int"/>
         <property name="items" type="Item[]"  singular="item"/>
         <property name="orderReference" type="string"/>
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
     </transfer>
 
     <transfer name="Quote">
