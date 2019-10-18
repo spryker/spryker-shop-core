@@ -23,7 +23,7 @@
     "spryker/payment": "^4.3.0",
     "spryker/permission-extension": "^1.0.0",
     "spryker/price": "^5.1.0",
-    "spryker/product-bundle": "^4.1.0 || ^6.0.0",
+    "spryker/product-bundle": "^4.1.0 || ^6.0.0 || ^7.0.0",
     "spryker/quote": "^1.1.0 || ^2.0.0",
     "spryker/shipment": "^7.0.0",
     "spryker/step-engine": "^3.2.0",

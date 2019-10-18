@@ -195,12 +195,12 @@ class ProductPackagingUnitWidget extends AbstractWidget
 
     /**
      * @param int $idProduct
-     * @param int|null $idLeadProduct
+     * @param int $idLeadProduct
      *
      * @return bool
      */
-    protected function isAmountBlockEnabled(int $idProduct, ?int $idLeadProduct): bool
+    protected function isAmountBlockEnabled(int $idProduct, int $idLeadProduct): bool
     {
-        return ($idProduct !== $idLeadProduct) && $idLeadProduct !== null;
+        return $idProduct !== $idLeadProduct;
     }
 }
