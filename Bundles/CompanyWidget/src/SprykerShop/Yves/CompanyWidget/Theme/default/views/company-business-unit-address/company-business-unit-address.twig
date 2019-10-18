@@ -27,7 +27,7 @@
     {% set optionValueDeliverToMultipleAddresses = '-1' %}
     {% set shippingAddress = 'shippingAddress' %}
     {% set billingAddress = 'billingAddress' %}
-    {% set fullAddresses = data.customerAddresses ? data.customerAddresses|merge(data.companyBusinessUnitAddresses) : data.companyBusinessUnitAddresses %}
+    {% set fullAddresses = data.customerAddresses ? data.customerAddresses | merge(data.companyBusinessUnitAddresses) : data.companyBusinessUnitAddresses %}
     {% set isShippingAddressFormType = data.formType == shippingAddress %}
     {% set isBillingAddressFormType = data.formType == billingAddress %}
     {% set addressSelectLabel = isShippingAddressFormType ? 'page.checkout.address.delivery.address_select' : 'page.checkout.address.billing.address_select' %}
