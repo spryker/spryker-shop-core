@@ -204,7 +204,6 @@ class AddressStepExecutor implements StepExecutorInterface
     ): ShipmentTransfer {
         $addressTransfer = $shipmentTransfer->requireShippingAddress()->getShippingAddress();
         $addressTransfer = $this->expandAddressTransfer($addressTransfer, $customerTransfer);
-        $addressTransfer = $this->sanitizeShippingAddress($addressTransfer);
         $addressHash = $this->getUniqueAddressKeyWithoutIdCustomerAddress($addressTransfer);
 
         if (isset($this->createdShipmentsWithShippingAddressesList[$addressHash])) {

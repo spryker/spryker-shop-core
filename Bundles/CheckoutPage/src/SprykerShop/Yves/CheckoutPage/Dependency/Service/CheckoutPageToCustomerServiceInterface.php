@@ -17,11 +17,4 @@ interface CheckoutPageToCustomerServiceInterface
      * @return string
      */
     public function getUniqueAddressKey(AddressTransfer $addressTransfer): string;
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    public function sanitizeUniqueAddressValues(AddressTransfer $addressTransfer): AddressTransfer;
 }

@@ -30,7 +30,7 @@
     {% set fullAddresses = data.customerAddresses ? data.customerAddresses|merge(data.companyBusinessUnitAddresses) : data.companyBusinessUnitAddresses %}
     {% set isShippingAddressFormType = data.formType == shippingAddress %}
     {% set isBillingAddressFormType = data.formType == billingAddress %}
-
+    {% set addressSelectLabel = isShippingAddressFormType ? 'page.checkout.address.delivery.address_select' : 'page.checkout.address.billing.address_select' %}
 
     {% if fullAddresses %}
         {% for address in fullAddresses %}
@@ -40,30 +40,19 @@
             {% set isCurrentCompanyUnitAddress = data.currentCompanyUnitAddressId and data.currentCompanyUnitAddressId == address.idCompanyUnitAddress %}
             {% set isCurrentValueDeliverToMultipleAddresses = data.currentAddressId == optionValueDeliverToMultipleAddresses %}
 
-            {% if canUseCurrentAsDefaultCustomerAddress %}
+            {% if canUseCurrentAsDefaultCustomerAddress or canUseCurrentAsDefaultCompanyUnitAddress
+                    or isCurrentCustomerAddress or isCurrentCompanyUnitAddress
+            %}
                 {% set defaultAddressKey = address.key %}
             {% endif %}
-            {% if canUseCurrentAsDefaultCompanyUnitAddress %}
-                {% set defaultAddressKey = address.key %}
-            {% endif %}
-            {% if isCurrentCustomerAddress %}
-                {% set defaultAddressKey = address.key %}
-            {% endif %}
-            {% if isCurrentCompanyUnitAddress %}
-                {% set defaultAddressKey = address.key %}
-            {% endif %}
+
             {% if isCurrentValueDeliverToMultipleAddresses %}
                 {% set defaultAddressKey = optionValueDeliverToMultipleAddresses %}
             {% endif %}
         {% endfor %}
     {% endif %}
 
-    {% if isShippingAddressFormType %}
-        <label>{{ 'page.checkout.address.delivery.address_select' | trans }}</label><br>
-    {% endif %}
-    {% if isBillingAddressFormType %}
-        <label>{{ 'page.checkout.address.billing.address_select' | trans }}</label><br>
-    {% endif %}
+    <label>{{ addressSelectLabel | trans }}</label><br>
 
     {% embed atom('select') with {
         class: 'spacing-bottom',
