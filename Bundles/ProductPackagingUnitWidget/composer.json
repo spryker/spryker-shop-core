@@ -7,7 +7,7 @@
     "php": ">=7.1",
     "spryker-shop/quick-order-page-extension": "^1.0.0",
     "spryker-shop/shop-ui": "^1.13.0",
-    "spryker/decimal-object": "^1.0.0",
+    "spryker/decimal-object": "^0.1.0",
     "spryker/kernel": "^3.30.0",
     "spryker/product-measurement-unit-storage": "^1.1.0",
     "spryker/product-packaging-unit-storage": "^5.0.0",
