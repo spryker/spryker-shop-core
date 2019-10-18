@@ -330,14 +330,4 @@ class AddressStepExecutor implements StepExecutorInterface
 
         return $quoteTransfer->setShippingAddress($shippingAddressTransfer);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    protected function sanitizeShippingAddress(AddressTransfer $addressTransfer): AddressTransfer
-    {
-        return $this->customerService->sanitizeUniqueAddressValues($addressTransfer);
-    }
 }
