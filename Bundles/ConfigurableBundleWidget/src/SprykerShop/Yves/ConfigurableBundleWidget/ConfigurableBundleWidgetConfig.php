@@ -11,4 +11,11 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class ConfigurableBundleWidgetConfig extends AbstractBundleConfig
 {
+    /**
+     * @return bool
+     */
+    public function isQuantityChangeable(): bool
+    {
+        return false;
+    }
 }

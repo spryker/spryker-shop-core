@@ -14,6 +14,8 @@ use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
+ * @deprecated Use `\SprykerShop\Yves\ShopApplication\Plugin\EventDispatcher\ShopApplicationExceptionEventDispatcherPlugin` instead.
+ *
  * @method \Spryker\Yves\Application\ApplicationFactory getFactory()
  */
 class YvesExceptionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
