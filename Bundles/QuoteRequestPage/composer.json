@@ -31,6 +31,7 @@
   },
   "suggest": {
     "spryker-shop/cart-page": "If you want to use cart page molecules: ^3.2.0",
+    "spryker-shop/configurable-bundle-widget": "If you want to use configurable bundle widget functionality",
     "spryker-shop/customer-page": "If you want to use customer layout templates: ^1.0.0",
     "spryker-shop/discount-widget": "If you want to use discount widget functionality: ^1.2.0",
     "spryker-shop/product-option-widget": "If you want to use product option widget functionality",
