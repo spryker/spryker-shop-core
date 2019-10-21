@@ -17,6 +17,7 @@ use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \SprykerShop\Yves\QuoteApprovalWidget\QuoteApprovalWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\QuoteApprovalWidget\QuoteApprovalWidgetConfig getConfig()
  */
 class QuoteApproveRequestWidget extends AbstractWidget
 {
@@ -28,6 +29,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
     protected const PARAMETER_CAN_SEND_APPROVAL_REQUEST = 'canSendApprovalRequest';
     protected const PARAMETER_LIMIT = 'limit';
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
+    protected const IS_QUOTE_APPLICABLE_FOR_APPROVAL_PROCESS = 'isQuoteApplicableForApprovalProcess';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -40,6 +42,7 @@ class QuoteApproveRequestWidget extends AbstractWidget
         $this->addLimitParameter($quoteTransfer);
         $this->addCanSendApprovalRequestParameter($quoteTransfer);
         $this->addQuoteApprovalRequestFormParameter($quoteTransfer);
+        $this->addIsQuoteApplicableForApprovalProcessParameter($quoteTransfer);
     }
 
     /**
@@ -234,5 +237,20 @@ class QuoteApproveRequestWidget extends AbstractWidget
     protected function getQuoteApprovalClient(): QuoteApprovalWidgetToQuoteApprovalClientInterface
     {
         return $this->getFactory()->getQuoteApprovalClient();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addIsQuoteApplicableForApprovalProcessParameter(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addParameter(
+            static::IS_QUOTE_APPLICABLE_FOR_APPROVAL_PROCESS,
+            $this->getFactory()
+                ->getQuoteApprovalClient()
+                ->isQuoteApplicableForApprovalProcess($quoteTransfer)
+        );
     }
 }

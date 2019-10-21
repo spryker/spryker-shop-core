@@ -103,7 +103,15 @@
                 </div>
             {% endif %}
             {% if quote %}
-                {% for cartItem in quote.items %}
+                {% widget 'QuoteConfiguredBundleWidget' args [quote] with {
+                    data: {
+                        isEditable: false,
+                    },
+                } only %}
+                {% endwidget %}
+
+                {% set cartItems = quote.items | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}
+                {% for cartItem in cartItems %}
                     {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
                         data: {
                             product: cartItem,

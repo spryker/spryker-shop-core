@@ -21,16 +21,7 @@
         }
 
         &__col {
-            margin-right: auto;
-            margin-left: auto;
-
-            &:first-child {
-                margin-left: 0;
-            }
-
-            &:last-child {
-                margin-right: 0;
-            }
+            max-width: 33.333%;
         }
 
         &__text {

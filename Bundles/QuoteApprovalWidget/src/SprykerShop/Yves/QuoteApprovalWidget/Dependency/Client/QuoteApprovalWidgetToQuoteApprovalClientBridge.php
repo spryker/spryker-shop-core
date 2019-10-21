@@ -34,6 +34,16 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
      *
      * @return bool
      */
+    public function isQuoteInApprovalProcess(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteApprovalClient->isQuoteInApprovalProcess($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
     public function canQuoteBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool
     {
         return $this->quoteApprovalClient->canQuoteBeApprovedByCurrentCustomer($quoteTransfer);
@@ -161,5 +171,15 @@ class QuoteApprovalWidgetToQuoteApprovalClientBridge implements QuoteApprovalWid
     public function declineQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         return $this->quoteApprovalClient->declineQuoteApproval($quoteApprovalRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteApplicableForApprovalProcess(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteApprovalClient->isQuoteApplicableForApprovalProcess($quoteTransfer);
     }
 }

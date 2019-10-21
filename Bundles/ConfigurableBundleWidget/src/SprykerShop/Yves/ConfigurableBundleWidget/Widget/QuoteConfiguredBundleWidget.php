@@ -19,6 +19,7 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
     protected const PARAMETER_QUOTE = 'quote';
     protected const PARAMETER_ITEMS = 'items';
     protected const PARAMETER_CONFIGURED_BUNDLES = 'configuredBundles';
+    protected const PARAMETER_IS_QUANTITY_CHANGEABLE = 'isQuantityChangeable';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -39,6 +40,7 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
         $this->addItemsParameter($itemTransfers);
         $this->addQuoteParameter($quoteTransfer);
         $this->addConfiguredBundlesParameter($configuredBundleTransfers);
+        $this->addIsQuantityChangeableParameter();
     }
 
     /**
@@ -101,5 +103,13 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
         }
 
         return $items;
+    }
+
+    /**
+     * @return void
+     */
+    protected function addIsQuantityChangeableParameter(): void
+    {
+        $this->addParameter(static::PARAMETER_IS_QUANTITY_CHANGEABLE, $this->getConfig()->isQuantityChangeable());
     }
 }

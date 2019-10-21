@@ -114,7 +114,7 @@ class StepFactory extends AbstractFactory
     public function createEntryStep()
     {
         return new EntryStep(
-            CheckoutPageControllerProvider::CHECKOUT_INDEX,
+            static::ROUTE_CART,
             HomePageControllerProvider::ROUTE_HOME
         );
     }
@@ -144,7 +144,8 @@ class StepFactory extends AbstractFactory
             $this->createAddressStepPostConditionChecker(),
             $this->getConfig(),
             CheckoutPageControllerProvider::CHECKOUT_ADDRESS,
-            HomePageControllerProvider::ROUTE_HOME
+            HomePageControllerProvider::ROUTE_HOME,
+            $this->getCheckoutAddressStepEnterPreCheckPlugins()
         );
     }
 
@@ -159,7 +160,8 @@ class StepFactory extends AbstractFactory
             $this->createShipmentStepPostConditionChecker(),
             $this->createGiftCardItemsChecker(),
             CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
-            HomePageControllerProvider::ROUTE_HOME
+            HomePageControllerProvider::ROUTE_HOME,
+            $this->getCheckoutShipmentStepEnterPreCheckPlugins()
         );
     }
 
@@ -190,7 +192,8 @@ class StepFactory extends AbstractFactory
             CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
             HomePageControllerProvider::ROUTE_HOME,
             $this->getFlashMessenger(),
-            $this->getCalculationClient()
+            $this->getCalculationClient(),
+            $this->getCheckoutPaymentStepEnterPreCheckPlugins()
         );
     }
 
@@ -204,7 +207,8 @@ class StepFactory extends AbstractFactory
             $this->getShipmentService(),
             $this->getConfig(),
             CheckoutPageControllerProvider::CHECKOUT_SUMMARY,
-            HomePageControllerProvider::ROUTE_HOME
+            HomePageControllerProvider::ROUTE_HOME,
+            $this->getCheckoutClient()
         );
     }
 
@@ -344,6 +348,30 @@ class StepFactory extends AbstractFactory
     public function getPaymentClient(): CheckoutPageToPaymentClientInterface
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_PAYMENT);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepEnterPreCheckPluginInterface[]
+     */
+    public function getCheckoutAddressStepEnterPreCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_ADDRESS_STEP_ENTER_PRE_CHECK);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepEnterPreCheckPluginInterface[]
+     */
+    public function getCheckoutShipmentStepEnterPreCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_SHIPMENT_STEP_ENTER_PRE_CHECK);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepEnterPreCheckPluginInterface[]
+     */
+    public function getCheckoutPaymentStepEnterPreCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK);
     }
 
     /**
