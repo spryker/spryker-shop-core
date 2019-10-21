@@ -1,0 +1,38 @@
+{
+  "name": "spryker-shop/configurable-bundle-page",
+  "type": "library",
+  "description": "ConfigurableBundlePage module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker-shop/shop-application": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/router": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/router": "Use this module if you want use the RouterProviderPlugin."
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerShopTest\\": "tests/SprykerShopTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
