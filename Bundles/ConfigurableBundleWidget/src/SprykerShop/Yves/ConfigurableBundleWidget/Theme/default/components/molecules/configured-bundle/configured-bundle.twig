@@ -10,6 +10,8 @@
     items: [],
     bundleItems: data.bundle.items | default({}),
     currencyIsoCode: null,
+    priceMode: null,
+    isQuantityChangeable: false,
     isEditable: true,
 } %}
 
@@ -20,7 +22,7 @@
         <div class="{{ config.name }}__content {{ config.name }}__container">
             {% block bundleInner %}
                 {% block bundleGeneralInformation %}
-                    <div class="{{ config.name }}__col col col--sm-7">
+                    <div class="{{ config.name }}__col col">
                         {% block bundleName %}
                             <h6 class="spacing-right spacing-right--big">
                                 {%- block bundleNameText -%}
@@ -31,8 +33,21 @@
                     </div>
                 {% endblock %}
 
+                {% block bundleQuantity %}
+                    <div class="{{ config.name }}__col col col--lg-4">
+                        {% block bundleQuantityInner %}
+                            {% include molecule('configured-bundle-quantity', 'ConfigurableBundleWidget') with {
+                                data: {
+                                    configuredBundle: data.bundle,
+                                    readOnly: not (data.isEditable and data.isQuantityChangeable),
+                                },
+                            } only %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+
                 {% block bundlePriceInformation %}
-                    <div class="{{ config.name }}__col col col--sm-5 text-right">
+                    <div class="{{ config.name }}__col col">
                         {% block bundleTotal %}
                             <strong class="{{ config.name }}__text">
                                 {%- block bundleTotalInner -%}
@@ -71,6 +86,7 @@
                             data: {
                                 product: item,
                                 currencyIsoCode: data.currencyIsoCode,
+                                priceMode: data.priceMode,
                             },
                         } only %}
                     {% endblock %}
