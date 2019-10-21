@@ -154,7 +154,8 @@ class AddressStepExecutor implements StepExecutorInterface
         ?CustomerTransfer $customerTransfer
     ): QuoteTransfer {
         if ($this->hasQuoteDataItemLevelShippingAddresses($quoteTransfer)) {
-            $firstItemTransfer = current($quoteTransfer->getItems());
+            /** @var \Generated\Shared\Transfer\ItemTransfer $firstItemTransfer */
+            $firstItemTransfer = $quoteTransfer->getItems()->getIterator()->current();
             $shippingAddressTransfer = $firstItemTransfer->getShipment()->getShippingAddress();
         } else {
             /**
@@ -327,7 +328,8 @@ class AddressStepExecutor implements StepExecutorInterface
         }
 
         if ($this->hasQuoteDataItemLevelShippingAddresses($quoteTransfer)) {
-            $firstItemTransfer = current($quoteTransfer->getItems());
+            /** @var \Generated\Shared\Transfer\ItemTransfer $firstItemTransfer */
+            $firstItemTransfer = $quoteTransfer->getItems()->getIterator()->current();
             $shippingAddressTransfer = $firstItemTransfer->getShipment()->getShippingAddress();
         } else {
             $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
