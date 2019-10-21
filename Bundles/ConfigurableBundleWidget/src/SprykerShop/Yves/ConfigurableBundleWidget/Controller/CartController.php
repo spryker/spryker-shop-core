@@ -7,7 +7,8 @@
 
 namespace SprykerShop\Yves\ConfigurableBundleWidget\Controller;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,11 +22,18 @@ class CartController extends AbstractController
     use PermissionAwareTrait;
 
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+    protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_REMOVED = 'configured_bundle_widget.configured_bundle.removed';
+    protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_UPDATED = 'configured_bundle_widget.configured_bundle.updated';
 
     /**
      * @uses \SprykerShop\Shared\CartPage\Plugin\RemoveCartItemPermissionPlugin::KEY
      */
     protected const REMOVE_CART_ITEM_PERMISSION_PLUGIN_KEY = 'RemoveCartItemPermissionPlugin';
+
+    /**
+     * @uses \SprykerShop\Shared\CartPage\Plugin\ChangeCartItemPermissionPlugin::KEY
+     */
+    protected const CHANGE_CART_ITEM_PERMISSION_PLUGIN_KEY = 'ChangeCartItemPermissionPlugin';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
@@ -51,6 +59,19 @@ class CartController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    public function changeConfiguredBundleQuantityAction(Request $request, string $configuredBundleGroupKey): Response
+    {
+        $response = $this->executeChangeConfiguredBundleQuantityAction($request, $configuredBundleGroupKey);
+
+        return $response;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $configuredBundleGroupKey
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     protected function executeRemoveConfiguredBundleAction(Request $request, string $configuredBundleGroupKey): Response
     {
         if (!$this->canRemoveCartItem()) {
@@ -59,19 +80,82 @@ class CartController extends AbstractController
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
-        $itemTransfers = $this->getFactory()
-            ->createQuoteReader()
-            ->getItemsByConfiguredBundleGroupKey($configuredBundleGroupKey);
+        $updateConfiguredBundleRequestTransfer = $this->createUpdateConfiguredBundleRequest($configuredBundleGroupKey);
 
-        $this->getFactory()
-            ->getCartClient()
-            ->removeItems($itemTransfers);
+        $quoteResponseTransfer = $this->getFactory()
+            ->getConfigurableBundleClient()
+            ->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
 
-        $this->getFactory()
-            ->getZedRequestClient()
-            ->addResponseMessagesToMessenger();
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_REMOVED);
+        }
+
+        $this->handleResponseErrors($quoteResponseTransfer);
 
         return $this->redirectResponseInternal(static::ROUTE_CART);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $configuredBundleGroupKey
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function executeChangeConfiguredBundleQuantityAction(Request $request, string $configuredBundleGroupKey): Response
+    {
+        $quantity = $request->get('quantity', 1);
+
+        if (!$this->canChangeCartItem($quantity)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_PERMISSION_FAILED);
+
+            return $this->redirectResponseInternal(static::ROUTE_CART);
+        }
+
+        $updateConfiguredBundleRequestTransfer = $this->createUpdateConfiguredBundleRequest($configuredBundleGroupKey, $quantity);
+
+        $quoteResponseTransfer = $this->getFactory()
+            ->getConfigurableBundleClient()
+            ->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
+
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_UPDATED);
+        }
+
+        $this->handleResponseErrors($quoteResponseTransfer);
+
+        return $this->redirectResponseInternal(static::ROUTE_CART);
+    }
+
+    /**
+     * @param string $configuredBundleGroupKey
+     * @param int|null $quantity
+     *
+     * @return \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer
+     */
+    protected function createUpdateConfiguredBundleRequest(string $configuredBundleGroupKey, ?int $quantity = null): UpdateConfiguredBundleRequestTransfer
+    {
+        return (new UpdateConfiguredBundleRequestTransfer())
+            ->setQuote($this->getFactory()->getQuoteClient()->getQuote())
+            ->setGroupKey($configuredBundleGroupKey)
+            ->setQuantity($quantity);
+    }
+
+    /**
+     * @param int|null $itemQuantity
+     *
+     * @return bool
+     */
+    protected function canChangeCartItem(?int $itemQuantity = null): bool
+    {
+        if (!$this->getFactory()->getModuleConfig()->isQuantityChangeable()) {
+            return false;
+        }
+
+        if ($itemQuantity === 0) {
+            return $this->canRemoveCartItem();
+        }
+
+        return $this->canPerformCartItemAction(static::CHANGE_CART_ITEM_PERMISSION_PLUGIN_KEY);
     }
 
     /**
@@ -79,22 +163,36 @@ class CartController extends AbstractController
      */
     protected function canRemoveCartItem(): bool
     {
-        $quoteTransfer = $this->getFactory()
-            ->getCartClient()
-            ->getQuote();
-
-        return $this->isQuoteEditable($quoteTransfer) && $this->can(static::REMOVE_CART_ITEM_PERMISSION_PLUGIN_KEY);
+        return $this->canPerformCartItemAction(static::REMOVE_CART_ITEM_PERMISSION_PLUGIN_KEY);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $permissionPluginKey
      *
      * @return bool
      */
-    protected function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
+    protected function canPerformCartItemAction(string $permissionPluginKey): bool
     {
-        return $this->getFactory()
+        $quoteTransfer = $this->getFactory()
+            ->getQuoteClient()
+            ->getQuote();
+
+        $isQuoteEditable = $this->getFactory()
             ->getQuoteClient()
             ->isQuoteEditable($quoteTransfer);
+
+        return $isQuoteEditable && $this->can($permissionPluginKey);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return void
+     */
+    protected function handleResponseErrors(QuoteResponseTransfer $quoteResponseTransfer): void
+    {
+        foreach ($quoteResponseTransfer->getErrors() as $errorTransfer) {
+            $this->addErrorMessage($errorTransfer->getMessage());
+        }
     }
 }
