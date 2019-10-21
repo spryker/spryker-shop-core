@@ -12,7 +12,7 @@
 
 {% block body %}
     {% embed molecule('configured-bundle', 'ConfigurableBundleWidget') ignore missing with {
-        modifiers: ['history-table'],
+        modifiers: ['ordered'],
         data: {
             bundle: data.bundle,
             items: data.items,

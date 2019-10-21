@@ -1,6 +1,6 @@
 @mixin configurable-bundle-widget-configured-bundle($name: '.configured-bundle') {
     #{$name} {
-        &--history-table {
+        &--ordered {
             padding: 0.5rem;
             margin: 0 0.5rem;
             background-color: $setting-color-white;
