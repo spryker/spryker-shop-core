@@ -80,6 +80,10 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_SUB_FORM_FILTERS = 'PLUGIN_SUB_FORM_FILTERS';
     public const PLUGIN_ADDRESS_STEP_EXECUTOR_ADDRESS_TRANSFER_EXPANDERS = 'PLUGIN_ADDRESS_STEP_EXECUTOR_ADDRESS_TRANSFER_EXPANDERS';
 
+    public const PLUGINS_CHECKOUT_ADDRESS_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_ADDRESS_STEP_ENTER_PRE_CHECK';
+    public const PLUGINS_CHECKOUT_SHIPMENT_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_SHIPMENT_STEP_ENTER_PRE_CHECK';
+    public const PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK';
+
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
@@ -115,6 +119,9 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPaymentPageWidgetPlugins($container);
         $container = $this->addSummaryPageWidgetPlugins($container);
         $container = $this->addSuccessPageWidgetPlugins($container);
+        $container = $this->addCheckoutAddressStepEnterPreCheckPlugins($container);
+        $container = $this->addCheckoutShipmentStepEnterPreCheckPlugins($container);
+        $container = $this->addCheckoutPaymentStepEnterPreCheckPlugins($container);
 
         $container = $this->addCustomerStepSubForms($container);
         $container = $this->addAddressStepSubForms($container);
@@ -660,6 +667,72 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface[]
      */
     protected function getSubFormFilterPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCheckoutAddressStepEnterPreCheckPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CHECKOUT_ADDRESS_STEP_ENTER_PRE_CHECK, function () {
+            return $this->getCheckoutAddressStepEnterPreCheckPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepEnterPreCheckPluginInterface[]
+     */
+    protected function getCheckoutAddressStepEnterPreCheckPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCheckoutShipmentStepEnterPreCheckPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CHECKOUT_SHIPMENT_STEP_ENTER_PRE_CHECK, function () {
+            return $this->getCheckoutShipmentStepEnterPreCheckPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepEnterPreCheckPluginInterface[]
+     */
+    protected function getCheckoutShipmentStepEnterPreCheckPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCheckoutPaymentStepEnterPreCheckPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK, function () {
+            return $this->getCheckoutPaymentStepEnterPreCheckPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepEnterPreCheckPluginInterface[]
+     */
+    protected function getCheckoutPaymentStepEnterPreCheckPlugins(): array
     {
         return [];
     }
