@@ -10,12 +10,8 @@
     "spryker/sales-configurable-bundle": "^1.0.0"
   },
   "require-dev": {
-    "spryker-shop/configurable-bundle-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker-shop/configurable-bundle-widget": "If you want to use components from module QuoteConfiguredBundleWidget."
   },
   "autoload": {
     "psr-4": {
