@@ -186,7 +186,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
 
         this.muError = false;
-        let qtyInBaseUnits = this.multiply(qtyInSalesUnits, Number(this.currentSalesUnit.conversion));
+        const qtyInBaseUnits = this.multiply(qtyInSalesUnits, Number(this.currentSalesUnit.conversion));
 
         if (qtyInBaseUnits < this.getMinQuantity()) {
             this.muError = true;
@@ -433,8 +433,8 @@ export default class PackagingUnitQuantitySelector extends Component {
             return;
         }
 
-        let quantity = Number(this.qtyInBaseUnitInput.value);
-        let totalAmount = amountInBaseUnits * quantity;
+        const quantity = Number(this.qtyInBaseUnitInput.value);
+        const totalAmount = amountInBaseUnits * quantity;
 
         this.amountInBaseUnitInput.value = totalAmount.toString();
         this.addToCartButton.removeAttribute("disabled");
@@ -575,7 +575,7 @@ export default class PackagingUnitQuantitySelector extends Component {
             && this.productPackagingUnitStorage.hasOwnProperty('amount_min')
             && this.productPackagingUnitStorage.amount_min !== null
         ) {
-            return +this.productPackagingUnitStorage.amount_min;
+            return Number(this.productPackagingUnitStorage.amount_min);
         }
 
         return 1;
