@@ -23,7 +23,15 @@
         <hr>
     {% endblock %}
 
-    {% widget 'QuoteApprovalWidget' args [data.cart] only %}{% endwidget %}
+    {% set quoteApprovalWidget = findWidget('QuoteApprovalWidget', [data.cart]) %}
+    {% if quoteApprovalWidget and quoteApprovalWidget.isVisible and not canProceedToCheckout %}
+        {% set canProceedToCheckout = true %}
+    {% endif %}
+
+    {% if quoteApprovalWidget %}  {# @deprecated - This widget is moved to summary page of checkout. #}
+        {% widget quoteApprovalWidget only %}{% endwidget %}
+    {% endif %}
+
 
     {% block cartSummaryContent %}
         {% if can('SeePricePermissionPlugin') %}
@@ -103,7 +111,7 @@
     {% endblock %}
 
     {% if data.isQuoteValid %}
-        {% widget 'QuoteApproveRequestWidget' args [data.cart] %}
+        {% widget 'QuoteApproveRequestWidget' args [data.cart] only %} {# @deprecated - This widget is moved to summary page of checkout. #}
             {% block body %}
                 <hr>
                 {{ parent() }}

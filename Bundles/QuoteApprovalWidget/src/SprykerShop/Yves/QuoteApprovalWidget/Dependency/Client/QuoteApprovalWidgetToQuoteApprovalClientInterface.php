@@ -21,6 +21,13 @@ interface QuoteApprovalWidgetToQuoteApprovalClientInterface
      *
      * @return bool
      */
+    public function isQuoteInApprovalProcess(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
     public function canQuoteBeApprovedByCurrentCustomer(QuoteTransfer $quoteTransfer): bool;
 
     /**
@@ -110,4 +117,11 @@ interface QuoteApprovalWidgetToQuoteApprovalClientInterface
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
     public function declineQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteApplicableForApprovalProcess(QuoteTransfer $quoteTransfer): bool;
 }

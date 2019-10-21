@@ -5,6 +5,7 @@
 
     <transfer name="QuoteRequest">
         <property name="latestVersion" type="QuoteRequestVersion"/>
+        <property name="quoteRequestReference" type="string"/>
     </transfer>
 
     <transfer name="QuoteRequestResponse">
@@ -25,4 +26,14 @@
     <transfer name="Message">
         <property name="value" type="string"/>
     </transfer>
+
+    <transfer name="QuoteRequestFilter">
+        <property name="idCompanyUser" type="int"/>
+        <property name="quoteRequestReference" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteRequestVersion">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
 </transfers>

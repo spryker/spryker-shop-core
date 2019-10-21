@@ -105,22 +105,18 @@ class CustomerController extends AbstractCustomerController
     protected function executeIndexAction()
     {
         $loggedInCustomerTransfer = $this->getLoggedInCustomerTransfer();
-        $customerTransfer = $this
-            ->getFactory()
-            ->getCustomerClient()
-            ->getCustomerByEmail($loggedInCustomerTransfer);
 
-        if (!$customerTransfer->getIdCustomer()) {
+        if (!$loggedInCustomerTransfer->getIdCustomer()) {
             return $this->redirectResponseInternal(CustomerPageControllerProvider::ROUTE_LOGOUT);
         }
 
-        $orderListTransfer = $this->createOrderListTransfer($customerTransfer);
+        $orderListTransfer = $this->createOrderListTransfer($loggedInCustomerTransfer);
         $orderList = $this->getFactory()->getSalesClient()->getPaginatedCustomerOrdersOverview($orderListTransfer);
 
         return [
-            'customer' => $customerTransfer,
+            'customer' => $loggedInCustomerTransfer,
             'orderList' => $orderList->getOrders(),
-            'addresses' => $this->getDefaultAddresses($customerTransfer),
+            'addresses' => $this->getDefaultAddresses($loggedInCustomerTransfer),
         ];
     }
 }

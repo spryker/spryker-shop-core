@@ -16,6 +16,8 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
+ * @deprecated Use `\SprykerShop\Yves\ShopApplication\Plugin\EventDispatcher\ShopApplicationFilterControllerEventDispatcherPlugin` instead.
+ *
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationConfig getConfig()
  */

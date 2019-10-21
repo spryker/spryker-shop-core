@@ -24,6 +24,7 @@
   "require-dev": {
     "spryker-shop/agent-page": "*",
     "spryker-shop/cart-page": "*",
+    "spryker-shop/configurable-bundle-widget": "*",
     "spryker-shop/quote-request-page": "*",
     "spryker/code-sniffer": "*",
     "spryker/router": "*",
@@ -33,6 +34,7 @@
   "suggest": {
     "spryker-shop/agent-page": "If you want to use agent layout templates: ^1.2.0",
     "spryker-shop/cart-page": "If you want to use cart page molecules: ^3.2.0",
+    "spryker-shop/configurable-bundle-widget": "If you want to use configurable bundle widget functionality",
     "spryker-shop/company-user-agent-widget": "If you want to use company user auto-complete form: ^1.0.0",
     "spryker-shop/quote-request-page": "If you want to use quote request page molecules: ^2.0.0",
     "spryker/router": "Use this module if you want use the RouterProviderPlugin.",

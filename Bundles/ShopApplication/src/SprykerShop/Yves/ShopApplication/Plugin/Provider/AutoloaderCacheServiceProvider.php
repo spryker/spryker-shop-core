@@ -12,6 +12,9 @@ use Silex\ServiceProviderInterface;
 use Spryker\Shared\Kernel\ClassResolver\ResolverCacheManager;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
+/**
+ * @deprecated Use `\Spryker\Yves\Kernel\Plugin\EventDispatcher\AutoloaderCacheEventDispatcherPlugin` instead.
+ */
 class AutoloaderCacheServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
