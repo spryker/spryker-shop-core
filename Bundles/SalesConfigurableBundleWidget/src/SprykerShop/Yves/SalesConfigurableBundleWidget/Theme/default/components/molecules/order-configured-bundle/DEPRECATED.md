@@ -1,1 +1,1 @@
-This component is deprecated. Use molecule('configured-bundle', 'ConfigurableBundleWidget') instead.
+This component is deprecated. Use molecule('ordered-configured-bundle', 'SalesConfigurableBundleWidget') instead.
