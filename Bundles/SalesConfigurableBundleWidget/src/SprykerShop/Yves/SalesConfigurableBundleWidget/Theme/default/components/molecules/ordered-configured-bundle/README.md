@@ -1,0 +1,1 @@
+Creates a block with ordered configured bundle information: ordered configured bundle name, ordered configured bundle ID, ordered configured bundle price, ordered configured bundle quantity, ordered configured bundle sum and list of included products.

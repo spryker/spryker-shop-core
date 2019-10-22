@@ -1,0 +1,44 @@
+@mixin sales-configurable-bundle-widget-ordered-configured-bundle-product($name: '.ordered-configured-bundle-product') {
+    @include shop-ui-product-item($name) {
+        @include helper-breakpoint(lg) {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        &__container {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.188rem;
+        }
+
+        &__col {
+            margin-right: auto;
+            margin-left: auto;
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            &--container {
+                display: flex;
+            }
+        }
+
+        &__image-container {
+            position: relative;
+            width: 100%;
+        }
+
+        &__text {
+            display: inline-block;
+            text-align: left;
+        }
+
+        @content;
+    }
+}

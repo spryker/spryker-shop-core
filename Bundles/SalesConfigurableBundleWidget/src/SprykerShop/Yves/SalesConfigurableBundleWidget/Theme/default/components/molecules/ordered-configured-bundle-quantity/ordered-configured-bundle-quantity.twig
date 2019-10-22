@@ -1,0 +1,21 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'ordered-configured-bundle-quantity',
+} %}
+
+{% define data = {
+    quantity: required,
+} %}
+
+{% block body %}
+    {% block quantityCol %}
+        <div class="{{ config.name }}__text text-center">
+            {% block quantity %}
+                <span class="{{ config.name }}__text">
+                    {{ 'configured_bundle.quantity' | trans }} {{ data.quantity }}
+                </span>
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}
