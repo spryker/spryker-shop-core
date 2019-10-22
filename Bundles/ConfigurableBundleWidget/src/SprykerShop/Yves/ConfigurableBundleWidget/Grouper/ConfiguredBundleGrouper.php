@@ -59,8 +59,10 @@ class ConfiguredBundleGrouper implements ConfiguredBundleGrouperInterface
      */
     protected function hasItems(ConfiguredBundleTransfer $configuredBundleTransfer, iterable $itemTransfers): bool
     {
+        $configuredBundleItemGroupKeys = $this->getItemGroupKeysFromConfiguredBundle($configuredBundleTransfer);
+
         foreach ($itemTransfers as $itemTransfer) {
-            if (in_array($itemTransfer->getGroupKey(), $this->getItemGroupKeysFromConfiguredBundle($configuredBundleTransfer))) {
+            if (in_array($itemTransfer->getGroupKey(), $configuredBundleItemGroupKeys)) {
                 return true;
             }
         }
