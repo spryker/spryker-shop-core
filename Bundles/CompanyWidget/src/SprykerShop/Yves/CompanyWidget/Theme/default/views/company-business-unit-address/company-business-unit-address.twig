@@ -20,6 +20,7 @@
     jsAddressClass: '',
     isCustomAddress: app.request.get('customAddress')[_widget.formType]  | default(not _widget.formAddressTransfer.idCustomerAddress),
     currentCompanyBusinessUnitAddress: _widget.currentCompanyBusinessUnitAddress,
+    isCurrentAddressEmpty: _widget.isCurrentAddressEmpty | default(true),
 } %}
 
 {% block body %}
@@ -34,8 +35,8 @@
 
     {% if fullAddresses %}
         {% for address in fullAddresses %}
-            {% set canUseCurrentAsDefaultCustomerAddress = not data.currentAddressId and not data.currentCompanyUnitAddressId and isShippingAddressFormType and address.isDefaultShipping %}
-            {% set canUseCurrentAsDefaultCompanyUnitAddress = not data.currentAddressId and not data.currentCompanyUnitAddressId and isBillingAddressFormType and address.isDefaultBilling %}
+            {% set canUseCurrentAsDefaultCustomerAddress = not data.currentAddressId and not data.currentCompanyUnitAddressId and isShippingAddressFormType and address.isDefaultShipping and data.isCurrentAddressEmpty %}
+            {% set canUseCurrentAsDefaultCompanyUnitAddress = not data.currentAddressId and not data.currentCompanyUnitAddressId and isBillingAddressFormType and address.isDefaultBilling and data.isCurrentAddressEmpty %}
             {% set isCurrentCustomerAddress = data.currentAddressId and data.currentAddressId == address.idCustomerAddress %}
             {% set isCurrentCompanyUnitAddress = data.currentCompanyUnitAddressId and data.currentCompanyUnitAddressId == address.idCompanyUnitAddress %}
             {% set isCurrentValueDeliverToMultipleAddresses = data.currentAddressId == optionValueDeliverToMultipleAddresses %}

@@ -44,6 +44,17 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
         $this->addCurrentCompanyBusinessUnitAddressParameter(
             $addressProvider->findCurrentCompanyBusinessUnitAddress($formAddressTransfer, $companyBusinessUnitAddresses)
         );
+        $this->addIsCurrentAddressEmptyParameter($formAddressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return void
+     */
+    protected function addIsCurrentAddressEmptyParameter(AddressTransfer $addressTransfer): void
+    {
+        $this->addParameter('isCurrentAddressEmpty', $this->isAddressEmpty($addressTransfer));
     }
 
     /**
@@ -156,5 +167,16 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
         return ($jsonEncodedAddresses !== false)
             ? $jsonEncodedAddresses
             : '[]';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return string
+     */
+    protected function isAddressEmpty(AddressTransfer $addressTransfer): string
+    {
+        return $addressTransfer->getFirstName() === null || $addressTransfer->getFirstName() === ''
+            || $addressTransfer->getLastName() === null || $addressTransfer->getLastName() === '';
     }
 }
