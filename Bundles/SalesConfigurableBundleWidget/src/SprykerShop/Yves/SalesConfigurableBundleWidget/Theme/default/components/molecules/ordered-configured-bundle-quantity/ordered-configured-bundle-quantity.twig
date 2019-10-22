@@ -9,13 +9,11 @@
 } %}
 
 {% block body %}
-    {% block quantityCol %}
-        <div class="{{ config.name }}__text text-center">
-            {% block quantity %}
-                <span>
-                    {{ 'configured_bundle.quantity' | trans }} {{ data.quantity }}
-                </span>
-            {% endblock %}
-        </div>
-    {% endblock %}
+    <div class="text-center">
+        {% block quantity %}
+            <span>
+                {{ 'configured_bundle.quantity' | trans }} {{ data.quantity }}
+            </span>
+        {% endblock %}
+    </div>
 {% endblock %}
