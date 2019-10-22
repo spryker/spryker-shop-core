@@ -178,7 +178,7 @@ class CheckoutAddressCollectionForm extends AbstractType
         }
 
         /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer|false $shipmentGroupTransfer */
-        $shipmentGroupTransfer = current($shipmentGroupCollection);
+        $shipmentGroupTransfer = $shipmentGroupCollection[0];
 
         if ($shipmentGroupTransfer === false) {
             return;

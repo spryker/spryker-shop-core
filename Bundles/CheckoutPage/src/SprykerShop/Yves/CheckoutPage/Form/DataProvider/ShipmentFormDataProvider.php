@@ -223,7 +223,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     protected function getAvailableShipmentMethods(QuoteTransfer $quoteTransfer)
     {
-        $shipmentMethodsTransfer = current($this->shipmentClient->getAvailableMethodsByShipment($quoteTransfer)->getShipmentMethods());
+        $shipmentMethodsTransfer = $this->shipmentClient->getAvailableMethodsByShipment($quoteTransfer)->getShipmentMethods()[0];
         if (!$shipmentMethodsTransfer) {
             return new ShipmentMethodsTransfer();
         }
