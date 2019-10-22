@@ -172,11 +172,11 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return string
+     * @return bool
      */
-    protected function isAddressEmpty(AddressTransfer $addressTransfer): string
+    protected function isAddressEmpty(AddressTransfer $addressTransfer): bool
     {
-        return $addressTransfer->getFirstName() === null || $addressTransfer->getFirstName() === ''
-            || $addressTransfer->getLastName() === null || $addressTransfer->getLastName() === '';
+        return ($addressTransfer->getFirstName() === null || $addressTransfer->getFirstName() === ''
+            || $addressTransfer->getLastName() === null || $addressTransfer->getLastName() === '');
     }
 }

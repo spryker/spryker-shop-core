@@ -20,7 +20,7 @@
     jsAddressClass: '',
     isCustomAddress: app.request.get('customAddress')[_widget.formType]  | default(not _widget.formAddressTransfer.idCustomerAddress),
     currentCompanyBusinessUnitAddress: _widget.currentCompanyBusinessUnitAddress,
-    isCurrentAddressEmpty: _widget.isCurrentAddressEmpty | default(true),
+    isCurrentAddressEmpty: _widget.isCurrentAddressEmpty,
 } %}
 
 {% block body %}
