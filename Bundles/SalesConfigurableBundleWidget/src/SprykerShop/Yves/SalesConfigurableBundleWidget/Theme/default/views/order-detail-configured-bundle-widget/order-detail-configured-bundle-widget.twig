@@ -9,7 +9,7 @@
 {% block body %}
     {% for bundle in data.salesOrderConfiguredBundles %}
         {% block bundleItem %}
-            {% include molecule('ordered-configured-bundle', 'SalesConfigurableBundleWidget') ignore missing with {
+            {% include molecule('ordered-configured-bundle', 'SalesConfigurableBundleWidget') with {
                 data: {
                     bundle: bundle,
                     items: data.items,

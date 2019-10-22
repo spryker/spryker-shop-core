@@ -6,15 +6,13 @@
 
 {% define data = {
     product: required,
-    image: required,
-    currencyIsoCode: required,
     quantity: data.product.quantity | default,
 } %}
 
 {% block extraClass %}{% endblock %}
 
 {% block imageContainer %}
-    <div class="{{ config.name }}__col {{ config.name }}__col--container col col--sm-12 col--lg-2">
+    <div class="{{ config.name }}__col grid grid--middle col col--sm-12 col--lg-2">
         <div class="grid grid--middle">
             <div class="{{ config.name }}__col-inner">
                 {% widget 'CustomerReorderItemCheckboxWidget' args [data.product] only %}{% endwidget %}
