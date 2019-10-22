@@ -173,7 +173,7 @@
                     {% block additionalInformation %}
                         <div class="spacing-bottom spacing-bottom--big">
                             <h5>{{ informationArticle.title }}</h5>
-                            <p>{{ informationArticle.text }}</p>
+                            <p>{{ informationArticle.text | raw }}</p>
                         </div>
                     {% endblock %}
                 {% endfor %}
