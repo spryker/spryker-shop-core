@@ -34,9 +34,9 @@ class MerchantProfilePageDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addMerchantProfileStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_MERCHANT_PROFILE_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_MERCHANT_PROFILE_STORAGE, function (Container $container) {
             return new MerchantProfilePageToMerchantProfileStorageClientBridge($container->getLocator()->merchantProfileStorage()->client());
-        };
+        });
 
         return $container;
     }

@@ -30,7 +30,7 @@ class MerchantProfileController extends AbstractController
 
         return $this->view(
             [
-            'merchantProfileView' => $merchantProfileViewTransfer,
+                'merchantProfileView' => $merchantProfileViewTransfer,
             ],
             [],
             '@MerchantProfilePage/views/merchant-profile/merchant-profile.twig'
