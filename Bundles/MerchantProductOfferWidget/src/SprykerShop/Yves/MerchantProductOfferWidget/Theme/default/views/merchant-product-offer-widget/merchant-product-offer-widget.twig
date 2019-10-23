@@ -1,0 +1,13 @@
+{% extends template('widget') %}
+
+{% define data = {
+    merchantProductOffers: _widget.merchantProductOffers,
+} %}
+
+{% block template %}
+    {% if data.merchantProductOffers %}
+        {% for merchantProductOffer in merchantProductOffers  %}
+            {{ dump(merchantProductOffer) }}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
