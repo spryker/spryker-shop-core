@@ -69,7 +69,7 @@
                                                     {% endblock %}
 
                                                     {% block addressCol %}
-                                                        {% set merchantAddresses = data.merchantProfile.addresses | default(['+++', '+++', '+++']) %}
+                                                        {% set merchantAddresses = data.merchantProfile.addressCollection | default([]) %}
 
                                                         {% if merchantAddresses %}
                                                             <div class="col col--sm-12 col--lg-6">
@@ -84,7 +84,10 @@
                                                                     } only %}
                                                                         {% block text %}
                                                                             {% for address in embed.addresses %}
-                                                                                <div>{{ address }}</div>
+                                                                                <div>{{ address.address1 }} {{ address.address2 }}</div>
+                                                                                <div>{{ address.zipCode }} {{ address.city}}</div>
+                                                                                <div>{{ address.address3 }}</div>
+                                                                                <div>{{ address.countryName }}</div>
                                                                             {% endfor %}
                                                                         {% endblock %}
                                                                     {% endembed %}
