@@ -127,14 +127,15 @@ class NewsletterController extends AbstractController
             ->getNewsletterClient()
             ->subscribeWithDoubleOptIn($newsletterSubscriptionRequestTransfer);
 
-        $subscriptionResult = $subscriptionResponse->getSubscriptionResults()[0];
-        if ($subscriptionResult->getIsSuccess()) {
+        /** @var \Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer $newsletterSubscriptionResultTransfer */
+        $newsletterSubscriptionResultTransfer = $subscriptionResponse->getSubscriptionResults()->getIterator()->current();
+        if ($newsletterSubscriptionResultTransfer->getIsSuccess()) {
             $this->addSuccessMessage(static::MESSAGE_SUBSCRIPTION_SUCCESS);
 
             return;
         }
 
-        $this->addErrorMessage($subscriptionResult->getErrorMessage());
+        $this->addErrorMessage($newsletterSubscriptionResultTransfer->getErrorMessage());
     }
 
     /**

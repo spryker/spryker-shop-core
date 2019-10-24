@@ -66,8 +66,9 @@ class NewsletterSubscriptionSummaryWidget extends AbstractWidget
             ->getNewsletterClient()
             ->checkSubscription($subscriptionRequestTransfer);
 
-        $result = $subscriptionResponseTransfer->getSubscriptionResults()[0];
+        /** @var \Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer $newsletterSubscriptionResultTransfer */
+        $newsletterSubscriptionResultTransfer = $subscriptionResponseTransfer->getSubscriptionResults()->getIterator()->current();
 
-        return $result->getIsSuccess();
+        return $newsletterSubscriptionResultTransfer->getIsSuccess();
     }
 }

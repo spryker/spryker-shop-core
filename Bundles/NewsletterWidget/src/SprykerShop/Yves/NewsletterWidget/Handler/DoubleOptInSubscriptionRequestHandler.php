@@ -48,7 +48,8 @@ class DoubleOptInSubscriptionRequestHandler implements SubscriptionRequestHandle
             return null;
         }
 
-        $newsLetterSubscriptionResultTransfer = $subscriptionResponse->getSubscriptionResults()[0];
+        /** @var \Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer $newsLetterSubscriptionResultTransfer */
+        $newsLetterSubscriptionResultTransfer = $subscriptionResponse->getSubscriptionResults()->getIterator()->current();
 
         return $newsLetterSubscriptionResultTransfer;
     }
