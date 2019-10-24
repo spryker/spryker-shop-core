@@ -85,6 +85,7 @@ class CompanyUnitAddressExpander implements CompanyUnitAddressExpanderInterface
 
         $addressTransfer = $this->companyUnitMapper->mapCustomerDataToAddressTransfer($addressTransfer, $customerTransfer);
         $addressTransfer->setCompany($this->getCompanyName($customerTransfer));
+        $addressTransfer->setIsAddressSavingSkipped(true);
 
         return $addressTransfer;
     }
