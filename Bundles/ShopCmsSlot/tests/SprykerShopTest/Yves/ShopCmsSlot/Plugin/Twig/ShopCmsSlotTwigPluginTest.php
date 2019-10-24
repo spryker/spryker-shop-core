@@ -9,6 +9,9 @@ namespace SprykerShopTest\Yves\ShopCmsSlot\Plugin\Twig;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CmsSlotContentResponseTransfer;
+use Generated\Shared\Transfer\CmsSlotTransfer;
+use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotStorageClientBridge;
+use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotStorageClientInterface;
 use SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin;
 use SprykerShop\Yves\ShopCmsSlot\ShopCmsSlotDependencyProvider;
 use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface;
@@ -40,7 +43,7 @@ class ShopCmsSlotTwigPluginTest extends Unit
         ]);
 
         $this->setCmsSlotContentPluginDependency($cmsSlotContentResponseTransfer);
-        $this->setCmsSlotStorageClientDependency(new CmsSlotStorageTransfer());
+        $this->setCmsSlotStorageClientDependency(new CmsSlotTransfer());
 
         $cmsSlotContextTransfer = $this->tester->getCmsSlotContextTransfer(
             static::SLOT_KEY,
@@ -64,7 +67,7 @@ class ShopCmsSlotTwigPluginTest extends Unit
         ]);
 
         $this->setCmsSlotContentPluginDependency($cmsSlotContentResponseTransfer);
-        $this->setCmsSlotStorageClientDependency(new CmsSlotStorageTransfer());
+        $this->setCmsSlotStorageClientDependency(new CmsSlotTransfer());
 
         $cmsSlotContextTransfer = $this->tester->getCmsSlotContextTransfer(
             static::SLOT_KEY,
@@ -83,11 +86,11 @@ class ShopCmsSlotTwigPluginTest extends Unit
      */
     public function testShopCmsSlotTwigPluginReturnsEmptyStringIfSlotKeyIsWrongOrSlotIsInactive(): void
     {
-        $cmsSlotDataTransfer = $this->tester->getCmsSlotDataTransfer([
-            CmsSlotDataTransfer::CONTENT => static::CONTENT,
+        $cmsSlotContentResponseTransfer = $this->tester->getCmsSlotContentResponseTransfer([
+            CmsSlotContentResponseTransfer::CONTENT => static::CONTENT,
         ]);
 
-        $this->setCmsSlotContentPluginDependency($cmsSlotDataTransfer);
+        $this->setCmsSlotContentPluginDependency($cmsSlotContentResponseTransfer);
         $this->setCmsSlotStorageClientDependency(null);
 
         $cmsSlotContextTransfer = $this->tester->getCmsSlotContextTransfer(
@@ -116,16 +119,16 @@ class ShopCmsSlotTwigPluginTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotStorageTransfer|null $cmsSlotStorageTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotTransfer|null $cmsSlotTransfer
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotStorageClientInterface
      */
-    protected function getCmsSlotStorageClientMock(?CmsSlotStorageTransfer $cmsSlotStorageTransfer): ShopCmsSlotToCmsSlotStorageClientInterface
+    protected function getCmsSlotStorageClientMock(?CmsSlotTransfer $cmsSlotTransfer): ShopCmsSlotToCmsSlotStorageClientInterface
     {
         $cmsSlotStorageClientMock = $this->getMockBuilder(ShopCmsSlotToCmsSlotStorageClientBridge::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $cmsSlotStorageClientMock->method('findCmsSlotByKey')->willReturn($cmsSlotStorageTransfer);
+        $cmsSlotStorageClientMock->method('findCmsSlotByKey')->willReturn($cmsSlotTransfer);
 
         return $cmsSlotStorageClientMock;
     }
@@ -144,15 +147,15 @@ class ShopCmsSlotTwigPluginTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotStorageTransfer|null $cmsSlotStorageTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotTransfer|null $cmsSlotTransfer
      *
      * @return void
      */
-    protected function setCmsSlotStorageClientDependency(?CmsSlotStorageTransfer $cmsSlotStorageTransfer): void
+    protected function setCmsSlotStorageClientDependency(?CmsSlotTransfer $cmsSlotTransfer): void
     {
         $this->tester->setDependency(
             ShopCmsSlotDependencyProvider::CLIENT_CMS_SLOT_STORAGE,
-            $this->getCmsSlotStorageClientMock($cmsSlotStorageTransfer)
+            $this->getCmsSlotStorageClientMock($cmsSlotTransfer)
         );
     }
 }

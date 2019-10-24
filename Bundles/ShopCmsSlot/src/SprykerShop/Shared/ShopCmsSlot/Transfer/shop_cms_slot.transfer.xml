@@ -25,7 +25,7 @@
         <property name="values" type="string[]" associative="true"/>
     </transfer>
 
-    <transfer name="CmsSlotStorage">
+    <transfer name="CmsSlot">
     </transfer>
 
 </transfers>
