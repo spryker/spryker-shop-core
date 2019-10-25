@@ -32,7 +32,7 @@
             {{ number | trans({
                 '1' : 'product_review.summary.star' | trans,
                 'many': 'product_review.summary.stars' | trans,
-            }) -}}
+            }) }}
             (<strong>{{ ratingReview }}</strong>)
         </li>
     {% endfor %}

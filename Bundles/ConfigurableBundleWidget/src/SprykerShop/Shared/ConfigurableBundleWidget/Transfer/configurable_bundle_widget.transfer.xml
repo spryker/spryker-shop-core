@@ -12,6 +12,7 @@
         <property name="configuredBundle" type="ConfiguredBundle"/>
         <property name="sumSubtotalAggregation" type="int"/>
         <property name="unitPrice" type="int"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="ConfiguredBundleCollection">
@@ -38,6 +39,21 @@
     <transfer name="ConfigurableBundleTemplateSlot">
         <property name="idConfigurableBundleTemplateSlot" type="int"/>
         <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="UpdateConfiguredBundleRequest">
+        <property name="quote" type="Quote"/>
+        <property name="groupKey" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="QuoteError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="QuoteError">
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

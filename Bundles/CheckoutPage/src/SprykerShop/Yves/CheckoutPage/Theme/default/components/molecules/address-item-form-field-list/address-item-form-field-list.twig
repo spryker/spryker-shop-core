@@ -10,14 +10,19 @@
     jsAddressClass: '',
 } %}
 
+{%- block class -%}
+    {{ parent() }} {{ config.jsName }}
+{%- endblock -%}
+
 {% block body %}
-    {% set companyBusinessUnitShippingAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', data.shippingForm.vars.data]) %}
-    {% set isCompanyBusinessUnitShippingAddressApplicable = companyBusinessUnitShippingAddressWidget and companyBusinessUnitShippingAddressWidget.isApplicable %}
+    {% set isCompanyBusinessUnitShippingAddressApplicable = false %}
 
     {% for item in data.items %}
         <div class="grid grid--middle {{ config.jsName }}__item-shipping-{{ loop.index }}">
             {% set hasShippingAddresses = item.shippingAddress.id_customer_address is defined %}
             {% set hasCompanyUnitAddresses = item.shippingAddress.id_company_unit_address is defined %}
+            {% set companyBusinessUnitShippingAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', item.shippingAddress.vars.data]) %}
+            {% set isCompanyBusinessUnitShippingAddressApplicable = companyBusinessUnitShippingAddressWidget and companyBusinessUnitShippingAddressWidget.isApplicable %}
             {% set hasShippingAddressesAndApplicable = isCompanyBusinessUnitShippingAddressApplicable ? true : hasShippingAddresses %}
             {% set itemName = item.vars.data.name | default %}
             {% set itemQuantity = item.vars.data.quantity | default %}
@@ -115,9 +120,11 @@
 
                 {% if hasShippingAddressesAndApplicable %}
                     {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
+                        class: config.jsName ~ '__toggler',
                         attributes: {
                             'trigger-selector': '.' ~ config.jsName ~ '__trigger--' ~ loop.index,
                             'target-selector': '.' ~ config.jsName ~ '__item-shipping--' ~ loop.index,
+                            'parent-target-class-name': config.jsName,
                         },
                     } only %}
                 {% endif %}
@@ -138,6 +145,7 @@
             'container-selector': '.' ~ config.jsName ~ '__item-shipping',
             'target-selector': '.' ~ data.jsAddressClass ~ '__form-submit',
             'dropdown-trigger-selector': '.' ~ config.jsName ~ '__trigger',
+            'parent-target-class-name': config.jsName,
             'is-enable': false,
         },
     } only %}

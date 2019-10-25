@@ -17,6 +17,8 @@
     shipmentMethod: _view.quoteTransfer.shipment.method.name | default,
     paymentMethod: _view.quoteTransfer.payment.paymentMethod,
     shipmentGroups: _view.shipmentGroups,
+    isPlaceableOrder: _view.isPlaceableOrder,
+    isPlaceableOrderErrors: _view.isPlaceableOrderErrors,
 
     forms: {
         summary: _view.summaryForm,
@@ -55,7 +57,7 @@
                     <hr>
                     <h6><strong>{{ 'checkout.step.summary.products' | trans }}</strong></h6>
 
-                    {% widget 'QuoteConfiguredBundleWidget' args [data.cart] with {
+                    {% widget 'QuoteConfiguredBundleWidget' args [data.cart, shipmentGroup.items] with {
                         data: {
                             isEditable: false,
                         },
@@ -245,6 +247,9 @@
                     </div>
                 {% endif %}
             {% endif %}
+            <div class="box">
+                {% widget 'QuoteApprovalWidget' args [data.cart] only %}{% endwidget %}
+            </div>
 
             <div class="box">
                 <h4>{{ 'page.checkout.summary.complete_checkout' | trans }}</h4>
@@ -262,7 +267,7 @@
                 data: {
                     form: data.forms.summary,
                     submit: {
-                        enable: can('SeeOrderPlaceSubmitPermissionPlugin'),
+                        enable: data.isPlaceableOrder and can('SeeOrderPlaceSubmitPermissionPlugin') and can('WriteSharedCartPermissionPlugin', data.cart.idQuote),
                         text: 'checkout.step.place.order' | trans,
                     },
                     cancel: {
@@ -274,6 +279,7 @@
                 embed: {
                     overview: data.overview,
                     cart: data.cart,
+                    isPlaceableOrderErrors: data.isPlaceableOrderErrors,
                 },
             } only %}
                 {% block body %}
@@ -287,8 +293,24 @@
                         },
                     } only %}
 
+                    {% widget 'QuoteApproveRequestWidget' args [embed.cart] %}
+                        {% block body %}
+                            <hr>
+                            {{ parent() }}
+                        {% endblock %}
+                    {% endwidget %}
+
                     <hr class="box__separator">
                     {{ parent() }}
+
+                    {% if embed.isPlaceableOrderErrors is not empty %}
+                        <hr class="box__separator">
+                        <ul class="list list--alert">
+                            {% for error in embed.isPlaceableOrderErrors %}
+                                <li class="list__item">{{ error.message | trans }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 {% endblock %}
             {% endembed %}
         </div>

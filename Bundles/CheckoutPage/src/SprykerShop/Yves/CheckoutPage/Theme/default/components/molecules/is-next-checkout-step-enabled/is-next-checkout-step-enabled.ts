@@ -1,5 +1,5 @@
 import Component from 'ShopUi/models/component';
-import ValidateNextCheckoutStep from '../validate-next-checkout-step/validate-next-checkout-step';
+import ValidateNextCheckoutStep, { EVENT_INIT } from '../validate-next-checkout-step/validate-next-checkout-step';
 
 export default class IsNextCheckoutStepEnabled extends Component {
     protected trigger: HTMLSelectElement;
@@ -12,13 +12,13 @@ export default class IsNextCheckoutStepEnabled extends Component {
         this.target = <ValidateNextCheckoutStep>document.querySelector(this.targetSelector);
 
         if (this.trigger) {
-            this.initTriggerState();
             this.mapEvents();
         }
     }
 
     protected mapEvents(): void {
         this.trigger.addEventListener('change', () => this.onTriggerChange());
+        this.target.addEventListener(EVENT_INIT, () => this.initTriggerState());
     }
 
     protected initTriggerState(): void {
