@@ -140,12 +140,10 @@
                            name="amount-sales-unit[{{ data.product.sku }}]"
                     >
                     <input id="default-amount"
-                           class="input input--expand"
                            type="hidden"
                            value="{{ defaultAmount }}"
                     >
                     <input id="amount"
-                           class="input input--expand"
                            type="hidden"
                            value="{{ defaultAmount }}"
                            name="amount[{{ data.product.sku }}]"
@@ -182,6 +180,24 @@
                 {% endif %}
             </div>
         </div>
+    {% elseif data.productPackagingUnit %}
+        <input type="hidden" name="amount-id-product-measurement-sales-unit[{{ data.product.sku }}]" value="{{ data.leadProductSalesUnits[0].idProductMeasurementSalesUnit }}">
+        <input id="user-amount"
+               type="hidden"
+               value="{{ data.productPackagingUnit.defaultAmount }}"
+        >
+        <input id="default-amount"
+               type="hidden"
+               value="{{ data.productPackagingUnit.defaultAmount }}"
+        >
+        <input id="amount"
+               type="hidden"
+               value="{{ data.productPackagingUnit.defaultAmount }}"
+               name="amount[{{ data.product.sku }}]"
+        >
+
+        <input type="hidden" name="lead-product-sku[{{ data.product.sku }}]"
+               value="{{ (data.productPackagingUnit.idLeadProduct == data.productPackagingUnit.idProduct) ? data.product.sku : '' }}">
     {% endif %}
 
     <div class="col col--sm-12 spacing-y">

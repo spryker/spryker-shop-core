@@ -169,10 +169,6 @@ export default class PackagingUnitQuantitySelector extends Component {
             this.measurementUnitInput.addEventListener('change', (event: Event) => this.measurementUnitInputChange(event));
         }
 
-        if (!this.packagingUnitIsVariable) {
-            return;
-        }
-
         this.amountInSalesUnitInput.addEventListener('input', (event: Event) => this.amountInputChange());
 
         if (this.leadSalesUnitSelect) {
@@ -436,6 +432,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         const quantity = Number(this.qtyInBaseUnitInput.value);
         const totalAmount = amountInBaseUnits * quantity;
 
+        console.log(totalAmount, amountInBaseUnits, quantity);
         this.amountInBaseUnitInput.value = totalAmount.toString();
         this.addToCartButton.removeAttribute("disabled");
         this.hidePackagingUnitRestrictionNotifications();
@@ -603,15 +600,6 @@ export default class PackagingUnitQuantitySelector extends Component {
         return 1;
     }
 
-    private getDefaultAmount() {
-        if (typeof this.productPackagingUnitStorage !== 'undefined'
-            && this.productPackagingUnitStorage.hasOwnProperty('default_amount')
-            && this.productPackagingUnitStorage.default_amount !== null
-        ) {
-            return Number(this.productPackagingUnitStorage.default_amount);
-        }
-    }
-
     private getMinAmountChoice(amountInSalesUnits: number) {
         const amountInBaseUnits = this.multiply(amountInSalesUnits, this.currentLeadSalesUnit.conversion);
 
@@ -674,6 +662,6 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     protected get packagingUnitIsVariable(): boolean {
-        return this.hasAttribute('packaging-unit-is-variable');
+        return this.getAttribute('packaging-unit-is-variable') === 'true';
     }
 }

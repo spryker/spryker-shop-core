@@ -24,15 +24,19 @@
     <li class="{{ config.name }}__item">
         <div>{{ 'packaging_units.cart.quantity' | trans }}</div>
         <div class="{{ config.name }}__value">{{ data.quantity }}</div>
-        <small class="text-secondary">
-            [= {{ data.quantity / data.quantityConversion }} {{ salesUnitName | trans }}]
-        </small>
+        {% if data.quantityConversion is not empty %}
+            <small class="text-secondary">
+                [= {{ data.quantity / data.quantityConversion }} {{ salesUnitName | trans }}]
+            </small>
+        {% endif %}
     </li>
     <li class="{{ config.name }}__item">
         <div>{{ 'packaging_units.cart.amount' | trans }}</div>
         <div class="{{ config.name }}__value">{{ amountPerQuantity }}</div>
-        <small class="text-secondary">
-            [= {{ amountPerQuantity.divide(data.amountConversion, 5).trim }} {{ leadSalesUnitName | trans }}]
-        </small>
+        {% if data.amountConversion is not empty %}
+            <small class="text-secondary">
+                [= {{ amountPerQuantity.divide(data.amountConversion, 5).trim }} {{ leadSalesUnitName | trans }}]
+            </small>
+        {% endif %}
     </li>
 {% endblock body %}
