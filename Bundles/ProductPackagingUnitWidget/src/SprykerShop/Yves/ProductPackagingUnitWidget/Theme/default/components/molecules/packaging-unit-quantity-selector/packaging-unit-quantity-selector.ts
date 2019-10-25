@@ -1,4 +1,3 @@
-/* tslint:disable */
 import Component from 'ShopUi/models/component';
 
 export default class PackagingUnitQuantitySelector extends Component {
@@ -91,7 +90,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.initCurrentLeadSalesUnit();
         this.initFormDefaultValues();
         this.mapEvents();
-        if(this.amountInBaseUnitInput) {
+        if (this.amountInBaseUnitInput) {
             this.amountInputChange();
         }
     }
@@ -110,7 +109,7 @@ export default class PackagingUnitQuantitySelector extends Component {
                 this.salesUnits = jsonData.salesUnits;
             }
 
-            if(jsonData.hasOwnProperty('leadSalesUnits')) {
+            if (jsonData.hasOwnProperty('leadSalesUnits')) {
                 this.leadSalesUnits = jsonData.leadSalesUnits;
             }
 
@@ -206,7 +205,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
         this.qtyInBaseUnitInput.value = qtyInBaseUnits.toString();
 
-        if(this.amountInBaseUnitInput) {
+        if (this.amountInBaseUnitInput) {
             this.amountInputChange();
         }
 
@@ -225,7 +224,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     private askCustomerForCorrectInput(qtyInSalesUnits: number) {
 
-        if(this.muError) {
+        if (this.muError) {
             let minChoice = this.getMinChoice(qtyInSalesUnits);
             let maxChoice = this.getMaxChoice(qtyInSalesUnits, minChoice);
 
@@ -433,7 +432,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
         const quantity = Number(this.qtyInBaseUnitInput.value);
         const amountPrecision = Number(this.currentLeadSalesUnit.precision);
-        const totalAmount = this.round(((amountInBaseUnits * amountPrecision) * quantity)/amountPrecision, 4);
+        const totalAmount = this.round(((amountInBaseUnits * amountPrecision) * quantity) / amountPrecision, 4);
 
         this.amountInBaseUnitInput.value = totalAmount.toString();
         this.addToCartButton.removeAttribute("disabled");
@@ -454,7 +453,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     private askCustomerForCorrectAmountInput(amountInSalesUnits) {
 
-        if(this.puError) {
+        if (this.puError) {
             let minChoice = this.getMinAmountChoice(amountInSalesUnits);
             let maxChoice = this.getMaxAmountChoice(amountInSalesUnits, minChoice);
 
@@ -537,7 +536,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.currentLeadSalesUnit = salesUnit;
 
         this.amountInSalesUnitInput.value = this.round(amountInSalesUnits, 4).toString();
-        if (this.amountInSalesUnitInput.min){
+        if (this.amountInSalesUnitInput.min) {
             this.amountInSalesUnitInput.min = this.round(amountInSalesUnitsMin, 4).toString();
         }
 
@@ -639,7 +638,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
         if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
             const amountPrecision = Number(this.currentLeadSalesUnit.precision);
-            const nextPossibleInterval = this.round(((minChoice * amountPrecision) + (this.getAmountInterval() * amountPrecision))/amountPrecision, 4);
+            const nextPossibleInterval = this.round(((minChoice * amountPrecision) + (this.getAmountInterval() * amountPrecision)) / amountPrecision, 4);
 
             return nextPossibleInterval;
         }
