@@ -4,7 +4,7 @@
         xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ContentProductAbstractListType">
-        <property name="idProductAbstracts" type="int[]"/>
+        <property name="idProductAbstracts" type="int[]" singular="idProductAbstracts"/>
     </transfer>
 
     <transfer name="ProductView">
@@ -12,7 +12,7 @@
         <property name="name" type="string"/>
         <property name="sku" type="string"/>
         <property name="url" type="string"/>
-        <property name="prices" type="array"/>
+        <property name="prices" type="array" singular="prices"/>
         <property name="images" singular="image" type="ProductImageStorage[]"/>
     </transfer>
 
