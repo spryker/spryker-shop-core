@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ConfigurableBundleWidget\Widget;
 
-use Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
@@ -18,19 +17,30 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class QuoteConfiguredBundleWidget extends AbstractWidget
 {
     protected const PARAMETER_QUOTE = 'quote';
+    protected const PARAMETER_ITEMS = 'items';
     protected const PARAMETER_CONFIGURED_BUNDLES = 'configuredBundles';
+    protected const PARAMETER_IS_QUANTITY_CHANGEABLE = 'isQuantityChangeable';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[]|null $itemTransfers
      */
-    public function __construct(QuoteTransfer $quoteTransfer)
+    public function __construct(QuoteTransfer $quoteTransfer, ?iterable $itemTransfers = [])
     {
-        $configuredBundleCollectionTransfer = $this->getFactory()
-            ->createConfiguredBundleMapper()
-            ->mapQuoteToConfiguredBundles($quoteTransfer);
+        if (!count($itemTransfers)) {
+            $itemTransfers = $quoteTransfer->getItems();
+        }
 
+        $itemTransfers = $this->mapItems($itemTransfers);
+
+        $configuredBundleTransfers = $this->getFactory()
+            ->createConfiguredBundleGrouper()
+            ->getConfiguredBundles($quoteTransfer, $itemTransfers);
+
+        $this->addItemsParameter($itemTransfers);
         $this->addQuoteParameter($quoteTransfer);
-        $this->addConfiguredBundlesParameter($configuredBundleCollectionTransfer);
+        $this->addConfiguredBundlesParameter($configuredBundleTransfers);
+        $this->addIsQuantityChangeableParameter();
     }
 
     /**
@@ -60,12 +70,46 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer $configuredBundleCollectionTransfer
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return void
      */
-    protected function addConfiguredBundlesParameter(ConfiguredBundleCollectionTransfer $configuredBundleCollectionTransfer): void
+    protected function addItemsParameter(iterable $itemTransfers): void
     {
-        $this->addParameter(static::PARAMETER_CONFIGURED_BUNDLES, $configuredBundleCollectionTransfer->getConfiguredBundles());
+        $this->addParameter(static::PARAMETER_ITEMS, $itemTransfers);
+    }
+
+    /**
+     * @param iterable|\Generated\Shared\Transfer\ConfiguredBundleTransfer[] $configuredBundleTransfers
+     *
+     * @return void
+     */
+    protected function addConfiguredBundlesParameter(iterable $configuredBundleTransfers): void
+    {
+        $this->addParameter(static::PARAMETER_CONFIGURED_BUNDLES, $configuredBundleTransfers);
+    }
+
+    /**
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function mapItems(iterable $itemTransfers): array
+    {
+        $items = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $items[$itemTransfer->getGroupKey()] = $itemTransfer;
+        }
+
+        return $items;
+    }
+
+    /**
+     * @return void
+     */
+    protected function addIsQuantityChangeableParameter(): void
+    {
+        $this->addParameter(static::PARAMETER_IS_QUANTITY_CHANGEABLE, $this->getConfig()->isQuantityChangeable());
     }
 }

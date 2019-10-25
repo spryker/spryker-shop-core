@@ -5,6 +5,11 @@
 
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
     </transfer>
 
 </transfers>

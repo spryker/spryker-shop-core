@@ -5,6 +5,12 @@
 
     <transfer name="Currency">
         <property name="symbol" type="string"/>
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="Money">
+        <property name="amount" type="string"/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
 </transfers>

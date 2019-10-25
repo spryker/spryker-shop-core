@@ -9,6 +9,7 @@
 {% define data = {
     formType: _widget.formType,
     currentAddressId: _widget.formAddressTransfer.idCustomerAddress | default,
+    currentCompanyUnitAddressId: _widget.formAddressTransfer.idCompanyUnitAddress | default,
     formAddressTransfer: _widget.formAddressTransfer,
     addresses: _widget.addresses,
     customerAddresses: _widget.customerAddresses,
@@ -19,38 +20,40 @@
     jsAddressClass: '',
     isCustomAddress: app.request.get('customAddress')[_widget.formType]  | default(not _widget.formAddressTransfer.idCustomerAddress),
     currentCompanyBusinessUnitAddress: _widget.currentCompanyBusinessUnitAddress,
+    isCurrentAddressEmpty: _widget.isCurrentAddressEmpty,
 } %}
 
 {% block body %}
     {% set defaultAddressKey = null %}
     {% set optionValueDeliverToMultipleAddresses = '-1' %}
-    {% set fullAddresses = data.customerAddresses ?: data.companyBusinessUnitAddresses %}
     {% set shippingAddress = 'shippingAddress' %}
     {% set billingAddress = 'billingAddress' %}
+    {% set fullAddresses = data.customerAddresses ? data.customerAddresses | merge(data.companyBusinessUnitAddresses) : data.companyBusinessUnitAddresses %}
+    {% set isShippingAddressFormType = data.formType == shippingAddress %}
+    {% set isBillingAddressFormType = data.formType == billingAddress %}
+    {% set addressSelectLabel = isShippingAddressFormType ? 'page.checkout.address.delivery.address_select' : 'page.checkout.address.billing.address_select' %}
 
     {% if fullAddresses %}
         {% for address in fullAddresses %}
-            {% if not data.currentAddressId and data.formType == shippingAddress and address.isDefaultShipping %}
+            {% set canUseCurrentAsDefaultCustomerAddress = not data.currentAddressId and not data.currentCompanyUnitAddressId and isShippingAddressFormType and address.isDefaultShipping and data.isCurrentAddressEmpty %}
+            {% set canUseCurrentAsDefaultCompanyUnitAddress = not data.currentAddressId and not data.currentCompanyUnitAddressId and isBillingAddressFormType and address.isDefaultBilling and data.isCurrentAddressEmpty %}
+            {% set isCurrentCustomerAddress = data.currentAddressId and data.currentAddressId == address.idCustomerAddress %}
+            {% set isCurrentCompanyUnitAddress = data.currentCompanyUnitAddressId and data.currentCompanyUnitAddressId == address.idCompanyUnitAddress %}
+            {% set isCurrentValueDeliverToMultipleAddresses = data.currentAddressId == optionValueDeliverToMultipleAddresses %}
+
+            {% if canUseCurrentAsDefaultCustomerAddress or canUseCurrentAsDefaultCompanyUnitAddress
+                    or isCurrentCustomerAddress or isCurrentCompanyUnitAddress
+            %}
                 {% set defaultAddressKey = address.key %}
             {% endif %}
-            {% if not data.currentAddressId and data.formType == billingAddress and address.isDefaultBilling %}
-                {% set defaultAddressKey = address.key %}
-            {% endif %}
-            {% if data.currentAddressId == address.idCustomerAddress %}
-                {% set defaultAddressKey = address.key %}
-            {% endif %}
-            {% if data.currentAddressId == optionValueDeliverToMultipleAddresses %}
+
+            {% if isCurrentValueDeliverToMultipleAddresses %}
                 {% set defaultAddressKey = optionValueDeliverToMultipleAddresses %}
             {% endif %}
         {% endfor %}
     {% endif %}
 
-    {% if data.formType == shippingAddress %}
-        <label>{{ 'page.checkout.address.delivery.address_select' | trans }}</label><br>
-    {% endif %}
-    {% if data.formType == billingAddress %}
-        <label>{{ 'page.checkout.address.billing.address_select' | trans }}</label><br>
-    {% endif %}
+    <label>{{ addressSelectLabel | trans }}</label><br>
 
     {% embed atom('select') with {
         class: 'spacing-bottom',
