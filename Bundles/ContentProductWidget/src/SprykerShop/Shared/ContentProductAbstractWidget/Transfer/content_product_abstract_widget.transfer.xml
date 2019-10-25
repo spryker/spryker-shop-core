@@ -6,6 +6,7 @@
     <transfer name="ContentProductAbstractListType">
         <property name="idProductAbstracts" type="int[]"/>
     </transfer>
+
     <transfer name="ProductView">
         <property name="idProductAbstract" type="int"/>
         <property name="name" type="string"/>
