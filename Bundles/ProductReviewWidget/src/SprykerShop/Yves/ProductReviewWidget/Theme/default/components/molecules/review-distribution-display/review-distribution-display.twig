@@ -27,7 +27,11 @@
 
             {{ rating }}
 
-            {{ (rating == 1 ? 'product_review.summary.star' | trans : 'product_review.summary.stars') | trans }}
+            {% set number = rating > 1 ? 'many' : rating %}
+            {{ number | trans({
+                '1' : 'product_review.summary.star' | trans,
+                'many': 'product_review.summary.stars' | trans,
+            }) -}}
             (<strong>{{ ratingReview }}</strong>)
         </li>
     {% endfor %}

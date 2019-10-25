@@ -29,7 +29,12 @@
         (
             {{- data.summary.totalReview }}
 
-            {{ (data.summary.totalReview == 1 ? 'product_review.summary.review' : 'product_review.summary.reviews') | trans -}}
+        {% set number = data.summary.totalReview > 1 ? 'many' : data.summary.totalReview %}
+
+        {{ number | trans({
+            '1' : 'product_review.summary.review' | trans,
+            'many': 'product_review.summary.reviews' | trans,
+        }) -}}
         )
     {% else %}
         {{ 'product_review.no_reviews' | trans }}
