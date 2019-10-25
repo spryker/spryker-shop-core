@@ -101,7 +101,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         if (jsonSchemaContainer.hasAttribute('json')) {
             let jsonString = jsonSchemaContainer.getAttribute('json');
             let jsonData = JSON.parse(jsonString);
-
+            console.log(jsonData);
             if (jsonData.hasOwnProperty('baseUnit')) {
                 this.baseUnit = jsonData.baseUnit;
             }
@@ -662,6 +662,6 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     protected get packagingUnitIsVariable(): boolean {
-        return this.getAttribute('packaging-unit-is-variable') === 'true';
+        return this.hasAttribute('packaging-unit-is-variable');
     }
 }
