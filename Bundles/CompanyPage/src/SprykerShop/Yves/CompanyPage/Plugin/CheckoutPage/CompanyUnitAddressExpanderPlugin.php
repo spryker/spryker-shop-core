@@ -18,7 +18,7 @@ use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\AddressTransferExpa
 class CompanyUnitAddressExpanderPlugin extends AbstractPlugin implements AddressTransferExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands address transfer with company unit address data.
      *
      * @api

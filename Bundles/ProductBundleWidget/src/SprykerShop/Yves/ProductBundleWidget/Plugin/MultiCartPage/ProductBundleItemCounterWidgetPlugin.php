@@ -21,7 +21,7 @@ class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin
     public const NAME = 'ProductBundleItemCounterWidgetPlugin';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +37,7 @@ class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class ProductBundleItemCounterWidgetPlugin extends AbstractWidgetPlugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

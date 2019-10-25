@@ -18,7 +18,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 class ShopApplicationFormTwigLoaderPlugin extends AbstractPlugin implements TwigLoaderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

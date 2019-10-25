@@ -19,7 +19,7 @@ class BusinessOnBehalfCompanyUserRedirectAfterLoginStrategyPlugin extends Abstra
     protected const COMPANY_REDIRECT_ROUTE = 'company/user/select';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Checks if provided customer has isOnBehalf flag without selected company.
      *
      * @api
@@ -36,7 +36,7 @@ class BusinessOnBehalfCompanyUserRedirectAfterLoginStrategyPlugin extends Abstra
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

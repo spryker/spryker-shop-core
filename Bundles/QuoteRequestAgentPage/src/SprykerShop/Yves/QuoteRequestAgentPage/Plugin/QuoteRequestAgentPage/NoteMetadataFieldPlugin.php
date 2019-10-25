@@ -23,7 +23,7 @@ class NoteMetadataFieldPlugin extends AbstractPlugin implements QuoteRequestAgen
     protected const MAX_LENGTH_NOTE = 1024;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds note to metadata for QuoteRequestAgent form.
      *
      * @api

@@ -32,7 +32,7 @@ class OrderDetailProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin i
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,7 +44,7 @@ class OrderDetailProductPackagingUnitWidgetPlugin extends AbstractWidgetPlugin i
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

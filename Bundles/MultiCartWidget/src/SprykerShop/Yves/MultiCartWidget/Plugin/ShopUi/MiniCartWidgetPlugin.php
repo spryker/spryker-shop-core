@@ -36,7 +36,7 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class MiniCartWidgetPlugin extends AbstractWidgetPlugin implements MiniCartWidge
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

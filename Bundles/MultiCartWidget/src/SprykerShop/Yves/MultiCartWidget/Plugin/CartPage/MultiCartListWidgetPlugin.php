@@ -34,7 +34,7 @@ class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCar
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,7 +46,7 @@ class MultiCartListWidgetPlugin extends AbstractWidgetPlugin implements MultiCar
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

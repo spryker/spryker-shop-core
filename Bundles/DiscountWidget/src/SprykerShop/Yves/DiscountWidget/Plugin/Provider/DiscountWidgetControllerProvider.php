@@ -11,7 +11,7 @@ use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
 /**
- * @deprecated Use \SprykerShop\Yves\CartCodeWidget\Plugin\Provider\CartCodeWidgetControllerProvider instead.
+ * @deprecated Use `\SprykerShop\Yves\DiscountWidget\Plugin\Router\DiscountWidgetRouteProviderPlugin` instead.
  */
 class DiscountWidgetControllerProvider extends AbstractYvesControllerProvider
 {

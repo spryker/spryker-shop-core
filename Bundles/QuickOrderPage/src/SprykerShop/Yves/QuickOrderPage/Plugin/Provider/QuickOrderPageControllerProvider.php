@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\QuickOrderPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\QuickOrderPage\Plugin\Router\QuickOrderPageRouteProviderPlugin` instead.
+ */
 class QuickOrderPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_QUICK_ORDER = 'quick-order';

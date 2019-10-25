@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\AgentPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\AgentPage\Plugin\Router\AgentPageRouteProviderPlugin` instead.
+ */
 class AgentPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_LOGIN = 'agent/login';

@@ -27,4 +27,13 @@ interface ContentProductWidgetToProductStorageClientBridgeInterface
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     public function mapProductAbstractStorageData(array $data, string $localeName, array $selectedAttributes = []): ProductViewTransfer;
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function getProductAbstractViewTransfers(array $productAbstractIds, string $localeName, array $selectedAttributes = []): array;
 }

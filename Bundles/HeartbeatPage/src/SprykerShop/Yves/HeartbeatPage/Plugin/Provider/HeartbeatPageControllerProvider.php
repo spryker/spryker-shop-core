@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\HeartbeatPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\HeartbeatPage\Plugin\Router\HeartbeatPageRouteProviderPlugin` instead.
+ */
 class HeartbeatPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_HEARTBEAT = 'heartbeat';

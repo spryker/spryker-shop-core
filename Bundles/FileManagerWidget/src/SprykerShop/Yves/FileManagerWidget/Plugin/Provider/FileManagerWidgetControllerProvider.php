@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\FileManagerWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\FileManagerWidget\Plugin\Router\FileManagerWidgetRouteProviderPlugin` instead.
+ */
 class FileManagerWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     protected const ROUTE_FILES_DOWNLOAD = 'files/download';
@@ -20,7 +23,7 @@ class FileManagerWidgetControllerProvider extends AbstractYvesControllerProvider
     protected $allowedLocalesPattern;
 
     /**
-     * {@inheritdoc}
+     * @param bool|null $sslEnabled
      */
     public function __construct(?bool $sslEnabled = null)
     {
@@ -36,22 +39,7 @@ class FileManagerWidgetControllerProvider extends AbstractYvesControllerProvider
      */
     protected function defineControllers(Application $app)
     {
-        $this->createFilesController('/download', static::ROUTE_FILES_DOWNLOAD, 'Download');
-    }
-
-    /**
-     * @param string $path
-     * @param string $name
-     * @param string $controllerName
-     * @param string $action
-     *
-     * @return void
-     */
-    protected function createFilesController(string $path, string $name, string $controllerName, $action = 'index')
-    {
-        $urlPath = '/{files}' . $path;
-
-        $this->createController($urlPath, $name, 'FileManagerWidget', $controllerName, $action)
+        $this->createController('/{files}/download', static::ROUTE_FILES_DOWNLOAD, 'FileManagerWidget', 'Download')
             ->assert('files', $this->allowedLocalesPattern . 'files|files')
             ->value('files', 'files');
     }

@@ -29,7 +29,7 @@ class AgentWidgetPlugin extends AbstractWidgetPlugin implements AgentWidgetPlugi
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -41,7 +41,7 @@ class AgentWidgetPlugin extends AbstractWidgetPlugin implements AgentWidgetPlugi
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

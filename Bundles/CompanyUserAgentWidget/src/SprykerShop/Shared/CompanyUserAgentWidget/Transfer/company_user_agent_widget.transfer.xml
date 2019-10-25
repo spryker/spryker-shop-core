@@ -13,22 +13,22 @@
     </transfer>
 
     <transfer name="CompanyUser">
-        <property name="customer" type="Customer" />
-        <property name="companyBusinessUnit" type="CompanyBusinessUnit" />
-        <property name="company" type="Company" />
+        <property name="customer" type="Customer"/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="company" type="Company"/>
     </transfer>
 
     <transfer name="Customer">
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string" />
-        <property name="email" type="string" />
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="email" type="string"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
-        <property name="name" type="string" />
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Company">
-        <property name="name" type="string" />
+        <property name="name" type="string"/>
     </transfer>
 </transfers>

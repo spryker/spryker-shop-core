@@ -36,7 +36,7 @@ class MultiCartMenuItemWidgetPlugin extends AbstractWidgetPlugin implements Mult
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class MultiCartMenuItemWidgetPlugin extends AbstractWidgetPlugin implements Mult
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

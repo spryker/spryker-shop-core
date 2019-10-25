@@ -34,6 +34,8 @@ class ShopApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return bool
      */
     public function isSslEnabled(): bool

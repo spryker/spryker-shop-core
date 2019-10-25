@@ -96,12 +96,10 @@
                         {% endblock %}
                     {% endembed %}
                 </p>
-                {% if isLatestVersion %}
-                    {% if data.quoteRequest.isLatestVersionVisible %}
-                        <p><b>{{ 'quote_request_page.quote_request.labels.latest_version_is_visible' | trans }}</b></p>
-                    {% else %}
-                        <p><b>{{ 'quote_request_page.quote_request.labels.latest_version_is_hidden' | trans }}</b></p>
-                    {% endif %}
+                {% if data.quoteRequest.isLatestVersionVisible %}
+                    <p><b>{{ 'quote_request_page.quote_request.labels.latest_version_is_visible' | trans }}</b></p>
+                {% else %}
+                    <p><b>{{ 'quote_request_page.quote_request.labels.latest_version_is_hidden' | trans }}</b></p>
                 {% endif %}
             </div>
         </div>
@@ -118,7 +116,15 @@
                 </div>
             {% endif %}
             {% if quote is not empty %}
-                {% for cartItem in quote.items %}
+                {% widget 'QuoteConfiguredBundleWidget' args [quote] with {
+                    data: {
+                        isEditable: false,
+                    },
+                } only %}
+                {% endwidget %}
+
+                {% set cartItems = quote.items | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}
+                {% for cartItem in cartItems %}
                     {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
                         data: {
                             product: cartItem,
