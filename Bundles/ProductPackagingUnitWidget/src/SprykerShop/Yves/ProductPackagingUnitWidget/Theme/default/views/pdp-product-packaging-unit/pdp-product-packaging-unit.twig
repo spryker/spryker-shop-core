@@ -122,34 +122,37 @@
     </div>
 
     <div class="grid grid--bottom grid--justify">
-        {% set defaultAmount = (data.productPackagingUnit.amountMin and data.productPackagingUnit.defaultAmount < data.productPackagingUnit.amountMin) ?
-            data.productPackagingUnit.amountMin :
-            data.productPackagingUnit.defaultAmount %}
+        {% if data.productPackagingUnit %}
+            {% set defaultAmount = (data.productPackagingUnit.amountMin and data.productPackagingUnit.defaultAmount < data.productPackagingUnit.amountMin) ?
+                data.productPackagingUnit.amountMin :
+                data.productPackagingUnit.defaultAmount %}
 
-        <div class="col {% if data.salesUnitCount %}col--sm-7{% else %}col--sm-5{% endif %}">
-            <label>
-                {{ 'packaging_units.cart.amount' | trans }}
-                <input id="user-amount"
-                       class="input input--expand"
-                       type="number"
-                       value="{{ defaultAmount }}"
-                       min="{{ data.productPackagingUnit.amountMin }}"
-                       max="{{ data.productPackagingUnit.amountMax }}"
-                       step="{{ data.productPackagingUnit.amountInterval }}"
-                       name="amount-sales-unit[{{ data.product.sku }}]"
-                       {{ not data.packagingUnitIsVariable ? 'disabled' }}
-                >
-                <input id="default-amount"
-                       type="hidden"
-                       value="{{ defaultAmount }}"
-                >
-                <input id="amount"
-                       type="hidden"
-                       value="{{ defaultAmount }}"
-                       name="amount[{{ data.product.sku }}]"
-                >
-            </label>
-        </div>
+            <div class="col {% if data.salesUnitCount %}col--sm-7{% else %}col--sm-5{% endif %}">
+                <label>
+                    {{ 'packaging_units.cart.amount' | trans }}
+                    <input id="user-amount"
+                           class="input input--expand"
+                           type="number"
+                           value="{{ defaultAmount }}"
+                           min="{{ data.productPackagingUnit.amountMin }}"
+                           max="{{ data.productPackagingUnit.amountMax }}"
+                           step="{{ data.productPackagingUnit.amountInterval }}"
+                           name="amount-sales-unit[{{ data.product.sku }}]"
+                           {{ not data.packagingUnitIsVariable ? 'disabled' }}
+                    >
+                    <input id="default-amount"
+                           type="hidden"
+                           value="{{ defaultAmount }}"
+                    >
+                    <input id="amount"
+                           type="hidden"
+                           value="{{ defaultAmount }}"
+                           name="amount[{{ data.product.sku }}]"
+                    >
+                </label>
+            </div>
+        {% endif %}
+
         <div class="col {% if data.salesUnitCount %}col--sm-4{% else %}col--sm-6{% endif %}">
             {% if data.salesUnitCount and data.leadProductSalesUnits | length > 1 %}
                 <label>

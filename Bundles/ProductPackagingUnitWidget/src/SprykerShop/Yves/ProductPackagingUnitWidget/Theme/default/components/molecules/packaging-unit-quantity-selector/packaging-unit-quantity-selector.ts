@@ -101,7 +101,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         if (jsonSchemaContainer.hasAttribute('json')) {
             let jsonString = jsonSchemaContainer.getAttribute('json');
             let jsonData = JSON.parse(jsonString);
-   
+
             if (jsonData.hasOwnProperty('baseUnit')) {
                 this.baseUnit = jsonData.baseUnit;
             }
@@ -432,7 +432,8 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
 
         const quantity = Number(this.qtyInBaseUnitInput.value);
-        const totalAmount = amountInBaseUnits * quantity;
+        const amountPrecision = Number(this.currentLeadSalesUnit.precision);
+        const totalAmount = this.round(((amountInBaseUnits * amountPrecision) * quantity)/amountPrecision, 4);
 
         this.amountInBaseUnitInput.value = totalAmount.toString();
         this.addToCartButton.removeAttribute("disabled");
