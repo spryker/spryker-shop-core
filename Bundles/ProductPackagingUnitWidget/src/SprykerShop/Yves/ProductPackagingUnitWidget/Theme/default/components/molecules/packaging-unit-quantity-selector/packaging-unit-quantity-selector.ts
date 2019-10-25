@@ -101,7 +101,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         if (jsonSchemaContainer.hasAttribute('json')) {
             let jsonString = jsonSchemaContainer.getAttribute('json');
             let jsonData = JSON.parse(jsonString);
-            console.log(jsonData);
+   
             if (jsonData.hasOwnProperty('baseUnit')) {
                 this.baseUnit = jsonData.baseUnit;
             }
@@ -407,19 +407,21 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.puError = false;
         const amountInBaseUnits = this.multiply(amountInSalesUnitInput, Number(this.currentLeadSalesUnit.conversion));
 
-        if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
-            this.puError = true;
-            this.puIntervalNotificationElement.classList.remove('is-hidden');
-        }
+        if (!this.amountInSalesUnitInput.disabled) {
+            if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
+                this.puError = true;
+                this.puIntervalNotificationElement.classList.remove('is-hidden');
+            }
 
-        if (amountInBaseUnits < this.getMinAmount()) {
-            this.puError = true;
-            this.puMinNotificationElement.classList.remove('is-hidden');
-        }
+            if (amountInBaseUnits < this.getMinAmount()) {
+                this.puError = true;
+                this.puMinNotificationElement.classList.remove('is-hidden');
+            }
 
-        if (this.getMaxAmount() > 0 && amountInBaseUnits > this.getMaxAmount()) {
-            this.puError = true;
-            this.puMaxNotificationElement.classList.remove('is-hidden');
+            if (this.getMaxAmount() > 0 && amountInBaseUnits > this.getMaxAmount()) {
+                this.puError = true;
+                this.puMaxNotificationElement.classList.remove('is-hidden');
+            }
         }
 
         if ((this.puError || this.muError || this.isAddToCartDisabled) && this.packagingUnitIsVariable) {
@@ -432,7 +434,6 @@ export default class PackagingUnitQuantitySelector extends Component {
         const quantity = Number(this.qtyInBaseUnitInput.value);
         const totalAmount = amountInBaseUnits * quantity;
 
-        console.log(totalAmount, amountInBaseUnits, quantity);
         this.amountInBaseUnitInput.value = totalAmount.toString();
         this.addToCartButton.removeAttribute("disabled");
         this.hidePackagingUnitRestrictionNotifications();

@@ -38,7 +38,6 @@
             {{ 'cart.item_quantity' | trans }}
 
             {% if data.salesUnitCount %}
-                <pre>{{ dump(data.minQuantityInSalesUnits) }}</pre>
                 <input id="sales-unit-quantity" class="input input--expand js-volume-price__quantity" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-quantity"/>
                 <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnit }}" name="quantity"/>
             {% else %}
@@ -122,81 +121,65 @@
         </div>
     </div>
 
-    {% if data.packagingUnitIsVariable %}
+    <div class="grid grid--bottom grid--justify">
         {% set defaultAmount = (data.productPackagingUnit.amountMin and data.productPackagingUnit.defaultAmount < data.productPackagingUnit.amountMin) ?
             data.productPackagingUnit.amountMin :
             data.productPackagingUnit.defaultAmount %}
 
-        <div class="grid grid--bottom grid--justify">
-            <div class="col {% if data.salesUnitCount %}col--sm-7{% else %}col--sm-5{% endif %}">
-                <label>
-                    {{ 'packaging_units.cart.amount' | trans }}
-                    <input id="user-amount"
-                           class="input input--expand"
-                           type="number"
-                           value="{{ defaultAmount }}"
-                           min="{{ data.productPackagingUnit.amountMin }}"
-                           max="{{ data.productPackagingUnit.amountMax }}"
-                           step="{{ data.productPackagingUnit.amountInterval }}"
-                           name="amount-sales-unit[{{ data.product.sku }}]"
-                    >
-                    <input id="default-amount"
-                           type="hidden"
-                           value="{{ defaultAmount }}"
-                    >
-                    <input id="amount"
-                           type="hidden"
-                           value="{{ defaultAmount }}"
-                           name="amount[{{ data.product.sku }}]"
-                    >
-                </label>
-            </div>
-            <div class="col {% if data.salesUnitCount %}col--sm-4{% else %}col--sm-6{% endif %}">
-                {% if data.salesUnitCount and data.leadProductSalesUnits | length > 1 %}
-                    <label>
-                        {{ 'product.measurement.sales_unit' | trans }}
-                        {% embed atom('select') with {
-                            modifiers: ['expand'],
-                            attributes: {
-                                name: 'amount-id-product-measurement-sales-unit[' ~ data.product.sku ~ ']',
-                            },
-                            embed: {
-                                salesUnits: data.leadProductSalesUnits,
-                            },
-                        } only %}
-                            {% block selectClass %}select-lead-measurement-unit{% endblock %}
-
-                            {% block options %}
-                                {% for salesUnit in embed.salesUnits %}
-                                    <option value="{{ salesUnit.idProductMeasurementSalesUnit }}" {{ salesUnit.isDefault ? 'selected' }}>{{ salesUnit.productMeasurementUnit.name | trans }}</option>
-                                {% endfor %}
-                            {% endblock %}
-                        {% endembed %}
-                    </label>
-                {% endif %}
-
-                {% if data.salesUnitCount and data.leadProductSalesUnits | length == 1 %}
-                    {{ data.leadProductSalesUnits[0].productMeasurementUnit.name | trans }}
-                    <input type="hidden" name="amount-id-product-measurement-sales-unit[{{ data.product.sku }}]" value="{{ data.leadProductSalesUnits[0].idProductMeasurementSalesUnit }}">
-                {% endif %}
-            </div>
+        <div class="col {% if data.salesUnitCount %}col--sm-7{% else %}col--sm-5{% endif %}">
+            <label>
+                {{ 'packaging_units.cart.amount' | trans }}
+                <input id="user-amount"
+                       class="input input--expand"
+                       type="number"
+                       value="{{ defaultAmount }}"
+                       min="{{ data.productPackagingUnit.amountMin }}"
+                       max="{{ data.productPackagingUnit.amountMax }}"
+                       step="{{ data.productPackagingUnit.amountInterval }}"
+                       name="amount-sales-unit[{{ data.product.sku }}]"
+                       {{ not data.packagingUnitIsVariable ? 'disabled' }}
+                >
+                <input id="default-amount"
+                       type="hidden"
+                       value="{{ defaultAmount }}"
+                >
+                <input id="amount"
+                       type="hidden"
+                       value="{{ defaultAmount }}"
+                       name="amount[{{ data.product.sku }}]"
+                >
+            </label>
         </div>
-    {% elseif data.productPackagingUnit %}
-        <input type="hidden" name="amount-id-product-measurement-sales-unit[{{ data.product.sku }}]" value="{{ data.leadProductSalesUnits[0].idProductMeasurementSalesUnit }}">
-        <input id="user-amount"
-               type="hidden"
-               value="{{ data.productPackagingUnit.defaultAmount }}"
-        >
-        <input id="default-amount"
-               type="hidden"
-               value="{{ data.productPackagingUnit.defaultAmount }}"
-        >
-        <input id="amount"
-               type="hidden"
-               value="{{ data.productPackagingUnit.defaultAmount }}"
-               name="amount[{{ data.product.sku }}]"
-        >
-    {% endif %}
+        <div class="col {% if data.salesUnitCount %}col--sm-4{% else %}col--sm-6{% endif %}">
+            {% if data.salesUnitCount and data.leadProductSalesUnits | length > 1 %}
+                <label>
+                    {{ 'product.measurement.sales_unit' | trans }}
+                    {% embed atom('select') with {
+                        modifiers: ['expand'],
+                        attributes: {
+                            name: 'amount-id-product-measurement-sales-unit[' ~ data.product.sku ~ ']',
+                        },
+                        embed: {
+                            salesUnits: data.leadProductSalesUnits,
+                        },
+                    } only %}
+                        {% block selectClass %}select-lead-measurement-unit{% endblock %}
+
+                        {% block options %}
+                            {% for salesUnit in embed.salesUnits %}
+                                <option value="{{ salesUnit.idProductMeasurementSalesUnit }}" {{ salesUnit.isDefault ? 'selected' }}>{{ salesUnit.productMeasurementUnit.name | trans }}</option>
+                            {% endfor %}
+                        {% endblock %}
+                    {% endembed %}
+                </label>
+            {% endif %}
+
+            {% if data.salesUnitCount and data.leadProductSalesUnits | length == 1 %}
+                {{ data.leadProductSalesUnits[0].productMeasurementUnit.name | trans }}
+                <input type="hidden" name="amount-id-product-measurement-sales-unit[{{ data.product.sku }}]" value="{{ data.leadProductSalesUnits[0].idProductMeasurementSalesUnit }}">
+            {% endif %}
+        </div>
+    </div>
 
     <div class="col col--sm-12 spacing-y">
         {% if data.salesUnitCount %}
