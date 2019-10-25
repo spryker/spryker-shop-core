@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\CmsBlockWidget;
 
+use Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPlugin;
+use Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientBridge;
@@ -18,6 +20,8 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_CMS_BLOCK_STORAGE = 'CLIENT_CMS_BLOCK_STORAGE';
     public const CLIENT_STORE = 'CLIENT_STORE';
 
+    public const CMS_TWIG_CONTENT_RENDERER_PLUGIN = 'CMS_TWIG_CONTENT_RENDERER_PLUGIN';
+
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
@@ -28,6 +32,7 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addTwigExtensionPlugins($container);
         $container = $this->addCmsBlockStorageClient($container);
         $container = $this->addStoreClient($container);
+        $container = $this->addCmsTwigContentRenderePlugin($container);
 
         return $container;
     }
@@ -59,7 +64,7 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCmsBlockStorageClient(Container $container)
+    protected function addCmsBlockStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_CMS_BLOCK_STORAGE, function (Container $container) {
             return new CmsBlockWidgetToCmsBlockStorageClientBridge(
@@ -82,5 +87,27 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    public function addCmsTwigContentRenderePlugin(Container $container): Container
+    {
+        $container->set(static::CMS_TWIG_CONTENT_RENDERER_PLUGIN, function () {
+            return $this->getCmsTwigContentRendererPlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface
+     */
+    protected function getCmsTwigContentRendererPlugin(): CmsTwigContentRendererPluginInterface
+    {
+        return new CmsTwigContentRendererPlugin();
     }
 }

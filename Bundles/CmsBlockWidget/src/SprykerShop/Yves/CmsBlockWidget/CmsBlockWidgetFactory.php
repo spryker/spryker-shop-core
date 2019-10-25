@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CmsBlockWidget;
 
+use Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\CmsBlockWidget\src\SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidator;
 use SprykerShop\CmsBlockWidget\src\SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface;
@@ -61,5 +62,13 @@ class CmsBlockWidgetFactory extends AbstractFactory
     public function getCmsBlockStorageClient(): CmsBlockWidgetToCmsBlockStorageClientInterface
     {
         return $this->getProvidedDependency(CmsBlockWidgetDependencyProvider::CLIENT_CMS_BLOCK_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface
+     */
+    public function getCmsTwigContentRendererPlugin(): CmsTwigContentRendererPluginInterface
+    {
+        return $this->getProvidedDependency(CmsBlockWidgetDependencyProvider::CMS_TWIG_CONTENT_RENDERER_PLUGIN);
     }
 }
