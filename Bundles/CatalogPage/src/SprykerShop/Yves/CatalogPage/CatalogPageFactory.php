@@ -15,6 +15,7 @@ use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToLocaleClientInte
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryFilterClientInterface;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryFilterStorageClientInterface;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface;
+use SprykerShop\Yves\CatalogPage\FacetFilter\FacetFilter;
 use SprykerShop\Yves\CatalogPage\Twig\CatalogPageTwigExtension;
 use SprykerShop\Yves\CatalogPage\Validator\PageParametersValidator;
 use SprykerShop\Yves\CatalogPage\Validator\PageParametersValidatorInterface;
@@ -30,6 +31,14 @@ class CatalogPageFactory extends AbstractFactory
     public function createActiveSearchFilterUrlGenerator()
     {
         return new UrlGenerator($this->getSearchClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CatalogPage\FacetFilter\FacetFilterInterface
+     */
+    public function createFacetFilter()
+    {
+        return new FacetFilter();
     }
 
     /**
