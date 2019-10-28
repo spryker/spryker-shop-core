@@ -1,4 +1,3 @@
-/* tslint:disable */
 import Component from 'ShopUi/models/component';
 
 export default class PackagingUnitQuantitySelector extends Component {
@@ -91,7 +90,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.initCurrentLeadSalesUnit();
         this.initFormDefaultValues();
         this.mapEvents();
-        if(this.amountInBaseUnitInput) {
+        if (this.amountInBaseUnitInput) {
             this.amountInputChange();
         }
     }
@@ -110,7 +109,7 @@ export default class PackagingUnitQuantitySelector extends Component {
                 this.salesUnits = jsonData.salesUnits;
             }
 
-            if(jsonData.hasOwnProperty('leadSalesUnits')) {
+            if (jsonData.hasOwnProperty('leadSalesUnits')) {
                 this.leadSalesUnits = jsonData.leadSalesUnits;
             }
 
@@ -169,10 +168,6 @@ export default class PackagingUnitQuantitySelector extends Component {
             this.measurementUnitInput.addEventListener('change', (event: Event) => this.measurementUnitInputChange(event));
         }
 
-        if (!this.packagingUnitIsVariable) {
-            return;
-        }
-
         this.amountInSalesUnitInput.addEventListener('input', (event: Event) => this.amountInputChange());
 
         if (this.leadSalesUnitSelect) {
@@ -210,7 +205,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
         this.qtyInBaseUnitInput.value = qtyInBaseUnits.toString();
 
-        if(this.amountInBaseUnitInput) {
+        if (this.amountInBaseUnitInput) {
             this.amountInputChange();
         }
 
@@ -229,7 +224,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     private askCustomerForCorrectInput(qtyInSalesUnits: number) {
 
-        if(this.muError) {
+        if (this.muError) {
             let minChoice = this.getMinChoice(qtyInSalesUnits);
             let maxChoice = this.getMaxChoice(qtyInSalesUnits, minChoice);
 
@@ -411,19 +406,21 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.puError = false;
         const amountInBaseUnits = this.multiply(amountInSalesUnitInput, Number(this.currentLeadSalesUnit.conversion));
 
-        if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
-            this.puError = true;
-            this.puIntervalNotificationElement.classList.remove('is-hidden');
-        }
+        if (!this.amountInSalesUnitInput.disabled) {
+            if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
+                this.puError = true;
+                this.puIntervalNotificationElement.classList.remove('is-hidden');
+            }
 
-        if (amountInBaseUnits < this.getMinAmount()) {
-            this.puError = true;
-            this.puMinNotificationElement.classList.remove('is-hidden');
-        }
+            if (amountInBaseUnits < this.getMinAmount()) {
+                this.puError = true;
+                this.puMinNotificationElement.classList.remove('is-hidden');
+            }
 
-        if (this.getMaxAmount() > 0 && amountInBaseUnits > this.getMaxAmount()) {
-            this.puError = true;
-            this.puMaxNotificationElement.classList.remove('is-hidden');
+            if (this.getMaxAmount() > 0 && amountInBaseUnits > this.getMaxAmount()) {
+                this.puError = true;
+                this.puMaxNotificationElement.classList.remove('is-hidden');
+            }
         }
 
         if ((this.puError || this.muError || this.isAddToCartDisabled) && this.packagingUnitIsVariable) {
@@ -434,7 +431,8 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
 
         const quantity = Number(this.qtyInBaseUnitInput.value);
-        const totalAmount = amountInBaseUnits * quantity;
+        const amountPrecision = Number(this.currentLeadSalesUnit.precision);
+        const totalAmount = this.round(((amountInBaseUnits * amountPrecision) * quantity) / amountPrecision, 4);
 
         this.amountInBaseUnitInput.value = totalAmount.toString();
         this.addToCartButton.removeAttribute("disabled");
@@ -455,7 +453,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     private askCustomerForCorrectAmountInput(amountInSalesUnits) {
 
-        if(this.puError) {
+        if (this.puError) {
             let minChoice = this.getMinAmountChoice(amountInSalesUnits);
             let maxChoice = this.getMaxAmountChoice(amountInSalesUnits, minChoice);
 
@@ -538,7 +536,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.currentLeadSalesUnit = salesUnit;
 
         this.amountInSalesUnitInput.value = this.round(amountInSalesUnits, 4).toString();
-        if (this.amountInSalesUnitInput.min){
+        if (this.amountInSalesUnitInput.min) {
             this.amountInSalesUnitInput.min = this.round(amountInSalesUnitsMin, 4).toString();
         }
 
@@ -603,15 +601,6 @@ export default class PackagingUnitQuantitySelector extends Component {
         return 1;
     }
 
-    private getDefaultAmount() {
-        if (typeof this.productPackagingUnitStorage !== 'undefined'
-            && this.productPackagingUnitStorage.hasOwnProperty('default_amount')
-            && this.productPackagingUnitStorage.default_amount !== null
-        ) {
-            return Number(this.productPackagingUnitStorage.default_amount);
-        }
-    }
-
     private getMinAmountChoice(amountInSalesUnits: number) {
         const amountInBaseUnits = this.multiply(amountInSalesUnits, this.currentLeadSalesUnit.conversion);
 
@@ -649,7 +638,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
         if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
             const amountPrecision = Number(this.currentLeadSalesUnit.precision);
-            const nextPossibleInterval = this.round(((minChoice * amountPrecision) + (this.getAmountInterval() * amountPrecision))/amountPrecision, 4);
+            const nextPossibleInterval = this.round(((minChoice * amountPrecision) + (this.getAmountInterval() * amountPrecision)) / amountPrecision, 4);
 
             return nextPossibleInterval;
         }
