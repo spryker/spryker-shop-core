@@ -21,7 +21,7 @@
     </transfer>
 
     <transfer name="ProductConcretePackagingStorage">
-        <property name="hasLeadProduct" type="bool"/>
+        <property name="idLeadProduct" type="int"/>
     </transfer>
 
     <transfer name="ProductQuantityStorage">

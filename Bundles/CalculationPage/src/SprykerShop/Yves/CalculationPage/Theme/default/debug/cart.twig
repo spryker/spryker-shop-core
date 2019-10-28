@@ -257,7 +257,7 @@
 
                 <!-- packaging unit definition -->
                 {% if item.productPackagingUnit %}
-                    <td>{{ item.productPackagingUnit.hasLeadProduct }}</td>
+                    <td>{{ item.productPackagingUnit.idLeadProduct }}</td>
                     <td>{{ item.productPackagingUnit.idProductPackagingUnit }}</td>
                     <td>{% if item.productPackagingUnit.productPackagingUnitType %}{{ item.productPackagingUnit.productPackagingUnitType.name }}{% endif %}</td>
 
