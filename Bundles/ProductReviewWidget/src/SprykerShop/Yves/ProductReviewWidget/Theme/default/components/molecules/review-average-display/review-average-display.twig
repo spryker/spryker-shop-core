@@ -29,11 +29,11 @@
         (
             {{- data.summary.totalReview }}
 
-            {% set number = data.summary.totalReview > 1 ? 'many' : data.summary.totalReview %}
+            {% set amount = data.summary.totalReview > 1 ? 'multiple' : data.summary.totalReview %}
 
-            {{ number | trans({
+            {{ amount | trans({
                 '1' : 'product_review.summary.review' | trans,
-                'many': 'product_review.summary.reviews' | trans,
+                'multiple': 'product_review.summary.reviews' | trans,
             }) -}}
         )
     {% else %}
