@@ -8,6 +8,7 @@
         <property name="quoteApprovals" type="QuoteApproval[]" singular="quoteApproval"/>
         <property name="quoteRequestVersionReference" type="string"/>
         <property name="commentThread" type="CommentThread"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="QuoteApproval">
@@ -20,6 +21,8 @@
         <property name="groupKeyPrefix" type="string"/>
         <property name="quantity" type="int"/>
         <property name="normalizableFields" type="string[]" singular="normalizableField"/>
+        <property name="productOptions" type="ProductOption[]" singular="productOption"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="QuoteResponse">
@@ -47,6 +50,11 @@
 
     <transfer name="CommentThread">
         <property name="idCommentThread" type="int"/>
+        <property name="ownerType" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
     </transfer>
 
 </transfers>

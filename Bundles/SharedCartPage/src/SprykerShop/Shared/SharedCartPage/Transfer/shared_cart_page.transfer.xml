@@ -11,10 +11,17 @@
 
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="idCustomer" type="int"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
     </transfer>
 
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="fkCustomer" type="int"/>
+        <property name="customer" type="Customer"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
     </transfer>
 
     <transfer name="ShareDetail">
@@ -24,6 +31,57 @@
 
     <transfer name="CompanyUserCriteriaFilter">
         <property name="isActive" type="bool"/>
+        <property name="idCompany" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="fkCompany" type="int"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
+    </transfer>
+
+    <transfer name="Route">
+        <property name="route" type="string"/>
+    </transfer>
+
+    <transfer name="ShareCartRequest">
+        <property name="idQuote" type="int"/>
+        <property name="idCompanyUser" type="int"/>
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="ShareDetailCollection">
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+    </transfer>
+
+    <transfer name="CompanyUserCollection">
+        <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
+    </transfer>
+
+    <transfer name="QuotePermissionGroupResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="quotePermissionGroups" type="QuotePermissionGroup[]" singular="quotePermissionGroup"/>
+    </transfer>
+
+    <transfer name="QuotePermissionGroup">
+        <property name="idQuotePermissionGroup" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ResourceShareRequest">
+        <property name="resourceShare" type="ResourceShare"/>
+    </transfer>
+
+    <transfer name="ResourceShare">
+        <property name="resourceType" type="string"/>
+        <property name="resourceShareData" type="ResourceShareData"/>
+    </transfer>
+
+    <transfer name="ResourceShareData">
+        <property name="shareOption" type="string"/>
     </transfer>
 
 </transfers>

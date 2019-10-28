@@ -25,6 +25,14 @@ class ConfigurableBundleWidgetToQuoteClientBridge implements ConfigurableBundleW
     }
 
     /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote()
+    {
+        return $this->quoteClient->getQuote();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
