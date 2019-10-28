@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsSlotContentRequestTransfer;
 use Generated\Shared\Transfer\CmsSlotContentResponseTransfer;
 use Generated\Shared\Transfer\CmsSlotContextTransfer;
 use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientInterface;
-use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotStorageClientInterface;
 use SprykerShop\Yves\ShopCmsSlot\Exception\MissingRequiredParameterException;
 use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface;
 
@@ -28,23 +27,15 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
     protected $cmsSlotClient;
 
     /**
-     * @var \SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotStorageClientInterface
-     */
-    protected $cmsSlotStorageClient;
-
-    /**
      * @param \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface $cmsSlotContentPlugin
      * @param \SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientInterface $cmsSlotClient
-     * @param \SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotStorageClientInterface $cmsSlotStorageClient
      */
     public function __construct(
         CmsSlotContentPluginInterface $cmsSlotContentPlugin,
-        ShopCmsSlotToCmsSlotClientInterface $cmsSlotClient,
-        ShopCmsSlotToCmsSlotStorageClientInterface $cmsSlotStorageClient
+        ShopCmsSlotToCmsSlotClientInterface $cmsSlotClient
     ) {
         $this->cmsSlotContentPlugin = $cmsSlotContentPlugin;
         $this->cmsSlotClient = $cmsSlotClient;
-        $this->cmsSlotStorageClient = $cmsSlotStorageClient;
     }
 
     /**
@@ -54,14 +45,6 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
      */
     public function getSlotContent(CmsSlotContextTransfer $cmsSlotContextTransfer): CmsSlotContentResponseTransfer
     {
-        $cmsSlotTransfer = $this->cmsSlotStorageClient->findCmsSlotByKey(
-            $cmsSlotContextTransfer->getCmsSlotKey()
-        );
-
-        if (!$cmsSlotTransfer) {
-            return (new CmsSlotContentResponseTransfer())->setContent('');
-        }
-
         $providedData = $cmsSlotContextTransfer->getProvidedData();
         $autoFilledKeys = $cmsSlotContextTransfer->getAutoFilledKeys();
 

@@ -40,11 +40,7 @@ class ShopCmsSlotFactory extends AbstractFactory
      */
     public function createCmsSlotDataProvider(): CmsSlotDataProviderInterface
     {
-        return new CmsSlotDataProvider(
-            $this->getCmsSlotContentPlugin(),
-            $this->getCmsSlotClient(),
-            $this->getCmsSlotStorageClient()
-        );
+        return new CmsSlotDataProvider($this->getCmsSlotContentPlugin(), $this->getCmsSlotClient());
     }
 
     /**

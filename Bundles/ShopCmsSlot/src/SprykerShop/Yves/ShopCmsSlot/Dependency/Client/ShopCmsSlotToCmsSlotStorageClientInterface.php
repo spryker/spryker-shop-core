@@ -7,14 +7,14 @@
 
 namespace SprykerShop\Yves\ShopCmsSlot\Dependency\Client;
 
-use Generated\Shared\Transfer\CmsSlotTransfer;
+use Generated\Shared\Transfer\CmsSlotStorageTransfer;
 
 interface ShopCmsSlotToCmsSlotStorageClientInterface
 {
     /**
      * @param string $cmsSlotKey
      *
-     * @return \Generated\Shared\Transfer\CmsSlotTransfer|null
+     * @return \Generated\Shared\Transfer\CmsSlotStorageTransfer|null
      */
-    public function findCmsSlotByKey(string $cmsSlotKey): ?CmsSlotTransfer;
+    public function findCmsSlotByKey(string $cmsSlotKey): ?CmsSlotStorageTransfer;
 }
