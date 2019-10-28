@@ -39,6 +39,7 @@
   "suggest": {
     "spryker-shop/business-on-behalf-widget": "If you want to use BusinessOnBehalfWidget or MenuItemBusinessOnBehalfWidgetPlugin.",
     "spryker-shop/cart-note-widget": "If you want to use components from module CartNoteWidget or CartNoteOrderNoteWidgetPlugin.",
+    "spryker-shop/sales-configurable-bundle-widget": "Add the module if you want to use OrderConfiguredBundleWidget.",
     "spryker-shop/customer-reorder-widget": "If you want to use CustomerReorderItemCheckboxWidget or CustomerReorderWidgetPlugin, for support of Split Delivery feature use (^6.2.0)",
     "spryker-shop/gift-card-widget": "If you want to use components from module GiftCardWidget.",
     "spryker-shop/home-page": "Widget plugins are available for this module.",
