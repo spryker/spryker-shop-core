@@ -18,11 +18,12 @@
     </transfer>
 
     <transfer name="ShoppingListItem">
+        <property name="idProductAbstract" type="int"/>
         <property name="productOptions" type="ProductOption[]" singular="productOption"/>
     </transfer>
 
     <transfer name="ShoppingList">
-        <property name="items" type="ShoppingListItem[]"/>
+        <property name="items" type="ShoppingListItem[]" singular="item"/>
     </transfer>
 
     <transfer name="ProductOption">
@@ -32,5 +33,10 @@
         <property name="unitGrossPrice" type="int"/>
         <property name="groupName" type="string"/>
     </transfer>
+
+    <transfer name="ProductView">
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
 </transfers>
 
