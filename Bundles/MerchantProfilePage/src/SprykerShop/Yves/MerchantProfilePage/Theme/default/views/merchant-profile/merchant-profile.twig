@@ -4,7 +4,7 @@
     merchantProfile: _view.merchantProfileView,
 } %}
 
-{% set merchantName = data.merchantProfile.contactPersonFirstName ~ ' ' ~ data.merchantProfile.contactPersonLastName %}
+{% set merchantName = data.merchantProfile.merchantame %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
