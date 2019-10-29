@@ -11,7 +11,7 @@
     </transfer>
 
     <transfer name="ProductOfferViewCollection">
-        <property name="ProductOfferViews" type="ProductOfferView[]" singular="productOfferView"/>
+        <property name="productOfferViews" type="ProductOfferView[]" singular="productOfferView"/>
     </transfer>
 
     <transfer name="MerchantProfileView">
