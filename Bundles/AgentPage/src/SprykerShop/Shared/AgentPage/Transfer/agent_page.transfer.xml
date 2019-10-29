@@ -8,4 +8,10 @@
         <property name="username" type="string"/>
     </transfer>
 
+    <transfer name="Quote">
+    </transfer>
+
+    <transfer name="Customer">
+    </transfer>
+
 </transfers>

@@ -12,4 +12,16 @@
         <property name="isSuccess" type="bool"/>
         <property name="route" type="Route"/>
     </transfer>
+
+    <transfer name="QuickOrder">
+    </transfer>
+
+    <transfer name="ProductConcrete">
+    </transfer>
+
+    <transfer name="QuickOrderItem">
+    </transfer>
+
+    <transfer name="Item">
+    </transfer>
 </transfers>
