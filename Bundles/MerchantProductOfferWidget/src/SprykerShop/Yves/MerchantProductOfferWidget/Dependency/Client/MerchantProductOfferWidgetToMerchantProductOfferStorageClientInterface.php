@@ -7,7 +7,14 @@
 
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductOfferViewCollectionTransfer;
+
 interface MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface
 {
-
+    /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferViewCollectionTransfer|null
+     */
+    public function findProductOffersByConcreteSku(string $concreteSku): ?ProductOfferViewCollectionTransfer;
 }

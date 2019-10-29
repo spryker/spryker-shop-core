@@ -7,14 +7,14 @@
 
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductOfferViewCollectionTransfer;
+use Generated\Shared\Transfer\MerchantProfileViewTransfer;
 
 interface MerchantProductOfferWidgetToMerchantProfileStorageClientInterface
 {
     /**
-     * @param string $concreteSku
+     * @param int $idMerchant
      *
-     * @return \Generated\Shared\Transfer\ProductOfferViewCollectionTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantProfileViewTransfer|null
      */
-    public function findProductOffersByConcreteSku(string $concreteSku): ?ProductOfferViewCollectionTransfer;
+    public function findMerchantProfileStorageViewData(int $idMerchant): ?MerchantProfileViewTransfer;
 }

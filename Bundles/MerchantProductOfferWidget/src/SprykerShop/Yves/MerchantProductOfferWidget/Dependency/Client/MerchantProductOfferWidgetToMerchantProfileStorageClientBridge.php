@@ -7,31 +7,30 @@
 
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductOfferViewCollectionTransfer;
-use Spryker\Client\MerchantProductOfferStorage\MerchantProductOfferStorageClientInterface;
+use Generated\Shared\Transfer\MerchantProfileViewTransfer;
 
 class MerchantProductOfferWidgetToMerchantProfileStorageClientBridge implements MerchantProductOfferWidgetToMerchantProfileStorageClientInterface
 {
     /**
-     * @var \Spryker\Client\MerchantProductOfferStorage\MerchantProductOfferStorageClientInterface
+     * @var \Spryker\Client\MerchantProfileStorage\MerchantProfileStorageClientInterface
      */
-    protected $merchantProductOfferStorageClient;
+    protected $merchantProfileStorageClient;
 
     /**
-     * @param \Spryker\Client\MerchantProductOfferStorage\MerchantProductOfferStorageClientInterface
+     * @param \Spryker\Client\MerchantProfileStorage\MerchantProfileStorageClientInterface $merchantProfileStorageClient
      */
-    public function __construct(MerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient)
+    public function __construct($merchantProfileStorageClient)
     {
-        $this->merchantProductOfferStorageClient = $merchantProductOfferStorageClient;
+        $this->merchantProfileStorageClient = $merchantProfileStorageClient;
     }
 
     /**
-     * @param string $concreteSku
+     * @param int $idMerchant
      *
-     * @return \Generated\Shared\Transfer\ProductOfferViewCollectionTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantProfileViewTransfer|null
      */
-    public function findProductOffersByConcreteSku(string $concreteSku): ?ProductOfferViewCollectionTransfer
+    public function findMerchantProfileStorageViewData(int $idMerchant): ?MerchantProfileViewTransfer
     {
-        $this->merchantProductOfferStorageClient->findProductOffersByConcreteSku($concreteSku);
+        return $this->merchantProfileStorageClient->findMerchantProfileStorageViewData($idMerchant);
     }
- }
+}

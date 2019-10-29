@@ -1,13 +1,26 @@
 {% extends template('widget') %}
 
 {% define data = {
-    merchantProductOffers: _widget.merchantProductOffers,
+    locale: app.locale | slice(0, 2),
+    productOfferViewCollection: _widget.productOfferViewCollection,
 } %}
 
 {% block template %}
-    {% if data.merchantProductOffers %}
-        {% for merchantProductOffer in merchantProductOffers  %}
-            {{ dump(merchantProductOffer) }}
-        {% endfor %}
+    {% if data.productOfferViewCollection %}
+        <div class="grid grid--left grid--justify">
+            <div class="col col--sm-12 col--md-12">
+                <ul class="list">
+                {% for productOfferView in data.productOfferViewCollection  %}
+                    <ul class="list">
+                        <li class="list__item spacing-y">
+                            <a href="{{ productOfferView.merchantProfileView.merchantUrl }}"
+                               style="background-color:#D3D3D3;">
+                                {{ productOfferView.merchantProfileView.merchantName }}
+                            </a>
+                        </li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}

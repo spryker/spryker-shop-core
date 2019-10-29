@@ -7,20 +7,30 @@
 
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client;
 
-use Spryker\Client\MerchantProfileStorage\MerchantProfileStorageClientInterface;
+use Generated\Shared\Transfer\ProductOfferViewCollectionTransfer;
 
 class MerchantProductOfferWidgetToMerchantProductOfferStorageClientBridge implements MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface
 {
     /**
-     * @var Spryker\Client\MerchantProfileStorage\MerchantProfileStorageClientInterface
+     * @var \Spryker\Client\MerchantProductOfferStorage\MerchantProductOfferStorageClientInterface
      */
-    protected $merchantProfileStorageClient;
+    protected $merchantProductOfferStorageClient;
 
     /**
-     * @param \Spryker\Client\MerchantProfileStorage\MerchantProfileStorageClientInterface $merchantProfileStorageClient
+     * @param \Spryker\Client\MerchantProductOfferStorage\MerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient
      */
-    public function __construct(MerchantProfileStorageClientInterface $merchantProfileStorageClient)
+    public function __construct($merchantProductOfferStorageClient)
     {
-        $this->merchantProfileStorageClient = $merchantProfileStorageClient;
+        $this->merchantProductOfferStorageClient = $merchantProductOfferStorageClient;
     }
- }
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferViewCollectionTransfer|null
+     */
+    public function findProductOffersByConcreteSku(string $concreteSku): ?ProductOfferViewCollectionTransfer
+    {
+        return $this->merchantProductOfferStorageClient->findProductOffersByConcreteSku($concreteSku);
+    }
+}

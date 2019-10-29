@@ -8,25 +8,11 @@
 namespace SprykerShop\Yves\MerchantProductOfferWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\CompanyWidget\Address\AddressProvider;
-use SprykerShop\Yves\CompanyWidget\Address\AddressProviderInterface;
-use SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCustomerClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProfileStorageClientInterface;
 
 class MerchantProductOfferWidgetFactory extends AbstractFactory
 {
-    /**
-     * @return \SprykerShop\Yves\CompanyWidget\Address\AddressProviderInterface
-     */
-    public function createAddressProvider(): AddressProviderInterface
-    {
-        return new AddressProvider(
-            $this->getMerchantProductOfferStorageClient(),
-            $this->getMerchantProfileStorageClient()
-        );
-    }
-
     /**
      * @return \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface
      */
@@ -40,6 +26,6 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
      */
     public function getMerchantProfileStorageClient(): MerchantProductOfferWidgetToMerchantProfileStorageClientInterface
     {
-        return $this->getProvidedDependency(MerchantProductOfferWidgetDependencyProvider::CLIENT_MERCHANT_PROFILE_OFFER_STORAGE);
+        return $this->getProvidedDependency(MerchantProductOfferWidgetDependencyProvider::CLIENT_MERCHANT_PROFILE_STORAGE);
     }
 }
