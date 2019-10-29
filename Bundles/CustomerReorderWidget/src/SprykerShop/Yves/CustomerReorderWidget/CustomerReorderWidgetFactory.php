@@ -34,7 +34,7 @@ class CustomerReorderWidgetFactory extends AbstractFactory
      */
     public function createCartFiller(): CartFillerInterface
     {
-        return new CartFiller($this->getCartClient(), $this->createItemsFetcher());
+        return new CartFiller($this->getCartClient(), $this->createItemsFetcher(), $this->getPostReorderPlugins());
     }
 
     /**
@@ -150,5 +150,13 @@ class CustomerReorderWidgetFactory extends AbstractFactory
     public function getProductStorageClient(): CustomerReorderWidgetToProductStorageClientInterface
     {
         return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\PostReorderPluginInterface[]
+     */
+    public function getPostReorderPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::POST_REORDER_EXTENSION_PLUGINS);
     }
 }

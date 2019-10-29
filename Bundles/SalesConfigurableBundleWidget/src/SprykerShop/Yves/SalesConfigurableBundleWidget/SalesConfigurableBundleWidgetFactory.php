@@ -14,4 +14,11 @@ use Spryker\Yves\Kernel\AbstractFactory;
  */
 class SalesConfigurableBundleWidgetFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
+     */
+    public function getMessenger()
+    {
+        return $this->getProvidedDependency(SalesConfigurableBundleWidgetDependencyProvider::FLASH_MESSENGER);
+    }
 }

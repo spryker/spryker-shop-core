@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface;
 
 class CartFiller implements CartFillerInterface
@@ -28,15 +29,23 @@ class CartFiller implements CartFillerInterface
     protected $itemsFetcher;
 
     /**
+     * @var array|\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\PostReorderPluginInterface[]
+     */
+    protected $postReorderPlugins;
+
+    /**
      * @param \SprykerShop\Yves\CustomerReorderWidget\Dependency\Client\CustomerReorderWidgetToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\CustomerReorderWidget\Model\ItemFetcherInterface $itemsFetcher
+     * @param \SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\PostReorderPluginInterface[] $postReorderPlugins
      */
     public function __construct(
         CustomerReorderWidgetToCartClientInterface $cartClient,
-        ItemFetcherInterface $itemsFetcher
+        ItemFetcherInterface $itemsFetcher,
+        array $postReorderPlugins
     ) {
         $this->cartClient = $cartClient;
         $this->itemsFetcher = $itemsFetcher;
+        $this->postReorderPlugins = $postReorderPlugins;
     }
 
     /**
@@ -72,14 +81,32 @@ class CartFiller implements CartFillerInterface
      */
     protected function updateCart(array $orderItems, OrderTransfer $orderTransfer): void
     {
+        $orderItemsCopy = $this->getOrderItemsCopy($orderItems);
         $cartChangeTransfer = $this->createCartChangeTransfer($orderItems);
         $cartChangeTransfer->setQuote($this->cartClient->getQuote());
         $orderItemTransfers = $this->sanitizeOrderItems($orderItems);
         $cartChangeTransfer->setItems($orderItemTransfers);
 
-        $this->cartClient->addValidItems($cartChangeTransfer, [
+        $quoteTransfer = $this->cartClient->addValidItems($cartChangeTransfer, [
             static::PARAM_ORDER_REFERENCE => $orderTransfer->getOrderReference(),
         ]);
+
+        $this->expandPostReorderPlugins($quoteTransfer, $orderItemsCopy);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function getOrderItemsCopy(array $orderItems): array
+    {
+        $copyOrderItems = [];
+        foreach ($orderItems as $orderItem) {
+            $copyOrderItems[] = (new ItemTransfer())->fromArray($orderItem->toArray(false));
+        }
+
+        return $copyOrderItems;
     }
 
     /**
@@ -92,6 +119,7 @@ class CartFiller implements CartFillerInterface
         $orderItemsSanitized = new ArrayObject();
         foreach ($orderItems as $itemTransfer) {
             $orderItemsSanitized->append($this->removeIdSalesShipmentFromItem($itemTransfer));
+            $this->cleanUpSalesOrderConfiguredBundleItem($itemTransfer);
         }
 
         return $orderItemsSanitized;
@@ -123,5 +151,36 @@ class CartFiller implements CartFillerInterface
         return (new CartChangeTransfer())
             ->setQuote($this->cartClient->getQuote())
             ->setItems(new ArrayObject($orderItems));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function cleanUpSalesOrderConfiguredBundleItem(ItemTransfer $itemTransfer): ItemTransfer
+    {
+        if (!$itemTransfer->getSalesOrderConfiguredBundleItem()) {
+            return $itemTransfer;
+        }
+
+        $itemTransfer->setSalesOrderConfiguredBundleItem(null);
+
+        return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array $itemsCollection
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function expandPostReorderPlugins(QuoteTransfer $quoteTransfer, array $itemsCollection): QuoteTransfer
+    {
+        foreach ($this->postReorderPlugins as $cartChangeTransferExpanderPlugin) {
+            $quoteTransfer = $cartChangeTransferExpanderPlugin->execute($quoteTransfer, $itemsCollection);
+        }
+
+        return $quoteTransfer;
     }
 }
