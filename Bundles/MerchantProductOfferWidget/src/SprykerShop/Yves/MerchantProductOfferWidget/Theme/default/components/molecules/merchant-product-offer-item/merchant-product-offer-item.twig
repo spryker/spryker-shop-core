@@ -1,0 +1,82 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'merchant-product-offer-item',
+} %}
+
+{% define data = {
+    checked: false,
+    radioName: '',
+    offerReference: '',
+    merchantName: '',
+    merchantUrl: '',
+    merchantPrice: 0
+} %}
+
+{%- block class -%}
+    {{ parent() }} spacing-y
+{%- endblock -%}
+
+{% block body %}
+    <div class="grid grid--nowrap">
+        {% block offerInner %}
+            {% block radioCol %}
+                <div class="col">
+                    {% block radio %}
+                        {% include atom('radio') with {
+                            class: config.jsName ~ '__trigger-' ~ data.offerReference,
+                            attributes: {
+                                checked: data.checked,
+                                name: data.radioName,
+                                value: data.offerReference,
+                            },
+                        } only %}
+
+                        {% include molecule('query-creator', 'MerchantProductOfferWidget') with {
+                            attributes: {
+                                'trigger-class': config.jsName ~ '__trigger-' ~ data.offerReference,
+                                'query': 'attribute[product_offer_reference]=' ~ data.offerReference,
+                            },
+                        } only %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+            {% block contentCol %}
+                <div class="col col--expand">
+                    {% block content %}
+                        <div class="grid grid--justify grid--nowrap">
+                            {% block contentInner %}
+                                {% block infoCol %}
+                                    <div class="col col--expand">
+                                        {% block infoName %}
+                                            <div>
+                                                <strong>{{ data.merchantName }}</strong>
+                                            </div>
+                                        {% endblock %}
+                                        {% block infoUrl %}
+                                            <a class="link link--small" href="{{ data.merchantUrl }}">
+                                                View Seller
+                                            </a>
+                                        {% endblock %}
+                                    </div>
+                                {% endblock %}
+
+                                {% block priceCol %}
+                                    <div class="col">
+                                        {% block price %}
+                                            <div>
+                                                <strong>{{ data.merchantPrice | money }}</strong>
+                                            </div>
+                                        {% endblock %}
+                                    </div>
+                                {% endblock %}
+                                <hr />
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        {% endblock %}
+    </div>
+{% endblock %}
