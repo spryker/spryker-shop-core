@@ -32,7 +32,7 @@
         <property name="cancellationPolicyGlossaryKey" type="string"/>
         <property name="imprintGlossaryKey" type="string"/>
         <property name="dataPrivacyGlossaryKey" type="string"/>
-        <property name="urlCollection" type="MerchantProfileViewUrl[]" singular="MerchantProfileViewUrl"/>
+        <property name="urlCollection" type="MerchantProfileViewUrl[]" singular="merchantProfileViewUrl"/>
         <property name="addressCollection" type="MerchantProfileViewAddress[]" singular="merchantProfileViewAddress"/>
     </transfer>
 
