@@ -33,6 +33,7 @@
     "spryker/container": "*",
     "spryker/messenger": "*",
     "spryker/router": "*",
+    "spryker/security": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
@@ -48,7 +49,8 @@
     "spryker/config": "Use this module when using plugins that need Config dependencies.",
     "spryker/container": "If you want to use twig plugins.",
     "spryker/messenger": "Use this module when using plugins that need Messenger dependencies.",
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
+    "spryker/security": "Add this module to use the SecurityPlugin."
   },
   "autoload": {
     "psr-4": {
