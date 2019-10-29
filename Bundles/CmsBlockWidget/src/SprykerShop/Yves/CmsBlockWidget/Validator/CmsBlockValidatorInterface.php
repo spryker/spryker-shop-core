@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\SpyCmsBlockEntityTransfer;
 interface CmsBlockValidatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $spyCmsBlockTransfer
+     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $cmsBlockEntityTransfer
      *
      * @return bool
      */
-    public function isValid(SpyCmsBlockEntityTransfer $spyCmsBlockTransfer): bool;
+    public function isValid(SpyCmsBlockEntityTransfer $cmsBlockEntityTransfer): bool;
 }

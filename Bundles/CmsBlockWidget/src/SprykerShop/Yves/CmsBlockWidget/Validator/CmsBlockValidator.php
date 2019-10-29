@@ -13,28 +13,36 @@ use Generated\Shared\Transfer\SpyCmsBlockEntityTransfer;
 class CmsBlockValidator implements CmsBlockValidatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $spyCmsBlockTransfer
+     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $cmsBlockEntityTransfer
      *
      * @return bool
      */
-    public function isValid(SpyCmsBlockEntityTransfer $spyCmsBlockTransfer): bool
+    public function isValid(SpyCmsBlockEntityTransfer $cmsBlockEntityTransfer): bool
     {
-        if (!$spyCmsBlockTransfer->getCmsBlockTemplate()) {
-            return false;
-        }
+        return $cmsBlockEntityTransfer->getIsActive() &&
+            $cmsBlockEntityTransfer->getCmsBlockTemplate() &&
+            $this->isDateValid($cmsBlockEntityTransfer);
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $cmsBlockEntityTransfer
+     *
+     * @return bool
+     */
+    protected function isDateValid(SpyCmsBlockEntityTransfer $cmsBlockEntityTransfer): bool
+    {
         $dateToCompare = new DateTime();
 
-        if ($spyCmsBlockTransfer->getValidFrom() !== null) {
-            $validFrom = new DateTime($spyCmsBlockTransfer->getValidFrom());
+        if ($cmsBlockEntityTransfer->getValidFrom() !== null) {
+            $validFrom = new DateTime($cmsBlockEntityTransfer->getValidFrom());
 
             if ($dateToCompare <= $validFrom) {
                 return false;
             }
         }
 
-        if ($spyCmsBlockTransfer->getValidTo() !== null) {
-            $validTo = new DateTime($spyCmsBlockTransfer->getValidTo());
+        if ($cmsBlockEntityTransfer->getValidTo() !== null) {
+            $validTo = new DateTime($cmsBlockEntityTransfer->getValidTo());
 
             if ($dateToCompare > $validTo) {
                 return false;

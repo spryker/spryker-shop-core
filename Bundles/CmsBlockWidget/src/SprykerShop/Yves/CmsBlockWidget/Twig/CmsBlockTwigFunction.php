@@ -119,14 +119,14 @@ class CmsBlockTwigFunction extends TwigFunction
     }
 
     /**
-     * @param \ArrayObject $mappings
+     * @param \Generated\Shared\Transfer\SpyCmsBlockGlossaryKeyMappingEntityTransfer[]|\ArrayObject $cmsBlockGlossaryKeyMappings
      *
      * @return string[]
      */
-    protected function mapGlossaryKeysByPlaceholder(ArrayObject $mappings): array
+    protected function mapGlossaryKeysByPlaceholder(ArrayObject $cmsBlockGlossaryKeyMappings): array
     {
         $placeholders = [];
-        foreach ($mappings as $mapping) {
+        foreach ($cmsBlockGlossaryKeyMappings as $mapping) {
             $placeholders[$mapping->getPlaceholder()] = $mapping->getGlossaryKey()->getKey();
         }
 
