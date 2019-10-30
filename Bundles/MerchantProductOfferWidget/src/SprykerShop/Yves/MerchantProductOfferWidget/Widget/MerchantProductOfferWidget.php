@@ -21,24 +21,7 @@ class MerchantProductOfferWidget extends AbstractWidget
      */
     public function __construct(ProductViewTransfer $productViewTransfer)
     {
-        if (!$productViewTransfer->getIdProductConcrete()) {
-            $this->addParameter('productOfferViewCollection', []);
-        }
-
-        $productOfferViewCollection = [];
-        $productOfferViewCollectionTransfer = $this->getFactory()->getMerchantProductOfferStorageClient()->findProductOffersByConcreteSku($productViewTransfer->getSku());
-        foreach ($productOfferViewCollectionTransfer->getProductOfferViews() as $productOfferView) {
-            $merchantProfileViewTransfer = $this->getFactory()->getMerchantProfileStorageClient()->findMerchantProfileStorageViewData($productOfferView->getIdMerchant());
-            if ($merchantProfileViewTransfer) {
-                $merchantProfileViewTransfer->setMerchantUrl(
-                    $this->getResolvedUrl($merchantProfileViewTransfer)
-                );
-                $productOfferView->setMerchantProfileView($merchantProfileViewTransfer);
-                $productOfferViewCollection[] = $productOfferView;
-            }
-        }
-
-        $this->addParameter('productOfferViewCollection', $productOfferViewCollection);
+        $this->addParameter('productOfferViewCollection', $this->getProductOfferViewCollection($productViewTransfer));
     }
 
     /**
@@ -74,5 +57,31 @@ class MerchantProductOfferWidget extends AbstractWidget
         }
 
         return '';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferViewTransfer[]
+     */
+    protected function getProductOfferViewCollection(ProductViewTransfer $productViewTransfer): array
+    {
+        if (!$productViewTransfer->getIdProductConcrete()) {
+            return [];
+        }
+        $productOfferViewCollection = [];
+        $productOfferViewCollectionTransfer = $this->getFactory()->getMerchantProductOfferStorageClient()->getProductOfferViewCollection($productViewTransfer->getSku());
+        foreach ($productOfferViewCollectionTransfer->getProductOfferViews() as $productOfferViewTransfer) {
+            $merchantProfileViewTransfer = $this->getFactory()->getMerchantProfileStorageClient()->findMerchantProfileStorageViewData($productOfferViewTransfer->getIdMerchant());
+            if ($merchantProfileViewTransfer) {
+                $merchantProfileViewTransfer->setMerchantUrl(
+                    $this->getResolvedUrl($merchantProfileViewTransfer)
+                );
+                $productOfferViewTransfer->setMerchantProfileView($merchantProfileViewTransfer);
+                $productOfferViewCollection[] = $productOfferViewTransfer;
+            }
+        }
+
+        return $productOfferViewCollection;
     }
 }
