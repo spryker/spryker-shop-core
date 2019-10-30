@@ -11,11 +11,10 @@ export default class QueryCreator extends Component {
     }
 
     protected mapEvents(): void {
-        this.triggers.forEach(trigger =>
-            trigger.addEventListener(this.eventName, (event: Event) => this.onEvent(event)));
+        this.triggers.forEach(trigger => trigger.addEventListener(this.eventName, () => this.onEvent()));
     }
 
-    protected onEvent(event: Event): void {
+    protected onEvent(): void {
         window.location.search = this.queryValue;
     }
 

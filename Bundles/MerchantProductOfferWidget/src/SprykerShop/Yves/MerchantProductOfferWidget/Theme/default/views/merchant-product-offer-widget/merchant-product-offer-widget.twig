@@ -20,17 +20,28 @@
                         {% for productOfferView in data.productOfferViewCollection  %}
                             {% block productOffer %}
                                 {% set merchantPrice = productOfferView.merchantProfileView.merchantPrice | default(12300) %}
+                                {% set currentMerchantOffer = app.request.query.all['attribute']['product_offer_reference'] | default() %}
+                                {% set isSameMerchantOffer= currentMerchantOffer == productOfferView.productOfferReference %}
 
-                                {% include molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
+                                {% embed molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
                                     data: {
-                                        checked: loop.first,
+                                        checked: isSameMerchantOffer,
                                         radioName: 'product_offer_reference',
                                         offerReference: productOfferView.productOfferReference,
                                         merchantName: productOfferView.merchantProfileView.merchantName,
                                         merchantUrl: productOfferView.merchantProfileView.merchantUrl,
                                         merchantPrice: merchantPrice,
                                     },
+                                    embed: {
+                                        productOfferViewCollection: data.productOfferViewCollection,
+                                    },
                                 } only %}
+                                    {% block radioCol %}
+                                        {% if embed.productOfferViewCollection | length > 1 %}
+                                            {{ parent() }}
+                                        {% endif %}
+                                    {% endblock %}
+                                {% endembed %}
                             {% endblock %}
                         {% endfor %}
                     {% endblock %}
