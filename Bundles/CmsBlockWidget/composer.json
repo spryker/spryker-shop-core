@@ -19,11 +19,9 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/catalog-page": "Widget plugins are available for this module.",
-    "spryker-shop/product-detail-page": "Widget plugins are available for this module.",
-    "spryker-shop/shop-application": "^0.2.0 ShopApplicationServiceProvider plugin is required by TwigCmsBlock plugin",
-    "spryker/container": "If you want to use Twig Plugin",
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+    "spryker-shop/shop-application": "Twig plugins are available for this module.",
+    "spryker/container": "If you want to use ShopApplication plugins through container.",
+    "spryker/translator": "^1.2.0 TranslatorApplicationPlugin is needed for CMS block content translations."
   },
   "autoload": {
     "psr-4": {
