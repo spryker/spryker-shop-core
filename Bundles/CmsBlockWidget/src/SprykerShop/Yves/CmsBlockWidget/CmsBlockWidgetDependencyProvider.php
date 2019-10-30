@@ -11,15 +11,17 @@ use Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPlugin;
 use Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientBridge;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToStoreClientBridge;
 
 class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const TWIG_EXTENSION_PLUGINS = 'TWIG_EXTENSION_PLUGINS';
     public const CLIENT_CMS_BLOCK_STORAGE = 'CLIENT_CMS_BLOCK_STORAGE';
     public const CLIENT_STORE = 'CLIENT_STORE';
+    public const SERVICE_TRANSLATOR = 'translator';
 
+    public const TWIG_EXTENSION_PLUGINS = 'TWIG_EXTENSION_PLUGINS';
     public const CMS_TWIG_CONTENT_RENDERER_PLUGIN = 'CMS_TWIG_CONTENT_RENDERER_PLUGIN';
 
     /**
@@ -33,6 +35,7 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCmsBlockStorageClient($container);
         $container = $this->addStoreClient($container);
         $container = $this->addCmsTwigContentRenderePlugin($container);
+        $container = $this->addTranslatorService($container);
 
         return $container;
     }
@@ -98,6 +101,20 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CMS_TWIG_CONTENT_RENDERER_PLUGIN, function () {
             return $this->getCmsTwigContentRendererPlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    public function addTranslatorService(Container $container): Container
+    {
+        $container->set(static::SERVICE_TRANSLATOR, function () {
+            return (new Pimple())->getApplication()->get(static::SERVICE_TRANSLATOR);
         });
 
         return $container;

@@ -7,22 +7,25 @@
 
 namespace SprykerShop\Yves\CmsBlockWidget;
 
+use Spryker\Shared\Twig\TwigFunction;
 use Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\CmsBlockWidget\src\SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidator;
 use SprykerShop\CmsBlockWidget\src\SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToStoreClientInterface;
+use SprykerShop\Yves\CmsBlockWidget\Twig\CmsBlockPlaceholderTwigFunction;
 use SprykerShop\Yves\CmsBlockWidget\Twig\CmsBlockTwigFunction;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CmsBlockWidgetFactory extends AbstractFactory
 {
     /**
      * @param string $localeName
      *
-     * @return \SprykerShop\Yves\CmsBlockWidget\Twig\CmsBlockTwigFunction
+     * @return \Spryker\Shared\Twig\TwigFunction
      */
-    public function createCmsBlockTwigFunction(string $localeName): CmsBlockTwigFunction
+    public function createCmsBlockTwigFunction(string $localeName): TwigFunction
     {
         return new CmsBlockTwigFunction(
             $this->getCmsBlockStorageClient(),
@@ -30,6 +33,14 @@ class CmsBlockWidgetFactory extends AbstractFactory
             $this->createCmsBlockValidator(),
             $localeName
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\TwigFunction
+     */
+    public function createCmsBlockPlaceholderTwigFunction(): TwigFunction
+    {
+        return new CmsBlockPlaceholderTwigFunction($this->getTranslatorService(), $this->getCmsTwigContentRendererPlugin());
     }
 
     /**
@@ -70,5 +81,13 @@ class CmsBlockWidgetFactory extends AbstractFactory
     public function getCmsTwigContentRendererPlugin(): CmsTwigContentRendererPluginInterface
     {
         return $this->getProvidedDependency(CmsBlockWidgetDependencyProvider::CMS_TWIG_CONTENT_RENDERER_PLUGIN);
+    }
+
+    /**
+     * @return \Symfony\Contracts\Translation\TranslatorInterface
+     */
+    public function getTranslatorService(): TranslatorInterface
+    {
+        return $this->getProvidedDependency(CmsBlockWidgetDependencyProvider::SERVICE_TRANSLATOR);
     }
 }

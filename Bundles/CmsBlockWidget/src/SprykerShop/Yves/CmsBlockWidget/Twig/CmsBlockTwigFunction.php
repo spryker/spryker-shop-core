@@ -61,7 +61,7 @@ class CmsBlockTwigFunction extends TwigFunction
     /**
      * @return string
      */
-    public function getFunctionName(): string
+    protected function getFunctionName(): string
     {
         return static::SPY_CMS_BLOCK_TWIG_FUNCTION;
     }
@@ -69,7 +69,7 @@ class CmsBlockTwigFunction extends TwigFunction
     /**
      * @return callable
      */
-    public function getFunction(): callable
+    protected function getFunction(): callable
     {
         return function (Environment $twig, array $context, array $blockOptions = []): string {
             $storeName = $this->storeClient->getCurrentStore()->getName();
