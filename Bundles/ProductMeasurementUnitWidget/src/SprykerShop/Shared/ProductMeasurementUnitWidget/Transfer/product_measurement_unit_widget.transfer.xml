@@ -36,4 +36,7 @@
         <property name="idProductMeasurementBaseUnit" type="int"/>
     </transfer>
 
+    <transfer name="ProductMeasurementUnitStorage">
+    </transfer>
+
 </transfers>

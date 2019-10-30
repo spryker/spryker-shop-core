@@ -158,4 +158,7 @@
         <property name="idShoppingListPermissionGroup" type="int"/>
     </transfer>
 
+    <transfer name="Quote">
+    </transfer>
+
 </transfers>
