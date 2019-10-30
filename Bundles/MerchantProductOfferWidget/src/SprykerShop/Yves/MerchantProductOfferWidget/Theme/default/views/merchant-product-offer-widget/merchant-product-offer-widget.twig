@@ -19,11 +19,11 @@
                     {% block productOfferList %}
                         {% for productOfferView in data.productOfferViewCollection  %}
                             {% block productOffer %}
-                                {% set merchantPrice = productOfferView.merchantProfileView.merchantPrice | default(12300) %}
+                                {% set merchantPrice = productOfferView.merchantProfileView.merchantPrice | default(null) %}
                                 {% set currentMerchantOffer = app.request.query.all['attribute']['product_offer_reference'] | default() %}
                                 {% set isSameMerchantOffer= currentMerchantOffer == productOfferView.productOfferReference %}
 
-                                {% embed molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
+                                {% include molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
                                     data: {
                                         checked: isSameMerchantOffer,
                                         radioGroupName: 'product_offer_reference',
@@ -31,17 +31,12 @@
                                         merchantName: productOfferView.merchantProfileView.merchantName,
                                         merchantUrl: productOfferView.merchantProfileView.merchantUrl,
                                         merchantPrice: merchantPrice,
+                                        shouldShowRadioCol: data.productOfferViewCollection | length > 1
                                     },
                                     embed: {
                                         productOfferViewCollection: data.productOfferViewCollection,
                                     },
                                 } only %}
-                                    {% block radioCol %}
-                                        {% if embed.productOfferViewCollection | length > 1 %}
-                                            {{ parent() }}
-                                        {% endif %}
-                                    {% endblock %}
-                                {% endembed %}
                             {% endblock %}
                         {% endfor %}
                     {% endblock %}

@@ -11,36 +11,37 @@
     merchantName: required,
     merchantUrl: required,
     merchantPrice: required,
+    shouldShowRadioCol: false,
 } %}
 
-{%- block class -%}
-    {{ parent() }} spacing-y
-{%- endblock -%}
+{% block extraClass %} spacing-y{% endblock %}
 
 {% block body %}
     <div class="grid grid--nowrap">
         {% block offerInner %}
-            {% block radioCol %}
-                <div class="col">
-                    {% block radio %}
-                        {% include atom('radio') with {
-                            class: config.jsName ~ '__trigger-' ~ data.offerReference,
-                            attributes: {
-                                checked: data.checked,
-                                name: data.radioGroupName,
-                                value: data.offerReference,
-                            },
-                        } only %}
+            {% if data.shouldShowRadioCol %}
+                {% block radioCol %}
+                    <div class="col">
+                        {% block radio %}
+                            {% include atom('radio') with {
+                                class: config.jsName ~ '__trigger-' ~ data.offerReference,
+                                attributes: {
+                                    checked: data.checked,
+                                    name: data.radioGroupName,
+                                    value: data.offerReference,
+                                },
+                            } only %}
 
-                        {% include molecule('query-creator', 'MerchantProductOfferWidget') with {
-                            attributes: {
-                                'trigger-class': config.jsName ~ '__trigger-' ~ data.offerReference,
-                                'query': 'attribute[product_offer_reference]=' ~ data.offerReference,
-                            },
-                        } only %}
-                    {% endblock %}
-                </div>
-            {% endblock %}
+                            {% include molecule('query-creator', 'MerchantProductOfferWidget') with {
+                                attributes: {
+                                    'trigger-class': config.jsName ~ '__trigger-' ~ data.offerReference,
+                                    query: 'attribute[product_offer_reference]=' ~ data.offerReference,
+                                },
+                            } only %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            {% endif %}
 
             {% block contentCol %}
                 <div class="col col--expand">

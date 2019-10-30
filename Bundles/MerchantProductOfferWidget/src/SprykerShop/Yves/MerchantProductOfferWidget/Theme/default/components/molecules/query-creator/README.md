@@ -1,1 +1,1 @@
-Change url search query by event.
+Changes the search query URL by the event.
