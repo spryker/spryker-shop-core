@@ -11,7 +11,7 @@
     merchantName: required,
     merchantUrl: required,
     merchantPrice: required,
-    shouldShowRadioCol: false,
+    shouldShowRadioButton: false,
 } %}
 
 {% block extraClass %} spacing-y{% endblock %}
@@ -19,7 +19,7 @@
 {% block body %}
     <div class="grid grid--nowrap">
         {% block offerInner %}
-            {% if data.shouldShowRadioCol %}
+            {% if data.shouldShowRadioButton %}
                 {% block radioCol %}
                     <div class="col">
                         {% block radio %}
