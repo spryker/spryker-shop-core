@@ -1,3 +1,4 @@
+/* tslint:disable */
 import Component from 'ShopUi/models/component';
 
 export default class PackagingUnitQuantitySelector extends Component {
@@ -21,7 +22,6 @@ export default class PackagingUnitQuantitySelector extends Component {
     itemBasePriceInput: any;
     itemMoneySymbolInput: any;
     amountInBaseUnitInput: any;
-    isAmountBlockEnabled: boolean;
     isAddToCartDisabled: boolean;
     currentLeadSalesUnit: any;
     defaultAmount: any;
@@ -111,10 +111,6 @@ export default class PackagingUnitQuantitySelector extends Component {
 
             if (jsonData.hasOwnProperty('leadSalesUnits')) {
                 this.leadSalesUnits = jsonData.leadSalesUnits;
-            }
-
-            if (jsonData.hasOwnProperty('isAmountBlockEnabled')) {
-                this.isAmountBlockEnabled = jsonData.isAmountBlockEnabled;
             }
 
             if (jsonData.hasOwnProperty('isAddToCartDisabled')) {

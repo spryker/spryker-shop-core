@@ -11,7 +11,7 @@
     isAddToCartDisabled : _widget.isAddToCartDisabled | default(false),
     packagingUnitDefaultAmount: _widget.productPackagingUnit.defaultAmount | default(0),
     packagingUnitIsVariable: _widget.productPackagingUnit.isVariable | default(false),
-    isAmountBlockEnabled: _widget.isAmountBlockEnabled | default(false),
+    packagingUnitIsSelfLead: _widget.productPackagingUnit is not null and _widget.productPackagingUnit.idProduct == _widget.productPackagingUnit.idLeadProduct,
     jsonScheme: _widget.jsonScheme | default(''),
     minQuantityInBaseUnit: _widget.minQuantityInBaseUnit,
     minQuantityInSalesUnits: _widget.minQuantityInSalesUnits,
@@ -20,7 +20,7 @@
 {% block body %}
 
     <div class="product-packaging-new-price is-hidden" id="product-packaging-new-price-block">
-        <span>{{ "measurement_units.new-price" | trans}}:</span>
+        <span>{{ "measurement_units.new-price" | trans }}:</span>
         <div id="product-packaging-new-price-value-block"></div>
         <hr>
     </div>
@@ -30,7 +30,7 @@
     >
     <input id="item-money-symbol"
            type="hidden"
-           value="{{  moneySymbol() }}"
+           value="{{ moneySymbol() }}"
     >
 
     <div class="grid grid--bottom grid--justify">
@@ -38,7 +38,8 @@
             {{ 'cart.item_quantity' | trans }}
 
             {% if data.salesUnitCount %}
-                <input id="sales-unit-quantity" class="input input--expand js-volume-price__quantity" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-quantity"/>
+                <input id="sales-unit-quantity" class="input input--expand js-volume-price__quantity" type="number"
+                       value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-quantity"/>
                 <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnit }}" name="quantity"/>
             {% else %}
                 {% embed atom('select') with {
@@ -56,10 +57,7 @@
         </div>
 
         <div class="col {% if data.salesUnitCount %}col--sm-4{% else %}col--sm-6{% endif %}">
-            {% set isProductSharesItsStockAndSalesUnitsIsMultiply = data.salesUnits | length > 1 and data.isAmountBlockEnabled != false %}
-            {% set isProductDoesNotSharesItsStockAndSalesUnitsIsSingle = data.salesUnits | length == 1 and data.isAmountBlockEnabled != false %}
-
-            {% if data.salesUnitCount and isProductSharesItsStockAndSalesUnitsIsMultiply %}
+            {% if data.salesUnitCount > 1 and data.packagingUnitIsSelfLead == false %}
                 <label>
                     {{ 'product.measurement.sales_unit' | trans }}
                     {% embed atom('select') with {
@@ -82,13 +80,15 @@
                 </label>
             {% endif %}
 
-            {% if data.salesUnitCount and isProductDoesNotSharesItsStockAndSalesUnitsIsSingle %}
+            {% if data.salesUnitCount == 1 and data.packagingUnitIsSelfLead == false %}
                 {{ data.salesUnits[0].productMeasurementUnit.name | trans }}
-                <input type="hidden" name="id-product-measurement-sales-unit" value="{{ data.salesUnits[0].idProductMeasurementSalesUnit }}">
+                <input type="hidden" name="id-product-measurement-sales-unit"
+                       value="{{ data.salesUnits[0].idProductMeasurementSalesUnit }}">
             {% endif %}
 
             {% if not data.salesUnitCount %}
-                <button type="submit" id="add-to-cart-button" class="button button--success button--expand" data-init-single-click {{ data.isAddToCartDisabled ? 'disabled' }} {{ qa('add-to-cart-button') }}>
+                <button type="submit" id="add-to-cart-button" class="button button--success button--expand"
+                        data-init-single-click {{ data.isAddToCartDisabled ? 'disabled' }} {{ qa('add-to-cart-button') }}>
                     {% include atom('icon') with {
                         data: {
                             name: 'cart-plus',
@@ -110,12 +110,12 @@
                     <span>{{ "measurement_units.recommendation.min-violation" | trans }}</span>
                 </div>
                 <div id="maximum-quantity" class="is-hidden">
-                    <span>{{  "measurement_units.recommendation.max-violation" | trans }}</span>
+                    <span>{{ "measurement_units.recommendation.max-violation" | trans }}</span>
                 </div>
             </div>
 
             <div id="measurement-unit-choices">
-                <span>{{ "measurement_units.recommendation.suggestion" | trans}}:</span>
+                <span>{{ "measurement_units.recommendation.suggestion" | trans }}:</span>
                 <div class="list"></div>
             </div>
         </div>
@@ -138,7 +138,7 @@
                            max="{{ data.productPackagingUnit.amountMax }}"
                            step="{{ data.productPackagingUnit.amountInterval }}"
                            name="amount-sales-unit[{{ data.product.sku }}]"
-                           {{ not data.packagingUnitIsVariable ? 'disabled' }}
+                        {{ not data.packagingUnitIsVariable ? 'disabled' }}
                     >
                     <input id="default-amount"
                            type="hidden"
@@ -179,7 +179,8 @@
 
             {% if data.salesUnitCount and data.leadProductSalesUnits | length == 1 %}
                 {{ data.leadProductSalesUnits[0].productMeasurementUnit.name | trans }}
-                <input type="hidden" name="amount-id-product-measurement-sales-unit[{{ data.product.sku }}]" value="{{ data.leadProductSalesUnits[0].idProductMeasurementSalesUnit }}">
+                <input type="hidden" name="amount-id-product-measurement-sales-unit[{{ data.product.sku }}]"
+                       value="{{ data.leadProductSalesUnits[0].idProductMeasurementSalesUnit }}">
             {% endif %}
         </div>
     </div>
@@ -215,7 +216,7 @@
                 </div>
 
                 <div id="packaging-unit-choices">
-                    <span>{{ "packaging_units.recommendation.suggestion" | trans}}</span>
+                    <span>{{ "packaging_units.recommendation.suggestion" | trans }}</span>
                     <div class="list"></div>
                 </div>
             </div>
@@ -223,7 +224,8 @@
 
         {% if data.salesUnitCount %}
             <hr>
-            <button type="submit" id="add-to-cart-button" class="button button--success button--expand" data-init-single-click {{ data.isAddToCartDisabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
+            <button type="submit" id="add-to-cart-button" class="button button--success button--expand"
+                    data-init-single-click {{ data.isAddToCartDisabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
                 {% include atom('icon') with {
                     data: {
                         name: 'cart-plus'
@@ -233,12 +235,12 @@
             </button>
         {% endif %}
 
-            {% set translations = [] %}
-            {% for key, salesUnit in data.salesUnits %}
-                {% set translations = translations | merge({(salesUnit.productMeasurementUnit.code) : (salesUnit.productMeasurementUnit.name | trans)}) %}
-            {% endfor %}
+        {% set translations = [] %}
+        {% for key, salesUnit in data.salesUnits %}
+            {% set translations = translations | merge({(salesUnit.productMeasurementUnit.code) : (salesUnit.productMeasurementUnit.name | trans)}) %}
+        {% endfor %}
 
-            <script type="application/json" id="measurement-unit-translation">{{ translations|json_encode|raw }}</script>
+        <script type="application/json" id="measurement-unit-translation">{{ translations|json_encode|raw }}</script>
 
     </div>
 {% endblock body %}

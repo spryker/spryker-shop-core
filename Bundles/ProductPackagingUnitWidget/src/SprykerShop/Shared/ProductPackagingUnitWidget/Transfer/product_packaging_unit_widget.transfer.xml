@@ -11,17 +11,29 @@
     <transfer name="ProductMeasurementUnit">
     </transfer>
 
+    <transfer name="ProductConcreteMeasurementUnitStorage">
+    </transfer>
+
+    <transfer name="ProductMeasurementUnitStorage">
+    </transfer>
+
+    <transfer name="Item">
+    </transfer>
+
     <transfer name="ProductMeasurementSalesUnit">
         <property name="conversion" type="float"/>
         <property name="isDefault" type="bool"/>
     </transfer>
 
-    <transfer name="ProductAbstractPackagingStorage">
-        <property name="leadProduct" type="int"/>
-    </transfer>
-
     <transfer name="ProductPackagingUnitStorage">
+        <property name="idProduct" type="int"/>
+        <property name="typeName" type="string"/>
         <property name="idLeadProduct" type="int"/>
+        <property name="defaultAmount" type="decimal"/>
+        <property name="isVariable" type="bool"/>
+        <property name="amountMin" type="decimal"/>
+        <property name="amountMax" type="decimal"/>
+        <property name="amountInterval" type="decimal"/>
     </transfer>
 
     <transfer name="ProductQuantityStorage">

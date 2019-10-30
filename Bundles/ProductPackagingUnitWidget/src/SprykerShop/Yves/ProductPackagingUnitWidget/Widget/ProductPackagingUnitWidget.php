@@ -27,7 +27,6 @@ class ProductPackagingUnitWidget extends AbstractWidget
     {
         $baseUnit = null;
         $salesUnits = null;
-        $isAmountBlockEnabled = false;
         $productQuantityStorageTransfer = null;
         $leadProductSalesUnits = null;
         $productPackagingUnitStorageTransfer = null;
@@ -50,11 +49,6 @@ class ProductPackagingUnitWidget extends AbstractWidget
                 $leadProductSalesUnits = $productMeasurementUnitStorageClient->findProductMeasurementSalesUnitByIdProduct(
                     $productPackagingUnitStorageTransfer->getIdLeadProduct()
                 );
-
-                $isAmountBlockEnabled = $this->isAmountBlockEnabled(
-                    $productViewTransfer->getIdProductConcrete(),
-                    $productPackagingUnitStorageTransfer->getIdLeadProduct()
-                );
             }
 
             $productQuantityStorageTransfer = $this->getFactory()
@@ -75,10 +69,8 @@ class ProductPackagingUnitWidget extends AbstractWidget
             ->addParameter('leadProductSalesUnits', $leadProductSalesUnits)
             ->addParameter('productPackagingUnit', $productPackagingUnitStorageTransfer)
             ->addParameter('isAddToCartDisabled', $isAddToCartDisabled)
-            ->addParameter('isAmountBlockEnabled', $isAmountBlockEnabled)
             ->addParameter('productQuantityStorage', $productQuantityStorageTransfer)
             ->addParameter('jsonScheme', $this->prepareJsonData(
-                $isAmountBlockEnabled,
                 $isAddToCartDisabled,
                 $baseUnit,
                 $salesUnits,
@@ -105,7 +97,6 @@ class ProductPackagingUnitWidget extends AbstractWidget
     }
 
     /**
-     * @param bool $isAmountBlockEnabled
      * @param bool $isAddToCartDisabled
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null $baseUnit
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null $salesUnits
@@ -116,7 +107,6 @@ class ProductPackagingUnitWidget extends AbstractWidget
      * @return string
      */
     protected function prepareJsonData(
-        bool $isAmountBlockEnabled,
         bool $isAddToCartDisabled,
         ?ProductMeasurementUnitTransfer $baseUnit,
         ?array $salesUnits,
@@ -127,7 +117,6 @@ class ProductPackagingUnitWidget extends AbstractWidget
         $jsonData = [];
 
         $jsonData['isAddToCartDisabled'] = $isAddToCartDisabled;
-        $jsonData['isAmountBlockEnabled'] = $isAmountBlockEnabled;
 
         if ($baseUnit !== null) {
             $jsonData['baseUnit'] = $baseUnit->toArray();
@@ -191,16 +180,5 @@ class ProductPackagingUnitWidget extends AbstractWidget
         }
 
         return $quantityMin;
-    }
-
-    /**
-     * @param int $idProduct
-     * @param int $idLeadProduct
-     *
-     * @return bool
-     */
-    protected function isAmountBlockEnabled(int $idProduct, int $idLeadProduct): bool
-    {
-        return $idProduct !== $idLeadProduct;
     }
 }
