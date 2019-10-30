@@ -95,6 +95,7 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
     ): CmsSlotContentRequestTransfer {
         return (new CmsSlotContentRequestTransfer())
             ->setCmsSlotKey($cmsSlotContextTransfer->getCmsSlotKey())
+            ->setCmsSlotTemplatePath($cmsSlotContextTransfer->getCmsSlotTemplatePath())
             ->setParams($providedData);
     }
 
