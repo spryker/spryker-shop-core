@@ -6,11 +6,11 @@
 
 {% define data = {
     checked: false,
-    radioName: '',
-    offerReference: '',
-    merchantName: '',
-    merchantUrl: '',
-    merchantPrice: 0,
+    radioGroupName: required,
+    offerReference: required,
+    merchantName: required,
+    merchantUrl: required,
+    merchantPrice: required,
 } %}
 
 {%- block class -%}
@@ -27,7 +27,7 @@
                             class: config.jsName ~ '__trigger-' ~ data.offerReference,
                             attributes: {
                                 checked: data.checked,
-                                name: data.radioName,
+                                name: data.radioGroupName,
                                 value: data.offerReference,
                             },
                         } only %}
