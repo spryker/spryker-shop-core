@@ -26,7 +26,7 @@
                                 {% embed molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
                                     data: {
                                         checked: isSameMerchantOffer,
-                                        radioName: 'product_offer_reference',
+                                        radioGroupName: 'product_offer_reference',
                                         offerReference: productOfferView.productOfferReference,
                                         merchantName: productOfferView.merchantProfileView.merchantName,
                                         merchantUrl: productOfferView.merchantProfileView.merchantUrl,
