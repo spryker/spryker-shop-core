@@ -15,10 +15,10 @@ export default class PageLocationSearchParamsUpdater extends Component {
     }
 
     protected onEvent(): void {
-        window.location.search = this.queryValue;
+        window.location.search = this.searchParams;
     }
 
-    protected get queryValue(): string {
+    protected get searchParams(): string {
         return this.getAttribute('search-params');
     }
 
