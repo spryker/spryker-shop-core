@@ -18,14 +18,27 @@ class OrderConfiguredBundleWidget extends AbstractWidget
 {
     protected const PARAMETER_ORDER = 'order';
     protected const PARAMETER_ITEMS = 'items';
+    protected const PARAMETER_SALES_ORDER_CONFIGURED_BUNDLES = 'salesOrderConfiguredBundles';
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[]|null $itemTransfers
      */
-    public function __construct(OrderTransfer $orderTransfer)
+    public function __construct(OrderTransfer $orderTransfer, ?iterable $itemTransfers = [])
     {
+        if (!count($itemTransfers)) {
+            $itemTransfers = $orderTransfer->getItems();
+        }
+
+        $itemTransfers = $this->mapOrderItems($itemTransfers);
+
+        $salesOrderConfiguredBundles = $this->getFactory()
+            ->createSalesOrderConfiguredBundleGrouper()
+            ->getSalesOrderConfiguredBundles($orderTransfer, $itemTransfers);
+
+        $this->addItemsParameter($itemTransfers);
         $this->addOrderParameter($orderTransfer);
-        $this->addItemsParameter($orderTransfer);
+        $this->addSalesOrderConfiguredBundlesParameter($salesOrderConfiguredBundles);
     }
 
     /**
@@ -41,7 +54,7 @@ class OrderConfiguredBundleWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@SalesConfigurableBundleWidget/views/order-configured-bundle-widget/order-configured-bundle-widget.twig';
+        return '@SalesConfigurableBundleWidget/views/order-detail-configured-bundle-widget/order-detail-configured-bundle-widget.twig';
     }
 
     /**
@@ -55,25 +68,35 @@ class OrderConfiguredBundleWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return void
      */
-    protected function addItemsParameter(OrderTransfer $orderTransfer): void
+    protected function addItemsParameter(iterable $itemTransfers): void
     {
-        $this->addParameter(static::PARAMETER_ITEMS, $this->mapOrderItems($orderTransfer));
+        $this->addParameter(static::PARAMETER_ITEMS, $itemTransfers);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param iterable|\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundles
+     *
+     * @return void
+     */
+    protected function addSalesOrderConfiguredBundlesParameter(iterable $salesOrderConfiguredBundles): void
+    {
+        $this->addParameter(static::PARAMETER_SALES_ORDER_CONFIGURED_BUNDLES, $salesOrderConfiguredBundles);
+    }
+
+    /**
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function mapOrderItems(OrderTransfer $orderTransfer): array
+    protected function mapOrderItems(iterable $itemTransfers): array
     {
         $items = [];
 
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
+        foreach ($itemTransfers as $itemTransfer) {
             $items[$itemTransfer->getIdSalesOrderItem()] = $itemTransfer;
         }
 

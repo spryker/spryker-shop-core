@@ -8,6 +8,8 @@
 namespace SprykerShop\Yves\SalesConfigurableBundleWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\SalesConfigurableBundleWidget\Grouper\SalesOrderConfiguredBundleGrouper;
+use SprykerShop\Yves\SalesConfigurableBundleWidget\Grouper\SalesOrderConfiguredBundleGrouperInterface;
 
 /**
  * @method \SprykerShop\Yves\SalesConfigurableBundleWidget\SalesConfigurableBundleWidgetConfig getConfig()
@@ -20,5 +22,13 @@ class SalesConfigurableBundleWidgetFactory extends AbstractFactory
     public function getMessenger()
     {
         return $this->getProvidedDependency(SalesConfigurableBundleWidgetDependencyProvider::FLASH_MESSENGER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\SalesConfigurableBundleWidget\Grouper\SalesOrderConfiguredBundleGrouperInterface
+     */
+    public function createSalesOrderConfiguredBundleGrouper(): SalesOrderConfiguredBundleGrouperInterface
+    {
+        return new SalesOrderConfiguredBundleGrouper();
     }
 }
