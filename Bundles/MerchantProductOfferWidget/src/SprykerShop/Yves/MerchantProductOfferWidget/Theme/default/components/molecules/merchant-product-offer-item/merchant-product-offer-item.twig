@@ -32,10 +32,10 @@
                                 },
                             } only %}
 
-                            {% include molecule('query-creator', 'MerchantProductOfferWidget') with {
+                            {% include molecule('page-location-search-params-updater', 'MerchantProductOfferWidget') with {
                                 attributes: {
                                     'trigger-class': config.jsName ~ '__trigger-' ~ data.offerReference,
-                                    query: 'attribute[product_offer_reference]=' ~ data.offerReference,
+                                    'search-params': 'attribute[product_offer_reference]=' ~ data.offerReference,
                                 },
                             } only %}
                         {% endblock %}
@@ -50,12 +50,12 @@
                             {% block contentInner %}
                                 {% block infoCol %}
                                     <div class="col col--expand">
-                                        {% block infoName %}
+                                        {% block merchantName %}
                                             <div>
                                                 <strong>{{ data.merchantName }}</strong>
                                             </div>
                                         {% endblock %}
-                                        {% block infoUrl %}
+                                        {% block merchantLink %}
                                             <a class="link link--small" href="{{ data.merchantUrl }}">
                                                 {{ "mearchant_product_offer.view_seller" | trans }}
                                             </a>

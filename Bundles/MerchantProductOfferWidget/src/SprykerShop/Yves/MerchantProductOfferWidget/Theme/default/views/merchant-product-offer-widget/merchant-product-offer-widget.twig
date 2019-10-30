@@ -19,9 +19,8 @@
                     {% block productOfferList %}
                         {% for productOfferView in data.productOfferViewCollection  %}
                             {% block productOffer %}
-                                {% set merchantPrice = productOfferView.merchantProfileView.merchantPrice | default(null) %}
                                 {% set currentMerchantOffer = app.request.query.all['attribute']['product_offer_reference'] | default() %}
-                                {% set isSameMerchantOffer= currentMerchantOffer == productOfferView.productOfferReference %}
+                                {% set isSameMerchantOffer = currentMerchantOffer == productOfferView.productOfferReference %}
 
                                 {% include molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
                                     data: {
@@ -30,7 +29,7 @@
                                         offerReference: productOfferView.productOfferReference,
                                         merchantName: productOfferView.merchantProfileView.merchantName,
                                         merchantUrl: productOfferView.merchantProfileView.merchantUrl,
-                                        merchantPrice: merchantPrice,
+                                        merchantPrice: productOfferView.merchantProfileView.merchantPrice | default(null),
                                         shouldShowRadioButton: data.productOfferViewCollection | length > 1
                                     },
                                     embed: {

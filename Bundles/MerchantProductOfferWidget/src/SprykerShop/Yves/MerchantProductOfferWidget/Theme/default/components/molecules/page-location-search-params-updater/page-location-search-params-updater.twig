@@ -1,14 +1,14 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'query-creator',
-    tag: 'query-creator',
+    name: 'page-location-search-params-updater',
+    tag: 'page-location-search-params-updater',
 } %}
 
 {% define attributes = {
     'trigger-class': required,
     event: 'change',
-    query: required,
+    'search-params': required,
 } %}
 
 {%- block class -%}

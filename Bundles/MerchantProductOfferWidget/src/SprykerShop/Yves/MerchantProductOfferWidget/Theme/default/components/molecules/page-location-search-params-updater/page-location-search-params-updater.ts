@@ -1,6 +1,6 @@
 import Component from 'ShopUi/models/component';
 
-export default class QueryCreator extends Component {
+export default class PageLocationSearchParamsUpdater extends Component {
     protected triggers: HTMLElement[];
 
     protected readyCallback(): void {}
@@ -19,7 +19,7 @@ export default class QueryCreator extends Component {
     }
 
     protected get queryValue(): string {
-        return this.getAttribute('query');
+        return this.getAttribute('search-params');
     }
 
     protected get triggerClass(): string {
