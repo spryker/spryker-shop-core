@@ -20,7 +20,7 @@
         <property name="leadProduct" type="int"/>
     </transfer>
 
-    <transfer name="ProductConcretePackagingStorage">
+    <transfer name="ProductPackagingUnitStorage">
         <property name="idLeadProduct" type="int"/>
     </transfer>
 
