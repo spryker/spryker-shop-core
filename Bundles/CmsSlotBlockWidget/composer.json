@@ -1,0 +1,31 @@
+{
+  "name": "spryker-shop/cms-slot-block-widget",
+  "type": "library",
+  "description": "CmsSlotBlockWidget module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker-shop/shop-cms-slot-extension": "^0.1.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/twig": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

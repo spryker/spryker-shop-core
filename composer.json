@@ -43,6 +43,7 @@
     "spryker-shop/cms-content-widget-product-set-connector": "*",
     "spryker-shop/cms-page": "*",
     "spryker-shop/cms-search-page": "*",
+    "spryker-shop/cms-slot-block-widget": "*",
     "spryker-shop/comment-widget": "*",
     "spryker-shop/comment-widget-extension": "*",
     "spryker-shop/company-page": "*",
