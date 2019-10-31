@@ -5,17 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CmsSlotBlockWidget\Plugin;
+namespace SprykerShop\Yves\CmsSlotBlockWidget\Business;
 
 use Generated\Shared\Transfer\CmsSlotContentRequestTransfer;
 use Generated\Shared\Transfer\CmsSlotContentResponseTransfer;
-use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface;
 
-/**
- * @method \SprykerShop\Yves\CmsSlotBlockWidget\CmsSlotBlockWidgetFactory getFactory()
- */
-class CmsSlotBlockWidgetCmsSlotContentPlugin extends AbstractPlugin implements CmsSlotContentPluginInterface
+interface CmsSlotBlockWidgetDataProviderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer
@@ -24,9 +19,5 @@ class CmsSlotBlockWidgetCmsSlotContentPlugin extends AbstractPlugin implements C
      */
     public function getSlotContent(
         CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer
-    ): CmsSlotContentResponseTransfer {
-        return $this->getFactory()
-            ->createCmsSlotBlockWidgetDataProvider()
-            ->getSlotContent($cmsSlotContentRequestTransfer);
-    }
+    ): CmsSlotContentResponseTransfer;
 }
