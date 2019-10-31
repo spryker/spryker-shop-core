@@ -27,12 +27,16 @@ class CmsSlotBlockWidgetToCmsSlotBlockStorageClientBridge implements CmsSlotBloc
         string $cmsSlotTemplatePath,
         string $cmsSlotKey
     ): CmsSlotBlockStorageTransfer {
+        //TODO: should be changed to client call
         $blocks = [
             [
-                'blockKey' => 'blk-1',
+                'blockName' => 'Category CMS page showcase for Top position',
             ],
             [
-                'blockKey' => 'blk-2',
+                'blockName' => 'Home Page',
+            ],
+            [
+                'blockName' => 'Category CMS page showcase for Top position',
             ],
         ];
 
