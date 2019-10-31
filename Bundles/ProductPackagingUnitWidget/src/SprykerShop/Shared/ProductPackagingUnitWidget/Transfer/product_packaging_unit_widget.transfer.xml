@@ -16,4 +16,25 @@
         <property name="isDefault" type="bool"/>
     </transfer>
 
+    <transfer name="ProductAbstractPackagingStorage">
+        <property name="leadProduct" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConcretePackagingStorage">
+        <property name="hasLeadProduct" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductQuantityStorage">
+        <property name="quantityMin" type="int"/>
+    </transfer>
+
+    <transfer name="Item">
+    </transfer>
+
+    <transfer name="ProductConcreteMeasurementUnitStorage">
+    </transfer>
+
+    <transfer name="ProductMeasurementUnitStorage">
+    </transfer>
+
 </transfers>

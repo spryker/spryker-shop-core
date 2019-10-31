@@ -8,4 +8,12 @@
         <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
+    <transfer name="Message">
+        <property name="type" type="string"/>
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="Quote">
+    </transfer>
+
 </transfers>

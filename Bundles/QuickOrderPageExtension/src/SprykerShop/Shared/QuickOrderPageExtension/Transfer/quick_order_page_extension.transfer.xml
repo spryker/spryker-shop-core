@@ -5,11 +5,23 @@
 
     <transfer name="Route">
         <property name="route" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="QuickOrderFormProcessResponse">
         <property name="isSuccess" type="bool"/>
         <property name="route" type="Route"/>
+    </transfer>
+
+    <transfer name="QuickOrder">
+    </transfer>
+
+    <transfer name="ProductConcrete">
+    </transfer>
+
+    <transfer name="QuickOrderItem">
+    </transfer>
+
+    <transfer name="Item">
     </transfer>
 </transfers>

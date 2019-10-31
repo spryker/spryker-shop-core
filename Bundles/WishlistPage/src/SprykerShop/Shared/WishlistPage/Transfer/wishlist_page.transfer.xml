@@ -5,6 +5,72 @@
 
     <transfer name="ProductView">
         <property name="images" singular="image" type="ProductImageStorage[]"/>
+        <property name="sku" type="string"/>
+        <property name="idProductConcrete" type="int"/>
+    </transfer>
+
+    <transfer name="WishlistMoveToCartRequestCollection">
+        <property name="requests" type="WishlistMoveToCartRequest[]" singular="request"/>
+    </transfer>
+
+    <transfer name="WishlistItem">
+        <property name="sku" type="string"/>
+        <property name="idWishlistItem" type="int"/>
+        <property name="wishlistName" type="string"/>
+        <property name="idProduct" type="int"/>
+        <property name="fkCustomer" type="int"/>
+    </transfer>
+
+    <transfer name="WishlistItemMeta">
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="WishlistMoveToCartRequest">
+        <property name="sku" type="string"/>
+        <property name="wishlistItem" type="WishlistItem"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="idCustomer" type="int"/>
+    </transfer>
+
+    <transfer name="Wishlist">
+        <property name="name" type="string"/>
+        <property name="fkCustomer" type="int"/>
+        <property name="idWishlist" type="int"/>
+    </transfer>
+
+    <transfer name="WishlistOverviewRequest">
+        <property name="wishlist" type="Wishlist"/>
+        <property name="page" type="int"/>
+        <property name="itemsPerPage" type="int"/>
+    </transfer>
+
+    <transfer name="WishlistOverviewResponse">
+        <property name="wishlist" type="Wishlist"/>
+        <property name="pagination" type="WishlistPagination"/>
+        <property name="items" type="WishlistItem[]" singular="item"/>
+        <property name="meta" type="WishlistOverviewMeta"/>
+    </transfer>
+
+    <transfer name="WishlistResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="array" singular="error"/>
+    </transfer>
+
+    <transfer name="WishlistPagination">
+        <property name="page" type="int"/>
+        <property name="pagesTotal" type="int"/>
+    </transfer>
+
+    <transfer name="WishlistOverviewMeta">
+        <property name="wishlistItemMetaCollection" type="WishlistItemMeta[]" singular="wishlistItemMeta"/>
+    </transfer>
+
+    <transfer name="ProductImageStorage">
+    </transfer>
+
+    <transfer name="WishlistItemCollection">
     </transfer>
 
 </transfers>

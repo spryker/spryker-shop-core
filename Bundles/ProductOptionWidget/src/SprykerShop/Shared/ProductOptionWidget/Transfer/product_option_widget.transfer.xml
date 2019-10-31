@@ -23,7 +23,7 @@
     </transfer>
 
     <transfer name="ShoppingList">
-        <property name="items" type="ShoppingListItem[]"/>
+        <property name="items" type="ShoppingListItem[]" singular="item"/>
     </transfer>
 
     <transfer name="ProductOption">
@@ -36,6 +36,9 @@
 
     <transfer name="ProductView">
         <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="Item">
     </transfer>
 
 </transfers>
