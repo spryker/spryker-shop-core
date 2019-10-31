@@ -22,6 +22,8 @@ class MerchantProfilePageDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideDependencies(Container $container): Container
     {
+        parent::provideDependencies($container);
+
         $container = $this->addMerchantProfileStorageClient($container);
 
         return $container;
