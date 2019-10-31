@@ -13,4 +13,7 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="Quote">
+    </transfer>
+
 </transfers>
