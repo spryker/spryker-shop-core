@@ -100,9 +100,18 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
                 $cmsSlotContentRequestTransfer->getCmsSlotKey()
             );
         //$blockOptions['keys'] = $this->getVisibleBlockKeys($cmsSlotBlockStorageTransfer);
-        $blockOptions['name'] = 'Category CMS page showcase for Top position';
+//
+//        return $cmsBlockFunction($this->twig, [], $blockOptions);
 
-        return $cmsBlockFunction($this->twig, [], $blockOptions);
+        //TODO should be removed:
+        $blockNames = $this->getVisibleBlockNames($cmsSlotBlockStorageTransfer);
+        $content = '';
+        foreach ($blockNames as $blockName) {
+            $blockOptions['name'] = $blockName;
+            $content .=  $cmsBlockFunction($this->twig, [], $blockOptions);
+        }
+
+        return $content;
     }
 
     /**
@@ -120,5 +129,24 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
         }
 
         return $visibleCmsBlockKeys;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer
+     *
+     * @return string[]
+     *
+     * TODO should be removed
+     */
+    protected function getVisibleBlockNames(CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer): array
+    {
+        $cmsBlocks = $cmsSlotBlockStorageTransfer->getCmsBlocks();
+        $visibleCmsBlockNames = [];
+
+        foreach ($cmsBlocks as $cmsBlock) {
+            $visibleCmsBlockNames[] = $cmsBlock['blockName'];
+        }
+
+        return $visibleCmsBlockNames;
     }
 }
