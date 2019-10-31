@@ -18,9 +18,9 @@ interface PostReorderPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsCollection
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function execute(QuoteTransfer $quoteTransfer, array $itemsCollection): QuoteTransfer;
+    public function execute(QuoteTransfer $quoteTransfer, array $itemTransfers): QuoteTransfer;
 }

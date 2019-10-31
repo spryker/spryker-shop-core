@@ -157,6 +157,6 @@ class CustomerReorderWidgetFactory extends AbstractFactory
      */
     public function getPostReorderPlugins(): array
     {
-        return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::POST_REORDER_EXTENSION_PLUGINS);
+        return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::POST_REORDER_PLUGINS);
     }
 }

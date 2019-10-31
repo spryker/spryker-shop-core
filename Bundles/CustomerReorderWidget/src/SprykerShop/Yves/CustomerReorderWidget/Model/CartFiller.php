@@ -29,7 +29,7 @@ class CartFiller implements CartFillerInterface
     protected $itemsFetcher;
 
     /**
-     * @var array|\SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\PostReorderPluginInterface[]
+     * @var \SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\PostReorderPluginInterface[]
      */
     protected $postReorderPlugins;
 
@@ -81,7 +81,7 @@ class CartFiller implements CartFillerInterface
      */
     protected function updateCart(array $orderItems, OrderTransfer $orderTransfer): void
     {
-        $orderItemsCopy = $this->getOrderItemsCopy($orderItems);
+        $orderItemsCopy = $this->getCopiedItemTransfers($orderItems);
         $cartChangeTransfer = $this->createCartChangeTransfer($orderItems);
         $cartChangeTransfer->setQuote($this->cartClient->getQuote());
         $orderItemTransfers = $this->sanitizeOrderItems($orderItems);
@@ -91,22 +91,23 @@ class CartFiller implements CartFillerInterface
             static::PARAM_ORDER_REFERENCE => $orderTransfer->getOrderReference(),
         ]);
 
-        $this->expandPostReorderPlugins($quoteTransfer, $orderItemsCopy);
+        $this->executePostReorderPlugins($quoteTransfer, $orderItemsCopy);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItems
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function getOrderItemsCopy(array $orderItems): array
+    protected function getCopiedItemTransfers(array $itemTransfers): array
     {
-        $copyOrderItems = [];
-        foreach ($orderItems as $orderItem) {
-            $copyOrderItems[] = (new ItemTransfer())->fromArray($orderItem->toArray(false));
+        $copiedItemTransfers = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $copiedItemTransfers[] = (new ItemTransfer())->fromArray($itemTransfer->toArray(false));
         }
 
-        return $copyOrderItems;
+        return $copiedItemTransfers;
     }
 
     /**
@@ -171,14 +172,14 @@ class CartFiller implements CartFillerInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $itemsCollection
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function expandPostReorderPlugins(QuoteTransfer $quoteTransfer, array $itemsCollection): QuoteTransfer
+    protected function executePostReorderPlugins(QuoteTransfer $quoteTransfer, array $itemTransfers): QuoteTransfer
     {
-        foreach ($this->postReorderPlugins as $cartChangeTransferExpanderPlugin) {
-            $quoteTransfer = $cartChangeTransferExpanderPlugin->execute($quoteTransfer, $itemsCollection);
+        foreach ($this->postReorderPlugins as $postReorderPlugin) {
+            $quoteTransfer = $postReorderPlugin->execute($quoteTransfer, $itemTransfers);
         }
 
         return $quoteTransfer;

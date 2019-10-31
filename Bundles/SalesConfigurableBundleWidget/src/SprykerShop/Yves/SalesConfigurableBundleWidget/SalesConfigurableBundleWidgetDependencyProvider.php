@@ -14,7 +14,6 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
 class SalesConfigurableBundleWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FLASH_MESSENGER = 'FLASH_MESSENGER';
-    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -23,24 +22,7 @@ class SalesConfigurableBundleWidgetDependencyProvider extends AbstractBundleDepe
      */
     public function provideDependencies(Container $container)
     {
-        $container = $this->addApplication($container);
         $container = $this->addFlashMessenger($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addApplication(Container $container): Container
-    {
-        $container->set(static::PLUGIN_APPLICATION, function () {
-            $pimplePlugin = new Pimple();
-
-            return $pimplePlugin->getApplication();
-        });
 
         return $container;
     }
@@ -52,8 +34,8 @@ class SalesConfigurableBundleWidgetDependencyProvider extends AbstractBundleDepe
      */
     protected function addFlashMessenger(Container $container): Container
     {
-        $container->set(static::FLASH_MESSENGER, function (Container $container) {
-            return $container[self::PLUGIN_APPLICATION]['flash_messenger'];
+        $container->set(static::FLASH_MESSENGER, function () {
+            return (new Pimple())->getApplication()['flash_messenger'];
         });
 
         return $container;
