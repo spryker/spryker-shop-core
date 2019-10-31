@@ -5,6 +5,8 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/configurable-bundle-page-search": "^1.0.0",
+    "spryker/kernel": "^3.33.0",
     "spryker-shop/shop-application": "^1.0.0"
   },
   "require-dev": {

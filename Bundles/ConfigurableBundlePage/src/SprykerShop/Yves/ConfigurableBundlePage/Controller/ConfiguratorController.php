@@ -7,15 +7,43 @@
 
 namespace SprykerShop\Yves\ConfigurableBundlePage\Controller;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchRequestTransfer;
+use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 
+/**
+ * @method \SprykerShop\Yves\ConfigurableBundlePage\ConfigurableBundlePageFactory getFactory()
+ */
 class ConfiguratorController extends AbstractController
 {
     /**
-     * @return void
+     * @uses \Spryker\Client\ConfigurableBundlePageSearch\Plugin\Elasticsearch\ResultFormatter\ConfigurableBundleTemplatePageSearchResultFormatterPlugin::NAME
      */
-    public function templateSelectionAction(): void
+    protected const CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_SEARCH_RESULT_FORMATTER_PLUGIN = 'ConfigurableBundleTemplatePageSearchResultFormatterPlugin';
+
+    /**
+     * @return \Spryker\Yves\Kernel\View\View
+     */
+    public function templateSelectionAction(): View
     {
-        dd(1);
+        $response = $this->executeTemplateSelectionAction();
+
+        return $this->view($response, [], '@ConfigurableBundlePage/views/template-selection/template-selection.twig');
+    }
+
+    /**
+     * @return array
+     */
+    protected function executeTemplateSelectionAction(): array
+    {
+        $formattedSearchResults = $this->getFactory()
+            ->getConfigurableBundlePageSearchClient()
+            ->searchConfigurableBundleTemplates(
+                new ConfigurableBundleTemplatePageSearchRequestTransfer()
+            );
+
+        return [
+            'configurableBundleTemplates' => $formattedSearchResults[static::CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_SEARCH_RESULT_FORMATTER_PLUGIN] ?? [],
+        ];
     }
 }
