@@ -40,13 +40,4 @@
         <property name="quantityMin" type="int"/>
     </transfer>
 
-    <transfer name="Item">
-    </transfer>
-
-    <transfer name="ProductConcreteMeasurementUnitStorage">
-    </transfer>
-
-    <transfer name="ProductMeasurementUnitStorage">
-    </transfer>
-
 </transfers>
