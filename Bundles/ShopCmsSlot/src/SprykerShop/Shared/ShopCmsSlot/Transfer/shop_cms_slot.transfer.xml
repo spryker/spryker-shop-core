@@ -26,6 +26,7 @@
     </transfer>
 
     <transfer name="CmsSlotStorage">
+        <property name="isActive" type="bool"/>
     </transfer>
 
 </transfers>
