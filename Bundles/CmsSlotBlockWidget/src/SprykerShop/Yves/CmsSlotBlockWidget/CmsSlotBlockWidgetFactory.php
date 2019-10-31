@@ -8,11 +8,28 @@
 namespace SprykerShop\Yves\CmsSlotBlockWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CmsSlotBlockWidget\Business\CmsSlotBlockWidgetDataProvider;
+use SprykerShop\Yves\CmsSlotBlockWidget\Business\CmsSlotBlockWidgetDataProviderInterface;
 use SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockStorageClientInterface;
 use Twig\Environment;
 
+/**
+ * @method \SprykerShop\Yves\CmsSlotBlockWidget\CmsSlotBlockWidgetConfig getConfig()
+ */
 class CmsSlotBlockWidgetFactory extends AbstractFactory
 {
+    /**
+     * @return \SprykerShop\Yves\CmsSlotBlockWidget\Business\CmsSlotBlockWidgetDataProviderInterface
+     */
+    public function createCmsSlotBlockWidgetDataProvider(): CmsSlotBlockWidgetDataProviderInterface
+    {
+        return new CmsSlotBlockWidgetDataProvider(
+            $this->getTwigEnvironment(),
+            $this->getCmsSlotBlockStorageClient(),
+            $this->getConfig()
+        );
+    }
+
     /**
      * @return \SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockStorageClientInterface
      */
