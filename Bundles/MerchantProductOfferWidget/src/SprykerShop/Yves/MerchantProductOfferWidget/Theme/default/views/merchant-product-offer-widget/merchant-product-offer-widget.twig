@@ -7,20 +7,40 @@
 
 {% block template %}
     {% if data.productOfferViewCollection %}
-        <div class="grid grid--left grid--justify">
-            <div class="col col--sm-12 col--md-12">
-                <ul class="list">
-                {% for productOfferView in data.productOfferViewCollection  %}
-                    <ul class="list">
-                        <li class="list__item spacing-y">
-                            <a href="{{ productOfferView.merchantProfileView.merchantUrl }}"
-                               style="background-color:#D3D3D3;">
-                                {{ productOfferView.merchantProfileView.merchantName }}
-                            </a>
-                        </li>
-                {% endfor %}
-                </ul>
+        {% block content %}
+            <div class="box box--dark box--spacingless spacing spacing--inner spacing-y">
+                {% block contentInner %}
+                    {% block title %}
+                        <div>
+                            <strong>{{ "mearchant_product_offer.sold_by" | trans }}</strong>
+                        </div>
+                    {% endblock %}
+
+                    {% block productOfferList %}
+                        {% for productOfferView in data.productOfferViewCollection  %}
+                            {% block productOffer %}
+                                {% set currentMerchantOffer = app.request.query.all['attribute']['product_offer_reference'] | default() %}
+                                {% set isSameMerchantOffer = currentMerchantOffer == productOfferView.productOfferReference %}
+
+                                {% include molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
+                                    data: {
+                                        checked: isSameMerchantOffer,
+                                        radioGroupName: 'product_offer_reference',
+                                        offerReference: productOfferView.productOfferReference,
+                                        merchantName: productOfferView.merchantProfileView.merchantName,
+                                        merchantUrl: productOfferView.merchantProfileView.merchantUrl,
+                                        merchantPrice: productOfferView.merchantProfileView.merchantPrice | default(null),
+                                        shouldShowRadioButton: data.productOfferViewCollection | length > 1
+                                    },
+                                    embed: {
+                                        productOfferViewCollection: data.productOfferViewCollection,
+                                    },
+                                } only %}
+                            {% endblock %}
+                        {% endfor %}
+                    {% endblock %}
+                {% endblock %}
             </div>
-        </div>
+        {% endblock %}
     {% endif %}
 {% endblock %}
