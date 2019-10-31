@@ -38,5 +38,8 @@
         <property name="idProductAbstract" type="int"/>
     </transfer>
 
+    <transfer name="Item">
+    </transfer>
+
 </transfers>
 
