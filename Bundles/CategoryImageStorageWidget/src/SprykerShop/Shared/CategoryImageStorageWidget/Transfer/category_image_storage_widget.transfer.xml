@@ -12,4 +12,7 @@
         <property name="images" singular="image" type="CategoryImageStorage[]"/>
     </transfer>
 
+    <transfer name="CategoryImageStorage">
+    </transfer>
+
 </transfers>

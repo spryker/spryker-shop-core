@@ -7,4 +7,13 @@
         <property name="isSuccessful" type="bool"/>
     </transfer>
 
+    <transfer name="Item">
+    </transfer>
+
+    <transfer name="Quote">
+    </transfer>
+
+    <transfer name="Order">
+    </transfer>
+
 </transfers>
