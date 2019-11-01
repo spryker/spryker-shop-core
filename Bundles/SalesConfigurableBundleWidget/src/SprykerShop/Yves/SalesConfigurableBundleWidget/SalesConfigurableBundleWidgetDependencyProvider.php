@@ -20,7 +20,7 @@ class SalesConfigurableBundleWidgetDependencyProvider extends AbstractBundleDepe
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = $this->addFlashMessenger($container);
 
