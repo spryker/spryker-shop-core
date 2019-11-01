@@ -9,4 +9,7 @@
     <transfer name="CustomerAutocompleteResponse">
     </transfer>
 
+    <transfer name="User">
+    </transfer>
+
 </transfers>
