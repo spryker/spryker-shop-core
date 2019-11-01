@@ -1,10 +1,10 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
-    merchantProfile: _view.merchantProfileView,
+    merchantProfile: _view.merchantProfile,
 } %}
 
-{% set merchantName = data.merchantProfile.contactPersonFirstName ~ ' ' ~ data.merchantProfile.contactPersonLastName %}
+{% set merchantName = data.merchantProfile.merchantName %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
