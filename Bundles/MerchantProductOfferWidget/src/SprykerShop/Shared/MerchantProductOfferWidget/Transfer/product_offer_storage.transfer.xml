@@ -3,40 +3,18 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="ProductOfferView">
+    <transfer name="ProductOfferStorage">
         <property name="idProductOffer" type="int"/>
         <property name="productOfferReference" type="string"/>
         <property name="idMerchant" type="int"/>
-        <property name="merchantProfileView" type="MerchantProfileView"/>
+        <property name="merchantProfile" type="MerchantProfileStorage"/>
     </transfer>
 
-    <transfer name="ProductOfferViewCollection">
-        <property name="productOfferViews" type="ProductOfferView[]" singular="productOfferView"/>
-    </transfer>
-
-    <transfer name="MerchantProfileView">
-        <property name="merchantName" type="string"/>
+    <transfer name="MerchantProfileStorage">
         <property name="merchantUrl" type="string"/>
-        <property name="contactPersonRole" type="string"/>
-        <property name="contactPersonTitle" type="string"/>
-        <property name="contactPersonFirstName" type="string"/>
-        <property name="contactPersonLastName" type="string"/>
-        <property name="contactPersonPhone" type="string"/>
-        <property name="logoUrl" type="string"/>
-        <property name="publicEmail" type="string"/>
-        <property name="publicPhone" type="string"/>
-        <property name="descriptionGlossaryKey" type="string"/>
-        <property name="bannerUrlGlossaryKey" type="string"/>
-        <property name="deliveryTimeGlossaryKey" type="string"/>
-        <property name="termsConditionsGlossaryKey" type="string"/>
-        <property name="cancellationPolicyGlossaryKey" type="string"/>
-        <property name="imprintGlossaryKey" type="string"/>
-        <property name="dataPrivacyGlossaryKey" type="string"/>
-        <property name="urlCollection" type="MerchantProfileViewUrl[]" singular="merchantProfileViewUrl"/>
-        <property name="addressCollection" type="MerchantProfileViewAddress[]" singular="merchantProfileViewAddress"/>
     </transfer>
 
-    <transfer name="MerchantProfileViewUrl">
+    <transfer name="MerchantProfileStorageUrl">
         <property name="url" type="string"/>
     </transfer>
 </transfers>

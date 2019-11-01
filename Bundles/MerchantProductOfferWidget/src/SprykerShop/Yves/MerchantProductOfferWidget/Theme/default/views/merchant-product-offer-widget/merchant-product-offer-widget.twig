@@ -2,11 +2,11 @@
 
 {% define data = {
     locale: app.locale | slice(0, 2),
-    productOfferViewCollection: _widget.productOfferViewCollection,
+    productOfferCollection: _widget.productOfferCollection,
 } %}
 
 {% block template %}
-    {% if data.productOfferViewCollection %}
+    {% if data.productOfferCollection %}
         {% block content %}
             <div class="box box--dark box--spacingless spacing spacing--inner spacing-y">
                 {% block contentInner %}
@@ -17,23 +17,23 @@
                     {% endblock %}
 
                     {% block productOfferList %}
-                        {% for productOfferView in data.productOfferViewCollection  %}
+                        {% for productOffer in data.productOfferCollection  %}
                             {% block productOffer %}
                                 {% set currentMerchantOffer = app.request.query.all['attribute']['product_offer_reference'] | default() %}
-                                {% set isSameMerchantOffer = currentMerchantOffer == productOfferView.productOfferReference %}
+                                {% set isSameMerchantOffer = currentMerchantOffer == productOffer.productOfferReference %}
 
                                 {% include molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
                                     data: {
                                         checked: isSameMerchantOffer,
                                         radioGroupName: 'product_offer_reference',
-                                        offerReference: productOfferView.productOfferReference,
-                                        merchantName: productOfferView.merchantProfileView.merchantName,
-                                        merchantUrl: productOfferView.merchantProfileView.merchantUrl,
-                                        merchantPrice: productOfferView.merchantProfileView.merchantPrice | default(null),
-                                        shouldShowRadioButton: data.productOfferViewCollection | length > 1
+                                        offerReference: productOffer.productOfferReference,
+                                        merchantName: productOffer.merchantProfile.merchantName,
+                                        merchantUrl: productOffer.merchantProfile.merchantUrl,
+                                        merchantPrice: productOffer.merchantProfile.merchantPrice | default(null),
+                                        shouldShowRadioButton: data.productOfferCollection | length > 1
                                     },
                                     embed: {
-                                        productOfferViewCollection: data.productOfferViewCollection,
+                                        productOfferCollection: data.productOfferCollection,
                                     },
                                 } only %}
                             {% endblock %}

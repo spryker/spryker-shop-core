@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\MerchantProfileViewTransfer;
+use Generated\Shared\Transfer\MerchantProfileStorageTransfer;
 
 class MerchantProductOfferWidgetToMerchantProfileStorageClientBridge implements MerchantProductOfferWidgetToMerchantProfileStorageClientInterface
 {
@@ -27,10 +27,10 @@ class MerchantProductOfferWidgetToMerchantProfileStorageClientBridge implements 
     /**
      * @param int $idMerchant
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileViewTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer|null
      */
-    public function findMerchantProfileStorageViewData(int $idMerchant): ?MerchantProfileViewTransfer
+    public function findMerchantProfileStorageData(int $idMerchant): ?MerchantProfileStorageTransfer
     {
-        return $this->merchantProfileStorageClient->findMerchantProfileStorageViewData($idMerchant);
+        return $this->merchantProfileStorageClient->findMerchantProfileStorageData($idMerchant);
     }
 }
