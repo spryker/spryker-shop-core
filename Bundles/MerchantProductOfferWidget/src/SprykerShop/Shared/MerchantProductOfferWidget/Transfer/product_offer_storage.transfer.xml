@@ -11,7 +11,9 @@
     </transfer>
 
     <transfer name="MerchantProfileStorage">
+        <property name="merchantName" type="string"/>
         <property name="merchantUrl" type="string"/>
+        <property name="fkMerchant" type="int"/>
     </transfer>
 
     <transfer name="MerchantProfileStorageUrl">
