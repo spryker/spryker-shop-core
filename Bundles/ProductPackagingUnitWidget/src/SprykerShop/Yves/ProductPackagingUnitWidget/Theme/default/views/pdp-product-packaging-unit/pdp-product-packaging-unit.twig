@@ -122,7 +122,7 @@
     </div>
 
     <div class="grid grid--bottom grid--justify">
-        {% if data.productPackagingUnit %}
+        {% if data.productPackagingUnit and data.salesUnitCount %}
             {% set defaultAmount = (data.productPackagingUnit.amountMin and data.productPackagingUnit.defaultAmount < data.productPackagingUnit.amountMin) ?
                 data.productPackagingUnit.amountMin :
                 data.productPackagingUnit.defaultAmount %}
