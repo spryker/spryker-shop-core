@@ -10,7 +10,7 @@
     productPackagingUnit: _widget.productPackagingUnit,
     isAddToCartDisabled : _widget.isAddToCartDisabled | default(false),
     packagingUnitDefaultAmount: _widget.productPackagingUnit.defaultAmount | default(0),
-    packagingUnitIsVariable: _widget.productPackagingUnit.isVariable | default(false),
+    packagingUnitIsAmountVariable: _widget.productPackagingUnit.isAmountVariable | default(false),
     packagingUnitIsSelfLead: _widget.productPackagingUnit is not null and _widget.productPackagingUnit.idProduct == _widget.productPackagingUnit.idLeadProduct,
     jsonScheme: _widget.jsonScheme | default(''),
     minQuantityInBaseUnit: _widget.minQuantityInBaseUnit,
@@ -138,7 +138,7 @@
                            max="{{ data.productPackagingUnit.amountMax }}"
                            step="{{ data.productPackagingUnit.amountInterval }}"
                            name="amount-sales-unit[{{ data.product.sku }}]"
-                        {{ not data.packagingUnitIsVariable ? 'disabled' }}
+                        {{ not data.packagingUnitIsAmountVariable ? 'disabled' }}
                     >
                     <input id="default-amount"
                            type="hidden"
@@ -192,7 +192,7 @@
                     json: data.jsonScheme,
                 },
                 attributes: {
-                    'packaging-unit-is-variable': data.packagingUnitIsVariable,
+                    'packaging-unit-is-amount-variable': data.packagingUnitIsAmountVariable,
                 },
             } only %}
 
