@@ -15,18 +15,4 @@ interface SalesConfigurableBundleWidgetToMessengerClientBridgeInterface
      * @return void
      */
     public function addSuccessMessage($message);
-
-    /**
-     * @param string $message
-     *
-     * @return void
-     */
-    public function addInfoMessage($message);
-
-    /**
-     * @param string $message
-     *
-     * @return void
-     */
-    public function addErrorMessage($message);
 }
