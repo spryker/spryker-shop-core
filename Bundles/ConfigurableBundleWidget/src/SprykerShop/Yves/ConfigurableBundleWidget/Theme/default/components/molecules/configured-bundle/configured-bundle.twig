@@ -13,7 +13,7 @@
     priceMode: null,
     isQuantityChangeable: false,
     isEditable: true,
-    isShowAmountOfBundle: false,
+    isAmountOfBundleVisible: false,
 } %}
 
 {%- block extraClass %} box{% endblock -%}
@@ -95,7 +95,7 @@
                     {% set bundleCurrentAmount = bundleCurrentAmount + item.quantity %}
                 {% endfor %}
 
-                {% if data.isShowAmountOfBundle %}
+                {% if data.isAmountOfBundleVisible %}
                     {% set bundleTotalAmount = 0 %}
                     {% for bundleItem in data.bundle.items %}
                         {% set bundleTotalAmount = bundleTotalAmount + bundleItem.quantity %}
