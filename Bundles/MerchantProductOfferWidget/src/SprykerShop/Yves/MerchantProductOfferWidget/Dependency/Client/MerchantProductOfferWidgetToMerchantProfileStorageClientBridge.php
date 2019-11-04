@@ -33,4 +33,14 @@ class MerchantProductOfferWidgetToMerchantProfileStorageClientBridge implements 
     {
         return $this->merchantProfileStorageClient->findMerchantProfileStorageData($idMerchant);
     }
+
+    /**
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer[]
+     */
+    public function findMerchantProfileStorageList(array $merchantIds): array
+    {
+        return $this->merchantProfileStorageClient->findMerchantProfileStorageList($merchantIds);
+    }
 }

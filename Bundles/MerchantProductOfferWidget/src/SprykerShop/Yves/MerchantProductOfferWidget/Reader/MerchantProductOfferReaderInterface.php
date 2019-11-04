@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\MerchantProductOfferWidget\Reader;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 
-interface ProductOfferReaderInterface
+interface MerchantProductOfferReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer

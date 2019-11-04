@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
+
 class MerchantProductOfferWidgetToMerchantProductOfferStorageClientBridge implements MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface
 {
     /**
@@ -25,9 +27,9 @@ class MerchantProductOfferWidgetToMerchantProductOfferStorageClientBridge implem
     /**
      * @param string $concreteSku
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOfferStorageCollection(string $concreteSku): array
+    public function getProductOfferStorageCollection(string $concreteSku): ProductOfferStorageCollectionTransfer
     {
         return $this->merchantProductOfferStorageClient->getProductOfferStorageCollection($concreteSku);
     }

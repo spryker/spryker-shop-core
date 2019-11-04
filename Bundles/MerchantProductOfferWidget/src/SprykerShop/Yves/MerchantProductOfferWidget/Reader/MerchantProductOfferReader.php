@@ -8,11 +8,12 @@
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Reader;
 
 use Generated\Shared\Transfer\MerchantProfileStorageTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProfileStorageClientInterface;
 
-class ProductOfferReader implements ProductOfferReaderInterface
+class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
 {
     /**
      * @var \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProfileStorageClientInterface
@@ -47,18 +48,43 @@ class ProductOfferReader implements ProductOfferReaderInterface
         if (!$productViewTransfer->getIdProductConcrete()) {
             return [];
         }
-        $productOfferStorageCollection = [];
-        $productOfferStorageCollectionTransfers = $this->merchantProductOfferStorageClient->getProductOfferStorageCollection($productViewTransfer->getSku());
-        foreach ($productOfferStorageCollectionTransfers as $productOfferStorageTransfer) {
-            $merchantProfileStorageTransfer = $this->merchantProfileStorageClient->findMerchantProfileStorageData($productOfferStorageTransfer->getIdMerchant());
-            if ($merchantProfileStorageTransfer) {
+        $productOfferStorageList = [];
+        $productOfferStorageCollection = $this->merchantProductOfferStorageClient->getProductOfferStorageCollection($productViewTransfer->getSku());
+        $productOffersStorageTransfers = $productOfferStorageCollection->getProductOffersStorage();
+        $merchantIds = array_map(function (ProductOfferStorageTransfer $productOffersStorageTransfer) {
+            return $productOffersStorageTransfer->getIdMerchant();
+        }, $productOffersStorageTransfers->getArrayCopy());
+
+        $merchantProfileStorageTransfers = $this->getMerchantProfileStorageList($merchantIds);
+
+        foreach ($productOffersStorageTransfers as $productOfferStorageTransfer) {
+            if (isset($merchantProfileStorageTransfers[$productOfferStorageTransfer->getIdMerchant()])) {
+                $merchantProfileStorageTransfer = $merchantProfileStorageTransfers[$productOfferStorageTransfer->getIdMerchant()];
                 $merchantProfileStorageTransfer->setMerchantUrl($this->getResolvedUrl($merchantProfileStorageTransfer, $localeName));
                 $productOfferStorageTransfer->setMerchantProfile($merchantProfileStorageTransfer);
-                $productOfferStorageCollection[] = $productOfferStorageTransfer;
+                $productOfferStorageList[] = $productOfferStorageTransfer;
             }
         }
 
-        return $productOfferStorageCollection;
+        return $productOfferStorageList;
+    }
+
+    /**
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer[]
+     */
+    protected function getMerchantProfileStorageList($merchantIds): array
+    {
+        $indexedMerchantProfileStorageTransfers = [];
+        
+        $merchantProfileStorageTransfers = $this->merchantProfileStorageClient->findMerchantProfileStorageList($merchantIds);
+
+        foreach ($merchantProfileStorageTransfers as $merchantProfileStorageTransfer) {
+            $indexedMerchantProfileStorageTransfers[$merchantProfileStorageTransfer->getFkMerchant()] = $merchantProfileStorageTransfer;
+        }
+
+        return $indexedMerchantProfileStorageTransfers;
     }
 
     /**

@@ -10,17 +10,17 @@ namespace SprykerShop\Yves\MerchantProductOfferWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProfileStorageClientInterface;
-use SprykerShop\Yves\MerchantProductOfferWidget\Reader\ProductOfferReader;
-use SprykerShop\Yves\MerchantProductOfferWidget\Reader\ProductOfferReaderInterface;
+use SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReader;
+use SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReaderInterface;
 
 class MerchantProductOfferWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\MerchantProductOfferWidget\Reader\ProductOfferReaderInterface
+     * @return \SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReaderInterface
      */
-    public function createProductOfferReader(): ProductOfferReaderInterface
+    public function createProductOfferReader(): MerchantProductOfferReaderInterface
     {
-        return new ProductOfferReader(
+        return new MerchantProductOfferReader(
             $this->getMerchantProfileStorageClient(),
             $this->getMerchantProductOfferStorageClient()
         );
