@@ -8,7 +8,9 @@
 namespace SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Widget;
 
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
+use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Form\ConfigurableBundleCartNoteForm;
 
 /**
  * @method \SprykerShop\Yves\ConfigurableBundleCartNoteWidget\ConfigurableBundleCartNoteWidgetFactory getFactory()
@@ -17,11 +19,15 @@ class ConfigurableBundleCartNoteFormWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer $configuredBundleTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
      */
-    public function __construct(ConfiguredBundleTransfer $configuredBundleTransfer)
-    {
+    public function __construct(
+        ConfiguredBundleTransfer $configuredBundleTransfer,
+        ?QuoteTransfer $quoteTransfer = null
+    ) {
         $this->addConfigurableBundleCartNoteFormParameter($configuredBundleTransfer);
-        $this->addQuoteParameter($configuredBundleTransfer);
+        $this->addConfiguredBundleParameter($configuredBundleTransfer);
+        $this->addQuoteParameter($quoteTransfer);
     }
 
     /**
@@ -51,6 +57,10 @@ class ConfigurableBundleCartNoteFormWidget extends AbstractWidget
             ->getConfigurableBundleCartNoteForm()
             ->setData($configuredBundleTransfer);
 
+        $cartNoteForm
+            ->get(ConfigurableBundleCartNoteForm::FIELD_CONFIGURABLE_BUNDLE_TEMPLATE_NAME)
+            ->setData($configuredBundleTransfer->getTemplate()->getName());
+
         $this->addParameter('configurableBundleCartNoteForm', $cartNoteForm->createView());
     }
 
@@ -59,8 +69,20 @@ class ConfigurableBundleCartNoteFormWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function addQuoteParameter(ConfiguredBundleTransfer $configuredBundleTransfer): void
+    protected function addConfiguredBundleParameter(ConfiguredBundleTransfer $configuredBundleTransfer): void
     {
         $this->addParameter('configuredBundle', $configuredBundleTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addQuoteParameter(?QuoteTransfer $quoteTransfer): void
+    {
+        $quoteTransfer = $quoteTransfer ?: $this->getFactory()->getQuoteClient()->getQuote();
+
+        $this->addParameter('quote', $quoteTransfer);
     }
 }

@@ -11,6 +11,7 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client\ConfigurableBundleCartNoteWidgetToConfigurableBundleCartNoteClientInterface;
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client\ConfigurableBundleCartNoteWidgetToGlossaryStorageClientInterface;
+use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client\ConfigurableBundleCartNoteWidgetToQuoteClientInterface;
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Form\ConfigurableBundleCartNoteForm;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -47,5 +48,13 @@ class ConfigurableBundleCartNoteWidgetFactory extends AbstractFactory
     public function getGlossaryStorageClient(): ConfigurableBundleCartNoteWidgetToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleCartNoteWidgetDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client\ConfigurableBundleCartNoteWidgetToQuoteClientInterface
+     */
+    public function getQuoteClient(): ConfigurableBundleCartNoteWidgetToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleCartNoteWidgetDependencyProvider::CLIENT_QUOTE);
     }
 }

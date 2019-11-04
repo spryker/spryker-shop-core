@@ -16,7 +16,7 @@ class ConfigurableBundleCartNoteWidgetRouteProviderPlugin extends AbstractRouteP
 
     /**
      * {@inheritDoc}
-     * - Adds Routes to the RouteCollection.
+     * - Adds configurable bundle cart note add action to RouteCollection.
      *
      * @api
      *

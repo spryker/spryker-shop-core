@@ -17,6 +17,7 @@ class ConfigurableBundleCartNoteForm extends AbstractType
     public const FORM_NAME = 'configurableBundleCartNote';
     public const FIELD_CONFIGURABLE_BUNDLE_CART_NOTE = 'cartNote';
     public const FIELD_CONFIGURABLE_BUNDLE_GROUP_KEY = 'groupKey';
+    public const FIELD_CONFIGURABLE_BUNDLE_TEMPLATE_NAME = 'templateName';
 
     /**
      * @return string
@@ -35,7 +36,8 @@ class ConfigurableBundleCartNoteForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addCartNoteField($builder)
-            ->addGroupKeyField($builder);
+            ->addGroupKeyField($builder)
+            ->addTemplateNameField($builder);
     }
 
     /**
@@ -61,6 +63,18 @@ class ConfigurableBundleCartNoteForm extends AbstractType
     protected function addGroupKeyField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_CONFIGURABLE_BUNDLE_GROUP_KEY, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addTemplateNameField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_CONFIGURABLE_BUNDLE_TEMPLATE_NAME, HiddenType::class);
 
         return $this;
     }

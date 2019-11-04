@@ -1,7 +1,7 @@
 # ConfigurableBundleCartNoteWidget Module
 [![Build Status](https://travis-ci.org/spryker-shop/configurable-bundle-cart-note-widget.svg)](https://travis-ci.org/spryker-shop/configurable-bundle-cart-note-widget)
 
-{{ADD DESCRIPTION HERE}}
+Widget module is responsible for displaying configurable bundle cart note.
 
 ## Installation
 

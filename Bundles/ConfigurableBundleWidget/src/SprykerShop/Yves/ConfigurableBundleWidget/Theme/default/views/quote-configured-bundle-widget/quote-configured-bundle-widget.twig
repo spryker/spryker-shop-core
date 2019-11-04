@@ -6,6 +6,7 @@
     priceMode: _widget.quote.priceMode,
     isQuantityChangeable: _widget.isQuantityChangeable,
     isEditable: true,
+    quote: _widget.quote,
 } %}
 
 {% block body %}
@@ -18,6 +19,7 @@
                     priceMode: data.priceMode,
                     isQuantityChangeable: data.isQuantityChangeable,
                     isEditable: data.isEditable,
+                    quote: data.quote,
                 },
             } only %}
         {% endblock %}
