@@ -84,4 +84,7 @@
         <property name="shareOption" type="string"/>
     </transfer>
 
+    <transfer name="QuotePermissionGroupCriteriaFilter">
+    </transfer>
+
 </transfers>

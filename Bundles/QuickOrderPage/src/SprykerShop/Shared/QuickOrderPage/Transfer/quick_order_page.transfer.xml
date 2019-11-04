@@ -63,4 +63,7 @@
         <property name="route" type="string"/>
     </transfer>
 
+    <transfer name="CsvFile">
+    </transfer>
+
 </transfers>

@@ -55,4 +55,7 @@
         <property name="commentThread" type="CommentThread"/>
     </transfer>
 
+    <transfer name="Customer">
+    </transfer>
+
 </transfers>
