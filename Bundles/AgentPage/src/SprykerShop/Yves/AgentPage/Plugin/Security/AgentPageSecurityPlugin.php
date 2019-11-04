@@ -14,7 +14,6 @@ use Spryker\Yves\Security\Configuration\SecurityBuilderInterface;
 use SprykerShop\Shared\AgentPage\AgentPageConfig;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @method \SprykerShop\Yves\AgentPage\AgentPageFactory getFactory()
@@ -26,6 +25,11 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
     protected const ROLE_ALLOWED_TO_SWITCH = 'ROLE_ALLOWED_TO_SWITCH';
     protected const ROLE_USER = 'ROLE_USER';
     protected const ROLE_PREVIOUS_ADMIN = 'ROLE_PREVIOUS_ADMIN';
+
+    /**
+     * @uses \Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     */
+    protected const SERVICE_DISPATCHER = 'dispatcher';
 
     /**
      * @uses \SprykerShop\Yves\AgentPage\Plugin\Router\AgentPageRouteProviderPlugin::ROUTE_LOGIN
@@ -64,7 +68,7 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
         $securityBuilder = $this->addAuthenticationSuccessHandler($securityBuilder);
         $securityBuilder = $this->addAuthenticationFailureHandler($securityBuilder);
 
-        $this->addSwitchUserEventSubscriber($container);
+        $this->addSwitchUserEventSubscriber($securityBuilder);
 
         return $securityBuilder;
     }
@@ -159,16 +163,14 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
     }
 
     /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
+     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
      *
      * @return void
      */
-    protected function addSwitchUserEventSubscriber(ContainerInterface $container): void
+    protected function addSwitchUserEventSubscriber(SecurityBuilderInterface $securityBuilder): void
     {
-        $container->extend('dispatcher', function (EventDispatcherInterface $eventDispatcher) {
-            $eventDispatcher->addSubscriber($this->getFactory()->createSwitchUserEventSubscriber());
-
-            return $eventDispatcher;
+        $securityBuilder->addEventSubscriber(function () {
+            return $this->getFactory()->createSwitchUserEventSubscriber();
         });
     }
 }

@@ -59,7 +59,7 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
         $securityBuilder = $this->addAuthenticationSuccessHandler($securityBuilder);
         $securityBuilder = $this->addAuthenticationFailureHandler($securityBuilder);
 
-        $securityBuilder = $this->setAccessDeniedHandler($securityBuilder);
+        $securityBuilder = $this->addAccessDeniedHandler($securityBuilder);
 
         return $securityBuilder;
     }
@@ -150,7 +150,7 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
      *
      * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
      */
-    protected function setAccessDeniedHandler(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
+    protected function addAccessDeniedHandler(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
         $securityBuilder->addAccessDeniedHandler(CustomerPageConfig::SECURITY_FIREWALL_NAME, function (ContainerInterface $container) {
             return $this->getFactory()->createAccessDeniedHandler(
