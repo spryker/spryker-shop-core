@@ -106,4 +106,7 @@
             {% endblock %}
         {% endif %}
     {% endblock %}
+    {% block configurableBundleCartNote %}
+        {% widget 'ConfigurableBundleCartNoteFormWidget' args [bundle] only %}{% endwidget %}
+    {% endblock %}
 {% endblock %}

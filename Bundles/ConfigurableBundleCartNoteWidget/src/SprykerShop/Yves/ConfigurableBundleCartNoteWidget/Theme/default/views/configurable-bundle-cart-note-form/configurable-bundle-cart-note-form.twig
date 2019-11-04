@@ -1,0 +1,21 @@
+{% extends template('widget') %}
+
+{% define data = {
+    configuredBundle: _widget.configuredBundle,
+    form: _widget.configurableBundleCartNoteForm
+} %}
+
+{% block body %}
+    {% include molecule('form') with {
+        data: {
+            form: data.form,
+            options: {
+                action: url('configurable-bundle-cart-note/add')
+            },
+            submit: {
+                enable: true,
+                text: 'configurable_bundle_cart_note.form.save' | trans
+            }
+        }
+    } only %}
+{% endblock %}
