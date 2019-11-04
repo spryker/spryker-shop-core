@@ -1,7 +1,7 @@
 {
   "name": "spryker-shop/customer-reorder-widget-extension",
   "type": "library",
-  "description": "CommentWidgetExtension module",
+  "description": "CustomerReorderWidgetExtension module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1"

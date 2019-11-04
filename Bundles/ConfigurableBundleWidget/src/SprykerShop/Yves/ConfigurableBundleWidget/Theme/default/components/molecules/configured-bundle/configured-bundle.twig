@@ -81,9 +81,7 @@
     {% block bundleProductList %}
         <div class="{{ config.name }}__products">
             {% block bundleProductListInner %}
-                {% if data.isShowAmountOfBundle %}
-                    {% set bundleCurrentAmount = 0 %}
-                {% endif %}
+                {% set bundleCurrentAmount = 0 %}
                 {% for item in data.bundleItems if data.items[item.GroupKey] is defined %}
                     {% block bundleProductItem %}
                         {% include molecule('configured-bundle-product', 'ConfigurableBundleWidget') with {
@@ -94,9 +92,7 @@
                             },
                         } only %}
                     {% endblock %}
-                    {% if data.isShowAmountOfBundle %}
-                        {% set bundleCurrentAmount = bundleCurrentAmount + item.quantity %}
-                    {% endif %}
+                    {% set bundleCurrentAmount = bundleCurrentAmount + item.quantity %}
                 {% endfor %}
 
                 {% if data.isShowAmountOfBundle %}

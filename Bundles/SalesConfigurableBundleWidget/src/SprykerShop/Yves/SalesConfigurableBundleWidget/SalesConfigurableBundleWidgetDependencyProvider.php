@@ -9,11 +9,11 @@ namespace SprykerShop\Yves\SalesConfigurableBundleWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use Spryker\Yves\Kernel\Plugin\Pimple;
+use SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client\SalesConfigurableBundleWidgetToMessengerClientBridge;
 
 class SalesConfigurableBundleWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FLASH_MESSENGER = 'FLASH_MESSENGER';
+    public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -22,7 +22,7 @@ class SalesConfigurableBundleWidgetDependencyProvider extends AbstractBundleDepe
      */
     public function provideDependencies(Container $container): Container
     {
-        $container = $this->addFlashMessenger($container);
+        $container = $this->addMessengerClient($container);
 
         return $container;
     }
@@ -32,10 +32,12 @@ class SalesConfigurableBundleWidgetDependencyProvider extends AbstractBundleDepe
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addFlashMessenger(Container $container): Container
+    protected function addMessengerClient(Container $container): Container
     {
-        $container->set(static::FLASH_MESSENGER, function () {
-            return (new Pimple())->getApplication()['flash_messenger'];
+        $container->set(static::CLIENT_MESSENGER, function (Container $container): SalesConfigurableBundleWidgetToMessengerClientBridge {
+            return new SalesConfigurableBundleWidgetToMessengerClientBridge(
+                $container->getLocator()->messenger()->client()
+            );
         });
 
         return $container;

@@ -8,10 +8,11 @@
 namespace SprykerShop\Yves\SalesConfigurableBundleWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
+use SprykerShop\Yves\SalesConfigurableBundleWidget\Checker\ConfiguredBundleChecker;
+use SprykerShop\Yves\SalesConfigurableBundleWidget\Checker\ConfiguredBundleCheckerInterface;
+use SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client\SalesConfigurableBundleWidgetToMessengerClientBridgeInterface;
 use SprykerShop\Yves\SalesConfigurableBundleWidget\Grouper\SalesOrderConfiguredBundleGrouper;
 use SprykerShop\Yves\SalesConfigurableBundleWidget\Grouper\SalesOrderConfiguredBundleGrouperInterface;
-use SprykerShop\Yves\SalesConfigurableBundleWidget\Model\ConfiguredBundleChecker;
 
 /**
  * @method \SprykerShop\Yves\SalesConfigurableBundleWidget\SalesConfigurableBundleWidgetConfig getConfig()
@@ -27,18 +28,18 @@ class SalesConfigurableBundleWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\SalesConfigurableBundleWidget\Model\ConfiguredBundleChecker
+     * @return \SprykerShop\Yves\SalesConfigurableBundleWidget\Checker\ConfiguredBundleCheckerInterface
      */
-    public function createConfiguredBundleChecker(): ConfiguredBundleChecker
+    public function createConfiguredBundleChecker(): ConfiguredBundleCheckerInterface
     {
         return new ConfiguredBundleChecker($this->getMessenger());
     }
 
     /**
-     * @return \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
+     * @return \SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client\SalesConfigurableBundleWidgetToMessengerClientBridgeInterface
      */
-    public function getMessenger(): FlashMessengerInterface
+    public function getMessenger(): SalesConfigurableBundleWidgetToMessengerClientBridgeInterface
     {
-        return $this->getProvidedDependency(SalesConfigurableBundleWidgetDependencyProvider::FLASH_MESSENGER);
+        return $this->getProvidedDependency(SalesConfigurableBundleWidgetDependencyProvider::CLIENT_MESSENGER);
     }
 }

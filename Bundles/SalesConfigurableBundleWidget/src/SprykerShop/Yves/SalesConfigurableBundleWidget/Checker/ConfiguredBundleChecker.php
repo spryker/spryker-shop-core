@@ -5,25 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\SalesConfigurableBundleWidget\Model;
+namespace SprykerShop\Yves\SalesConfigurableBundleWidget\Checker;
 
-use Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface;
+use SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client\SalesConfigurableBundleWidgetToMessengerClientBridgeInterface;
 
 class ConfiguredBundleChecker implements ConfiguredBundleCheckerInterface
 {
     public const GLOSSARY_KEY_CONFIGURED_BUNDLE_ITEMS_ADDED_TO_CART_SUCCESS = 'sales_configured_bundle_widget.success.items_added_to_cart_as_individual_products';
 
     /**
-     * @var \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
+     * @var \SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client\SalesConfigurableBundleWidgetToMessengerClientBridgeInterface
      */
-    protected $flashMessenger;
+    protected $messengerClient;
 
     /**
-     * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
+     * @param \SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client\SalesConfigurableBundleWidgetToMessengerClientBridgeInterface $messengerClient
      */
-    public function __construct(FlashMessengerInterface $flashMessenger)
+    public function __construct(SalesConfigurableBundleWidgetToMessengerClientBridgeInterface $messengerClient)
     {
-        $this->flashMessenger = $flashMessenger;
+        $this->messengerClient = $messengerClient;
     }
 
     /**
@@ -38,7 +38,7 @@ class ConfiguredBundleChecker implements ConfiguredBundleCheckerInterface
                 continue;
             }
 
-            $this->flashMessenger->addSuccessMessage(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_ITEMS_ADDED_TO_CART_SUCCESS);
+            $this->messengerClient->addSuccessMessage(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_ITEMS_ADDED_TO_CART_SUCCESS);
 
             return;
         }

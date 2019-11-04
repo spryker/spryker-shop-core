@@ -34,7 +34,11 @@ class CustomerReorderWidgetFactory extends AbstractFactory
      */
     public function createCartFiller(): CartFillerInterface
     {
-        return new CartFiller($this->getCartClient(), $this->createItemsFetcher(), $this->getPostReorderPlugins());
+        return new CartFiller(
+            $this->getCartClient(),
+            $this->createItemsFetcher(),
+            $this->getPostReorderPlugins()
+        );
     }
 
     /**
@@ -157,6 +161,6 @@ class CustomerReorderWidgetFactory extends AbstractFactory
      */
     public function getPostReorderPlugins(): array
     {
-        return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::POST_REORDER_PLUGINS);
+        return $this->getProvidedDependency(CustomerReorderWidgetDependencyProvider::PLUGINS_POST_REORDER);
     }
 }

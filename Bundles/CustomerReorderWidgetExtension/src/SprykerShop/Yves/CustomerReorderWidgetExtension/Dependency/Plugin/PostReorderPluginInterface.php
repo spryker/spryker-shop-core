@@ -20,7 +20,7 @@ interface PostReorderPluginInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return void
      */
-    public function execute(QuoteTransfer $quoteTransfer, array $itemTransfers): QuoteTransfer;
+    public function execute(QuoteTransfer $quoteTransfer, array $itemTransfers): void;
 }

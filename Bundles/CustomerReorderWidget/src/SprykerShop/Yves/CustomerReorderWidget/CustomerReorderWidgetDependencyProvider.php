@@ -32,7 +32,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
-    public const POST_REORDER_PLUGINS = 'POST_REORDER_PLUGINS';
+    public const PLUGINS_POST_REORDER = 'PLUGINS_POST_REORDER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -223,7 +223,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addPostReorderPlugins(Container $container): Container
     {
-        $container->set(static::POST_REORDER_PLUGINS, function () {
+        $container->set(static::PLUGINS_POST_REORDER, function () {
             return $this->getPostReorderPlugins();
         });
 
