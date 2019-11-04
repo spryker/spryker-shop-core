@@ -262,8 +262,7 @@
                     <td>{% if item.productPackagingUnit.productPackagingUnitType %}{{ item.productPackagingUnit.productPackagingUnitType.name }}{% endif %}</td>
 
                     {% if item.productPackagingUnit.productPackagingUnitAmount %}
-                        <td>{{ item.productPackagingUnit.productPackagingUnitAmount.idProductPackagingUnitAmount }}</td>
-                        <td>{{ item.productPackagingUnit.productPackagingUnitAmount.isVariable }}</td>
+                        <td>{{ item.productPackagingUnit.productPackagingUnitAmount.isAmountVariable }}</td>
                         <td>{{ item.productPackagingUnit.productPackagingUnitAmount.defaultAmount }}</td>
                         <td>{{ item.productPackagingUnit.productPackagingUnitAmount.amountMin }} / {{ item.productPackagingUnit.productPackagingUnitAmount.amountMax }} / {{ item.productPackagingUnit.productPackagingUnitAmount.amountInterval }}</td>
                     {% else %}

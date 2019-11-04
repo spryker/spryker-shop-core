@@ -1,3 +1,4 @@
+/* tslint:disable */
 import Component from 'ShopUi/models/component';
 
 export default class PackagingUnitQuantitySelector extends Component {
@@ -21,7 +22,6 @@ export default class PackagingUnitQuantitySelector extends Component {
     itemBasePriceInput: any;
     itemMoneySymbolInput: any;
     amountInBaseUnitInput: any;
-    isAmountBlockEnabled: boolean;
     isAddToCartDisabled: boolean;
     currentLeadSalesUnit: any;
     defaultAmount: any;
@@ -111,10 +111,6 @@ export default class PackagingUnitQuantitySelector extends Component {
 
             if (jsonData.hasOwnProperty('leadSalesUnits')) {
                 this.leadSalesUnits = jsonData.leadSalesUnits;
-            }
-
-            if (jsonData.hasOwnProperty('isAmountBlockEnabled')) {
-                this.isAmountBlockEnabled = jsonData.isAmountBlockEnabled;
             }
 
             if (jsonData.hasOwnProperty('isAddToCartDisabled')) {
@@ -423,7 +419,7 @@ export default class PackagingUnitQuantitySelector extends Component {
             }
         }
 
-        if ((this.puError || this.muError || this.isAddToCartDisabled) && this.packagingUnitIsVariable) {
+        if ((this.puError || this.muError || this.isAddToCartDisabled) && this.packagingUnitIsAmountVariable) {
             this.askCustomerForCorrectAmountInput(amountInSalesUnitInput);
             this.addToCartButton.setAttribute("disabled", "disabled");
 
@@ -662,7 +658,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         return amountPercentageOfDivision;
     }
 
-    protected get packagingUnitIsVariable(): boolean {
-        return this.hasAttribute('packaging-unit-is-variable');
+    protected get packagingUnitIsAmountVariable(): boolean {
+        return this.hasAttribute('packaging-unit-is-amount-variable');
     }
 }

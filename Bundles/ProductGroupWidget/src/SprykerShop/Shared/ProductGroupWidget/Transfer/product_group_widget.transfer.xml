@@ -7,4 +7,7 @@
         <property name="groupProductAbstractIds" type="array" singular="groupProductAbstractIds"/>
     </transfer>
 
+    <transfer name="ProductView">
+    </transfer>
+
 </transfers>
