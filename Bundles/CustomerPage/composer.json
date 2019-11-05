@@ -31,10 +31,16 @@
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/container": "*",
+    "spryker/customer-access-permission": "*",
+    "spryker/event-dispatcher": "*",
     "spryker/messenger": "*",
+    "spryker/propel": "*",
     "spryker/router": "*",
     "spryker/security": "*",
+    "spryker/session": "*",
     "spryker/silex": "*",
+    "spryker/storage": "*",
+    "spryker/storage-redis": "*",
     "spryker/testify": "*"
   },
   "suggest": {

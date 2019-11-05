@@ -138,8 +138,10 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
      */
     protected function addAuthenticationFailureHandler(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
-        $securityBuilder->addAuthenticationFailureHandler(CustomerPageConfig::SECURITY_FIREWALL_NAME, function () {
-            return $this->getFactory()->createCustomerAuthenticationFailureHandler();
+        $securityBuilder->addAuthenticationFailureHandler(CustomerPageConfig::SECURITY_FIREWALL_NAME, function (ContainerInterface $container) {
+            return $this->getFactory()->createCustomerAuthenticationFailureHandler(
+                $this->getRouter($container)->generate(static::ROUTE_HOME)
+            );
         });
 
         return $securityBuilder;

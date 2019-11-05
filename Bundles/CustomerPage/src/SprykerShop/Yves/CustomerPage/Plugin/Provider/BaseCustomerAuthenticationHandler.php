@@ -20,15 +20,16 @@ class BaseCustomerAuthenticationHandler extends AbstractPlugin
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string|null $defaultRedirectUrl
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function createRefererRedirectResponse(Request $request)
+    protected function createRefererRedirectResponse(Request $request, ?string $defaultRedirectUrl = null)
     {
         $targetUrl = $this->filterUrl(
             $request->headers->get('Referer'),
             $this->getConfig()->getYvesHost(),
-            $this->getHomeUrl()
+            $defaultRedirectUrl ?? $this->getHomeUrl()
         );
 
         $response = $this->getFactory()->createRedirectResponse($targetUrl);
@@ -59,6 +60,8 @@ class BaseCustomerAuthenticationHandler extends AbstractPlugin
     }
 
     /**
+     * @deprecated The `application` is deprecated and should not be accessed.
+     *
      * @return string
      */
     protected function getHomeUrl()
