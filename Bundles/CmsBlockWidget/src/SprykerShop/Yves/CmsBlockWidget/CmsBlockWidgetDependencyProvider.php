@@ -34,7 +34,7 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addTwigExtensionPlugins($container);
         $container = $this->addCmsBlockStorageClient($container);
         $container = $this->addStoreClient($container);
-        $container = $this->addCmsTwigContentRenderePlugin($container);
+        $container = $this->addCmsTwigContentRendererPlugin($container);
         $container = $this->addTranslatorService($container);
 
         return $container;
@@ -97,7 +97,7 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function addCmsTwigContentRenderePlugin(Container $container): Container
+    public function addCmsTwigContentRendererPlugin(Container $container): Container
     {
         $container->set(static::CMS_TWIG_CONTENT_RENDERER_PLUGIN, function () {
             return $this->getCmsTwigContentRendererPlugin();
