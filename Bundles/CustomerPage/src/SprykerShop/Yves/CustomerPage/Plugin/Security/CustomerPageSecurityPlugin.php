@@ -14,6 +14,7 @@ use Spryker\Yves\Router\Router\ChainRouter;
 use Spryker\Yves\Security\Configuration\SecurityBuilderInterface;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Form\LoginForm;
+use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener;
 
 /**
  * @method \Spryker\Client\Customer\CustomerClientInterface getClient()
@@ -79,6 +80,7 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
                 'check_path' => '/login_check',
                 'username_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_EMAIL . ']',
                 'password_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_PASSWORD . ']',
+                'listener_class' => UsernamePasswordFormAuthenticationListener::class,
             ],
             'logout' => [
                 'logout_path' => static::ROUTE_LOGOUT,

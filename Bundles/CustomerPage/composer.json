@@ -31,7 +31,6 @@
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/container": "*",
-    "spryker/customer-access-permission": "*",
     "spryker/event-dispatcher": "*",
     "spryker/messenger": "*",
     "spryker/propel": "*",

@@ -28,6 +28,7 @@ class AgentAuthenticationFailureHandler extends AbstractPlugin implements Authen
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
+        $foo = 'bar';
         $this->getFactory()
             ->getMessengerClient()
             ->addErrorMessage(static::MESSAGE_AGENT_AUTHENTICATION_FAILED);

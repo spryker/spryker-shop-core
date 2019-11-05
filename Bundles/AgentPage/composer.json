@@ -21,9 +21,14 @@
     "spryker-shop/quote-request-agent-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
+    "spryker/propel": "*",
     "spryker/router": "*",
+    "spryker/session": "*",
     "spryker/silex": "*",
     "spryker/security": "*",
+    "spryker/storage": "*",
+    "spryker/storage-redis": "*",
     "spryker/testify": "*"
   },
   "suggest": {

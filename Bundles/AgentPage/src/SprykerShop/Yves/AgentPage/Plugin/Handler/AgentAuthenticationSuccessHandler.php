@@ -28,6 +28,7 @@ class AgentAuthenticationSuccessHandler extends AbstractPlugin implements Authen
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
+        $foo = 'bar';
         $this->setAgentSession(
             $this->getSecurityUser($token)->getUserTransfer()
         );
