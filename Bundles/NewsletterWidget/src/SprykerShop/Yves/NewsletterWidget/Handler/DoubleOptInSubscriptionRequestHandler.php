@@ -44,12 +44,14 @@ class DoubleOptInSubscriptionRequestHandler implements SubscriptionRequestHandle
         $subscriptionResponse = $this->newsletterClient
             ->subscribeWithDoubleOptIn($request);
 
-        $newsLetterSubscriptionResultTransfer = current($subscriptionResponse->getSubscriptionResults());
-        if ($newsLetterSubscriptionResultTransfer === false) {
+        if ($subscriptionResponse->getSubscriptionResults()->count() === 0) {
             return null;
         }
 
-        return $newsLetterSubscriptionResultTransfer;
+        /** @var \Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer $newsletterSubscriptionResultTransfer */
+        $newsletterSubscriptionResultTransfer = $subscriptionResponse->getSubscriptionResults()->getIterator()->current();
+
+        return $newsletterSubscriptionResultTransfer;
     }
 
     /**
