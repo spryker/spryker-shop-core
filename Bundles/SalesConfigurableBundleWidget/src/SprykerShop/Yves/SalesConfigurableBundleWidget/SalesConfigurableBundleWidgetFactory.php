@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\SalesConfigurableBundleWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\SalesConfigurableBundleWidget\Checker\ConfiguredBundleChecker;
 use SprykerShop\Yves\SalesConfigurableBundleWidget\Checker\ConfiguredBundleCheckerInterface;
-use SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client\SalesConfigurableBundleWidgetToMessengerClientBridgeInterface;
+use SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client\SalesConfigurableBundleWidgetToMessengerClientInterface;
 use SprykerShop\Yves\SalesConfigurableBundleWidget\Grouper\SalesOrderConfiguredBundleGrouper;
 use SprykerShop\Yves\SalesConfigurableBundleWidget\Grouper\SalesOrderConfiguredBundleGrouperInterface;
 
@@ -36,9 +36,9 @@ class SalesConfigurableBundleWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client\SalesConfigurableBundleWidgetToMessengerClientBridgeInterface
+     * @return \SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client\SalesConfigurableBundleWidgetToMessengerClientInterface
      */
-    public function getMessenger(): SalesConfigurableBundleWidgetToMessengerClientBridgeInterface
+    public function getMessenger(): SalesConfigurableBundleWidgetToMessengerClientInterface
     {
         return $this->getProvidedDependency(SalesConfigurableBundleWidgetDependencyProvider::CLIENT_MESSENGER);
     }

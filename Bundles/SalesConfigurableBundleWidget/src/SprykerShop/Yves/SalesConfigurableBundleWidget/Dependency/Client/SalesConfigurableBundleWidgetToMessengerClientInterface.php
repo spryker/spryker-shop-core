@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client;
 
-interface SalesConfigurableBundleWidgetToMessengerClientBridgeInterface
+interface SalesConfigurableBundleWidgetToMessengerClientInterface
 {
     /**
      * @param string $message

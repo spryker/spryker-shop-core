@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client;
 
-class SalesConfigurableBundleWidgetToMessengerClientBridge implements SalesConfigurableBundleWidgetToMessengerClientBridgeInterface
+class SalesConfigurableBundleWidgetToMessengerClientBridge implements SalesConfigurableBundleWidgetToMessengerClientInterface
 {
     /**
      * @var \Spryker\Client\Messenger\MessengerClientInterface

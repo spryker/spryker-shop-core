@@ -7,21 +7,21 @@
 
 namespace SprykerShop\Yves\SalesConfigurableBundleWidget\Checker;
 
-use SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client\SalesConfigurableBundleWidgetToMessengerClientBridgeInterface;
+use SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client\SalesConfigurableBundleWidgetToMessengerClientInterface;
 
 class ConfiguredBundleChecker implements ConfiguredBundleCheckerInterface
 {
     public const GLOSSARY_KEY_CONFIGURED_BUNDLE_ITEMS_ADDED_TO_CART_SUCCESS = 'sales_configured_bundle_widget.success.items_added_to_cart_as_individual_products';
 
     /**
-     * @var \SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client\SalesConfigurableBundleWidgetToMessengerClientBridgeInterface
+     * @var \SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client\SalesConfigurableBundleWidgetToMessengerClientInterface
      */
     protected $messengerClient;
 
     /**
-     * @param \SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client\SalesConfigurableBundleWidgetToMessengerClientBridgeInterface $messengerClient
+     * @param \SprykerShop\Yves\SalesConfigurableBundleWidget\Dependency\Client\SalesConfigurableBundleWidgetToMessengerClientInterface $messengerClient
      */
-    public function __construct(SalesConfigurableBundleWidgetToMessengerClientBridgeInterface $messengerClient)
+    public function __construct(SalesConfigurableBundleWidgetToMessengerClientInterface $messengerClient)
     {
         $this->messengerClient = $messengerClient;
     }
