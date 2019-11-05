@@ -15,8 +15,8 @@ class ConfigurableBundlePageRouteProviderPlugin extends AbstractRouteProviderPlu
     protected const ROUTE_CONFIGURATOR_TEMPLATE_SELECTION = 'configurable-bundle/configurator/template-selection';
 
     /**
-     * Specification:
-     * - Adds Routes to the RouteCollection.
+     * {@inheritDoc}
+     * - Adds ConfigurableBundlePage module routes to RouteCollection.
      *
      * @api
      *
