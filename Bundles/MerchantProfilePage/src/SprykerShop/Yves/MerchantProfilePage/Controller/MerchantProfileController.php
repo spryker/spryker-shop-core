@@ -28,9 +28,14 @@ class MerchantProfileController extends AbstractController
             ->getMerchantStorageClient()
             ->mapMerchantProfileStorageData($merchantProfile);
 
+        $merchantOpeningHoursStorageTransfer = $this->getFactory()
+            ->getMerchantOpeningHoursStoregeClient()
+            ->findMerchantOpeningHoursByIdIdMerchant($merchantProfileStorageTransfer->getFkMerchant());
+
         return $this->view(
             [
                 'merchantProfile' => $merchantProfileStorageTransfer,
+                'merchantOpeningHours' => $merchantOpeningHoursStorageTransfer,
             ],
             [],
             '@MerchantProfilePage/views/merchant-profile/merchant-profile.twig'

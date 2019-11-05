@@ -1,0 +1,33 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'special-opening-hours',
+} %}
+
+{% define data = {
+    specialOpeningHours: required
+} %}
+{% block body %}
+    {% if data.specialOpeningHours is not empty %}
+        <h5>Special Opening Hours</h5>
+        {% set prevDate = null %}
+        {% for openingHours in data.specialOpeningHours %}
+            {% if openingHours.timeFrom is not empty and openingHours.timeFrom is not empty %}
+                {% block specialOpeningHours %}
+                    {% if openingHours.date != prevDate %}
+                        <strong>
+                            {{ openingHours.date }}
+                            {% if openingHours.note is not empty %}
+                            - {{ openingHours.note }}
+                            {%  endif %}
+                        </strong>
+                        <br>
+                        {% set prevDate = openingHours.date %}
+                    {% endif %}
+                    {{ openingHours.timeFrom }} - {{ openingHours.timeFrom }}
+                    <br>
+                {% endblock %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

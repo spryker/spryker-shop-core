@@ -1,0 +1,21 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'holidays',
+} %}
+
+{% define data = {
+    holidays: required
+} %}
+{% block body %}
+    {% if data.holidays is not empty %}
+        <h5>Holidays</h5>
+        {% for holiday in data.holidays %}
+            {% if holiday.timeFrom is empty and holiday.timeFrom is empty %}
+                {% block holidays %}
+                    <span>{{ holiday.date }} - {{ holiday.note | trans }}</span><br>
+                {% endblock %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'weekday-schedule',
+} %}
+
+{% define data = {
+    weekdaySchedule: required
+} %}
+{% block body %}
+    {% if data.weekdaySchedule is not empty %}
+        {% set prevDayName = '' %}
+        {% for weekday in data.weekdaySchedule %}
+            {% set dayName = weekday.day %}
+            {% block weekday %}
+                {% if dayName != prevDayName %}
+                    <strong>{{ dayName }}</strong>
+                    <br>
+                    {% set prevDayName = dayName %}
+                {% endif %}
+                {{ weekday.timeFrom }} - {{ weekday.timeFrom }}
+                <br>
+            {% endblock %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

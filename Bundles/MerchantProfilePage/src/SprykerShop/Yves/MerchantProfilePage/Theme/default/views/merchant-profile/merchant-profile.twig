@@ -2,6 +2,7 @@
 
 {% define data = {
     merchantProfile: _view.merchantProfile,
+    merchantOpeningHours: _view.merchantOpeningHours,
 } %}
 
 {% set merchantName = data.merchantProfile.merchantName %}
@@ -141,6 +142,39 @@
                                         {% endblock %}
                                     </div>
                                 {% endblock %}
+                            </div>
+                        {% endblock %}
+                    </div>
+                    <div class="box">
+                        {% block weekdaySchedule %}
+                            <div class="col col--sm-12 col--lg-6">
+                                {% include molecule('weekday-schedule', 'MerchantProfilePage') with {
+                                    data: {
+                                        weekdaySchedule: data.merchantOpeningHours.weekdaySchedule | default([]),
+                                    },
+                                } only %}
+                            </div>
+                        {% endblock %}
+                    </div>
+                    <div class="box">
+                        {% block specialOpeningHours %}
+                            <div class="col col--sm-12 col--lg-6">
+                                {% include molecule('special-opening-hours', 'MerchantProfilePage') with {
+                                    data: {
+                                        specialOpeningHours: data.merchantOpeningHours.dateSchedule | default([]),
+                                    },
+                                } only %}
+                            </div>
+                        {% endblock %}
+                    </div>
+                    <div class="box">
+                        {% block hollidays %}
+                            <div class="col col--sm-12 col--lg-6">
+                                {% include molecule('holidays', 'MerchantProfilePage') with {
+                                    data: {
+                                        holidays: data.merchantOpeningHours.dateSchedule | default([]),
+                                    },
+                                } only %}
                             </div>
                         {% endblock %}
                     </div>
