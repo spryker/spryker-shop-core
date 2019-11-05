@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/merchant-product-offer-widget",
+  "type": "library",
   "description": "MerchantProductOfferWidget module",
   "license": "proprietary",
   "require": {
