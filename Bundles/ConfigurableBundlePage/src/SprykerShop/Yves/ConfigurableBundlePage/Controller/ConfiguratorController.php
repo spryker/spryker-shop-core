@@ -19,7 +19,7 @@ class ConfiguratorController extends AbstractController
     /**
      * @uses \Spryker\Client\ConfigurableBundlePageSearch\Plugin\Elasticsearch\ResultFormatter\ConfigurableBundleTemplatePageSearchResultFormatterPlugin::NAME
      */
-    protected const CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_SEARCH_RESULT_FORMATTER_PLUGIN = 'ConfigurableBundleTemplatePageSearchResultFormatterPlugin';
+    protected const FORMATTED_RESULT_KEY = 'ConfigurableBundleTemplateCollection';
 
     /**
      * @return \Spryker\Yves\Kernel\View\View
@@ -43,7 +43,7 @@ class ConfiguratorController extends AbstractController
             );
 
         return [
-            'configurableBundleTemplates' => $formattedSearchResults[static::CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_SEARCH_RESULT_FORMATTER_PLUGIN] ?? [],
+            'configurableBundleTemplates' => $formattedSearchResults[static::FORMATTED_RESULT_KEY] ?? [],
         ];
     }
 }
