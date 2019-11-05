@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Widget;
 
-use Generated\Shared\Transfer\ConfiguredBundleTransfer;
+use Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -16,11 +16,11 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class ConfigurableBundleCartNoteDisplayWidget extends AbstractWidget
 {
     /**
-     * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer $configuredBundleTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer
      */
-    public function __construct(ConfiguredBundleTransfer $configuredBundleTransfer)
+    public function __construct(SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer)
     {
-        $this->addConfiguredBundleParameter($configuredBundleTransfer);
+        $this->addConfiguredBundleParameter($salesOrderConfiguredBundleTransfer);
     }
 
     /**
@@ -40,12 +40,12 @@ class ConfigurableBundleCartNoteDisplayWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer $configuredBundleTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer
      *
      * @return void
      */
-    protected function addConfiguredBundleParameter(ConfiguredBundleTransfer $configuredBundleTransfer): void
+    protected function addConfiguredBundleParameter(SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer): void
     {
-        $this->addParameter('configuredBundle', $configuredBundleTransfer);
+        $this->addParameter('salesOrderConfiguredBundle', $salesOrderConfiguredBundleTransfer);
     }
 }

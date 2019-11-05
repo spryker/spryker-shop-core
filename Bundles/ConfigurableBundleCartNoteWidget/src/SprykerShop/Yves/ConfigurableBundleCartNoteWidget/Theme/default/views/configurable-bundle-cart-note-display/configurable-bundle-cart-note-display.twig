@@ -1,11 +1,11 @@
 {% extends template('widget') %}
 
 {% define data = {
-    configuredBundle: _widget.configuredBundle
+    salesOrderConfiguredBundle: _widget.salesOrderConfiguredBundle
 } %}
 
 {% block body %}
     <div class="form">
-        {{ 'cart_note.checkout_page.item_note' | trans }}: {{ data.configuredBundle.cartNote }}
+        {{ 'cart_note.checkout_page.item_note' | trans }}: {{ data.salesOrderConfiguredBundle.cartNote }}
     </div>
 {% endblock %}

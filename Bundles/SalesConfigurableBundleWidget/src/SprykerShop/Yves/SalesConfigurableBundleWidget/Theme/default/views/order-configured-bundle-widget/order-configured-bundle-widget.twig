@@ -38,9 +38,6 @@
                 },
             } only %}
         {% endfor %}
-        {% block configurableBundleCartNote %}
-            {% widget 'ConfigurableBundleCartNoteDisplayWidget' args [bundle] only %}{% endwidget %}
-        {% endblock %}
     {% endfor %}
 
     {% if data.salesOrderConfiguredBundles is not empty %}
