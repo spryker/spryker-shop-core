@@ -39,4 +39,7 @@
         <property name="requestParams" type="array" singular="requestParams"/>
     </transfer>
 
+    <transfer name="ProductReviewStorage">
+    </transfer>
+
 </transfers>
