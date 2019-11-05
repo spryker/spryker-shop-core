@@ -56,4 +56,7 @@
         <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
+    <transfer name="Quote">
+    </transfer>
+
 </transfers>
