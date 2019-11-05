@@ -10,9 +10,19 @@ namespace SprykerShop\Yves\ConfigurableBundlePage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundlePageSearchClientInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundleStorageClientInterface;
+use SprykerShop\Yves\ConfigurableBundlePage\Validator\ConfigurableBundleTemplateSlotCombinationValidator;
+use SprykerShop\Yves\ConfigurableBundlePage\Validator\ConfigurableBundleTemplateSlotCombinationValidatorInterface;
 
 class ConfigurableBundlePageFactory extends AbstractFactory
 {
+    /**
+     * @return \SprykerShop\Yves\ConfigurableBundlePage\Validator\ConfigurableBundleTemplateSlotCombinationValidatorInterface
+     */
+    public function createConfigurableBundleTemplateSlotCombinationValidator(): ConfigurableBundleTemplateSlotCombinationValidatorInterface
+    {
+        return new ConfigurableBundleTemplateSlotCombinationValidator();
+    }
+
     /**
      * @return \SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundlePageSearchClientInterface
      */

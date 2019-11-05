@@ -29,11 +29,17 @@ class ConfiguratorController extends AbstractController
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'idConfigurableBundleTemplate';
 
     /**
+     * @uses \SprykerShop\Yves\ConfigurableBundlePage\Plugin\Router\ConfigurableBundlePageRouteProviderPlugin::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT
+     */
+    protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'idConfigurableBundleTemplateSlot';
+
+    /**
      * @uses \Spryker\Client\ConfigurableBundlePageSearch\Plugin\Elasticsearch\ResultFormatter\ConfigurableBundleTemplatePageSearchResultFormatterPlugin::NAME
      */
     protected const CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_SEARCH_RESULT_FORMATTER_PLUGIN = 'ConfigurableBundleTemplatePageSearchResultFormatterPlugin';
 
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = 'configurable_bundle_page.template_not_found';
+    protected const GLOSSARY_KEY_INVALID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_COMBINATION = 'configurable_bundle_page.invalid_template_slot_combination';
 
     /**
      * @return \Spryker\Yves\Kernel\View\View
@@ -52,9 +58,12 @@ class ConfiguratorController extends AbstractController
      */
     public function slotsAction(Request $request): RedirectResponse
     {
+        $idConfigurableBundleTemplate = $request->attributes->getInt(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE);
+        $idConfigurableBundleTemplateSlot = $request->attributes->getInt(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT);
+
         $configurableBundleTemplateStorageTransfer = $this->getFactory()
             ->getConfigurableBundleStorageClient()
-            ->findConfigurableBundleTemplateStorage($request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE));
+            ->findConfigurableBundleTemplateStorage($idConfigurableBundleTemplate);
 
         if (!$configurableBundleTemplateStorageTransfer) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND);
@@ -62,7 +71,21 @@ class ConfiguratorController extends AbstractController
             return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);
         }
 
-        // ToDo: to implement validation and other things
+        if (!$idConfigurableBundleTemplateSlot) {
+            // initial page
+        }
+
+        $isTemplateSlotCombinationValid = $this->getFactory()
+            ->createConfigurableBundleTemplateSlotCombinationValidator()
+            ->validateConfigurableBundleTemplateSlotCombination($configurableBundleTemplateStorageTransfer, $idConfigurableBundleTemplateSlot);
+
+        if (!$isTemplateSlotCombinationValid) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_INVALID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_COMBINATION);
+
+            return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);
+        }
+
+        // selected slot page
     }
 
     /**
