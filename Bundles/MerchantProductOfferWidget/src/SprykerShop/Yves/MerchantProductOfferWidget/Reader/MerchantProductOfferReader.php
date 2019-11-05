@@ -97,10 +97,10 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
     {
         $locale = strstr($localeName, '_', true);
 
-        foreach ($merchantProfileStorageTransfer->getUrlCollection() as $merchantProfileStorageUrlTransfer) {
-            $urlLocale = mb_substr($merchantProfileStorageUrlTransfer->getUrl(), 1, 2);
+        foreach ($merchantProfileStorageTransfer->getUrlCollection() as $urlTransfer) {
+            $urlLocale = mb_substr($urlTransfer->getUrl(), 1, 2);
             if ($locale === $urlLocale) {
-                return $merchantProfileStorageUrlTransfer->getUrl();
+                return $urlTransfer->getUrl();
             }
         }
 
