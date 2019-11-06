@@ -20,4 +20,7 @@
         <transfer name="Company">
             <property name="name" type="string"/>
         </transfer>
+
+    <transfer name="CompanyUserCollection">
+    </transfer>
 </transfers>
