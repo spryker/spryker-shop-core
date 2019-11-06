@@ -9,24 +9,32 @@
 } %}
 {% block body %}
     {% if data.specialOpeningHours is not empty %}
-        <h5>Special Opening Hours</h5>
-        {% set prevDate = null %}
+        {% block title %}
+        <strong>{{ 'merchant_opening_hours.special_opening_hours_title' | trans }}</strong><br>
+        {% endblock %}
+        {% set prevDate = '' %}
+        {% set todayTimestamp = "now" | date('Y-m-d') | date('U') %}
+        {% set openingHoursCounter = 0 %}
+        {% set openingHoursLimit = 2 %}
         {% for openingHours in data.specialOpeningHours %}
             {% if openingHours.timeFrom is not empty and openingHours.timeFrom is not empty %}
-                {% block specialOpeningHours %}
-                    {% if openingHours.date != prevDate %}
-                        <strong>
-                            {{ openingHours.date }}
+                {% set dateTimestamp = (openingHours.date ~ ' ' ~ openingHours.timeFrom) | date('U') %}
+                {% if dateTimestamp >= todayTimestamp and openingHoursCounter < openingHoursLimit %}
+                    {% set openingHoursCounter = openingHoursCounter + 1 %}
+                    {% block specialOpeningHours %}
+                        {% if openingHours.date != prevDate %}
+                            {{ openingHours.date | date('d.m.Y, l') }}
                             {% if openingHours.note is not empty %}
-                            - {{ openingHours.note }}
+                            ({{ openingHours.note }})
                             {%  endif %}
-                        </strong>
+                            {% set prevDate = openingHours.date %}
+                        {% else %}
+                            |
+                        {% endif %}
+                        {{ openingHours.timeFrom | date('H:i') }} - {{ openingHours.timeTo | date('H:i') }}
                         <br>
-                        {% set prevDate = openingHours.date %}
-                    {% endif %}
-                    {{ openingHours.timeFrom }} - {{ openingHours.timeFrom }}
-                    <br>
-                {% endblock %}
+                    {% endblock %}
+                {% endif %}
             {% endif %}
         {% endfor %}
     {% endif %}

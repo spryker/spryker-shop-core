@@ -7,14 +7,24 @@
 {% define data = {
     holidays: required
 } %}
+
 {% block body %}
     {% if data.holidays is not empty %}
-        <h5>Holidays</h5>
+        {% block title %}
+        <strong>{{ 'merchant_opening_hours.public_holidays_title' | trans }}</strong><br>
+        {% endblock %}
+        {% set todayTimestamp = "now" | date('Y-m-d') | date('U') %}
+        {% set holidaysCounter = 0 %}
+        {% set holidaysLimit = 2 %}
         {% for holiday in data.holidays %}
             {% if holiday.timeFrom is empty and holiday.timeFrom is empty %}
-                {% block holidays %}
-                    <span>{{ holiday.date }} - {{ holiday.note | trans }}</span><br>
-                {% endblock %}
+                {% set dateTimestamp = holiday.date | date('U') %}
+                {% if dateTimestamp >= todayTimestamp and holidaysCounter < holidaysLimit %}
+                    {% set holidaysCounter = holidaysCounter + 1 %}
+                    {% block holidays %}
+                        {{ holiday.date | date('Y-m-d, l') }} - {{ holiday.note | trans }}<br>
+                    {% endblock %}
+                {% endif %}
             {% endif %}
         {% endfor %}
     {% endif %}

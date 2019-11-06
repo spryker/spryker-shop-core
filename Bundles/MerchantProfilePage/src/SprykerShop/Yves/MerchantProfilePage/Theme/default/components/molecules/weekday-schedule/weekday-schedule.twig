@@ -7,19 +7,32 @@
 {% define data = {
     weekdaySchedule: required
 } %}
+
 {% block body %}
+    {% set prevDayName = '' %}
     {% if data.weekdaySchedule is not empty %}
-        {% set prevDayName = '' %}
+        {% block title %}
+        <strong>{{ 'merchant_opening_hours.opening_hours_title' | trans }}</strong><br>
+        {% endblock %}
         {% for weekday in data.weekdaySchedule %}
-            {% set dayName = weekday.day %}
+
+            {% if weekday.timeFrom is not empty and weekday.timeTo is not empty %}
+                {% set weekdayTime = weekday.timeFrom | date('H:i') ~ ' - ' ~ weekday.timeTo | date('H:i') %}
+            {% else %}
+                {% set weekdayTime = 'merchant_opening_hours.opening_hours_closed' | trans %}
+            {% endif %}
+
+            {% if weekday.day != prevDayName %}
+                {% block weekdayTitle %}
+                    {% set localizedDayTitleKey = 'merchant_opening_hours.day.title.' ~ weekday.day | lower %}
+                    {{ localizedDayTitleKey | trans }}:
+                {% endblock %}
+                {% set prevDayName = weekday.day %}
+            {% else %}
+                |
+            {% endif %}
             {% block weekday %}
-                {% if dayName != prevDayName %}
-                    <strong>{{ dayName }}</strong>
-                    <br>
-                    {% set prevDayName = dayName %}
-                {% endif %}
-                {{ weekday.timeFrom }} - {{ weekday.timeFrom }}
-                <br>
+                {{ weekdayTime }}<br>
             {% endblock %}
         {% endfor %}
     {% endif %}
