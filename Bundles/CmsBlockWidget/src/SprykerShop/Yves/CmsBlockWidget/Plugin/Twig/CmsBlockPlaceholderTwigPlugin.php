@@ -7,22 +7,20 @@
 
 namespace SprykerShop\Yves\CmsBlockWidget\Plugin\Twig;
 
-use SprykerShop\Yves\ShopApplication\Plugin\AbstractTwigExtensionPlugin;
+use Spryker\Yves\Twig\Plugin\AbstractTwigExtensionPlugin;
 
 /**
  * @method \SprykerShop\Yves\CmsBlockWidget\CmsBlockWidgetFactory getFactory()
  */
-class CmsBlockWidgetTwigPlugin extends AbstractTwigExtensionPlugin
+class CmsBlockPlaceholderTwigPlugin extends AbstractTwigExtensionPlugin
 {
     /**
      * @return \Twig\TwigFunction[]
      */
     public function getFunctions(): array
     {
-        $locale = $this->getLocale();
-
         return [
-            $this->getFactory()->createCmsBlockTwigFunction($locale),
+            $this->getFactory()->createCmsBlockPlaceholderTwigFunction(),
         ];
     }
 }
