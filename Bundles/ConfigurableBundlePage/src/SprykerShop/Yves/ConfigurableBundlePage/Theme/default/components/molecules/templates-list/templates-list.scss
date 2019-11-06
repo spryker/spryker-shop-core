@@ -1,0 +1,27 @@
+@mixin configurable-bundle-page-templates-list($name: '.templates-list') {
+    #{$name} {
+        border: 0.125rem solid $setting-color-lighter;
+        padding: 1.75rem 2.5rem 2.5rem;
+
+        &__title {
+            text-align: center;
+        }
+
+        &__content {
+
+        }
+
+        &__item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &__item-title {
+            min-height: 9rem;
+            background: $setting-color-lighter;
+            color: $setting-color-darkest;
+        }
+
+        @content;
+    }
+}
