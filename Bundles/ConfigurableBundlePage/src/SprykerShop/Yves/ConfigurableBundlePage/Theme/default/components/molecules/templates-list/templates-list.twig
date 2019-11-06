@@ -12,8 +12,8 @@
 
 {% block body %}
     <h5 class="{{ config.name }}__title col col--sm-12 spacing-left--big spacing-bottom--big">{{ 'configurable_bundle_page.configurator.choose_template' | trans }}</h5>
-    <ul class="{{ config.name }}__content col--sm-12">
-        {% if data.templates | length %}
+    {% if data.templates | length %}
+        <ul class="{{ config.name }}__content col--sm-12">
             {% for template in data.templates %}
                 {# TODO change hard code urls to path() function when backend router will be ready #}
                 <li class="{{ config.name }}__item col col--sm-12 col--md-6 col--xl-3">
@@ -27,10 +27,10 @@
                     </div>
                 </li>
             {% endfor %}
-        {% else %}
-            <p class="{{ config.name }}__content col--sm-12 spacing-left">
-                {{ 'configurable_bundle_page.configurator.templates_not_found' | trans }}
-            </p>
-        {% endif %}
-    </ul>
+        </ul>
+    {% else %}
+        <p class="{{ config.name }}__content col--sm-12 spacing-left">
+            {{ 'configurable_bundle_page.configurator.templates_not_found' | trans }}
+        </p>
+    {% endif %}
 {% endblock %}
