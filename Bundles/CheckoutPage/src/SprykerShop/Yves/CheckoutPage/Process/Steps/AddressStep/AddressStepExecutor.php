@@ -110,8 +110,8 @@ class AddressStepExecutor implements StepExecutorInterface
      */
     protected function setDefaultShippingAddress(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        /** @var \Generated\Shared\Transfer\ItemTransfer|false $itemTransfer */
-        $itemTransfer = current($quoteTransfer->getItems());
+        /** @var \Generated\Shared\Transfer\ItemTransfer|null $itemTransfer */
+        $itemTransfer = $quoteTransfer->getItems()->getIterator()->current();
 
         if (!$itemTransfer) {
             return $quoteTransfer;
@@ -154,7 +154,8 @@ class AddressStepExecutor implements StepExecutorInterface
         ?CustomerTransfer $customerTransfer
     ): QuoteTransfer {
         if ($this->hasQuoteDataItemLevelShippingAddresses($quoteTransfer)) {
-            $firstItemTransfer = current($quoteTransfer->getItems());
+            /** @var \Generated\Shared\Transfer\ItemTransfer $firstItemTransfer */
+            $firstItemTransfer = $quoteTransfer->getItems()->getIterator()->current();
             $shippingAddressTransfer = $firstItemTransfer->getShipment()->getShippingAddress();
         } else {
             /**
@@ -310,7 +311,8 @@ class AddressStepExecutor implements StepExecutorInterface
         }
 
         if ($this->hasQuoteDataItemLevelShippingAddresses($quoteTransfer)) {
-            $firstItemTransfer = current($quoteTransfer->getItems());
+            /** @var \Generated\Shared\Transfer\ItemTransfer $firstItemTransfer */
+            $firstItemTransfer = $quoteTransfer->getItems()->getIterator()->current();
             $shippingAddressTransfer = $firstItemTransfer->getShipment()->getShippingAddress();
         } else {
             $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
