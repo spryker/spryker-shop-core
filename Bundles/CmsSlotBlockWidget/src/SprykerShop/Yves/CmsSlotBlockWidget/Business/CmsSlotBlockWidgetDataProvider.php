@@ -19,6 +19,10 @@ use Twig\Environment;
 
 class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderInterface
 {
+    protected const KEY_BLOCK_KEY = 'blockKey';
+    protected const KEY_CONDITIONS = 'conditions';
+    protected const KEY_BLOCK_OPTIONS_KEYS = 'keys';
+
     /**
      * @var \Twig\Environment
      */
@@ -65,12 +69,9 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
     public function getSlotContent(
         CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer
     ): CmsSlotContentResponseTransfer {
-        $cmsBlockFunction = $this->getCmsBlockTwigFunction();
+        $cmsBlockTwigFunction = $this->getCmsBlockTwigFunction();
 
-        $content = $this->getContent(
-            $cmsBlockFunction,
-            $cmsSlotContentRequestTransfer
-        );
+        $content = $this->getContent($cmsBlockTwigFunction, $cmsSlotContentRequestTransfer);
 
         return (new CmsSlotContentResponseTransfer())
             ->setContent($content);
@@ -109,36 +110,12 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
                 $cmsSlotContentRequestTransfer->getCmsSlotTemplatePath(),
                 $cmsSlotContentRequestTransfer->getCmsSlotKey()
             );
-        //$blockOptions['keys'] = $this->getVisibleBlockKeys($cmsSlotBlockStorageTransfer);
-//
-//        return $cmsBlockFunction($this->twig, [], $blockOptions);
+        $blockOptions[static::KEY_BLOCK_OPTIONS_KEYS] = $this->getVisibleBlockKeys(
+            $cmsSlotBlockStorageTransfer,
+            $cmsSlotContentRequestTransfer
+        );
 
-        //TODO should be removed:
-        $blockNames = $this->getVisibleBlockNames($cmsSlotBlockStorageTransfer, $cmsSlotContentRequestTransfer);
-        $content = '';
-        foreach ($blockNames as $blockName) {
-            $blockOptions['name'] = $blockName;
-            $content .= $cmsBlockFunction($this->twig, [], $blockOptions);
-        }
-
-        return $content;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer
-     *
-     * @return string[]
-     */
-    protected function getVisibleBlockKeys(CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer): array
-    {
-        $cmsBlocks = $cmsSlotBlockStorageTransfer->getCmsBlocks();
-        $visibleCmsBlockKeys = [];
-
-        foreach ($cmsBlocks as $cmsBlock) {
-            $visibleCmsBlockKeys[] = $cmsBlock['blockKey'];
-        }
-
-        return $visibleCmsBlockKeys;
+        return $cmsBlockFunction($this->twig, [], $blockOptions);
     }
 
     /**
@@ -147,19 +124,26 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
      *
      * @return array
      */
-    protected function getVisibleBlockNames(
+    protected function getVisibleBlockKeys(
         CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer,
         CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer
     ): array {
         $cmsBlocks = $cmsSlotBlockStorageTransfer->getCmsBlocks();
-        $visibleCmsBlockNames = [];
+        $visibleBlockKeys = [];
 
         foreach ($cmsBlocks as $cmsBlock) {
-            if ($this->cmsSlotBlockClient->isCmsBlockVisibleInSlot(new CmsBlockTransfer(), $cmsBlock['conditions'], $cmsSlotContentRequestTransfer->getParams())) {
-                $visibleCmsBlockNames[] = $cmsBlock['blockName'];
+            $cmsBlockTransfer = (new CmsBlockTransfer())->setKey($cmsBlock[static::KEY_BLOCK_KEY]);
+            $isCmsBlockVisibleInSlot = $this->cmsSlotBlockClient->isCmsBlockVisibleInSlot(
+                $cmsBlockTransfer,
+                $cmsBlock[static::KEY_CONDITIONS],
+                $cmsSlotContentRequestTransfer->getParams()
+            );
+
+            if ($isCmsBlockVisibleInSlot) {
+                $visibleBlockKeys[] = $cmsBlock[static::KEY_BLOCK_KEY];
             }
         }
 
-        return $visibleCmsBlockNames;
+        return $visibleBlockKeys;
     }
 }
