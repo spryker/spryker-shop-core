@@ -30,15 +30,11 @@ class CmsSlotBlockWidgetToCmsSlotBlockStorageClientBridge implements CmsSlotBloc
         //TODO: should be changed to client call
         $blocks = [
             [
-                'blockName' => 'Category CMS page showcase for Top position',
-                'conditions' => ['product' => ['all' => false, 'productIds' => [2]]],
+                'blockKey' => 'blck-2',
+                'conditions' => ['product' => ['all' => false, 'productIds' => [3]]],
             ],
             [
-                'blockName' => 'Home Page',
-                'conditions' => ['product' => ['all' => false, 'productIds' => [2, 5]]],
-            ],
-            [
-                'blockName' => 'Category CMS page showcase for Top position',
+                'blockKey' => 'blck-4',
                 'conditions' => ['product' => ['all' => false, 'productIds' => [2], 'categoryIds' => [4]]],
             ],
         ];
