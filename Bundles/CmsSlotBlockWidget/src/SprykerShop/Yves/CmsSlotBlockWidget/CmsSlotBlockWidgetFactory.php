@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CmsSlotBlockWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CmsSlotBlockWidget\Business\CmsSlotBlockWidgetDataProvider;
 use SprykerShop\Yves\CmsSlotBlockWidget\Business\CmsSlotBlockWidgetDataProviderInterface;
+use SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockClientInterface;
 use SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockStorageClientInterface;
 use Twig\Environment;
 
@@ -26,6 +27,7 @@ class CmsSlotBlockWidgetFactory extends AbstractFactory
         return new CmsSlotBlockWidgetDataProvider(
             $this->getTwigEnvironment(),
             $this->getCmsSlotBlockStorageClient(),
+            $this->getCmsSlotBlockClient(),
             $this->getConfig()
         );
     }
@@ -36,6 +38,14 @@ class CmsSlotBlockWidgetFactory extends AbstractFactory
     public function getCmsSlotBlockStorageClient(): CmsSlotBlockWidgetToCmsSlotBlockStorageClientInterface
     {
         return $this->getProvidedDependency(CmsSlotBlockWidgetDependencyProvider::CLIENT_CMS_SLOT_BLOCK_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockClientInterface
+     */
+    public function getCmsSlotBlockClient(): CmsSlotBlockWidgetToCmsSlotBlockClientInterface
+    {
+        return $this->getProvidedDependency(CmsSlotBlockWidgetDependencyProvider::CLIENT_CMS_SLOT_BLOCK);
     }
 
     /**

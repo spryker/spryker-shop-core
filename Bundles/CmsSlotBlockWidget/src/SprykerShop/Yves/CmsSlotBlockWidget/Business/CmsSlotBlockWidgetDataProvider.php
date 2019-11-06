@@ -7,10 +7,12 @@
 
 namespace SprykerShop\Yves\CmsSlotBlockWidget\Business;
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockStorageTransfer;
 use Generated\Shared\Transfer\CmsSlotContentRequestTransfer;
 use Generated\Shared\Transfer\CmsSlotContentResponseTransfer;
 use SprykerShop\Yves\CmsSlotBlockWidget\CmsSlotBlockWidgetConfig;
+use SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockClientInterface;
 use SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockStorageClientInterface;
 use SprykerShop\Yves\CmsSlotBlockWidget\Exceptions\CmsBlockTwigFunctionMissingException;
 use Twig\Environment;
@@ -28,6 +30,11 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
     protected $cmsSlotBlockStorageClient;
 
     /**
+     * @var \SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockClientInterface
+     */
+    protected $cmsSlotBlockClient;
+
+    /**
      * @var \SprykerShop\Yves\CmsSlotBlockWidget\CmsSlotBlockWidgetConfig
      */
     protected $cmsSlotBlockWidgetConfig;
@@ -35,15 +42,18 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
     /**
      * @param \Twig\Environment $twig
      * @param \SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockStorageClientInterface $cmsSlotBlockStorageClient
+     * @param \SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockClientInterface $cmsSlotBlockClient
      * @param \SprykerShop\Yves\CmsSlotBlockWidget\CmsSlotBlockWidgetConfig $cmsSlotBlockWidgetConfig
      */
     public function __construct(
         Environment $twig,
         CmsSlotBlockWidgetToCmsSlotBlockStorageClientInterface $cmsSlotBlockStorageClient,
+        CmsSlotBlockWidgetToCmsSlotBlockClientInterface $cmsSlotBlockClient,
         CmsSlotBlockWidgetConfig $cmsSlotBlockWidgetConfig
     ) {
         $this->twig = $twig;
         $this->cmsSlotBlockStorageClient = $cmsSlotBlockStorageClient;
+        $this->cmsSlotBlockClient = $cmsSlotBlockClient;
         $this->cmsSlotBlockWidgetConfig = $cmsSlotBlockWidgetConfig;
     }
 
@@ -104,11 +114,11 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
 //        return $cmsBlockFunction($this->twig, [], $blockOptions);
 
         //TODO should be removed:
-        $blockNames = $this->getVisibleBlockNames($cmsSlotBlockStorageTransfer);
+        $blockNames = $this->getVisibleBlockNames($cmsSlotBlockStorageTransfer, $cmsSlotContentRequestTransfer);
         $content = '';
         foreach ($blockNames as $blockName) {
             $blockOptions['name'] = $blockName;
-            $content .=  $cmsBlockFunction($this->twig, [], $blockOptions);
+            $content .= $cmsBlockFunction($this->twig, [], $blockOptions);
         }
 
         return $content;
@@ -133,18 +143,21 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
 
     /**
      * @param \Generated\Shared\Transfer\CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer
      *
-     * @return string[]
-     *
-     * TODO should be removed
+     * @return array
      */
-    protected function getVisibleBlockNames(CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer): array
-    {
+    protected function getVisibleBlockNames(
+        CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer,
+        CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer
+    ): array {
         $cmsBlocks = $cmsSlotBlockStorageTransfer->getCmsBlocks();
         $visibleCmsBlockNames = [];
 
         foreach ($cmsBlocks as $cmsBlock) {
-            $visibleCmsBlockNames[] = $cmsBlock['blockName'];
+            if ($this->cmsSlotBlockClient->isCmsBlockVisibleInSlot(new CmsBlockTransfer(), $cmsBlock['conditions'], $cmsSlotContentRequestTransfer->getParams())) {
+                $visibleCmsBlockNames[] = $cmsBlock['blockName'];
+            }
         }
 
         return $visibleCmsBlockNames;
