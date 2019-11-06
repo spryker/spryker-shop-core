@@ -24,7 +24,7 @@
         } only %}
     {% elseif data.form.cartNote.vars.value is not empty %}
         <div class="form">
-            {{ 'cart_note.checkout_page.item_note' | trans }}: {{ data.form.cartNote.vars.value }}
+            {{ 'configurable_bundle_cart_note.cart_note' | trans }}: {{ data.form.cartNote.vars.value }}
         </div>
     {% endif %}
 {% endblock %}

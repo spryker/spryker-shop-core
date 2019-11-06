@@ -26,17 +26,19 @@ class ConfigurableBundleCartNoteWidgetRouteProviderPlugin extends AbstractRouteP
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
-        $routeCollection = $this->addQuoteRoute($routeCollection);
+        $routeCollection = $this->addConfigurableBundleCartNoteAddRoute($routeCollection);
 
         return $routeCollection;
     }
 
     /**
+     * @uses \SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Controller\CartNoteController::addAction()
+     *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
      */
-    protected function addQuoteRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addConfigurableBundleCartNoteAddRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute(
             '/configurable-bundle-cart-note/add',
