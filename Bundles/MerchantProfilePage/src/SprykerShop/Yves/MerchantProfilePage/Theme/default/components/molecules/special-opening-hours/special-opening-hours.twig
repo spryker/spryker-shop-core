@@ -25,7 +25,7 @@
                         {% if openingHours.date != prevDate %}
                             {{ openingHours.date | date('d.m.Y, l') }}
                             {% if openingHours.note is not empty %}
-                            ({{ openingHours.note }})
+                            ({{ openingHours.note | trans }})
                             {%  endif %}
                             {% set prevDate = openingHours.date %}
                         {% else %}
