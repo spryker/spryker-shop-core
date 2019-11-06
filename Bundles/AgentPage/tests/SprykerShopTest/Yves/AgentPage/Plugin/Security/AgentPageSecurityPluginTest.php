@@ -20,6 +20,11 @@ use Symfony\Component\HttpFoundation\Response;
 class AgentPageSecurityPluginTest extends Unit
 {
     /**
+     * @uses \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_AUTHORIZATION_CHECKER
+     */
+    protected const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
+
+    /**
      * @var \SprykerShopTest\Yves\AgentPage\AgentPageTester
      */
     protected $tester;
@@ -39,12 +44,17 @@ class AgentPageSecurityPluginTest extends Unit
         $this->tester->setDependency(CustomerPageDependencyProvider::PLUGIN_APPLICATION, $container);
 
         $this->tester->addRoute('home', '/', function () use ($container) {
-            if ($container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-                return new Response('authenticated');
+            $user = $container->get('security.token_storage')->getToken()->getUser();
+
+            $content = is_object($user) ? $user->getUsername() : 'ANONYMOUS';
+
+            if ($container->get(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER)->isGranted('IS_AUTHENTICATED_FULLY')) {
+                $content .= 'AUTHENTICATED';
             }
 
-            return new Response('homepage');
+            return new Response($content);
         });
+
         $this->tester->addRoute('login', '/login', function () {
             return new Response('loginpage');
         });
@@ -60,16 +70,67 @@ class AgentPageSecurityPluginTest extends Unit
 
         $securityPlugin = new AgentPageSecurityPlugin();
         $securityPlugin->setFactory($this->tester->getFactory());
-        $this->tester->addSecurityPlugin(new CustomerPageSecurityPlugin());
         $this->tester->addSecurityPlugin($securityPlugin);
+        $this->tester->addSecurityPlugin(new CustomerPageSecurityPlugin());
 
         $container->get('session')->start();
 
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
-//        $httpKernelBrowser->request('get', '/');
+        $httpKernelBrowser->request('get', '/');
         $httpKernelBrowser->request('post', '/agent/login_check', ['loginForm' => ['email' => $userTransfer->getUsername(), 'password' => 'foo']]);
         $httpKernelBrowser->followRedirect();
 
-        $this->assertSame('authenticated', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame($userTransfer->getUsername() . 'AUTHENTICATED', $httpKernelBrowser->getResponse()->getContent());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAgentIsRedirectedOnAuthenticationFailure(): void
+    {
+        $container = $this->tester->getContainer();
+        $userTransfer = $this->tester->haveRegisteredAgent(['password' => 'foo']);
+
+        $securityPlugin = new AgentPageSecurityPlugin();
+        $securityPlugin->setFactory($this->tester->getFactory());
+        $this->tester->addSecurityPlugin($securityPlugin);
+        $this->tester->addSecurityPlugin(new CustomerPageSecurityPlugin());
+
+        $container->get('session')->start();
+
+        $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $httpKernelBrowser->request('get', '/');
+        $httpKernelBrowser->request('post', '/agent/login_check', ['loginForm' => ['email' => $userTransfer->getUsername(), 'password' => 'bar']]);
+        $httpKernelBrowser->followRedirect();
+
+        $this->assertSame('ANONYMOUS', $httpKernelBrowser->getResponse()->getContent());
+    }
+
+    /**
+     * @group single
+     *
+     * @return void
+     */
+    public function testAgentCanSwitchUser(): void
+    {
+        $container = $this->tester->getContainer();
+        $customerTransfer = $this->tester->haveCustomer(['username' => 'user', 'password' => 'foo']);
+        $userTransfer = $this->tester->haveRegisteredAgent(['password' => 'foo']);
+
+        $securityPlugin = new AgentPageSecurityPlugin();
+        $securityPlugin->setFactory($this->tester->getFactory());
+        $this->tester->addSecurityPlugin($securityPlugin);
+        $this->tester->addSecurityPlugin(new CustomerPageSecurityPlugin());
+
+        $container->get('session')->start();
+
+        $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $httpKernelBrowser->request('get', '/');
+        $httpKernelBrowser->request('post', '/agent/login_check', ['loginForm' => ['email' => $userTransfer->getUsername(), 'password' => 'foo']]);
+
+        $httpKernelBrowser->request('get', '/?_switch_user=' . $customerTransfer->getEmail());
+        $httpKernelBrowser->followRedirect();
+
+        $this->assertSame($customerTransfer->getEmail() . 'AUTHENTICATED', $httpKernelBrowser->getResponse()->getContent());
     }
 }

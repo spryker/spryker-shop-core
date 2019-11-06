@@ -28,8 +28,4 @@ use Codeception\Actor;
 class AgentPageTester extends Actor
 {
     use _generated\AgentPageTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

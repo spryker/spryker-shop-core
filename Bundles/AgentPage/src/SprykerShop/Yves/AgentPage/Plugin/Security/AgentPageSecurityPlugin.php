@@ -10,11 +10,11 @@ namespace SprykerShop\Yves\AgentPage\Plugin\Security;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Security\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Yves\Router\Router\ChainRouter;
 use Spryker\Yves\Security\Configuration\SecurityBuilderInterface;
 use SprykerShop\Shared\AgentPage\AgentPageConfig;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
-use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener;
 
 /**
  * @method \SprykerShop\Yves\AgentPage\AgentPageFactory getFactory()
@@ -31,6 +31,11 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
      * @uses \Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
      */
     protected const SERVICE_DISPATCHER = 'dispatcher';
+
+    /**
+     * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     */
+    protected const SERVICE_ROUTER = 'routers';
 
     /**
      * @uses \SprykerShop\Yves\AgentPage\Plugin\Router\AgentPageRouteProviderPlugin::ROUTE_LOGIN
@@ -84,7 +89,6 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
                 'check_path' => static::ROUTE_CHECK_PATH,
                 'username_parameter' => AgentLoginForm::FORM_NAME . '[' . AgentLoginForm::FIELD_EMAIL . ']',
                 'password_parameter' => AgentLoginForm::FORM_NAME . '[' . AgentLoginForm::FIELD_PASSWORD . ']',
-                'listener_class' => UsernamePasswordFormAuthenticationListener::class,
             ],
             'logout' => [
                 'logout_path' => static::ROUTE_LOGOUT,
@@ -137,8 +141,10 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
      */
     protected function addAuthenticationSuccessHandler(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
-        $securityBuilder->addAuthenticationSuccessHandler(AgentPageConfig::SECURITY_FIREWALL_NAME, function () {
-            return $this->getFactory()->createAgentAuthenticationSuccessHandler();
+        $securityBuilder->addAuthenticationSuccessHandler(AgentPageConfig::SECURITY_FIREWALL_NAME, function (ContainerInterface $container) {
+            return $this->getFactory()->createAgentAuthenticationSuccessHandler(
+                $this->getRouter($container)->generate(static::ROUTE_HOME)
+            );
         });
 
         return $securityBuilder;
@@ -151,8 +157,10 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
      */
     protected function addAuthenticationFailureHandler(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
-        $securityBuilder->addAuthenticationFailureHandler(AgentPageConfig::SECURITY_FIREWALL_NAME, function () {
-            return $this->getFactory()->createAgentAuthenticationFailureHandler();
+        $securityBuilder->addAuthenticationFailureHandler(AgentPageConfig::SECURITY_FIREWALL_NAME, function (ContainerInterface $container) {
+            return $this->getFactory()->createAgentAuthenticationFailureHandler(
+                $this->getRouter($container)->generate(static::ROUTE_HOME)
+            );
         });
 
         return $securityBuilder;
@@ -168,5 +176,15 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
         $securityBuilder->addEventSubscriber(function () {
             return $this->getFactory()->createSwitchUserEventSubscriber();
         });
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Yves\Router\Router\ChainRouter
+     */
+    protected function getRouter(ContainerInterface $container): ChainRouter
+    {
+        return $container->get(static::SERVICE_ROUTER);
     }
 }
