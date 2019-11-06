@@ -1,0 +1,30 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'templates-list',
+} %}
+
+{% define data = {
+    templates: required,
+} %}
+
+{% block extraClass %} grid grid--center{% endblock %}
+
+{% block body %}
+    <h5 class="{{ config.name }}__title col col--sm-12 spacing-bottom spacing-bottom--big">{{ 'configurable_bundle_page.choose_template' | trans }}</h5>
+    <ul class="{{ config.name }}__content col--sm-12">
+        {% for template in data.templates %}
+            {# TODO change hard code urls to path() function when backend router will be ready #}
+            <li class="{{ config.name }}__item col col--sm-12 col--md-6 col--xl-3">
+                <div class="box box--stretch">
+                    <a href="{{ 'configurable-bundle/configurator/' ~ template.idConfigurableBundleTemplate ~ '/slots' }}"  class="{{ config.name }}__item-title grid grid--center grid--middle spacing-bottom">
+                        {{ template.Translations[0].name }}
+                    </a>
+                    <a href="{{ 'configurable-bundle/configurator/' ~ template.idConfigurableBundleTemplate ~ '/slots' }}" class="button button--expand button--success">
+                        {{ 'configurable_bundle_page.select' | trans }}
+                    </a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

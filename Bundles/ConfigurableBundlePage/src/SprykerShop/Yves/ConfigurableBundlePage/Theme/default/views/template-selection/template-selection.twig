@@ -2,17 +2,13 @@
 
 {% define data = {
     title: 'configurable_bundle_page.configurator' | trans,
-    configurableBundleTemplates: _view.configurableBundleTemplates
+    configurableBundleTemplates: _view.configurableBundleTemplates,
 } %}
 
 {% block content %}
-
-    {% for configurableBundleTemplate in data.configurableBundleTemplates %}
-        <pre>
-            {{ dump(configurableBundleTemplate.toArray()) }}
-        </pre>
-
-        <hr/>
-    {% endfor %}
-
+    {% include molecule('templates-list', 'ConfigurableBundlePage') with {
+        data: {
+            templates: data.configurableBundleTemplates,
+        },
+    } only %}
 {% endblock %}
