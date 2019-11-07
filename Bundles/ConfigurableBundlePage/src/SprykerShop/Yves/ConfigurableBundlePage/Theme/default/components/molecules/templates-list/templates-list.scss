@@ -2,14 +2,8 @@
     #{$name} {
         border: 0.125rem solid $setting-color-lighter;
         padding: 1.75rem 2.5rem 2.5rem;
-
-        &__title {
-            text-align: center;
-        }
-
-        &__content {
-
-        }
+        margin: 0.5rem;
+        overflow: hidden;
 
         &__item {
             display: flex;
