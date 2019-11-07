@@ -145,32 +145,45 @@
                             </div>
                         {% endblock %}
                     </div>
+                {% endblock %}
+
+                {% block scheduleContainer %}
                     <div class="box">
-                        <div class="col col--sm-12 col--lg-6">
-                            {% block weekdaySchedule %}
-                                {% include molecule('weekday-schedule', 'MerchantProfilePage') with {
-                                    data: {
-                                        weekdaySchedule: data.merchantOpeningHours.weekdaySchedule | default([]),
-                                    },
-                                } only %}
-                            {% endblock %}
-                        </div>
-                        <div class="col col--sm-12 col--lg-6">
-                            {% block specialOpeningHours %}
-                                {% include molecule('special-opening-hours', 'MerchantProfilePage') with {
-                                    data: {
-                                        specialOpeningHours: data.merchantOpeningHours.dateSchedule | default([]),
-                                    },
-                                } only %}
-                            {% endblock %}
-                            {% block hollidays %}
-                                {% include molecule('holidays', 'MerchantProfilePage') with {
-                                    data: {
-                                        holidays: data.merchantOpeningHours.dateSchedule | default([]),
-                                    },
-                                } only %}
-                            {% endblock %}
-                        </div>
+                        {% block schedule %}
+                            <div class="grid">
+                                {% block schedulelInner %}
+                                    <div class="col col--sm-12 col--lg-6">
+                                        {% block weekdaySchedule %}
+                                            {% include molecule('weekday-schedule', 'MerchantProfilePage') with {
+                                                data: {
+                                                    weekdaySchedule: data.merchantOpeningHours.weekdaySchedule,
+                                                },
+                                            } only %}
+                                        {% endblock %}
+                                    </div>
+
+                                    <div class="col col--sm-12 col--lg-6">
+                                        {% block specialOpeningHours %}
+                                            {% include molecule('special-opening-hours', 'MerchantProfilePage') with {
+                                                data: {
+                                                    specialOpeningHours: data.merchantOpeningHours.dateSchedule,
+                                                    itemsLimit: 2,
+                                                },
+                                            } only %}
+                                        {% endblock %}
+
+                                        {% block hollidays %}
+                                            {% include molecule('holidays', 'MerchantProfilePage') with {
+                                                data: {
+                                                    holidays: data.merchantOpeningHours.dateSchedule,
+                                                    itemsLimit: 2,
+                                                },
+                                            } only %}
+                                        {% endblock %}
+                                    </div>
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
                     </div>
                 {% endblock %}
             </div>

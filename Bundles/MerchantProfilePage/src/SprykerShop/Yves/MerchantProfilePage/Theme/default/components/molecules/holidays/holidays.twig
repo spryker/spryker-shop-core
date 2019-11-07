@@ -5,27 +5,46 @@
 } %}
 
 {% define data = {
-    holidays: required
+    holidays: required,
+    itemsLimit: 0,
 } %}
 
 {% block body %}
-    {% if data.holidays is not empty %}
-        {% block title %}
-        <strong>{{ 'merchant_opening_hours.public_holidays_title' | trans }}</strong><br>
-        {% endblock %}
-        {% set todayTimestamp = "now" | date('Y-m-d') | date('U') %}
-        {% set holidaysCounter = 0 %}
-        {% set holidaysLimit = 2 %}
-        {% for holiday in data.holidays %}
-            {% if holiday.timeFrom is empty and holiday.timeFrom is empty %}
-                {% set dateTimestamp = holiday.date | date('U') %}
-                {% if dateTimestamp >= todayTimestamp and holidaysCounter < holidaysLimit %}
-                    {% set holidaysCounter = holidaysCounter + 1 %}
-                    {% block holidays %}
-                        {{ holiday.date | date('Y-m-d, l') }} - {{ holiday.note | trans }}<br>
-                    {% endblock %}
-                {% endif %}
-            {% endif %}
-        {% endfor %}
-    {% endif %}
+    {% set weekdaysData = [] %}
+    {% set todayTimestamp = "now" | date('Y-m-d') | date('U') %}
+    {% set holidaysCounter = 0 %}
+
+    {% for openingHours in data.holidays %}
+        {% set dateTimestamp = (openingHours.date ~ ' ' ~ openingHours.timeTo) | date('U') %}
+        {% set isHoliday = openingHours.timeFrom is empty and openingHours.timeFrom is empty %}
+        {% set isNotPastdDay = (dateTimestamp >= todayTimestamp and holidaysCounter < data.itemsLimit) or data.itemsLimit == 0 %}
+
+        {% if isHoliday and isNotPastdDay %}
+            {% set holidaysCounter = holidaysCounter + 1 %}
+
+            {% set weekdaysData = weekdaysData | merge({
+                (openingHours.date): {
+                    note: openingHours.note | trans,
+                    date: openingHours.date | date('d.m.Y, l'),
+                },
+            }) %}
+        {% endif %}
+    {% endfor %}
+
+    {% block schedule %}
+        {% embed molecule('information-item', 'MerchantProfilePage') with {
+            data: {
+                title: 'merchant_opening_hours.public_holidays_title' | trans,
+            },
+            embed: {
+                weekdaysData: weekdaysData,
+            },
+        } only %}
+            {% block text %}
+                {% for weekday in embed.weekdaysData %}
+                    <div>{{ weekday.date }} ({{ weekday.note }})</div>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+    {% endblock %}
 {% endblock %}
