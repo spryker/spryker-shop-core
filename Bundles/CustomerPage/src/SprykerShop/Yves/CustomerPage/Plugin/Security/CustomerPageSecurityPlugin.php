@@ -8,10 +8,10 @@
 namespace SprykerShop\Yves\CustomerPage\Plugin\Security;
 
 use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Router\Router\ChainRouter;
-use Spryker\Yves\Security\Configuration\SecurityBuilderInterface;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Form\LoginForm;
 
@@ -46,10 +46,10 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
     protected const SERVICE_ROUTER = 'routers';
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     public function extend(SecurityBuilderInterface $securityBuilder, ContainerInterface $container): SecurityBuilderInterface
     {
@@ -65,9 +65,9 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
     }
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     protected function addFirewalls(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
@@ -93,9 +93,9 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
     }
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     protected function addAccessRules(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
@@ -118,9 +118,9 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
     }
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     protected function addAuthenticationSuccessHandler(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
@@ -132,9 +132,9 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
     }
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     protected function addAuthenticationFailureHandler(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
@@ -148,9 +148,9 @@ class CustomerPageSecurityPlugin extends AbstractPlugin implements SecurityPlugi
     }
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     protected function addAccessDeniedHandler(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {

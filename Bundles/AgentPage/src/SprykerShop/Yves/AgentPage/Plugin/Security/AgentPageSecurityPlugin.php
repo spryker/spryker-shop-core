@@ -8,10 +8,10 @@
 namespace SprykerShop\Yves\AgentPage\Plugin\Security;
 
 use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Router\Router\ChainRouter;
-use Spryker\Yves\Security\Configuration\SecurityBuilderInterface;
 use SprykerShop\Shared\AgentPage\AgentPageConfig;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\AgentPage\Form\AgentLoginForm;
@@ -56,10 +56,10 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
      * - Adds a firewall for the AgentPages.
      * - Adds a context and switch_user to the existing CustomerPage firewall configuration.
      *
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     public function extend(SecurityBuilderInterface $securityBuilder, ContainerInterface $container): SecurityBuilderInterface
     {
@@ -74,9 +74,9 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
     }
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     protected function addFirewalls(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
@@ -115,9 +115,9 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
     }
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     protected function addAccessRules(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
@@ -135,9 +135,9 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
     }
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     protected function addAuthenticationSuccessHandler(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
@@ -151,9 +151,9 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
     }
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     protected function addAuthenticationFailureHandler(SecurityBuilderInterface $securityBuilder): SecurityBuilderInterface
     {
@@ -167,7 +167,7 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
     }
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      *
      * @return void
      */
