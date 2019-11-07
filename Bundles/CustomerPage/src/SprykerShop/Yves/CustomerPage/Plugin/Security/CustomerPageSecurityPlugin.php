@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage\Plugin\Security;
 
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\Security\Dependency\Plugin\SecurityPluginInterface;
+use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Router\Router\ChainRouter;
 use Spryker\Yves\Security\Configuration\SecurityBuilderInterface;
