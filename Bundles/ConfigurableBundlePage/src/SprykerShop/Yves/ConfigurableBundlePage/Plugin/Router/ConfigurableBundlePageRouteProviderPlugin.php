@@ -19,8 +19,8 @@ class ConfigurableBundlePageRouteProviderPlugin extends AbstractRouteProviderPlu
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'idConfigurableBundleTemplateSlot';
 
     /**
-     * Specification:
-     * - Adds Routes to the RouteCollection.
+     * {@inheritDoc}
+     * - Adds ConfigurableBundlePage module routes to RouteCollection.
      *
      * @api
      *
