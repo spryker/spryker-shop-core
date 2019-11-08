@@ -17,6 +17,8 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
+ * @deprecated Use `\SprykerShop\Yves\ErrorPage\Plugin\EventDispatcher\ErrorPageEventDispatcherPlugin` instead.
+ *
  * @method \SprykerShop\Yves\ErrorPage\ErrorPageFactory getFactory()
  */
 class ErrorPageServiceProvider extends AbstractPlugin implements ServiceProviderInterface

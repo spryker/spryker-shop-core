@@ -12,9 +12,11 @@
 
 {% block imageContainer %}
     <div class="{{ config.name }}__col col col--sm-12 col--lg-2">
+        {% set imageModifiers =  ['small'] %}
+
         {% block image %}
             {% include atom('thumbnail') with {
-                modifiers: ['small'],
+                modifiers: imageModifiers,
                 attributes: {
                     src: data.image,
                     alt: data.name,
@@ -47,12 +49,21 @@
                                 {% block price %}
                                     <span class="{{ config.name }}__text">
                                         {% block priceInner %}
-                                            {% if can('SeePricePermissionPlugin') and data.product.unitPrice %}
+                                            {% if can('SeePricePermissionPlugin') and data.product.unitPrice is not empty %}
                                                 {%- block priceTitle -%}
                                                     {{ 'configured_bundle.price' | trans }}
                                                 {% endblock %}
 
                                                 {%- block priceValue -%}
+                                                    {% if data.product.sourceUnitGrossPrice is not null or data.product.sourceUnitNetPrice is not null %}
+                                                        {% set priceModeGross = 'GROSS_MODE' %}
+                                                        {% set originUnitPrice = (data.priceMode == priceModeGross) ? data.product.originUnitGrossPrice : data.product.originUnitNetPrice %}
+
+                                                        {%- block oldPriceValue -%}
+                                                            <del class="spacing-right">{{ originUnitPrice | money(true, data.currencyIsoCode) }}</del>
+                                                        {% endblock %}
+                                                    {% endif %}
+
                                                     {{ data.product.unitPrice | money(true, data.currencyIsoCode) }}
                                                 {% endblock %}
                                             {% else %}
@@ -79,7 +90,7 @@
                                 {% block total %}
                                     <strong class="{{ config.name }}__text">
                                         {% block totalInner %}
-                                            {% if can('SeePricePermissionPlugin') and data.product.sumSubtotalAggregation %}
+                                            {% if can('SeePricePermissionPlugin') and data.product.sumSubtotalAggregation is not empty %}
                                                 {%- block totalTitle -%}
                                                     {{ 'configured_bundle.total' | trans }}
                                                 {% endblock %}

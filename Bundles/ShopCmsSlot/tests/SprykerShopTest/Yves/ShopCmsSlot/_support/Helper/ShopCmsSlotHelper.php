@@ -8,27 +8,27 @@
 namespace SprykerShopTest\Yves\ShopCmsSlot\Helper;
 
 use Codeception\Module;
-use Generated\Shared\DataBuilder\CmsSlotDataBuilder;
+use Generated\Shared\DataBuilder\CmsSlotContentResponseBuilder;
+use Generated\Shared\Transfer\CmsSlotContentResponseTransfer;
 use Generated\Shared\Transfer\CmsSlotContextTransfer;
-use Generated\Shared\Transfer\CmsSlotDataTransfer;
 
 class ShopCmsSlotHelper extends Module
 {
     /**
      * @param array $seedData
      *
-     * @return \Generated\Shared\Transfer\CmsSlotDataTransfer
+     * @return \Generated\Shared\Transfer\CmsSlotContentResponseTransfer
      */
-    public function getCmsSlotDataTransfer(array $seedData = []): CmsSlotDataTransfer
+    public function getCmsSlotContentResponseTransfer(array $seedData = []): CmsSlotContentResponseTransfer
     {
-        return (new CmsSlotDataBuilder($seedData))->build();
+        return (new CmsSlotContentResponseBuilder($seedData))->build();
     }
 
     /**
      * @param string $cmsSlotKey
      * @param array $providedData
      * @param string[] $requiredKeys
-     * @param string[] $autoFillingKeys
+     * @param string[] $autoFilledKeys
      *
      * @return \Generated\Shared\Transfer\CmsSlotContextTransfer
      */
@@ -36,12 +36,12 @@ class ShopCmsSlotHelper extends Module
         string $cmsSlotKey,
         array $providedData,
         array $requiredKeys,
-        array $autoFillingKeys
+        array $autoFilledKeys
     ): CmsSlotContextTransfer {
         return (new CmsSlotContextTransfer())
             ->setCmsSlotKey($cmsSlotKey)
             ->setProvidedData($providedData)
             ->setRequiredKeys($requiredKeys)
-            ->setAutoFillingKeys($autoFillingKeys);
+            ->setAutoFilledKeys($autoFilledKeys);
     }
 }

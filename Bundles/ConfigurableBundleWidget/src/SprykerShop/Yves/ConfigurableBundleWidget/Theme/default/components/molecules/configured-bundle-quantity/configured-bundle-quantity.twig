@@ -1,0 +1,35 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'configured-bundle-quantity',
+} %}
+
+{% define data = {
+    configuredBundle: required,
+    readOnly: false,
+} %}
+
+{% block body %}
+    {% if data.readOnly %}
+        {% block quantityCol %}
+            <div class="{{ config.name }}__text text-center">
+                {% block quantity %}
+                    <span class="{{ config.name }}__text">
+                        {{ 'configured_bundle.quantity' | trans }} {{ data.configuredBundle.quantity }}
+                    </span>
+                {% endblock %}
+            </div>
+        {% endblock %}
+    {% else %}
+        {% block form %}
+            <form method="POST" action="{{ path('cart/configured-bundle/change', {'configuredBundleGroupKey': data.configuredBundle.groupKey }) }}">
+                {% include molecule('quantity-input') with {
+                    data: {
+                        value: data.configuredBundle.quantity,
+                        readOnly: data.readOnly
+                    }
+                } only %}
+            </form>
+        {% endblock %}
+    {% endif %}
+{% endblock %}

@@ -120,7 +120,8 @@ class CheckoutAddressCollectionForm extends AbstractType
             'mapped' => false,
             'validation_groups' => function (FormInterface $form) {
                 if ($this->isIdCustomerAddressFieldNotEmpty($form)
-                    || $this->isIdCompanyUnitAddressFieldNotEmpty($form)) {
+                    || $this->isIdCompanyUnitAddressFieldNotEmpty($form)
+                ) {
                     return false;
                 }
 
@@ -176,10 +177,10 @@ class CheckoutAddressCollectionForm extends AbstractType
             return;
         }
 
-        /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer|false $shipmentGroupTransfer */
-        $shipmentGroupTransfer = current($shipmentGroupCollection);
+        /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer|null $shipmentGroupTransfer */
+        $shipmentGroupTransfer = $shipmentGroupCollection->getIterator()->current();
 
-        if ($shipmentGroupTransfer === false) {
+        if ($shipmentGroupTransfer === null) {
             return;
         }
 
@@ -314,7 +315,8 @@ class CheckoutAddressCollectionForm extends AbstractType
                 }
 
                 if ($this->isIdCustomerAddressExistAndNotEmpty($form)
-                    || $this->isIdCompanyUnitAddressFieldExistAndNotEmpty($form)) {
+                    || $this->isIdCompanyUnitAddressFieldExistAndNotEmpty($form)
+                ) {
                     return false;
                 }
 

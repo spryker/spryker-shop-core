@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ProductOptionValueStorage">
         <property name="idProductOptionValue" type="int"/>
@@ -18,11 +18,12 @@
     </transfer>
 
     <transfer name="ShoppingListItem">
+        <property name="idProductAbstract" type="int"/>
         <property name="productOptions" type="ProductOption[]" singular="productOption"/>
     </transfer>
 
     <transfer name="ShoppingList">
-        <property name="items" type="ShoppingListItem[]"/>
+        <property name="items" type="ShoppingListItem[]" singular="item"/>
     </transfer>
 
     <transfer name="ProductOption">
@@ -32,5 +33,13 @@
         <property name="unitGrossPrice" type="int"/>
         <property name="groupName" type="string"/>
     </transfer>
+
+    <transfer name="ProductView">
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="Item">
+    </transfer>
+
 </transfers>
 

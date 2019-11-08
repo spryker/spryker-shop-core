@@ -110,8 +110,8 @@ class AddressStepExecutor implements StepExecutorInterface
      */
     protected function setDefaultShippingAddress(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        /** @var \Generated\Shared\Transfer\ItemTransfer|false $itemTransfer */
-        $itemTransfer = current($quoteTransfer->getItems());
+        /** @var \Generated\Shared\Transfer\ItemTransfer|null $itemTransfer */
+        $itemTransfer = $quoteTransfer->getItems()->getIterator()->current();
 
         if (!$itemTransfer) {
             return $quoteTransfer;
@@ -154,7 +154,8 @@ class AddressStepExecutor implements StepExecutorInterface
         ?CustomerTransfer $customerTransfer
     ): QuoteTransfer {
         if ($this->hasQuoteDataItemLevelShippingAddresses($quoteTransfer)) {
-            $firstItemTransfer = current($quoteTransfer->getItems());
+            /** @var \Generated\Shared\Transfer\ItemTransfer $firstItemTransfer */
+            $firstItemTransfer = $quoteTransfer->getItems()->getIterator()->current();
             $shippingAddressTransfer = $firstItemTransfer->getShipment()->getShippingAddress();
         } else {
             /**
@@ -204,7 +205,7 @@ class AddressStepExecutor implements StepExecutorInterface
     ): ShipmentTransfer {
         $addressTransfer = $shipmentTransfer->requireShippingAddress()->getShippingAddress();
         $addressTransfer = $this->expandAddressTransfer($addressTransfer, $customerTransfer);
-        $addressHash = $this->getUniqueAddressKeyWithoutIdCustomerAddress($addressTransfer);
+        $addressHash = $this->customerService->getUniqueAddressKey($addressTransfer);
 
         if (isset($this->createdShipmentsWithShippingAddressesList[$addressHash])) {
             return $this->createdShipmentsWithShippingAddressesList[$addressHash];
@@ -264,23 +265,6 @@ class AddressStepExecutor implements StepExecutorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return string
-     */
-    protected function getUniqueAddressKeyWithoutIdCustomerAddress(AddressTransfer $addressTransfer): string
-    {
-        $idCustomerAddress = $addressTransfer->getIdCustomerAddress();
-        $addressTransfer->setIdCustomerAddress(null);
-
-        $addressHash = $this->customerService->getUniqueAddressKey($addressTransfer);
-
-        $addressTransfer->setIdCustomerAddress($idCustomerAddress);
-
-        return $addressHash;
-    }
-
-    /**
      * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -327,7 +311,8 @@ class AddressStepExecutor implements StepExecutorInterface
         }
 
         if ($this->hasQuoteDataItemLevelShippingAddresses($quoteTransfer)) {
-            $firstItemTransfer = current($quoteTransfer->getItems());
+            /** @var \Generated\Shared\Transfer\ItemTransfer $firstItemTransfer */
+            $firstItemTransfer = $quoteTransfer->getItems()->getIterator()->current();
             $shippingAddressTransfer = $firstItemTransfer->getShipment()->getShippingAddress();
         } else {
             $shippingAddressTransfer = $quoteTransfer->getShippingAddress();

@@ -21,7 +21,7 @@ use Twig\Loader\ChainLoader;
 use Twig\Loader\FilesystemLoader;
 
 /**
- * @deprecated Use `Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin` instead.
+ * @deprecated Use `\SprykerShop\Yves\ShopApplication\Plugin\EventDispatcher\ShopApplicationEventDispatcherPlugin` instead.
  *
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationFactory getFactory()
  * @method \SprykerShop\Yves\ShopApplication\ShopApplicationConfig getConfig()

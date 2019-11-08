@@ -5,8 +5,10 @@
     tag: 'source-price-form'
 } %}
 
+{# @deprecated property "priceFiled" is deprecated: use "priceForm" instead. #}
 {% define data = {
-    priceFiled: required,
+    priceFiled: null,
+    priceForm: data.priceFiled | default(null),
     checkboxName: required,
     checkboxValue: required,
     isChecked: required,
@@ -25,7 +27,7 @@
                     name: data.checkboxName,
                     value: data.checkboxValue,
                     checked: data.isChecked,
-                    disabled: data.priceFiled.vars.disabled,
+                    disabled: data.priceForm.vars.disabled,
                 },
                 data: {
                     label: data.checkboxLabel,
@@ -38,7 +40,7 @@
             {% endembed %}
         </div>
         <div class="col col--sm-12 col--xl-10">
-            {{ form_row(data.priceFiled, {'attr': {'class': config.jsName ~ '__input-container is-hidden spacing-top spacing-top--small'}}) }}
+            {{ form_row(data.priceForm, {'attr': {'class': config.jsName ~ '__input-container is-hidden spacing-top spacing-top--small'}}) }}
         </div>
     </div>
 {% endblock %}

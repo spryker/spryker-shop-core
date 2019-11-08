@@ -229,9 +229,11 @@ class CheckoutController extends AbstractController
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 
-        $grandTotal = $this->getFactory()
+        $quoteTransfer = $this->getFactory()
             ->getQuoteClient()
-            ->getQuote()
+            ->getQuote();
+
+        $grandTotal = $quoteTransfer
             ->getTotals()
             ->getGrandTotal();
 
@@ -239,6 +241,10 @@ class CheckoutController extends AbstractController
             $this->addErrorMessage(static::MESSAGE_PERMISSION_FAILED);
 
             return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUMMARY);
+        }
+
+        if ($quoteTransfer->getOrderReference() !== null) {
+            return $this->redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUCCESS);
         }
 
         return $this->createStepProcess()->process($request);
