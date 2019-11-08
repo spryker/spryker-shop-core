@@ -24,23 +24,6 @@
     <h3>{{ merchantName }}</h3>
 {% endblock %}
 
-{% macro scheduleTime(scheduleItem, scheduleList, key) %}
-    {% if scheduleItem.timeFrom and scheduleItem.timeTo %}
-        {% set defaultTime = scheduleItem.timeFrom | date('H:i') ~ ' - ' ~ scheduleItem.timeTo | date('H:i') %}
-    {% else %}
-        {% set defaultTime = 'merchant_opening_hours.opening_hours_closed' | trans %}
-    {% endif %}
-
-    {% if key in scheduleList | keys %}
-        {% set complexTime = scheduleList[key].time ~ ' | ' ~ defaultTime %}
-
-        {{ complexTime }}
-    {% else %}
-        {{ defaultTime }}
-    {% endif %}
-{% endmacro %}
-
-
 {% block content %}
     <div class="grid">
         {% block contentInner %}
