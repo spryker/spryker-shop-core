@@ -29,8 +29,8 @@ class MerchantProfilePageToMerchantOpeningHoursStorageClientBridge implements Me
      *
      * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer|null
      */
-    public function findMerchantOpeningHoursByIdIdMerchant(int $idMerchant): ?MerchantOpeningHoursStorageTransfer
+    public function findMerchantOpeningHoursByIdMerchant(int $idMerchant): ?MerchantOpeningHoursStorageTransfer
     {
-        return $this->merchantOpeningHoursStorageClient->findMerchantOpeningHoursByIdIdMerchant($idMerchant);
+        return $this->merchantOpeningHoursStorageClient->findMerchantOpeningHoursByIdMerchant($idMerchant);
     }
 }

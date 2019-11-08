@@ -30,7 +30,7 @@ class MerchantProfileController extends AbstractController
 
         $merchantOpeningHoursStorageTransfer = $this->getFactory()
             ->getMerchantOpeningHoursStoregeClient()
-            ->findMerchantOpeningHoursByIdIdMerchant($merchantProfileStorageTransfer->getFkMerchant());
+            ->findMerchantOpeningHoursByIdMerchant($merchantProfileStorageTransfer->getFkMerchant());
 
         return $this->view(
             [
