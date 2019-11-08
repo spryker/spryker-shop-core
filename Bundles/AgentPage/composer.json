@@ -25,9 +25,9 @@
     "spryker/event-dispatcher": "*",
     "spryker/propel": "*",
     "spryker/router": "*",
+    "spryker/security": "*",
     "spryker/session": "*",
     "spryker/silex": "*",
-    "spryker/security": "*",
     "spryker/storage": "*",
     "spryker/storage-redis": "*",
     "spryker/testify": "*"
@@ -42,6 +42,11 @@
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",
