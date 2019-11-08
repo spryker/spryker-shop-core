@@ -1,59 +1,26 @@
-{% extends model('component') %}
+{% extends molecule('schedule-list', 'MerchantProfilePage') %}
+{% import molecule('schedule-list', 'MerchantProfilePage') as scheduleMacro %}
 
 {% define config = {
     name: 'weekday-schedule',
 } %}
 
-{% define data = {
-    weekdaySchedule: required,
-} %}
-
-{% macro weekdayTime(weekday, weekdaysData, key) %}
-    {% if weekday.timeFrom and weekday.timeTo %}
-        {% set weekdayTime = weekday.timeFrom | date('H:i') ~ ' - ' ~ weekday.timeTo | date('H:i') %}
-    {% else %}
-        {% set weekdayTime = 'merchant_opening_hours.opening_hours_closed' | trans %}
-    {% endif %}
-
-    {% if key in weekdaysData | keys %}
-        {% set complexTime = weekdaysData[key].time ~ ' | ' ~ weekdayTime %}
-
-        {{ complexTime }}
-    {% else %}
-        {{ weekdayTime }}
-    {% endif %}
-{% endmacro %}
-
 {% block body %}
-    {% set weekdaysData = [] %}
+    {% set scheduleList = [] %}
 
-    {% for weekday in data.weekdaySchedule %}
-        {% set localizedDayTitleKey = 'merchant_opening_hours.day.title.' ~ weekday.day | lower %}
-        {% set time = weekdaySchedule.weekdayTime(weekday, weekdaysData, weekday.day) %}
-        {% set weekdaysData = weekdaysData | merge({
-            (weekday.day): {
-                day: localizedDayTitleKey | trans,
+    {% for scheduleItem in data.scheduleData %}
+        {% set localizedDayTitleKey = 'merchant_opening_hours.day.title.' ~ scheduleItem.day | lower %}
+        {% set time = scheduleMacro.scheduleTime(scheduleItem, scheduleList, scheduleItem.day) %}
+        {% set scheduleList = scheduleList | merge({
+            (scheduleItem.day): {
+                note: '',
+                date: localizedDayTitleKey | trans,
                 time: time,
             },
         }) %}
     {% endfor %}
 
     {% block schedule %}
-        {% embed molecule('information-item', 'MerchantProfilePage') with {
-            data: {
-                title: 'merchant_opening_hours.opening_hours_title' | trans,
-            },
-            embed: {
-                weekdaysData: weekdaysData,
-            },
-        } only %}
-            {% block text %}
-                {% for weekday in embed.weekdaysData %}
-                    <div>{{ weekday.day }}: {{ weekday.time }}</div>
-                {% endfor %}
-            {% endblock %}
-        {% endembed %}
+        {{ parent() }}
     {% endblock %}
 {% endblock %}
-
-{% import _self as weekdaySchedule %}

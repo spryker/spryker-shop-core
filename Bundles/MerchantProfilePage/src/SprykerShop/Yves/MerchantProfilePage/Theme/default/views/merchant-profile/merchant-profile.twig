@@ -24,6 +24,23 @@
     <h3>{{ merchantName }}</h3>
 {% endblock %}
 
+{% macro scheduleTime(scheduleItem, scheduleList, key) %}
+    {% if scheduleItem.timeFrom and scheduleItem.timeTo %}
+        {% set defaultTime = scheduleItem.timeFrom | date('H:i') ~ ' - ' ~ scheduleItem.timeTo | date('H:i') %}
+    {% else %}
+        {% set defaultTime = 'merchant_opening_hours.opening_hours_closed' | trans %}
+    {% endif %}
+
+    {% if key in scheduleList | keys %}
+        {% set complexTime = scheduleList[key].time ~ ' | ' ~ defaultTime %}
+
+        {{ complexTime }}
+    {% else %}
+        {{ defaultTime }}
+    {% endif %}
+{% endmacro %}
+
+
 {% block content %}
     <div class="grid">
         {% block contentInner %}
@@ -156,7 +173,8 @@
                                         {% block weekdaySchedule %}
                                             {% include molecule('weekday-schedule', 'MerchantProfilePage') with {
                                                 data: {
-                                                    weekdaySchedule: data.merchantOpeningHours.weekdaySchedule,
+                                                    scheduleData: data.merchantOpeningHours.weekdaySchedule,
+                                                    title: 'merchant_opening_hours.opening_hours_title' | trans,
                                                 },
                                             } only %}
                                         {% endblock %}
@@ -164,19 +182,22 @@
 
                                     <div class="col col--sm-12 col--lg-6">
                                         {% block specialOpeningHours %}
-                                            {% include molecule('special-opening-hours', 'MerchantProfilePage') with {
+                                            {% include molecule('schedule-list', 'MerchantProfilePage') with {
                                                 data: {
-                                                    specialOpeningHours: data.merchantOpeningHours.dateSchedule,
+                                                    scheduleData: data.merchantOpeningHours.dateSchedule,
                                                     itemsLimit: 2,
+                                                    title: 'merchant_opening_hours.special_opening_hours_title' | trans,
                                                 },
                                             } only %}
                                         {% endblock %}
 
                                         {% block hollidays %}
-                                            {% include molecule('holidays', 'MerchantProfilePage') with {
+                                            {% include molecule('schedule-list', 'MerchantProfilePage') with {
                                                 data: {
-                                                    holidays: data.merchantOpeningHours.dateSchedule,
+                                                    scheduleData: data.merchantOpeningHours.dateSchedule,
                                                     itemsLimit: 2,
+                                                    isHoliday: true,
+                                                    title: 'merchant_opening_hours.public_holidays_title' | trans,
                                                 },
                                             } only %}
                                         {% endblock %}
