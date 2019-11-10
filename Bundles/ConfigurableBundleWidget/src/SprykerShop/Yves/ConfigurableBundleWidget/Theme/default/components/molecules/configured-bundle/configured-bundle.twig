@@ -13,7 +13,7 @@
     priceMode: null,
     isQuantityChangeable: false,
     isEditable: true,
-    quote: null,
+    idQuote: null,
 } %}
 
 {%- block extraClass %} box{% endblock -%}
@@ -109,6 +109,6 @@
         {% endif %}
     {% endblock %}
     {% block configurableBundleCartNote %}
-        {% widget 'ConfigurableBundleCartNoteFormWidget' args [data.bundle, data.quote] only %}{% endwidget %}
+        {% widget 'ConfiguredBundleCartNoteFormWidget' args [data.bundle, data.idQuote] only %}{% endwidget %}
     {% endblock %}
 {% endblock %}

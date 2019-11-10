@@ -11,13 +11,16 @@ use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 
 class ConfigurableBundleCartNoteForm extends AbstractType
 {
     public const FORM_NAME = 'configurableBundleCartNote';
     public const FIELD_CONFIGURABLE_BUNDLE_CART_NOTE = 'cartNote';
-    public const FIELD_CONFIGURABLE_BUNDLE_GROUP_KEY = 'groupKey';
+    public const FIELD_CONFIGURABLE_BUNDLE_GROUP_KEY = 'configurableBundleGroupKey';
     public const FIELD_CONFIGURABLE_BUNDLE_TEMPLATE_NAME = 'templateName';
+
+    protected const FIELD_CONFIGURABLE_BUNDLE_CART_NOTE_MAX_LENGTH = 255;
 
     /**
      * @return string
@@ -50,6 +53,9 @@ class ConfigurableBundleCartNoteForm extends AbstractType
         $builder->add(static::FIELD_CONFIGURABLE_BUNDLE_CART_NOTE, TextareaType::class, [
             'label' => 'configurable_bundle_cart_note.enter_note',
             'required' => false,
+            'constraints' => [
+                new Length(['max' => static::FIELD_CONFIGURABLE_BUNDLE_CART_NOTE_MAX_LENGTH]),
+            ],
         ]);
 
         return $this;

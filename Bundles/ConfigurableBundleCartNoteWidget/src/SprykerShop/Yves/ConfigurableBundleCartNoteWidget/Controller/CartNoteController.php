@@ -7,9 +7,8 @@
 
 namespace SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Controller;
 
+use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
-use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Form\ConfigurableBundleCartNoteForm;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,7 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CartNoteController extends AbstractController
 {
-    protected const MESSAGE_CONFIGURABLE_BUNDLE_CART_NOTE_ADDED_SUCCESS = 'configurable_bundle_cart_note.note_added';
+    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_CART_NOTE_ADDED = 'configurable_bundle_cart_note.note_added';
+    protected const GLOSSARY_PARAMETER_CONFIGURABLE_BUNDLE_TEMPLATE_NAME = '%template-name%';
     protected const REQUEST_HEADER_REFERER = 'referer';
 
     /**
@@ -33,38 +33,37 @@ class CartNoteController extends AbstractController
      */
     public function addAction(Request $request): RedirectResponse
     {
-        $this->handleConfigurableBundleCartNoteForm($request);
+        $redirectResponse = $this->executeAddAction($request);
 
-        return $this->getRedirectResponse($request);
+        return $redirectResponse;
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return void
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function handleConfigurableBundleCartNoteForm(Request $request): void
+    protected function executeAddAction(Request $request): RedirectResponse
     {
         $configurableBundleCartNoteForm = $this->getFactory()
             ->getConfigurableBundleCartNoteForm()
             ->handleRequest($request);
 
         if (!$configurableBundleCartNoteForm->isSubmitted() || !$configurableBundleCartNoteForm->isValid()) {
-            return;
+            return $this->getRedirectResponse($request);
         }
 
         $quoteResponseTransfer = $this->getFactory()
             ->getConfigurableBundleCartNoteClient()
-            ->setCartNoteToConfigurableBundle(
-                $this->getCartNote($configurableBundleCartNoteForm),
-                $this->getGroupKey($configurableBundleCartNoteForm)
-            );
+            ->setCartNoteToConfigurableBundle($configurableBundleCartNoteForm->getData());
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(
-                $this->getSuccessMessage($this->getTemplateName($configurableBundleCartNoteForm))
+                $this->getSuccessMessage($configurableBundleCartNoteForm->getData())
             );
         }
+
+        return $this->getRedirectResponse($request);
     }
 
     /**
@@ -84,54 +83,19 @@ class CartNoteController extends AbstractController
     }
 
     /**
-     * @param string $templateName
+     * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configurableBundleCartNoteFormRequestTransfer
      *
      * @return string
      */
-    protected function getSuccessMessage(string $templateName): string
+    protected function getSuccessMessage(ConfiguredBundleCartNoteRequestTransfer $configurableBundleCartNoteFormRequestTransfer): string
     {
-        return $this->getFactory()
-            ->getGlossaryStorageClient()
-            ->translate(static::MESSAGE_CONFIGURABLE_BUNDLE_CART_NOTE_ADDED_SUCCESS, $this->getLocale(), ['%template-name%' => $templateName]);
-    }
+        $glossaryStorageClient = $this->getFactory()->getGlossaryStorageClient();
+        $templateName = $glossaryStorageClient->translate($configurableBundleCartNoteFormRequestTransfer->getTemplateName(), $this->getLocale());
 
-    /**
-     * @param \Symfony\Component\Form\FormInterface $configurableBundleCartNoteForm
-     *
-     * @return string
-     */
-    protected function getCartNote(FormInterface $configurableBundleCartNoteForm): string
-    {
-        return (string)$configurableBundleCartNoteForm
-            ->get(ConfigurableBundleCartNoteForm::FIELD_CONFIGURABLE_BUNDLE_CART_NOTE)
-            ->getData();
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $configurableBundleCartNoteForm
-     *
-     * @return string
-     */
-    protected function getGroupKey(FormInterface $configurableBundleCartNoteForm): string
-    {
-        return (string)$configurableBundleCartNoteForm
-            ->get(ConfigurableBundleCartNoteForm::FIELD_CONFIGURABLE_BUNDLE_GROUP_KEY)
-            ->getData();
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $configurableBundleCartNoteForm
-     *
-     * @return string
-     */
-    protected function getTemplateName(FormInterface $configurableBundleCartNoteForm): string
-    {
-        $templateName = (string)$configurableBundleCartNoteForm
-            ->get(ConfigurableBundleCartNoteForm::FIELD_CONFIGURABLE_BUNDLE_TEMPLATE_NAME)
-            ->getData();
-
-        return $this->getFactory()
-            ->getGlossaryStorageClient()
-            ->translate($templateName, $this->getLocale());
+        return $glossaryStorageClient->translate(
+            static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_CART_NOTE_ADDED,
+            $this->getLocale(),
+            [static::GLOSSARY_PARAMETER_CONFIGURABLE_BUNDLE_TEMPLATE_NAME => $templateName]
+        );
     }
 }

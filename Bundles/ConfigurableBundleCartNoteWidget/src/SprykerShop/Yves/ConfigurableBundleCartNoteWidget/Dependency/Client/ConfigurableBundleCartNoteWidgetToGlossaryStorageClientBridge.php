@@ -12,14 +12,14 @@ class ConfigurableBundleCartNoteWidgetToGlossaryStorageClientBridge implements C
     /**
      * @var \Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface
      */
-    protected $glossaryClient;
+    protected $glossaryStorageClient;
 
     /**
-     * @param \Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface $glossaryClient
+     * @param \Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface $glossaryStorageClient
      */
-    public function __construct($glossaryClient)
+    public function __construct($glossaryStorageClient)
     {
-        $this->glossaryClient = $glossaryClient;
+        $this->glossaryStorageClient = $glossaryStorageClient;
     }
 
     /**
@@ -31,6 +31,6 @@ class ConfigurableBundleCartNoteWidgetToGlossaryStorageClientBridge implements C
      */
     public function translate($id, $localeName, array $parameters = [])
     {
-        return $this->glossaryClient->translate($id, $localeName, $parameters);
+        return $this->glossaryStorageClient->translate($id, $localeName, $parameters);
     }
 }

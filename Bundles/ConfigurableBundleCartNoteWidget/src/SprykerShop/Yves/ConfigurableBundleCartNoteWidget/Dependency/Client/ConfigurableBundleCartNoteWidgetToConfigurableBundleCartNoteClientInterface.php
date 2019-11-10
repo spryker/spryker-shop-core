@@ -7,15 +7,17 @@
 
 namespace SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 interface ConfigurableBundleCartNoteWidgetToConfigurableBundleCartNoteClientInterface
 {
     /**
-     * @param string $cartNote
-     * @param string $configurableBundleGroupKey
+     * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfigurableBundle(string $cartNote, string $configurableBundleGroupKey): QuoteResponseTransfer;
+    public function setCartNoteToConfigurableBundle(
+        ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
+    ): QuoteResponseTransfer;
 }

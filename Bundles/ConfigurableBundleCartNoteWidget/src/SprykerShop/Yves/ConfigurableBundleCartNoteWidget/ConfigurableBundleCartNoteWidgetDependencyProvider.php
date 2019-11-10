@@ -11,13 +11,11 @@ use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client\ConfigurableBundleCartNoteWidgetToConfigurableBundleCartNoteClientBridge;
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client\ConfigurableBundleCartNoteWidgetToGlossaryStorageClientBridge;
-use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client\ConfigurableBundleCartNoteWidgetToQuoteClientBridge;
 
 class ConfigurableBundleCartNoteWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CONFIGURABLE_BUNDLE_CART_NOTE = 'CLIENT_CONFIGURABLE_BUNDLE_CART_NOTE';
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
-    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -29,7 +27,6 @@ class ConfigurableBundleCartNoteWidgetDependencyProvider extends AbstractBundleD
         $container = parent::provideDependencies($container);
         $container = $this->addConfigurableBundleCartNoteClient($container);
         $container = $this->addGlossaryStorageClient($container);
-        $container = $this->addQuoteClient($container);
 
         return $container;
     }
@@ -60,22 +57,6 @@ class ConfigurableBundleCartNoteWidgetDependencyProvider extends AbstractBundleD
         $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new ConfigurableBundleCartNoteWidgetToGlossaryStorageClientBridge(
                 $container->getLocator()->glossaryStorage()->client()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addQuoteClient(Container $container): Container
-    {
-        $container->set(static::CLIENT_QUOTE, function (Container $container) {
-            return new ConfigurableBundleCartNoteWidgetToQuoteClientBridge(
-                $container->getLocator()->quote()->client()
             );
         });
 

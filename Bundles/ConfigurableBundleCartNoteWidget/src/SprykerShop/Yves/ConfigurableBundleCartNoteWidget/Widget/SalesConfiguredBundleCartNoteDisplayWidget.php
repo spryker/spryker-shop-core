@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\ConfigurableBundleCartNoteWidget\ConfigurableBundleCartNoteWidgetFactory getFactory()
  */
-class ConfigurableBundleCartNoteDisplayWidget extends AbstractWidget
+class SalesConfiguredBundleCartNoteDisplayWidget extends AbstractWidget
 {
     /**
      * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer
@@ -28,7 +28,7 @@ class ConfigurableBundleCartNoteDisplayWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ConfigurableBundleCartNoteDisplayWidget';
+        return 'SalesConfiguredBundleCartNoteDisplayWidget';
     }
 
     /**
@@ -36,7 +36,7 @@ class ConfigurableBundleCartNoteDisplayWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ConfigurableBundleCartNoteWidget/views/configurable-bundle-cart-note-display/configurable-bundle-cart-note-display.twig';
+        return '@ConfigurableBundleCartNoteWidget/views/sales-configured-bundle-cart-note-display/sales-configured-bundle-cart-note-display.twig';
     }
 
     /**
