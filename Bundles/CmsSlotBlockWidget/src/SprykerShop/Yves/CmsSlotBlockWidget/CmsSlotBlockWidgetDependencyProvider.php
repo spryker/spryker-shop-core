@@ -12,16 +12,13 @@ use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockClientBridge;
 use SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockStorageClientBridge;
-use Twig\Environment;
 
 class CmsSlotBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CMS_SLOT_BLOCK_STORAGE = 'CLIENT_CMS_SLOT_BLOCK_STORAGE';
     public const CLIENT_CMS_SLOT_BLOCK = 'CLIENT_CMS_SLOT_BLOCK';
 
-    public const TWIG_ENVIRONMENT = 'TWIG ENVIRONMENT';
-
-    protected const SERVICE_TWIG = 'twig';
+    public const SERVICE_TWIG = 'twig';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -76,20 +73,10 @@ class CmsSlotBlockWidgetDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addTwigEnvironment(Container $container): Container
     {
-        $container[static::TWIG_ENVIRONMENT] = function (Container $container) {
-            return $this->getTwigEnvironment();
-        };
+        $container->set(static::SERVICE_TWIG, function () {
+            return (new Pimple())->getApplication()[static::SERVICE_TWIG];
+        });
 
         return $container;
-    }
-
-    /**
-     * @return \Twig\Environment
-     */
-    protected function getTwigEnvironment(): Environment
-    {
-        $pimplePlugin = new Pimple();
-
-        return $pimplePlugin->getApplication()[static::SERVICE_TWIG];
     }
 }

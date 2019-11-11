@@ -8,25 +8,36 @@
 namespace SprykerShop\Yves\CmsSlotBlockWidget\Business;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Generated\Shared\Transfer\CmsSlotBlockStorageTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer;
 use Generated\Shared\Transfer\CmsSlotContentRequestTransfer;
 use Generated\Shared\Transfer\CmsSlotContentResponseTransfer;
 use SprykerShop\Yves\CmsSlotBlockWidget\CmsSlotBlockWidgetConfig;
 use SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockClientInterface;
 use SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockStorageClientInterface;
 use SprykerShop\Yves\CmsSlotBlockWidget\Exceptions\CmsBlockTwigFunctionMissingException;
-use Twig\Environment;
+use Twig\Environment as TwigEnvironment;
 
 class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderInterface
 {
+    /**
+     * @uses \Spryker\Zed\CmsSlotBlockStorage\Persistence\Propel\Mapper\CmsSlotBlockStorageMapper::KEY_BLOCK_KEY
+     */
     protected const KEY_BLOCK_KEY = 'blockKey';
+
+    /**
+     * @uses \Spryker\Zed\CmsSlotBlockStorage\Persistence\Propel\Mapper\CmsSlotBlockStorageMapper::KEY_CONDITIONS
+     */
     protected const KEY_CONDITIONS = 'conditions';
+
+    /**
+     * @uses \Spryker\Client\CmsBlockStorage\Storage\CmsBlockStorage::OPTION_KEYS
+     */
     protected const KEY_BLOCK_OPTIONS_KEYS = 'keys';
 
     /**
      * @var \Twig\Environment
      */
-    protected $twig;
+    protected $twigEnvironment;
 
     /**
      * @var \SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockStorageClientInterface
@@ -44,18 +55,18 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
     protected $cmsSlotBlockWidgetConfig;
 
     /**
-     * @param \Twig\Environment $twig
+     * @param \Twig\Environment $twigEnvironment
      * @param \SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockStorageClientInterface $cmsSlotBlockStorageClient
      * @param \SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockClientInterface $cmsSlotBlockClient
      * @param \SprykerShop\Yves\CmsSlotBlockWidget\CmsSlotBlockWidgetConfig $cmsSlotBlockWidgetConfig
      */
     public function __construct(
-        Environment $twig,
+        TwigEnvironment $twigEnvironment,
         CmsSlotBlockWidgetToCmsSlotBlockStorageClientInterface $cmsSlotBlockStorageClient,
         CmsSlotBlockWidgetToCmsSlotBlockClientInterface $cmsSlotBlockClient,
         CmsSlotBlockWidgetConfig $cmsSlotBlockWidgetConfig
     ) {
-        $this->twig = $twig;
+        $this->twigEnvironment = $twigEnvironment;
         $this->cmsSlotBlockStorageClient = $cmsSlotBlockStorageClient;
         $this->cmsSlotBlockClient = $cmsSlotBlockClient;
         $this->cmsSlotBlockWidgetConfig = $cmsSlotBlockWidgetConfig;
@@ -84,12 +95,13 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
      */
     protected function getCmsBlockTwigFunction(): callable
     {
-        $twigFunction = $this->twig->getFunction($this->cmsSlotBlockWidgetConfig->getCmsBlockTwigFunctionName());
+        $twigFunction = $this->twigEnvironment->getFunction($this->cmsSlotBlockWidgetConfig->getCmsBlockTwigFunctionName());
 
         if (!$twigFunction) {
-            throw new CmsBlockTwigFunctionMissingException(
-                'You need to register \SprykerShop\Yves\CmsBlockWidget\Plugin\Twig\CmsBlockTwigPlugin in \Pyz\Yves\Twig\TwigDependencyProvider::getTwigPlugins().'
-            );
+            throw new CmsBlockTwigFunctionMissingException(sprintf(
+                'Twig function with name %s is not registered in TwigDependencyProvider::getTwigPlugins().',
+                $this->cmsSlotBlockWidgetConfig->getCmsBlockTwigFunctionName()
+            ));
         }
 
         return $twigFunction->getCallable();
@@ -105,37 +117,38 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
         callable $cmsBlockFunction,
         CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer
     ): string {
-        $cmsSlotBlockStorageTransfer = $this->cmsSlotBlockStorageClient
+        $cmsSlotBlockStorageDataTransfer = $this->cmsSlotBlockStorageClient
             ->getCmsSlotBlockCollection(
                 $cmsSlotContentRequestTransfer->getCmsSlotTemplatePath(),
                 $cmsSlotContentRequestTransfer->getCmsSlotKey()
             );
         $blockOptions[static::KEY_BLOCK_OPTIONS_KEYS] = $this->getVisibleBlockKeys(
-            $cmsSlotBlockStorageTransfer,
+            $cmsSlotBlockStorageDataTransfer,
             $cmsSlotContentRequestTransfer
         );
 
-        return $cmsBlockFunction($this->twig, [], $blockOptions);
+        return $cmsBlockFunction($this->twigEnvironment, [], $blockOptions);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer $cmsSlotBlockStorageDataTransfer
      * @param \Generated\Shared\Transfer\CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer
      *
      * @return array
      */
     protected function getVisibleBlockKeys(
-        CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer,
+        CmsSlotBlockStorageDataTransfer $cmsSlotBlockStorageDataTransfer,
         CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer
     ): array {
-        $cmsBlocks = $cmsSlotBlockStorageTransfer->getCmsBlocks();
+        $cmsBlocks = $cmsSlotBlockStorageDataTransfer->getCmsBlocks();
         $visibleBlockKeys = [];
 
         foreach ($cmsBlocks as $cmsBlock) {
-            $cmsBlockTransfer = (new CmsBlockTransfer())->setKey($cmsBlock[static::KEY_BLOCK_KEY]);
+            $cmsBlockTransfer = (new CmsBlockTransfer())
+                ->setKey($cmsBlock[static::KEY_BLOCK_KEY])
+                ->setCmsSlotBlockConditions($cmsBlock[static::KEY_CONDITIONS]);
             $isCmsBlockVisibleInSlot = $this->cmsSlotBlockClient->isCmsBlockVisibleInSlot(
                 $cmsBlockTransfer,
-                $cmsBlock[static::KEY_CONDITIONS],
                 $cmsSlotContentRequestTransfer->getParams()
             );
 
