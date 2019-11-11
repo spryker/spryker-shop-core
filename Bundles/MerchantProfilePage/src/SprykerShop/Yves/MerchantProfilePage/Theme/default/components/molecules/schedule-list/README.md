@@ -1,1 +1,1 @@
-Shows list of scheduled special merchant opening hours and holidays.
+Shows a merchant working schedule.
