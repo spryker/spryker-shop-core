@@ -158,6 +158,7 @@
                                                 data: {
                                                     scheduleData: data.merchantOpeningHours.weekdaySchedule,
                                                     title: 'merchant_opening_hours.opening_hours_title' | trans,
+                                                    itemsLimit: null,
                                                 },
                                             } only %}
                                         {% endblock %}
@@ -168,7 +169,6 @@
                                             {% include molecule('schedule-list', 'MerchantProfilePage') with {
                                                 data: {
                                                     scheduleData: data.merchantOpeningHours.dateSchedule,
-                                                    itemsLimit: 2,
                                                     title: 'merchant_opening_hours.special_opening_hours_title' | trans,
                                                 },
                                             } only %}
@@ -178,7 +178,6 @@
                                             {% include molecule('schedule-list', 'MerchantProfilePage') with {
                                                 data: {
                                                     scheduleData: data.merchantOpeningHours.dateSchedule,
-                                                    itemsLimit: 2,
                                                     isHoliday: true,
                                                     title: 'merchant_opening_hours.public_holidays_title' | trans,
                                                 },

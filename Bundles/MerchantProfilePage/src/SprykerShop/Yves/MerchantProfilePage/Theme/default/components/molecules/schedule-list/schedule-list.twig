@@ -6,7 +6,7 @@
 
 {% define data = {
     scheduleData: required,
-    itemsLimit: 0,
+    itemsLimit: 2,
     isHoliday: false,
     title: required,
 } %}
@@ -37,7 +37,7 @@
         {% set isWorkingDay = scheduleItem.timeFrom and scheduleItem.timeFrom %}
         {% set isHoliday = scheduleItem.timeFrom is empty and scheduleItem.timeFrom is empty %}
         {% set isDayAllowed = data.isHoliday ? not isWorkingDay : isWorkingDay %}
-        {% set isNotPastdDay = (dateTimestamp >= todayTimestamp and scheduleItemCounter < data.itemsLimit) or data.itemsLimit == 0 %}
+        {% set isNotPastdDay = (dateTimestamp >= todayTimestamp and scheduleItemCounter < data.itemsLimit) or data.itemsLimit is null %}
 
         {% if isDayAllowed and isNotPastdDay %}
             {% set scheduleItemCounter = scheduleItemCounter + 1 %}
