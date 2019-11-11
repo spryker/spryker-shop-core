@@ -1,0 +1,35 @@
+{
+  "name": "spryker-shop/health-check-page",
+  "type": "library",
+  "description": "HealthCheckPage module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/health-check": "^1.0.0",
+    "spryker/kernel": "^3.30.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerShopTest\\": "tests/SprykerShopTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
