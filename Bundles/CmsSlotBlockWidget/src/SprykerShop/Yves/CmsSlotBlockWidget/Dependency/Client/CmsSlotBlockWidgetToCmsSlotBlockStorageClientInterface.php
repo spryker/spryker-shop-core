@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\CmsSlotBlockStorageTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer;
 
 interface CmsSlotBlockWidgetToCmsSlotBlockStorageClientInterface
 {
@@ -15,10 +15,10 @@ interface CmsSlotBlockWidgetToCmsSlotBlockStorageClientInterface
      * @param string $cmsSlotTemplatePath
      * @param string $cmsSlotKey
      *
-     * @return \Generated\Shared\Transfer\CmsSlotBlockStorageTransfer
+     * @return \Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer
      */
     public function getCmsSlotBlockCollection(
         string $cmsSlotTemplatePath,
         string $cmsSlotKey
-    ): CmsSlotBlockStorageTransfer;
+    ): CmsSlotBlockStorageDataTransfer;
 }

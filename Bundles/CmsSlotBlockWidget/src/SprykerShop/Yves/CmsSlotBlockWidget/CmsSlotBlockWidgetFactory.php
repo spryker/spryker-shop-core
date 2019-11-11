@@ -53,6 +53,6 @@ class CmsSlotBlockWidgetFactory extends AbstractFactory
      */
     public function getTwigEnvironment(): Environment
     {
-        return $this->getProvidedDependency(CmsSlotBlockWidgetDependencyProvider::TWIG_ENVIRONMENT);
+        return $this->getProvidedDependency(CmsSlotBlockWidgetDependencyProvider::SERVICE_TWIG);
     }
 }

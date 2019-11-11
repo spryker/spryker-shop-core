@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\CmsSlotBlockStorageTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer;
 
 class CmsSlotBlockWidgetToCmsSlotBlockStorageClientBridge implements CmsSlotBlockWidgetToCmsSlotBlockStorageClientInterface
 {
@@ -21,17 +21,17 @@ class CmsSlotBlockWidgetToCmsSlotBlockStorageClientBridge implements CmsSlotBloc
      * @param string $cmsSlotTemplatePath
      * @param string $cmsSlotKey
      *
-     * @return \Generated\Shared\Transfer\CmsSlotBlockStorageTransfer
+     * @return \Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer
      */
     public function getCmsSlotBlockCollection(
         string $cmsSlotTemplatePath,
         string $cmsSlotKey
-    ): CmsSlotBlockStorageTransfer {
+    ): CmsSlotBlockStorageDataTransfer {
         //TODO: should be changed to client call
         $blocks = [
             [
                 'blockKey' => 'blck-2',
-                'conditions' => ['product' => ['all' => false, 'productIds' => [3]]],
+                'conditions' => ['product' => ['all' => false, 'productIds' => [3], 'categoryIds' => []]],
             ],
             [
                 'blockKey' => 'blck-4',
@@ -39,6 +39,6 @@ class CmsSlotBlockWidgetToCmsSlotBlockStorageClientBridge implements CmsSlotBloc
             ],
         ];
 
-        return (new CmsSlotBlockStorageTransfer())->setCmsBlocks($blocks);
+        return (new CmsSlotBlockStorageDataTransfer())->setCmsBlocks($blocks);
     }
 }
