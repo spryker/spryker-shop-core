@@ -13,6 +13,7 @@
     priceMode: null,
     isQuantityChangeable: false,
     isEditable: true,
+    isAmountOfBundleVisible: false,
     idQuote: null,
 } %}
 
@@ -81,6 +82,7 @@
     {% block bundleProductList %}
         <div class="{{ config.name }}__products">
             {% block bundleProductListInner %}
+                {% set bundleCurrentAmount = 0 %}
                 {% for item in data.bundleItems if data.items[item.GroupKey] is defined %}
                     {% block bundleProductItem %}
                         {% include molecule('configured-bundle-product', 'ConfigurableBundleWidget') with {
@@ -91,9 +93,19 @@
                             },
                         } only %}
                     {% endblock %}
+                    {% set bundleCurrentAmount = bundleCurrentAmount + item.quantity %}
                 {% endfor %}
+
+                {% if data.isAmountOfBundleVisible %}
+                    {% set bundleTotalAmount = 0 %}
+                    {% for bundleItem in data.bundle.items %}
+                        {% set bundleTotalAmount = bundleTotalAmount + bundleItem.quantity %}
+                    {% endfor %}
+                    {{ 'configured_bundle_widget.items' | trans }} {{ bundleCurrentAmount }} / {{ bundleTotalAmount }}
+                {% endif %}
             {% endblock %}
         </div>
+
     {% endblock %}
 
     {% set bundleActionClassName = 'float-right spacing-y' %}
