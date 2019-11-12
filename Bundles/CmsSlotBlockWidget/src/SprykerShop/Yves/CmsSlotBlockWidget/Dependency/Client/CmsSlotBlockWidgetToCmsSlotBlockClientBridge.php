@@ -26,12 +26,12 @@ class CmsSlotBlockWidgetToCmsSlotBlockClientBridge implements CmsSlotBlockWidget
 
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     * @param array $cmsSlotData
+     * @param array $cmsSlotParams
      *
      * @return bool
      */
-    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotData): bool
+    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotParams): bool
     {
-        return $this->cmsSlotBlockClient->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotData);
+        return $this->cmsSlotBlockClient->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotParams);
     }
 }
