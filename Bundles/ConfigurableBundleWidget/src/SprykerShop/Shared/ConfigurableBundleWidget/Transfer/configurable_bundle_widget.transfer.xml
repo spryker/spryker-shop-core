@@ -12,6 +12,7 @@
         <property name="configuredBundle" type="ConfiguredBundle"/>
         <property name="sumSubtotalAggregation" type="int"/>
         <property name="unitPrice" type="int"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="ConfiguredBundleCollection">

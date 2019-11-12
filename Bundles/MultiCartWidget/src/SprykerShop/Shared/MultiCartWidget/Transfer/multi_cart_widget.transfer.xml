@@ -13,4 +13,7 @@
         <property name="isLocked" type="bool"/>
     </transfer>
 
+    <transfer name="ProductView">
+    </transfer>
+
 </transfers>

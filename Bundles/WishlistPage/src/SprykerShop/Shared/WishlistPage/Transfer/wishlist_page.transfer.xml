@@ -67,4 +67,10 @@
         <property name="wishlistItemMetaCollection" type="WishlistItemMeta[]" singular="wishlistItemMeta"/>
     </transfer>
 
+    <transfer name="ProductImageStorage">
+    </transfer>
+
+    <transfer name="WishlistItemCollection">
+    </transfer>
+
 </transfers>
