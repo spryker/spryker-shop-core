@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\ProductPackagingUnitWidget\Widget;
 
-use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer;
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
@@ -27,39 +27,27 @@ class ProductPackagingUnitWidget extends AbstractWidget
     {
         $baseUnit = null;
         $salesUnits = null;
-        $isAmountBlockEnabled = false;
         $productQuantityStorageTransfer = null;
         $leadProductSalesUnits = null;
-        $productConcretePackagingStorageTransfer = null;
+        $productPackagingUnitStorageTransfer = null;
 
         if ($productViewTransfer->getIdProductConcrete()) {
             $productMeasurementUnitStorageClient = $this->getFactory()->getProductMeasurementUnitStorageClient();
             $productPackagingUnitStorageClient = $this->getFactory()->getProductPackagingUnitStorageClient();
 
-            $baseUnit = $productMeasurementUnitStorageClient->findProductMeasurementBaseUnitByIdProductConcrete($productViewTransfer->getIdProductConcrete());
+            $baseUnit = $productMeasurementUnitStorageClient->findProductMeasurementBaseUnitByIdProduct($productViewTransfer->getIdProductConcrete());
 
-            $productConcretePackagingStorageTransfer = $productPackagingUnitStorageClient->findProductConcretePackagingById(
-                $productViewTransfer->getIdProductAbstract(),
+            $productPackagingUnitStorageTransfer = $productPackagingUnitStorageClient->findProductPackagingUnitById(
                 $productViewTransfer->getIdProductConcrete()
             );
 
-            $productAbstractPackaging = $productPackagingUnitStorageClient->findProductAbstractPackagingById(
-                $productViewTransfer->getIdProductAbstract()
-            );
-
-            $salesUnits = $productMeasurementUnitStorageClient->findProductMeasurementSalesUnitByIdProductConcrete(
+            $salesUnits = $productMeasurementUnitStorageClient->findProductMeasurementSalesUnitByIdProduct(
                 $productViewTransfer->getIdProductConcrete()
             );
 
-            if ($productAbstractPackaging) {
-                $leadProductSalesUnits = $productMeasurementUnitStorageClient->findProductMeasurementSalesUnitByIdProductConcrete(
-                    $productAbstractPackaging->getLeadProduct()
-                );
-
-                $isAmountBlockEnabled = $this->isAmountBlockEnabled(
-                    $productViewTransfer->getIdProductConcrete(),
-                    $productAbstractPackaging->getLeadProduct(),
-                    $productConcretePackagingStorageTransfer->getHasLeadProduct()
+            if ($productPackagingUnitStorageTransfer) {
+                $leadProductSalesUnits = $productMeasurementUnitStorageClient->findProductMeasurementSalesUnitByIdProduct(
+                    $productPackagingUnitStorageTransfer->getIdLeadProduct()
                 );
             }
 
@@ -79,17 +67,15 @@ class ProductPackagingUnitWidget extends AbstractWidget
             ->addParameter('baseUnit', $baseUnit)
             ->addParameter('salesUnits', $salesUnits)
             ->addParameter('leadProductSalesUnits', $leadProductSalesUnits)
-            ->addParameter('productPackagingUnit', $productConcretePackagingStorageTransfer)
+            ->addParameter('productPackagingUnit', $productPackagingUnitStorageTransfer)
             ->addParameter('isAddToCartDisabled', $isAddToCartDisabled)
-            ->addParameter('isAmountBlockEnabled', $isAmountBlockEnabled)
             ->addParameter('productQuantityStorage', $productQuantityStorageTransfer)
             ->addParameter('jsonScheme', $this->prepareJsonData(
-                $isAmountBlockEnabled,
                 $isAddToCartDisabled,
                 $baseUnit,
                 $salesUnits,
                 $leadProductSalesUnits,
-                $productConcretePackagingStorageTransfer,
+                $productPackagingUnitStorageTransfer,
                 $productQuantityStorageTransfer
             ));
     }
@@ -111,29 +97,26 @@ class ProductPackagingUnitWidget extends AbstractWidget
     }
 
     /**
-     * @param bool $isAmountBlockEnabled
      * @param bool $isAddToCartDisabled
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null $baseUnit
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null $salesUnits
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null $leadSalesUnits
-     * @param \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer|null $productConcretePackagingStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer|null $productPackagingUnitStorageTransfer
      * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null $productQuantityStorageTransfer
      *
      * @return string
      */
     protected function prepareJsonData(
-        bool $isAmountBlockEnabled,
         bool $isAddToCartDisabled,
         ?ProductMeasurementUnitTransfer $baseUnit,
         ?array $salesUnits,
         ?array $leadSalesUnits,
-        ?ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer,
+        ?ProductPackagingUnitStorageTransfer $productPackagingUnitStorageTransfer,
         ?ProductQuantityStorageTransfer $productQuantityStorageTransfer = null
     ): string {
         $jsonData = [];
 
         $jsonData['isAddToCartDisabled'] = $isAddToCartDisabled;
-        $jsonData['isAmountBlockEnabled'] = $isAmountBlockEnabled;
 
         if ($baseUnit !== null) {
             $jsonData['baseUnit'] = $baseUnit->toArray();
@@ -147,8 +130,8 @@ class ProductPackagingUnitWidget extends AbstractWidget
             $jsonData['leadSalesUnits'][] = $leadSalesUnit->toArray();
         }
 
-        if ($productConcretePackagingStorageTransfer !== null) {
-            $jsonData['productPackagingUnitStorage'] = $productConcretePackagingStorageTransfer->toArray();
+        if ($productPackagingUnitStorageTransfer !== null) {
+            $jsonData['productPackagingUnitStorage'] = $productPackagingUnitStorageTransfer->toArray();
         }
 
         if ($productQuantityStorageTransfer !== null) {
@@ -197,17 +180,5 @@ class ProductPackagingUnitWidget extends AbstractWidget
         }
 
         return $quantityMin;
-    }
-
-    /**
-     * @param int $idProduct
-     * @param int $idLeadProduct
-     * @param bool $hasLeadProduct
-     *
-     * @return bool
-     */
-    protected function isAmountBlockEnabled(int $idProduct, int $idLeadProduct, bool $hasLeadProduct): bool
-    {
-        return ($idProduct !== $idLeadProduct) && $hasLeadProduct;
     }
 }

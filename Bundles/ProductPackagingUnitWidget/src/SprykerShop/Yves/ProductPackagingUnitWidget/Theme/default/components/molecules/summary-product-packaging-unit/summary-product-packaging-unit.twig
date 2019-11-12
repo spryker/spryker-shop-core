@@ -36,19 +36,22 @@
         <div class="col col--sm-12 col--lg-9">
             {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default('') %}
             {% set salesUnitSummary = salesUnitName ? data.quantity / data.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
-            {% set amountPerQuantity = data.amount / data.quantity %}
 
             <strong class="float-right">{{ can('SeePricePermissionPlugin') ? data.price : 'customer.access.cannot_see_price' | trans }}</strong>
             <div>{{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }} {% if salesUnitSummary %}(={{ salesUnitSummary }}){% endif %}</div>
             <div>{{ 'packaging_units.cart.quantity' | trans }}: {{ data.quantity }}</div>
 
             {% if data.amountSalesUnit is not empty %}
-                {% set amountSalesUnitName = data.amountSalesUnit.productMeasurementUnit.name | default('') %}
+                {% set amountPerQuantity = data.amount.divide(data.quantity, 5).trim %}
+                {% set amountPerQuantityConversion = amountPerQuantity.divide(data.amountSalesUnit.conversion, 5).trim %}
+                {% set amountSalesUnitName = salesUnitName | default(data.amountSalesUnit.productMeasurementUnit.name) | default('') %}
                 <div>
                     <span class="text-secondary">&times;</span>
-                    {{ amountPerQuantity }} {{ 'packaging_units.cart.item' | trans }}
-                    (= {{ amountPerQuantity / data.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }})
-                    = {{ data.amount }} {{ 'packaging_units.cart.item' | trans }}
+                    {{ amountPerQuantity }} {{ amountSalesUnitName | trans }}
+                    {% if amountPerQuantityConversion != amountPerQuantity %}
+                        (= {{ amountPerQuantityConversion }} {{ data.amountSalesUnit.productMeasurementUnit.name | trans }})
+                    {% endif %}
+                    = {{ data.amount }} {{ amountSalesUnitName | trans }}
                 </div>
             {% endif %}
         </div>
