@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\HealthCheckPage\Controller;
 
 use Generated\Shared\Transfer\HealthCheckRequestTransfer;
+use Generated\Shared\Transfer\HealthCheckResponseTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +31,10 @@ class IndexController extends AbstractController
             ->setApplication(APPLICATION)
             ->setServices($request->get(static::KEY_HEALTH_CHECK_SERVICE));
 
-        dump($this->getFactory()->getHealthCheckService()->processHealthCheck($healthCheckRequestTransfer));
-        die;
+        $healthCheckResponseTransfer = $this->getFactory()
+            ->getHealthCheckService()
+            ->processHealthCheck($healthCheckRequestTransfer);
+
+        return new JsonResponse($healthCheckResponseTransfer->toArray());
     }
 }
