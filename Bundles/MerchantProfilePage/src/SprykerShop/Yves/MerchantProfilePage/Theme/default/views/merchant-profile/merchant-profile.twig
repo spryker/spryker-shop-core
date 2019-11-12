@@ -156,7 +156,7 @@
                                         {% block weekdaySchedule %}
                                             {% include molecule('weekday-schedule', 'MerchantProfilePage') with {
                                                 data: {
-                                                    scheduleData: data.merchantOpeningHours.weekdaySchedule,
+                                                    scheduleData: data.merchantOpeningHours.weekdaySchedule | default([]),
                                                     title: 'merchant_opening_hours.opening_hours_title' | trans,
                                                 },
                                             } only %}
@@ -167,7 +167,7 @@
                                         {% block specialOpeningHours %}
                                             {% include molecule('schedule-list', 'MerchantProfilePage') with {
                                                 data: {
-                                                    scheduleData: data.merchantOpeningHours.dateSchedule,
+                                                    scheduleData: data.merchantOpeningHours.dateSchedule | default([]),
                                                     title: 'merchant_opening_hours.special_opening_hours_title' | trans,
                                                 },
                                             } only %}
@@ -176,7 +176,7 @@
                                         {% block holidays %}
                                             {% include molecule('schedule-list', 'MerchantProfilePage') with {
                                                 data: {
-                                                    scheduleData: data.merchantOpeningHours.dateSchedule,
+                                                    scheduleData: data.merchantOpeningHours.dateSchedule | default([]),
                                                     isHoliday: true,
                                                     title: 'merchant_opening_hours.public_holidays_title' | trans,
                                                 },
