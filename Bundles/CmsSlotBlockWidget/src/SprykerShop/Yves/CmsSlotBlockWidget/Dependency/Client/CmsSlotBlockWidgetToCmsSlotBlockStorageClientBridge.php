@@ -11,34 +11,30 @@ use Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer;
 
 class CmsSlotBlockWidgetToCmsSlotBlockStorageClientBridge implements CmsSlotBlockWidgetToCmsSlotBlockStorageClientInterface
 {
+    /**
+     * @var \Spryker\Client\CmsSlotBlockStorage\CmsSlotBlockStorageClientInterface
+     */
     protected $cmsSlotBlockStorageClient;
-    
-    public function __construct()
+
+    /**
+     * @param \Spryker\Client\CmsSlotBlockStorage\CmsSlotBlockStorageClientInterface $cmsSlotBlockStorageClient
+     */
+    public function __construct($cmsSlotBlockStorageClient)
     {
+        $this->cmsSlotBlockStorageClient = $cmsSlotBlockStorageClient;
     }
 
     /**
      * @param string $cmsSlotTemplatePath
      * @param string $cmsSlotKey
      *
-     * @return \Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer
+     * @return \Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer|null
      */
-    public function getCmsSlotBlockCollection(
+    public function findCmsSlotBlockStorageData(
         string $cmsSlotTemplatePath,
         string $cmsSlotKey
-    ): CmsSlotBlockStorageDataTransfer {
-        //TODO: should be changed to client call
-        $blocks = [
-            [
-                'blockKey' => 'blck-2',
-                'conditions' => ['productCategory' => ['all' => false, 'productIds' => [3], 'categoryIds' => []]],
-            ],
-            [
-                'blockKey' => 'blck-4',
-                'conditions' => ['productCategory' => ['all' => false, 'productIds' => [2], 'categoryIds' => [4]]],
-            ],
-        ];
-
-        return (new CmsSlotBlockStorageDataTransfer())->setCmsBlocks($blocks);
+    ): ?CmsSlotBlockStorageDataTransfer {
+        return $this->cmsSlotBlockStorageClient
+            ->findCmsSlotBlockStorageData($cmsSlotTemplatePath, $cmsSlotKey);
     }
 }

@@ -118,10 +118,15 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
         CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer
     ): string {
         $cmsSlotBlockStorageDataTransfer = $this->cmsSlotBlockStorageClient
-            ->getCmsSlotBlockCollection(
+            ->findCmsSlotBlockStorageData(
                 $cmsSlotContentRequestTransfer->getCmsSlotTemplatePath(),
                 $cmsSlotContentRequestTransfer->getCmsSlotKey()
             );
+
+        if (!$cmsSlotBlockStorageDataTransfer) {
+            return '';
+        }
+
         $blockOptions[static::KEY_BLOCK_OPTIONS_KEYS] = $this->getVisibleBlockKeys(
             $cmsSlotBlockStorageDataTransfer,
             $cmsSlotContentRequestTransfer
