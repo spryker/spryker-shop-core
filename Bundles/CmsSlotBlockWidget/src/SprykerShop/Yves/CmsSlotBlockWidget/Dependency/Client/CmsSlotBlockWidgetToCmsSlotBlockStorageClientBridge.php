@@ -31,11 +31,11 @@ class CmsSlotBlockWidgetToCmsSlotBlockStorageClientBridge implements CmsSlotBloc
         $blocks = [
             [
                 'blockKey' => 'blck-2',
-                'conditions' => ['product' => ['all' => false, 'productIds' => [3], 'categoryIds' => []]],
+                'conditions' => ['productCategory' => ['all' => false, 'productIds' => [3], 'categoryIds' => []]],
             ],
             [
                 'blockKey' => 'blck-4',
-                'conditions' => ['product' => ['all' => false, 'productIds' => [2], 'categoryIds' => [4]]],
+                'conditions' => ['productCategory' => ['all' => false, 'productIds' => [2], 'categoryIds' => [4]]],
             ],
         ];
 

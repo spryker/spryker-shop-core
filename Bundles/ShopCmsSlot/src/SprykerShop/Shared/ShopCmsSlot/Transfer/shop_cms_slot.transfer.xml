@@ -11,7 +11,7 @@
 
     <transfer name="CmsSlotContentRequest">
         <property name="cmsSlotKey" type="string"/>
-        <property name="params" type="array" singular="params"/>
+        <property name="params" type="array" singular="param"/>
         <property name="cmsSlotTemplatePath" type="string"/>
     </transfer>
 
