@@ -28,12 +28,11 @@ class IndexController extends AbstractController
     public function indexAction(Request $request): JsonResponse
     {
         $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())
-            ->setApplication(APPLICATION)
             ->setServices($request->get(static::KEY_HEALTH_CHECK_SERVICE));
 
         $healthCheckResponseTransfer = $this->getFactory()
             ->getHealthCheckService()
-            ->processHealthCheck($healthCheckRequestTransfer);
+            ->checkYvesHealthCheck($healthCheckRequestTransfer);
 
         return new JsonResponse($healthCheckResponseTransfer->toArray());
     }

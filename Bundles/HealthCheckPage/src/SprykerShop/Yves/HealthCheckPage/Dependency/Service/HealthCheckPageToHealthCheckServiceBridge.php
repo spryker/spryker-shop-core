@@ -30,8 +30,8 @@ class HealthCheckPageToHealthCheckServiceBridge implements HealthCheckPageToHeal
      *
      * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
      */
-    public function processHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
+    public function checkYvesHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
     {
-        return $this->healthCheckService->processHealthCheck($healthCheckRequestTransfer);
+        return $this->healthCheckService->checkYvesHealthCheck($healthCheckRequestTransfer);
     }
 }

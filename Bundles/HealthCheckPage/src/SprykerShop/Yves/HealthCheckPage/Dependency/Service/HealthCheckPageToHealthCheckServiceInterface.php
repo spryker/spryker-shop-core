@@ -17,5 +17,5 @@ interface HealthCheckPageToHealthCheckServiceInterface
      *
      * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
      */
-    public function processHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer;
+    public function checkYvesHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer;
 }
