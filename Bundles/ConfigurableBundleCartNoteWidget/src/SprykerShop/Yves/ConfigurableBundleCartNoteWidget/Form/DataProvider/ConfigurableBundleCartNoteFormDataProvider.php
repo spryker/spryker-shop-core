@@ -24,7 +24,7 @@ class ConfigurableBundleCartNoteFormDataProvider
         }
 
         return (new ConfiguredBundleCartNoteRequestTransfer())
-            ->setConfigurableBundleGroupKey($configuredBundleTransfer->getGroupKey())
+            ->setGroupKey($configuredBundleTransfer->getGroupKey())
             ->setTemplateName($configuredBundleTransfer->getTemplate()->getName())
             ->setCartNote($configuredBundleTransfer->getCartNote());
     }

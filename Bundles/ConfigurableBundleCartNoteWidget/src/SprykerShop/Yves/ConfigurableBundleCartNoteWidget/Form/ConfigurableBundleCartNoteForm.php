@@ -20,14 +20,6 @@ class ConfigurableBundleCartNoteForm extends AbstractType
     protected const FIELD_CONFIGURABLE_BUNDLE_CART_NOTE_MAX_LENGTH = 255;
 
     /**
-     * @return string
-     */
-    public function getBlockPrefix(): string
-    {
-        return 'configurableBundleCartNote';
-    }
-
-    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
@@ -77,7 +69,7 @@ class ConfigurableBundleCartNoteForm extends AbstractType
      */
     protected function addGroupKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(ConfiguredBundleCartNoteRequestTransfer::CONFIGURABLE_BUNDLE_GROUP_KEY, HiddenType::class);
+        $builder->add(ConfiguredBundleCartNoteRequestTransfer::GROUP_KEY, HiddenType::class);
 
         return $this;
     }
