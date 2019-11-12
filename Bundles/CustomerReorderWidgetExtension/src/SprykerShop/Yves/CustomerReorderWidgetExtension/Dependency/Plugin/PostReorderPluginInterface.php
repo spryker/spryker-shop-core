@@ -13,7 +13,7 @@ interface PostReorderPluginInterface
 {
     /**
      *  Specification:
-     *  - Plugin is executed after reordering.
+     *  - Plugin is executed after reorder finished cart updating.
      *
      * @api
      *
