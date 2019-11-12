@@ -1,0 +1,46 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    title: 'configurable_bundle_page.configurator' | trans,
+    form: _view.form,
+    configurableBundleTemplateStorage: _view.configurableBundleTemplateStorage,
+    selectedSlotId: _view.selectedSlotId | default(null),
+    productConcreteCriteriaFilter: _view.productConcreteCriteriaFilter | default(null)
+} %}
+
+{% block content %}
+    <div class="grid">
+
+        <div class="col col--sm-12 col--md-3" class="button">
+            {% for configurableBundleTemplateSlotStorage in data.configurableBundleTemplateStorage.slots %}
+                <div class="box">
+                    {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
+                        data: {
+                            form: data.form.createView,
+                            idConfigurableBundleTemplate: data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
+                            configurableBundleTemplateSlotStorage: configurableBundleTemplateSlotStorage
+                        },
+                    } only %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="col col--sm-12 col--md-9">
+            {% if data.selectedSlotId %}
+                {% include molecule('product-concrete-list', 'ConfigurableBundlePage') with {
+                    data: {
+                        selectedSlotId: data.selectedSlotId,
+                        form: data.form,
+                        productConcreteCriteriaFilter: data.productConcreteCriteriaFilter
+                    },
+                } only %}
+            {% else %}
+                <div class="box">
+                    <h5>{{ 'configurable_bundle_page.configurator.tip.header' | trans }}</h5>
+                    <p>{{ 'configurable_bundle_page.configurator.tip.text' | trans }}</p>
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+{% endblock %}

@@ -7,7 +7,11 @@
 
 namespace SprykerShop\Yves\ConfigurableBundlePage\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchRequestTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageRequestTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
+use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -38,9 +42,6 @@ class ConfiguratorController extends AbstractController
      */
     protected const FORMATTED_RESULT_KEY = 'ConfigurableBundleTemplateCollection';
 
-    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = 'configurable_bundle_page.template_not_found';
-    protected const GLOSSARY_KEY_INVALID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_COMBINATION = 'configurable_bundle_page.invalid_template_slot_combination';
-
     /**
      * @return \Spryker\Yves\Kernel\View\View
      */
@@ -54,38 +55,17 @@ class ConfiguratorController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function slotsAction(Request $request): RedirectResponse
+    public function slotsAction(Request $request)
     {
-        $idConfigurableBundleTemplate = $request->attributes->getInt(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE);
-        $idConfigurableBundleTemplateSlot = $request->attributes->getInt(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT);
+        $response = $this->executeSlotsAction($request);
 
-        $configurableBundleTemplateStorageTransfer = $this->getFactory()
-            ->getConfigurableBundleStorageClient()
-            ->findConfigurableBundleTemplateStorage($idConfigurableBundleTemplate);
-
-        if (!$configurableBundleTemplateStorageTransfer) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND);
-
-            return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);
+        if ($response instanceof RedirectResponse) {
+            return $response;
         }
 
-        if (!$idConfigurableBundleTemplateSlot) {
-            // initial page
-        }
-
-        $isTemplateSlotCombinationValid = $this->getFactory()
-            ->createConfigurableBundleTemplateSlotCombinationValidator()
-            ->validateConfigurableBundleTemplateSlotCombination($configurableBundleTemplateStorageTransfer, $idConfigurableBundleTemplateSlot);
-
-        if (!$isTemplateSlotCombinationValid) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_INVALID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_COMBINATION);
-
-            return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);
-        }
-
-        // selected slot page
+        return $this->view($response, [], '@ConfigurableBundlePage/views/slots/slots.twig');
     }
 
     /**
@@ -102,5 +82,92 @@ class ConfiguratorController extends AbstractController
         return [
             'configurableBundleTemplates' => $formattedSearchResults[static::FORMATTED_RESULT_KEY] ?? [],
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeSlotsAction(Request $request)
+    {
+        $idConfigurableBundleTemplate = $request->attributes->getInt(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE);
+        $idConfigurableBundleTemplateSlot = $request->attributes->getInt(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT);
+
+        $configurableBundleTemplateStorageTransfer = $this->findConfigurableBundleTemplateStorage($idConfigurableBundleTemplate, $idConfigurableBundleTemplateSlot);
+
+        if (!$configurableBundleTemplateStorageTransfer) {
+            return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);
+        }
+
+        $response = [
+            'form' => $this->getFactory()->getConfiguratorStateForm()->handleRequest($request),
+            'configurableBundleTemplateStorage' => $configurableBundleTemplateStorageTransfer,
+        ];
+
+        if (!$idConfigurableBundleTemplateSlot) {
+            return $response;
+        }
+
+        $response['selectedSlotId'] = $idConfigurableBundleTemplateSlot;
+        $response['productConcreteCriteriaFilter'] = $this->createProductConcreteCriteriaFilterTransfer(
+            $configurableBundleTemplateStorageTransfer,
+            $idConfigurableBundleTemplateSlot
+        );
+
+        return $response;
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     * @param int|null $idConfigurableBundleTemplateSlot
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
+     */
+    protected function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate, ?int $idConfigurableBundleTemplateSlot): ?ConfigurableBundleTemplateStorageTransfer
+    {
+        $configurableBundleTemplateStorageRequestTransfer = (new ConfigurableBundleTemplateStorageRequestTransfer())
+            ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
+            ->setIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplateSlot);
+
+        $configurableBundleTemplateStorageResponseTransfer = $this->getFactory()
+            ->createConfigurableBundleTemplateStorageReader()
+            ->getConfigurableBundleTemplateStorage($configurableBundleTemplateStorageRequestTransfer);
+
+        if (!$configurableBundleTemplateStorageResponseTransfer->getIsSuccessful()) {
+            $this->handleErrors($configurableBundleTemplateStorageResponseTransfer->getMessages());
+
+            return null;
+        }
+
+        return $configurableBundleTemplateStorageResponseTransfer->getConfigurableBundleTemplateStorage();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
+     * @param int $idConfigurableBundleTemplateSlot
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer
+     */
+    protected function createProductConcreteCriteriaFilterTransfer(ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer, int $idConfigurableBundleTemplateSlot): ProductConcreteCriteriaFilterTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer $configurableBundleTemplateSlotStorageTransfer */
+        $configurableBundleTemplateSlotStorageTransfer = $configurableBundleTemplateStorageTransfer->getSlots()->offsetGet($idConfigurableBundleTemplateSlot);
+
+        return (new ProductConcreteCriteriaFilterTransfer())->setRequestParams([
+            'idProductList' => $configurableBundleTemplateSlotStorageTransfer->getIdProductList(),
+        ]);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     *
+     * @return void
+     */
+    protected function handleErrors(ArrayObject $messageTransfers): void
+    {
+        foreach ($messageTransfers as $messageTransfer) {
+            $this->addErrorMessage($messageTransfer->getValue());
+        }
     }
 }

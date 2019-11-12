@@ -1,0 +1,25 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'product',
+    tag: 'div'
+} %}
+
+{% define data = {
+    product: required
+} %}
+
+{% block body %}
+    <div class="box">
+        {% block productData %}
+            <div>
+                {{ data.product.name }}
+            </div>
+            <div>
+                {{ data.product.sku }}
+            </div>
+        {% endblock %}
+
+        {% block productExtension %}{% endblock %}
+    </div>
+{% endblock %}

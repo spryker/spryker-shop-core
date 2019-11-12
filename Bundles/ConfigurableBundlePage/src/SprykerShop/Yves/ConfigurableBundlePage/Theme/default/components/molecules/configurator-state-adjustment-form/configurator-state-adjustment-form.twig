@@ -1,0 +1,30 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'configurator-state-adjustment-form',
+} %}
+
+{% define data = {
+    product: required,
+    form: required,
+    selectedSlotId: required
+} %}
+
+{% block body %}
+    {% set inputName =  'configurator_state_form[slots][' ~ data.selectedSlotId ~ '][sku]' %}
+    {% set inputId =  'configurator_state_form_slots_' ~ data.selectedSlotId ~ '_sku' %}
+
+    {{ form_start(data.form) }}
+
+    {% for slotForm in data.form.slots %}
+        {{ form_widget(slotForm) }}
+    {% endfor %}
+
+    <input id="{{ inputId }}" name="{{ inputName }}" type="hidden" value="{{ data.product.sku }}">
+
+    <button type="submit" name="submit" class="button button--success">
+        {{ 'configurable_bundle_page.select' | trans }}
+    </button>
+
+    {{ form_end(data.form) }}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'configurator-state-form',
+} %}
+
+{% define data = {
+    form: required,
+    idConfigurableBundleTemplate: required,
+    configurableBundleTemplateSlotStorage: required
+} %}
+
+{% block body %}
+    {{ form_start(data.form,  {'action': path(
+        'configurable-bundle/configurator/slots', {
+            'idConfigurableBundleTemplate': data.idConfigurableBundleTemplate,
+            'idConfigurableBundleTemplateSlot': data.configurableBundleTemplateSlotStorage.idConfigurableBundleTemplateSlot
+        }
+    )}) }}
+
+    {% for slotForm in data.form.slots %}
+        {{ form_widget(slotForm) }}
+    {% endfor %}
+
+    <button type="submit" name="submit" class="btn-link">
+        {{ data.configurableBundleTemplateSlotStorage.name | trans }}
+    </button>
+
+    {{ form_end(data.form) }}
+{% endblock %}

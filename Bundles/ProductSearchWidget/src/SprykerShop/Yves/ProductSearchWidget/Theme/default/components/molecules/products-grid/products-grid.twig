@@ -1,0 +1,28 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'products-grid',
+    tag: 'div'
+} %}
+
+{% define data = {
+    products: required
+} %}
+
+{% block body %}
+    {% if data.products is not empty %}
+        {% for product in data.products %}
+
+            {% block product %}
+                {% include molecule('product', 'ProductSearchWidget') with {
+                    data: {
+                        product: product
+                    }
+                } only %}
+            {% endblock %}
+
+        {% endfor %}
+    {% else %}
+        <p>{{ 'product_search_widget.search.no_results' | trans }}</p>
+    {% endif %}
+{% endblock %}

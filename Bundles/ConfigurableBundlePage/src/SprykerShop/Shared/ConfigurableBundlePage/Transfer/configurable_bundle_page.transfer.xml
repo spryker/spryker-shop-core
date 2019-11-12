@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="spryker:transfer-01"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ConfigurableBundleTemplateStorageRequest">
+        <property name="idConfigurableBundleTemplate" type="int"/>
+        <property name="idConfigurableBundleTemplateSlot" type="int"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateStorageResponse">
+        <property name="configurableBundleTemplateStorage" type="ConfigurableBundleTemplateStorage"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+</transfers>
