@@ -3,8 +3,19 @@
 {% block pageInfo %}{% endblock %}
 
 {% block content %}
-    {% cms_slot "slt-4" with {
-        idProductAbstract: 5
-    } %}
+    {% include molecule('jumbotron') with {
+        class: 'box'
+    } only %}
 
+    <div class="box spacing-top spacing-top--big">
+        {{ spyCmsBlock({
+            name: 'Home Page'
+        }) }}
+    </div>
+
+    <div class="box spacing-top spacing-top--big">
+        {{ spyCmsBlock({
+            name: 'Teaser for home page'
+        }) }}
+    </div>
 {% endblock %}
