@@ -20,12 +20,12 @@ use Twig\Environment as TwigEnvironment;
 class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderInterface
 {
     /**
-     * @uses \Spryker\Zed\CmsSlotBlockStorage\Persistence\Propel\Mapper\CmsSlotBlockStorageMapper::KEY_BLOCK_KEY
+     * @uses \Spryker\Shared\CmsSlotBlockStorage\CmsSlotBlockStorageConfig::BLOCK_DATA_KEY_BLOCK_KEY
      */
     protected const KEY_BLOCK_KEY = 'blockKey';
 
     /**
-     * @uses \Spryker\Zed\CmsSlotBlockStorage\Persistence\Propel\Mapper\CmsSlotBlockStorageMapper::KEY_CONDITIONS
+     * @uses \Spryker\Shared\CmsSlotBlockStorage\CmsSlotBlockStorageConfig::BLOCK_DATA_KEY_CONDITIONS
      */
     protected const KEY_CONDITIONS = 'conditions';
 
