@@ -18,7 +18,7 @@ class HealthCheckPageToHealthCheckServiceBridge implements HealthCheckPageToHeal
     protected $healthCheckService;
 
     /**
-     * @param \Spryker\Service\HealthCheck\HealthCheckServiceInterface
+     * @param \Spryker\Service\HealthCheck\HealthCheckServiceInterface $healthCheckService
      */
     public function __construct($healthCheckService)
     {
