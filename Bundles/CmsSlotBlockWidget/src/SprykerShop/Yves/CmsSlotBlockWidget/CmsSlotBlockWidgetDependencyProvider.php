@@ -38,13 +38,13 @@ class CmsSlotBlockWidgetDependencyProvider extends AbstractBundleDependencyProvi
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
-     *
-     * TODO: inject client to bridge
      */
     protected function addCmsSlotBlockStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_CMS_SLOT_BLOCK_STORAGE, function (Container $container) {
-            return new CmsSlotBlockWidgetToCmsSlotBlockStorageClientBridge();
+            return new CmsSlotBlockWidgetToCmsSlotBlockStorageClientBridge(
+                $container->getLocator()->cmsSlotBlockStorage()->client()
+            );
         });
 
         return $container;

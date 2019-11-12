@@ -15,10 +15,10 @@ interface CmsSlotBlockWidgetToCmsSlotBlockStorageClientInterface
      * @param string $cmsSlotTemplatePath
      * @param string $cmsSlotKey
      *
-     * @return \Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer
+     * @return \Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer|null
      */
-    public function getCmsSlotBlockCollection(
+    public function findCmsSlotBlockStorageData(
         string $cmsSlotTemplatePath,
         string $cmsSlotKey
-    ): CmsSlotBlockStorageDataTransfer;
+    ): ?CmsSlotBlockStorageDataTransfer;
 }
