@@ -8,4 +8,7 @@
         <property name="type" type="string"/>
     </transfer>
 
+    <transfer name="FileManagerData">
+    </transfer>
+
 </transfers>
