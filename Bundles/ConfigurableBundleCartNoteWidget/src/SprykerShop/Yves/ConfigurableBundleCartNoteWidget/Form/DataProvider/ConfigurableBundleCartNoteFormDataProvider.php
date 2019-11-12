@@ -10,18 +10,8 @@ namespace SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Form\DataProvider;
 use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 
-class ConfigurableBundleCartNoteFormDataProvider implements ConfigurableBundleCartNoteFormDataProviderInterface
+class ConfigurableBundleCartNoteFormDataProvider
 {
-    /**
-     * @return string[]
-     */
-    public function getOptions(): array
-    {
-        return [
-            'data_class' => ConfiguredBundleCartNoteRequestTransfer::class,
-        ];
-    }
-
     /**
      * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer|null $configuredBundleTransfer
      *

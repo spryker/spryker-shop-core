@@ -12,9 +12,9 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client\ConfigurableBundleCartNoteWidgetToConfigurableBundleCartNoteClientInterface;
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client\ConfigurableBundleCartNoteWidgetToGlossaryStorageClientInterface;
+use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client\ConfigurableBundleCartNoteWidgetToQuoteClientInterface;
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Form\ConfigurableBundleCartNoteForm;
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Form\DataProvider\ConfigurableBundleCartNoteFormDataProvider;
-use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Form\DataProvider\ConfigurableBundleCartNoteFormDataProviderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -32,15 +32,14 @@ class ConfigurableBundleCartNoteWidgetFactory extends AbstractFactory
         return $this->getFormFactory()
             ->create(
                 ConfigurableBundleCartNoteForm::class,
-                $configurableBundleCartNoteFormDataProvider->getData($configuredBundleTransfer),
-                $configurableBundleCartNoteFormDataProvider->getOptions()
+                $configurableBundleCartNoteFormDataProvider->getData($configuredBundleTransfer)
             );
     }
 
     /**
-     * @return \SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Form\DataProvider\ConfigurableBundleCartNoteFormDataProviderInterface
+     * @return \SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Form\DataProvider\ConfigurableBundleCartNoteFormDataProvider
      */
-    public function createConfigurableBundleCartNoteFormDataProvider(): ConfigurableBundleCartNoteFormDataProviderInterface
+    public function createConfigurableBundleCartNoteFormDataProvider(): ConfigurableBundleCartNoteFormDataProvider
     {
         return new ConfigurableBundleCartNoteFormDataProvider();
     }
@@ -67,5 +66,13 @@ class ConfigurableBundleCartNoteWidgetFactory extends AbstractFactory
     public function getGlossaryStorageClient(): ConfigurableBundleCartNoteWidgetToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleCartNoteWidgetDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client\ConfigurableBundleCartNoteWidgetToQuoteClientInterface
+     */
+    public function getQuoteClient(): ConfigurableBundleCartNoteWidgetToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleCartNoteWidgetDependencyProvider::CLIENT_QUOTE);
     }
 }

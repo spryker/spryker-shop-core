@@ -16,10 +16,12 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class QuoteConfiguredBundleWidget extends AbstractWidget
 {
-    protected const PARAMETER_QUOTE = 'quote';
     protected const PARAMETER_ITEMS = 'items';
     protected const PARAMETER_CONFIGURED_BUNDLES = 'configuredBundles';
     protected const PARAMETER_IS_QUANTITY_CHANGEABLE = 'isQuantityChangeable';
+    protected const PARAMETER_CURRENCY_ISO_CODE = 'currencyIsoCode';
+    protected const PARAMETER_PRICE_MODE = 'priceMode';
+    protected const PARAMETER_ID_QUOTE = 'idQuote';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -38,9 +40,11 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
             ->getConfiguredBundles($quoteTransfer, $itemTransfers);
 
         $this->addItemsParameter($itemTransfers);
-        $this->addQuoteParameter($quoteTransfer);
         $this->addConfiguredBundlesParameter($configuredBundleTransfers);
         $this->addIsQuantityChangeableParameter();
+        $this->addCurrencyIsoCodeParameter($quoteTransfer);
+        $this->addPriceModeParameter($quoteTransfer);
+        $this->addIdQuoteParameter($quoteTransfer);
     }
 
     /**
@@ -57,16 +61,6 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@ConfigurableBundleWidget/views/quote-configured-bundle-widget/quote-configured-bundle-widget.twig';
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    protected function addQuoteParameter(QuoteTransfer $quoteTransfer): void
-    {
-        $this->addParameter(static::PARAMETER_QUOTE, $quoteTransfer);
     }
 
     /**
@@ -111,5 +105,38 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
     protected function addIsQuantityChangeableParameter(): void
     {
         $this->addParameter(static::PARAMETER_IS_QUANTITY_CHANGEABLE, $this->getConfig()->isQuantityChangeable());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addCurrencyIsoCodeParameter(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addParameter(
+            static::PARAMETER_CURRENCY_ISO_CODE,
+            $quoteTransfer->getCurrency() ? $quoteTransfer->getCurrency()->getCode() : null
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addPriceModeParameter(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_PRICE_MODE, $quoteTransfer->getPriceMode());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addIdQuoteParameter(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_ID_QUOTE, $quoteTransfer->getIdQuote());
     }
 }

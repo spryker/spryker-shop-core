@@ -6,6 +6,7 @@
     <transfer name="ConfiguredBundleCartNoteRequest">
         <property name="configurableBundleGroupKey" type="string"/>
         <property name="cartNote" type="string"/>
+        <property name="quote" type="Quote"/>
         <property name="templateName" type="string"/>
     </transfer>
 

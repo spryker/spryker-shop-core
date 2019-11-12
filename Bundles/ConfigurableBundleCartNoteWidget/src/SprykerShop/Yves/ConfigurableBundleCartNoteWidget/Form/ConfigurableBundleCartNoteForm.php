@@ -7,19 +7,16 @@
 
 namespace SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Form;
 
+use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 
 class ConfigurableBundleCartNoteForm extends AbstractType
 {
-    public const FORM_NAME = 'configurableBundleCartNote';
-    public const FIELD_CONFIGURABLE_BUNDLE_CART_NOTE = 'cartNote';
-    public const FIELD_CONFIGURABLE_BUNDLE_GROUP_KEY = 'configurableBundleGroupKey';
-    public const FIELD_CONFIGURABLE_BUNDLE_TEMPLATE_NAME = 'templateName';
-
     protected const FIELD_CONFIGURABLE_BUNDLE_CART_NOTE_MAX_LENGTH = 255;
 
     /**
@@ -27,7 +24,19 @@ class ConfigurableBundleCartNoteForm extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return static::FORM_NAME;
+        return 'configurableBundleCartNote';
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => ConfiguredBundleCartNoteRequestTransfer::class,
+        ]);
     }
 
     /**
@@ -50,7 +59,7 @@ class ConfigurableBundleCartNoteForm extends AbstractType
      */
     protected function addCartNoteField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_CONFIGURABLE_BUNDLE_CART_NOTE, TextareaType::class, [
+        $builder->add(ConfiguredBundleCartNoteRequestTransfer::CART_NOTE, TextareaType::class, [
             'label' => 'configurable_bundle_cart_note.enter_note',
             'required' => false,
             'constraints' => [
@@ -68,7 +77,7 @@ class ConfigurableBundleCartNoteForm extends AbstractType
      */
     protected function addGroupKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_CONFIGURABLE_BUNDLE_GROUP_KEY, HiddenType::class);
+        $builder->add(ConfiguredBundleCartNoteRequestTransfer::CONFIGURABLE_BUNDLE_GROUP_KEY, HiddenType::class);
 
         return $this;
     }
@@ -80,7 +89,7 @@ class ConfigurableBundleCartNoteForm extends AbstractType
      */
     protected function addTemplateNameField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_CONFIGURABLE_BUNDLE_TEMPLATE_NAME, HiddenType::class);
+        $builder->add(ConfiguredBundleCartNoteRequestTransfer::TEMPLATE_NAME, HiddenType::class);
 
         return $this;
     }

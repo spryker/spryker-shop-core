@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Controller;
 
 use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -55,15 +56,37 @@ class CartNoteController extends AbstractController
 
         $quoteResponseTransfer = $this->getFactory()
             ->getConfigurableBundleCartNoteClient()
-            ->setCartNoteToConfigurableBundle($configurableBundleCartNoteForm->getData());
-
-        if ($quoteResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(
-                $this->getSuccessMessage($configurableBundleCartNoteForm->getData())
+            ->setCartNoteToConfigurableBundle(
+                $this->getConfiguredBundleCartNoteRequestTransfer($configurableBundleCartNoteForm)
             );
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->getRedirectResponse($request);
         }
 
+        $this->getFactory()->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
+        $this->addSuccessMessage(
+            $this->getSuccessMessage($configurableBundleCartNoteForm->getData())
+        );
+
         return $this->getRedirectResponse($request);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $configurableBundleCartNoteForm
+     *
+     * @return \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer
+     */
+    protected function getConfiguredBundleCartNoteRequestTransfer(
+        FormInterface $configurableBundleCartNoteForm
+    ): ConfiguredBundleCartNoteRequestTransfer {
+        /** @var \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer */
+        $configuredBundleCartNoteRequestTransfer = $configurableBundleCartNoteForm->getData();
+        $configuredBundleCartNoteRequestTransfer->setQuote(
+            $this->getFactory()->getQuoteClient()->getQuote()
+        );
+
+        return $configuredBundleCartNoteRequestTransfer;
     }
 
     /**

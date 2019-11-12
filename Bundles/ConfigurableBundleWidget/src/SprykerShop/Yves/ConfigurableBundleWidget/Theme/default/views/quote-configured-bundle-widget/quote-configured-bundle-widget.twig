@@ -3,11 +3,11 @@
 {% define data = {
     items: _widget.items,
     configuredBundles: _widget.configuredBundles,
-    currencyIsoCode: _widget.quote.currency ? _widget.quote.currency.code : null,
-    priceMode: _widget.quote.priceMode,
+    currencyIsoCode: _widget.currencyIsoCode,
+    priceMode: _widget.priceMode,
     isQuantityChangeable: _widget.isQuantityChangeable,
     isEditable: true,
-    idQuote: _widget.quote.idQuote,
+    idQuote: _widget.idQuote,
 } %}
 
 {% block body %}

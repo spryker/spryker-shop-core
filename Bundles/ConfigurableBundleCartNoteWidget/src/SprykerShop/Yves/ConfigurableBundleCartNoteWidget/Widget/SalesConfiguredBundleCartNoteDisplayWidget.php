@@ -15,6 +15,8 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class SalesConfiguredBundleCartNoteDisplayWidget extends AbstractWidget
 {
+    protected const PARAMETER_SALES_ORDER_CONFIGURED_BUNDLE = 'salesOrderConfiguredBundle';
+
     /**
      * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer
      */
@@ -46,6 +48,6 @@ class SalesConfiguredBundleCartNoteDisplayWidget extends AbstractWidget
      */
     protected function addConfiguredBundleParameter(SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer): void
     {
-        $this->addParameter('salesOrderConfiguredBundle', $salesOrderConfiguredBundleTransfer);
+        $this->addParameter(static::PARAMETER_SALES_ORDER_CONFIGURED_BUNDLE, $salesOrderConfiguredBundleTransfer);
     }
 }
