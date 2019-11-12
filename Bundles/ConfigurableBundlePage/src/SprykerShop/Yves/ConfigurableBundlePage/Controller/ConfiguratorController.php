@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchRequestTransfe
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageRequestTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -41,6 +42,16 @@ class ConfiguratorController extends AbstractController
      * @uses \Spryker\Client\ConfigurableBundlePageSearch\Plugin\Elasticsearch\ResultFormatter\ConfigurableBundleTemplatePageSearchResultFormatterPlugin::NAME
      */
     protected const FORMATTED_RESULT_KEY = 'ConfigurableBundleTemplateCollection';
+
+    /**
+     * @uses \Spryker\Client\ProductListSearch\Plugin\Search\ProductListFilterQueryExpanderPlugin::REQUEST_PARAM_ID_PRODUCT_LIST
+     */
+    protected const REQUEST_PARAM_ID_PRODUCT_LIST = ProductListTransfer::ID_PRODUCT_LIST;
+
+    /**
+     * @uses \Spryker\Client\ProductListSearch\Plugin\Search\ProductListFilterQueryExpanderPlugin::REQUEST_PARAM_IGNORE_PAGINATION
+     */
+    protected const REQUEST_PARAM_IGNORE_PAGINATION = 'ignorePagination';
 
     /**
      * @return \Spryker\Yves\Kernel\View\View
@@ -155,7 +166,8 @@ class ConfiguratorController extends AbstractController
         $configurableBundleTemplateSlotStorageTransfer = $configurableBundleTemplateStorageTransfer->getSlots()->offsetGet($idConfigurableBundleTemplateSlot);
 
         return (new ProductConcreteCriteriaFilterTransfer())->setRequestParams([
-            'idProductList' => $configurableBundleTemplateSlotStorageTransfer->getIdProductList(),
+            static::REQUEST_PARAM_ID_PRODUCT_LIST => $configurableBundleTemplateSlotStorageTransfer->getIdProductList(),
+            static::REQUEST_PARAM_IGNORE_PAGINATION => true,
         ]);
     }
 
