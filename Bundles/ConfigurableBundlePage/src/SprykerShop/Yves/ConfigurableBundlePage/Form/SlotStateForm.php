@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class SlotStateForm extends AbstractType
 {
-    protected const FILED_SKU = 'sku';
+    public const FILED_SKU = 'sku';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

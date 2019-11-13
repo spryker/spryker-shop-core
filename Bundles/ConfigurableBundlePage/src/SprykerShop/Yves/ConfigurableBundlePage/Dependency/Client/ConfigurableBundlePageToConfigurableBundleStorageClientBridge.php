@@ -33,4 +33,14 @@ class ConfigurableBundlePageToConfigurableBundleStorageClientBridge implements C
     {
         return $this->configurableBundleStorageClient->findConfigurableBundleTemplateStorage($idConfigurableBundleTemplate);
     }
+
+    /**
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteStoragesBySkusForCurrentLocale(array $skus): array
+    {
+        return $this->configurableBundleStorageClient->getProductConcreteStoragesBySkusForCurrentLocale($skus);
+    }
 }

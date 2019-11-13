@@ -5,8 +5,21 @@
     form: _view.form,
     configurableBundleTemplateStorage: _view.configurableBundleTemplateStorage,
     selectedSlotId: _view.selectedSlotId | default(null),
-    productConcreteCriteriaFilter: _view.productConcreteCriteriaFilter | default(null)
+    productConcreteCriteriaFilter: _view.productConcreteCriteriaFilter | default(null),
+    selectedProductConcrete: _view.selectedProductConcrete | default(null),
 } %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'configurable_bundle_page.template_selection' | trans,
+                url: path('configurable-bundle/configurator/template-selection'),
+                withChevron: false
+            }]
+        }
+    } only %}
+{% endblock %}
 
 {% block content %}
     <div class="grid">
@@ -27,6 +40,16 @@
 
         <div class="col col--sm-12 col--md-9">
             {% if data.selectedSlotId %}
+                {% if data.selectedProductConcrete %}
+                    {% include molecule('selected-product', 'ConfigurableBundlePage') with {
+                        data: {
+                            product: data.selectedProductConcrete,
+                            selectedSlotId: data.selectedSlotId,
+                            form: data.form.createView
+                        },
+                    } only %}
+                {% endif %}
+
                 {% include molecule('product-concrete-list', 'ConfigurableBundlePage') with {
                     data: {
                         selectedSlotId: data.selectedSlotId,

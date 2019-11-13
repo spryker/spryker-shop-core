@@ -12,9 +12,13 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchRequestTransfe
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageRequestTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Yves\Kernel\View\View;
+use SprykerShop\Yves\ConfigurableBundlePage\Form\ConfiguratorStateForm;
+use SprykerShop\Yves\ConfigurableBundlePage\Form\SlotStateForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -111,8 +115,10 @@ class ConfiguratorController extends AbstractController
             return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);
         }
 
+        $form = $this->getFactory()->getConfiguratorStateForm()->handleRequest($request);
+
         $response = [
-            'form' => $this->getFactory()->getConfiguratorStateForm()->handleRequest($request),
+            'form' => $form,
             'configurableBundleTemplateStorage' => $configurableBundleTemplateStorageTransfer,
         ];
 
@@ -120,11 +126,11 @@ class ConfiguratorController extends AbstractController
             return $response;
         }
 
-        $response['selectedSlotId'] = $idConfigurableBundleTemplateSlot;
-        $response['productConcreteCriteriaFilter'] = $this->createProductConcreteCriteriaFilterTransfer(
-            $configurableBundleTemplateStorageTransfer,
-            $idConfigurableBundleTemplateSlot
-        );
+        $response = array_merge($response, [
+            'selectedSlotId' => $idConfigurableBundleTemplateSlot,
+            'selectedProductConcrete' => $this->findSelectedProductConcreteForSlot($form, $idConfigurableBundleTemplateSlot),
+            'productConcreteCriteriaFilter' => $this->createProductConcreteCriteriaFilterTransfer($configurableBundleTemplateStorageTransfer, $idConfigurableBundleTemplateSlot),
+        ]);
 
         return $response;
     }
@@ -169,6 +175,27 @@ class ConfiguratorController extends AbstractController
             static::REQUEST_PARAM_ID_PRODUCT_LIST => $configurableBundleTemplateSlotStorageTransfer->getIdProductList(),
             static::REQUEST_PARAM_IGNORE_PAGINATION => true,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param int $idConfigurableBundleTemplateSlot
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    protected function findSelectedProductConcreteForSlot(FormInterface $form, int $idConfigurableBundleTemplateSlot): ?ProductConcreteTransfer
+    {
+        $sku = $form->getData()[ConfiguratorStateForm::FILED_SLOTS][$idConfigurableBundleTemplateSlot][SlotStateForm::FILED_SKU] ?? null;
+
+        if (!$sku) {
+            return null;
+        }
+
+        $productConcreteTransfers = $this->getFactory()
+            ->getConfigurableBundleStorageClient()
+            ->getProductConcreteStoragesBySkusForCurrentLocale([$sku]);
+
+        return $productConcreteTransfers[$sku] ?? null;
     }
 
     /**

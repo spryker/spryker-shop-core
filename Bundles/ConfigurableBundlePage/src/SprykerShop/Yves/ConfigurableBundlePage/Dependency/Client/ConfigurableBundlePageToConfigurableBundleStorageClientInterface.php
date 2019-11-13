@@ -17,4 +17,11 @@ interface ConfigurableBundlePageToConfigurableBundleStorageClientInterface
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
      */
     public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateStorageTransfer;
+
+    /**
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteStoragesBySkusForCurrentLocale(array $skus): array;
 }
