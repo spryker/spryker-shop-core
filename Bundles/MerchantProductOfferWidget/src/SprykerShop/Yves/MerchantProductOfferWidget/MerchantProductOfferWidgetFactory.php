@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\MerchantProductOfferWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProfileStorageClientInterface;
+use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToPriceProductStorageClientInterface;
+use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Service\MerchantProductOfferWidgetToPriceProductClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReader;
 use SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReaderInterface;
 
@@ -22,7 +24,9 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
     {
         return new MerchantProductOfferReader(
             $this->getMerchantProfileStorageClient(),
-            $this->getMerchantProductOfferStorageClient()
+            $this->getMerchantProductOfferStorageClient(),
+            $this->getPriceProductServiceClient(),
+            $this->getPriceProductStorageClient()
         );
     }
 
@@ -40,5 +44,21 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
     public function getMerchantProfileStorageClient(): MerchantProductOfferWidgetToMerchantProfileStorageClientInterface
     {
         return $this->getProvidedDependency(MerchantProductOfferWidgetDependencyProvider::CLIENT_MERCHANT_PROFILE_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Service\MerchantProductOfferWidgetToPriceProductClientInterface
+     */
+    public function getPriceProductServiceClient(): MerchantProductOfferWidgetToPriceProductClientInterface
+    {
+        return $this->getProvidedDependency(MerchantProductOfferWidgetDependencyProvider::CLIENT_PRICE_PRODUCT_SERVICE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToPriceProductStorageClientInterface
+     */
+    public function getPriceProductStorageClient(): MerchantProductOfferWidgetToPriceProductStorageClientInterface
+    {
+        return $this->getProvidedDependency(MerchantProductOfferWidgetDependencyProvider::CLIENT_PRICE_PRODUCT_STORAGE);
     }
 }

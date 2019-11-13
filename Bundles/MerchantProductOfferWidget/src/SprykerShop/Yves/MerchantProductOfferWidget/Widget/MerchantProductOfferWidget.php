@@ -24,6 +24,10 @@ class MerchantProductOfferWidget extends AbstractWidget
             'productOfferCollection',
             $this->getFactory()->createProductOfferReader()->getProductOfferCollection($productViewTransfer, $this->getLocale())
         );
+        $this->addParameter(
+            'productView',
+            $productViewTransfer
+        );
     }
 
     /**
