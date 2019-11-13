@@ -6,7 +6,8 @@
 
 {% define data = {
     form: required,
-    configurableBundleTemplateStorage: required
+    configurableBundleTemplateStorage: required,
+    isSummaryPageUnlocked: required
 } %}
 
 {% block body %}
@@ -33,6 +34,7 @@
             data: {
                 form: data.form.createView,
                 submitButtonText: 'configurable_bundle_page.configurator.summary' | trans,
+                isSubmitButtonActive: data.isSummaryPageUnlocked,
                 action: path(
                     'configurable-bundle/configurator/summary', {
                         'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,

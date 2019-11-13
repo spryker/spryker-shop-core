@@ -3,7 +3,8 @@
 {% define data = {
     title: 'configurable_bundle_page.configurator.summary' | trans,
     form: _view.form,
-    configurableBundleTemplateStorage: _view.configurableBundleTemplateStorage
+    configurableBundleTemplateStorage: _view.configurableBundleTemplateStorage,
+    products: _view.products
 } %}
 
 {% block breadcrumbs %}
@@ -25,13 +26,33 @@
             {% include molecule('configurator-left-sidebar', 'ConfigurableBundlePage') with {
                 data: {
                     form: data.form,
-                    configurableBundleTemplateStorage: data.configurableBundleTemplateStorage
+                    configurableBundleTemplateStorage: data.configurableBundleTemplateStorage,
+                    isSummaryPageUnlocked: true
                 }
             } only %}
         </div>
 
         <div class="col col--sm-12 col--md-9">
+            {% include molecule('selected-product-list', 'ConfigurableBundlePage') with {
+                data: {
+                    form: data.form,
+                    products: data.products,
+                    configurableBundleTemplateStorage: data.configurableBundleTemplateStorage
+                },
+            } only %}
 
+            {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
+                data: {
+                    form: data.form.createView,
+                    submitButtonText: 'configurable_bundle_page.configurator.add_to_cart' | trans,
+                    submitButtonClass: 'button button--success',
+                    action: path(
+                        'configurable-bundle/configurator/summary', {
+                            'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
+                        }
+                    )
+                },
+            } only %}
         </div>
 
     </div>

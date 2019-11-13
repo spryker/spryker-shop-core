@@ -17,6 +17,8 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class ProductConcreteSearchGridWidget extends AbstractWidget
 {
     protected const NAME = 'ProductConcreteSearchGridWidget';
+    protected const TEMPLATE = '@ProductSearchWidget/views/product-concrete-search-grid/product-concrete-search-grid.twig';
+    protected const PARAM_PRODUCTS = 'products';
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer|null $productConcreteCriteriaFilterTransfer
@@ -31,7 +33,7 @@ class ProductConcreteSearchGridWidget extends AbstractWidget
             ->createProductConcreteReader()
             ->searchProductConcretesByFullText($productConcreteCriteriaFilterTransfer);
 
-        $this->addParameter('products', $productViewTransfers);
+        $this->addParameter(static::PARAM_PRODUCTS, $productViewTransfers);
     }
 
     /**
@@ -55,6 +57,6 @@ class ProductConcreteSearchGridWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ProductSearchWidget/views/product-concrete-search-grid/product-concrete-search-grid.twig';
+        return static::TEMPLATE;
     }
 }

@@ -1,0 +1,44 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'selected-product-list'
+} %}
+
+{% define data = {
+    products: required,
+    form: required,
+    configurableBundleTemplateStorage: required
+} %}
+
+{% block body %}
+    {% set configuratorForm = data.form.createView %}
+
+    {% for idSlot,slotForm in configuratorForm.slots %}
+        <div class="box">
+            {% set sku = slotForm.vars.value.sku %}
+            <div>
+                {{ data.configurableBundleTemplateStorage.slots[idSlot].name | trans }}
+            </div>
+            <hr/>
+            <div>
+                {{ data.products[sku].localizedAttributes[0].name }}
+            </div>
+            <div>
+                {{ sku }}
+            </div>
+
+            {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
+                data: {
+                    form: data.form.createView,
+                    submitButtonText: 'configurable_bundle_page.edit' | trans,
+                    action: path(
+                        'configurable-bundle/configurator/slots', {
+                            'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
+                            'idConfigurableBundleTemplateSlot': data.configurableBundleTemplateStorage.slots[idSlot].idConfigurableBundleTemplateSlot,
+                        }
+                    )
+                },
+            } only %}
+        </div>
+    {% endfor %}
+{% endblock %}

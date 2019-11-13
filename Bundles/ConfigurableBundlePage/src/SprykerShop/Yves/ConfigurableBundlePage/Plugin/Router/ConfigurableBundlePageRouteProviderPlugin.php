@@ -14,6 +14,7 @@ class ConfigurableBundlePageRouteProviderPlugin extends AbstractRouteProviderPlu
 {
     protected const ROUTE_CONFIGURATOR_TEMPLATE_SELECTION = 'configurable-bundle/configurator/template-selection';
     protected const ROUTE_CONFIGURATOR_SLOTS = 'configurable-bundle/configurator/slots';
+    protected const ROUTE_CONFIGURATOR_SUMMARY = 'configurable-bundle/configurator/summary';
 
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'idConfigurableBundleTemplate';
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'idConfigurableBundleTemplateSlot';
@@ -32,6 +33,7 @@ class ConfigurableBundlePageRouteProviderPlugin extends AbstractRouteProviderPlu
     {
         $routeCollection = $this->addConfiguratorTemplateSelectionRoute($routeCollection);
         $routeCollection = $this->addConfiguratorSlotsRoute($routeCollection);
+        $routeCollection = $this->addConfiguratorSummaryRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -66,6 +68,23 @@ class ConfigurableBundlePageRouteProviderPlugin extends AbstractRouteProviderPlu
         $route = $route->setDefault(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT, null);
 
         $routeCollection->add(static::ROUTE_CONFIGURATOR_SLOTS, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\ConfigurableBundlePage\Controller\ConfiguratorController::summaryAction()
+     *
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addConfiguratorSummaryRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute('/configurable-bundle/configurator/{idConfigurableBundleTemplate}/summary', 'ConfigurableBundlePage', 'Configurator', 'summaryAction');
+        $route = $route->setRequirement(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE, '\d+');
+
+        $routeCollection->add(static::ROUTE_CONFIGURATOR_SUMMARY, $route);
 
         return $routeCollection;
     }

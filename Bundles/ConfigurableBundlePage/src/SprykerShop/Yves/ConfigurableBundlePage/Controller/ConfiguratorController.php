@@ -33,6 +33,11 @@ class ConfiguratorController extends AbstractController
     protected const ROUTE_CONFIGURATOR_TEMPLATE_SELECTION = 'configurable-bundle/configurator/template-selection';
 
     /**
+     * @uses \SprykerShop\Yves\ConfigurableBundlePage\Plugin\Router\ConfigurableBundlePageRouteProviderPlugin::ROUTE_CONFIGURATOR_SLOTS
+     */
+    protected const ROUTE_CONFIGURATOR_SLOTS = 'configurable-bundle/configurator/slots';
+
+    /**
      * @uses \SprykerShop\Yves\ConfigurableBundlePage\Plugin\Router\ConfigurableBundlePageRouteProviderPlugin::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE
      */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'idConfigurableBundleTemplate';
@@ -56,6 +61,8 @@ class ConfiguratorController extends AbstractController
      * @uses \Spryker\Client\ProductListSearch\Plugin\Search\ProductListFilterQueryExpanderPlugin::REQUEST_PARAM_IGNORE_PAGINATION
      */
     protected const REQUEST_PARAM_IGNORE_PAGINATION = 'ignorePagination';
+
+    protected const GLOSSARY_KEY_CONFIGURATOR_SUMMARY_PAGE_LOCKED = 'configurable_bundle_page.configurator.summary_page_locked';
 
     /**
      * @return \Spryker\Yves\Kernel\View\View
@@ -81,6 +88,22 @@ class ConfiguratorController extends AbstractController
         }
 
         return $this->view($response, [], '@ConfigurableBundlePage/views/slots/slots.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function summaryAction(Request $request)
+    {
+        $response = $this->executeSummaryAction($request);
+
+        if ($response instanceof RedirectResponse) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@ConfigurableBundlePage/views/summary/summary.twig');
     }
 
     /**
@@ -130,9 +153,65 @@ class ConfiguratorController extends AbstractController
             'selectedSlotId' => $idConfigurableBundleTemplateSlot,
             'selectedProductConcrete' => $this->findSelectedProductConcreteForSlot($form, $idConfigurableBundleTemplateSlot),
             'productConcreteCriteriaFilter' => $this->createProductConcreteCriteriaFilterTransfer($configurableBundleTemplateStorageTransfer, $idConfigurableBundleTemplateSlot),
+            'isSummaryPageUnlocked' => $this->isSummaryPageUnlocked($form),
         ]);
 
         return $response;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeSummaryAction(Request $request)
+    {
+        $idConfigurableBundleTemplate = $request->attributes->getInt(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE);
+        $configurableBundleTemplateStorageTransfer = $this->findConfigurableBundleTemplateStorage($idConfigurableBundleTemplate);
+
+        if (!$configurableBundleTemplateStorageTransfer) {
+            return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);
+        }
+
+        $form = $this->getFactory()->getConfiguratorStateForm()->handleRequest($request);
+
+        if (!$this->isSummaryPageUnlocked($form)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_CONFIGURATOR_SUMMARY_PAGE_LOCKED);
+
+            return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_SLOTS, [
+                static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $request->attributes->getInt(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE),
+            ]);
+        }
+
+        $productConcreteTransfers = $this->getFactory()
+            ->getConfigurableBundleStorageClient()
+            ->getProductConcreteStoragesBySkusForCurrentLocale($this->extractProductConcreteSkus($form));
+
+        return [
+            'form' => $form,
+            'configurableBundleTemplateStorage' => $configurableBundleTemplateStorageTransfer,
+            'products' => $productConcreteTransfers,
+        ];
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return bool
+     */
+    protected function isSummaryPageUnlocked(FormInterface $form): bool
+    {
+        $slotStateFormsData = $form->getData()[ConfiguratorStateForm::FILED_SLOTS] ?? [];
+
+        foreach ($slotStateFormsData as $slotStateFormData) {
+            $sku = $slotStateFormData[SlotStateForm::FILED_SKU] ?? null;
+
+            if ($sku) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -141,7 +220,7 @@ class ConfiguratorController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
      */
-    protected function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate, ?int $idConfigurableBundleTemplateSlot): ?ConfigurableBundleTemplateStorageTransfer
+    protected function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate, ?int $idConfigurableBundleTemplateSlot = null): ?ConfigurableBundleTemplateStorageTransfer
     {
         $configurableBundleTemplateStorageRequestTransfer = (new ConfigurableBundleTemplateStorageRequestTransfer())
             ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
@@ -196,6 +275,22 @@ class ConfiguratorController extends AbstractController
             ->getProductConcreteStoragesBySkusForCurrentLocale([$sku]);
 
         return $productConcreteTransfers[$sku] ?? null;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return string[]
+     */
+    protected function extractProductConcreteSkus(FormInterface $form): array
+    {
+        $skus = [];
+
+        foreach ($form->getData()[ConfiguratorStateForm::FILED_SLOTS] as $slotStateFormData) {
+            $skus[] = $slotStateFormData[SlotStateForm::FILED_SKU];
+        }
+
+        return $skus;
     }
 
     /**

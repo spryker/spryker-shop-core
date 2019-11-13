@@ -8,6 +8,7 @@
     form: required,
     action: required,
     submitButtonText: required,
+    submitButtonClass: 'btn-link',
     isSubmitButtonActive: true
 } %}
 
@@ -18,7 +19,7 @@
         {{ form_widget(slotForm) }}
     {% endfor %}
 
-    <button type="submit" name="submit" class="btn-link" {{ data.isSubmitButtonActive ? '' : 'disabled' }}>
+    <button type="submit" name="submit" class="{{ data.submitButtonClass }}" {{ data.isSubmitButtonActive ? '' : 'disabled' }}>
         {{ data.submitButtonText }}
     </button>
 

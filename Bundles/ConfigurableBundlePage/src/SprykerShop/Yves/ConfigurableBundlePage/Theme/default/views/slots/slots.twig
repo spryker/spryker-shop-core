@@ -29,7 +29,8 @@
             {% include molecule('configurator-left-sidebar', 'ConfigurableBundlePage') with {
                 data: {
                     form: data.form,
-                    configurableBundleTemplateStorage: data.configurableBundleTemplateStorage
+                    configurableBundleTemplateStorage: data.configurableBundleTemplateStorage,
+                    isSummaryPageUnlocked: data.isSummaryPageUnlocked
                 }
             } only %}
         </div>
