@@ -29,7 +29,7 @@
 
 {% block body %}
     {% set scheduleList = [] %}
-    {% set todayTimestamp = "now" | date('U') %}
+    {% set todayTimestamp = "now" | date('Y-m-d') | date('U') %}
     {% set scheduleItemCounter = 0 %}
 
     {% for scheduleItem in data.scheduleData %}
