@@ -13,7 +13,7 @@
 
 {% macro scheduleTime(scheduleItem, scheduleList, key) %}
     {% if scheduleItem.timeFrom and scheduleItem.timeTo %}
-        {% set defaultTime = scheduleItem.timeFrom | date('H:i') ~ ' - ' ~ scheduleItem.timeTo | date('H:i') %}
+        {% set defaultTime = scheduleItem.timeFrom | date('H:i', false) ~ ' - ' ~ scheduleItem.timeTo | date('H:i', false) %}
     {% else %}
         {% set defaultTime = 'merchant_opening_hours.opening_hours_closed' | trans %}
     {% endif %}
@@ -37,6 +37,7 @@
         {% set isWorkingHours = scheduleItem.timeTo and scheduleItem.timeFrom %}
         {% set isDayAllowed = data.isHoliday ? not isWorkingHours : isWorkingHours %}
         {% set isNotPastDay = (dateTimestamp >= todayTimestamp and scheduleItemCounter < data.itemsLimit) or data.itemsLimit is null %}
+        {% set localizedDay = 'merchant_opening_hours.day.title.' ~ scheduleItem.date | date('l') | capitalize %}
 
         {% if isDayAllowed and isNotPastDay %}
             {% set scheduleItemCounter = scheduleItemCounter + 1 %}
@@ -44,7 +45,7 @@
             {% set scheduleList = scheduleList | merge({
                 (scheduleItem.date): {
                     note: scheduleItem.note | trans,
-                    date: scheduleItem.date | date('d.m.Y, l'),
+                    date: scheduleItem.date | date('d.m.Y, ', false) ~ localizedDay | trans,
                     time: data.isHoliday ? '' : time,
                 },
             }) %}
