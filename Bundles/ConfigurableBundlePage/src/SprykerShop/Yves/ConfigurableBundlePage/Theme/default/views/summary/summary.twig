@@ -1,0 +1,38 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    title: 'configurable_bundle_page.configurator.summary' | trans,
+    form: _view.form,
+    configurableBundleTemplateStorage: _view.configurableBundleTemplateStorage
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'configurable_bundle_page.template_selection' | trans,
+                url: path('configurable-bundle/configurator/template-selection'),
+                withChevron: false
+            }]
+        }
+    } only %}
+{% endblock %}
+
+{% block content %}
+    <div class="grid">
+
+        <div class="col col--sm-12 col--md-3" class="button">
+            {% include molecule('configurator-left-sidebar', 'ConfigurableBundlePage') with {
+                data: {
+                    form: data.form,
+                    configurableBundleTemplateStorage: data.configurableBundleTemplateStorage
+                }
+            } only %}
+        </div>
+
+        <div class="col col--sm-12 col--md-9">
+
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'configurator-left-sidebar',
+} %}
+
+{% define data = {
+    form: required,
+    configurableBundleTemplateStorage: required
+} %}
+
+{% block body %}
+
+    {% for configurableBundleTemplateSlotStorage in data.configurableBundleTemplateStorage.slots %}
+        <div class="box">
+            {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
+                data: {
+                    form: data.form.createView,
+                    submitButtonText: configurableBundleTemplateSlotStorage.name | trans,
+                    action: path(
+                        'configurable-bundle/configurator/slots', {
+                            'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
+                            'idConfigurableBundleTemplateSlot': configurableBundleTemplateSlotStorage.idConfigurableBundleTemplateSlot
+                        }
+                    )
+                },
+            } only %}
+        </div>
+    {% endfor %}
+
+    <div class="box">
+        {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
+            data: {
+                form: data.form.createView,
+                submitButtonText: 'configurable_bundle_page.configurator.summary' | trans,
+                action: path(
+                    'configurable-bundle/configurator/summary', {
+                        'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
+                    }
+                )
+            },
+        } only %}
+    </div>
+
+{% endblock %}

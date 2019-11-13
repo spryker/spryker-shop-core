@@ -7,6 +7,7 @@
     selectedSlotId: _view.selectedSlotId | default(null),
     productConcreteCriteriaFilter: _view.productConcreteCriteriaFilter | default(null),
     selectedProductConcrete: _view.selectedProductConcrete | default(null),
+    isSummaryPageUnlocked: _view.isSummaryPageUnlocked | default(false)
 } %}
 
 {% block breadcrumbs %}
@@ -25,35 +26,12 @@
     <div class="grid">
 
         <div class="col col--sm-12 col--md-3" class="button">
-            {% for configurableBundleTemplateSlotStorage in data.configurableBundleTemplateStorage.slots %}
-                <div class="box">
-                    {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
-                        data: {
-                            form: data.form.createView,
-                            submitButtonText: configurableBundleTemplateSlotStorage.name | trans,
-                            action: path(
-                                'configurable-bundle/configurator/slots', {
-                                    'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
-                                    'idConfigurableBundleTemplateSlot': configurableBundleTemplateSlotStorage.idConfigurableBundleTemplateSlot
-                                }
-                            )
-                        },
-                    } only %}
-                </div>
-            {% endfor %}
-            <div class="box">
-                {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
-                    data: {
-                        form: data.form.createView,
-                        submitButtonText: 'configurable_bundle_page.configurator.summary' | trans,
-                        action: path(
-                            'configurable-bundle/configurator/summary', {
-                                'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
-                            }
-                        )
-                    },
-                } only %}
-            </div>
+            {% include molecule('configurator-left-sidebar', 'ConfigurableBundlePage') with {
+                data: {
+                    form: data.form,
+                    configurableBundleTemplateStorage: data.configurableBundleTemplateStorage
+                }
+            } only %}
         </div>
 
         <div class="col col--sm-12 col--md-9">

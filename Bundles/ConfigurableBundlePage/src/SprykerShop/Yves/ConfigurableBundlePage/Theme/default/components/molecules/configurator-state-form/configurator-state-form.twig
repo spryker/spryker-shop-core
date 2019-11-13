@@ -7,7 +7,8 @@
 {% define data = {
     form: required,
     action: required,
-    submitButtonText: required
+    submitButtonText: required,
+    isSubmitButtonActive: true
 } %}
 
 {% block body %}
@@ -17,7 +18,7 @@
         {{ form_widget(slotForm) }}
     {% endfor %}
 
-    <button type="submit" name="submit" class="btn-link">
+    <button type="submit" name="submit" class="btn-link" {{ data.isSubmitButtonActive ? '' : 'disabled' }}>
         {{ data.submitButtonText }}
     </button>
 
