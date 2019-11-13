@@ -28,13 +28,15 @@ export default class VolumePrice extends Component {
 
     /**
      * The current quantity select/input value.
+     *
+     * @deprecated
      */
     currentQuantityValue: number;
     protected timeout: number = 400;
 
     protected readyCallback(): void {
         this.productPriceElement = <HTMLElement>this.getElementsByClassName(`${this.jsName}__price`)[0];
-        this.volumePricesData = <VolumePricesData[]>JSON.parse(this.dataset.json).reverse();
+        this.volumePricesData = <VolumePricesData[]>JSON.parse(this.dataset.json);
         this.quantityElement = <HTMLFormElement>document.getElementsByClassName(`${this.jsName}__quantity`)[0];
         this.highLightedClass = <string>`${this.name}__price--highlighted`;
 
@@ -52,27 +54,18 @@ export default class VolumePrice extends Component {
     }
 
     protected quantityChangeHandler(event: Event): void {
-        this.currentQuantityValue = Number((<HTMLInputElement>event.target).value);
-        this.checkQuantityValue();
-    }
+        const currentQuantityValue = Number((<HTMLInputElement>event.target).value);
+        const defaultPrice = this.volumePricesData[0].price;
 
-    protected checkQuantityValue(): void {
-        this.volumePricesData.every((item: VolumePricesData) => {
-            return this.checkQuantityValueCallback(item);
+        this.changePrice(defaultPrice);
+
+        this.volumePricesData.forEach((item: VolumePricesData) => {
+            if (currentQuantityValue !== Number(item.count)) {
+                return;
+            }
+
+            this.changePrice(item.price);
         });
-    }
-
-    protected checkQuantityValueCallback(priceData: VolumePricesData): boolean {
-        const volumePrice: string = priceData.price;
-        const volumePriceCount: number = priceData.count;
-
-        if (this.currentQuantityValue >= volumePriceCount) {
-            this.changePrice(volumePrice);
-
-            return false;
-        }
-
-        return true;
     }
 
     protected changePrice(price: string): void {
