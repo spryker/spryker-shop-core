@@ -4,7 +4,7 @@
   "description": "CheckoutPage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker-shop/checkout-page-extension": "^1.1.0",
     "spryker-shop/customer-page": "^2.0.0",
     "spryker-shop/home-page": "^1.0.0",
@@ -25,7 +25,7 @@
     "spryker/price": "^5.1.0",
     "spryker/product-bundle": "^4.1.0 || ^6.0.0",
     "spryker/quote": "^1.1.0 || ^2.0.0",
-    "spryker/shipment": "^7.0.0",
+    "spryker/shipment": "^7.0.0 || ^8.0.0",
     "spryker/step-engine": "^3.2.0",
     "spryker/symfony": "^3.1.0",
     "spryker/util-validate": "^1.0.0"
