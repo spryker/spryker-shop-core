@@ -45,7 +45,7 @@
             {% set scheduleList = scheduleList | merge({
                 (scheduleItem.date): {
                     note: scheduleItem.note | trans,
-                    date: scheduleItem.date | date('d.m.Y, ') ~ localizedDay | trans,
+                    date: scheduleItem.date | date('d.m.Y, ', false) ~ localizedDay | trans,
                     time: data.isHoliday ? '' : time,
                 },
             }) %}
