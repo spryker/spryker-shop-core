@@ -5,6 +5,7 @@
 
     <transfer name="FacetSearchResult">
         <property name="config" type="FacetConfig"/>
+        <property name="values" type="FacetSearchResultValue[]" singular="value"/>
     </transfer>
 
     <transfer name="RangeSearchResult">
