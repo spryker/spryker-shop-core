@@ -53,14 +53,19 @@ class ConfiguratorController extends AbstractController
     protected const FORMATTED_RESULT_KEY = 'ConfigurableBundleTemplateCollection';
 
     /**
-     * @uses \Spryker\Client\ProductListSearch\Plugin\Search\ProductListFilterQueryExpanderPlugin::REQUEST_PARAM_ID_PRODUCT_LIST
+     * @uses \Spryker\Client\ProductListSearch\Plugin\Search\ProductListQueryExpanderPlugin::REQUEST_PARAM_ID_PRODUCT_LIST
      */
     protected const REQUEST_PARAM_ID_PRODUCT_LIST = ProductListTransfer::ID_PRODUCT_LIST;
 
     /**
-     * @uses \Spryker\Client\ProductListSearch\Plugin\Search\ProductListFilterQueryExpanderPlugin::REQUEST_PARAM_IGNORE_PAGINATION
+     * @uses \Spryker\Client\ProductListSearch\Plugin\Search\ProductListQueryExpanderPlugin::REQUEST_PARAM_ITEMS_PER_PAGE
      */
-    protected const REQUEST_PARAM_IGNORE_PAGINATION = 'ignorePagination';
+    protected const REQUEST_PARAM_ITEMS_PER_PAGE = 'itemsPerPage';
+
+    /**
+     * @see \SprykerShop\Yves\CatalogPage\CatalogPageConfig::CATALOG_PAGE_LIMIT
+     */
+    protected const REQUEST_PARAM_ITEMS_PER_PAGE_VALUE = 10000;
 
     protected const GLOSSARY_KEY_CONFIGURATOR_SUMMARY_PAGE_LOCKED = 'configurable_bundle_page.configurator.summary_page_locked';
 
@@ -252,7 +257,7 @@ class ConfiguratorController extends AbstractController
 
         return (new ProductConcreteCriteriaFilterTransfer())->setRequestParams([
             static::REQUEST_PARAM_ID_PRODUCT_LIST => $configurableBundleTemplateSlotStorageTransfer->getIdProductList(),
-            static::REQUEST_PARAM_IGNORE_PAGINATION => true,
+            static::REQUEST_PARAM_ITEMS_PER_PAGE => static::REQUEST_PARAM_ITEMS_PER_PAGE_VALUE,
         ]);
     }
 
