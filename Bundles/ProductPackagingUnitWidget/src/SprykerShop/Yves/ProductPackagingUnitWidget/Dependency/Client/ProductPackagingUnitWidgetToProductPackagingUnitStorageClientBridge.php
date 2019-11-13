@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer;
 
 class ProductPackagingUnitWidgetToProductPackagingUnitStorageClientBridge implements ProductPackagingUnitWidgetToProductPackagingUnitStorageClientInterface
 {
@@ -28,11 +28,11 @@ class ProductPackagingUnitWidgetToProductPackagingUnitStorageClientBridge implem
     /**
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer|null
      */
-    public function findProductConcretePackagingById(int $idProductConcrete): ?ProductConcretePackagingStorageTransfer
+    public function findProductPackagingUnitById(int $idProductConcrete): ?ProductPackagingUnitStorageTransfer
     {
-        return $this->productPackagingUnitStorageClient->findProductConcretePackagingById($idProductConcrete);
+        return $this->productPackagingUnitStorageClient->findProductPackagingUnitById($idProductConcrete);
     }
 
     /**
