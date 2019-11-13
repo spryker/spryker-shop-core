@@ -6,24 +6,19 @@
 
 {% define data = {
     form: required,
-    idConfigurableBundleTemplate: required,
-    configurableBundleTemplateSlotStorage: required
+    action: required,
+    submitButtonText: required
 } %}
 
 {% block body %}
-    {{ form_start(data.form,  {'action': path(
-        'configurable-bundle/configurator/slots', {
-            'idConfigurableBundleTemplate': data.idConfigurableBundleTemplate,
-            'idConfigurableBundleTemplateSlot': data.configurableBundleTemplateSlotStorage.idConfigurableBundleTemplateSlot
-        }
-    )}) }}
+    {{ form_start(data.form,  {'action': data.action}) }}
 
     {% for slotForm in data.form.slots %}
         {{ form_widget(slotForm) }}
     {% endfor %}
 
     <button type="submit" name="submit" class="btn-link">
-        {{ data.configurableBundleTemplateSlotStorage.name | trans }}
+        {{ data.submitButtonText }}
     </button>
 
     {{ form_end(data.form) }}
