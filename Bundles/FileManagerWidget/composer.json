@@ -4,7 +4,7 @@
   "description": "FileManagerWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/cms-content-widget": "^1.0.0",
     "spryker/file-manager": "^1.0.0",
     "spryker/file-manager-storage": "^1.0.0",
