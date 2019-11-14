@@ -16,7 +16,7 @@ use SprykerShop\Yves\ConfigurableBundlePage\Mapper\ConfiguredBundleRequestMapper
 use SprykerShop\Yves\ConfigurableBundlePage\Mapper\ConfiguredBundleRequestMapperInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Reader\ConfigurableBundleTemplateStorageReader;
 use SprykerShop\Yves\ConfigurableBundlePage\Reader\ConfigurableBundleTemplateStorageReaderInterface;
-use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
 class ConfigurableBundlePageFactory extends AbstractFactory
@@ -49,9 +49,9 @@ class ConfigurableBundlePageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormFactory
+     * @return \Symfony\Component\Form\FormFactoryInterface
      */
-    public function getFormFactory(): FormFactory
+    public function getFormFactory(): FormFactoryInterface
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }
