@@ -57,9 +57,9 @@ export default class VolumePrice extends Component {
 
     protected quantityChangeHandler(event: Event): void {
         const currentQuantityValue = Number((<HTMLInputElement>event.target).value);
-        const defaultPrice = this.volumePricesData[0].price;
+        const defaultVolumePricesData = this.volumePricesData[0];
 
-        this.changePrice(defaultPrice);
+        this.changePrice(defaultVolumePricesData.price);
 
         this.volumePricesData.forEach((item: VolumePricesData) => {
             if (currentQuantityValue !== Number(item.count)) {
