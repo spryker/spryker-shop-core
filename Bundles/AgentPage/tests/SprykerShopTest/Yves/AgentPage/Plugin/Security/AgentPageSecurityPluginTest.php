@@ -25,6 +25,16 @@ class AgentPageSecurityPluginTest extends Unit
     protected const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
 
     /**
+     * @uses \Spryker\Yves\Session\Plugin\Application\SessionApplicationPlugin::SERVICE_SESSION
+     */
+    protected const SERVICE_SESSION = 'session';
+
+    /**
+     * @uses \Spryker\Yves\Messenger\Plugin\Application\FlashMessengerApplicationPlugin::SERVICE_FLASH_MESSENGER
+     */
+    protected const SERVICE_FLASH_MESSENGER = 'flash_messenger';
+
+    /**
      * @var \SprykerShopTest\Yves\AgentPage\AgentPageTester
      */
     protected $tester;
@@ -32,12 +42,12 @@ class AgentPageSecurityPluginTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $container = $this->tester->getContainer();
-        $container->set('flash_messenger', function () {
+        $container->set(static::SERVICE_FLASH_MESSENGER, function () {
             return Stub::makeEmpty(FlashMessengerInterface::class);
         });
         $this->tester->setDependency(StorageDependencyProvider::PLUGIN_STORAGE, new StorageRedisPlugin());
@@ -73,7 +83,7 @@ class AgentPageSecurityPluginTest extends Unit
         $this->tester->addSecurityPlugin($securityPlugin);
         $this->tester->addSecurityPlugin(new CustomerPageSecurityPlugin());
 
-        $container->get('session')->start();
+        $container->get(static::SERVICE_SESSION)->start();
 
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
         $httpKernelBrowser->request('get', '/');
@@ -96,7 +106,7 @@ class AgentPageSecurityPluginTest extends Unit
         $this->tester->addSecurityPlugin($securityPlugin);
         $this->tester->addSecurityPlugin(new CustomerPageSecurityPlugin());
 
-        $container->get('session')->start();
+        $container->get(self::SERVICE_SESSION)->start();
 
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
         $httpKernelBrowser->request('get', '/');
@@ -107,8 +117,6 @@ class AgentPageSecurityPluginTest extends Unit
     }
 
     /**
-     * @group single
-     *
      * @return void
      */
     public function testAgentCanSwitchUser(): void
@@ -122,7 +130,7 @@ class AgentPageSecurityPluginTest extends Unit
         $this->tester->addSecurityPlugin($securityPlugin);
         $this->tester->addSecurityPlugin(new CustomerPageSecurityPlugin());
 
-        $container->get('session')->start();
+        $container->get(self::SERVICE_SESSION)->start();
 
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
         $httpKernelBrowser->request('get', '/');

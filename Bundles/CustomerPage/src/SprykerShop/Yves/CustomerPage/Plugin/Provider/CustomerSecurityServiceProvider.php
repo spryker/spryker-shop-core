@@ -19,6 +19,7 @@ use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationL
 
 /**
  * @deprecated Will be removed with the next major release.
+ *
  * @see \SprykerShop\Yves\CustomerPage\Plugin\Security\CustomerPageSecurityPlugin
  *
  * @method \Spryker\Client\Customer\CustomerClientInterface getClient()

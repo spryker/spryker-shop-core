@@ -103,7 +103,7 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
             ],
         ]);
 
-        $securityBuilder->addFirewall(CustomerPageConfig::SECURITY_FIREWALL_NAME, [
+        $securityBuilder->mergeFirewall(CustomerPageConfig::SECURITY_FIREWALL_NAME, [
             'context' => AgentPageConfig::SECURITY_FIREWALL_NAME,
             'switch_user' => [
                 'parameter' => '_switch_user',
