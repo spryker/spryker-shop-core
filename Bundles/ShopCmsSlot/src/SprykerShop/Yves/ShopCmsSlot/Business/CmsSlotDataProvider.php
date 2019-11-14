@@ -12,15 +12,16 @@ use Generated\Shared\Transfer\CmsSlotContentResponseTransfer;
 use Generated\Shared\Transfer\CmsSlotContextTransfer;
 use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientInterface;
 use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotStorageClientInterface;
+use SprykerShop\Yves\ShopCmsSlot\Exception\MissingCmsSlotContentPluginException;
 use SprykerShop\Yves\ShopCmsSlot\Exception\MissingRequiredParameterException;
 use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface;
 
 class CmsSlotDataProvider implements CmsSlotDataProviderInterface
 {
     /**
-     * @var \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface
+     * @var \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface[]
      */
-    protected $cmsSlotContentPlugin;
+    protected $cmsSlotContentPlugins;
 
     /**
      * @var \SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientInterface
@@ -33,16 +34,16 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
     protected $cmsSlotStorageClient;
 
     /**
-     * @param \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface $cmsSlotContentPlugin
+     * @param \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface[] $cmsSlotContentPlugins
      * @param \SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientInterface $cmsSlotClient
      * @param \SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotStorageClientInterface $cmsSlotStorageClient
      */
     public function __construct(
-        CmsSlotContentPluginInterface $cmsSlotContentPlugin,
+        array $cmsSlotContentPlugins,
         ShopCmsSlotToCmsSlotClientInterface $cmsSlotClient,
         ShopCmsSlotToCmsSlotStorageClientInterface $cmsSlotStorageClient
     ) {
-        $this->cmsSlotContentPlugin = $cmsSlotContentPlugin;
+        $this->cmsSlotContentPlugins = $cmsSlotContentPlugins;
         $this->cmsSlotClient = $cmsSlotClient;
         $this->cmsSlotStorageClient = $cmsSlotStorageClient;
     }
@@ -73,8 +74,31 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
         }
 
         $cmsSlotContentRequestTransfer = $this->createCmsSlotContentRequestTransfer($cmsSlotContextTransfer, $providedData);
+        $cmsSlotContentPlugin = $this->getContentPlugin($cmsSlotStorageTransfer->getContentProviderType());
 
-        return $this->cmsSlotContentPlugin->getSlotContent($cmsSlotContentRequestTransfer);
+        return $cmsSlotContentPlugin->getSlotContent($cmsSlotContentRequestTransfer);
+    }
+
+    /**
+     * @param string $contentProviderType
+     *
+     * @throws \SprykerShop\Yves\ShopCmsSlot\Exception\MissingCmsSlotContentPluginException
+     *
+     * @return \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface
+     */
+    protected function getContentPlugin(string $contentProviderType): CmsSlotContentPluginInterface
+    {
+        if (!isset($this->cmsSlotContentPlugins[$contentProviderType])) {
+            throw new MissingCmsSlotContentPluginException(
+                sprintf(
+                    'There is no CMS slot content plugin registered for this content provider type: %s, ' .
+                    'you can fix this error by adding it in ShopCmsSlotDependencyProvider',
+                    $contentProviderType
+                )
+            );
+        }
+
+        return $this->cmsSlotContentPlugins[$contentProviderType];
     }
 
     /**
