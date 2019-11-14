@@ -27,7 +27,7 @@ class QuoteConfiguredBundleWidget extends AbstractWidget
      */
     public function __construct(QuoteTransfer $quoteTransfer, ?iterable $itemTransfers = [])
     {
-        if (!count($itemTransfers)) {
+        if ($itemTransfers === null || !count($itemTransfers)) {
             $itemTransfers = $quoteTransfer->getItems();
         }
 
