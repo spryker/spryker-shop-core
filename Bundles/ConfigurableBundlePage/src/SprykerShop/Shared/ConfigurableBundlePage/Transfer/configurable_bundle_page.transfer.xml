@@ -25,4 +25,36 @@
         <property name="items" type="ConfiguredBundleItemRequest[]" singular="item"/>
     </transfer>
 
+    <transfer name="ConfigurableBundleTemplateStorage">
+        <property name="slots" singular="slot" type="ConfigurableBundleTemplateSlotStorage[]"/>
+        <property name="name" type="string"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConcreteCriteriaFilter">
+        <property name="requestParams" type="array" singular="requestParams"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotStorage">
+        <property name="idProductList" type="int"/>
+        <property name="idConfigurableBundleTemplateSlot" type="int"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplatePageSearchRequest">
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="sku" type="string"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
+    </transfer>
+
+    <transfer name="LocalizedAttributes">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductList">
+        <property name="idProductList" type="int"/>
+    </transfer>
+
 </transfers>
