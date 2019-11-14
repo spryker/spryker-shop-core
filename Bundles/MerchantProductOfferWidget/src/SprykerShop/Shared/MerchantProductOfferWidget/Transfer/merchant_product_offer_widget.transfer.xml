@@ -20,4 +20,10 @@
     <transfer name="MerchantProfileStorageUrl">
         <property name="url" type="string"/>
     </transfer>
+
+    <transfer name="ProductView">
+    </transfer>
+
+    <transfer name="ProductOfferStorageCollection">
+    </transfer>
 </transfers>

@@ -4,7 +4,7 @@
   "description": "GiftCardWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker-shop/cart-code-widget": "^1.0.0",
     "spryker-shop/shop-ui": "^1.0.0"
   },

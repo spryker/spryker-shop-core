@@ -3,6 +3,7 @@
 {% define data = {
     products: _view.products,
     facets: _view.facets,
+    filteredFacets: _view.filteredFacets | default([]),
     searchString: _view.searchString,
     suggestion: _view.spellingSuggestion,
     category: _view.category | default,
