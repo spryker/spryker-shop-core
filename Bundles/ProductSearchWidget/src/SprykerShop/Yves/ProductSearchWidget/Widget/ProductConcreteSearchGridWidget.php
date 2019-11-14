@@ -29,11 +29,7 @@ class ProductConcreteSearchGridWidget extends AbstractWidget
             $productConcreteCriteriaFilterTransfer = new ProductConcreteCriteriaFilterTransfer();
         }
 
-        $productViewTransfers = $this->getFactory()
-            ->createProductConcreteReader()
-            ->searchProductConcretesByFullText($productConcreteCriteriaFilterTransfer);
-
-        $this->addParameter(static::PARAM_PRODUCTS, $productViewTransfers);
+        $this->addProductsParameter($productConcreteCriteriaFilterTransfer);
     }
 
     /**
@@ -58,5 +54,19 @@ class ProductConcreteSearchGridWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return static::TEMPLATE;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
+     *
+     * @return void
+     */
+    protected function addProductsParameter(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): void
+    {
+        $productViewTransfers = $this->getFactory()
+            ->createProductConcreteReader()
+            ->searchProductConcretesByFullText($productConcreteCriteriaFilterTransfer);
+
+        $this->addParameter(static::PARAM_PRODUCTS, $productViewTransfers);
     }
 }

@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class ConfiguratorStateForm extends AbstractType
 {
-    public const FILED_SLOTS = 'slots';
+    public const FIELD_SLOTS = 'slots';
 
     protected const METHOD_GET = 'GET';
 
@@ -36,7 +36,7 @@ class ConfiguratorStateForm extends AbstractType
      */
     protected function addSlotsField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FILED_SLOTS, CollectionType::class, [
+        $builder->add(static::FIELD_SLOTS, CollectionType::class, [
             'entry_type' => SlotStateForm::class,
             'allow_add' => true,
             'allow_delete' => true,

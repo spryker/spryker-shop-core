@@ -2,11 +2,11 @@
 
 {% define config = {
     name: 'products-grid',
-    tag: 'div'
+    tag: 'div',
 } %}
 
 {% define data = {
-    products: required
+    products: required,
 } %}
 
 {% block body %}
@@ -16,7 +16,7 @@
             {% block product %}
                 {% include molecule('product', 'ProductSearchWidget') with {
                     data: {
-                        product: product
+                        product: product,
                     }
                 } only %}
             {% endblock %}

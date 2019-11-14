@@ -38,7 +38,7 @@ class ConfigurableBundlePageFactory extends AbstractFactory
     }
 
     /**
-     * @param array[] $data
+     * @param array $data
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
