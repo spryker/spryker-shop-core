@@ -14,7 +14,7 @@
     isQuantityChangeable: false,
     isEditable: true,
     isAmountOfBundleVisible: false,
-    idQuote: null,
+    quote: null,
 } %}
 
 {%- block extraClass %} box{% endblock -%}
@@ -120,7 +120,8 @@
             {% endblock %}
         {% endif %}
     {% endblock %}
+
     {% block configurableBundleCartNote %}
-        {% widget 'ConfiguredBundleCartNoteFormWidget' args [data.bundle, data.idQuote] only %}{% endwidget %}
+        {% widget 'ConfiguredBundleCartNoteWidget' args [data.bundle, data.quote] only %}{% endwidget %}
     {% endblock %}
 {% endblock %}

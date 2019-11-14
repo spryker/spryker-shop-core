@@ -8,26 +8,27 @@
 namespace SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Widget;
 
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
  * @method \SprykerShop\Yves\ConfigurableBundleCartNoteWidget\ConfigurableBundleCartNoteWidgetFactory getFactory()
  */
-class ConfiguredBundleCartNoteFormWidget extends AbstractWidget
+class ConfiguredBundleCartNoteWidget extends AbstractWidget
 {
     protected const PARAMETER_CONFIGURABLE_BUNDLE_CART_NOTE_FORM = 'configurableBundleCartNoteForm';
-    protected const PARAMETER_ID_QUOTE = 'idQuote';
+    protected const PARAMETER_QUOTE = 'quote';
 
     /**
      * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer $configuredBundleTransfer
-     * @param int|null $idQuote
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
      */
     public function __construct(
         ConfiguredBundleTransfer $configuredBundleTransfer,
-        ?int $idQuote = null
+        ?QuoteTransfer $quoteTransfer = null
     ) {
         $this->addConfigurableBundleCartNoteFormParameter($configuredBundleTransfer);
-        $this->addIdQuoteParameter($idQuote);
+        $this->addQuoteParameter($quoteTransfer);
     }
 
     /**
@@ -35,7 +36,7 @@ class ConfiguredBundleCartNoteFormWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'ConfiguredBundleCartNoteFormWidget';
+        return 'ConfiguredBundleCartNoteWidget';
     }
 
     /**
@@ -43,7 +44,7 @@ class ConfiguredBundleCartNoteFormWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ConfigurableBundleCartNoteWidget/views/configured-bundle-cart-note-form/configured-bundle-cart-note-form.twig';
+        return '@ConfigurableBundleCartNoteWidget/views/configured-bundle-cart-note/configured-bundle-cart-note.twig';
     }
 
     /**
@@ -58,12 +59,12 @@ class ConfiguredBundleCartNoteFormWidget extends AbstractWidget
     }
 
     /**
-     * @param int|null $idQuote
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
      *
      * @return void
      */
-    protected function addIdQuoteParameter(?int $idQuote): void
+    protected function addQuoteParameter(?QuoteTransfer $quoteTransfer): void
     {
-        $this->addParameter(static::PARAMETER_ID_QUOTE, $idQuote);
+        $this->addParameter(static::PARAMETER_QUOTE, $quoteTransfer);
     }
 }

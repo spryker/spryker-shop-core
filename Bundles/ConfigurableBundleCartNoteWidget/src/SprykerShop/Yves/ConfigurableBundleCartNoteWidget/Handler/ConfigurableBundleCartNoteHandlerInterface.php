@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client;
+namespace SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Handler;
 
 use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
-interface ConfigurableBundleCartNoteWidgetToConfigurableBundleCartNoteClientInterface
+interface ConfigurableBundleCartNoteHandlerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer

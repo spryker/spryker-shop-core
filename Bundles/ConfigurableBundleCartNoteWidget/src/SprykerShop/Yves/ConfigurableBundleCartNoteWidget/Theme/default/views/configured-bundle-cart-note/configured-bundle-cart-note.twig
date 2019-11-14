@@ -1,0 +1,33 @@
+{% extends template('widget') %}
+
+{% define data = {
+    form: _widget.configurableBundleCartNoteForm,
+    quote: _widget.quote,
+} %}
+
+{% block body %}
+    {% set canWrite = (data.quote is not empty) and (not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.quote.idQuote)) %}
+
+    {% if canWrite %}
+        {% block cartNoteForm %}
+            {% include molecule('form') with {
+                data: {
+                    form: data.form,
+                    options: {
+                        action: url('configurable-bundle-cart-note/add'),
+                    },
+                    submit: {
+                        enable: true,
+                        text: 'configurable_bundle_cart_note.form.save' | trans,
+                    }
+                }
+            } only %}
+        {% endblock %}
+    {% endif %}
+
+    {% if not canWrite and data.form.cartNote.vars.value is not empty %}
+        {% block cartNoteReadOnly %}
+            <div>{{ 'configurable_bundle_cart_note.cart_note' | trans }} {{ data.form.cartNote.vars.value }}</div>
+        {% endblock %}
+    {% endif %}
+{% endblock %}

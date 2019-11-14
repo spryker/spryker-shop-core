@@ -15,6 +15,8 @@ use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client\Configur
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client\ConfigurableBundleCartNoteWidgetToQuoteClientInterface;
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Form\ConfigurableBundleCartNoteForm;
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Form\DataProvider\ConfigurableBundleCartNoteFormDataProvider;
+use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Handler\ConfigurableBundleCartNoteHandler;
+use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Handler\ConfigurableBundleCartNoteHandlerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -42,6 +44,17 @@ class ConfigurableBundleCartNoteWidgetFactory extends AbstractFactory
     public function createConfigurableBundleCartNoteFormDataProvider(): ConfigurableBundleCartNoteFormDataProvider
     {
         return new ConfigurableBundleCartNoteFormDataProvider();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Handler\ConfigurableBundleCartNoteHandlerInterface
+     */
+    public function createConfigurableBundleCartNoteHandler(): ConfigurableBundleCartNoteHandlerInterface
+    {
+        return new ConfigurableBundleCartNoteHandler(
+            $this->getConfigurableBundleCartNoteClient(),
+            $this->getQuoteClient()
+        );
     }
 
     /**

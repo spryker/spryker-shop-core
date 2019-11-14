@@ -92,7 +92,12 @@
             {% endblock %}
         </div>
     {% endblock %}
+
     {% block configurableBundleCartNote %}
-        {% widget 'SalesConfiguredBundleCartNoteDisplayWidget' args [data.bundle] only %}{% endwidget %}
+        {% include molecule('sales-configured-bundle-cart-note', 'ConfigurableBundleCartNoteWidget') ignore missing with {
+            data: {
+                bundle: data.bundle,
+            },
+        } only %}
     {% endblock %}
 {% endblock %}
