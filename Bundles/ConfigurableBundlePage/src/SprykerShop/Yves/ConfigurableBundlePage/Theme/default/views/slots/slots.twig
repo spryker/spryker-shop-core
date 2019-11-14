@@ -24,14 +24,14 @@
 
 {% block content %}
     <div class="grid">
-
         <div class="col col--sm-12 col--md-3" class="button">
-            {% include molecule('configurator-left-sidebar', 'ConfigurableBundlePage') with {
+            {% include molecule('configurator-sidebar', 'ConfigurableBundlePage') with {
                 data: {
                     form: data.form,
                     configurableBundleTemplateStorage: data.configurableBundleTemplateStorage,
-                    isSummaryPageUnlocked: data.isSummaryPageUnlocked
-                }
+                    isSummaryPageUnlocked: data.isSummaryPageUnlocked,
+                    selectedSlotId: data.selectedSlotId,
+                },
             } only %}
         </div>
 
@@ -51,7 +51,7 @@
                     data: {
                         selectedSlotId: data.selectedSlotId,
                         form: data.form,
-                        productConcreteCriteriaFilter: data.productConcreteCriteriaFilter
+                        productConcreteCriteriaFilter: data.productConcreteCriteriaFilter,
                     },
                 } only %}
             {% else %}
