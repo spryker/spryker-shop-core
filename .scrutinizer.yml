@@ -1,0 +1,15 @@
+build:
+  environment:
+    php: '7.2'
+
+  nodes:
+    analysis:
+      tests:
+        override:
+          - php-scrutinizer-run
+
+filter:
+  excluded_paths:
+
+build_failure_conditions:
+  - 'project.metric("scrutinizer.quality", < 9.88)'
