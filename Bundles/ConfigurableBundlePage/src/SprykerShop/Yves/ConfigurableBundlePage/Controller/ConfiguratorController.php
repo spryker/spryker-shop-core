@@ -7,10 +7,10 @@
 
 namespace SprykerShop\Yves\ConfigurableBundlePage\Controller;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchRequestTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageRequestTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
+use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
@@ -53,16 +53,23 @@ class ConfiguratorController extends AbstractController
     protected const FORMATTED_RESULT_KEY = 'ConfigurableBundleTemplateCollection';
 
     /**
-     * @uses \Spryker\Client\ProductListSearch\Plugin\Search\ProductListFilterQueryExpanderPlugin::REQUEST_PARAM_ID_PRODUCT_LIST
+     * @uses \Spryker\Client\ProductListSearch\Plugin\Search\ProductListQueryExpanderPlugin::REQUEST_PARAM_ID_PRODUCT_LIST
      */
     protected const REQUEST_PARAM_ID_PRODUCT_LIST = ProductListTransfer::ID_PRODUCT_LIST;
 
     /**
-     * @uses \Spryker\Client\ProductListSearch\Plugin\Search\ProductListFilterQueryExpanderPlugin::REQUEST_PARAM_IGNORE_PAGINATION
+     * @uses \Spryker\Client\ProductListSearch\Plugin\Search\ProductListQueryExpanderPlugin::REQUEST_PARAM_ITEMS_PER_PAGE
      */
-    protected const REQUEST_PARAM_IGNORE_PAGINATION = 'ignorePagination';
+    protected const REQUEST_PARAM_ITEMS_PER_PAGE = 'itemsPerPage';
+
+    /**
+     * @see \SprykerShop\Yves\CatalogPage\CatalogPageConfig::CATALOG_PAGE_LIMIT
+     */
+    protected const REQUEST_PARAM_ITEMS_PER_PAGE_VALUE = 10000;
 
     protected const GLOSSARY_KEY_CONFIGURATOR_SUMMARY_PAGE_LOCKED = 'configurable_bundle_page.configurator.summary_page_locked';
+    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = 'configurable_bundle_page.template_not_found';
+    protected const GLOSSARY_KEY_INVALID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_COMBINATION = 'configurable_bundle_page.invalid_template_slot_combination';
 
     /**
      * @return \Spryker\Yves\Kernel\View\View
@@ -107,6 +114,16 @@ class ConfiguratorController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function addToCartAction(Request $request): RedirectResponse
+    {
+        return $this->executeAddToCartAction($request);
+    }
+
+    /**
      * @return array
      */
     protected function executeTemplateSelectionAction(): array
@@ -135,6 +152,14 @@ class ConfiguratorController extends AbstractController
         $configurableBundleTemplateStorageTransfer = $this->findConfigurableBundleTemplateStorage($idConfigurableBundleTemplate, $idConfigurableBundleTemplateSlot);
 
         if (!$configurableBundleTemplateStorageTransfer) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND);
+
+            return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);
+        }
+
+        if ($idConfigurableBundleTemplateSlot && !$configurableBundleTemplateStorageTransfer->getSlots()->offsetExists($idConfigurableBundleTemplateSlot)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_INVALID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_COMBINATION);
+
             return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);
         }
 
@@ -167,9 +192,12 @@ class ConfiguratorController extends AbstractController
     protected function executeSummaryAction(Request $request)
     {
         $idConfigurableBundleTemplate = $request->attributes->getInt(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE);
+
         $configurableBundleTemplateStorageTransfer = $this->findConfigurableBundleTemplateStorage($idConfigurableBundleTemplate);
 
         if (!$configurableBundleTemplateStorageTransfer) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND);
+
             return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);
         }
 
@@ -192,6 +220,41 @@ class ConfiguratorController extends AbstractController
             'configurableBundleTemplateStorage' => $configurableBundleTemplateStorageTransfer,
             'products' => $productConcreteTransfers,
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function executeAddToCartAction(Request $request): RedirectResponse
+    {
+        $idConfigurableBundleTemplate = $request->attributes->getInt(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE);
+        $form = $this->getFactory()->getConfiguratorStateForm();
+
+        $formData = $request->request->get($form->getName())[ConfiguratorStateForm::FILED_SLOTS] ?? null;
+
+        if (!$formData) {
+            return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);
+        }
+
+        $configurableBundleTemplateStorageTransfer = $this->findConfigurableBundleTemplateStorage($idConfigurableBundleTemplate);
+
+        if (!$configurableBundleTemplateStorageTransfer) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND);
+
+            return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);
+        }
+
+        $createConfiguredBundleRequestTransfer = $this->getFactory()
+            ->createConfiguredBundleRequestMapper()
+            ->mapDataToCreateConfiguredBundleRequestTransfer(
+                $formData,
+                $configurableBundleTemplateStorageTransfer,
+                new CreateConfiguredBundleRequestTransfer()
+            );
+
+        // ToDo: To make a client call in next story.
     }
 
     /**
@@ -226,17 +289,9 @@ class ConfiguratorController extends AbstractController
             ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
             ->setIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplateSlot);
 
-        $configurableBundleTemplateStorageResponseTransfer = $this->getFactory()
+        return $this->getFactory()
             ->createConfigurableBundleTemplateStorageReader()
             ->getConfigurableBundleTemplateStorage($configurableBundleTemplateStorageRequestTransfer);
-
-        if (!$configurableBundleTemplateStorageResponseTransfer->getIsSuccessful()) {
-            $this->handleErrors($configurableBundleTemplateStorageResponseTransfer->getMessages());
-
-            return null;
-        }
-
-        return $configurableBundleTemplateStorageResponseTransfer->getConfigurableBundleTemplateStorage();
     }
 
     /**
@@ -252,7 +307,7 @@ class ConfiguratorController extends AbstractController
 
         return (new ProductConcreteCriteriaFilterTransfer())->setRequestParams([
             static::REQUEST_PARAM_ID_PRODUCT_LIST => $configurableBundleTemplateSlotStorageTransfer->getIdProductList(),
-            static::REQUEST_PARAM_IGNORE_PAGINATION => true,
+            static::REQUEST_PARAM_ITEMS_PER_PAGE => static::REQUEST_PARAM_ITEMS_PER_PAGE_VALUE,
         ]);
     }
 
@@ -291,17 +346,5 @@ class ConfiguratorController extends AbstractController
         }
 
         return $skus;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
-     *
-     * @return void
-     */
-    protected function handleErrors(ArrayObject $messageTransfers): void
-    {
-        foreach ($messageTransfers as $messageTransfer) {
-            $this->addErrorMessage($messageTransfer->getValue());
-        }
     }
 }

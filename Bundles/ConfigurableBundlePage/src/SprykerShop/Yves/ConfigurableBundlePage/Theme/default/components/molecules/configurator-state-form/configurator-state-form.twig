@@ -9,13 +9,14 @@
     action: required,
     submitButtonText: required,
     idConfigurableBundleTemplateSlot: '',
-    isSubmitButtonActive: true,
     selectedSlotId: '',
     isSummary: false,
+    isSubmitButtonActive: true,
+    method: 'GET',
 } %}
 
 {% block body %}
-    {{ form_start(data.form,  {'action': data.action}) }}
+    {{ form_start(data.form,  {'action': data.action, 'method': data.method}) }}
 
     {% for slotForm in data.form.slots %}
         {{ form_row(slotForm.sku, { id: '' }) }}
@@ -40,6 +41,6 @@
         {{ data.submitButtonText }}
     </button>
 
-    {{ form_row(data.form._token,{ id:'' }) }}
+    {{ form_row(data.form._token,{ id: '' }) }}
     {{ form_end(data.form) }}
 {% endblock %}

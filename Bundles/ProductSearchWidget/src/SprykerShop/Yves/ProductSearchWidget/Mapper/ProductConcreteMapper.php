@@ -22,10 +22,8 @@ class ProductConcreteMapper implements ProductConcreteMapperInterface
         ProductConcretePageSearchTransfer $productConcretePageSearchTransfer,
         ProductViewTransfer $productViewTransfer
     ): ProductViewTransfer {
-        $productViewTransfer->fromArray($productConcretePageSearchTransfer->toArray(), true);
-        $productViewTransfer->setIdProductConcrete($productConcretePageSearchTransfer->getFkProduct());
-        $productViewTransfer->setIdProductAbstract($productConcretePageSearchTransfer->getFkProductAbstract());
-
-        return $productViewTransfer;
+        return $productViewTransfer->fromArray($productConcretePageSearchTransfer->toArray(), true)
+            ->setIdProductConcrete($productConcretePageSearchTransfer->getFkProduct())
+            ->setIdProductAbstract($productConcretePageSearchTransfer->getFkProductAbstract());
     }
 }
