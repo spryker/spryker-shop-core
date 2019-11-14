@@ -8,10 +8,21 @@
         <property name="idConfigurableBundleTemplateSlot" type="int"/>
     </transfer>
 
-    <transfer name="ConfigurableBundleTemplateStorageResponse">
-        <property name="configurableBundleTemplateStorage" type="ConfigurableBundleTemplateStorage"/>
-        <property name="isSuccessful" type="bool"/>
-        <property name="messages" type="Message[]" singular="message"/>
+    <transfer name="ConfiguredBundleItemRequest">
+        <property name="slotUuid" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="ConfiguredBundleRequest">
+        <property name="templateUuid" type="string"/>
+        <property name="templateName" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="CreateConfiguredBundleRequest">
+        <property name="configuredBundleRequest" type="ConfiguredBundleRequest"/>
+        <property name="items" type="ConfiguredBundleItemRequest[]" singular="item"/>
     </transfer>
 
 </transfers>

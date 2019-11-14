@@ -12,10 +12,10 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundlePageSearchClientInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundleStorageClientInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Form\ConfiguratorStateForm;
+use SprykerShop\Yves\ConfigurableBundlePage\Mapper\ConfiguredBundleRequestMapper;
+use SprykerShop\Yves\ConfigurableBundlePage\Mapper\ConfiguredBundleRequestMapperInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Reader\ConfigurableBundleTemplateStorageReader;
 use SprykerShop\Yves\ConfigurableBundlePage\Reader\ConfigurableBundleTemplateStorageReaderInterface;
-use SprykerShop\Yves\ConfigurableBundlePage\Validator\ConfigurableBundleTemplateSlotCombinationValidator;
-use SprykerShop\Yves\ConfigurableBundlePage\Validator\ConfigurableBundleTemplateSlotCombinationValidatorInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -26,18 +26,15 @@ class ConfigurableBundlePageFactory extends AbstractFactory
      */
     public function createConfigurableBundleTemplateStorageReader(): ConfigurableBundleTemplateStorageReaderInterface
     {
-        return new ConfigurableBundleTemplateStorageReader(
-            $this->getConfigurableBundleStorageClient(),
-            $this->createConfigurableBundleTemplateSlotCombinationValidator()
-        );
+        return new ConfigurableBundleTemplateStorageReader($this->getConfigurableBundleStorageClient());
     }
 
     /**
-     * @return \SprykerShop\Yves\ConfigurableBundlePage\Validator\ConfigurableBundleTemplateSlotCombinationValidatorInterface
+     * @return \SprykerShop\Yves\ConfigurableBundlePage\Mapper\ConfiguredBundleRequestMapperInterface
      */
-    public function createConfigurableBundleTemplateSlotCombinationValidator(): ConfigurableBundleTemplateSlotCombinationValidatorInterface
+    public function createConfiguredBundleRequestMapper(): ConfiguredBundleRequestMapperInterface
     {
-        return new ConfigurableBundleTemplateSlotCombinationValidator();
+        return new ConfiguredBundleRequestMapper();
     }
 
     /**

@@ -9,11 +9,12 @@
     action: required,
     submitButtonText: required,
     submitButtonClass: 'btn-link',
-    isSubmitButtonActive: true
+    isSubmitButtonActive: true,
+    method: 'GET'
 } %}
 
 {% block body %}
-    {{ form_start(data.form,  {'action': data.action}) }}
+    {{ form_start(data.form,  {'action': data.action, 'method': data.method}) }}
 
     {% for slotForm in data.form.slots %}
         {{ form_widget(slotForm) }}

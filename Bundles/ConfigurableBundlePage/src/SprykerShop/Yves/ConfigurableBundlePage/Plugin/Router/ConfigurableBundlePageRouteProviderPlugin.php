@@ -15,6 +15,7 @@ class ConfigurableBundlePageRouteProviderPlugin extends AbstractRouteProviderPlu
     protected const ROUTE_CONFIGURATOR_TEMPLATE_SELECTION = 'configurable-bundle/configurator/template-selection';
     protected const ROUTE_CONFIGURATOR_SLOTS = 'configurable-bundle/configurator/slots';
     protected const ROUTE_CONFIGURATOR_SUMMARY = 'configurable-bundle/configurator/summary';
+    protected const ROUTE_CONFIGURATOR_ADD_TO_CART = 'configurable-bundle/configurator/add-to-cart';
 
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'idConfigurableBundleTemplate';
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'idConfigurableBundleTemplateSlot';
@@ -34,6 +35,7 @@ class ConfigurableBundlePageRouteProviderPlugin extends AbstractRouteProviderPlu
         $routeCollection = $this->addConfiguratorTemplateSelectionRoute($routeCollection);
         $routeCollection = $this->addConfiguratorSlotsRoute($routeCollection);
         $routeCollection = $this->addConfiguratorSummaryRoute($routeCollection);
+        $routeCollection = $this->addConfiguratorAddToCartRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -85,6 +87,23 @@ class ConfigurableBundlePageRouteProviderPlugin extends AbstractRouteProviderPlu
         $route = $route->setRequirement(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE, '\d+');
 
         $routeCollection->add(static::ROUTE_CONFIGURATOR_SUMMARY, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\ConfigurableBundlePage\Controller\ConfiguratorController::addToCartAction()
+     *
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addConfiguratorAddToCartRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute('/configurable-bundle/configurator/{idConfigurableBundleTemplate}/add-to-cart', 'ConfigurableBundlePage', 'Configurator', 'addToCartAction');
+        $route = $route->setRequirement(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE, '\d+');
+
+        $routeCollection->add(static::ROUTE_CONFIGURATOR_ADD_TO_CART, $route);
 
         return $routeCollection;
     }

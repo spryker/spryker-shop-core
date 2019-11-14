@@ -8,16 +8,16 @@
 namespace SprykerShop\Yves\ConfigurableBundlePage\Reader;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageRequestTransfer;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageResponseTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 
 interface ConfigurableBundleTemplateStorageReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageRequestTransfer $configurableBundleTemplateStorageRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageResponseTransfer
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
      */
     public function getConfigurableBundleTemplateStorage(
         ConfigurableBundleTemplateStorageRequestTransfer $configurableBundleTemplateStorageRequestTransfer
-    ): ConfigurableBundleTemplateStorageResponseTransfer;
+    ): ?ConfigurableBundleTemplateStorageTransfer;
 }

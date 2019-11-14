@@ -46,8 +46,9 @@
                     form: data.form.createView,
                     submitButtonText: 'configurable_bundle_page.configurator.add_to_cart' | trans,
                     submitButtonClass: 'button button--success',
+                    method: 'POST',
                     action: path(
-                        'configurable-bundle/configurator/summary', {
+                        'configurable-bundle/configurator/add-to-cart', {
                             'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
                         }
                     )
