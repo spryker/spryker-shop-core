@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ConfigurableBundlePage;
 
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundleCartClientInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundlePageSearchClientInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundleStorageClientInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Form\ConfiguratorStateForm;
@@ -70,5 +71,13 @@ class ConfigurableBundlePageFactory extends AbstractFactory
     public function getConfigurableBundleStorageClient(): ConfigurableBundlePageToConfigurableBundleStorageClientInterface
     {
         return $this->getProvidedDependency(ConfigurableBundlePageDependencyProvider::CLIENT_CONFIGURABLE_BUNDLE_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundleCartClientInterface
+     */
+    public function getConfigurableBundleCartClient(): ConfigurableBundlePageToConfigurableBundleCartClientInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundlePageDependencyProvider::CLIENT_CONFIGURABLE_BUNDLE_CART);
     }
 }

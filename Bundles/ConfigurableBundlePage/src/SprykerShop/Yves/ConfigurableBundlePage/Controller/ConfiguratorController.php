@@ -38,6 +38,11 @@ class ConfiguratorController extends AbstractController
     protected const ROUTE_CONFIGURATOR_SLOTS = 'configurable-bundle/configurator/slots';
 
     /**
+     * @uses \SprykerShop\Yves\CartPage\Controller\CartController::indexAction()
+     */
+    protected const ROUTE_CART = 'cart';
+
+    /**
      * @uses \SprykerShop\Yves\ConfigurableBundlePage\Plugin\Router\ConfigurableBundlePageRouteProviderPlugin::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE
      */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'idConfigurableBundleTemplate';
@@ -254,7 +259,21 @@ class ConfiguratorController extends AbstractController
                 new CreateConfiguredBundleRequestTransfer()
             );
 
-        // ToDo: To make a client call in next story.
+        $quoteResponseTransfer = $this->getFactory()
+            ->getConfigurableBundleCartClient()
+            ->addConfiguredBundle($createConfiguredBundleRequestTransfer);
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
+                $this->addErrorMessage($quoteErrorTransfer->getMessage());
+            }
+
+            return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_SLOTS, [
+                static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $request->attributes->getInt(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE),
+            ]);
+        }
+
+        $this->redirectResponseInternal(static::ROUTE_CART);
     }
 
     /**
