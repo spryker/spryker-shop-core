@@ -103,15 +103,6 @@
             align-items: center;
         }
 
-        &--stretch {
-            align-items: stretch;
-
-            & .col {
-                margin-top: 0;
-                margin-bottom: 0;
-            }
-        }
-
         &--justify {
             justify-content: space-between;
 
@@ -126,6 +117,15 @@
                 &:last-child {
                     margin-right: 0;
                 }
+            }
+        }
+
+        &--stretch {
+            align-items: stretch;
+
+            & .col:not(.col--save-spaces) {
+                margin-top: 0;
+                margin-bottom: 0;
             }
         }
 

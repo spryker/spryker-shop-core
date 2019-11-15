@@ -5,11 +5,9 @@
 } %}
 
 {% block body %}
-
     {% include molecule('products-grid', 'ProductSearchWidget') with {
         data: {
             products: data.products,
         }
     } only %}
-
 {% endblock %}
