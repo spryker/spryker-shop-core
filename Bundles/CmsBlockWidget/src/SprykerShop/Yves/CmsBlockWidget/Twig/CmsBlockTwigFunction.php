@@ -10,9 +10,9 @@ namespace SprykerShop\Yves\CmsBlockWidget\Twig;
 use ArrayObject;
 use Generated\Shared\Transfer\SpyCmsBlockEntityTransfer;
 use Spryker\Shared\Twig\TwigFunction;
-use SprykerShop\CmsBlockWidget\src\SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToStoreClientInterface;
+use SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface;
 use Twig\Environment;
 
 class CmsBlockTwigFunction extends TwigFunction
@@ -30,7 +30,7 @@ class CmsBlockTwigFunction extends TwigFunction
     protected $storeClient;
 
     /**
-     * @var \SprykerShop\CmsBlockWidget\src\SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface
+     * @var \SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface
      */
     protected $cmsBlockValidator;
 
@@ -42,7 +42,7 @@ class CmsBlockTwigFunction extends TwigFunction
     /**
      * @param \SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface $cmsBlockStorageClient
      * @param \SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToStoreClientInterface $storeClient
-     * @param \SprykerShop\CmsBlockWidget\src\SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface $cmsBlockValidator
+     * @param \SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface $cmsBlockValidator
      * @param string $localeName
      */
     public function __construct(
