@@ -7,7 +7,7 @@
     "php": ">=7.1",
     "spryker-shop/shop-cms-slot-extension": "^0.2.0",
     "spryker/cms-slot-block": "^0.1.0",
-    "spryker/cms-slot-block-storage": "*",
+    "spryker/cms-slot-block-storage": "^0.1.0",
     "spryker/kernel": "^3.30.0",
     "spryker/twig": "^1.0.0 || ^2.0.0 || ^3.0.0"
   },
