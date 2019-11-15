@@ -10,12 +10,12 @@ namespace SprykerShop\Yves\CmsBlockWidget;
 use Spryker\Shared\Twig\TwigFunction;
 use Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\CmsBlockWidget\src\SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidator;
-use SprykerShop\CmsBlockWidget\src\SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToStoreClientInterface;
 use SprykerShop\Yves\CmsBlockWidget\Twig\CmsBlockPlaceholderTwigFunction;
 use SprykerShop\Yves\CmsBlockWidget\Twig\CmsBlockTwigFunction;
+use SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidator;
+use SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CmsBlockWidgetFactory extends AbstractFactory
@@ -44,7 +44,7 @@ class CmsBlockWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\CmsBlockWidget\src\SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface
+     * @return \SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface
      */
     public function createCmsBlockValidator(): CmsBlockValidatorInterface
     {
