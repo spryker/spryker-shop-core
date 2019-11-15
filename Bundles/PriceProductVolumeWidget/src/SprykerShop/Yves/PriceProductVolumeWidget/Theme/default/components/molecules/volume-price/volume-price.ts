@@ -24,7 +24,7 @@ export default class VolumePrice extends Component {
     /**
      * The custom class for price animation.
      */
-    highLightedClass: string;
+    highLightedClass: string = `${this.name}__price--highlighted`;
 
     /**
      * The current quantity select/input value.
@@ -38,11 +38,10 @@ export default class VolumePrice extends Component {
 
     protected init(): void {
         this.productPriceElement = <HTMLElement>this.getElementsByClassName(`${this.jsName}__price`)[0];
-        this.volumePricesData = <VolumePricesData[]>JSON.parse(this.dataset.json);
         this.quantityElement = <HTMLFormElement>document.getElementsByClassName(`${this.jsName}__quantity`)[0];
-        this.highLightedClass = <string>`${this.name}__price--highlighted`;
 
         this.mapEvents();
+        this.modifyVolumePriceData();
     }
 
     protected mapEvents(): void {
@@ -55,26 +54,35 @@ export default class VolumePrice extends Component {
         });
     }
 
+    protected modifyVolumePriceData(): void {
+        const volumePricesData = <VolumePricesData[]>JSON.parse(this.dataset.json);
+
+        this.volumePricesData = <VolumePricesData[]>volumePricesData.sort((firstElement, secondElement) => {
+            return firstElement.count - secondElement.count;
+        }).reverse();
+    }
+
     protected quantityChangeHandler(event: Event): void {
         const currentQuantityValue = Number((<HTMLInputElement>event.target).value);
-        const defaultVolumePricesData = this.volumePricesData[0];
 
-        this.changePrice(defaultVolumePricesData.price);
+        this.volumePricesData.every((item: VolumePricesData) => {
+            if (currentQuantityValue >= Number(item.count)) {
+                this.changePrice(item.price);
 
-        this.volumePricesData.forEach((item: VolumePricesData) => {
-            if (currentQuantityValue !== Number(item.count)) {
-                return;
+                return false;
             }
 
-            this.changePrice(item.price);
+            return true;
         });
     }
 
     protected changePrice(price: string): void {
-        if (this.productPriceElement.innerText !== price) {
-            this.productPriceElement.innerHTML = price;
-            this.highlight();
+        if (this.productPriceElement.innerText === price) {
+            return;
         }
+
+        this.productPriceElement.innerHTML = price;
+        this.highlight();
     }
 
     protected highlight(): void {
