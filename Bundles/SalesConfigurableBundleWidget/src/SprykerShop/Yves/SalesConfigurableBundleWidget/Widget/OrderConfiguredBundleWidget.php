@@ -26,7 +26,7 @@ class OrderConfiguredBundleWidget extends AbstractWidget
      */
     public function __construct(OrderTransfer $orderTransfer, ?iterable $itemTransfers = [])
     {
-        if (!count($itemTransfers)) {
+        if ($itemTransfers === null || !count($itemTransfers)) {
             $itemTransfers = $orderTransfer->getItems();
         }
 

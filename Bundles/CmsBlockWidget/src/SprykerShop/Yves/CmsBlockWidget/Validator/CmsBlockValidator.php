@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\CmsBlockWidget\src\SprykerShop\Yves\CmsBlockWidget\Validator;
+namespace SprykerShop\Yves\CmsBlockWidget\Validator;
 
 use DateTime;
 use Generated\Shared\Transfer\SpyCmsBlockEntityTransfer;

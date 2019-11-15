@@ -4,7 +4,7 @@
   "description": "PersistentCartSharePage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker-shop/cart-page": "^3.0.0",
     "spryker-shop/resource-share-page-extension": "^1.0.0",
     "spryker-shop/shop-application": "^1.0.0",
