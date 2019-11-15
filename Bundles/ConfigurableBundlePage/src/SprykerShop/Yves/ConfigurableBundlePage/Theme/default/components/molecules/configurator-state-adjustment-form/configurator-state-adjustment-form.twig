@@ -11,20 +11,26 @@
 } %}
 
 {% block body %}
-    {% set inputName =  'configurator_state_form[slots][' ~ data.selectedSlotId ~ '][sku]' %}
-    {% set inputId =  'configurator_state_form_slots_' ~ data.selectedSlotId ~ '_sku' %}
-
     {{ form_start(data.form) }}
 
-    {% for slotForm in data.form.slots %}
-        {{ form_widget(slotForm) }}
-    {% endfor %}
+    {% block form %}
+        {% for slotForm in data.form.slots %}
+            {{ form_row(slotForm.sku, { id: '' }) }}
+        {% endfor %}
 
-    <input id="{{ inputId }}" name="{{ inputName }}" type="hidden" value="{{ data.product.sku }}">
+        {% set inputName =  'configurator_state_form[slots][' ~ data.selectedSlotId ~ '][sku]' %}
+        {% set inputId =  'configurator_state_form_slots_' ~ data.selectedSlotId ~ '_sku' %}
 
-    <button type="submit" name="submit" class="button button--success">
-        {{ 'configurable_bundle_page.select' | trans }}
-    </button>
+        <input name="{{ inputName }}" type="hidden" value="{{ data.product.sku }}">
 
+        {% block button %}
+            <button type="submit" name="submit" class="{% block buttonClasses %}button button--expand {% endblock %}">
+                {% block buttonText %}
+                    {{ 'configurable_bundle_page.select' | trans }}
+                {% endblock %}
+            </button>
+        {% endblock %}
+    {% endblock %}
+    {{ form_row(data.form._token,{ id: '' }) }}
     {{ form_end(data.form) }}
 {% endblock %}

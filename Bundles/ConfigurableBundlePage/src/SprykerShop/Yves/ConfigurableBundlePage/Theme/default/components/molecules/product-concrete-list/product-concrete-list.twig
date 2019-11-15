@@ -7,45 +7,21 @@
 {% define data = {
     selectedSlotId: required,
     form: required,
-    productConcreteCriteriaFilter: required
+    productConcreteCriteriaFilter: required,
 } %}
 
 {% block body %}
     {% widget 'ProductConcreteSearchGridWidget' args [data.productConcreteCriteriaFilter] %}
         {% block body %}
-            {% embed molecule('products-grid', 'ProductSearchWidget') with {
-                data: {
-                    products: data.products
-                },
-                embed: {
-                    form: data.form,
-                    selectedSlotId: data.selectedSlotId
-                }
-            } only %}
-
-                {% block product %}
-                    {% embed molecule('product', 'ProductSearchWidget') with {
-                        data: {
-                            product: product
-                        },
-                        embed: {
-                            form: embed.form,
-                            selectedSlotId: embed.selectedSlotId
-                        }
-                    } only %}
-                        {% block productExtension %}
-                            {% include molecule('configurator-state-adjustment-form', 'ConfigurableBundlePage') with {
-                                data: {
-                                    product: data.product,
-                                    form: embed.form.createView,
-                                    selectedSlotId: embed.selectedSlotId
-                                },
-                            } only %}
-                        {% endblock %}
-                    {% endembed %}
-                {% endblock %}
-
-            {% endembed %}
+            {% for product in data.products %}
+                {% include molecule('product', 'ProductSearchWidget') with {
+                    data: {
+                        product: product,
+                        form: data.form.createView,
+                        selectedSlotId: data.selectedSlotId,
+                    },
+                } only %}
+            {% endfor %}
         {% endblock %}
     {% endwidget %}
 {% endblock %}
