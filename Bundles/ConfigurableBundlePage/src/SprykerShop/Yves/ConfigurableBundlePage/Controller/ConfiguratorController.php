@@ -58,9 +58,9 @@ class ConfiguratorController extends AbstractController
     protected const REQUEST_PARAM_ID_PRODUCT_LIST = ProductListTransfer::ID_PRODUCT_LIST;
 
     /**
-     * @uses \Spryker\Client\ProductListSearch\Plugin\Search\ProductListQueryExpanderPlugin::REQUEST_PARAM_ITEMS_PER_PAGE
+     * @uses \Spryker\Client\Catalog\CatalogConfig::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME
      */
-    protected const REQUEST_PARAM_ITEMS_PER_PAGE = 'itemsPerPage';
+    protected const REQUEST_PARAM_ITEMS_PER_PAGE = 'ipp';
 
     /**
      * @see \SprykerShop\Yves\CatalogPage\CatalogPageConfig::CATALOG_PAGE_LIMIT
