@@ -3,6 +3,7 @@
 {% define data = {
     products: required,
     facets: required,
+    filteredFacets: [],
     category: null,
     categories: [],
     categoryId: null,
@@ -79,6 +80,7 @@
                         class: 'box spacing-top spacing-top--big js-catalog__filters-toggle',
                         data: {
                             facets: data.facets,
+                            filteredFacets: data.filteredFacets,
                             filterPath: data.filterPath,
                             categories: data.categories,
                             isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
@@ -96,6 +98,7 @@
                     class: 'spacing-top spacing-top--big',
                     data: {
                         facets: data.facets,
+                        filteredFacets: data.filteredFacets
                     },
                 } only %}
 
