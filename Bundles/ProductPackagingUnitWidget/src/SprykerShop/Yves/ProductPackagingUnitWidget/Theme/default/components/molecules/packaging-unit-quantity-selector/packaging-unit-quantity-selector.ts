@@ -419,7 +419,7 @@ export default class PackagingUnitQuantitySelector extends Component {
             }
         }
 
-        if ((this.puError || this.muError || this.isAddToCartDisabled) && this.packagingUnitIsAmountVariable) {
+        if (this.puError || this.muError || this.isAddToCartDisabled) {
             this.askCustomerForCorrectAmountInput(amountInSalesUnitInput);
             this.addToCartButton.setAttribute("disabled", "disabled");
 
@@ -656,9 +656,5 @@ export default class PackagingUnitQuantitySelector extends Component {
         const amountPercentageOfDivision = this.round(((currentMinusMinimumAmount * amountPrecision) % (this.getAmountInterval() * amountPrecision)) / amountPrecision, 4);
 
         return amountPercentageOfDivision;
-    }
-
-    protected get packagingUnitIsAmountVariable(): boolean {
-        return this.hasAttribute('packaging-unit-is-amount-variable');
     }
 }
