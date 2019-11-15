@@ -1,13 +1,13 @@
 {% extends template('widget') %}
 
 {% define data = {
-    products: _widget.products
+    products: _widget.products,
 } %}
 
 {% block body %}
     {% include molecule('products-grid', 'ProductSearchWidget') with {
         data: {
-            products: data.products
+            products: data.products,
         }
     } only %}
 {% endblock %}

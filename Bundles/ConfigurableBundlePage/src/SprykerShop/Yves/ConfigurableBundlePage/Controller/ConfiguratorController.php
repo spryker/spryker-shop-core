@@ -58,9 +58,9 @@ class ConfiguratorController extends AbstractController
     protected const REQUEST_PARAM_ID_PRODUCT_LIST = ProductListTransfer::ID_PRODUCT_LIST;
 
     /**
-     * @uses \Spryker\Client\ProductListSearch\Plugin\Search\ProductListQueryExpanderPlugin::REQUEST_PARAM_ITEMS_PER_PAGE
+     * @uses \Spryker\Client\Catalog\CatalogConfig::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME
      */
-    protected const REQUEST_PARAM_ITEMS_PER_PAGE = 'itemsPerPage';
+    protected const REQUEST_PARAM_ITEMS_PER_PAGE = 'ipp';
 
     /**
      * @see \SprykerShop\Yves\CatalogPage\CatalogPageConfig::CATALOG_PAGE_LIMIT
@@ -232,7 +232,7 @@ class ConfiguratorController extends AbstractController
         $idConfigurableBundleTemplate = $request->attributes->getInt(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE);
         $form = $this->getFactory()->getConfiguratorStateForm();
 
-        $formData = $request->request->get($form->getName())[ConfiguratorStateForm::FILED_SLOTS] ?? null;
+        $formData = $request->request->get($form->getName())[ConfiguratorStateForm::FIELD_SLOTS] ?? null;
 
         if (!$formData) {
             return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);
@@ -264,12 +264,10 @@ class ConfiguratorController extends AbstractController
      */
     protected function isSummaryPageUnlocked(FormInterface $form): bool
     {
-        $slotStateFormsData = $form->getData()[ConfiguratorStateForm::FILED_SLOTS] ?? [];
+        $slotStateFormsData = $form->getData()[ConfiguratorStateForm::FIELD_SLOTS] ?? [];
 
         foreach ($slotStateFormsData as $slotStateFormData) {
-            $sku = $slotStateFormData[SlotStateForm::FILED_SKU] ?? null;
-
-            if ($sku) {
+            if (isset($slotStateFormData[SlotStateForm::FIELD_SKU])) {
                 return true;
             }
         }
@@ -319,7 +317,7 @@ class ConfiguratorController extends AbstractController
      */
     protected function findSelectedProductConcreteForSlot(FormInterface $form, int $idConfigurableBundleTemplateSlot): ?ProductConcreteTransfer
     {
-        $sku = $form->getData()[ConfiguratorStateForm::FILED_SLOTS][$idConfigurableBundleTemplateSlot][SlotStateForm::FILED_SKU] ?? null;
+        $sku = $form->getData()[ConfiguratorStateForm::FIELD_SLOTS][$idConfigurableBundleTemplateSlot][SlotStateForm::FIELD_SKU] ?? null;
 
         if (!$sku) {
             return null;
@@ -341,8 +339,8 @@ class ConfiguratorController extends AbstractController
     {
         $skus = [];
 
-        foreach ($form->getData()[ConfiguratorStateForm::FILED_SLOTS] as $slotStateFormData) {
-            $skus[] = $slotStateFormData[SlotStateForm::FILED_SKU];
+        foreach ($form->getData()[ConfiguratorStateForm::FIELD_SLOTS] as $slotStateFormData) {
+            $skus[] = $slotStateFormData[SlotStateForm::FIELD_SKU];
         }
 
         return $skus;

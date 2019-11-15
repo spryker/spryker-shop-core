@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class SlotStateForm extends AbstractType
 {
-    public const FILED_SKU = 'sku';
+    public const FIELD_SKU = 'sku';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -33,7 +33,7 @@ class SlotStateForm extends AbstractType
      */
     protected function addSkuField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FILED_SKU, HiddenType::class, [
+        $builder->add(static::FIELD_SKU, HiddenType::class, [
             'label' => false,
             'required' => false,
         ]);

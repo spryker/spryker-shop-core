@@ -94,7 +94,7 @@ class ConfiguredBundleRequestMapper implements ConfiguredBundleRequestMapperInte
         ConfigurableBundleTemplateSlotStorageTransfer $configurableBundleTemplateSlotStorageTransfer
     ): ConfiguredBundleItemRequestTransfer {
         return (new ConfiguredBundleItemRequestTransfer())
-            ->setSku($slotStateFormData[SlotStateForm::FILED_SKU])
+            ->setSku($slotStateFormData[SlotStateForm::FIELD_SKU])
             ->setSlotUuid($configurableBundleTemplateSlotStorageTransfer->getUuid())
             ->setQuantity(static::DEFAULT_QUANTITY);
     }
