@@ -15,7 +15,6 @@ use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotStorageCl
 use SprykerShop\Yves\ShopCmsSlot\Twig\Node\ShopCmsSlotNodeBuilder;
 use SprykerShop\Yves\ShopCmsSlot\Twig\Node\ShopCmsSlotNodeBuilderInterface;
 use SprykerShop\Yves\ShopCmsSlot\Twig\TokenParser\ShopCmsSlotTokenParser;
-use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface;
 
 class ShopCmsSlotFactory extends AbstractFactory
 {
@@ -41,18 +40,18 @@ class ShopCmsSlotFactory extends AbstractFactory
     public function createCmsSlotDataProvider(): CmsSlotDataProviderInterface
     {
         return new CmsSlotDataProvider(
-            $this->getCmsSlotContentPlugin(),
+            $this->getCmsSlotContentPlugins(),
             $this->getCmsSlotClient(),
             $this->getCmsSlotStorageClient()
         );
     }
 
     /**
-     * @return \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface
+     * @return \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface[]
      */
-    public function getCmsSlotContentPlugin(): CmsSlotContentPluginInterface
+    public function getCmsSlotContentPlugins(): array
     {
-        return $this->getProvidedDependency(ShopCmsSlotDependencyProvider::PLUGIN_CMS_SLOT_CONTENT);
+        return $this->getProvidedDependency(ShopCmsSlotDependencyProvider::PLUGINS_CMS_SLOT_CONTENT);
     }
 
     /**
