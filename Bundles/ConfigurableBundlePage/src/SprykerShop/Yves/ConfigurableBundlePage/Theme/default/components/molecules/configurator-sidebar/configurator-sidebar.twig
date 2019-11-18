@@ -10,6 +10,7 @@
     configurableBundleTemplateStorage: required,
     isSummaryPageUnlocked: required,
     selectedSlotId: '',
+    isSummaryPage: false,
 } %}
 
 {%- block extraClass %} spacing-left spacing-top{% endblock -%}
@@ -25,12 +26,14 @@
                             submitButtonText: configurableBundleTemplateSlotStorage.name | trans,
                             idConfigurableBundleTemplateSlot: configurableBundleTemplateSlotStorage.idConfigurableBundleTemplateSlot,
                             selectedSlotId: data.selectedSlotId,
+                            submitButtonClass: 'button button--expand button--big-spaces',
+                            isExtraClass: true,
                             action: path(
                                 'configurable-bundle/configurator/slots', {
                                     'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
                                     'idConfigurableBundleTemplateSlot': configurableBundleTemplateSlotStorage.idConfigurableBundleTemplateSlot,
                                 }
-                            )
+                            ),
                         },
                     } only %}
                 {% endblock %}
@@ -40,17 +43,22 @@
     {% block summary %}
         <li class="{% block summaryClasses %}{% endblock %}">
             {% block summaryInner %}
+                {% set summaryButtonExtraClass = data.isSummaryPage ? ' button--active' : ' button--unselected' %}
+                {% set summaryButtonClasses = 'button button--expand button--big-spaces' ~ summaryButtonExtraClass %}
+
                 {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
                     data: {
                         form: data.form.createView,
                         submitButtonText: 'configurable_bundle_page.configurator.summary' | trans,
                         isSubmitButtonActive: data.isSummaryPageUnlocked,
+                        submitButtonClass: summaryButtonClasses,
+                        isExtraClass: false,
                         isSummary: true,
                         action: path(
                             'configurable-bundle/configurator/summary', {
                                 'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
                             }
-                        )
+                        ),
                     },
                 } only %}
             {% endblock %}
