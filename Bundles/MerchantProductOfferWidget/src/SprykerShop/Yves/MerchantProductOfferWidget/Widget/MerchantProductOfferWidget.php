@@ -20,14 +20,8 @@ class MerchantProductOfferWidget extends AbstractWidget
      */
     public function __construct(ProductViewTransfer $productViewTransfer)
     {
-        $this->addParameter(
-            'productOfferCollection',
-            $this->getFactory()->createProductOfferReader()->getProductOfferCollection($productViewTransfer, $this->getLocale())
-        );
-        $this->addParameter(
-            'productView',
-            $productViewTransfer
-        );
+        $this->addProductOfferCollection($productViewTransfer);
+        $this->addProductViewParameter($productViewTransfer);
     }
 
     /**
@@ -44,5 +38,28 @@ class MerchantProductOfferWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@MerchantProductOfferWidget/views/merchant-product-offer-widget/merchant-product-offer-widget.twig';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return void
+     */
+    protected function addProductOfferCollection(ProductViewTransfer $productViewTransfer): void
+    {
+        $this->addParameter(
+            'productOfferCollection',
+            $this->getFactory()->createProductOfferReader()->getProductOfferCollection($productViewTransfer, $this->getLocale())
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return void
+     */
+    protected function addProductViewParameter(ProductViewTransfer $productViewTransfer): void
+    {
+        $this->addParameter('productView', $productViewTransfer);
     }
 }

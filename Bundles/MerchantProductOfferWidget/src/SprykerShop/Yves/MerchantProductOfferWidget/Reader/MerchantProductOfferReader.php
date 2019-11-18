@@ -158,19 +158,19 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
      */
     protected function getCurrentProductPriceTransferForOffer(array $priceProductTransfers, string $productOfferReference): CurrentProductPriceTransfer
     {
-        $priceProductTransfersForOffer = [];
+        $offerPriceProductTransfers = [];
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            if ($priceProductTransfer->getPriceDimension()->getType() === MerchantProductOfferWidgetConfig::DIMENSION_TYPE &&
-                $priceProductTransfer->getPriceDimension()->getProductOfferReference() !== $productOfferReference
-            ) {
+            $dimensionType = $priceProductTransfer->getPriceDimension()->getType();
+            $priceDimensionProductOfferReference = $priceProductTransfer->getPriceDimension()->getProductOfferReference();
+
+            if ($dimensionType === MerchantProductOfferWidgetConfig::DIMENSION_TYPE && $priceDimensionProductOfferReference !== $productOfferReference) {
                 continue;
             }
-            $priceProductTransfersForOffer[] = $priceProductTransfer;
+            $offerPriceProductTransfers[] = $priceProductTransfer;
         }
-        $priceProductFilterTransfer = new PriceProductFilterTransfer();
-        $priceProductFilterTransfer->setProductOfferReference($productOfferReference);
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())->setProductOfferReference($productOfferReference);
 
-        return $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter($priceProductTransfersForOffer, $priceProductFilterTransfer);
+        return $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter($offerPriceProductTransfers, $priceProductFilterTransfer);
     }
 }
