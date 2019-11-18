@@ -35,11 +35,15 @@ export default class ProductItem extends Component {
     }
 
     protected set newImageUrl(imageUrl: string) {
-        this.productImage.src = imageUrl;
+        if (this.productImage) {
+            this.productImage.src = imageUrl;
+        }
     }
 
     protected set newName(name: string) {
-        this.productName.innerText = name;
+        if (this.productName) {
+            this.productName.innerText = name;
+        }
     }
 
     protected set newRating(rating: number) {
@@ -47,18 +51,26 @@ export default class ProductItem extends Component {
     }
 
     protected set newDefaultPrice(defaultPrice: string) {
-        this.productDefaultPrice.innerText = defaultPrice;
+        if (this.productDefaultPrice) {
+            this.productDefaultPrice.innerText = defaultPrice;
+        }
     }
 
     protected set newOriginalPrice(originalPrice: string) {
-        this.productOriginalPrice.innerText = originalPrice;
+        if (this.productOriginalPrice) {
+            this.productOriginalPrice.innerText = originalPrice;
+        }
     }
 
     protected set newDetailPageUrl(detailPageUrl: string) {
-        this.productLinkDetailPage.href = detailPageUrl;
+        if (this.productLinkDetailPage) {
+            this.productLinkDetailPage.forEach((element: HTMLAnchorElement) => element.href = detailPageUrl);
+        }
     }
 
     protected set newAddToCartUrl(addToCartUrl: string) {
-        this.productLinkAddToCart.href = addToCartUrl;
+        if (this.productLinkAddToCart) {
+            this.productLinkAddToCart.href = addToCartUrl;
+        }
     }
 }
