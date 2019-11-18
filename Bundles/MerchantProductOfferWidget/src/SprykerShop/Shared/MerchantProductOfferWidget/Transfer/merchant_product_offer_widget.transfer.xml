@@ -26,10 +26,6 @@
         <property name="productOffersStorage" type="ProductOfferStorage[]" singular="productOfferStorage"/>
     </transfer>
 
-    <transfer name="ProductOfferStorage">
-        <property name="merchantProfile" type="MerchantProfileStorage"/>
-    </transfer>
-
     <transfer name="Url">
     </transfer>
 </transfers>
