@@ -7,15 +7,7 @@
         class: 'box'
     } only %}
 
-    <div class="box spacing-top spacing-top--big">
-        {{ spyCmsBlock({
-            name: 'Home Page'
-        }) }}
-    </div>
-
-    <div class="box spacing-top spacing-top--big">
-        {{ spyCmsBlock({
-            name: 'Teaser for home page'
-        }) }}
+    <div class="box">
+        {% cms_slot "slt-1" %}
     </div>
 {% endblock %}
