@@ -1,0 +1,12 @@
+@mixin configurable-bundle-page-selected-product-list($name: '.selected-product-list') {
+    #{$name} {
+        &__heading {
+            margin: 0 0.5rem -0.5rem;
+            padding: 0.5rem;
+            border: 1px solid $setting-color-lighter;
+            border-bottom: none;
+        }
+
+        @content;
+    }
+}

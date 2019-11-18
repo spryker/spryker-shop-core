@@ -8,6 +8,8 @@
     form: required,
     action: required,
     submitButtonText: required,
+    submitButtonClass: 'button button--expand',
+    isExtraClass: false,
     idConfigurableBundleTemplateSlot: '',
     selectedSlotId: '',
     isSummary: false,
@@ -21,11 +23,8 @@
     {% for slotForm in data.form.slots %}
         {{ form_row(slotForm.sku, { id: '' }) }}
     {% endfor %}
-    {% set extraClass = 'button--unselected' %}
 
-    {% if data.form.slots[data.idConfigurableBundleTemplateSlot].vars.value.sku is defined %}
-        {% set extraClass = 'button--selected' %}
-    {%- endif %}
+    {% set extraClass = 'button--unselected' %}
 
     {% if data.form.slots[data.idConfigurableBundleTemplateSlot].vars.value.sku is defined %}
         {% set extraClass = 'button--selected' %}
@@ -35,11 +34,15 @@
         {% set extraClass = 'button--active' %}
     {%- endif %}
 
-    {% set buttonClasses = 'button button--expand button--big-spaces ' ~ extraClass %}
+    {% block buttonClasses %}
+        {% set buttonClasses = data.isExtraClass ? data.submitButtonClass ~ ' ' ~ extraClass : data.submitButtonClass %}
 
-    <button type="submit" name="submit" class="{{ buttonClasses }}" {{ data.isSubmitButtonActive ? '' : 'disabled' }}>
-        {{ data.submitButtonText }}
-    </button>
+        {% block button %}
+            <button type="submit" name="submit" class="{{ buttonClasses }}" {{ data.isSubmitButtonActive ? '' : 'disabled' }}>
+                {{ data.submitButtonText }}
+            </button>
+        {% endblock %}
+    {% endblock %}
 
     {{ form_row(data.form._token,{ id: '' }) }}
     {{ form_end(data.form) }}
