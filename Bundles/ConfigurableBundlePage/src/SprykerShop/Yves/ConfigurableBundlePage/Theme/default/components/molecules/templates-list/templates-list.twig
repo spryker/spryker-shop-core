@@ -23,12 +23,17 @@
                                 {% block listItemInner %}
                                     {% set slotsPageUrl = path('configurable-bundle/configurator/slots', {'idConfigurableBundleTemplate': template.idConfigurableBundleTemplate }) %}
                                     <div class="box box--stretch">
-                                        <a href="{{ slotsPageUrl }}" class="{{ config.name }}__item-title grid grid--center grid--middle spacing-bottom">
-                                            {{ template.name | trans }}
-                                        </a>
-                                        <a href="{{ slotsPageUrl }}" class="button button--expand button--success">
-                                            {{ 'configurable_bundle_page.select' | trans }}
-                                        </a>
+                                        {% block templateTitle %}
+                                            <a href="{{ slotsPageUrl }}" class="{{ config.name }}__item-title grid grid--center grid--middle spacing-bottom">
+                                                {{ template.name | trans }}
+                                            </a>
+                                        {% endblock %}
+
+                                        {% block button %}
+                                            <a href="{{ slotsPageUrl }}" class="button button--expand button--success">
+                                                {{ 'configurable_bundle_page.select' | trans }}
+                                            </a>
+                                        {% endblock %}
                                     </div>
                                 {% endblock %}
                             </li>

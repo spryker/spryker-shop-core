@@ -1,63 +1,63 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'selected-product-list'
+    name: 'selected-product-list',
 } %}
 
 {% define data = {
     products: required,
     form: required,
-    configurableBundleTemplateStorage: required
+    configurableBundleTemplateStorage: required,
 } %}
 
 {% block body %}
-    {% set configuratorForm = data.form.createView %}
-
-    {% for idSlot,slotForm in configuratorForm.slots %}
+    {% for idSlot,slotForm in data.form.createView.slots %}
         {% set sku = slotForm.vars.value.sku %}
-        <div class="{{ config.name }}__heading grid grid--justify grid--middle">
-            <span class="col col--sm-10">
-                {{ data.configurableBundleTemplateStorage.slots[idSlot].name | trans }}
-            </span>
-            <span class="col col--sm-1">
-                {% embed molecule('configurator-state-form', 'ConfigurableBundlePage') with {
-                    data: {
-                        form: configuratorForm,
-                        submitButtonText: 'configurable_bundle_page.edit' | trans,
-                        action: path(
-                            'configurable-bundle/configurator/slots', {
-                                'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
-                                'idConfigurableBundleTemplateSlot': data.configurableBundleTemplateStorage.slots[idSlot].idConfigurableBundleTemplateSlot,
-                            }
-                        )
-                    },
-                } only %}
-                    {% block buttonClasses %}
-                        {% set buttonClasses = 'button button--expand' %}
+        {% block productSection %}
+            {% block heading %}
+                <div class="{{ config.name }}__heading grid grid--justify grid--middle">
+                    {% block headingInner %}
+                        {% block title %}
+                            <h6 class="col col--sm-10">
+                                {{ data.configurableBundleTemplateStorage.slots[idSlot].name | trans }}
+                            </h6>
+                        {% endblock %}
 
-                        {% block button %}
-                            {{ parent() }}
+                        {% block form %}
+                            <span class="col col--sm-1">
+                                {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
+                                    data: {
+                                        form: data.form.createView,
+                                        submitButtonText: 'configurable_bundle_page.edit' | trans,
+                                        action: path(
+                                            'configurable-bundle/configurator/slots', {
+                                                'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
+                                                'idConfigurableBundleTemplateSlot': data.configurableBundleTemplateStorage.slots[idSlot].idConfigurableBundleTemplateSlot,
+                                            }
+                                        )
+                                    },
+                                } only %}
+                            </span>
                         {% endblock %}
                     {% endblock %}
-                {% endembed %}
-            </span>
-        </div>
-        {% embed molecule('product', 'ProductSearchWidget') with {
-            data: {
-                product: data.products[sku],
-                form: configuratorForm,
-                selectedSlotId: '',
-            },
-            embed: {
-                configurableBundleTemplateStorage: data.configurableBundleTemplateStorage,
-                idSlot: idSlot,
-            }
-        } only %}
-            {% block name %}
-                <strong class="{{ config.name }}__name">{{ data.product.localizedAttributes[0].name }}</strong>
+                </div>
             {% endblock %}
 
-            {% block actionsContainerInner %}{% endblock %}
-        {% endembed %}
+            {% block product %}
+                {% embed molecule('product', 'ProductSearchWidget') with {
+                    data: {
+                        product: data.products[sku],
+                        form: data.form.createView,
+                        selectedSlotId: '',
+                    },
+                } only %}
+                    {% block name %}
+                        <strong class="{{ config.name }}__name">{{ data.product.localizedAttributes[0].name }}</strong>
+                    {% endblock %}
+
+                    {% block actionsContainerInner %}{% endblock %}
+                {% endembed %}
+            {% endblock %}
+        {% endblock %}
     {% endfor %}
 {% endblock %}

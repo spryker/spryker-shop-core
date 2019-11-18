@@ -15,6 +15,7 @@
 
 {% block body %}
     {% block imageContainer %}
+        {#  TODO add thumbnail in next story #}
         <div class="col col--sm-3 col--md-2 col--middle">
 
         </div>
@@ -31,7 +32,7 @@
 
                 {% block sku %}
                     {% if data.product.sku %}
-                        <div>{{ data.product.sku }}</div>
+                        <span class="{{ config.name }}__sku">{{ data.product.sku }}</span>
                     {% endif %}
                 {% endblock %}
             {% endblock %}
