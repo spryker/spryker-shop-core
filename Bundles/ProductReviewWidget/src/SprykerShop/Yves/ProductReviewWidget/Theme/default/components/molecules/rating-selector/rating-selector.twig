@@ -2,7 +2,7 @@
 
 {% define config = {
     name: 'rating-selector',
-    tag: 'rating-selector'
+    tag: 'rating-selector',
 } %}
 
 {% define data = {
@@ -12,12 +12,13 @@
     steps: 5,
     useHalfSteps: false,
     inputId: '',
-    inputName: 'rating'
+    inputName: 'rating',
+    productItemJsName: '',
 } %}
 
 {% define attributes = {
     'readonly': false,
-    'disable-if-empty-value': false
+    'disable-if-empty-value': false,
 } %}
 
 {% set singleStepValue = (data.maxValue - data.minValue) / (data.steps - 1) %}
@@ -97,15 +98,15 @@
         {% endspaceless %}
     </span>
 
-    {% if not attributes.readonly %}
+    {#{% if not attributes.readonly %}#}
         {% block input %}
             <input
                 type="hidden"
-                class="{{config.jsName}}__input"
-                {% if data.inputId is not empty %}id="{{data.inputId}}"{% endif %}
-                name="{{data.inputName}}"
-                value="{{data.value}}"
+                class="{{ config.jsName }}__input {{ data.productItemJsName }}__rating"
+                {% if data.inputId is not empty %}id="{{ data.inputId }}"{% endif %}
+                name="{{ data.inputName }}"
+                value="{{ data.value }}"
                 {% if attributes['disable-if-empty-value'] and data.value is empty %}disabled{% endif %}>
         {% endblock %}
-    {% endif %}
+    {#{% endif %}#}
 {% endblock %}
