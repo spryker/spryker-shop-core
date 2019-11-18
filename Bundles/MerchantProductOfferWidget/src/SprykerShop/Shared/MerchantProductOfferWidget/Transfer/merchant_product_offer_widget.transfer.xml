@@ -15,15 +15,18 @@
         <property name="merchantName" type="string"/>
         <property name="merchantUrl" type="string"/>
         <property name="fkMerchant" type="int"/>
-    </transfer>
-
-    <transfer name="MerchantProfileStorageUrl">
-        <property name="url" type="string"/>
+        <property name="urlCollection" type="Url[]" singular="url"/>
     </transfer>
 
     <transfer name="ProductView">
+        <property name="idProductConcrete" type="int"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="ProductOfferStorageCollection">
+        <property name="productOffersStorage" type="ProductOfferStorage[]" singular="productOfferStorage"/>
+    </transfer>
+
+    <transfer name="Url">
     </transfer>
 </transfers>
