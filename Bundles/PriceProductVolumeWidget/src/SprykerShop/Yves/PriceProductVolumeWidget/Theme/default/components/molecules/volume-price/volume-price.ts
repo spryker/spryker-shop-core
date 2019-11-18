@@ -41,7 +41,7 @@ export default class VolumePrice extends Component {
         this.quantityElement = <HTMLFormElement>document.getElementsByClassName(`${this.jsName}__quantity`)[0];
 
         this.mapEvents();
-        this.modifyVolumePriceData();
+        this.sortVolumePriceData();
     }
 
     protected mapEvents(): void {
@@ -54,12 +54,12 @@ export default class VolumePrice extends Component {
         });
     }
 
-    protected modifyVolumePriceData(): void {
+    protected sortVolumePriceData(): void {
         const volumePricesData = <VolumePricesData[]>JSON.parse(this.dataset.json);
 
         this.volumePricesData = <VolumePricesData[]>volumePricesData.sort((firstElement, secondElement) => {
-            return firstElement.count - secondElement.count;
-        }).reverse();
+            return secondElement.count - firstElement.count;
+        });
     }
 
     protected quantityChangeHandler(event: Event): void {
@@ -81,7 +81,7 @@ export default class VolumePrice extends Component {
             return;
         }
 
-        this.productPriceElement.innerHTML = price;
+        this.productPriceElement.innerText = price;
         this.highlight();
     }
 
