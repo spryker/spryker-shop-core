@@ -75,6 +75,7 @@ class ConfiguratorController extends AbstractController
     protected const GLOSSARY_KEY_CONFIGURATOR_SUMMARY_PAGE_LOCKED = 'configurable_bundle_page.configurator.summary_page_locked';
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = 'configurable_bundle_page.template_not_found';
     protected const GLOSSARY_KEY_INVALID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_COMBINATION = 'configurable_bundle_page.invalid_template_slot_combination';
+    protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_ADDED_TO_CART = 'configurable_bundle_page.configurator.added_to_cart';
 
     /**
      * @return \Spryker\Yves\Kernel\View\View
@@ -273,7 +274,9 @@ class ConfiguratorController extends AbstractController
             ]);
         }
 
-        $this->redirectResponseInternal(static::ROUTE_CART);
+        $this->addSuccessMessage(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_ADDED_TO_CART);
+
+        return $this->redirectResponseInternal(static::ROUTE_CART);
     }
 
     /**
