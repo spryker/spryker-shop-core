@@ -1,0 +1,3 @@
+@include helper-import(molecule, selected-product-list) {
+    @include configurable-bundle-page-selected-product-list;
+}

@@ -5,19 +5,24 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/application": "^3.0.0",
     "spryker/configurable-bundle": "^2.0.0",
     "spryker/configurable-bundle-page-search": "^1.0.0",
+    "spryker/configurable-bundle-storage": "^2.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker-shop/shop-application": "^1.0.0",
-    "spryker-shop/shop-ui": "^1.0.0"
+    "spryker-shop/shop-ui": "^1.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/router": "*",
+    "spryker-shop/product-search-widget": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/router": "Use this module if you want use the RouterProviderPlugin."
+    "spryker/router": "Use this module if you want use the RouterProviderPlugin.",
+    "spryker-shop/product-search-widget": "Use this module if you want use the ProductConcreteSearchGridWidget."
   },
   "autoload": {
     "psr-4": {

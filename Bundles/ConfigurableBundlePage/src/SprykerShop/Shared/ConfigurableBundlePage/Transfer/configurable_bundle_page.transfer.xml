@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="spryker:transfer-01"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ConfigurableBundleTemplateStorageRequest">
+        <property name="idConfigurableBundleTemplate" type="int"/>
+        <property name="idConfigurableBundleTemplateSlot" type="int"/>
+    </transfer>
+
+    <transfer name="ConfiguredBundleItemRequest">
+        <property name="slotUuid" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="ConfiguredBundleRequest">
+        <property name="templateUuid" type="string"/>
+        <property name="templateName" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="CreateConfiguredBundleRequest">
+        <property name="configuredBundleRequest" type="ConfiguredBundleRequest"/>
+        <property name="items" type="ConfiguredBundleItemRequest[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateStorage">
+        <property name="slots" singular="slot" type="ConfigurableBundleTemplateSlotStorage[]"/>
+        <property name="name" type="string"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConcreteCriteriaFilter">
+        <property name="requestParams" type="array" singular="requestParams"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotStorage">
+        <property name="idProductList" type="int"/>
+        <property name="idConfigurableBundleTemplateSlot" type="int"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplatePageSearchRequest">
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="sku" type="string"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
+    </transfer>
+
+    <transfer name="LocalizedAttributes">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductList">
+        <property name="idProductList" type="int"/>
+    </transfer>
+
+</transfers>

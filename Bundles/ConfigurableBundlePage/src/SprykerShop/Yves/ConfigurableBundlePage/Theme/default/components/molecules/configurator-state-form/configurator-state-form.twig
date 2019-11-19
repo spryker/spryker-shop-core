@@ -1,0 +1,49 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'configurator-state-form',
+} %}
+
+{% define data = {
+    form: required,
+    action: required,
+    submitButtonText: required,
+    submitButtonClass: 'button button--expand',
+    isExtraClass: false,
+    idConfigurableBundleTemplateSlot: '',
+    selectedSlotId: '',
+    isSummary: false,
+    isSubmitButtonActive: true,
+    method: 'GET',
+} %}
+
+{% block body %}
+    {{ form_start(data.form,  {'action': data.action, 'method': data.method}) }}
+
+    {% for slotForm in data.form.slots %}
+        {{ form_row(slotForm.sku, { id: '' }) }}
+    {% endfor %}
+
+    {% set extraClass = 'button--unselected' %}
+
+    {% if data.form.slots[data.idConfigurableBundleTemplateSlot].vars.value.sku is defined %}
+        {% set extraClass = 'button--selected' %}
+    {%- endif %}
+
+    {% if data.idConfigurableBundleTemplateSlot == data.selectedSlotId and not data.isSummary %}
+        {% set extraClass = 'button--active' %}
+    {%- endif %}
+
+    {% block buttonClasses %}
+        {% set buttonClasses = data.isExtraClass ? data.submitButtonClass ~ ' ' ~ extraClass : data.submitButtonClass %}
+
+        {% block button %}
+            <button type="submit" name="submit" class="{{ buttonClasses }}" {{ data.isSubmitButtonActive ? '' : 'disabled' }}>
+                {{ data.submitButtonText }}
+            </button>
+        {% endblock %}
+    {% endblock %}
+
+    {{ form_row(data.form._token,{ id: '' }) }}
+    {{ form_end(data.form) }}
+{% endblock %}
