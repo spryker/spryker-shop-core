@@ -177,10 +177,10 @@ class CheckoutAddressCollectionForm extends AbstractType
             return;
         }
 
-        /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer|false $shipmentGroupTransfer */
-        $shipmentGroupTransfer = current($shipmentGroupCollection);
+        /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer|null $shipmentGroupTransfer */
+        $shipmentGroupTransfer = $shipmentGroupCollection->getIterator()->current();
 
-        if ($shipmentGroupTransfer === false) {
+        if ($shipmentGroupTransfer === null) {
             return;
         }
 
