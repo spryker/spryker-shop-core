@@ -55,11 +55,9 @@ class CartNoteController extends AbstractController
             ->createConfigurableBundleCartNoteHandler()
             ->setCartNoteToConfiguredBundle($configurableBundleCartNoteForm->getData());
 
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->getRedirectResponse($request);
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_CART_NOTE_ADDED);
         }
-
-        $this->addSuccessMessage($this->getSuccessMessage());
 
         return $this->getRedirectResponse($request);
     }
@@ -78,15 +76,5 @@ class CartNoteController extends AbstractController
         }
 
         return $this->redirectResponseInternal(static::ROUTE_CART);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getSuccessMessage(): string
-    {
-        return $this->getFactory()
-            ->getGlossaryStorageClient()
-            ->translate(static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_CART_NOTE_ADDED, $this->getLocale());
     }
 }

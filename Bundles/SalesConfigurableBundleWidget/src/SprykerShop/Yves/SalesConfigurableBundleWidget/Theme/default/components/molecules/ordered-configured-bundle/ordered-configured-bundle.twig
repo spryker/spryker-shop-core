@@ -94,7 +94,7 @@
     {% endblock %}
 
     {% block configurableBundleCartNote %}
-        {% include molecule('sales-configured-bundle-cart-note', 'ConfigurableBundleCartNoteWidget') ignore missing with {
+        {% include molecule('readonly-bundled-cart-note', 'ConfigurableBundleCartNoteWidget') ignore missing with {
             data: {
                 bundle: data.bundle,
             },
