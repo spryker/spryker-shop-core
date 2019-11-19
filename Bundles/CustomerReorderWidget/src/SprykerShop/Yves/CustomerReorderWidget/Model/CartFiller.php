@@ -81,7 +81,7 @@ class CartFiller implements CartFillerInterface
      */
     protected function updateCart(array $orderItems, OrderTransfer $orderTransfer): void
     {
-        $orderItemsCopy = $this->getItemTransfersCopy($orderItems);
+        $orderItemsBeforeSanitize = $this->copyItemTransfers($orderItems);
         $cartChangeTransfer = $this->createCartChangeTransfer($orderItems);
         $cartChangeTransfer->setQuote($this->cartClient->getQuote());
         $orderItemTransfers = $this->sanitizeOrderItems($orderItems);
@@ -91,7 +91,7 @@ class CartFiller implements CartFillerInterface
             static::PARAM_ORDER_REFERENCE => $orderTransfer->getOrderReference(),
         ]);
 
-        $this->executePostReorderPlugins($quoteTransfer, $orderItemsCopy);
+        $this->executePostReorderPlugins($quoteTransfer, $orderItemsBeforeSanitize);
     }
 
     /**
@@ -99,7 +99,7 @@ class CartFiller implements CartFillerInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function getItemTransfersCopy(array $itemTransfers): array
+    protected function copyItemTransfers(array $itemTransfers): array
     {
         $copiedItemTransfers = [];
 
@@ -119,8 +119,9 @@ class CartFiller implements CartFillerInterface
     {
         $orderItemsSanitized = new ArrayObject();
         foreach ($orderItems as $itemTransfer) {
-            $orderItemsSanitized->append($this->removeIdSalesShipmentFromItem($itemTransfer));
-            $this->cleanUpSalesOrderConfiguredBundleItem($itemTransfer);
+            $itemTransfer = $this->removeIdSalesShipmentFromItem($itemTransfer);
+            $itemTransfer = $this->removeSalesOrderConfiguredBundleItemFromItemTransfer($itemTransfer);
+            $orderItemsSanitized->append($itemTransfer);
         }
 
         return $orderItemsSanitized;
@@ -159,7 +160,7 @@ class CartFiller implements CartFillerInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function cleanUpSalesOrderConfiguredBundleItem(ItemTransfer $itemTransfer): ItemTransfer
+    protected function removeSalesOrderConfiguredBundleItemFromItemTransfer(ItemTransfer $itemTransfer): ItemTransfer
     {
         if (!$itemTransfer->getSalesOrderConfiguredBundleItem()) {
             return $itemTransfer;

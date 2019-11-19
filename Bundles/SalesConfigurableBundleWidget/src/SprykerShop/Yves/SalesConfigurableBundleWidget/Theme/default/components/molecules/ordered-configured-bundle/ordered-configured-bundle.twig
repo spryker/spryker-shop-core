@@ -76,7 +76,7 @@
     {% block bundleProductList %}
         <div class="{{ config.name }}__products">
             {% block bundleProductListInner %}
-                {% set bundleCurrentAmount = 0 %}
+                {% set partialItemCount = 0 %}
                 {% for item in data.bundle.salesOrderConfiguredBundleItems if data.items[item.IdSalesOrderItem] is defined %}
                     {% include molecule('ordered-configured-bundle-product', 'SalesConfigurableBundleWidget') with {
                         data: {
@@ -85,10 +85,10 @@
                             image: data.items[item.IdSalesOrderItem].metadata.image,
                         },
                     } only %}
-                    {% set bundleCurrentAmount = bundleCurrentAmount + 1 %}
+                    {% set partialItemCount = partialItemCount + 1 %}
                 {% endfor %}
 
-                {{ 'configured_bundle_widget.items' | trans }} {{ bundleCurrentAmount }} / {{ data.bundle.salesOrderConfiguredBundleItems | length }}
+                {{ 'configured_bundle_widget.items' | trans }} {{ partialItemCount }} / {{ data.bundle.salesOrderConfiguredBundleItems | length }}
             {% endblock %}
         </div>
     {% endblock %}
