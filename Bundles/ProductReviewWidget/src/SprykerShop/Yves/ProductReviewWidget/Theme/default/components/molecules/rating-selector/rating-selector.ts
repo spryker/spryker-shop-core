@@ -1,4 +1,5 @@
 import Component from 'ShopUi/models/component';
+import ProductItem, { EVENT_UPDATE_RATING } from 'ShopUi/components/molecules/product-item/product-item';
 
 export default class RatingSelector extends Component {
     /**
@@ -10,21 +11,35 @@ export default class RatingSelector extends Component {
      * Collection of the elements which toggle the steps of the product review.
      */
     steps: HTMLElement[];
+    protected productItem: ProductItem;
 
     protected readyCallback(): void {
         this.input = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__input`)[0];
         this.steps = <HTMLElement[]>Array.from(this.getElementsByClassName(`${this.jsName}__step`));
+        if (this.productItemClassName) {
+            this.productItem = <ProductItem>this.closest(this.productItemClassName);
+        }
 
         if (!this.readOnly) {
             this.checkInput(this.value);
             this.mapEvents();
         }
+
+        this.mapCustomEvents();
     }
 
     protected mapEvents(): void {
         this.steps.forEach((step: HTMLElement) => {
             step.addEventListener('click', (event: Event) => this.onStepClick(event));
         });
+    }
+
+    protected mapCustomEvents(): void {
+        if (this.productItem) {
+            this.productItem.addEventListener(EVENT_UPDATE_RATING, (event: Event) => {
+                this.updateRating((<CustomEvent>event).detail.rating);
+            });
+        }
     }
 
     protected onStepClick(event: Event): void {
@@ -92,5 +107,9 @@ export default class RatingSelector extends Component {
      */
     get disableIfEmptyValue(): boolean {
         return this.hasAttribute('disable-if-empty-value');
+    }
+
+    protected get productItemClassName(): string {
+        return this.getAttribute('product-item-class-name');
     }
 }
