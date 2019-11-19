@@ -35,6 +35,12 @@
                         <span class="{{ config.name }}__sku">{{ data.product.sku }}</span>
                     {% endif %}
                 {% endblock %}
+
+                {% block price %}
+                    {% if data.product.price %}
+                        <span class="{{ config.name }}__price">{{ data.product.price | money }}</span>
+                    {% endif %}
+                {% endblock %}
             {% endblock %}
         </div>
     {% endblock %}

@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ProductSearchWidget;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientInterface;
+use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToPriceProductStorageClientInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Service\ProductSearchWidgetToUtilEncodingServiceInterface;
 use SprykerShop\Yves\ProductSearchWidget\Form\ProductQuickAddForm;
 use SprykerShop\Yves\ProductSearchWidget\Mapper\ProductConcreteMapper;
@@ -28,6 +29,7 @@ class ProductSearchWidgetFactory extends AbstractFactory
     {
         return new ProductConcreteReader(
             $this->getCatalogClient(),
+            $this->getPriceProductStorageClient(),
             $this->createProductConcreteMapper()
         );
     }
@@ -70,5 +72,13 @@ class ProductSearchWidgetFactory extends AbstractFactory
     public function getUtilEncodingService(): ProductSearchWidgetToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ProductSearchWidgetDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToPriceProductStorageClientInterface
+     */
+    public function getPriceProductStorageClient(): ProductSearchWidgetToPriceProductStorageClientInterface
+    {
+        return $this->getProvidedDependency(ProductSearchWidgetDependencyProvider::CLIENT_PRICE_PRODUCT_STORAGE);
     }
 }
