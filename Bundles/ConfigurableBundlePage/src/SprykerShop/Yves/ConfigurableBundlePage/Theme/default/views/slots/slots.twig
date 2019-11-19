@@ -7,7 +7,7 @@
     selectedSlotId: _view.selectedSlotId | default(null),
     productConcreteCriteriaFilter: _view.productConcreteCriteriaFilter | default(null),
     selectedProductConcrete: _view.selectedProductConcrete | default(null),
-    isSummaryPageUnlocked: _view.isSummaryPageUnlocked | default(false)
+    isSummaryPageUnlocked: _view.isSummaryPageUnlocked | default(false),
 } %}
 
 {% block breadcrumbs %}
@@ -16,14 +16,14 @@
             steps: [{
                 label: 'configurable_bundle_page.template_selection' | trans,
                 url: path('configurable-bundle/configurator/template-selection'),
-                withChevron: false
-            }]
-        }
+                withChevron: false,
+            }],
+        },
     } only %}
 {% endblock %}
 
 {% block content %}
-    <div class="grid">
+    <div class="grid grid--stretch">
         <div class="col col--sm-12 col--md-3" class="button">
             {% include molecule('configurator-sidebar', 'ConfigurableBundlePage') with {
                 data: {
@@ -35,32 +35,71 @@
             } only %}
         </div>
 
-        <div class="col col--sm-12 col--md-9">
+        {% set wrapperClasses = data.selectedSlotId ? 'col col--sm-12 col--md-9' : 'grid grid--middle grid--center col col--save-spaces col--expand box' %}
+
+        <div class="{{ wrapperClasses }}">
             {% if data.selectedSlotId %}
                 {% if data.selectedProductConcrete %}
-                    {% include molecule('selected-product', 'ConfigurableBundlePage') with {
+                    {% embed molecule('product', 'ProductSearchWidget') with {
                         data: {
                             product: data.selectedProductConcrete,
+                            form: data.form.createView,
                             selectedSlotId: data.selectedSlotId,
-                            form: data.form.createView
                         },
                     } only %}
+                        {% block name %}
+                            <strong class="{{ config.name }}__name">{{ data.product.localizedAttributes[0].name }}</strong>
+                        {% endblock %}
+
+                        {% block actionsContainerInner %}
+                            {% embed molecule('configurator-state-adjustment-form', 'ConfigurableBundlePage') with {
+                                data: {
+                                    product: data.product,
+                                    form: data.form,
+                                    selectedSlotId: data.selectedSlotId,
+                                },
+                            } only %}
+                                {% block form %}
+                                    {% for slotId,slotForm in data.form.slots %}
+                                        {% if slotId == data.selectedSlotId %}
+                                            {% do slotForm.setRendered %}
+                                        {% else %}
+                                            {{ form_widget(slotForm) }}
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    <button type="submit" name="submit" class="button button--expand button--success">
+                                        {{ 'configurable_bundle_page.unselect' | trans }}
+                                    </button>
+                                {% endblock %}
+                            {% endembed %}
+                        {% endblock %}
+                    {% endembed %}
                 {% endif %}
 
-                {% include molecule('product-concrete-list', 'ConfigurableBundlePage') with {
-                    data: {
-                        selectedSlotId: data.selectedSlotId,
-                        form: data.form,
-                        productConcreteCriteriaFilter: data.productConcreteCriteriaFilter,
-                    },
-                } only %}
+                {% widget 'ProductConcreteSearchGridWidget' args [data.productConcreteCriteriaFilter] %}
+                    {% block body %}
+                        {% if data.products is not empty %}
+                            {% for product in data.products %}
+                                {% include molecule('product', 'ProductSearchWidget') with {
+                                    data: {
+                                        product: product,
+                                        form: data.form.createView,
+                                        selectedSlotId: data.selectedSlotId,
+                                    },
+                                } only %}
+                            {% endfor %}
+                        {% else %}
+                            <p>{{ 'product_search_widget.search.no_results' | trans }}</p>
+                        {% endif %}
+                    {% endblock %}
+                {% endwidget %}
             {% else %}
-                <div class="box">
-                    <h5>{{ 'configurable_bundle_page.configurator.tip.header' | trans }}</h5>
-                    <p>{{ 'configurable_bundle_page.configurator.tip.text' | trans }}</p>
+                <div class="col col--sm-12 col--md-5">
+                    <h5 class="text-center">{{ 'configurable_bundle_page.configurator.tip.header' | trans }}</h5>
+                    <p class="text-center">{{ 'configurable_bundle_page.configurator.tip.text' | trans }}</p>
                 </div>
             {% endif %}
         </div>
-
     </div>
 {% endblock %}

@@ -4,7 +4,7 @@
     title: 'configurable_bundle_page.configurator.summary' | trans,
     form: _view.form,
     configurableBundleTemplateStorage: _view.configurableBundleTemplateStorage,
-    products: _view.products
+    products: _view.products,
 } %}
 
 {% block breadcrumbs %}
@@ -13,48 +13,49 @@
             steps: [{
                 label: 'configurable_bundle_page.template_selection' | trans,
                 url: path('configurable-bundle/configurator/template-selection'),
-                withChevron: false
-            }]
-        }
+                withChevron: false,
+            }],
+        },
     } only %}
 {% endblock %}
 
 {% block content %}
     <div class="grid">
-
         <div class="col col--sm-12 col--md-3" class="button">
             {% include molecule('configurator-sidebar', 'ConfigurableBundlePage') with {
                 data: {
                     form: data.form,
                     configurableBundleTemplateStorage: data.configurableBundleTemplateStorage,
                     isSummaryPageUnlocked: true,
-                }
+                    isSummaryPage: true,
+                },
             } only %}
         </div>
-
         <div class="col col--sm-12 col--md-9">
             {% include molecule('selected-product-list', 'ConfigurableBundlePage') with {
+                class: 'spacing-top',
                 data: {
                     form: data.form,
                     products: data.products,
-                    configurableBundleTemplateStorage: data.configurableBundleTemplateStorage
+                    configurableBundleTemplateStorage: data.configurableBundleTemplateStorage,
                 },
             } only %}
-
-            {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
-                data: {
-                    form: data.form.createView,
-                    submitButtonText: 'configurable_bundle_page.configurator.add_to_cart' | trans,
-                    submitButtonClass: 'button button--success',
-                    method: 'POST',
-                    action: path(
-                        'configurable-bundle/configurator/add-to-cart', {
-                            'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
-                        }
-                    )
-                },
-            } only %}
+            <div class="grid grid--right">
+                {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
+                    class: 'spacing-x col col--sm-2',
+                    data: {
+                        form: data.form.createView,
+                        submitButtonText: 'configurable_bundle_page.configurator.add_to_cart' | trans,
+                        submitButtonClass: 'button button--expand button--success',
+                        method: 'POST',
+                        action: path(
+                            'configurable-bundle/configurator/add-to-cart', {
+                                'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
+                            }
+                        ),
+                    },
+                } only %}
+            </div>
         </div>
-
     </div>
 {% endblock %}

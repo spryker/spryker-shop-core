@@ -1,0 +1,16 @@
+@mixin product-search-widget-product($name: '.product') {
+    #{$name} {
+        &__name {
+            @include helper-font-weight(bold);
+            color: $setting-color-text;
+        }
+
+        &__sku {
+            @include helper-font-size(small);
+            display: block;
+            color: $setting-color-dark;
+        }
+
+        @content;
+    }
+}
