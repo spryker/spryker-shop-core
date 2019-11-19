@@ -20,7 +20,7 @@
                     {% block productOfferList %}
                         {% for productOffer in data.productOfferCollection  %}
                             {% block productOffer %}
-                                {% set isSameMerchantOffer = data.productView.currentProductPrice.priceDimension.productOfferReference == productOffer.productOfferReference %}
+                                {% set isSameMerchantOffer = data.productView.productOfferReference == productOffer.productOfferReference %}
 
                                 {% include molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
                                     data: {
