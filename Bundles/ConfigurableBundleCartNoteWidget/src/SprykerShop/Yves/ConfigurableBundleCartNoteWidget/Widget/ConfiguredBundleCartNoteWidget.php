@@ -65,6 +65,7 @@ class ConfiguredBundleCartNoteWidget extends AbstractWidget
      */
     protected function addQuoteParameter(?QuoteTransfer $quoteTransfer): void
     {
+        $quoteTransfer = $quoteTransfer ?: $this->getFactory()->getQuoteClient()->getQuote();
         $this->addParameter(static::PARAMETER_QUOTE, $quoteTransfer);
     }
 }

@@ -122,6 +122,18 @@
     {% endblock %}
 
     {% block configurableBundleCartNote %}
-        {% widget 'ConfiguredBundleCartNoteWidget' args [data.bundle, data.quote] only %}{% endwidget %}
+        {% if data.isEditable %}
+            {% block editableConfigurableBundleCartNote %}
+                {% widget 'ConfiguredBundleCartNoteWidget' args [data.bundle, data.quote] only %}{% endwidget %}
+            {% endblock %}
+        {% else %}
+            {% block notEditableConfigurableBundleCartNote %}
+                {% include molecule('readonly-bundled-cart-note', 'ConfigurableBundleCartNoteWidget') ignore missing with {
+                    data: {
+                        bundle: data.bundle,
+                    },
+                } only %}
+            {% endblock %}
+        {% endif %}
     {% endblock %}
 {% endblock %}
