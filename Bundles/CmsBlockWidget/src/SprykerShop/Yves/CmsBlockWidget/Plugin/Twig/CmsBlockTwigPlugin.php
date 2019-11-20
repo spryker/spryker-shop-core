@@ -38,9 +38,7 @@ class CmsBlockTwigPlugin extends AbstractTwigExtensionPlugin
      */
     protected function registerCmsBlockTwigExtensions(Environment $twig): Environment
     {
-        foreach ($this->getFactory()->getTwigExtensionPlugins() as $extension) {
-            $twig->addExtension($extension);
-        }
+        $twig->setExtensions($this->getFactory()->getTwigExtensionPlugins());
 
         return $twig;
     }

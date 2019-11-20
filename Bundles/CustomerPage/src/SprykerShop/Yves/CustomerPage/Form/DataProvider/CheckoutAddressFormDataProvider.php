@@ -322,7 +322,8 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function getFirstItemLevelShippingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
     {
-        $itemTransfer = current($quoteTransfer->getItems());
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $quoteTransfer->getItems()->getIterator()->current();
         $itemTransfer->requireShipment();
 
         return $itemTransfer->getShipment()->getShippingAddress();
