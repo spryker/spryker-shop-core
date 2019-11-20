@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ProductReviewWidget;
 
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Yves\Kernel\Application;
 use Spryker\Yves\ProductReview\ProductReviewFactory as SprykerProductReviewFactory;
 use SprykerShop\Yves\ProductReviewWidget\Controller\Calculator\ProductReviewSummaryCalculator;
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToCustomerClientInterface;
@@ -68,6 +69,8 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
     }
 
     /**
+     * @deprecated Use \Spryker\Client\ProductReview\ProductReviewFactory::createProductReviewSummaryCalculator instead.
+     *
      * @return \SprykerShop\Yves\ProductReviewWidget\Controller\Calculator\ProductReviewSummaryCalculatorInterface
      */
     public function createProductReviewSummaryCalculator()
@@ -81,5 +84,13 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
     public function createProductReviewFormDataProvider()
     {
         return new ProductReviewFormDataProvider();
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\Application
+     */
+    public function getApplication(): Application
+    {
+        return $this->getProvidedDependency(ProductReviewWidgetDependencyProvider::PLUGIN_APPLICATION);
     }
 }

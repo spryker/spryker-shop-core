@@ -57,4 +57,7 @@
         <property name="companyUserTransfer" type="CompanyUser"/>
     </transfer>
 
+    <transfer name="ProductView">
+    </transfer>
+
 </transfers>

@@ -35,7 +35,7 @@ class ProductDetailPageReviewWidget extends AbstractWidget
             ->addParameter('hasCustomer', $this->hasCustomer())
             ->addParameter('productReviews', $productReviews['productReviews'])
             ->addParameter('pagination', $productReviews['pagination'])
-            ->addParameter('summary', $this->getFactory()->createProductReviewSummaryCalculator()->execute($productReviews['ratingAggregation']))
+            ->addParameter('summary', $this->getFactory()->getProductReviewClient()->calculateProductReviewSummary($productReviews['ratingAggregation']))
             ->addParameter('maximumRating', $this->getFactory()->getProductReviewClient()->getMaximumRating());
     }
 
