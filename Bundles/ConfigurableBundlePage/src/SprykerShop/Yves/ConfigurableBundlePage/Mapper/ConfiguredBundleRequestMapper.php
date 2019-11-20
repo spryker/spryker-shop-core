@@ -62,7 +62,7 @@ class ConfiguredBundleRequestMapper implements ConfiguredBundleRequestMapperInte
                 continue;
             }
 
-            $createConfiguredBundleRequestTransfer->addItem(
+            $createConfiguredBundleRequestTransfer->addConfiguredBundleItemRequest(
                 $this->getMappedConfiguredBundleItemRequestTransfer($slotStateFormData, $configurableBundleTemplateSlotStorageTransfer)
             );
         }
