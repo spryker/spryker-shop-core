@@ -12,6 +12,8 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToPriceProductStorageClientInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Service\ProductSearchWidgetToUtilEncodingServiceInterface;
+use SprykerShop\Yves\ProductSearchWidget\Expander\ProductConcretePriceExpander;
+use SprykerShop\Yves\ProductSearchWidget\Expander\ProductConcretePriceExpanderInterface;
 use SprykerShop\Yves\ProductSearchWidget\Form\ProductQuickAddForm;
 use SprykerShop\Yves\ProductSearchWidget\Mapper\ProductConcreteMapper;
 use SprykerShop\Yves\ProductSearchWidget\Mapper\ProductConcreteMapperInterface;
@@ -29,9 +31,17 @@ class ProductSearchWidgetFactory extends AbstractFactory
     {
         return new ProductConcreteReader(
             $this->getCatalogClient(),
-            $this->getPriceProductStorageClient(),
+            $this->createProductConcretePriceExpander(),
             $this->createProductConcreteMapper()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductSearchWidget\Expander\ProductConcretePriceExpanderInterface
+     */
+    public function createProductConcretePriceExpander(): ProductConcretePriceExpanderInterface
+    {
+        return new ProductConcretePriceExpander($this->getPriceProductStorageClient());
     }
 
     /**

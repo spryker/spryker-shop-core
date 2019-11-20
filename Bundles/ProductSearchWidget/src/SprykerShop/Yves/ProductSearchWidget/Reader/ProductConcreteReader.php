@@ -7,12 +7,11 @@
 
 namespace SprykerShop\Yves\ProductSearchWidget\Reader;
 
-use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientInterface;
-use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToPriceProductStorageClientInterface;
+use SprykerShop\Yves\ProductSearchWidget\Expander\ProductConcretePriceExpanderInterface;
 use SprykerShop\Yves\ProductSearchWidget\Mapper\ProductConcreteMapperInterface;
 
 class ProductConcreteReader implements ProductConcreteReaderInterface
@@ -30,9 +29,9 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     protected $catalogClient;
 
     /**
-     * @var \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToPriceProductStorageClientInterface
+     * @var \SprykerShop\Yves\ProductSearchWidget\Expander\ProductConcretePriceExpanderInterface $productConcretePriceExpander
      */
-    protected $priceProductStorageClient;
+    protected $productConcretePriceExpander;
 
     /**
      * @var \SprykerShop\Yves\ProductSearchWidget\Mapper\ProductConcreteMapperInterface
@@ -41,16 +40,16 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
 
     /**
      * @param \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientInterface $catalogClient
-     * @param \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToPriceProductStorageClientInterface $priceProductStorageClient
+     * @param \SprykerShop\Yves\ProductSearchWidget\Expander\ProductConcretePriceExpanderInterface $productConcretePriceExpander
      * @param \SprykerShop\Yves\ProductSearchWidget\Mapper\ProductConcreteMapperInterface $productConcreteMapper
      */
     public function __construct(
         ProductSearchWidgetToCatalogClientInterface $catalogClient,
-        ProductSearchWidgetToPriceProductStorageClientInterface $priceProductStorageClient,
+        ProductConcretePriceExpanderInterface $productConcretePriceExpander,
         ProductConcreteMapperInterface $productConcreteMapper
     ) {
         $this->catalogClient = $catalogClient;
-        $this->priceProductStorageClient = $priceProductStorageClient;
+        $this->productConcretePriceExpander = $productConcretePriceExpander;
         $this->productConcreteMapper = $productConcreteMapper;
     }
 
@@ -87,30 +86,9 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
                 new ProductViewTransfer()
             );
 
-            $productViewTransfers[] = $this->expandProductViewTransferWithPrice($productViewTransfer);
+            $productViewTransfers[] = $this->productConcretePriceExpander->expandProductViewTransferWithPrice($productViewTransfer);
         }
 
         return $productViewTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    protected function expandProductViewTransferWithPrice(ProductViewTransfer $productViewTransfer): ProductViewTransfer
-    {
-        if (!$this->can('SeePricePermissionPlugin')) {
-            return $productViewTransfer;
-        }
-
-        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
-            ->setQuantity($productViewTransfer->getQuantity() ?: 1)
-            ->setIdProduct($productViewTransfer->getIdProductConcrete())
-            ->setIdProductAbstract($productViewTransfer->getIdProductAbstract());
-
-        $currentProductPriceTransfer = $this->priceProductStorageClient->getResolvedCurrentProductPriceTransfer($priceProductFilterTransfer);
-
-        return $productViewTransfer->setPrice($currentProductPriceTransfer->getSumPrice());
     }
 }
