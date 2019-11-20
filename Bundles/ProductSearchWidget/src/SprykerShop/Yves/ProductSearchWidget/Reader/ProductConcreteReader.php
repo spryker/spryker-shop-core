@@ -10,12 +10,15 @@ namespace SprykerShop\Yves\ProductSearchWidget\Reader;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToPriceProductStorageClientInterface;
 use SprykerShop\Yves\ProductSearchWidget\Mapper\ProductConcreteMapperInterface;
 
 class ProductConcreteReader implements ProductConcreteReaderInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * @uses \Spryker\Client\Catalog\Plugin\Elasticsearch\ResultFormatter\ProductConcreteCatalogSearchResultFormatterPlugin::NAME
      */
@@ -97,6 +100,10 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
      */
     protected function expandProductViewTransferWithPrice(ProductViewTransfer $productViewTransfer): ProductViewTransfer
     {
+        if (!$this->can('SeePricePermissionPlugin')) {
+            return $productViewTransfer;
+        }
+
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setQuantity($productViewTransfer->getQuantity() ?: 1)
             ->setIdProduct($productViewTransfer->getIdProductConcrete())
