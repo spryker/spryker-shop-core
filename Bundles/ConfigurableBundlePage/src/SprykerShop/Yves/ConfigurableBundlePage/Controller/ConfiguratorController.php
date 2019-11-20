@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageRequestTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ConfigurableBundlePage\Form\ConfiguratorStateForm;
 use SprykerShop\Yves\ConfigurableBundlePage\Form\SlotStateForm;
@@ -182,7 +182,7 @@ class ConfiguratorController extends AbstractController
 
         $response = array_merge($response, [
             'selectedSlotId' => $idConfigurableBundleTemplateSlot,
-            'selectedProductConcrete' => $this->findSelectedProductConcreteForSlot($form, $idConfigurableBundleTemplateSlot),
+            'selectedProduct' => $this->findSelectedProductConcreteForSlot($form, $idConfigurableBundleTemplateSlot),
             'productConcreteCriteriaFilter' => $this->createProductConcreteCriteriaFilterTransfer($configurableBundleTemplateStorageTransfer, $idConfigurableBundleTemplateSlot),
             'isSummaryPageUnlocked' => $this->isSummaryPageUnlocked($form),
         ]);
@@ -217,14 +217,14 @@ class ConfiguratorController extends AbstractController
             ]);
         }
 
-        $productConcreteTransfers = $this->getFactory()
-            ->getConfigurableBundleStorageClient()
-            ->getProductConcreteStoragesBySkusForCurrentLocale($this->extractProductConcreteSkus($form));
+        $productViewTransfers = $this->getFactory()
+            ->createProductConcreteReader()
+            ->getProductConcretesBySkusAndLocale($this->extractProductConcreteSkus($form), $this->getLocale());
 
         return [
             'form' => $form,
             'configurableBundleTemplateStorage' => $configurableBundleTemplateStorageTransfer,
-            'products' => $productConcreteTransfers,
+            'products' => $productViewTransfers,
         ];
     }
 
@@ -335,9 +335,9 @@ class ConfiguratorController extends AbstractController
      * @param \Symfony\Component\Form\FormInterface $form
      * @param int $idConfigurableBundleTemplateSlot
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    protected function findSelectedProductConcreteForSlot(FormInterface $form, int $idConfigurableBundleTemplateSlot): ?ProductConcreteTransfer
+    protected function findSelectedProductConcreteForSlot(FormInterface $form, int $idConfigurableBundleTemplateSlot): ?ProductViewTransfer
     {
         $sku = $form->getData()[ConfiguratorStateForm::FIELD_SLOTS][$idConfigurableBundleTemplateSlot][SlotStateForm::FIELD_SKU] ?? null;
 
@@ -345,11 +345,11 @@ class ConfiguratorController extends AbstractController
             return null;
         }
 
-        $productConcreteTransfers = $this->getFactory()
-            ->getConfigurableBundleStorageClient()
-            ->getProductConcreteStoragesBySkusForCurrentLocale([$sku]);
+        $productViewTransfers = $this->getFactory()
+            ->createProductConcreteReader()
+            ->getProductConcretesBySkusAndLocale([$sku], $this->getLocale());
 
-        return $productConcreteTransfers[$sku] ?? null;
+        return $productViewTransfers[$sku] ?? null;
     }
 
     /**

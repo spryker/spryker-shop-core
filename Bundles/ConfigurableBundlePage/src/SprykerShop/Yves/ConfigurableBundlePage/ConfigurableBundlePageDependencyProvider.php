@@ -12,12 +12,14 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundleCartClientBridge;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundlePageSearchClientBridge;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundleStorageClientBridge;
+use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToProductImageStorageClientBridge;
 
 class ConfigurableBundlePageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CONFIGURABLE_BUNDLE_PAGE_SEARCH = 'CLIENT_CONFIGURABLE_BUNDLE_PAGE_SEARCH';
     public const CLIENT_CONFIGURABLE_BUNDLE_STORAGE = 'CLIENT_CONFIGURABLE_BUNDLE_STORAGE';
     public const CLIENT_CONFIGURABLE_BUNDLE_CART = 'CLIENT_CONFIGURABLE_BUNDLE_CART';
+    public const CLIENT_PRODUCT_IMAGE_STORAGE = 'CLIENT_PRODUCT_IMAGE_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -30,6 +32,7 @@ class ConfigurableBundlePageDependencyProvider extends AbstractBundleDependencyP
         $container = $this->addConfigurableBundlePageSearchClient($container);
         $container = $this->addConfigurableBundleStorageClient($container);
         $container = $this->addConfigurableBundleCartClient($container);
+        $container = $this->addProductImageStorageClient($container);
 
         return $container;
     }
@@ -76,6 +79,22 @@ class ConfigurableBundlePageDependencyProvider extends AbstractBundleDependencyP
         $container->set(static::CLIENT_CONFIGURABLE_BUNDLE_CART, function (Container $container) {
             return new ConfigurableBundlePageToConfigurableBundleCartClientBridge(
                 $container->getLocator()->configurableBundleCart()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductImageStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PRODUCT_IMAGE_STORAGE, function (Container $container) {
+            return new ConfigurableBundlePageToProductImageStorageClientBridge(
+                $container->getLocator()->productImageStorage()->client()
             );
         });
 
