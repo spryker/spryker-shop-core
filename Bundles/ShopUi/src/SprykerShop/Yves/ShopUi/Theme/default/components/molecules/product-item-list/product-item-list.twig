@@ -4,20 +4,15 @@
     name: 'product-item-list',
 } %}
 
-{% block image %}
-    {% include atom('thumbnail') with {
-        modifiers: ['small'],
-        attributes: {
-            src: data.image,
-            alt: data.name,
-        },
-    } only %}
-{% endblock %}
+{% block thumbnailWrapper %}
+    {% set extraClass = '' %}
+    {% set modifiers = ['small'] %}
 
-{% block imageContainer %}
-    <div class="col col--sm-3 col--md-2 col--middle">
-        {{ parent() }}
-    </div>
+    {% block imageContainer %}
+        <div class="col col--sm-3 col--md-2 col--middle">
+            {{ parent() }}
+        </div>
+    {% endblock %}
 {% endblock %}
 
 {% block priceContainer %}

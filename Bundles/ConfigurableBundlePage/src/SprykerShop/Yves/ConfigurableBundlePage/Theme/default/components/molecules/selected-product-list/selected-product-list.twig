@@ -34,7 +34,7 @@
                                                 'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
                                                 'idConfigurableBundleTemplateSlot': data.configurableBundleTemplateStorage.slots[idSlot].idConfigurableBundleTemplateSlot,
                                             }
-                                        )
+                                        ),
                                     },
                                 } only %}
                             </span>
@@ -44,19 +44,15 @@
             {% endblock %}
 
             {% block product %}
-                {% embed molecule('product', 'ProductSearchWidget') with {
+                {% include molecule('configurator-product', 'ConfigurableBundlePage') with {
                     data: {
                         product: data.products[sku],
                         form: data.form.createView,
+                        name: data.products[sku].localizedAttributes[0].name,
                         selectedSlotId: '',
+                        isSelectable: false,
                     },
                 } only %}
-                    {% block name %}
-                        <strong class="{{ config.name }}__name">{{ data.product.localizedAttributes[0].name }}</strong>
-                    {% endblock %}
-
-                    {% block actionsContainerInner %}{% endblock %}
-                {% endembed %}
             {% endblock %}
         {% endblock %}
     {% endfor %}

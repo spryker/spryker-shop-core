@@ -7,12 +7,12 @@
 {% define data = {
     form: required,
     action: required,
-    submitButtonText: required,
+    submitButtonText: '',
     submitButtonClass: 'button button--expand',
     isExtraClass: false,
     idConfigurableBundleTemplateSlot: '',
     selectedSlotId: '',
-    isSummary: false,
+    isSeparateItem: false,
     isSubmitButtonActive: true,
     method: 'GET',
 } %}
@@ -30,15 +30,15 @@
         {% set extraClass = 'button--selected' %}
     {%- endif %}
 
-    {% if data.idConfigurableBundleTemplateSlot == data.selectedSlotId and not data.isSummary %}
+    {% if data.idConfigurableBundleTemplateSlot == data.selectedSlotId and not data.isSeparateItem %}
         {% set extraClass = 'button--active' %}
     {%- endif %}
 
-    {% block buttonClasses %}
+    {% block button %}
         {% set buttonClasses = data.isExtraClass ? data.submitButtonClass ~ ' ' ~ extraClass : data.submitButtonClass %}
 
-        {% block button %}
-            <button type="submit" name="submit" class="{{ buttonClasses }}" {{ data.isSubmitButtonActive ? '' : 'disabled' }}>
+        {% block buttonItem %}
+            <button type="submit" name="submit" class="{{ buttonClasses }}" {{ not data.isSubmitButtonActive ? 'disabled' }}>
                 {{ data.submitButtonText }}
             </button>
         {% endblock %}
