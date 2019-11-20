@@ -1,11 +1,10 @@
-{% extends model('component') %}
+{% extends molecule('product-item-list') %}
 
 {% define config = {
     name: 'product',
 } %}
 
 {% define data = {
-    product: required,
     selectedSlotId: required,
     form: required,
     configurableBundleTemplateStorage: '',
@@ -13,49 +12,17 @@
 
 {% block extraClass %} grid box{% endblock %}
 
-{% block body %}
+{% block thumbnailWrapper %}
+    {% set extraClass = '' %}
+    {% set modifiers = ['small'] %}
+
     {% block imageContainer %}
-        {#  TODO add thumbnail in next story #}
-        <div class="col col--sm-3 col--md-2 col--middle">
-
-        </div>
-    {% endblock %}
-
-    {% block content %}
-        <div class="col col--sm-6 col--md-7 col--xl-8 col--middle">
-            {% block productData %}
-                {% block name %}
-                    {% if data.product.name %}
-                        <strong class="{{ config.name }}__name">{{ data.product.name }}</strong>
-                    {% endif %}
-                {% endblock %}
-
-                {% block sku %}
-                    {% if data.product.sku %}
-                        <span class="{{ config.name }}__sku">{{ data.product.sku }}</span>
-                    {% endif %}
-                {% endblock %}
-
-                {% block price %}
-                    {% if data.product.price %}
-                        <span class="{{ config.name }}__price">{{ data.product.price | money }}</span>
-                    {% endif %}
-                {% endblock %}
-            {% endblock %}
-        </div>
-    {% endblock %}
-
-    {% block actionsContainer %}
-        <div class="col col--sm-3 col--xl-2 col--bottom">
-            {% block actionsContainerInner %}
-                {% include molecule('configurator-state-adjustment-form', 'ConfigurableBundlePage') with {
-                    data: {
-                        product: data.product,
-                        form: data.form,
-                        selectedSlotId: data.selectedSlotId,
-                    },
-                } only %}
-            {% endblock %}
-        </div>
+        {{ parent() }}
     {% endblock %}
 {% endblock %}
+
+{% block rating %}{% endblock %}
+
+{% block priceContainer %}{% endblock %}
+
+{% block actionsContainer %}{% endblock %}

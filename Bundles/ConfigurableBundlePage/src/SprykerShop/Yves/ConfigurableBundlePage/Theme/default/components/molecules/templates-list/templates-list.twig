@@ -10,7 +10,11 @@
 
 {% block body %}
     {% block title %}
-        <h5 class="{% block titleClasses %}spacing-bottom--big{% endblock %}">{{ 'configurable_bundle_page.configurator.choose_template' | trans }}</h5>
+        {% set titleClasses = 'spacing-bottom--big' %}
+
+        {% block titleItem %}
+            <h5 class="{{ titleClasses }}">{{ 'configurable_bundle_page.configurator.choose_template' | trans }}</h5>
+        {% endblock %}
     {% endblock %}
 
     {% block content %}
@@ -19,24 +23,36 @@
                 <ul class="grid {{ config.name }}__list">
                     {% for template in data.templates %}
                         {% block listItem %}
-                            <li class="{% block listItemClasses %}col col--sm-12 col--md-6 col--xl-3{% endblock %}">
-                                {% block listItemInner %}
-                                    {% set slotsPageUrl = path('configurable-bundle/configurator/slots', {'idConfigurableBundleTemplate': template.idConfigurableBundleTemplate }) %}
-                                    <div class="box box--stretch">
-                                        {% block templateTitle %}
-                                            <a href="{{ slotsPageUrl }}" class="{{ config.name }}__item-title grid grid--center grid--middle spacing-bottom">
-                                                {{ template.name | trans }}
-                                            </a>
-                                        {% endblock %}
+                            {% set listItemClasses = 'col col--sm-12 col--md-6 col--xl-3' %}
 
-                                        {% block button %}
-                                            <a href="{{ slotsPageUrl }}" class="button button--expand button--success">
-                                                {{ 'configurable_bundle_page.select' | trans }}
-                                            </a>
-                                        {% endblock %}
-                                    </div>
-                                {% endblock %}
-                            </li>
+                            {% block item %}
+                                <li class="{{ listItemClasses }}">
+                                    {% block listItemInner %}
+                                        {% set slotsPageUrl = path('configurable-bundle/configurator/slots', {'idConfigurableBundleTemplate': template.idConfigurableBundleTemplate }) %}
+                                        <div class="box box--stretch">
+                                            {% block templateTitle %}
+                                                {% set titleClasses = config.name ~ '__item-title grid grid--center grid--middle spacing-bottom' %}
+
+                                                {% block templateTitleItem %}
+                                                    <a href="{{ slotsPageUrl }}" class="{{ titleClasses }}">
+                                                        {{ template.name | trans }}
+                                                    </a>
+                                                {% endblock %}
+                                            {% endblock %}
+
+                                            {% block button %}
+                                                {% set buttonClasses = 'button button--expand button--success' %}
+
+                                                {% block buttonItem %}
+                                                    <a href="{{ slotsPageUrl }}" class="button button--expand button--success">
+                                                        {{ 'configurable_bundle_page.select' | trans }}
+                                                    </a>
+                                                {% endblock %}
+                                            {% endblock %}
+                                        </div>
+                                    {% endblock %}
+                                </li>
+                            {% endblock %}
                         {% endblock %}
                     {% endfor %}
                 </ul>

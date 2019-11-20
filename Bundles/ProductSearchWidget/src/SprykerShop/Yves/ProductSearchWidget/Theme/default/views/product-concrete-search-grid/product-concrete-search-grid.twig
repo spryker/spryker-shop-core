@@ -5,17 +5,17 @@
 } %}
 
 {% block body %}
-    {% if data.products is not empty %}
-        {% for product in data.products %}
-            {% block product %}
-                {% include molecule('product', 'ProductSearchWidget') with {
-                    data: {
-                        product: product,
-                    }
-                } only %}
-            {% endblock %}
-        {% endfor %}
-    {% else %}
+    {% for product in data.products %}
+        {% block product %}
+            {% include molecule('product', 'ProductSearchWidget') with {
+                data: {
+                    product: product,
+                },
+            } only %}
+        {% endblock %}
+    {% endfor %}
+
+    {% if data.products is empty %}
         <p>{{ 'product_search_widget.search.no_results' | trans }}</p>
     {% endif %}
 {% endblock %}

@@ -1,1 +1,1 @@
-Displays product list item in the configurable bundle page.
+Displays product concrete item without actions.

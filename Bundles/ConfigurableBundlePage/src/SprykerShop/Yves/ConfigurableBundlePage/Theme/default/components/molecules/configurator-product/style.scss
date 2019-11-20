@@ -1,0 +1,3 @@
+@include helper-import(molecule, configurator-product) {
+    @include configurable-bundle-page-configurator-product;
+}
