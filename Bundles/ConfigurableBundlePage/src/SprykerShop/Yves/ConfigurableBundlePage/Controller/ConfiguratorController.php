@@ -212,7 +212,7 @@ class ConfiguratorController extends AbstractController
         }
 
         $productViewTransfers = $this->getFactory()
-            ->getConfigurableBundleStorageClient()
+            ->createProductConcreteReader()
             ->getProductConcretesBySkusAndLocale($this->extractProductConcreteSkus($form), $this->getLocale());
 
         return [
@@ -324,7 +324,7 @@ class ConfiguratorController extends AbstractController
         }
 
         $productViewTransfers = $this->getFactory()
-            ->getConfigurableBundleStorageClient()
+            ->createProductConcreteReader()
             ->getProductConcretesBySkusAndLocale([$sku], $this->getLocale());
 
         return $productViewTransfers[$sku] ?? null;
