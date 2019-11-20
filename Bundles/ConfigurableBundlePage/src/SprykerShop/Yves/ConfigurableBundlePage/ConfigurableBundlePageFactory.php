@@ -11,11 +11,16 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundlePageSearchClientInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundleStorageClientInterface;
+use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToProductImageStorageClientInterface;
+use SprykerShop\Yves\ConfigurableBundlePage\Expander\ProductConcreteImageExpander;
+use SprykerShop\Yves\ConfigurableBundlePage\Expander\ProductConcreteImageExpanderInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Form\ConfiguratorStateForm;
 use SprykerShop\Yves\ConfigurableBundlePage\Mapper\ConfiguredBundleRequestMapper;
 use SprykerShop\Yves\ConfigurableBundlePage\Mapper\ConfiguredBundleRequestMapperInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Reader\ConfigurableBundleTemplateStorageReader;
 use SprykerShop\Yves\ConfigurableBundlePage\Reader\ConfigurableBundleTemplateStorageReaderInterface;
+use SprykerShop\Yves\ConfigurableBundlePage\Reader\ProductConcreteReader;
+use SprykerShop\Yves\ConfigurableBundlePage\Reader\ProductConcreteReaderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -35,6 +40,25 @@ class ConfigurableBundlePageFactory extends AbstractFactory
     public function createConfiguredBundleRequestMapper(): ConfiguredBundleRequestMapperInterface
     {
         return new ConfiguredBundleRequestMapper();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ConfigurableBundlePage\Reader\ProductConcreteReaderInterface
+     */
+    public function createProductConcreteReader(): ProductConcreteReaderInterface
+    {
+        return new ProductConcreteReader(
+            $this->getConfigurableBundleStorageClient(),
+            $this->createProductConcreteImageExpander()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ConfigurableBundlePage\Expander\ProductConcreteImageExpanderInterface
+     */
+    public function createProductConcreteImageExpander(): ProductConcreteImageExpanderInterface
+    {
+        return new ProductConcreteImageExpander($this->getProductImageStorageClient());
     }
 
     /**
@@ -70,5 +94,13 @@ class ConfigurableBundlePageFactory extends AbstractFactory
     public function getConfigurableBundleStorageClient(): ConfigurableBundlePageToConfigurableBundleStorageClientInterface
     {
         return $this->getProvidedDependency(ConfigurableBundlePageDependencyProvider::CLIENT_CONFIGURABLE_BUNDLE_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToProductImageStorageClientInterface
+     */
+    public function getProductImageStorageClient(): ConfigurableBundlePageToProductImageStorageClientInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundlePageDependencyProvider::CLIENT_PRODUCT_IMAGE_STORAGE);
     }
 }

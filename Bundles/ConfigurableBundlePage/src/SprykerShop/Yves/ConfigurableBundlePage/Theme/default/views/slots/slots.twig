@@ -6,7 +6,7 @@
     configurableBundleTemplateStorage: _view.configurableBundleTemplateStorage,
     selectedSlotId: _view.selectedSlotId | default(null),
     productConcreteCriteriaFilter: _view.productConcreteCriteriaFilter | default(null),
-    selectedProductConcrete: _view.selectedProductConcrete | default(null),
+    selectedProduct: _view.selectedProduct | default(null),
     isSummaryPageUnlocked: _view.isSummaryPageUnlocked | default(false),
 } %}
 
@@ -39,16 +39,16 @@
 
         <div class="{{ wrapperClasses }}">
             {% if data.selectedSlotId %}
-                {% if data.selectedProductConcrete %}
+                {% if data.selectedProduct %}
                     {% embed molecule('product', 'ProductSearchWidget') with {
                         data: {
-                            product: data.selectedProductConcrete,
+                            product: data.selectedProduct,
                             form: data.form.createView,
                             selectedSlotId: data.selectedSlotId,
                         },
                     } only %}
                         {% block name %}
-                            <strong class="{{ config.name }}__name">{{ data.product.localizedAttributes[0].name }}</strong>
+                            <strong class="{{ config.name }}__name">{{ data.product.name }}</strong>
                         {% endblock %}
 
                         {% block actionsContainerInner %}

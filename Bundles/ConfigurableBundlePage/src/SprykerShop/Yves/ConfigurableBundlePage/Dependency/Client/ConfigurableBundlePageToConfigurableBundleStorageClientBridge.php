@@ -36,11 +36,12 @@ class ConfigurableBundlePageToConfigurableBundleStorageClientBridge implements C
 
     /**
      * @param string[] $skus
+     * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function getProductConcreteStoragesBySkusForCurrentLocale(array $skus): array
+    public function getProductConcretesBySkusAndLocale(array $skus, string $localeName): array
     {
-        return $this->configurableBundleStorageClient->getProductConcreteStoragesBySkusForCurrentLocale($skus);
+        return $this->configurableBundleStorageClient->getProductConcretesBySkusAndLocale($skus, $localeName);
     }
 }
