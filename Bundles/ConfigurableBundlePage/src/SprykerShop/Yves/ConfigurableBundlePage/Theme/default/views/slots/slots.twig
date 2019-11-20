@@ -45,13 +45,13 @@
 
                 {% block configuratorProductsInner %}
                     <div class="{{ wrapperClasses }}">
-                        {% if data.selectedSlotId and data.selectedProductConcrete %}
+                        {% if data.selectedSlotId and data.selectedProduct %}
                             {% include molecule('configurator-product', 'ConfigurableBundlePage') ignore missing with {
                                 data: {
-                                    product: data.selectedProductConcrete,
+                                    product: data.selectedProduct,
                                     form: data.form.createView,
                                     selectedSlotId: data.selectedSlotId,
-                                    name: data.selectedProductConcrete.localizedAttributes[0].name,
+                                    name: data.selectedProduct.name,
                                     isSelected: true,
                                 },
                             } only %}
