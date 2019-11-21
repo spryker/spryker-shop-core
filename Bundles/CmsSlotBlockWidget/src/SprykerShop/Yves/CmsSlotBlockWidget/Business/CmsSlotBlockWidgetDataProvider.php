@@ -154,7 +154,7 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
                 ->setCmsSlotBlockConditions($cmsBlock[static::KEY_CONDITIONS]);
             $isCmsBlockVisibleInSlot = $this->cmsSlotBlockClient->isCmsBlockVisibleInSlot(
                 $cmsBlockTransfer,
-                $cmsSlotContentRequestTransfer->getParams()
+                $cmsSlotContentRequestTransfer->getCmsSlotParams()
             );
 
             if ($isCmsBlockVisibleInSlot) {

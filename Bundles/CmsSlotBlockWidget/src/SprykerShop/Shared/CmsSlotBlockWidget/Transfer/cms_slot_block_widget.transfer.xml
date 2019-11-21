@@ -16,7 +16,10 @@
     <transfer name="CmsSlotContentRequest">
         <property name="cmsSlotKey" type="string"/>
         <property name="cmsSlotTemplatePath" type="string"/>
-        <property name="params" type="array" singular="param"/>
+        <property name="cmsSlotParams" type="CmsSlotParams"/>
+    </transfer>
+
+    <transfer name="CmsSlotParams">
     </transfer>
 
     <transfer name="CmsBlock">

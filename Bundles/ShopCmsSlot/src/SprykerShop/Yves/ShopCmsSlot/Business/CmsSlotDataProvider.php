@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ShopCmsSlot\Business;
 use Generated\Shared\Transfer\CmsSlotContentRequestTransfer;
 use Generated\Shared\Transfer\CmsSlotContentResponseTransfer;
 use Generated\Shared\Transfer\CmsSlotContextTransfer;
+use Generated\Shared\Transfer\CmsSlotParamsTransfer;
 use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientInterface;
 use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotStorageClientInterface;
 use SprykerShop\Yves\ShopCmsSlot\Exception\MissingCmsSlotContentPluginException;
@@ -134,10 +135,14 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
         CmsSlotContextTransfer $cmsSlotContextTransfer,
         array $providedData
     ): CmsSlotContentRequestTransfer {
-        return (new CmsSlotContentRequestTransfer())
+        $cmsSlotContentRequestTransfer = (new CmsSlotContentRequestTransfer())
             ->setCmsSlotKey($cmsSlotContextTransfer->getCmsSlotKey())
             ->setCmsSlotTemplatePath($cmsSlotContextTransfer->getCmsSlotTemplatePath())
-            ->setParams($providedData);
+            ->setCmsSlotParams(
+                (new CmsSlotParamsTransfer())->fromArray($providedData, true)
+            );
+
+        return $cmsSlotContentRequestTransfer;
     }
 
     /**
