@@ -51,7 +51,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      * @param \SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface $postConditionChecker
      * @param \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface $giftCardItemsChecker
      * @param string $stepRoute
-     * @param string $escapeRoute
+     * @param string|null $escapeRoute
      * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepEnterPreCheckPluginInterface[] $checkoutShipmentStepEnterPreCheckPlugins
      */
     public function __construct(
