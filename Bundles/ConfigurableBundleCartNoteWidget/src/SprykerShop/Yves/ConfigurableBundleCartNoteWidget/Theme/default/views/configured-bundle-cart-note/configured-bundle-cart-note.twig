@@ -28,7 +28,10 @@
 
         {% if not canWrite and data.form.cartNote.vars.value is not empty %}
             {% block cartNoteReadOnly %}
-                <div>{{ 'configurable_bundle_cart_note.cart_note' | trans }} {{ data.form.cartNote.vars.value }}</div>
+                <ul>
+                    <li><small>{{ 'configurable_bundle_cart_note.cart_note' | trans }}</small></li>
+                    <li>{{ data.form.cartNote.vars.value | escape | nl2br }}</li>
+                </ul>
             {% endblock %}
         {% endif %}
     {% endblock %}
