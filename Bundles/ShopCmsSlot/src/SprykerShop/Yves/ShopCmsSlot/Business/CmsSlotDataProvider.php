@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ShopCmsSlot\Business;
 
+use Exception;
 use Generated\Shared\Transfer\CmsSlotContentRequestTransfer;
 use Generated\Shared\Transfer\CmsSlotContentResponseTransfer;
 use Generated\Shared\Transfer\CmsSlotContextTransfer;
@@ -15,6 +16,7 @@ use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientInt
 use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotStorageClientInterface;
 use SprykerShop\Yves\ShopCmsSlot\Exception\MissingCmsSlotContentPluginException;
 use SprykerShop\Yves\ShopCmsSlot\Exception\MissingRequiredParameterException;
+use SprykerShop\Yves\ShopCmsSlot\ShopCmsSlotConfig;
 use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface;
 
 class CmsSlotDataProvider implements CmsSlotDataProviderInterface
@@ -35,33 +37,54 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
     protected $cmsSlotStorageClient;
 
     /**
+     * @var \SprykerShop\Yves\ShopCmsSlot\ShopCmsSlotConfig
+     */
+    protected $shopCmsSlotConfig;
+
+    /**
      * @param \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface[] $cmsSlotContentPlugins
      * @param \SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientInterface $cmsSlotClient
      * @param \SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotStorageClientInterface $cmsSlotStorageClient
+     * @param \SprykerShop\Yves\ShopCmsSlot\ShopCmsSlotConfig $shopCmsSlotConfig
      */
     public function __construct(
         array $cmsSlotContentPlugins,
         ShopCmsSlotToCmsSlotClientInterface $cmsSlotClient,
-        ShopCmsSlotToCmsSlotStorageClientInterface $cmsSlotStorageClient
+        ShopCmsSlotToCmsSlotStorageClientInterface $cmsSlotStorageClient,
+        ShopCmsSlotConfig $shopCmsSlotConfig
     ) {
         $this->cmsSlotContentPlugins = $cmsSlotContentPlugins;
         $this->cmsSlotClient = $cmsSlotClient;
         $this->cmsSlotStorageClient = $cmsSlotStorageClient;
+        $this->shopCmsSlotConfig = $shopCmsSlotConfig;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CmsSlotContextTransfer $cmsSlotContextTransfer
      *
+     * @throws \Exception
+     *
      * @return \Generated\Shared\Transfer\CmsSlotContentResponseTransfer
      */
     public function getSlotContent(CmsSlotContextTransfer $cmsSlotContextTransfer): CmsSlotContentResponseTransfer
     {
-        $cmsSlotStorageTransfer = $this->cmsSlotStorageClient->getCmsSlotByKey(
-            $cmsSlotContextTransfer->getCmsSlotKey()
-        );
+        $cmsSlotResponseTransfer = (new CmsSlotContentResponseTransfer())
+            ->setContent('');
+
+        try {
+            $cmsSlotStorageTransfer = $this->cmsSlotStorageClient->getCmsSlotByKey(
+                $cmsSlotContextTransfer->getCmsSlotKey()
+            );
+        } catch (Exception $exception) {
+            if ($this->shopCmsSlotConfig->isDebugModeEnabled()) {
+                throw $exception;
+            }
+
+            return $cmsSlotResponseTransfer;
+        }
 
         if (!$cmsSlotStorageTransfer->getIsActive()) {
-            return (new CmsSlotContentResponseTransfer())->setContent('');
+            return $cmsSlotResponseTransfer;
         }
 
         $providedData = $cmsSlotContextTransfer->getProvidedData();
@@ -77,7 +100,15 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
         $cmsSlotContentRequestTransfer = $this->createCmsSlotContentRequestTransfer($cmsSlotContextTransfer, $providedData);
         $cmsSlotContentPlugin = $this->getContentPlugin($cmsSlotStorageTransfer->getContentProviderType());
 
-        return $cmsSlotContentPlugin->getSlotContent($cmsSlotContentRequestTransfer);
+        try {
+            $cmsSlotResponseTransfer = $cmsSlotContentPlugin->getSlotContent($cmsSlotContentRequestTransfer);
+        } catch (Exception $exception) {
+            if ($this->shopCmsSlotConfig->isDebugModeEnabled()) {
+                throw $exception;
+            }
+        }
+
+        return $cmsSlotResponseTransfer;
     }
 
     /**

@@ -5,7 +5,6 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker-shop/shop-application": "^1.5.0",
     "spryker-shop/shop-cms-slot-extension": "^0.2.0",
     "spryker/cms-slot": "^0.5.0",
     "spryker/cms-slot-storage": "^0.1.0",
@@ -14,12 +13,12 @@
     "spryker/twig": "^3.2.3"
   },
   "require-dev": {
+    "spryker-shop/shop-application": "*",
     "spryker/code-sniffer": "*",
-    "spryker/error-handler": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/error-handler": "If you want to use ShopCmsSlotTwigPlugin: ^2.1.3"
+    "spryker-shop/shop-application": "If you want to use the CMS slot plugin for Twig."
   },
   "autoload": {
     "psr-4": {
