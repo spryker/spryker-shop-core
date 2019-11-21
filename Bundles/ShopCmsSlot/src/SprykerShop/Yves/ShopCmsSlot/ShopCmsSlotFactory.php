@@ -16,6 +16,9 @@ use SprykerShop\Yves\ShopCmsSlot\Twig\Node\ShopCmsSlotNodeBuilder;
 use SprykerShop\Yves\ShopCmsSlot\Twig\Node\ShopCmsSlotNodeBuilderInterface;
 use SprykerShop\Yves\ShopCmsSlot\Twig\TokenParser\ShopCmsSlotTokenParser;
 
+/**
+ * @method \SprykerShop\Yves\ShopCmsSlot\ShopCmsSlotConfig getConfig()
+ */
 class ShopCmsSlotFactory extends AbstractFactory
 {
     /**
@@ -42,7 +45,8 @@ class ShopCmsSlotFactory extends AbstractFactory
         return new CmsSlotDataProvider(
             $this->getCmsSlotContentPlugins(),
             $this->getCmsSlotClient(),
-            $this->getCmsSlotStorageClient()
+            $this->getCmsSlotStorageClient(),
+            $this->getConfig()
         );
     }
 
