@@ -47,7 +47,8 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
         ProductSearchWidgetToCatalogClientInterface $catalogClient,
         ProductConcretePriceExpanderInterface $productConcretePriceExpander,
         ProductConcreteMapperInterface $productConcreteMapper
-    ) {
+    )
+    {
         $this->catalogClient = $catalogClient;
         $this->productConcretePriceExpander = $productConcretePriceExpander;
         $this->productConcreteMapper = $productConcreteMapper;
@@ -68,7 +69,9 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
             return [];
         }
 
-        return $this->getMappedProductViewTransfers($productConcretePageSearchTransfers);
+        $productViewTransfers = $this->getMappedProductViewTransfers($productConcretePageSearchTransfers);
+
+        return $this->expandProductViewTransfers($productViewTransfers);
     }
 
     /**
@@ -81,14 +84,29 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
         $productViewTransfers = [];
 
         foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
-            $productViewTransfer = $this->productConcreteMapper->mapProductConcretePageSearchTransferToProductViewTransfer(
+            $productViewTransfers[] = $this->productConcreteMapper->mapProductConcretePageSearchTransferToProductViewTransfer(
                 $productConcretePageSearchTransfer,
                 new ProductViewTransfer()
             );
-
-            $productViewTransfers[] = $this->productConcretePriceExpander->expandProductViewTransferWithPrice($productViewTransfer);
         }
 
         return $productViewTransfers;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    protected function expandProductViewTransfers(array $productViewTransfers): array
+    {
+        $expandedProductViewTransfers = [];
+
+        foreach ($productViewTransfers as $productViewTransfer) {
+            $expandedProductViewTransfers[] = $this->productConcretePriceExpander->expandProductViewTransferWithPrice($productViewTransfer);
+        }
+
+        return $expandedProductViewTransfers;
+    }
+
 }
