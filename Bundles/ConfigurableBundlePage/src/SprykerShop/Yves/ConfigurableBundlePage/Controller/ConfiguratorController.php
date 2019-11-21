@@ -38,6 +38,11 @@ class ConfiguratorController extends AbstractController
     protected const ROUTE_CONFIGURATOR_SLOTS = 'configurable-bundle/configurator/slots';
 
     /**
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
+     */
+    protected const ROUTE_CART = 'cart';
+
+    /**
      * @uses \SprykerShop\Yves\ConfigurableBundlePage\Plugin\Router\ConfigurableBundlePageRouteProviderPlugin::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE
      */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'idConfigurableBundleTemplate';
@@ -70,6 +75,7 @@ class ConfiguratorController extends AbstractController
     protected const GLOSSARY_KEY_CONFIGURATOR_SUMMARY_PAGE_LOCKED = 'configurable_bundle_page.configurator.summary_page_locked';
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = 'configurable_bundle_page.template_not_found';
     protected const GLOSSARY_KEY_INVALID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_COMBINATION = 'configurable_bundle_page.invalid_template_slot_combination';
+    protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_ADDED_TO_CART = 'configurable_bundle_page.configurator.added_to_cart';
 
     /**
      * @return \Spryker\Yves\Kernel\View\View
@@ -254,7 +260,23 @@ class ConfiguratorController extends AbstractController
                 new CreateConfiguredBundleRequestTransfer()
             );
 
-        // ToDo: To make a client call in next story.
+        $quoteResponseTransfer = $this->getFactory()
+            ->getConfigurableBundleCartClient()
+            ->addConfiguredBundle($createConfiguredBundleRequestTransfer);
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
+                $this->addErrorMessage($quoteErrorTransfer->getMessage());
+            }
+
+            return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_SLOTS, [
+                static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $request->attributes->getInt(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE),
+            ]);
+        }
+
+        $this->addSuccessMessage(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_ADDED_TO_CART);
+
+        return $this->redirectResponseInternal(static::ROUTE_CART);
     }
 
     /**
