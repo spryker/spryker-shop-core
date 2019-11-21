@@ -48,10 +48,6 @@ class ProductColorGroupWidget extends AbstractWidget
     {
         $productViewExpanderPlugins = $this->getFactory()->getProductViewExpanderPlugins();
 
-        if ($productViewExpanderPlugins === []) {
-            return $productViewTransfer;
-        }
-
         foreach ($productViewExpanderPlugins as $productViewExpanderPlugin) {
             $productViewTransfer = $productViewExpanderPlugin->expand($productViewTransfer);
         }
