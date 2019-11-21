@@ -21,6 +21,7 @@
     <transfer name="ProductView">
         <property name="idProductConcrete" type="int"/>
         <property name="sku" type="string"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="ProductOfferStorageCollection">
@@ -29,5 +30,16 @@
 
     <transfer name="Url">
         <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="priceDimension" type="PriceProductDimension"/>
+    </transfer>
+
+    <transfer name="PriceProductFilter">
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="CurrentProductPrice">
     </transfer>
 </transfers>
