@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CmsSlotParamsTransfer;
 
 class CmsSlotBlockWidgetToCmsSlotBlockClientBridge implements CmsSlotBlockWidgetToCmsSlotBlockClientInterface
 {
@@ -26,12 +27,14 @@ class CmsSlotBlockWidgetToCmsSlotBlockClientBridge implements CmsSlotBlockWidget
 
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     * @param array $cmsSlotParams
+     * @param \Generated\Shared\Transfer\CmsSlotParamsTransfer $cmsSlotParamsTransfer
      *
      * @return bool
      */
-    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotParams): bool
-    {
-        return $this->cmsSlotBlockClient->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotParams);
+    public function isCmsBlockVisibleInSlot(
+        CmsBlockTransfer $cmsBlockTransfer,
+        CmsSlotParamsTransfer $cmsSlotParamsTransfer
+    ): bool {
+        return $this->cmsSlotBlockClient->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotParamsTransfer);
     }
 }
