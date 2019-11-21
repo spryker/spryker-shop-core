@@ -31,7 +31,7 @@ class ProductConcretePriceExpander implements ProductConcretePriceExpanderInterf
     }
 
     /**
-     * @uses \Spryker\Yves\Kernel\PermissionAwareTrait::can()
+     * @uses \Spryker\Client\CustomerAccessPermission\Plugin\SeePricePermissionPlugin
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
