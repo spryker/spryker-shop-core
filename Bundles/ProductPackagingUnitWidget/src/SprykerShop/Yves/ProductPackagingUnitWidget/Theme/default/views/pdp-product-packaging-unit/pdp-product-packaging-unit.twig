@@ -11,7 +11,7 @@
     isAddToCartDisabled : _widget.isAddToCartDisabled | default(false),
     packagingUnitDefaultAmount: _widget.productPackagingUnit.defaultAmount | default(0),
     packagingUnitIsAmountVariable: _widget.productPackagingUnit.isAmountVariable | default(false),
-    packagingUnitIsSelfLead: _widget.productPackagingUnit is not null and _widget.productPackagingUnit.idProduct == _widget.productPackagingUnit.idLeadProduct,
+    packagingUnitIsSelfLead: _widget.packagingUnitIsSelfLead,
     jsonScheme: _widget.jsonScheme | default(''),
     minQuantityInBaseUnit: _widget.minQuantityInBaseUnit,
     minQuantityInSalesUnits: _widget.minQuantityInSalesUnits,
