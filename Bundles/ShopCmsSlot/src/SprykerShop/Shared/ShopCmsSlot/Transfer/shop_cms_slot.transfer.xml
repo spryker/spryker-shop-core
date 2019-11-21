@@ -29,6 +29,7 @@
 
     <transfer name="CmsSlotStorage">
         <property name="isActive" type="bool"/>
+        <property name="contentProviderType" type="string"/>
     </transfer>
 
 </transfers>
