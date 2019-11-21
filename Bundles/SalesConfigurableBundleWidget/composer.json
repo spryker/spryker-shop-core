@@ -13,7 +13,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker-shop/configurable-bundle-cart-note-widget": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker-shop/configurable-bundle-cart-note-widget": "If you want to use configurable bundle cart note feature."
   },
   "autoload": {
     "psr-4": {

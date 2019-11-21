@@ -1,0 +1,20 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'readonly-bundled-cart-note',
+} %}
+
+{% define data = {
+    bundle: required,
+} %}
+
+{% block body %}
+    {% if data.bundle.cartNote is not empty %}
+        {% block bundleCartNote %}
+            <ul>
+                <li><small>{{ 'configurable_bundle_cart_note.cart_note' | trans }}</small></li>
+                <li>{{ data.bundle.cartNote | escape | nl2br }}</li>
+            </ul>
+        {% endblock %}
+    {% endif %}
+{% endblock %}

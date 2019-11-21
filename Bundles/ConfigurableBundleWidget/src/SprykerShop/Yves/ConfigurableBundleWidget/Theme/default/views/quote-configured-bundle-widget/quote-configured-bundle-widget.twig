@@ -8,6 +8,7 @@
     isQuantityChangeable: _widget.isQuantityChangeable,
     isEditable: true,
     isQuantitySummaryVisible: false,
+    quote: _widget.quote,
 } %}
 
 {% block body %}
@@ -22,6 +23,7 @@
                     isQuantityChangeable: data.isQuantityChangeable,
                     isEditable: data.isEditable,
                     isQuantitySummaryVisible: data.isQuantitySummaryVisible,
+                    quote: data.quote,
                 },
             } only %}
         {% endblock %}
