@@ -120,6 +120,14 @@
                 } only %}
                 {{ block('cartShipment') }}
             {% endblock %}
+            {% widget 'SalesOrderThresholdWidget' args [data.cart.expenses] only %}
+                {% block body %}
+                    <li class="list__item spacing-y">
+                        {{ parent() }}
+                        <hr>
+                    </li>
+                {% endblock %}
+            {% endwidget %}
             {{ block('cartPrice') }}
         {% endblock %}
     {% endembed %}
