@@ -3,7 +3,7 @@
   "description": "Spryker Shop page and widget modules",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.2"
   },
   "require-dev": {
     "spryker/code-sniffer": "dev-master"
@@ -134,11 +134,5 @@
     "spryker-shop/web-profiler-widget": "*",
     "spryker-shop/wishlist-page": "*",
     "spryker-shop/wishlist-widget": "*"
-  },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "git@github.com:spryker/spryker.git"
-    }
-  ]
+  }
 }
