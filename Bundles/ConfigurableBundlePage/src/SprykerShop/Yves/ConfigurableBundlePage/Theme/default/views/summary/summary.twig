@@ -23,7 +23,7 @@
     <div class="grid">
         {% block summaryContentInner %}
             {% block summarySidebar %}
-                <div class="col col--sm-12 col--md-3" class="button">
+                <div class="col col--sm-12 col--md-3">
                     {% block summarySidebarInner %}
                         {% include molecule('configurator-sidebar', 'ConfigurableBundlePage') with {
                             data: {
@@ -51,20 +51,22 @@
 
                         {% block summaryForm %}
                             <div class="grid grid--right">
-                                {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
-                                    class: 'spacing-x col col--sm-2',
-                                    data: {
-                                        form: data.form.createView,
-                                        submitButtonText: 'configurable_bundle_page.configurator.add_to_cart' | trans,
-                                        submitButtonClass: 'button button--expand button--success',
-                                        method: 'POST',
-                                        action: path(
-                                            'configurable-bundle/configurator/add-to-cart', {
-                                                'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
-                                            }
-                                        ),
-                                    },
-                                } only %}
+                                {% block summaryFormInner %}
+                                    {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
+                                        class: 'spacing-x col col--sm-2',
+                                        data: {
+                                            form: data.form.createView,
+                                            submitButtonText: 'configurable_bundle_page.configurator.add_to_cart' | trans,
+                                            submitButtonClass: 'button button--expand button--success',
+                                            method: 'POST',
+                                            action: path(
+                                                'configurable-bundle/configurator/add-to-cart', {
+                                                    'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
+                                                }
+                                            ),
+                                        },
+                                    } only %}
+                                {% endblock %}
                             </div>
                         {% endblock %}
                     {% endblock %}

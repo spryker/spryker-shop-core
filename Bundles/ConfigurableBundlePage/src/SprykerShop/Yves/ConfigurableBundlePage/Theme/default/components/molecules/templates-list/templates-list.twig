@@ -22,13 +22,14 @@
             {% block list %}
                 <ul class="grid {{ config.name }}__list">
                     {% for template in data.templates %}
-                        {% block listItem %}
-                            {% set listItemClasses = 'col col--sm-12 col--md-6 col--xl-3' %}
+                        {% set listItemClasses = 'col col--sm-12 col--md-6 col--xl-3' %}
 
-                            {% block item %}
-                                <li class="{{ listItemClasses }}">
-                                    {% block listItemInner %}
-                                        {% set slotsPageUrl = path('configurable-bundle/configurator/slots', {'idConfigurableBundleTemplate': template.idConfigurableBundleTemplate }) %}
+                        {% block item %}
+                            <li class="{{ listItemClasses }}">
+                                {% block listItemInner %}
+                                    {% set slotsPageUrl = path('configurable-bundle/configurator/slots', {'idConfigurableBundleTemplate': template.idConfigurableBundleTemplate }) %}
+
+                                    {% block template %}
                                         <div class="box box--stretch">
                                             {% block templateTitle %}
                                                 {% set titleClasses = config.name ~ '__item-title grid grid--center grid--middle spacing-bottom' %}
@@ -44,15 +45,15 @@
                                                 {% set buttonClasses = 'button button--expand button--success' %}
 
                                                 {% block buttonItem %}
-                                                    <a href="{{ slotsPageUrl }}" class="button button--expand button--success">
+                                                    <a href="{{ slotsPageUrl }}" class="{{ buttonClasses }}">
                                                         {{ 'configurable_bundle_page.select' | trans }}
                                                     </a>
                                                 {% endblock %}
                                             {% endblock %}
                                         </div>
                                     {% endblock %}
-                                </li>
-                            {% endblock %}
+                                {% endblock %}
+                            </li>
                         {% endblock %}
                     {% endfor %}
                 </ul>

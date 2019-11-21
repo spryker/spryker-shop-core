@@ -38,7 +38,10 @@
         {% set buttonClasses = data.isExtraClass ? data.submitButtonClass ~ ' ' ~ extraClass : data.submitButtonClass %}
 
         {% block buttonItem %}
-            <button type="submit" name="submit" class="{{ buttonClasses }}" {{ not data.isSubmitButtonActive ? 'disabled' }}>
+            {% set extraClass = data.isExtraClass ? extraClass %}
+            {% set buttonState = not data.isSubmitButtonActive ? 'disabled' %}
+
+            <button type="submit" class="{{ data.submitButtonClass }} {{ extraClass }}" {{ buttonState }}>
                 {{ data.submitButtonText }}
             </button>
         {% endblock %}

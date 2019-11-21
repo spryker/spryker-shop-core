@@ -17,31 +17,29 @@
 
 {% block body %}
     {% for configurableBundleTemplateSlotStorage in data.configurableBundleTemplateStorage.slots %}
-        {% block slot %}
-            {% set slotClasses = '' %}
+        {% set slotClasses = '' %}
 
-            {% block slotItem %}
-                <li class="{{ slotClasses }}">
-                    {% block slotItemInner %}
-                        {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
-                            data: {
-                                form: data.form.createView,
-                                submitButtonText: configurableBundleTemplateSlotStorage.name | trans,
-                                idConfigurableBundleTemplateSlot: configurableBundleTemplateSlotStorage.idConfigurableBundleTemplateSlot,
-                                selectedSlotId: data.selectedSlotId,
-                                submitButtonClass: 'button button--expand button--big-spaces',
-                                isExtraClass: true,
-                                action: path(
-                                    'configurable-bundle/configurator/slots', {
-                                        'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
-                                        'idConfigurableBundleTemplateSlot': configurableBundleTemplateSlotStorage.idConfigurableBundleTemplateSlot,
-                                    }
-                                ),
-                            },
-                        } only %}
-                    {% endblock %}
-                </li>
-            {% endblock %}
+        {% block slotItem %}
+            <li class="{{ slotClasses }}">
+                {% block slotItemInner %}
+                    {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
+                        data: {
+                            form: data.form.createView,
+                            submitButtonText: configurableBundleTemplateSlotStorage.name | trans,
+                            idConfigurableBundleTemplateSlot: configurableBundleTemplateSlotStorage.idConfigurableBundleTemplateSlot,
+                            selectedSlotId: data.selectedSlotId,
+                            submitButtonClass: 'button button--expand button--big-spaces',
+                            isExtraClass: true,
+                            action: path(
+                                'configurable-bundle/configurator/slots', {
+                                    'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
+                                    'idConfigurableBundleTemplateSlot': configurableBundleTemplateSlotStorage.idConfigurableBundleTemplateSlot,
+                                }
+                            ),
+                        },
+                    } only %}
+                {% endblock %}
+            </li>
         {% endblock %}
     {% endfor %}
     {% block summary %}
@@ -59,7 +57,6 @@
                             submitButtonText: 'configurable_bundle_page.configurator.summary' | trans,
                             isSubmitButtonActive: data.isSeparateItemUnlocked,
                             submitButtonClass: buttonClasses,
-                            isExtraClass: false,
                             isSeparateItem: true,
                             action: path(
                                 'configurable-bundle/configurator/summary', {
