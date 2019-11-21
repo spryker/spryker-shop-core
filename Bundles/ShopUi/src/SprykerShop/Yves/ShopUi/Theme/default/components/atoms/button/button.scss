@@ -57,9 +57,9 @@
         }
 
         &--active,
+        &--active:hover,
         &--unselected:hover,
-        &--selected:hover,
-        &--active:hover {
+        &--selected:hover {
             background-color: helper-color-light($setting-color-main);
             color: $setting-color-darker;
             border: 1px solid $setting-color-main;

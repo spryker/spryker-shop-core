@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\ConfigurableBundlePage\Reader;
 
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundleStorageClientInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Expander\ProductConcreteImageExpanderInterface;
+use SprykerShop\Yves\ConfigurableBundlePage\Expander\ProductConcretePriceExpanderInterface;
 
 class ProductConcreteReader implements ProductConcreteReaderInterface
 {
@@ -23,14 +24,22 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     protected $productConcreteImageExpander;
 
     /**
+     * @var \SprykerShop\Yves\ConfigurableBundlePage\Expander\ProductConcretePriceExpanderInterface
+     */
+    protected $productConcretePriceExpander;
+
+    /**
      * @param \SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundleStorageClientInterface $configurableBundleStorageClient
      * @param \SprykerShop\Yves\ConfigurableBundlePage\Expander\ProductConcreteImageExpanderInterface $productConcreteImageExpander
+     * @param \SprykerShop\Yves\ConfigurableBundlePage\Expander\ProductConcretePriceExpanderInterface $productConcretePriceExpander
      */
     public function __construct(
         ConfigurableBundlePageToConfigurableBundleStorageClientInterface $configurableBundleStorageClient,
-        ProductConcreteImageExpanderInterface $productConcreteImageExpander
+        ProductConcreteImageExpanderInterface $productConcreteImageExpander,
+        ProductConcretePriceExpanderInterface $productConcretePriceExpander
     ) {
         $this->configurableBundleStorageClient = $configurableBundleStorageClient;
+        $this->productConcretePriceExpander = $productConcretePriceExpander;
         $this->productConcreteImageExpander = $productConcreteImageExpander;
     }
 
@@ -58,7 +67,10 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
         $expandedProductViewTransfers = [];
 
         foreach ($productViewTransfers as $productViewTransfer) {
-            $expandedProductViewTransfers[$productViewTransfer->getSku()] = $this->productConcreteImageExpander->expandProductViewTransferWithImages($productViewTransfer, $localeName);
+            $productViewTransfer = $this->productConcreteImageExpander->expandProductViewTransferWithImages($productViewTransfer, $localeName);
+            $productViewTransfer = $this->productConcretePriceExpander->expandProductViewTransferWithPrice($productViewTransfer);
+
+            $expandedProductViewTransfers[$productViewTransfer->getSku()] = $productViewTransfer;
         }
 
         return $expandedProductViewTransfers;

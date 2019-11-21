@@ -11,6 +11,7 @@
     "spryker/configurable-bundle-page-search": "^1.0.0",
     "spryker/configurable-bundle-storage": "^2.0.0",
     "spryker/kernel": "^3.33.0",
+    "spryker/price-product-storage": "^4.0.0",
     "spryker/product-image-storage": "^1.0.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.0.0",

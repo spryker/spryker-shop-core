@@ -8,28 +8,47 @@
     product: required,
     form: required,
     selectedSlotId: required,
+    isSelected: false,
 } %}
 
 {% block body %}
     {{ form_start(data.form) }}
 
     {% block form %}
-        {% for slotForm in data.form.slots %}
-            {{ form_row(slotForm.sku, { id: '' }) }}
-        {% endfor %}
+        {% if data.isSelected %}
+            {% for slotId,slotForm in data.form.slots %}
+                {% if slotId == data.selectedSlotId %}
+                    {% do slotForm.setRendered %}
+                {% else %}
+                    {{ form_widget(slotForm) }}
+                {% endif %}
+            {% endfor %}
 
-        {% set inputName =  'configurator_state_form[slots][' ~ data.selectedSlotId ~ '][sku]' %}
-        {% set inputId =  'configurator_state_form_slots_' ~ data.selectedSlotId ~ '_sku' %}
-
-        <input name="{{ inputName }}" type="hidden" value="{{ data.product.sku }}">
-
-        {% block button %}
-            <button type="submit" name="submit" class="{% block buttonClasses %}button button--expand {% endblock %}">
-                {% block buttonText %}
-                    {{ 'configurable_bundle_page.select' | trans }}
-                {% endblock %}
+            <button type="submit" name="submit" class="button button--expand button--success">
+                {{ 'configurable_bundle_page.unselect' | trans }}
             </button>
-        {% endblock %}
+        {% else %}
+            {% for slotForm in data.form.slots %}
+                {{ form_row(slotForm.sku, { id: '' }) }}
+            {% endfor %}
+
+            {% set inputName =  'configurator_state_form[slots][' ~ data.selectedSlotId ~ '][sku]' %}
+            {% set inputId =  'configurator_state_form_slots_' ~ data.selectedSlotId ~ '_sku' %}
+
+            <input name="{{ inputName }}" type="hidden" value="{{ data.product.sku }}">
+
+            {% block unselectedButton %}
+                {% set buttonClasses = 'button button--expand' %}
+
+                {% block unselectedButtonItem %}
+                    <button type="submit" name="submit" class="{{ buttonClasses }}">
+                        {% block buttonText %}
+                            {{ 'configurable_bundle_page.select' | trans }}
+                        {% endblock %}
+                    </button>
+                {% endblock %}
+            {% endblock %}
+        {% endif %}
     {% endblock %}
     {{ form_row(data.form._token,{ id: '' }) }}
     {{ form_end(data.form) }}

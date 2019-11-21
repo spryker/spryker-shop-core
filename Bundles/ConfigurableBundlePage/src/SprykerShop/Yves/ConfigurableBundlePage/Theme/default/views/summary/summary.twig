@@ -21,41 +21,55 @@
 
 {% block content %}
     <div class="grid">
-        <div class="col col--sm-12 col--md-3" class="button">
-            {% include molecule('configurator-sidebar', 'ConfigurableBundlePage') with {
-                data: {
-                    form: data.form,
-                    configurableBundleTemplateStorage: data.configurableBundleTemplateStorage,
-                    isSummaryPageUnlocked: true,
-                    isSummaryPage: true,
-                },
-            } only %}
-        </div>
-        <div class="col col--sm-12 col--md-9">
-            {% include molecule('selected-product-list', 'ConfigurableBundlePage') with {
-                class: 'spacing-top',
-                data: {
-                    form: data.form,
-                    products: data.products,
-                    configurableBundleTemplateStorage: data.configurableBundleTemplateStorage,
-                },
-            } only %}
-            <div class="grid grid--right">
-                {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
-                    class: 'spacing-x col col--sm-2',
-                    data: {
-                        form: data.form.createView,
-                        submitButtonText: 'configurable_bundle_page.configurator.add_to_cart' | trans,
-                        submitButtonClass: 'button button--expand button--success',
-                        method: 'POST',
-                        action: path(
-                            'configurable-bundle/configurator/add-to-cart', {
-                                'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
-                            }
-                        ),
-                    },
-                } only %}
-            </div>
-        </div>
+        {% block summaryContentInner %}
+            {% block summarySidebar %}
+                <div class="col col--sm-12 col--md-3" class="button">
+                    {% block summarySidebarInner %}
+                        {% include molecule('configurator-sidebar', 'ConfigurableBundlePage') with {
+                            data: {
+                                form: data.form,
+                                configurableBundleTemplateStorage: data.configurableBundleTemplateStorage,
+                                isSeparateItemUnlocked: true,
+                                isSeparateItemActive: true,
+                            },
+                        } only %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+            {% block summaryProducts %}
+                <div class="col col--sm-12 col--md-9">
+                    {% block summaryProductsInner %}
+                        {% include molecule('selected-product-list', 'ConfigurableBundlePage') with {
+                            class: 'spacing-top',
+                            data: {
+                                form: data.form,
+                                products: data.products,
+                                configurableBundleTemplateStorage: data.configurableBundleTemplateStorage,
+                            },
+                        } only %}
+
+                        {% block summaryForm %}
+                            <div class="grid grid--right">
+                                {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
+                                    class: 'spacing-x col col--sm-2',
+                                    data: {
+                                        form: data.form.createView,
+                                        submitButtonText: 'configurable_bundle_page.configurator.add_to_cart' | trans,
+                                        submitButtonClass: 'button button--expand button--success',
+                                        method: 'POST',
+                                        action: path(
+                                            'configurable-bundle/configurator/add-to-cart', {
+                                                'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
+                                            }
+                                        ),
+                                    },
+                                } only %}
+                            </div>
+                        {% endblock %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        {% endblock %}
     </div>
 {% endblock %}

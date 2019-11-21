@@ -8,9 +8,9 @@
 {% define data = {
     form: required,
     configurableBundleTemplateStorage: required,
-    isSummaryPageUnlocked: required,
-    selectedSlotId: null,
-    isSummaryPage: false,
+    isSeparateItemUnlocked: required,
+    selectedSlotId: '',
+    isSeparateItemActive: false,
 } %}
 
 {%- block extraClass %} spacing-left spacing-top{% endblock -%}
@@ -18,20 +18,52 @@
 {% block body %}
     {% for configurableBundleTemplateSlotStorage in data.configurableBundleTemplateStorage.slots %}
         {% block slot %}
-            <li class="{% block slotClasses %}{% endblock %}">
-                {% block slotInner %}
+            {% set slotClasses = '' %}
+
+            {% block slotItem %}
+                <li class="{{ slotClasses }}">
+                    {% block slotItemInner %}
+                        {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
+                            data: {
+                                form: data.form.createView,
+                                submitButtonText: configurableBundleTemplateSlotStorage.name | trans,
+                                idConfigurableBundleTemplateSlot: configurableBundleTemplateSlotStorage.idConfigurableBundleTemplateSlot,
+                                selectedSlotId: data.selectedSlotId,
+                                submitButtonClass: 'button button--expand button--big-spaces',
+                                isExtraClass: true,
+                                action: path(
+                                    'configurable-bundle/configurator/slots', {
+                                        'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
+                                        'idConfigurableBundleTemplateSlot': configurableBundleTemplateSlotStorage.idConfigurableBundleTemplateSlot,
+                                    }
+                                ),
+                            },
+                        } only %}
+                    {% endblock %}
+                </li>
+            {% endblock %}
+        {% endblock %}
+    {% endfor %}
+    {% block summary %}
+        {% set summaryClasses = '' %}
+
+        {% block item %}
+            <li class="{{ summaryClasses }}">
+                {% block itemInner %}
+                    {% set buttonExtraClass = data.isSeparateItemActive ? ' button--active' : ' button--unselected' %}
+                    {% set buttonClasses = 'button button--expand button--big-spaces' ~ buttonExtraClass %}
+
                     {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
                         data: {
                             form: data.form.createView,
-                            submitButtonText: configurableBundleTemplateSlotStorage.name | trans,
-                            idConfigurableBundleTemplateSlot: configurableBundleTemplateSlotStorage.idConfigurableBundleTemplateSlot,
-                            selectedSlotId: data.selectedSlotId,
-                            submitButtonClass: 'button button--expand button--big-spaces',
-                            isExtraClass: true,
+                            submitButtonText: 'configurable_bundle_page.configurator.summary' | trans,
+                            isSubmitButtonActive: data.isSeparateItemUnlocked,
+                            submitButtonClass: buttonClasses,
+                            isExtraClass: false,
+                            isSeparateItem: true,
                             action: path(
-                                'configurable-bundle/configurator/slots', {
+                                'configurable-bundle/configurator/summary', {
                                     'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
-                                    'idConfigurableBundleTemplateSlot': configurableBundleTemplateSlotStorage.idConfigurableBundleTemplateSlot,
                                 }
                             ),
                         },
@@ -39,29 +71,5 @@
                 {% endblock %}
             </li>
         {% endblock %}
-    {% endfor %}
-    {% block summary %}
-        <li class="{% block summaryClasses %}{% endblock %}">
-            {% block summaryInner %}
-                {% set summaryButtonExtraClass = data.isSummaryPage ? ' button--active' : ' button--unselected' %}
-                {% set summaryButtonClasses = 'button button--expand button--big-spaces' ~ summaryButtonExtraClass %}
-
-                {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
-                    data: {
-                        form: data.form.createView,
-                        submitButtonText: 'configurable_bundle_page.configurator.summary' | trans,
-                        isSubmitButtonActive: data.isSummaryPageUnlocked,
-                        submitButtonClass: summaryButtonClasses,
-                        isExtraClass: false,
-                        isSummary: true,
-                        action: path(
-                            'configurable-bundle/configurator/summary', {
-                                'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
-                            }
-                        ),
-                    },
-                } only %}
-            {% endblock %}
-        </li>
     {% endblock %}
 {% endblock %}
