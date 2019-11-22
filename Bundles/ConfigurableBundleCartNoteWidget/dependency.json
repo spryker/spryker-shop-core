@@ -2,6 +2,6 @@
   "include": {
     "spryker/cart-note": "ConfigurableBundleCartNote is part of CartNote feature.",
     "spryker/configurable-bundle": "ConfigurableBundle provides base functionality.",
-    "spryker/sales-configurable-bundle": "SalesConfigurableBundle provides base functionality related to order."
+    "spryker/sales-configurable-bundle": "SalesConfigurableBundle provides base sales functionality."
   }
 }
