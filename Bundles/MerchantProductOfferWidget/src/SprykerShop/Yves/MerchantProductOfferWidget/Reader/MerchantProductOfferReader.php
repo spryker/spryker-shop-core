@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\MerchantProductOfferWidget\Reader;
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\MerchantProfileStorageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use SprykerShop\Shared\MerchantProductOfferWidget\MerchantProductOfferWidgetConfig;
@@ -161,10 +162,7 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
         $offerPriceProductTransfers = [];
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $dimensionType = $priceProductTransfer->getPriceDimension()->getType();
-            $priceDimensionProductOfferReference = $priceProductTransfer->getPriceDimension()->getProductOfferReference();
-
-            if ($dimensionType === MerchantProductOfferWidgetConfig::DIMENSION_TYPE && $priceDimensionProductOfferReference !== $productOfferReference) {
+            if (!$this->isCurrentProductOffer($productOfferReference, $priceProductTransfer)) {
                 continue;
             }
             $offerPriceProductTransfers[] = $priceProductTransfer;
@@ -172,5 +170,23 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())->setProductOfferReference($productOfferReference);
 
         return $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter($offerPriceProductTransfers, $priceProductFilterTransfer);
+    }
+
+    /**
+     * @param string $productOfferReference
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return bool
+     */
+    protected function isCurrentProductOffer(string $productOfferReference, PriceProductTransfer $priceProductTransfer)
+    {
+        $dimensionType = $priceProductTransfer->getPriceDimension()->getType();
+        $priceDimensionProductOfferReference = $priceProductTransfer->getPriceDimension()->getProductOfferReference();
+
+        if ($dimensionType === MerchantProductOfferWidgetConfig::DIMENSION_TYPE_PRODUCT_OFFER && $priceDimensionProductOfferReference !== $productOfferReference) {
+            return false;
+        }
+
+        return true;
     }
 }

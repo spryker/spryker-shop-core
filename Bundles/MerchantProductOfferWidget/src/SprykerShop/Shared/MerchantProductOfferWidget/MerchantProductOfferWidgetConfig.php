@@ -17,7 +17,7 @@ class MerchantProductOfferWidgetConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @see \Spryker\Shared\PriceProductOfferStorage\PriceProductOfferStorageConfig::DIMENSION_TYPE.
+     * @see \Spryker\Shared\PriceProductOfferStorage\PriceProductOfferStorageConfig::DIMENSION_TYPE_PRODUCT_OFFER.
      */
-    public const DIMENSION_TYPE = 'OFFER';
+    public const DIMENSION_TYPE_PRODUCT_OFFER = 'OFFER';
 }
