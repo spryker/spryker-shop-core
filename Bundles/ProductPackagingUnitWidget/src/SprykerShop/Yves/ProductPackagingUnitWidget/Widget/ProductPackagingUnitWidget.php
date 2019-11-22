@@ -68,6 +68,7 @@ class ProductPackagingUnitWidget extends AbstractWidget
             ->addParameter('salesUnits', $salesUnits)
             ->addParameter('leadProductSalesUnits', $leadProductSalesUnits)
             ->addParameter('productPackagingUnit', $productPackagingUnitStorageTransfer)
+            ->addParameter('packagingUnitIsSelfLead', $this->isProductPackagingUnitSelfLead($productPackagingUnitStorageTransfer))
             ->addParameter('isAddToCartDisabled', $isAddToCartDisabled)
             ->addParameter('productQuantityStorage', $productQuantityStorageTransfer)
             ->addParameter('jsonScheme', $this->prepareJsonData(
@@ -180,5 +181,16 @@ class ProductPackagingUnitWidget extends AbstractWidget
         }
 
         return $quantityMin;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer|null $productPackagingUnitStorageTransfer
+     *
+     * @return bool
+     */
+    protected function isProductPackagingUnitSelfLead(?ProductPackagingUnitStorageTransfer $productPackagingUnitStorageTransfer): bool
+    {
+        return $productPackagingUnitStorageTransfer !== null
+            && $productPackagingUnitStorageTransfer->getIdProduct() === $productPackagingUnitStorageTransfer->getIdLeadProduct();
     }
 }
