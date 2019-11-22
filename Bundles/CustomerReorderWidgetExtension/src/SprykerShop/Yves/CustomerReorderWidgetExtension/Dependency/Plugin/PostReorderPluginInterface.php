@@ -12,8 +12,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface PostReorderPluginInterface
 {
     /**
-     *  Specification:
-     *  - Plugin is executed after reorder finished cart updating.
+     * Specification:
+     * - Plugin is executed after reorder finished cart updating.
+     * - Parameter `$itemTransfers` represents items from order that are going to be reordered.
      *
      * @api
      *

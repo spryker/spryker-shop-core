@@ -41,7 +41,7 @@ class ConfigurableBundleCartNoteHandler implements ConfigurableBundleCartNoteHan
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfiguredBundle(
+    public function setConfiguredBundleCartNote(
         ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer {
         $configuredBundleCartNoteRequestTransfer->setQuote(
@@ -49,7 +49,7 @@ class ConfigurableBundleCartNoteHandler implements ConfigurableBundleCartNoteHan
         );
 
         $quoteResponseTransfer = $this->configurableBundleCartNoteClient
-            ->setCartNoteToConfiguredBundle($configuredBundleCartNoteRequestTransfer);
+            ->setConfiguredBundleCartNote($configuredBundleCartNoteRequestTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;

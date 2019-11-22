@@ -53,7 +53,7 @@ class CartNoteController extends AbstractController
 
         $quoteResponseTransfer = $this->getFactory()
             ->createConfigurableBundleCartNoteHandler()
-            ->setCartNoteToConfiguredBundle($configurableBundleCartNoteForm->getData());
+            ->setConfiguredBundleCartNote($configurableBundleCartNoteForm->getData());
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_CART_NOTE_ADDED);

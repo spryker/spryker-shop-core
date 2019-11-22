@@ -30,9 +30,9 @@ class ConfigurableBundleCartNoteWidgetToConfigurableBundleCartNoteClientBridge i
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfiguredBundle(
+    public function setConfiguredBundleCartNote(
         ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer {
-        return $this->configurableBundleCartNoteClient->setCartNoteToConfiguredBundle($configuredBundleCartNoteRequestTransfer);
+        return $this->configurableBundleCartNoteClient->setConfiguredBundleCartNote($configuredBundleCartNoteRequestTransfer);
     }
 }
