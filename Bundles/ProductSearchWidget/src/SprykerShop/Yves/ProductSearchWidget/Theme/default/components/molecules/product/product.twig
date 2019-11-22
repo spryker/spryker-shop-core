@@ -4,21 +4,13 @@
     name: 'product',
 } %}
 
-{% define data = {
-    selectedSlotId: required,
-    form: required,
-    configurableBundleTemplateStorage: '',
-} %}
-
 {% block extraClass %} grid box{% endblock %}
 
 {% block thumbnailWrapper %}
     {% set extraClass = '' %}
     {% set modifiers = ['small'] %}
 
-    {% block imageContainer %}
-        {{ parent() }}
-    {% endblock %}
+    {{ parent() }}
 {% endblock %}
 
 {% block rating %}{% endblock %}

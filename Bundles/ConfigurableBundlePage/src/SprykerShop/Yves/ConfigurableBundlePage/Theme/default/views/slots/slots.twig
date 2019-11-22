@@ -46,7 +46,7 @@
                 {% block configuratorProductsInner %}
                     <div class="{{ wrapperClasses }}">
                         {% if data.selectedSlotId and data.selectedProduct %}
-                            {% include molecule('configurator-product', 'ConfigurableBundlePage') ignore missing with {
+                            {% include molecule('configurator-product', 'ConfigurableBundlePage') with {
                                 data: {
                                     product: data.selectedProduct,
                                     form: data.form.createView,
@@ -61,7 +61,7 @@
                             {% widget 'ProductConcreteSearchGridWidget' args [data.productConcreteCriteriaFilter] %}
                                 {% block body %}
                                     {% for product in data.products %}
-                                        {% include molecule('configurator-product', 'ConfigurableBundlePage') ignore missing with {
+                                        {% include molecule('configurator-product', 'ConfigurableBundlePage') with {
                                             data: {
                                                 product: product,
                                                 form: data.form.createView,

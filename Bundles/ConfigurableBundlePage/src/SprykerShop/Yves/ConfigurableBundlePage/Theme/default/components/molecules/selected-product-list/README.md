@@ -1,1 +1,1 @@
-Displays selected product list on configurator summary page.
+Displays selected product list.
