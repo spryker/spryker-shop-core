@@ -13,7 +13,7 @@ interface ProductViewExpanderPluginInterface
 {
     /**
      * Specification:
-     *  - Expands product view data with additional data.
+     *  - Expands product view data transfer object with additional data.
      *
      * @api
      *

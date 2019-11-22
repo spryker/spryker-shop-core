@@ -14,11 +14,11 @@ use SprykerShop\Yves\ProductColorGroupWidgetExtension\Dependency\Plugin\ProductV
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
  */
-class CartPageProductViewExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
+class AddToCartUrlProductViewExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     *  - Expands product view data with an add to cart URL.
+     *  - Expands product view data transfer object with an add to cart URL.
      *
      * @api
      *
