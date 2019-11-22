@@ -49,6 +49,18 @@
                             },
                         } only %}
 
+                        {% block bundleTotal %}
+                            {% set totalPrice = data.products|reduce((accumulator, product) => accumulator + (product.price ? product.price : 0), 0) %}
+
+                            {% block bundleTotalInner %}
+                                {% include molecule('configured-bundle-total', 'ConfigurableBundlePage') with {
+                                    data: {
+                                        total: totalPrice,
+                                    },
+                                } only %}
+                            {% endblock %}
+                        {% endblock %}
+
                         {% block summaryForm %}
                             <div class="grid grid--right">
                                 {% block summaryFormInner %}
