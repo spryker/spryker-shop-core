@@ -42,4 +42,9 @@
 
     <transfer name="CurrentProductPrice">
     </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="type" type="string"/>
+        <property name="productOfferReference" type="string"/>
+    </transfer>
 </transfers>
