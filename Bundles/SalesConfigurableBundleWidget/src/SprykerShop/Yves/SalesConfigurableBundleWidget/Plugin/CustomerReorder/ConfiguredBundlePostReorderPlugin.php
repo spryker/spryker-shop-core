@@ -18,7 +18,7 @@ class ConfiguredBundlePostReorderPlugin extends AbstractPlugin implements PostRe
 {
     /**
      * {@inheritDoc}
-     * - Adds flash message if $itemTransfers has Configured Bundle.
+     * - Adds flash message if at least 1 of the provided "items" has configured bundle property.
      *
      * @api
      *
