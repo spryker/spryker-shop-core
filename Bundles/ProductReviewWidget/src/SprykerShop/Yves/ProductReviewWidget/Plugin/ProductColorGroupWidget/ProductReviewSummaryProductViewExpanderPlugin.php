@@ -14,11 +14,11 @@ use SprykerShop\Yves\ProductColorGroupWidgetExtension\Dependency\Plugin\ProductV
 /**
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */
-class ProductReviewPageProductViewExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
+class ProductReviewSummaryProductViewExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     *  - Expands product view data with product review summary data (average rating).
+     *  - Expands product view data transfer object with the product review summary data (average rating).
      *
      * @api
      *
