@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CartPage\Dependency\Client;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 class CartPageToCartClientBridge implements CartPageToCartClientInterface
@@ -135,5 +136,15 @@ class CartPageToCartClientBridge implements CartPageToCartClientInterface
     public function resetQuoteLock(): QuoteResponseTransfer
     {
         return $this->cartClient->resetQuoteLock();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductViewWithCartData(ProductViewTransfer $productViewTransfer): ProductViewTransfer
+    {
+        return $this->cartClient->expandProductViewWithCartData($productViewTransfer);
     }
 }

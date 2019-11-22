@@ -42,4 +42,8 @@
     <transfer name="ProductReviewStorage">
     </transfer>
 
+    <transfer name="ProductView">
+        <property name="rating" type="ProductReviewSummary"/>
+    </transfer>
+
 </transfers>
