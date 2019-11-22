@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Handler;
 
 use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
+use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client\ConfigurableBundleCartNoteWidgetToConfigurableBundleCartNoteClientInterface;
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client\ConfigurableBundleCartNoteWidgetToQuoteClientInterface;
@@ -37,16 +38,15 @@ class ConfigurableBundleCartNoteHandler implements ConfigurableBundleCartNoteHan
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
+     * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer $configuredBundleTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setConfiguredBundleCartNote(
-        ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
-    ): QuoteResponseTransfer {
-        $configuredBundleCartNoteRequestTransfer->setQuote(
-            $this->quoteClient->getQuote()
-        );
+    public function setConfiguredBundleCartNote(ConfiguredBundleTransfer $configuredBundleTransfer): QuoteResponseTransfer
+    {
+        $configuredBundleCartNoteRequestTransfer = (new ConfiguredBundleCartNoteRequestTransfer())
+            ->setConfiguredBundle($configuredBundleTransfer)
+            ->setQuote($this->quoteClient->getQuote());
 
         $quoteResponseTransfer = $this->configurableBundleCartNoteClient
             ->setConfiguredBundleCartNote($configuredBundleCartNoteRequestTransfer);

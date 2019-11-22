@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Form;
 
-use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
+use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -27,7 +27,7 @@ class ConfigurableBundleCartNoteForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => ConfiguredBundleCartNoteRequestTransfer::class,
+            'data_class' => ConfiguredBundleTransfer::class,
         ]);
     }
 
@@ -50,7 +50,7 @@ class ConfigurableBundleCartNoteForm extends AbstractType
      */
     protected function addCartNoteField(FormBuilderInterface $builder)
     {
-        $builder->add(ConfiguredBundleCartNoteRequestTransfer::CART_NOTE, TextareaType::class, [
+        $builder->add(ConfiguredBundleTransfer::CART_NOTE, TextareaType::class, [
             'label' => 'configurable_bundle_cart_note.enter_note',
             'required' => false,
             'constraints' => [
@@ -68,7 +68,7 @@ class ConfigurableBundleCartNoteForm extends AbstractType
      */
     protected function addGroupKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(ConfiguredBundleCartNoteRequestTransfer::GROUP_KEY, HiddenType::class);
+        $builder->add(ConfiguredBundleTransfer::GROUP_KEY, HiddenType::class);
 
         return $this;
     }

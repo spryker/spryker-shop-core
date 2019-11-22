@@ -14,7 +14,6 @@ use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client\Configur
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client\ConfigurableBundleCartNoteWidgetToGlossaryStorageClientInterface;
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Dependency\Client\ConfigurableBundleCartNoteWidgetToQuoteClientInterface;
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Form\ConfigurableBundleCartNoteForm;
-use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Form\DataProvider\ConfigurableBundleCartNoteFormDataProvider;
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Handler\ConfigurableBundleCartNoteHandler;
 use SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Handler\ConfigurableBundleCartNoteHandlerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -29,21 +28,7 @@ class ConfigurableBundleCartNoteWidgetFactory extends AbstractFactory
      */
     public function getConfigurableBundleCartNoteForm(?ConfiguredBundleTransfer $configuredBundleTransfer = null): FormInterface
     {
-        $configurableBundleCartNoteFormDataProvider = $this->createConfigurableBundleCartNoteFormDataProvider();
-
-        return $this->getFormFactory()
-            ->create(
-                ConfigurableBundleCartNoteForm::class,
-                $configurableBundleCartNoteFormDataProvider->getData($configuredBundleTransfer)
-            );
-    }
-
-    /**
-     * @return \SprykerShop\Yves\ConfigurableBundleCartNoteWidget\Form\DataProvider\ConfigurableBundleCartNoteFormDataProvider
-     */
-    public function createConfigurableBundleCartNoteFormDataProvider(): ConfigurableBundleCartNoteFormDataProvider
-    {
-        return new ConfigurableBundleCartNoteFormDataProvider();
+        return $this->getFormFactory()->create(ConfigurableBundleCartNoteForm::class, $configuredBundleTransfer);
     }
 
     /**
