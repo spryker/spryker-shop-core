@@ -445,8 +445,8 @@ export default class PackagingUnitQuantitySelector extends Component {
         if (this.amountDefaultInBaseUnitInput.value != amountInBaseUnits) {
             let newPrice = (amountInBaseUnits / this.amountDefaultInBaseUnitInput.value) * this.itemBasePriceInput.value;
             newPrice = (newPrice * Number(this.qtyInBaseUnitInput.value)) / 100;
-
             this.productPackagingNewPriceValueBlock.innerHTML = this.itemMoneySymbolInput.value + newPrice.toFixed(2);
+
             this.productPackagingNewPriceBlock.classList.remove('is-hidden');
         }
     }
