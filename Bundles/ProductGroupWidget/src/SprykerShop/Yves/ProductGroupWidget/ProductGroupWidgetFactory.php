@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ProductGroupWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\ProductColorGroupWidget\ProductColorGroupWidgetDependencyProvider;
 use SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToProductGroupStorageClientInterface;
 use SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToProductStorageClientInterface;
 
@@ -27,5 +28,13 @@ class ProductGroupWidgetFactory extends AbstractFactory
     public function getProductStorageClient(): ProductGroupWidgetToProductStorageClientInterface
     {
         return $this->getProvidedDependency(ProductGroupWidgetDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductColorGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     */
+    public function getProductViewExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductGroupWidgetDependencyProvider::PLUGIN_PRODUCT_VIEW_EXPANDERS);
     }
 }
