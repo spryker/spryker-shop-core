@@ -7,8 +7,7 @@
 
 namespace SprykerShop\Yves\CmsSlotBlockWidget\Business;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
-use Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotContentRequestTransfer;
 use Generated\Shared\Transfer\CmsSlotContentResponseTransfer;
 use SprykerShop\Yves\CmsSlotBlockWidget\CmsSlotBlockWidgetConfig;
@@ -117,18 +116,18 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
         callable $cmsBlockFunction,
         CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer
     ): string {
-        $cmsSlotBlockStorageDataTransfer = $this->cmsSlotBlockStorageClient
-            ->findCmsSlotBlockStorageData(
+        $cmsSlotBlockCollectionTransfer = $this->cmsSlotBlockStorageClient
+            ->getCmsSlotBlockCollection(
                 $cmsSlotContentRequestTransfer->getCmsSlotTemplatePath(),
                 $cmsSlotContentRequestTransfer->getCmsSlotKey()
             );
 
-        if (!$cmsSlotBlockStorageDataTransfer) {
+        if ($cmsSlotBlockCollectionTransfer->getCmsSlotBlocks()->count() === 0) {
             return '';
         }
 
         $blockOptions[static::KEY_BLOCK_OPTIONS_KEYS] = $this->getVisibleBlockKeys(
-            $cmsSlotBlockStorageDataTransfer,
+            $cmsSlotBlockCollectionTransfer,
             $cmsSlotContentRequestTransfer
         );
 
@@ -136,29 +135,25 @@ class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer $cmsSlotBlockStorageDataTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer
      * @param \Generated\Shared\Transfer\CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer
      *
      * @return array
      */
     protected function getVisibleBlockKeys(
-        CmsSlotBlockStorageDataTransfer $cmsSlotBlockStorageDataTransfer,
+        CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer,
         CmsSlotContentRequestTransfer $cmsSlotContentRequestTransfer
     ): array {
-        $cmsBlocks = $cmsSlotBlockStorageDataTransfer->getCmsBlocks();
         $visibleBlockKeys = [];
 
-        foreach ($cmsBlocks as $cmsBlock) {
-            $cmsBlockTransfer = (new CmsBlockTransfer())
-                ->setKey($cmsBlock[static::KEY_BLOCK_KEY])
-                ->setCmsSlotBlockConditions($cmsBlock[static::KEY_CONDITIONS]);
+        foreach ($cmsSlotBlockCollectionTransfer->getCmsSlotBlocks() as $cmsSlotBlockTransfer) {
             $isCmsBlockVisibleInSlot = $this->cmsSlotBlockClient->isCmsBlockVisibleInSlot(
-                $cmsBlockTransfer,
+                $cmsSlotBlockTransfer,
                 $cmsSlotContentRequestTransfer->getCmsSlotParams()
             );
 
             if ($isCmsBlockVisibleInSlot) {
-                $visibleBlockKeys[] = $cmsBlock[static::KEY_BLOCK_KEY];
+                $visibleBlockKeys[] = $cmsSlotBlockTransfer->getCmsBlockKey();
             }
         }
 
