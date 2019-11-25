@@ -27,8 +27,8 @@ class SalesConfigurableBundleWidgetToMessengerClientBridge implements SalesConfi
      *
      * @return void
      */
-    public function addSuccessMessage($message)
+    public function addInfoMessage($message)
     {
-        $this->messengerClient->addSuccessMessage($message);
+        $this->messengerClient->addInfoMessage($message);
     }
 }

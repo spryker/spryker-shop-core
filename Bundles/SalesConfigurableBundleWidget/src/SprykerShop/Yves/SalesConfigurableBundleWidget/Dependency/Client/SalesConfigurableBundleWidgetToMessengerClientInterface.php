@@ -14,5 +14,5 @@ interface SalesConfigurableBundleWidgetToMessengerClientInterface
      *
      * @return void
      */
-    public function addSuccessMessage($message);
+    public function addInfoMessage($message);
 }

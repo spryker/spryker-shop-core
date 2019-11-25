@@ -38,7 +38,7 @@ class ConfiguredBundleChecker implements ConfiguredBundleCheckerInterface
                 continue;
             }
 
-            $this->messengerClient->addSuccessMessage(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_ITEMS_ADDED_TO_CART_SUCCESS);
+            $this->messengerClient->addInfoMessage(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_ITEMS_ADDED_TO_CART_SUCCESS);
 
             return;
         }
