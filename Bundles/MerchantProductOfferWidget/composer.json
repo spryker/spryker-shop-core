@@ -6,10 +6,10 @@
   "require": {
     "php": ">=7.2",
     "spryker/kernel": "^3.33.0",
-    "spryker/merchant-product-offer-storage": "^0.1.0",
+    "spryker/merchant-product-offer-storage": "^0.2.0",
     "spryker/merchant-profile-storage": "^0.1.0",
     "spryker/price-product": "^4.0.0",
-    "spryker/price-product-storage": "^1.2.0"
+    "spryker/price-product-storage": "^4.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
