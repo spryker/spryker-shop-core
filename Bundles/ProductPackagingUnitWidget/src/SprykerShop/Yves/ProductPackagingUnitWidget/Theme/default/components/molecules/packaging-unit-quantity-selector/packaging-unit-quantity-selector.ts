@@ -394,7 +394,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     private amountInputChange(amountInSalesUnitInput?: number) {
-        const amountDecimalsMaxLength = new RegExp(`(\\.\\d{${this.numbersAfterDot}})\\d+`, 'g');
+        const amountDecimalsMaxLength = new RegExp(`((\.|\,)\\d{${this.numbersAfterDot}})\\d+`, 'g');
 
         this.amountInSalesUnitInput.value = this.amountInSalesUnitInput.value.replace(amountDecimalsMaxLength, '$1');
 
@@ -666,7 +666,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     protected getDecimals(value: string): number {
-        return value && value.includes('.') ? value.split('.')[1].length : 0;
+        return value && value.match(/[,.]/) ? value.split(/[,.]/)[1].length : 0;
     }
 
     protected get numbersAfterDot(): number {
