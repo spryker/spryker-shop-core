@@ -11,14 +11,13 @@
     isAddToCartDisabled : _widget.isAddToCartDisabled | default(false),
     packagingUnitDefaultAmount: _widget.productPackagingUnit.defaultAmount | default(0),
     packagingUnitIsAmountVariable: _widget.productPackagingUnit.isAmountVariable | default(false),
-    packagingUnitIsSelfLead: _widget.productPackagingUnit is not null and _widget.productPackagingUnit.idProduct == _widget.productPackagingUnit.idLeadProduct,
+    packagingUnitIsSelfLead: _widget.packagingUnitIsSelfLead,
     jsonScheme: _widget.jsonScheme | default(''),
     minQuantityInBaseUnit: _widget.minQuantityInBaseUnit,
     minQuantityInSalesUnits: _widget.minQuantityInSalesUnits,
 } %}
 
 {% block body %}
-
     <div class="product-packaging-new-price is-hidden" id="product-packaging-new-price-block">
         <span>{{ "measurement_units.new-price" | trans }}:</span>
         <div id="product-packaging-new-price-value-block"></div>
@@ -100,24 +99,22 @@
         </div>
     </div>
 
-    <div class="col col--sm-12">
-        <div class="text-small spacing-y is-hidden measurement-unit-choice">
-            <div class="measurement-unit-notifications">
-                <div id="quantity-between-units" class="is-hidden">
-                    <span>{{ "measurement_units.recommendation.between-units-info" | trans }} (<span id="current-choice"></span>)</span>
-                </div>
-                <div id="minimum-quantity" class="is-hidden">
-                    <span>{{ "measurement_units.recommendation.min-violation" | trans }}</span>
-                </div>
-                <div id="maximum-quantity" class="is-hidden">
-                    <span>{{ "measurement_units.recommendation.max-violation" | trans }}</span>
-                </div>
+    <div class="text-small spacing-y is-hidden measurement-unit-choice">
+        <div class="measurement-unit-notifications">
+            <div id="quantity-between-units" class="is-hidden">
+                <span>{{ "measurement_units.recommendation.between-units-info" | trans }} (<span id="current-choice"></span>)</span>
             </div>
+            <div id="minimum-quantity" class="is-hidden">
+                <span>{{ "measurement_units.recommendation.min-violation" | trans }}</span>
+            </div>
+            <div id="maximum-quantity" class="is-hidden">
+                <span>{{ "measurement_units.recommendation.max-violation" | trans }}</span>
+            </div>
+        </div>
 
-            <div id="measurement-unit-choices">
-                <span>{{ "measurement_units.recommendation.suggestion" | trans }}:</span>
-                <div class="list"></div>
-            </div>
+        <div id="measurement-unit-choices">
+            <span>{{ "measurement_units.recommendation.suggestion" | trans }}:</span>
+            <div class="list"></div>
         </div>
     </div>
 
@@ -186,7 +183,7 @@
         </div>
     </div>
 
-    <div class="col col--sm-12 spacing-y">
+    <div class="spacing-bottom spacing-bottom--big">
         {% if data.salesUnitCount %}
             {% include molecule('packaging-unit-quantity-selector', 'ProductPackagingUnitWidget') with {
                 data: {
@@ -239,6 +236,5 @@
         {% endfor %}
 
         <script type="application/json" id="measurement-unit-translation">{{ translations|json_encode|raw }}</script>
-
     </div>
 {% endblock body %}
