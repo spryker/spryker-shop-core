@@ -19,16 +19,6 @@ use Twig\Environment as TwigEnvironment;
 class CmsSlotBlockWidgetDataProvider implements CmsSlotBlockWidgetDataProviderInterface
 {
     /**
-     * @uses \Spryker\Shared\CmsSlotBlockStorage\CmsSlotBlockStorageConfig::BLOCK_DATA_KEY_BLOCK_KEY
-     */
-    protected const KEY_BLOCK_KEY = 'blockKey';
-
-    /**
-     * @uses \Spryker\Shared\CmsSlotBlockStorage\CmsSlotBlockStorageConfig::BLOCK_DATA_KEY_CONDITIONS
-     */
-    protected const KEY_CONDITIONS = 'conditions';
-
-    /**
      * @uses \Spryker\Client\CmsBlockStorage\Storage\CmsBlockStorage::OPTION_KEYS
      */
     protected const KEY_BLOCK_OPTIONS_KEYS = 'keys';
