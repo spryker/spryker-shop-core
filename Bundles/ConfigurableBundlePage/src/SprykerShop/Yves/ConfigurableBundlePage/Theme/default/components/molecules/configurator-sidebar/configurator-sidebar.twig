@@ -8,7 +8,7 @@
 {% define data = {
     form: required,
     configurableBundleTemplateStorage: required,
-    isSeparateItemUnlocked: required,
+    isSeparateItemUnlocked: true,
     selectedSlotId: null,
     isSeparateItemActive: false,
 } %}
@@ -20,6 +20,8 @@
         {% set slotClasses = '' %}
 
         {% block slotItem %}
+            {% set submitButtonModifiers = ['expand', 'big-spaces'] %}
+
             <li class="{{ slotClasses }}">
                 {% block slotItemInner %}
                     {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
@@ -28,7 +30,7 @@
                             submitButtonText: configurableBundleTemplateSlotStorage.name | trans,
                             idConfigurableBundleTemplateSlot: configurableBundleTemplateSlotStorage.idConfigurableBundleTemplateSlot,
                             selectedSlotId: data.selectedSlotId,
-                            submitButtonClass: 'button button--expand button--big-spaces',
+                            submitButtonModifiers: submitButtonModifiers,
                             isExtraClass: true,
                             action: path(
                                 'configurable-bundle/configurator/slots', {
@@ -42,21 +44,21 @@
             </li>
         {% endblock %}
     {% endfor %}
+
+    {% set summaryClasses = '' %}
+
     {% block summary %}
-        {% set summaryClasses = '' %}
+        <li class="{{ summaryClasses }}">
+            {% block itemInner %}
+                {% set buttonModifiers = data.isSeparateItemActive ? ['expand', 'big-spaces', 'active'] : ['expand', 'big-spaces'] %}
 
-        {% block item %}
-            <li class="{{ summaryClasses }}">
-                {% block itemInner %}
-                    {% set buttonExtraClass = data.isSeparateItemActive ? ' button--active' : ' button--unselected' %}
-                    {% set buttonClasses = 'button button--expand button--big-spaces' ~ buttonExtraClass %}
-
+                {% block itemAction %}
                     {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
                         data: {
                             form: data.form.createView,
                             submitButtonText: 'configurable_bundle_page.configurator.summary' | trans,
                             isSubmitButtonActive: data.isSeparateItemUnlocked,
-                            submitButtonClass: buttonClasses,
+                            submitButtonModifiers: buttonModifiers,
                             isSeparateItem: true,
                             action: path(
                                 'configurable-bundle/configurator/summary', {
@@ -66,7 +68,7 @@
                         },
                     } only %}
                 {% endblock %}
-            </li>
-        {% endblock %}
+            {% endblock %}
+        </li>
     {% endblock %}
 {% endblock %}

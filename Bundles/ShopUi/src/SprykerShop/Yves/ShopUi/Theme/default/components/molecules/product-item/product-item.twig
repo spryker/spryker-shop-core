@@ -118,20 +118,18 @@
     {% block actionsContainer %}
         <div class="{{ config.name }}__actions">
             {% block actions %}
-                {% macro icon(modifiers, name) %}
-                    {{- 'product.view' | trans -}}
-                    {%- include atom('icon') with {
-                        modifiers: modifiers,
-                        data: {
-                            name: name,
-                        },
-                    } only -%}
-                {% endmacro %}
-
                 {% if data.url %}
                     {% block action %}
                         <a class="button button--expand" href="{{ path(data.url) }}">
-                            {{ _self.icon(['small'], 'angle-double-right') }}
+                            {% block actionInner %}
+                                {{- 'product.view' | trans -}}
+                                {%- include atom('icon') with {
+                                    modifiers: modifiers,
+                                    data: {
+                                        name: name,
+                                    },
+                                } only -%}
+                            {% endblock %}
                         </a>
                     {% endblock %}
                 {% endif %}

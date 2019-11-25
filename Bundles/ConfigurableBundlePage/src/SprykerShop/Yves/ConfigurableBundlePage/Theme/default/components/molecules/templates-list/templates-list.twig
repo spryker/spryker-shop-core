@@ -21,7 +21,8 @@
         {% if data.templates | length %}
             {% block list %}
                 <ul class="grid {{ config.name }}__list">
-                    {% for template in data.templates %}
+                    {% block listInner %}
+                        {% for template in data.templates %}
                         {% set listItemClasses = 'col col--sm-12 col--md-6 col--xl-3' %}
 
                         {% block item %}
@@ -56,6 +57,7 @@
                             </li>
                         {% endblock %}
                     {% endfor %}
+                    {% endblock %}
                 </ul>
             {% endblock %}
         {% else %}

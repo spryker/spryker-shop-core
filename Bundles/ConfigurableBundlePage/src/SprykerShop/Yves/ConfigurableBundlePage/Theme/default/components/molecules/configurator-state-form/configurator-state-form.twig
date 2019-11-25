@@ -8,13 +8,14 @@
     form: required,
     action: required,
     submitButtonText: '',
-    submitButtonClass: 'button button--expand',
     isExtraClass: false,
     idConfigurableBundleTemplateSlot: '',
     selectedSlotId: null,
+    submitButtonModifiers: ['expand'],
     isSeparateItem: false,
     isSubmitButtonActive: true,
     method: 'GET',
+
 } %}
 
 {% block body %}
@@ -24,26 +25,30 @@
         {{ form_row(slotForm.sku, { id: '' }) }}
     {% endfor %}
 
-    {% set extraClass = 'button--unselected' %}
+    {% block action %}
+        {% set isSelectedProduct = data.form.slots[data.idConfigurableBundleTemplateSlot].vars.value.sku is defined %}
 
-    {% if data.form.slots[data.idConfigurableBundleTemplateSlot].vars.value.sku is defined %}
-        {% set extraClass = 'button--selected' %}
-    {%- endif %}
+        {% if isSelectedProduct %}
+            {% set extraModifier = 'selected' %}
+        {%- endif %}
 
-    {% if data.idConfigurableBundleTemplateSlot == data.selectedSlotId and not data.isSeparateItem %}
-        {% set extraClass = 'button--active' %}
-    {%- endif %}
+        {% if data.idConfigurableBundleTemplateSlot == data.selectedSlotId and not data.isSeparateItem %}
+            {% set extraModifier = 'active' %}
+        {%- endif %}
 
-    {% block button %}
-        {% set buttonClasses = data.isExtraClass ? data.submitButtonClass ~ ' ' ~ extraClass : data.submitButtonClass %}
+        {% block button %}
+            {% set buttonModifiers = extraModifier is defined ? ['expand', 'big-spaces', extraModifier] : ['expand', 'big-spaces'] %}
+            {% set buttonAttributes = not data.isSubmitButtonActive ? {disabled: 'disabled'} : {} %}
 
-        {% block buttonItem %}
-            {% set extraClass = data.isExtraClass ? extraClass %}
-            {% set buttonState = not data.isSubmitButtonActive ? 'disabled' %}
-
-            <button type="submit" class="{{ data.submitButtonClass }} {{ extraClass }}" {{ buttonState }}>
-                {{ data.submitButtonText }}
-            </button>
+            {% block buttonInner %}
+                {% include molecule('configurator-action', 'ConfigurableBundlePage') with {
+                    modifiers: buttonModifiers,
+                    attributes: buttonAttributes,
+                    data: {
+                        text: data.submitButtonText,
+                    },
+                } only %}
+            {% endblock %}
         {% endblock %}
     {% endblock %}
 
