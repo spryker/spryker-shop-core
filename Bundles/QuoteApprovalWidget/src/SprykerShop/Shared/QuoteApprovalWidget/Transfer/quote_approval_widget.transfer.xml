@@ -68,4 +68,7 @@
         <property name="code" type="string"/>
     </transfer>
 
+    <transfer name="Money">
+    </transfer>
+
 </transfers>

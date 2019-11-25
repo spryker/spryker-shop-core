@@ -12,7 +12,7 @@
     <h6 class="text-secondary float-right">
         {% widget 'ProductBundleItemCounterWidget' args [data.cart] only %}
         {% nowidget %}
-            {{ totals }} {{ 'item' | trans }}
+            {{ data.cart.items | length }} {{ 'item' | trans }}
         {% endwidget %}
     </h6>
     <h6>{{ 'cart.your-order' | trans }}</h6>
@@ -22,8 +22,8 @@
         {% block body %}
             <li class="list__item spacing-y">
                 {{ parent() }}
+                <hr>
             </li>
-            <hr>
         {% endblock %}
     {% endwidget %}
 

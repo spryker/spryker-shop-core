@@ -7,4 +7,7 @@
         <property name="wishlists" type="Wishlist[]" singular="wishlist"/>
     </transfer>
 
+    <transfer name="ProductView">
+    </transfer>
+
 </transfers>

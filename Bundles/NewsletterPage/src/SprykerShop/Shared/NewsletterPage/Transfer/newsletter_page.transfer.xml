@@ -27,4 +27,9 @@
         <property name="subscriptionResults" type="NewsletterSubscriptionResult[]" singular="subscriptionResult"/>
     </transfer>
 
+    <transfer name="NewsletterSubscriptionResult">
+        <property name="isSuccess" type="bool"/>
+        <property name="errorMessage" type="string"/>
+    </transfer>
+
 </transfers>

@@ -24,4 +24,9 @@
     <transfer name="CmsSlotExternalData">
         <property name="values" type="string[]" associative="true" singular="values"/>
     </transfer>
+
+    <transfer name="CmsSlotStorage">
+        <property name="isActive" type="bool"/>
+    </transfer>
+
 </transfers>
