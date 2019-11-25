@@ -29,7 +29,7 @@ class AddToCartUrlProductViewExpanderPlugin extends AbstractPlugin implements Pr
     public function expand(ProductViewTransfer $productViewTransfer): ProductViewTransfer
     {
         return $this->getFactory()
-            ->getCartClient()
+            ->createProductViewExpander()
             ->expandProductViewWithCartData($productViewTransfer);
     }
 }
