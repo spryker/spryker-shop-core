@@ -14,7 +14,7 @@ interface PostReorderPluginInterface
     /**
      * Specification:
      * - Plugin is executed after reorder finished cart updating.
-     * - Parameter `$itemTransfers` represents the to be reorderd items before sanitization.
+     * - Parameter `$itemTransfers` represents the items being reordered before sanitization.
      *
      * @api
      *
