@@ -11,7 +11,7 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class ShoppingListWidgetConfig extends AbstractBundleConfig
 {
-    public const DEFAULT_NAME = 'My shopping list';
+    protected const DEFAULT_NAME = 'My shopping list';
 
     /**
      * @see \SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS

@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ShoppingListWidget\Controller;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetConfig;
@@ -40,10 +39,12 @@ class ShoppingListWidgetController extends AbstractController
     {
         parent::initialize();
 
-        $customerTransfer = $this->getCustomer();
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
 
         if ($customerTransfer === null || !$customerTransfer->getCompanyUserTransfer()) {
-            throw new NotFoundHttpException("Only company users are allowed to access this page");
+            throw new NotFoundHttpException('Only company users are allowed to access this page');
         }
     }
 
@@ -53,6 +54,16 @@ class ShoppingListWidgetController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request): RedirectResponse
+    {
+        return $this->executeIndexAction($request);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeIndexAction(Request $request): RedirectResponse
     {
         $shoppingListItemTransfer = $this->getShoppingListItemTransferFromRequest($request);
 
@@ -84,7 +95,9 @@ class ShoppingListWidgetController extends AbstractController
      */
     protected function getShoppingListItemTransferFromRequest(Request $request): ShoppingListItemTransfer
     {
-        $customerTransfer = $this->getCustomer();
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
 
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setSku($request->get(static::PARAM_SKU))
@@ -94,15 +107,5 @@ class ShoppingListWidgetController extends AbstractController
             ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());
 
         return $shoppingListItemTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
-     */
-    protected function getCustomer(): ?CustomerTransfer
-    {
-        return $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
     }
 }
