@@ -1,0 +1,30 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'configured-bundle-total',
+} %}
+
+{% define data = {
+    total: required,
+} %}
+
+{% block extraClass %} grid grid--justify{% endblock %}
+
+{% block body %}
+    {% block title %}
+        <h6 class="col col-sm-8">{{ 'configurable_bundle_page.configurator.summary_page_total' | trans }}</h6>
+    {% endblock %}
+
+    {% block price %}
+        {% if can('SeePricePermissionPlugin') %}
+            {% include molecule('money-price') with {
+                class: 'col col-sm-4 text-right',
+                data: {
+                    amount: data.total | default(null),
+                },
+            } only %}
+        {% else %}
+            {{ 'customer.access.cannot_see_price' | trans }}
+        {% endif %}
+    {% endblock %}
+{% endblock %}
