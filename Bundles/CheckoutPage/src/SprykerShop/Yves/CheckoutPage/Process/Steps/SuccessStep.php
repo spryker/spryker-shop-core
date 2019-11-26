@@ -36,7 +36,7 @@ class SuccessStep extends AbstractBaseStep
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig $checkoutPageConfig
      * @param string $stepRoute
-     * @param string $escapeRoute
+     * @param string|null $escapeRoute
      */
     public function __construct(
         CheckoutPageToCustomerClientInterface $customerClient,

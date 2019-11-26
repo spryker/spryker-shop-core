@@ -1,0 +1,83 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'merchant-product-offer-item',
+} %}
+
+{% define data = {
+    checked: false,
+    radioGroupName: required,
+    offerReference: required,
+    merchantName: required,
+    merchantUrl: required,
+    merchantPrice: required,
+    shouldShowRadioButton: false,
+} %}
+
+{% block extraClass %} spacing-y{% endblock %}
+
+{% block body %}
+    <div class="grid grid--nowrap">
+        {% block offerInner %}
+            {% if data.shouldShowRadioButton %}
+                {% block radioCol %}
+                    <div class="col">
+                        {% block radio %}
+                            {% include atom('radio') with {
+                                class: config.jsName ~ '__trigger-' ~ data.offerReference,
+                                attributes: {
+                                    checked: data.checked,
+                                    name: data.radioGroupName,
+                                    value: data.offerReference,
+                                },
+                            } only %}
+
+                            {% include molecule('page-location-search-params-updater', 'MerchantProductOfferWidget') with {
+                                attributes: {
+                                    'trigger-class': config.jsName ~ '__trigger-' ~ data.offerReference,
+                                    'search-params': 'attribute[product_offer_reference]=' ~ data.offerReference,
+                                },
+                            } only %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            {% endif %}
+
+            {% block contentCol %}
+                <div class="col col--expand">
+                    {% block content %}
+                        <div class="grid grid--justify grid--nowrap">
+                            {% block contentInner %}
+                                {% block merchantInfoCol %}
+                                    <div class="col col--expand">
+                                        {% block merchantName %}
+                                            <div>
+                                                <strong>{{ data.merchantName }}</strong>
+                                            </div>
+                                        {% endblock %}
+
+                                        {% block merchantLink %}
+                                            <a class="link link--small" href="{{ data.merchantUrl }}">
+                                                {{ "mearchant_product_offer.view_seller" | trans }}
+                                            </a>
+                                        {% endblock %}
+                                    </div>
+                                {% endblock %}
+
+                                {% block priceCol %}
+                                    <div class="col">
+                                        {% block price %}
+                                            <div>
+                                                <strong>{{ data.merchantPrice | money }}</strong>
+                                            </div>
+                                        {% endblock %}
+                                    </div>
+                                {% endblock %}
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        {% endblock %}
+    </div>
+{% endblock %}
