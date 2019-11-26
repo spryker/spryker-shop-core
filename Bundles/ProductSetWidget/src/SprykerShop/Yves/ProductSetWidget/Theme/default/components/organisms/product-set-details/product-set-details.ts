@@ -9,7 +9,9 @@ export default class ProductSetDetails extends Component {
 
     protected init(): void {
         this.productItems = <ProductItem[]>Array.from(this.getElementsByClassName(`${this.jsName}__product-item`));
-        this.targets = <HTMLInputElement[]>Array.from(this.getElementsByClassName(`${this.jsName}__product-sku-hidden-input`));
+        this.targets = <HTMLInputElement[]>Array.from(this.getElementsByClassName(
+            `${this.jsName}__product-sku-hidden-input`
+        ));
 
         this.mapEvents();
     }

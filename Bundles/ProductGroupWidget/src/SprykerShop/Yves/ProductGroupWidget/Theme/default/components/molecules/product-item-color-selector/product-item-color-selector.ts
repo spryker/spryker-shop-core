@@ -28,7 +28,7 @@ export default class ProductItemColorSelector extends ColorSelector {
             originalPrice: this.originalPrice,
             detailPageUrl: this.detailPageUrl,
             addToCartUrl: this.addToCartUrl
-        }
+        };
     }
 
     protected get imageUrl(): string {
