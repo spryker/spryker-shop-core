@@ -3,7 +3,15 @@ import ProductItem, { ProductItemData } from 'ShopUi/components/molecules/produc
 
 export default class ProductItemColorSelector extends ColorSelector {
     protected productItemData: ProductItemData;
-    protected currentSelection: HTMLButtonElement;
+    protected productItem: ProductItem;
+
+    protected readyCallback(): void {}
+
+    protected init(): void {
+        if (this.productItemClassName) {
+            this.productItem = <ProductItem>this.closest(this.productItemClassName);
+        }
+    }
 
     protected get imageUrl(): string {
         return this.currentSelection.getAttribute('data-product-image-src');
@@ -31,5 +39,9 @@ export default class ProductItemColorSelector extends ColorSelector {
 
     protected get addToCartUrl(): string {
         return this.currentSelection.getAttribute('data-product-add-to-cart-url');
+    }
+
+    protected get productItemClassName(): string {
+        return this.getAttribute('product-item-class-name');
     }
 }

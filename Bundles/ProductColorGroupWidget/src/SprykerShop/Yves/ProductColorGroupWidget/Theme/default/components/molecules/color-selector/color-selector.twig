@@ -6,9 +6,8 @@
 } %}
 
 {% define data = {
-    item: required,
+    items: required,
     selectionTag: 'button',
-    firstItem: null,
 } %}
 
 {% define attributes = {
@@ -16,18 +15,26 @@
 } %}
 
 {% block component %}
-    {% if data.item is not empty %}
+    {% if data.items is not empty %}
         {{ parent() }}
     {% endif %}
 {% endblock %}
 
 {% block body %}
-    {% set activeClassName = data.firstItem ? attributes['active-item-class-name'] %}
-    {% set backgroundColor = data.item.colorCode ? 'background-color: ' ~ data.item.colorCode ~ ';' %}
+    {% block list %}
+        <div class="{{ config.name }}__list">
+            {% for item in data.items %}
+                {% block item %}
+                    {% set activeClassName = loop.first ? attributes['active-item-class-name'] %}
+                    {% set backgroundColor = item.colorCode ? 'background-color: ' ~ item.colorCode ~ ';' %}
 
-    <{{ data.selectionTag }}
-        class="{{ config.name }}__item {{ activeClassName }} {{ config.jsName }}__item"
-        style="{{ backgroundColor }}"
-        {% block listDataAttributes %}{% endblock %}>
-    </{{ data.selectionTag }}>
+                    <{{ data.selectionTag }}
+                        class="{{ config.name }}__item {{ activeClassName }} {{ config.jsName }}__item"
+                        style="{{ backgroundColor }}"
+                        {% block listDataAttributes %}{% endblock %}>
+                    </{{ data.selectionTag }}>
+                {% endblock %}
+            {% endfor %}
+        </div>
+    {% endblock %}
 {% endblock %}

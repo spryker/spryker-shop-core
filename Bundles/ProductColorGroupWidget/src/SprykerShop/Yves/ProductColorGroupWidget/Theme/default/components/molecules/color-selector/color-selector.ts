@@ -2,6 +2,7 @@ import Component from 'ShopUi/models/component';
 
 export default class ColorSelector extends Component {
     protected triggers: HTMLElement[];
+    protected currentSelection: HTMLElement;
 
     protected readyCallback(): void {}
 
@@ -17,19 +18,18 @@ export default class ColorSelector extends Component {
         });
     }
 
-    protected onTriggerSelection(event: Event): void {
+    onTriggerSelection(event: Event): void {
         event.preventDefault();
-        const currentSelection = <HTMLElement>event.currentTarget;
-
-        this.setActiveItemSelection(currentSelection);
+        this.currentSelection = <HTMLElement>event.currentTarget;
+        this.setActiveItemSelection();
     }
 
-    protected setActiveItemSelection(currentSelection: HTMLElement): void {
+    protected setActiveItemSelection(): void {
         this.triggers.forEach((element: HTMLElement) => {
             element.classList.remove(this.activeItemClassName);
         });
 
-        currentSelection.classList.add(this.activeItemClassName);
+        this.currentSelection.classList.add(this.activeItemClassName);
     }
 
     protected get activeItemClassName(): string {
