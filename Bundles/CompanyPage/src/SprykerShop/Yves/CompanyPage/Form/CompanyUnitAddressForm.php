@@ -37,7 +37,6 @@ class CompanyUnitAddressForm extends AbstractType
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
     protected const VALIDATION_MIN_LENGTH_MESSAGE = 'validation.min_length';
     protected const VALIDATION_ADDRESS_NUMBER_MESSAGE = 'validation.address_number';
-    protected const VALIDATION_ZIP_CODE_MESSAGE = 'validation.zip_code';
 
     /**
      * @return string
