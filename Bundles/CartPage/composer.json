@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.2",
     "spryker-shop/comment-widget-extension": "^1.0.0",
-    "spryker-shop/product-color-group-widget-extension": "*",
+    "spryker-shop/product-color-group-widget-extension": "^1.0.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.28.0",
     "spryker/availability": "^5.4.0 || ^6.0.0 || ^8.0.0",
