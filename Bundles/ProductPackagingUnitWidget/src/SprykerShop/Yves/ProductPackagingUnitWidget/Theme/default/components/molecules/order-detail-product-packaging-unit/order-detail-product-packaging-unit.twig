@@ -7,7 +7,8 @@
 
 {% define data = {
     concreteItem: required,
-    currencyIsoCode: required
+    currencyIsoCode: required,
+    countOfDecimalsInAmount: 10,
 } %}
 
 {% block body %}
@@ -28,7 +29,7 @@
     <td>
         {{ data.concreteItem.name }}<br>
         {% if data.concreteItem.amount and data.concreteItem.quantity %}
-            <span class="text-secondary">&times;</span> {{ data.concreteItem.amount / data.concreteItem.quantity }} {{ 'packaging_units.cart.item' | trans }} (= {{ (data.concreteItem.amount / data.concreteItem.quantity) / data.concreteItem.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }}
+            <span class="text-secondary">&times;</span> {{ data.concreteItem.amount.divide(data.concreteItem.quantity, data.countOfDecimalsInAmount).trim }} {{ 'packaging_units.cart.item' | trans }} (= {{ (data.concreteItem.amount.divide(data.concreteItem.quantity, data.countOfDecimalsInAmount)).divide(data.concreteItem.amountSalesUnit.conversion, data.countOfDecimalsInAmount).trim }}{{ amountSalesUnitName | trans }}) = {{ data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }}
         {% endif %}
     </td>
     <td>
