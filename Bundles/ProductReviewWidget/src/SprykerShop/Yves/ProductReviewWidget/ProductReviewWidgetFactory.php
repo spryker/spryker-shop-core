@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ProductReviewWidget;
 
+use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\Application;
 use Spryker\Yves\ProductReview\ProductReviewFactory as SprykerProductReviewFactory;
@@ -16,6 +17,7 @@ use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetTo
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewStorageClientInterface;
 use SprykerShop\Yves\ProductReviewWidget\Form\DataProvider\ProductReviewFormDataProvider;
 use SprykerShop\Yves\ProductReviewWidget\Form\ProductReviewForm;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProductReviewWidgetFactory extends SprykerProductReviewFactory
 {
@@ -92,5 +94,27 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
     public function getApplication(): Application
     {
         return $this->getProvidedDependency(ProductReviewWidgetDependencyProvider::PLUGIN_APPLICATION);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    public function getApplicationRequest(): Request
+    {
+        return $this->getApplication()['request'];
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer
+     */
+    public function createProductReviewSearchRequestTransfer(int $idProductAbstract): ProductReviewSearchRequestTransfer
+    {
+        $productReviewSearchRequestTransfer = new ProductReviewSearchRequestTransfer();
+        $productReviewSearchRequestTransfer->setIdProductAbstract($idProductAbstract);
+        $productReviewSearchRequestTransfer->setRequestParams($this->getApplicationRequest()->query->all());
+
+        return $productReviewSearchRequestTransfer;
     }
 }
