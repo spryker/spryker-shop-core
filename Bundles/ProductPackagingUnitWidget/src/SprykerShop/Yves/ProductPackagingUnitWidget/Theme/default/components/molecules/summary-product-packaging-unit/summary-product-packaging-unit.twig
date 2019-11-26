@@ -12,6 +12,7 @@
     quantitySalesUnit: required,
     amountSalesUnit: required,
     images: [],
+    countOfDecimalsInAmount: 10,
 } %}
 
 {% block body %}
@@ -34,7 +35,7 @@
             {% endif %}
         </div>
         <div class="col col--sm-12 col--lg-9">
-            {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+            {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default %}
             {% set salesUnitSummary = salesUnitName ? data.quantity / data.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
 
             <strong class="float-right">{{ can('SeePricePermissionPlugin') ? data.price : 'customer.access.cannot_see_price' | trans }}</strong>
@@ -42,9 +43,10 @@
             <div>{{ 'packaging_units.cart.quantity' | trans }}: {{ data.quantity }}</div>
 
             {% if data.amountSalesUnit is not empty %}
-                {% set amountPerQuantity = data.amount.divide(data.quantity, 5).trim %}
-                {% set amountPerQuantityConversion = amountPerQuantity.divide(data.amountSalesUnit.conversion, 5).trim %}
-                {% set amountSalesUnitName = salesUnitName | default(data.amountSalesUnit.productMeasurementUnit.name) | default('') %}
+                {% set amountPerQuantity = data.amount.divide(data.quantity, data.countOfDecimalsInAmount).trim %}
+                {% set amountPerQuantityConversion = amountPerQuantity.divide(data.amountSalesUnit.conversion, data.countOfDecimalsInAmount).trim %}
+                {% set amountSalesUnitName = salesUnitName | default(data.amountSalesUnit.productMeasurementBaseUnit.productMeasurementUnit.name) | default %}
+
                 <div>
                     <span class="text-secondary">&times;</span>
                     {{ amountPerQuantity }} {{ amountSalesUnitName | trans }}
