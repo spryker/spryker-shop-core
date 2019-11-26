@@ -74,7 +74,7 @@ class CmsSlotBlockWidgetDependencyProvider extends AbstractBundleDependencyProvi
     protected function addTwigEnvironment(Container $container): Container
     {
         $container->set(static::SERVICE_TWIG, function () {
-            return (new Pimple())->getApplication()[static::SERVICE_TWIG];
+            return (new Pimple())->getApplication()->get(static::SERVICE_TWIG);
         });
 
         return $container;
