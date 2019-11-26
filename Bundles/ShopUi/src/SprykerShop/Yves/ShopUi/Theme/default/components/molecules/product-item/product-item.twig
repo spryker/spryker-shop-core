@@ -122,13 +122,18 @@
                     {% block action %}
                         <a class="button button--expand" href="{{ path(data.url) }}">
                             {% block actionInner %}
-                                {{- 'product.view' | trans -}}
-                                {%- include atom('icon') with {
-                                    modifiers: modifiers,
-                                    data: {
-                                        name: name,
-                                    },
-                                } only -%}
+                                {% set iconModifiers = ['small'] %}
+                                {% set iconName = 'angle-double-right' %}
+
+                                {% block icon %}
+                                    {{- 'product.view' | trans -}}
+                                    {%- include atom('icon') with {
+                                        modifiers: iconModifiers,
+                                        data: {
+                                            name: iconName,
+                                        },
+                                    } only -%}
+                                {% endblock %}
                             {% endblock %}
                         </a>
                     {% endblock %}
