@@ -1,6 +1,7 @@
 {% extends template('widget') %}
 
 {% define data = {
+    bundle: _widget.configuredBundle,
     form: _widget.configurableBundleCartNoteForm,
     quote: _widget.quote,
 } %}
@@ -28,10 +29,11 @@
 
         {% if not canWrite and data.form.cartNote.vars.value is not empty %}
             {% block cartNoteReadOnly %}
-                <ul>
-                    <li><small>{{ 'configurable_bundle_cart_note.cart_note' | trans }}</small></li>
-                    <li>{{ data.form.cartNote.vars.value | escape | nl2br }}</li>
-                </ul>
+                {% include molecule('readonly-bundled-cart-note', 'ConfigurableBundleCartNoteWidget') ignore missing with {
+                    data: {
+                        bundle: data.bundle,
+                    },
+                } only %}
             {% endblock %}
         {% endif %}
     {% endblock %}

@@ -11,10 +11,8 @@
 {% block body %}
     {% if data.bundle.cartNote is not empty %}
         {% block bundleCartNote %}
-            <ul>
-                <li><small>{{ 'configurable_bundle_cart_note.cart_note' | trans }}</small></li>
-                <li>{{ data.bundle.cartNote | escape | nl2br }}</li>
-            </ul>
+            <h6 class="{{ config.name }}__title">{{ 'configurable_bundle_cart_note.cart_note' | trans }}</h6>
+            <p class="spacing spacing--reset">{{ data.bundle.cartNote | escape | nl2br }}</p>
         {% endblock %}
     {% endif %}
 {% endblock %}

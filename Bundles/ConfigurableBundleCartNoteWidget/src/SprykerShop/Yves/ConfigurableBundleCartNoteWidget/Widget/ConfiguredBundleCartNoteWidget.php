@@ -16,6 +16,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ConfiguredBundleCartNoteWidget extends AbstractWidget
 {
+    protected const PARAMETER_CONFIGURED_BUNDLE = 'configuredBundle';
     protected const PARAMETER_CONFIGURABLE_BUNDLE_CART_NOTE_FORM = 'configurableBundleCartNoteForm';
     protected const PARAMETER_QUOTE = 'quote';
 
@@ -27,6 +28,7 @@ class ConfiguredBundleCartNoteWidget extends AbstractWidget
         ConfiguredBundleTransfer $configuredBundleTransfer,
         ?QuoteTransfer $quoteTransfer = null
     ) {
+        $this->addConfiguredBundleParameter($configuredBundleTransfer);
         $this->addConfigurableBundleCartNoteFormParameter($configuredBundleTransfer);
         $this->addQuoteParameter($quoteTransfer);
     }
@@ -45,6 +47,16 @@ class ConfiguredBundleCartNoteWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@ConfigurableBundleCartNoteWidget/views/configured-bundle-cart-note/configured-bundle-cart-note.twig';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer $configuredBundleTransfer
+     *
+     * @return void
+     */
+    protected function addConfiguredBundleParameter(ConfiguredBundleTransfer $configuredBundleTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_CONFIGURED_BUNDLE, $configuredBundleTransfer);
     }
 
     /**
