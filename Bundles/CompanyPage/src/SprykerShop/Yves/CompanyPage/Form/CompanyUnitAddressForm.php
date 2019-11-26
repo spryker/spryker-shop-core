@@ -195,7 +195,6 @@ class CompanyUnitAddressForm extends AbstractType
             'required' => true,
             'constraints' => [
                 $this->createNotBlankConstraint(),
-                $this->createZipCodeConstraint($options),
             ],
         ]);
 
@@ -279,22 +278,6 @@ class CompanyUnitAddressForm extends AbstractType
             'min' => 3,
             'groups' => $validationGroup,
             'minMessage' => static::VALIDATION_MIN_LENGTH_MESSAGE,
-        ]);
-    }
-
-    /**
-     * @param array $options
-     *
-     * @return \Symfony\Component\Validator\Constraints\Regex
-     */
-    protected function createZipCodeConstraint(array $options): Regex
-    {
-        $validationGroup = $this->getValidationGroup($options);
-
-        return new Regex([
-            'pattern' => '/^\d{5}$/',
-            'message' => static::VALIDATION_ZIP_CODE_MESSAGE,
-            'groups' => $validationGroup,
         ]);
     }
 
