@@ -8,10 +8,10 @@
     form: required,
     action: required,
     submitButtonText: '',
-    isExtraClass: false,
-    idConfigurableBundleTemplateSlot: '',
-    selectedSlotId: null,
     submitButtonModifiers: ['expand'],
+    isExtraModifier: false,
+    idConfigurableBundleTemplateSlot: null,
+    selectedSlotId: null,
     isSeparateItem: false,
     isSubmitButtonActive: true,
     method: 'GET',
@@ -28,16 +28,16 @@
     {% block action %}
         {% set isSelectedProduct = data.form.slots[data.idConfigurableBundleTemplateSlot].vars.value.sku is defined %}
 
-        {% if isSelectedProduct %}
+        {% if isSelectedProduct and data.isExtraModifier %}
             {% set extraModifier = 'selected' %}
         {%- endif %}
 
-        {% if data.idConfigurableBundleTemplateSlot == data.selectedSlotId and not data.isSeparateItem %}
+        {% if data.idConfigurableBundleTemplateSlot == data.selectedSlotId and not data.isSeparateItem and data.isExtraModifier %}
             {% set extraModifier = 'active' %}
         {%- endif %}
 
         {% block button %}
-            {% set buttonModifiers = extraModifier is defined ? ['expand', 'big-spaces', extraModifier] : ['expand', 'big-spaces'] %}
+            {% set buttonModifiers = extraModifier is defined ? data.submitButtonModifiers | merge([extraModifier]) : data.submitButtonModifiers %}
             {% set buttonAttributes = not data.isSubmitButtonActive ? {disabled: 'disabled'} : {} %}
 
             {% block buttonInner %}

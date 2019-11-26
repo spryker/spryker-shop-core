@@ -20,7 +20,7 @@
         {% set slotClasses = '' %}
 
         {% block slotItem %}
-            {% set submitButtonModifiers = ['expand', 'big-spaces'] %}
+            {% set submitButtonModifiers = ['expand', 'navigation-item'] %}
 
             <li class="{{ slotClasses }}">
                 {% block slotItemInner %}
@@ -31,7 +31,7 @@
                             idConfigurableBundleTemplateSlot: configurableBundleTemplateSlotStorage.idConfigurableBundleTemplateSlot,
                             selectedSlotId: data.selectedSlotId,
                             submitButtonModifiers: submitButtonModifiers,
-                            isExtraClass: true,
+                            isExtraModifier: true,
                             action: path(
                                 'configurable-bundle/configurator/slots', {
                                     'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
@@ -47,12 +47,12 @@
 
     {% set summaryClasses = '' %}
 
-    {% block summary %}
+    {% block summaryItem %}
         <li class="{{ summaryClasses }}">
-            {% block itemInner %}
-                {% set buttonModifiers = data.isSeparateItemActive ? ['expand', 'big-spaces', 'active'] : ['expand', 'big-spaces'] %}
+            {% block summaryItemInner %}
+                {% set buttonModifiers = data.isSeparateItemActive ? ['expand', 'navigation-item', 'active'] : ['expand', 'navigation-item'] %}
 
-                {% block itemAction %}
+                {% block summaryItemAction %}
                     {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
                         data: {
                             form: data.form.createView,
@@ -60,6 +60,7 @@
                             isSubmitButtonActive: data.isSeparateItemUnlocked,
                             submitButtonModifiers: buttonModifiers,
                             isSeparateItem: true,
+                            isExtraModifier: true,
                             action: path(
                                 'configurable-bundle/configurator/summary', {
                                     'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
