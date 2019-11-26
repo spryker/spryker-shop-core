@@ -20,7 +20,7 @@
         {% set slotClasses = '' %}
 
         {% block slotItem %}
-            {% set submitButtonModifiers = ['expand', 'navigation-item'] %}
+            {% set submitButtonModifiers = ['expand', 'additional-indention'] %}
 
             <li class="{{ slotClasses }}">
                 {% block slotItemInner %}
@@ -50,7 +50,7 @@
     {% block summaryItem %}
         <li class="{{ summaryClasses }}">
             {% block summaryItemInner %}
-                {% set buttonModifiers = data.isSeparateItemActive ? ['expand', 'navigation-item', 'active'] : ['expand', 'navigation-item'] %}
+                {% set buttonModifiers = data.isSeparateItemActive ? ['expand', 'additional-indention', 'active'] : ['expand', 'additional-indention'] %}
 
                 {% block summaryItemAction %}
                     {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
