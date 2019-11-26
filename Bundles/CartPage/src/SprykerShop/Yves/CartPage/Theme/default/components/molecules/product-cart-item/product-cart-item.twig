@@ -70,14 +70,14 @@
 
 {% block actionsContainer %}
     <div class="{{ config.name }}__col col col--sm-12 col--lg-4">
-        {% if data.product.quantitySalesUnit and data.product.amountSalesUnit %}
+        {% if data.product.amountSalesUnit %}
             {% include molecule('packaging-unit-cart', 'ProductPackagingUnitWidget') ignore missing with {
                 data: {
                     amount: data.product.amount,
                     quantity: data.product.quantity,
                     quantitySalesUnit: data.product.quantitySalesUnit,
-                    quantityConversion: data.product.quantitySalesUnit.conversion,
-                    quantityProductMeasurementUnit: data.product.quantitySalesUnit.productMeasurementUnit,
+                    quantityConversion: data.product.quantitySalesUnit.conversion | default(null),
+                    quantityProductMeasurementUnit: data.product.quantitySalesUnit.productMeasurementUnit | default(null),
                     amountSalesUnit: data.product.amountSalesUnit,
                     amountConversion: data.product.amountSalesUnit.conversion,
                     amountProductMeasurementUnit: data.product.amountSalesUnit.productMeasurementUnit,

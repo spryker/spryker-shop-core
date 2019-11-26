@@ -8,8 +8,7 @@
 namespace SprykerShop\Yves\ProductPackagingUnitWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer;
-use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer;
 
 class ProductPackagingUnitWidgetToProductPackagingUnitStorageClientBridge implements ProductPackagingUnitWidgetToProductPackagingUnitStorageClientInterface
 {
@@ -21,31 +20,19 @@ class ProductPackagingUnitWidgetToProductPackagingUnitStorageClientBridge implem
     /**
      * @param \Spryker\Client\ProductPackagingUnitStorage\ProductPackagingUnitStorageClientInterface $productPackagingUnitStorageClient
      */
-    public function __construct(
-        $productPackagingUnitStorageClient
-    ) {
+    public function __construct($productPackagingUnitStorageClient)
+    {
         $this->productPackagingUnitStorageClient = $productPackagingUnitStorageClient;
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer|null
      */
-    public function findProductAbstractPackagingById(int $idProductAbstract): ?ProductAbstractPackagingStorageTransfer
+    public function findProductPackagingUnitById(int $idProductConcrete): ?ProductPackagingUnitStorageTransfer
     {
-        return $this->productPackagingUnitStorageClient->findProductAbstractPackagingById($idProductAbstract);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer|null
-     */
-    public function findProductConcretePackagingById(int $idProductAbstract, int $idProduct): ?ProductConcretePackagingStorageTransfer
-    {
-        return $this->productPackagingUnitStorageClient->findProductConcretePackagingById($idProductAbstract, $idProduct);
+        return $this->productPackagingUnitStorageClient->findProductPackagingUnitById($idProductConcrete);
     }
 
     /**

@@ -62,7 +62,7 @@
         <div class="col col--sm-12 col--lg-4">
             {% if widgetExists('CartProductPackagingUnitWidgetPlugin') %}
                 {{ widget('CartProductPackagingUnitWidgetPlugin', data.cartItem) }} {# @deprecated Use molecule('packaging-unit-cart', 'ProductPackagingUnitWidget') instead. #}
-            {% elseif data.cartItem.quantitySalesUnit is not empty and data.cartItem.amountSalesUnit is not empty %}
+            {% elseif data.cartItem.amountSalesUnit is not empty %}
                 {% include molecule('packaging-unit-cart', 'ProductPackagingUnitWidget') ignore missing with {
                     data: {
                         amount: data.cartItem.amount,

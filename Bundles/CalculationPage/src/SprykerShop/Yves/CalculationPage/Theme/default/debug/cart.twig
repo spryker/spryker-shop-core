@@ -208,10 +208,8 @@
                 <th>lead product</th>
 
                 <!-- packaging unit definition -->
-                <th>has lead product</th>
                 <th>packaging ID</th>
                 <th>packaging name</th>
-                <th>amount ID</th>
                 <th>amount is variable</th>
                 <th>amount default</th>
                 <th>amount restrictions (min/max/interval)</th>
@@ -250,24 +248,21 @@
                 {% endif %}
 
                 {% if item.amountLeadProduct %}
-                    <td>{{ item.amountLeadProduct.product.sku }}</td>
+                    <td>{{ item.amountLeadProduct.product is defined ? item.amountLeadProduct.product.sku : item.amountLeadProduct.sku }}</td>
                 {% else %}
                     <td></td>
                 {% endif %}
 
                 <!-- packaging unit definition -->
                 {% if item.productPackagingUnit %}
-                    <td>{{ item.productPackagingUnit.hasLeadProduct }}</td>
                     <td>{{ item.productPackagingUnit.idProductPackagingUnit }}</td>
                     <td>{% if item.productPackagingUnit.productPackagingUnitType %}{{ item.productPackagingUnit.productPackagingUnitType.name }}{% endif %}</td>
 
                     {% if item.productPackagingUnit.productPackagingUnitAmount %}
-                        <td>{{ item.productPackagingUnit.productPackagingUnitAmount.idProductPackagingUnitAmount }}</td>
-                        <td>{{ item.productPackagingUnit.productPackagingUnitAmount.isVariable }}</td>
+                        <td>{{ item.productPackagingUnit.productPackagingUnitAmount.isAmountVariable is defined ? item.productPackagingUnit.productPackagingUnitAmount.isAmountVariable : item.productPackagingUnit.productPackagingUnitAmount.isVariable }}</td>
                         <td>{{ item.productPackagingUnit.productPackagingUnitAmount.defaultAmount }}</td>
                         <td>{{ item.productPackagingUnit.productPackagingUnitAmount.amountMin }} / {{ item.productPackagingUnit.productPackagingUnitAmount.amountMax }} / {{ item.productPackagingUnit.productPackagingUnitAmount.amountInterval }}</td>
                     {% else %}
-                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -275,9 +270,7 @@
                 {% else %}
                     <td></td>
                     <td></td>
-                    <td></td>
 
-                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
