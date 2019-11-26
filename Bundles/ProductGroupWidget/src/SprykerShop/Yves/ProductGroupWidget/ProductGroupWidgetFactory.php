@@ -28,4 +28,12 @@ class ProductGroupWidgetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductGroupWidgetDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }
+
+    /**
+     * @return \SprykerShop\Yves\ProductColorGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     */
+    public function getProductViewExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductGroupWidgetDependencyProvider::PLUGIN_PRODUCT_VIEW_EXPANDERS);
+    }
 }

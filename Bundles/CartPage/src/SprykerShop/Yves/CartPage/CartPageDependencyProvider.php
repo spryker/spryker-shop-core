@@ -32,6 +32,11 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
+     * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     */
+    public const SERVICE_ROUTER = 'routers';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
