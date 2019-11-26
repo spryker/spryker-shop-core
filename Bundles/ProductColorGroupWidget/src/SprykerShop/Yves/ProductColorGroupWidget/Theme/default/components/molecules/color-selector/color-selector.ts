@@ -18,7 +18,7 @@ export default class ColorSelector extends Component {
         });
     }
 
-    onTriggerSelection(event: Event): void {
+    protected onTriggerSelection(event: Event): void {
         event.preventDefault();
         this.currentSelection = <HTMLElement>event.currentTarget;
         this.setActiveItemSelection();

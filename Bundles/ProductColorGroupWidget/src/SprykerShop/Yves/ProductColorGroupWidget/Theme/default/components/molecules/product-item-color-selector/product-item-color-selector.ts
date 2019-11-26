@@ -5,11 +5,29 @@ export default class ProductItemColorSelector extends ColorSelector {
     protected productItemData: ProductItemData;
     protected productItem: ProductItem;
 
-    protected readyCallback(): void {}
-
     protected init(): void {
         if (this.productItemClassName) {
             this.productItem = <ProductItem>this.closest(this.productItemClassName);
+        }
+
+        super.init();
+    }
+
+    protected onTriggerSelection(event: Event): void {
+        super.onTriggerSelection(event);
+        this.getProductItemData();
+        this.productItem.updateProductItemData(this.productItemData);
+    }
+
+    protected getProductItemData(): void {
+        this.productItemData = {
+            imageUrl: this.imageUrl,
+            nameValue: this.nameValue,
+            ratingValue: this.ratingValue,
+            defaultPrice: this.defaultPrice,
+            originalPrice: this.originalPrice,
+            detailPageUrl: this.detailPageUrl,
+            addToCartUrl: this.addToCartUrl
         }
     }
 
