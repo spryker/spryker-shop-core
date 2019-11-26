@@ -17,7 +17,7 @@ export default class RatingSelector extends Component {
         this.input = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__input`)[0];
         this.steps = <HTMLElement[]>Array.from(this.getElementsByClassName(`${this.jsName}__step`));
         if (this.productItemClassName) {
-            this.productItem = <ProductItem>this.closest(this.productItemClassName);
+            this.productItem = <ProductItem>this.closest(`.${this.productItemClassName}`);
         }
 
         if (!this.readOnly) {

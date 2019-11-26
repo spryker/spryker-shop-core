@@ -9,6 +9,7 @@ $color-selector-size: 1.5rem;
 
         &__item {
             @include helper-effect-transition(border-color opacity);
+            display: block;
             width: $color-selector-size;
             height: $color-selector-size;
             border: 0.125rem solid $setting-color-dark;
@@ -35,5 +36,3 @@ $color-selector-size: 1.5rem;
         @content;
     }
 }
-
-@include product-color-group-widget-color-selector();

@@ -15,7 +15,7 @@
     currencyIsoCode: null,
 } %}
 
-{%- block extraClass %} box{% endblock -%}
+{%- block extraClass %} box {{ config.jsName }}{% endblock -%}
 
 {% block body %}
     {% block imageContainer %}

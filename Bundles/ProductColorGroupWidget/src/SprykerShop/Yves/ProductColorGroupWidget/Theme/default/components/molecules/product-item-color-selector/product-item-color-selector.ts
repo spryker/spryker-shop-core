@@ -7,7 +7,7 @@ export default class ProductItemColorSelector extends ColorSelector {
 
     protected init(): void {
         if (this.productItemClassName) {
-            this.productItem = <ProductItem>this.closest(this.productItemClassName);
+            this.productItem = <ProductItem>this.closest(`.${this.productItemClassName}`);
         }
 
         super.init();

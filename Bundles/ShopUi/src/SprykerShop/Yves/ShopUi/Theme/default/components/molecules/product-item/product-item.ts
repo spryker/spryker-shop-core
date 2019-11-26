@@ -1,7 +1,12 @@
 import Component from '../../../models/component';
 
 export const EVENT_UPDATE_RATING = 'updateRating';
+export const EVENT_UPDATE_ADD_TO_CART_URL = 'updateAddToCartUrl';
 
+/**
+ * @event updateRating An event emitted when the product rating has been updated.
+ * @event updateAddToCartUrl An event emitted when the product 'add to cart' URL has been updated.
+ */
 export interface ProductItemData {
     imageUrl: string;
     nameValue: string;
@@ -89,6 +94,8 @@ export default class ProductItem extends Component {
         if (this.productLinkAddToCart) {
             this.productLinkAddToCart.href = addToCartUrl;
         }
+
+        this.dispatchCustomEvent(EVENT_UPDATE_ADD_TO_CART_URL, {sku: addToCartUrl.split('/').pop()});
     }
 
     /**

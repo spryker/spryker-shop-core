@@ -14,11 +14,11 @@
 } %}
 
 {% block listDataAttributes %}
-    data-product-image-src="{{ data.item.images ? data.item.images[0].externalUrlSmall }}"
-    data-product-name="{{ data.item.name ? data.item.name }}"
-    data-product-rating="{{ data.item.rating ? data.item.rating.averageRating }}"
-    data-product-default-price="{{ data.item.prices['DEFAULT'] ? (data.item.prices['DEFAULT'] | money) }}"
-    data-product-original-price="{{ data.item.prices['ORIGINAL'] ? (data.item.prices['ORIGINAL'] | money) }}"
-    data-product-detail-page-url="{{ data.item.url ? data.item.url }}"
-    data-product-add-to-cart-url="{{ data.item.sku ? path('cart/add', {sku: data.item.sku}) }}"
+    data-product-image-src="{{ item.images ? item.images[0].externalUrlSmall }}"
+    data-product-name="{{ item.name ? item.name }}"
+    data-product-rating="{{ item.rating ? item.rating.averageRating }}"
+    data-product-default-price="{{ item.prices['DEFAULT'] is defined ? (item.prices['DEFAULT'] | money) }}"
+    data-product-original-price="{{ item.prices['ORIGINAL'] is defined ? (item.prices['ORIGINAL'] | money) }}"
+    data-product-detail-page-url="{{ item.url ? item.url }}"
+    data-product-add-to-cart-url="{{ item.sku ? path('cart/add', {sku: item.sku}) }}"
 {% endblock %}
