@@ -15,9 +15,9 @@
         {% set sku = slotForm.vars.value.sku %}
 
         {% block productSection %}
-            {% block heading %}
+            {% block header %}
                 <div class="{{ config.name }}__header grid grid--justify grid--middle">
-                    {% block headingInner %}
+                    {% block headerInner %}
                         {% block title %}
                             <h6 class="col col--sm-10">
                                 {{ data.configurableBundleTemplateStorage.slots[idSlot].name | trans }}
@@ -26,18 +26,20 @@
 
                         {% block form %}
                             <span class="col col--sm-1">
-                                {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
-                                    data: {
-                                        form: data.form.createView,
-                                        submitButtonText: 'configurable_bundle_page.edit' | trans,
-                                        action: path(
-                                            'configurable-bundle/configurator/slots', {
-                                                'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
-                                                'idConfigurableBundleTemplateSlot': data.configurableBundleTemplateStorage.slots[idSlot].idConfigurableBundleTemplateSlot,
-                                            }
-                                        ),
-                                    },
-                                } only %}
+                                {% block formInner %}
+                                    {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
+                                        data: {
+                                            form: data.form.createView,
+                                            submitButtonText: 'configurable_bundle_page.edit' | trans,
+                                            action: path(
+                                                'configurable-bundle/configurator/slots', {
+                                                    'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
+                                                    'idConfigurableBundleTemplateSlot': data.configurableBundleTemplateStorage.slots[idSlot].idConfigurableBundleTemplateSlot,
+                                                }
+                                            ),
+                                        },
+                                    } only %}
+                                {% endblock %}
                             </span>
                         {% endblock %}
                     {% endblock %}

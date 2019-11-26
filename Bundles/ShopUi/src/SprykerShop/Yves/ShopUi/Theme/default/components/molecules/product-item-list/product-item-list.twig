@@ -4,15 +4,13 @@
     name: 'product-item-list',
 } %}
 
-{% block thumbnailWrapper %}
+{% block image %}
     {% set extraClass = '' %}
     {% set modifiers = ['small'] %}
 
-    {% block imageContainer %}
-        <div class="col col--sm-3 col--md-2 col--middle">
-            {{ parent() }}
-        </div>
-    {% endblock %}
+    <div class="col col--sm-3 col--md-2 col--middle">
+        {{ parent() }}
+    </div>
 {% endblock %}
 
 {% block priceContainer %}

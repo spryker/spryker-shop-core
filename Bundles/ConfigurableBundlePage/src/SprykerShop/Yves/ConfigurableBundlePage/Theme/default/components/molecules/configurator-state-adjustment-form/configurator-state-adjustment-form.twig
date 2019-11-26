@@ -16,7 +16,7 @@
 
     {% block form %}
         {% if data.isSelected %}
-            {% for slotId,slotForm in data.form.slots %}
+            {% for slotId, slotForm in data.form.slots %}
                 {% if slotId == data.selectedSlotId %}
                     {% do slotForm.setRendered %}
                 {% else %}
@@ -24,28 +24,35 @@
                 {% endif %}
             {% endfor %}
 
-            <button type="submit" name="submit" class="button button--expand button--success">
-                {{ 'configurable_bundle_page.unselect' | trans }}
-            </button>
+            {% set selectedButtonModifiers = ['expand', 'success'] %}
+
+            {% block selectedButton %}
+                {% include molecule('configurator-action', 'ConfigurableBundlePage') with {
+                    modifiers: selectedButtonModifiers,
+                    data: {
+                        text: 'configurable_bundle_page.unselect' | trans,
+                    },
+                } only %}
+            {% endblock %}
         {% else %}
             {% for slotForm in data.form.slots %}
                 {{ form_row(slotForm.sku, { id: '' }) }}
             {% endfor %}
 
-            {% set inputName =  'configurator_state_form[slots][' ~ data.selectedSlotId ~ '][sku]' %}
-            {% set inputId =  'configurator_state_form_slots_' ~ data.selectedSlotId ~ '_sku' %}
+            {% set productSkuInputName = data.form.vars.name ~ '[slots][' ~ data.selectedSlotId ~ '][sku]' %}
 
-            <input name="{{ inputName }}" type="hidden" value="{{ data.product.sku }}">
+            <input name="{{ productSkuInputName }}" type="hidden" value="{{ data.product.sku }}">
 
             {% block unselectedButton %}
-                {% set buttonClasses = 'button button--expand' %}
+                {% set buttonModifiers = ['expand'] %}
 
                 {% block unselectedButtonItem %}
-                    <button type="submit" class="{{ buttonClasses }}">
-                        {% block buttonText %}
-                            {{ 'configurable_bundle_page.select' | trans }}
-                        {% endblock %}
-                    </button>
+                    {% include molecule('configurator-action', 'ConfigurableBundlePage') with {
+                        modifiers: buttonModifiers,
+                        data: {
+                            text: 'configurable_bundle_page.select' | trans,
+                        },
+                    } only %}
                 {% endblock %}
             {% endblock %}
         {% endif %}

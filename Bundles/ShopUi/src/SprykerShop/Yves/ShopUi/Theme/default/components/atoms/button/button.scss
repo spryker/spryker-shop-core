@@ -39,32 +39,6 @@
             }
         }
 
-        &--big-spaces {
-            padding: 2rem 1rem;
-            margin: 0 0 0.5rem;
-        }
-
-        &--unselected {
-            background-color: $setting-color-white;
-            color: $setting-color-dark;
-            border: 1px solid $setting-color-lighter;
-        }
-
-        &--selected {
-            background-color: helper-color-light(map-get($setting-color-actions, 'success'));
-            color: map-get($setting-color-actions, 'success');
-            border: 1px solid map-get($setting-color-actions, 'success');
-        }
-
-        &--active,
-        &--active:hover,
-        &--unselected:hover,
-        &--selected:hover {
-            background-color: helper-color-light($setting-color-main);
-            color: $setting-color-darker;
-            border: 1px solid $setting-color-main;
-        }
-
         &--expand {
             width: 100%;
         }
@@ -79,10 +53,6 @@
             &:focus {
                 background-color: $setting-color-light;
             }
-        }
-
-        &--unselected[disabled] {
-            color: $setting-color-white;
         }
 
         @each $action, $setting-color-action in $setting-color-actions {

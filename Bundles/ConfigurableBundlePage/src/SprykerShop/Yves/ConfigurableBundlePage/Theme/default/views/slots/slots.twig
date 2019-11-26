@@ -45,53 +45,59 @@
 
                 {% block configuratorProductsInner %}
                     <div class="{{ wrapperClasses }}">
-                        {% if data.selectedSlotId and data.selectedProduct %}
-                            {% include molecule('configurator-product', 'ConfigurableBundlePage') with {
-                                data: {
-                                    product: data.selectedProduct,
-                                    form: data.form.createView,
-                                    selectedSlotId: data.selectedSlotId,
-                                    name: data.selectedProduct.name,
-                                    isSelected: true,
-                                },
-                            } only %}
-                        {% endif %}
-
-                        {% if data.selectedSlotId %}
-                            {% widget 'ProductConcreteSearchGridWidget' args [data.productConcreteCriteriaFilter] %}
-                                {% block body %}
-                                    {% for product in data.products %}
-                                        {% include molecule('configurator-product', 'ConfigurableBundlePage') with {
-                                            data: {
-                                                product: product,
-                                                form: data.form.createView,
-                                                selectedSlotId: data.selectedSlotId,
-                                            },
-                                        } only %}
-                                    {% endfor %}
-
-                                    {% if data.products is empty %}
-                                        <p>{{ 'product_search_widget.search.no_results' | trans }}</p>
-                                    {% endif %}
+                        {% block slotProducts %}
+                            {% if data.selectedSlotId and data.selectedProduct %}
+                                {% block configuratorSelectedItem %}
+                                    {% include molecule('configurator-product', 'ConfigurableBundlePage') with {
+                                        data: {
+                                            product: data.selectedProduct,
+                                            form: data.form.createView,
+                                            selectedSlotId: data.selectedSlotId,
+                                            name: data.selectedProduct.name,
+                                            isSelected: true,
+                                        },
+                                    } only %}
                                 {% endblock %}
-                            {% endwidget %}
-                        {% endif %}
+                            {% endif %}
 
-                        {% if not data.selectedSlotId %}
-                            {% block chooseSlotMessage %}
-                                <div class="col col--sm-12 col--md-5">
-                                    {% block chooseSlotMessageInner %}
-                                        {% block chooseSlotMessageTitle %}
-                                            <h5 class="text-center">{{ 'configurable_bundle_page.configurator.tip.header' | trans }}</h5>
-                                        {% endblock %}
+                            {% if data.selectedSlotId %}
+                                {% block configuratorUnselectedProducts %}
+                                    {% widget 'ProductConcreteSearchGridWidget' args [data.productConcreteCriteriaFilter] %}
+                                        {% block body %}
+                                            {% for product in data.products %}
+                                                {% include molecule('configurator-product', 'ConfigurableBundlePage') with {
+                                                    data: {
+                                                        product: product,
+                                                        form: data.form.createView,
+                                                        selectedSlotId: data.selectedSlotId,
+                                                    },
+                                                } only %}
+                                            {% endfor %}
 
-                                        {% block chooseSlotMessageText %}
-                                            <p class="text-center">{{ 'configurable_bundle_page.configurator.tip.text' | trans }}</p>
+                                            {% if data.products is empty %}
+                                                <p>{{ 'product_search_widget.search.no_results' | trans }}</p>
+                                            {% endif %}
                                         {% endblock %}
-                                    {% endblock %}
-                                </div>
-                            {% endblock %}
-                        {% endif %}
+                                    {% endwidget %}
+                                {% endblock %}
+                            {% endif %}
+
+                            {% if not data.selectedSlotId %}
+                                {% block chooseSlotMessage %}
+                                    <div class="col col--sm-12 col--md-5">
+                                        {% block chooseSlotMessageInner %}
+                                            {% block chooseSlotMessageTitle %}
+                                                <h5 class="text-center">{{ 'configurable_bundle_page.configurator.tip.header' | trans }}</h5>
+                                            {% endblock %}
+
+                                            {% block chooseSlotMessageText %}
+                                                <p class="text-center">{{ 'configurable_bundle_page.configurator.tip.text' | trans }}</p>
+                                            {% endblock %}
+                                        {% endblock %}
+                                    </div>
+                                {% endblock %}
+                            {% endif %}
+                        {% endblock %}
                     </div>
                 {% endblock %}
             {% endblock %}
