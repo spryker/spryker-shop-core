@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ProductGroupWidget;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\ProductColorGroupWidget\ProductColorGroupWidgetDependencyProvider;
 use SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToProductGroupStorageClientInterface;
 use SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToProductStorageClientInterface;
 

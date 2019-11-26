@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ProductGroupWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\ProductColorGroupWidget\ProductColorGroupWidgetDependencyProvider;
 use SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToProductGroupStorageClientBridge;
 use SprykerShop\Yves\ProductGroupWidget\Dependency\Client\ProductGroupWidgetToProductStorageClientBridge;
 
@@ -39,11 +38,11 @@ class ProductGroupWidgetDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addProductGroupStorageClient($container)
+    protected function addProductGroupStorageClient($container): Container
     {
-        $container[static::CLIENT_PRODUCT_GROUP_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_GROUP_STORAGE, function (Container $container) {
             return new ProductGroupWidgetToProductGroupStorageClientBridge($container->getLocator()->productGroupStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -53,11 +52,11 @@ class ProductGroupWidgetDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addProductStorageClient($container)
+    protected function addProductStorageClient($container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductGroupWidgetToProductStorageClientBridge($container->getLocator()->productStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -67,7 +66,7 @@ class ProductGroupWidgetDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addProductViewExpanderPlugins(Container $container)
+    protected function addProductViewExpanderPlugins(Container $container): Container
     {
         $container->set(static::PLUGIN_PRODUCT_VIEW_EXPANDERS, function () {
             return $this->getProductViewExpanderPlugins();
