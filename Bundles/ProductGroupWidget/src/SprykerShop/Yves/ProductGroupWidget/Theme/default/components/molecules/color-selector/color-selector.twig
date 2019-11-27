@@ -26,7 +26,7 @@
             {% for item in data.items %}
                 {% block item %}
                     {% set activeClassName = loop.first ? attributes['active-item-class-name'] %}
-                    {% set backgroundColor = item.colorCode ? 'background-color: ' ~ item.colorCode ~ ';' %}
+                    {% set backgroundColor = item.colorCode is defined ? 'background-color: ' ~ item.colorCode ~ ';' %}
 
                     <{{ data.selectionTag }}
                         class="{{ config.name }}__item {{ activeClassName }} {{ config.jsName }}__item"

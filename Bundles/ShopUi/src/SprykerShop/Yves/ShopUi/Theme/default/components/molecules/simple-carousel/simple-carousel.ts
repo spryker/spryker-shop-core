@@ -49,15 +49,8 @@ export default class SimpleCarousel extends Component {
     /**
      * Dot element "is current" modifier.
      */
-    readonly dotCurrentModifier: string;
+    readonly dotCurrentModifier: string = `${this.name}__dot--current`;
     protected fullSliderWidth: number = 100;
-
-    constructor() {
-        super();
-
-        this.dotSelector = `${this.jsName}__dot`;
-        this.dotCurrentModifier = `${this.name}__dot--current`;
-    }
 
     protected readyCallback(): void {
         this.slidesCount = this.getElementsByClassName(`${this.jsName}__slide`).length;
@@ -70,7 +63,7 @@ export default class SimpleCarousel extends Component {
         this.triggerNext = <HTMLElement>this.getElementsByClassName(`${this.jsName}__next`)[0];
         this.slider = <HTMLElement>this.getElementsByClassName(`${this.jsName}__slider`)[0];
         this.slideWidth = this.fullSliderWidth / this.slidesToShow;
-        this.dots = <HTMLElement[]>Array.from(this.getElementsByClassName(this.dotSelector));
+        this.dots = <HTMLElement[]>Array.from(this.getElementsByClassName(`${this.jsName}__dot`));
         this.viewsCount = this.getViewsCount();
 
         this.mapEvents();
@@ -169,7 +162,7 @@ export default class SimpleCarousel extends Component {
         }
 
         this
-            .querySelector(`.${this.dotSelector}.${this.dotCurrentModifier}`)
+            .querySelector(`.${this.jsName}__dot.${this.dotCurrentModifier}`)
             .classList
             .remove(this.dotCurrentModifier);
 
