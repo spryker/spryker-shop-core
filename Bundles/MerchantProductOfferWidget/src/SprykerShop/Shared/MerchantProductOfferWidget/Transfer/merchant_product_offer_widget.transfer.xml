@@ -7,6 +7,7 @@
         <property name="idProductOffer" type="int"/>
         <property name="productOfferReference" type="string"/>
         <property name="idMerchant" type="int"/>
+        <property name="price" type="CurrentProductPrice"/>
         <property name="merchantProfile" type="MerchantProfileStorage"/>
     </transfer>
 
@@ -20,6 +21,7 @@
     <transfer name="ProductView">
         <property name="idProductConcrete" type="int"/>
         <property name="sku" type="string"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="ProductOfferStorageCollection">
@@ -28,5 +30,21 @@
 
     <transfer name="Url">
         <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="priceDimension" type="PriceProductDimension"/>
+    </transfer>
+
+    <transfer name="PriceProductFilter">
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="CurrentProductPrice">
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="type" type="string"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 </transfers>
