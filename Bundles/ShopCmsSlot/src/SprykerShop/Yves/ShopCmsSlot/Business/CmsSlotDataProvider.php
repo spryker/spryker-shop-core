@@ -68,9 +68,6 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
      */
     public function getSlotContent(CmsSlotContextTransfer $cmsSlotContextTransfer): CmsSlotContentResponseTransfer
     {
-        $cmsSlotResponseTransfer = (new CmsSlotContentResponseTransfer())
-            ->setContent('');
-
         try {
             $cmsSlotStorageTransfer = $this->cmsSlotStorageClient->getCmsSlotByKey(
                 $cmsSlotContextTransfer->getCmsSlotKey()
@@ -80,11 +77,13 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
                 throw $exception;
             }
 
-            return $cmsSlotResponseTransfer;
+            return (new CmsSlotContentResponseTransfer())
+                ->setContent('');
         }
 
         if (!$cmsSlotStorageTransfer->getIsActive()) {
-            return $cmsSlotResponseTransfer;
+            return (new CmsSlotContentResponseTransfer())
+                ->setContent('');
         }
 
         $providedData = $cmsSlotContextTransfer->getProvidedData();
@@ -106,6 +105,9 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
             if ($this->shopCmsSlotConfig->isDebugModeEnabled()) {
                 throw $exception;
             }
+
+            return (new CmsSlotContentResponseTransfer())
+                ->setContent('');
         }
 
         return $cmsSlotResponseTransfer;
