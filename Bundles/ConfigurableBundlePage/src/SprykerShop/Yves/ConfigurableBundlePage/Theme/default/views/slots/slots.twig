@@ -65,13 +65,17 @@
                                     {% widget 'ProductConcreteSearchGridWidget' args [data.productConcreteCriteriaFilter] %}
                                         {% block body %}
                                             {% for product in data.products %}
-                                                {% include molecule('configurator-product', 'ConfigurableBundlePage') with {
-                                                    data: {
-                                                        product: product,
-                                                        form: data.form.createView,
-                                                        selectedSlotId: data.selectedSlotId,
-                                                    },
-                                                } only %}
+                                                {% set form = data.form.createView %}
+
+                                                {% if data.form.slots[data.selectedSlotId] is defined and form.slots[data.selectedSlotId].vars.value.sku != product.sku %}
+                                                    {% include molecule('configurator-product', 'ConfigurableBundlePage') with {
+                                                        data: {
+                                                            product: product,
+                                                            form: form,
+                                                            selectedSlotId: data.selectedSlotId,
+                                                        },
+                                                    } only %}
+                                                {% endif %}
                                             {% endfor %}
 
                                             {% if data.products is empty %}
