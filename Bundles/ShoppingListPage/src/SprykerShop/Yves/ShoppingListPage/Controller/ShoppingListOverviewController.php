@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
-use SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,6 +32,11 @@ class ShoppingListOverviewController extends AbstractShoppingListController
     protected const GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND = 'shopping_list.not_found';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_SUCCESS = 'customer.account.shopping_list.clear.success';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_OVERVIEW_CREATE_SUCCESSFUL = 'customer.account.shopping_list.overview.create.success';
+
+    /**
+     * @use \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
+     */
+    protected const ROUTE_CART_PAGE = 'cart';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -205,7 +209,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
 
         $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART);
 
-        return $this->redirectResponseInternal(ShoppingListPageConfig::CART_REDIRECT_URL);
+        return $this->redirectResponseInternal(static::ROUTE_CART_PAGE);
     }
 
     /**

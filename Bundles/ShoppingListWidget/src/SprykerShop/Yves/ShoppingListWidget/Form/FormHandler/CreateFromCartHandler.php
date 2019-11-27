@@ -5,33 +5,33 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ShoppingListPage\Business;
+namespace SprykerShop\Yves\ShoppingListWidget\Form\FormHandler;
 
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface;
-use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
-use SprykerShop\Yves\ShoppingListPage\Form\ShoppingListFromCartForm;
+use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToCustomerClientInterface;
+use SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListClientInterface;
+use SprykerShop\Yves\ShoppingListWidget\Form\ShoppingListFromCartForm;
 use Symfony\Component\Form\FormInterface;
 
 class CreateFromCartHandler implements CreateFromCartHandlerInterface
 {
     /**
-     * @var \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface
+     * @var \SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListClientInterface
      */
     protected $shoppingListClient;
 
     /**
-     * @var \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface
+     * @var \SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToCustomerClientInterface
      */
     protected $customerClient;
 
     /**
-     * @param \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface $shoppingListClient
-     * @param \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface $customerClient
+     * @param \SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToShoppingListClientInterface $shoppingListClient
+     * @param \SprykerShop\Yves\ShoppingListWidget\Dependency\Client\ShoppingListWidgetToCustomerClientInterface $customerClient
      */
     public function __construct(
-        ShoppingListPageToShoppingListClientInterface $shoppingListClient,
-        ShoppingListPageToCustomerClientInterface $customerClient
+        ShoppingListWidgetToShoppingListClientInterface $shoppingListClient,
+        ShoppingListWidgetToCustomerClientInterface $customerClient
     ) {
         $this->shoppingListClient = $shoppingListClient;
         $this->customerClient = $customerClient;
@@ -54,7 +54,6 @@ class CreateFromCartHandler implements CreateFromCartHandlerInterface
         }
         $shoppingListFromCartRequest->setCustomer($this->customerClient->getCustomer());
 
-        return $this->shoppingListClient
-            ->createShoppingListFromQuote($shoppingListFromCartRequest);
+        return $this->shoppingListClient->createShoppingListFromQuote($shoppingListFromCartRequest);
     }
 }

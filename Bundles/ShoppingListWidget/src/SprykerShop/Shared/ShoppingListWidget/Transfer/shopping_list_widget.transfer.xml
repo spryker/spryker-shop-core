@@ -56,6 +56,14 @@
         <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
+    <transfer name="ShoppingListFromCartRequest">
+        <property name="newShoppingListName" type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="idShoppingList" type="int"/>
+        <property name="shoppingListName" type="string"/>
+        <property name="idQuote" type="int"/>
+    </transfer>
+
     <transfer name="Quote">
     </transfer>
 

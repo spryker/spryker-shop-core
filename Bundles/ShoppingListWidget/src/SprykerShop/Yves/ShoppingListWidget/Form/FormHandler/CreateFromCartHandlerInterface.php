@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ShoppingListPage\Business;
+namespace SprykerShop\Yves\ShoppingListWidget\Form\FormHandler;
 
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Symfony\Component\Form\FormInterface;

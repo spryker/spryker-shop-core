@@ -13,7 +13,7 @@
     <li class="menu__item {{ itemClass }}">
         <a href="{{ path('shopping-list') }}" data-id="sidebar-shopping-list">{{ 'shopping_list.shopping_list' | trans }}</a>
         {% if data.shoppingListCollection | length > 0 %}
-        {% include molecule('shopping-list-navigation', 'ShoppingListPage') with {
+        {% include molecule('shopping-list-navigation', 'ShoppingListWidget') with {
             data: {
                 activeShoppingListId: data.activeShoppingListId,
                 shoppingListCollection: data.shoppingListCollection

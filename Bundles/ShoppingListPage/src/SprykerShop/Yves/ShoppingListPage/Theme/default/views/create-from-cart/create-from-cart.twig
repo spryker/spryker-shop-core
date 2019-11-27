@@ -26,21 +26,6 @@
 
 {% block customerContent %}
     <div class="box">
-        {% include molecule('form') with {
-            data: {
-                title: 'customer.account.shopping_list.create_from_cart.form_title' | trans({
-                    '%cart_name%' : data.cart.name,
-                }),
-                form: data.form,
-                submit: {
-                    enable: true
-                },
-                cancel: {
-                    enable: true,
-                    url: data.backUrl,
-                    text: 'general.back.button' | trans
-                }
-            }
-        } only %}
+        {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] only %}{% endwidget %}
     </div>
 {% endblock %}
