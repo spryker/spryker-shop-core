@@ -3,6 +3,7 @@
 {% define data = {
     locale: app.locale | slice(0, 2),
     productOfferCollection: _widget.productOfferCollection,
+    productView: _widget.productView,
 } %}
 
 {% block template %}
@@ -19,8 +20,7 @@
                     {% block productOfferList %}
                         {% for productOffer in data.productOfferCollection  %}
                             {% block productOffer %}
-                                {% set currentMerchantOffer = app.request.query.all['attribute']['product_offer_reference'] | default() %}
-                                {% set isSameMerchantOffer = currentMerchantOffer == productOffer.productOfferReference %}
+                                {% set isSameMerchantOffer = data.productView.productOfferReference == productOffer.productOfferReference %}
 
                                 {% include molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
                                     data: {
@@ -29,11 +29,9 @@
                                         offerReference: productOffer.productOfferReference,
                                         merchantName: productOffer.merchantProfile.merchantName,
                                         merchantUrl: productOffer.merchantProfile.merchantUrl,
-                                        merchantPrice: productOffer.merchantProfile.merchantPrice | default(null),
+                                        price: productOffer.price.price | default(null),
+                                        currencyIsoCode: productOffer.price.currency.code | default(null),
                                         shouldShowRadioButton: data.productOfferCollection | length > 1
-                                    },
-                                    embed: {
-                                        productOfferCollection: data.productOfferCollection,
                                     },
                                 } only %}
                             {% endblock %}
