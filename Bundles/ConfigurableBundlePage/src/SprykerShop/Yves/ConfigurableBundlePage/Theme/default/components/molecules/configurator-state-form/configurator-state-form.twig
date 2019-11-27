@@ -41,7 +41,7 @@
             {% set buttonAttributes = not data.isSubmitButtonActive ? {disabled: 'disabled'} : {} %}
 
             {% block buttonInner %}
-                {% include molecule('configurator-action', 'ConfigurableBundlePage') with {
+                {% include molecule('configurator-button', 'ConfigurableBundlePage') with {
                     modifiers: buttonModifiers,
                     attributes: buttonAttributes,
                     data: {

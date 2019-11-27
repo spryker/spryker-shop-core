@@ -1,1 +1,1 @@
-Displays selected product list of configurable bundle product. Every item contain product information (image, name, sku, price).
+Displays selected product list of configurable bundle products. Each list item is a molecule('configurator-product', 'ConfigurableBundlePage').

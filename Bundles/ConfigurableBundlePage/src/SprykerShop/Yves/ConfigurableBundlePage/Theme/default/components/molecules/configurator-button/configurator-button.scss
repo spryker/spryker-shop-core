@@ -1,0 +1,40 @@
+@mixin configurable-bundle-page-configurator-button($name: '.configurator-button') {
+    @include shop-ui-button($name) {
+        &--additional-indention {
+            padding: 2rem map-get($setting-spacing, 'big');
+            margin: map-get($setting-spacing, 'reset') map-get($setting-spacing, 'reset') map-get($setting-spacing, 'default');
+            background: $setting-color-white;
+            color: $setting-color-dark;
+            border: 1px solid $setting-color-lighter;
+
+            &:hover {
+                @include configurable-bundle-page-configurator-button-state;
+            }
+        }
+
+        &--selected {
+            @include configurable-bundle-page-configurator-button-state(helper-color-light(map-get($setting-color-actions, 'success')), map-get($setting-color-actions, 'success'), map-get($setting-color-actions, 'success'));
+
+            &:hover {
+                @include configurable-bundle-page-configurator-button-state;
+            }
+        }
+
+        &--active,
+        &--active:hover, {
+            @include configurable-bundle-page-configurator-button-state;
+        }
+
+        &[disabled] {
+            color: $setting-color-white;
+        }
+
+        @content;
+    }
+}
+
+@mixin configurable-bundle-page-configurator-button-state($background: helper-color-light($setting-color-main), $color: $setting-color-darker, $border-color: $setting-color-main) {
+    background: $background;
+    color: $color;
+    border-color: $border-color;
+}
