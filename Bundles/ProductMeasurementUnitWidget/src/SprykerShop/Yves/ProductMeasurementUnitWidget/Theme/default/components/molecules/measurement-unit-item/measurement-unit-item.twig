@@ -7,16 +7,17 @@
 
 {% define data = {
     cartItem: required,
+    quantitySalesUnit: required,
+    quantitySalesUnitPrecision: required,
+    hasQuantitySalesUnit: required,
 } %}
 
 {% block body %}
-    {% if data.cartItem.quantitySalesUnit %}
-        {% set value = data.cartItem.quantitySalesUnit.value %}
-        {% set precision = data.cartItem.quantitySalesUnit.precision %}
+    {% if data.hasQuantitySalesUnit %}
         {% set salesUnitName = data.cartItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
 
         <small class="text-secondary">
-            [= {{ value / precision }} {{ salesUnitName | trans }}]
+            [= {{ data.quantitySalesUnitPrecision }} {{ data.quantitySalesUnit.productMeasurementUnit.name | default | trans | trans }}]
         </small>
     {% endif %}
 {% endblock %}

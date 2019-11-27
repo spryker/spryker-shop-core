@@ -2,16 +2,17 @@
 
 {% define data = {
     cartItem: _widget.itemTransfer,
-    isBaseUnit: _widget.isBaseUnit ?? true
+    quantitySalesUnit: _widget.quantitySalesUnit,
+    quantitySalesUnitPrecision: _widget.quantitySalesUnitPrecision | default(null),
 } %}
 
+{% set hasQuantitySalesUnit = data.quantitySalesUnit.idProductMeasurementSalesUnit | default(false) %}
+
 {%- block hasSalesUnit -%}
-    {{- _widget.itemTransfer.quantitySalesUnit.idProductMeasurementSalesUnit | default(false) -}}
+    {{- hasQuantitySalesUnit -}}
 {%- endblock -%}
 
 {% block body %}
-    {% set hasQuantitySalesUnit = data.cartItem.quantitySalesUnit is not empty %}
-
     {% include molecule('cart-quantity-input', 'CartPage') with {
         data: {
             cartItem: data.cartItem,
@@ -19,13 +20,15 @@
         }
     } only %}
 
-    {% if hasQuantitySalesUnit %}
-        {% set value = data.cartItem.quantitySalesUnit.value %}
-        {% set precision = data.cartItem.quantitySalesUnit.precision %}
-        {% set salesUnitName = data.cartItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
-
-        <small class="text-secondary">
-            [= {{ value / precision }} {{ salesUnitName | trans }}]
-        </small>
-    {% endif %}
+    {% block quantitySalesUnit %}
+        {% include molecule('measurement-unit-item') with {
+            class: 'spacing spacing--reset',
+            data: {
+                cartItem: data.cartItem,
+                quantitySalesUnit: data.quantitySalesUnit,
+                quantitySalesUnitPrecision: data.quantitySalesUnitPrecision,
+                hasQuantitySalesUnit: hasQuantitySalesUnit,
+            },
+        } only %}
+    {% endblock %}
 {% endblock %}

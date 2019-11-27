@@ -1,20 +1,143 @@
 {% extends model('component') %}
 
 {% define data = {
-    json: required
+    json: required,
+    quantityOptions: required,
+    minQuantityInBaseUnits: required,
+    minQuantityInSalesUnits: required,
+    baseUnit: required,
+    salesUnits: required,
+    salesUnitCount : required,
+    isAddToCartDisabled : required,
 } %}
 
 {% define config = {
     name: 'measurement-quantity-selector',
-    tag: 'measurement-quantity-selector'
+    tag: 'measurement-quantity-selector',
 } %}
 
+{% define attributes = {
+    json: data.json,
+} %}
+
+{% set hasProductMeasurementUnit = data.salesUnitCount >= 1 %}
+{% set disabled = data.isAddToCartDisabled %}
+
+
 {% block body %}
-    {% include atom('json-scheme', 'ProductMeasurementUnitWidget') with {
-        class: config.name,
-        data: {
-            name: config.name,
-            json: data.json
-        }
-    } only %}
+    {% if hasProductMeasurementUnit %}
+        <ul class="text-small">
+            {% for salesUnit in data.salesUnits %}
+                {% if salesUnit.productMeasurementUnit.idProductMeasurementUnit != data.baseUnit.idProductMeasurementUnit %}
+                    <li>
+                        1 {{ data.baseUnit.name | trans }}
+                        = {{ (1 / salesUnit.conversion)|round(4) }} {{ salesUnit.productMeasurementUnit.name | trans }}
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <hr>
+    {% endif %}
+
+    <div class="grid grid--bottom grid--justify">
+        <div class="col {% if hasProductMeasurementUnit %}col--sm-7{% else %}col--sm-5{% endif %}">
+            <label>
+                {{ 'cart.item_quantity' | trans }}
+
+                {% if hasProductMeasurementUnit %}
+                    <input class="{{ config.jsName }}__sales-unit-quantity input input--expand js-volume-price__quantity" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value"/>
+                    <input class="{{ config.jsName }}__base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
+                {% else %}
+                    {% embed atom('select') with {
+                        modifiers: ['expand'],
+                        data: {
+                            options: data.quantityOptions,
+                        },
+                        attributes: {
+                            name: 'quantity',
+                        },
+                    } only %}
+                        {% block selectClass %}js-volume-price__quantity{% endblock %}
+                    {% endembed %}
+                {% endif %}
+            </label>
+        </div>
+
+        <div class="col {% if hasProductMeasurementUnit %}col--sm-4{% else %}col--sm-6{% endif %}">
+            {% if hasProductMeasurementUnit %}
+                <label>
+                    {{ 'product.measurement.sales_unit' | trans }}
+                    {% embed atom('select') with {
+                        class: '345',
+                        modifiers: ['expand'],
+                        attributes: {
+                            name: 'id-product-measurement-sales-unit',
+                        },
+                        embed: {
+                            jsName: config.jsName,
+                            salesUnits: data.salesUnits,
+                        },
+                    } only %}
+                        {% block selectClass %}{{ embed.jsName }}__select-measurement-unit{% endblock %}
+                        {% block options %}
+                            {% for salesUnit in embed.salesUnits %}
+                                <option value="{{ salesUnit.idProductMeasurementSalesUnit }}" {{ (salesUnit.isDefault) ? 'selected' : '' }}>{{ salesUnit.productMeasurementUnit.name | trans }}</option>
+                            {% endfor %}
+                        {% endblock %}
+                    {% endembed %}
+                </label>
+            {% else %}
+                <button type="submit" class="{{ config.jsName }}__add-to-cart-button button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
+                    {% include atom('icon') with {
+                        data: {
+                            name: 'cart-plus',
+                        },
+                    } only %}
+                    {{ 'page.detail.add-to-cart' | trans }}
+                </button>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if hasProductMeasurementUnit %}
+        <div class="{{ config.jsName }}__measurement-unit-choice text-small is-hidden ">
+            <hr>
+
+            <div class="measurement-unit-notifications">
+                <div class="{{ config.jsName }}__quantity-between-units is-hidden">
+                    <span>{{ "measurement_units.recommendation.between-units-info" | trans }} (<span class="{{ config.jsName }}__current-choice"></span>)</span>
+                </div>
+                <div class="{{ config.jsName }}__minimum-quantity is-hidden">
+                    <span>{{ "measurement_units.recommendation.min-violation" | trans }}</span>
+                </div>
+                <div class="{{ config.jsName }}__maximum-quantity is-hidden">
+                    <span>{{  "measurement_units.recommendation.max-violation" | trans }}</span>
+                </div>
+            </div>
+
+            <div class="{{ config.jsName }}__measurement-unit-choices">
+                <span>{{ "measurement_units.recommendation.suggestion" | trans}}:</span>
+                <ul class="list"></ul>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if hasProductMeasurementUnit %}
+        <hr>
+        <button type="submit" class="{{ config.jsName }}__add-to-cart-button button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
+            {% include atom('icon') with {
+                data: {
+                    name: 'cart-plus',
+                },
+            } only %}
+            {{ 'page.detail.add-to-cart' | trans }}
+        </button>
+    {% endif %}
+
+    {% set translations = [] %}
+    {% for key, salesUnit in data.salesUnits %}
+        {% set translations = translations | merge({(salesUnit.productMeasurementUnit.code) : (salesUnit.productMeasurementUnit.name | trans)}) %}
+    {% endfor %}
+
+    <script type="application/json" class="{{ config.jsName }}__measurement-unit-translation">{{ translations|json_encode|raw }}</script>
 {% endblock %}
