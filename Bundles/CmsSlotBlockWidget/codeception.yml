@@ -1,5 +1,9 @@
 namespace: CmsSlotBlockWidget
 actor: Tester
+
+include:
+  - tests/SprykerShopTest/Yves/CmsSlotBlockWidget
+
 paths:
     tests: tests
     log: tests/_output

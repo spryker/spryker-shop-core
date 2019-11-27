@@ -22,6 +22,7 @@ class ShopCmsSlotNodeTest extends NodeTestCase
     {
         return [
             'cms slot tag' => $this->getCmsSlotTagTestCase(),
+            'cms slot tag with template name' => $this->getCmsSlotTagWithTemplateNameTestCase(),
             'cms slot tag with data' => $this->getCmsSlotTagWithDataTestCase(),
             'cms slot tag with required' => $this->getCmsSlotTagWithRequiredTestCase(),
             'cms slot tag with autofilled data' => $this->getCmsSlotTagWithAutofilledDataTestCase(),
@@ -44,6 +45,25 @@ class ShopCmsSlotNodeTest extends NodeTestCase
         $expectedCode = <<<EOF
 // line 1
 echo \$this->env->getExtension('SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin')->getSlotContent((new Generated\Shared\Transfer\CmsSlotContextTransfer())->setCmsSlotKey('cms-slot-key')->setCmsSlotTemplatePath('')->setProvidedData([])->setRequiredKeys([])->setAutoFilledKeys([]));
+EOF;
+
+        return [$node, $expectedCode];
+    }
+
+    /**
+     * {% cms_slot "cms-slot-key" %}
+     *
+     * @return array
+     */
+    protected function getCmsSlotTagWithTemplateNameTestCase(): array
+    {
+        $templatePath = '@Home/index/home.twig';
+        $node = new ShopCmsSlotNode('cms-slot-key', [], [], 1, 'cms_slot');
+        $node->setTemplateName($templatePath);
+
+        $expectedCode = <<<EOF
+// line 1
+echo \$this->env->getExtension('SprykerShop\Yves\ShopCmsSlot\Plugin\Twig\ShopCmsSlotTwigPlugin')->getSlotContent((new Generated\Shared\Transfer\CmsSlotContextTransfer())->setCmsSlotKey('cms-slot-key')->setCmsSlotTemplatePath('$templatePath')->setProvidedData([])->setRequiredKeys([])->setAutoFilledKeys([]));
 EOF;
 
         return [$node, $expectedCode];
