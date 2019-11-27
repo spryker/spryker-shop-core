@@ -12,7 +12,7 @@
 
 {% block body %}
     {% block title %}
-        <h6 class="col col-sm-8">{{ 'configurable_bundle_page.configurator.summary_page_total' | trans }}</h6>
+        <h6 class="col col-sm-8">{{- 'configurable_bundle_page.configurator.summary_page_total' | trans -}}</h6>
     {% endblock %}
 
     {% block price %}
@@ -24,7 +24,7 @@
                 },
             } only %}
         {% else %}
-            {{ 'customer.access.cannot_see_price' | trans }}
+            {{- 'customer.access.cannot_see_price' | trans -}}
         {% endif %}
     {% endblock %}
 {% endblock %}

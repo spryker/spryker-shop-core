@@ -108,7 +108,7 @@
                             },
                         } only %}
                     {% else %}
-                        {{ 'customer.access.cannot_see_price' | trans }}
+                        {{- 'customer.access.cannot_see_price' | trans -}}
                     {% endif %}
                 {% endblock %}
             </div>
@@ -125,7 +125,7 @@
                                 {% set iconModifiers = ['small'] %}
                                 {% set iconName = 'angle-double-right' %}
 
-                                {% block icon %}
+                                {% block actionInfo %}
                                     {{- 'product.view' | trans -}}
                                     {%- include atom('icon') with {
                                         modifiers: iconModifiers,

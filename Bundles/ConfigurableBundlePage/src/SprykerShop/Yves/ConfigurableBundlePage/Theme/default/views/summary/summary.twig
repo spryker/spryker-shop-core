@@ -38,9 +38,11 @@
 
             {% block summaryProducts %}
                 <div class="col col--sm-12 col--md-9">
+                    {% set productListClasses = 'spacing-top' %}
+
                     {% block summaryProductsInner %}
                         {% include molecule('selected-product-list', 'ConfigurableBundlePage') with {
-                            class: 'spacing-top',
+                            class: productListClasses,
                             data: {
                                 form: data.form,
                                 products: data.products,
@@ -49,7 +51,7 @@
                         } only %}
 
                         {% block bundleTotal %}
-                            {% set totalPrice = data.products|reduce((accumulator, product) => accumulator + (product.price ? product.price : 0), 0) %}
+                            {% set totalPrice = data.products | reduce((accumulator, product) => accumulator + (product.price ? product.price : 0), 0) %}
 
                             {% block bundleTotalInner %}
                                 {% include molecule('configured-bundle-total', 'ConfigurableBundlePage') with {

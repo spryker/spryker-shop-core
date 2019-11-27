@@ -27,7 +27,7 @@
             {% set selectedButtonModifiers = ['expand', 'success'] %}
 
             {% block selectedButton %}
-                {% include molecule('configurator-action', 'ConfigurableBundlePage') with {
+                {% include molecule('configurator-button', 'ConfigurableBundlePage') with {
                     modifiers: selectedButtonModifiers,
                     data: {
                         text: 'configurable_bundle_page.unselect' | trans,
@@ -47,7 +47,7 @@
                 {% set buttonModifiers = ['expand'] %}
 
                 {% block unselectedButtonItem %}
-                    {% include molecule('configurator-action', 'ConfigurableBundlePage') with {
+                    {% include molecule('configurator-button', 'ConfigurableBundlePage') with {
                         modifiers: buttonModifiers,
                         data: {
                             text: 'configurable_bundle_page.select' | trans,
