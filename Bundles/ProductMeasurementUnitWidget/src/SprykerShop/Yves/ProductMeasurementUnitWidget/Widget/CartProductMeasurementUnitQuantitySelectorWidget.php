@@ -26,7 +26,7 @@ class CartProductMeasurementUnitQuantitySelectorWidget extends AbstractWidget
     }
 
     /**
-     * @param @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return float|null
      */
