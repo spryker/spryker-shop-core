@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
 interface MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface
 {
     /**
-     * @param string $concreteSku
+     * @param string $productSku
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOfferStorageCollection(string $concreteSku): ProductOfferStorageCollectionTransfer;
+    public function getProductOfferStorageCollection(string $productSku): ProductOfferStorageCollectionTransfer;
 }

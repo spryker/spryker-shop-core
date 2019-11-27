@@ -5,7 +5,7 @@
 } %}
 
 {% block body %}
-    {% if data.cartItem.quantitySalesUnit is not empty and data.cartItem.amountSalesUnit is not empty %}
+    {% if data.cartItem.amountSalesUnit is not empty %}
         {% include molecule('packaging-unit-cart', 'ProductPackagingUnitWidget') with {
             data: {
                 amount: data.cartItem.amount,
