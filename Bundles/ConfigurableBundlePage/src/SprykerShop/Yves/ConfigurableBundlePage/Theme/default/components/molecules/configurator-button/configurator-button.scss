@@ -3,9 +3,9 @@
         &--additional-indention {
             padding: 2rem map-get($setting-spacing, 'big');
             margin: map-get($setting-spacing, 'reset') map-get($setting-spacing, 'reset') map-get($setting-spacing, 'default');
-            background: $setting-color-white;
-            color: $setting-color-dark;
-            border: 1px solid $setting-color-lighter;
+            border: 1px solid;
+
+            @include configurable-bundle-page-configurator-button-state($button-parameters);
 
             &:hover {
                 @include configurable-bundle-page-configurator-button-state;
@@ -13,7 +13,7 @@
         }
 
         &--selected {
-            @include configurable-bundle-page-configurator-button-state(helper-color-light(map-get($setting-color-actions, 'success')), map-get($setting-color-actions, 'success'), map-get($setting-color-actions, 'success'));
+            @include configurable-bundle-page-configurator-button-state($button-selected-parameters);
 
             &:hover {
                 @include configurable-bundle-page-configurator-button-state;
@@ -33,8 +33,26 @@
     }
 }
 
-@mixin configurable-bundle-page-configurator-button-state($background: helper-color-light($setting-color-main), $color: $setting-color-darker, $border-color: $setting-color-main) {
-    background: $background;
-    color: $color;
-    border-color: $border-color;
+@mixin configurable-bundle-page-configurator-button-state($button-settings: $button-active-parameters) {
+    background: map-get($button-settings, 'background-color');
+    color: map-get($button-settings, 'color');
+    border-color: map-get($button-settings, 'border-color');
 }
+
+$button-parameters: (
+    background-color: $setting-color-white,
+    color: $setting-color-dark,
+    border-color: $setting-color-lighter,
+);
+
+$button-selected-parameters: (
+    background-color: helper-color-light(map-get($setting-color-actions, 'success')),
+    color: map-get($setting-color-actions, 'success'),
+    border-color: map-get($setting-color-actions, 'success'),
+);
+
+$button-active-parameters: (
+    background-color: helper-color-light($setting-color-main),
+    color: $setting-color-darker,
+    border-color: $setting-color-main,
+);
