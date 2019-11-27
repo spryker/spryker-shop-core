@@ -9,6 +9,7 @@
     "spryker/cms-slot-block": "^0.1.0",
     "spryker/cms-slot-block-storage": "^0.1.0",
     "spryker/kernel": "^3.30.0",
+    "spryker/transfer": "^3.8.0",
     "spryker/twig": "^1.0.0 || ^2.0.0 || ^3.0.0"
   },
   "require-dev": {
