@@ -324,20 +324,20 @@ class ConfiguratorController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
      * @param int $idConfigurableBundleTemplateSlot
-     * @param int[] $excludeProductIds
+     * @param int[] $excludedProductIds
      *
      * @return \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer
      */
     protected function createProductConcreteCriteriaFilterTransfer(
         ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer,
         int $idConfigurableBundleTemplateSlot,
-        array $excludeProductIds
+        array $excludedProductIds
     ): ProductConcreteCriteriaFilterTransfer {
         /** @var \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer $configurableBundleTemplateSlotStorageTransfer */
         $configurableBundleTemplateSlotStorageTransfer = $configurableBundleTemplateStorageTransfer->getSlots()->offsetGet($idConfigurableBundleTemplateSlot);
 
         return (new ProductConcreteCriteriaFilterTransfer())
-            ->setExcludedProductIds($excludeProductIds)
+            ->setExcludedProductIds($excludedProductIds)
             ->setRequestParams([
                 static::REQUEST_PARAM_ID_PRODUCT_LIST => $configurableBundleTemplateSlotStorageTransfer->getIdProductList(),
                 static::REQUEST_PARAM_ITEMS_PER_PAGE => static::REQUEST_PARAM_ITEMS_PER_PAGE_VALUE,
