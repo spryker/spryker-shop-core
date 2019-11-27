@@ -1,0 +1,44 @@
+{% extends template('widget') %}
+
+{% define data = {
+    locale: app.locale | slice(0, 2),
+    productOfferCollection: _widget.productOfferCollection,
+    productView: _widget.productView,
+} %}
+
+{% block template %}
+    {% if data.productOfferCollection %}
+        {% block content %}
+            <div class="box box--dark box--spacingless spacing spacing--inner spacing-y">
+                {% block contentInner %}
+                    {% block title %}
+                        <div>
+                            <strong>{{ "mearchant_product_offer.sold_by" | trans }}</strong>
+                        </div>
+                    {% endblock %}
+
+                    {% block productOfferList %}
+                        {% for productOffer in data.productOfferCollection  %}
+                            {% block productOffer %}
+                                {% set isSameMerchantOffer = data.productView.productOfferReference == productOffer.productOfferReference %}
+
+                                {% include molecule('merchant-product-offer-item', 'MerchantProductOfferWidget') with {
+                                    data: {
+                                        checked: isSameMerchantOffer,
+                                        radioGroupName: 'product_offer_reference',
+                                        offerReference: productOffer.productOfferReference,
+                                        merchantName: productOffer.merchantProfile.merchantName,
+                                        merchantUrl: productOffer.merchantProfile.merchantUrl,
+                                        price: productOffer.price.price | default(null),
+                                        currencyIsoCode: productOffer.price.currency.code | default(null),
+                                        shouldShowRadioButton: data.productOfferCollection | length > 1
+                                    },
+                                } only %}
+                            {% endblock %}
+                        {% endfor %}
+                    {% endblock %}
+                {% endblock %}
+            </div>
+        {% endblock %}
+    {% endif %}
+{% endblock %}

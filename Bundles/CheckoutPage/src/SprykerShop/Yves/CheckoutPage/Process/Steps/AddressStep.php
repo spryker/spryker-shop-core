@@ -46,7 +46,7 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      * @param \SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface $postConditionChecker
      * @param \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig $checkoutPageConfig
      * @param string $stepRoute
-     * @param string $escapeRoute
+     * @param string|null $escapeRoute
      * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepEnterPreCheckPluginInterface[] $checkoutAddressStepEnterPreCheckPlugins
      */
     public function __construct(
