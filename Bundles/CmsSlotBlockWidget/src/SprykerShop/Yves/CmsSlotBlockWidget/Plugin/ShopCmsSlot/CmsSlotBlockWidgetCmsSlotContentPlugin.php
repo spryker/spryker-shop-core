@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CmsSlotBlockWidget\Plugin;
+namespace SprykerShop\Yves\CmsSlotBlockWidget\Plugin\ShopCmsSlot;
 
 use Generated\Shared\Transfer\CmsSlotContentRequestTransfer;
 use Generated\Shared\Transfer\CmsSlotContentResponseTransfer;

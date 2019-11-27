@@ -1,5 +1,6 @@
 {
   "include": {
+    "spryker-shop/shop-cms-slot": "",
     "spryker/transfer": "Provides transfer objects definition with associative functionality."
   }
 }
