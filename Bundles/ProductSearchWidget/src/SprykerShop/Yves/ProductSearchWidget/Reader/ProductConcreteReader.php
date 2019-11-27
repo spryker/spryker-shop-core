@@ -68,10 +68,10 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
             return [];
         }
 
-        if ($productConcreteCriteriaFilterTransfer->getExcludeProductIds()) {
+        if ($productConcreteCriteriaFilterTransfer->getExcludedProductIds()) {
             $productConcretePageSearchTransfers = $this->filterProductConcretePageSearchTransfersByProductIds(
                 $productConcretePageSearchTransfers,
-                $productConcreteCriteriaFilterTransfer->getExcludeProductIds()
+                $productConcreteCriteriaFilterTransfer->getExcludedProductIds()
             );
         }
 
@@ -82,16 +82,16 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[] $productConcretePageSearchTransfers
-     * @param int[] $excludeProductIds
+     * @param int[] $excludedProductIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    protected function filterProductConcretePageSearchTransfersByProductIds($productConcretePageSearchTransfers, array $excludeProductIds): array
+    protected function filterProductConcretePageSearchTransfersByProductIds($productConcretePageSearchTransfers, array $excludedProductIds): array
     {
         $filteredProductConcretePageSearchTransfers = [];
 
         foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
-            if (!in_array($productConcretePageSearchTransfer->getFkProduct(), $excludeProductIds, true)) {
+            if (!in_array($productConcretePageSearchTransfer->getFkProduct(), $excludedProductIds, true)) {
                 $filteredProductConcretePageSearchTransfers[] = $productConcretePageSearchTransfer;
             }
         }

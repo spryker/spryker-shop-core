@@ -6,7 +6,7 @@
     <transfer name="ProductConcreteCriteriaFilter">
         <property name="searchString" type="string"/>
         <property name="limit" type="int"/>
-        <property name="excludeProductIds" type="int[]" singular="excludeProductId"/>
+        <property name="excludedProductIds" type="int[]" singular="excludedProductId"/>
     </transfer>
 
 </transfers>

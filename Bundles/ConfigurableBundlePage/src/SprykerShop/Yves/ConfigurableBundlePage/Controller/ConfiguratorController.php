@@ -331,13 +331,13 @@ class ConfiguratorController extends AbstractController
     protected function createProductConcreteCriteriaFilterTransfer(
         ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer,
         int $idConfigurableBundleTemplateSlot,
-        array $excludeProductIds = []
+        array $excludeProductIds
     ): ProductConcreteCriteriaFilterTransfer {
         /** @var \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer $configurableBundleTemplateSlotStorageTransfer */
         $configurableBundleTemplateSlotStorageTransfer = $configurableBundleTemplateStorageTransfer->getSlots()->offsetGet($idConfigurableBundleTemplateSlot);
 
         return (new ProductConcreteCriteriaFilterTransfer())
-            ->setExcludeProductIds($excludeProductIds)
+            ->setExcludedProductIds($excludeProductIds)
             ->setRequestParams([
                 static::REQUEST_PARAM_ID_PRODUCT_LIST => $configurableBundleTemplateSlotStorageTransfer->getIdProductList(),
                 static::REQUEST_PARAM_ITEMS_PER_PAGE => static::REQUEST_PARAM_ITEMS_PER_PAGE_VALUE,
