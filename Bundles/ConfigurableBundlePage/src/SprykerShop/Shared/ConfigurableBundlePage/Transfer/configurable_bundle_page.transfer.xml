@@ -34,6 +34,7 @@
 
     <transfer name="ProductConcreteCriteriaFilter">
         <property name="requestParams" type="array" singular="requestParams"/>
+        <property name="excludeProductIds" type="int[]" singular="excludeProductId"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlotStorage">

@@ -180,10 +180,17 @@ class ConfiguratorController extends AbstractController
             return $response;
         }
 
+        $selectedProductViewTransfer = $this->findSelectedProductConcreteForSlot($form, $idConfigurableBundleTemplateSlot);
+        $productConcreteCriteriaFilterTransfer = $this->createProductConcreteCriteriaFilterTransfer(
+            $configurableBundleTemplateStorageTransfer,
+            $idConfigurableBundleTemplateSlot,
+            $selectedProductViewTransfer ? [$selectedProductViewTransfer->getIdProductConcrete()] : []
+        );
+
         $response = array_merge($response, [
             'selectedSlotId' => $idConfigurableBundleTemplateSlot,
-            'selectedProduct' => $this->findSelectedProductConcreteForSlot($form, $idConfigurableBundleTemplateSlot),
-            'productConcreteCriteriaFilter' => $this->createProductConcreteCriteriaFilterTransfer($configurableBundleTemplateStorageTransfer, $idConfigurableBundleTemplateSlot),
+            'selectedProduct' => $selectedProductViewTransfer,
+            'productConcreteCriteriaFilter' => $productConcreteCriteriaFilterTransfer,
             'isSummaryPageUnlocked' => $this->isSummaryPageUnlocked($form),
         ]);
 
@@ -317,18 +324,24 @@ class ConfiguratorController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
      * @param int $idConfigurableBundleTemplateSlot
+     * @param int[] $excludeProductIds
      *
      * @return \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer
      */
-    protected function createProductConcreteCriteriaFilterTransfer(ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer, int $idConfigurableBundleTemplateSlot): ProductConcreteCriteriaFilterTransfer
-    {
+    protected function createProductConcreteCriteriaFilterTransfer(
+        ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer,
+        int $idConfigurableBundleTemplateSlot,
+        array $excludeProductIds = []
+    ): ProductConcreteCriteriaFilterTransfer {
         /** @var \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer $configurableBundleTemplateSlotStorageTransfer */
         $configurableBundleTemplateSlotStorageTransfer = $configurableBundleTemplateStorageTransfer->getSlots()->offsetGet($idConfigurableBundleTemplateSlot);
 
-        return (new ProductConcreteCriteriaFilterTransfer())->setRequestParams([
-            static::REQUEST_PARAM_ID_PRODUCT_LIST => $configurableBundleTemplateSlotStorageTransfer->getIdProductList(),
-            static::REQUEST_PARAM_ITEMS_PER_PAGE => static::REQUEST_PARAM_ITEMS_PER_PAGE_VALUE,
-        ]);
+        return (new ProductConcreteCriteriaFilterTransfer())
+            ->setExcludeProductIds($excludeProductIds)
+            ->setRequestParams([
+                static::REQUEST_PARAM_ID_PRODUCT_LIST => $configurableBundleTemplateSlotStorageTransfer->getIdProductList(),
+                static::REQUEST_PARAM_ITEMS_PER_PAGE => static::REQUEST_PARAM_ITEMS_PER_PAGE_VALUE,
+            ]);
     }
 
     /**

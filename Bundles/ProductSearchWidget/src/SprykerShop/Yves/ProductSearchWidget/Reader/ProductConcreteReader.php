@@ -47,8 +47,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
         ProductSearchWidgetToCatalogClientInterface $catalogClient,
         ProductConcretePriceExpanderInterface $productConcretePriceExpander,
         ProductConcreteMapperInterface $productConcreteMapper
-    )
-    {
+    ) {
         $this->catalogClient = $catalogClient;
         $this->productConcretePriceExpander = $productConcretePriceExpander;
         $this->productConcreteMapper = $productConcreteMapper;
@@ -69,9 +68,35 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
             return [];
         }
 
+        if ($productConcreteCriteriaFilterTransfer->getExcludeProductIds()) {
+            $productConcretePageSearchTransfers = $this->filterProductConcretePageSearchTransfersByProductIds(
+                $productConcretePageSearchTransfers,
+                $productConcreteCriteriaFilterTransfer->getExcludeProductIds()
+            );
+        }
+
         $productViewTransfers = $this->getMappedProductViewTransfers($productConcretePageSearchTransfers);
 
         return $this->expandProductViewTransfers($productViewTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[] $productConcretePageSearchTransfers
+     * @param int[] $excludeProductIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    protected function filterProductConcretePageSearchTransfersByProductIds($productConcretePageSearchTransfers, array $excludeProductIds): array
+    {
+        $filteredProductConcretePageSearchTransfers = [];
+
+        foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
+            if (!in_array($productConcretePageSearchTransfer->getFkProduct(), $excludeProductIds, true)) {
+                $filteredProductConcretePageSearchTransfers[] = $productConcretePageSearchTransfer;
+            }
+        }
+
+        return $filteredProductConcretePageSearchTransfers;
     }
 
     /**
@@ -108,5 +133,4 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
 
         return $expandedProductViewTransfers;
     }
-
 }
