@@ -1,24 +1,24 @@
 {
-  "name": "spryker-shop/shop-cms-slot",
+  "name": "spryker-shop/cms-slot-block-widget",
   "type": "library",
-  "description": "ShopCmsSlot module",
+  "description": "CmsSlotBlockWidget module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker-shop/shop-cms-slot": "^0.6.0",
     "spryker-shop/shop-cms-slot-extension": "^0.2.0",
-    "spryker/cms-slot": "^0.5.0",
-    "spryker/cms-slot-storage": "^0.1.0",
+    "spryker/cms-slot-block": "^0.1.0",
+    "spryker/cms-slot-block-storage": "^0.1.0",
     "spryker/kernel": "^3.30.0",
     "spryker/transfer": "^3.8.0",
-    "spryker/twig": "^3.2.3"
+    "spryker/twig": "^1.0.0 || ^2.0.0 || ^3.0.0"
   },
   "require-dev": {
-    "spryker-shop/shop-application": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/shop-application": "If you want to use the CMS slot plugin for Twig."
+    "spryker-shop/cms-block-widget": "If you want to use CmsBlockTwigPlugin. Minimum required version: 2.0.0."
   },
   "autoload": {
     "psr-4": {
