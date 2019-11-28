@@ -321,9 +321,9 @@ export default class MeasurementQuantitySelector extends Component {
     }
 
     protected multiply(a: number, b: number): number {
-        const result = ((a * this.factor) * (b * this.factor)) / Math.pow(this.factor, this.degree[0]);
+        let result = ((a * this.factor) * (b * this.factor)) / Math.pow(this.factor, this.degree[0]);
 
-        return Math.floor(result * Math.pow(this.factor, this.degree[1]) / Math.pow(this.factor, this.degree[1]));
+        return Math.floor(result * Math.pow(this.factor, this.degree[1])) / Math.pow(this.factor, this.degree[1]);
     }
 
     protected getMinQuantity(): number {
