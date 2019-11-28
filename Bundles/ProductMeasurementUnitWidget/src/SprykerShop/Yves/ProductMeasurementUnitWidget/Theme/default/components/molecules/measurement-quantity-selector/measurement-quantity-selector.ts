@@ -317,11 +317,11 @@ export default class MeasurementQuantitySelector extends Component {
     }
 
     protected round(value: number, decimals: number): number {
-        return Number(Math.round(parseFloat(value + 'e' + decimals)) + 'e-' + decimals);
+        return Number(`${Math.round(parseFloat(`${value}e${decimals}`))}e-${decimals}`);
     }
 
     protected multiply(a: number, b: number): number {
-        let result = ((a * this.factor) * (b * this.factor)) / Math.pow(this.factor, this.degree[0]);
+        const result = ((a * this.factor) * (b * this.factor)) / Math.pow(this.factor, this.degree[0]);
 
         return Math.floor(result * Math.pow(this.factor, this.degree[1])) / Math.pow(this.factor, this.degree[1]);
     }
