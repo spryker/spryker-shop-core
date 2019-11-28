@@ -16,7 +16,7 @@ use SprykerShop\Yves\CmsSlotBlockWidget\Business\CmsSlotBlockWidgetDataProvider;
 use SprykerShop\Yves\CmsSlotBlockWidget\CmsSlotBlockWidgetDependencyProvider;
 use SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockClientInterface;
 use SprykerShop\Yves\CmsSlotBlockWidget\Dependency\Client\CmsSlotBlockWidgetToCmsSlotBlockStorageClientInterface;
-use SprykerShop\Yves\CmsSlotBlockWidget\Plugin\CmsSlotBlockWidgetCmsSlotContentPlugin;
+use SprykerShop\Yves\CmsSlotBlockWidget\Plugin\ShopCmsSlot\CmsSlotBlockWidgetCmsSlotContentPlugin;
 use Twig\Environment;
 
 class CmsSlotBlockWidgetCmsSlotContentPluginTest extends Unit
@@ -71,7 +71,7 @@ class CmsSlotBlockWidgetCmsSlotContentPluginTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerShop\Yves\CmsSlotBlockWidget\Plugin\CmsSlotBlockWidgetCmsSlotContentPlugin
+     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerShop\Yves\CmsSlotBlockWidget\Plugin\ShopCmsSlot\CmsSlotBlockWidgetCmsSlotContentPlugin
      */
     protected function getCmsSlotBlockWidgetCmsSlotContentPluginMock(): CmsSlotBlockWidgetCmsSlotContentPlugin
     {
