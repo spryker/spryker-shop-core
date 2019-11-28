@@ -25,6 +25,11 @@
       "SprykerShop\\": "src/SprykerShop/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerShopTest\\": "tests/SprykerShopTest/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

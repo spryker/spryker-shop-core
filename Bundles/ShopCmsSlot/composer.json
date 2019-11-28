@@ -22,8 +22,7 @@
   },
   "autoload": {
     "psr-4": {
-      "SprykerShop\\": "src/SprykerShop/",
-      "SprykerShopTest\\Yves\\ShopCmsSlot\\Helper\\": "tests/SprykerShopTest/Yves/ShopCmsSlot/_support/Helper/"
+      "SprykerShop\\": "src/SprykerShop/"
     }
   },
   "autoload-dev": {
