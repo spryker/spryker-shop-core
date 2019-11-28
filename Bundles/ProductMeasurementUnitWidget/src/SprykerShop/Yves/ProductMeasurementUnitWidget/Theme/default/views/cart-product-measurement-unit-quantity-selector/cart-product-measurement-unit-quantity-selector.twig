@@ -20,13 +20,15 @@
         },
     } only %}
 
-    {% if hasQuantitySalesUnit %}
-        {% block quantitySalesUnit %}
-            <small class="text-secondary">
-                {% block quantitySalesUnitInner %}
-                    [= {{ data.quantitySalesUnitPrecision }} {{ data.quantitySalesUnit.productMeasurementUnit.name | default | trans }}]
-                {% endblock %}
-            </small>
-        {% endblock %}
-    {% endif %}
+    {% block quantitySalesUnit %}
+        {% include molecule('measurement-unit-item') with {
+            class: 'spacing spacing--reset',
+            data: {
+                cartItem: data.cartItem,
+                quantitySalesUnit: data.quantitySalesUnit,
+                quantitySalesUnitPrecision: data.quantitySalesUnitPrecision,
+                hasQuantitySalesUnit: hasQuantitySalesUnit,
+            },
+        } only %}
+    {% endblock %}
 {% endblock %}
