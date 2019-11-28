@@ -5,7 +5,7 @@
             margin: map-get($setting-spacing, 'reset') map-get($setting-spacing, 'reset') map-get($setting-spacing, 'default');
             border: 1px solid;
 
-            @include configurable-bundle-page-configurator-button-state($button-parameters);
+            @include configurable-bundle-page-configurator-button-state($setting-color-white, $setting-color-dark, $setting-color-lighter);
 
             &:hover {
                 @include configurable-bundle-page-configurator-button-state;
@@ -13,7 +13,8 @@
         }
 
         &--selected {
-            @include configurable-bundle-page-configurator-button-state($button-selected-parameters);
+            @include configurable-bundle-page-configurator-button-state(
+                    helper-color-light(map-get($setting-color-actions, 'success')), map-get($setting-color-actions, 'success'), map-get($setting-color-actions, 'success'));
 
             &:hover {
                 @include configurable-bundle-page-configurator-button-state;
@@ -33,26 +34,9 @@
     }
 }
 
-@mixin configurable-bundle-page-configurator-button-state($button-settings: $button-active-parameters) {
-    background: map-get($button-settings, 'background-color');
-    color: map-get($button-settings, 'color');
-    border-color: map-get($button-settings, 'border-color');
+@mixin configurable-bundle-page-configurator-button-state($background: helper-color-light($setting-color-main),
+$color: $setting-color-darker, $border-color: $setting-color-main) {
+    background: $background;
+    color: $color;
+    border-color: $border-color;
 }
-
-$button-parameters: (
-    background-color: $setting-color-white,
-    color: $setting-color-dark,
-    border-color: $setting-color-lighter,
-);
-
-$button-selected-parameters: (
-    background-color: helper-color-light(map-get($setting-color-actions, 'success')),
-    color: map-get($setting-color-actions, 'success'),
-    border-color: map-get($setting-color-actions, 'success'),
-);
-
-$button-active-parameters: (
-    background-color: helper-color-light($setting-color-main),
-    color: $setting-color-darker,
-    border-color: $setting-color-main,
-);
