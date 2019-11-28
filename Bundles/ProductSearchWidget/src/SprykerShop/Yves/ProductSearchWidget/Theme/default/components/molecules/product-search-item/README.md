@@ -1,1 +1,1 @@
-Displays product concrete search item with information (image, name, sku, price) without actions.
+Displays product concrete search item which based on molecule('product-item-list') without displaying rating and submit form button.

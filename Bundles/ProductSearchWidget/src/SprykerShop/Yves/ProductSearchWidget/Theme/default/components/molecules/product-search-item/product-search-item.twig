@@ -6,15 +6,6 @@
 
 {% block extraClass %} grid box{% endblock %}
 
-{% block image %}
-    {% set extraClass = '' %}
-    {% set modifiers = ['small'] %}
-
-    <div class="col col--sm-3 col--md-2 col--middle">
-        {{ parent() }}
-    </div>
-{% endblock %}
-
 {% block rating %}{% endblock %}
 
 {% block price %}
