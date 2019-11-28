@@ -267,6 +267,8 @@ class ConfiguratorController extends AbstractController
                 new CreateConfiguredBundleRequestTransfer()
             );
 
+        $createConfiguredBundleRequestTransfer->setLocaleName($this->getLocale());
+
         $quoteResponseTransfer = $this->getFactory()
             ->getConfigurableBundleCartClient()
             ->addConfiguredBundle($createConfiguredBundleRequestTransfer);
