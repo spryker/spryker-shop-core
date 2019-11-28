@@ -1,1 +1,1 @@
-Displays product concrete search item. Each item is a molecule('product-item-list').
+Displays product concrete search item which based on molecule('product-item-list') without displaying rating and submit form button.

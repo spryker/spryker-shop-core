@@ -32,7 +32,9 @@
             {% set extraModifier = 'selected' %}
         {%- endif %}
 
-        {% if data.idConfigurableBundleTemplateSlot == data.selectedSlotId and not data.isSeparateItem and data.isExtraModifier %}
+        {% set isActive = data.idConfigurableBundleTemplateSlot == data.selectedSlotId and not data.isSeparateItem and data.isExtraModifier %}
+
+        {% if isActive %}
             {% set extraModifier = 'active' %}
         {%- endif %}
 

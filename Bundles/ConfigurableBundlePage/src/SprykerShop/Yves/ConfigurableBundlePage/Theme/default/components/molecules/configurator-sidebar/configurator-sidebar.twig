@@ -50,7 +50,11 @@
     {% block summaryItem %}
         <li class="{{ summaryClasses }}">
             {% block summaryItemInner %}
-                {% set buttonModifiers = data.isSeparateItemActive ? ['expand', 'additional-indention', 'active'] : ['expand', 'additional-indention'] %}
+                {% set buttonModifiers = ['expand', 'additional-indention'] %}
+
+                {% if data.isSeparateItemActive %}
+                    {% set buttonModifiers = buttonModifiers | merge(['active']) %}
+                {% endif %}
 
                 {% block summaryItemAction %}
                     {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
