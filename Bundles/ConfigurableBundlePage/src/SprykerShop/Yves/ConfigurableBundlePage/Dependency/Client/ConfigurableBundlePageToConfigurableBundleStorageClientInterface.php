@@ -13,10 +13,11 @@ interface ConfigurableBundlePageToConfigurableBundleStorageClientInterface
 {
     /**
      * @param int $idConfigurableBundleTemplate
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
      */
-    public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateStorageTransfer;
+    public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate, string $localeName): ?ConfigurableBundleTemplateStorageTransfer;
 
     /**
      * @param string[] $skus

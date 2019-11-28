@@ -314,7 +314,8 @@ class ConfiguratorController extends AbstractController
     {
         $configurableBundleTemplateStorageRequestTransfer = (new ConfigurableBundleTemplateStorageRequestTransfer())
             ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
-            ->setIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplateSlot);
+            ->setIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplateSlot)
+            ->setLocaleName($this->getLocale());
 
         return $this->getFactory()
             ->createConfigurableBundleTemplateStorageReader()

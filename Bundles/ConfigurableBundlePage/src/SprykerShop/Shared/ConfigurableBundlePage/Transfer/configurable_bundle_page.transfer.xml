@@ -6,6 +6,7 @@
     <transfer name="ConfigurableBundleTemplateStorageRequest">
         <property name="idConfigurableBundleTemplate" type="int"/>
         <property name="idConfigurableBundleTemplateSlot" type="int"/>
+        <property name="localeName" type="string"/>
     </transfer>
 
     <transfer name="ConfiguredBundleItemRequest">

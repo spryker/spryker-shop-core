@@ -21,7 +21,7 @@
         }
 
         &--active,
-        &--active:hover, {
+        &--active:hover {
             @include configurable-bundle-page-configurator-button-state;
         }
 

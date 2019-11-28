@@ -36,7 +36,8 @@ class ConfigurableBundleTemplateStorageReader implements ConfigurableBundleTempl
         ConfigurableBundleTemplateStorageRequestTransfer $configurableBundleTemplateStorageRequestTransfer
     ): ?ConfigurableBundleTemplateStorageTransfer {
         $configurableBundleTemplateStorageTransfer = $this->configurableBundleStorageClient->findConfigurableBundleTemplateStorage(
-            $configurableBundleTemplateStorageRequestTransfer->getIdConfigurableBundleTemplate()
+            $configurableBundleTemplateStorageRequestTransfer->getIdConfigurableBundleTemplate(),
+            $configurableBundleTemplateStorageRequestTransfer->getLocaleName()
         );
 
         if (!$configurableBundleTemplateStorageTransfer) {
