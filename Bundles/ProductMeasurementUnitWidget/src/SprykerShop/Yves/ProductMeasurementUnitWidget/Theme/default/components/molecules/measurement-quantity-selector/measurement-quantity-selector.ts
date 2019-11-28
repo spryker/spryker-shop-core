@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* tslint:disable: max-file-line-count no-magic-numbers*/
 
 /*
  * @tag example This code provides example of using the Product Measurement Unit.
