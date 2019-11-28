@@ -67,7 +67,7 @@ class PlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirec
      * @param string $currentLocale
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface $glossaryStorageClient
      * @param string $stepRoute
-     * @param string $escapeRoute
+     * @param string|null $escapeRoute
      * @param array $errorCodeToRouteMatching
      */
     public function __construct(

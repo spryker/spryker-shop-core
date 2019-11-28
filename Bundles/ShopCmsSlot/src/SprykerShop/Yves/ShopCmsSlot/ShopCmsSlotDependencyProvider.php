@@ -11,11 +11,13 @@ use RuntimeException;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientBridge;
+use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotStorageClientBridge;
 use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface;
 
 class ShopCmsSlotDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CMS_SLOT = 'CLIENT_CMS_SLOT';
+    public const CLIENT_CMS_SLOT_STORAGE = 'CLIENT_CMS_SLOT_STORAGE';
     public const PLUGIN_CMS_SLOT_CONTENT = 'PLUGIN_CMS_SLOT_CONTENT';
 
     /**
@@ -27,6 +29,7 @@ class ShopCmsSlotDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addCmsSlotContentPlugin($container);
         $container = $this->addCmsSlotClient($container);
+        $container = $this->addCmsSlotStorageClient($container);
 
         return $container;
     }
@@ -54,6 +57,20 @@ class ShopCmsSlotDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_CMS_SLOT, function (Container $container) {
             return new ShopCmsSlotToCmsSlotClientBridge($container->getLocator()->cmsSlot()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCmsSlotStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_CMS_SLOT_STORAGE, function (Container $container) {
+            return new ShopCmsSlotToCmsSlotStorageClientBridge($container->getLocator()->cmsSlotStorage()->client());
         });
 
         return $container;

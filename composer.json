@@ -3,10 +3,11 @@
   "description": "Spryker Shop page and widget modules",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.2"
   },
   "require-dev": {
-    "spryker/code-sniffer": "dev-master"
+    "spryker/code-sniffer": "dev-master",
+    "spryker/spryker": "dev-master"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -66,6 +67,8 @@
     "spryker-shop/heartbeat-page": "*",
     "spryker-shop/home-page": "*",
     "spryker-shop/language-switcher-widget": "*",
+    "spryker-shop/merchant-product-offer-widget": "*",
+    "spryker-shop/merchant-profile-page": "*",
     "spryker-shop/money-widget": "*",
     "spryker-shop/multi-cart-page": "*",
     "spryker-shop/multi-cart-widget": "*",
