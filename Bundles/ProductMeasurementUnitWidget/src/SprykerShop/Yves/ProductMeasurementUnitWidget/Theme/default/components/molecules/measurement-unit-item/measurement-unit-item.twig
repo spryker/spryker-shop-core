@@ -14,10 +14,8 @@
 
 {% block body %}
     {% if data.hasQuantitySalesUnit %}
-        {% set salesUnitName = data.cartItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
-
         <small class="text-secondary">
-            [= {{ data.quantitySalesUnitPrecision }} {{ data.quantitySalesUnit.productMeasurementUnit.name | default | trans | trans }}]
+            [= {{ data.quantitySalesUnitPrecision }} {{ data.quantitySalesUnit.productMeasurementUnit.name | default | trans }}]
         </small>
     {% endif %}
 {% endblock %}

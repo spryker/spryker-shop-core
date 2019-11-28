@@ -104,11 +104,18 @@ export default class MeasurementQuantitySelector extends Component {
      * The translations object.
      */
     protected translations: UnitTranslationsJSONData;
-
     /**
      * The number of decimals characters after dot for rounded numbers.
      */
     protected readonly decimals: number = 4;
+    /**
+     * The number coefficient for math actions with numbers.
+     */
+     protected readonly factor: number = 10;
+    /**
+     * The number coefficients for exponentiation actions of a factor number.
+     */
+    protected readonly degree: number[] = [2, 3];
 
     protected readyCallback(event?: Event): void {}
 
@@ -242,9 +249,9 @@ export default class MeasurementQuantitySelector extends Component {
                 .toString()} ${measurementSalesUnitName}) = (${qtyInBaseUnits} ${measurementBaseUnitName})`;
             choiceElem.onclick = (event: Event) => {
                 const element = <HTMLSelectElement>event.currentTarget;
-                const qtyInBaseUnits = parseFloat(element.dataset.baseUnitQty);
-                const qtyInSalesUnits = parseFloat(element.dataset.salesUnitQty);
-                this.selectQty(qtyInBaseUnits, qtyInSalesUnits);
+                const qtyInBaseUnitsChoice = parseFloat(element.dataset.baseUnitQty);
+                const qtyInSalesUnitsChoice = parseFloat(element.dataset.salesUnitQty);
+                this.selectQty(qtyInBaseUnitsChoice, qtyInSalesUnitsChoice);
             };
 
             choiceElem.style.display = 'block';
@@ -314,9 +321,9 @@ export default class MeasurementQuantitySelector extends Component {
     }
 
     protected multiply(a: number, b: number): number {
-        const result = ((a * 10) * (b * 10)) / 100;
+        const result = ((a * this.factor) * (b * this.factor)) / Math.pow(this.factor, this.degree[0]);
 
-        return Math.floor(result * 1000) / 1000;
+        return Math.floor(result * Math.pow(this.factor, this.degree[1]) / Math.pow(this.factor, this.degree[1]));
     }
 
     protected getMinQuantity(): number {
@@ -342,8 +349,7 @@ export default class MeasurementQuantitySelector extends Component {
 
     protected getQuantityInterval(): number {
         if (typeof this.productQuantityStorage !== 'undefined'
-            && this.productQuantityStorage.hasOwnProperty('quantity_interval')
-        ) {
+            && this.productQuantityStorage.hasOwnProperty('quantity_interval')) {
             return this.productQuantityStorage.quantity_interval;
         }
 
@@ -362,25 +368,20 @@ export default class MeasurementQuantitySelector extends Component {
     }
 
     protected getSalesUnitById(salesUnitId: number): SalesUnit {
-        for (let key in this.salesUnits) {
-            if (this.salesUnits.hasOwnProperty(key)) {
-                if (salesUnitId === this.salesUnits[key].id_product_measurement_sales_unit) {
-                    return this.salesUnits[key];
-                }
-            }
-        }
+        const targetSalesUnits = this.salesUnits.filter(
+            (item: SalesUnit) => salesUnitId === item.id_product_measurement_sales_unit
+        );
+
+        return targetSalesUnits[0];
     }
 
     protected getBaseSalesUnit(): SalesUnit {
-        for (let key in this.salesUnits) {
-            if (this.salesUnits.hasOwnProperty(key)) {
-                if (this.baseUnit.id_product_measurement_unit ===
-                    this.salesUnits[key].product_measurement_unit.id_product_measurement_unit) {
+        const targetBaseUnits = this.salesUnits.filter(
+            (item: SalesUnit) =>
+                this.baseUnit.id_product_measurement_unit === item.product_measurement_unit.id_product_measurement_unit
+        );
 
-                    return this.salesUnits[key];
-                }
-            }
-        }
+        return targetBaseUnits[0];
     }
 
     protected getUnitName(key: string): string {
