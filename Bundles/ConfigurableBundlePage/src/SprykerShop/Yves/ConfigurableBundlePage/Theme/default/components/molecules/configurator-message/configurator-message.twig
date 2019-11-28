@@ -1,0 +1,26 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'configurator-message',
+} %}
+
+{% define data = {
+    title: 'configurable_bundle_page.configurator.tip.header' | trans,
+    text: 'configurable_bundle_page.configurator.tip.text' | trans,
+} %}
+
+{% block body %}
+    {% block message %}
+        <div class="col col--sm-12 col--md-5">
+            {% block messageInner %}
+                {% block messageTitle %}
+                    <h5 class="text-center">{{ data.title }}</h5>
+                {% endblock %}
+
+                {% block messageText %}
+                    <p class="text-center">{{ data.text }}</p>
+                {% endblock %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}

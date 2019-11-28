@@ -20,7 +20,7 @@
                     {% block headerInner %}
                         {% block title %}
                             <h6 class="col col--sm-10">
-                                {{ data.configurableBundleTemplateStorage.slots[idSlot].name | trans }}
+                                {{- data.configurableBundleTemplateStorage.slots[idSlot].name | trans -}}
                             </h6>
                         {% endblock %}
 

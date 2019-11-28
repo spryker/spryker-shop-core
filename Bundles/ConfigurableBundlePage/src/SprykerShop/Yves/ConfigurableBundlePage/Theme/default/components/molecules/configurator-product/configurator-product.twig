@@ -13,7 +13,7 @@
 
 {% block extraClass %} grid box{% endblock %}
 
-{% block thumbnailWrapper %}
+{% block imageContainer %}
     {% set extraClass = '' %}
     {% set modifiers = ['small'] %}
 
@@ -23,6 +23,18 @@
 {% block labels %}{% endblock %}
 
 {% block rating %}{% endblock %}
+
+{% block price %}
+    {% if can('SeePricePermissionPlugin') %}
+        {% include molecule('money-price') with {
+            data: {
+                amount: data.product.price | default(null),
+            },
+        } only %}
+    {% else %}
+        {{- 'customer.access.cannot_see_price' | trans -}}
+    {% endif %}
+{% endblock %}
 
 {% block actionsContainer %}
     {% if data.isActionActive %}

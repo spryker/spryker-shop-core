@@ -23,47 +23,47 @@
                 <ul class="grid {{ config.name }}__list">
                     {% block listInner %}
                         {% for template in data.templates %}
-                        {% set listItemClasses = 'col col--sm-12 col--md-6 col--xl-3' %}
+                            {% set listItemClasses = 'col col--sm-12 col--md-6 col--xl-3' %}
 
-                        {% block item %}
-                            <li class="{{ listItemClasses }}">
-                                {% block listItemInner %}
-                                    {% set slotsPageUrl = path('configurable-bundle/configurator/slots', {'idConfigurableBundleTemplate': template.idConfigurableBundleTemplate }) %}
+                            {% block item %}
+                                <li class="{{ listItemClasses }}">
+                                    {% block listItemInner %}
+                                        {% set slotsPageUrl = path('configurable-bundle/configurator/slots', {'idConfigurableBundleTemplate': template.idConfigurableBundleTemplate }) %}
 
-                                    {% block template %}
-                                        <div class="box box--stretch">
-                                            {% block templateTitle %}
-                                                {% set titleClasses = config.name ~ '__item-title grid grid--center grid--middle spacing-bottom' %}
+                                        {% block template %}
+                                            <div class="box box--stretch">
+                                                {% block templateTitle %}
+                                                    {% set titleClasses = config.name ~ '__item-title grid grid--center grid--middle spacing-bottom' %}
 
-                                                {% block templateTitleItem %}
-                                                    <a href="{{ slotsPageUrl }}" class="{{ titleClasses }}">
-                                                        {{ template.name | trans }}
-                                                    </a>
+                                                    {% block templateTitleItem %}
+                                                        <a href="{{ slotsPageUrl }}" class="{{ titleClasses }}">
+                                                            {{ template.name | trans }}
+                                                        </a>
+                                                    {% endblock %}
                                                 {% endblock %}
-                                            {% endblock %}
 
-                                            {% block button %}
-                                                {% set buttonClasses = 'button button--expand button--success' %}
+                                                {% block button %}
+                                                    {% set buttonClasses = 'button button--expand button--success' %}
 
-                                                {% block buttonItem %}
-                                                    <a href="{{ slotsPageUrl }}" class="{{ buttonClasses }}">
-                                                        {{ 'configurable_bundle_page.select' | trans }}
-                                                    </a>
+                                                    {% block buttonItem %}
+                                                        <a href="{{ slotsPageUrl }}" class="{{ buttonClasses }}">
+                                                            {{- 'configurable_bundle_page.select' | trans -}}
+                                                        </a>
+                                                    {% endblock %}
                                                 {% endblock %}
-                                            {% endblock %}
-                                        </div>
+                                            </div>
+                                        {% endblock %}
                                     {% endblock %}
-                                {% endblock %}
-                            </li>
-                        {% endblock %}
-                    {% endfor %}
+                                </li>
+                            {% endblock %}
+                        {% endfor %}
                     {% endblock %}
                 </ul>
             {% endblock %}
         {% else %}
             {% block message %}
                 <p>
-                    {{ 'configurable_bundle_page.configurator.templates_not_found' | trans }}
+                    {{- 'configurable_bundle_page.configurator.templates_not_found' | trans -}}
                 </p>
             {% endblock %}
         {% endif %}

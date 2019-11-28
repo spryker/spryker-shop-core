@@ -41,7 +41,7 @@
             {% endblock %}
 
             {% block configuratorProducts %}
-                {% set wrapperClasses = data.selectedSlotId ? 'col col--sm-12 col--md-9' : 'grid grid--middle grid--center col col--save-spaces col--expand box' %}
+                {% set wrapperClasses = data.selectedSlotId ? 'col col--sm-12 col--md-9' : 'grid grid--stretch col col--expand' %}
 
                 {% block configuratorProductsInner %}
                     <div class="{{ wrapperClasses }}">
@@ -84,17 +84,7 @@
 
                             {% if not data.selectedSlotId %}
                                 {% block chooseSlotMessage %}
-                                    <div class="col col--sm-12 col--md-5">
-                                        {% block chooseSlotMessageInner %}
-                                            {% block chooseSlotMessageTitle %}
-                                                <h5 class="text-center">{{ 'configurable_bundle_page.configurator.tip.header' | trans }}</h5>
-                                            {% endblock %}
-
-                                            {% block chooseSlotMessageText %}
-                                                <p class="text-center">{{ 'configurable_bundle_page.configurator.tip.text' | trans }}</p>
-                                            {% endblock %}
-                                        {% endblock %}
-                                    </div>
+                                    {% include molecule('configurator-message', 'ConfigurableBundlePage') only %}
                                 {% endblock %}
                             {% endif %}
                         {% endblock %}
