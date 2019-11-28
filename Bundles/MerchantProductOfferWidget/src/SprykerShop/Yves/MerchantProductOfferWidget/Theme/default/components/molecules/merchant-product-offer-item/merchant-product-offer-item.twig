@@ -10,7 +10,8 @@
     offerReference: required,
     merchantName: required,
     merchantUrl: required,
-    merchantPrice: required,
+    price: required,
+    currencyIsoCode: required,
     shouldShowRadioButton: false,
 } %}
 
@@ -68,7 +69,7 @@
                                     <div class="col">
                                         {% block price %}
                                             <div>
-                                                <strong>{{ data.merchantPrice | money }}</strong>
+                                                <strong>{{ data.price | money(true, data.currencyIsoCode) }}</strong>
                                             </div>
                                         {% endblock %}
                                     </div>
