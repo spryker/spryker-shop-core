@@ -39,4 +39,6 @@ $color: $setting-color-darker, $border-color: $setting-color-main) {
     background: $background;
     color: $color;
     border-color: $border-color;
+
+    @content;
 }
