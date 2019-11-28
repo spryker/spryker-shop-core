@@ -10,7 +10,6 @@
   },
   "require-dev": {
     "spryker-shop/product-detail-page": "*",
-    "spryker-shop/shopping-list-page": "*",
     "spryker-shop/wishlist-page": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"

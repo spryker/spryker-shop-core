@@ -10,14 +10,13 @@ namespace SprykerShop\Yves\ProductBarcodeWidget\Plugin\ShoppingList;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductBarcodeWidget\Widget\ProductBarcodeWidget;
-use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductBarcodeWidget\ProductBarcodeWidgetPluginInterface;
 
 /**
  * @deprecated Use \SprykerShop\Yves\ProductBarcodeWidget\Widget\ProductBarcodeWidget instead.
  *
  * @method \SprykerShop\Yves\ProductBarcodeWidget\ProductBarcodeWidgetFactory getFactory()
  */
-class ProductBarcodeWidgetPlugin extends AbstractWidgetPlugin implements ProductBarcodeWidgetPluginInterface
+class ProductBarcodeWidgetPlugin extends AbstractWidgetPlugin
 {
      /**
       * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -37,7 +36,7 @@ class ProductBarcodeWidgetPlugin extends AbstractWidgetPlugin implements Product
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'ProductBarcodeWidgetPlugin';
     }
 
     /**

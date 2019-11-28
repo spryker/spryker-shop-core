@@ -10,12 +10,11 @@ namespace SprykerShop\Yves\ShoppingListNoteWidget\Plugin;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ShoppingListNoteWidget\Widget\ShoppingListItemNoteWidget;
-use SprykerShop\Yves\ShoppingListPage\Plugin\ShoppingListItemNoteWidgetPluginInterface;
 
 /**
  * @deprecated Use \SprykerShop\Yves\ShoppingListNoteWidget\Widget\ShoppingListItemNoteWidget instead.
  */
-class ShoppingListItemNoteWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListItemNoteWidgetPluginInterface
+class ShoppingListItemNoteWidgetPlugin extends AbstractWidgetPlugin
 {
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
@@ -50,6 +49,6 @@ class ShoppingListItemNoteWidgetPlugin extends AbstractWidgetPlugin implements S
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'ShoppingListItemNoteWidgetPlugin';
     }
 }

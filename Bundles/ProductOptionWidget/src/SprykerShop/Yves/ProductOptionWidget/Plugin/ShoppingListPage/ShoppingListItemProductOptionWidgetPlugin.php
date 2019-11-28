@@ -9,14 +9,13 @@ namespace SprykerShop\Yves\ProductOptionWidget\Plugin\ShoppingListPage;
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductOptionWidget\ShoppingListItemProductOptionWidgetPluginInterface;
 
 /**
  * @deprecated Use molecule('shopping-list-item-product-option-display', 'ProductOptionWidget') instead.
  *
  * @method \SprykerShop\Yves\ProductOptionWidget\ProductOptionWidgetFactory getFactory()
  */
-class ShoppingListItemProductOptionWidgetPlugin extends AbstractWidgetPlugin implements ShoppingListItemProductOptionWidgetPluginInterface
+class ShoppingListItemProductOptionWidgetPlugin extends AbstractWidgetPlugin
 {
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
@@ -40,7 +39,7 @@ class ShoppingListItemProductOptionWidgetPlugin extends AbstractWidgetPlugin imp
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'ShoppingListItemProductOptionWidgetPlugin';
     }
 
     /**

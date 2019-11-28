@@ -18,6 +18,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class CartToShoppingListController extends AbstractController
 {
     protected const PARAM_REFERER = 'referer';
+    protected const PARAM_ID_QUOTE = 'idQuote';
     protected const GLOSSARY_KEY_CART_NOT_AVAILABLE = 'shopping_list.cart.not_available';
     protected const GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_SUCCESS = 'shopping_list.cart.items_add.success';
     protected const GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_FAILED = 'shopping_list.cart.items_add.failed';
@@ -46,26 +47,25 @@ class CartToShoppingListController extends AbstractController
     }
 
     /**
-     * @param int $idQuote
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function createFromCartAction(int $idQuote, Request $request)
+    public function createFromCartAction(Request $request)
     {
-        $response = $this->executeCreateFromCartAction($idQuote, $request);
+        $response = $this->executeCreateFromCartAction($request);
 
         return $response;
     }
 
     /**
-     * @param int $idQuote
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeCreateFromCartAction(int $idQuote, Request $request)
+    protected function executeCreateFromCartAction(Request $request)
     {
+        $idQuote = $request->get(static::PARAM_ID_QUOTE);
         $cartToShoppingListForm = $this->getFactory()
             ->getShoppingListFromCartForm($idQuote)
             ->handleRequest($request);

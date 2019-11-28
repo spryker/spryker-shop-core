@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ShoppingListWidget\Controller;
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
-use SprykerShop\Yves\ShoppingListWidget\ShoppingListWidgetConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -26,9 +25,14 @@ class ShoppingListWidgetController extends AbstractController
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ADD_ITEM_SUCCESS = 'customer.account.shopping_list.add_item.success';
 
     /**
-     * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST
+     * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST
      */
-    protected const SHOPPING_LISTS_REDIRECT_URL = 'shopping-list';
+    protected const ROUTE_SHOPPING_LIST = 'shopping-list';
+
+    /**
+     * @see \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST_DETAILS
+     */
+    protected const ROUTE_SHOPPING_LIST_DETAILS = 'shopping-list/details';
 
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -74,16 +78,16 @@ class ShoppingListWidgetController extends AbstractController
         if (!$shoppingListItemTransfer->getIdShoppingListItem()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED);
 
-            return $this->redirectResponseInternal(static::SHOPPING_LISTS_REDIRECT_URL);
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
         }
 
         $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ADD_ITEM_SUCCESS);
 
         if (!$shoppingListItemTransfer->getFkShoppingList()) {
-            return $this->redirectResponseInternal(static::SHOPPING_LISTS_REDIRECT_URL);
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
         }
 
-        return $this->redirectResponseInternal(ShoppingListWidgetConfig::SHOPPING_LIST_REDIRECT_URL, [
+        return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST_DETAILS, [
             'idShoppingList' => $shoppingListItemTransfer->getFkShoppingList(),
         ]);
     }

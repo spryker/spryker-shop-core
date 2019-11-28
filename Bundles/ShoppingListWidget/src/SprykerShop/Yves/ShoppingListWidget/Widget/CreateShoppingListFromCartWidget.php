@@ -39,7 +39,7 @@ class CreateShoppingListFromCartWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@CartToShoppingListWidget/views/create-shopping-list-from-cart/create-shopping-list-from-cart.twig';
+        return '@ShoppingListWidget/views/create-shopping-list-from-cart/create-shopping-list-from-cart.twig';
     }
 
     /**

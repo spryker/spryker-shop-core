@@ -1,7 +1,6 @@
 {% extends template('page-layout-shopping-list', 'ShoppingListPage') %}
 
 {% define data = {
-    form: _view.cartToShoppingListForm,
     cart: _view.cart,
     backUrl: app.request.headers.get('referer') | default(url('shopping-list')),
     title: 'customer.account.shopping_list.create_from_cart.title' | trans,

@@ -53,7 +53,7 @@ class ShoppingListWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addCreateShoppingListFromCartRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/shopping-list/create-from-cart', 'ShoppingListWidget', 'CartToShoppingList', 'indexAction');
+        $route = $this->buildRoute('/shopping-list/create-from-cart', 'ShoppingListWidget', 'CartToShoppingList', 'createFromCartAction');
         $routeCollection->add(static::ROUTE_CART_TO_SHOPPING_LIST, $route);
 
         return $routeCollection;

@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\ShoppingListPage\Controller;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,6 +36,16 @@ class ShoppingListOverviewController extends AbstractShoppingListController
      * @use \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
      */
     protected const ROUTE_CART_PAGE = 'cart';
+
+    /**
+     * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST
+     */
+    protected const ROUTE_SHOPPING_LIST = 'shopping-list';
+
+    /**
+     * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST_UPDATE
+     */
+    protected const ROUTE_SHOPPING_LIST_UPDATE = 'shopping-list/update';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -115,7 +124,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         if (!$shoppingListTransfer->getIdShoppingList()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND);
 
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
         }
 
         $shoppingListForm = $this->getFactory()
@@ -132,7 +141,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             if ($shoppingListResponseTransfer->getIsSuccess()) {
                 $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_UPDATED);
 
-                return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_UPDATE, [
+                return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST_UPDATE, [
                     static::ROUTE_PARAM_ID_SHOPPING_LIST => $idShoppingList,
                 ]);
             }
@@ -168,14 +177,14 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         if (!$shoppingListResponseTransfer->getIsSuccess()) {
             $this->handleResponseErrors($shoppingListResponseTransfer);
 
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_UPDATE, [
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST_UPDATE, [
                 static::ROUTE_PARAM_ID_SHOPPING_LIST => $idShoppingList,
             ]);
         }
 
         $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CLEAR_SUCCESS);
 
-        return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_UPDATE, [
+        return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST_UPDATE, [
             static::ROUTE_PARAM_ID_SHOPPING_LIST => $idShoppingList,
         ]);
     }
@@ -194,7 +203,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         if (count($shoppingListItems->getItems()) === 0) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_NOT_FOUND);
 
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
         }
 
         $result = $this->getFactory()
@@ -204,7 +213,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         if ($result->getRequests()->count()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_FAILED);
 
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
         }
 
         $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART);
@@ -249,7 +258,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
             if ($shoppingListShareResponseTransfer->getIsSuccess()) {
                 $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_SHARE_SHARE_SHOPPING_LIST_SUCCESSFUL);
 
-                return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+                return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
             }
 
             $this->addErrorMessage($shoppingListShareResponseTransfer->getError());
@@ -261,7 +270,7 @@ class ShoppingListOverviewController extends AbstractShoppingListController
         if (!$shoppingListTransfer->getIdShoppingList()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND);
 
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
         }
 
         return [

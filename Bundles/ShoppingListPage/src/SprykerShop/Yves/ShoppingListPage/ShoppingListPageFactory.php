@@ -153,14 +153,6 @@ class ShoppingListPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig
-     */
-    public function getBundleConfig(): ShoppingListPageConfig
-    {
-        return $this->getConfig();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
