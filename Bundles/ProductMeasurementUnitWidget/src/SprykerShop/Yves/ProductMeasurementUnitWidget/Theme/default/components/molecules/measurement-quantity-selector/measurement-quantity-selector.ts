@@ -1,4 +1,4 @@
-/* tslint:disable: max-file-line-count no-magic-numbers*/
+/* tslint:disable: max-file-line-count */
 
 /*
  * @tag example This code provides example of using the Product Measurement Unit.
@@ -7,9 +7,9 @@
 import Component from 'ShopUi/models/component';
 
 interface UnitTranslationsJSONData {
-    GRAM: string;
-    ITEM: string;
-    KILO: string;
+    gram: string;
+    item: string;
+    kilo: string;
 }
 
 interface BaseUnit {
@@ -48,87 +48,43 @@ interface MeasurementJSONData {
 }
 
 export default class MeasurementQuantitySelector extends Component {
-    /**
-     * The input element of the sales quantity value.
-     */
     protected qtyInSalesUnitInput: HTMLInputElement;
-    /**
-     * The input element of the base quantity value.
-     */
     protected qtyInBaseUnitInput: HTMLInputElement;
-    /**
-     * The input element of the measurement unit.
-     */
     protected measurementUnitInput: HTMLSelectElement;
-    /**
-     * The "Add to cart" button.
-     */
     protected addToCartButton: HTMLButtonElement;
-    /**
-     * The quantity step container.
-     */
     protected quantityBetweenUnits: HTMLElement;
-    /**
-     * The minimum quantity container.
-     */
     protected minimumQuantity: HTMLElement;
-    /**
-     * The maximum quantity container.
-     */
     protected maximumQuantity: HTMLElement;
-    /**
-     * The measurement unit correct choice container.
-     */
     protected measurementUnitChoice: HTMLElement;
-    /**
-     * The base unit object.
-     */
     protected baseUnit: BaseUnit;
-    /**
-     * The sales units object.
-     */
     protected salesUnits: SalesUnit[];
-    /**
-     * The current sales unit object.
-     */
     protected currentSalesUnit: SalesUnit;
-    /**
-     * The product quantity storage object.
-     */
     protected productQuantityStorage: ProductQuantityStorage;
-    /**
-     * The current value.
-     */
     protected currentValue: number;
-    /**
-     * The translations object.
-     */
     protected translations: UnitTranslationsJSONData;
-    /**
-     * The number of decimals characters after dot for rounded numbers.
-     */
     protected readonly decimals: number = 4;
-    /**
-     * The number coefficient for math actions with numbers.
-     */
-     protected readonly factor: number = 10;
-    /**
-     * The number coefficients for exponentiation actions of a factor number.
-     */
+    protected readonly factor: number = 10;
+
+    /* tslint:disable: no-magic-numbers */
     protected readonly degree: number[] = [2, 3];
 
+    /* tslint:enable: no-magic-numbers */
     protected readyCallback(event?: Event): void {}
 
     protected init(): void {
         this.qtyInSalesUnitInput = <HTMLInputElement>
             this.getElementsByClassName(`${this.jsName}__sales-unit-quantity`)[0];
+
+        if (!this.qtyInSalesUnitInput) {
+            return;
+        }
+
         this.qtyInBaseUnitInput = <HTMLInputElement>
             this.getElementsByClassName(`${this.jsName}__base-unit-quantity`)[0];
         this.measurementUnitInput = <HTMLSelectElement>
             this.getElementsByClassName(`${this.jsName}__select-measurement-unit`)[0];
         this.addToCartButton = <HTMLButtonElement>
             this.getElementsByClassName(`${this.jsName}__add-to-cart-button`)[0];
-
         this.quantityBetweenUnits = <HTMLElement>
             this.getElementsByClassName(`${this.jsName}__quantity-between-units`)[0];
         this.minimumQuantity = <HTMLElement>
@@ -368,20 +324,13 @@ export default class MeasurementQuantitySelector extends Component {
     }
 
     protected getSalesUnitById(salesUnitId: number): SalesUnit {
-        const targetSalesUnits = this.salesUnits.filter(
-            (item: SalesUnit) => salesUnitId === item.id_product_measurement_sales_unit
-        );
-
-        return targetSalesUnits[0];
+        return this.salesUnits.find((item: SalesUnit) => salesUnitId === item.id_product_measurement_sales_unit);
     }
 
     protected getBaseSalesUnit(): SalesUnit {
-        const targetBaseUnits = this.salesUnits.filter(
-            (item: SalesUnit) =>
-                this.baseUnit.id_product_measurement_unit === item.product_measurement_unit.id_product_measurement_unit
+        return this.salesUnits.find((item: SalesUnit) =>
+            this.baseUnit.id_product_measurement_unit === item.product_measurement_unit.id_product_measurement_unit
         );
-
-        return targetBaseUnits[0];
     }
 
     protected getUnitName(key: string): string {

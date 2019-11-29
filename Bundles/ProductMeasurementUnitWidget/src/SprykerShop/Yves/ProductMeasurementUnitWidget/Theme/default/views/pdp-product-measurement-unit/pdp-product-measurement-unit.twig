@@ -1,27 +1,25 @@
 {% extends template('widget') %}
 
 {% define data = {
-    quantityOptions: _widget.quantityOptions,
-    minQuantityInBaseUnits: _widget.minQuantityInBaseUnits,
-    minQuantityInSalesUnits: _widget.minQuantityInSalesUnits,
-    baseUnit: _widget.baseUnit | default,
     salesUnits: _widget.salesUnits | default([]),
-    jsonScheme: _widget.jsonScheme | default(''),
-    salesUnitCount : _widget.salesUnits|length,
-    isAddToCartDisabled : _widget.isAddToCartDisabled | default(false),
+    quantityOptions: _widget.quantityOptions,
+    isAddToCartDisabled: _widget.isAddToCartDisabled | default(false),
+    baseUnit: _widget.baseUnit | default({}),
+    minQuantityInBaseUnits: _widget.minQuantityInBaseUnits | default('1'),
+    minQuantityInSalesUnits: _widget.minQuantityInSalesUnits | default('1'),
+    jsonScheme: _widget.jsonScheme | default,
 } %}
 
 {% block body %}
     {% include molecule('measurement-quantity-selector', 'ProductMeasurementUnitWidget') with {
         data: {
+            salesUnits: data.salesUnits,
             quantityOptions: data.quantityOptions,
+            isAddToCartDisabled: data.isAddToCartDisabled,
+            baseUnit: data.baseUnit,
+            json: data.jsonScheme,
             minQuantityInBaseUnits: data.minQuantityInBaseUnits,
             minQuantityInSalesUnits: data.minQuantityInSalesUnits,
-            baseUnit: data.baseUnit,
-            salesUnits: data.salesUnits | default([]),
-            salesUnitCount : data.salesUnits,
-            isAddToCartDisabled : data.isAddToCartDisabled,
-            json: data.jsonScheme,
         },
     } only %}
 {% endblock %}

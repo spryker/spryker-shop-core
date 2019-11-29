@@ -1,14 +1,13 @@
 {% extends model('component') %}
 
 {% define data = {
-    json: required,
-    quantityOptions: required,
-    minQuantityInBaseUnits: required,
-    minQuantityInSalesUnits: required,
-    baseUnit: required,
     salesUnits: required,
-    salesUnitCount : required,
-    isAddToCartDisabled : required,
+    quantityOptions: required,
+    isAddToCartDisabled: required | default(false),
+    baseUnit: {},
+    json: '',
+    minQuantityInBaseUnits: '',
+    minQuantityInSalesUnits: '',
 } %}
 
 {% define config = {
@@ -20,9 +19,8 @@
     json: data.json,
 } %}
 
-{% set hasProductMeasurementUnit = data.salesUnitCount >= 1 %}
+{% set hasProductMeasurementUnit = data.salesUnits | length >= 1 %}
 {% set disabled = data.isAddToCartDisabled %}
-
 
 {% block body %}
     {% if hasProductMeasurementUnit %}
@@ -40,13 +38,13 @@
     {% endif %}
 
     <div class="grid grid--bottom grid--justify">
-        <div class="col {% if hasProductMeasurementUnit %}col--sm-7{% else %}col--sm-5{% endif %}">
+        <div class="col {{ hasProductMeasurementUnit ? 'col--sm-7' : 'col--sm-5' }}">
             <label>
                 {{ 'cart.item_quantity' | trans }}
 
                 {% if hasProductMeasurementUnit %}
-                    <input class="{{ config.jsName }}__sales-unit-quantity input input--expand js-volume-price__quantity" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value"/>
-                    <input class="{{ config.jsName }}__base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
+                    <input class="{{ config.jsName }}__sales-unit-quantity input input--expand js-volume-price__quantity" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value">
+                    <input class="{{ config.jsName }}__base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity">
                 {% else %}
                     {% embed atom('select') with {
                         modifiers: ['expand'],
@@ -63,12 +61,11 @@
             </label>
         </div>
 
-        <div class="col {% if hasProductMeasurementUnit %}col--sm-4{% else %}col--sm-6{% endif %}">
+        <div class="col {{ hasProductMeasurementUnit ? 'col--sm-4' : 'col--sm-6' }}">
             {% if hasProductMeasurementUnit %}
                 <label>
                     {{ 'product.measurement.sales_unit' | trans }}
                     {% embed atom('select') with {
-                        class: '345',
                         modifiers: ['expand'],
                         attributes: {
                             name: 'id-product-measurement-sales-unit',
@@ -81,13 +78,13 @@
                         {% block selectClass %}{{ embed.jsName }}__select-measurement-unit{% endblock %}
                         {% block options %}
                             {% for salesUnit in embed.salesUnits %}
-                                <option value="{{ salesUnit.idProductMeasurementSalesUnit }}" {{ (salesUnit.isDefault) ? 'selected' : '' }}>{{ salesUnit.productMeasurementUnit.name | trans }}</option>
+                                <option value="{{ salesUnit.idProductMeasurementSalesUnit }}" {{ salesUnit.isDefault ? 'selected' }}>{{ salesUnit.productMeasurementUnit.name | trans }}</option>
                             {% endfor %}
                         {% endblock %}
                     {% endembed %}
                 </label>
             {% else %}
-                <button type="submit" class="{{ config.jsName }}__add-to-cart-button button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
+                <button type="submit" class="{{ config.jsName }}__add-to-cart-button button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' }} {{ qa('add-to-cart-button') }}>
                     {% include atom('icon') with {
                         data: {
                             name: 'cart-plus',
@@ -100,19 +97,17 @@
     </div>
 
     {% if hasProductMeasurementUnit %}
-        <div class="{{ config.jsName }}__measurement-unit-choice text-small is-hidden ">
+        <div class="{{ config.jsName }}__measurement-unit-choice text-small is-hidden">
             <hr>
 
-            <div class="measurement-unit-notifications">
-                <div class="{{ config.jsName }}__quantity-between-units is-hidden">
-                    <span>{{ "measurement_units.recommendation.between-units-info" | trans }} (<span class="{{ config.jsName }}__current-choice"></span>)</span>
-                </div>
-                <div class="{{ config.jsName }}__minimum-quantity is-hidden">
-                    <span>{{ "measurement_units.recommendation.min-violation" | trans }}</span>
-                </div>
-                <div class="{{ config.jsName }}__maximum-quantity is-hidden">
-                    <span>{{  "measurement_units.recommendation.max-violation" | trans }}</span>
-                </div>
+            <div class="{{ config.jsName }}__quantity-between-units is-hidden">
+                <span>{{ "measurement_units.recommendation.between-units-info" | trans }} (<span class="{{ config.jsName }}__current-choice"></span>)</span>
+            </div>
+            <div class="{{ config.jsName }}__minimum-quantity is-hidden">
+                <span>{{ "measurement_units.recommendation.min-violation" | trans }}</span>
+            </div>
+            <div class="{{ config.jsName }}__maximum-quantity is-hidden">
+                <span>{{ "measurement_units.recommendation.max-violation" | trans }}</span>
             </div>
 
             <div class="{{ config.jsName }}__measurement-unit-choices">
@@ -120,11 +115,10 @@
                 <ul class="list"></ul>
             </div>
         </div>
-    {% endif %}
 
-    {% if hasProductMeasurementUnit %}
         <hr>
-        <button type="submit" class="{{ config.jsName }}__add-to-cart-button button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
+
+        <button type="submit" class="{{ config.jsName }}__add-to-cart-button button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' }} {{ qa('add-to-cart-button') }}>
             {% include atom('icon') with {
                 data: {
                     name: 'cart-plus',
@@ -132,12 +126,12 @@
             } only %}
             {{ 'page.detail.add-to-cart' | trans }}
         </button>
+
+        {% set translations = [] %}
+        {% for key, salesUnit in data.salesUnits %}
+            {% set translations = translations | merge({(salesUnit.productMeasurementUnit.code) : (salesUnit.productMeasurementUnit.name | trans)}) %}
+        {% endfor %}
+
+        <script type="application/json" class="{{ config.jsName }}__measurement-unit-translation">{{ translations|json_encode|raw }}</script>
     {% endif %}
-
-    {% set translations = [] %}
-    {% for key, salesUnit in data.salesUnits %}
-        {% set translations = translations | merge({(salesUnit.productMeasurementUnit.code) : (salesUnit.productMeasurementUnit.name | trans)}) %}
-    {% endfor %}
-
-    <script type="application/json" class="{{ config.jsName }}__measurement-unit-translation">{{ translations|json_encode|raw }}</script>
 {% endblock %}

@@ -7,15 +7,12 @@
 
 {% define data = {
     cartItem: required,
-    quantitySalesUnit: required,
-    quantitySalesUnitPrecision: required,
-    hasQuantitySalesUnit: required,
+    quantitySalesUnit: '',
+    quantitySalesUnitPrecision: '',
 } %}
 
 {% block body %}
-    {% if data.hasQuantitySalesUnit %}
-        <small class="text-secondary">
-            [= {{ data.quantitySalesUnitPrecision }} {{ data.quantitySalesUnit.productMeasurementUnit.name | default | trans }}]
-        </small>
-    {% endif %}
+    <small class="text-secondary">
+        [= {{ data.quantitySalesUnitPrecision }} {{ data.quantitySalesUnit.productMeasurementUnit.name | default | trans }}]
+    </small>
 {% endblock %}
