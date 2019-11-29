@@ -1,7 +1,7 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
-    title: 'configurable_bundle_page.configurator' | trans,
+    title: _view.configurableBundleTemplateStorage.name | trans,
     form: _view.form,
     configurableBundleTemplateStorage: _view.configurableBundleTemplateStorage,
     selectedSlotId: _view.selectedSlotId | default(null),
@@ -13,11 +13,16 @@
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
         data: {
-            steps: [{
-                label: 'configurable_bundle_page.template_selection' | trans,
-                url: path('configurable-bundle/configurator/template-selection'),
-                withChevron: false,
-            }],
+            steps: [
+                {
+                    label: 'configurable_bundle_page.configurable_bundle_list' | trans,
+                    url: path('configurable-bundle/configurator/template-selection'),
+                },
+                {
+                    label: data.configurableBundleTemplateStorage.name | trans,
+                    withChevron: false,
+                },
+            ],
         },
     } only %}
 {% endblock %}

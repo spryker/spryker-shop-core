@@ -69,20 +69,22 @@
                                     {% set buttonModifiers = ['expand', 'success'] %}
 
                                     {% block form %}
-                                        {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
-                                            class: formClasses,
-                                            data: {
-                                                form: data.form.createView,
-                                                submitButtonText: 'configurable_bundle_page.configurator.add_to_cart' | trans,
-                                                submitButtonModifiers: buttonModifiers,
-                                                method: 'POST',
-                                                action: path(
-                                                    'configurable-bundle/configurator/add-to-cart', {
-                                                        'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
-                                                    }
-                                                ),
-                                            },
-                                        } only %}
+                                        {% if can('SeeAddToCartPermissionPlugin') %}
+                                            {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
+                                                class: formClasses,
+                                                data: {
+                                                    form: data.form.createView,
+                                                    submitButtonText: 'configurable_bundle_page.configurator.add_to_cart' | trans,
+                                                    submitButtonModifiers: buttonModifiers,
+                                                    method: 'POST',
+                                                    action: path(
+                                                        'configurable-bundle/configurator/add-to-cart', {
+                                                            'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
+                                                        }
+                                                    ),
+                                                },
+                                            } only %}
+                                        {% endif %}
                                     {% endblock %}
                                 {% endblock %}
                             </div>

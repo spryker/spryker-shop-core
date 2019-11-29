@@ -44,16 +44,18 @@
             <input name="{{ productSkuInputName }}" type="hidden" value="{{ data.product.sku }}">
 
             {% block unselectedButton %}
-                {% set buttonModifiers = ['expand'] %}
+                {% if not data.product.price is null %}
+                    {% set buttonModifiers = ['expand'] %}
 
-                {% block unselectedButtonItem %}
-                    {% include molecule('configurator-button', 'ConfigurableBundlePage') with {
-                        modifiers: buttonModifiers,
-                        data: {
-                            text: 'configurable_bundle_page.select' | trans,
-                        },
-                    } only %}
-                {% endblock %}
+                    {% block unselectedButtonItem %}
+                        {% include molecule('configurator-button', 'ConfigurableBundlePage') with {
+                            modifiers: buttonModifiers,
+                            data: {
+                                text: 'configurable_bundle_page.select' | trans,
+                            },
+                        } only %}
+                    {% endblock %}
+                {% endif %}
             {% endblock %}
         {% endif %}
     {% endblock %}

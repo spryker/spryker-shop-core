@@ -1,9 +1,20 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
-    title: 'configurable_bundle_page.configurator' | trans,
+    title: 'configurable_bundle_page.choose_bundle_to_configure' | trans,
     configurableBundleTemplates: _view.configurableBundleTemplates,
 } %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [{
+                label: 'configurable_bundle_page.configurable_bundle' | trans,
+                withChevron: false,
+            }],
+        },
+    } only %}
+{% endblock %}
 
 {% block content %}
     {% include molecule('template-list', 'ConfigurableBundlePage') with {

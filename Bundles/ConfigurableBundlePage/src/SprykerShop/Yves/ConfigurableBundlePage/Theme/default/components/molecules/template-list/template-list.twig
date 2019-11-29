@@ -11,10 +11,6 @@
 {% block body %}
     {% block title %}
         {% set titleClasses = 'spacing-bottom--big' %}
-
-        {% block titleItem %}
-            <h5 class="{{ titleClasses }}">{{ 'configurable_bundle_page.configurator.choose_template' | trans }}</h5>
-        {% endblock %}
     {% endblock %}
 
     {% block content %}
@@ -36,9 +32,9 @@
                                                     {% set titleClasses = config.name ~ '__item-title grid grid--center grid--middle spacing-bottom' %}
 
                                                     {% block templateTitleItem %}
-                                                        <a href="{{ slotsPageUrl }}" class="{{ titleClasses }}">
+                                                        <div class="{{ titleClasses }}">
                                                             {{ template.name | trans }}
-                                                        </a>
+                                                        </div>
                                                     {% endblock %}
                                                 {% endblock %}
 
