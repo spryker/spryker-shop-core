@@ -28,7 +28,7 @@
                             {% block item %}
                                 <li class="{{ listItemClasses }}">
                                     {% block listItemInner %}
-                                        {% set slotsPageUrl = path('configurable-bundle/configurator/slots', {'idConfigurableBundleTemplate': template.idConfigurableBundleTemplate }) %}
+                                        {% set slotsPageUrl = path('configurable-bundle/configurator/slots', {'idConfigurableBundleTemplate': template.fkConfigurableBundleTemplate }) %}
 
                                         {% block template %}
                                             <div class="box box--stretch">
