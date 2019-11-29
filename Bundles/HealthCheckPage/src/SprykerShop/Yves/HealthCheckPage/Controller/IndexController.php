@@ -30,8 +30,8 @@ class IndexController extends AbstractController
             ->setServices($request->get(static::KEY_HEALTH_CHECK_SERVICES));
 
         $healthCheckResponseTransfer = $this->getFactory()
-            ->getHealthCheckService()
-            ->checkYvesHealthCheck($healthCheckRequestTransfer);
+            ->getHealthCheckClient()
+            ->executeHealthCheck($healthCheckRequestTransfer);
 
         return new JsonResponse($healthCheckResponseTransfer->toArray());
     }

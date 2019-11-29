@@ -8,15 +8,15 @@
 namespace SprykerShop\Yves\HealthCheckPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\HealthCheckPage\Dependency\Service\HealthCheckPageToHealthCheckServiceInterface;
+use SprykerShop\Yves\HealthCheckPage\Dependency\Client\HealthCheckPageToHealthCheckClientInterface;
 
 class HealthCheckPageFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\HealthCheckPage\Dependency\Service\HealthCheckPageToHealthCheckServiceInterface
+     * @return \SprykerShop\Yves\HealthCheckPage\Dependency\Client\HealthCheckPageToHealthCheckClientInterface
      */
-    public function getHealthCheckService(): HealthCheckPageToHealthCheckServiceInterface
+    public function getHealthCheckClient(): HealthCheckPageToHealthCheckClientInterface
     {
-        return $this->getProvidedDependency(HealthCheckPageDependencyProvider::SERVICE_HEALTH_CHECK);
+        return $this->getProvidedDependency(HealthCheckPageDependencyProvider::CLIENT_HEALTH_CHECK);
     }
 }

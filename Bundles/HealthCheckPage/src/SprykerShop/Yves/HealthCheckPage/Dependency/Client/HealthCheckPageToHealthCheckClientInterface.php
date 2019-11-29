@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\HealthCheckPage\Dependency\Service;
+namespace SprykerShop\Yves\HealthCheckPage\Dependency\Client;
 
 use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 use Generated\Shared\Transfer\HealthCheckResponseTransfer;
 
-interface HealthCheckPageToHealthCheckServiceInterface
+interface HealthCheckPageToHealthCheckClientInterface
 {
     /**
      * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
      *
      * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
      */
-    public function checkYvesHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer;
+    public function executeHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer;
 }

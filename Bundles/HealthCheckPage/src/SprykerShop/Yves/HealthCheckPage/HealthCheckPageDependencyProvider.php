@@ -9,11 +9,11 @@ namespace SprykerShop\Yves\HealthCheckPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use SprykerShop\Yves\HealthCheckPage\Dependency\Service\HealthCheckPageToHealthCheckServiceBridge;
+use SprykerShop\Yves\HealthCheckPage\Dependency\Client\HealthCheckPageToHealthCheckClientBridge;
 
 class HealthCheckPageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SERVICE_HEALTH_CHECK = 'SERVICE_HEALTH_CHECK';
+    public const CLIENT_HEALTH_CHECK = 'CLIENT_HEALTH_CHECK';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -22,7 +22,7 @@ class HealthCheckPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container): Container
     {
-        $container = $this->addHealthCheckService($container);
+        $container = $this->addHealthCheckClient($container);
 
         return $container;
     }
@@ -32,11 +32,11 @@ class HealthCheckPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addHealthCheckService(Container $container): Container
+    protected function addHealthCheckClient(Container $container): Container
     {
-        $container->set(static::SERVICE_HEALTH_CHECK, function (Container $container) {
-            return new HealthCheckPageToHealthCheckServiceBridge(
-                $container->getLocator()->healthCheck()->service()
+        $container->set(static::CLIENT_HEALTH_CHECK, function (Container $container) {
+            return new HealthCheckPageToHealthCheckClientBridge(
+                $container->getLocator()->healthCheck()->client()
             );
         });
 
