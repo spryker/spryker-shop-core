@@ -44,6 +44,10 @@ class AgentPageSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
 
     protected const ROUTE_CHECK_PATH = '/agent/login_check';
 
+    /**
+     * This is used as route name and is internally converted to `/agent/logout`.
+     * `path('agent_logout')` can be used in templates to get the URL.
+     */
     protected const ROUTE_LOGOUT = 'agent_logout';
 
     /**
