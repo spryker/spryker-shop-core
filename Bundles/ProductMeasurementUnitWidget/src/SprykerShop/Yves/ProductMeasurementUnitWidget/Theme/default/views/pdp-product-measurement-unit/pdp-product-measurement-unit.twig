@@ -2,7 +2,7 @@
 
 {% define data = {
     salesUnits: _widget.salesUnits | default([]),
-    quantityOptions: _widget.quantityOptions,
+    quantityOptions: _widget.quantityOptions | default([]),
     isAddToCartDisabled: _widget.isAddToCartDisabled | default(false),
     baseUnit: _widget.baseUnit | default({}),
     minQuantityInBaseUnits: _widget.minQuantityInBaseUnits | default('1'),
