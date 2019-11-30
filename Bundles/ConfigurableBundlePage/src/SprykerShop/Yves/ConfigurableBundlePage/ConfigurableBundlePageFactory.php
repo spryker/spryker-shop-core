@@ -25,6 +25,8 @@ use SprykerShop\Yves\ConfigurableBundlePage\Reader\ConfigurableBundleTemplateSto
 use SprykerShop\Yves\ConfigurableBundlePage\Reader\ConfigurableBundleTemplateStorageReaderInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Reader\ProductConcreteReader;
 use SprykerShop\Yves\ConfigurableBundlePage\Reader\ProductConcreteReaderInterface;
+use SprykerShop\Yves\ConfigurableBundlePage\Sanitizer\ConfiguratorStateSanitizer;
+use SprykerShop\Yves\ConfigurableBundlePage\Sanitizer\ConfiguratorStateSanitizerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -72,6 +74,14 @@ class ConfigurableBundlePageFactory extends AbstractFactory
     public function createProductConcretePriceExpander(): ProductConcretePriceExpanderInterface
     {
         return new ProductConcretePriceExpander($this->getPriceProductStorageClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ConfigurableBundlePage\Sanitizer\ConfiguratorStateSanitizerInterface
+     */
+    public function createConfiguratorStateSanitizer(): ConfiguratorStateSanitizerInterface
+    {
+        return new ConfiguratorStateSanitizer();
     }
 
     /**
