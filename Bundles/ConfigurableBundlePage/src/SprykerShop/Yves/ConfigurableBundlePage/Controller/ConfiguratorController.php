@@ -311,9 +311,10 @@ class ConfiguratorController extends AbstractController
                 $this->addErrorMessage($quoteErrorTransfer->getMessage());
             }
 
-            return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_SLOTS, [
-                static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $request->attributes->getInt(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE),
-            ]);
+            $parameters = $request->request->all();
+            $parameters[static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE] = $idConfigurableBundleTemplate;
+
+            return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_SUMMARY, $parameters);
         }
 
         $this->addSuccessMessage(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_ADDED_TO_CART);
