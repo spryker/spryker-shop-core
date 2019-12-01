@@ -68,6 +68,10 @@
                                     {% set formClasses = 'spacing-x col col--sm-2' %}
                                     {% set buttonModifiers = ['expand', 'success'] %}
 
+                                    <a href="{{ path('configurable-bundle/configurator/template-selection') }}" class="button button--hollow">
+                                        {{ 'general.cancel.button' | trans }}
+                                    </a>
+
                                     {% block form %}
                                         {% if can('SeeAddToCartPermissionPlugin') %}
                                             {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
