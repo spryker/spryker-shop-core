@@ -9,15 +9,32 @@ namespace SprykerShop\Yves\ConfigurableBundlePage\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
-use Generated\Shared\Transfer\ConfiguredBundleItemRequestTransfer;
-use Generated\Shared\Transfer\ConfiguredBundleRequestTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\ConfiguredBundleItemTransfer;
+use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use SprykerShop\Yves\ConfigurableBundlePage\Expander\ItemExpanderInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Form\SlotStateForm;
 
 class ConfiguredBundleRequestMapper implements ConfiguredBundleRequestMapperInterface
 {
     protected const DEFAULT_QUANTITY = 1;
+
+    /**
+     * @var \SprykerShop\Yves\ConfigurableBundlePage\Expander\ItemExpanderInterface
+     */
+    protected $itemExpander;
+
+    /**
+     * @param \SprykerShop\Yves\ConfigurableBundlePage\Expander\ItemExpanderInterface $itemExpander
+     */
+    public function __construct(ItemExpanderInterface $itemExpander)
+    {
+        $this->itemExpander = $itemExpander;
+    }
 
     /**
      * @param array $formData
@@ -31,16 +48,23 @@ class ConfiguredBundleRequestMapper implements ConfiguredBundleRequestMapperInte
         ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer,
         CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
     ): CreateConfiguredBundleRequestTransfer {
-        $createConfiguredBundleRequestTransfer = new CreateConfiguredBundleRequestTransfer();
+        $createConfiguredBundleRequestTransfer->requireLocaleName();
 
-        $configuredBundleRequestTransfer = $this->getMappedConfiguredBundleRequestTransfer($configurableBundleTemplateStorageTransfer);
-        $createConfiguredBundleRequestTransfer->setConfiguredBundleRequest($configuredBundleRequestTransfer);
+        $configuredBundleTransfer = $this->getMappedConfiguredBundleTransfer($configurableBundleTemplateStorageTransfer);
+        $createConfiguredBundleRequestTransfer->setConfiguredBundle($configuredBundleTransfer);
 
-        return $this->setItemsToCreateConfiguredBundleRequestTransfer(
+        $createConfiguredBundleRequestTransfer = $this->setItemsToCreateConfiguredBundleRequestTransfer(
             $createConfiguredBundleRequestTransfer,
             $configurableBundleTemplateStorageTransfer->getSlots(),
             $formData
         );
+
+        $itemTransfers = $this->itemExpander->expandItemTransfers(
+            $createConfiguredBundleRequestTransfer->getItems(),
+            $createConfiguredBundleRequestTransfer->getLocaleName()
+        );
+
+        return $createConfiguredBundleRequestTransfer->setItems($itemTransfers);
     }
 
     /**
@@ -62,8 +86,8 @@ class ConfiguredBundleRequestMapper implements ConfiguredBundleRequestMapperInte
                 continue;
             }
 
-            $createConfiguredBundleRequestTransfer->addConfiguredBundleItemRequest(
-                $this->getMappedConfiguredBundleItemRequestTransfer($slotStateFormData, $configurableBundleTemplateSlotStorageTransfer)
+            $createConfiguredBundleRequestTransfer->addItem(
+                $this->getMappedItemTransfer($slotStateFormData, $configurableBundleTemplateSlotStorageTransfer)
             );
         }
 
@@ -73,13 +97,17 @@ class ConfiguredBundleRequestMapper implements ConfiguredBundleRequestMapperInte
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfiguredBundleRequestTransfer
+     * @return \Generated\Shared\Transfer\ConfiguredBundleTransfer
      */
-    protected function getMappedConfiguredBundleRequestTransfer(ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer): ConfiguredBundleRequestTransfer
+    protected function getMappedConfiguredBundleTransfer(ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer): ConfiguredBundleTransfer
     {
-        return (new ConfiguredBundleRequestTransfer())
-            ->setTemplateName($configurableBundleTemplateStorageTransfer->getName())
-            ->setTemplateUuid($configurableBundleTemplateStorageTransfer->getUuid())
+        $configurableBundleTransfer = (new ConfigurableBundleTemplateTransfer())->fromArray(
+            $configurableBundleTemplateStorageTransfer->toArray(),
+            true
+        );
+
+        return (new ConfiguredBundleTransfer())
+            ->setTemplate($configurableBundleTransfer)
             ->setQuantity(static::DEFAULT_QUANTITY);
     }
 
@@ -87,15 +115,20 @@ class ConfiguredBundleRequestMapper implements ConfiguredBundleRequestMapperInte
      * @param array $slotStateFormData
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer $configurableBundleTemplateSlotStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfiguredBundleItemRequestTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function getMappedConfiguredBundleItemRequestTransfer(
+    protected function getMappedItemTransfer(
         array $slotStateFormData,
         ConfigurableBundleTemplateSlotStorageTransfer $configurableBundleTemplateSlotStorageTransfer
-    ): ConfiguredBundleItemRequestTransfer {
-        return (new ConfiguredBundleItemRequestTransfer())
+    ): ItemTransfer {
+        $configurableBundleTemplateSlotTransfer = (new ConfigurableBundleTemplateSlotTransfer())->fromArray(
+            $configurableBundleTemplateSlotStorageTransfer->toArray(),
+            true
+        );
+
+        return (new ItemTransfer())
             ->setSku($slotStateFormData[SlotStateForm::FIELD_SKU])
-            ->setSlotUuid($configurableBundleTemplateSlotStorageTransfer->getUuid())
+            ->setConfiguredBundleItem((new ConfiguredBundleItemTransfer())->setSlot($configurableBundleTemplateSlotTransfer))
             ->setQuantity(static::DEFAULT_QUANTITY);
     }
 }

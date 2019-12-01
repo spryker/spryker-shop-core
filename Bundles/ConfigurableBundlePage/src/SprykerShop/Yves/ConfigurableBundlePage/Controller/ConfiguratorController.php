@@ -291,15 +291,16 @@ class ConfiguratorController extends AbstractController
             return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);
         }
 
+        $createConfiguredBundleRequestTransfer = (new CreateConfiguredBundleRequestTransfer())
+            ->setLocaleName($this->getLocale());
+
         $createConfiguredBundleRequestTransfer = $this->getFactory()
             ->createConfiguredBundleRequestMapper()
             ->mapDataToCreateConfiguredBundleRequestTransfer(
                 $formData,
                 $configurableBundleTemplateStorageTransfer,
-                new CreateConfiguredBundleRequestTransfer()
+                $createConfiguredBundleRequestTransfer
             );
-
-        $createConfiguredBundleRequestTransfer->setLocaleName($this->getLocale());
 
         $quoteResponseTransfer = $this->getFactory()
             ->getConfigurableBundleCartClient()
