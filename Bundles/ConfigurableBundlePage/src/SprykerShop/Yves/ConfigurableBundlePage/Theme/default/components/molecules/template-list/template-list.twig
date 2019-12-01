@@ -24,17 +24,37 @@
                             {% block item %}
                                 <li class="{{ listItemClasses }}">
                                     {% block listItemInner %}
-                                        {% set slotsPageUrl = path('configurable-bundle/configurator/slots', {'idConfigurableBundleTemplate': template.idConfigurableBundleTemplate }) %}
+                                        {% set slotsPageUrl = path('configurable-bundle/configurator/slots', {'idConfigurableBundleTemplate': template.fkConfigurableBundleTemplate }) %}
 
                                         {% block template %}
                                             <div class="box box--stretch">
                                                 {% block templateTitle %}
-                                                    {% set titleClasses = config.name ~ '__item-title grid grid--center grid--middle spacing-bottom' %}
+                                                    {% set isTitleImage = template.images is defined %}
+                                                    {% set titleAdditionalClass = not isTitleImage ? config.name ~ '__item-title--with-background' %}
+                                                    {% set titleClasses = config.name ~ '__item-title ' ~ titleAdditionalClass ~ ' grid grid--center grid--middle spacing-bottom' %}
 
                                                     {% block templateTitleItem %}
-                                                        <div class="{{ titleClasses }}">
-                                                            {{ template.name | trans }}
-                                                        </div>
+                                                        <a href="{{ slotsPageUrl }}" class="{{ titleClasses }}">
+                                                            {% block templateTitleItemInner %}
+                                                                {% if isTitleImage %}
+                                                                    {% set imageModifiers = ['full-width'] %}
+
+                                                                    {% block templateTitleImage %}
+                                                                        {% include atom('thumbnail') with {
+                                                                            modifiers: imageModifiers,
+                                                                            attributes: {
+                                                                                src: publicPath(template.images.0.externalUrlSmall),
+                                                                                alt: template.name | trans,
+                                                                            },
+                                                                        } only %}
+                                                                    {% endblock %}
+                                                                {% else %}
+                                                                    {% block templateTitleText %}
+                                                                        {{ template.name | trans }}
+                                                                    {% endblock %}
+                                                                {% endif %}
+                                                            {% endblock %}
+                                                        </a>
                                                     {% endblock %}
                                                 {% endblock %}
 

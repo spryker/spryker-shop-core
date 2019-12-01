@@ -11,8 +11,11 @@
 
         &__item-title {
             min-height: 9rem;
-            background: $setting-color-lighter;
             color: $setting-color-darkest;
+
+            &--with-background {
+                background: $setting-color-lighter;
+            }
         }
 
         @content;
