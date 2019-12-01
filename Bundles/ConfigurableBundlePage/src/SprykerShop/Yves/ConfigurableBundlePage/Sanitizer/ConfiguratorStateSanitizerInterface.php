@@ -7,18 +7,15 @@
 
 namespace SprykerShop\Yves\ConfigurableBundlePage\Sanitizer;
 
-use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
+use Generated\Shared\Transfer\ConfiguratorStateSanitizeRequestTransfer;
+use Generated\Shared\Transfer\ConfiguratorStateSanitizeResponseTransfer;
 
 interface ConfiguratorStateSanitizerInterface
 {
     /**
-     * @param array $configuratorStateFormData
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
+     * @param \Generated\Shared\Transfer\ConfiguratorStateSanitizeRequestTransfer $configuratorStateSanitizeRequestTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ConfiguratorStateSanitizeResponseTransfer
      */
-    public function sanitizeConfiguratorStateFormData(
-        array $configuratorStateFormData,
-        ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
-    ): array;
+    public function sanitizeConfiguratorStateFormData(ConfiguratorStateSanitizeRequestTransfer $configuratorStateSanitizeRequestTransfer): ConfiguratorStateSanitizeResponseTransfer;
 }

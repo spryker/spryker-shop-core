@@ -7,9 +7,11 @@
 
 namespace SprykerShop\Yves\ConfigurableBundlePage\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchRequestTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageRequestTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
+use Generated\Shared\Transfer\ConfiguratorStateSanitizeRequestTransfer;
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
@@ -81,7 +83,6 @@ class ConfiguratorController extends AbstractController
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = 'configurable_bundle_page.template_not_found';
     protected const GLOSSARY_KEY_INVALID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_COMBINATION = 'configurable_bundle_page.invalid_template_slot_combination';
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_ADDED_TO_CART = 'configurable_bundle_page.configurator.added_to_cart';
-    protected const GLOSSARY_KEY_ONE_OF_SLOTS_BECAME_UNAVAILABLE = 'configurable_bundle_page.configurator.one_of_slots_became_unavailable';
 
     /**
      * @return \Spryker\Yves\Kernel\View\View
@@ -222,21 +223,6 @@ class ConfiguratorController extends AbstractController
 
         $form = $this->getFactory()->getConfiguratorStateForm()->handleRequest($request);
 
-        $formData = $form->getData();
-        $sanitizedFormData = $this->getFactory()
-            ->createConfiguratorStateSanitizer()
-            ->sanitizeConfiguratorStateFormData($formData, $configurableBundleTemplateStorageTransfer);
-
-        if (count($formData[ConfiguratorStateForm::FIELD_SLOTS]) !== count($sanitizedFormData[ConfiguratorStateForm::FIELD_SLOTS])) {
-            $parameters = $request->query->all();
-            $parameters[$form->getName()][ConfiguratorStateForm::FIELD_SLOTS] = $sanitizedFormData[ConfiguratorStateForm::FIELD_SLOTS];
-            $parameters[static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE] = $idConfigurableBundleTemplate;
-
-            $this->addInfoMessage(static::GLOSSARY_KEY_ONE_OF_SLOTS_BECAME_UNAVAILABLE);
-
-            return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_SUMMARY, $parameters);
-        }
-
         if (!$this->isSummaryPageUnlocked($form)) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CONFIGURATOR_SUMMARY_PAGE_LOCKED);
 
@@ -248,6 +234,31 @@ class ConfiguratorController extends AbstractController
         $productViewTransfers = $this->getFactory()
             ->createProductConcreteReader()
             ->getProductConcretesBySkusAndLocale($this->extractProductConcreteSkus($form), $this->getLocale());
+
+        $configuratorStateSanitizeRequestTransfer = (new ConfiguratorStateSanitizeRequestTransfer())
+            ->setSlotStateFormsData($form->getData()[ConfiguratorStateForm::FIELD_SLOTS])
+            ->setConfigurableBundleTemplateStorage($configurableBundleTemplateStorageTransfer)
+            ->setProducts(new ArrayObject($productViewTransfers));
+
+        $configuratorStateSanitizeResponseTransfer = $this->getFactory()
+            ->createConfiguratorStateSanitizer()
+            ->sanitizeConfiguratorStateFormData($configuratorStateSanitizeRequestTransfer);
+
+        if ($configuratorStateSanitizeResponseTransfer->getIsSanitized()) {
+            foreach ($configuratorStateSanitizeResponseTransfer->getMessages() as $messageTransfer) {
+                $this->addErrorMessage(
+                    $this->getFactory()
+                        ->getGlossaryStorageClient()
+                        ->translate($messageTransfer->getValue(), $this->getLocale(), $messageTransfer->getParameters())
+                );
+            }
+
+            $parameters = $request->query->all();
+            $parameters[$form->getName()][ConfiguratorStateForm::FIELD_SLOTS] = $configuratorStateSanitizeResponseTransfer->getSanitizedSlotStateFormsData();
+            $parameters[static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE] = $idConfigurableBundleTemplate;
+
+            return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_SUMMARY, $parameters);
+        }
 
         return [
             'form' => $form,

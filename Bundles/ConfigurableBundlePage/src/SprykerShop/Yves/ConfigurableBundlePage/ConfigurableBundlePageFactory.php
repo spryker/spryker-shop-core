@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundleCartClientInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundlePageSearchClientInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundleStorageClientInterface;
+use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToPriceProductStorageClientInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToProductImageStorageClientInterface;
 use SprykerShop\Yves\ConfigurableBundlePage\Expander\ProductConcreteImageExpander;
@@ -141,5 +142,13 @@ class ConfigurableBundlePageFactory extends AbstractFactory
     public function getPriceProductStorageClient(): ConfigurableBundlePageToPriceProductStorageClientInterface
     {
         return $this->getProvidedDependency(ConfigurableBundlePageDependencyProvider::CLIENT_PRICE_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): ConfigurableBundlePageToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundlePageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }
