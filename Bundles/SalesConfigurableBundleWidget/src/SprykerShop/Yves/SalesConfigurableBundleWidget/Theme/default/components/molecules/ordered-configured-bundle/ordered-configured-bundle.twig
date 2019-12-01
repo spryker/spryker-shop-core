@@ -93,8 +93,8 @@
         </div>
     {% endblock %}
 
-    {% block configurableBundleCartNote %}
-        {% include molecule('readonly-bundled-cart-note', 'ConfigurableBundleCartNoteWidget') ignore missing with {
+    {% block configurableBundleNote %}
+        {% include molecule('readonly-bundled-note', 'ConfigurableBundleNoteWidget') ignore missing with {
             data: {
                 bundle: data.bundle,
             },

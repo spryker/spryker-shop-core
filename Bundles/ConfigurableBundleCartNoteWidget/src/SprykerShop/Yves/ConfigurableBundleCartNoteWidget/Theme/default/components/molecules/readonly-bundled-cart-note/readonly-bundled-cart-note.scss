@@ -1,9 +1,0 @@
-@mixin configurable-bundle-cart-note-widget-readonly-bundled-cart-note($name: '.readonly-bundled-cart-note') {
-    #{$name} {
-        &__title {
-            font-size: map-get($setting-font-size, 'small');
-        }
-
-        @content;
-    }
-}

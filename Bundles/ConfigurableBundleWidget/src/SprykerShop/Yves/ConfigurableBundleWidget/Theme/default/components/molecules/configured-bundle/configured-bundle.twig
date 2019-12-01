@@ -121,14 +121,14 @@
         {% endif %}
     {% endblock %}
 
-    {% block configurableBundleCartNote %}
+    {% block configurableBundleNote %}
         {% if data.isEditable %}
-            {% block editableConfigurableBundleCartNote %}
-                {% widget 'ConfiguredBundleCartNoteWidget' args [data.bundle, data.quote] only %}{% endwidget %}
+            {% block editableConfigurableBundleNote %}
+                {% widget 'ConfiguredBundleNoteWidget' args [data.bundle, data.quote] only %}{% endwidget %}
             {% endblock %}
         {% else %}
-            {% block notEditableConfigurableBundleCartNote %}
-                {% include molecule('readonly-bundled-cart-note', 'ConfigurableBundleCartNoteWidget') ignore missing with {
+            {% block notEditableConfigurableBundleNote %}
+                {% include molecule('readonly-bundled-note', 'ConfigurableBundleNoteWidget') ignore missing with {
                     data: {
                         bundle: data.bundle,
                     },
