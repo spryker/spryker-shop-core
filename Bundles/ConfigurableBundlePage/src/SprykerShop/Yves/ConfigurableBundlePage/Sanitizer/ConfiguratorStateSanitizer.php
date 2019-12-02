@@ -38,11 +38,6 @@ class ConfiguratorStateSanitizer implements ConfiguratorStateSanitizerInterface
             $configuratorStateSanitizeResponseTransfer
         );
 
-        $configuratorStateSanitizeResponseTransfer = $this->reorderProductViewTransfers(
-            $configuratorStateSanitizeRequestTransfer,
-            $configuratorStateSanitizeResponseTransfer
-        );
-
         $configuratorStateSanitizeResponseTransfer->setIsSanitized(
             (bool)$configuratorStateSanitizeResponseTransfer->getMessages()->count()
         );
@@ -66,6 +61,7 @@ class ConfiguratorStateSanitizer implements ConfiguratorStateSanitizerInterface
 
         $sanitizedSlotStateFormsData = [];
         $configurableBundleTemplateStorageTransfer = $configuratorStateSanitizeRequestTransfer->getConfigurableBundleTemplateStorage();
+        $productViewTransfers = $configuratorStateSanitizeRequestTransfer->getProducts();
 
         foreach ($configuratorStateSanitizeRequestTransfer->getSlotStateFormsData() as $idConfigurableBundleTemplateSlot => $slotStateFormData) {
             if (!$configurableBundleTemplateStorageTransfer->getSlots()->offsetExists($idConfigurableBundleTemplateSlot)) {
@@ -80,28 +76,6 @@ class ConfiguratorStateSanitizer implements ConfiguratorStateSanitizerInterface
                 continue;
             }
 
-            $sanitizedSlotStateFormsData[$idConfigurableBundleTemplateSlot] = $slotStateFormData;
-        }
-
-        return $configuratorStateSanitizeResponseTransfer->setSanitizedSlotStateFormsData($sanitizedSlotStateFormsData);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfiguratorStateSanitizeRequestTransfer $configuratorStateSanitizeRequestTransfer
-     * @param \Generated\Shared\Transfer\ConfiguratorStateSanitizeResponseTransfer $configuratorStateSanitizeResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\ConfiguratorStateSanitizeResponseTransfer
-     */
-    protected function sanitizeProducts(
-        ConfiguratorStateSanitizeRequestTransfer $configuratorStateSanitizeRequestTransfer,
-        ConfiguratorStateSanitizeResponseTransfer $configuratorStateSanitizeResponseTransfer
-    ): ConfiguratorStateSanitizeResponseTransfer {
-        $configuratorStateSanitizeResponseTransfer->requireSanitizedSlotStateFormsData();
-
-        $sanitizedSlotStateFormsData = [];
-        $productViewTransfers = $configuratorStateSanitizeRequestTransfer->getProducts();
-
-        foreach ($configuratorStateSanitizeResponseTransfer->getSanitizedSlotStateFormsData() as $idConfigurableBundleTemplateSlot => $slotStateFormData) {
             $sku = $slotStateFormData[SlotStateForm::FIELD_SKU];
 
             if (!$productViewTransfers->offsetExists($sku)) {
@@ -129,7 +103,7 @@ class ConfiguratorStateSanitizer implements ConfiguratorStateSanitizerInterface
      *
      * @return \Generated\Shared\Transfer\ConfiguratorStateSanitizeResponseTransfer
      */
-    protected function reorderProductViewTransfers(
+    protected function sanitizeProducts(
         ConfiguratorStateSanitizeRequestTransfer $configuratorStateSanitizeRequestTransfer,
         ConfiguratorStateSanitizeResponseTransfer $configuratorStateSanitizeResponseTransfer
     ): ConfiguratorStateSanitizeResponseTransfer {
