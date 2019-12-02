@@ -12,6 +12,7 @@ use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundleCartClientBridge;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundlePageSearchClientBridge;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundleStorageClientBridge;
+use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToGlossaryStorageClientBridge;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToPriceProductStorageClientBridge;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToProductImageStorageClientBridge;
 
@@ -22,6 +23,7 @@ class ConfigurableBundlePageDependencyProvider extends AbstractBundleDependencyP
     public const CLIENT_CONFIGURABLE_BUNDLE_CART = 'CLIENT_CONFIGURABLE_BUNDLE_CART';
     public const CLIENT_PRODUCT_IMAGE_STORAGE = 'CLIENT_PRODUCT_IMAGE_STORAGE';
     public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -36,6 +38,7 @@ class ConfigurableBundlePageDependencyProvider extends AbstractBundleDependencyP
         $container = $this->addConfigurableBundleCartClient($container);
         $container = $this->addProductImageStorageClient($container);
         $container = $this->addPriceProductStorageClient($container);
+        $container = $this->addGlossaryStorageClient($container);
 
         return $container;
     }
@@ -114,6 +117,22 @@ class ConfigurableBundlePageDependencyProvider extends AbstractBundleDependencyP
         $container->set(static::CLIENT_PRICE_PRODUCT_STORAGE, function (Container $container) {
             return new ConfigurableBundlePageToPriceProductStorageClientBridge(
                 $container->getLocator()->priceProductStorage()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addGlossaryStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
+            return new ConfigurableBundlePageToGlossaryStorageClientBridge(
+                $container->getLocator()->glossaryStorage()->client()
             );
         });
 
