@@ -77,7 +77,7 @@ class ConfiguratorController extends AbstractController
     /**
      * @see \SprykerShop\Yves\CatalogPage\CatalogPageConfig::CATALOG_PAGE_LIMIT
      */
-    protected const REQUEST_PARAM_ITEMS_PER_PAGE_VALUE = 10000;
+    protected const REQUEST_PARAM_ITEMS_PER_PAGE_VALUE = 1000;
 
     protected const GLOSSARY_KEY_CONFIGURATOR_SUMMARY_PAGE_LOCKED = 'configurable_bundle_page.configurator.summary_page_locked';
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = 'configurable_bundle_page.template_not_found';
