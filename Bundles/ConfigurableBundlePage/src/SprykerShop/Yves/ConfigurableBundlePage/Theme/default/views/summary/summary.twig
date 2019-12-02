@@ -10,11 +10,16 @@
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
         data: {
-            steps: [{
-                label: 'configurable_bundle_page.template_selection' | trans,
-                url: path('configurable-bundle/configurator/template-selection'),
-                withChevron: false,
-            }],
+            steps: [
+                {
+                    label: 'configurable_bundle_page.configurable_bundle_list' | trans,
+                    url: path('configurable-bundle/configurator/template-selection'),
+                },
+                {
+                    label: data.configurableBundleTemplateStorage.name | trans,
+                    withChevron: false,
+                },
+            ],
         },
     } only %}
 {% endblock %}
