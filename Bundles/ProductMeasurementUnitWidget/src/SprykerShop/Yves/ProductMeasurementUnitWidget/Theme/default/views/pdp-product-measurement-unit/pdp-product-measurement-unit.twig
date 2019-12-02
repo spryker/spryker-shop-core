@@ -2,10 +2,10 @@
 
 {% set quantityOptions = [] %}
 
-{% for i in 0..9 %}
+{% for i in 1..10 %}
     {% set quantityOptions = quantityOptions | merge([{
-        label: i + 1,
-        value: i + 1,
+        label: i,
+        value: i,
     }]) %}
 {% endfor %}
 
