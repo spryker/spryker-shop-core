@@ -66,15 +66,17 @@
     {% elsewidget 'SimilarProductsWidgetPlugin' args [data.product] only %} {# @deprecated Use SimilarProductsWidget instead. #}
     {% endwidget %}
 
-    {% if widgetExists('ProductCmsBlockWidgetPlugin') %}
-        {{ widget('ProductCmsBlockWidgetPlugin', data.product) }} {# @deprecated Use molecule('product-cms-block', 'CmsBlockWidget') instead. #}
-    {% else %}
-        {% include molecule('product-cms-block', 'CmsBlockWidget') ignore missing with {
-            class: 'box',
-            data: {
-                idProductAbstract: data.product.idProductAbstract
-            }
-        } only %}
-    {% endif %}
+    {% block cmsContent %}
+        {% if widgetExists('ProductCmsBlockWidgetPlugin') %}
+            {{ widget('ProductCmsBlockWidgetPlugin', data.product) }} {# @deprecated Use molecule('product-cms-block', 'CmsBlockWidget') instead. #}
+        {% else %}
+            {% include molecule('product-cms-block', 'CmsBlockWidget') ignore missing with {
+                class: 'box',
+                data: {
+                    idProductAbstract: data.product.idProductAbstract
+                }
+            } only %}
+        {% endif %}
+    {% endblock %}
 
 {% endblock %}
