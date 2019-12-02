@@ -1,12 +1,21 @@
 {% extends template('widget') %}
 
+{% set quantityOptions = [] %}
+
+{% for i in 0..9 %}
+    {% set quantityOptions = quantityOptions | merge([{
+        label: i + 1,
+        value: i + 1,
+    }]) %}
+{% endfor %}
+
 {% define data = {
     salesUnits: _widget.salesUnits | default([]),
-    quantityOptions: _widget.quantityOptions | default([]),
+    quantityOptions: _widget.quantityOptions | default(quantityOptions),
     isAddToCartDisabled: _widget.isAddToCartDisabled | default(false),
     baseUnit: _widget.baseUnit | default({}),
-    minQuantityInBaseUnits: _widget.minQuantityInBaseUnits | default('1'),
-    minQuantityInSalesUnits: _widget.minQuantityInSalesUnits | default('1'),
+    minQuantityInBaseUnits: _widget.minQuantityInBaseUnits | default(1),
+    minQuantityInSalesUnits: _widget.minQuantityInSalesUnits | default(1),
     jsonScheme: _widget.jsonScheme | default,
 } %}
 

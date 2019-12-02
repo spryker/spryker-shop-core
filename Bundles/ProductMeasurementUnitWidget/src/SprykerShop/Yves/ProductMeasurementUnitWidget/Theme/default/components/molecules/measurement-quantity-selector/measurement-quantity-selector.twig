@@ -2,8 +2,8 @@
 
 {% define data = {
     salesUnits: required,
-    quantityOptions: required,
-    isAddToCartDisabled: required | default(false),
+    quantityOptions: [],
+    isAddToCartDisabled: false,
     baseUnit: {},
     json: '',
     minQuantityInBaseUnits: '',
@@ -20,9 +20,11 @@
 } %}
 
 {% set hasProductMeasurementUnit = data.salesUnits | length >= 1 %}
-{% set disabled = data.isAddToCartDisabled %}
 
 {% block body %}
+    {% set leftColumnModifierClass = hasProductMeasurementUnit ? 'col--sm-7' : 'col--sm-5' %}
+    {% set rightColumnModifierClass = hasProductMeasurementUnit ? 'col--sm-4' : 'col--sm-6' %}
+
     {% if hasProductMeasurementUnit %}
         <ul class="text-small">
             {% for salesUnit in data.salesUnits %}
@@ -38,7 +40,7 @@
     {% endif %}
 
     <div class="grid grid--bottom grid--justify">
-        <div class="col {{ hasProductMeasurementUnit ? 'col--sm-7' : 'col--sm-5' }}">
+        <div class="col {{ leftColumnModifierClass }}">
             <label>
                 {{ 'cart.item_quantity' | trans }}
 
@@ -61,7 +63,7 @@
             </label>
         </div>
 
-        <div class="col {{ hasProductMeasurementUnit ? 'col--sm-4' : 'col--sm-6' }}">
+        <div class="col {{ rightColumnModifierClass }}">
             {% if hasProductMeasurementUnit %}
                 <label>
                     {{ 'product.measurement.sales_unit' | trans }}
@@ -84,7 +86,7 @@
                     {% endembed %}
                 </label>
             {% else %}
-                <button type="submit" class="{{ config.jsName }}__add-to-cart-button button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' }} {{ qa('add-to-cart-button') }}>
+                <button type="submit" class="{{ config.jsName }}__add-to-cart-button button button--success button--expand" data-init-single-click {{ data.isAddToCartDisabled ? 'disabled' }} {{ qa('add-to-cart-button') }}>
                     {% include atom('icon') with {
                         data: {
                             name: 'cart-plus',
@@ -118,7 +120,7 @@
 
         <hr>
 
-        <button type="submit" class="{{ config.jsName }}__add-to-cart-button button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' }} {{ qa('add-to-cart-button') }}>
+        <button type="submit" class="{{ config.jsName }}__add-to-cart-button button button--success button--expand" data-init-single-click {{ data.isAddToCartDisabled ? 'disabled' }} {{ qa('add-to-cart-button') }}>
             {% include atom('icon') with {
                 data: {
                     name: 'cart-plus',
