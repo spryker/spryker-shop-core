@@ -38,6 +38,13 @@ class ConfiguratorStateSanitizer implements ConfiguratorStateSanitizerInterface
             $configuratorStateSanitizeResponseTransfer
         );
 
+        if (count($configuratorStateSanitizeResponseTransfer->getSanitizedSlotStateFormsData()) > 1) {
+            $configuratorStateSanitizeResponseTransfer = $this->reorderProductViewTransfers(
+                $configuratorStateSanitizeRequestTransfer,
+                $configuratorStateSanitizeResponseTransfer
+            );
+        }
+
         $configuratorStateSanitizeResponseTransfer->setIsSanitized(
             (bool)$configuratorStateSanitizeResponseTransfer->getMessages()->count()
         );
@@ -116,5 +123,35 @@ class ConfiguratorStateSanitizer implements ConfiguratorStateSanitizerInterface
         }
 
         return $configuratorStateSanitizeResponseTransfer->setSanitizedSlotStateFormsData($sanitizedSlotStateFormsData);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfiguratorStateSanitizeRequestTransfer $configuratorStateSanitizeRequestTransfer
+     * @param \Generated\Shared\Transfer\ConfiguratorStateSanitizeResponseTransfer $configuratorStateSanitizeResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfiguratorStateSanitizeResponseTransfer
+     */
+    protected function reorderProductViewTransfers(
+        ConfiguratorStateSanitizeRequestTransfer $configuratorStateSanitizeRequestTransfer,
+        ConfiguratorStateSanitizeResponseTransfer $configuratorStateSanitizeResponseTransfer
+    ): ConfiguratorStateSanitizeResponseTransfer {
+        $slotStateFormsData = $configuratorStateSanitizeResponseTransfer->getSanitizedSlotStateFormsData();
+        $configurableBundleTemplateSlotStorageTransfers = $configuratorStateSanitizeRequestTransfer->getConfigurableBundleTemplateStorage()->getSlots();
+        $productViewTransfers = $configuratorStateSanitizeRequestTransfer->getProducts();
+
+        foreach ($configurableBundleTemplateSlotStorageTransfers as $configurableBundleTemplateSlotStorageTransfer) {
+            $idConfigurableBundleTemplateSlot = $configurableBundleTemplateSlotStorageTransfer->getIdConfigurableBundleTemplateSlot();
+
+            if (isset($slotStateFormsData[$idConfigurableBundleTemplateSlot])) {
+                $sku = $slotStateFormsData[$idConfigurableBundleTemplateSlot][SlotStateForm::FIELD_SKU];
+
+                $configuratorStateSanitizeResponseTransfer->getSanitizedProducts()->offsetSet(
+                    $idConfigurableBundleTemplateSlot,
+                    $productViewTransfers[$sku]
+                );
+            }
+        }
+
+        return $configuratorStateSanitizeResponseTransfer;
     }
 }

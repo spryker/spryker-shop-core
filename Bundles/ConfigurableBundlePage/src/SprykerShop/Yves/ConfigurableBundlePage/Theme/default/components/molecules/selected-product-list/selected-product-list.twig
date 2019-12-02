@@ -11,8 +11,10 @@
 } %}
 
 {% block body %}
-    {% for idSlot, slotForm in data.form.createView.slots %}
-        {% set sku = slotForm.vars.value.sku %}
+    {% set slotsForm = data.form.createView.slots %}
+
+    {% for idSlot, product in data.products %}
+        {% set sku = product.sku %}
 
         {% block productSection %}
             {% block header %}
@@ -49,9 +51,8 @@
             {% block product %}
                 {% include molecule('configurator-product', 'ConfigurableBundlePage') with {
                     data: {
-                        product: data.products[sku],
+                        product: product,
                         form: data.form.createView,
-                        name: data.products[sku].name,
                         selectedSlotId: null,
                         isActionActive: false,
                     },

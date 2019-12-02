@@ -66,6 +66,7 @@
 
     <transfer name="ConfiguratorStateSanitizeResponse">
         <property name="sanitizedSlotStateFormsData" type="array" singular="sanitizedSlotStateFormsData"/>
+        <property name="sanitizedProducts" type="ProductView[]" singular="sanitizedProduct"/>
         <property name="isSanitized" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
     </transfer>

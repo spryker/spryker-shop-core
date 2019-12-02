@@ -263,7 +263,7 @@ class ConfiguratorController extends AbstractController
         return [
             'form' => $form,
             'configurableBundleTemplateStorage' => $configurableBundleTemplateStorageTransfer,
-            'products' => $productViewTransfers,
+            'products' => $configuratorStateSanitizeResponseTransfer->getSanitizedProducts(),
         ];
     }
 
