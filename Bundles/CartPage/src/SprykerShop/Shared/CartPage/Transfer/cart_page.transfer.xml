@@ -45,10 +45,6 @@
         <property name="addToCartUrl" type="string"/>
     </transfer>
 
-    <transfer name="ProductConcreteAvailabilityRequest">
-        <property name="sku" type="string"/>
-    </transfer>
-
     <transfer name="CommentThread">
         <property name="idCommentThread" type="int"/>
         <property name="ownerType" type="string"/>

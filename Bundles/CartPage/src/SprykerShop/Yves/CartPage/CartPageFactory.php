@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CartPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToQuoteClientInterface;
@@ -125,14 +124,6 @@ class CartPageFactory extends AbstractFactory
     public function getAvailabilityStorageClient(): CartPageToAvailabilityStorageClientInterface
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_AVAILABILITY_STORAGE);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface
-     */
-    public function getAvailabilityClient(): CartPageToAvailabilityClientInterface
-    {
-        return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_AVAILABILITY);
     }
 
     /**
