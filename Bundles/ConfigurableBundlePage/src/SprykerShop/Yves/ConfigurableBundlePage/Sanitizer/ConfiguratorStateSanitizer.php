@@ -38,12 +38,10 @@ class ConfiguratorStateSanitizer implements ConfiguratorStateSanitizerInterface
             $configuratorStateSanitizeResponseTransfer
         );
 
-        if (count($configuratorStateSanitizeResponseTransfer->getSanitizedSlotStateFormsData()) > 1) {
-            $configuratorStateSanitizeResponseTransfer = $this->reorderProductViewTransfers(
-                $configuratorStateSanitizeRequestTransfer,
-                $configuratorStateSanitizeResponseTransfer
-            );
-        }
+        $configuratorStateSanitizeResponseTransfer = $this->reorderProductViewTransfers(
+            $configuratorStateSanitizeRequestTransfer,
+            $configuratorStateSanitizeResponseTransfer
+        );
 
         $configuratorStateSanitizeResponseTransfer->setIsSanitized(
             (bool)$configuratorStateSanitizeResponseTransfer->getMessages()->count()
