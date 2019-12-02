@@ -1,4 +1,4 @@
-namespace: SprykerShopTest\Yves\ShopCmsSlot
+namespace: SprykerShopTest\Yves\CmsSlotBlockWidget
 
 paths:
     tests: .
@@ -14,8 +14,9 @@ coverage:
 suites:
     Yves:
         path: .
-        class_name: ShopCmsSlotYvesTester
+        class_name: CmsSlotBlockWidgetYvesTester
         modules:
             enabled:
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Yves\Testify\Helper\FactoryHelper

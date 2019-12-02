@@ -8,6 +8,11 @@
 namespace SprykerShopTest\Yves\ShopCmsSlot;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\CmsSlotContentResponseBuilder;
+use Generated\Shared\DataBuilder\CmsSlotStorageBuilder;
+use Generated\Shared\Transfer\CmsSlotContentResponseTransfer;
+use Generated\Shared\Transfer\CmsSlotContextTransfer;
+use Generated\Shared\Transfer\CmsSlotStorageTransfer;
 
 /**
  * Inherited Methods
@@ -29,7 +34,44 @@ class ShopCmsSlotYvesTester extends Actor
 {
     use _generated\ShopCmsSlotYvesTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotContentResponseTransfer
+     */
+    public function getCmsSlotContentResponseTransfer(array $seedData = []): CmsSlotContentResponseTransfer
+    {
+        return (new CmsSlotContentResponseBuilder($seedData))->build();
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotStorageTransfer
+     */
+    public function getCmsSlotStorageTransfer(array $seedData = []): CmsSlotStorageTransfer
+    {
+        return (new CmsSlotStorageBuilder($seedData))->build();
+    }
+
+    /**
+     * @param string $cmsSlotKey
+     * @param array $providedData
+     * @param string[] $requiredKeys
+     * @param string[] $autoFilledKeys
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotContextTransfer
+     */
+    public function getCmsSlotContextTransfer(
+        string $cmsSlotKey,
+        array $providedData,
+        array $requiredKeys,
+        array $autoFilledKeys
+    ): CmsSlotContextTransfer {
+        return (new CmsSlotContextTransfer())
+            ->setCmsSlotKey($cmsSlotKey)
+            ->setProvidedData($providedData)
+            ->setRequiredKeys($requiredKeys)
+            ->setAutoFilledKeys($autoFilledKeys);
+    }
 }
