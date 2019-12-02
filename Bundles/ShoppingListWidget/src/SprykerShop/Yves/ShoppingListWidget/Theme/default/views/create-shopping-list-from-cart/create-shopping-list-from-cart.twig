@@ -1,24 +1,18 @@
 {% extends template('widget') %}
 
-{% if _widget is defined %}
-    {% set viewForm = _widget.form %}
-{% else %}
-    {% set viewForm = _view.form %}
-{% endif %}
-
 {% define data = {
-    form: viewForm,
+    form: _widget.form,
     formOptions: {
         action: url('shopping-list/create-from-cart'),
         attr: {
-            novalidate: 'novalidate'
-        }
+            novalidate: 'novalidate',
+        },
     },
-    labels: {
-        formLabel: 'cart.add-to-shopping-list.form' | trans,
-        submitLabel: 'cart.add-to-shopping-list' | trans
-    },
-    isVisible: _widget.isVisible
+    formTitle: 'cart.add-to-shopping-list.form' | trans,
+    submitButton: 'cart.add-to-shopping-list' | trans,
+    isVisible: _widget.isVisible,
+    backUrl: '',
+    isLabelHidden: true,
 } %}
 
 {% block template %}
@@ -26,34 +20,80 @@
 {% endblock %}
 
 {% block body %}
+    {% set labelOptions = data.isLabelHidden ? {label: false} : {} %}
 
     {{ form_start(data.form, data.formOptions) }}
+        {% block formInner %}
+            {% block content %}
+                <div class="grid grid--bottom">
+                    {% block title %}
+                        <h5>{{ data.formTitle }}</h5>
+                    {% endblock %}
 
-        <div class="grid grid--bottom">
-            <h5>{{data.labels.formLabel}}</h5>
-            <div class="col col--sm-12">
-                {% include molecule('toggle-select-form', 'ShoppingListWidget') with {
-                    data: {
-                        attribute: attribute(data.form.children, 'idShoppingList'),
-                        selectAttributes: {
-                            'target': 'js-add-new-shopping-list',
-                            'class-to-toggle': 'is-hidden'
-                        }
-                    }
-                } only %}
-            </div>
-            <div class="col col--sm-12 js-add-new-shopping-list spacing-y">
-                {{ form_row(attribute(data.form.children, 'newShoppingListName')) }}
-            </div>
-        </div>
+                    {% block shoppingListDropDown %}
+                        <div class="col col--sm-12">
+                            {% block shoppingListDropDownInner %}
+                                {% include molecule('toggle-select-form', 'ShoppingListWidget') with {
+                                    data: {
+                                        attribute: attribute(data.form.children, 'idShoppingList'),
+                                        labelOptions: labelOptions,
+                                        selectAttributes: {
+                                            'target': 'js-add-new-shopping-list',
+                                            'class-to-toggle': 'is-hidden',
+                                        },
+                                    },
+                                } only %}
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
 
-        <div class="form-field grid grid--middle grid--right">
-            <button type="submit" class="button button--expand button--success" data-qa="submit-button">
-                {{ data.labels.submitLabel | trans }}
-            </button>
-        </div>
+                    {% block field %}
+                        <div class="col col--sm-12 js-add-new-shopping-list spacing-top">
+                            {% block fieldInner %}
+                                {{ form_row(attribute(
+                                    data.form.children, 'newShoppingListName'),
+                                    labelOptions
+                                ) }}
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+                </div>
+            {% endblock %}
 
-        {{ form_errors(data.form) }}
+            {% set submitButtonClasses = "button button--expand button--success" %}
+            {% set backButtonClasses = "button button--secondary button--hollow" %}
+
+            {% block actions %}
+                <div class="spacing-top">
+                    {% block actionsInner %}
+                        {% if data.backUrl %}
+                            {% block backButton %}
+                                <a href="{{ data.backUrl }}" class="{{ backButtonClasses }}" data-qa="cancel-button">
+                                    {% block backButtonInner %}
+                                        {% include atom('icon') with {
+                                            modifiers: ['small'],
+                                            data: {
+                                                name: 'chevron-left',
+                                            },
+                                        } only %}
+                                        {{- 'general.back.button' | trans -}}
+                                    {% endblock %}
+                                </a>
+                            {% endblock %}
+                        {% endif %}
+
+                        {% block submitButton %}
+                            <button type="submit" class="{{ submitButtonClasses }}" data-qa="submit-button">
+                                {{ data.submitButton }}
+                            </button>
+                        {% endblock %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+            {% block formErrors %}
+                {{ form_errors(data.form) }}
+            {% endblock %}
+        {% endblock %}
     {{ form_end(data.form) }}
-
 {% endblock %}

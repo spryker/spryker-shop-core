@@ -2,26 +2,41 @@
 
 {% define config = {
     name: 'shopping-list-navigation',
-    tag: 'nav'
+    tag: 'nav',
 } %}
 
 {% define data = {
     activeShoppingListId: 0,
-    shoppingListCollection: required
+    shoppingListCollection: required,
 } %}
 
-{%- macro isActive(idShoppingList, activeShoppingListId) -%}
-    {%- if idShoppingList == activeShoppingListId -%}menu__item--active{%- endif -%}
-{%- endmacro -%}
-
-{%- import _self as macros -%}
+{% block component %}
+    {% if data.shoppingListCollection | length %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
 
 {% block body %}
-    {% if data.shoppingListCollection|length %}
-        <ul class="nested vertical menu">
-            {% for shoppingList in data.shoppingListCollection %}
-                <li class="menu__item {{ config.name }}__item {{macros.isActive(shoppingList.idShoppingList, data.activeShoppingListId)}}"><a href="{{ path('shopping-list/details', { idShoppingList: (shoppingList.idShoppingList ) })  }}">{{ shoppingList.name }}</a></li>
-            {% endfor %}
+
+    {% block list %}
+        <ul class="menu">
+            {% block listInner %}
+                {% for shoppingList in data.shoppingListCollection %}
+                    {% set activeClass = shoppingList.idShoppingList == data.activeShoppingListId ? 'menu__item--active' %}
+
+                    {% block item %}
+                        <li class="menu__item {{ config.name }}__item {{ activeClass }}">
+                            {% block itemInner %}
+                                <a href="{{ path('shopping-list/details', {idShoppingList: (shoppingList.idShoppingList)}) }}">
+                                    {%- block linkInner -%}
+                                        {{ shoppingList.name }}
+                                    {%- endblock -%}
+                                </a>
+                            {% endblock %}
+                        </li>
+                    {% endblock %}
+                {% endfor %}
+            {% endblock %}
         </ul>
-    {% endif %}
+    {% endblock %}
 {% endblock %}

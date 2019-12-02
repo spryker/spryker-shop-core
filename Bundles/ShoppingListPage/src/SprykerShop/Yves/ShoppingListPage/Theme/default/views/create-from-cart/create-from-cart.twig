@@ -4,7 +4,7 @@
     cart: _view.cart,
     backUrl: app.request.headers.get('referer') | default(url('shopping-list')),
     title: 'customer.account.shopping_list.create_from_cart.title' | trans,
-    activePage: 'shoppingList'
+    activePage: 'shoppingList',
 } %}
 
 {% block breadcrumbs %}
@@ -17,14 +17,36 @@
                 },
                 {
                     label: 'customer.account.shopping_list.shopping_cart' | trans,
-                }
-            ]
-        }
+                },
+            ],
+        },
     } only %}
 {% endblock %}
 
 {% block customerContent %}
     <div class="box">
-        {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] only %}{% endwidget %}
+        {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] with {
+            data: {
+                formTitle: 'customer.account.shopping_list.create_from_cart.form_title' | trans({
+                    '%cart_name%' : data.cart.name,
+                }),
+                backUrl: data.backUrl,
+                isLabelHidden: false,
+            },
+        }  only %}
+            {% block title %}
+                <h5 class="spacing-bottom">{{ data.formTitle }}</h5>
+            {% endblock %}
+
+            {% block actions %}
+                <div class="spacing-top spacing-top--big text-right">
+                    {% set submitButtonClasses = "button button--success" %}
+
+                    {% block actionsInner %}
+                        {{ parent() }}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        {% endwidget %}
     </div>
 {% endblock %}

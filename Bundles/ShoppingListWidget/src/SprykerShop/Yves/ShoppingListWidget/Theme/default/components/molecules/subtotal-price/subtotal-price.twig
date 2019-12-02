@@ -1,21 +1,36 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'subtotal-price'
+    name: 'subtotal-price',
 } %}
 
 {% define data = {
-    amount: required
+    amount: required,
+    currencyIsoCode: null,
+    title: 'customer.account.shopping_list.subtotal' | trans,
 } %}
 
 {% block body %}
     <div class="grid grid--justify">
-        <h6 class="col">{{ 'customer.account.shopping_list.subtotal' | trans }}</h6>
-        {% include molecule('price') with {
-            class: 'col',
-            data: {
-                amount: data.amount
-            }
-        } only %}
+        {% block content %}
+            {% set titleClasses = 'col' %}
+            {% set priceClasses = 'col' %}
+
+            {% block title %}
+                <h6 class="{{ titleClasses }}">
+                    {{- data.title -}}
+                </h6>
+            {% endblock %}
+
+            {% block price %}
+                {% include molecule('money-price') with {
+                    class: priceClasses,
+                    data: {
+                        amount: data.amount,
+                        currencyIsoCode: data.currencyIsoCode,
+                    },
+                } only %}
+            {% endblock %}
+        {% endblock %}
     </div>
 {% endblock %}

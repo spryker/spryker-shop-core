@@ -2,7 +2,7 @@
 
 {% define config = {
     name: 'toggle-select-form',
-    tag: 'toggle-select-form'
+    tag: 'toggle-select-form',
 } %}
 
 {% define data = {
@@ -10,14 +10,12 @@
     selectAttributes: {
         'data-select-trigger': '',
         'target': required,
-        'class-to-toggle': required
-    }
+        'class-to-toggle': required,
+    },
+    labelOptions: {},
 } %}
 
-
-{%- block body -%}
-
-    {{ form_row(data.attribute,  {'attr': data.selectAttributes}) }}
-
-{%- endblock -%}
+{% block body %}
+    {{ form_row(data.attribute, data.labelOptions | merge({'attr': data.selectAttributes})) }}
+{% endblock %}
 

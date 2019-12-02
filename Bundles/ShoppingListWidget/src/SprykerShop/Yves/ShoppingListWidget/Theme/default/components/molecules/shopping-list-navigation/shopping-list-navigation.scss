@@ -1,4 +1,4 @@
-@mixin shopping-list-page-shopping-list-navigation($name: '.shopping-list-navigation') {
+@mixin shopping-list-widget-shopping-list-navigation($name: '.shopping-list-navigation') {
     #{$name} {
         &__item {
             overflow: hidden;

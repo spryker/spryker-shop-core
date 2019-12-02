@@ -1,41 +1,65 @@
 {% extends template('widget') %}
 
 {% define data = {
-    shoppingListCollection: _widget.shoppingListCollection
+    shoppingListCollection: _widget.shoppingListCollection,
 } %}
 
 {% block body %}
-    <a href="{{ path('shopping-list') }}">
-        {{ 'shopping_list.shopping_list' | trans }}
+    {% block navLink %}
+        <a href="{{ path('shopping-list') }}">
+            {% block navLinkInner %}
+                {{ 'shopping_list.shopping_list' | trans }}
 
-        {% include atom('icon') with {
-            data: {
-                name: 'th-list'
-            }
-        } only %}
-    </a>
-    <ul class="menu menu--wide text-left shop-list-item__list">
-        {% if data.shoppingListCollection.shoppingLists | length %}
-            {% for shoppingList in data.shoppingListCollection.shoppingLists %}
-                <li class="menu__item">
-                    {% include molecule('shop-list-item', 'ShoppingListWidget') with {
-                        data: {
-                            shoppingList: shoppingList
-                        }
-                    } only %}
-                </li>
-            {% endfor %}
-        {% else %}
-            <li class="menu__item">
-                <span class="no-items no-shopping-lists">
-                    {{ 'shopping_list.no_lists_created' | trans }}
-                </span>
-            </li>
-        {% endif %}
-        <li class="menu__item">
-            <a href="{{ path('shopping-list') }}" class="button">
-                {{ 'shopping_list.create_new_list' | trans }}
-            </a>
-        </li>
-    </ul>
+                {% include atom('icon') with {
+                    data: {
+                        name: 'th-list',
+                    },
+                } only %}
+            {% endblock %}
+        </a>
+    {% endblock %}
+
+    {% block list %}
+        <ul class="menu menu--wide text-left shop-list-item__list">
+            {% block listInner %}
+                {% block loopItems %}
+                    {% for shoppingList in data.shoppingListCollection.shoppingLists %}
+                        {% block loopItem %}
+                            <li class="menu__item">
+                                {% block loopItemInner %}
+                                    {% include molecule('shop-list-item', 'ShoppingListWidget') with {
+                                        data: {
+                                            shoppingList: shoppingList,
+                                        },
+                                    } only %}
+                                {% endblock %}
+                            </li>
+                        {% endblock %}
+                    {% endfor %}
+
+                    {% if not data.shoppingListCollection.shoppingLists | length %}
+                        {% block listEmptyItem %}
+                            <li class="menu__item">
+                                {% block listEmptyItemInner %}
+                                    <span class="no-items no-shopping-lists">
+                                        {{ 'shopping_list.no_lists_created' | trans }}
+                                    </span>
+                                {% endblock %}
+                            </li>
+                        {% endblock %}
+                    {% endif %}
+                {% endblock %}
+
+                {% block listItem %}
+                    <li class="menu__item">
+                        {% block listItemInner %}
+                            <a href="{{ path('shopping-list') }}" class="button">
+                                {{ 'shopping_list.create_new_list' | trans }}
+                            </a>
+                        {% endblock %}
+                    </li>
+                {% endblock %}
+            {% endblock %}
+        </ul>
+    {% endblock %}
 {% endblock %}
