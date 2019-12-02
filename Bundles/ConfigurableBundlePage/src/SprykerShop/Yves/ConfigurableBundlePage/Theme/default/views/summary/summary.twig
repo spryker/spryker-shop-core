@@ -1,7 +1,7 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
-    title: 'configurable_bundle_page.configurator.summary' | trans,
+    title: _view.configurableBundleTemplateStorage.name | trans,
     form: _view.form,
     configurableBundleTemplateStorage: _view.configurableBundleTemplateStorage,
     products: _view.products,
