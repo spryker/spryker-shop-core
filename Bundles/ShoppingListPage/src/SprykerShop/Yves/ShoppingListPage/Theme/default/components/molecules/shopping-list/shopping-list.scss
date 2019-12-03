@@ -1,4 +1,4 @@
-@mixin shopping-list-page-shopping-list-table($name: '.shopping-list-table') {
+@mixin shopping-list-page-shopping-list($name: '.shopping-list') {
     #{$name} {
         width: 100%;
 

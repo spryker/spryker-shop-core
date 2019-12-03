@@ -5,7 +5,7 @@
     backUrl: app.request.headers.get('referer') | default(url('shopping-list')),
     shoppingList: _view.shoppingList,
     idShoppingList: _view.shoppingList.idShoppingList,
-    shoppingListName: _view.shoppingList.name
+    shoppingListName: _view.shoppingList.name,
 } %}
 
 {% block breadcrumbs %}
@@ -25,9 +25,9 @@
                 },
                 {
                     label: 'customer.account.shopping_list.overview.warning' | trans,
-                }
-            ]
-        }
+                },
+            ],
+        },
     } only %}
 {% endblock %}
 
@@ -37,41 +37,63 @@
     {% endwidget %}
 {% endblock %}
 
-{% block customerContent %}
-    <div class="box">
+{% block customerContentInner %}
+    {% block generalTitle %}
         <h5 class="spacing-bottom">
-            {% include atom('icon') with {
-                modifiers: ['big'],
-                data: {
-                    name: 'action-warning'
-                }
-            } only %}
-            {{ "customer.account.shopping_list.overview.warning" | trans }}
+            {% block generalTitleInner %}
+                {% include atom('icon') with {
+                    modifiers: ['big'],
+                    data: {
+                        name: 'action-warning',
+                    },
+                } only %}
+                {{- "customer.account.shopping_list.overview.warning" | trans -}}
+            {% endblock %}
         </h5>
+    {% endblock %}
 
+    {% block separator %}
         <hr class="box__separator">
+    {% endblock %}
 
+    {% block text %}
         <div class="spacing-bottom">
-            {{ "shopping_list_page.dismiss_confirmation.trying_to_dismiss" | trans }}
+            {{- "shopping_list_page.dismiss_confirmation.trying_to_dismiss" | trans -}}
         </div>
+    {% endblock %}
 
+    {% block shoppingListName %}
         <div class="spacing-bottom spacing-bottom--big">
             <strong>{{ data.shoppingListName }}</strong>
         </div>
+    {% endblock %}
 
+    {% block actions %}
         <div class="float-right">
-            <a href="{{ data.backUrl }}" class="button button--secondary button--hollow">
-                {% include atom('icon') with {
-                    modifiers: ['small'],
-                    data: {
-                        name: 'chevron-left'
-                    }
-                } only %}
-                {{ "general.cancel.button" | trans }}
-            </a>
-            <a href="{{ url('shopping-list/dismiss', { 'idShoppingList': data.idShoppingList }) }}" class="button button--alert">
-                {{ "customer.account.shopping_list.overview.dismiss" | trans }}
-            </a>
+            {% block actionsInner %}
+                {% set backButtonClasses = 'button button--secondary button--hollow' %}
+                {% set dismissButtonClasses = 'button button--alert' %}
+
+                {% block backButton %}
+                    <a href="{{ data.backUrl }}" class="{{ backButtonClasses }}">
+                        {% block backButtonIcon %}
+                            {% include atom('icon') with {
+                                modifiers: ['small'],
+                                data: {
+                                    name: 'chevron-left',
+                                },
+                            } only %}
+                        {% endblock %}
+                        {{- "general.cancel.button" | trans -}}
+                    </a>
+                {% endblock %}
+
+                {% block dismissButton %}
+                    <a href="{{ url('shopping-list/dismiss', { 'idShoppingList': data.idShoppingList }) }}" class="{{ dismissButtonClasses }} data-init-single-click">
+                        {{- "customer.account.shopping_list.overview.dismiss" | trans -}}
+                    </a>
+                {% endblock %}
+            {% endblock %}
         </div>
-    </div>
+    {% endblock %}
 {% endblock %}

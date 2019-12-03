@@ -1,7 +1,7 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'shopping-list-message'
+    name: 'shopping-list-message',
 } %}
 
 {% define data = {
@@ -9,61 +9,134 @@
     backUrl: required,
     idShoppingList: required,
     sharedCompanyUsers: required,
-    sharedCompanyBusinessUnits: required
+    sharedCompanyBusinessUnits: required,
 } %}
 
 {% block body %}
-    <h5 class="{{ config.name }}__title spacing-bottom">
-        {% include atom('icon') with {
-            modifiers: ['big'],
-            data: {
-                name: 'action-warning'
-            }
-        } only %}
-        {{ 'customer.account.shopping_list.delete.warning' | trans }}
-    </h5>
-    <p class="{{ config.name }}__name spacing-y spacing-y--small">
-        {{ 'customer.account.shopping_list.delete.you_are_trying_to_delete_shopping_list' | trans({
-            '%link%': url('shopping-list/details', {'idShoppingList': data.idShoppingList}),
-            '%name%': data.title
-        }) | raw }}
-    </p>
+    {% block title %}
+        <h5 class="{{ config.name }}__title spacing-bottom">
+            {% block titleInner %}
+                {% set titleIconName = 'action-warning' %}
+                {% set titleIconModifiers = ['big'] %}
+
+                {% block titleIcon %}
+                    {% include atom('icon') with {
+                        modifiers: titleIconModifiers,
+                        data: {
+                            name: titleIconName,
+                        },
+                    } only %}
+                {% endblock %}
+                {{ 'customer.account.shopping_list.delete.warning' | trans }}
+            {% endblock %}
+        </h5>
+    {% endblock %}
+
+    {% set messageClasses = config.name ~ '__text spacing-y spacing-y--small' %}
+
+    {% block message %}
+        <p class="{{ messageClasses }}">
+            {% block messageInner %}
+                {{ 'customer.account.shopping_list.delete.you_are_trying_to_delete_shopping_list' | trans({
+                    '%link%': url('shopping-list/details', {'idShoppingList': data.idShoppingList}),
+                    '%name%': data.title
+                }) | raw }}
+            {% endblock %}
+        </p>
+    {% endblock %}
+
     {% if data.sharedCompanyUsers.count or data.sharedCompanyBusinessUnits.count %}
-        <p class="spacing-y spacing-y--small spacing-bottom spacing-bottom--big">
-            {{ 'customer.account.shopping_list.delete.it_belongs_to_follow' | trans }}
-        </p>
+        {% block sharedInformation %}
+            {% set sharedInformationTitleClasses = 'spacing-y spacing-y--small spacing-bottom spacing-bottom--big' %}
 
-        {% if data.sharedCompanyBusinessUnits.count %}
-            <b>{{ 'company.account.business_unit' | trans }}:</b>
-            <ul class="list">
-                {% for sharedCompanyBusinessUnit in data.sharedCompanyBusinessUnits %}
-                    <li class="list__item">{{ sharedCompanyBusinessUnit.name }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+            {% block sharedInformationTitle %}
+                <p class="{{ sharedInformationTitleClasses }}">
+                    {{- 'customer.account.shopping_list.delete.it_belongs_to_follow' | trans -}}
+                </p>
+            {% endblock %}
 
-        <br>
+            {% if data.sharedCompanyBusinessUnits.count %}
+                {% block businessUnitsTitle %}
+                    <strong>{{ 'company.account.business_unit' | trans }}:</strong>
+                {% endblock %}
 
-        {% if data.sharedCompanyUsers.count %}
-            <b>{{ 'company.account.company_user' | trans }}:</b>
-            <ul class="list">
-                {% for sharedCompanyUser in data.sharedCompanyUsers %}
-                    <li class="list__item">{{ sharedCompanyUser.customer.firstName ~ ' ' ~  sharedCompanyUser.customer.lastName }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+                {% block businessUnitsList %}
+                    <ul class="list">
+                        {% block businessUnitsListInner %}
+                            {% set businessUnitsListItemClasses = 'list__item' %}
 
-        <br>
+                            {% for sharedCompanyBusinessUnit in data.sharedCompanyBusinessUnits %}
+                                {% block businessUnitsListItem %}
+                                    <li class="{{ businessUnitsListItemClasses }}">
+                                        {{- sharedCompanyBusinessUnit.name -}}
+                                    </li>
+                                {% endblock %}
+                            {% endfor %}
+                        {% endblock %}
+                    </ul>
+                {% endblock %}
+            {% endif %}
 
-        <p>
-            <strong>
-                {{ 'customer.account.shopping_list.delete.it_will_be_deleted_from_all_of_them' | trans }}
-            </strong>
-        </p>
+            {% block linebreak %}
+                <br>
+            {% endblock %}
+
+            {% if data.sharedCompanyUsers.count %}
+                {% block companyUsersTitle %}
+                    <strong>{{ 'company.account.company_user' | trans }}:</strong>
+                {% endblock %}
+
+                {% block companyUsersList %}
+                    <ul class="list">
+                        {% block companyUsersListInner %}
+                            {% set companyUsersListItemClasses = 'list__item' %}
+
+                            {% for sharedCompanyUser in data.sharedCompanyUsers %}
+                                {% block companyUsersListItem %}
+                                    <li class="{{ companyUsersListItemClasses }}">
+                                        {{- sharedCompanyUser.customer.firstName ~ ' ' ~  sharedCompanyUser.customer.lastName -}}
+                                    </li>
+                                {% endblock %}
+                            {% endfor %}
+                        {% endblock %}
+                    </ul>
+                {% endblock %}
+            {% endif %}
+
+            {% block linebreakSecondary %}
+                <br>
+            {% endblock %}
+
+            {% set sharedMessageClasses = '' %}
+
+            {% block sharedMessage %}
+                <p>
+                    {% block sharedMessageInner %}
+                        <strong class="{{ sharedMessageClasses }}">
+                            {{- 'customer.account.shopping_list.delete.it_will_be_deleted_from_all_of_them' | trans -}}
+                        </strong>
+                    {% endblock %}
+                </p>
+        {% endblock %}
     {% endif %}
-    <div>
-        <a href="{{ data.backUrl }}" class="button button--hollow">{{ 'general.cancel.button' | trans }}</a>
-        <a data-init-single-click href="{{ url('shopping-list/delete', {'idShoppingList': data.idShoppingList}) }}"
-           class="button button--alert spacing-left">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
-    </div>
+
+    {% block buttonsWrap %}
+        <div>
+            {% block buttons %}
+                {% set backButtonClasses = 'button button--hollow' %}
+                {% set deleteButtonClasses = 'button button--alert spacing-left' %}
+
+                {% block backButton %}
+                    <a href="{{ data.backUrl }}" class="{{ backButtonClasses }}">{{ 'general.cancel.button' | trans }}</a>
+                {% endblock %}
+
+                {% block deleteButton %}
+                    <a href="{{ url('shopping-list/delete', {'idShoppingList': data.idShoppingList}) }}"
+                       class="{{ deleteButtonClasses }}" data-init-single-click>
+                        {{- 'customer.account.shopping_list.overview.delete' | trans -}}
+                    </a>
+                {% endblock %}
+            {% endblock %}
+        </div>
+    {% endblock %}
 {% endblock %}

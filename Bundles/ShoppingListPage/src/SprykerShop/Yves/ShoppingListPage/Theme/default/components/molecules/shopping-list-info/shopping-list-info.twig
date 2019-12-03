@@ -1,46 +1,82 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'shopping-list-info'
+    name: 'shopping-list-info',
 } %}
 
 {% define data = {
-    shoppingList: required
+    shoppingList: required,
+    withShared: true,
 } %}
 
 {% block body %}
-
     {% set hasWritePermission = can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
 
-    <div class="grid">
-        <div class="col col--sm-12 col--md-6 col--lg-4">
-            <b>{{ 'customer.account.shopping_list.overview.owner' | trans }}</b>: {{ data.shoppingList.owner }}
-        </div>
-        <div class="col col--sm-12 col--md-6 col--lg-4">
-            <b>{{ 'customer.account.shopping_list.access' | trans }}</b>:
+    {% block content %}
+        <div class="grid">
+            {% block inner %}
+                {% block owner %}
+                    <div class="col col--sm-12 col--md-6 col--lg-4">
+                        {% block ownerInner %}
+                            {% block ownerTitle %}
+                                <strong>{{ 'customer.account.shopping_list.overview.owner' | trans }}:</strong>
+                            {% endblock %}
+                            {{ data.shoppingList.owner }}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
 
-            {% include molecule('shopping-list-permission', 'ShoppingListPage') with {
-                data: {
-                    hasWritePermission: hasWritePermission
-                }
-            } only %}
+                {% block access %}
+                    <div class="col col--sm-12 col--md-6 col--lg-4">
+                        {% block accessInner %}
+                            {% block accessTitle %}
+                                <strong>{{ 'customer.account.shopping_list.access' | trans }}:</strong>
+                            {% endblock %}
 
+                            {% set shoppingListPermissionModifiers = [] %}
+
+                            {% block shoppingListPermission %}
+                                {% include molecule('shopping-list-permission', 'ShoppingListPage') with {
+                                    modifiers: shoppingListPermissionModifiers,
+                                    data: {
+                                        hasWritePermission: hasWritePermission,
+                                    },
+                                } only %}
+                            {% endblock %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+
+                {% block sharedWrap %}
+                    {% if data.withShared %}
+                        {% block shared %}
+                            <div class="col col--sm-12 col--md-6 col--lg-4">
+                                {% block sharedInner %}
+                                    {% block sharedTitle %}
+                                        <strong>{{ 'customer.account.shopping_list.overview.shared_with' | trans }}:</strong>
+                                    {% endblock %}
+
+                                    {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
+                                        {% block sharedLink %}
+                                            <a href="{{ url('shopping-list/share', { idShoppingList: data.shoppingList.idShoppingList }) }}">
+                                                {{ data.shoppingList.sharedCompanyUsers.count ~ ' ' ~ 'company.account.company_user' | trans }},
+                                                {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ 'company.account.business_unit' | trans }}
+                                            </a>
+                                        {% endblock %}
+                                    {% else %}
+                                        {% block sharedText %}
+                                            <span>
+                                                {{ data.shoppingList.sharedCompanyUsers.count ~ ' ' ~ 'company.account.company_user' | trans }},
+                                                {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ 'company.account.business_unit' | trans }}
+                                            </span>
+                                        {% endblock %}
+                                    {% endif %}
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
+                    {% endif %}
+                {% endblock %}
+            {% endblock %}
         </div>
-        {% block sharedBlock %}
-            <div class="col col--sm-12 col--md-6 col--lg-4">
-                <b>{{ 'customer.account.shopping_list.overview.shared_with' | trans }}</b>:
-                {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
-                    <a href="{{ url('shopping-list/share', { idShoppingList: data.shoppingList.idShoppingList }) }}">
-                        {{ data.shoppingList.sharedCompanyUsers.count ~ ' ' ~ 'company.account.company_user' | trans }},
-                        {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ 'company.account.business_unit' | trans }}
-                    </a>
-                {% else %}
-                    <span>
-                        {{ data.shoppingList.sharedCompanyUsers.count ~ ' ' ~ 'company.account.company_user' | trans }},
-                        {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ 'company.account.business_unit' | trans }}
-                    </span>
-                {% endif %}
-            </div>
-        {% endblock %}
-    </div>
+    {% endblock %}
 {% endblock %}

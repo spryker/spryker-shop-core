@@ -5,7 +5,7 @@
     backUrl: _view.backUrl,
     shoppingList: _view.shoppingList,
     sharedCompanyUsers: _view.sharedCompanyUsers,
-    sharedCompanyBusinessUnits: _view.sharedCompanyBusinessUnits
+    sharedCompanyBusinessUnits: _view.sharedCompanyBusinessUnits,
 } %}
 
 {% block breadcrumbs %}
@@ -18,13 +18,13 @@
                 },
                 {
                     label: 'customer.account.shopping_list' | trans,
-                    url: url('shopping-list')
+                    url: url('shopping-list'),
                 },
                 {
                     label: 'customer.account.shopping_list.overview.warning' | trans,
-                }
-            ]
-        }
+                },
+            ],
+        },
     } only %}
 {% endblock %}
 
@@ -34,15 +34,17 @@
     {% endwidget %}
 {% endblock %}
 
+{% set shoppingListMessageClasses = 'box' %}
+
 {% block customerContent %}
     {% include molecule('shopping-list-message', 'ShoppingListPage') with {
-        class: 'box',
+        class: shoppingListMessageClasses,
         data: {
             title: data.title,
             backUrl: data.backUrl,
             idShoppingList: data.shoppingList.idShoppingList,
             sharedCompanyUsers: data.sharedCompanyUsers,
-            sharedCompanyBusinessUnits: data.sharedCompanyBusinessUnits
-        }
+            sharedCompanyBusinessUnits: data.sharedCompanyBusinessUnits,
+        },
     } only %}
 {% endblock %}

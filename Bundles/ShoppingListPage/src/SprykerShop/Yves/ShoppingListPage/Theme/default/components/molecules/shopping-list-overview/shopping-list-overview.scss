@@ -1,4 +1,4 @@
-@mixin shopping-list-page-shopping-list-overview-table($name: '.shopping-list-overview-table') {
+@mixin shopping-list-page-shopping-list-overview($name: '.shopping-list-overview') {
     #{$name} {
         &__name {
             overflow: hidden;

@@ -1,11 +1,11 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'shopping-list-product-quick-add'
+    name: 'shopping-list-product-quick-add',
 } %}
 
 {% define data = {
-    activeShoppingListId: required
+    activeShoppingListId: required,
 } %}
 
 {% block body %}
@@ -15,8 +15,8 @@
         'shopping-list/quick-add-item',
         false,
         {
-            'idShoppingList': data.activeShoppingListId
-        }
+            'idShoppingList': data.activeShoppingListId,
+        },
     ] only %}
     {% endwidget %}
 {% endblock %}

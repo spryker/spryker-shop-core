@@ -1,0 +1,95 @@
+{% extends template('page-blank') %}
+
+{% define data = {
+    shoppingList: _view.shoppingListOverview.shoppingList,
+    shoppingListItems: _view.shoppingListItems,
+    barcodeGeneratorPlugin: _view.barcodeGeneratorPlugin | default(null),
+    title: _view.shoppingListOverview.shoppingList.name | default,
+} %}
+
+{% block meta %}
+    <meta charset="utf-8">
+{% endblock %}
+
+{% block headStyles %}
+    <style type="text/css">
+        .shopping-list-title th,
+        .shopping-list-title td,
+        .shopping-list-items th,
+        .shopping-list-items td {
+            border: 1px solid black;
+        }
+    </style>
+{% endblock %}
+
+{% block headScripts %}{% endblock %}
+
+{% block body %}
+    <table class="shopping-list-title">
+        <tbody>
+            <tr>
+                <td>{{ 'customer.account.print_shopping_list.title.shopping_list_id' | trans }}</td>
+                <td>{{ data.shoppingList.idShoppingList }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'customer.account.print_shopping_list.title.shopping_list_name' | trans }}</td>
+                <td>{{ data.title }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br><br>
+
+    <table class="shopping-list-items">
+        <tbody>
+            {% set productBarcodeWidgetExists = null %}
+            {% set isNotesSupported = null %}
+
+            {% for item in data.shoppingListItems %}
+                {% if productBarcodeWidgetExists is null %}
+                    {% set productBarcodeWidget = findWidget('ProductBarcodeWidget', [item, data.barcodeGeneratorPlugin])
+                        | default(findWidget('ProductBarcodeWidgetPlugin', [item, data.barcodeGeneratorPlugin])) %} {# @deprecated Use ProductBarcodeWidget instead. #}
+                    {% set productBarcodeWidgetExists = productBarcodeWidget is not null %}
+                {% endif %}
+
+                {% if isNotesSupported is null %}
+                    {% set shoppingListItemNoteWidget = findWidget('ShoppingListItemNoteWidget', [item.shoppingListItem])
+                        | default(findWidget('ShoppingListItemNoteWidgetPlugin', [item.shoppingListItem])) %} {# @deprecated Use ShoppingListItemNoteWidget instead. #}
+                    {% set isNotesSupported = shoppingListItemNoteWidget is not null %}
+                {% endif %}
+                <tr>
+                    {% widget productBarcodeWidget only %}
+                        {% block body %}
+                            <td>{{ parent() }}</td>
+                        {% endblock %}
+                    {% endwidget %}
+                    <td>{{ item.sku }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>
+                        {% if item.prices.DEFAULT is defined %}
+                            {{ item.prices.DEFAULT | money }}
+                        {% endif %}
+                    </td>
+                    {% if isNotesSupported %}
+                        <td>{{ item.shoppingListItem.shoppingListItemNote.note }}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+        <thead>
+            <tr>
+                {% if productBarcodeWidgetExists %}
+                    <th>{{ 'customer.account.print_shopping_list.table.barcode' | trans }}</th>
+                {% endif %}
+                <th>{{ 'customer.account.print_shopping_list.table.product_sku' | trans }}</th>
+                <th>{{ 'customer.account.print_shopping_list.table.product_name' | trans }}</th>
+                <th>{{ 'customer.account.print_shopping_list.table.default_price' | trans }}</th>
+                {% if isNotesSupported %}
+                    <th>{{ 'customer.account.print_shopping_list.table.note' | trans }}</th>
+                {% endif %}
+            </tr>
+        </thead>
+    </table>
+{% endblock %}
+
+{% block footerScripts %} {% endblock %}

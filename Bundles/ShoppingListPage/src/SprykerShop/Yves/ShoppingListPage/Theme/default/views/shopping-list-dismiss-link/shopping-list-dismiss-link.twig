@@ -2,13 +2,17 @@
 
 {% define data = {
     idShoppingList: _widget.shoppingList.idShoppingList,
-    isOwner: _widget.isOwner
+    isOwner: _widget.isOwner,
 } %}
 
 {% block body %}
     {% if data.isOwner == false %}
-    <a class="spacing-left spacing-left--small" href="{{ url('shopping-list/dismiss-confirm', { idShoppingList: data.idShoppingList }) }}">
-        {{ 'customer.account.shopping_list.overview.dismiss' | trans }}
-    </a>
+        {% set linkClasses = 'spacing-left spacing-left--small' %}
+
+        {% block link %}
+            <a class="{{ linkClasses }}" href="{{ url('shopping-list/dismiss-confirm', { idShoppingList: data.idShoppingList }) }}" data-init-single-click>
+                {{- 'customer.account.shopping_list.overview.dismiss' | trans -}}
+            </a>
+        {% endblock %}
     {% endif %}
 {% endblock %}

@@ -194,7 +194,7 @@ class ShoppingListController extends AbstractShoppingListController
         return $this->view(
             $response,
             [],
-            '@ShoppingListPage/views/shopping-list/print-shopping-list.twig'
+            '@ShoppingListPage/views/print-shopping-list/print-shopping-list.twig'
         );
     }
 

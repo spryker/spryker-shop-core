@@ -6,7 +6,7 @@
     idShoppingList: _view.idShoppingList,
     shoppingList: _view.shoppingList,
     sharedCompanyUsers: _view.shoppingList.sharedCompanyUsers,
-    sharedCompanyBusinessUnits: _view.shoppingList.sharedCompanyBusinessUnits
+    sharedCompanyBusinessUnits: _view.shoppingList.sharedCompanyBusinessUnits,
 } %}
 
 {% block breadcrumbs %}
@@ -19,13 +19,13 @@
                 },
                 {
                     label: 'customer.account.shopping_list' | trans,
-                    url: url('shopping-list')
+                    url: url('shopping-list'),
                 },
                 {
                     label: 'customer.account.shopping_list.share.from.share' | trans,
-                }
-            ]
-        }
+                },
+            ],
+        },
     } only %}
 {% endblock %}
 
@@ -35,63 +35,74 @@
     {% endwidget %}
 {% endblock %}
 
+{% set formClasses = 'box' %}
+{% set formButtonClasses = 'button button--success' %}
+
 {% block customerContent %}
-    <div class="form box" data-qa="component form">
-        <div class="shopping-list-info shopping-list-info--reset">
-            <h5 class="shopping-list-info__name spacing-bottom spacing-bottom--big">{{ 'customer.account.shopping_list.share.from.share.title' | trans({
-                '%name%': data.title
-            })}}</h5>
-        </div>
+    {% embed molecule('form') with {
+        class: formClasses,
+        data: {
+            form: data.shareShoppingListForm,
+            title: 'customer.account.shopping_list.share.from.share.title' | trans({'%name%': data.title}),
+            submit: {
+                text: 'customer.account.shopping_list.share.from.share' | trans,
+                class: formButtonClasses,
+                enable: true,
+            },
+        },
+        embed: {
+            sharedCompanyBusinessUnits: data.sharedCompanyBusinessUnits,
+            sharedCompanyUsers: data.sharedCompanyUsers,
+        },
+    } only %}
+        {% block title %}
+            <h5 class="text-break spacing-bottom spacing-bottom--big">
+                {{- data.title -}}
+            </h5>
+        {% endblock %}
 
-        {{ form_start(data.shareShoppingListForm) }}
-
-        <div class="form__container">
-            <div class="form__fields grid grid--bottom">
-                <div class="form__field col col--sm-12">
-                    <div class="grid">
-                        <div class="col col--sm-12 col--lg-3 spacing-y">
-                            <b>{{ 'customer.account.shopping_list.share.select_company_business_unit' | trans }}</b>
-                        </div>
-                        <div class="col col--sm-12 col--lg-9">
-                            {% include molecule('share-list', 'ShoppingListPage') with {
-                                data: {
-                                    shareUnits: data.sharedCompanyBusinessUnits,
-                                    shareForm: data.shareShoppingListForm.sharedCompanyBusinessUnits
-                                }
-                            } only %}
-                        </div>
+        {% block fields %}
+            <div class="{{ config.name }}__field col col--sm-12">
+                <div class="grid">
+                    <div class="col col--sm-12 col--lg-3 spacing-y">
+                        <b>{{ 'customer.account.shopping_list.share.select_company_business_unit' | trans }}</b>
                     </div>
-                </div>
-
-                <div class="form__field col col--sm-12">
-                    <hr class="box__separator">
-                </div>
-
-                <div class="form__field col col--sm-12">
-                    <div class="grid">
-                        <div class="col col--sm-12 col--lg-3 spacing-y">
-                            <b>{{ 'customer.account.shopping_list.share.select_company_user' | trans }}</b>
-                        </div>
-                        <div class="col col--sm-12 col--lg-9">
-                            {% include molecule('share-list', 'ShoppingListPage') with {
-                                data: {
-                                    shareUnits: data.sharedCompanyUsers,
-                                    shareForm: data.shareShoppingListForm.sharedCompanyUsers
-                                }
-                            } only %}
-                        </div>
+                    <div class="col col--sm-12 col--lg-9">
+                        {% include molecule('share-list', 'ShoppingListPage') with {
+                            data: {
+                                shareUnits: embed.sharedCompanyBusinessUnits,
+                                shareForm: data.form.sharedCompanyBusinessUnits,
+                            },
+                        } only %}
                     </div>
                 </div>
             </div>
 
-            <div class="form__actions spacing-x">
-                <button type="submit" class="form__action button button--success" data-qa="submit-button">
-                    {{ 'customer.account.shopping_list.share.from.share' | trans }}
-                </button>
+            <div class="{{ config.name }}__field col col--sm-12">
+                <hr class="box__separator">
             </div>
-        </div>
 
-        {{ form_end(data.shareShoppingListForm) }}
-    </div>
+            <div class="{{ config.name }}__field col col--sm-12">
+                <div class="grid">
+                    <div class="col col--sm-12 col--lg-3 spacing-y">
+                        <b>{{ 'customer.account.shopping_list.share.select_company_user' | trans }}</b>
+                    </div>
+                    <div class="col col--sm-12 col--lg-9">
+                        {% include molecule('share-list', 'ShoppingListPage') with {
+                            data: {
+                                shareUnits: embed.sharedCompanyUsers,
+                                shareForm: data.form.sharedCompanyUsers,
+                            },
+                        } only %}
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
 
+        {% block actions %}
+            <div class="spacing-x">
+                {{ parent() }}
+            </div>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}
