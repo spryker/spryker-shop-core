@@ -7,18 +7,16 @@
 
 namespace SprykerShop\Yves\ShopCmsSlot;
 
-use RuntimeException;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotClientBridge;
 use SprykerShop\Yves\ShopCmsSlot\Dependency\Client\ShopCmsSlotToCmsSlotStorageClientBridge;
-use SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface;
 
 class ShopCmsSlotDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CMS_SLOT = 'CLIENT_CMS_SLOT';
     public const CLIENT_CMS_SLOT_STORAGE = 'CLIENT_CMS_SLOT_STORAGE';
-    public const PLUGIN_CMS_SLOT_CONTENT = 'PLUGIN_CMS_SLOT_CONTENT';
+    public const PLUGINS_CMS_SLOT_CONTENT = 'PLUGINS_CMS_SLOT_CONTENT';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -41,8 +39,8 @@ class ShopCmsSlotDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsSlotContentPlugin(Container $container): Container
     {
-        $container->set(static::PLUGIN_CMS_SLOT_CONTENT, function () {
-            return $this->getCmsSlotContentPlugin();
+        $container->set(static::PLUGINS_CMS_SLOT_CONTENT, function () {
+            return $this->getCmsSlotContentPlugins();
         });
 
         return $container;
@@ -77,14 +75,10 @@ class ShopCmsSlotDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @throws \RuntimeException
-     *
-     * @return \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface
+     * @return \SprykerShop\Yves\ShopCmsSlotExtension\Dependency\Plugin\CmsSlotContentPluginInterface[]
      */
-    protected function getCmsSlotContentPlugin(): CmsSlotContentPluginInterface
+    protected function getCmsSlotContentPlugins(): array
     {
-        throw new RuntimeException(
-            'You must implement getCmsSlotContentPlugin() by returning the instance of CmsSlotContentPluginInterface to use the \'cms_slot\' widget.'
-        );
+        return [];
     }
 }
