@@ -124,7 +124,7 @@ class BusinessOnBehalfStatusWidget extends AbstractWidget
             $companyBusinessUnitName = $companyUserTransfer->getCompanyBusinessUnit()->getName();
         }
 
-        $this->addParameter(static::PARAMETER_COMPANY_NAME, $companyBusinessUnitName);
+        $this->addParameter(static::PARAMETER_COMPANY_BUSINESS_UNIT_NAME, $companyBusinessUnitName);
 
         return $this;
     }
