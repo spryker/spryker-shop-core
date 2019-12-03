@@ -11,7 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchRequestTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageRequestTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
-use Generated\Shared\Transfer\ConfiguratorStateSanitizeRequestTransfer;
+use Generated\Shared\Transfer\ConfiguratorStateTransfer;
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
@@ -235,17 +235,17 @@ class ConfiguratorController extends AbstractController
             ->createProductConcreteReader()
             ->getProductConcretesBySkusAndLocale($this->extractProductConcreteSkus($form), $this->getLocale());
 
-        $configuratorStateSanitizeRequestTransfer = (new ConfiguratorStateSanitizeRequestTransfer())
+        $configuratorStateTransfer = (new ConfiguratorStateTransfer())
             ->setSlotStateFormsData($form->getData()[ConfiguratorStateForm::FIELD_SLOTS])
             ->setConfigurableBundleTemplateStorage($configurableBundleTemplateStorageTransfer)
             ->setProducts(new ArrayObject($productViewTransfers));
 
-        $configuratorStateSanitizeResponseTransfer = $this->getFactory()
+        $configuratorStateTransfer = $this->getFactory()
             ->createConfiguratorStateSanitizer()
-            ->sanitizeConfiguratorStateFormData($configuratorStateSanitizeRequestTransfer);
+            ->sanitizeConfiguratorStateFormData($configuratorStateTransfer);
 
-        if ($configuratorStateSanitizeResponseTransfer->getIsSanitized()) {
-            foreach ($configuratorStateSanitizeResponseTransfer->getMessages() as $messageTransfer) {
+        if ($configuratorStateTransfer->getIsStateModified()) {
+            foreach ($configuratorStateTransfer->getMessages() as $messageTransfer) {
                 $this->addErrorMessage(
                     $this->getFactory()
                         ->getGlossaryStorageClient()
@@ -254,7 +254,7 @@ class ConfiguratorController extends AbstractController
             }
 
             $parameters = $request->query->all();
-            $parameters[$form->getName()][ConfiguratorStateForm::FIELD_SLOTS] = $configuratorStateSanitizeResponseTransfer->getSanitizedSlotStateFormsData();
+            $parameters[$form->getName()][ConfiguratorStateForm::FIELD_SLOTS] = $configuratorStateTransfer->getSlotStateFormsData();
             $parameters[static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE] = $idConfigurableBundleTemplate;
 
             return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_SUMMARY, $parameters);
@@ -263,7 +263,7 @@ class ConfiguratorController extends AbstractController
         return [
             'form' => $form,
             'configurableBundleTemplateStorage' => $configurableBundleTemplateStorageTransfer,
-            'products' => $configuratorStateSanitizeResponseTransfer->getSanitizedProducts(),
+            'products' => $configuratorStateTransfer->getProducts()->getArrayCopy(),
         ];
     }
 

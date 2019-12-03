@@ -58,16 +58,11 @@
         <property name="idProductList" type="int"/>
     </transfer>
 
-    <transfer name="ConfiguratorStateSanitizeRequest">
+    <transfer name="ConfiguratorState">
         <property name="slotStateFormsData" type="array" singular="slotStateFormsData"/>
         <property name="configurableBundleTemplateStorage" type="ConfigurableBundleTemplateStorage"/>
         <property name="products" type="ProductView[]" singular="product"/>
-    </transfer>
-
-    <transfer name="ConfiguratorStateSanitizeResponse">
-        <property name="sanitizedSlotStateFormsData" type="array" singular="sanitizedSlotStateFormsData"/>
-        <property name="sanitizedProducts" type="ProductView[]" singular="sanitizedProduct"/>
-        <property name="isSanitized" type="bool"/>
+        <property name="isStateModified" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 

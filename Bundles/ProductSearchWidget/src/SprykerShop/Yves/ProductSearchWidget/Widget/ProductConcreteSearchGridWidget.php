@@ -51,7 +51,7 @@ class ProductConcreteSearchGridWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ProductSearchWidget/views/product-concrete-search-grid/product-concrete-search-grid.twig';
+        return '@ProductSearchWidget/views/product-concrete-search-list/product-concrete-search-list.twig';
     }
 
     /**
