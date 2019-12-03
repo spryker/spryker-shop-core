@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ProductReviewWidget;
 
-use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\Application;
 use Spryker\Yves\ProductReview\ProductReviewFactory as SprykerProductReviewFactory;
@@ -17,6 +16,8 @@ use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetTo
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewStorageClientInterface;
 use SprykerShop\Yves\ProductReviewWidget\Form\DataProvider\ProductReviewFormDataProvider;
 use SprykerShop\Yves\ProductReviewWidget\Form\ProductReviewForm;
+use SprykerShop\Yves\ProductReviewWidget\ProductReviewSearchRequestBuilder\ProductReviewSearchRequestBuilder;
+use SprykerShop\Yves\ProductReviewWidget\ProductReviewSearchRequestBuilder\ProductReviewSearchRequestBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProductReviewWidgetFactory extends SprykerProductReviewFactory
@@ -105,16 +106,10 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
     }
 
     /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer
+     * @return \SprykerShop\Yves\ProductReviewWidget\ProductReviewSearchRequestBuilder\ProductReviewSearchRequestBuilderInterface
      */
-    public function createProductReviewSearchRequestTransfer(int $idProductAbstract): ProductReviewSearchRequestTransfer
+    public function createProductReviewSearchRequestBuilder(): ProductReviewSearchRequestBuilderInterface
     {
-        $productReviewSearchRequestTransfer = new ProductReviewSearchRequestTransfer();
-        $productReviewSearchRequestTransfer->setIdProductAbstract($idProductAbstract);
-        $productReviewSearchRequestTransfer->setRequestParams($this->getApplicationRequest()->query->all());
-
-        return $productReviewSearchRequestTransfer;
+        return new ProductReviewSearchRequestBuilder($this->getApplicationRequest());
     }
 }

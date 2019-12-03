@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductReviewWidget\Plugin\ProductColorGroupWidget;
+namespace SprykerShop\Yves\ProductReviewWidget\Plugin\ProductGroupWidget;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\ProductColorGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface;
+use SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
@@ -29,6 +29,7 @@ class ProductReviewSummaryProductViewExpanderPlugin extends AbstractPlugin imple
     public function expand(ProductViewTransfer $productViewTransfer): ProductViewTransfer
     {
         $productReviewSearchRequestTransfer = $this->getFactory()
+            ->createProductReviewSearchRequestBuilder()
             ->createProductReviewSearchRequestTransfer($productViewTransfer->getIdProductAbstract());
 
         return $this->getFactory()

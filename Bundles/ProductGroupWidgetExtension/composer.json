@@ -1,6 +1,6 @@
 {
-  "name": "spryker-shop/product-color-group-widget-extension",
-  "description": "ProductColorGroupWidgetExtension module",
+  "name": "spryker-shop/product-group-widget-extension",
+  "description": "ProductGroupWidgetExtension module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2"
