@@ -8,9 +8,17 @@
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 
 interface MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface
 {
+    /**
+     * @param string $productOfferReference
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer|null
+     */
+    public function findProductOfferByReference(string $productOfferReference): ?ProductOfferStorageTransfer;
+
     /**
      * @param string $productSku
      *

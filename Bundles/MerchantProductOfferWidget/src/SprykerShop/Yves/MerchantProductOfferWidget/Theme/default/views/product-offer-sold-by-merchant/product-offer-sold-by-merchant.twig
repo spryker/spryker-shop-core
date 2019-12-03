@@ -1,0 +1,21 @@
+{% extends template('widget') %}
+
+{% define data = {
+    merchantProfile: _widget.merchantProfile | default,
+    locale: app.locale,
+} %}
+
+{% block template %}
+    {% if data.merchantProfile %}
+        {% set merchantProfileUrl = null %}
+
+        {% for urlTransfer in  data.merchantProfile.urlCollection %}
+            {% if urlTransfer.localeName == data.locale %}
+                {% set merchantProfileUrl = urlTransfer.url %}
+            {% endif %}
+        {% endfor %}
+        <p>
+            {{ 'mearchant_product_offer.sold_by' | trans }} <a href="{{ merchantProfileUrl }}" target="_blank" >{{ data.merchantProfile.merchantName }}</a>
+        </p>
+    {% endif %}
+{% endblock %}

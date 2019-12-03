@@ -51,6 +51,7 @@
                                 {% set item = item.bundleProduct ?? item %}
                                 {% embed molecule('summary-item', 'CheckoutPage') with {
                                     data: {
+                                        item: item,
                                         name: item.name,
                                         quantity: item.quantity,
                                         price: item.sumPrice | money,

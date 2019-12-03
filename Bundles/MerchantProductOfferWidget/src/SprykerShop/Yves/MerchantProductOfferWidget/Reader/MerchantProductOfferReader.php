@@ -178,7 +178,7 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
      *
      * @return bool
      */
-    protected function isCurrentProductOffer(string $productOfferReference, PriceProductTransfer $priceProductTransfer)
+    protected function isCurrentProductOffer(string $productOfferReference, PriceProductTransfer $priceProductTransfer): bool
     {
         $dimensionType = $priceProductTransfer->getPriceDimension()->getType();
         $priceDimensionProductOfferReference = $priceProductTransfer->getPriceDimension()->getProductOfferReference();

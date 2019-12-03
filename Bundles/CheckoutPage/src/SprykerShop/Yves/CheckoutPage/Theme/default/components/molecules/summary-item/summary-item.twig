@@ -5,6 +5,7 @@
 } %}
 
 {% define data = {
+    item: required,
     name: required,
     quantity: required,
     images: required,
@@ -27,6 +28,7 @@
             molecule('summary-product-packaging-unit-by-default', 'ProductPackagingUnitWidget')
         ] ignore missing with {
             data: {
+                item: data.item,
                 name: data.name,
                 quantity: data.quantity,
                 amount: data.amount,
