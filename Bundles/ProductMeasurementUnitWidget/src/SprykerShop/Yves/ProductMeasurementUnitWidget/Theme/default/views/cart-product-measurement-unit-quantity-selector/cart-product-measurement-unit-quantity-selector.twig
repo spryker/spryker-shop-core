@@ -13,7 +13,7 @@
 {%- endblock -%}
 
 {% block body %}
-    {% include molecule('cart-quantity-input', 'CartPage') with {
+    {% include molecule('cart-quantity-input', 'CartPage') ignore missing with {
         data: {
             cartItem: data.cartItem,
             readOnly: hasQuantitySalesUnit,
@@ -22,7 +22,7 @@
 
     {% block quantitySalesUnit %}
         {% if hasQuantitySalesUnit %}
-            {% include molecule('measurement-unit-item') with {
+            {% include molecule('measurement-unit-item', 'ProductMeasurementUnitWidget') with {
                 class: 'spacing spacing--reset',
                 data: {
                     cartItem: data.cartItem,
