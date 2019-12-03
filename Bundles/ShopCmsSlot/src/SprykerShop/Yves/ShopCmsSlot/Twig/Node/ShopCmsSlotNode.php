@@ -48,10 +48,11 @@ class ShopCmsSlotNode extends TwigNode
     {
         $compiler->addDebugInfo($this)->raw(
             sprintf(
-                'echo $this->env->getExtension(\'%s\')->getSlotContent((new %s())->setCmsSlotKey(\'%s\')',
+                'echo $this->env->getExtension(\'%s\')->getSlotContent((new %s())->setCmsSlotKey(\'%s\')->setCmsSlotTemplatePath(\'%s\')',
                 ShopCmsSlotTwigPlugin::class,
                 CmsSlotContextTransfer::class,
-                $this->cmsSlotKey
+                $this->cmsSlotKey,
+                $this->getTemplateName()
             )
         );
         $compiler->raw('->setProvidedData(');

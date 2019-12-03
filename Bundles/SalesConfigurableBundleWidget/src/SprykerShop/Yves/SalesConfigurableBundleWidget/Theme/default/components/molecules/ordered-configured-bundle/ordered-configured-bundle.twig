@@ -76,6 +76,7 @@
     {% block bundleProductList %}
         <div class="{{ config.name }}__products">
             {% block bundleProductListInner %}
+                {% set partialItemCount = 0 %}
                 {% for item in data.bundle.salesOrderConfiguredBundleItems if data.items[item.IdSalesOrderItem] is defined %}
                     {% include molecule('ordered-configured-bundle-product', 'SalesConfigurableBundleWidget') with {
                         data: {
@@ -84,8 +85,19 @@
                             image: data.items[item.IdSalesOrderItem].metadata.image,
                         },
                     } only %}
+                    {% set partialItemCount = partialItemCount + 1 %}
                 {% endfor %}
+
+                {{ 'configured_bundle_widget.items' | trans }} {{ partialItemCount }} / {{ data.bundle.salesOrderConfiguredBundleItems | length }}
             {% endblock %}
         </div>
+    {% endblock %}
+
+    {% block configurableBundleNote %}
+        {% include molecule('readonly-bundled-note', 'ConfigurableBundleNoteWidget') ignore missing with {
+            data: {
+                bundle: data.bundle,
+            },
+        } only %}
     {% endblock %}
 {% endblock %}
