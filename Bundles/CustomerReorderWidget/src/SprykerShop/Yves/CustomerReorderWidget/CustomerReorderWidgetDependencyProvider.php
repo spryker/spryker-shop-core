@@ -32,6 +32,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const PLUGINS_POST_REORDER = 'PLUGINS_POST_REORDER';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -50,6 +51,7 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addProductStorageClient($container);
         $container = $this->addZedRequestClient($container);
         $container = $this->addLocaleClient($container);
+        $container = $this->addPostReorderPlugins($container);
 
         return $container;
     }
@@ -212,5 +214,27 @@ class CustomerReorderWidgetDependencyProvider extends AbstractBundleDependencyPr
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPostReorderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_POST_REORDER, function () {
+            return $this->getPostReorderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerReorderWidgetExtension\Dependency\Plugin\PostReorderPluginInterface[]
+     */
+    protected function getPostReorderPlugins(): array
+    {
+        return [];
     }
 }
