@@ -1,1 +1,1 @@
-Displays configurator adjustment state form. Form redirects to the slot page by submitting.
+Displays a configurator adjustment state form. The form redirects to the slot page upon submission.

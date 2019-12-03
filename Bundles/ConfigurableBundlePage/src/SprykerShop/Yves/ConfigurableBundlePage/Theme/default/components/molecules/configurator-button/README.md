@@ -1,1 +1,1 @@
-Displays submit button, which submit form with configurator information by clicking.
+Displays the "Submit" button, which submits the form with configurator information.

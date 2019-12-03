@@ -1,1 +1,1 @@
-Displays slot page redirect form, which based on configurator state form. Form redirects to the slot page.
+Displays a slot page redirect form, which is based on the configurator state form. The form redirects to the slot page.

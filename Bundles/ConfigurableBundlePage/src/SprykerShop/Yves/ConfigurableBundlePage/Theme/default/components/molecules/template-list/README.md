@@ -1,1 +1,1 @@
-Displays configurable bundle templates list. List item contains template image if image is defined or name, if image is not defined and select button, which redirects to the configurator page.
+Displays configurable bundle templates list. The list item contains a template image if the image is defined or a name if the image is not defined, and a "Select" button, which redirects to the configurator page.
