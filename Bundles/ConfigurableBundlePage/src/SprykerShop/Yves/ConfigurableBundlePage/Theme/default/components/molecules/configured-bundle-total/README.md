@@ -1,1 +1,1 @@
-Displays total price of configurable bundle product.
+Displays the total price of a configurable bundle product.

@@ -20,7 +20,7 @@
             {% include molecule('money-price') with {
                 class: 'col col-sm-4 text-right',
                 data: {
-                    amount: data.total | default(null),
+                    amount: data.total,
                 },
             } only %}
         {% else %}
