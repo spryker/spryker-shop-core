@@ -1,0 +1,18 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'readonly-bundled-note',
+} %}
+
+{% define data = {
+    bundle: required,
+} %}
+
+{% block body %}
+    {% if data.bundle.note is not empty %}
+        {% block bundleNote %}
+            <h6 class="{{ config.name }}__title">{{ 'configurable_bundle_note.note' | trans }}</h6>
+            <p class="spacing spacing--reset">{{ data.bundle.note | escape | nl2br }}</p>
+        {% endblock %}
+    {% endif %}
+{% endblock %}
