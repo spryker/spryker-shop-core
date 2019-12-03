@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ConfigurableBundlePage\Controller;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchRequestTransfer;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageRequestTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use Generated\Shared\Transfer\ConfiguratorStateTransfer;
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
@@ -162,7 +161,9 @@ class ConfiguratorController extends AbstractController
         $idConfigurableBundleTemplate = $request->attributes->getInt(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE);
         $idConfigurableBundleTemplateSlot = $request->attributes->getInt(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT);
 
-        $configurableBundleTemplateStorageTransfer = $this->findConfigurableBundleTemplateStorage($idConfigurableBundleTemplate, $idConfigurableBundleTemplateSlot);
+        $configurableBundleTemplateStorageTransfer = $this->getFactory()
+            ->createConfigurableBundleTemplateStorageReader()
+            ->findConfigurableBundleTemplateStorage($idConfigurableBundleTemplate, $this->getLocale());
 
         if (!$configurableBundleTemplateStorageTransfer) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND);
@@ -213,7 +214,9 @@ class ConfiguratorController extends AbstractController
     {
         $idConfigurableBundleTemplate = $request->attributes->getInt(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE);
 
-        $configurableBundleTemplateStorageTransfer = $this->findConfigurableBundleTemplateStorage($idConfigurableBundleTemplate);
+        $configurableBundleTemplateStorageTransfer = $this->getFactory()
+            ->createConfigurableBundleTemplateStorageReader()
+            ->findConfigurableBundleTemplateStorage($idConfigurableBundleTemplate, $this->getLocale());
 
         if (!$configurableBundleTemplateStorageTransfer) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND);
@@ -283,7 +286,9 @@ class ConfiguratorController extends AbstractController
             return $this->redirectResponseInternal(static::ROUTE_CONFIGURATOR_TEMPLATE_SELECTION);
         }
 
-        $configurableBundleTemplateStorageTransfer = $this->findConfigurableBundleTemplateStorage($idConfigurableBundleTemplate);
+        $configurableBundleTemplateStorageTransfer = $this->getFactory()
+            ->createConfigurableBundleTemplateStorageReader()
+            ->findConfigurableBundleTemplateStorage($idConfigurableBundleTemplate, $this->getLocale());
 
         if (!$configurableBundleTemplateStorageTransfer) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND);
@@ -338,24 +343,6 @@ class ConfiguratorController extends AbstractController
         }
 
         return false;
-    }
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     * @param int|null $idConfigurableBundleTemplateSlot
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
-     */
-    protected function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate, ?int $idConfigurableBundleTemplateSlot = null): ?ConfigurableBundleTemplateStorageTransfer
-    {
-        $configurableBundleTemplateStorageRequestTransfer = (new ConfigurableBundleTemplateStorageRequestTransfer())
-            ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
-            ->setIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplateSlot)
-            ->setLocaleName($this->getLocale());
-
-        return $this->getFactory()
-            ->createConfigurableBundleTemplateStorageReader()
-            ->getConfigurableBundleTemplateStorage($configurableBundleTemplateStorageRequestTransfer);
     }
 
     /**

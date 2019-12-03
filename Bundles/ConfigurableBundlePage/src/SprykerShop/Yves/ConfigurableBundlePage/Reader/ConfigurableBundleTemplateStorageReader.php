@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ConfigurableBundlePage\Reader;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageRequestTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use SprykerShop\Yves\ConfigurableBundlePage\Dependency\Client\ConfigurableBundlePageToConfigurableBundleStorageClientInterface;
 
@@ -28,16 +27,16 @@ class ConfigurableBundleTemplateStorageReader implements ConfigurableBundleTempl
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageRequestTransfer $configurableBundleTemplateStorageRequestTransfer
+     * @param int $idConfigurableBundleTemplate
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
      */
-    public function getConfigurableBundleTemplateStorage(
-        ConfigurableBundleTemplateStorageRequestTransfer $configurableBundleTemplateStorageRequestTransfer
-    ): ?ConfigurableBundleTemplateStorageTransfer {
+    public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate, string $localeName): ?ConfigurableBundleTemplateStorageTransfer
+    {
         $configurableBundleTemplateStorageTransfer = $this->configurableBundleStorageClient->findConfigurableBundleTemplateStorage(
-            $configurableBundleTemplateStorageRequestTransfer->getIdConfigurableBundleTemplate(),
-            $configurableBundleTemplateStorageRequestTransfer->getLocaleName()
+            $idConfigurableBundleTemplate,
+            $localeName
         );
 
         if (!$configurableBundleTemplateStorageTransfer) {
