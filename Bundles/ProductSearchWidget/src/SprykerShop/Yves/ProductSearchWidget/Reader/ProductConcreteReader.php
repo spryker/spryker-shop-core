@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientInterface;
-use SprykerShop\Yves\ProductSearchWidget\Expander\ProductConcretePriceExpanderInterface;
 use SprykerShop\Yves\ProductSearchWidget\Mapper\ProductConcreteMapperInterface;
 
 class ProductConcreteReader implements ProductConcreteReaderInterface
@@ -29,27 +28,19 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     protected $catalogClient;
 
     /**
-     * @var \SprykerShop\Yves\ProductSearchWidget\Expander\ProductConcretePriceExpanderInterface $productConcretePriceExpander
-     */
-    protected $productConcretePriceExpander;
-
-    /**
      * @var \SprykerShop\Yves\ProductSearchWidget\Mapper\ProductConcreteMapperInterface
      */
     protected $productConcreteMapper;
 
     /**
      * @param \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientInterface $catalogClient
-     * @param \SprykerShop\Yves\ProductSearchWidget\Expander\ProductConcretePriceExpanderInterface $productConcretePriceExpander
      * @param \SprykerShop\Yves\ProductSearchWidget\Mapper\ProductConcreteMapperInterface $productConcreteMapper
      */
     public function __construct(
         ProductSearchWidgetToCatalogClientInterface $catalogClient,
-        ProductConcretePriceExpanderInterface $productConcretePriceExpander,
         ProductConcreteMapperInterface $productConcreteMapper
     ) {
         $this->catalogClient = $catalogClient;
-        $this->productConcretePriceExpander = $productConcretePriceExpander;
         $this->productConcreteMapper = $productConcreteMapper;
     }
 
@@ -75,9 +66,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
             );
         }
 
-        $productViewTransfers = $this->getMappedProductViewTransfers($productConcretePageSearchTransfers);
-
-        return $this->expandProductViewTransfers($productViewTransfers);
+        return $this->getMappedProductViewTransfers($productConcretePageSearchTransfers);
     }
 
     /**
@@ -116,21 +105,5 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
         }
 
         return $productViewTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
-     */
-    protected function expandProductViewTransfers(array $productViewTransfers): array
-    {
-        $expandedProductViewTransfers = [];
-
-        foreach ($productViewTransfers as $productViewTransfer) {
-            $expandedProductViewTransfers[] = $this->productConcretePriceExpander->expandProductViewTransferWithPrice($productViewTransfer);
-        }
-
-        return $expandedProductViewTransfers;
     }
 }

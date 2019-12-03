@@ -1,0 +1,13 @@
+{% extends template('widget') %}
+
+{% define data = {
+    currentProductPrice: _widget.currentProductPrice,
+} %}
+
+{% block body %}
+    {% include molecule('price', 'PriceProductWidget') with {
+        data: {
+            currentProductPrice: data.currentProductPrice,
+        },
+    } only %}
+{% endblock %}

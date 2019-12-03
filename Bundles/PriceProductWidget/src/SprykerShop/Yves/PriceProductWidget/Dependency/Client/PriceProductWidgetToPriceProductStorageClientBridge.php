@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\ProductSearchWidget\Dependency\Client;
+namespace SprykerShop\Yves\PriceProductWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
-class ProductSearchWidgetToPriceProductStorageClientBridge implements ProductSearchWidgetToPriceProductStorageClientInterface
+class PriceProductWidgetToPriceProductStorageClientBridge implements PriceProductWidgetToPriceProductStorageClientInterface
 {
     /**
      * @var \Spryker\Client\PriceProductStorage\PriceProductStorageClientInterface

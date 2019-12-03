@@ -1,0 +1,23 @@
+{% define config = {
+    name: 'price',
+} %}
+
+{% define data = {
+    currentProductPrice: required,
+} %}
+
+{% block extraClass %} grid box{% endblock %}
+
+{% block rating %}{% endblock %}
+
+{% block price %}
+    {% if can('SeePricePermissionPlugin') %}
+        {% include molecule('money-price') with {
+            data: {
+                amount: data.currentProductPrice.sumPrice,
+            },
+        } only %}
+    {% else %}
+        {{ 'customer.access.cannot_see_price' | trans }}
+    {% endif %}
+{% endblock %}

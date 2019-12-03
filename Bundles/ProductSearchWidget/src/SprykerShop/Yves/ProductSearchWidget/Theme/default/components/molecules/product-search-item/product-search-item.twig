@@ -8,16 +8,4 @@
 
 {% block rating %}{% endblock %}
 
-{% block price %}
-    {% if can('SeePricePermissionPlugin') %}
-        {% include molecule('money-price') with {
-            data: {
-                amount: data.product.price | default(null),
-            },
-        } only %}
-    {% else %}
-        {{ 'customer.access.cannot_see_price' | trans }}
-    {% endif %}
-{% endblock %}
-
 {% block actionsContainer %}{% endblock %}
