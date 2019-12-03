@@ -15,6 +15,7 @@ class CatalogPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_SEARCH = 'search';
     protected const ROUTE_SUGGESTION = 'search/suggestion';
     protected const ROUTER_CHANGE_VIEW_MODE = 'change-view-mode';
+    protected const ROUTE_URL_PURIFY = 'search/url-purify';
 
     /**
      * Specification:
@@ -31,6 +32,7 @@ class CatalogPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection = $this->addFulltextSearchRoute($routeCollection);
         $routeCollection = $this->addSuggestionRoute($routeCollection);
         $routeCollection = $this->addChangeViewRoute($routeCollection);
+        $routeCollection = $this->addUrlPurifyRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -70,6 +72,19 @@ class CatalogPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     {
         $route = $this->buildRoute('/catalog/change-view-mode', 'CatalogPage', 'Catalog', 'changeViewModeAction');
         $routeCollection->add(static::ROUTER_CHANGE_VIEW_MODE, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addUrlPurifyRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute('/search/url-purify', 'CatalogPage', 'UrlPurify', 'index');
+        $routeCollection->add(static::ROUTE_URL_PURIFY, $route);
 
         return $routeCollection;
     }
