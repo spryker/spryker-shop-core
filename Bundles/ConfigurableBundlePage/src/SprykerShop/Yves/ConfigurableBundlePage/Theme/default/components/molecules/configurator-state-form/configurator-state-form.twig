@@ -16,7 +16,7 @@
 } %}
 
 {% block body %}
-    {{ form_start(data.form,  { 'action': data.action, 'method': data.method }) }}
+    {{ form_start(data.form, { 'action': data.action, 'method': data.method }) }}
 
     {% for slotForm in data.form.slots %}
         {{ form_row(slotForm.sku, { id: '' }) }}
