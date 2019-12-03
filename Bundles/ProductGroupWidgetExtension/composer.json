@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/product-group-widget-extension",
+  "type": "library",
   "description": "ProductGroupWidgetExtension module",
   "license": "proprietary",
   "require": {
@@ -11,7 +12,7 @@
   },
   "autoload": {
     "psr-4": {
-      "SprykerShop\\": "src/SprykerShop"
+      "SprykerShop\\": "src/SprykerShop/"
     }
   },
   "minimum-stability": "dev",
