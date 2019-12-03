@@ -1,16 +1,16 @@
 @mixin configurable-bundle-page-template-list($name: '.template-list') {
     #{$name} {
+        @include helper-ui-clearfix;
         border: 1px solid $setting-color-lighter;
         padding: 1.75rem map-get($setting-spacing, 'default') 2.5rem;
         margin: map-get($setting-spacing, 'default');
-        overflow: hidden;
 
         &__list {
             margin: map-get($setting-spacing, 'reset') -#{map-get($setting-spacing, 'default')};
         }
 
         &__item-title {
-            min-height: 9rem;
+            min-height: 11rem;
             color: $setting-color-darkest;
 
             &--with-background {

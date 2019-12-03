@@ -29,7 +29,7 @@
                                         {% block template %}
                                             <div class="box box--stretch">
                                                 {% block templateTitle %}
-                                                    {% set isTitleImage = template.images is defined %}
+                                                    {% set isTitleImage = template.images is defined and template.images | length %}
                                                     {% set titleAdditionalClass = not isTitleImage ? config.name ~ '__item-title--with-background' %}
                                                     {% set titleClasses = config.name ~ '__item-title ' ~ titleAdditionalClass ~ ' grid grid--center grid--middle spacing-bottom' %}
 

@@ -24,14 +24,13 @@
 
             <li class="{{ slotClasses }}">
                 {% block slotItemInner %}
-                    {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
+                    {% include molecule('slot-page-redirect-form', 'ConfigurableBundlePage') with {
                         data: {
                             form: data.form.createView,
                             submitButtonText: configurableBundleTemplateSlotStorage.name | trans,
                             idConfigurableBundleTemplateSlot: configurableBundleTemplateSlotStorage.idConfigurableBundleTemplateSlot,
                             selectedSlotId: data.selectedSlotId,
                             submitButtonModifiers: submitButtonModifiers,
-                            isExtraModifier: true,
                             action: path(
                                 'configurable-bundle/configurator/slots', {
                                     'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
@@ -63,8 +62,6 @@
                             submitButtonText: 'configurable_bundle_page.configurator.summary' | trans,
                             isSubmitButtonActive: data.isSeparateItemUnlocked,
                             submitButtonModifiers: buttonModifiers,
-                            isSeparateItem: true,
-                            isExtraModifier: true,
                             action: path(
                                 'configurable-bundle/configurator/summary', {
                                     'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
