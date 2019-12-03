@@ -1,0 +1,9 @@
+@mixin configurable-bundle-note-widget-readonly-bundled-note($name: '.readonly-bundled-note') {
+    #{$name} {
+        &__title {
+            font-size: map-get($setting-font-size, 'small');
+        }
+
+        @content;
+    }
+}

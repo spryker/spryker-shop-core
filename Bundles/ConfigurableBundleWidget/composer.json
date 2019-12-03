@@ -14,6 +14,7 @@
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
+    "spryker-shop/configurable-bundle-note-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/router": "*",
     "spryker/silex": "*",
@@ -21,7 +22,8 @@
   },
   "suggest": {
     "spryker/router": "Use this module if you want use the RouterProviderPlugin.",
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
+    "spryker-shop/configurable-bundle-note-widget": "If you want to use configurable bundle note feature."
   },
   "autoload": {
     "psr-4": {
