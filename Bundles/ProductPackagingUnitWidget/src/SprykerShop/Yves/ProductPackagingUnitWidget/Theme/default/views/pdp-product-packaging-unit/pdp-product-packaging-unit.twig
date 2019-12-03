@@ -120,7 +120,7 @@
 
     <div class="grid grid--bottom grid--justify">
         {% if data.productPackagingUnit and data.salesUnitCount %}
-            {% set defaultAmount = (data.productPackagingUnit.amountMin and data.productPackagingUnit.defaultAmount < data.productPackagingUnit.amountMin) ?
+            {% set defaultAmount = (data.productPackagingUnit.amountMin and data.productPackagingUnit.defaultAmount.toFloat() < data.productPackagingUnit.amountMin.toFloat()) ?
                 data.productPackagingUnit.amountMin :
                 data.productPackagingUnit.defaultAmount %}
 
@@ -140,7 +140,7 @@
                     <input id="default-amount"
                            type="hidden"
                            value="{{ defaultAmount }}"
-                           data-default-amount="{{ defaultAmount }}"
+                           data-amount-interval="{{ data.productPackagingUnit.amountInterval }}"
                     >
                     <input id="amount"
                            type="hidden"
