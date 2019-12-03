@@ -11,4 +11,11 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class HealthCheckPageConfig extends AbstractBundleConfig
 {
+    /**
+     * @return string[]
+     */
+    public function getAvailableHealthCheckServices(): array
+    {
+        return [];
+    }
 }

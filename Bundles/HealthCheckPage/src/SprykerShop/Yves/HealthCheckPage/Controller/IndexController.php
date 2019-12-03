@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\HealthCheckPage\HealthCheckPageFactory getFactory()
+ * @method \SprykerShop\Yves\HealthCheckPage\HealthCheckPageConfig getConfig()
  */
 class IndexController extends AbstractController
 {
@@ -27,7 +28,13 @@ class IndexController extends AbstractController
     public function indexAction(Request $request): JsonResponse
     {
         $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())
-            ->setServices($request->get(static::KEY_HEALTH_CHECK_SERVICES));
+            ->setAvailableServices($this->getFactory()->getConfig()->getAvailableHealthCheckServices());
+
+        $requestedServices = $request->query->get(static::KEY_HEALTH_CHECK_SERVICES);
+
+        if ($requestedServices !== null) {
+            $healthCheckRequestTransfer->setRequestedServices(explode(',', $requestedServices));
+        }
 
         $healthCheckResponseTransfer = $this->getFactory()
             ->getHealthCheckClient()

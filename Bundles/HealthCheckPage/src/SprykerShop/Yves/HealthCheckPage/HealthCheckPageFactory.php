@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\HealthCheckPage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\HealthCheckPage\Dependency\Client\HealthCheckPageToHealthCheckClientInterface;
 
+/**
+ * @method \SprykerShop\Yves\HealthCheckPage\HealthCheckPageConfig getConfig()
+ */
 class HealthCheckPageFactory extends AbstractFactory
 {
     /**
