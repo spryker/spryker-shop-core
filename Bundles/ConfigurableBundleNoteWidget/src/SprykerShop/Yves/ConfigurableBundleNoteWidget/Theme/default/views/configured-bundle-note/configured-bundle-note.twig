@@ -1,0 +1,40 @@
+{% extends template('widget') %}
+
+{% define data = {
+    bundle: _widget.configuredBundle,
+    form: _widget.configurableBundleNoteForm,
+    quote: _widget.quote,
+} %}
+
+{% block body %}
+    {% set canWrite = (data.quote is not empty) and (not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.quote.idQuote)) %}
+
+    {% block configuredBundleNote %}
+        {% if canWrite %}
+            {% block noteForm %}
+                {% include molecule('form') with {
+                    data: {
+                        form: data.form,
+                        options: {
+                            action: url('configurable-bundle-note/add'),
+                        },
+                        submit: {
+                            enable: true,
+                            text: 'configurable_bundle_note.form.save' | trans,
+                        },
+                    },
+                } only %}
+            {% endblock %}
+        {% endif %}
+
+        {% if not canWrite and data.form.note.vars.value is not empty %}
+            {% block noteReadOnly %}
+                {% include molecule('readonly-bundled-note', 'ConfigurableBundleNoteWidget') ignore missing with {
+                    data: {
+                        bundle: data.bundle,
+                    },
+                } only %}
+            {% endblock %}
+        {% endif %}
+    {% endblock %}
+{% endblock %}
