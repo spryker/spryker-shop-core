@@ -7,7 +7,8 @@
 
 namespace SprykerShop\Yves\CartCodeWidget\Controller;
 
-use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use SprykerShop\Yves\CartCodeWidget\Form\CartCodeForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
@@ -41,19 +42,23 @@ class CodeController extends AbstractController
                 ->getQuoteClient()
                 ->getQuote();
 
-            $cartCodeOperationResultTransfers = $this->getFactory()
+            $cartCodeResponseTransfer = $this->getFactory()
                 ->getCartCodeClient()
-                ->addCandidate($quoteTransfer, $code);
+                ->addCartCode(
+                    (new CartCodeRequestTransfer())
+                        ->setCartCode($code)
+                        ->setQuote($quoteTransfer)
+                );
 
             $this->getFactory()
                 ->getQuoteClient()
-                ->setQuote($cartCodeOperationResultTransfers->getQuote());
+                ->setQuote($cartCodeResponseTransfer->getQuote());
 
             $this->getFactory()
                 ->getZedRequestClient()
                 ->addFlashMessagesFromLastZedRequest();
 
-            $this->handleCartCodeOperationResult($cartCodeOperationResultTransfers);
+            $this->handleCartCodeResponse($cartCodeResponseTransfer);
         }
 
         return $this->redirectResponseExternal($request->headers->get('referer'));
@@ -72,19 +77,23 @@ class CodeController extends AbstractController
                 ->getQuoteClient()
                 ->getQuote();
 
-            $cartCodeOperationResultTransfers = $this->getFactory()
+            $cartCodeResponseTransfer = $this->getFactory()
                 ->getCartCodeClient()
-                ->removeCode($quoteTransfer, $code);
+                ->removeCartCode(
+                    (new CartCodeRequestTransfer())
+                        ->setCartCode($code)
+                        ->setQuote($quoteTransfer)
+                );
 
             $this->getFactory()
                 ->getQuoteClient()
-                ->setQuote($cartCodeOperationResultTransfers->getQuote());
+                ->setQuote($cartCodeResponseTransfer->getQuote());
 
             $this->getFactory()
                 ->getZedRequestClient()
                 ->addFlashMessagesFromLastZedRequest();
 
-            $this->handleCartCodeOperationResult($cartCodeOperationResultTransfers);
+            $this->handleCartCodeResponse($cartCodeResponseTransfer);
         }
 
         return $this->redirectResponseExternal($request->headers->get('referer'));
@@ -101,31 +110,34 @@ class CodeController extends AbstractController
             ->getQuoteClient()
             ->getQuote();
 
-        $cartCodeOperationResultTransfers = $this->getFactory()
+        $cartCodeResponseTransfer = $this->getFactory()
             ->getCartCodeClient()
-            ->clearCodes($quoteTransfer);
+            ->clearCartCodes(
+                (new CartCodeRequestTransfer())
+                    ->setQuote($quoteTransfer)
+            );
 
         $this->getFactory()
             ->getQuoteClient()
-            ->setQuote($cartCodeOperationResultTransfers->getQuote());
+            ->setQuote($cartCodeResponseTransfer->getQuote());
 
         $this->getFactory()
             ->getZedRequestClient()
             ->addFlashMessagesFromLastZedRequest();
 
-        $this->handleCartCodeOperationResult($cartCodeOperationResultTransfers);
+        $this->handleCartCodeResponse($cartCodeResponseTransfer);
 
         return $this->redirectResponseExternal($request->headers->get('referer'));
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartCodeOperationResultTransfer $cartCodeOperationResultTransfer
+     * @param \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer
      *
      * @return void
      */
-    protected function handleCartCodeOperationResult(CartCodeOperationResultTransfer $cartCodeOperationResultTransfer): void
+    protected function handleCartCodeResponse(CartCodeResponseTransfer $cartCodeResponseTransfer): void
     {
-        foreach ($cartCodeOperationResultTransfer->getMessages() as $messageTransfer) {
+        foreach ($cartCodeResponseTransfer->getMessages() as $messageTransfer) {
             $this->handleMessage($messageTransfer);
         }
     }
