@@ -110,8 +110,8 @@
                                                         {% include molecule('shopping-list-item-product-option-display', 'ProductOptionWidget') with {
                                                             class: 'list list--expand',
                                                             data: {
-                                                                options: item.shoppingListItem.productOptions
-                                                            }
+                                                                options: item.shoppingListItem.productOptions,
+                                                            },
                                                         } only %}
                                                     {% endif %}
                                                 </ul>
@@ -129,8 +129,8 @@
                                                         {% include molecule('money-price') with {
                                                             data: {
                                                                 amount: item.price,
-                                                                originalAmount: item.prices.ORIGINAL is not defined or item.prices.ORIGINAL is empty ? null : item.prices.ORIGINAL
-                                                            }
+                                                                originalAmount: item.prices.ORIGINAL ?? null,
+                                                            },
                                                         } only %}
                                                     {% endblock %}
                                                 {% else %}
@@ -174,7 +174,7 @@
                                                 {% if isItemAvailable %}
                                                     <button type="submit" name="add-item" class="button button--success"
                                                             value="{{ item.idShoppingListItem }}" {{ qa('submit-button') }}>
-                                                        {{'customer.account.shopping_list.add-to-cart' | trans}}
+                                                        {{ 'customer.account.shopping_list.add-to-cart' | trans }}
                                                     </button>
                                                 {% endif %}
                                             {% endblock %}
