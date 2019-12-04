@@ -435,7 +435,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
 
         const quantity = Number(this.qtyInBaseUnitInput.value);
-        const totalAmount = Number(((amountInBaseUnits * this.precision) * quantity) / this.precision).toFixed(this.numbersAfterDot);
+        const totalAmount = (((amountInBaseUnits * this.precision) * quantity) / this.precision).toFixed(this.numbersAfterDot);
 
         this.amountInBaseUnitInput.value = parseFloat(totalAmount);
         this.addToCartButton.removeAttribute("disabled");
