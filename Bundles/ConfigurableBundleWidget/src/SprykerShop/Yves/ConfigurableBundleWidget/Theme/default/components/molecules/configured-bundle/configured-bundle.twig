@@ -13,6 +13,8 @@
     priceMode: null,
     isQuantityChangeable: false,
     isEditable: true,
+    isQuantitySummaryVisible: false,
+    quote: null,
 } %}
 
 {%- block extraClass %} box{% endblock -%}
@@ -80,6 +82,7 @@
     {% block bundleProductList %}
         <div class="{{ config.name }}__products">
             {% block bundleProductListInner %}
+                {% set partialSumItemQuantity = 0 %}
                 {% for item in data.bundleItems if data.items[item.GroupKey] is defined %}
                     {% block bundleProductItem %}
                         {% include molecule('configured-bundle-product', 'ConfigurableBundleWidget') with {
@@ -90,9 +93,19 @@
                             },
                         } only %}
                     {% endblock %}
+                    {% set partialSumItemQuantity = partialSumItemQuantity + item.quantity %}
                 {% endfor %}
+
+                {% if data.isQuantitySummaryVisible %}
+                    {% set totalSumItemQuantity = 0 %}
+                    {% for bundleItem in data.bundle.items %}
+                        {% set totalSumItemQuantity = totalSumItemQuantity + bundleItem.quantity %}
+                    {% endfor %}
+                    {{ 'configured_bundle_widget.items' | trans }} {{ partialSumItemQuantity }} / {{ totalSumItemQuantity }}
+                {% endif %}
             {% endblock %}
         </div>
+
     {% endblock %}
 
     {% set bundleActionClassName = 'float-right spacing-y' %}
@@ -104,6 +117,22 @@
                         {{- 'configured_bundle.remove' | trans | raw -}}
                     {% endblock %}
                 </a>
+            {% endblock %}
+        {% endif %}
+    {% endblock %}
+
+    {% block configurableBundleNote %}
+        {% if data.isEditable %}
+            {% block editableConfigurableBundleNote %}
+                {% widget 'ConfiguredBundleNoteWidget' args [data.bundle, data.quote] only %}{% endwidget %}
+            {% endblock %}
+        {% else %}
+            {% block notEditableConfigurableBundleNote %}
+                {% include molecule('readonly-bundled-note', 'ConfigurableBundleNoteWidget') ignore missing with {
+                    data: {
+                        bundle: data.bundle,
+                    },
+                } only %}
             {% endblock %}
         {% endif %}
     {% endblock %}

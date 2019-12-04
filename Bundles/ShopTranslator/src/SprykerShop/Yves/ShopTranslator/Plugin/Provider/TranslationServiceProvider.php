@@ -19,6 +19,8 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class TranslationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    protected const SERVICE_TRANSLATOR = 'translator';
+
     /**
      * @param \Silex\Application $app
      *
@@ -26,7 +28,7 @@ class TranslationServiceProvider extends AbstractPlugin implements ServiceProvid
      */
     public function register(Application $app)
     {
-        $app['translator'] = $app->share(function ($app) {
+        $app[static::SERVICE_TRANSLATOR] = $app->share(function ($app) {
             $twigTranslator = $this->getFactory()->createTwigTranslator(
                 $app['locale']
             );
