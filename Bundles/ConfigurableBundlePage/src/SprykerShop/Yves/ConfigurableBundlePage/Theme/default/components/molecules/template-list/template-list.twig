@@ -39,32 +39,34 @@
                                                                 {% set templateItemNameClasses = config.name ~ '__item-name' %}
                                                                 {% set templateName = template.name | trans %}
 
-                                                                {% macro templateText(classes, text) %}
-                                                                    <span class="{{ classes }}">{{ text }}</span>
-                                                                {% endmacro %}
+                                                                {% block templateTitleContent %}
+                                                                    {% macro templateText(classes, text) %}
+                                                                        <span class="{{ classes }}">{{ text }}</span>
+                                                                    {% endmacro %}
 
-                                                                {% if isTitleImage %}
-                                                                    {% set imageModifiers = ['without-spaces'] %}
+                                                                    {% if isTitleImage %}
+                                                                        {% set imageModifiers = ['without-spaces'] %}
 
-                                                                    {% block templateTitleImage %}
-                                                                        {% include atom('thumbnail') with {
-                                                                            modifiers: imageModifiers,
-                                                                            attributes: {
-                                                                                src: publicPath(template.images.0.externalUrlSmall),
-                                                                                alt: template.name | trans,
-                                                                            },
-                                                                        } only %}
-                                                                    {% endblock %}
+                                                                        {% block templateTitleImage %}
+                                                                            {% include atom('thumbnail') with {
+                                                                                modifiers: imageModifiers,
+                                                                                attributes: {
+                                                                                    src: publicPath(template.images.0.externalUrlSmall),
+                                                                                    alt: template.name | trans,
+                                                                                },
+                                                                            } only %}
+                                                                        {% endblock %}
 
-                                                                    {% block templateItemNameInner %}
-                                                                        {{ _self.templateText(templateItemNameClasses, templateName) }}
-                                                                    {% endblock %}
-                                                                {% else %}
-                                                                    {% block templateTitleText %}
-                                                                        {% set templateItemNameClasses = config.name ~ '__item-name ' ~ config.name ~ '__item-name--secondary' %}
-                                                                        {{ _self.templateText(templateItemNameClasses, templateName) }}
-                                                                    {% endblock %}
-                                                                {% endif %}
+                                                                        {% block templateItemNameInner %}
+                                                                            {{ _self.templateText(templateItemNameClasses, templateName) }}
+                                                                        {% endblock %}
+                                                                    {% else %}
+                                                                        {% block templateTitleText %}
+                                                                            {% set templateItemNameClasses = config.name ~ '__item-name ' ~ config.name ~ '__item-name--secondary' %}
+                                                                            {{ _self.templateText(templateItemNameClasses, templateName) }}
+                                                                        {% endblock %}
+                                                                    {% endif %}
+                                                                {% endblock %}
                                                             {% endblock %}
                                                         </a>
                                                     {% endblock %}
