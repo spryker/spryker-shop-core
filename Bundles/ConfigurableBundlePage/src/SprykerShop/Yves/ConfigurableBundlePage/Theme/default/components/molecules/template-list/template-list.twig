@@ -31,13 +31,20 @@
                                                 {% block templateTitle %}
                                                     {% set isTitleImage = template.images is defined and template.images | length %}
                                                     {% set titleAdditionalClass = not isTitleImage ? config.name ~ '__item-title--with-background' %}
-                                                    {% set titleClasses = config.name ~ '__item-title ' ~ titleAdditionalClass ~ ' grid grid--center grid--middle spacing-bottom' %}
+                                                    {% set titleClasses = config.name ~ '__item-title ' ~ titleAdditionalClass ~ ' spacing-bottom' %}
 
                                                     {% block templateTitleItem %}
                                                         <a href="{{ slotsPageUrl }}" class="{{ titleClasses }}">
                                                             {% block templateTitleItemInner %}
+                                                                {% set templateItemNameClasses = config.name ~ '__item-name' %}
+                                                                {% set templateName = template.name | trans %}
+
+                                                                {% macro templateText(classes, text) %}
+                                                                    <span class="{{ classes }}">{{ text }}</span>
+                                                                {% endmacro %}
+
                                                                 {% if isTitleImage %}
-                                                                    {% set imageModifiers = ['full-width'] %}
+                                                                    {% set imageModifiers = ['without-spaces'] %}
 
                                                                     {% block templateTitleImage %}
                                                                         {% include atom('thumbnail') with {
@@ -48,9 +55,14 @@
                                                                             },
                                                                         } only %}
                                                                     {% endblock %}
+
+                                                                    {% block templateItemNameInner %}
+                                                                        {{ _self.templateText(templateItemNameClasses, templateName) }}
+                                                                    {% endblock %}
                                                                 {% else %}
                                                                     {% block templateTitleText %}
-                                                                        {{ template.name | trans }}
+                                                                        {% set templateItemNameClasses = config.name ~ '__item-name ' ~ config.name ~ '__item-name--secondary' %}
+                                                                        {{ _self.templateText(templateItemNameClasses, templateName) }}
                                                                     {% endblock %}
                                                                 {% endif %}
                                                             {% endblock %}
