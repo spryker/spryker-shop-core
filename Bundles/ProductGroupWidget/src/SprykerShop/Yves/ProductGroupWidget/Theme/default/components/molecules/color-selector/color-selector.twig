@@ -15,9 +15,7 @@
 } %}
 
 {% block component %}
-    {% if data.items is not empty %}
-        {{ parent() }}
-    {% endif %}
+    {% if data.items %}{{ parent() }}{% endif %}
 {% endblock %}
 
 {% block body %}
