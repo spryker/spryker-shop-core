@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\PriceProductWidget\Widget;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -18,17 +19,15 @@ class PriceProductWidget extends AbstractWidget
     protected const PARAMETER_CURRENT_PRODUCT_PRICE = 'currentProductPrice';
 
     /**
-     * @param int $idProductConcrete
-     * @param int $idProductAbstract
-     * @param int|null $quantity
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      */
-    public function __construct(int $idProductConcrete, int $idProductAbstract, ?int $quantity)
+    public function __construct(ProductViewTransfer $productViewTransfer)
     {
-        if (!$quantity) {
-            $quantity = 1;
+        if (!$productViewTransfer->getQuantity()) {
+            $productViewTransfer->setQuantity(1);
         }
 
-        $this->addPriceParameter($idProductConcrete, $idProductAbstract, $quantity);
+        $this->addPriceParameter($productViewTransfer);
     }
 
     /**
@@ -56,18 +55,16 @@ class PriceProductWidget extends AbstractWidget
     }
 
     /**
-     * @param int $idProductConcrete
-     * @param int $idProductAbstract
-     * @param int $quantity
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return void
      */
-    protected function addPriceParameter(int $idProductConcrete, int $idProductAbstract, int $quantity): void
+    protected function addPriceParameter(ProductViewTransfer $productViewTransfer): void
     {
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
-            ->setQuantity($quantity)
-            ->setIdProduct($idProductConcrete)
-            ->setIdProductAbstract($idProductAbstract);
+            ->setQuantity($productViewTransfer->getQuantity())
+            ->setIdProduct($productViewTransfer->getIdProductConcrete())
+            ->setIdProductAbstract($productViewTransfer->getIdProductAbstract());
 
         $currentProductPriceTransfer = $this->getFactory()
             ->getPriceProductStorageClient()

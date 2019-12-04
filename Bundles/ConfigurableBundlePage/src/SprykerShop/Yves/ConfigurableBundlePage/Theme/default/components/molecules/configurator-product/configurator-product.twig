@@ -17,21 +17,12 @@
 
 {% block rating %}{% endblock %}
 
-{% set priceProductWidget = findWidget('PriceProductWidget', [
-    data.product.idProductConcrete,
-    data.product.idProductAbstract,
-    data.product.quantity
-]) %}
+{% set priceProductWidget = findWidget('PriceProductWidget', [data.product]) %}
 
 {% set productPrice = priceProductWidget.currentProductPrice is defined ? priceProductWidget.currentProductPrice.sumPrice : null %}
 
 {% block price %}
-    {% widget 'PriceProductWidget' args [
-        data.product.idProductConcrete,
-        data.product.idProductAbstract,
-        data.product.quantity
-    ] only %}
-    {% endwidget %}
+    {% widget 'PriceProductWidget' args [data.product] only %}{% endwidget %}
 {% endblock %}
 
 {% block actionsContainer %}
