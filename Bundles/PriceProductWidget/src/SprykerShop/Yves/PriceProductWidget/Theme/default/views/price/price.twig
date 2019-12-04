@@ -7,7 +7,7 @@
 {% block body %}
     {% include molecule('price', 'PriceProductWidget') with {
         data: {
-            currentProductPrice: data.currentProductPrice,
+            price: data.currentProductPrice.sumPrice,
         },
     } only %}
 {% endblock %}

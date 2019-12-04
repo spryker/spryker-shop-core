@@ -1,23 +1,25 @@
+{% extends model('component') %}
+
 {% define config = {
     name: 'price',
 } %}
 
 {% define data = {
-    currentProductPrice: required,
+    price: required,
 } %}
 
-{% block extraClass %} grid box{% endblock %}
-
-{% block rating %}{% endblock %}
-
-{% block price %}
+{% block body %}
     {% if can('SeePricePermissionPlugin') %}
-        {% include molecule('money-price') with {
-            data: {
-                amount: data.currentProductPrice.sumPrice,
-            },
-        } only %}
+        {% block price %}
+            {% include molecule('money-price') with {
+                data: {
+                    amount: data.price,
+                },
+            } only %}
+        {% endblock %}
     {% else %}
-        {{ 'customer.access.cannot_see_price' | trans }}
+        {% block message %}
+            {{ 'customer.access.cannot_see_price' | trans }}
+        {% endblock %}
     {% endif %}
 {% endblock %}
