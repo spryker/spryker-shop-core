@@ -20,7 +20,7 @@
     "spryker/kernel": "^3.33.0",
     "spryker/messenger": "^3.1.0",
     "spryker/money": "^2.4.0",
-    "spryker/payment": "^4.3.0",
+    "spryker/payment": "^4.3.0 || ^5.0.0",
     "spryker/permission-extension": "^1.0.0",
     "spryker/price": "^5.1.0",
     "spryker/product-bundle": "^4.1.0 || ^6.0.0 || ^7.0.0",

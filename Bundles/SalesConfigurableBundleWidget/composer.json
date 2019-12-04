@@ -5,13 +5,19 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker-shop/customer-reorder-widget-extension": "^1.0.0",
     "spryker-shop/shop-ui": "^1.31.0",
     "spryker/kernel": "^3.33.0",
+    "spryker/messenger": "^3.0.0",
     "spryker/sales-configurable-bundle": "^1.0.0"
   },
   "require-dev": {
+    "spryker-shop/configurable-bundle-note-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker-shop/configurable-bundle-note-widget": "If you want to use configurable bundle note feature."
   },
   "autoload": {
     "psr-4": {

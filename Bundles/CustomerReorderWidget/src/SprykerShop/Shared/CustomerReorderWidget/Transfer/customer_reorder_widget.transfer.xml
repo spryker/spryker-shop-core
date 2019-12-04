@@ -7,6 +7,7 @@
         <property name="id" type="int"/>
         <property name="sku" type="string"/>
         <property name="idSalesOrderItem" type="int"/>
+        <property name="salesOrderConfiguredBundleItem" type="SalesOrderConfiguredBundleItem"/>
         <property name="productOptions" type="ProductOption[]" singular="productOption"/>
         <property name="isOrdered" type="bool"/>
         <property name="idProductAbstract" type="int"/>
