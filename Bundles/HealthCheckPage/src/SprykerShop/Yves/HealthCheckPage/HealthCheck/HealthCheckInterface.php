@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\HealthCheckPage\HealthCheck;
 
 use Generated\Shared\Transfer\HealthCheckResponseTransfer;
 
-interface HealthCheckerInterface
+interface HealthCheckInterface
 {
     /**
      * @param string|null $requestedServices

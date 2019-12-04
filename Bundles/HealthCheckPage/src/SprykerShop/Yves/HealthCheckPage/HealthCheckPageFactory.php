@@ -9,8 +9,8 @@ namespace SprykerShop\Yves\HealthCheckPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\HealthCheckPage\Dependency\Client\HealthCheckPageToHealthCheckClientInterface;
-use SprykerShop\Yves\HealthCheckPage\HealthCheck\HealthChecker;
-use SprykerShop\Yves\HealthCheckPage\HealthCheck\HealthCheckerInterface;
+use SprykerShop\Yves\HealthCheckPage\HealthCheck\HealthCheck;
+use SprykerShop\Yves\HealthCheckPage\HealthCheck\HealthCheckInterface;
 
 /**
  * @method \SprykerShop\Yves\HealthCheckPage\HealthCheckPageConfig getConfig()
@@ -18,11 +18,11 @@ use SprykerShop\Yves\HealthCheckPage\HealthCheck\HealthCheckerInterface;
 class HealthCheckPageFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\HealthCheckPage\HealthCheck\HealthCheckerInterface
+     * @return \SprykerShop\Yves\HealthCheckPage\HealthCheck\HealthCheckInterface
      */
-    public function createHealthChecker(): HealthCheckerInterface
+    public function createHealthChecker(): HealthCheckInterface
     {
-        return new HealthChecker(
+        return new HealthCheck(
             $this->getHealthCheckClient(),
             $this->getConfig()
         );

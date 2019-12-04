@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\HealthCheckResponseTransfer;
 use SprykerShop\Yves\HealthCheckPage\Dependency\Client\HealthCheckPageToHealthCheckClientInterface;
 use SprykerShop\Yves\HealthCheckPage\HealthCheckPageConfig;
 
-class HealthChecker implements HealthCheckerInterface
+class HealthCheck implements HealthCheckInterface
 {
     /**
      * @var \SprykerShop\Yves\HealthCheckPage\Dependency\Client\HealthCheckPageToHealthCheckClientInterface
