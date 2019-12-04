@@ -101,7 +101,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         if (jsonSchemaContainer.hasAttribute('json')) {
             let jsonString = jsonSchemaContainer.getAttribute('json');
             let jsonData = JSON.parse(jsonString);
-            console.log(jsonData);
+
             if (jsonData.hasOwnProperty('baseUnit')) {
                 this.baseUnit = jsonData.baseUnit;
             }
@@ -494,7 +494,6 @@ export default class PackagingUnitQuantitySelector extends Component {
         if (amountInBaseUnits > 0) {
             const choiceElem = document.createElement('span');
             const amountInSalesUnits = (((amountInBaseUnits * this.precision) / this.currentLeadSalesUnit.conversion) / this.precision).toFixed(this.numbersAfterDot);
-            console.log(parseFloat(amountInSalesUnits).toString(), 'amountInSalesUnits');
             const measurementSalesUnitName = this.getUnitName(this.currentLeadSalesUnit.product_measurement_unit.code);
             const measurementBaseUnitName = this.getUnitName(this.baseUnit.code);
 
