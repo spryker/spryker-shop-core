@@ -40,6 +40,11 @@ class IndexController extends AbstractController
             ->getHealthCheckClient()
             ->executeHealthCheck($healthCheckRequestTransfer);
 
-        return new JsonResponse($healthCheckResponseTransfer->toArray());
+        return $this->jsonResponse(
+            [
+                $healthCheckResponseTransfer->toArray(),
+            ],
+            $healthCheckResponseTransfer->getStatusCode()
+        );
     }
 }
