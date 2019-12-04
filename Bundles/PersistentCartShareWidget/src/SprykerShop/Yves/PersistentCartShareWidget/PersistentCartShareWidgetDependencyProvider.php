@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\PersistentCartShareWidget;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
@@ -17,7 +18,16 @@ class PersistentCartShareWidgetDependencyProvider extends AbstractBundleDependen
 {
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_PERSISTENT_CART_SHARE = 'CLIENT_PERSISTENT_CART_SHARE';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
+    /**
+     * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     */
+    public const SERVICE_ROUTER = 'routers';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -28,6 +38,7 @@ class PersistentCartShareWidgetDependencyProvider extends AbstractBundleDependen
     {
         $container = $this->addCustomerClient($container);
         $container = $this->addPersistentCartShareClient($container);
+        $container = $this->addRouter($container);
         $container = $this->addApplication($container);
 
         return $container;
@@ -62,6 +73,22 @@ class PersistentCartShareWidgetDependencyProvider extends AbstractBundleDependen
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addRouter(Container $container): Container
+    {
+        $container->set(static::SERVICE_ROUTER, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_ROUTER);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container

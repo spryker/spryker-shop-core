@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\PersistentCartShareWidget\PersistentCartShare;
 
 use Generated\Shared\Transfer\ResourceShareTransfer;
-use Spryker\Yves\Kernel\Application;
+use Spryker\Yves\Router\Router\ChainRouter;
 use SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToCustomerClientInterface;
 use SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToPersistentCartShareClientInterface;
 use SprykerShop\Yves\PersistentCartShareWidget\Exceptions\InvalidShareOptionGroupException;
@@ -31,9 +31,9 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
     protected $persistentCartShareClient;
 
     /**
-     * @var \Spryker\Yves\Kernel\Application
+     * @var \Spryker\Yves\Router\Router\ChainRouter
      */
-    protected $application;
+    protected $router;
 
     /**
      * @var \SprykerShop\Yves\PersistentCartShareWidget\ResourceShare\ResourceShareRequestBuilder
@@ -47,18 +47,18 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
 
     /**
      * @param \SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToPersistentCartShareClientInterface $persistentCartShareClient
-     * @param \Spryker\Yves\Kernel\Application $application
+     * @param \Spryker\Yves\Router\Router\ChainRouter $router
      * @param \SprykerShop\Yves\PersistentCartShareWidget\ResourceShare\ResourceShareRequestBuilder $resourceShareRequestBuilder
      * @param \SprykerShop\Yves\PersistentCartShareWidget\Dependency\Client\PersistentCartShareWidgetToCustomerClientInterface $customerClient
      */
     public function __construct(
         PersistentCartShareWidgetToPersistentCartShareClientInterface $persistentCartShareClient,
-        Application $application,
+        ChainRouter $router,
         ResourceShareRequestBuilder $resourceShareRequestBuilder,
         PersistentCartShareWidgetToCustomerClientInterface $customerClient
     ) {
         $this->persistentCartShareClient = $persistentCartShareClient;
-        $this->application = $application;
+        $this->router = $router;
         $this->resourceShareRequestBuilder = $resourceShareRequestBuilder;
         $this->customerClient = $customerClient;
     }
@@ -119,7 +119,7 @@ class PersistentCartShareLinkGenerator implements PersistentCartShareLinkGenerat
      */
     protected function buildResourceShareLink(ResourceShareTransfer $cartResourceShare): string
     {
-        return $this->application->url(static::LINK_ROUTE, [static::PARAM_RESOURCE_SHARE_UUID => $cartResourceShare->getUuid()]);
+        return $this->router->generate(static::LINK_ROUTE, [static::PARAM_RESOURCE_SHARE_UUID => $cartResourceShare->getUuid()]);
     }
 
     /**

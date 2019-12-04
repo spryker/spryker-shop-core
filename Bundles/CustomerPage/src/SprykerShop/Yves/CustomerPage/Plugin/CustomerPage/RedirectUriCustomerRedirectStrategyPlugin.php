@@ -56,7 +56,7 @@ class RedirectUriCustomerRedirectStrategyPlugin extends AbstractPlugin implement
      */
     protected function findParamRedirectUri(): ?string
     {
-        $request = $this->getFactory()->getApplication()[static::REQUEST];
+        $request = $this->getFactory()->getReuqestStack()->getCurrentRequest();
 
         return $request->get(static::PARAM_REDIRECT_URI);
     }

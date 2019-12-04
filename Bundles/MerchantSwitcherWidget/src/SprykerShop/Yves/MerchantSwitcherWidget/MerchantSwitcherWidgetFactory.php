@@ -23,6 +23,7 @@ use SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcher\MerchantSwitcherInt
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @method \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig getConfig()
@@ -77,7 +78,15 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
      */
     public function getRequest(): Request
     {
-        return $this->getApplication()['request'];
+        return $this->getRequestStack()->getCurrentRequest();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RequestStack
+     */
+    public function getRequestStack(): RequestStack
+    {
+        return $this->getProvidedDependency(MerchantSwitcherWidgetDependencyProvider::SERVICE_REQUEST_STACK);
     }
 
     /**
@@ -85,10 +94,12 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
      */
     public function getCookies(): ArrayObject
     {
-        return $this->getApplication()['cookies'];
+        return $this->getProvidedDependency(MerchantSwitcherWidgetDependencyProvider::SERVICE_COOKIES);
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Shared\Kernel\Communication\Application
      */
     public function getApplication(): Application

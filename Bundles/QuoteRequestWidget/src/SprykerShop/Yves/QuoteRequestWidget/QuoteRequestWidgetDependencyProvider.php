@@ -7,9 +7,9 @@
 
 namespace SprykerShop\Yves\QuoteRequestWidget;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCompanyUserClientBridge;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToCustomerClientBridge;
 use SprykerShop\Yves\QuoteRequestWidget\Dependency\Client\QuoteRequestWidgetToPersistentCartClientBridge;
@@ -121,8 +121,8 @@ class QuoteRequestWidgetDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addRouterService(Container $container): Container
     {
-        $container->set(static::SERVICE_ROUTER, function (): ChainRouterInterface {
-            return (new Pimple())->getApplication()->get(static::SERVICE_ROUTER);
+        $container->set(static::SERVICE_ROUTER, function (ContainerInterface $container): ChainRouterInterface {
+            return $container->getApplicationService(static::SERVICE_ROUTER);
         });
 
         return $container;

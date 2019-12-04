@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ShopApplication;
 
+use Spryker\Shared\Kernel\Container\GlobalContainer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
@@ -20,7 +21,14 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     public const PLUGIN_GLOBAL_WIDGETS = 'PLUGIN_GLOBAL_WIDGETS';
     public const WIDGET_GLOBAL = 'WIDGET_GLOBAL';
+
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ShopApplication\ShopApplicationDependencyProvider::GLOBAL_CONTAINER} instead.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
+    public const GLOBAL_CONTAINER = 'GLOBAL_CONTAINER';
+
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
     public const STORE = 'STORE';
     public const PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER = 'PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER';
@@ -33,6 +41,7 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
+        $container = $this->addGlobalContainer($container);
         $container = $this->addApplicationPlugin($container);
         $container = $this->addGlobalWidgets($container);
         $container = $this->addStore($container);
@@ -44,6 +53,22 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addGlobalContainer(Container $container)
+    {
+        $container->set(static::GLOBAL_CONTAINER, function () {
+            return (new GlobalContainer())->getContainer();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Use {@link \SprykerShop\Yves\ShopApplication\ShopApplicationDependencyProvider::addGlobalContainer()} instead.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container

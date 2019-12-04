@@ -68,6 +68,6 @@ class BaseCustomerAuthenticationHandler extends AbstractPlugin
      */
     protected function getHomeUrl()
     {
-        return $this->getFactory()->getApplication()->url(HomePageControllerProvider::ROUTE_HOME);
+        return $this->getFactory()->getRouter()->generate(HomePageControllerProvider::ROUTE_HOME);
     }
 }

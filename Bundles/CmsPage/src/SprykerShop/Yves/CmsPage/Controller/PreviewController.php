@@ -55,7 +55,7 @@ class PreviewController extends AbstractController
     protected function assertTemplate($template)
     {
         /** @var \Twig\Loader\ExistsLoaderInterface $loader */
-        $loader = $this->getApplication()['twig']->getLoader();
+        $loader = $this->getTwig()->getLoader();
         if (!$loader->exists($template)) {
             throw new NotFoundHttpException('The Cms Page template is not found');
         }
@@ -128,7 +128,7 @@ class PreviewController extends AbstractController
      */
     protected function getCurrentPreviewPageUri($idCmsPage)
     {
-        return $this->getApplication()->path(
+        return $this->getRouter()->generate(
             PreviewControllerProvider::ROUTE_PREVIEW,
             [PreviewControllerProvider::PARAM_PAGE => $idCmsPage]
         );

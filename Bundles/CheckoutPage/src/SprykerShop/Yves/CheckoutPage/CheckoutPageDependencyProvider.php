@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CheckoutPage;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider as SprykerCheckoutDependencyProvider;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
@@ -58,7 +59,21 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
     public const SERVICE_CUSTOMER = 'SERVICE_CUSTOMER';
 
+    /**
+     * @uses \Spryker\Yves\Messenger\Plugin\Application\FlashMessengerApplicationPlugin::SERVICE_FLASH_MESSENGER
+     */
+    public const SERVICE_FLASH_MESSENGER = 'flash_messenger';
+
+    /**
+     * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     */
+    public const SERVICE_ROUTER = 'routers';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
     public const PLUGIN_CUSTOMER_STEP_HANDLER = 'PLUGIN_CUSTOMER_STEP_HANDLER';
     public const PLUGIN_SHIPMENT_STEP_HANDLER = 'PLUGIN_SHIPMENT_STEP_HANDLER';
     public const PLUGIN_SHIPMENT_HANDLER = 'PLUGIN_SHIPMENT_HANDLER';
@@ -107,6 +122,8 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductBundleClient($container);
         $container = $this->addLocaleClient($container);
 
+        $container = $this->addFlashMessenger($container);
+        $container = $this->addRouter($container);
         $container = $this->addApplication($container);
         $container = $this->provideStore($container);
         $container = $this->addUtilValidateService($container);
@@ -442,6 +459,36 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addFlashMessenger(Container $container): Container
+    {
+        $container->set(static::SERVICE_FLASH_MESSENGER, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_FLASH_MESSENGER);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addRouter(Container $container): Container
+    {
+        $container->set(static::SERVICE_ROUTER, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_ROUTER);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container

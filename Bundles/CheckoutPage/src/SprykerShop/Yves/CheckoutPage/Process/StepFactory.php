@@ -105,7 +105,7 @@ class StepFactory extends AbstractFactory
     public function createStepCollection()
     {
         return new StepCollection(
-            $this->getUrlGenerator(),
+            $this->getRouter(),
             CheckoutPageControllerProvider::CHECKOUT_ERROR
         );
     }
@@ -162,7 +162,7 @@ class StepFactory extends AbstractFactory
             $this->getCustomerStepHandler(),
             static::CHECKOUT_CUSTOMER,
             $this->getConfig()->getEscapeRoute(),
-            $this->getApplication()->path(static::ROUTE_LOGOUT)
+            $this->getRouter()->generate(static::ROUTE_LOGOUT)
         );
     }
 
@@ -311,10 +311,12 @@ class StepFactory extends AbstractFactory
      */
     public function getFlashMessenger()
     {
-        return $this->getApplication()['flash_messenger'];
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_FLASH_MESSENGER);
     }
 
     /**
+     * @deprecated Use {@link \SprykerShop\Yves\CheckoutPage\Process\StepFactory::getRouter()} instead.
+     *
      * @return \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
     public function getUrlGenerator()
@@ -323,6 +325,16 @@ class StepFactory extends AbstractFactory
     }
 
     /**
+     * @return \Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     */
+    public function getRouter()
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_ROUTER);
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Yves\Kernel\Application
      */
     public function getApplication()

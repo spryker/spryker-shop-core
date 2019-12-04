@@ -625,7 +625,7 @@ class QuickOrderController extends AbstractController
 
         $route = $response->getRoute();
 
-        return new RedirectResponse($this->getApplication()->path($route->getRoute(), $route->getParameters()));
+        return new RedirectResponse($this->getRouter()->generate($route->getRoute(), $route->getParameters()));
     }
 
     /**

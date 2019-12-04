@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Application;
+use Spryker\Yves\Router\Router\RouterInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToAgentClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToCustomerClientInterface;
 use SprykerShop\Yves\AgentPage\Dependency\Client\AgentPageToMessengerClientInterface;
@@ -67,6 +68,14 @@ class AgentPageFactory extends AbstractFactory
     public function createAgentAuthenticationFailureHandler(?string $targetUrl = null): AuthenticationFailureHandlerInterface
     {
         return new AgentAuthenticationFailureHandler($targetUrl);
+    }
+
+    /**
+     * @return \Spryker\Yves\Router\Router\RouterInterface
+     */
+    public function getRouter(): RouterInterface
+    {
+        return $this->getProvidedDependency(AgentPageDependencyProvider::SERVICE_ROUTER);
     }
 
     /**
@@ -149,9 +158,7 @@ class AgentPageFactory extends AbstractFactory
      */
     public function getTokenStorage()
     {
-        $application = $this->getApplication();
-
-        return $application['security.token_storage'];
+        return $this->getProvidedDependency(AgentPageDependencyProvider::SERVICE_SECURITY_TOKEN_STORAGE);
     }
 
     /**
@@ -159,9 +166,7 @@ class AgentPageFactory extends AbstractFactory
      */
     public function getSecurityAuthorizationChecker(): AuthorizationCheckerInterface
     {
-        $application = $this->getApplication();
-
-        return $application['security.authorization_checker'];
+        return $this->getProvidedDependency(AgentPageDependencyProvider::SERVICE_SECURITY_AUTHORIZATION_CHECKER);
     }
 
     /**
