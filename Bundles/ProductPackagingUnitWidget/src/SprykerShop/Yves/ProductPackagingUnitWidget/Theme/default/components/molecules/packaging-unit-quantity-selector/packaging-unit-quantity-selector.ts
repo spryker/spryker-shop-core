@@ -50,6 +50,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     muError: boolean;
     puError: boolean;
+    protected numbersAfterDot: number = 10;
 
     protected readyCallback(event?: Event): void {
         this.qtyInSalesUnitInput = <HTMLInputElement>document.getElementById('sales-unit-quantity');
@@ -436,7 +437,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         const quantity = Number(this.qtyInBaseUnitInput.value);
         const totalAmount = Number(((amountInBaseUnits * this.precision) * quantity) / this.precision).toFixed(this.numbersAfterDot);
 
-        this.amountInBaseUnitInput.value = totalAmount;
+        this.amountInBaseUnitInput.value = parseFloat(totalAmount);
         this.addToCartButton.removeAttribute("disabled");
         this.hidePackagingUnitRestrictionNotifications();
 
@@ -491,15 +492,16 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     private createAmountChoiceElement(amountInBaseUnits: number) {
         if (amountInBaseUnits > 0) {
-            let choiceElem = document.createElement('span');
-            let amountInSalesUnits = amountInBaseUnits / this.currentLeadSalesUnit.conversion;
-            let measurementSalesUnitName = this.getUnitName(this.currentLeadSalesUnit.product_measurement_unit.code);
-            let measurementBaseUnitName = this.getUnitName(this.baseUnit.code);
+            const choiceElem = document.createElement('span');
+            const amountInSalesUnits = (((amountInBaseUnits * this.precision) / this.currentLeadSalesUnit.conversion) / this.precision).toFixed(this.numbersAfterDot);
+            console.log(parseFloat(amountInSalesUnits).toString(), 'amountInSalesUnits');
+            const measurementSalesUnitName = this.getUnitName(this.currentLeadSalesUnit.product_measurement_unit.code);
+            const measurementBaseUnitName = this.getUnitName(this.baseUnit.code);
 
             choiceElem.classList.add('link');
             choiceElem.setAttribute('data-base-unit-amount', amountInBaseUnits.toString());
-            choiceElem.setAttribute('data-sales-unit-amount', amountInSalesUnits.toString());
-            choiceElem.textContent = `(${amountInSalesUnits} ${measurementSalesUnitName}) = (${amountInBaseUnits} ${measurementBaseUnitName})`;
+            choiceElem.setAttribute('data-sales-unit-amount', parseFloat(amountInSalesUnits).toString());
+            choiceElem.textContent = `(${parseFloat(amountInSalesUnits)} ${measurementSalesUnitName}) = (${amountInBaseUnits} ${measurementBaseUnitName})`;
             choiceElem.onclick = function (event: Event) {
                 let element = event.srcElement as HTMLSelectElement;
                 let amountInBaseUnits = parseFloat(element.dataset.baseUnitAmount);
@@ -666,23 +668,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         return Number(amountPercentageOfDivision);
     }
 
-    protected getDecimals(value: string): number {
-        return value && value.match(/[,.]/) ? value.split(/[,.]/)[1].length : 0;
-    }
-
-    protected get numbersAfterDot(): number {
-        const amountInterval = this.amountDefaultInBaseUnitInput.getAttribute('data-amount-interval');
-        const amountDefault = this.amountDefaultInBaseUnitInput.value;
-        const maxCountDecimals = Math.max(this.getDecimals(amountInterval), this.getDecimals(amountDefault));
-
-        return maxCountDecimals;
-    }
-
     protected get precision(): number {
-        if (this.numbersAfterDot === 0) {
-            return 1;
-        }
-
-        return Number('1' + '0'.repeat(this.numbersAfterDot));
+        return Number(`1${'0'.repeat(this.numbersAfterDot)}`);
     }
 }
