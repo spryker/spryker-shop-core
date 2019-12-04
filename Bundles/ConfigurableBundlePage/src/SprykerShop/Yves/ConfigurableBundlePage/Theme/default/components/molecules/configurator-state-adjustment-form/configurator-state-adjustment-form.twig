@@ -44,8 +44,7 @@
             <input name="{{ productSkuInputName }}" type="hidden" value="{{ data.product.sku }}">
 
             {% block unselectedButton %}
-                {# TODO: if price is null product shouldn't be visible. Price is in widget now               #}
-{#                {% if data.product.price is not null %}#}
+                {% if data.product.price is not null %}
                     {% set buttonModifiers = ['expand'] %}
 
                     {% block unselectedButtonItem %}
@@ -56,7 +55,7 @@
                             },
                         } only %}
                     {% endblock %}
-{#                {% endif %}#}
+                {% endif %}
             {% endblock %}
         {% endif %}
     {% endblock %}

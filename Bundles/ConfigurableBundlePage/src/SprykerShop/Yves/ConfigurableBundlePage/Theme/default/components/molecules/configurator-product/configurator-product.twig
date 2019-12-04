@@ -17,6 +17,14 @@
 
 {% block rating %}{% endblock %}
 
+{% set priceProductWidget = findWidget('PriceProductWidget', [
+    data.product.idProductConcrete,
+    data.product.idProductAbstract,
+    data.product.quantity
+]) %}
+
+{% set productPrice = priceProductWidget.currentProductPrice is defined ? priceProductWidget.currentProductPrice.sumPrice : null %}
+
 {% block price %}
     {% widget 'PriceProductWidget' args [
         data.product.idProductConcrete,
@@ -31,6 +39,8 @@
         {% block actionsContainerInner %}
             <div class="col col--sm-3 col--xl-2 col--bottom">
                 {% block action %}
+                    {% do data.product.setPrice(productPrice) %}
+
                     {% include molecule('configurator-state-adjustment-form', 'ConfigurableBundlePage') with {
                         data: {
                             product: data.product,
