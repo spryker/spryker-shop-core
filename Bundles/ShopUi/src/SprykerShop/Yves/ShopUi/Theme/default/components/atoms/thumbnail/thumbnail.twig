@@ -8,5 +8,9 @@
 {% block attributes %}{% endblock %}
 
 {% block body %}
-    <img class="{{ config.name }}__image {% block additionalClass %}{% endblock %}" {{ component.renderAttributes(attributes) }}>
+    {% set additionalClass = '' %}
+
+    {% block image %}
+        <img class="{{ config.name }}__image {{ additionalClass }}" {{ component.renderAttributes(attributes) }}>
+    {% endblock %}
 {% endblock %}

@@ -30,9 +30,11 @@
                         jsName: config.jsName,
                     },
                 } only %}
-                    {% block additionalClass -%}
-                        {{ embed.jsName }}__image
-                    {%- endblock %}
+                    {% block image %}
+                        {% set additionalClass = embed.jsName ~ '__image' %}
+
+                        {{ parent() }}
+                    {% endblock %}
                 {% endembed %}
             {% endblock %}
         </a>
@@ -45,8 +47,6 @@
     {% block groups %}
         {% widget 'ProductGroupWidget' args [data.idProductAbstract] only %}{% endwidget %}
     {% endblock %}
-
-    {% block colors %}{% endblock %}
 
     {% block content %}
         {% block name %}
