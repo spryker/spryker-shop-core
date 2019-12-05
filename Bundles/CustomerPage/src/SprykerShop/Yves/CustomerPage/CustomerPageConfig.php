@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage;
 
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class CustomerPageConfig extends AbstractBundleConfig
@@ -44,5 +45,13 @@ class CustomerPageConfig extends AbstractBundleConfig
     public function getCustomerPasswordMaxLength(): int
     {
         return static::MAX_LENGTH_CUSTOMER_PASSWORD;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAnonymousPattern(): string
+    {
+        return $this->get(CustomerConstants::CUSTOMER_ANONYMOUS_PATTERN);
     }
 }
