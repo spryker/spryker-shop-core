@@ -50,6 +50,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     muError: boolean;
     puError: boolean;
+    protected numberOfDecimalPlaces: number = 10;
 
     protected readyCallback(event?: Event): void {
         this.qtyInSalesUnitInput = <HTMLInputElement>document.getElementById('sales-unit-quantity');
@@ -394,15 +395,17 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     private amountInputChange(amountInSalesUnitInput?: number) {
-        const amountDecimalsMaxLength = new RegExp(`((\.|\,)\\d{${this.numbersAfterDot}})\\d+`, 'g');
+        const amountDecimalsMaxLength = new RegExp(`((\.|\,)\\d{${this.numberOfDecimalPlaces}})\\d+`, 'g');
 
-        this.amountInSalesUnitInput.value = this.amountInSalesUnitInput.value.replace(amountDecimalsMaxLength, '$1');
+        if (this.amountInSalesUnitInput.value.match(/[,.]/)) {
+            this.amountInSalesUnitInput.value = this.amountInSalesUnitInput.value.replace(amountDecimalsMaxLength, '$1');
+        }
 
         if (typeof amountInSalesUnitInput === 'undefined') {
             amountInSalesUnitInput = Number(this.amountInSalesUnitInput.value);
         }
 
-        const amountInBaseUnits = Number((((amountInSalesUnitInput * this.precision) * Number(this.currentLeadSalesUnit.conversion)) / this.precision).toFixed(this.numbersAfterDot));
+        const amountInBaseUnits = Number((((amountInSalesUnitInput * this.precision) * Number(this.currentLeadSalesUnit.conversion)) / this.precision).toFixed(this.numberOfDecimalPlaces));
 
         this.productPackagingNewPriceBlock.classList.add('is-hidden');
         this.puError = false;
@@ -432,7 +435,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
 
         const quantity = Number(this.qtyInBaseUnitInput.value);
-        const totalAmount = (((amountInBaseUnits * this.precision) * quantity) / this.precision).toFixed(this.numbersAfterDot);
+        const totalAmount = (((amountInBaseUnits * this.precision) * quantity) / this.precision).toFixed(this.numberOfDecimalPlaces);
 
         this.amountInBaseUnitInput.value = parseFloat(totalAmount);
         this.addToCartButton.removeAttribute("disabled");
@@ -489,15 +492,15 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     private createAmountChoiceElement(amountInBaseUnits: number) {
         if (amountInBaseUnits > 0) {
-            let choiceElem = document.createElement('span');
-            let amountInSalesUnits = amountInBaseUnits / this.currentLeadSalesUnit.conversion;
-            let measurementSalesUnitName = this.getUnitName(this.currentLeadSalesUnit.product_measurement_unit.code);
-            let measurementBaseUnitName = this.getUnitName(this.baseUnit.code);
+            const choiceElem = document.createElement('span');
+            const amountInSalesUnits = (((amountInBaseUnits * this.precision) / this.currentLeadSalesUnit.conversion) / this.precision).toFixed(this.numberOfDecimalPlaces);
+            const measurementSalesUnitName = this.getUnitName(this.currentLeadSalesUnit.product_measurement_unit.code);
+            const measurementBaseUnitName = this.getUnitName(this.baseUnit.code);
 
             choiceElem.classList.add('link');
             choiceElem.setAttribute('data-base-unit-amount', amountInBaseUnits.toString());
-            choiceElem.setAttribute('data-sales-unit-amount', amountInSalesUnits.toString());
-            choiceElem.textContent = `(${amountInSalesUnits} ${measurementSalesUnitName}) = (${amountInBaseUnits} ${measurementBaseUnitName})`;
+            choiceElem.setAttribute('data-sales-unit-amount', parseFloat(amountInSalesUnits).toString());
+            choiceElem.textContent = `(${parseFloat(amountInSalesUnits)} ${measurementSalesUnitName}) = (${amountInBaseUnits} ${measurementBaseUnitName})`;
             choiceElem.onclick = function (event: Event) {
                 let element = event.srcElement as HTMLSelectElement;
                 let amountInBaseUnits = parseFloat(element.dataset.baseUnitAmount);
@@ -528,14 +531,13 @@ export default class PackagingUnitQuantitySelector extends Component {
         const salesUnitId = parseInt((event.srcElement as HTMLSelectElement).value);
         const salesUnit = this.getLeadSalesUnitById(salesUnitId);
 
-        const amountInSalesUnits = this.multiply(Number(this.amountInSalesUnitInput.value), this.currentLeadSalesUnit.conversion) / salesUnit.conversion;
-        const amountInSalesUnitsMin = this.multiply(Number(this.amountInSalesUnitInput.min), this.currentLeadSalesUnit.conversion) / salesUnit.conversion;
-        const amountInSalesUnitsMax = this.multiply(Number(this.amountInSalesUnitInput.max), this.currentLeadSalesUnit.conversion) / salesUnit.conversion;
-        const amountInSalesUnitsStep = this.multiply(Number(this.amountInSalesUnitInput.step), this.currentLeadSalesUnit.conversion) / salesUnit.conversion;
+        const amountInSalesUnits = this.getAmountConversion(this.amountInSalesUnitInput.value, salesUnit.conversion);
+        const amountInSalesUnitsMin = this.getAmountConversion(this.amountInSalesUnitInput.min, salesUnit.conversion);
+        const amountInSalesUnitsMax = this.getAmountConversion(this.amountInSalesUnitInput.max, salesUnit.conversion);
+        const amountInSalesUnitsStep = this.getAmountConversion(this.amountInSalesUnitInput.step, salesUnit.conversion);
 
         this.currentLeadSalesUnit = salesUnit;
         this.amountInSalesUnitInput.value = amountInSalesUnits;
-        this.amountDefaultInBaseUnitInput.setAttribute('data-default-amount', (amountInSalesUnitsMin ? amountInSalesUnitsMin : amountInSalesUnits));
 
         if (this.amountInSalesUnitInput.min) {
             this.amountInSalesUnitInput.min = amountInSalesUnitsMin;
@@ -603,7 +605,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     private getMinAmountChoice(amountInSalesUnits: number) {
-        const amountInBaseUnits = Number((((amountInSalesUnits * this.precision) * Number(this.currentLeadSalesUnit.conversion)) / this.precision).toFixed(this.numbersAfterDot));
+        const amountInBaseUnits = Number((((amountInSalesUnits * this.precision) * Number(this.currentLeadSalesUnit.conversion)) / this.precision).toFixed(this.numberOfDecimalPlaces));
 
         if (amountInBaseUnits < this.getMinAmount()) {
             return this.getMinAmount();
@@ -621,7 +623,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     private getMaxAmountChoice(amountInSalesUnits: number, minChoice: number) {
-        let amountInBaseUnits = Number((((amountInSalesUnits * this.precision) * Number(this.currentLeadSalesUnit.conversion)) / this.precision).toFixed(this.numbersAfterDot));
+        let amountInBaseUnits = Number((((amountInSalesUnits * this.precision) * Number(this.currentLeadSalesUnit.conversion)) / this.precision).toFixed(this.numberOfDecimalPlaces));
 
         if (this.isAmountGreaterThanMaxAmount(amountInBaseUnits)) {
             amountInBaseUnits = this.getMaxAmount();
@@ -638,7 +640,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
 
         if (this.isAmountMultipleToInterval(amountInBaseUnits)) {
-            const nextPossibleInterval = Number((((minChoice * this.precision) + (this.getAmountInterval() * this.precision)) / this.precision).toFixed(this.numbersAfterDot));
+            const nextPossibleInterval = Number((((minChoice * this.precision) + (this.getAmountInterval() * this.precision)) / this.precision).toFixed(this.numberOfDecimalPlaces));
 
             return nextPossibleInterval;
         }
@@ -654,34 +656,22 @@ export default class PackagingUnitQuantitySelector extends Component {
         return this.getAmountPercentageOfDivision(amountInBaseUnits) !== 0;
     }
 
+    protected getAmountConversion(value: number, conversion: number): number {
+        return parseFloat(((((value * this.precision) * this.currentLeadSalesUnit.conversion) / conversion) / this.precision).toFixed(this.numberOfDecimalPlaces));
+    }
+
     protected getAmountPercentageOfDivision(amountInBaseUnits: number): number {
         const amountMultiplyToPrecision = Math.round((amountInBaseUnits * this.precision));
         const minAmountMultiplyToPrecision = Math.round((this.getMinAmount() * this.precision));
         const amountIntervalMultiplyToPrecision = this.getAmountInterval() * this.precision;
-        const currentMinusMinimumAmount = Number(((amountMultiplyToPrecision - minAmountMultiplyToPrecision) / this.precision).toFixed(this.numbersAfterDot));
+        const currentMinusMinimumAmount = Number(((amountMultiplyToPrecision - minAmountMultiplyToPrecision) / this.precision).toFixed(this.numberOfDecimalPlaces));
         const currentMinusMinimumAmountMultiplyToPrecision = Math.round(currentMinusMinimumAmount * this.precision);
-        const amountPercentageOfDivision = ((currentMinusMinimumAmountMultiplyToPrecision % amountIntervalMultiplyToPrecision) / this.precision).toFixed(this.numbersAfterDot);
+        const amountPercentageOfDivision = ((currentMinusMinimumAmountMultiplyToPrecision % amountIntervalMultiplyToPrecision) / this.precision).toFixed(this.numberOfDecimalPlaces);
 
         return Number(amountPercentageOfDivision);
     }
 
-    protected getDecimals(value: string): number {
-        return value && value.match(/[,.]/) ? value.split(/[,.]/)[1].length : 0;
-    }
-
-    protected get numbersAfterDot(): number {
-        const amountInterval = this.amountInSalesUnitInput.step;
-        const amountDefault = this.amountDefaultInBaseUnitInput.getAttribute('data-default-amount');
-        const maxCountDecimals = Math.max(this.getDecimals(amountInterval), this.getDecimals(amountDefault));
-
-        return maxCountDecimals;
-    }
-
     protected get precision(): number {
-        if (this.numbersAfterDot === 0) {
-            return 1;
-        }
-
-        return Number('1' + '0'.repeat(this.numbersAfterDot));
+        return Number(`1${'0'.repeat(this.numberOfDecimalPlaces)}`);
     }
 }
