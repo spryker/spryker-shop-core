@@ -74,7 +74,6 @@
 
                             {% embed molecule('summary-item', 'CheckoutPage') with {
                                 data: {
-                                    item: item,
                                     name: item.name,
                                     quantity: item.quantity,
                                     price: item.sumPrice | money,
@@ -86,6 +85,7 @@
                                     images: item.images,
                                     sku: item.sku,
                                     groupKey: item.groupKey,
+                                    productOffer: item.productOffer | default(null),
                                 },
                                 embed: {
                                     isFirst: loop.first,
