@@ -24,7 +24,16 @@ class UrlPurifyController extends AbstractController
     public function indexAction(Request $request): JsonResponse
     {
         $requestParams = $request->request->all();
-        $url = stripslashes($request->get('url'));
+        $url = $request->get('url');
+
+        if ($url === null) {
+            return $this->jsonResponse([
+                'url' => null,
+                'isSuccess' => false,
+            ]);
+        }
+
+        $url = stripslashes($url);
         unset($requestParams['url']);
         $requestParams = $this->getFactory()
             ->createRequestAttributesPurifier()
@@ -34,6 +43,7 @@ class UrlPurifyController extends AbstractController
 
         return $this->jsonResponse([
             'url' => $request->getSchemeAndHttpHost() . $purifiedUrl,
+            'isSuccess' => true,
         ]);
     }
 }

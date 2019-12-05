@@ -35,6 +35,8 @@ export default class FilterSection extends Component {
         data.append('url', url);
         const response = await this.purifyAjaxProvider.fetch(data);
         const jsonResponse = JSON.parse(response);
-        window.location.href = jsonResponse.url;
+        if (jsonResponse.isSuccess === true) {
+            window.location.href = jsonResponse.url;
+        }
     }
 }
