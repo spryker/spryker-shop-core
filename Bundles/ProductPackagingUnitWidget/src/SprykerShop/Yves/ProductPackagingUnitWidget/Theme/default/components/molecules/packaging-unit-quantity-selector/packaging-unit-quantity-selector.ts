@@ -102,10 +102,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     protected readonly degree: number[] = [2, 3];
 
     /* tslint:enable: no-magic-numbers */
-
-    // protected puChoiceListElement: HTMLUListElement;
-    // protected puCurrentChoiceElement: HTMLSpanElement;
-
+    
     protected readyCallback(event?: Event): void {}
 
     protected init(): void {
