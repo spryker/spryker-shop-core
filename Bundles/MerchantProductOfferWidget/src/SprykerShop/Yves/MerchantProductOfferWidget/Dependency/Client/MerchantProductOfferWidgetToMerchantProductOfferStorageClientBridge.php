@@ -30,9 +30,9 @@ class MerchantProductOfferWidgetToMerchantProductOfferStorageClientBridge implem
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer|null
      */
-    public function findProductOfferByReference(string $productOfferReference): ?ProductOfferStorageTransfer
+    public function findProductOfferStorageByReference(string $productOfferReference): ?ProductOfferStorageTransfer
     {
-        return $this->merchantProductOfferStorageClient->findProductOfferByReference($productOfferReference);
+        return $this->merchantProductOfferStorageClient->findProductOfferStorageByReference($productOfferReference);
     }
 
     /**

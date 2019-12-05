@@ -20,6 +20,11 @@ class MerchantProductOfferPreAddToCartPlugin extends AbstractPlugin implements P
     protected const PARAM_PRODUCT_OFFER_REFERENCE = 'product_offer_reference';
 
     /**
+     * {@inheritdoc}
+     * - Sets product offer reference to item transfer.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param array $params
      *
@@ -33,7 +38,7 @@ class MerchantProductOfferPreAddToCartPlugin extends AbstractPlugin implements P
 
         $productOfferStorageTransfer = $this->getFactory()
             ->getMerchantProductOfferStorageClient()
-            ->findProductOfferByReference($params[static::PARAM_PRODUCT_OFFER_REFERENCE]);
+            ->findProductOfferStorageByReference($params[static::PARAM_PRODUCT_OFFER_REFERENCE]);
 
         if (!$productOfferStorageTransfer) {
             return $itemTransfer;
