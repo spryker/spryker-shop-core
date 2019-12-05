@@ -1,0 +1,43 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'configurator-state-form',
+} %}
+
+{% define data = {
+    form: required,
+    action: required,
+    submitButtonText: 'forms.submit-btn' | trans,
+    submitButtonModifiers: ['expand'],
+    idConfigurableBundleTemplateSlot: null,
+    selectedSlotId: null,
+    isSubmitButtonActive: true,
+    method: 'GET',
+} %}
+
+{% block body %}
+    {{ form_start(data.form, { 'action': data.action, 'method': data.method }) }}
+
+    {% for slotForm in data.form.slots %}
+        {{ form_row(slotForm.sku, { id: '' }) }}
+    {% endfor %}
+
+    {% set buttonAttributes = not data.isSubmitButtonActive ? { disabled: 'disabled' } : {} %}
+
+    {% block actionContainer %}
+        {% set buttonModifiers = data.submitButtonModifiers %}
+
+        {% block action %}
+            {% include molecule('configurator-button', 'ConfigurableBundlePage') with {
+                modifiers: buttonModifiers,
+                attributes: buttonAttributes,
+                data: {
+                    text: data.submitButtonText,
+                },
+            } only %}
+        {% endblock %}
+    {% endblock %}
+
+    {{ form_row(data.form._token, { id: '' }) }}
+    {{ form_end(data.form) }}
+{% endblock %}
