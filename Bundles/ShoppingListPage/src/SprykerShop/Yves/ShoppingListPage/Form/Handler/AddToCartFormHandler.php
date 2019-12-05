@@ -52,7 +52,6 @@ class AddToCartFormHandler implements AddToCartFormHandlerInterface
      */
     public function handleAddToCartRequest(Request $request): ShoppingListItemCollectionTransfer
     {
-        dd($request->request->all());
         if ($request->get(static::PARAM_ID_ADD_ITEM)) {
             return $this->getShoppingListItemTransferFromRequest($request);
         }
