@@ -60,6 +60,7 @@
                     {% widget 'QuoteConfiguredBundleWidget' args [data.cart, shipmentGroup.items] with {
                         data: {
                             isEditable: false,
+                            isQuantitySummaryVisible: true,
                         },
                     } only %}
                     {% endwidget %}

@@ -21,6 +21,7 @@ class ShopCmsSlotTwigPluginTest extends Unit
 {
     protected const CONTENT = 'test content';
     protected const SLOT_KEY = 'test-slot-key';
+    protected const CONTENT_PROVIDER_TYPE = 'content-provider-type';
     protected const PROVIDED_DATA = [
         'provided-key' => 'data-value',
     ];
@@ -45,7 +46,10 @@ class ShopCmsSlotTwigPluginTest extends Unit
         ]);
 
         $this->setCmsSlotContentPluginDependency($cmsSlotContentResponseTransfer);
-        $this->setCmsSlotStorageClientDependency((new CmsSlotStorageTransfer())->setIsActive(true));
+        $this->setCmsSlotStorageClientDependency($this->tester->getCmsSlotStorageTransfer([
+            CmsSlotStorageTransfer::IS_ACTIVE => true,
+            CmsSlotStorageTransfer::CONTENT_PROVIDER_TYPE => static::CONTENT_PROVIDER_TYPE,
+        ]));
 
         $cmsSlotContextTransfer = $this->tester->getCmsSlotContextTransfer(
             static::SLOT_KEY,
@@ -65,7 +69,7 @@ class ShopCmsSlotTwigPluginTest extends Unit
     /**
      * @return void
      */
-    public function testShopCmsSlotTwigPluginReturnsEmptyStringOnMissingRequiredData(): void
+    public function testShopCmsSlotTwigPluginThrowsExceptionOnMissingRequiredData(): void
     {
         // Arrange
         $cmsSlotContentResponseTransfer = $this->tester->getCmsSlotContentResponseTransfer([
@@ -73,7 +77,10 @@ class ShopCmsSlotTwigPluginTest extends Unit
         ]);
 
         $this->setCmsSlotContentPluginDependency($cmsSlotContentResponseTransfer);
-        $this->setCmsSlotStorageClientDependency((new CmsSlotStorageTransfer())->setIsActive(true));
+        $this->setCmsSlotStorageClientDependency($this->tester->getCmsSlotStorageTransfer([
+            CmsSlotStorageTransfer::IS_ACTIVE => true,
+            CmsSlotStorageTransfer::CONTENT_PROVIDER_TYPE => static::CONTENT_PROVIDER_TYPE,
+        ]));
 
         $cmsSlotContextTransfer = $this->tester->getCmsSlotContextTransfer(
             static::SLOT_KEY,
@@ -82,12 +89,12 @@ class ShopCmsSlotTwigPluginTest extends Unit
             static::AUTO_FILLED_DATA
         );
 
-        // Act
-        $shopCmsSlotContent = (new ShopCmsSlotTwigPlugin())
-            ->getSlotContent($cmsSlotContextTransfer);
-
         // Assert
-        $this->assertEquals('', $shopCmsSlotContent);
+        $this->expectExceptionMessage('Unable to find provided data for the key "missing-provided-key"');
+
+        // Act
+        (new ShopCmsSlotTwigPlugin())
+            ->getSlotContent($cmsSlotContextTransfer);
     }
 
     /**
@@ -101,7 +108,10 @@ class ShopCmsSlotTwigPluginTest extends Unit
         ]);
 
         $this->setCmsSlotContentPluginDependency($cmsSlotContentResponseTransfer);
-        $this->setCmsSlotStorageClientDependency((new CmsSlotStorageTransfer())->setIsActive(false));
+        $this->setCmsSlotStorageClientDependency($this->tester->getCmsSlotStorageTransfer([
+            CmsSlotStorageTransfer::IS_ACTIVE => false,
+            CmsSlotStorageTransfer::CONTENT_PROVIDER_TYPE => static::CONTENT_PROVIDER_TYPE,
+        ]));
 
         $cmsSlotContextTransfer = $this->tester->getCmsSlotContextTransfer(
             static::SLOT_KEY,
@@ -121,7 +131,7 @@ class ShopCmsSlotTwigPluginTest extends Unit
     /**
      * @return void
      */
-    public function testShopCmsSlotTwigPluginThrowsExceptionIfSlotDoesNotExist(): void
+    public function testShopCmsSlotTwigPluginReturnsEmptyStringIfSlotDoesNotExist(): void
     {
         // Arrange
         $cmsSlotContentResponseTransfer = $this->tester->getCmsSlotContentResponseTransfer([
@@ -138,12 +148,12 @@ class ShopCmsSlotTwigPluginTest extends Unit
             static::AUTO_FILLED_DATA
         );
 
-        // Assert
-        $this->expectException(CmsSlotNotFoundException::class);
-
         // Act
-        (new ShopCmsSlotTwigPlugin())
+        $shopCmsSlotContent = (new ShopCmsSlotTwigPlugin())
             ->getSlotContent($cmsSlotContextTransfer);
+
+        // Assert
+        $this->assertEquals('', $shopCmsSlotContent);
     }
 
     /**
@@ -189,8 +199,10 @@ class ShopCmsSlotTwigPluginTest extends Unit
     protected function setCmsSlotContentPluginDependency(CmsSlotContentResponseTransfer $cmsSlotContentResponseTransfer): void
     {
         $this->tester->setDependency(
-            ShopCmsSlotDependencyProvider::PLUGIN_CMS_SLOT_CONTENT,
-            $this->getCmsSlotContentPluginMock($cmsSlotContentResponseTransfer)
+            ShopCmsSlotDependencyProvider::PLUGINS_CMS_SLOT_CONTENT,
+            [
+                static::CONTENT_PROVIDER_TYPE => $this->getCmsSlotContentPluginMock($cmsSlotContentResponseTransfer),
+            ]
         );
     }
 
