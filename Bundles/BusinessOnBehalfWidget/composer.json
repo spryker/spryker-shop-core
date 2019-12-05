@@ -11,12 +11,8 @@
     "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
-    "spryker-shop/customer-page": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker-shop/customer-page": "To add menu item to customer page menu: ^0.4.1."
   },
   "autoload": {
     "psr-4": {
