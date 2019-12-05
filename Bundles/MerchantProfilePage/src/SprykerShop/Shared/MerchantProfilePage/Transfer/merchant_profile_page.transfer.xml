@@ -6,6 +6,10 @@
 
     <transfer name="MerchantProfileStorage">
         <property name="idMerchantProfile" type="int"/>
+        <property name="fkMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantOpeningHoursStorage">
     </transfer>
 
 </transfers>
