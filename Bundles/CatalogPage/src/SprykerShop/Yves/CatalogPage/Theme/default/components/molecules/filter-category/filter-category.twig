@@ -2,14 +2,14 @@
 
 {% define config = {
     name: 'filter-category',
-    tag: 'filter-category',
 } %}
 
 {% define data = {
     filter: null,
     filterPath: null,
     categories: [],
-    isEmptyCategoryFilterValueVisible: null
+    isEmptyCategoryFilterValueVisible: null,
+    filterSectionJsName: '',
 } %}
 
 {% block component %}
@@ -19,14 +19,6 @@
 {% endblock %}
 
 {% block body %}
-    {% include molecule('ajax-provider') with {
-        class: config.jsName ~ '__url-purify-provider',
-        attributes: {
-            method: 'POST',
-            url: url('search/url-purify'),
-        },
-    } only %}
-
     <ul class="menu">
         {% for categoryNode in data.categories %}
             {% set quantity = 0 %}
@@ -43,7 +35,7 @@
             {% endif %}
             {% if (quantity > 0) or (quantity <= 0 and data.isEmptyCategoryFilterValueVisible == true) %}
                 <li class="menu__item {% if hasChildren %}menu__item--has-children-list{% endif %}">
-                    <button class="link {{ config.jsName }}__purify-triggers" type="button" {% if quantity == 0 %}disabled="disabled"{% endif %}>
+                    <button class="link {{ data.filterSectionJsName }}__purify-trigger" type="button" {{ quantity == 0 ? 'disabled' }} data-url={{ categoryUrl }}>
                         {{ categoryNode.name }} ({{ quantity }})
                     </button>
 

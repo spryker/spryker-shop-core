@@ -2,7 +2,7 @@
 
 {% define config = {
     name: 'filter-section',
-    tag: 'section'
+    tag: 'filter-section',
 } %}
 
 {% define data = {
@@ -10,11 +10,19 @@
     filteredFacets: [],
     filterPath: null,
     categories: [],
-    isEmptyCategoryFilterValueVisible: null
+    isEmptyCategoryFilterValueVisible: null,
 } %}
 
 {% block body %}
     {% set facets = data.filteredFacets is not empty ? data.filteredFacets : data.facets %}
+
+    {% include molecule('ajax-provider') with {
+        class: config.jsName ~ '__url-purify-provider',
+        attributes: {
+            method: 'POST',
+            url: url('search/url-purify'),
+        },
+    } only %}
 
     {% for filter in facets %}
         {% set filterHasValues = filter.values is not defined or filter.values | length > 0 %}
@@ -36,7 +44,8 @@
                         max: filter.max | default(0),
                         activeMin: filter.activeMin | default(0),
                         activeMax: filter.activeMax | default(0),
-                        isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible
+                        isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
+                        filterSectionJsName: config.jsName,
                     }
                 } only %}
             {% endblock %}
