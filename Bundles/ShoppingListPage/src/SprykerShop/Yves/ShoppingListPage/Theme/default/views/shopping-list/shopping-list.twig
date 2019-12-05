@@ -90,12 +90,12 @@
                         <div class="grid grid--justify spacing-y spacing-y--inner">
                             {% block formPanelInner %}
                                 <div class="col">
-                                    <button type="submit" class="{{ formButtonClasses }}" data-init-single-click {{ qa('submit-button') }}>
+                                    <button type="submit" class="{{ formButtonClasses }}" {{ qa('submit-button') }}>
                                         {{- 'customer.account.shopping_list.add_selected_items_to_cart' | trans -}}
                                     </button>
                                 </div>
                                 <div class="col">
-                                    <button type="submit" class="{{ formButtonClasses }}" name="add-all-available" value="1" data-init-single-click {{ qa('submit-button') }}>
+                                    <button type="submit" class="{{ formButtonClasses }}" name="add-all-available" value="1" {{ qa('submit-button') }}>
                                         {{- 'customer.account.shopping_list.add_all_available_to_cart' | trans -}}
                                     </button>
                                 </div>
