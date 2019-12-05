@@ -20,7 +20,7 @@
 {% endblock %}
 
 {% block body %}
-    {% set labelOptions = data.isLabelHidden ? {label: false} : {} %}
+    {% set labelOptions = data.isLabelHidden ? { label: false } : {} %}
 
     {{ form_start(data.form, data.formOptions) }}
         {% block formInner %}

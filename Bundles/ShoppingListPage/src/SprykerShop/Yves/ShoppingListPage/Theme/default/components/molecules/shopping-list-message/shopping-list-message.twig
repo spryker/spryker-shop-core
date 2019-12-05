@@ -38,8 +38,8 @@
         <p class="{{ messageClasses }}">
             {% block messageInner %}
                 {{ 'customer.account.shopping_list.delete.you_are_trying_to_delete_shopping_list' | trans({
-                    '%link%': url('shopping-list/details', {'idShoppingList': data.idShoppingList}),
-                    '%name%': data.title
+                    '%link%': url('shopping-list/details', { 'idShoppingList': data.idShoppingList }),
+                    '%name%': data.title,
                 }) | raw }}
             {% endblock %}
         </p>
@@ -47,7 +47,7 @@
 
     {% if data.sharedCompanyUsers.count or data.sharedCompanyBusinessUnits.count %}
         {% block sharedInformation %}
-            {% set sharedInformationTitleClasses = 'spacing-y spacing-y--small spacing-bottom spacing-bottom--big' %}
+            {% set sharedInformationTitleClasses = 'spacing-top spacing-top--small spacing-bottom spacing-bottom--big' %}
 
             {% block sharedInformationTitle %}
                 <p class="{{ sharedInformationTitleClasses }}">
@@ -61,7 +61,7 @@
                 {% endblock %}
 
                 {% block businessUnitsList %}
-                    <ul class="list">
+                    <ul class="list spacing-bottom spacing-bottom--big">
                         {% block businessUnitsListInner %}
                             {% set businessUnitsListItemClasses = 'list__item' %}
 
@@ -77,17 +77,13 @@
                 {% endblock %}
             {% endif %}
 
-            {% block linebreak %}
-                <br>
-            {% endblock %}
-
             {% if data.sharedCompanyUsers.count %}
                 {% block companyUsersTitle %}
                     <strong>{{ 'company.account.company_user' | trans }}:</strong>
                 {% endblock %}
 
                 {% block companyUsersList %}
-                    <ul class="list">
+                    <ul class="list spacing-bottom spacing-bottom--big">
                         {% block companyUsersListInner %}
                             {% set companyUsersListItemClasses = 'list__item' %}
 
@@ -103,10 +99,6 @@
                 {% endblock %}
             {% endif %}
 
-            {% block linebreakSecondary %}
-                <br>
-            {% endblock %}
-
             {% set sharedMessageClasses = '' %}
 
             {% block sharedMessage %}
@@ -121,7 +113,7 @@
         {% endblock %}
     {% endif %}
 
-    {% block buttonsWrap %}
+    {% block buttonsContainer %}
         <div>
             {% block buttons %}
                 {% set backButtonClasses = 'button button--hollow' %}
@@ -132,7 +124,7 @@
                 {% endblock %}
 
                 {% block deleteButton %}
-                    <a href="{{ url('shopping-list/delete', {'idShoppingList': data.idShoppingList}) }}"
+                    <a href="{{ url('shopping-list/delete', { 'idShoppingList': data.idShoppingList }) }}"
                        class="{{ deleteButtonClasses }}" data-init-single-click>
                         {{- 'customer.account.shopping_list.overview.delete' | trans -}}
                     </a>

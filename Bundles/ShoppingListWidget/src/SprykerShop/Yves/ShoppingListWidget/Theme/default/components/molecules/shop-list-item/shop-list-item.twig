@@ -19,7 +19,7 @@
                 {% set ownerNameClasses = config.name ~ '__owner' %}
 
                 {% block link %}
-                    <a href="{{ path('shopping-list/details', { idShoppingList: (data.shoppingList.idShoppingList)}) }}" class="{{ linkClasses }}">
+                    <a href="{{ path('shopping-list/details', { idShoppingList: (data.shoppingList.idShoppingList) }) }}" class="{{ linkClasses }}">
                         {% block linkInner %}
                             <strong class="{{ linkTextClasses }}">{{ data.shoppingList.name }}</strong>
                         {% endblock %}

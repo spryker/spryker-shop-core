@@ -30,9 +30,7 @@
 {% endblock %}
 
 {% block customerNavigation %}
-    {% widget 'CustomerNavigationWidget' args ['shoppingList', data.idShoppingList] only %}
-    {% elsewidget 'CustomerNavigationWidgetPlugin' args ['shoppingList', data.idShoppingList] only %} {# @deprecated Use CustomerNavigationWidget instead. #}
-    {% endwidget %}
+    {% widget 'CustomerNavigationWidget' args ['shoppingList', data.idShoppingList] only %}{% endwidget %}
 {% endblock %}
 
 {% set formClasses = 'box' %}
@@ -43,7 +41,7 @@
         class: formClasses,
         data: {
             form: data.shareShoppingListForm,
-            title: 'customer.account.shopping_list.share.from.share.title' | trans({'%name%': data.title}),
+            title: 'customer.account.shopping_list.share.from.share.title' | trans({ '%name%': data.title }),
             submit: {
                 text: 'customer.account.shopping_list.share.from.share' | trans,
                 class: formButtonClasses,

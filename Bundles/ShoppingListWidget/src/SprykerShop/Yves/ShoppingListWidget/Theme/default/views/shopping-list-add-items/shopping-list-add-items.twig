@@ -7,7 +7,7 @@
 
 {% block template %}
     {% if data.isVisible %}
-        {{parent()}}
+        {{ parent() }}
     {% endif %}
 {% endblock %}
 
@@ -15,10 +15,10 @@
     <hr>
     {% block content %}
         <div class="grid grid--bottom grid--justify">
-            {% block inner %}
+            {% block contentInner %}
                 {% set selectModifiers = ['expand'] %}
 
-                {% block selectWrap %}
+                {% block selectContainer %}
                     <div class="col col--sm-12 col--md-3"></div>
                     <div class="col col--sm-12 col--md-2">
                         {% block select %}
@@ -39,7 +39,7 @@
 
                 {% set buttonClasses = 'button button--expand button--success' %}
 
-                {% block buttonWrap %}
+                {% block buttonContainer %}
                     <div class="col col--sm-12 col--md-3">
                         {% block button %}
                             <button type="submit" name="addToShoppingList" class="{{ buttonClasses }}">

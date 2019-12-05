@@ -26,7 +26,7 @@
     <form class="js-shopping-list__form" method="POST" action="{{ path('shopping-list/add-item') }}">
         {% block formContent %}
             <div class="grid grid--justify grid--bottom">
-                {% block selectWrap %}
+                {% block selectContainer %}
                     <div class="col col--sm-5">
                         <label>{{ 'shopping_list.item_quantity' | trans }}</label>
                         {% block select %}
@@ -72,7 +72,7 @@
                                 </button>
                             {% endblock %}
 
-                            {% block selectOptionsWrap %}
+                            {% block selectOptionsContainer %}
                                 {% if shoppingListOptions is not empty %}
                                     {% block selectOptions %}
                                         {% include atom('select') with {

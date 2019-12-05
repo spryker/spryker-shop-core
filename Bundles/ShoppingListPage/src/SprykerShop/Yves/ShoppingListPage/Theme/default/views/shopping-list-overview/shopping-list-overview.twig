@@ -48,7 +48,7 @@
                         {% include molecule('shopping-list-overview', 'ShoppingListPage') with {
                             data: {
                                 shoppingLists: data.shoppingListCollection.shoppingLists,
-                                enableTableForm: true,
+                                isTableFormEnabled: true,
                                 shoppingListResponse: data.shoppingListResponse,
                             },
                         } only %}

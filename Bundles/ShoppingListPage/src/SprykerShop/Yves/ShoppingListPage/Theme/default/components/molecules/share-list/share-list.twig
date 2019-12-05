@@ -28,7 +28,7 @@
                     <ul class="{{ config.name }}__list">
                         {% block sharedUnitListInner %}
                             {% for key, unit in data.shareUnits if unit.idShoppingListPermissionGroup is not null %}
-                                {% block shareListItemWrap %}
+                                {% block shareListItemContainer %}
                                     {% set shareListItemClasses = 'spacing-y spacing-y--inner' %}
                                     {% set user = unit.companyUser is defined ?
                                         unit.companyUser.customer.firstName ~ ' '
@@ -63,7 +63,7 @@
                         {% block notSharedUnitListInner %}
                             {% for key, unit in data.shareUnits if unit.idShoppingListPermissionGroup is null %}
                                 {% block notShareListItem %}
-                                    {{ block('shareListItemWrap') }}
+                                    {{ block('shareListItemContainer') }}
                                 {% endblock %}
                             {% endfor %}
                         {% endblock %}

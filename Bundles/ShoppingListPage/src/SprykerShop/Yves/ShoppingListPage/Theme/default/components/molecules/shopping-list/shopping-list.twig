@@ -27,18 +27,18 @@
         <tbody>
             {% block contentInner %}
                 {% for item in data.shoppingListItems %}
-                    {% block loop %}
+                    {% block shoppingListItem %}
                         {% set isItemAvailable = item.available is defined and item.available and item.price is defined and item.price is not null %}
                         {% set productDiscontinuedWidget = findWidget('ProductDiscontinuedWidget', [item.sku]) %}
-                        {% set isDiscontinued = productDiscontinuedWidget.isDiscontinued ?? widgetBlock('ProductDiscontinuedWidgetPlugin', 'isDiscontinued', item.sku) %} {# @deprecated Use ProductDiscontinuedWidget instead of ProductDiscontinuedWidgetPlugin. #}
+                        {% set isDiscontinued = productDiscontinuedWidget.isDiscontinued %}
                         {% if isDiscontinued is not null %}
                             {% set isItemAvailable = not isDiscontinued and isItemAvailable %}
                         {% endif %}
 
                         {% block row %}
-                            {% set disableClass = not isItemAvailable ? config.name ~ '__row--disable' %}
+                            {% set disableModifiers = not isItemAvailable ? ['disable'] : [] %}
 
-                            <tr class="{{ config.name }}__row {{ disableClass }}">
+                            <tr class="{{ component.renderClass(config.name ~ '__row', disableModifiers) }}">
                                 {% block rowInner %}
                                     {% block checkboxCol %}
                                         <td class="{{ config.name }}__cell">
@@ -90,7 +90,7 @@
                                                     <li class="list__item">
                                                         {% set listOfAttributes = {} %}
                                                         {% for attribute in item.superAttributesDefinition if item.attributes[attribute] is defined %}
-                                                            {% set listOfAttributes = listOfAttributes|merge({ ('product.attribute.' ~ attribute) | trans: item.attributes[attribute] }) %}
+                                                            {% set listOfAttributes = listOfAttributes | merge({ ('product.attribute.' ~ attribute) | trans: item.attributes[attribute] }) %}
                                                         {% endfor %}
 
                                                         {% include molecule('product-item-attributes') with {
@@ -101,19 +101,14 @@
                                                     </li>
 
                                                     {% widget 'ShoppingListItemNoteWidget' args [item.shoppingListItem] only %}
-                                                    {% elsewidget 'ShoppingListItemNoteWidgetPlugin' args [item.shoppingListItem] only %} {# @deprecated Use ShoppingListItemNoteWidget instead. #}
                                                     {% endwidget %}
 
-                                                    {% if widgetExists('ShoppingListItemProductOptionWidgetPlugin') %}
-                                                        {{ widget('ShoppingListItemProductOptionWidgetPlugin', item.shoppingListItem) }} {# @deprecated Use molecule('shopping-list-item-product-option-display', 'ProductOptionWidget') instead. #}
-                                                    {% else %}
-                                                        {% include molecule('shopping-list-item-product-option-display', 'ProductOptionWidget') with {
-                                                            class: 'list list--expand',
-                                                            data: {
-                                                                options: item.shoppingListItem.productOptions,
-                                                            },
-                                                        } only %}
-                                                    {% endif %}
+                                                    {% include molecule('shopping-list-item-product-option-display', 'ProductOptionWidget') ignore missing with {
+                                                        class: 'list list--expand',
+                                                        data: {
+                                                            options: item.shoppingListItem.productOptions,
+                                                        },
+                                                    } only %}
                                                 </ul>
                                             {% endblock %}
                                         </td>
@@ -159,7 +154,6 @@
                                                     {{ 'customer.account.shopping_list.available' | trans }}
                                                 {% else %}
                                                     {% widget 'ProductDiscontinuedWidget' args [item.sku] only %}
-                                                    {% elsewidget 'ProductDiscontinuedWidgetPlugin' args [item.sku] only %} {# @deprecated Use ProductDiscontinuedWidget instead. #}
                                                     {% nowidget %}
                                                         {{ 'customer.account.shopping_list.not_available' | trans }}
                                                     {% endwidget %}
@@ -189,7 +183,6 @@
                         {% block shoppingListProductAlternative %}
                             {% if permission %}
                                 {% widget 'ShoppingListProductAlternativeWidget' args [item, data.shoppingList] only %}
-                                {% elsewidget 'ProductAlternativeWidgetPlugin' args [item, data.shoppingList] only %} {# @deprecated Use ShoppingListProductAlternativeWidget instead. #}
                                 {% endwidget %}
                             {% endif %}
                         {% endblock %}

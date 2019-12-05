@@ -13,7 +13,7 @@
     {% set linkClasses = '' %}
 
     {% block link %}
-        <a class="{{ linkClasses }}" href="{{ url('shopping-list/create-from-exist-cart', {idQuote: (data.quote.idQuote)}) }}">
+        <a class="{{ linkClasses }}" href="{{ url('shopping-list/create-from-exist-cart', { idQuote: (data.quote.idQuote) }) }}">
             {% block linkInner %}
                 {{ 'widget.shopping_list.multi_cart.to_shopping_list' | trans }}
             {% endblock %}

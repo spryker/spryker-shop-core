@@ -13,7 +13,7 @@
 {% block body %}
     <div class="grid grid--middle">
         {% block content %}
-            {% block labelWrap %}
+            {% block labelContainer %}
                 <div class="col col--sm-6 col--md-7">
                     {% block label %}
                         <label>{{ data.name }}</label>
@@ -21,7 +21,7 @@
                 </div>
             {% endblock %}
 
-            {% block formWrap %}
+            {% block formContainer %}
                 <div class="col col--sm-6 col--md-5">
                     {% block form %}
                         {{ form_row(data.shareForm) }}

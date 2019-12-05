@@ -6,7 +6,7 @@
 
 {% define data = {
     shoppingList: required,
-    withShared: true,
+    isShareable: true,
 } %}
 
 {% block body %}
@@ -14,7 +14,7 @@
 
     {% block content %}
         <div class="grid">
-            {% block inner %}
+            {% block contentInner %}
                 {% block owner %}
                     <div class="col col--sm-12 col--md-6 col--lg-4">
                         {% block ownerInner %}
@@ -47,8 +47,8 @@
                     </div>
                 {% endblock %}
 
-                {% block sharedWrap %}
-                    {% if data.withShared %}
+                {% block sharedContainer %}
+                    {% if data.isShareable %}
                         {% block shared %}
                             <div class="col col--sm-12 col--md-6 col--lg-4">
                                 {% block sharedInner %}
@@ -59,15 +59,16 @@
                                     {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
                                         {% block sharedLink %}
                                             <a href="{{ url('shopping-list/share', { idShoppingList: data.shoppingList.idShoppingList }) }}">
-                                                {{ data.shoppingList.sharedCompanyUsers.count ~ ' ' ~ 'company.account.company_user' | trans }},
-                                                {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ 'company.account.business_unit' | trans }}
+                                                {% block sharedInfo %}
+                                                    {{ data.shoppingList.sharedCompanyUsers.count ~ ' ' ~ 'company.account.company_user' | trans }},
+                                                    {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ 'company.account.business_unit' | trans }}
+                                                {% endblock %}
                                             </a>
                                         {% endblock %}
                                     {% else %}
                                         {% block sharedText %}
                                             <span>
-                                                {{ data.shoppingList.sharedCompanyUsers.count ~ ' ' ~ 'company.account.company_user' | trans }},
-                                                {{ data.shoppingList.sharedCompanyBusinessUnits.count ~ ' ' ~ 'company.account.business_unit' | trans }}
+                                                {{ block('sharedInfo') }}
                                             </span>
                                         {% endblock %}
                                     {% endif %}

@@ -22,11 +22,11 @@
     {% block list %}
         <ul class="menu menu--wide text-left shop-list-item__list">
             {% block listInner %}
-                {% block loopItems %}
+                {% block shoppingListItems %}
                     {% for shoppingList in data.shoppingListCollection.shoppingLists %}
-                        {% block loopItem %}
+                        {% block shoppingListItem %}
                             <li class="menu__item">
-                                {% block loopItemInner %}
+                                {% block shoppingListItemInner %}
                                     {% include molecule('shop-list-item', 'ShoppingListWidget') with {
                                         data: {
                                             shoppingList: shoppingList,

@@ -36,9 +36,7 @@
         </a>
     {% endblock %}
 
-    {% widget 'ShoppingListDismissWidget' args [data.shoppingList] only %}
-    {% elsewidget 'ShoppingListDismissWidgetPlugin' args [data.shoppingList] only %} {# @deprecated Use ShoppingListDismissWidget instead. #}
-    {% endwidget %}
+    {% widget 'ShoppingListDismissWidget' args [data.shoppingList] only %}{% endwidget %}
 
     {% set deleteButtonClasses = 'spacing-left spacing-left--small' %}
 

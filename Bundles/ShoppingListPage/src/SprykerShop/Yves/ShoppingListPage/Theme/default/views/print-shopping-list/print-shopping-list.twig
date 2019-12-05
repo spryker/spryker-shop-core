@@ -47,14 +47,12 @@
 
             {% for item in data.shoppingListItems %}
                 {% if productBarcodeWidgetExists is null %}
-                    {% set productBarcodeWidget = findWidget('ProductBarcodeWidget', [item, data.barcodeGeneratorPlugin])
-                        | default(findWidget('ProductBarcodeWidgetPlugin', [item, data.barcodeGeneratorPlugin])) %} {# @deprecated Use ProductBarcodeWidget instead. #}
+                    {% set productBarcodeWidget = findWidget('ProductBarcodeWidget', [item, data.barcodeGeneratorPlugin]) %}
                     {% set productBarcodeWidgetExists = productBarcodeWidget is not null %}
                 {% endif %}
 
                 {% if isNotesSupported is null %}
-                    {% set shoppingListItemNoteWidget = findWidget('ShoppingListItemNoteWidget', [item.shoppingListItem])
-                        | default(findWidget('ShoppingListItemNoteWidgetPlugin', [item.shoppingListItem])) %} {# @deprecated Use ShoppingListItemNoteWidget instead. #}
+                    {% set shoppingListItemNoteWidget = findWidget('ShoppingListItemNoteWidget', [item.shoppingListItem]) %}
                     {% set isNotesSupported = shoppingListItemNoteWidget is not null %}
                 {% endif %}
                 <tr>

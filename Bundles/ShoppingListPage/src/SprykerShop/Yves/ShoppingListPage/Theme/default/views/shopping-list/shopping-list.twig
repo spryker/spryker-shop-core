@@ -25,7 +25,6 @@
 
 {% block customerNavigation %}
     {% widget 'CustomerNavigationWidget' args ['shoppingList', data.shoppingList.idShoppingList] only %}
-    {% elsewidget 'CustomerNavigationWidgetPlugin' args ['shoppingList', data.shoppingList.idShoppingList] only %} {# @deprecated Use CustomerNavigationWidget instead. #}
     {% endwidget %}
 {% endblock %}
 
@@ -107,7 +106,7 @@
                         <input type="hidden" value="{{ data.shoppingList.idShoppingList }}" name="idShoppingList">
                     {% endblock %}
 
-                    {% block shoppingListTableWrap %}
+                    {% block shoppingListTableContainer %}
                         <div class="is-scrollable-x">
                             {% block shoppingListTable %}
                                 {% include molecule('shopping-list', 'ShoppingListPage') with {

@@ -9,6 +9,7 @@
     idShoppingList: null,
     shoppingListForm: null,
     shoppingListResponse: null,
+    isTableFormEnabled: false,
 } %}
 
 {% block body %}
@@ -42,7 +43,7 @@
                                         {% set checkboxModifiers = [] %}
 
                                         {% block checkbox %}
-                                            {% if data.enableTableForm %}
+                                            {% if data.isTableFormEnabled %}
                                                 {% include atom('checkbox') with {
                                                     modifiers: checkboxModifiers,
                                                     attributes: {
