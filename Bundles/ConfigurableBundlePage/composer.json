@@ -5,6 +5,8 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker-shop/price-product-widget": "^1.0.0",
+    "spryker-shop/product-search-widget": "^3.2.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.32.0",
     "spryker/application": "^3.0.0",
@@ -25,8 +27,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/router": "Use this module if you want use the RouterProviderPlugin.",
-    "spryker-shop/product-search-widget": "Use this module if you want use the ProductConcreteSearchGridWidget."
+    "spryker/router": "Use this module if you want use the RouterProviderPlugin."
   },
   "autoload": {
     "psr-4": {
