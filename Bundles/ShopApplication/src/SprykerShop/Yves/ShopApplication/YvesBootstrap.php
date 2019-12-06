@@ -131,9 +131,13 @@ abstract class YvesBootstrap
     }
 
     /**
+     * @deprecated Use `\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface`'s instead.
+     *
      * @return void
      */
-    abstract protected function registerServiceProviders();
+    protected function registerServiceProviders()
+    {
+    }
 
     /**
      * @deprecated Use `\Spryker\Yves\Router\RouterDependencyProvider::getRouterPlugins()` instead.
