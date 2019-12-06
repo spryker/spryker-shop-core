@@ -15,17 +15,19 @@
 {% endblock %}
 
 {% block body %}
+    {% set isFullCompanyInformation = data.isOnBehalf and data.companyName is not empty
+        and data.companyBusinessUnitName is not empty %}
+    {% set companyInformation = isFullCompanyInformation ?
+        data.companyName ~ ' / ' ~ data.companyBusinessUnitName :
+        'business_on_behalf_widget.no_selected_company' | trans %}
+
     {% if data.isCompanyUserChangeAllowed %}
-        {% if data.isOnBehalf and data.companyName is not empty and data.companyBusinessUnitName is not empty %}
-            <a href="{{ path('company/user/select') }}">{{ data.companyName }} / {{ data.companyBusinessUnitName }}</a>
-        {% else %}
-            <a href="{{ path('company/user/select') }}">{{ 'business_on_behalf_widget.no_selected_company' | trans }}</a>
-        {% endif %}
-    {% else %}
-        {% if data.isOnBehalf and data.companyName is not empty and data.companyBusinessUnitName is not empty %}
-            <span>{{ data.companyName }} / {{ data.companyBusinessUnitName }}</span>
-        {% else %}
-            <span>{{ 'business_on_behalf_widget.no_selected_company' | trans }}</span>
-        {% endif %}
+        <a href="{{ path('company/user/select') }}">
+            {{- companyInformation -}}
+        </a>
+    {% endif %}
+
+    {% if not data.isCompanyUserChangeAllowed %}
+        <span>{{ companyInformation }}</span>
     {% endif %}
 {% endblock %}

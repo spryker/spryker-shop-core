@@ -1,0 +1,16 @@
+{% extends molecule('configurator-state-form', 'ConfigurableBundlePage') %}
+
+{% define config = {
+    name: 'slot-page-redirect-form',
+} %}
+
+{% block actionContainer %}
+    {% set isSelectedProduct = data.form.slots[data.idConfigurableBundleTemplateSlot].vars.value.sku is defined %}
+    {% set isActive = data.idConfigurableBundleTemplateSlot == data.selectedSlotId %}
+    {% set extraModifier = isActive ? 'active' : isSelectedProduct ? 'selected' %}
+    {% set buttonModifiers = data.submitButtonModifiers | merge([extraModifier]) %}
+
+    {% block action %}
+        {{ parent() }}
+    {% endblock %}
+{% endblock %}

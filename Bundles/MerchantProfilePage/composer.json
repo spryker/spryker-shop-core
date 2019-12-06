@@ -8,6 +8,7 @@
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/storage-router-extension": "^1.0.0",
     "spryker/kernel": "^3.33.0",
+    "spryker/merchant-opening-hours-storage": "^0.1.0",
     "spryker/merchant-profile-storage": "^0.1.0",
     "spryker/symfony": "^3.0.0"
   },
@@ -15,7 +16,6 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "suggest": [],
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
