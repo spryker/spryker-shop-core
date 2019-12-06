@@ -46,7 +46,7 @@ class CodeController extends AbstractController
 
         $cartCodeResponseTransfer = $this->getFactory()
             ->getCartCodeClient()
-            ->addCartCode($this->createCartCodeResponseTransfer($quoteTransfer, $code));
+            ->addCartCode($this->createCartCodeRequestTransfer($quoteTransfer, $code));
 
         return $this->redirectResponse($cartCodeResponseTransfer, $request);
     }
@@ -66,7 +66,7 @@ class CodeController extends AbstractController
         $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
         $cartCodeResponseTransfer = $this->getFactory()
             ->getCartCodeClient()
-            ->removeCartCode($this->createCartCodeResponseTransfer($quoteTransfer, $code));
+            ->removeCartCode($this->createCartCodeRequestTransfer($quoteTransfer, $code));
 
         return $this->redirectResponse($cartCodeResponseTransfer, $request);
     }
@@ -82,7 +82,7 @@ class CodeController extends AbstractController
 
         $cartCodeResponseTransfer = $this->getFactory()
             ->getCartCodeClient()
-            ->clearCartCodes($this->createCartCodeResponseTransfer($quoteTransfer));
+            ->clearCartCodes($this->createCartCodeRequestTransfer($quoteTransfer));
 
         return $this->redirectResponse($cartCodeResponseTransfer, $request);
     }
@@ -113,7 +113,7 @@ class CodeController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\CartCodeRequestTransfer
      */
-    protected function createCartCodeResponseTransfer(
+    protected function createCartCodeRequestTransfer(
         QuoteTransfer $quoteTransfer,
         ?string $code = null
     ): CartCodeRequestTransfer {
