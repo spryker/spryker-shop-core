@@ -30,7 +30,7 @@ class ProductGroupWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductColorGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     * @return \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
     public function getProductViewExpanderPlugins(): array
     {

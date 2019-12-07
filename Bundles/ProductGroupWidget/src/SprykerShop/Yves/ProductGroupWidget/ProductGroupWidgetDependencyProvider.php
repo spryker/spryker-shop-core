@@ -76,7 +76,7 @@ class ProductGroupWidgetDependencyProvider extends AbstractBundleDependencyProvi
     }
 
     /**
-     * @return \SprykerShop\Yves\ProductColorGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     * @return \SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
     protected function getProductViewExpanderPlugins(): array
     {
