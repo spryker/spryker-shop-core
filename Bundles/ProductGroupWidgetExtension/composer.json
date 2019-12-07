@@ -1,6 +1,7 @@
 {
-  "name": "spryker-shop/product-color-group-widget-extension",
-  "description": "ProductColorGroupWidgetExtension module",
+  "name": "spryker-shop/product-group-widget-extension",
+  "type": "library",
+  "description": "ProductGroupWidgetExtension module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2"
@@ -11,7 +12,7 @@
   },
   "autoload": {
     "psr-4": {
-      "SprykerShop\\": "src/SprykerShop"
+      "SprykerShop\\": "src/SprykerShop/"
     }
   },
   "minimum-stability": "dev",

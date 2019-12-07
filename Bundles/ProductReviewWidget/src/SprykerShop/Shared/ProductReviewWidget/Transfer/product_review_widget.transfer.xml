@@ -43,6 +43,7 @@
     </transfer>
 
     <transfer name="ProductView">
+        <property name="idProductAbstract" type="int"/>
         <property name="rating" type="ProductReviewSummary"/>
     </transfer>
 

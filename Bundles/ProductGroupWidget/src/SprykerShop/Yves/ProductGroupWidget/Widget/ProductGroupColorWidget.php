@@ -8,14 +8,15 @@
 namespace SprykerShop\Yves\ProductGroupWidget\Widget;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
  * @method \SprykerShop\Yves\ProductGroupWidget\ProductGroupWidgetFactory getFactory()
  */
-class ProductColorGroupWidget extends ProductGroupWidget
+class ProductGroupColorWidget extends AbstractWidget
 {
     /**
-     * @var array|\SprykerShop\Yves\ProductColorGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     * @var array|\SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
     protected $productViewExpanderPlugins;
 
@@ -26,7 +27,8 @@ class ProductColorGroupWidget extends ProductGroupWidget
     {
         $this->productViewExpanderPlugins = $this->getFactory()->getProductViewExpanderPlugins();
 
-        parent::__construct($idProductAbstract);
+        $this->addParameter('productGroupItems', $this->getProductGroups($idProductAbstract))
+            ->addParameter('idProductAbstract', $idProductAbstract);
     }
 
     /**
@@ -36,7 +38,7 @@ class ProductColorGroupWidget extends ProductGroupWidget
      */
     public static function getName(): string
     {
-        return 'ProductColorGroupWidget';
+        return 'ProductGroupColorWidget';
     }
 
     /**
@@ -56,9 +58,24 @@ class ProductColorGroupWidget extends ProductGroupWidget
      */
     protected function getProductGroups(int $idProductAbstract): array
     {
-        $productViewTransfers = parent::getProductGroups($idProductAbstract);
+        $productViewTransfers = $this->getProductGroupTransfers($idProductAbstract);
 
         return $this->getExpandedProductViewTransfers($productViewTransfers);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    protected function getProductGroupTransfers(int $idProductAbstract): array
+    {
+        $productAbstractGroupStorageTransfer = $this->getFactory()->getProductGroupStorageClient()->findProductGroupItemsByIdProductAbstract($idProductAbstract);
+        $productViewTransfers = $this->getFactory()
+            ->getProductStorageClient()
+            ->getProductAbstractViewTransfers($productAbstractGroupStorageTransfer->getGroupProductAbstractIds(), $this->getLocale());
+
+        return $productViewTransfers;
     }
 
     /**
@@ -69,7 +86,7 @@ class ProductColorGroupWidget extends ProductGroupWidget
     protected function getExpandedProductViewTransfers(array $productViewTransfers): array
     {
         foreach ($productViewTransfers as $productViewTransfer) {
-            $productViewTransfer = $this->getExpandedProductViewTransfer($productViewTransfer);
+            $productViewTransfer = $this->expandProductViewTransfer($productViewTransfer);
         }
 
         return $productViewTransfers;
@@ -80,7 +97,7 @@ class ProductColorGroupWidget extends ProductGroupWidget
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    protected function getExpandedProductViewTransfer(ProductViewTransfer $productViewTransfer): ProductViewTransfer
+    protected function expandProductViewTransfer(ProductViewTransfer $productViewTransfer): ProductViewTransfer
     {
         foreach ($this->productViewExpanderPlugins as $productViewExpanderPlugin) {
             $productViewTransfer = $productViewExpanderPlugin->expand($productViewTransfer);

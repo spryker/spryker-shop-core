@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CartPage\Plugin\ProductColorGroupWidget;
+namespace SprykerShop\Yves\CartPage\Plugin\ProductGroupWidget;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\ProductColorGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface;
+use SprykerShop\Yves\ProductGroupWidgetExtension\Dependency\Plugin\ProductViewExpanderPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\CartPage\CartPageFactory getFactory()
