@@ -50,6 +50,7 @@
     "spryker-shop/company-user-agent-widget": "*",
     "spryker-shop/company-user-invitation-page": "*",
     "spryker-shop/company-widget": "*",
+    "spryker-shop/configurable-bundle-page": "*",
     "spryker-shop/configurable-bundle-note-widget": "*",
     "spryker-shop/configurable-bundle-widget": "*",
     "spryker-shop/content-banner-widget": "*",

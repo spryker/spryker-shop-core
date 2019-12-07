@@ -7,9 +7,9 @@
 
 namespace SprykerShop\Shared\CustomerPage;
 
-use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractSharedConfig;
 
-class CustomerPageConfig extends AbstractBundleConfig
+class CustomerPageConfig extends AbstractSharedConfig
 {
     public const SECURITY_FIREWALL_NAME = 'secured';
 

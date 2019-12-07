@@ -7,7 +7,9 @@
 
 namespace SprykerShop\Shared\AgentPage;
 
-class AgentPageConfig
+use Spryker\Shared\Kernel\AbstractSharedConfig;
+
+class AgentPageConfig extends AbstractSharedConfig
 {
     public const SECURITY_FIREWALL_NAME = 'agent';
 }
