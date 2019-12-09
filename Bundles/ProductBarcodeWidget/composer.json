@@ -10,6 +10,7 @@
     "spryker/product-barcode": "^1.0.0"
   },
   "require-dev": {
+    "spryker-shop/shopping-list-page": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },

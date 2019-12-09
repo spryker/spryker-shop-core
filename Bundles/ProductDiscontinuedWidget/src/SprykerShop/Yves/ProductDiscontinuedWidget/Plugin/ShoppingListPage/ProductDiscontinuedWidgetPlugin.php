@@ -9,13 +9,14 @@ namespace SprykerShop\Yves\ProductDiscontinuedWidget\Plugin\ShoppingListPage;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedWidget;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Plugin\ProductDiscontinuedWidget\ProductDiscontinuedWidgetPluginInterface;
 
 /**
  * @deprecated Use \SprykerShop\Yves\ProductDiscontinuedWidget\Widget\ProductDiscontinuedWidget instead.
  *
  * @method \SprykerShop\Yves\ProductDiscontinuedWidget\ProductDiscontinuedWidgetFactory getFactory()
  */
-class ProductDiscontinuedWidgetPlugin extends AbstractWidgetPlugin
+class ProductDiscontinuedWidgetPlugin extends AbstractWidgetPlugin implements ProductDiscontinuedWidgetPluginInterface
 {
     /**
      * @param string $sku
@@ -38,7 +39,7 @@ class ProductDiscontinuedWidgetPlugin extends AbstractWidgetPlugin
      */
     public static function getName(): string
     {
-        return 'ProductDiscontinuedWidgetPlugin';
+        return static::NAME;
     }
 
     /**

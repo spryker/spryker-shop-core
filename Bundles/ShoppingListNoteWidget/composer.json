@@ -11,6 +11,7 @@
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
+    "spryker-shop/shopping-list-page": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
