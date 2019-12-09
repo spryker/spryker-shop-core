@@ -16,6 +16,7 @@
     "spryker/product-bundle": "^4.1.0 || ^6.0.0 || ^7.0.0",
     "spryker/quote": "^1.0.0 || ^2.1.0",
     "spryker/sales": "^8.15.0 || ^10.0.0 || ^11.0.0",
+    "spryker/security-extension": "^1.0.0",
     "spryker/shipment": "^7.0.0 || ^8.0.0",
     "spryker/step-engine": "^3.1.0",
     "spryker/symfony": "^3.1.0",
@@ -31,9 +32,15 @@
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
     "spryker/messenger": "*",
+    "spryker/propel": "*",
     "spryker/router": "*",
+    "spryker/security": "*",
+    "spryker/session": "*",
     "spryker/silex": "*",
+    "spryker/storage": "*",
+    "spryker/storage-redis": "*",
     "spryker/testify": "*"
   },
   "suggest": {
@@ -48,11 +55,17 @@
     "spryker/config": "Use this module when using plugins that need Config dependencies.",
     "spryker/container": "If you want to use twig plugins.",
     "spryker/messenger": "Use this module when using plugins that need Messenger dependencies.",
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
+    "spryker/security": "Add this module to use the SecurityPlugin."
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",

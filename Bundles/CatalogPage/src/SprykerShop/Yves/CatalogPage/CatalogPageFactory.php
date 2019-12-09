@@ -33,7 +33,7 @@ class CatalogPageFactory extends AbstractFactory
      */
     public function createActiveSearchFilterUrlGenerator()
     {
-        return new UrlGenerator($this->getSearchClient());
+        return new UrlGenerator($this->getSearchClient(), $this->getConfig());
     }
 
     /**

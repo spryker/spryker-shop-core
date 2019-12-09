@@ -1,0 +1,9 @@
+{
+  "include": {
+    "spryker-shop/price-product-widget": "Depends on PriceProductWidget.",
+    "spryker-shop/product-search-widget": "Depends on ProductConcreteSearchGridWidget.",
+    "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure.",
+    "spryker/configurable-bundle": "Depends on ConfigurableBundle functionality.",
+    "spryker/sales-configurable-bundle": "Defined for forward-compatibility reasons."
+  }
+}
