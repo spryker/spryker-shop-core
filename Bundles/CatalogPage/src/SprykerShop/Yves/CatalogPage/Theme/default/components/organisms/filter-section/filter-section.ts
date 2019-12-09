@@ -3,40 +3,54 @@ import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provide
 
 export default class FilterSection extends Component {
     protected form: HTMLFormElement;
-    protected purifyAjaxProvider: AjaxProvider;
-    protected purifyTriggers: HTMLButtonElement[];
+    protected ajaxProvider: AjaxProvider;
+    protected triggers: HTMLButtonElement[];
+    protected formSubmit: HTMLButtonElement;
 
     protected readyCallback(): void {}
 
     protected init(): void {
         this.form = <HTMLFormElement>this.closest('form');
-        this.purifyTriggers = <HTMLButtonElement[]>Array.from(
-            this.getElementsByClassName(`${this.jsName}__purify-trigger`)
-        );
-        this.purifyAjaxProvider = <AjaxProvider>this.getElementsByClassName(`${this.jsName}__url-purify-provider`)[0];
+        this.triggers = <HTMLButtonElement[]>Array.from(this.getElementsByClassName(`${this.jsName}__trigger`));
+        this.ajaxProvider = <AjaxProvider>this.getElementsByClassName(`${this.jsName}__provider`)[0];
+        this.formSubmit = <HTMLButtonElement>this.getElementsByClassName(`${this.jsName}__form-submit`)[0];
 
         this.mapEvents();
     }
 
     protected mapEvents(): void {
-        this.purifyTriggers.forEach((element: HTMLButtonElement) => {
+        this.triggers.forEach((element: HTMLButtonElement) => {
             element.addEventListener('click', (event: Event) => this.onCategoryClick(event));
         });
+
+        this.formSubmit.addEventListener('click', () => this.onSubmit());
     }
 
     protected onCategoryClick(event: Event): void {
-        event.preventDefault();
         const url = (<HTMLButtonElement>event.currentTarget).getAttribute('data-url');
-        this.categoryRedirect(url);
+
+        this.urlEncodeFormData(url);
     }
 
-    protected async categoryRedirect(url: string): Promise<void> {
-        const data = new FormData(this.form);
-        data.append('url', url);
-        const response = await this.purifyAjaxProvider.fetch(data);
-        const jsonResponse = JSON.parse(response);
-        if (jsonResponse.isSuccess === true) {
-            window.location.href = jsonResponse.url;
-        }
+    protected onSubmit(): void {
+        this.urlEncodeFormData();
+    }
+
+    protected urlEncodeFormData(url?: string): void {
+        const formData = new FormData(this.form);
+        /* tslint:disable:no-any */
+        const data = new URLSearchParams(formData as any);
+        /* tslint:enable:no-any */
+        const pathname = url ? url : window.location.pathname;
+
+        formData.forEach((value: string, key: string) => {
+            if (value.length) {
+                return;
+            }
+
+            data.delete(key);
+        });
+
+        window.location.href = `${pathname}?${data.toString()}`;
     }
 }

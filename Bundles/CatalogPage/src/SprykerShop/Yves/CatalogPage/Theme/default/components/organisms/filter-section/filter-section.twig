@@ -16,14 +16,6 @@
 {% block body %}
     {% set facets = data.filteredFacets is not empty ? data.filteredFacets : data.facets %}
 
-    {% include molecule('ajax-provider') with {
-        class: config.jsName ~ '__url-purify-provider',
-        attributes: {
-            method: 'POST',
-            url: url('search/url-purify'),
-        },
-    } only %}
-
     {% for filter in facets %}
         {% set filterHasValues = filter.values is not defined or filter.values | length > 0 %}
 
@@ -46,7 +38,7 @@
                         activeMax: filter.activeMax | default(0),
                         isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
                         filterSectionJsName: config.jsName,
-                    }
+                    },
                 } only %}
             {% endblock %}
 
@@ -54,12 +46,12 @@
         {% endif %}
     {% endfor %}
 
-    <button type="submit" class="button button--expand button--small">
+    <button type="button" class="button button--expand button--small {{ config.jsName }}__form-submit">
         {{ 'catalog.filter.button' | trans }}
         {% include atom('icon') with {
             data: {
-                name: 'filter'
-            }
+                name: 'filter',
+            },
         } only %}
     </button>
 {% endblock %}

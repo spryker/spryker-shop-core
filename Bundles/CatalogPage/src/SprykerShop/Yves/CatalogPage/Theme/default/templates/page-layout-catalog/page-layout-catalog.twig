@@ -108,11 +108,15 @@
                 } only %}
 
                 <div class="grid grid--stretch">
-                    {% for product in data.products %}
-                        {% widget 'CatalogPageProductWidget' args [product, data.viewMode] only %}
-                        {% elsewidget 'ProductWidgetPlugin' args [product, data.viewMode] only %} {# @deprecated Use CatalogPageProductWidget instead. #}
-                        {% endwidget %}
-                    {% endfor %}
+                    {% if data.products %}
+                        {% for product in data.products %}
+                            {% widget 'CatalogPageProductWidget' args [product, data.viewMode] only %}
+                            {% elsewidget 'ProductWidgetPlugin' args [product, data.viewMode] only %} {# @deprecated Use CatalogPageProductWidget instead. #}
+                            {% endwidget %}
+                        {% endfor %}
+                    {% else %}
+                        <div class="col col--sm-12 text-center">{{ 'catalog.no-results' | trans }}</div>
+                    {% endif %}
                 </div>
 
                 {% include molecule('pagination') with {

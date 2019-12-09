@@ -1,31 +1,32 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'active-filter-price-range'
+    name: 'active-filter-price-range',
 } %}
 
+{#
+    @deprecated property "data.min" is deprecated.
+    @deprecated property "data.max" is deprecated.
+#}
 {% define data = {
     filter: required,
     min: required,
     activeMin: required,
     max: required,
-    activeMax: required
+    activeMax: required,
 } %}
 
 {% set currentValue = data.activeMin | money  ~ ' - ' ~ data.activeMax | money %}
 
 {% block component %}
-    {% set isNotDefault = app.request.query.has(data.filter.config.parameterName)
-        and data.min != data.activeMin
-        and data.max != data.activeMax
-        and can('SeePricePermissionPlugin') %}
+    {% set isNotDefault = app.request.query.has(data.filter.config.parameterName) and can('SeePricePermissionPlugin') %}
 
     {% if isNotDefault %}
         {% include molecule('active-filter', 'CatalogPage') with {
             data: {
                 filter: data.filter,
-                value: currentValue
-            }
+                value: currentValue,
+            },
         } only %}
     {% endif %}
 {% endblock %}
