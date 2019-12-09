@@ -55,12 +55,21 @@
 {% endblock %}
 
 {% block content %}
-    <form method="GET" class="grid" data-init-default-value-form>
+    {% set catalogJsName = 'js-catalog' %}
+
+    {% include molecule('url-generator', 'CatalogPage') with {
+        attributes: {
+            'form-class-name': catalogJsName ~ '__form',
+            'trigger-class-name': catalogJsName ~ '__trigger',
+        },
+    } only %}
+
+    <form method="GET" class="grid {{ catalogJsName }}__form" data-init-default-value-form>
         {% block form %}
             <div class="col col--sm-12 col--lg-4 col--xl-3">
                 {% block filterBar %}
                     {% include molecule('view-mode-switch', 'CatalogPage') with {
-                        class: 'box',
+                        class: 'box'
                     } only %}
 
                     {% include molecule('toggler-checkbox') with {
@@ -84,6 +93,7 @@
                             filterPath: data.filterPath,
                             categories: data.categories,
                             isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
+                            catalogJsName: catalogJsName,
                         },
                     } only %}
                 {% endblock %}
@@ -91,7 +101,10 @@
 
             <div class="col col--sm-12 col--lg-8 col--xl-9">
                 {% include molecule('sort', 'CatalogPage') with {
-                    class: 'box'
+                    class: 'box',
+                    data: {
+                        catalogJsName: catalogJsName,
+                    },
                 } only %}
 
                 {% include organism('active-filter-section', 'CatalogPage') with {

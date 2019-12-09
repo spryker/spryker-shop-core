@@ -9,7 +9,6 @@
     filterPath: null,
     categories: [],
     isEmptyCategoryFilterValueVisible: null,
-    filterSectionJsName: '',
 } %}
 
 {% block component %}
@@ -36,7 +35,7 @@
                 {% set childrenClass = hasChildren ? 'menu__item--has-children-list' %}
 
                 <li class="menu__item {{ childrenClass }}">
-                    <button class="link {{ data.filterSectionJsName }}__trigger" type="button" {{ quantity == 0 ? 'disabled' }} data-url={{ categoryUrl }}>
+                    <button class="link {{ data.catalogJsName }}__trigger" type="button" {{ quantity == 0 ? 'disabled' }} data-url={{ categoryUrl }}>
                         {{ categoryNode.name }} ({{ quantity }})
                     </button>
 
@@ -47,7 +46,7 @@
                                 filterPath: data.filterPath,
                                 categories: categoryNode.children,
                                 isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
-                                filterSectionJsName: data.filterSectionJsName,
+                                catalogJsName: data.catalogJsName,
                             },
                         } only %}
                     {% endif %}
