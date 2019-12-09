@@ -1,0 +1,12 @@
+@mixin configurable-bundle-page-configurator-message($name: '.configurator-message') {
+    #{$name} {
+        display: flex;
+        flex-grow: 1;
+        justify-content: center;
+        align-items: center;
+        margin: map-get($setting-spacing, 'default') map-get($setting-spacing, 'default') map-get($setting-spacing, 'default') map-get($setting-spacing, 'big');
+        border: 1px solid $setting-color-lighter;
+
+        @content;
+    }
+}

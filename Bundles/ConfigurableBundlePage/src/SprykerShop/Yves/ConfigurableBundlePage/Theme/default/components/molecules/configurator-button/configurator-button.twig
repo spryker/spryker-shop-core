@@ -1,0 +1,18 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'configurator-button',
+    tag: 'button',
+} %}
+
+{% define data = {
+    text: '',
+} %}
+
+{% define attributes = {
+    type: 'submit',
+} %}
+
+{% block body %}
+    {{ data.text }}
+{% endblock %}

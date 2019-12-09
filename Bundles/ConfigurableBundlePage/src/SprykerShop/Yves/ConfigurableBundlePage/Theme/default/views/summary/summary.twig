@@ -1,0 +1,106 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    title: _view.configurableBundleTemplateStorage.name | trans,
+    form: _view.form,
+    configurableBundleTemplateStorage: _view.configurableBundleTemplateStorage,
+    products: _view.products,
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'configurable_bundle_page.configurable_bundle_list' | trans,
+                    url: path('configurable-bundle/configurator/template-selection'),
+                },
+                {
+                    label: data.configurableBundleTemplateStorage.name | trans,
+                    withChevron: false,
+                },
+            ],
+        },
+    } only %}
+{% endblock %}
+
+{% block content %}
+    <div class="grid">
+        {% block summaryContentInner %}
+            {% block summarySidebar %}
+                <div class="col col--sm-12 col--md-3">
+                    {% block summarySidebarInner %}
+                        {% include molecule('configurator-sidebar', 'ConfigurableBundlePage') with {
+                            data: {
+                                form: data.form,
+                                configurableBundleTemplateStorage: data.configurableBundleTemplateStorage,
+                                isSeparateItemActive: true,
+                            },
+                        } only %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+            {% block summaryProducts %}
+                <div class="col col--sm-12 col--md-9">
+                    {% set productListClasses = 'spacing-top' %}
+
+                    {% block summaryProductsInner %}
+                        {% include molecule('selected-product-list', 'ConfigurableBundlePage') with {
+                            class: productListClasses,
+                            data: {
+                                form: data.form,
+                                products: data.products,
+                                configurableBundleTemplateStorage: data.configurableBundleTemplateStorage,
+                            },
+                        } only %}
+
+                        {% block bundleTotal %}
+                            {% set totalPrice = data.products | reduce((accumulator, product) => accumulator + (product.price ?: 0), 0) %}
+
+                            {% block bundleTotalInner %}
+                                {% include molecule('configured-bundle-total', 'ConfigurableBundlePage') with {
+                                    data: {
+                                        total: totalPrice,
+                                    },
+                                } only %}
+                            {% endblock %}
+                        {% endblock %}
+
+                        {% block summaryForm %}
+                            <div class="grid grid--right">
+                                {% block summaryFormInner %}
+                                    {% set formClasses = 'spacing-x col col--sm-2' %}
+                                    {% set buttonModifiers = ['expand', 'success'] %}
+
+                                    <a href="{{ path('configurable-bundle/configurator/template-selection') }}" class="button button--hollow">
+                                        {{ 'general.cancel.button' | trans }}
+                                    </a>
+
+                                    {% block form %}
+                                        {% if can('SeeAddToCartPermissionPlugin') %}
+                                            {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
+                                                class: formClasses,
+                                                data: {
+                                                    form: data.form.createView,
+                                                    submitButtonText: 'configurable_bundle_page.configurator.add_to_cart' | trans,
+                                                    submitButtonModifiers: buttonModifiers,
+                                                    method: 'POST',
+                                                    action: path(
+                                                        'configurable-bundle/configurator/add-to-cart', {
+                                                            'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
+                                                        }
+                                                    ),
+                                                },
+                                            } only %}
+                                        {% endif %}
+                                    {% endblock %}
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        {% endblock %}
+    </div>
+{% endblock %}
