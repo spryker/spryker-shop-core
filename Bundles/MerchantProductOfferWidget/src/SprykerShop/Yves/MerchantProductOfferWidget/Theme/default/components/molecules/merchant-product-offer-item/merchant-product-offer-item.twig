@@ -21,7 +21,9 @@
     <div class="grid grid--nowrap">
         {% block offerInner %}
             {% block radioCol %}
-                <div class="col {{ data.shouldShowRadioButton ? '' : 'is-hidden' }}">
+                {% set radioColVisibilityClass = not data.shouldShowRadioButton ? 'is-hidden' %}
+
+                <div class="col {{ radioColVisibilityClass }}">
                     {% block radio %}
                         {% include atom('radio') with {
                             class: config.jsName ~ '__trigger-' ~ data.offerReference,
