@@ -58,7 +58,7 @@ class ProductOfferSoldByMerchantWidget extends AbstractWidget
 
         $productOfferStorageTransfer = $this->getFactory()
             ->getMerchantProductOfferStorageClient()
-            ->findProductOfferByReference($productOfferTransfer->getProductOfferReference());
+            ->findProductOfferStorageByReference($productOfferTransfer->getProductOfferReference());
 
         $merchantProfileStorageTransfer = $this->getFactory()
             ->getMerchantProfileStorageClient()

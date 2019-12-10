@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MerchantProfileStorageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use SprykerShop\Shared\MerchantProductOfferWidget\MerchantProductOfferWidgetConfig;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface;
@@ -167,7 +168,10 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
             }
             $offerPriceProductTransfers[] = $priceProductTransfer;
         }
-        $priceProductFilterTransfer = (new PriceProductFilterTransfer())->setProductOfferReference($productOfferReference);
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())->setProductOffer(
+            (new ProductOfferTransfer())
+                ->setProductOfferReference($productOfferReference)
+        );
 
         return $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter($offerPriceProductTransfers, $priceProductFilterTransfer);
     }
