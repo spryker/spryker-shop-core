@@ -9,7 +9,8 @@
     "spryker/merchant-product-offer-storage": "^0.3.0",
     "spryker/merchant-profile-storage": "^0.1.0",
     "spryker/price-product": "^4.0.0",
-    "spryker/price-product-storage": "^4.1.0"
+    "spryker/price-product-storage": "^4.1.0",
+    "spryker-shop/cart-page-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
