@@ -22,15 +22,12 @@ export default class UrlGenerator extends Component {
     protected onTriggerEvent(event: Event): void {
         const categoryUrl = (<HTMLButtonElement>event.currentTarget).getAttribute('data-url');
 
-        this.urlEncodeFormData(categoryUrl);
+        this.getQueryString(categoryUrl ? categoryUrl : '');
     }
 
-    protected urlEncodeFormData(url?: string): void {
+    protected getQueryString(categoryUrl: string = window.location.pathname): void {
         const formData = new FormData(this.form);
-        /* tslint:disable:no-any */
-        const data = new URLSearchParams(formData as any);
-        /* tslint:enable:no-any */
-        const pathname = url ? url : window.location.pathname;
+        const data = new URLSearchParams(<URLSearchParams>formData);
 
         formData.forEach((value: string, key: string) => {
             if (value.length) {
@@ -40,7 +37,11 @@ export default class UrlGenerator extends Component {
             data.delete(key);
         });
 
-        window.location.href = `${pathname}?${data.toString()}`;
+        this.setWindowLocation(categoryUrl, data.toString());
+    }
+
+    protected setWindowLocation(categoryUrl: string, data: string): void {
+        window.location.href = `${categoryUrl}?${data}`;
     }
 
     protected get formClassName(): string {
