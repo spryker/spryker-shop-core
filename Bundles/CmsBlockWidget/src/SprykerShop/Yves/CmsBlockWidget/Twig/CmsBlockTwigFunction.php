@@ -20,10 +20,10 @@ use Twig\Environment;
 class CmsBlockTwigFunction extends TwigFunction
 {
     protected const SPY_CMS_BLOCK_TWIG_FUNCTION = 'spyCmsBlock';
-    protected const SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPINGS = 'SpyCmsBlockGlossaryKeyMappings';
-    protected const PLACEHOLDER = 'placeholder';
-    protected const GLOSSARY_KEY = 'GlossaryKey';
-    protected const KEY = 'key';
+    protected const STORAGE_DATA_KEY_CMS_BLOCK_GLOSSARY_KEY_MAPPINGS = 'SpyCmsBlockGlossaryKeyMappings';
+    protected const CMS_BLOCK_GLOSSARY_KEY_MAPPING_PLACEHOLDER = 'placeholder';
+    protected const CMS_BLOCK_GLOSSARY_KEY_MAPPING_GLOSSARY_KEY = 'GlossaryKey';
+    protected const CMS_BLOCK_GLOSSARY_KEY_MAPPING_KEY = 'key';
 
     /**
      * @var \SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface
@@ -150,10 +150,10 @@ class CmsBlockTwigFunction extends TwigFunction
 
         $cmsBlockGlossaryPlaceholderTransfers = new ArrayObject();
 
-        foreach ($cmsBlock[static::SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPINGS] as $mapping) {
+        foreach ($cmsBlock[static::STORAGE_DATA_KEY_CMS_BLOCK_GLOSSARY_KEY_MAPPINGS] as $mapping) {
             $cmsBlockGlossaryPlaceholderTransfer = (new CmsBlockGlossaryPlaceholderTransfer())
-                ->setPlaceholder($mapping[static::PLACEHOLDER])
-                ->setTranslationKey($mapping[static::GLOSSARY_KEY][static::KEY]);
+                ->setPlaceholder($mapping[static::CMS_BLOCK_GLOSSARY_KEY_MAPPING_PLACEHOLDER])
+                ->setTranslationKey($mapping[static::CMS_BLOCK_GLOSSARY_KEY_MAPPING_GLOSSARY_KEY][static::CMS_BLOCK_GLOSSARY_KEY_MAPPING_KEY]);
 
             $cmsBlockGlossaryPlaceholderTransfers->append($cmsBlockGlossaryPlaceholderTransfer);
         }
