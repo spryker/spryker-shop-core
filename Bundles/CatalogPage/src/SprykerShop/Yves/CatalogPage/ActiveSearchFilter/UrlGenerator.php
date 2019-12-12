@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use InvalidArgumentException;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use SprykerShop\Yves\CatalogPage\CatalogPageConfig;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,11 +24,18 @@ class UrlGenerator implements UrlGeneratorInterface
     protected $searchClient;
 
     /**
-     * @param \SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface $searchClient
+     * @var \SprykerShop\Yves\CatalogPage\CatalogPageConfig
      */
-    public function __construct(CatalogPageToSearchClientInterface $searchClient)
+    protected $config;
+
+    /**
+     * @param \SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface $searchClient
+     * @param \SprykerShop\Yves\CatalogPage\CatalogPageConfig $config
+     */
+    public function __construct(CatalogPageToSearchClientInterface $searchClient, CatalogPageConfig $config)
     {
         $this->searchClient = $searchClient;
+        $this->config = $config;
     }
 
     /**
@@ -141,10 +149,7 @@ class UrlGenerator implements UrlGeneratorInterface
      */
     protected function removePaginationFromParams(array $params)
     {
-        $paginationParameterName = $this->searchClient->getSearchConfig()
-            ->getPaginationConfigBuilder()
-            ->get()
-            ->getParameterName();
+        $paginationParameterName = $this->config->getParameterNamePage();
 
         if (isset($params[$paginationParameterName])) {
             unset($params[$paginationParameterName]);
