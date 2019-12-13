@@ -165,7 +165,9 @@ export default class PackagingUnitQuantitySelector extends Component {
             this.measurementUnitInput.addEventListener('change', (event: Event) => this.measurementUnitInputChange(event));
         }
 
-        this.amountInSalesUnitInput.addEventListener('input', (event: Event) => this.amountInputChange());
+        if (this.amountInSalesUnitInput) {
+            this.amountInSalesUnitInput.addEventListener('input', (event: Event) => this.amountInputChange());
+        }
 
         if (this.leadSalesUnitSelect) {
             this.leadSalesUnitSelect.addEventListener('change', (event: Event) => this.leadSalesUnitSelectChange(event));
@@ -194,9 +196,17 @@ export default class PackagingUnitQuantitySelector extends Component {
             this.quantityMaxElement.classList.remove('is-hidden');
         }
 
+        if (this.muError && !isFinite(qtyInSalesUnits)) {
+            this.addToCartButton.setAttribute('disabled', 'disabled');
+            this.qtyInSalesUnitInput.setAttribute('disabled', 'disabled');
+
+            return;
+        }
+
         if (this.muError || this.puError || this.isAddToCartDisabled) {
             this.addToCartButton.setAttribute("disabled", "disabled");
             this.askCustomerForCorrectInput(qtyInSalesUnits);
+
             return;
         }
 
@@ -274,6 +284,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.qtyInSalesUnitInput.value = this.round(qtyInSalesUnits, 4).toString().toString();
         if (!this.puError && !this.isAddToCartDisabled) {
             this.addToCartButton.removeAttribute("disabled");
+            this.qtyInSalesUnitInput.removeAttribute('disabled');
         }
         this.muChoiceNotificationElement.classList.add('is-hidden');
         this.qtyInputChange();
@@ -372,7 +383,11 @@ export default class PackagingUnitQuantitySelector extends Component {
         let qtyInBaseUnits = this.multiply(qtyInSalesUnits, this.currentSalesUnit.conversion);
         qtyInSalesUnits = qtyInBaseUnits / salesUnit.conversion;
         this.currentSalesUnit = salesUnit;
-        this.qtyInSalesUnitInput.value = this.round(qtyInSalesUnits, 4).toString();
+
+        if (isFinite(qtyInSalesUnits)) {
+            this.qtyInSalesUnitInput.value = this.round(qtyInSalesUnits, 4).toString();
+        }
+
         this.qtyInputChange(qtyInSalesUnits);
     }
 

@@ -27,7 +27,7 @@
 
     {% if hasProductMeasurementUnit %}
         <ul class="text-small">
-            {% for salesUnit in data.salesUnits %}
+            {% for salesUnit in data.salesUnits if salesUnit.conversion != 0 %}
                 {% if salesUnit.productMeasurementUnit.idProductMeasurementUnit != data.baseUnit.idProductMeasurementUnit %}
                     <li>
                         1 {{ data.baseUnit.name | trans }}

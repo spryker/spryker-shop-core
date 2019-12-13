@@ -148,6 +148,13 @@ export default class MeasurementQuantitySelector extends Component {
             this.maximumQuantity.classList.remove('is-hidden');
         }
 
+        if (error && !isFinite(qtyInSalesUnits)) {
+            this.addToCartButton.setAttribute('disabled', 'disabled');
+            this.qtyInSalesUnitInput.setAttribute('disabled', 'disabled');
+
+            return;
+        }
+
         if (error) {
             this.addToCartButton.setAttribute('disabled', 'disabled');
             this.askCustomerForCorrectInput(qtyInSalesUnits);
@@ -191,7 +198,7 @@ export default class MeasurementQuantitySelector extends Component {
         this.measurementUnitChoice.classList.remove('is-hidden');
     }
 
-    private createChoiceElement(qtyInBaseUnits: number): HTMLSpanElement {
+    protected createChoiceElement(qtyInBaseUnits: number): HTMLSpanElement {
         if (qtyInBaseUnits > 0) {
             const choiceElem = document.createElement('span');
             const qtyInSalesUnits = qtyInBaseUnits / this.currentSalesUnit.conversion;
@@ -220,6 +227,7 @@ export default class MeasurementQuantitySelector extends Component {
         this.qtyInBaseUnitInput.value = qtyInBaseUnits.toString();
         this.qtyInSalesUnitInput.value = this.round(qtyInSalesUnits, this.decimals).toString().toString();
         this.addToCartButton.removeAttribute('disabled');
+        this.qtyInSalesUnitInput.removeAttribute('disabled');
         this.measurementUnitChoice.classList.add('is-hidden');
     }
 
@@ -319,7 +327,11 @@ export default class MeasurementQuantitySelector extends Component {
         const qtyInBaseUnits = this.multiply(qtyInSalesUnits, this.currentSalesUnit.conversion);
         qtyInSalesUnits = qtyInBaseUnits / salesUnit.conversion;
         this.currentSalesUnit = salesUnit;
-        this.qtyInSalesUnitInput.value = this.round(qtyInSalesUnits, this.decimals).toString();
+
+        if (isFinite(qtyInSalesUnits)) {
+            this.qtyInSalesUnitInput.value = this.round(qtyInSalesUnits, this.decimals).toString();
+        }
+
         this.qtyInputChange(qtyInSalesUnits);
     }
 
