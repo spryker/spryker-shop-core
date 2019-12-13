@@ -57,7 +57,7 @@
 {% block content %}
     {% set catalogJsName = 'js-catalog' %}
 
-    {% include molecule('url-generator', 'CatalogPage') with {
+    {% include molecule('window-location-applicator', 'CatalogPage') with {
         attributes: {
             'form-class-name': catalogJsName ~ '__form',
             'trigger-class-name': catalogJsName ~ '__trigger',
