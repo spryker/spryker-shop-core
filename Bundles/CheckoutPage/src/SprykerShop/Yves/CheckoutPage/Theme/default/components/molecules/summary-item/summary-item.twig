@@ -5,7 +5,6 @@
 } %}
 
 {% define data = {
-    item: required,
     name: required,
     quantity: required,
     images: required,
@@ -17,6 +16,7 @@
     quantitySalesUnit: null,
     amountSalesUnit: null,
     amount: 0,
+    productOffer: null,
 } %}
 
 {% block body %}
@@ -28,7 +28,6 @@
             molecule('summary-product-packaging-unit-by-default', 'ProductPackagingUnitWidget')
         ] ignore missing with {
             data: {
-                item: data.item,
                 name: data.name,
                 quantity: data.quantity,
                 amount: data.amount,
@@ -38,6 +37,7 @@
                 images: data.images,
                 groupKey: data.groupKey,
                 sku: data.sku,
+                productOffer: data.productOffer,
             },
         } only %}
     {% endif %}

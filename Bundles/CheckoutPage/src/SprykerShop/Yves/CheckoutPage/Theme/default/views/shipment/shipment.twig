@@ -51,7 +51,6 @@
                                 {% set item = item.bundleProduct ?? item %}
                                 {% embed molecule('summary-item', 'CheckoutPage') with {
                                     data: {
-                                        item: item,
                                         name: item.name,
                                         quantity: item.quantity,
                                         price: item.sumPrice | money,
@@ -63,6 +62,7 @@
                                         groupKey: item.groupKey,
                                         images: item.images,
                                         sku: item.sku,
+                                        productOffer: item.productOffer | default(null),
                                     },
                                     embed: {
                                         isLast: not loop.last,

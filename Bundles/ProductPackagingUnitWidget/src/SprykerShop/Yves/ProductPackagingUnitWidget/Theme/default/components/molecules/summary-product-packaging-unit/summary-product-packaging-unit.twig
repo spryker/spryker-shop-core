@@ -5,7 +5,6 @@
 } %}
 
 {% define data = {
-    item: required,
     name: required,
     quantity: required,
     amount: required,
@@ -14,6 +13,7 @@
     amountSalesUnit: required,
     images: [],
     countOfDecimalsInAmount: 10,
+    productOffer: null,
 } %}
 
 {% block body %}
@@ -43,7 +43,7 @@
             <div>{{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }} {% if salesUnitSummary %}(={{ salesUnitSummary }}){% endif %}</div>
             <div>{{ 'packaging_units.cart.quantity' | trans }}: {{ data.quantity }}</div>
 
-            {% widget 'ProductOfferSoldByMerchantWidget' args [data.item] only %}{% endwidget %}
+            {% widget 'ProductOfferSoldByMerchantWidget' args [data.productOffer] only %}{% endwidget %}
 
             {% if data.amountSalesUnit is not empty %}
                 {% set amountPerQuantity = data.amount.divide(data.quantity, data.countOfDecimalsInAmount).trim %}
