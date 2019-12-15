@@ -179,8 +179,6 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.isAddToCartDisabled = packagingUnitData.isAddToCartDisabled;
         this.productPackagingUnitStorage = packagingUnitData.productPackagingUnitStorage;
         this.productQuantityStorage = packagingUnitData.productQuantityStorage;
-
-        debugger
     }
 
     protected initFormDefaultValues(): void {
@@ -568,11 +566,11 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     protected initCurrentLeadSalesUnit(): void {
-        this.leadSalesUnits.forEach((item: SalesUnit) => {
-            if (item.is_default) {
-                this.currentLeadSalesUnit = item;
-            }
-        });
+        if (!this.currentLeadSalesUnit) {
+            return;
+        }
+
+        this.currentLeadSalesUnit = this.leadSalesUnits.find((item: SalesUnit) => item.is_default);
     }
 
     protected createAmountChoiceElement(amountInBaseUnits: number): HTMLSpanElement {
