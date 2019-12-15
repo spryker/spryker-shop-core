@@ -49,6 +49,10 @@
             box-shadow: 0 0 0 1px $setting-color-lighter;
         }
 
+        &--without-spaces {
+            margin: 0;
+        }
+
         @content;
     }
 }

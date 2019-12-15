@@ -6,6 +6,17 @@
     <transfer name="ProductConcreteCriteriaFilter">
         <property name="searchString" type="string"/>
         <property name="limit" type="int"/>
+        <property name="excludedProductIds" type="int[]" singular="excludedProductId"/>
+    </transfer>
+
+    <transfer name="ProductConcretePageSearch">
+        <property name="fkProduct" type="int"/>
+        <property name="fkProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="ProductView">
+        <property name="idProductConcrete" type="int"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
 </transfers>

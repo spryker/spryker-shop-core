@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/product-search-widget.svg)](https://travis-ci.org/spryker-shop/product-search-widget)
 [![Coverage Status](https://coveralls.io/repos/github/spryker-shop/product-search-widget/badge.svg)](https://coveralls.io/github/spryker-shop/product-search-widget)
 
-Provides searchable dropdown for products
+Provides searchable dropdown for products and product list search widget.
 
 ## Installation
 
