@@ -29,7 +29,7 @@
     {% set leftColumnModifierClass = salesUnitCount ? 'col--sm-7' : 'col--sm-5' %}
     {% set rightColumnModifierClass = salesUnitCount ? 'col--sm-4' : 'col--sm-6' %}
 
-    <div class="{{ config.jsName }}__product-packaging-new-price-block product-packaging-new-price is-hidden" id="">
+    <div class="{{ config.jsName }}__product-packaging-new-price-block product-packaging-new-price is-hidden">
         <span>{{ "measurement_units.new-price" | trans }}:</span>
         <div class="{{ config.jsName }}__product-packaging-new-price-value-block"></div>
         <hr>
@@ -128,10 +128,10 @@
 
     <div class="grid grid--bottom grid--justify">
         {% if data.productPackagingUnit and salesUnitCount %}
-            {% set defaultAmount =
-                (data.productPackagingUnit.amountMin and
-                data.productPackagingUnit.defaultAmount < data.productPackagingUnit.amountMin) ?
-                data.productPackagingUnit.amountMin : data.productPackagingUnit.defaultAmount %}
+            {% set defaultAmount = (data.productPackagingUnit.amountMin and
+                data.productPackagingUnit.defaultAmount.toFloat() < data.productPackagingUnit.amountMin.toFloat()) ?
+                data.productPackagingUnit.amountMin :
+                data.productPackagingUnit.defaultAmount %}
 
             <div class="col {{ leftColumnModifierClass }}">
                 <label>
@@ -144,8 +144,7 @@
                            step="{{ data.productPackagingUnit.amountInterval }}"
                            name="amount-sales-unit[{{ data.product.sku }}]"
                             {{ not data.packagingUnitIsAmountVariable ? 'disabled' }}>
-                    <input class="{{ config.jsName }}__default-amount" type="hidden" value="{{ defaultAmount }}"
-                           data-default-amount="{{ defaultAmount }}">
+                    <input class="{{ config.jsName }}__default-amount" type="hidden" value="{{ defaultAmount }}">
                     <input class="{{ config.jsName }}__amount" type="hidden" value="{{ defaultAmount }}"
                            name="amount[{{ data.product.sku }}]">
                 </label>
