@@ -10,6 +10,10 @@ export default class FormDataInjector extends Component {
         this.destinationForm = <HTMLFormElement>document.getElementsByClassName(this.destinationFormClassName)[0];
         this.fieldsToInject = <HTMLElement[]>Array.from(document.querySelectorAll(this.fieldsSelector));
 
+        if (!this.destinationForm) {
+            return;
+        }
+
         this.mapEvents();
     }
 
@@ -20,12 +24,12 @@ export default class FormDataInjector extends Component {
     protected onSubmit(event: Event): void {
         event.preventDefault();
 
-        this.preventSubmitButton();
+        this.disableSubmitButton();
         this.injectData();
         this.destinationForm.submit();
     }
 
-    protected preventSubmitButton(): void {
+    protected disableSubmitButton(): void {
         this.destinationForm.querySelector('[type="submit"]').setAttribute('disabled', 'disabled');
     }
 
@@ -34,13 +38,13 @@ export default class FormDataInjector extends Component {
     }
 
     protected addField(field: HTMLFormElement): void {
-        const insertField: HTMLInputElement = <HTMLInputElement>document.createElement('input');
+        const fieldToInsert: HTMLInputElement = <HTMLInputElement>document.createElement('input');
 
-        insertField.setAttribute('type', 'hidden');
-        insertField.setAttribute('name', field.name);
-        insertField.setAttribute('value', field.value);
+        fieldToInsert.setAttribute('type', 'hidden');
+        fieldToInsert.setAttribute('name', field.name);
+        fieldToInsert.setAttribute('value', field.value);
 
-        this.destinationForm.appendChild(insertField);
+        this.destinationForm.appendChild(fieldToInsert);
     }
 
     protected get destinationFormClassName(): string {

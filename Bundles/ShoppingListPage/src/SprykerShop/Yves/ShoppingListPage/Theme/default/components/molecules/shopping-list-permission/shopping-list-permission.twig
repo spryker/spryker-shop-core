@@ -10,7 +10,7 @@
 } %}
 
 {% block body %}
-    {% set fullAccessClasses = config.name ~ '__full' %}
+    {% set fullAccessClasses = config.name ~ '__full-access' %}
 
     {% block content %}
         {% if data.hasWritePermission %}

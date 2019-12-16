@@ -20,44 +20,22 @@
 {% endblock %}
 
 {% block body %}
-    {% set labelOptions = data.isLabelHidden ? { label: false } : {} %}
-
     {{ form_start(data.form, data.formOptions) }}
         {% block formInner %}
             {% block content %}
-                <div class="grid grid--bottom">
-                    {% block title %}
-                        <h5>{{ data.formTitle }}</h5>
-                    {% endblock %}
+                {% block title %}
+                    <h5>{{ data.formTitle }}</h5>
+                {% endblock %}
 
-                    {% block shoppingListDropDown %}
-                        <div class="col col--sm-12">
-                            {% block shoppingListDropDownInner %}
-                                {% include molecule('toggle-select-form', 'ShoppingListWidget') with {
-                                    data: {
-                                        attribute: attribute(data.form.children, 'idShoppingList'),
-                                        labelOptions: labelOptions,
-                                        selectAttributes: {
-                                            'target': 'js-add-new-shopping-list',
-                                            'class-to-toggle': 'is-hidden',
-                                        },
-                                    },
-                                } only %}
-                            {% endblock %}
-                        </div>
-                    {% endblock %}
-
-                    {% block field %}
-                        <div class="col col--sm-12 js-add-new-shopping-list spacing-top">
-                            {% block fieldInner %}
-                                {{ form_row(attribute(
-                                    data.form.children, 'newShoppingListName'),
-                                    labelOptions
-                                ) }}
-                            {% endblock %}
-                        </div>
-                    {% endblock %}
-                </div>
+                {% block shoppingListContainer %}
+                    {% include molecule('new-shopping-list', 'ShoppingListWidget') with {
+                        data: {
+                            formChildren: data.form.children,
+                            title: data.formTitle,
+                            labelOptions: data.isLabelHidden ? { label: false } : {},
+                        },
+                    } only %}
+                {% endblock %}
             {% endblock %}
 
             {% set submitButtonClasses = "button button--expand button--success" %}

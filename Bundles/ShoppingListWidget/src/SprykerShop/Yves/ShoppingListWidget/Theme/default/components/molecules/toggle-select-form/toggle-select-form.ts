@@ -22,8 +22,8 @@ export default class ToggleSelectForm extends Component {
         this.toggle();
     }
 
-    protected toggle(isToggle: boolean = this.isSelected): void {
-        this.targets.forEach((element: HTMLElement) => element.classList.toggle(this.classToToggle, isToggle));
+    protected toggle(isForced: boolean = this.isSelected): void {
+        this.targets.forEach((element: HTMLElement) => element.classList.toggle(this.classToToggle, isForced));
     }
 
     protected get isSelected(): boolean {
