@@ -24,7 +24,7 @@
                 {% include atom('thumbnail') with {
                     modifiers: ['small'],
                     attributes: {
-                        alt: data.name | default(''),
+                        alt: data.name | default,
                         src: imageUrl.externalUrlLarge,
                     },
                 } only %}
@@ -42,7 +42,7 @@
             <div>{{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }} {% if salesUnitSummary %}(={{ salesUnitSummary }}){% endif %}</div>
             <div>{{ 'packaging_units.cart.quantity' | trans }}: {{ data.quantity }}</div>
 
-            {% if data.amountSalesUnit is not empty %}
+            {% if data.amountSalesUnit %}
                 {% set amountPerQuantity = data.amount.divide(data.quantity, data.countOfDecimalsInAmount).trim %}
                 {% set amountPerQuantityConversion = amountPerQuantity.divide(data.amountSalesUnit.conversion, data.countOfDecimalsInAmount).trim %}
                 {% set amountSalesUnitName = salesUnitName | default(data.amountSalesUnit.productMeasurementBaseUnit.productMeasurementUnit.name) | default %}
