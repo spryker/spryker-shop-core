@@ -1,0 +1,64 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'configurator-state-adjustment-form',
+} %}
+
+{% define data = {
+    product: required,
+    form: required,
+    selectedSlotId: required,
+    isSelected: false,
+} %}
+
+{% block body %}
+    {{ form_start(data.form) }}
+
+    {% block form %}
+        {% if data.isSelected %}
+            {% for slotId, slotForm in data.form.slots %}
+                {% if slotId == data.selectedSlotId %}
+                    {% do slotForm.setRendered %}
+                {% else %}
+                    {{ form_widget(slotForm) }}
+                {% endif %}
+            {% endfor %}
+
+            {% set selectedButtonModifiers = ['expand', 'success'] %}
+
+            {% block selectedButton %}
+                {% include molecule('configurator-button', 'ConfigurableBundlePage') with {
+                    modifiers: selectedButtonModifiers,
+                    data: {
+                        text: 'configurable_bundle_page.unselect' | trans,
+                    },
+                } only %}
+            {% endblock %}
+        {% else %}
+            {% for slotForm in data.form.slots %}
+                {{ form_row(slotForm.sku, { id: '' }) }}
+            {% endfor %}
+
+            {% set productSkuInputName = data.form.vars.name ~ '[slots][' ~ data.selectedSlotId ~ '][sku]' %}
+
+            <input name="{{ productSkuInputName }}" type="hidden" value="{{ data.product.sku }}">
+
+            {% block unselectedButton %}
+                {% if data.product.price is not null %}
+                    {% set buttonModifiers = ['expand'] %}
+
+                    {% block unselectedButtonItem %}
+                        {% include molecule('configurator-button', 'ConfigurableBundlePage') with {
+                            modifiers: buttonModifiers,
+                            data: {
+                                text: 'configurable_bundle_page.select' | trans,
+                            },
+                        } only %}
+                    {% endblock %}
+                {% endif %}
+            {% endblock %}
+        {% endif %}
+    {% endblock %}
+    {{ form_row(data.form._token, { id: '' }) }}
+    {{ form_end(data.form) }}
+{% endblock %}

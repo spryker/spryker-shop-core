@@ -1,0 +1,21 @@
+{% extends template('widget') %}
+
+{% define data = {
+    products: _widget.products,
+} %}
+
+{% block body %}
+    {% for product in data.products %}
+        {% block product %}
+            {% include molecule('product-search-item', 'ProductSearchWidget') with {
+                data: {
+                    product: product,
+                },
+            } only %}
+        {% endblock %}
+    {% endfor %}
+
+    {% if data.products is empty %}
+        <p>{{ 'product_search_widget.search.no_results' | trans }}</p>
+    {% endif %}
+{% endblock %}
