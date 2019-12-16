@@ -19,6 +19,10 @@ class AddressProvider implements AddressProviderInterface
     protected const COMPANY_BUSINESS_UNIT_ADDRESS_KEY_PATTERN = 'company_business_unit_address_%s';
     protected const CUSTOMER_ADDRESS_KEY_PATTERN = 'customer_address_%s';
 
+    protected const KEY_IS_DEFAULT_SHIPPING = 'is_default_shipping';
+    protected const KEY_IS_DEFAULT_BILLING = 'is_default_billing';
+    protected const KEY_ID_CUSTOMER_ADDRESS = 'id_customer_address';
+
     /**
      * @var \SprykerShop\Yves\CompanyWidget\Dependency\Client\CompanyWidgetToCustomerClientInterface
      */
@@ -39,7 +43,7 @@ class AddressProvider implements AddressProviderInterface
     {
         $customerTransfer = $this->customerClient->getCustomer();
 
-        if (!$customerTransfer) {
+        if ($customerTransfer === null) {
             return false;
         }
 
@@ -75,6 +79,77 @@ class AddressProvider implements AddressProviderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $formAddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer[] $companyBusinessUnitAddresses
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCurrentCompanyBusinessUnitAddress(AddressTransfer $formAddressTransfer, array $companyBusinessUnitAddresses): ?AddressTransfer
+    {
+        $formAddressData = $formAddressTransfer->modifiedToArray();
+        if ($this->isAddressFormDataEmpty($formAddressData)) {
+            return null;
+        }
+
+        $formAddressData = $this->cleanAddressDefaultFields($formAddressData);
+
+        foreach ($companyBusinessUnitAddresses as $companyBusinessUnitAddressTransfer) {
+            if ($this->isSameCompanyUnitAddress($formAddressData, $companyBusinessUnitAddressTransfer)) {
+                return $companyBusinessUnitAddressTransfer;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param array $formAddressData
+     * @param \Generated\Shared\Transfer\AddressTransfer $companyBusinessUnitAddressTransfer
+     *
+     * @return bool
+     */
+    protected function isSameCompanyUnitAddress(array $formAddressData, AddressTransfer $companyBusinessUnitAddressTransfer): bool
+    {
+        $companyBusinessUnitAddressData = $companyBusinessUnitAddressTransfer->toArray();
+
+        foreach ($formAddressData as $formAddressKey => $formAddressValue) {
+            if (!isset($companyBusinessUnitAddressData[$formAddressKey])
+                || $companyBusinessUnitAddressData[$formAddressKey] !== $formAddressValue
+            ) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param array $formAddressData
+     *
+     * @return array
+     */
+    protected function cleanAddressDefaultFields(array $formAddressData): array
+    {
+        unset(
+            $formAddressData[static::KEY_IS_DEFAULT_SHIPPING],
+            $formAddressData[static::KEY_IS_DEFAULT_BILLING],
+            $formAddressData[static::KEY_ID_CUSTOMER_ADDRESS]
+        );
+
+        return $formAddressData;
+    }
+
+    /**
+     * @param array $formAddressData
+     *
+     * @return bool
+     */
+    protected function isAddressFormDataEmpty(array $formAddressData): bool
+    {
+        return !array_filter($formAddressData);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
@@ -89,13 +164,7 @@ class AddressProvider implements AddressProviderInterface
 
         $addressTransfer = $this->setAddressCustomerAttributes($addressTransfer, $customerTransfer);
         $addressTransfer->setKey($this->getBusinessUnitAddressKey($companyUnitAddressTransfer->getIdCompanyUnitAddress()));
-
-        $companyBusinessUnitTransfer = $this->findCompanyBusinessUnit($customerTransfer);
-        if ($companyBusinessUnitTransfer) {
-            $addressTransfer->setCompany(
-                $companyBusinessUnitTransfer->getCompany()->getName()
-            );
-        }
+        $addressTransfer = $this->hydrateCompanyNameToAddressTransfer($addressTransfer, $customerTransfer);
 
         return $addressTransfer;
     }
@@ -106,6 +175,11 @@ class AddressProvider implements AddressProviderInterface
     protected function getCustomerAddressList(): ArrayObject
     {
         $customerTransfer = $this->customerClient->getCustomer();
+        $addressesTransfer = $customerTransfer->getAddresses();
+
+        if ($addressesTransfer === null) {
+            return new ArrayObject();
+        }
 
         return $customerTransfer->getAddresses()
             ->getAddresses();
@@ -143,7 +217,35 @@ class AddressProvider implements AddressProviderInterface
             return new ArrayObject();
         }
 
-        return $companyBusinessUnitAddressCollection->getCompanyUnitAddresses();
+        $companyUnitAddressTransfers = $companyBusinessUnitAddressCollection->getCompanyUnitAddresses();
+
+        $idCompanyUnitAddress = $companyBusinessUnitTransfer->getDefaultBillingAddress();
+        if (!$idCompanyUnitAddress) {
+            return $companyUnitAddressTransfers;
+        }
+
+        return $this->markDefaultBillingCompanyBusinessUnitAddress($idCompanyUnitAddress, $companyUnitAddressTransfers);
+    }
+
+    /**
+     * @param int $idCompanyUnitAddress
+     * @param \ArrayObject|\Generated\Shared\Transfer\CompanyUnitAddressTransfer[] $companyUnitAddressTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\CompanyUnitAddressTransfer[]
+     */
+    protected function markDefaultBillingCompanyBusinessUnitAddress(
+        int $idCompanyUnitAddress,
+        ArrayObject $companyUnitAddressTransfers
+    ): ArrayObject {
+        foreach ($companyUnitAddressTransfers as $companyUnitAddressTransfer) {
+            if ($companyUnitAddressTransfer->getIdCompanyUnitAddress() === $idCompanyUnitAddress) {
+                $companyUnitAddressTransfer->setIsDefaultBilling(true);
+
+                return $companyUnitAddressTransfers;
+            }
+        }
+
+        return $companyUnitAddressTransfers;
     }
 
     /**
@@ -176,9 +278,33 @@ class AddressProvider implements AddressProviderInterface
         AddressTransfer $addressTransfer,
         CustomerTransfer $customerTransfer
     ): AddressTransfer {
-        $addressTransfer = $addressTransfer->setLastName($customerTransfer->getLastName())
+        return $addressTransfer
+            ->setLastName($customerTransfer->getLastName())
             ->setFirstName($customerTransfer->getFirstName())
             ->setSalutation($customerTransfer->getSalutation());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function hydrateCompanyNameToAddressTransfer(
+        AddressTransfer $addressTransfer,
+        CustomerTransfer $customerTransfer
+    ): AddressTransfer {
+        $companyBusinessUnitTransfer = $this->findCompanyBusinessUnit($customerTransfer);
+        if ($companyBusinessUnitTransfer === null) {
+            return $addressTransfer;
+        }
+
+        $companyTransfer = $companyBusinessUnitTransfer->getCompany();
+        if ($companyTransfer === null) {
+            return $addressTransfer;
+        }
+
+        $addressTransfer->setCompany($companyTransfer->getName());
 
         return $addressTransfer;
     }

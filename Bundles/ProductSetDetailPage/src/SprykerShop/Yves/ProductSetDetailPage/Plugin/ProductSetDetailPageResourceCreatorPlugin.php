@@ -8,17 +8,21 @@
 namespace SprykerShop\Yves\ProductSetDetailPage\Plugin;
 
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
-use Silex\Application;
 use Spryker\Shared\ProductSetStorage\ProductSetStorageConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\ProductSetDetailPage\Controller\DetailController;
 use SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Use `\SprykerShop\Yves\ProductSetDetailPage\Plugin\StorageRouter\ProductSetDetailPageResourceCreatorPlugin` instead.
+ *
  * @method \SprykerShop\Yves\ProductSetDetailPage\ProductSetDetailPageFactory getFactory()
  */
 class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implements ResourceCreatorPluginInterface
 {
+    private const SERVICE_REQUEST = 'request';
+
     /**
      * @return string
      */
@@ -56,10 +60,10 @@ class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implement
      *
      * @return array
      */
-    public function mergeResourceData(array $data)
+    public function mergeResourceData(array $data): array
     {
         $productSetStorageTransfer = $this->getFactory()->getProductSetStorageClient()->mapProductSetStorageDataToTransfer($data);
-        $productViewTransfers = $this->mapProductViewTransfer($this->getApplication(), $productSetStorageTransfer);
+        $productViewTransfers = $this->mapProductViewTransfer($productSetStorageTransfer);
 
         return [
             'productSetDataStorageTransfer' => $productSetStorageTransfer,
@@ -68,51 +72,41 @@ class ProductSetDetailPageResourceCreatorPlugin extends AbstractPlugin implement
     }
 
     /**
-     * @param \Silex\Application $application
      * @param \Generated\Shared\Transfer\ProductSetDataStorageTransfer $productSetDataStorageTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    protected function mapProductViewTransfer(Application $application, ProductSetDataStorageTransfer $productSetDataStorageTransfer)
+    protected function mapProductViewTransfer(ProductSetDataStorageTransfer $productSetDataStorageTransfer): array
     {
-        $productViewTransfers = [];
+        $selectedAttributes = [];
         foreach ($productSetDataStorageTransfer->getProductAbstractIds() as $idProductAbstract) {
-            $productViewTransfer = $this->getFactory()->getProductStorageClient()->findProductAbstractViewTransfer(
-                $idProductAbstract,
-                $this->getLocale(),
-                $this->getSelectedAttributes($application, $idProductAbstract)
-            );
-
-            if ($productViewTransfer === null) {
-                continue;
-            }
-
-            $productViewTransfers[] = $productViewTransfer;
+            $selectedAttributes[$idProductAbstract] = $this->getSelectedAttributes($idProductAbstract);
         }
+
+        $productViewTransfers = $this->getFactory()
+            ->getProductStorageClient()
+            ->getProductAbstractViewTransfers($productSetDataStorageTransfer->getProductAbstractIds(), $this->getLocale(), $selectedAttributes);
 
         return $productViewTransfers;
     }
 
     /**
-     * @param \Silex\Application $application
      * @param int $idProductAbstract
      *
      * @return array
      */
-    protected function getSelectedAttributes(Application $application, $idProductAbstract)
+    protected function getSelectedAttributes($idProductAbstract): array
     {
-        $attributes = $this->getRequest($application)->query->get(DetailController::PARAM_ATTRIBUTE, []);
+        $attributes = $this->getRequest()->query->get(DetailController::PARAM_ATTRIBUTE, []);
 
         return isset($attributes[$idProductAbstract]) ? array_filter($attributes[$idProductAbstract]) : [];
     }
 
     /**
-     * @param \Silex\Application $application
-     *
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    protected function getRequest(Application $application)
+    protected function getRequest(): Request
     {
-        return $application['request'];
+        return $this->getApplication()->get(static::SERVICE_REQUEST);
     }
 }

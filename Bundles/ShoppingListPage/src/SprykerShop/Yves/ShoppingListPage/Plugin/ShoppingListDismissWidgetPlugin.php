@@ -33,7 +33,7 @@ class ShoppingListDismissWidgetPlugin extends AbstractWidgetPlugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +45,7 @@ class ShoppingListDismissWidgetPlugin extends AbstractWidgetPlugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

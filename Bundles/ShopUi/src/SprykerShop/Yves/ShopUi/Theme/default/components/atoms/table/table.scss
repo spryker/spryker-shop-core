@@ -8,16 +8,42 @@
 
         tbody,
         &__body {
-            tr {
+            tr:not(#{$name}__row--backgroungless) {
                 &:nth-child(even) {
                     background-color: $setting-color-lightest;
                 }
             }
         }
 
-        th, td {
+        th,
+        td {
             padding: 0.5rem 0.25rem;
             text-align: left;
+        }
+
+        &__row {
+            &--backgroungless {
+                background: none;
+            }
+
+            &--highlighted {
+                background-color: $setting-color-lightest;
+            }
+
+            &--spacing-y-small {
+                th,
+                td {
+                    padding-top: 0.25rem;
+                    padding-bottom: 0.25rem;
+                }
+            }
+
+            &--spacing-bottom-reset {
+                th,
+                td {
+                    padding-bottom: 0;
+                }
+            }
         }
 
         &--expand {

@@ -4,11 +4,11 @@
   "description": "ProductGroupWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker-shop/shop-ui": "^1.0.0",
-    "spryker/kernel": "^3.24.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/product-group-storage": "^1.0.0",
-    "spryker/product-storage": "^1.10.0"
+    "spryker/product-storage": "^1.14.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

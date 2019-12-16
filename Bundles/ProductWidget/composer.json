@@ -4,25 +4,25 @@
   "description": "ProductWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker-shop/shop-ui": "^1.0.0",
-    "spryker/kernel": "^3.24.0"
+    "php": ">=7.2",
+    "spryker-shop/shop-ui": "^1.27.0",
+    "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
     "spryker-shop/catalog-page": "*",
+    "spryker-shop/cms-content-widget-product-connector": "*",
     "spryker-shop/product-alternative-widget": "*",
     "spryker-shop/product-relation-widget": "*",
     "spryker-shop/product-replacement-for-widget": "*",
-    "spryker/cms-content-widget-product-connector": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/catalog-page": "Widget plugins are available for this module.",
+    "spryker-shop/cms-content-widget-product-connector": "Use this module when using plugins that need CmsContentWidgetProductConnector dependencies.",
     "spryker-shop/product-alternative-widget": "if you want to use ProductWidgetPlugin: ^1.0.0",
     "spryker-shop/product-relation-widget": "Widget plugins are available for this module.",
-    "spryker-shop/product-replacement-for-widget": "if you want to use ProductWidgetPlugin: ^1.0.0",
-    "spryker/cms-content-widget-product-connector": "Use this module when using plugins that need CmsContentWidgetProductConnector dependencies."
+    "spryker-shop/product-replacement-for-widget": "if you want to use ProductWidgetPlugin: ^1.0.0"
   },
   "autoload": {
     "psr-4": {

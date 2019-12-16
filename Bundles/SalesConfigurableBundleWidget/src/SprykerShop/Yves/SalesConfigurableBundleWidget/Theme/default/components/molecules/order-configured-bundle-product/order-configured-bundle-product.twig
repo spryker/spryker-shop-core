@@ -1,0 +1,58 @@
+{# @deprecated Use molecule molecule('ordered-configured-bundle-product', 'SalesConfigurableBundleWidget') instead. #}
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-configured-bundle-product',
+    tag: 'tr',
+} %}
+
+{% define data = {
+    item: required,
+    quantity: data.item.quantity | default,
+    currencyIsoCode: null,
+} %}
+
+{% block body %}
+    {% block generalCol %}
+        <td class="{{ config.name }}__col" colspan="2">
+            {%- block bullet -%}
+                <span class="{{ config.name }}__bullet">
+                    {%- block bulletInner -%}-{%- endblock -%}
+                </span>
+            {%- endblock -%}
+
+            {%- block generalColInner -%}
+                <span class="{{ config.name }}__content">
+                    {%- block name -%}
+                        {{ data.item.name }}
+                    {%- endblock -%}
+                    <br>
+                    <small class="text-secondary">
+                        {{- 'configured_bundle.item_sku' | trans }}
+                        {% block sku -%}
+                            {{ data.item.sku }}
+                        {%- endblock -%}
+                    </small>
+                </span>
+            {%- endblock -%}
+        </td>
+    {% endblock %}
+
+    {% block secondaryCols %}
+        <td class="{{ config.name }}__col">
+            {%- block price -%}
+                {{ data.item.unitPrice | money(true, data.currencyIsoCode) }}
+            {%- endblock -%}
+        </td>
+        <td class="{{ config.name }}__col">
+            {%- block quantity -%}
+                {{ data.quantity }}
+            {%- endblock -%}
+        </td>
+        <td class="{{ config.name }}__col">
+            {%- block total -%}
+                {{ data.item.sumPriceToPayAggregation | money(true, data.currencyIsoCode) }}
+            {%- endblock -%}
+        </td>
+    {% endblock %}
+{% endblock %}

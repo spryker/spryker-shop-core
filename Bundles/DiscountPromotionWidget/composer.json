@@ -4,10 +4,10 @@
   "description": "DiscountPromotionWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker-shop/shop-ui": "^1.13.0",
-    "spryker/kernel": "^3.24.0",
-    "spryker/product-storage": "^1.10.0",
+    "php": ">=7.2",
+    "spryker-shop/shop-ui": "^1.27.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/product-storage": "^1.14.0",
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
@@ -27,7 +27,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

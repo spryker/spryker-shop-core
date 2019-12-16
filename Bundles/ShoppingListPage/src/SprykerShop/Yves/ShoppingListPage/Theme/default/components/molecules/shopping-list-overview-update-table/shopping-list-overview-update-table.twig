@@ -1,3 +1,4 @@
+{# fe-sniffer:disabled correct-twig-component-structure #}
 {% extends molecule('shopping-list-table', 'ShoppingListPage') %}
 
 {% define data = {
@@ -5,7 +6,7 @@
     idShoppingList: required,
     shoppingList: required,
     shoppingListItemProducts: required,
-    form: required
+    form: required,
 } %}
 
 {% block body %}
@@ -57,10 +58,10 @@
                 </td>
                 <td nowrap="nowrap" class="{{ config.name }}__cell text-center">
                     {% if product.price is not null %}
-                        {% include molecule('price') with {
+                        {% include molecule('money-price') with {
                             data: {
-                                amount: product.price | money,
-                                originalAmount: product.prices.ORIGINAL is not defined or product.prices.ORIGINAL is empty ? null : (product.prices.ORIGINAL | money)
+                                amount: product.price,
+                                originalAmount: product.prices.ORIGINAL is not defined or product.prices.ORIGINAL is empty ? null : product.prices.ORIGINAL
                             }
                         } only %}
                     {% else %}
@@ -95,7 +96,11 @@
                     {% for subForm in data.form.items[key].children  %}
                         {% if not subForm.rendered %}
                             {% if subForm.vars.template_path is defined %}
-                                {% include subForm.vars.template_path with {'form': subForm, 'rowClass': config.name ~ '__options-row'} %}
+                                {% include subForm.vars.template_path with {
+                                    attributes: {'data-product-available': not isProductAvailable},
+                                    'form': subForm,
+                                    'rowClass': config.name ~ '__row ' ~ config.name ~ '__row--borderless ' ~ (not isProductAvailable ? config.name ~ '__row--disable' : null)
+                                } %}
                             {% endif %}
                         {% endif %}
                     {% endfor %}

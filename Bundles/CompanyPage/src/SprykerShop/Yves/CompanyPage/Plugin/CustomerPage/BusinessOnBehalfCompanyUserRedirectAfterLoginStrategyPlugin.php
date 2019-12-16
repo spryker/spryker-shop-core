@@ -19,7 +19,7 @@ class BusinessOnBehalfCompanyUserRedirectAfterLoginStrategyPlugin extends Abstra
     protected const COMPANY_REDIRECT_ROUTE = 'company/user/select';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Checks if provided customer has isOnBehalf flag without selected company.
      *
      * @api
@@ -30,11 +30,13 @@ class BusinessOnBehalfCompanyUserRedirectAfterLoginStrategyPlugin extends Abstra
      */
     public function isApplicable(CustomerTransfer $customerTransfer): bool
     {
-        return $customerTransfer->getIsOnBehalf() && !$customerTransfer->getCompanyUserTransfer();
+        return $customerTransfer->getIsOnBehalf()
+            && !$customerTransfer->getCompanyUserTransfer()
+            && $this->isCompanyUserChangeAllowed($customerTransfer);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,5 +47,17 @@ class BusinessOnBehalfCompanyUserRedirectAfterLoginStrategyPlugin extends Abstra
     public function getRedirectUrl(CustomerTransfer $customerTransfer): string
     {
         return $this->getFactory()->getApplication()->path(static::COMPANY_REDIRECT_ROUTE);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isCompanyUserChangeAllowed(CustomerTransfer $customerTransfer): bool
+    {
+        return $this->getFactory()
+            ->getBusinessOnBehalfClient()
+            ->isCompanyUserChangeAllowed($customerTransfer);
     }
 }

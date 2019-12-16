@@ -32,7 +32,7 @@ class QuantitySalesUnitWidgetPlugin extends AbstractWidgetPlugin implements Quan
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,7 +44,7 @@ class QuantitySalesUnitWidgetPlugin extends AbstractWidgetPlugin implements Quan
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

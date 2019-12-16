@@ -4,16 +4,15 @@
   "description": "SharedCartWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/customer": "^7.0.0",
-    "spryker/kernel": "^3.24.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/multi-cart": "^1.3.0",
     "spryker/quote": "^2.8.0",
-    "spryker/shared-cart": "^1.2.0"
+    "spryker/shared-cart": "^1.13.0"
   },
   "require-dev": {
-    "spryker-shop/multi-cart-page": "*",
     "spryker-shop/multi-cart-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"

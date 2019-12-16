@@ -1,0 +1,66 @@
+@mixin file-manager-widget-file-download-link($name: '.file-download-link') {
+    #{$name} {
+        &--icon {
+            width: 8.5rem;
+        }
+
+        &__link {
+            &--icon {
+                display: block;
+                font-size: map-get($setting-font-size, 'small');
+                color: $setting-color-darker;
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+
+        &__icon {
+            display: block;
+            padding: 2rem 0;
+            margin-bottom: 0.25rem;
+            background-color: helper-color-light(map-get($setting-color-actions, 'alert'), 57);
+            color: helper-color-light(map-get($setting-color-actions, 'alert'), 20);
+            text-align: center;
+        }
+
+        &__name-wrapper {
+            display: flex;
+        }
+
+        &__name {
+            display: inline-block;
+            vertical-align: middle;
+
+            &--icon {
+                max-width: 6rem;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+        }
+
+        &__extension {
+            vertical-align: middle;
+        }
+
+        &__size {
+            display: block;
+            opacity: 0.5;
+        }
+
+        @content;
+    }
+}
+
+/**
+ * @deprecated use file-manager-widget-file-download-link mixin instead.
+ */
+@mixin file-download-link($name: '.file-download-link') {
+    @include file-manager-widget-file-download-link();
+
+    #{$name} {
+        @content;
+    }
+}

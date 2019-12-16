@@ -1,7 +1,4 @@
-$business-unit-chart-link-bg: $setting-color-lightest;
-$business-unit-chart-link-color: $setting-color-darkest;
-
-@mixin business-unit-chart-item($name: '.business-unit-chart-item') {
+@mixin company-page-business-unit-chart-item($name: '.business-unit-chart-item') {
     #{$name} {
         & & {
             padding-left: map-get($setting-spacing, 'big');
@@ -11,9 +8,22 @@ $business-unit-chart-link-color: $setting-color-darkest;
             display: block;
             padding: map-get($setting-spacing, 'default');
             margin-bottom: map-get($setting-spacing, 'default');
-            background: $business-unit-chart-link-bg;
-            color: $business-unit-chart-link-color;
+            background: $setting-color-lightest;
+            color: $setting-color-darkest;
             border-radius: 4px;
         }
+
+        @content;
+    }
+}
+
+/**
+ * @deprecated use company-page-business-unit-chart-item mixin instead.
+ */
+@mixin business-unit-chart-item($name: '.business-unit-chart-item') {
+    @include company-page-business-unit-chart-item();
+
+    #{$name} {
+        @content;
     }
 }

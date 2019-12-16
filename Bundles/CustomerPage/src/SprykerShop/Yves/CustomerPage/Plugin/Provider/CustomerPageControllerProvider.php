@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CustomerPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin` instead.
+ */
 class CustomerPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_LOGIN = 'login';
@@ -28,6 +31,9 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_CUSTOMER_ORDER_DETAILS = 'customer/order/details';
     public const ROUTE_CUSTOMER_DELETE = 'customer/delete';
     public const ROUTE_CUSTOMER_DELETE_CONFIRM = 'customer/delete/confirm';
+    protected const ROUTE_TOKEN = 'token';
+
+    protected const TOKEN_PATTERN = '[a-zA-Z0-9-_\.]+';
 
     /**
      * @param \Silex\Application $app
@@ -43,15 +49,17 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
             ->addRestorePasswordRoute()
             ->addCustomerOverviewRoute()
             ->addCustomerProfileRoute()
-            ->addCustomerAddressRoute()
-            ->addNewCustomerAddressRoute()
+            ->addCustomerAddressRoute();
+
+        $this->addNewCustomerAddressRoute()
             ->addUpdateCustomerAddressRoute()
             ->addDeleteCustomerAddressRoute()
             ->addRefreshCustomerAddressRoute()
             ->addCustomerOrderRoute()
             ->addCustomerOrderDetailsRoute()
             ->addCustomerDeleteRoute()
-            ->addCustomerDeleteConfirmRoute();
+            ->addCustomerDeleteConfirmRoute()
+            ->addAccessTokenRoute();
     }
 
     /**
@@ -242,6 +250,21 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{customer}/delete/confirm', self::ROUTE_CUSTOMER_DELETE_CONFIRM, 'CustomerPage', 'Delete', 'confirm')
             ->assert('customer', $this->getAllowedLocalesPattern() . 'customer|customer')
             ->value('customer', 'customer');
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\CustomerPage\Controller\AccessTokenController::indexAction()
+     *
+     * @return $this
+     */
+    protected function addAccessTokenRoute()
+    {
+        $this->createController('/{accessToken}/{token}', static::ROUTE_TOKEN, 'CustomerPage', 'AccessToken', 'index')
+            ->assert('accessToken', $this->getAllowedLocalesPattern() . 'access-token|access-token')
+            ->value('accessToken', 'access-token')
+            ->assert('token', static::TOKEN_PATTERN);
 
         return $this;
     }

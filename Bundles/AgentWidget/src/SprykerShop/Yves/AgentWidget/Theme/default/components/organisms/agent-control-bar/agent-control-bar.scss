@@ -1,4 +1,4 @@
-@mixin agent-control-bar($name: '.agent-control-bar') {
+@mixin agent-widget-agent-control-bar($name: '.agent-control-bar') {
     #{$name} {
         position: relative;
         z-index: $setting-zi-header + 1;
@@ -7,3 +7,13 @@
     }
 }
 
+/**
+ * @deprecated use agent-widget-agent-control-bar mixin instead.
+ */
+@mixin agent-control-bar($name: '.agent-control-bar') {
+    @include agent-widget-agent-control-bar();
+
+    #{$name} {
+        @content;
+    }
+}

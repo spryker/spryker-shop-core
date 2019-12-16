@@ -15,6 +15,9 @@ use Spryker\Yves\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
 use SprykerShop\Yves\ShopRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
 
+/**
+ * @deprecated Use `spryker-shop/storage-router` instead.
+ */
 class ResourceCreatorHandler implements ResourceCreatorHandlerInterface
 {
     /**

@@ -41,7 +41,7 @@ class CustomerStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface $customerClient
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface $customerStepHandler
      * @param string $stepRoute
-     * @param string $escapeRoute
+     * @param string|null $escapeRoute
      * @param string $logoutRoute
      */
     public function __construct(
@@ -119,6 +119,7 @@ class CustomerStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
         $customerTransfer = $this->customerClient->findCustomerById($customerTransfer);
         if (!$customerTransfer) {
             $this->externalRedirect = $this->logoutRoute;
+
             return false;
         }
 

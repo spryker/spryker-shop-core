@@ -15,16 +15,21 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class BusinessOnBehalfStatusWidget extends AbstractWidget
 {
+    protected const PARAMETER_IS_COMPANY_USER_CHANGE_ALLOWED = 'isCompanyUserChangeAllowed';
+    protected const PARAMETER_IS_ON_BEHALF = 'isOnBehalf';
+    protected const PARAMETER_COMPANY_NAME = 'companyName';
+    protected const PARAMETER_COMPANY_BUSINESS_UNIT_NAME = 'companyBusinessUnitName';
+    protected const PARAMETER_IS_VISIBLE = 'isVisible';
+
     public function __construct()
     {
-        $customer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
+        $customerTransfer = $this->getCustomerTransfer();
 
-        $this->addParameter('isOnBehalf', $this->isOnBehalf($customer))
-            ->addParameter('companyName', $this->getCompanyName($customer))
-            ->addParameter('companyBusinessUnitName', $this->getCompanyBusinessUnitName($customer))
-            ->addParameter('isVisible', $this->isVisible($customer));
+        $this->addIsOnBehalfParameter($customerTransfer)
+            ->addCompanyNameParameter($customerTransfer)
+            ->addCompanyBusinessUnitNameParameter($customerTransfer)
+            ->addIsVisibleParameter($customerTransfer)
+            ->addIsCompanyUserChangeAllowedParameter($customerTransfer);
     }
 
     /**
@@ -44,58 +49,95 @@ class BusinessOnBehalfStatusWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
-     *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function isOnBehalf(?CustomerTransfer $customerTransfer): bool
+    protected function getCustomerTransfer(): CustomerTransfer
     {
-        if (!$customerTransfer || !$customerTransfer->getIsOnBehalf()) {
-            return false;
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
+
+        if ($customerTransfer === null) {
+            return new CustomerTransfer();
         }
 
-        return true;
+        return $customerTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return string
+     * @return $this
      */
-    protected function getCompanyName(?CustomerTransfer $customerTransfer): string
+    protected function addIsCompanyUserChangeAllowedParameter(CustomerTransfer $customerTransfer)
     {
-        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer() || !$customerTransfer->getCompanyUserTransfer()->getCompany()) {
-            return '';
-        }
+        $businessOnBehalfClient = $this->getFactory()
+            ->getBusinessOnBehalfClient();
 
-        return $customerTransfer->getCompanyUserTransfer()->getCompany()->getName();
+        $isAllowed = $customerTransfer->getIsOnBehalf()
+            && $businessOnBehalfClient->isCompanyUserChangeAllowed($customerTransfer);
+        $this->addParameter(static::PARAMETER_IS_COMPANY_USER_CHANGE_ALLOWED, $isAllowed);
+
+        return $this;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return string
+     * @return $this
      */
-    protected function getCompanyBusinessUnitName(?CustomerTransfer $customerTransfer): string
+    protected function addIsOnBehalfParameter(CustomerTransfer $customerTransfer)
     {
-        if (!$customerTransfer || !$customerTransfer->getCompanyUserTransfer() || !$customerTransfer->getCompanyUserTransfer()->getCompanyBusinessUnit()) {
-            return '';
-        }
+        $this->addParameter(static::PARAMETER_IS_ON_BEHALF, (bool)$customerTransfer->getIsOnBehalf());
 
-        return $customerTransfer->getCompanyUserTransfer()->getCompanyBusinessUnit()->getName();
+        return $this;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return bool
+     * @return $this
      */
-    protected function isVisible(?CustomerTransfer $customerTransfer): bool
+    protected function addCompanyNameParameter(CustomerTransfer $customerTransfer)
     {
-        if (!$customerTransfer || !$customerTransfer->getIsOnBehalf()) {
-            return false;
+        $companyName = '';
+        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
+        if ($companyUserTransfer && $companyUserTransfer->getCompany()) {
+            $companyName = $companyUserTransfer->getCompany()->getName();
         }
 
-        return true;
+        $this->addParameter(static::PARAMETER_COMPANY_NAME, $companyName);
+
+        return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return $this
+     */
+    protected function addCompanyBusinessUnitNameParameter(CustomerTransfer $customerTransfer)
+    {
+        $companyBusinessUnitName = '';
+        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
+        if ($companyUserTransfer && $companyUserTransfer->getCompanyBusinessUnit()) {
+            $companyBusinessUnitName = $companyUserTransfer->getCompanyBusinessUnit()->getName();
+        }
+
+        $this->addParameter(static::PARAMETER_COMPANY_BUSINESS_UNIT_NAME, $companyBusinessUnitName);
+
+        return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return $this
+     */
+    protected function addIsVisibleParameter(CustomerTransfer $customerTransfer)
+    {
+        $this->addParameter(static::PARAMETER_IS_VISIBLE, (bool)$customerTransfer->getIsOnBehalf());
+
+        return $this;
     }
 }

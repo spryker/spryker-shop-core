@@ -3,6 +3,7 @@
 {% define data = {
     products: [],
     facets: _view.facets,
+    filteredFacets: _view.filteredFacets | default([]),
     category: _view.category | default,
     categories: categories | default([]),
     isEmptyCategoryFilterValueVisible: _view.isEmptyCategoryFilterValueVisible | default,
@@ -33,7 +34,7 @@
             } only %}
 
             {% embed organism('filter-section', 'CatalogPage') with {
-                class: 'box js-catalog__filters-toggle',
+                class: 'box spacing-top spacing-top--big js-catalog__filters-toggle',
                 data: {
                     facets: data.facets,
                     categories: data.categories,

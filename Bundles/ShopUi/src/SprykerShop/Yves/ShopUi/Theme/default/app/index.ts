@@ -23,10 +23,12 @@ function onApplicationError(e: CustomEvent): void {
     error('application error ->', e.detail);
 }
 
+/* tslint:disable: no-any */
 function dispatchCustomEvent(name: string, detail: any = {}): void {
     const event = new CustomEvent(name, { detail });
     document.dispatchEvent(event);
 }
+/* tslint:enable */
 
 function mountComponent(component: Component): void {
     component.mountCallback();
@@ -37,11 +39,12 @@ function isComponent(element: Element): boolean {
     // it needs to be changed into `instanceof` check once the following issue get solved:
     // {@link https://github.com/webcomponents/custom-elements/issues/64}
     const component: Component = <Component>element;
+
     return !!component.name && !!component.jsName;
 }
 
 async function mountComponents(): Promise<void> {
-    const promises: Promise<Element[]>[] = getCandidates().map((candidate: Candidate) => candidate.define());
+    const promises: Array<Promise<Element[]>> = getCandidates().map((candidate: Candidate) => candidate.define());
     const elements: Element[][] = await Promise.all(promises);
 
     elements.forEach((elementSet: Element[]) => elementSet
@@ -57,11 +60,14 @@ async function mountComponents(): Promise<void> {
  *
  * @remarks
  * This function must be invoked after setup() as it relies on the initial configuration.
- * This function should be invoked on DOMContentLoaded or following event as DOM must be loaded to mount Spryker componets.
+ * This function should be invoked on DOMContentLoaded or following event as DOM must be loaded to mount Spryker
+ * componets.
  *
  * @event components-mount (config().events.mount) Fired when all components has been succesfully mounted.
- * @event components-ready (config().events.ready) Deprecated, use `components-mount` event instead - Fired when all components has been succesfully mounted.
- * @event application-bootstrap (config().events.bootstrap) Fired only once, when all components has been succesfully mounted for the first time and application bootstrap is completed.
+ * @event components-ready (config().events.ready) Deprecated, use `components-mount` event instead - Fired when all
+ * components has been succesfully mounted.
+ * @event application-bootstrap (config().events.bootstrap) Fired only once, when all components has been succesfully
+ * mounted for the first time and application bootstrap is completed.
  * @event application-error (config().events.error) Fired when an error occours during the mounting process.
  * @returns Void promise as the mounting process is asyncronous.
  */
@@ -69,7 +75,12 @@ export async function mount(): Promise<void> {
     try {
         await mountComponents();
         dispatchCustomEvent(config().events.mount);
-        dispatchCustomEvent(config().events.ready); // deprecated
+        /**
+         * @deprecated Use events.mount instead.
+         */
+        /* tslint:disable: deprecation */
+        dispatchCustomEvent(config().events.ready);
+        /* tslint:enable: deprecation */
 
         if (isBootstrap) {
             dispatchCustomEvent(config().events.bootstrap);
@@ -83,7 +94,8 @@ export async function mount(): Promise<void> {
 /**
  * Setups the initial configuration for the application and the log system.
  *
- * @param [initialConfig=defaultConfig] The initial configuration. Default development configuration is used if none is passed.
+ * @param [initialConfig=defaultConfig] The initial configuration. Default development configuration is used if none is
+ * passed.
  */
 export function setup(initialConfig: Config = defaultConfig): void {
     setConfig(initialConfig);
@@ -104,7 +116,8 @@ export function setup(initialConfig: Config = defaultConfig): void {
  * @remarks
  * This is the recommended function to invoke in order to initialise Spryker Shop frontend application.
  *
- * @param [initialConfig=defaultConfig] The initial configuration. Default development configuration is used if none is passed.
+ * @param [initialConfig=defaultConfig] The initial configuration. Default development configuration is used if none is
+ * passed.
  */
 export function bootstrap(initialConfig: Config = defaultConfig): void {
     setup(initialConfig);

@@ -1,11 +1,27 @@
 {% extends template('widget') %}
 
 {% define data = {
-    idProductAbstract: _widget.idProductAbstract
+    idProductAbstract: _widget.idProductAbstract,
+    form: _widget.form,
+    showSuccessMessage: false,
+    action: 'product-review/create',
+    reviews: _widget.productReviews,
+    summary: _widget.summary,
+    ratingMaxValue: _widget.maximumRating,
+    hasCustomer: _widget.hasCustomer,
+
+    pagination: {
+        parameters: app.request.query.all(),
+        currentPage: _widget.pagination.currentPage,
+        paginationPath: app.request.getPathInfo(),
+        maxPage: _widget.pagination.maxPage,
+        showAlwaysFirstAndLast: true,
+        anchor: 'product-reviews'
+    }
 } %}
 
 {% block rating %}
-    <hr />
+    <hr>
     {% include molecule('rating-selector', 'ProductReviewWidget') with {
         modifiers: ['expand'],
         data: {
@@ -22,19 +38,17 @@
     <div class="box">
         {% include molecule('toggler-click') with {
             attributes: {
-                'trigger-selector': '.js-review__new-review-trigger',
-                'target-selector': '.js-review__new-review-form-target',
-                'class-to-toggle': 'is-hidden'
-            }
+                'trigger-class-name': 'js-review__new-review-trigger',
+                'target-class-name': 'js-review__new-review-form-target',
+            },
         } only %}
 
         {% include molecule('toggler-hash') with {
             attributes: {
                 'trigger-hash': '#review',
-                'target-selector': '.js-review__new-review-form-target',
-                'class-to-toggle': 'is-hidden',
-                'add-class-when-hash-in-url': false
-            }
+                'target-class-name': 'js-review__new-review-form-target',
+                'add-class-when-hash-in-url': false,
+            },
         } only %}
 
         {% if is_granted('ROLE_USER') %}
@@ -51,9 +65,28 @@
 
     {% if is_granted('ROLE_USER') %}
         <div class="is-hidden js-review__new-review-form-target">
-            {{ render(path('product-review/submit', {'idProductAbstract': data.idProductAbstract})) }}
+            {% if data.showSuccessMessage %}
+                <div class="box box--success">
+                    {{ 'product_review.submit.success' | trans }}
+                </div>
+            {% endif %}
+
+            {% include molecule('new-review-form', 'ProductReviewWidget') with {
+                data: {
+                    form: data.form,
+                    action: url(data.action, {idProductAbstract: data.idProductAbstract})
+                }
+            } only %}
         </div>
     {% endif %}
 
-    {{ render(path('product-review/index', {'idProductAbstract': data.idProductAbstract})) }}
+    {% include organism('review-summary', 'ProductReviewWidget') with {
+        data: {
+            reviews: data.reviews,
+            summary: data.summary,
+            ratingMaxValue: data.ratingMaxValue,
+            hasCustomer: data.hasCustomer,
+            pagination: data.pagination
+        }
+    } only %}
 {% endblock %}

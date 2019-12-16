@@ -1,29 +1,37 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'business-unit-address-item'
+    name: 'business-unit-address-item',
 } %}
 
 {% define data = {
     address: required,
-    idCompanyBusinessUnit: required
+    idCompanyBusinessUnit: required,
 } %}
 
 {% block body %}
+    {% set companyBusinessUnitAddressUpdateUrl = url('company/business-unit/address/update', {
+        id: data.address.vars.value,
+        idCompanyBusinessUnit: data.idCompanyBusinessUnit,
+    }) %}
+    {% set companyBusinessUnitAddressDeleteConfirmationUrl = url('company/address/delete-confirmation', {
+        id: data.address.vars.value,
+        idCompanyBusinessUnit: data.idCompanyBusinessUnit,
+    }) %}
+
     <div class="grid grid--middle">
         <div class="col col--md-9 col--sm-12">
             {{ form_widget(data.address, {
-                'attr': {
-                    'label': data.address.vars.label
-                    }
-                })
-            }}
+                attr: {
+                    label: data.address.vars.label,
+                },
+            }) }}
         </div>
-        <div class="col col--md-3 col--sm-12 {{ config.name }}__actions">
-            <a href="{{ url('company/address/update', {'id': data.address.vars.value, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">
+        <div class="{{ config.name }}__actions col col--sm-12 col--md-3">
+            <a href="{{ companyBusinessUnitAddressUpdateUrl }}" title="{{ "company.account.address.edit" | trans }}">
                 {{ "company.account.address.edit" | trans }}
             </a>
-            <a class="link link--alert spacing-left" href="{{ url('company/address/delete-confirmation', {'id': data.address.vars.value, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">
+            <a class="link link--alert spacing-left" href="{{ companyBusinessUnitAddressDeleteConfirmationUrl }}" title="{{ "company.account.address.delete" | trans }}">
                 {{ "company.account.address.delete" | trans }}
             </a>
         </div>

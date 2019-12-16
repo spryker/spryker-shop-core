@@ -2,13 +2,13 @@
 
 {% define config = {
     name: 'cart-summary',
-    tag: 'div'
 } %}
 
 {% define data = {
     cart: required,
     isQuoteValid: required,
     isQuoteEditable: required,
+    cartQuantity: cartQuantity is defined ? cartQuantity : app['cart.quantity'] | default,
 } %}
 
 {% set canProceedToCheckout = data.cart.items is not empty
@@ -17,88 +17,124 @@
 %}
 
 {% block body %}
-    <h6 class="text-secondary float-right">{{ app['cart.quantity'] }} {{ 'item' | trans }}</h6>
-    <h6>{{ 'cart.your-order' | trans }}</h6>
-    <hr/>
+    {% block cartQuantity %}
+        <h6 class="text-secondary float-right">{{ data.cartQuantity }} {{ 'item' | trans }}</h6>
+        <h6>{{ 'cart.your-order' | trans }}</h6>
+        <hr>
+    {% endblock %}
 
-    {% widget 'QuoteApprovalWidget' args [data.cart] only %}{% endwidget %}
-
-    {% if can('SeePricePermissionPlugin') %}
-        {% if widgetExists('DiscountSummaryWidgetPlugin') %}
-            <ul class="list spacing-y">
-                {{ widget('DiscountSummaryWidgetPlugin', data.cart) }} {# @deprecated Use molecule('cart-discount-summary', 'DiscountWidget') instead. #}
-            </ul>
-        {% else %}
-            {% include molecule('cart-discount-summary', 'DiscountWidget') ignore missing with {
-                class: 'list spacing-y',
-                data: {
-                    voucherDiscounts: data.cart.voucherDiscounts,
-                    ruleDiscounts: data.cart.cartRuleDiscounts,
-                    discountTotal: data.cart.totals.discounttotal,
-                    isQuoteEditable: data.isQuoteEditable
-                }
-            } only %}
-        {% endif %}
-
-        <ul class="list spacing-y">
-
-            {% if data.cart.shipment is not empty and data.cart.shipment.method is not empty %}
-                <li class="list__item spacing-y">
-                    <strong>{{ 'cart.shipping' | trans }}</strong>
-                    <br/>
-                    {{ data.cart.shipment.method.name }}
-                    <span class="float-right">{{ data.cart.shipment.method.storeCurrencyPrice | money }}</span>
-                    <hr/>
-                </li>
-            {% endif %}
-
-            {% widget 'SalesOrderThresholdWidget' args [data.cart.expenses] only %}
-                {% block body %}
-                    <li class="list__item spacing-y">
-                        {{ parent() }}
-                    </li>
-                    <hr/>
-                {% endblock %}
-            {% elsewidget 'SalesOrderThresholdWidgetPlugin' args [data.cart.expenses] only %} {# @deprecated Use SalesOrderThresholdWidget instead. #}
-                {% block body %}
-                    <li class="list__item spacing-y">
-                        {{ parent() }}
-                    </li>
-                    <hr/>
-                {% endblock %}
-            {% endwidget %}
-
-            <li class="list__item spacing-y">
-                {{ 'cart.price.subtotal' | trans }}
-                <span class="float-right">{{ data.cart.totals.subtotal | money }}</span>
-            </li>
-
-            <li class="list__item spacing-y">
-                {{ 'cart.total.tax_total' | trans }}
-                <span class="float-right">{{ data.cart.totals.taxTotal.amount | money }}</span>
-            </li>
-            <li class="list__item spacing-y">
-                {{ 'cart.price.grand.total' | trans }}
-                <strong class="float-right">{{ data.cart.totals.grandTotal | money }}</strong>
-            </li>
-        </ul>
-    {% else %}
-        <li>{{ 'customer.access.cannot_see_price' | trans }}</li>
+    {% set quoteApprovalWidget = findWidget('QuoteApprovalWidget', [data.cart]) %}
+    {% if quoteApprovalWidget and quoteApprovalWidget.isVisible and not canProceedToCheckout %}
+        {% set canProceedToCheckout = true %}
     {% endif %}
 
+    {% if quoteApprovalWidget %}  {# @deprecated - This widget is moved to summary page of checkout. #}
+        {% widget quoteApprovalWidget only %}{% endwidget %}
+    {% endif %}
+
+
+    {% block cartSummaryContent %}
+        {% if can('SeePricePermissionPlugin') %}
+            {% if widgetExists('DiscountSummaryWidgetPlugin') %}
+                <ul class="list spacing-y">
+                    {{ widget('DiscountSummaryWidgetPlugin', data.cart) }} {# @deprecated Use molecule('cart-discount-summary', 'DiscountWidget') instead. #}
+                </ul>
+            {% else %}
+                {% include molecule('cart-discount-summary', 'DiscountWidget') ignore missing with {
+                    class: 'list spacing-y',
+                    data: {
+                        voucherDiscounts: data.cart.voucherDiscounts,
+                        ruleDiscounts: data.cart.cartRuleDiscounts,
+                        discountTotal: data.cart.totals.discounttotal,
+                        isQuoteEditable: data.isQuoteEditable,
+                        currencyIsoCode: data.cart.currency.code,
+                    },
+                } only %}
+            {% endif %}
+
+            <ul class="list spacing-y">
+                {% block cartShipment %}
+                    {% if data.cart.shipment is not empty and data.cart.shipment.method is not empty %}
+                        <li class="list__item spacing-y">
+                            <strong>{{ 'cart.shipping' | trans }}</strong>
+                            <br>
+                            {{ data.cart.shipment.method.name }}
+                            <span class="float-right">{{ data.cart.shipment.method.storeCurrencyPrice | money(true, data.cart.currency.code) }}</span>
+                            <hr>
+                        </li>
+                    {% endif %}
+                {% endblock %}
+
+                {% widget 'SalesOrderThresholdWidget' args [data.cart.expenses] only %}
+                    {% block body %}
+                        <li class="list__item spacing-y">
+                            {{ parent() }}
+                            <hr>
+                        </li>
+                    {% endblock %}
+                {% elsewidget 'SalesOrderThresholdWidgetPlugin' args [data.cart.expenses] only %} {# @deprecated Use SalesOrderThresholdWidget instead. #}
+                    {% block body %}
+                        <li class="list__item spacing-y">
+                            {{ parent() }}
+                        </li>
+                        <hr>
+                    {% endblock %}
+                {% endwidget %}
+
+                {% block cartPrice %}
+                    <li class="list__item spacing-y">
+                        {{ 'cart.price.subtotal' | trans }}
+                        <span class="float-right">{{ data.cart.totals.subtotal | money(true, data.cart.currency.code) }}</span>
+                    </li>
+
+                    <li class="list__item spacing-y">
+                        {{ 'cart.total.tax_total' | trans }}
+                        <span class="float-right">{{ data.cart.totals.taxTotal.amount | money(true, data.cart.currency.code) }}</span>
+                    </li>
+                    <li class="list__item spacing-y">
+                        {{ 'cart.price.grand.total' | trans }}
+                        <strong class="float-right">{{ data.cart.totals.grandTotal | money(true, data.cart.currency.code) }}</strong>
+                    </li>
+                {% endblock %}
+            </ul>
+
+            {% include molecule('gift-card-payment-summary', 'GiftCardWidget') ignore missing with {
+                class: 'list spacing-y',
+                data: {
+                    cart: data.cart,
+                    isQuoteEditable: data.isQuoteEditable,
+                },
+            } only %}
+        {% else %}
+            {{ 'customer.access.cannot_see_price' | trans }}
+        {% endif %}
+    {% endblock %}
+
     {% if data.isQuoteValid %}
-        <hr />
-        {% widget 'QuoteApproveRequestWidget' args [data.cart] %}{% endwidget %}
+        {% widget 'QuoteApproveRequestWidget' args [data.cart] only %} {# @deprecated - This widget is moved to summary page of checkout. #}
+            {% block body %}
+                <hr>
+                {{ parent() }}
+            {% endblock %}
+        {% endwidget %}
     {% endif %}
 
     {% if canProceedToCheckout %}
-        <hr/>
         {% widget 'ProceedToCheckoutButtonWidget' args [data.cart] %}
-        {% nowidget %}
-            <a class="button button--expand button--success"
-               href="{{ url('checkout-index') }}" {{ qa('cart-go-to-checkout') }}>
-                {{ 'cart.checkout' | trans }}
-            </a>
+            {% block body %}
+                <hr>
+                {{ parent() }}
+            {% endblock %}
         {% endwidget %}
+    {% endif %}
+
+    {% if is_granted('ROLE_USER') %}
+        {% widget 'QuoteRequestCreateWidget' args [data.cart] only %}
+            {% block body %}
+                <hr>
+                {{ parent() }}
+            {% endblock %}
+        {% endwidget %}
+        {% widget 'QuoteRequestCartWidget' args [data.cart] only %}{% endwidget %}
     {% endif %}
 {% endblock %}

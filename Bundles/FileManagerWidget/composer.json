@@ -4,22 +4,24 @@
   "description": "FileManagerWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/cms-content-widget": "^1.0.0",
     "spryker/file-manager": "^1.0.0",
     "spryker/file-manager-storage": "^1.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker-shop/shop-application": "*",
     "spryker/code-sniffer": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {
     "spryker-shop/shop-application": "Use this module when using plugins that need Twig dependencies.",
+    "spryker/router": "If you want to use RouteProviderPlugins to be added to the Route Module.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
     "spryker/twig": "Use this module when using plugins that need Twig dependencies."
   },

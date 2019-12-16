@@ -1,80 +1,15 @@
+/**
+ * Provides global class names for the custom responsive grid system with flexible columns
+ * and configurable columns count, container with maximum content width
+ * and modifiers for alignment.
+ * Grid system parameters can be customized in grid settings file.
+ */
 @mixin basic-grid() {
     .container {
         display: block;
         width: 100%;
         max-width: $setting-grid-max-width;
         margin: auto;
-    }
-
-    .grid {
-        @include helper-ui-clearfix;
-        clear: both;
-        display: flex;
-        flex-flow: row wrap;
-        align-items: flex-start;
-        justify-content: flex-start;
-
-        &--top {
-            align-items: flex-start;
-        }
-
-        &--bottom {
-            align-items: flex-end;
-        }
-
-        &--left {
-            justify-content: flex-start;
-        }
-
-        &--right {
-            justify-content: flex-end;
-        }
-
-        &--center {
-            justify-content: center;
-        }
-
-        &--middle {
-            align-items: center;
-        }
-
-        &--justify {
-            justify-content: space-between;
-
-            & .col {
-                margin-left: auto;
-                margin-right: auto;
-
-                &:first-child {
-                    margin-left: 0;
-                }
-
-                &:last-child {
-                    margin-right: 0;
-                }
-            }
-        }
-
-        &--nowrap {
-            flex-wrap: nowrap;
-        }
-
-        &--stretch {
-            align-items: stretch;
-
-            & .col {
-                margin-top: 0;
-                margin-bottom: 0;
-            }
-        }
-
-        &--with-gutter {
-            margin: 0 -$setting-grid-gutter;
-        }
-
-        &.container {
-            max-width: $setting-grid-max-width;
-        }
     }
 
     .col {
@@ -133,6 +68,77 @@
 
         &--with-gutter {
             padding: 0 $setting-grid-gutter;
+        }
+    }
+
+    .grid {
+        @include helper-ui-clearfix;
+        clear: both;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        &--top {
+            align-items: flex-start;
+        }
+
+        &--bottom {
+            align-items: flex-end;
+        }
+
+        &--left {
+            justify-content: flex-start;
+        }
+
+        &--right {
+            justify-content: flex-end;
+        }
+
+        &--center {
+            justify-content: center;
+        }
+
+        &--middle {
+            align-items: center;
+        }
+
+        &--stretch {
+            align-items: stretch;
+
+            & .col {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+        }
+
+        &--justify {
+            justify-content: space-between;
+
+            & .col {
+                margin-left: auto;
+                margin-right: auto;
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+
+        &--nowrap {
+            flex-wrap: nowrap;
+        }
+
+        &--with-gutter {
+            margin: 0 -$setting-grid-gutter;
+        }
+
+        &.container {
+            max-width: $setting-grid-max-width;
         }
     }
 }

@@ -2,97 +2,108 @@
 
 {% define config = {
     name: 'summary-overview',
-    tag: 'ul'
+    tag: 'ul',
 } %}
+
+{#
+    @deprecated property "shipmentMethod" is deprecated.
+    @deprecated property "payments" is deprecated.
+    @deprecated property "cartQuantity" is deprecated.
+    @deprecated property "prices.storeCurrency" is deprecated.
+#}
 
 {% define data = {
     shipmentMethod: required,
+    payments: required,
+    totalCosts: required,
     expenses: [],
     voucherDiscounts: [],
     cartRuleDiscounts: [],
+    cartQuantity: cartQuantity is defined ? cartQuantity : app['cart.quantity'] | default,
+    shipmentGroups: required,
 
     prices: {
         subTotal: required,
         storeCurrency: required,
         tax: required,
         grandTotal: required,
-        discountTotal: null
-    }
+        discountTotal: null,
+    },
 } %}
 
-{% block body %}
-    <li>
-        <span class="float-right">{{ app['cart.quantity'] }} {{ 'checkout.step.summary.items' | trans }}</span>
-        <h6>{{ 'checkout.step.summary.overview' | trans }}</h6>
-    </li>
-    {% block separator %}
-        <li><hr /></li>
-    {% endblock %}
-    {% if can('SeePricePermissionPlugin') %}
-    <li>
-        {{ 'checkout.step.summary.sub_total' | trans }}
-        <strong class="float-right">{{ data.prices.subTotal | money }}</strong>
-    </li>
-    {{block('separator')}}
-
-    {% if data.prices.discountTotal %}
-        {% if data.voucherDiscounts is not empty %}
-            <li>
-                <strong>{{ 'cart.vouchers' | trans }}</strong>
-                {% for voucherDiscount in data.voucherDiscounts %}
-                    <div class="grid grid--justify">
-                        <span class="col col--sm-10">{{ voucherDiscount.displayName }}</span>
-                        <span class="col col--expand text-right">- {{ voucherDiscount.amount | money }}</span>
-                    </div>
-                {% endfor %}
-            </li>
-        {% endif %}
-
-        {% if data.cartRuleDiscounts|length %}
-            <li>
-                <strong>{{ 'cart.discounts' | trans }}</strong>
-                {% for ruleDiscount in data.cartRuleDiscounts %}
-                    <div class="grid grid--justify">
-                        <span class="col col--sm-10">{{ ruleDiscount.displayName }}</span>
-                        <span class="col col--expand text-right">- {{ ruleDiscount.amount | money }}</span>
-                    </div>
-                {% endfor %}
-            </li>
-        {% endif %}
-
-        {{block('separator')}}
+{% macro itemDiscounts(discounts, title) %}
+    {% if discounts | length %}
+        <li>
+            <strong>{{ title | trans }}</strong>
+            {% for discount in discounts %}
+                <div class="grid grid--justify">
+                    <span class="col col--sm-10">{{ discount.displayName }}</span>
+                    <span class="col col--expand text-right">- {{ discount.amount | money }}</span>
+                </div>
+            {% endfor %}
+        </li>
     {% endif %}
+{% endmacro %}
 
-    <li>
-        <span class="float-right">{{ data.prices.storeCurrency | money }}</span>
-        {{ 'checkout.step.summary.shipping' | trans }} (<strong>{{ data.shipmentMethod }}</strong>)
-    </li>
-    {% widget 'SalesOrderThresholdWidget' args [data.expenses] only %}
-        {% block body %}
-            {{block('separator')}}
-            <li>
-                {{ parent() }}
-            </li>
+{% block body %}
+    {% if can('SeePricePermissionPlugin') %}
+        <li>
+            <strong class="float-right">{{ data.prices.subTotal | money }}</strong>
+            <strong>{{ 'checkout.step.summary.sub_total' | trans }}</strong>
+        </li>
+
+        {% block separator %}
+            <li><hr></li>
         {% endblock %}
-    {% elsewidget 'SalesOrderThresholdWidgetPlugin' args [data.expenses] only %} {# @deprecated Use SalesOrderThresholdWidget instead. #}
-        {% block body %}
-            {{block('separator')}}
-            <li>
-                {{ parent() }}
-            </li>
-        {% endblock %}
-    {% endwidget %}
-    {{block('separator')}}
-    <li>
-        {{ 'checkout.step.summary.tax' | trans }}
-        <span class="float-right">{{ data.prices.tax | money }}</span>
-    </li>
-    {{block('separator')}}
-    <li>
-        <h6 class="float-right">{{ data.prices.grandTotal | money }}</h6>
-        <h6>{{ 'checkout.step.summary.grand_total' | trans }}</h6>
-    </li>
+
+        {% if data.prices.discountTotal %}
+            {{ _self.itemDiscounts(data.voucherDiscounts, 'cart.vouchers') }}
+            {{ _self.itemDiscounts(data.cartRuleDiscounts, 'cart.discounts') }}
+            {{ block('separator') }}
+        {% endif %}
+
+        <li>
+            <strong class="float-right">{{ data.totalCosts | money }}</strong>
+            <strong>{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
+            {% for shipmentGroup in data.shipmentGroups %}
+                <div class="grid grid--justify">
+                    <span class="col col--sm-10">{{ shipmentGroup.shipment.method.carrierName }}
+                        - {{ shipmentGroup.shipment.method.name }}</span>
+                    <span class="col col--expand text-right">{{ shipmentGroup.shipment.method.storeCurrencyPrice | money }}</span>
+                </div>
+            {% endfor %}
+        </li>
+
+        {% widget 'SalesOrderThresholdWidget' args [data.expenses] only %}
+            {% block body %}
+                {{ block('separator') }}
+                <li>
+                    {{ parent() }}
+                </li>
+            {% endblock %}
+        {% elsewidget 'SalesOrderThresholdWidgetPlugin' args [data.expenses] only %} {# @deprecated Use SalesOrderThresholdWidget instead. #}
+            {% block body %}
+                {{ block('separator') }}
+                <li>
+                    {{ parent() }}
+                </li>
+            {% endblock %}
+        {% endwidget %}
+
+        {{ block('separator') }}
+
+        <li>
+            <span class="float-right">{{ data.prices.tax | money }}</span>
+            <span>{{ 'checkout.step.summary.tax' | trans }}</span>
+        </li>
+
+        {{ block('separator') }}
+
+        <li>
+            <strong class="{{ config.name }}__grand-total-price float-right">{{ data.prices.grandTotal | money }}</strong>
+            <h6><strong>{{ 'checkout.step.summary.grand_total' | trans }}</strong></h6>
+        </li>
     {% else %}
-    <li>{{ 'customer.access.cannot_see_price' | trans }}</li>
+        <li>{{ 'customer.access.cannot_see_price' | trans }}</li>
     {% endif %}
 {% endblock %}

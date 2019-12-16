@@ -30,7 +30,7 @@
             {% endif %}
             <tr class="{{ config.name }}__row {{ not isItemAvailable ? config.name ~ '__row--disable' : ''}}">
                 <td class="{{ config.name }}__cell">
-                    <input type="checkbox" {{ isItemAvailable ? '' : 'disabled' }} name="shoppingListItem[idShoppingListItem][{{ item.idShoppingListItem }}]" value="{{ item.idShoppingListItem }}"/>
+                    <input type="checkbox" {{ isItemAvailable ? '' : 'disabled' }} name="shoppingListItem[idShoppingListItem][{{ item.idShoppingListItem }}]" value="{{ item.idShoppingListItem }}">
                 </td>
                 <td class="{{ config.name }}__cell text-center">
                     {% if item.images is defined and item.images is not empty %}
@@ -52,13 +52,19 @@
                         <li class="list__item">
                             <small class="text-secondary">{{ item.sku }}</small>
                         </li>
-                        {% for attribute in item.superAttributesDefinition %}
-                            {% if item.attributes[attribute] is defined %}
-                                <li class="list__item">
-                                    {{ ('product.attribute.' ~ attribute) | trans }}: {{ item.attributes[attribute] }}
-                                </li>
-                            {% endif %}
-                        {% endfor %}
+
+                        <li class="list__item">
+                            {% set listOfAttributes = {} %}
+                            {% for attribute in item.superAttributesDefinition if item.attributes[attribute] is defined %}
+                                {% set listOfAttributes = listOfAttributes|merge({ ('product.attribute.' ~ attribute) | trans: item.attributes[attribute] }) %}
+                            {% endfor %}
+
+                            {% include molecule('product-item-attributes') with {
+                                data: {
+                                    list: listOfAttributes,
+                                },
+                            } only %}
+                        </li>
 
                         {% widget 'ShoppingListItemNoteWidget' args [item.shoppingListItem] only %}
                         {% elsewidget 'ShoppingListItemNoteWidgetPlugin' args [item.shoppingListItem] only %} {# @deprecated Use ShoppingListItemNoteWidget instead. #}
@@ -78,10 +84,10 @@
                 </td>
                 <td nowrap="nowrap" class="{{ config.name }}__cell text-center">
                     {% if item.price is not empty %}
-                        {% include molecule('price') with {
+                        {% include molecule('money-price') with {
                             data: {
-                                amount: item.price | money,
-                                originalAmount: item.prices.ORIGINAL is not defined or item.prices.ORIGINAL is empty ? null : (item.prices.ORIGINAL | money)
+                                amount: item.price,
+                                originalAmount: item.prices.ORIGINAL is not defined or item.prices.ORIGINAL is empty ? null : item.prices.ORIGINAL
                             }
                         } only %}
                     {% else %}

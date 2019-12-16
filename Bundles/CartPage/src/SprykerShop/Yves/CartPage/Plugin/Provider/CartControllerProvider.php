@@ -11,6 +11,9 @@ use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin` instead.
+ */
 class CartControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_CART = 'cart';
@@ -22,6 +25,8 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_CART_CHANGE_QUANTITY = 'cart/change/quantity';
     public const ROUTE_CART_ADD_ITEMS = 'cart/add-items';
     public const SKU_PATTERN = '[a-zA-Z0-9-_\.]+';
+
+    protected const ROUTE_CART_RESET_LOCK = 'cart/reset-lock';
 
     /**
      * @param \Silex\Application $app
@@ -36,7 +41,8 @@ class CartControllerProvider extends AbstractYvesControllerProvider
             ->addCartRemoveRoute()
             ->addCartChangeQuantityRoute()
             ->addCartUpdateRoute()
-            ->addCartQuickAddRoute();
+            ->addCartQuickAddRoute()
+            ->addCartResetLockRoute();
     }
 
     /**
@@ -58,6 +64,20 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     protected function addCartAddItemsRoute()
     {
         $this->createPostController('/{cart}/add-items', self::ROUTE_CART_ADD_ITEMS, 'CartPage', 'Cart', 'addItems')
+            ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
+            ->value('cart', 'cart');
+
+        return $this;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\CartPage\Controller\CartLockController::resetLockAction()
+     *
+     * @return $this
+     */
+    protected function addCartResetLockRoute()
+    {
+        $this->createPostController('/{cart}/reset-lock', static::ROUTE_CART_RESET_LOCK, 'CartPage', 'CartLock', 'resetLock')
             ->assert('cart', $this->getAllowedLocalesPattern() . 'cart|cart')
             ->value('cart', 'cart');
 

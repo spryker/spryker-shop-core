@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
 use Spryker\Yves\CmsContentWidgetProductSetConnector\Plugin\CmsProductSetContentWidgetPlugin as SprykerCmsProductSetContentWidgetPlugin;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 use SprykerShop\Yves\ProductSetDetailPage\Controller\DetailController;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
  * @method \SprykerShop\Yves\CmsContentWidgetProductSetConnector\CmsContentWidgetProductSetConnectorFactory getFactory()
@@ -19,14 +19,14 @@ use Twig_Environment;
 class CmsProductSetContentWidgetPlugin extends SprykerCmsProductSetContentWidgetPlugin
 {
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param array $context
      * @param array|string $productSetKeys
      * @param string|null $templateIdentifier
      *
      * @return string
      */
-    public function contentWidgetFunction(Twig_Environment $twig, array $context, $productSetKeys, $templateIdentifier = null)
+    public function contentWidgetFunction(Environment $twig, array $context, $productSetKeys, $templateIdentifier = null)
     {
         $widgetContainerRegistry = $this->getFactory()->createWidgetContainerRegistry();
         $widgetContainerRegistry->add($this->createCmsProductContentWidgetCollection());
@@ -88,22 +88,14 @@ class CmsProductSetContentWidgetPlugin extends SprykerCmsProductSetContentWidget
      */
     protected function mapProductSetDataStorageTransfers(array $context, ProductSetDataStorageTransfer $productSetDataStorageTransfer)
     {
-        $productViewTransfers = [];
+        $selectedAttributes = [];
         foreach ($productSetDataStorageTransfer->getProductAbstractIds() as $idProductAbstract) {
-            $productViewTransfer = $this->getFactory()
-                ->getProductStorageClient()
-                ->findProductAbstractViewTransfer(
-                    $idProductAbstract,
-                    $this->getLocale(),
-                    $this->getSelectedAttributes($context, $idProductAbstract)
-                );
-
-            if ($productViewTransfer === null) {
-                continue;
-            }
-
-            $productViewTransfers[] = $productViewTransfer;
+            $selectedAttributes[$idProductAbstract] = $this->getSelectedAttributes($context, $idProductAbstract);
         }
+
+        $productViewTransfers = $this->getFactory()
+            ->getProductStorageClient()
+            ->getProductAbstractViewTransfers($productSetDataStorageTransfer->getProductAbstractIds(), $this->getLocale(), $selectedAttributes);
 
         return $productViewTransfers;
     }

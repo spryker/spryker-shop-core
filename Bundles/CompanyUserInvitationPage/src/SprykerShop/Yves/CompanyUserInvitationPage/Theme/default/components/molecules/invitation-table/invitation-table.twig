@@ -2,11 +2,10 @@
 
 {% define config = {
     name: 'invitation-table',
-    tag: 'div'
 } %}
 
 {% define data = {
-    invitations: required
+    invitations: required,
 } %}
 
 {% block body %}
@@ -33,20 +32,21 @@
                   <ul class="menu menu--inline">
                       {% if invitation.companyUserInvitationStatusKey == 'new'  %}
                           <li class="menu__item">
-                              <a href="{{ path('company/user-invitation/send', {'idCompanyUserInvitation': invitation.idCompanyUserInvitation}) }}" data-init-single-click>
+                              <a href="{{ url('company/user-invitation/send', {'idCompanyUserInvitation': invitation.idCompanyUserInvitation}) }}" data-init-single-click>
                                 {{ 'company.user.invitation.send.button' | trans }}
                               </a>
                           </li>
                       {% endif %}
                       {% if invitation.companyUserInvitationStatusKey == 'pending'  %}
                           <li class="menu__item">
-                              <a href="{{ path('company/user-invitation/resend', {'idCompanyUserInvitation': invitation.idCompanyUserInvitation}) }}">
+                              <a href="{{ url('company/user-invitation/resend', {'idCompanyUserInvitation': invitation.idCompanyUserInvitation}) }}">
                                   {{ 'company.user.invitation.resend.button' | trans }}
                               </a>
                           </li>
                       {% endif %}
                       <li class="menu__item">
-                          <a href="{{ path('company/user-invitation/delete', {'idCompanyUserInvitation': invitation.idCompanyUserInvitation}) }}">
+                          <a data-init-single-click
+                             href="{{ url('company/user-invitation/delete', {'idCompanyUserInvitation': invitation.idCompanyUserInvitation}) }}">
                               {{ 'company.user.invitation.delete.button' | trans }}
                           </a>
                       </li>

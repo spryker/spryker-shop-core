@@ -7,13 +7,16 @@
 
 {% define data = {
     facets: [],
+    filteredFacets: [],
     filterPath: null,
     categories: [],
     isEmptyCategoryFilterValueVisible: null
 } %}
 
 {% block body %}
-    {% for filter in data.facets %}
+    {% set facets = data.filteredFacets is not empty ? data.filteredFacets : data.facets %}
+
+    {% for filter in facets %}
         {% set filterHasValues = filter.values is not defined or filter.values | length > 0 %}
 
         {% if filterHasValues %}
@@ -38,7 +41,7 @@
                 } only %}
             {% endblock %}
 
-            <hr />
+            <hr>
         {% endif %}
     {% endfor %}
 

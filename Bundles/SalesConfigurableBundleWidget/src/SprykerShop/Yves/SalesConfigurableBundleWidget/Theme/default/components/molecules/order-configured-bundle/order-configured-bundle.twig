@@ -1,0 +1,36 @@
+{# @deprecated Use molecule molecule('ordered-configured-bundle', 'SalesConfigurableBundleWidget') instead. #}
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-configured-bundle',
+    tag: 'tr',
+} %}
+
+{% define data = {
+    bundle: required,
+    items: required,
+    currencyIsoCode: null,
+} %}
+
+{% block body %}
+    <td class="{{ config.name }}__col"></td>
+    <td class="{{ config.name }}__col">
+        {%- block name -%}
+            {{ data.bundle.name | trans }}
+        {%- endblock -%}
+    </td>
+    <td class="{{ config.name }}__col"></td>
+    <td class="{{ config.name }}__col"></td>
+    <td class="{{ config.name }}__col">
+        {%- block total -%}
+            {% set bundleSumPriceToPayAggregation = 0 %}
+
+            {% for item in data.bundle.salesOrderConfiguredBundleItems if data.items[item.IdSalesOrderItem] is defined %}
+                {% set product = data.items[item.IdSalesOrderItem] %}
+                {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + product.sumPriceToPayAggregation %}
+            {% endfor %}
+
+            {{ bundleSumPriceToPayAggregation | money(true, data.currencyIsoCode) }}
+        {%- endblock -%}
+    </td>
+{% endblock %}

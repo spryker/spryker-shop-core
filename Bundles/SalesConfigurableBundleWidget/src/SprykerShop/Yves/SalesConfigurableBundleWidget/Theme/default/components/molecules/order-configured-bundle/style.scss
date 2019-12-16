@@ -1,0 +1,3 @@
+@include helper-import(molecule, order-configured-bundle) {
+    @include sales-configurable-bundle-widget-order-configured-bundle;
+}

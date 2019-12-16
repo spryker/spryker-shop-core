@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CompanyPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin` instead.
+ */
 class CompanyPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_COMPANY_LOGIN = 'company/login';
@@ -55,6 +58,8 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
     public const ROUTE_COMPANY_USER_STATUS_ENABLE = 'company/company-user-status/enable';
     public const ROUTE_COMPANY_USER_STATUS_DISABLE = 'company/company-user-status/disable';
 
+    protected const ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_UPDATE = 'company/business-unit/address/update';
+
     /**
      * @param \Silex\Application $app
      *
@@ -65,6 +70,7 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
         $this->addCompanyRoutes()
             ->addCompanyAddressRoutes()
             ->addCompanyBusinessUnitRoutes()
+            ->addCompanyBusinessUnitAddressRoutes()
             ->addCompanyRoleRoutes()
             ->addPermissionRoutes()
             ->addCompanyUserRoutes()
@@ -77,9 +83,6 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected function addCompanyRoutes()
     {
-        $this->createController('/{company}/login', static::ROUTE_COMPANY_LOGIN, 'CompanyPage', 'Auth', 'login')
-            ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
-            ->value('company', 'company');
         $this->createController('/{company}/register', static::ROUTE_COMPANY_REGISTER, 'CompanyPage', 'Register', 'index')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
@@ -137,7 +140,43 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
         $this->createController('/{company}/business-unit/delete-confirmation', static::ROUTE_COMPANY_BUSINESS_UNIT_DELETE_CONFIRMATION, 'CompanyPage', 'BusinessUnit', 'confirmDelete')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function addCompanyBusinessUnitAddressRoutes()
+    {
+        $this->addCompanyBusinessUnitAddressCreateRoute()
+            ->addCompanyBusinessUnitAddressUpdateRoute();
+
+        return $this;
+    }
+
+    /**
+     * @see \SprykerShop\Yves\CompanyPage\Controller\BusinessUnitAddressController::createAction()
+     *
+     * @return $this
+     */
+    protected function addCompanyBusinessUnitAddressCreateRoute()
+    {
         $this->createController('/{company}/business-unit/address/create', static::ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_CREATE, 'CompanyPage', 'BusinessUnitAddress', 'create')
+            ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
+            ->value('company', 'company');
+
+        return $this;
+    }
+
+    /**
+     * @see \SprykerShop\Yves\CompanyPage\Controller\BusinessUnitAddressController::updateAction()
+     *
+     * @return $this
+     */
+    protected function addCompanyBusinessUnitAddressUpdateRoute()
+    {
+        $this->createController('/{company}/business-unit/address/update', static::ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_UPDATE, 'CompanyPage', 'BusinessUnitAddress', 'update')
             ->assert('company', $this->getAllowedLocalesPattern() . 'company|company')
             ->value('company', 'company');
 

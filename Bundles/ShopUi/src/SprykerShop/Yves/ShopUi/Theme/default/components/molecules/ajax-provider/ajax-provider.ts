@@ -9,7 +9,7 @@ const EVENT_FETCHED = 'fetched';
  * @event fetched An event which is triggered when an ajax request is closed.
  */
 export default class AjaxProvider extends Component {
-    protected isFetchingRequest: boolean = false
+    protected isFetchingRequest: boolean = false;
 
     /**
      * Defines the key/value pairs which are send with the request as query parameters.
@@ -17,7 +17,7 @@ export default class AjaxProvider extends Component {
      * @remarks
      * Use it to add/remove query parameters from the request.
      */
-    readonly queryParams: Map<String, String> = new Map<String, String>()
+    readonly queryParams: Map<string, string> = new Map<string, string>();
 
     /**
      * Defines the key/value pairs which are send with the request as headers.
@@ -25,12 +25,13 @@ export default class AjaxProvider extends Component {
      * @remarks
      * Use it to add/remove headers from the request.
      */
-    readonly headers: Map<String, String> = new Map<String, String>()
+    readonly headers: Map<string, string> = new Map<string, string>();
 
     /**
      * Represents the request object used by the component to perform the fetch operation.
      */
-    readonly xhr: XMLHttpRequest
+    readonly xhr: XMLHttpRequest;
+    protected xhrStatusSuccessOk: number = 200;
 
     constructor() {
         super();
@@ -49,13 +50,16 @@ export default class AjaxProvider extends Component {
      * @param data Optional data sent to the server in the request body.
      * @returns A generic typed promise connected to the ajax request.
      */
+    /* tslint:disable: no-any */
     async fetch<T = string>(data?: any): Promise<T> {
+        /* tslint:enable */
         debug(this.method, this.url, 'fetching...');
         this.isFetchingRequest = true;
         this.dispatchCustomEvent(EVENT_FETCHING);
 
         return new Promise<T>((resolve, reject) => {
             this.xhr.open(this.method, this.url);
+            this.headers.forEach((value: string, key: string) => this.xhr.setRequestHeader(key, value));
             this.xhr.responseType = this.responseType;
             this.xhr.addEventListener('load', (event: Event) => this.onRequestLoad(resolve, reject, event));
             this.xhr.addEventListener('error', (event: Event) => this.onRequestError(reject, event));
@@ -68,8 +72,9 @@ export default class AjaxProvider extends Component {
         this.isFetchingRequest = false;
         this.dispatchCustomEvent(EVENT_FETCHED);
 
-        if (this.xhr.status !== 200) {
+        if (this.xhr.status !== this.xhrStatusSuccessOk) {
             reject(new Error(`${this.method} ${this.xhr.status} ${this.url} server error`));
+
             return;
         }
 
@@ -101,12 +106,12 @@ export default class AjaxProvider extends Component {
 
         const queryStringParams = [];
 
-        this.queryParams.forEach((value: string, key: String) => {
+        this.queryParams.forEach((value: string, key: string) => {
             const encodeValue = encodeURIComponent(value);
             queryStringParams.push(`${key}=${encodeValue}`);
         });
 
-        return url + '?' + queryStringParams.join('&');
+        return `${url}?${queryStringParams.join('&')}`;
     }
 
     /**

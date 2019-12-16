@@ -2,9 +2,10 @@
 
 {% define data = {
     isOnBehalf: _widget.isOnBehalf,
+    isCompanyUserChangeAllowed: _widget.isCompanyUserChangeAllowed,
     companyName: _widget.companyName,
     companyBusinessUnitName: _widget.companyBusinessUnitName,
-    isVisible: _widget.isVisible
+    isVisible: _widget.isVisible,
 } %}
 
 {% block template %}
@@ -14,9 +15,19 @@
 {% endblock %}
 
 {% block body %}
-    {% if data.isOnBehalf and data.companyName is not empty and data.companyBusinessUnitName is not empty %}
-        <a href="{{ path('company/user/select') }}">{{ data.companyName }} / {{ data.companyBusinessUnitName }}</a>
-    {% else %}
-        <a href="{{ path('company/user/select') }}">{{ 'business_on_behalf_widget.no_selected_company' | trans }}</a>
+    {% set isFullCompanyInformation = data.isOnBehalf and data.companyName is not empty
+        and data.companyBusinessUnitName is not empty %}
+    {% set companyInformation = isFullCompanyInformation ?
+        data.companyName ~ ' / ' ~ data.companyBusinessUnitName :
+        'business_on_behalf_widget.no_selected_company' | trans %}
+
+    {% if data.isCompanyUserChangeAllowed %}
+        <a href="{{ path('company/user/select') }}">
+            {{- companyInformation -}}
+        </a>
+    {% endif %}
+
+    {% if not data.isCompanyUserChangeAllowed %}
+        <span>{{ companyInformation }}</span>
     {% endif %}
 {% endblock %}

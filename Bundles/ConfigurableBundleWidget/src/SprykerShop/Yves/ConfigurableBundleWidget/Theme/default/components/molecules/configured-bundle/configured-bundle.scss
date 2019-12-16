@@ -1,0 +1,34 @@
+@mixin configurable-bundle-widget-configured-bundle($name: '.configured-bundle') {
+    #{$name} {
+        &--ordered {
+            padding: 0.5rem;
+            margin: 0 0.5rem;
+            background-color: $setting-color-white;
+            border: 1px solid $setting-color-lighter;
+        }
+
+        &__content {
+            padding: 0 map-get($setting-spacing, 'default') map-get($setting-spacing, 'default');
+            margin: 0 -#{map-get($setting-spacing, 'default')};
+            border-bottom: 1px solid $setting-color-lighter;
+        }
+
+        &__container {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        &__col {
+            max-width: 33.333%;
+        }
+
+        &__text {
+            display: inline-block;
+            text-align: left;
+        }
+
+        @content;
+    }
+}

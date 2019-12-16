@@ -1,0 +1,91 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-detail',
+} %}
+
+{# @deprecated property "orderItems" is deprecated: use "shipmentGroups" instead. #}
+
+{% define data = {
+    orderItems: [],
+    shipmentGroups: data.orderItems | default([]),
+    orderShipmentExpenses: data.orderShipmentExpenses | default([]),
+    order: required,
+} %}
+
+{% block body %}
+    {% block orderDetailContent %} {# @deprecated - This block will be removed with next release. Content will be placed directly under `body` block #}
+        <div class="box">
+            <a href="{{url('customer/order')}}" class="link float-right">{{ 'general.back.button' | trans }}</a>
+            <h5>{{ 'customer.profile.order_details' | trans }}</h5>
+            <hr class="box__separator">
+            <ul>
+                <li>
+                    {{ 'customer.order.order_id' | trans }}:
+                    <strong>{{ data.order.orderReference }}</strong>
+                </li>
+                <li>
+                    {{ 'customer.order.date' | trans }}:
+                    <strong>{{ data.order.createdAt | formatDateTime }}</strong>
+                </li>
+            </ul>
+            <hr class="box__separator">
+            {% include molecule('order-detail-table', 'CustomerPage') with {
+                data: {
+                    shipmentGroups: data.shipmentGroups,
+                    orderShipmentExpenses: data.orderShipmentExpenses,
+                    currencyIsoCode: data.order.currencyIsoCode,
+                    order: data.order,
+                },
+            } only %}
+        </div>
+
+        <div class="box">
+            <h5>{{ 'customer.order.payment' | trans }}</h5>
+            <div class="box grid grid--justify spacing-bottom spacing-bottom--big">
+                <div class="col col--sm-12 col--lg-6">
+                    {% include molecule('order-payment', 'CustomerPage') with {
+                        data: {
+                            payments: data.order.payments,
+                            currencyIsoCode: data.order.currencyIsoCode,
+                        },
+                    } only %}
+                </div>
+                <div class="col col--sm-12 col--lg-5 spacing-left spacing-left--inner">
+                    <strong>{{ 'customer.order.billing_address' | trans }}</strong>
+                    {% include molecule('display-address') with {
+                        data: {
+                            address: data.order.billingAddress,
+                        },
+                    } only %}
+                </div>
+            </div>
+        </div>
+
+        {% if data.order.cartNote is not empty %}
+            <div class="box spacing-top spacing-top--big">
+                {% if widgetExists('CartNoteOrderNoteWidgetPlugin') %}
+                    {{ widget('CartNoteOrderNoteWidgetPlugin', data.order) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
+                {% else %}
+                    {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                        data: {
+                            label: 'cart_note.customer_page.order_note',
+                            note: data.order.cartNote,
+                        },
+                    } only %}
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div class="box">
+            <h5>{{ 'customer.order.complete_checkout' | trans }}</h5>
+            <hr />
+            {% include molecule('order-summary', 'CustomerPage') with {
+                class: 'text-right',
+                data: {
+                    order: data.order,
+                },
+            } only %}
+        </div>
+    {% endblock %}
+{% endblock %}

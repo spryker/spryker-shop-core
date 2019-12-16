@@ -16,6 +16,8 @@ use SprykerShop\Yves\CompanyWidget\Address\AddressProviderInterface;
  */
 class CompanyBusinessUnitAddressWidget extends AbstractWidget
 {
+    protected const PARAMETER_CURRENT_COMPANY_BUSINESS_UNIT_ADDRESS = 'currentCompanyBusinessUnitAddress';
+
     /**
      * @param string $formType
      * @param \Generated\Shared\Transfer\AddressTransfer $formAddressTransfer
@@ -39,6 +41,20 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
         $this->addAddressesParameter($customerAddresses, $companyBusinessUnitAddresses);
         $this->addCustomerAddressesParameter($customerAddresses);
         $this->addCompanyBusinessUnitAddressesParameter($companyBusinessUnitAddresses);
+        $this->addCurrentCompanyBusinessUnitAddressParameter(
+            $addressProvider->findCurrentCompanyBusinessUnitAddress($formAddressTransfer, $companyBusinessUnitAddresses)
+        );
+        $this->addIsCurrentAddressEmptyParameter($formAddressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return void
+     */
+    protected function addIsCurrentAddressEmptyParameter(AddressTransfer $addressTransfer): void
+    {
+        $this->addParameter('isCurrentAddressEmpty', $this->isAddressEmpty($addressTransfer));
     }
 
     /**
@@ -110,6 +126,16 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
     }
 
     /**
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $currentCompanyBusinessUnitAddressTransfer
+     *
+     * @return void
+     */
+    protected function addCurrentCompanyBusinessUnitAddressParameter(?AddressTransfer $currentCompanyBusinessUnitAddressTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_CURRENT_COMPANY_BUSINESS_UNIT_ADDRESS, $currentCompanyBusinessUnitAddressTransfer);
+    }
+
+    /**
      * @return string
      */
     public static function getName(): string
@@ -141,5 +167,16 @@ class CompanyBusinessUnitAddressWidget extends AbstractWidget
         return ($jsonEncodedAddresses !== false)
             ? $jsonEncodedAddresses
             : '[]';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return bool
+     */
+    protected function isAddressEmpty(AddressTransfer $addressTransfer): bool
+    {
+        return ($addressTransfer->getFirstName() === null || $addressTransfer->getFirstName() === ''
+            || $addressTransfer->getLastName() === null || $addressTransfer->getLastName() === '');
     }
 }

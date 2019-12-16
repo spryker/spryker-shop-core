@@ -1,0 +1,31 @@
+{% extends template('widget') %}
+
+{% define data = {
+    items: _widget.items,
+    configuredBundles: _widget.configuredBundles,
+    currencyIsoCode: _widget.quote.currency ? _widget.quote.currency.code : null,
+    priceMode: _widget.quote.priceMode,
+    isQuantityChangeable: _widget.isQuantityChangeable,
+    isEditable: true,
+    isQuantitySummaryVisible: false,
+    quote: _widget.quote,
+} %}
+
+{% block body %}
+    {% for bundle in data.configuredBundles %}
+        {% block bundleItem %}
+            {% include molecule('configured-bundle', 'ConfigurableBundleWidget') with {
+                data: {
+                    bundle: bundle,
+                    items: data.items,
+                    currencyIsoCode: data.currencyIsoCode,
+                    priceMode: data.priceMode,
+                    isQuantityChangeable: data.isQuantityChangeable,
+                    isEditable: data.isEditable,
+                    isQuantitySummaryVisible: data.isQuantitySummaryVisible,
+                    quote: data.quote,
+                },
+            } only %}
+        {% endblock %}
+    {% endfor %}
+{% endblock %}

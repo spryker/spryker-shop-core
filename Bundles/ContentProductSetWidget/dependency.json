@@ -1,0 +1,5 @@
+{
+  "include": {
+    "spryker-shop/product-set-widget": "ProductSetWidget provides product-set-cms-content twig component."
+  }
+}

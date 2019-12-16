@@ -4,14 +4,15 @@ export default class RatingSelector extends Component {
     /**
      * The input element.
      */
-    input: HTMLInputElement
+    input: HTMLInputElement;
+
     /**
      * Collection of the elements which toggle the steps of the product review.
      */
-    steps: HTMLElement[]
+    steps: HTMLElement[];
 
     protected readyCallback(): void {
-        this.input = <HTMLInputElement>this.querySelector(`.${this.jsName}__input`);
+        this.input = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__input`)[0];
         this.steps = <HTMLElement[]>Array.from(this.getElementsByClassName(`${this.jsName}__step`));
 
         if (!this.readOnly) {
@@ -21,12 +22,12 @@ export default class RatingSelector extends Component {
     }
 
     protected mapEvents(): void {
-        this.steps.forEach((step: HTMLElement) => step.addEventListener('click', (event: Event) => this.onStepClick(event)));
+        this.steps.forEach((step: HTMLElement) => {
+            step.addEventListener('click', (event: Event) => this.onStepClick(event));
+        });
     }
 
     protected onStepClick(event: Event): void {
-        event.preventDefault();
-
         const step = <HTMLElement>event.currentTarget;
         const newValue = parseFloat(step.getAttribute('data-step-value'));
 
@@ -45,12 +46,12 @@ export default class RatingSelector extends Component {
 
         if (!value) {
             this.input.setAttribute('disabled', 'disabled');
+
             return;
         }
 
         this.input.removeAttribute('disabled');
     }
-
 
     /**
      * Sets the value attribute and toggles the special class name.
@@ -64,6 +65,7 @@ export default class RatingSelector extends Component {
 
             if (value >= stepValue) {
                 step.classList.add(`${this.name}__step--active`);
+
                 return;
             }
 

@@ -26,13 +26,11 @@
 {% block customerContent %}
     <div class="box">
         <h5>{{ "multi_cart_page.cart_delete_confirmation.warning" | trans }}</h5>
-        <hr />
+        <hr class="box__separator">
         {{ "multi_cart_page.cart_delete_confirmation.trying_to_delete" | trans }}: <strong>{{ data.cartName }}</strong>
-        <br/><br/>
+        <br><br>
 
-        {% widget 'CartDeleteCompanyUsersListWidget' args [data.cart] only %}
-        {% elsewidget 'CartDeleteCompanyUsersListWidgetPlugin' args [data.cart] only %} {# @deprecated Use CartDeleteCompanyUsersListWidget instead. #}
-        {% endwidget %}
+        {% widget 'CartDeleteSharingCompanyUsersListWidget' args [data.cart] only %}{% endwidget %}
 
         <div class="form__actions">
             <a href="{{ data.backUrl }}" class="button button--secondary button--hollow">
@@ -44,7 +42,8 @@
                 } only %}
                 {{ "general.back.button" | trans }}
             </a>
-            <a href="{{ url('multi-cart/delete', { 'idQuote' : data.cartIdQuote }) }}" class="button button--alert">
+            <a data-init-single-click href="{{ url('multi-cart/delete', { 'idQuote' : data.cartIdQuote }) }}"
+               class="button button--alert">
                 {{ "multi_cart_page.cart_delete_confirmation.delete" | trans }}
             </a>
         </div>

@@ -2,11 +2,10 @@
 
 {% define config = {
     name: 'business-unit-delete-message',
-    tag: 'div'
 } %}
 
 {% define data = {
-    companyBusinessUnit: required
+    companyBusinessUnit: required,
 } %}
 
 {% block body %}
@@ -29,7 +28,8 @@
         {{ "label.button.cancel" | trans }}
     </a>
 
-    <a class="button" href="{{ url('company/business-unit/delete', {'id': data.companyBusinessUnit.idCompanyBusinessUnit}) }}">
-        {{ "label.button.submit" | trans }}
+    <a data-init-single-click class="button"
+       href="{{ url('company/business-unit/delete', {'id': data.companyBusinessUnit.idCompanyBusinessUnit}) }}">
+    {{ "label.button.submit" | trans }}
     </a>
 {% endblock %}

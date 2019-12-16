@@ -1,0 +1,30 @@
+{
+  "name": "spryker-shop/gift-card-widget",
+  "type": "library",
+  "description": "GiftCardWidget module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2",
+    "spryker-shop/cart-code-widget": "^1.0.0",
+    "spryker-shop/shop-ui": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

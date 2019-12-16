@@ -2,14 +2,13 @@
 
 {% define config = {
     name: 'address-delete-message',
-    tag: 'div'
 } %}
 
 {% define data = {
     companyUnitAddress: required,
     companyBusinessUnits: null,
     idCompanyBusinessUnit: null,
-    cancelUrl: required
+    cancelUrl: required,
 } %}
 
 {% block body %}
@@ -50,7 +49,8 @@
         {{ "label.button.cancel" | trans }}
     </a>
 
-    <a class="button button--alert" href="{{ url('company/address/delete', {'id': data.companyUnitAddress.idCompanyUnitAddress, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">
+    <a data-init-single-click class="button button--alert"
+       href="{{ url('company/address/delete', {'id': data.companyUnitAddress.idCompanyUnitAddress, 'idCompanyBusinessUnit': data.idCompanyBusinessUnit }) }}">
         {{ "company.account.company_user.delete" | trans }}
     </a>
 {% endblock %}

@@ -1,0 +1,194 @@
+{% extends template('page-layout-cart', 'CartPage') %}
+
+{% define data = {
+    cart: _view.cart,
+    cartItems: _view.cartItems,
+    request: app.request,
+    isQuoteEditable: false,
+    isQuoteValid: false,
+} %}
+
+{% block header %}
+    {% embed organism('header') only %}
+        {% block body %}
+            <div class="container">
+                <div class="{{ config.name }}__row grid grid--middle">
+                    {% include molecule('logo') with {
+                        class: 'col col--sm-8 col--lg-4',
+                    } only %}
+                    {% embed organism('navigation-top') with {
+                        class: 'col col--sm-4 col--lg-8 text-right',
+                    } only %}
+                        {% block body %}
+                            {% if is_granted('ROLE_USER') %}
+                                <li class="menu__item"><a href="{{ url('logout') }}">{{ 'customer.logout'|trans }}</a></li>
+                            {% else %}
+                                <li class="menu__item"><a href="{{ url('login') }}">{{ 'customer.login'|trans }}</a></li>
+                            {% endif %}
+                        {% endblock %}
+                    {% endembed %}
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block pageInfo %}
+    <div class="box">
+        {% block breadcrumbs %}{% endblock %}
+        {% block title %}
+            <h3>{{ 'persistent_cart_share_page.preview'|trans({'%title%': data.cart.name}) }}</h3>
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block emptyCart %}
+    <div class="grid">
+        <div class="col col--sm-9">
+            {{ block('emptyCartMessage') }}
+        </div>
+        <div class="col col--xl-3">
+            {% if data.cart.idQuote is not empty %}
+                <div class="box">
+                    {% widget 'CommentThreadWidget' args [
+                        data.cart.idQuote,
+                        'quote',
+                        app.request.requestUri,
+                        data.cart.commentThread
+                    ] only %}
+                    {% endwidget %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block cartItem %}
+    {% embed molecule('product-cart-item', 'CartPage') with {
+        data: {
+            product: cartItem,
+            cart: data.cart,
+            isQuoteEditable: data.isQuoteEditable,
+            attributes: data.attributes[cartItem.sku] | default([]),
+        },
+    } only %}
+        {% block cartItemNote %}
+            {% widget 'CartItemNoteFormWidget' args [data.product, data.cart] only %}
+                {% block body %}
+                    {% set canWrite = false %}
+                    {{ parent() }}
+                {% endblock %}
+            {% endwidget %}
+        {% endblock %}
+        {% block body %}
+            {% set canEditCart = false %}
+            {{ parent() }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block cartNote %}
+    {% widget 'CartNoteFormWidget' args [data.cart] only %}
+        {% block body %}
+            {% set canWrite = false %}
+            {{ parent() }}
+        {% endblock %}
+    {% endwidget %}
+{% endblock %}
+
+{% block cartSummary %}
+    {% embed molecule('cart-summary', 'CartPage') with {
+        data: {
+            cart: data.cart,
+            isQuoteValid: data.isQuoteValid,
+            isQuoteEditable: data.isQuoteEditable,
+            cartQuantity: data.cartItems.count,
+        },
+    } only %}
+        {% block body %}
+            {{ block('cartQuantity') }}
+            {% block cartSummaryContent %}
+                {% include molecule('cart-discount-summary', 'DiscountWidget') ignore missing with {
+                    class: 'list spacing-y',
+                    data: {
+                        voucherDiscounts: data.cart.voucherDiscounts,
+                        ruleDiscounts: data.cart.cartRuleDiscounts,
+                        discountTotal: data.cart.totals.discounttotal,
+                        isQuoteEditable: data.isQuoteEditable,
+                        currencyIsoCode: data.cart.currency.code,
+                    },
+                } only %}
+                {{ block('cartShipment') }}
+            {% endblock %}
+            {% widget 'SalesOrderThresholdWidget' args [data.cart.expenses] only %}
+                {% block body %}
+                    <li class="list__item spacing-y">
+                        {{ parent() }}
+                        <hr>
+                    </li>
+                {% endblock %}
+            {% endwidget %}
+            {{ block('cartPrice') }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block promotionalItems %}
+    {% widget 'CartDiscountPromotionProductListWidget' args [data.cart, data.request] only %}
+        {% block product %}
+            <div class="col col--sm-12 col--md-6">
+                {% embed molecule('product-item') with {
+                    class: 'box--stretch',
+                    data: {
+                        product: product,
+                        currencyIsoCode: data.cart.currency.code,
+                    },
+                } only %}
+                    {% block sku %}
+                        <div class="text-secondary">
+                            {{ 'cart.item.sku' | trans }}
+                            {{ data.sku }}
+                        </div>
+                    {% endblock %}
+
+                    {% block content %}
+                        {{parent()}}
+
+                        {% if data.product.promotionItem.discount.description %}
+                            <hr>
+                            {{ data.product.promotionItem.discount.description }}
+                        {% endif %}
+
+                        <hr>
+                        {% include molecule('variant-configurator', 'DiscountPromotionWidget') with {
+                            data: {
+                                sku: data.sku,
+                                superAttributes: data.product.attributeMap.superAttributes,
+                                selectedAttributes: data.product.selectedAttributes,
+                                availableAttributes: data.product.availableAttributes,
+                            },
+                        } only %}
+                        <hr>
+                    {% endblock %}
+                    {% block actionsContainer %}{% endblock %}
+                {% endembed %}
+            </div>
+        {% endblock %}
+    {% endwidget %}
+{% endblock %}
+
+{% block cartActions %}
+
+    {% if data.cart.idQuote is not empty %}
+        <div class="box">
+            {% widget 'CommentThreadWidget' args [
+                data.cart.idQuote,
+                'quote',
+                app.request.requestUri,
+                data.cart.commentThread
+            ] only %}
+            {% endwidget %}
+        </div>
+    {% endif %}
+
+{% endblock %}

@@ -4,14 +4,14 @@
   "description": "MultiCartPage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker-shop/cart-page": "^1.0.0",
+    "php": ">=7.2",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.6.0",
     "spryker/application": "^3.0.0",
-    "spryker/cart": "^5.0.0",
-    "spryker/kernel": "^3.24.0",
+    "spryker/cart": "^5.0.0 || ^7.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/multi-cart": "^1.0.0",
+    "spryker/quote": "^2.8.0",
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
@@ -19,13 +19,15 @@
     "spryker-shop/shared-cart-widget": "*",
     "spryker-shop/shopping-list-widget": "*",
     "spryker/code-sniffer": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/customer-page": "if you want to use customer layout templates: ^1.0.0",
-    "spryker-shop/shared-cart-widget": "If you want to use CartListPermissionGroupWidget or CartListPermissionGroupWidgetPlugin",
-    "spryker-shop/shopping-list-widget": "If you want to use components from module ShoppingListWidget or CartToShoppingListWidgetPlugin",
+    "spryker/router": "Use this module when you want to use the Router.",
+    "spryker-shop/shared-cart-widget": "If you want to use CartListPermissionGroupWidget",
+    "spryker-shop/shopping-list-widget": "If you want to use components from module ShoppingListWidget",
     "spryker/permission": "If you want to use permissions plugins",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
@@ -38,7 +40,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

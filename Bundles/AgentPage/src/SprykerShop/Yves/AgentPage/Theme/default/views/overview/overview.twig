@@ -1,0 +1,20 @@
+{% extends template('page-layout-agent', 'AgentPage') %}
+
+{% define data = {
+    title: 'agent.account.overview' | trans,
+    agent: _view.agent
+} %}
+
+{% block agentContent %}
+    <div class="box">
+        <h5>{{ 'agent.account.overview' | trans }}</h5>
+
+        <hr class="box__separator">
+
+        {% include molecule('overview-info', 'AgentPage') with {
+            data: {
+                agent: data.agent
+            }
+        } only %}
+    </div>
+{% endblock %}

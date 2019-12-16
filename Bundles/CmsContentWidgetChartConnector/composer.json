@@ -4,9 +4,9 @@
   "description": "CmsContentWidgetChartConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/cms-content-widget": "^1.0.0",
-    "spryker/kernel": "^3.24.0"
+    "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

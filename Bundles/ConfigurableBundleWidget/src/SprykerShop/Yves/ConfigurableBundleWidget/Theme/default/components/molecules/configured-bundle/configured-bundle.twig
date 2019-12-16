@@ -1,0 +1,139 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'configured-bundle',
+    tag: 'article',
+} %}
+
+{% define data = {
+    bundle: required,
+    items: [],
+    bundleItems: data.bundle.items | default({}),
+    currencyIsoCode: null,
+    priceMode: null,
+    isQuantityChangeable: false,
+    isEditable: true,
+    isQuantitySummaryVisible: false,
+    quote: null,
+} %}
+
+{%- block extraClass %} box{% endblock -%}
+
+{% block body %}
+    {% block bundle %}
+        <div class="{{ config.name }}__content {{ config.name }}__container">
+            {% block bundleInner %}
+                {% block bundleGeneralInformation %}
+                    <div class="{{ config.name }}__col col">
+                        {% block bundleName %}
+                            <h6 class="spacing-right spacing-right--big">
+                                {%- block bundleNameText -%}
+                                    {{ data.bundle.template.name | trans }}
+                                {%- endblock -%}
+                            </h6>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+
+                {% block bundleQuantity %}
+                    <div class="{{ config.name }}__col col col--lg-4">
+                        {% block bundleQuantityInner %}
+                            {% include molecule('configured-bundle-quantity', 'ConfigurableBundleWidget') with {
+                                data: {
+                                    configuredBundle: data.bundle,
+                                    readOnly: not (data.isEditable and data.isQuantityChangeable),
+                                },
+                            } only %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+
+                {% block bundlePriceInformation %}
+                    <div class="{{ config.name }}__col col">
+                        {% block bundleTotal %}
+                            <strong class="{{ config.name }}__text">
+                                {%- block bundleTotalInner -%}
+                                    {% if can('SeePricePermissionPlugin') %}
+                                        {%- block bundleTotalTitle -%}
+                                            {{ 'configured_bundle.bundle_total' | trans }}
+                                        {%- endblock %}
+
+                                        {% block bundleTotalValue -%}
+                                            {% set bundleSumSubtotalAggregation = 0 %}
+
+                                            {% for bundleItem in data.bundle.items if data.items[bundleItem.GroupKey] is defined %}
+                                                {% set bundleSumSubtotalAggregation = bundleSumSubtotalAggregation + bundleItem.sumSubtotalAggregation %}
+                                            {% endfor %}
+
+                                            {{ bundleSumSubtotalAggregation | money(true, data.currencyIsoCode) }}
+                                        {%- endblock -%}
+                                    {% else %}
+                                        {{ 'customer.access.cannot_see_price' | trans }}
+                                    {% endif %}
+                                {%- endblock -%}
+                            </strong>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block bundleProductList %}
+        <div class="{{ config.name }}__products">
+            {% block bundleProductListInner %}
+                {% set partialSumItemQuantity = 0 %}
+                {% for item in data.bundleItems if data.items[item.GroupKey] is defined %}
+                    {% block bundleProductItem %}
+                        {% include molecule('configured-bundle-product', 'ConfigurableBundleWidget') with {
+                            data: {
+                                product: item,
+                                currencyIsoCode: data.currencyIsoCode,
+                                priceMode: data.priceMode,
+                            },
+                        } only %}
+                    {% endblock %}
+                    {% set partialSumItemQuantity = partialSumItemQuantity + item.quantity %}
+                {% endfor %}
+
+                {% if data.isQuantitySummaryVisible %}
+                    {% set totalSumItemQuantity = 0 %}
+                    {% for bundleItem in data.bundle.items %}
+                        {% set totalSumItemQuantity = totalSumItemQuantity + bundleItem.quantity %}
+                    {% endfor %}
+                    {{ 'configured_bundle_widget.items' | trans }} {{ partialSumItemQuantity }} / {{ totalSumItemQuantity }}
+                {% endif %}
+            {% endblock %}
+        </div>
+
+    {% endblock %}
+
+    {% set bundleActionClassName = 'float-right spacing-y' %}
+    {% block bundleActions %}
+        {% if data.isEditable %}
+            {% block bundleActionsInner %}
+                <a class="{{ bundleActionClassName }}" href="{{ path('cart/configured-bundle/remove', {'configuredBundleGroupKey': data.bundle.groupKey}) }}" data-init-single-click>
+                    {% block removeLinkInner %}
+                        {{- 'configured_bundle.remove' | trans | raw -}}
+                    {% endblock %}
+                </a>
+            {% endblock %}
+        {% endif %}
+    {% endblock %}
+
+    {% block configurableBundleNote %}
+        {% if data.isEditable %}
+            {% block editableConfigurableBundleNote %}
+                {% widget 'ConfiguredBundleNoteWidget' args [data.bundle, data.quote] only %}{% endwidget %}
+            {% endblock %}
+        {% else %}
+            {% block notEditableConfigurableBundleNote %}
+                {% include molecule('readonly-bundled-note', 'ConfigurableBundleNoteWidget') ignore missing with {
+                    data: {
+                        bundle: data.bundle,
+                    },
+                } only %}
+            {% endblock %}
+        {% endif %}
+    {% endblock %}
+{% endblock %}

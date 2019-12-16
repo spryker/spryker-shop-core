@@ -1,0 +1,26 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'information-item',
+} %}
+
+{% define data = {
+    title: required,
+    text: '',
+} %}
+
+{%- block class -%}
+    {{ parent() }} spacing-bottom spacing-bottom--big
+{%- endblock -%}
+
+{% block body %}
+    {% block title %}
+        <strong>{{ data.title }}</strong>
+    {% endblock %}
+
+    {% block text %}
+        {% if data.text | trim %}
+            <div>{{ data.text }}</div>
+        {% endif %}
+    {% endblock %}
+{% endblock %}

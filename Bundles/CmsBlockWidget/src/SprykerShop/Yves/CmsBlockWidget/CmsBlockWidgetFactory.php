@@ -7,23 +7,87 @@
 
 namespace SprykerShop\Yves\CmsBlockWidget;
 
+use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface;
+use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToStoreClientInterface;
+use SprykerShop\Yves\CmsBlockWidget\Twig\CmsBlockPlaceholderTwigFunction;
+use SprykerShop\Yves\CmsBlockWidget\Twig\CmsBlockTwigFunction;
+use SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidator;
+use SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CmsBlockWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface[]
+     * @param string $localeName
+     *
+     * @return \Spryker\Shared\Twig\TwigFunction
      */
-    public function getTwigFunctionPlugins()
+    public function createCmsBlockTwigFunction(string $localeName): TwigFunction
     {
-        return $this->getProvidedDependency(CmsBlockWidgetDependencyProvider::TWIG_FUNCTION_PLUGINS);
+        return new CmsBlockTwigFunction(
+            $this->getCmsBlockStorageClient(),
+            $this->getStoreClient(),
+            $this->createCmsBlockValidator(),
+            $localeName
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\TwigFunction
+     */
+    public function createCmsBlockPlaceholderTwigFunction(): TwigFunction
+    {
+        return new CmsBlockPlaceholderTwigFunction($this->getTranslatorService(), $this->getCmsTwigContentRendererPlugin());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CmsBlockWidget\Validator\CmsBlockValidatorInterface
+     */
+    public function createCmsBlockValidator(): CmsBlockValidatorInterface
+    {
+        return new CmsBlockValidator();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToStoreClientInterface
+     */
+    public function getStoreClient(): CmsBlockWidgetToStoreClientInterface
+    {
+        return $this->getProvidedDependency(CmsBlockWidgetDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\TwigExtensionInterface[]
+     */
+    public function getTwigExtensionPlugins(): array
+    {
+        return $this->getProvidedDependency(CmsBlockWidgetDependencyProvider::TWIG_EXTENSION_PLUGINS);
     }
 
     /**
      * @return \SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientInterface
      */
-    public function getCmsBlockStorageClient()
+    public function getCmsBlockStorageClient(): CmsBlockWidgetToCmsBlockStorageClientInterface
     {
         return $this->getProvidedDependency(CmsBlockWidgetDependencyProvider::CLIENT_CMS_BLOCK_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface
+     */
+    public function getCmsTwigContentRendererPlugin(): CmsTwigContentRendererPluginInterface
+    {
+        return $this->getProvidedDependency(CmsBlockWidgetDependencyProvider::CMS_TWIG_CONTENT_RENDERER_PLUGIN);
+    }
+
+    /**
+     * @return \Symfony\Contracts\Translation\TranslatorInterface
+     */
+    public function getTranslatorService(): TranslatorInterface
+    {
+        return $this->getProvidedDependency(CmsBlockWidgetDependencyProvider::SERVICE_TRANSLATOR);
     }
 }

@@ -1,0 +1,16 @@
+@mixin shop-ui-section($name: '.section') {
+    #{$name} {
+        padding: 1rem 0;
+
+        @include helper-breakpoint(lg) {
+            padding: 2rem 0;
+        }
+
+        &--center {
+            display: flex;
+            justify-content: center;
+        }
+
+        @content;
+    }
+}

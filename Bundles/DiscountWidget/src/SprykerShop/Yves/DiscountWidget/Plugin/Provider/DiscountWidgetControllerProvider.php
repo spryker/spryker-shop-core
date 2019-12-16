@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\DiscountWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\DiscountWidget\Plugin\Router\DiscountWidgetRouteProviderPlugin` instead.
+ */
 class DiscountWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_DISCOUNT_VOUCHER_ADD = 'discount/voucher/add';

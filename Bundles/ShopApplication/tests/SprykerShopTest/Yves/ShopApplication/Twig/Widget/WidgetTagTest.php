@@ -9,17 +9,17 @@ namespace SprykerShopTest\Yves\ShopApplication\Twig\Widget;
 
 use SprykerShop\Yves\ShopApplication\Twig\Widget\Node\WidgetTagTwigNode;
 use SprykerShop\Yves\ShopApplication\Twig\Widget\TokenParser\WidgetTagTokenParser;
-use Twig_Node_Expression_Array;
-use Twig_Node_Expression_Constant;
-use Twig_Node_Text;
-use Twig_Test_NodeTestCase;
+use Twig\Node\Expression\ArrayExpression;
+use Twig\Node\Expression\ConstantExpression;
+use Twig\Node\TextNode;
+use Twig\Test\NodeTestCase;
 
-class WidgetTagTest extends Twig_Test_NodeTestCase
+class WidgetTagTest extends NodeTestCase
 {
     /**
      * @return array
      */
-    public function getTests()
+    public function getTests(): array
     {
         return [
             'simple widget tag' => $this->getSimpleWidgetTagTestCase(),
@@ -39,7 +39,7 @@ class WidgetTagTest extends Twig_Test_NodeTestCase
      *
      * @return array
      */
-    protected function getSimpleWidgetTagTestCase()
+    protected function getSimpleWidgetTagTestCase(): array
     {
         $node = new WidgetTagTwigNode('foo', [], $this->getAttributes(), 1, 'widget');
 
@@ -59,14 +59,14 @@ EOF;
      *
      * @return array
      */
-    protected function getWidgetTagWithArgumentsTestCase()
+    protected function getWidgetTagWithArgumentsTestCase(): array
     {
         $nodes = [
-            WidgetTagTokenParser::NODE_ARGS => new Twig_Node_Expression_Array([
-                new Twig_Node_Expression_Constant(0, 1),
-                new Twig_Node_Expression_Constant('foo', 1),
-                new Twig_Node_Expression_Constant(1, 1),
-                new Twig_Node_Expression_Constant(123, 1),
+            WidgetTagTokenParser::NODE_ARGS => new ArrayExpression([
+                new ConstantExpression(0, 1),
+                new ConstantExpression('foo', 1),
+                new ConstantExpression(1, 1),
+                new ConstantExpression(123, 1),
             ], 1),
         ];
 
@@ -88,10 +88,10 @@ EOF;
      *
      * @return array
      */
-    protected function getWidgetTagWithViewTestCase()
+    protected function getWidgetTagWithViewTestCase(): array
     {
         $nodes = [
-            WidgetTagTokenParser::NODE_USE => new Twig_Node_Expression_Constant('custom-view.twig', 1),
+            WidgetTagTokenParser::NODE_USE => new ConstantExpression('custom-view.twig', 1),
         ];
 
         $node = new WidgetTagTwigNode('foo', $nodes, $this->getAttributes(), 1, 'widget');
@@ -117,16 +117,16 @@ EOF;
      *
      * @return array
      */
-    protected function getWidgetTagWithVariablesTestCase()
+    protected function getWidgetTagWithVariablesTestCase(): array
     {
         $nodes = [
-            WidgetTagTokenParser::NODE_WITH => new Twig_Node_Expression_Array([
-                new Twig_Node_Expression_Constant('foo', 1),
-                new Twig_Node_Expression_Constant('bar', 1),
-                new Twig_Node_Expression_Constant('baz', 1),
-                new Twig_Node_Expression_Array([
-                    new Twig_Node_Expression_Constant('a', 1),
-                    new Twig_Node_Expression_Constant('b', 1),
+            WidgetTagTokenParser::NODE_WITH => new ArrayExpression([
+                new ConstantExpression('foo', 1),
+                new ConstantExpression('bar', 1),
+                new ConstantExpression('baz', 1),
+                new ArrayExpression([
+                    new ConstantExpression('a', 1),
+                    new ConstantExpression('b', 1),
                 ], 1),
             ], 1),
         ];
@@ -154,16 +154,16 @@ EOF;
      *
      * @return array
      */
-    protected function getWidgetTagWithVariablesOnlyTestCase()
+    protected function getWidgetTagWithVariablesOnlyTestCase(): array
     {
         $nodes = [
-            WidgetTagTokenParser::NODE_WITH => new Twig_Node_Expression_Array([
-                new Twig_Node_Expression_Constant('foo', 1),
-                new Twig_Node_Expression_Constant('bar', 1),
-                new Twig_Node_Expression_Constant('baz', 1),
-                new Twig_Node_Expression_Array([
-                    new Twig_Node_Expression_Constant('a', 1),
-                    new Twig_Node_Expression_Constant('b', 1),
+            WidgetTagTokenParser::NODE_WITH => new ArrayExpression([
+                new ConstantExpression('foo', 1),
+                new ConstantExpression('bar', 1),
+                new ConstantExpression('baz', 1),
+                new ArrayExpression([
+                    new ConstantExpression('a', 1),
+                    new ConstantExpression('b', 1),
                 ], 1),
             ], 1),
         ];
@@ -190,7 +190,7 @@ EOF;
      *
      * @return array
      */
-    protected function getWidgetTagWithoutVariablesOnlyTestCase()
+    protected function getWidgetTagWithoutVariablesOnlyTestCase(): array
     {
         $nodes = [];
 
@@ -219,10 +219,10 @@ EOF;
      *
      * @return array
      */
-    protected function getWidgetTagWithNowidgetTestCase()
+    protected function getWidgetTagWithNowidgetTestCase(): array
     {
         $nodes = [
-            WidgetTagTokenParser::NODE_NOWIDGET => new Twig_Node_Text('content of nowidget', 1),
+            WidgetTagTokenParser::NODE_NOWIDGET => new TextNode('content of nowidget', 1),
         ];
 
         $node = new WidgetTagTwigNode('foo', $nodes, $this->getAttributes(), 1, 'widget');
@@ -247,13 +247,13 @@ EOF;
      *
      * @return array
      */
-    protected function getWidgetTagWithSingleElsewidgetTestCase()
+    protected function getWidgetTagWithSingleElsewidgetTestCase(): array
     {
         $elsewidgetNode = new WidgetTagTwigNode('bar', [], $this->getAttributes([WidgetTagTokenParser::ATTRIBUTE_ELSEWIDGET_CASE => true]), 1);
 
         $nodes = [
-            WidgetTagTokenParser::NODE_ELSEWIDGETS => new Twig_Node_Expression_Array([
-                new Twig_Node_Expression_Constant(0, 1),
+            WidgetTagTokenParser::NODE_ELSEWIDGETS => new ArrayExpression([
+                new ConstantExpression(0, 1),
                 $elsewidgetNode,
             ], 1),
         ];
@@ -282,27 +282,27 @@ EOF;
      *
      * @return array
      */
-    protected function getWidgetTagWithMultipleElsewidgetsTestCase()
+    protected function getWidgetTagWithMultipleElsewidgetsTestCase(): array
     {
         $elsewidgetNode1 = new WidgetTagTwigNode('bar', [
-            WidgetTagTokenParser::NODE_WITH => new Twig_Node_Expression_Array([
-                new Twig_Node_Expression_Constant('param1', 1),
-                new Twig_Node_Expression_Constant('bar', 1),
+            WidgetTagTokenParser::NODE_WITH => new ArrayExpression([
+                new ConstantExpression('param1', 1),
+                new ConstantExpression('bar', 1),
             ], 1),
         ], $this->getAttributes([WidgetTagTokenParser::ATTRIBUTE_ELSEWIDGET_CASE => true]), 1);
 
         $elsewidgetNode2 = new WidgetTagTwigNode('baz', [
-            WidgetTagTokenParser::NODE_ARGS => new Twig_Node_Expression_Array([
-                new Twig_Node_Expression_Constant(0, 1),
-                new Twig_Node_Expression_Constant('arg1', 1),
+            WidgetTagTokenParser::NODE_ARGS => new ArrayExpression([
+                new ConstantExpression(0, 1),
+                new ConstantExpression('arg1', 1),
             ], 1),
         ], $this->getAttributes([WidgetTagTokenParser::ATTRIBUTE_ELSEWIDGET_CASE => true]), 1);
 
         $nodes = [
-            WidgetTagTokenParser::NODE_ELSEWIDGETS => new Twig_Node_Expression_Array([
-                new Twig_Node_Expression_Constant(0, 1),
+            WidgetTagTokenParser::NODE_ELSEWIDGETS => new ArrayExpression([
+                new ConstantExpression(0, 1),
                 $elsewidgetNode1,
-                new Twig_Node_Expression_Constant(1, 1),
+                new ConstantExpression(1, 1),
                 $elsewidgetNode2,
             ], 1),
         ];
@@ -331,7 +331,7 @@ EOF;
      *
      * @return array
      */
-    protected function getAttributes(array $attributes = [])
+    protected function getAttributes(array $attributes = []): array
     {
         return array_merge([
             WidgetTagTokenParser::ATTRIBUTE_PARENT_TEMPLATE_NAME => 'parent-template-name.twig',

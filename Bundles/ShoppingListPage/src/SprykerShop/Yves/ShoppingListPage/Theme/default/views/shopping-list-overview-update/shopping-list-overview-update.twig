@@ -97,9 +97,12 @@
                             }
                         } only %}
                     {% else %}
-                        <hr>
+                        <hr class="box__separator">
                         {{ 'customer.account.shopping_list.empty' | trans }}
                     {% endif %}
+                </div>
+                <div class="col col--sm-12 spacing-x spacing-x--inner">
+                    {% widget 'ShoppingListSubtotalWidget' args [data.shoppingListItemProducts] only %}{% endwidget %}
                 </div>
             {% endblock %}
 

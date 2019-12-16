@@ -1,0 +1,22 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'measurement-unit-item',
+    tag: 'p',
+} %}
+
+{% define data = {
+    cartItem: required,
+} %}
+
+{% block body %}
+    {% if data.cartItem.quantitySalesUnit %}
+        {% set value = data.cartItem.quantitySalesUnit.value %}
+        {% set precision = data.cartItem.quantitySalesUnit.precision %}
+        {% set salesUnitName = data.cartItem.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+
+        <small class="text-secondary">
+            [= {{ value / precision }} {{ salesUnitName | trans }}]
+        </small>
+    {% endif %}
+{% endblock %}

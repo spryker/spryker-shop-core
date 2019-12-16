@@ -6,6 +6,7 @@
     quote: _widget.quote,
     limit: _widget.limit,
     isVisible: _widget.isVisible,
+    isQuoteApplicableForApprovalProcess: _widget.isQuoteApplicableForApprovalProcess,
     quoteStatus: _widget.quoteStatus,
     canSendApprovalRequest: _widget.canSendApprovalRequest,
     quoteApprovalRequestFormOptions: {
@@ -13,55 +14,66 @@
     }
 } %}
 
-{% block body %}
+{% block template %}
     {% if data.isVisible %}
-        {% set quoteApproval = data.quote.quoteApprovals | length > 0 ? data.quote.quoteApprovals | last : null %}
-        {% set customer = quoteApproval ? quoteApproval.approver.customer : null %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
 
-        {% include molecule('quote-approve-request', 'QuoteApprovalWidget') with {
+{% block body %}
+    {% set quoteApproval = data.quote.quoteApprovals | length > 0 ? data.quote.quoteApprovals | last : null %}
+    {% set customer = quoteApproval ? quoteApproval.approver.customer : null %}
+
+    {% include molecule('quote-approve-request', 'QuoteApprovalWidget') with {
+        data: {
+            customer: customer,
+            quoteStatus: data.quoteStatus,
+            quoteApproval: quoteApproval,
+            quote: data.quote
+        }
+    } only %}
+
+    {% if data.canSendApprovalRequest %}
+        {% if data.hasApprovers %}
+            <p>
+                <b>{{ 'quote_approval_widget.shared_cart_warning' | trans }}</b>
+            </p>
+            <hr>
+        {% endif %}
+
+        {% if not can('PlaceOrderPermissionPlugin') %}
+        <p>
+            {% if data.limit is null %}
+                {{ 'quote_approval_widget.no_limit_text' | trans }}
+            {% else %}
+                {{ 'quote_approval_widget.limit_text' | trans({'%amount%': data.limit | money}) }}
+            {% endif %}
+        </p>
+        {% endif %}
+
+        {% if not data.hasApprovers %}
+            <hr>
+            <p>
+                <b>{{ 'quote_approval_widget.no_approvers_found' | trans }}</b>
+            </p>
+        {% endif %}
+
+        {% if not data.isQuoteApplicableForApprovalProcess %}
+            <hr>
+            <p>
+                <b>{{ 'quote_approval_widget.quote_not_applicable_for_approval_process' | trans }}</b>
+            </p>
+        {% endif %}
+    {% endif %}
+
+    {% if data.canSendApprovalRequest and data.hasApprovers and data.isQuoteApplicableForApprovalProcess %}
+        {% include molecule('approve-request-form', 'QuoteApprovalWidget') with {
             data: {
-                customer: customer,
-                quoteStatus: data.quoteStatus,
-                quoteApproval: quoteApproval,
-                quote: data.quote
+                quoteApprovalRequestForm: data.quoteApprovalRequestForm,
+                quoteApprovalRequestFormOptions: data.quoteApprovalRequestFormOptions
             }
         } only %}
-
-        {% if data.canSendApprovalRequest %}
-            {% if data.hasApprovers %}
-                <p>
-                    <b>{{ 'quote_approval_widget.shared_cart_warning' | trans }}</b>
-                </p>
-                <hr>
-            {% endif %}
-
-            {% if not can('PlaceOrderPermissionPlugin') %}
-            <p>
-                {% if data.limit is null %}
-                    {{ 'quote_approval_widget.no_limit_text' | trans }}
-                {% else %}
-                    {{ 'quote_approval_widget.limit_text' | trans({'%amount%': data.limit | money}) }}
-                {% endif %}
-            </p>
-            {% endif %}
-
-            {% if not data.hasApprovers %}
-                <hr>
-                <p>
-                    <b>{{ 'quote_approval_widget.no_approvers_found' | trans }}</b>
-                </p>
-            {% endif %}
-        {% endif %}
-
-        {% if data.canSendApprovalRequest and data.hasApprovers %}
-            {% include molecule('approve-request-form', 'QuoteApprovalWidget') with {
-                data: {
-                    quoteApprovalRequestForm: data.quoteApprovalRequestForm,
-                    quoteApprovalRequestFormOptions: data.quoteApprovalRequestFormOptions
-                }
-            } only %}
-        {% endif %}
-        <hr>
     {% endif %}
+    <hr>
 {% endblock %}
 

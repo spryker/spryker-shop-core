@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageFactory getFactory()
+ * @method \SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig getConfig()
  */
 class ShoppingListController extends AbstractShoppingListController
 {
@@ -54,7 +55,7 @@ class ShoppingListController extends AbstractShoppingListController
 
         return $this->view(
             $response,
-            $this->getFactory()->getShoppingListViewWidgetPlugins(),
+            [],
             '@ShoppingListPage/views/shopping-list/shopping-list.twig'
         );
     }
@@ -136,6 +137,7 @@ class ShoppingListController extends AbstractShoppingListController
         $shoppingListItemTransferCollection = $this->getFactory()->createAddToCartFormHandler()->handleAddToCartRequest($request);
         if (!$shoppingListItemTransferCollection->getItems()->count()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_SELECT_ITEM);
+
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
                 'idShoppingList' => $request->get(static::PARAM_ID_SHOPPING_LIST),
             ]);
@@ -152,6 +154,7 @@ class ShoppingListController extends AbstractShoppingListController
 
         if ($result->getRequests()->count()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_TO_CART_FAILED);
+
             return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
                 'idShoppingList' => $request->get(static::PARAM_ID_SHOPPING_LIST),
             ]);
@@ -177,7 +180,7 @@ class ShoppingListController extends AbstractShoppingListController
 
         return $this->view(
             $response,
-            $this->getFactory()->getPrintShoppingListWidgetPlugins(),
+            [],
             '@ShoppingListPage/views/shopping-list/print-shopping-list.twig'
         );
     }
@@ -244,14 +247,15 @@ class ShoppingListController extends AbstractShoppingListController
     }
 
     /**
-     * @param string $sku
-     * @param int $quantity
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $sku
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function quickAddToShoppingListAction(string $sku, int $quantity, Request $request): RedirectResponse
+    public function quickAddToShoppingListAction(Request $request, string $sku): RedirectResponse
     {
+        $quantity = $request->get('quantity', 1);
+
         $idShoppingList = $this->getShoppingListIdFromRequest($request);
         if ($idShoppingList === null) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_SELECT_LIST);

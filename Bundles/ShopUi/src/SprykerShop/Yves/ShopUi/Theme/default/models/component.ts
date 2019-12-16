@@ -3,17 +3,17 @@
  * It is used in Spryker Shop as base class for every components.
  */
 export default abstract class Component extends HTMLElement {
-    private isComponentMounted: boolean
+    private isComponentMounted: boolean;
 
     /**
      * The name of the component.
      */
-    readonly name: string
+    readonly name: string;
 
     /**
      * The js-safe name of the component.
      */
-    readonly jsName: string
+    readonly jsName: string;
 
     /**
      * Creates an instance of Component.
@@ -25,7 +25,9 @@ export default abstract class Component extends HTMLElement {
         this.isComponentMounted = false;
     }
 
+    /* tslint:disable: no-any */
     protected dispatchCustomEvent(name: string, detail: any = {}): void {
+        /* tslint:enable */
         const customEvent = new CustomEvent(name, { detail });
         this.dispatchEvent(customEvent);
     }
@@ -33,9 +35,25 @@ export default abstract class Component extends HTMLElement {
     /**
      * Same as mountCallback().
      *
-     * @deprecated Use mountCallback() instead.
+     * @deprecated Use init() instead.
      */
-    protected abstract readyCallback(): void
+    protected abstract readyCallback(): void;
+
+    /**
+     * Initialise the component.
+     * It's invoked when DOM is completely loaded and every other webcomponent in the page has been defined.
+     * @remarks
+     * Use this method as initial point for your component, especially if you intend to query the DOM for
+     * other webcomponents. If this is not needed, you can still use `connectedCallback()` instead for
+     * a faster execution, as described by official documentation for WebComponents here:
+     * {@link https://developer.mozilla.org/en-US/docs/Web/Web_Components/
+     * Using_custom_elements#Using_the_lifecycle_callbacks}
+     */
+    protected init(): void {
+        /* tslint:disable: deprecation */
+        this.readyCallback();
+        /* tslint:enable */
+    }
 
     /**
      * Used by the application to mark the current component as mounted and avoid multiple initialisations.
@@ -45,16 +63,10 @@ export default abstract class Component extends HTMLElement {
     }
 
     /**
-     * Invoked when DOM is loaded and every webcomponent in the page is defined.
-     *
-     * @remarks
-     * Use this method as initial point for your component if you intend to query the DOM for other webcomponents.
-     * If this is not needed, you can use connectedCallback() intead for a faster execution,
-     * as described by official documentation for Web Components:
-     * {@link https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#Using_the_lifecycle_callbacks}
+     * Automatically invoked by the application when component has to be mounted.
      */
     mountCallback(): void {
-        this.readyCallback();
+        this.init();
     }
 
     /**

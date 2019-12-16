@@ -1,0 +1,18 @@
+{# fe-sniffer:disabled correct-twig-component-structure #}
+{% extends model('component') %}
+
+{% define data = {
+    activePage: null
+} %}
+
+{% define config = {
+    tag: 'li',
+    name: 'menu__item' ~ (data.activePage == 'quoteRequestAgent' ? ' menu__item--active' : ''),
+} %}
+
+{% set itemClass = data.activePage ? ' menu__item--active' : '' %}
+
+{% block body %}
+    <a href="{{ url('agent/quote-request') }}"
+       data-id="sidebar-quote-request">{{ 'agent.account.quote_request' | trans }}</a>
+{% endblock %}

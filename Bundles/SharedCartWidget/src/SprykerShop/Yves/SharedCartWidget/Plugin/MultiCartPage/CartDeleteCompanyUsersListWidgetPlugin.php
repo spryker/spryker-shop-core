@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\SharedCartWidget\Plugin\MultiCartPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
-use SprykerShop\Yves\MultiCartPage\Dependency\Plugin\SharedCartWidget\CartDeleteCompanyUsersListWidgetPluginInterface;
 use SprykerShop\Yves\SharedCartWidget\Widget\CartDeleteCompanyUsersListWidget;
 
 /**
@@ -17,10 +16,12 @@ use SprykerShop\Yves\SharedCartWidget\Widget\CartDeleteCompanyUsersListWidget;
  *
  * @method \SprykerShop\Yves\SharedCartWidget\SharedCartWidgetFactory getFactory()
  */
-class CartDeleteCompanyUsersListWidgetPlugin extends AbstractWidgetPlugin implements CartDeleteCompanyUsersListWidgetPluginInterface
+class CartDeleteCompanyUsersListWidgetPlugin extends AbstractWidgetPlugin
 {
+    public const NAME = 'CartDeleteCompanyUsersListWidgetPlugin';
+
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +37,7 @@ class CartDeleteCompanyUsersListWidgetPlugin extends AbstractWidgetPlugin implem
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +49,7 @@ class CartDeleteCompanyUsersListWidgetPlugin extends AbstractWidgetPlugin implem
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -22,7 +22,7 @@
         } only %}
         {{ 'customer.account.shopping_list.delete.warning' | trans }}
     </h5>
-    <p class="spacing-y spacing-y--small">
+    <p class="{{ config.name }}__name spacing-y spacing-y--small">
         {{ 'customer.account.shopping_list.delete.you_are_trying_to_delete_shopping_list' | trans({
             '%link%': url('shopping-list/details', {'idShoppingList': data.idShoppingList}),
             '%name%': data.title
@@ -63,6 +63,7 @@
     {% endif %}
     <div>
         <a href="{{ data.backUrl }}" class="button button--hollow">{{ 'general.cancel.button' | trans }}</a>
-        <a href="{{ url('shopping-list/delete', {'idShoppingList': data.idShoppingList})}}" class="button button--alert spacing-left">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
+        <a data-init-single-click href="{{ url('shopping-list/delete', {'idShoppingList': data.idShoppingList}) }}"
+           class="button button--alert spacing-left">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
     </div>
 {% endblock %}

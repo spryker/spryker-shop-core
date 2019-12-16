@@ -33,7 +33,7 @@ class ProductConcreteSearchWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +45,7 @@ class ProductConcreteSearchWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

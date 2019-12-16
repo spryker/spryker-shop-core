@@ -4,22 +4,25 @@
   "description": "ProductSearchWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
+    "spryker-shop/shop-ui": "^1.28.1",
     "spryker/application": "^3.0.0",
     "spryker/catalog": "^5.5.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
     "spryker-shop/shop-application": "*",
     "spryker/code-sniffer": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/quick-order-page": "Use this module when using plugins that need QuickOrderPage dependencies.",
     "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies.",
+    "spryker-shop/quick-order-page": "Use this module when using plugins that need QuickOrderPage dependencies.",
+    "spryker/router": "If you want to use RouteProviderPlugins to be added to the Route Module.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
@@ -31,7 +34,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

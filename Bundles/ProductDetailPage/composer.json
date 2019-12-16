@@ -4,11 +4,12 @@
   "description": "ProductDetailPage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-router-extension": "^1.0.0",
-    "spryker-shop/shop-ui": "^1.13.0",
-    "spryker/kernel": "^3.24.0",
+    "spryker-shop/shop-ui": "^1.27.0",
+    "spryker-shop/storage-router-extension": "^1.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/product-storage": "^1.1.0",
     "spryker/storage": "^3.4.0",
     "spryker/symfony": "^3.1.0"
@@ -36,7 +37,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

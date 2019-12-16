@@ -2,11 +2,10 @@
 
 {% define config = {
     name: 'order-table',
-    tag: 'div'
 } %}
 
 {% define data = {
-    orders: required
+    orders: required,
 } %}
 
 {% block body %}
@@ -37,8 +36,14 @@
                                 </li>
                                 {% if widgetExists('CustomerReorderWidgetPlugin') %}
                                     <li class="menu__item">
-                                        {{ widgetBlock('CustomerReorderWidgetPlugin', 'reorderAction', order) }}
+                                        {{ widgetBlock('CustomerReorderWidgetPlugin', 'reorderAction', order) }} {# @deprecated Use molecule('customer-reorder-link', 'CustomerReorderWidget') instead. #}
                                     </li>
+                                {% else %}
+                                    {% include molecule('customer-reorder-link', 'CustomerReorderWidget') with {
+                                        data: {
+                                            idSalesOrder: order.idSalesOrder
+                                        }
+                                    } only %}
                                 {% endif %}
                             </ul>
                         </td>

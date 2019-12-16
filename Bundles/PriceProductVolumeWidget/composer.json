@@ -4,11 +4,12 @@
   "description": "PriceProductVolumeWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
+    "spryker-shop/shop-ui": "^1.31.1",
     "spryker/currency": "^3.4.0",
-    "spryker/kernel": "^3.24.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/price": "^5.3.0",
-    "spryker/price-product-storage": "^2.1.0",
+    "spryker/price-product-storage": "^2.1.0 || ^4.0.0",
     "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {

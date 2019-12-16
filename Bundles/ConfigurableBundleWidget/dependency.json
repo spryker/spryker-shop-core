@@ -1,0 +1,6 @@
+{
+  "include": {
+    "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure.",
+    "spryker/configurable-bundle": "ConfigurableBundleWidget depends on ConfigurableBundle functionality."
+  }
+}

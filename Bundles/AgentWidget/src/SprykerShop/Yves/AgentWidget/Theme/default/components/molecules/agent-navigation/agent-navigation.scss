@@ -1,0 +1,33 @@
+@mixin agent-widget-agent-navigation($name: '.agent-navigation') {
+    #{$name} {
+        &__dropdown > &__dropdown-item[position-right] {
+            left: auto;
+            right: 0;
+        }
+
+        &__name {
+            position: relative;
+            padding-right: 1.5rem;
+        }
+
+        &__caret {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+        }
+
+        @content;
+    }
+}
+
+/**
+ * @deprecated use agent-widget-agent-navigation mixin instead.
+ */
+@mixin agent-navigation($name: '.agent-navigation') {
+    @include agent-widget-agent-navigation();
+
+    #{$name} {
+        @content;
+    }
+}

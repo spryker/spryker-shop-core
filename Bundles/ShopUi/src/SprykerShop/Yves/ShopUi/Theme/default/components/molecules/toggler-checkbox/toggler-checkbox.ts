@@ -7,17 +7,21 @@ export default class TogglerCheckbox extends Component {
     /**
      * Element triggering the toggle action.
      */
-    readonly trigger: HTMLInputElement
+    readonly trigger: HTMLInputElement;
 
     /**
      * Elements targeted by the toggle action.
      */
-    readonly targets: HTMLElement[]
+    readonly targets: HTMLElement[];
+    protected event: CustomEvent;
 
     constructor() {
         super();
-        this.trigger = <HTMLInputElement>this.querySelector(`.${this.jsName}__trigger`);
-        this.targets = <HTMLElement[]>Array.from(document.querySelectorAll(this.targetSelector));
+        this.trigger = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__trigger`)[0];
+        /* tslint:disable: deprecation */
+        this.targets = <HTMLElement[]>Array.from(this.targetClassName ?
+            document.getElementsByClassName(this.targetClassName) : document.querySelectorAll(this.targetSelector));
+        /* tslint:enable: deprecation */
     }
 
     protected readyCallback(): void {
@@ -37,7 +41,7 @@ export default class TogglerCheckbox extends Component {
     }
 
     /**
-     * Toggles the class names.
+     * Toggles the class names in the target elements.
      * @param addClass A boolean value which checks if the trigger is checked.
      */
     toggle(addClass: boolean = this.addClass): void {
@@ -48,8 +52,8 @@ export default class TogglerCheckbox extends Component {
      *  Creates an instance of the custom toggle event and triggers it.
      */
     fireToggleEvent(): void {
-        const event = new CustomEvent('toggle');
-        this.dispatchEvent(event);
+        this.event = new CustomEvent('toggle');
+        this.dispatchEvent(this.event);
     }
 
     /**
@@ -61,9 +65,14 @@ export default class TogglerCheckbox extends Component {
 
     /**
      * Gets a querySelector of the target element.
+     *
+     * @deprecated Use targetClassName() instead.
      */
     get targetSelector(): string {
         return this.trigger.getAttribute('target-selector');
+    }
+    protected get targetClassName(): string {
+        return this.trigger.getAttribute('target-class-name');
     }
 
     /**

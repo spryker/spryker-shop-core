@@ -1,15 +1,16 @@
 {% extends template('widget') %}
 
 {% define data = {
-    isVisible: _widget.isVisible
+    isVisible: _widget.isVisible,
+    isCompanyUserChangeAllowed: _widget.isCompanyUserChangeAllowed,
 } %}
 
 {% block template %}
-    {% if data.isVisible %}
-        {{parent()}}
+    {% if data.isVisible and data.isCompanyUserChangeAllowed %}
+        {{ parent() }}
     {% endif %}
 {% endblock %}
 
 {% block body %}
-    <a href="{{ path('company/user/select') }}" data-id="change-company-user">{{ "business_on_behalf_widget.change_company_user" | trans }}</a>
+    <a href="{{ path('company/user/select') }}">{{ 'business_on_behalf_widget.change_company_user' | trans }}</a>
 {% endblock %}

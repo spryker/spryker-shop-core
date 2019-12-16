@@ -3,6 +3,7 @@
 {% define data = {
     products: _view.products,
     facets: _view.facets,
+    filteredFacets: _view.filteredFacets | default([]),
     searchString: _view.searchString,
     suggestion: _view.spellingSuggestion,
     category: _view.category | default,
@@ -37,7 +38,7 @@
 {% endblock %}
 
 {% block title %}
-    <h3>{{ 'global.search.results' | trans }} "<strong>{{ data.searchString }}</strong>"</h3>
+    <h3>{{ 'global.search.results' | trans }} "<strong class="text-break">{{ data.searchString }}</strong>"</h3>
 
     {% embed molecule('spelling-suggestion', 'CatalogPage') with {
         data: {
@@ -45,7 +46,7 @@
         }
     } only %}
         {% block body %}
-            <hr />
+            <hr>
             {{parent()}}
         {% endblock %}
     {% endembed %}
@@ -58,6 +59,6 @@
 
     {{parent()}}
     {% if data.searchString is not empty %}
-        <input type="hidden" name="q" value="{{ data.searchString }}" />
+        <input type="hidden" name="q" value="{{ data.searchString }}">
     {% endif %}
 {% endblock %}

@@ -32,7 +32,7 @@ class CartNoteQuoteWidgetPlugin extends AbstractWidgetPlugin implements CartNote
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,7 +44,7 @@ class CartNoteQuoteWidgetPlugin extends AbstractWidgetPlugin implements CartNote
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -4,30 +4,33 @@
   "description": "CustomerReorderWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
+    "spryker-shop/customer-reorder-widget-extension": "^1.0.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.0.0",
-    "spryker/availability-storage": "^1.0.0",
-    "spryker/cart": "^4.6.0 || ^5.0.0",
+    "spryker/availability-storage": "^1.0.0 || ^2.0.0",
+    "spryker/cart": "^4.6.0 || ^5.0.0 || ^7.0.0",
     "spryker/customer": "^7.4.0",
     "spryker/glossary-storage": "^1.0.0",
-    "spryker/kernel": "^3.16.0",
+    "spryker/kernel": "^3.33.0",
     "spryker/locale": "^3.0.0",
     "spryker/messenger": "^3.1.0",
-    "spryker/product-bundle": "^4.1.0",
+    "spryker/product-bundle": "^4.1.0 || ^6.0.0 || ^7.0.0",
     "spryker/product-storage": "^1.1.0",
-    "spryker/sales": "^8.5.0",
+    "spryker/sales": "^8.5.0 || ^10.0.0 || ^11.0.0",
     "spryker/symfony": "^3.1.0",
     "spryker/zed-request": "^3.6.0"
   },
   "require-dev": {
     "spryker-shop/customer-page": "*",
     "spryker/code-sniffer": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/customer-page": "Module with interface to implement (^0.2.0), to use the reorder widget on a customer page",
+    "spryker/router": "Use this module when you want to use the Router.",
     "spryker/silex": "If you want use the widget's router provider",
     "spryker-shop/cart-page": "The default widget redirect is heading to a cart controller. Please redefine the redirect URL if you would like to use a custom behavior."
   },
@@ -40,7 +43,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "6.0.x-dev"
     }
   },
   "config": {

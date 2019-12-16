@@ -17,12 +17,12 @@
             modifiers: ['naked'],
             attributes: {
                 name: 'price-mode',
-                onchange: 'this.form.submit()'
+                'data-form-submitter': true,
             },
             embed: {
                 priceModes: data.priceModes,
-                currentPriceMode: data.currentPriceMode
-            }
+                currentPriceMode: data.currentPriceMode,
+            },
         } only %}
             {% block options %}
                 {% for priceMode in embed.priceModes %}
@@ -31,6 +31,6 @@
             {% endblock %}
         {% endembed %}
 
-        <input type="hidden" name="referrer-url" value="{{ app.request.requestUri }}" />
+        <input type="hidden" name="referrer-url" value="{{ app.request.requestUri }}">
     </form>
 {% endblock %}

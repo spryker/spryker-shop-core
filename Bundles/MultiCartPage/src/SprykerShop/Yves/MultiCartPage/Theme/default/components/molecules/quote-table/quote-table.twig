@@ -2,7 +2,6 @@
 
 {% define config = {
     name: 'quote-table',
-    tag: 'div'
 } %}
 
 {% define data = {
@@ -10,9 +9,9 @@
     actions: {
         update: false,
         delete: false,
-        duplicate: false
+        duplicate: false,
     },
-    isQuoteDeletable: required
+    isQuoteDeletable: required,
 } %}
 
 {% set showActions = data.actions.update or data.actions.delete or data.actions.duplicate %}
@@ -24,7 +23,7 @@
             <tr class="active">
                 <th>{{ 'page.multi_cart.shopping_cart.list.label.name' | trans }}</th>
                 {% set cartListPermissionGroupWidget = findWidget('CartListPermissionGroupWidget', [data.quotes|first, isQuoteDeletable]) %}
-                {% set isSharingAllowed = cartListPermissionGroupWidget.isSharingAllowed ?? widget('CartListPermissionGroupWidgetPlugin', data.quotes|first, isQuoteDeletable) %} {# @deprecated Use CartListPermissionGroupWidget instead of CartListPermissionGroupWidgetPlugin. #}
+                {% set isSharingAllowed = cartListPermissionGroupWidget.isSharingAllowed %}
                 {% if isSharingAllowed %}
                     <th>{{ 'page.multi_cart.shopping_cart.list.label.access' | trans }}</th>
                 {% endif %}
@@ -57,12 +56,9 @@
                         </a>
                         {% endif %}
                     </td>
-                    {% widget 'CartListPermissionGroupWidget' args [quote, isQuoteDeletable] use view('multi-cart-permission-show', 'SharedCartWidget') only %}
-                    {% elsewidget 'CartListPermissionGroupWidgetPlugin' args [quote, isQuoteDeletable] use view('multi-cart-permission-show', 'SharedCartWidget') only %} {# @deprecated Use CartListPermissionGroupWidget instead. #}
-                    {% endwidget %}
+                    {% widget 'CartListPermissionGroupWidget' args [quote, isQuoteDeletable] use view('multi-cart-permission-show', 'SharedCartWidget') only %}{% endwidget %}
                     <td>
                         {% widget 'ProductBundleItemCounterWidget' args [quote] only %}
-                        {% elsewidget 'ProductBundleItemCounterWidgetPlugin' args [quote] only %} {# @deprecated Use ProductBundleItemCounterWidget instead. #}
                         {% nowidget %}
                             {% set label = (totals == 1)
                                 ? 'page.multi_cart.shopping_cart.list.label.item'
@@ -109,7 +105,6 @@
                                 {% endif %}
 
                                 {% widget 'CartListPermissionGroupWidget' args [quote, isQuoteDeletable] use view('multi-cart-permission-actions', 'SharedCartWidget') only %}
-                                {% elsewidget 'CartListPermissionGroupWidgetPlugin' args [quote, isQuoteDeletable] use view('multi-cart-permission-actions', 'SharedCartWidget') only %} {# @deprecated Use CartListPermissionGroupWidget instead. #}
                                 {% nowidget %}
                                     {% if isQuoteEditable and isQuoteDeletable %}
                                         <li class="menu__item">
@@ -120,17 +115,11 @@
                                     {% endif %}
                                 {% endwidget %}
 
-                                {% if isQuoteEditable and widgetExists('CartToShoppingListWidgetPlugin') %}
-                                    <li class="menu__item">
-                                        {{ widget('CartToShoppingListWidgetPlugin', quote) }} {# @deprecated Use molecule('cart-to-shopping-list', 'ShoppingListWidget') instead. #}
-                                    </li>
-                                {% else %}
-                                    {% include molecule('cart-to-shopping-list', 'ShoppingListWidget') ignore missing with {
-                                        data: {
-                                            quote: quote
-                                        }
-                                    } only %}
-                                {% endif %}
+                                {% include molecule('cart-to-shopping-list', 'ShoppingListWidget') ignore missing with {
+                                    data: {
+                                        quote: quote
+                                    }
+                                } only %}
                             </ul>
                         </td>
                     {% endif %}

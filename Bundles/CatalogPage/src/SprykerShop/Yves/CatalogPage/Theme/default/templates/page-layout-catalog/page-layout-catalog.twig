@@ -3,6 +3,7 @@
 {% define data = {
     products: required,
     facets: required,
+    filteredFacets: [],
     category: null,
     categories: [],
     categoryId: null,
@@ -59,30 +60,31 @@
             <div class="col col--sm-12 col--lg-4 col--xl-3">
                 {% block filterBar %}
                     {% include molecule('view-mode-switch', 'CatalogPage') with {
-                        class: 'box'
+                        class: 'box',
                     } only %}
 
                     {% include molecule('toggler-checkbox') with {
                         modifiers: ['expand'],
-                        class: 'box is-hidden-lg-xl',
+                        class: 'box spacing-top spacing-top--big is-hidden-lg-xl',
                         data: {
-                            label: 'Show/Hide filters'
+                            label: 'catalog.filter.show_hide_button' | trans,
                         },
                         attributes: {
-                            'target-selector': '.js-catalog__filters-toggle',
+                            'target-class-name': 'js-catalog__filters-toggle',
                             'class-to-toggle': 'is-hidden-sm-md',
-                            checked: true
-                        }
+                            checked: true,
+                        },
                     } only %}
 
                     {% include organism('filter-section', 'CatalogPage') with {
-                        class: 'box js-catalog__filters-toggle',
+                        class: 'box spacing-top spacing-top--big js-catalog__filters-toggle',
                         data: {
                             facets: data.facets,
+                            filteredFacets: data.filteredFacets,
                             filterPath: data.filterPath,
                             categories: data.categories,
-                            isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible
-                        }
+                            isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
+                        },
                     } only %}
                 {% endblock %}
             </div>
@@ -93,14 +95,16 @@
                 } only %}
 
                 {% include organism('active-filter-section', 'CatalogPage') with {
+                    class: 'spacing-top spacing-top--big',
                     data: {
-                        facets: data.facets
-                    }
+                        facets: data.facets,
+                        filteredFacets: data.filteredFacets
+                    },
                 } only %}
 
                 {% include molecule('pagination') with {
-                    class: 'box',
-                    data: data.pagination
+                    class: 'box spacing-top spacing-top--big',
+                    data: data.pagination,
                 } only %}
 
                 <div class="grid grid--stretch">

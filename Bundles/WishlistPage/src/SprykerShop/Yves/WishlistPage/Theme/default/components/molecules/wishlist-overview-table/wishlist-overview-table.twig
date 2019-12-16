@@ -2,12 +2,11 @@
 
 {% define config = {
     name: 'wishlist-overview-table',
-    tag: 'div'
 } %}
 
 {% define data = {
     wishlists: required,
-    wishlistForm: null
+    wishlistForm: null,
 } %}
 
 {% block body %}
@@ -41,7 +40,7 @@
                                     </button>
                                 </div>
                             </div>
-                            {{ form_errors(data.wishlistForm.name) }}
+                            {{ form_errors(data.wishlistForm) }}
                             {{ form_end(data.wishlistForm) }}
                         {% else %}
                             <a href="{{ path('wishlist/details', { wishlistName: wishlist.name }) }}">{{ wishlist.name }}</a>
@@ -62,7 +61,8 @@
                             </li>
                             <li class="menu__item">
                                 <form method="POST" action="{{ path('wishlist/delete', {wishlistName: wishlist.name}) }}">
-                                    <button type="submit" class="link" title="{{ 'customer.account.wishlist.overview.delete' | trans }}">
+                                    <button data-init-single-click type="submit" class="link"
+                                            title="{{ 'customer.account.wishlist.overview.delete' | trans }}">
                                         {% include atom('icon') with {
                                             data: {
                                                 name: 'remove'

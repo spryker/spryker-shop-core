@@ -38,6 +38,8 @@ class RegisterForm extends AbstractType
     public const OPTION_MIN_LENGTH_CUSTOMER_PASSWORD = 'OPTION_MIN_LENGTH_CUSTOMER_PASSWORD';
 
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
+    protected const VALIDATION_MIN_LENGTH_MESSAGE = 'validation.min_length';
+    protected const VALIDATION_MAX_LENGTH_MESSAGE = 'validation.max_length.singular';
 
     /**
      * @return string
@@ -79,7 +81,6 @@ class RegisterForm extends AbstractType
                 'Mrs' => 'customer.salutation.mrs',
                 'Dr' => 'customer.salutation.dr',
             ]),
-            'choices_as_values' => true,
             'required' => true,
             'label' => 'address.salutation',
             'constraints' => [
@@ -169,6 +170,9 @@ class RegisterForm extends AbstractType
             'constraints' => [
                 new Length([
                     'min' => $this->getConfig()->getCustomerPasswordMinLength(),
+                    'max' => $this->getConfig()->getCustomerPasswordMaxLength(),
+                    'minMessage' => static::VALIDATION_MIN_LENGTH_MESSAGE,
+                    'maxMessage' => static::VALIDATION_MAX_LENGTH_MESSAGE,
                 ]),
                 $this->createNotBlankConstraint(),
             ],

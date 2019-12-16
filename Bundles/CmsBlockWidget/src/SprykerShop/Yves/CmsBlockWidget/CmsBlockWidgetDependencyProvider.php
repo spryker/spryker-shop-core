@@ -7,24 +7,35 @@
 
 namespace SprykerShop\Yves\CmsBlockWidget;
 
+use Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPlugin;
+use Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToCmsBlockStorageClientBridge;
+use SprykerShop\Yves\CmsBlockWidget\Dependency\Client\CmsBlockWidgetToStoreClientBridge;
 
 class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const TWIG_FUNCTION_PLUGINS = 'TWIG_FUNCTION_PLUGINS';
     public const CLIENT_CMS_BLOCK_STORAGE = 'CLIENT_CMS_BLOCK_STORAGE';
+    public const CLIENT_STORE = 'CLIENT_STORE';
+    public const SERVICE_TRANSLATOR = 'translator';
+
+    public const TWIG_EXTENSION_PLUGINS = 'TWIG_EXTENSION_PLUGINS';
+    public const CMS_TWIG_CONTENT_RENDERER_PLUGIN = 'CMS_TWIG_CONTENT_RENDERER_PLUGIN';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
-        $container = $this->addTwigFunctionPlugins($container);
+        $container = $this->addTwigExtensionPlugins($container);
         $container = $this->addCmsBlockStorageClient($container);
+        $container = $this->addStoreClient($container);
+        $container = $this->addCmsTwigContentRendererPlugin($container);
+        $container = $this->addTranslatorService($container);
 
         return $container;
     }
@@ -34,19 +45,19 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addTwigFunctionPlugins(Container $container)
+    protected function addTwigExtensionPlugins(Container $container): Container
     {
-        $container[static::TWIG_FUNCTION_PLUGINS] = function () {
-            return $this->getTwigFunctionPlugins();
-        };
+        $container->set(static::TWIG_EXTENSION_PLUGINS, function () {
+            return $this->getTwigExtensionPlugins();
+        });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface[]
+     * @return \Spryker\Shared\Twig\TwigExtensionInterface[]
      */
-    protected function getTwigFunctionPlugins()
+    protected function getTwigExtensionPlugins(): array
     {
         return [];
     }
@@ -56,12 +67,64 @@ class CmsBlockWidgetDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCmsBlockStorageClient(Container $container)
+    protected function addCmsBlockStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_CMS_BLOCK_STORAGE] = function (Container $container) {
-            return new CmsBlockWidgetToCmsBlockStorageClientBridge($container->getLocator()->cmsBlockStorage()->client());
-        };
+        $container->set(static::CLIENT_CMS_BLOCK_STORAGE, function (Container $container) {
+            return new CmsBlockWidgetToCmsBlockStorageClientBridge(
+                $container->getLocator()->cmsBlockStorage()->client()
+            );
+        });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new CmsBlockWidgetToStoreClientBridge($container->getLocator()->store()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    public function addCmsTwigContentRendererPlugin(Container $container): Container
+    {
+        $container->set(static::CMS_TWIG_CONTENT_RENDERER_PLUGIN, function () {
+            return $this->getCmsTwigContentRendererPlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    public function addTranslatorService(Container $container): Container
+    {
+        $container->set(static::SERVICE_TRANSLATOR, function () {
+            return (new Pimple())->getApplication()->get(static::SERVICE_TRANSLATOR);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface
+     */
+    protected function getCmsTwigContentRendererPlugin(): CmsTwigContentRendererPluginInterface
+    {
+        return new CmsTwigContentRendererPlugin();
     }
 }

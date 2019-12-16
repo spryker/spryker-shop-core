@@ -2,18 +2,18 @@
 
 {% block pageInfo %}{% endblock %}
 
-{% block content %}    
+{% block content %}
     {% include molecule('jumbotron') with {
         class: 'box'
     } only %}
 
-    <div class="box">
+    <div class="box spacing-top spacing-top--big">
         {{ spyCmsBlock({
             name: 'Home Page'
         }) }}
     </div>
 
-    <div class="box">
+    <div class="box spacing-top spacing-top--big">
         {{ spyCmsBlock({
             name: 'Teaser for home page'
         }) }}

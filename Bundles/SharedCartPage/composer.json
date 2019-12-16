@@ -4,14 +4,14 @@
   "description": "SharedCartPage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker-shop/cart-page": "^1.0.0",
+    "php": ">=7.2",
+    "spryker-shop/resource-share-page-extension": "^1.0.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/application": "^3.0.0",
-    "spryker/company-user": "^1.0.0 || ^2.0.0",
+    "spryker/company-user": "^2.8.0",
     "spryker/customer": "^7.0.0",
-    "spryker/kernel": "^3.19.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/multi-cart": "^1.1.0",
     "spryker/quote": "^2.8.0",
     "spryker/shared-cart": "^1.4.0",
@@ -20,12 +20,14 @@
   "require-dev": {
     "spryker-shop/multi-cart-page": "*",
     "spryker/code-sniffer": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/multi-cart-page": "if you want to use customer layout templates: ^1.1.0",
     "spryker/permission": "If you want to use permissions plugins",
+    "spryker/router": "Use this module when using plugins that need Router dependencies.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
@@ -37,7 +39,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

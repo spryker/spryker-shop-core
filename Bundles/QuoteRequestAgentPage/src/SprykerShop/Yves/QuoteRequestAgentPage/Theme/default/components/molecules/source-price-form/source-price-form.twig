@@ -1,0 +1,46 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'source-price-form',
+    tag: 'source-price-form'
+} %}
+
+{# @deprecated property "priceFiled" is deprecated: use "priceForm" instead. #}
+{% define data = {
+    priceFiled: null,
+    priceForm: data.priceFiled | default(null),
+    checkboxName: required,
+    checkboxValue: required,
+    isChecked: required,
+    checkboxLabel: required,
+} %}
+
+{% define attributes = {
+    price: required,
+} %}
+
+{% block body %}
+    <div class="row">
+        <div class="col col--sm-12 col--xl-12">
+            {% embed atom('checkbox') with {
+                attributes: {
+                    name: data.checkboxName,
+                    value: data.checkboxValue,
+                    checked: data.isChecked,
+                    disabled: data.priceForm.vars.disabled,
+                },
+                data: {
+                    label: data.checkboxLabel,
+                },
+                embed: {
+                    inputClass: config.jsName ~ '__checkbox-container',
+                },
+            } only %}
+                {% block inputClass %}{{ embed.inputClass }}{% endblock %}
+            {% endembed %}
+        </div>
+        <div class="col col--sm-12 col--xl-10">
+            {{ form_row(data.priceForm, {'attr': {'class': config.jsName ~ '__input-container is-hidden spacing-top spacing-top--small'}}) }}
+        </div>
+    </div>
+{% endblock %}

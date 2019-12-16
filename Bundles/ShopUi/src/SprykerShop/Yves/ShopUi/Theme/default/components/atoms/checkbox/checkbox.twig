@@ -22,8 +22,8 @@
 
 {% block body %}
     <label class="{{config.name}}__container" {{qa('label')}}>
+        <input class="{{config.name}}__input {% block inputClass %}{% endblock %}" {{component.renderAttributes(attributes)}}>
         <span class="{{config.name}}__box"></span>
-        <input class="{{config.name}}__input {% block inputClass %}{% endblock %}" {{component.renderAttributes(attributes)}}/>
         <span class="{{config.name}}__check"></span>
         {%- block labelContainer -%}
             <span class="{{config.name}}__label label {% if attributes.required %}label--required{% endif %}">

@@ -1,27 +1,93 @@
+/**
+ * Defines the main color of the shop theme. Usage: primary elements' background and color.
+ */
 $setting-color-main: #2199e8 !default;
+
+/**
+ * Defines alternative color of the shop theme. Usage: secondary elements' background and color.
+ */
 $setting-color-alt: #e2694a !default;
 
+/**
+ * Defines white color. Usage: not transparent elements' background of default background.
+ */
 $setting-color-white: #ffffff !default;
+
+/**
+ * Defines a light shade color. Usage: elements' background, borders and text.
+ */
 $setting-color-light: #dadada !default;
+
+/**
+ * Defines a lighter shade color. Usage: elements' background, borders and text.
+ */
 $setting-color-lighter: #f0f0f0 !default;
+
+/**
+ * Defines the lightest shade color. Usage: elements' background, borders and text.
+ */
 $setting-color-lightest: #f4f4f4 !default;
 
+/**
+ * Defines the shade of the black color. Usage: as a base of black color for semi-transparent elements.
+ */
 $setting-color-black: #000000 !default;
+
+/**
+ * Defines a dark shade color. Usage: elements' text color variant.
+ */
 $setting-color-dark: #bbbbbb !default;
+
+/**
+ * Defines a darker shade color. Usage: elements' text color variant.
+ */
 $setting-color-darker: #777777 !default;
+
+/**
+ * Defines the darkest shade color. Usage: elements' text color variant.
+ */
 $setting-color-darkest: #333333 !default;
 
+/**
+ * Defines a transparent color. Usage: elements' background, border.
+ */
 $setting-color-transparent: rgba($setting-color-white, 0) !default;
 
+/**
+ * Defines the main background color. Usage: body and side-drawer background.
+ */
 $setting-color-bg: $setting-color-white !default;
+
+/**
+ * Defines the main color of text. Usage: default global text color.
+ */
 $setting-color-text: $setting-color-darkest !default;
+
+/**
+ * Defines a default global border color for the input elements.
+ */
 $setting-color-input-border: $setting-color-light !default;
+
+/**
+ * Defines a default global border color for the input elements on focus event.
+ */
 $setting-color-input-border-focus: $setting-color-dark !default;
+
+/**
+ * Defines a shadow shade and transparency for the shadowed elements.
+ */
 $setting-color-shadow: rgba($setting-color-black, 0.1) !default;
+
+/**
+ * Defines a default overlay color. Usage: elements with overlay - side-drawer, popups etc.
+ */
 $setting-color-overlay: rgba($setting-color-black, 0.3) !default;
 
+/**
+ * Defines action colors map.
+ */
 $setting-color-actions: (
-    success: #4FC2A0,
-    warning: #F29133,
-    alert: #B2171A
+    success: #4fc2a0,
+    warning: #f29133,
+    alert: #b2171a
 ) !default;

@@ -11,7 +11,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidgetPlugin;
 use SprykerShop\Yves\CmsContentWidgetChartConnector\Dependency\Plugin\ChartWidget\ChartWidgetPluginInterface;
 
 /**
- * @deprecated Use "chart()" function instead.
+ * @deprecated Use \SprykerShop\Yves\ChartWidget\Plugin\Twig\ChartTwigPlugin function instead.
  */
 class ChartWidgetPlugin extends AbstractWidgetPlugin implements ChartWidgetPluginInterface
 {
@@ -23,7 +23,6 @@ class ChartWidgetPlugin extends AbstractWidgetPlugin implements ChartWidgetPlugi
      */
     public function initialize(string $chartPluginName, ?string $dataIdentifier = null): void
     {
-
         $this
             ->addParameter('chartPluginName', $chartPluginName)
             ->addParameter('dataIdentifier', $dataIdentifier);

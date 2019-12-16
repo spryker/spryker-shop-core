@@ -10,17 +10,22 @@ namespace SprykerShop\Yves\CheckoutPage;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPriceClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Form\DataProvider\ShipmentFormDataProvider;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilter;
 use SprykerShop\Yves\CheckoutPage\Form\Filter\SubFormFilterInterface;
 use SprykerShop\Yves\CheckoutPage\Form\FormFactory;
-use SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandler;
+use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsChecker;
+use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface;
 use SprykerShop\Yves\CheckoutPage\Process\StepFactory;
 
+/**
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
+ */
 class CheckoutPageFactory extends AbstractFactory
 {
     /**
@@ -152,18 +157,13 @@ class CheckoutPageFactory extends AbstractFactory
     {
         return new ShipmentFormDataProvider(
             $this->getShipmentClient(),
-            $this->getGlossaryClient(),
+            $this->getGlossaryStorageClient(),
             $this->getStore(),
-            $this->getMoneyPlugin()
+            $this->getMoneyPlugin(),
+            $this->getShipmentService(),
+            $this->createGiftCardItemsChecker(),
+            $this->getConfig()
         );
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CheckoutPage\Handler\ShipmentHandlerInterface
-     */
-    public function createShipmentHandler()
-    {
-        return new ShipmentHandler($this->getShipmentClient(), $this->getPriceClient());
     }
 
     /**
@@ -175,11 +175,11 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryClientInterface
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface
      */
-    public function getGlossaryClient(): CheckoutPageToGlossaryClientInterface
+    public function getGlossaryStorageClient(): CheckoutPageToGlossaryStorageClientInterface
     {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_GLOSSARY);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 
     /**
@@ -204,6 +204,14 @@ class CheckoutPageFactory extends AbstractFactory
     public function getStore()
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
+     */
+    public function getShipmentService(): CheckoutPageToShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::SERVICE_SHIPMENT);
     }
 
     /**
@@ -239,5 +247,13 @@ class CheckoutPageFactory extends AbstractFactory
     protected function getSubFormFilterPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_SUB_FORM_FILTERS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface
+     */
+    public function createGiftCardItemsChecker(): GiftCardItemsCheckerInterface
+    {
+        return new GiftCardItemsChecker();
     }
 }

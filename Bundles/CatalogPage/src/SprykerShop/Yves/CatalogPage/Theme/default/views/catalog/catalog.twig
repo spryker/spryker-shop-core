@@ -3,6 +3,7 @@
 {% define data = {
     products: _view.products,
     facets: _view.facets,
+    filteredFacets: _view.filteredFacets | default([]),
     searchString: _view.searchString,
     category: _view.category | default,
     categories: categories | default([]),
@@ -28,6 +29,6 @@
 {% block form %}
     {{parent()}}
     {% if data.searchString is not empty %}
-        <input type="hidden" name="q" value="{{ data.searchString }}" />
+        <input type="hidden" name="q" value="{{ data.searchString }}">
     {% endif %}
 {% endblock %}

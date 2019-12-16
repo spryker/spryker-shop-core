@@ -1,4 +1,4 @@
-@mixin shop-ui-volume-price($name: '.volume-price') {
+@mixin price-product-volume-widget-volume-price($name: '.volume-price') {
     #{$name} {
         @include helper-font-size(big);
 
@@ -22,7 +22,7 @@
             transform: translateZ(0);
 
             &--highlighted {
-                animation: priceHighlight 0.4s linear 2;
+                animation: pulse-highlight 0.4s linear 2;
             }
         }
 
@@ -30,16 +30,13 @@
     }
 }
 
-@keyframes priceHighlight {
-    0 {
-        transform: scale(1);
-    }
+/**
+ * @deprecated use price-product-volume-widget-volume-price mixin instead.
+ */
+@mixin shop-ui-volume-price($name: '.volume-price') {
+    @include price-product-volume-widget-volume-price();
 
-    50% {
-          transform: scale(1.2);
-    }
-
-    100% {
-        transform: scale(1);
+    #{$name} {
+        @content;
     }
 }

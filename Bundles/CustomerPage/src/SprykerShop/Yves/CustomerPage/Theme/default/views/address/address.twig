@@ -4,12 +4,12 @@
     addresses: _view.addresses,
 
     title: 'customer.account.address' | trans,
-    activePage: 'address'
+    activePage: 'address',
 } %}
 
 {% block customerContent %}
     <div class="box text-right">
-        <a class="button" href="{{url('customer/address/new')}}" {{qa('customer-add-new-address')}}>{{ 'customer.account.add_new_address' | trans }}</a>
+        <a class="button" href="{{url('customer/address/new')}}" {{qa('customer-add-new-address')}}>{{ 'customer.account.button.add_new_address' | trans }}</a>
     </div>
 
     {% for address in data.addresses %}
@@ -21,7 +21,8 @@
                     </a>
                 </li>
                 <li class="menu__item">
-                    <a href="{{ url('customer/address/delete', {'id': address.idCustomerAddress }) }}">
+                    <a data-init-single-click
+                       href="{{ url('customer/address/delete', {'id': address.idCustomerAddress }) }}">
                         {{ "customer.profile.address.delete" | trans }}
                     </a>
                 </li>
@@ -29,8 +30,8 @@
 
             {% include molecule('display-address') with {
                 data: {
-                    address: address
-                }
+                    address: address,
+                },
             } only %}
         </div>
     {% endfor %}

@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace SprykerShop\Yves\ProductOptionWidget\Plugin\ShoppingListPage;
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
@@ -20,7 +21,7 @@ use Symfony\Component\Form\FormEvents;
 class ShoppingListItemProductOptionFormExpanderPlugin extends AbstractPlugin implements ShoppingListItemFormExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Extends shopping list item form with product options form.
      *
      * @api
@@ -33,14 +34,21 @@ class ShoppingListItemProductOptionFormExpanderPlugin extends AbstractPlugin imp
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $option[ShoppingListItemProductOptionForm::PRODUCT_OPTION_GROUP_KEY] = $this->getFactory()
+            $productOptionGroupStorageTransfers = $this->getFactory()
                 ->createShoppingListItemProductOptionFormDataProvider()
                 ->findProductOptionGroupsByShoppingListItem($event->getData());
-            $event->getForm()->add(
-                ShoppingListItemTransfer::PRODUCT_OPTIONS,
-                ShoppingListItemProductOptionForm::class,
-                $option
-            );
+
+            if ($productOptionGroupStorageTransfers->count()) {
+                $fieldOptions = [
+                    ShoppingListItemProductOptionForm::PRODUCT_OPTION_GROUP_KEY => $productOptionGroupStorageTransfers,
+                ];
+
+                $event->getForm()->add(
+                    ShoppingListItemTransfer::PRODUCT_OPTIONS,
+                    ShoppingListItemProductOptionForm::class,
+                    $fieldOptions
+                );
+            }
         });
     }
 }

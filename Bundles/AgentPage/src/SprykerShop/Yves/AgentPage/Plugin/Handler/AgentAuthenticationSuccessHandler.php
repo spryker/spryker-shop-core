@@ -9,8 +9,9 @@ namespace SprykerShop\Yves\AgentPage\Plugin\Handler;
 
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use SprykerShop\Yves\AgentPage\Plugin\Provider\AgentPageControllerProvider;
 use SprykerShop\Yves\AgentPage\Security\Agent;
-use SprykerShop\Yves\HomePage\Plugin\Provider\HomePageControllerProvider;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
@@ -20,6 +21,19 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerI
  */
 class AgentAuthenticationSuccessHandler extends AbstractPlugin implements AuthenticationSuccessHandlerInterface
 {
+    /**
+     * @var string|null
+     */
+    protected $targetUrl;
+
+    /**
+     * @param string|null $targetUrl
+     */
+    public function __construct(?string $targetUrl = null)
+    {
+        $this->targetUrl = $targetUrl;
+    }
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
@@ -42,7 +56,10 @@ class AgentAuthenticationSuccessHandler extends AbstractPlugin implements Authen
      */
     protected function getSecurityUser(TokenInterface $token): Agent
     {
-        return $token->getUser();
+        /** @var \SprykerShop\Yves\AgentPage\Security\Agent $user */
+        $user = $token->getUser();
+
+        return $user;
     }
 
     /**
@@ -62,9 +79,13 @@ class AgentAuthenticationSuccessHandler extends AbstractPlugin implements Authen
      */
     protected function createRedirectResponse()
     {
+        if ($this->targetUrl) {
+            return new RedirectResponse($this->targetUrl);
+        }
+
         $targetUrl = $this->getFactory()
             ->getApplication()
-            ->url(HomePageControllerProvider::ROUTE_HOME);
+            ->url(AgentPageControllerProvider::ROUTE_AGENT_OVERVIEW);
 
         $response = $this->getFactory()->createRedirectResponse($targetUrl);
 

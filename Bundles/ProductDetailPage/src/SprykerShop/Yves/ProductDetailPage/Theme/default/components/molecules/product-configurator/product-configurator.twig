@@ -7,7 +7,7 @@
 
 {% define data = {
     product: required,
-    maxQuantity: 10
+    maxQuantity: 10,
 } %}
 
 {% set options = [] %}
@@ -21,7 +21,7 @@
 {% for index in 1..data.maxQuantity %}
     {% set options = options | merge([{
         label: index,
-        value: index
+        value: index,
     }]) %}
 {% endfor %}
 
@@ -46,18 +46,18 @@
     {% endif %}
     <small>{{ 'product.attribute.sku' | trans }}: {{sku}}</small>
 
-    <hr />
+    <hr>
     {% widget 'ProductPriceVolumeWidget' args [data.product] only %}
     {% elsewidget 'PriceProductVolumeWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductPriceVolumeWidget instead. #}
     {% nowidget %}
         {% if widgetExists('PriceWidgetPlugin') %}
-            {{ widget('PriceWidgetPlugin', data.product) }}  {# @deprecated Use molecule('price') instead. #}
+            {{ widget('PriceWidgetPlugin', data.product) }}  {# @deprecated Use molecule('money-price') instead. #}
         {% else %}
             <p>
-                {% include molecule('price') with {
+                {% include molecule('money-price') with {
                     data: {
-                        amount: data.product.price | money,
-                        originalAmount: data.product.prices.ORIGINAL | default
+                        amount: data.product.price,
+                        originalAmount: data.product.prices.ORIGINAL | default,
                     }
                 } only %}
             </p>
@@ -79,13 +79,13 @@
         data: {
             superAttributes: data.product.attributeMap.superAttributes,
             selectedAttributes: data.product.selectedAttributes,
-            availableAttributes: data.product.availableAttributes
+            availableAttributes: data.product.availableAttributes,
         }
     } only %}
-        {% block body %}<hr />{{parent()}}{% endblock %}
+        {% block body %}<hr>{{parent()}}{% endblock %}
     {% endembed %}
 
-    <hr />
+    <hr>
     <form method="POST" class="{{ config.jsName }}__form" action="{{ path("cart/add", {"sku": sku}) }}">
         {% widget 'ProductOptionConfiguratorWidget' args [data.product] only %}
         {% elsewidget 'ProductOptionWidgetPlugin' args [data.product] only %} {# @deprecated Use ProductOptionConfiguratorWidget instead. #}
@@ -104,22 +104,22 @@
                             {% include atom('select') with {
                                 modifiers: ['expand'],
                                 data: {
-                                    options: options
+                                    options: options,
                                 },
                                 attributes: {
                                     name: 'quantity',
-                                    disabled: isDisabled
-                                }
+                                    disabled: isDisabled,
+                                },
                             } only %}
                         </label>
                     </div>
 
                     <div class="col col--sm-6">
-                        <button type="submit" class="button button--success button--expand" data-init-single-click {{ isDisabled ? 'disabled' : '' }} {{qa('add-to-cart-button')}}>
+                        <button type="submit" class="button button--success button--expand" data-init-single-click {{ isDisabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
                             {% include atom('icon') with {
                                 data: {
-                                    name: 'cart-plus'
-                                }
+                                    name: 'cart-plus',
+                                },
                             } only %}
                             {{ 'page.detail.add-to-cart' | trans }}
                         </button>
@@ -132,14 +132,16 @@
         {% elsewidget 'MultiCartWidgetPlugin' args [data.product, isDisabled] only %} {# @deprecated Use AddToMultiCartWidget instead. #}
         {% endwidget %}
 
+        {% widget 'MerchantProductOfferWidget' args [data.product] only %}{% endwidget %}
+
         {% if widgetExists('AvailabilityWidgetPlugin') %}
             {{ widget('AvailabilityWidgetPlugin', data.product) }} {# @deprecated Use molecule('availability-product', 'AvailabilityWidget') instead. #}
         {% else %}
             {% include molecule('availability-product', 'AvailabilityWidget') ignore missing with {
                 data: {
                     idProductConcrete: data.product.idProductConcrete,
-                    isAvailable: data.product.available
-                }
+                    isAvailable: data.product.available,
+                },
             } only %}
         {% endif %}
     </form>
@@ -151,12 +153,12 @@
     {% if can('SeeShoppingListPermissionPlugin') and isProductAvailable %}
         {% widget 'AddToShoppingListWidget' args [sku, isDisabled] only %}
             {% block body %}
-                <hr />
+                <hr>
                 {{ parent() }}
             {% endblock %}
         {% elsewidget 'ShoppingListWidgetPlugin' args [sku, isDisabled] only %} {# @deprecated Use AddToShoppingListWidget instead. #}
             {% block body %}
-                <hr />
+                <hr>
                 {{ parent() }}
             {% endblock %}
         {% endwidget %}
@@ -164,14 +166,14 @@
 
     {% if can('SeeWishlistPermissionPlugin') and isProductAvailable %}
         {% if widgetExists('WishlistWidgetPlugin') %}
-            <hr />
+            <hr>
             {{ widget('WishlistWidgetPlugin', data.product) }} {# @deprecated Use molecule('wishlist-selector', 'WishlistWidget') instead. #}
         {% else %}
             {% include molecule('wishlist-selector-for-pdp', 'WishlistWidget') ignore missing with {
                 data: {
                     sku: data.product.sku,
-                    idProductConcrete: data.product.idProductConcrete | default
-                }
+                    idProductConcrete: data.product.idProductConcrete | default,
+                },
             } only %}
         {% endif %}
     {% endif %}

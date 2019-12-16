@@ -7,7 +7,8 @@
 
 {% define data = {
     concreteItem: required,
-    currencyIsoCode: required
+    currencyIsoCode: required,
+    countOfDecimalsInAmount: 10,
 } %}
 
 {% block body %}
@@ -22,12 +23,13 @@
         {% set amountSalesUnitName = data.concreteItem.amountSalesUnit.productMeasurementUnit.name | default('') %}
     {% endif %}
     <td>
+        {% block actions %}{% endblock %}
         {{ data.concreteItem.sku }}
     </td>
     <td>
-        {{ data.concreteItem.name }}<br/>
+        {{ data.concreteItem.name }}<br>
         {% if data.concreteItem.amount and data.concreteItem.quantity %}
-            <span class="text-secondary">&times;</span> {{ data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }} (= {{ data.concreteItem.amount / data.concreteItem.amountSalesUnit.conversion }}{{ amountSalesUnitName | trans }}) = {{ data.concreteItem.quantity * data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }}
+            <span class="text-secondary">&times;</span> {{ data.concreteItem.amount.divide(data.concreteItem.quantity, data.countOfDecimalsInAmount).trim }} {{ 'packaging_units.cart.item' | trans }} (= {{ (data.concreteItem.amount.divide(data.concreteItem.quantity, data.countOfDecimalsInAmount)).divide(data.concreteItem.amountSalesUnit.conversion, data.countOfDecimalsInAmount).trim }}{{ amountSalesUnitName | trans }}) = {{ data.concreteItem.amount }} {{ 'packaging_units.cart.item' | trans }}
         {% endif %}
     </td>
     <td>

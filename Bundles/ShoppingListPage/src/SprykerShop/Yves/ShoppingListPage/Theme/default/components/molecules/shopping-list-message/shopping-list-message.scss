@@ -1,9 +1,25 @@
-@mixin shopping-list-message($name: '.shopping-list-message') {
+@mixin shopping-list-page-shopping-list-message($name: '.shopping-list-message') {
     #{$name} {
         &__title {
             color: map-get($setting-color-actions, 'alert');
         }
 
+        &__name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @content;
+    }
+}
+
+/**
+ * @deprecated use shopping-list-page-shopping-list-message mixin instead.
+ */
+@mixin shopping-list-message($name: '.shopping-list-message') {
+    @include shopping-list-page-shopping-list-message();
+
+    #{$name} {
         @content;
     }
 }

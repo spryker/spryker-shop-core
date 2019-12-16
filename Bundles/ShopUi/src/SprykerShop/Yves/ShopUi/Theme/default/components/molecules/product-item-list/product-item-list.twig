@@ -1,0 +1,34 @@
+{% extends molecule('product-item') %}
+
+{% define config = {
+    name: 'product-item-list',
+} %}
+
+{% block imageContainer %}
+    {% set extraClass = '' %}
+    {% set modifiers = ['small'] %}
+
+    <div class="col col--sm-3 col--md-2 col--middle">
+        {{ parent() }}
+    </div>
+{% endblock %}
+
+{% block priceContainer %}
+    <div>
+        {% block price %}
+            {{ parent() }}
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="col col--sm-6 col--md-7 col--xl-8 col--middle">
+        {{ parent() }}
+    </div>
+{% endblock %}
+
+{% block actionsContainer %}
+    <div class="col col--sm-3 col--xl-2 col--bottom">
+        {{ parent() }}
+    </div>
+{% endblock %}

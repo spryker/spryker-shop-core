@@ -18,6 +18,10 @@ use Symfony\Component\Security\Http\Firewall\ExceptionListener;
 use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener;
 
 /**
+ * @deprecated Will be removed with the next major release.
+ *
+ * @see \SprykerShop\Yves\CustomerPage\Plugin\Security\CustomerPageSecurityPlugin
+ *
  * @method \Spryker\Client\Customer\CustomerClientInterface getClient()
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageFactory getFactory()
  */
@@ -163,6 +167,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
         if ($prefixLocale) {
             $logoutPath = '/' . $prefixLocale . $logoutPath;
         }
+
         return $logoutPath;
     }
 
@@ -177,6 +182,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
         if ($prefixLocale) {
             $loginPath = '/' . $prefixLocale . $loginPath;
         }
+
         return $loginPath;
     }
 
@@ -198,6 +204,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
         if ($prefixLocale . '/' !== $localePath) {
             return null;
         }
+
         return $prefixLocale;
     }
 
@@ -212,6 +219,7 @@ class CustomerSecurityServiceProvider extends AbstractPlugin implements ServiceP
         if ($selectedLanguage) {
             $logoutTarget .= $selectedLanguage;
         }
+
         return $logoutTarget;
     }
 }

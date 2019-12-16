@@ -10,10 +10,12 @@ namespace SprykerShop\Yves\SharedCartPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\SharedCartPage\Plugin\Router\SharedCartPageRouteProviderPlugin` instead.
+ */
 class SharedCartPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_SHARED_CART_SHARE = 'shared-cart/share';
-    public const ROUTE_SHARED_CART_UNSHARE = 'shared-cart/unshare';
     public const ROUTE_SHARED_CART_DISMISS = 'shared-cart/dismiss';
     public const ROUTE_SHARED_CART_DISMISS_CONFIRM = 'shared-cart/dismiss-confirm';
 
@@ -25,7 +27,6 @@ class SharedCartPageControllerProvider extends AbstractYvesControllerProvider
     protected function defineControllers(Application $app)
     {
         $this->addShareController()
-            ->addUnshareController()
             ->addDismissController()
             ->addDismissConfirmController();
     }
@@ -36,18 +37,6 @@ class SharedCartPageControllerProvider extends AbstractYvesControllerProvider
     protected function addShareController()
     {
         $this->createController('/{sharedCart}/share/{idQuote}', static::ROUTE_SHARED_CART_SHARE, 'SharedCartPage', 'Share', 'index')
-            ->assert('sharedCart', $this->getAllowedLocalesPattern() . 'shared-cart|shared-cart')
-            ->value('sharedCart', 'shared-cart');
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    protected function addUnshareController()
-    {
-        $this->createController('/{sharedCart}/unshare/{idQuote}/{idCompanyUser}/{idPermissionGroup}', static::ROUTE_SHARED_CART_UNSHARE, 'SharedCartPage', 'Unshare', 'index')
             ->assert('sharedCart', $this->getAllowedLocalesPattern() . 'shared-cart|shared-cart')
             ->value('sharedCart', 'shared-cart');
 

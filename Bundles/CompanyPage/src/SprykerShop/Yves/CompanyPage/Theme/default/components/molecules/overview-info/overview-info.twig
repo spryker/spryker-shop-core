@@ -2,18 +2,17 @@
 
 {% define config = {
     name: 'overview-info',
-    tag: 'div'
 } %}
 
 {% define data = {
     company: required,
-    defaultBillingAddress: required
+    defaultBillingAddress: required,
 } %}
 
 {% block body %}
     {% if data.company is not empty %}
         <span class="{{ config.name }}__title">{{ 'company.account.name' | trans }}:</span>
-        <span class="{{ config.name }}__text"> {{ data.company.name }}</span><br/>
+        <span class="{{ config.name }}__text"> {{ data.company.name }}</span><br>
     {% endif %}
     {% if data.defaultBillingAddress is not empty %}
         <span class="{{ config.name }}__title">{{ 'company.account.address' | trans }}:</span>

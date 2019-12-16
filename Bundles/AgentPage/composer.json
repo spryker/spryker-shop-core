@@ -4,32 +4,49 @@
   "description": "AgentPage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker-shop/customer-page": "^1.4.0",
+    "php": ">=7.2",
+    "spryker-shop/customer-page": "^1.4.0 || ^2.0.0",
     "spryker-shop/customer-page-extension": "^1.2.0",
     "spryker-shop/shop-application": "^1.1.0",
     "spryker-shop/shop-ui": "^1.3.0",
     "spryker/agent": "^1.0.0",
     "spryker/application": "^3.9.0",
     "spryker/customer": "^7.10.0",
-    "spryker/kernel": "^3.23.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/messenger": "^3.1.0",
     "spryker/quote": "^2.0.0",
+    "spryker/security-extension": "^1.0.0",
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
-    "spryker-shop/home-page": "*",
+    "spryker-shop/quote-request-agent-widget": "*",
     "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
+    "spryker/propel": "*",
+    "spryker/router": "*",
+    "spryker/security": "*",
+    "spryker/session": "*",
     "spryker/silex": "*",
+    "spryker/storage": "*",
+    "spryker/storage-redis": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/home-page": "Widget plugins are available for this module.",
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+    "spryker-shop/quote-request-agent-widget": "If you want to use quote quote-request-menu-item.twig molecule.",
+    "spryker/container": "Add this module to use the Container.",
+    "spryker/router": "Use this module when you want to use the Router.",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
+    "spryker/security": "Add this module to use the SecurityPlugin."
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerShopTest\\": "tests/SprykerShopTest/"
     }
   },
   "minimum-stability": "dev",

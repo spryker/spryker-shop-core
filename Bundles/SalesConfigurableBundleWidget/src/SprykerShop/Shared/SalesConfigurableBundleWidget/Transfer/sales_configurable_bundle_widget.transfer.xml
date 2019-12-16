@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="spryker:transfer-01"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="salesOrderConfiguredBundleItem" type="SalesOrderConfiguredBundleItem"/>
+        <property name="sku" type="string"/>
+        <property name="unitPrice" type="int"/>
+        <property name="sumPriceToPayAggregation" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle"/>
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundle">
+        <property name="name" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="salesOrderConfiguredBundleItems" type="SalesOrderConfiguredBundleItem[]" singular="salesOrderConfiguredBundleItem"/>
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundleItem">
+        <property name="idSalesOrderItem" type="int"/>
+    </transfer>
+
+</transfers>

@@ -2,12 +2,11 @@
 
 {% define config = {
     name: 'wishlist-selector',
-    tag: 'div'
 } %}
 
 {% define data = {
     sku: required,
-    idProductConcrete: required
+    idProductConcrete: required,
 } %}
 
 {% set isUserLoggedIn = is_granted('ROLE_USER') %}
@@ -19,18 +18,18 @@
             class: config.jsName ~ '__provider',
             attributes: {
                 'url': path('wishlist/add-to-wishlist'),
-                'fetch-on-load': true
-            }
+                'fetch-on-load': true,
+            },
         } only %}
 
         {% include molecule('ajax-loader') with {
             modifiers: ['solid-bg'],
             data: {
-                showSpinnerOnLoad: true
+                showSpinnerOnLoad: true,
             },
             attributes: {
-                'provider-selector': '.' ~ config.jsName ~ '__provider'
-            }
+                'provider-class-name': config.jsName ~ '__provider',
+            },
         } only %}
     {% endif %}
 
@@ -40,8 +39,8 @@
                 {% if isUserLoggedIn %}
                     {% include molecule('ajax-renderer') with {
                         attributes: {
-                            'provider-selector': '.' ~ config.jsName ~ '__provider'
-                        }
+                            'provider-class-name': config.jsName ~ '__provider',
+                        },
                     } only %}
                 {% endif %}
             </div>
@@ -51,8 +50,8 @@
                     {% include atom('icon') with {
                         modifiers: ['small'],
                         data: {
-                            name: 'heart'
-                        }
+                            name: 'heart',
+                        },
                     } only %}
                     {{ 'page.detail.add-to-wishlist' | trans }}
                 </button>

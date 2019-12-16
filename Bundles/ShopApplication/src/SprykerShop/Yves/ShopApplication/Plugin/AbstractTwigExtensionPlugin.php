@@ -7,15 +7,34 @@
 
 namespace SprykerShop\Yves\ShopApplication\Plugin;
 
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Twig\TwigExtensionInterface;
+use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig\Extension\ExtensionInterface;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
  * @method \Spryker\Yves\Kernel\AbstractFactory getFactory()
  */
-abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements ExtensionInterface
+abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements TwigPluginInterface, TwigExtensionInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Twig\Environment $twig
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Twig\Environment
+     */
+    public function extend(Environment $twig, ContainerInterface $container): Environment
+    {
+        $twig->addExtension($this);
+
+        return $twig;
+    }
+
     /**
      * Initializes the runtime environment.
      *
@@ -23,11 +42,11 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Ext
      *
      * @api
      *
-     * @param \Twig_Environment $environment The current Twig_Environment instance
+     * @param \Twig\Environment $environment The current Environment instance
      *
      * @return void
      */
-    public function initRuntime(Twig_Environment $environment)
+    public function initRuntime(Environment $environment)
     {
     }
 
@@ -36,7 +55,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Ext
      *
      * @api
      *
-     * @return array An array of Twig_TokenParserInterface or Twig_TokenParserBrokerInterface instances
+     * @return array An array of TokenParserInterface or TokenParserBrokerInterface instances
      */
     public function getTokenParsers()
     {
@@ -48,7 +67,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Ext
      *
      * @api
      *
-     * @return \Twig_NodeVisitorInterface[] An array of Twig_NodeVisitorInterface instances
+     * @return \Twig\NodeVisitor\NodeVisitorInterface[] An array of NodeVisitorInterface instances
      */
     public function getNodeVisitors()
     {
@@ -113,5 +132,15 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Ext
     public function getGlobals()
     {
         return [];
+    }
+
+    /**
+     * @deprecated since 1.26 (to be removed in 2.0), not used anymore internally
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return static::class;
     }
 }

@@ -4,20 +4,31 @@ import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provide
 import debounce from 'lodash-es/debounce';
 
 export default class QuickOrderRow extends Component {
+    /**
+     * Performs the Ajax operations.
+     */
     ajaxProvider: AjaxProvider;
+
+    /**
+     * The autocomplete text input element.
+     */
     autocompleteInput: AutocompleteForm;
+
+    /**
+     * The quantity number input element.
+     */
     quantityInput: HTMLInputElement;
-    timeout: number = 3000;
 
     protected readyCallback(): void {
-        this.ajaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__provider`);
-        this.autocompleteInput = <AutocompleteForm>this.querySelector('autocomplete-form');
+        this.ajaxProvider = <AjaxProvider>this.getElementsByClassName(`${this.jsName}__provider`)[0];
+        this.autocompleteInput = <AutocompleteForm>this.getElementsByTagName('autocomplete-form')[0];
         this.registerQuantityInput();
         this.mapEvents();
     }
 
     protected registerQuantityInput(): void {
-        this.quantityInput = <HTMLInputElement>this.querySelector(`.${this.jsName}__quantity, .${this.jsName}-partial__quantity`);
+        this.quantityInput = <HTMLInputElement>(this.getElementsByClassName(`${this.jsName}__quantity`)[0] ||
+            this.getElementsByClassName(`${this.jsName}-partial__quantity`)[0]);
     }
 
     protected mapEvents(): void {
@@ -27,7 +38,9 @@ export default class QuickOrderRow extends Component {
     }
 
     protected mapQuantityInputChange(): void {
-        this.quantityInput.addEventListener('input', debounce(() => this.onQuantityChange(), this.autocompleteInput.debounceDelay));
+        this.quantityInput.addEventListener('input', debounce(() => {
+            this.onQuantityChange();
+        }, this.autocompleteInput.debounceDelay));
     }
 
     protected onAutocompleteSet(): void {
@@ -42,11 +55,16 @@ export default class QuickOrderRow extends Component {
         this.reloadField(this.autocompleteInput.inputValue);
     }
 
+    /**
+     * Sends an ajax request to the server and renders the response on the page.
+     * @param sku A product SKU used for reloading autocomplete field.
+     */
     async reloadField(sku: string = '') {
-        const quantityInputValue = parseInt(this.quantityValue);
+        const quantityInputValue = this.quantityValue;
 
         this.ajaxProvider.queryParams.set('sku', sku);
-        this.ajaxProvider.queryParams.set('index', this.ajaxProvider.getAttribute('class').split('-').pop().trim());
+        this.ajaxProvider.queryParams.set('index', this.ajaxProvider.getAttribute('class')
+            .split('-').pop().trim());
 
         if (!!quantityInputValue) {
             this.ajaxProvider.queryParams.set('quantity', `${quantityInputValue}`);
@@ -56,11 +74,21 @@ export default class QuickOrderRow extends Component {
         this.registerQuantityInput();
         this.mapQuantityInputChange();
 
-        if (!!sku) {
-            this.quantityInput.focus();
+        if (!sku) {
+            return;
         }
+
+        const quantityValueLength = this.quantityValue.length;
+
+        this.quantityInput.focus();
+        this.quantityInput.type = 'text';
+        this.quantityInput.setSelectionRange(quantityValueLength, quantityValueLength);
+        this.quantityInput.type = 'number';
     }
 
+    /**
+     * Gets the value attribute from the quantity input field.
+     */
     get quantityValue(): string {
         return this.quantityInput.value;
     }

@@ -15,6 +15,8 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated use CreateController instead
+ *
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
  */
 class SubmitController extends AbstractController
@@ -85,8 +87,8 @@ class SubmitController extends AbstractController
 
         $productReviewResponseTransfer = $this->getFactory()->getProductReviewClient()->submitCustomerReview(
             $this->getProductReviewFormData($form)
-                    ->setCustomerReference($customerReference)
-                    ->setLocaleName($this->getLocale())
+                ->setCustomerReference($customerReference)
+                ->setLocaleName($this->getLocale())
         );
 
         if ($productReviewResponseTransfer->getIsSuccess()) {

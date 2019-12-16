@@ -4,19 +4,19 @@
   "description": "QuickOrderPage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker-shop/cart-page": "^1.0.0",
-    "spryker-shop/checkout-page": "^1.0.0",
+    "php": ">=7.2",
+    "spryker-shop/cart-page": "^1.0.0 || ^3.0.0",
+    "spryker-shop/checkout-page": "^1.0.0 || ^2.0.0 || ^3.0.0",
     "spryker-shop/quick-order-page-extension": "^1.1.0",
     "spryker-shop/shop-application": "^1.0.0",
-    "spryker-shop/shop-ui": "^1.0.0",
+    "spryker-shop/shop-ui": "^1.28.1",
     "spryker/application": "^3.0.0",
-    "spryker/cart": "^4.0.0 || ^5.0.0",
-    "spryker/kernel": "^3.24.0",
-    "spryker/price-product-storage": "^2.9.0",
-    "spryker/product-quantity-storage": "^1.2.0",
+    "spryker/cart": "^4.0.0 || ^5.0.0 || ^7.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/price-product-storage": "^2.9.0 || ^4.0.0",
+    "spryker/product-quantity-storage": "^1.2.0 || ^3.0.0",
     "spryker/product-storage": "^1.7.0",
-    "spryker/quick-order": "^1.1.0",
+    "spryker/quick-order": "^1.1.0 || ^3.0.0",
     "spryker/quote": "^1.0.0 || ^2.0.0",
     "spryker/symfony": "^3.1.0",
     "spryker/util-csv": "^1.0.0",
@@ -24,10 +24,12 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/router": "If you want to use RouteProviderPlugins to be added to the Route Module.",
     "spryker/silex": "If you want to use ServiceProvider."
   },
   "autoload": {
@@ -39,7 +41,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "4.0.x-dev"
     }
   },
   "config": {

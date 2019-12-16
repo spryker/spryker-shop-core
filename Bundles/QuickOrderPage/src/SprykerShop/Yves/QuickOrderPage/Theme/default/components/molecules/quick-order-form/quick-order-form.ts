@@ -6,40 +6,47 @@ export default class QuickOrderForm extends Component {
     /**
      * The current form.
      */
-    form: HTMLFormElement
+    form: HTMLFormElement;
+
     /**
      * The rows of the current forms.
      */
-    rows: HTMLElement
+    rows: HTMLElement;
+
     /**
      * Element wich creats the for row.
      */
-    addRowTrigger: HTMLElement
+    addRowTrigger: HTMLElement;
+
     /**
      * Collection of the elements which remove the form row.
      */
-    removeRowTriggers: HTMLElement[]
+    removeRowTriggers: HTMLElement[];
+
     /**
      * Element creates the AjaxProvider component for the form row.
      */
-    addRowAjaxProvider: AjaxProvider
+    addRowAjaxProvider: AjaxProvider;
+
     /**
      * Element removes the AjaxProvider component from the form row.
      */
-    removeRowAjaxProvider: AjaxProvider
+    removeRowAjaxProvider: AjaxProvider;
 
     protected readyCallback(): void {
-        this.form = <HTMLFormElement>this.querySelector(`.${this.jsName}__form`);
-        this.rows = <HTMLElement>this.querySelector(`.${this.jsName}__rows`);
-        this.addRowTrigger = <HTMLElement>this.querySelector(`.${this.jsName}__add-row-trigger`);
-        this.addRowAjaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__add-row-provider`);
-        this.removeRowAjaxProvider = <AjaxProvider>this.querySelector(`.${this.jsName}__remove-row-provider`);
+        this.form = <HTMLFormElement>this.getElementsByClassName(`${this.jsName}__form`)[0];
+        this.rows = <HTMLElement>this.getElementsByClassName(`${this.jsName}__rows`)[0];
+        this.addRowTrigger = <HTMLElement>this.getElementsByClassName(`${this.jsName}__add-row-trigger`)[0];
+        this.addRowAjaxProvider = <AjaxProvider>this.getElementsByClassName(`${this.jsName}__add-row-provider`)[0];
+        this.removeRowAjaxProvider = <AjaxProvider>this.getElementsByClassName(
+            `${this.jsName}__remove-row-provider`)[0];
         this.registerRemoveRowTriggers();
         this.mapEvents();
     }
 
     protected registerRemoveRowTriggers(): void {
-        this.removeRowTriggers = <HTMLElement[]>Array.from(this.querySelectorAll(`.${this.jsName}__remove-row-trigger`));
+        this.removeRowTriggers = <HTMLElement[]>Array.from(this.getElementsByClassName(
+            `${this.jsName}__remove-row-trigger`));
     }
 
     protected mapEvents(): void {
@@ -48,7 +55,9 @@ export default class QuickOrderForm extends Component {
     }
 
     protected mapRemoveRowTriggersEvents(): void {
-        this.removeRowTriggers.forEach((trigger: HTMLElement) => trigger.addEventListener('click', (event: Event) => this.onRemoveRowClick(event)));
+        this.removeRowTriggers.forEach((trigger: HTMLElement) => {
+            trigger.addEventListener('click', (event: Event) => this.onRemoveRowClick(event));
+        });
     }
 
     protected onAddRowClick(event: Event): void {

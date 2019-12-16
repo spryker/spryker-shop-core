@@ -2,13 +2,12 @@
 
 {% define config = {
     name: 'cart-item-variant-selector',
-    tag: 'div'
 } %}
 
 {% define data = {
     cartItem: required,
     canEditCart: required,
-    cartItemAttributes: []
+    cartItemAttributes: [],
 } %}
 
 {% block component %}
@@ -45,26 +44,26 @@
                             modifiers: ['expand'],
                             data: {
                                 label: ('product.attribute.' ~ attributeName) | trans,
-                                options: options
+                                options: options,
                             },
                             attributes: {
                                 name: 'preselectedAttributes[' ~ attributeName ~ ']',
-                                'onchange': 'this.form.submit();',
-                                disabled: not data.canEditCart
-                            }
+                                'data-form-submitter': true,
+                                disabled: not data.canEditCart,
+                            },
                         } only %}
                     </label>
-                    <input name="selectedAttributes[{{ attributeName }}]" type="hidden" />
+                    <input name="selectedAttributes[{{ attributeName }}]" type="hidden">
                 </li>
             {% endfor %}
         </ul>
 
-        <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey" />
-        <input type="hidden" value="{{ data.cartItem.quantity }}" name="quantity" />
+        <input type="hidden" value="{{ data.cartItem.groupKey }}" name="groupKey">
+        <input type="hidden" value="{{ data.cartItem.quantity }}" name="quantity">
 
         {% if data.cartItem.productOptions is not empty %}
             {% for productOption in data.cartItem.productOptions %}
-                <input name="product-option[{{ productOption.groupName }}]" type="hidden" value="{{ productOption.idProductOptionValue }}" />
+                <input name="product-option[{{ productOption.groupName }}]" type="hidden" value="{{ productOption.idProductOptionValue }}">
             {% endfor %}
         {% endif %}
     </form>

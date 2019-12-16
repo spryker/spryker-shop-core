@@ -1,0 +1,6 @@
+{
+  "include": {
+    "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure.",
+    "spryker-shop/cart-code-widget": "GiftCardWidget components are depending on some CartCodeWidget components."
+  }
+}

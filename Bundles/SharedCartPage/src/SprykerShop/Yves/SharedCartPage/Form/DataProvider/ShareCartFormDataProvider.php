@@ -94,10 +94,11 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
     protected function getShareDetails(int $idQuote): ArrayObject
     {
         $quoteTransfer = $this->multiCartClient->findQuoteById($idQuote);
-        $shareDetailTransfers = $quoteTransfer->getShareDetails();
-        $companyUserData = $this->getCustomerListData();
+        $shareDetailTransfers = $this->sharedCartClient->getShareDetailsByIdQuoteAction($quoteTransfer)
+            ->getShareDetails();
         $indexedSharedCompanyUsers = $this->indexExistingCompanyUsers($shareDetailTransfers);
-        foreach ($companyUserData as $idCompanyUser => $companyUserName) {
+
+        foreach ($this->getCustomerListData() as $idCompanyUser => $companyUserName) {
             if (!in_array($idCompanyUser, $indexedSharedCompanyUsers)) {
                 $shareDetailTransfers->append(
                     (new ShareDetailTransfer())
@@ -157,6 +158,7 @@ class ShareCartFormDataProvider implements ShareCartFormDataProviderInterface
     {
         $companyUserCriteriaFilterTransfer = new CompanyUserCriteriaFilterTransfer();
         $companyUserCriteriaFilterTransfer->setIdCompany($companyBusinessUnitTransfer->getFkCompany());
+        $companyUserCriteriaFilterTransfer->setIsActive(true);
         $companyUserCollectionTransfer = $this->companyUserClient->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
 
         $businessUnitCompanyUserList = [];

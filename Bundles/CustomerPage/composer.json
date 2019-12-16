@@ -4,52 +4,75 @@
   "description": "CustomerPage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
+    "spryker-shop/checkout-page": "^3.0.0",
+    "spryker-shop/checkout-page-extension": "^1.0.0",
     "spryker-shop/customer-page-extension": "^1.2.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/application": "^3.8.0",
-    "spryker/customer": "^7.17.0",
-    "spryker/kernel": "^3.25.0",
-    "spryker/product-bundle": "^4.1.0",
+    "spryker/customer": "^7.25.0",
+    "spryker/kernel": "^3.33.0",
+    "spryker/product-bundle": "^4.1.0 || ^6.0.0 || ^7.0.0",
     "spryker/quote": "^1.0.0 || ^2.1.0",
-    "spryker/sales": "^8.15.0",
+    "spryker/sales": "^8.15.0 || ^10.0.0 || ^11.0.0",
+    "spryker/security-extension": "^1.0.0",
+    "spryker/shipment": "^7.0.0 || ^8.0.0",
     "spryker/step-engine": "^3.1.0",
     "spryker/symfony": "^3.1.0",
+    "spryker/twig": "^3.3.4",
+    "spryker/twig-extension": "^1.0.0",
     "spryker/util-validate": "^1.0.0"
   },
   "require-dev": {
     "spryker-shop/business-on-behalf-widget": "*",
     "spryker-shop/cart-note-widget": "*",
+    "spryker-shop/customer-reorder-widget": "*",
     "spryker-shop/home-page": "*",
-    "spryker-shop/product-packaging-unit-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
+    "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
     "spryker/messenger": "*",
+    "spryker/propel": "*",
+    "spryker/router": "*",
+    "spryker/security": "*",
+    "spryker/session": "*",
     "spryker/silex": "*",
-    "spryker/testify": "*",
-    "spryker/twig": "*"
+    "spryker/storage": "*",
+    "spryker/storage-redis": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker-shop/business-on-behalf-widget": "If you want to use BusinessOnBehalfWidget or MenuItemBusinessOnBehalfWidgetPlugin.",
     "spryker-shop/cart-note-widget": "If you want to use components from module CartNoteWidget or CartNoteOrderNoteWidgetPlugin.",
+    "spryker-shop/sales-configurable-bundle-widget": "Add the module if you want to use OrderConfiguredBundleWidget.",
+    "spryker-shop/customer-reorder-widget": "If you want to use CustomerReorderItemCheckboxWidget or CustomerReorderWidgetPlugin, for support of Split Delivery feature use (^6.2.0)",
+    "spryker-shop/gift-card-widget": "If you want to use components from module GiftCardWidget.",
     "spryker-shop/home-page": "Widget plugins are available for this module.",
     "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or OrderDetailProductPackagingUnitWidgetPlugin.",
+    "spryker/router": "Use this module when you want to use the Router.",
     "spryker/config": "Use this module when using plugins that need Config dependencies.",
+    "spryker/container": "If you want to use twig plugins.",
     "spryker/messenger": "Use this module when using plugins that need Messenger dependencies.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
-    "spryker/twig": "Use this module when using plugins that need Twig dependencies."
+    "spryker/security": "Add this module to use the SecurityPlugin."
   },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerShopTest\\": "tests/SprykerShopTest/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

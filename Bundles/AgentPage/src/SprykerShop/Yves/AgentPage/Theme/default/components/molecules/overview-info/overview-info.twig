@@ -1,0 +1,21 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'overview-info',
+} %}
+
+{% define data = {
+    agent: required,
+} %}
+
+{% block body %}
+
+    <div class="box">
+        <h5>{{ 'agent.account.profile_data' | trans }}</h5>
+        <hr class="box__separator">
+        <ul>
+            <li>{{ data.agent.firstName ~ ' ' ~ data.agent.lastName }}</li>
+            <li><a href="mailto:{{ data.agent.username }}">{{ data.agent.username }}</a></li>
+        </ul>
+    </div>
+{% endblock %}

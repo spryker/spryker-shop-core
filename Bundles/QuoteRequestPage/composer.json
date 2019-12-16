@@ -1,0 +1,57 @@
+{
+  "name": "spryker-shop/quote-request-page",
+  "type": "library",
+  "description": "QuoteRequestPage module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2",
+    "spryker-shop/quote-request-page-extension": "^1.0.0",
+    "spryker-shop/shop-application": "^1.0.0",
+    "spryker-shop/shop-ui": "^1.0.0",
+    "spryker/application": "^3.8.0",
+    "spryker/cart": "^5.0.0 || ^7.0.0",
+    "spryker/company-user": "^2.10.0",
+    "spryker/customer": "^7.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/persistent-cart": "^1.8.0 || ^3.0.0",
+    "spryker/quote": "^2.0.0",
+    "spryker/quote-request": "^2.0.0",
+    "spryker/symfony": "^3.1.0",
+    "spryker/util-date-time": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker-shop/cart-page": "*",
+    "spryker-shop/customer-page": "*",
+    "spryker-shop/product-option-widget": "*",
+    "spryker-shop/product-packaging-unit-widget": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/router": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker-shop/cart-page": "If you want to use cart page molecules: ^3.2.0",
+    "spryker-shop/configurable-bundle-widget": "If you want to use configurable bundle widget functionality",
+    "spryker-shop/customer-page": "If you want to use customer layout templates: ^1.0.0",
+    "spryker-shop/discount-widget": "If you want to use discount widget functionality: ^1.2.0",
+    "spryker-shop/product-option-widget": "If you want to use product option widget functionality",
+    "spryker-shop/product-packaging-unit-widget": "If you want to use product packaging unit widget functionality",
+    "spryker/router": "Use this module if you want use the RouterProviderPlugin.",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

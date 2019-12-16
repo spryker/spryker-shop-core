@@ -2,11 +2,10 @@
 
 {% define config = {
     name: 'shared-cart-customers-table',
-    tag: 'div'
 } %}
 
 {% define data = {
-    cart: required
+    cart: required,
 } %}
 
 {% block body %}
@@ -28,9 +27,6 @@
                 <td>
                     <ul class="menu">
                         <li class="menu__item">
-                            <a href="{{ path('shared-cart/unshare', {idQuote: data.cart.idQuote, idCompanyUser: shareDetail.idCompanyUser, idPermissionGroup: shareDetail.quotePermissionGroup.idQuotePermissionGroup}) }}">
-                                {{ 'shared_cart_widget.share_list.action.unshare' | trans }}
-                            </a>
                         </li>
                     </ul>
                 </td>

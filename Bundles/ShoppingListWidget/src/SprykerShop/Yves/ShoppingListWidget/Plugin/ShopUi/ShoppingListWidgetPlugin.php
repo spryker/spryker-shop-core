@@ -32,6 +32,8 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
      * {@inheritDoc}
      *
      * @api
+     *
+     * @return string
      */
     public static function getTemplate()
     {
@@ -42,6 +44,8 @@ class ShoppingListWidgetPlugin extends AbstractWidgetPlugin implements ShoppingL
      * {@inheritDoc}
      *
      * @api
+     *
+     * @return string
      */
     public static function getName()
     {

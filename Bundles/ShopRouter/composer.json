@@ -4,11 +4,11 @@
   "description": "ShopRouter module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker-shop/shop-router-extension": "^1.0.0",
     "spryker/application": "^3.8.0",
     "spryker/container": "^1.1.0",
-    "spryker/kernel": "^3.16.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/log": "^3.4.0",
     "spryker/silex": "^2.0.0",
     "spryker/symfony": "^3.1.0",

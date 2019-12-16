@@ -14,6 +14,7 @@ use Spryker\Yves\Kernel\Application as SilexApplication;
 use Spryker\Yves\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 
 abstract class YvesBootstrap
 {
@@ -36,7 +37,7 @@ abstract class YvesBootstrap
 
     public function __construct()
     {
-        $this->application = new SilexApplication();
+        $this->application = $this->getBaseApplication();
 
         if ($this->application instanceof ContainerInterface) {
             $this->sprykerApplication = new Application($this->application);
@@ -69,6 +70,17 @@ abstract class YvesBootstrap
         $this->sprykerApplication->boot();
 
         return $this->sprykerApplication;
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\Application
+     */
+    protected function getBaseApplication(): SilexApplication
+    {
+        $application = new SilexApplication();
+        Pimple::setApplication($application);
+
+        return $application;
     }
 
     /**
@@ -119,17 +131,29 @@ abstract class YvesBootstrap
     }
 
     /**
+     * @deprecated Use `\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface`'s instead.
+     *
      * @return void
      */
-    abstract protected function registerServiceProviders();
+    protected function registerServiceProviders()
+    {
+    }
 
     /**
+     * @deprecated Use `\Spryker\Yves\Router\RouterDependencyProvider::getRouterPlugins()` instead.
+     *
      * @return void
      */
-    abstract protected function registerRouters();
+    protected function registerRouters()
+    {
+    }
 
     /**
+     * @deprecated Use `\Spryker\Yves\Router\RouterDependencyProvider::getRouteProvider()` instead.
+     *
      * @return void
      */
-    abstract protected function registerControllerProviders();
+    protected function registerControllerProviders()
+    {
+    }
 }

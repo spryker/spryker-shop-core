@@ -42,7 +42,7 @@
 
         <h4>{{ data.wishlistName }}</h4>
 
-        <hr />
+        <hr class="box__separator">
         {% if data.wishlistItems is empty %}
             <div class="text-center">
                 <h6>{{ 'customer.account.wishlist.empty' | trans }}</h6>
@@ -55,7 +55,7 @@
                 }
             } only %}
 
-            <hr />
+            <hr class="box__separator">
             {% include molecule('pagination') with {
                 data: data.pagination
             } only %}

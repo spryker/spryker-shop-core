@@ -22,7 +22,7 @@ class BusinessOnBehalfWidgetDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = $this->provideCustomerClient($container);
         $container = $this->provideBusinessOnBehalfClient($container);
@@ -37,9 +37,9 @@ class BusinessOnBehalfWidgetDependencyProvider extends AbstractBundleDependencyP
      */
     protected function provideCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new BusinessOnBehalfWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -51,9 +51,9 @@ class BusinessOnBehalfWidgetDependencyProvider extends AbstractBundleDependencyP
      */
     protected function provideBusinessOnBehalfClient(Container $container): Container
     {
-        $container[static::CLIENT_BUSINESS_ON_BEHALF] = function (Container $container) {
+        $container->set(static::CLIENT_BUSINESS_ON_BEHALF, function (Container $container) {
             return new BusinessOnBehalfWidgetToBusinessOnBehalfClientBridge($container->getLocator()->businessOnBehalf()->client());
-        };
+        });
 
         return $container;
     }

@@ -1,97 +1,56 @@
 {% extends template('page-layout-customer', 'CustomerPage') %}
 
+{# @deprecated property 'orderItems' is deprecated: use 'shipmentGroups' instead #}
 {% define data = {
     order: _view.order,
-    orderItems: _view.items,
+    orderItems: _view.items | default([]),
+    shipmentGroups: _view.shipmentGroups,
+    orderShipmentExpenses: _view.orderShipmentExpenses,
 
     title: 'customer.account.order_history' | trans,
-    activePage: 'order'
+    activePage: 'order',
 } %}
 
 {% block customerContent %}
-    {{ widgetBlock('CustomerReorderWidgetPlugin', 'formStart', data.order) }}
 
-    <div class="box">
-        <a href="{{url('customer/order')}}" class="link float-right">{{ 'general.back.button' | trans }}</a>
-        <h5>{{ 'customer.profile.order_details' | trans }}</h5>
-        <hr />
-        <ul>
-            <li>
-                {{ 'customer.order.order_id' | trans }}:
-                <strong>{{ _view.order.orderReference }}</strong>
-            </li>
-            <li>
-                {{ 'customer.order.date' | trans }}:
-                <strong>{{ _view.order.createdAt | formatDateTime }}</strong>
-            </li>
-        </ul>
-        <hr />
-        {% embed molecule('order-detail-table', 'CustomerPage') with {
-            data: {
-                items: data.orderItems,
-                currencyIsoCode: data.order.currencyIsoCode,
-                order: data.order
-            }
-        } only %}
-            {% block headerRow %}
-                <td></td>
-                {{parent()}}
-            {% endblock %}
-            {% block bundleDetailRow %}
-                <td></td>
-                {{parent()}}
-            {% endblock %}
-            {% block detailRow %}
-                <td></td>
-                {{parent()}}
-            {% endblock %}
-        {% endembed %}
-        <hr />
-        {% include molecule('order-summary', 'CustomerPage') with {
-            class: 'text-right',
-            data: {
-                order: data.order
-            }
-        } only %}
-    </div>
-
-    <div class="box">
-        <h5>{{ 'customer.order.shipping_address' | trans }}</h5>
-        <hr />
-        {% include molecule('display-address') with {
-            data: {
-                address: data.order.shippingAddress
-            }
-        } only %}
-    </div>
-
-    <div class="box">
-        <h5>{{ 'customer.order.billing_address' | trans }}</h5>
-        <hr />
-        {% include molecule('display-address') with {
-            data: {
-                address: data.order.billingAddress
-            }
-        } only %}
-    </div>
-
-    {% if widgetExists('CartNoteOrderNoteWidgetPlugin') %}
-        {% if data.order.cartNote is not empty %}
-            <div class="box">
-                {{ widget('CartNoteOrderNoteWidgetPlugin', data.order) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
-            </div>
-        {% endif %}
-    {% elseif data.order.cartNote is not empty %}
-        <div class="box">
-            {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+    {% embed [
+        molecule('customer-reorder-form', 'CustomerReorderWidget'),
+        molecule('order-detail', 'CustomerPage'),
+    ] ignore missing with {
+        data: {
+            idSalesOrder: data.order.idSalesOrder,
+            shipmentGroups: data.shipmentGroups,
+            orderShipmentExpenses: data.orderShipmentExpenses | default([]),
+            order: data.order,
+        },
+    } only %}
+        {% block formContent %}
+            {% include molecule('order-detail', 'CustomerPage') with {
                 data: {
-                    label: 'cart_note.customer_page.order_note',
-                    note: data.order.cartNote
-                }
+                    order: data.order,
+                    shipmentGroups: data.shipmentGroups,
+                    orderShipmentExpenses: data.orderShipmentExpenses,
+                },
             } only %}
-        </div>
-    {% endif %}
+        {% endblock %}
 
-    {{ widgetBlock('CustomerReorderWidgetPlugin', 'formActions', data.order) }}
-    {{ widgetBlock('CustomerReorderWidgetPlugin', 'formEnd', data.order) }}
+        {% block orderDetailContent %}
+            {{ widgetBlock('CustomerReorderWidgetPlugin', 'formStart', data.order) }} {# @deprecated Use molecule('customer-reorder-form', 'CustomerReorderWidget') instead. #}
+
+            {{ parent() }}
+
+            {{ widgetBlock('CustomerReorderWidgetPlugin', 'formActions', data.order) }} {# @deprecated Use molecule('customer-reorder-form', 'CustomerReorderWidget') instead. #}
+            {{ widgetBlock('CustomerReorderWidgetPlugin', 'formEnd', data.order) }} {# @deprecated Use molecule('customer-reorder-form', 'CustomerReorderWidget') instead. #}
+        {% endblock %}
+    {% endembed %}
+
+    <div class="box">
+        {% widget 'CommentThreadWidget' args [
+            data.order.idSalesOrder,
+            'sales_order',
+            app.request.requestUri,
+            data.order.commentThread
+        ] only %}
+        {% endwidget %}
+    </div>
 {% endblock %}

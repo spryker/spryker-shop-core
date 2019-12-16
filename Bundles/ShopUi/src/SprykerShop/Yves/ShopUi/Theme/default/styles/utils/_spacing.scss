@@ -1,3 +1,6 @@
+/**
+ * Provides global class names for spacings.
+ */
 @mixin util-spacing() {
     @include helper-spacing('.spacing');
     @include helper-spacing('.spacing-top', top);

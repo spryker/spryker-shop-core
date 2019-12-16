@@ -1,0 +1,41 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'agent-navigation',
+} %}
+
+{% define data = {
+    agent: required,
+} %}
+
+{% block body %}
+    <ul class="menu menu--inline">
+        <li class="{{ config.name }}__dropdown menu__item menu__item--has-children-dropdown">
+            <div class="{{ config.name }}__name">
+                {{ 'agent.account.page_title' | trans }}:
+                <span class="link">
+                    {{ data.agent.firstName ~ ' ' ~ data.agent.lastName }}
+                    {% include atom('icon') with {
+                        class: config.name ~ '__caret',
+                        data: {
+                            name: 'caret-down'
+                        }
+                    } only %}
+                </span>
+            </div>
+            <ul class="{{ config.name }}__dropdown-item menu" position-right>
+                <li class="menu__item">
+                    <a href="{{ path('agent/overview') }}">{{ "agent.account.overview" | trans }}</a>
+                </li>
+
+                {% block additional %}
+                    {% include molecule('quote-request-menu-item', 'QuoteRequestAgentWidget') ignore missing only %}
+                {% endblock %}
+
+                <li class="menu__item">
+                    <a href="{{ path('agent_logout') }}">{{ "agent.control_bar.logout" | trans }}</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+{% endblock %}

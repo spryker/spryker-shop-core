@@ -4,21 +4,23 @@
   "description": "ShopPermission module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/kernel": "^3.0.0",
+    "php": ">=7.2",
+    "spryker/kernel": "^3.30.0",
     "spryker/permission": "^1.0.0"
   },
   "require-dev": {
     "spryker-shop/shop-application": "*",
     "spryker/code-sniffer": "*",
+    "spryker/container": "*",
     "spryker/silex": "^2.0.0",
     "spryker/testify": "*",
     "spryker/twig": "^3.0.0"
   },
   "suggest": {
-    "spryker/twig": ">3.0.0 If you want to use the permission plugin for Twig",
+    "spryker-shop/shop-application": ">1.0.0 If you want to use the permission plugin for Twig",
+    "spryker/container": "If you want to use ShopPermissionTwigPlugin.",
     "spryker/silex": ">2.0.0 If you want to use the permission plugin for Twig",
-    "spryker-shop/shop-application": ">1.0.0 If you want to use the permission plugin for Twig"
+    "spryker/twig": ">3.0.0 If you want to use the permission plugin for Twig"
   },
   "autoload": {
     "psr-4": {

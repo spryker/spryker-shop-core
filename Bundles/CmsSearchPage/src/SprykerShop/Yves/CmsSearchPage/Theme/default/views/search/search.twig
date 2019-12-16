@@ -29,7 +29,7 @@
 {% endblock %}
 
 {% block title %}
-    <h3>{{ 'global.search.results' | trans }} "<strong>{{ data.searchString }}</strong>"</h3>
+    <h3>{{ 'global.search.results' | trans }} "<strong class="text-break">{{ data.searchString }}</strong>"</h3>
 {% endblock %}
 
 {% block form %}
@@ -42,7 +42,7 @@
         } only %}
 
         {% include molecule('pagination') with {
-            class: 'box',
+            class: 'box spacing-top spacing-top--big',
             data: data.pagination
         } only %}
 
@@ -60,6 +60,6 @@
     </div>
     {{parent()}}
     {% if data.searchString is not empty %}
-        <input type="hidden" name="q" value="{{ data.searchString }}" />
+        <input type="hidden" name="q" value="{{ data.searchString }}">
     {% endif %}
 {% endblock %}

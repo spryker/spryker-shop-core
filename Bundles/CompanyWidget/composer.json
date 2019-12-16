@@ -4,9 +4,9 @@
   "description": "CompanyWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/customer": "^7.0.0",
-    "spryker/kernel": "^3.24.0"
+    "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
     "spryker-shop/shop-ui": "*",
@@ -14,7 +14,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker-shop/shop-ui": "To add widget customer navigation menu: ^1.1.0."
+    "spryker-shop/shop-ui": "To add widget customer navigation menu: ^1.28.1."
   },
   "autoload": {
     "psr-4": {

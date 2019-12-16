@@ -1,0 +1,37 @@
+@mixin sales-configurable-bundle-widget-order-configured-bundle-product($name: '.order-configured-bundle-product') {
+    #{$name} {
+        background-color: $setting-color-lightest;
+
+        &:last-child {
+            border-bottom: 1px solid $setting-color-light;
+        }
+
+        &__col {
+            vertical-align: top;
+            padding: 0.25rem;
+        }
+
+        &__bullet {
+            float: left;
+            margin-right: 0.25rem;
+        }
+
+        &__content {
+            display: block;
+            overflow: hidden;
+        }
+
+        @content;
+    }
+}
+
+/**
+ * @deprecated use configurable-bundle-widget-order-configured-bundle-product mixin instead.
+ */
+@mixin configurable-bundle-widget-order-configured-bundle-product($name: '.order-configured-bundle-product') {
+    @include sales-configurable-bundle-widget-order-configured-bundle-product();
+
+    #{$name} {
+        @content;
+    }
+}
