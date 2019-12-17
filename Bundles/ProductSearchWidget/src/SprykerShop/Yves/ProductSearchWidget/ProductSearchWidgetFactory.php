@@ -12,11 +12,34 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientInterface;
 use SprykerShop\Yves\ProductSearchWidget\Dependency\Service\ProductSearchWidgetToUtilEncodingServiceInterface;
 use SprykerShop\Yves\ProductSearchWidget\Form\ProductQuickAddForm;
+use SprykerShop\Yves\ProductSearchWidget\Mapper\ProductConcreteMapper;
+use SprykerShop\Yves\ProductSearchWidget\Mapper\ProductConcreteMapperInterface;
+use SprykerShop\Yves\ProductSearchWidget\Reader\ProductConcreteReader;
+use SprykerShop\Yves\ProductSearchWidget\Reader\ProductConcreteReaderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
 class ProductSearchWidgetFactory extends AbstractFactory
 {
+    /**
+     * @return \SprykerShop\Yves\ProductSearchWidget\Reader\ProductConcreteReaderInterface
+     */
+    public function createProductConcreteReader(): ProductConcreteReaderInterface
+    {
+        return new ProductConcreteReader(
+            $this->getCatalogClient(),
+            $this->createProductConcreteMapper()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductSearchWidget\Mapper\ProductConcreteMapperInterface
+     */
+    public function createProductConcreteMapper(): ProductConcreteMapperInterface
+    {
+        return new ProductConcreteMapper();
+    }
+
     /**
      * @return \SprykerShop\Yves\ProductSearchWidget\Dependency\Client\ProductSearchWidgetToCatalogClientInterface
      */
