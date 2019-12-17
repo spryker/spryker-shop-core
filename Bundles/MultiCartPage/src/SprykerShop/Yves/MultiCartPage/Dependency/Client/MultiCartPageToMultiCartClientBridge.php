@@ -34,6 +34,8 @@ class MultiCartPageToMultiCartClientBridge implements MultiCartPageToMultiCartCl
     }
 
     /**
+     * @deprecated Use `setActiveQuote()` instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -41,6 +43,16 @@ class MultiCartPageToMultiCartClientBridge implements MultiCartPageToMultiCartCl
     public function setDefaultQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->multiCartClient->setDefaultQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setActiveQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->multiCartClient->setActiveQuote($quoteTransfer);
     }
 
     /**
