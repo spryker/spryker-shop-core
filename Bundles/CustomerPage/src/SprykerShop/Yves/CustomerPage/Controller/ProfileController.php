@@ -124,7 +124,7 @@ class ProfileController extends AbstractCustomerController
 
         if ($customerResponseTransfer->getIsSuccess()) {
             $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
-            $this->updateLoggedInCustomerTransfer($customerResponseTransfer->getCustomerTransfer());
+            $this->updateLoggedInCustomerTransfer($customerTransfer);
             $token = $this->getFactory()->createUsernamePasswordToken($customerTransfer);
 
             $this->getFactory()
