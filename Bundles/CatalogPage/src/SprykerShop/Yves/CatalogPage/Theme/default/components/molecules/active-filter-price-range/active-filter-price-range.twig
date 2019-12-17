@@ -10,10 +10,10 @@
 #}
 {% define data = {
     filter: required,
-    min: required,
     activeMin: required,
-    max: required,
     activeMax: required,
+    min: 0,
+    max: 0,
 } %}
 
 {% set currentValue = data.activeMin | money  ~ ' - ' ~ data.activeMax | money %}

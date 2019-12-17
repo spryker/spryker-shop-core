@@ -69,7 +69,7 @@
             <div class="col col--sm-12 col--lg-4 col--xl-3">
                 {% block filterBar %}
                     {% include molecule('view-mode-switch', 'CatalogPage') with {
-                        class: 'box'
+                        class: 'box',
                     } only %}
 
                     {% include molecule('toggler-checkbox') with {
@@ -128,7 +128,9 @@
                             {% endwidget %}
                         {% endfor %}
                     {% else %}
-                        <div class="col col--sm-12 text-center">{{ 'catalog.no-results' | trans }}</div>
+                        {% block noResults %}
+                            <div class="col col--sm-12 text-center">{{ 'catalog.no-results' | trans }}</div>
+                        {% endblock %}
                     {% endif %}
                 </div>
 
