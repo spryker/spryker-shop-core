@@ -123,7 +123,13 @@ class ProfileController extends AbstractCustomerController
             ->updateCustomerPassword($customerTransfer);
 
         if ($customerResponseTransfer->getIsSuccess()) {
+            $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
             $this->updateLoggedInCustomerTransfer($customerResponseTransfer->getCustomerTransfer());
+            $token = $this->getFactory()->createUsernamePasswordToken($customerTransfer);
+
+            $this->getFactory()
+                ->createCustomerAuthenticator()
+                ->authenticateCustomer($customerTransfer, $token);
 
             $this->addSuccessMessage(self::MESSAGE_PASSWORD_CHANGE_SUCCESS);
 
