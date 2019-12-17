@@ -20,9 +20,9 @@ export default class WindowLocationApplicator extends Component {
     }
 
     protected onTriggerEvent(event: Event): void {
-        const categoryUrl = (<HTMLButtonElement>event.currentTarget).getAttribute('data-url') || '';
+        const categoryUrl = (<HTMLButtonElement>event.currentTarget).getAttribute('data-url');
 
-        this.getQueryString(categoryUrl);
+        this.getQueryString(categoryUrl ? categoryUrl : '');
     }
 
     protected getQueryString(categoryUrl: string = window.location.pathname): void {
