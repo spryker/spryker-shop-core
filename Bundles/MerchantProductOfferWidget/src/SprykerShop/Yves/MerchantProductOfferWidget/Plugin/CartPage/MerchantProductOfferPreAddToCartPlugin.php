@@ -20,7 +20,7 @@ class MerchantProductOfferPreAddToCartPlugin extends AbstractPlugin implements P
     protected const PARAM_PRODUCT_OFFER_REFERENCE = 'product_offer_reference';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Sets product offer reference to item transfer.
      *
      * @api

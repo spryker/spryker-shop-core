@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Widget;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
@@ -20,7 +19,7 @@ class ProductOfferSoldByMerchantWidget extends AbstractWidget
     protected const PARAMETER_CURRENT_LOCALE = 'currentLocale';
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer|null $productOfferTransfer
      */
     public function __construct(?ProductOfferTransfer $productOfferTransfer)
     {
