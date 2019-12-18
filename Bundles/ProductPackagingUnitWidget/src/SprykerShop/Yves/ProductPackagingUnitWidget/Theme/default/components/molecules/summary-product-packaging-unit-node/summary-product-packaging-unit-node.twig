@@ -35,12 +35,18 @@
                 </div>
             {% endif %}
         </div>
+
         <div class="col col--sm-12 col--lg-9">
             {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default %}
             {% set salesUnitSummary = salesUnitName ? data.quantity / data.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
 
             <strong class="float-right">{{ can('SeePricePermissionPlugin') ? data.price | money : 'customer.access.cannot_see_price' | trans }}</strong>
-            <div>{{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }} {% if salesUnitSummary %}(={{ salesUnitSummary }}){% endif %}</div>
+
+            <div>
+                {{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }}
+                {% if salesUnitSummary %}(={{ salesUnitSummary }}){% endif %}
+            </div>
+
             <div>{{ 'packaging_units.cart.quantity' | trans }}: {{ data.quantity }}</div>
 
             {% widget 'ProductOfferSoldByMerchantWidget' args [data.node] only %}{% endwidget %}

@@ -49,6 +49,7 @@
                         {% for item in shipmentGroupForm.vars.data.items %}
                             <div class="col col--sm-12 col--lg-8">
                                 {% set item = item.bundleProduct ?? item %}
+
                                 {% embed molecule('summary-node', 'CheckoutPage') with {
                                     data: {
                                         node: item,
