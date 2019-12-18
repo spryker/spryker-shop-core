@@ -45,5 +45,9 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "scripts": {
+    "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p -s src/",
+    "cs-fix": "phpcbf --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p -s src/"
   }
 }
