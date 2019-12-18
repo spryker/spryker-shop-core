@@ -23,6 +23,10 @@
         <property name="customerReference" type="string"/>
         <property name="idProductAbstract" type="int"/>
         <property name="localeName" type="string"/>
+        <property name="rating" type="int"/>
+        <property name="summary" type="string"/>
+        <property name="description" type="string"/>
+        <property name="nickname" type="string"/>
     </transfer>
 
     <transfer name="Customer">
