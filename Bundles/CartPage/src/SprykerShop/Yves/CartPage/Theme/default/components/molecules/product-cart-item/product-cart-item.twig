@@ -56,7 +56,7 @@
                 {% widget 'ProductBundleCartItemsListWidget' args [data.product, data.cart] only %}{% endwidget %}
             {% endif %}
 
-            {% widget 'ProductOfferSoldByMerchantWidget' args [data.product.productOffer | default(null)] only %}{% endwidget %}
+            {% widget 'ProductOfferSoldByMerchantWidget' args [data.product] only %}{% endwidget %}
 
             {% include molecule('cart-item-summary', 'CartPage') with {
                 data: {
