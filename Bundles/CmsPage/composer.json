@@ -38,6 +38,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p -s src/",
+    "cs-fix": "phpcbf --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p -s src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
@@ -45,9 +49,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "scripts": {
-    "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p -s src/",
-    "cs-fix": "phpcbf --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p -s src/"
   }
 }
