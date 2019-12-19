@@ -11,9 +11,7 @@
 } %}
 
 {% block body %}
-    {% if widgetExists('SummaryProductPackagingUnitWidgetPlugin') %}
-        {{ widget('SummaryProductPackagingUnitWidgetPlugin', data) }} {# @deprecated Use molecule('summary-product-packaging-unit-node', 'ProductPackagingUnitWidget') instead. #}
-    {% else %}
+    {% block packagingUnit %}
         {% include [
             molecule('summary-product-packaging-unit-node', 'ProductPackagingUnitWidget'),
             molecule('summary-product-packaging-unit-node-by-default', 'ProductPackagingUnitWidget')
@@ -22,23 +20,39 @@
                 node: data.node,
             },
         } only %}
-    {% endif %}
+    {% endblock %}
 
-    {% if data.bundleItems is not empty %}
-        <ul>
-            <li>{{ 'checkout.summary.item.bundle.description' | trans }}</li>
-            {% for item in data.bundleItems %}
-                <li> - {{ item.quantity }} x {{ item.name }}  </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    {% block bundleItems %}
+        {% if data.bundleItems is not empty %}
+            <ul>
+                <li>{{ 'checkout.summary.item.bundle.description' | trans }}</li>
 
-    {% if data.options is not empty %}
-        <ul>
-            <li>{{ 'checkout.summary.item.option.description' | trans }}</small></li>
-            {% for option in data.options %}
-                <li> + {{ option.value | trans }} <strong>{{ option.sumPrice | default(0) | money }}</strong></li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+                {% for item in data.bundleItems %}
+                    <li>
+                        {{ 'summary_node_bundle_items_summary' | trans({
+                                "%quantity%": item.quantity,
+                                "%name%": item.name,
+                        })}}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endblock %}
+
+    {% block options %}
+        {% if data.options is not empty %}
+            <ul>
+                <li>{{ 'checkout.summary.item.option.description' | trans }}</small></li>
+
+                {% for option in data.options %}
+                    <li>
+                        {{ 'summary_node_option_value' | trans({
+                            "%value%": option.value | trans,
+                        })}}
+                        <strong>{{ option.sumPrice | default(0) | money }}</strong>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endblock %}
 {% endblock %}

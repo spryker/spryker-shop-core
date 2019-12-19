@@ -1,1 +1,1 @@
-Displays a list of products on the checkout summary step, which includes name, quantity, options and price.
+Displays a list of products, which includes name, quantity, options, and price.

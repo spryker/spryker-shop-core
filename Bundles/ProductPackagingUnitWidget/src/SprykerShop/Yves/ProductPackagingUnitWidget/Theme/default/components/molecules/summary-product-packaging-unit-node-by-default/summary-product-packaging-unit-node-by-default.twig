@@ -6,20 +6,29 @@
 
 {% define data = {
     node: required,
-    name: data.node.name,
-    quantity: data.node.quantity,
+    name: data.node.name | default,
+    quantity: data.node.quantity | default(1),
     price: data.node.price | default(0),
     quantitySalesUnit: data.node.quantitySalesUnit | default(null),
 } %}
 
 {% block body %}
-    {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default('') %}
-    {% set salesUnitSummary = salesUnitName ? data.quantity / data.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
+    {% block price %}
+        <strong class="float-right">{{ can('SeePricePermissionPlugin') ? data.price : 'customer.access.cannot_see_price' | trans }}</strong>
+    {% endblock %}
 
-    <strong class="float-right">{{ can('SeePricePermissionPlugin') ? data.price : 'customer.access.cannot_see_price' | trans }}</strong>
+    {% block summary %}
+        {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default %}
+        {% set salesUnitSummary = salesUnitName ? data.quantity / data.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
 
-    <div>
-        {{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }}
-        {% if salesUnitSummary is not empty %}(= {{ salesUnitSummary }}){% endif %}
-    </div>
+        <div>
+            {{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }}
+
+            {% if salesUnitSummary %}
+                {{ 'product_packaging_unit_node_summary' | trans({
+                    "%summary%": salesUnitSummary,
+                })}}
+            {% endif %}
+        </div>
+    {% endblock %}
 {% endblock %}
