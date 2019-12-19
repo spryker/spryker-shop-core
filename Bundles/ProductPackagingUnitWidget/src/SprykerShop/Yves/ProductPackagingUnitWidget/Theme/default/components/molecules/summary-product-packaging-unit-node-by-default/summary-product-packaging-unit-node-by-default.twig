@@ -21,14 +21,20 @@
         {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default %}
         {% set salesUnitSummary = salesUnitName ? data.quantity / data.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
 
-        <div>
-            {{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }}
+        {% block summaryContainer %}
+            <div>
+                {% block summaryInner %}
+                    {{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }}
 
-            {% if salesUnitSummary %}
-                {{ 'product_packaging_unit_node_summary' | trans({
-                    '%summary%': salesUnitSummary,
-                })}}
-            {% endif %}
-        </div>
+                    {% block summaryInformation %}
+                        {% if salesUnitSummary %}
+                            {{ 'product_packaging_unit_node_summary' | trans({
+                                '%summary%': salesUnitSummary,
+                            })}}
+                        {% endif %}
+                    {% endblock %}
+                {% endblock %}
+            </div>
+        {% endblock %}
     {% endblock %}
 {% endblock %}

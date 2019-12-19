@@ -18,24 +18,32 @@
 
 {% block body %}
     <div class="grid">
-        {% block images %}
+        {% block imagesCol %}
             <div class="col col--sm-12 col--lg-3">
                 {% block imagesInner %}
                     {% set imageUrl = data.images ? data.images | first %}
 
-                    {% if imageUrl %}
-                        {% include atom('thumbnail') with {
-                            modifiers: ['small'],
-                            attributes: {
-                                alt: data.name | default(''),
-                                src: imageUrl.externalUrlLarge,
-                            },
-                        } only %}
-                    {% else %}
-                        <div class="text-center">
-                            <small>{{ 'global.no_image_available' | trans }}</small>
-                        </div>
-                    {% endif %}
+                    {% block imagesInpsection %}
+                        {% if imageUrl %}
+                            {% set thumbnailModifires = ['small'] %}
+
+                            {% block images %}
+                                {% include atom('thumbnail') with {
+                                    modifiers: thumbnailModifires,
+                                    attributes: {
+                                        alt: data.name | default,
+                                        src: imageUrl.externalUrlLarge,
+                                    },
+                                } only %}
+                            {% endblock %}
+                        {% else %}
+                            {% block emptyImages %}
+                                <div class="text-center">
+                                    <small>{{ 'global.no_image_available' | trans }}</small>
+                                </div>
+                            {% endblock %}
+                        {% endif %}
+                    {% endblock %}
                 {% endblock %}
             </div>
         {% endblock %}
@@ -52,13 +60,17 @@
 
                     {% block summary %}
                         <div>
-                            {{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }}
+                            {% block summaryInner %}
+                                {{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }}
 
-                            {% if salesUnitSummary %}
-                                {{ 'product_packaging_unit_node_summary' | trans({
-                                    '%summary%': salesUnitSummary,
-                                })}}
-                            {% endif %}
+                                {% block summaryInformation %}
+                                    {% if salesUnitSummary %}
+                                        {{ 'product_packaging_unit_node_summary' | trans({
+                                            '%summary%': salesUnitSummary,
+                                        })}}
+                                    {% endif %}
+                                {% endblock %}
+                            {% endblock %}
                         </div>
                     {% endblock %}
 
@@ -76,20 +88,28 @@
                             {% set amountPerQuantityConversion = amountPerQuantity.divide(data.amountSalesUnit.conversion, data.countOfDecimalsInAmount).trim %}
                             {% set amountSalesUnitName = salesUnitName | default(data.amountSalesUnit.productMeasurementBaseUnit.productMeasurementUnit.name) | default %}
 
-                            <div>
-                                <span class="text-secondary">&times;</span>
-                                {{ amountPerQuantity }} {{ amountSalesUnitName | trans }}
+                            {% block amountSalesUnitContainer %}
+                                <div>
+                                    {% block amountSalesUnitInner %}
+                                        {% block amountSalesUnitSymbol %}
+                                            <span class="text-secondary">&times;</span>
+                                        {% endblock %}
+                                        {{ amountPerQuantity }} {{ amountSalesUnitName | trans }}
 
-                                {% if amountPerQuantityConversion != amountPerQuantity %}
-                                    {{ 'product_packaging_unit_node_summary' | trans({
-                                        '%summary%': amountPerQuantityConversion ~ ' ' ~ data.amountSalesUnit.productMeasurementUnit.name | trans,
-                                    })}}
-                                {% endif %}
+                                        {% block amountSalesUnitSummary %}
+                                            {% if amountPerQuantityConversion != amountPerQuantity %}
+                                                {{ 'product_packaging_unit_node_summary' | trans({
+                                                    '%summary%': amountPerQuantityConversion ~ ' ' ~ data.amountSalesUnit.productMeasurementUnit.name | trans,
+                                                })}}
+                                            {% endif %}
+                                        {% endblock %}
 
-                                {{ 'product_packaging_unit_node_amount_summary' | trans({
-                                    '%summary%': data.amount ~ ' ' ~ amountSalesUnitName | trans,
-                                })}}
-                            </div>
+                                        {{ 'product_packaging_unit_node_amount_summary' | trans({
+                                            '%summary%': data.amount ~ ' ' ~ amountSalesUnitName | trans,
+                                        })}}
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
                         {% endif %}
                     {% endblock %}
                 {% endblock %}
