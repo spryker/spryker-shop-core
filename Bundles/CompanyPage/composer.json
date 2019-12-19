@@ -31,8 +31,7 @@
     "spryker-shop/customer-page": "*",
     "spryker/code-sniffer": "*",
     "spryker/router": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/silex": "*"
   },
   "suggest": {
     "spryker-shop/company-user-invitation-page": "If you want to import new invitations from file: ^2.1.0",

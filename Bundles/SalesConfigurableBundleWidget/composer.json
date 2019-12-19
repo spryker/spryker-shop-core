@@ -13,8 +13,7 @@
   },
   "require-dev": {
     "spryker-shop/configurable-bundle-note-widget": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker-shop/configurable-bundle-note-widget": "If you want to use configurable bundle note feature."

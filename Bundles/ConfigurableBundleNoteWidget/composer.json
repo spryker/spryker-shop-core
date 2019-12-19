@@ -15,8 +15,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/router": "*",
-    "spryker/testify": "*"
+    "spryker/router": "*"
   },
   "suggest": {
     "spryker/router": "Use this module when using plugins that need Router dependencies."

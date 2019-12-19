@@ -23,8 +23,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/router": "*",
-    "spryker/testify": "*"
+    "spryker/router": "*"
   },
   "suggest": {
     "spryker/router": "Use this module if you want use the RouterProviderPlugin."

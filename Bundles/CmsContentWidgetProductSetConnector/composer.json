@@ -14,7 +14,6 @@
     "spryker-shop/product-set-detail-page": "*",
     "spryker-shop/product-set-widget": "*",
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {

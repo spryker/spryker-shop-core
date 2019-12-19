@@ -17,8 +17,7 @@
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
     "spryker/event-dispatcher": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/silex": "*"
   },
   "suggest": {
     "spryker/container": "Add this module when using plugins from this module.",

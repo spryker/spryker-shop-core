@@ -16,8 +16,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/router": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/silex": "*"
   },
   "suggest": {
     "spryker-shop/customer-page": "Use RedirectUriCustomerRedirectStrategyPlugin to allow redirect when login is necessary for a shared resource: 1.21.0",

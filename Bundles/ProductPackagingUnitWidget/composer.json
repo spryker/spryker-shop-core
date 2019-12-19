@@ -20,8 +20,7 @@
     "spryker-shop/customer-page": "*",
     "spryker-shop/money-widget": "*",
     "spryker-shop/product-detail-page": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker-shop/cart-page": "Widget plugins are available for this module.",

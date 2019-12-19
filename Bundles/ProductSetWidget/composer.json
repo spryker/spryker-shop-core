@@ -12,8 +12,7 @@
     "spryker-shop/cms-content-widget-product-set-connector": "*",
     "spryker-shop/product-detail-page": "*",
     "spryker-shop/product-set-detail-page": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker-shop/cms-content-widget-product-set-connector": "Use this module when using plugins that need CmsContentWidgetProductSetConnector dependencies.",

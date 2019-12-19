@@ -14,8 +14,7 @@
   },
   "require-dev": {
     "spryker-shop/product-detail-page": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker-shop/product-detail-page": "Widget plugins are available for this module."

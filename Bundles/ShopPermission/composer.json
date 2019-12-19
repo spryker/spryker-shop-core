@@ -13,7 +13,6 @@
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
     "spryker/silex": "^2.0.0",
-    "spryker/testify": "*",
     "spryker/twig": "^3.0.0"
   },
   "suggest": {
