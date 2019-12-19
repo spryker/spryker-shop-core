@@ -14,8 +14,7 @@
     "spryker-shop/product-alternative-widget": "*",
     "spryker-shop/product-relation-widget": "*",
     "spryker-shop/product-replacement-for-widget": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker-shop/catalog-page": "Widget plugins are available for this module.",

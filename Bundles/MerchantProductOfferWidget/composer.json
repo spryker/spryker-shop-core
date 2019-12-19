@@ -12,8 +12,7 @@
     "spryker/price-product-storage": "^4.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {

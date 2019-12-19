@@ -46,17 +46,17 @@
   "suggest": {
     "spryker-shop/business-on-behalf-widget": "If you want to use BusinessOnBehalfWidget or MenuItemBusinessOnBehalfWidgetPlugin.",
     "spryker-shop/cart-note-widget": "If you want to use components from module CartNoteWidget or CartNoteOrderNoteWidgetPlugin.",
-    "spryker-shop/sales-configurable-bundle-widget": "Add the module if you want to use OrderConfiguredBundleWidget.",
     "spryker-shop/customer-reorder-widget": "If you want to use CustomerReorderItemCheckboxWidget or CustomerReorderWidgetPlugin, for support of Split Delivery feature use (^6.2.0)",
     "spryker-shop/gift-card-widget": "If you want to use components from module GiftCardWidget.",
     "spryker-shop/home-page": "Widget plugins are available for this module.",
     "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or OrderDetailProductPackagingUnitWidgetPlugin.",
-    "spryker/router": "Use this module when you want to use the Router.",
+    "spryker-shop/sales-configurable-bundle-widget": "Add the module if you want to use OrderConfiguredBundleWidget.",
     "spryker/config": "Use this module when using plugins that need Config dependencies.",
     "spryker/container": "If you want to use twig plugins.",
     "spryker/messenger": "Use this module when using plugins that need Messenger dependencies.",
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
-    "spryker/security": "Add this module to use the SecurityPlugin."
+    "spryker/router": "Use this module when you want to use the Router.",
+    "spryker/security": "Add this module to use the SecurityPlugin.",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {

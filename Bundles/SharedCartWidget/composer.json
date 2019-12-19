@@ -14,8 +14,7 @@
   },
   "require-dev": {
     "spryker-shop/multi-cart-widget": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker-shop/multi-cart-page": "If you want to use CartDeleteCompanyUsersListWidgetPlugin and CartListPermissionGroupWidgetPlugin: ^1.0.0",

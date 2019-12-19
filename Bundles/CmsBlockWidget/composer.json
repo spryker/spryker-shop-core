@@ -15,8 +15,7 @@
   "require-dev": {
     "spryker-shop/shop-application": "*",
     "spryker/code-sniffer": "*",
-    "spryker/container": "*",
-    "spryker/testify": "*"
+    "spryker/container": "*"
   },
   "suggest": {
     "spryker-shop/shop-application": "Twig plugins are available for this module.",

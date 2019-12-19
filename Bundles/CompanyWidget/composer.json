@@ -10,8 +10,7 @@
   },
   "require-dev": {
     "spryker-shop/shop-ui": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker-shop/shop-ui": "To add widget customer navigation menu: ^1.28.1."

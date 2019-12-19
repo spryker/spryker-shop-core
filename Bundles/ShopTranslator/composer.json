@@ -11,8 +11,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/silex": "*"
   },
   "suggest": {
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."

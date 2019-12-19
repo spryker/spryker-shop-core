@@ -16,8 +16,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/router": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/silex": "*"
   },
   "suggest": {
     "spryker/router": "If you want to use RouteProviderPlugins to be added to the Route Module.",

@@ -36,8 +36,8 @@
     "spryker-shop/quote-request-agent-widget": "If you want to use quote quote-request-menu-item.twig molecule.",
     "spryker/container": "Add this module to use the Container.",
     "spryker/router": "Use this module when you want to use the Router.",
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
-    "spryker/security": "Add this module to use the SecurityPlugin."
+    "spryker/security": "Add this module to use the SecurityPlugin.",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
     "psr-4": {
