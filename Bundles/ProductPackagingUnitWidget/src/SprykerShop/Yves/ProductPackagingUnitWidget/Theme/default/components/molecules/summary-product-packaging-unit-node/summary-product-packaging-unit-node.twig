@@ -20,10 +20,10 @@
     <div class="grid">
         {% block imageCol %}
             <div class="col col--sm-12 col--lg-3">
-                {% block imageInner %}
+                {% block imageColInner %}
                     {% set imageUrl = data.images ? data.images | first %}
 
-                    {% block imageInspection %}
+                    {% block imageCondition %}
                         {% if imageUrl %}
                             {% set thumbnailModifires = ['small'] %}
 
