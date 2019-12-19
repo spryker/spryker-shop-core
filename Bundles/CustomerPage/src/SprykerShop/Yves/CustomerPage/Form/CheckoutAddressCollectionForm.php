@@ -216,8 +216,9 @@ class CheckoutAddressCollectionForm extends AbstractType
         }
 
         $shippingAddressTransfer = $shippingAddressFrom->getData();
-        $shipmentTransfer = (new ShipmentTransfer())
-            ->setShippingAddress($shippingAddressTransfer);
+        $itemTransfer = $quoteTransfer->getItems()->getIterator()->current();
+        $shipmentTransfer = $itemTransfer->getShipment() ?: new ShipmentTransfer();
+        $shipmentTransfer->setShippingAddress($shippingAddressTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->setShipment($shipmentTransfer);
