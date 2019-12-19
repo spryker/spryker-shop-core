@@ -49,24 +49,14 @@
                         {% for item in shipmentGroupForm.vars.data.items %}
                             <div class="col col--sm-12 col--lg-8">
                                 {% set item = item.bundleProduct ?? item %}
-                                {% embed molecule('summary-item', 'CheckoutPage') with {
+
+                                {% embed molecule('summary-node', 'CheckoutPage') with {
                                     data: {
-                                        name: item.name,
-                                        quantity: item.quantity,
-                                        price: item.sumPrice | money,
-                                        options: item.productOptions | default({}),
-                                        bundleItems: item.bundleItems | default([]),
-                                        quantitySalesUnit: item.quantitySalesUnit,
-                                        amountSalesUnit: item.amountSalesUnit,
-                                        amount: item.amount,
-                                        groupKey: item.groupKey,
-                                        images: item.images,
-                                        sku: item.sku,
-                                        productOffer: item.productOffer | default(null),
+                                        node: item,
                                     },
                                     embed: {
                                         isLast: not loop.last,
-                                    }
+                                    },
                                 } only %}
                                     {% block body %}
                                         {{ parent() }}

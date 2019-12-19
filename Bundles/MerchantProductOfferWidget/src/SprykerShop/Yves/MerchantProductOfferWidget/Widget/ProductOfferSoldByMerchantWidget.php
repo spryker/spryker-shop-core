@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Widget;
 
-use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -19,15 +19,11 @@ class ProductOfferSoldByMerchantWidget extends AbstractWidget
     protected const PARAMETER_CURRENT_LOCALE = 'currentLocale';
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer|null $productOfferTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      */
-    public function __construct(?ProductOfferTransfer $productOfferTransfer)
+    public function __construct(ItemTransfer $itemTransfer)
     {
-        if (!$productOfferTransfer) {
-            return;
-        }
-
-        $this->addMerchantProfileParameter($productOfferTransfer);
+        $this->addMerchantProfileParameter($itemTransfer);
     }
 
     /**
@@ -47,17 +43,22 @@ class ProductOfferSoldByMerchantWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return $this
      */
-    protected function addMerchantProfileParameter(ProductOfferTransfer $productOfferTransfer)
+    protected function addMerchantProfileParameter(ItemTransfer $itemTransfer)
     {
-        $productOfferTransfer->requireProductOfferReference();
+        if (!$itemTransfer->getProductOffer()) {
+            return $this;
+        }
+
+        $itemTransfer->getProductOffer()
+            ->requireProductOfferReference();
 
         $productOfferStorageTransfer = $this->getFactory()
             ->getMerchantProductOfferStorageClient()
-            ->findProductOfferStorageByReference($productOfferTransfer->getProductOfferReference());
+            ->findProductOfferStorageByReference($itemTransfer->getProductOffer()->getProductOfferReference());
 
         $merchantProfileStorageTransfer = $this->getFactory()
             ->getMerchantProfileStorageClient()
