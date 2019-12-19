@@ -56,7 +56,7 @@
 
                             {% if salesUnitSummary %}
                                 {{ 'product_packaging_unit_node_summary' | trans({
-                                    "%summary%": salesUnitSummary,
+                                    '%summary%': salesUnitSummary,
                                 })}}
                             {% endif %}
                         </div>
@@ -82,12 +82,12 @@
 
                                 {% if amountPerQuantityConversion != amountPerQuantity %}
                                     {{ 'product_packaging_unit_node_summary' | trans({
-                                        "%summary%": amountPerQuantityConversion ~ ' ' ~ data.amountSalesUnit.productMeasurementUnit.name | trans,
+                                        '%summary%': amountPerQuantityConversion ~ ' ' ~ data.amountSalesUnit.productMeasurementUnit.name | trans,
                                     })}}
                                 {% endif %}
 
                                 {{ 'product_packaging_unit_node_amount_summary' | trans({
-                                    "%summary%": data.amount ~ ' ' ~ amountSalesUnitName | trans,
+                                    '%summary%': data.amount ~ ' ' ~ amountSalesUnitName | trans,
                                 })}}
                             </div>
                         {% endif %}

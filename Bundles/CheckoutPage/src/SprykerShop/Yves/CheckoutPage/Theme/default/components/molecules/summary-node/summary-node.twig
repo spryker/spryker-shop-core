@@ -30,8 +30,8 @@
                 {% for item in data.bundleItems %}
                     <li>
                         {{ 'summary_node_bundle_items_summary' | trans({
-                                "%quantity%": item.quantity,
-                                "%name%": item.name,
+                                '%quantity%': item.quantity,
+                                '%name%': item.name,
                         })}}
                     </li>
                 {% endfor %}
@@ -47,7 +47,7 @@
                 {% for option in data.options %}
                     <li>
                         {{ 'summary_node_option_value' | trans({
-                            "%value%": option.value | trans,
+                            '%value%': option.value | trans,
                         })}}
                         <strong>{{ option.sumPrice | default(0) | money }}</strong>
                     </li>
