@@ -430,7 +430,9 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     {
         $shipmentGroupForRemoveIndexes = [];
         foreach ($shipmentGroupCollection as $shipmentGroupIndex => $shipmentGroupTransfer) {
-            if ($this->giftCardItemsChecker->hasOnlyGiftCardItems($shipmentGroupTransfer->getItems())) {
+            $itemTransfers = $shipmentGroupTransfer->getItems();
+            $this->removeGiftCardItem($itemTransfers);
+            if ($this->giftCardItemsChecker->hasOnlyGiftCardItems($itemTransfers)) {
                 $shipmentGroupForRemoveIndexes[] = $shipmentGroupIndex;
             }
         }
@@ -440,5 +442,20 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         }
 
         return $shipmentGroupCollection;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return void
+     */
+    protected function removeGiftCardItem(ArrayObject $itemTransfers): void
+    {
+        foreach ($itemTransfers as $itemIndex => $itemTransfer) {
+            $giftCardMetadataTransfer = $itemTransfer->getGiftCardMetadata();
+            if ($giftCardMetadataTransfer && $giftCardMetadataTransfer->getIsGiftCard()) {
+                $itemTransfers->offsetUnset($itemIndex);
+            }
+        }
     }
 }
