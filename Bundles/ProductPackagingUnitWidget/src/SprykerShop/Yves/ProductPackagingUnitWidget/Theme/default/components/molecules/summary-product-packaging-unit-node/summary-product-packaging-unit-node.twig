@@ -18,16 +18,16 @@
 
 {% block body %}
     <div class="grid">
-        {% block imagesCol %}
+        {% block imageCol %}
             <div class="col col--sm-12 col--lg-3">
-                {% block imagesInner %}
+                {% block imageInner %}
                     {% set imageUrl = data.images ? data.images | first %}
 
-                    {% block imagesInpsection %}
+                    {% block imageInpsection %}
                         {% if imageUrl %}
                             {% set thumbnailModifires = ['small'] %}
 
-                            {% block images %}
+                            {% block image %}
                                 {% include atom('thumbnail') with {
                                     modifiers: thumbnailModifires,
                                     attributes: {
@@ -37,7 +37,7 @@
                                 } only %}
                             {% endblock %}
                         {% else %}
-                            {% block emptyImages %}
+                            {% block emptyImage %}
                                 <div class="text-center">
                                     <small>{{ 'global.no_image_available' | trans }}</small>
                                 </div>
