@@ -57,6 +57,7 @@
         <property name="zipCode" type="string"/>
         <property name="city" type="string"/>
         <property name="address1" type="string"/>
+        <property name="companyBusinessUnits" type="CompanyBusinessUnitCollection"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressCriteriaFilter">
@@ -131,6 +132,7 @@
         <property name="idPermission" type="int"/>
         <property name="configurationSignature" type="array" singular="configurationSignature"/>
         <property name="idCompanyRole" type="int"/>
+        <property name="configuration" type="array" singular="configuration"/>
     </transfer>
 
     <transfer name="CompanyRolePermissionResponse">

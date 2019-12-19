@@ -25,7 +25,6 @@ class ShopApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const STORE = 'STORE';
     public const PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER = 'PLUGINS_FILTER_CONTROLLER_EVENT_SUBSCRIBER';
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
-    public const ENVIRONMENT = 'ENVIRONMENT';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

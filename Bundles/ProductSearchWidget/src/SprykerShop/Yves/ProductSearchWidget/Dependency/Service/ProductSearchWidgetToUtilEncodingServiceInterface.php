@@ -16,5 +16,5 @@ interface ProductSearchWidgetToUtilEncodingServiceInterface
      *
      * @return string|null
      */
-    public function encodeJson(array $value, $options = null, $depth = null);
+    public function encodeJson($value, $options = null, $depth = null);
 }

@@ -8,41 +8,41 @@
 namespace SprykerShop\Yves\CmsBlockWidget\Validator;
 
 use DateTime;
-use Generated\Shared\Transfer\SpyCmsBlockEntityTransfer;
+use Generated\Shared\Transfer\CmsBlockTransfer;
 
 class CmsBlockValidator implements CmsBlockValidatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $cmsBlockEntityTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return bool
      */
-    public function isValid(SpyCmsBlockEntityTransfer $cmsBlockEntityTransfer): bool
+    public function isValid(CmsBlockTransfer $cmsBlockTransfer): bool
     {
-        return $cmsBlockEntityTransfer->getIsActive() &&
-            $cmsBlockEntityTransfer->getCmsBlockTemplate() &&
-            $this->isDateValid($cmsBlockEntityTransfer);
+        return $cmsBlockTransfer->getIsActive() &&
+            $cmsBlockTransfer->getCmsBlockTemplate() &&
+            $this->isDateValid($cmsBlockTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $cmsBlockEntityTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return bool
      */
-    protected function isDateValid(SpyCmsBlockEntityTransfer $cmsBlockEntityTransfer): bool
+    protected function isDateValid(CmsBlockTransfer $cmsBlockTransfer): bool
     {
         $dateToCompare = new DateTime();
 
-        if ($cmsBlockEntityTransfer->getValidFrom() !== null) {
-            $validFrom = new DateTime($cmsBlockEntityTransfer->getValidFrom());
+        if ($cmsBlockTransfer->getValidFrom() !== null) {
+            $validFrom = new DateTime($cmsBlockTransfer->getValidFrom());
 
             if ($dateToCompare <= $validFrom) {
                 return false;
             }
         }
 
-        if ($cmsBlockEntityTransfer->getValidTo() !== null) {
-            $validTo = new DateTime($cmsBlockEntityTransfer->getValidTo());
+        if ($cmsBlockTransfer->getValidTo() !== null) {
+            $validTo = new DateTime($cmsBlockTransfer->getValidTo());
 
             if ($dateToCompare > $validTo) {
                 return false;
