@@ -1,6 +1,6 @@
 # AgentPage Module
 [![Build Status](https://travis-ci.org/spryker-shop/agent-page.svg)](https://travis-ci.org/spryker-shop/agent-page)
-[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/agent-page/badge.svg)](https://coveralls.io/github/spryker-shop/agent-page)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 This module contains the agent page and its components.
 
