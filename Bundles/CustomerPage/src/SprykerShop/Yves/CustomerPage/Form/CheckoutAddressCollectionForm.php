@@ -239,11 +239,11 @@ class CheckoutAddressCollectionForm extends AbstractType
             ->getIterator()
             ->current();
 
-        if ($itemTransfer === null) {
-            return new ShipmentTransfer();
+        if ($itemTransfer !== null && $itemTransfer->getShipment()) {
+            return $itemTransfer->getShipment();
         }
 
-        return $itemTransfer->getShipment() ?: new ShipmentTransfer();
+        return new ShipmentTransfer();
     }
 
     /**
