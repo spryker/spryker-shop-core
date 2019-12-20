@@ -12,6 +12,9 @@ use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
+/**
+ * @deprecated Will be removed without replacement. The `\Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder`
+ */
 class YvesSecurityServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     public const BCRYPT_FACTOR = 12;

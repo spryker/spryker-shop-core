@@ -8,10 +8,7 @@
 namespace SprykerShop\Yves\ShopCmsSlot\Plugin\Twig;
 
 use Generated\Shared\Transfer\CmsSlotContextTransfer;
-use RuntimeException;
-use Spryker\Shared\ErrorHandler\ErrorLogger;
 use SprykerShop\Yves\ShopApplication\Plugin\AbstractTwigExtensionPlugin;
-use SprykerShop\Yves\ShopCmsSlot\Exception\MissingRequiredParameterException;
 
 /**
  * @method \SprykerShop\Yves\ShopCmsSlot\ShopCmsSlotConfig getConfig()
@@ -36,19 +33,10 @@ class ShopCmsSlotTwigPlugin extends AbstractTwigExtensionPlugin
      */
     public function getSlotContent(CmsSlotContextTransfer $cmsSlotContextTransfer): string
     {
-        $cmsSlotContent = '';
+        $cmsSlotContentResponseTransfer = $this->getFactory()
+            ->createCmsSlotDataProvider()
+            ->getSlotContent($cmsSlotContextTransfer);
 
-        try {
-            $cmsSlotContentResponseTransfer = $this->getFactory()
-                ->createCmsSlotDataProvider()
-                ->getSlotContent($cmsSlotContextTransfer);
-            $cmsSlotContent = $cmsSlotContentResponseTransfer->getContent();
-        } catch (RuntimeException | MissingRequiredParameterException $exception) {
-            if ($this->getConfig()->isDebugModeEnabled()) {
-                ErrorLogger::getInstance()->log($exception);
-            }
-        }
-
-        return $cmsSlotContent;
+        return $cmsSlotContentResponseTransfer->getContent();
     }
 }

@@ -1,6 +1,6 @@
 # QuoteRequestPage Module
-[![Build Status](https://travis-ci.org/spryker-shop/quote-request-page.svg)](https://travis-ci.org/spryker/quote-request-page)
-[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/quote-request-page/badge.svg)](https://coveralls.io/github/spryker/quote-request-page)
+[![Build Status](https://travis-ci.org/spryker-shop/quote-request-page.svg)](https://travis-ci.org/spryker-shop/quote-request-page)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 This module contains the list/edit pages for requests for quote.
 

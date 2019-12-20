@@ -58,11 +58,13 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
+     * @param string|null $targetUrl
+     *
      * @return \SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureHandler
      */
-    public function createCustomerAuthenticationFailureHandler()
+    public function createCustomerAuthenticationFailureHandler(?string $targetUrl = null)
     {
-        return new CustomerAuthenticationFailureHandler($this->getFlashMessenger());
+        return new CustomerAuthenticationFailureHandler($this->getFlashMessenger(), $targetUrl);
     }
 
     /**

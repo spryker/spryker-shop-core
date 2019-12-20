@@ -1,0 +1,6 @@
+@mixin configurable-bundle-page-configurator-product($name: '.configurator-product') {
+    @include shop-ui-product-item-list($name) {
+
+        @content;
+    }
+}

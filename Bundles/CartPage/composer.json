@@ -31,7 +31,6 @@
     "spryker/container": "*",
     "spryker/router": "*",
     "spryker/silex": "*",
-    "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {
@@ -56,9 +55,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

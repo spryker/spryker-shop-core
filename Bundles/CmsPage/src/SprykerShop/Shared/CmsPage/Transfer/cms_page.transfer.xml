@@ -8,6 +8,7 @@
     </transfer>
 
     <transfer name="LocaleCmsPageData">
+        <property name="idCmsPage" type="int"/>
         <property name="templatePath" type="string"/>
         <property name="isActive" type="bool"/>
         <property name="placeholders" type="array" singular="placeholders"/>
