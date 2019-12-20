@@ -7,14 +7,14 @@
 
 namespace SprykerShop\Yves\CmsBlockWidget\Validator;
 
-use Generated\Shared\Transfer\SpyCmsBlockEntityTransfer;
+use Generated\Shared\Transfer\CmsBlockTransfer;
 
 interface CmsBlockValidatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $cmsBlockEntityTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return bool
      */
-    public function isValid(SpyCmsBlockEntityTransfer $cmsBlockEntityTransfer): bool;
+    public function isValid(CmsBlockTransfer $cmsBlockTransfer): bool;
 }
