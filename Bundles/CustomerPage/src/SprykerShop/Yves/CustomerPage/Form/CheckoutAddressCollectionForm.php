@@ -216,8 +216,8 @@ class CheckoutAddressCollectionForm extends AbstractType
         }
 
         $shippingAddressTransfer = $shippingAddressFrom->getData();
-        $itemTransfer = $quoteTransfer->getItems()->getIterator()->current();
-        $shipmentTransfer = $itemTransfer->getShipment() ?: new ShipmentTransfer();
+        $itemTransfer = $this->findQuoteFirstItemTransfer($quoteTransfer);
+        $shipmentTransfer = $this->getItemShipmentTransfer($itemTransfer);
         $shipmentTransfer->setShippingAddress($shippingAddressTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
@@ -227,6 +227,28 @@ class CheckoutAddressCollectionForm extends AbstractType
         $event->setData($quoteTransfer);
 
         return $event;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     */
+    protected function findQuoteFirstItemTransfer(QuoteTransfer $quoteTransfer): ?ItemTransfer
+    {
+        return $quoteTransfer->getItems()
+            ->getIterator()
+            ->current();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    protected function getItemShipmentTransfer(ItemTransfer $itemTransfer): ShipmentTransfer
+    {
+        return $itemTransfer->getShipment() ?: new ShipmentTransfer();
     }
 
     /**
