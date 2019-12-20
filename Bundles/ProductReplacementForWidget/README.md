@@ -1,6 +1,6 @@
 # ProductReplacementForWidget Module
 [![Build Status](https://travis-ci.org/spryker-shop/product-replacement-for-widget.svg)](https://travis-ci.org/spryker-shop/product-replacement-for-widget)
-[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/product-replacement-for-widget/badge.svg)](https://coveralls.io/github/spryker-shop/product-replacement-for-widget)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Uses ProductAlternativeStorage module to show what product is a replacement for what other products.
 
