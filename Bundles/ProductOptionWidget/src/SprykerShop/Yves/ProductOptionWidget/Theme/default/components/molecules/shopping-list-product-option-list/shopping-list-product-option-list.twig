@@ -33,9 +33,9 @@
                 {% block options %}
                     <option value="">{{ 'product.product_options_select' | trans }}</option>
                     {% for option in embed.options %}
-                        {% set isOptionSelected = option.data.getIsSelected ? 'selected' %}
+                        {% set optionAttributeSelected = option.data.getIsSelected ? 'selected' %}
 
-                        <option value="{{ option.data.getIdProductOptionValue }}" {{ isOptionSelected }}>
+                        <option value="{{ option.data.getIdProductOptionValue }}" {{ optionAttributeSelected }}>
                             {{ option.data.getValue | trans }} {{ option.data.getPrice | money }}
                         </option>
                     {% endfor %}
