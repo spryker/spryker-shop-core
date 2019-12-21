@@ -108,6 +108,7 @@ class PreviewController extends AbstractController
     protected function executeIndexAction(int $idCmsPage, array $metaData): array
     {
         return [
+            'idCmsPage' => $idCmsPage,
             'placeholders' => $metaData['placeholders'],
             'pageTitle' => $metaData['meta_title'],
             'pageDescription' => $metaData['meta_description'],
