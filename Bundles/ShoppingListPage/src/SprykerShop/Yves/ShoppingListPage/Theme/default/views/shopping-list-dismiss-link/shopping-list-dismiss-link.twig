@@ -10,7 +10,7 @@
         {% set linkClasses = 'spacing-left spacing-left--small' %}
 
         {% block link %}
-            <a class="{{ linkClasses }}" href="{{ url('shopping-list/dismiss-confirm', { idShoppingList: data.idShoppingList }) }}" data-init-single-click>
+            <a class="{{ linkClasses }}" href="{{ url('shopping-list/dismiss-confirm', { idShoppingList: data.idShoppingList }) }}">
                 {{- 'customer.account.shopping_list.overview.dismiss' | trans -}}
             </a>
         {% endblock %}
