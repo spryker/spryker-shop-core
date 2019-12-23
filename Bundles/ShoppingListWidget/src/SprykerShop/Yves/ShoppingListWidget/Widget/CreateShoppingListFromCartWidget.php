@@ -74,10 +74,6 @@ class CreateShoppingListFromCartWidget extends AbstractWidget
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        if (!($customerTransfer && $customerTransfer->getCompanyUserTransfer())) {
-            return false;
-        }
-
-        return true;
+        return $customerTransfer && $customerTransfer->getCompanyUserTransfer();
     }
 }

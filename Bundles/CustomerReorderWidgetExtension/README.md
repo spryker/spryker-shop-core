@@ -1,6 +1,6 @@
 # CustomerReorderWidgetExtension Module
 [![Build Status](https://travis-ci.org/spryker-shop/customer-reorder-widget-extension.svg)](https://travis-ci.org/spryker-shop/customer-reorder-widget-extension)
-[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/customer-reorder-widget-extension/badge.svg)](https://coveralls.io/github/spryker-shop/customer-reorder-widget-extension)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 The module provides plugin interfaces for extending CustomerReorderWidget module functionality.
 
