@@ -13,6 +13,8 @@
     </transfer>
 
     <transfer name="CategoryImageStorage">
+        <property name="externalUrlSmall" type="string"/>
+        <property name="externalUrlLarge" type="string"/>
     </transfer>
 
 </transfers>
