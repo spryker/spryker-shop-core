@@ -60,14 +60,14 @@
         </div>
 
         <div class="float-right">
-            <a href="{{ data.backUrl }}" class="button button--secondary button--hollow">
+            <a href="{{ path('shopping-list') }}" class="button button--secondary button--hollow">
                 {% include atom('icon') with {
                     modifiers: ['small'],
                     data: {
                         name: 'chevron-left'
                     }
                 } only %}
-                {{ "general.cancel.button" | trans }}
+                {{ 'shopping_list.dismiss_confirmation.shopping_lists' | trans }}
             </a>
             <a href="{{ url('shopping-list/dismiss', { 'idShoppingList': data.idShoppingList }) }}" class="button button--alert">
                 {{ "customer.account.shopping_list.overview.dismiss" | trans }}
