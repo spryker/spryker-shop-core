@@ -1,6 +1,6 @@
 # MerchantProfilePage Module
 [![Build Status](https://travis-ci.org/spryker-shop/merchant-profile-page.svg)](https://travis-ci.org/spryker-shop/merchant-profile-page)
-[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/merchant-profile-page/badge.svg)](https://coveralls.io/github/spryker-shop/merchant-profile-page)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 This module provides information about the merchant profile.
 

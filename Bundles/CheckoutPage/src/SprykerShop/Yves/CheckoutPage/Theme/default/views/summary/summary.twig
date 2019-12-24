@@ -257,7 +257,9 @@
                 data: {
                     form: data.forms.summary,
                     submit: {
-                        enable: data.isPlaceableOrder and can('SeeOrderPlaceSubmitPermissionPlugin') and can('WriteSharedCartPermissionPlugin', data.cart.idQuote),
+                        enable: data.isPlaceableOrder
+                            and can('SeeOrderPlaceSubmitPermissionPlugin')
+                            and (not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote)),
                         text: 'checkout.step.place.order' | trans,
                     },
                     cancel: {

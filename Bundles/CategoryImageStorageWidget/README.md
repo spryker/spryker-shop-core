@@ -1,6 +1,6 @@
 # CategoryImageStorageWidget Module
 [![Build Status](https://travis-ci.org/spryker-shop/category-image-storage-widget.svg)](https://travis-ci.org/spryker-shop/category-image-storage-widget)
-[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/category-image-storage-widget/badge.svg)](https://coveralls.io/github/spryker-shop/category-image-storage-widget)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 This module contains the category image storage widget and its components.
 

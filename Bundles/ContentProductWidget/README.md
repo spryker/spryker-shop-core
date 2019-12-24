@@ -1,6 +1,6 @@
 # ContentProductWidget Module
 [![Build Status](https://travis-ci.org/spryker-shop/content-product-widget.svg)](https://travis-ci.org/spryker-shop/content-product-widget)
-[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/content-product-widget/badge.svg)](https://coveralls.io/github/spryker-shop/content-product-widget)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 This module provides twig plugins for displaying ProductList Content Item by its ID.
 
