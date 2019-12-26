@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\ShoppingListWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-
 class ShoppingListWidgetToCustomerClientBridge implements ShoppingListWidgetToCustomerClientInterface
 {
     /**
@@ -27,7 +25,7 @@ class ShoppingListWidgetToCustomerClientBridge implements ShoppingListWidgetToCu
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer(): ?CustomerTransfer
+    public function getCustomer()
     {
         return $this->customerClient->getCustomer();
     }
@@ -35,7 +33,7 @@ class ShoppingListWidgetToCustomerClientBridge implements ShoppingListWidgetToCu
     /**
      * @return bool
      */
-    public function isLoggedIn(): bool
+    public function isLoggedIn()
     {
         return $this->customerClient->isLoggedIn();
     }
