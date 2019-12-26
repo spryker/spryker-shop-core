@@ -1,0 +1,194 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'shopping-list',
+    tag: 'table',
+} %}
+
+{% define data = {
+    shoppingList: required,
+    shoppingListItems: required,
+} %}
+
+{% block body %}
+    {% block head %}
+        <thead class="{{ config.name }}__head">
+            <tr>
+                <th class="{{ config.name }}__cell text-left" colspan="3">{{ 'customer.account.shopping_list.product' | trans }}</th>
+                <th class="{{ config.name }}__cell text-center">{{ 'customer.account.shopping_list.price' | trans }}</th>
+                <th class="{{ config.name }}__cell text-center">{{ 'customer.account.shopping_list.quantity' | trans }}</th>
+                <th class="{{ config.name }}__cell text-center">{{ 'customer.account.shopping_list.availability' | trans }}</th>
+                <th class="{{ config.name }}__cell text-center">{{ 'customer.account.shopping_list.overview.actions' | trans }}</th>
+            </tr>
+        </thead>
+    {% endblock %}
+
+    {% block content %}
+        <tbody>
+            {% block contentInner %}
+                {% for item in data.shoppingListItems %}
+                    {% block shoppingListItem %}
+                        {% set isItemAvailable = item.available is defined and item.available and item.price is defined and item.price is not null %}
+                        {% set productDiscontinuedWidget = findWidget('ProductDiscontinuedWidget', [item.sku]) %}
+                        {% set isDiscontinued = productDiscontinuedWidget.isDiscontinued %}
+                        {% if isDiscontinued is not null %}
+                            {% set isItemAvailable = not isDiscontinued and isItemAvailable %}
+                        {% endif %}
+
+                        {% block row %}
+                            {% set disableModifiers = not isItemAvailable ? ['disable'] : [] %}
+
+                            <tr class="{{ component.renderClass(config.name ~ '__row', disableModifiers) }}">
+                                {% block rowInner %}
+                                    {% block checkboxCol %}
+                                        <td class="{{ config.name }}__cell">
+                                            {% set checkboxModifiers = [] %}
+
+                                            {% block checkbox %}
+                                                {% include atom('checkbox') with {
+                                                    modifiers: checkboxModifiers,
+                                                    attributes: {
+                                                        name: 'shoppingListItem[idShoppingListItem][' ~ item.idShoppingListItem ~ ']',
+                                                        value: item.idShoppingListItem,
+                                                        disabled: not isItemAvailable,
+                                                    },
+                                                } only %}
+                                            {% endblock %}
+                                        </td>
+                                    {% endblock %}
+
+                                    {% block thumbnailCol %}
+                                        <td class="{{ config.name }}__cell text-center">
+                                            {% block thumbnailColInner %}
+                                                {% if item.images is defined and item.images is not empty %}
+                                                    {% block thumbnail %}
+                                                        {% include atom('thumbnail') with {
+                                                            modifiers: ['small', 'min-size'],
+                                                            attributes: {
+                                                                alt: item.name | default,
+                                                                src: item.images.0.externalUrlSmall | default,
+                                                                title: item.name | default,
+                                                            },
+                                                        } only %}
+                                                    {% endblock %}
+                                                {% endif %}
+                                            {% endblock %}
+                                        </td>
+                                    {% endblock %}
+
+                                    {% block productCol %}
+                                        <td class="{{ config.name }}__cell">
+                                            {% block productColInner %}
+                                                <ul class="list spacing-y">
+                                                    <li class="list__item">
+                                                        <a href="{{ item.url }}">{{ item.name }}</a>
+                                                    </li>
+                                                    <li class="list__item">
+                                                        <small class="text-secondary">{{ item.sku }}</small>
+                                                    </li>
+
+                                                    <li class="list__item">
+                                                        {% set listOfAttributes = {} %}
+                                                        {% for attribute in item.superAttributesDefinition if item.attributes[attribute] is defined %}
+                                                            {% set listOfAttributes = listOfAttributes | merge({ ('product.attribute.' ~ attribute) | trans: item.attributes[attribute] }) %}
+                                                        {% endfor %}
+
+                                                        {% include molecule('product-item-attributes') with {
+                                                            data: {
+                                                                list: listOfAttributes,
+                                                            },
+                                                        } only %}
+                                                    </li>
+
+                                                    {% widget 'ShoppingListItemNoteWidget' args [item.shoppingListItem] only %}
+                                                    {% endwidget %}
+
+                                                    {% include molecule('shopping-list-item-product-option-display', 'ProductOptionWidget') ignore missing with {
+                                                        class: 'list list--expand',
+                                                        data: {
+                                                            options: item.shoppingListItem.productOptions,
+                                                        },
+                                                    } only %}
+                                                </ul>
+                                            {% endblock %}
+                                        </td>
+                                    {% endblock %}
+
+                                    {% block priceCol %}
+                                        <td nowrap="nowrap" class="{{ config.name }}__cell text-center">
+                                            {% set hasPrice = item.price is not empty %}
+
+                                            {% block priceColInner %}
+                                                {% if hasPrice %}
+                                                    {% block price %}
+                                                        {% include molecule('money-price') with {
+                                                            data: {
+                                                                amount: item.price,
+                                                                originalAmount: item.prices.ORIGINAL ?? null,
+                                                            },
+                                                        } only %}
+                                                    {% endblock %}
+                                                {% else %}
+                                                    {{ 'shopping_list.not_applicable' | trans }}
+                                                {% endif %}
+                                            {% endblock %}
+                                        </td>
+                                    {% endblock %}
+
+                                    {% block quantityCol %}
+                                        <td class="{{ config.name }}__cell text-center">
+                                            {% set isDisabled = not isItemAvailable ? 'disabled' %}
+
+                                            {% block quantityColInner %}
+                                                <input class="input" type="number"
+                                                       name="shoppingListItem[quantity][{{ item.idShoppingListItem }}]"
+                                                       value="{{ item.quantity }}" {{ isDisabled }}>
+                                            {% endblock %}
+                                        </td>
+                                    {% endblock %}
+
+                                    {% block availableCol %}
+                                        <td class="{{ config.name }}__cell text-center">
+                                            {% block availableColInner %}
+                                                {% if isItemAvailable %}
+                                                    {{ 'customer.account.shopping_list.available' | trans }}
+                                                {% else %}
+                                                    {% widget 'ProductDiscontinuedWidget' args [item.sku] only %}
+                                                    {% nowidget %}
+                                                        {{ 'customer.account.shopping_list.not_available' | trans }}
+                                                    {% endwidget %}
+                                                {% endif %}
+                                            {% endblock %}
+                                        </td>
+                                    {% endblock %}
+
+                                    {% block buttonCol %}
+                                        <td class="{{ config.name }}__cell">
+                                            {% block buttonColInner %}
+                                                {% if isItemAvailable %}
+                                                    <button type="submit" name="add-item" class="button button--success"
+                                                            value="{{ item.idShoppingListItem }}" {{ qa('submit-button') }}>
+                                                        {{ 'customer.account.shopping_list.add-to-cart' | trans }}
+                                                    </button>
+                                                {% endif %}
+                                            {% endblock %}
+                                        </td>
+                                    {% endblock %}
+                                {% endblock %}
+                            </tr>
+                        {% endblock %}
+
+                        {% set permission = can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
+
+                        {% block shoppingListProductAlternative %}
+                            {% if permission %}
+                                {% widget 'ShoppingListProductAlternativeWidget' args [item, data.shoppingList] only %}
+                                {% endwidget %}
+                            {% endif %}
+                        {% endblock %}
+                    {% endblock %}
+                {% endfor %}
+            {% endblock %}
+        </tbody>
+    {% endblock %}
+{% endblock %}

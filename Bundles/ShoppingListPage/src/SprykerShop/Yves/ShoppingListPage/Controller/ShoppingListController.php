@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
-use SprykerShop\Yves\ShoppingListPage\ShoppingListPageConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -39,6 +37,21 @@ class ShoppingListController extends AbstractShoppingListController
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_NOT_ADDED = 'customer.account.shopping_list.item.not_added';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ADD_ITEM_SUCCESS = 'customer.account.shopping_list.add_item.success';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_SELECT_LIST = 'customer.account.shopping_list.items.added_to_cart.select_list';
+
+    /**
+     * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST
+     */
+    protected const ROUTE_SHOPPING_LIST = 'shopping-list';
+
+    /**
+     * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST_DETAILS
+     */
+    protected const ROUTE_SHOPPING_LIST_DETAILS = 'shopping-list/details';
+
+    /**
+     * @use \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
+     */
+    protected const ROUTE_CART_PAGE = 'cart';
 
     /**
      * @param int $idShoppingList
@@ -84,7 +97,7 @@ class ShoppingListController extends AbstractShoppingListController
                 $this->addErrorMessage($errorMessageTransfer->getValue());
             }
 
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
         }
 
         $shoppingListItems = $this->getShoppingListItems($shoppingListOverviewResponseTransfer);
@@ -115,14 +128,14 @@ class ShoppingListController extends AbstractShoppingListController
         if (!$shoppingListItemResponseTransfer->getIsSuccess()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_REMOVE_FAILED);
 
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST_DETAILS, [
                 'idShoppingList' => $shoppingListItemTransfer->getFkShoppingList(),
             ]);
         }
 
         $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_REMOVE_SUCCESS);
 
-        return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
+        return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST_DETAILS, [
             'idShoppingList' => $shoppingListItemTransfer->getFkShoppingList(),
         ]);
     }
@@ -138,7 +151,7 @@ class ShoppingListController extends AbstractShoppingListController
         if (!$shoppingListItemTransferCollection->getItems()->count()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_SELECT_ITEM);
 
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST_DETAILS, [
                 'idShoppingList' => $request->get(static::PARAM_ID_SHOPPING_LIST),
             ]);
         }
@@ -155,14 +168,14 @@ class ShoppingListController extends AbstractShoppingListController
         if ($result->getRequests()->count()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_TO_CART_FAILED);
 
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST_DETAILS, [
                 'idShoppingList' => $request->get(static::PARAM_ID_SHOPPING_LIST),
             ]);
         }
 
         $this->addSuccessMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADDED_TO_CART);
 
-        return $this->redirectResponseInternal(ShoppingListPageConfig::CART_REDIRECT_URL);
+        return $this->redirectResponseInternal(static::ROUTE_CART_PAGE);
     }
 
     /**
@@ -181,7 +194,7 @@ class ShoppingListController extends AbstractShoppingListController
         return $this->view(
             $response,
             [],
-            '@ShoppingListPage/views/shopping-list/print-shopping-list.twig'
+            '@ShoppingListPage/views/print-shopping-list/print-shopping-list.twig'
         );
     }
 
@@ -197,7 +210,7 @@ class ShoppingListController extends AbstractShoppingListController
         if ($shoppingListOverviewResponseTransfer->getIsSuccess() !== true) {
             $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND);
 
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
         }
 
         $shoppingListItems = $this->getShoppingListItems($shoppingListOverviewResponseTransfer);
@@ -260,7 +273,7 @@ class ShoppingListController extends AbstractShoppingListController
         if ($idShoppingList === null) {
             $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEMS_ADDED_TO_CART_SELECT_LIST);
 
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
         }
 
         $shoppingListItemTransfer = $this->executeQuickAddToShoppingListAction($sku, $quantity, $idShoppingList, $request);
@@ -282,10 +295,10 @@ class ShoppingListController extends AbstractShoppingListController
     protected function getQuickAddToShoppingListRedirectResponse(ShoppingListItemTransfer $shoppingListItemTransfer): RedirectResponse
     {
         if (!$shoppingListItemTransfer->getFkShoppingList()) {
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
         }
 
-        return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
+        return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST_DETAILS, [
             'idShoppingList' => $shoppingListItemTransfer->getFkShoppingList(),
         ]);
     }

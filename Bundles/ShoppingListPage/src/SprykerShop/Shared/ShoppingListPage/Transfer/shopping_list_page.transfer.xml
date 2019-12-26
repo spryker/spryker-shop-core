@@ -54,13 +54,6 @@
         <property name="shoppingListItem" type="ShoppingListItem"/>
     </transfer>
 
-    <transfer name="ShoppingListFromCartRequest">
-        <property name="idShoppingList" type="int"/>
-        <property name="shoppingListName" type="string"/>
-        <property name="customer" type="Customer"/>
-        <property name="idQuote" type="int"/>
-    </transfer>
-
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
         <property name="customerReference" type="string"/>

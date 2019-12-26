@@ -1,7 +1,11 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'sort'
+    name: 'sort',
+} %}
+
+{% define data = {
+    parentJsName: '',
 } %}
 
 {% block body %}
@@ -47,12 +51,12 @@
             {% endembed %}
         </div>
 
-        <div class="{{config.name}}__col col col--sm-2 col--lg-1">
-            <button type="submit" class="button button--expand">
+        <div class="{{ config.name }}__col col col--sm-2 col--lg-1">
+            <button type="button" class="button button--expand {{ data.parentJsName }}__trigger">
                 {% include atom('icon') with {
                     data: {
-                        name: 'sort'
-                    }
+                        name: 'sort',
+                    },
                 } only %}
             </button>
         </div>

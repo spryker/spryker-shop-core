@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\ShoppingListWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
@@ -64,5 +65,15 @@ class ShoppingListWidgetToShoppingListClientBridge implements ShoppingListWidget
     public function calculateShoppingListSubtotal(array $shoppingListItemProductViews): int
     {
         return $this->shoppingListClient->calculateShoppingListSubtotal($shoppingListItemProductViews);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    public function createShoppingListFromQuote(ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer): ShoppingListTransfer
+    {
+        return $this->shoppingListClient->createShoppingListFromQuote($shoppingListFromCartRequestTransfer);
     }
 }
