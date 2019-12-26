@@ -1,6 +1,6 @@
 # TabsWidget Module
 [![Build Status](https://travis-ci.org/spryker-shop/tabs-widget.svg)](https://travis-ci.org/spryker-shop/tabs-widget)
-[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/tabs-widget/badge.svg)](https://coveralls.io/github/spryker-shop/tabs-widget)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 The module provides tabs functionality.
 

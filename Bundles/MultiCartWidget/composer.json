@@ -16,8 +16,7 @@
     "spryker-shop/product-detail-page": "*",
     "spryker-shop/quick-order-page": "*",
     "spryker-shop/shared-cart-widget": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker-shop/customer-page": "If you want to use MultiCartMenuItemWidgetPlugin: ^1.3.1",
@@ -35,6 +34,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
