@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\CustomerPage\Form;
 use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -63,7 +65,45 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addShippingAddressField($builder, $options);
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($builder, $options) {
+            /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+            $itemTransfer = $event->getData();
+            $form = $event->getForm();
+
+            if (!$itemTransfer->getRelatedBundleItemIdentifier()) {
+                $form->add(static::FIELD_SHIPPING_ADDRESS, CheckoutAddressForm::class, [
+                    'property_path' => static::PROPERTY_PATH_SHIPPING_ADDRESS,
+                    'data_class' => AddressTransfer::class,
+                    'required' => true,
+                    'validation_groups' => function (FormInterface $form) {
+                        $customerAddressForm = $form->getParent()
+                            ->getParent()
+                            ->getParent()
+                            ->get(CheckoutAddressCollectionForm::FIELD_SHIPPING_ADDRESS);
+
+                        if (!$this->isDeliverToMultipleAddressesEnabled($customerAddressForm)) {
+                            return false;
+                        }
+
+                        if ($this->isNewAddressFormShouldNotBeValidated($customerAddressForm)) {
+                            return false;
+                        }
+
+                        if ($this->isNewAddressFormShouldNotBeValidated($form)) {
+                            return false;
+                        }
+
+                        return [CheckoutAddressCollectionForm::GROUP_SHIPPING_ADDRESS];
+                    },
+                    CheckoutAddressForm::OPTION_VALIDATION_GROUP => $options[static::OPTION_VALIDATION_GROUP],
+                    CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
+                    CheckoutAddressForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
+                    CheckoutAddressForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
+                ]);
+            }
+        });
+
+//        $this->addShippingAddressField($builder, $options);
     }
 
     /**

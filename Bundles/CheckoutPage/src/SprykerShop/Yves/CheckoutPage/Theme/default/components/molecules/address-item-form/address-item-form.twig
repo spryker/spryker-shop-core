@@ -6,6 +6,7 @@
 
 {% define data = {
     form: required,
+    formBundle: required,
     shippingForm: required,
     jsAddressClass: '',
 } %}
@@ -18,6 +19,7 @@
             <hr>
         </div>
     {% endif %}
+
     {% embed molecule('form') with {
         data: {
             form: data.form,
@@ -47,4 +49,37 @@
             </div>
         {% endblock %}
     {% endembed %}
+
+
+    {% embed molecule('form') with {
+        data: {
+            form: data.formBundle,
+            enableStart: false,
+            enableEnd: false,
+            options: {
+                attr: {
+                    class: config.jsName ~ '__form',
+                },
+            },
+        },
+        embed: {
+            jsName: config.jsName,
+            shippingForm: data.shippingForm,
+            jsAddressClass: data.jsAddressClass,
+        },
+    } only %}
+        {% block fields %}
+            <div class="{{ embed.jsName }}__list col col--sm-12">
+                {% include molecule('address-bundle-item-form-field-list', 'CheckoutPage') with {
+                    data: {
+                        bundleItems: data.form,
+                        shippingForm: embed.shippingForm,
+                        jsAddressClass: embed.jsAddressClass,
+                    },
+                } only %}
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+
 {% endblock %}

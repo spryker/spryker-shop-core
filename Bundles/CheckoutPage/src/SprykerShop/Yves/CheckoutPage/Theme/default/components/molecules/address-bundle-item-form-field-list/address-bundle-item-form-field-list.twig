@@ -5,7 +5,7 @@
 } %}
 
 {% define data = {
-    items: required,
+    bundleItems: required,
     shippingForm: required,
     jsAddressClass: '',
 } %}
@@ -17,9 +17,8 @@
 {% block body %}
     {% set isCompanyBusinessUnitShippingAddressApplicable = false %}
 
-    {% for item in data.items %}
-        {% if not item.vars.data.relatedBundleItemIdentifier %}
-        <div class="grid grid--middle {{ config.jsName }}__item-shipping-{{ loop.index }}">
+    {% for item in data.bundleItems %}
+        <div class="grid grid--middle {{ config.jsName }}__bundle-item-shipping-{{ loop.index }}">
             {% set hasShippingAddresses = item.shippingAddress.id_customer_address is defined %}
             {% set hasCompanyUnitAddresses = item.shippingAddress.id_company_unit_address is defined %}
             {% set companyBusinessUnitShippingAddressWidget = findWidget('CompanyBusinessUnitAddressWidget', ['shippingAddress', item.shippingAddress.vars.data]) %}
@@ -62,11 +61,11 @@
                                 {% set index0 = embed.index - 1 %}
                                 {% include molecule('company-business-unit-address-handler', 'CompanyWidget') ignore missing with {
                                     attributes: {
-                                        'form-selector': '.' ~ embed.jsName ~ '__item-shipping-' ~ embed.index,
+                                        'form-selector': '.' ~ embed.jsName ~ '__bundle-item-shipping-' ~ embed.index,
                                         'data-selector': '.' ~ embed.jsName ~ '__trigger--' ~ embed.index,
-                                        'default-address-selector': '.' ~ embed.jsName ~ '__default-address-item-shipping-' ~ embed.index,
-                                        'address-hidden-input-selector': '[name="addressesForm[multiShippingAddresses][' ~ index0 ~ '][shippingAddress][id_customer_address]"]',
-                                        'company-address-hidden-input-selector': '[name="addressesForm[multiShippingAddresses][' ~ index0 ~ '][shippingAddress][id_company_unit_address]"]',
+                                        'default-address-selector': '.' ~ embed.jsName ~ '__default-address-bundle-item-shipping-' ~ embed.index,
+                                        'address-hidden-input-selector': '[name="addressesForm[multiShippingAddressesForBundleItems][' ~ index0 ~ '][shippingAddress][id_customer_address]"]',
+                                        'company-address-hidden-input-selector': '[name="addressesForm[multiShippingAddressesForBundleItems][' ~ index0 ~ '][shippingAddress][id_company_unit_address]"]',
                                         'addresses': data.addresses,
                                     },
                                 } only %}
@@ -74,9 +73,9 @@
 
                             {% block hiddenFields %}
                                 {% set index0 = embed.index - 1 %}
-                                <input type="hidden" name="addressesForm[multiShippingAddresses][{{ index0 }}][shippingAddress][id_customer_address]">
-                                <input type="hidden" name="addressesForm[multiShippingAddresses][{{ index0 }}][shippingAddress][id_company_unit_address]">
-                                <input type="hidden" class="{{ embed.jsName }}__default-address-item-shipping-{{ embed.index }}" value="{{ defaultAddressKey }}">
+                                <input type="hidden" name="addressesForm[multiShippingAddressesForBundleItems][{{ index0 }}][shippingAddress][id_customer_address]">
+                                <input type="hidden" name="addressesForm[multiShippingAddressesForBundleItems][{{ index0 }}][shippingAddress][id_company_unit_address]">
+                                <input type="hidden" class="{{ embed.jsName }}__default-address-bundle-item-shipping-{{ embed.index }}" value="{{ defaultAddressKey }}">
                             {% endblock %}
                         {% endwidget %}
 
@@ -101,7 +100,7 @@
 
             <div class="col col--sm-12">
                 {% include molecule('form') with {
-                    class: config.jsName ~ '__item-shipping ' ~ (hasShippingAddressesAndApplicable ? ' is-hidden ') ~ config.jsName ~ '__item-shipping--' ~ loop.index,
+                    class: config.jsName ~ '__bundle-item-shipping ' ~ (hasShippingAddressesAndApplicable ? ' is-hidden ') ~ config.jsName ~ '__bundle-item-shipping--' ~ loop.index,
                     data: {
                         form: item.shippingAddress,
                         enableStart: false,
@@ -124,14 +123,13 @@
                         class: config.jsName ~ '__toggler',
                         attributes: {
                             'trigger-selector': '.' ~ config.jsName ~ '__trigger--' ~ loop.index,
-                            'target-selector': '.' ~ config.jsName ~ '__item-shipping--' ~ loop.index,
+                            'target-selector': '.' ~ config.jsName ~ '__bundle-item-shipping--' ~ loop.index,
                             'parent-target-class-name': config.jsName,
                         },
                     } only %}
                 {% endif %}
             </div>
         </div>
-        {% endif %}
     {% endfor %}
 
     {% include molecule('is-next-checkout-step-enabled', 'CheckoutPage') with {
@@ -144,7 +142,7 @@
     {% include molecule('validate-next-checkout-step', 'CheckoutPage') with {
         class: config.jsName ~ '__validate-next-checkout-step',
         attributes: {
-            'container-selector': '.' ~ config.jsName ~ '__item-shipping',
+            'container-selector': '.' ~ config.jsName ~ '__bundle-item-shipping',
             'target-selector': '.' ~ data.jsAddressClass ~ '__form-submit',
             'dropdown-trigger-selector': '.' ~ config.jsName ~ '__trigger',
             'parent-target-class-name': config.jsName,

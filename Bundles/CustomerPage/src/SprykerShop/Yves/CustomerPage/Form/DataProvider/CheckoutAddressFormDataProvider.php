@@ -69,9 +69,11 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
          * @deprecated Exists for Backward Compatibility reasons only.
          */
         $quoteTransfer->setShippingAddress($this->getShippingAddress($quoteTransfer));
-
         $quoteTransfer->setBillingAddress($this->getBillingAddress($quoteTransfer));
+
         $quoteTransfer = $this->setItemLevelShippingAddresses($quoteTransfer);
+        $quoteTransfer = $this->setBundleItemLevelShippingAddresses($quoteTransfer);
+
         $quoteTransfer = $this->setBillingSameAsShipping($quoteTransfer);
 
         return $quoteTransfer;
@@ -337,6 +339,26 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     protected function setItemLevelShippingAddresses(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() !== null
+                && $itemTransfer->getShipment()->getShippingAddress() !== null
+            ) {
+                continue;
+            }
+
+            $itemTransfer->setShipment($this->getItemShipment($itemTransfer));
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setBundleItemLevelShippingAddresses(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() !== null
                 && $itemTransfer->getShipment()->getShippingAddress() !== null
             ) {

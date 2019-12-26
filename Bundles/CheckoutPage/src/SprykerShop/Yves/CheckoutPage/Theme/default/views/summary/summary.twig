@@ -65,14 +65,17 @@
                     } only %}
                     {% endwidget %}
 
-                    {% set itemsExceptConfiguredBundles = shipmentGroup.items | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}
+                    {#{% set itemsExceptConfiguredBundles = shipmentGroup.items | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}#}
+                    {% set itemsExceptConfiguredBundles = true %}
 
                     {% if itemsExceptConfiguredBundles %}
-                        {% for item in itemsExceptConfiguredBundles %}
-                            {% set isGiftCardExists = item.giftCardMetadata is not null and item.giftCardMetadata.isGiftCard %}
+                        {% for item in shipmentGroup.cartItems %}
                             {% set item = item.bundleProduct ?? item %}
+                            {% set isConfiguredBundle = item.configuredBundleItem is defined and item.configuredBundleItem is not empty %}
+                            {% set isGiftCardExists = item.giftCardMetadata is not null and item.giftCardMetadata.isGiftCard %}
 
-                            {% embed molecule('summary-item', 'CheckoutPage') with {
+                            {% if not isConfiguredBundle %}
+                                {% embed molecule('summary-item', 'CheckoutPage') with {
                                 data: {
                                     name: item.name,
                                     quantity: item.quantity,
@@ -110,6 +113,7 @@
                                     {% endif %}
                                 {% endblock %}
                             {% endembed %}
+                            {% endif %}
                         {% endfor %}
                     {% endif %}
                 </div>

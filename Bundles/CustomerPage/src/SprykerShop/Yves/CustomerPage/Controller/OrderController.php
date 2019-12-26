@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
@@ -155,6 +156,8 @@ class OrderController extends AbstractCustomerController
             ->getShipmentService()
             ->groupItemsByShipment($orderTransfer->getItems());
 
+        $shipmentGroupCollection = $this->expandShipmentGroupsWithCartItems($shipmentGroupCollection, $orderTransfer);
+
         $orderShipmentExpenses = $this->prepareOrderShipmentExpenses($orderTransfer, $shipmentGroupCollection);
 
         return [
@@ -162,6 +165,26 @@ class OrderController extends AbstractCustomerController
             'shipmentGroups' => $shipmentGroupCollection,
             'orderShipmentExpenses' => $orderShipmentExpenses,
         ];
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupTransfers
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    protected function expandShipmentGroupsWithCartItems(ArrayObject $shipmentGroupTransfers, OrderTransfer $orderTransfer): ArrayObject
+    {
+        foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
+            $cartItems = $this->getFactory()->getProductBundleClient()->getGroupedBundleItems(
+                $shipmentGroupTransfer->getItems(),
+                $orderTransfer->getBundleItems()
+            );
+
+            $shipmentGroupTransfer->setCartItems($cartItems);
+        }
+
+        return $shipmentGroupTransfers;
     }
 
     /**
