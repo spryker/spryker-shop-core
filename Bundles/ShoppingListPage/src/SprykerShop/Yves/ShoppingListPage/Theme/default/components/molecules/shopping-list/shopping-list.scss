@@ -1,0 +1,29 @@
+@mixin shopping-list-page-shopping-list($name: '.shopping-list') {
+    #{$name} {
+        width: 100%;
+
+        &__head {
+            @include helper-font-weight(bold);
+            border-bottom: 1px solid $setting-color-light;
+        }
+
+        &__cell {
+            padding: map-get($setting-spacing, 'default') map-get($setting-spacing, 'small');
+        }
+
+        &__row {
+            border-top: 1px solid $setting-color-light;
+
+            &--disable {
+                opacity: 0.4;
+            }
+
+            &:first-child,
+            &--borderless {
+                border: none;
+            }
+        }
+
+        @content;
+    }
+}
