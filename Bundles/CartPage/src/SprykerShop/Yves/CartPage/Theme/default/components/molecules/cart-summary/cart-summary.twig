@@ -125,6 +125,12 @@
                 <hr>
                 {{ parent() }}
             {% endblock %}
+        {% nowidget %}
+            {% set checkoutButtonText =  'cart.checkout' | trans %}
+
+            <a href="{{ url('checkout-index') }}" class="button button--expand button--success" data-init-single-click title={{ checkoutButtonText }} {{ qa('cart-go-to-checkout') }}>
+                {{ checkoutButtonText }}
+            </a>
         {% endwidget %}
     {% endif %}
 

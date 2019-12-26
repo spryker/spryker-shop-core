@@ -7,6 +7,7 @@
         <property name="idShoppingList" type="int"/>
         <property name="name" type="string"/>
         <property name="customerReference" type="string"/>
+        <property name="owner" type="string"/>
         <property name="idCompanyUser" type="int"/>
         <property name="items" type="ShoppingListItem[]" singular="item"/>
     </transfer>
@@ -54,6 +55,14 @@
     <transfer name="Route">
         <property name="route" type="string"/>
         <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="ShoppingListFromCartRequest">
+        <property name="newShoppingListName" type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="idShoppingList" type="int"/>
+        <property name="shoppingListName" type="string"/>
+        <property name="idQuote" type="int"/>
     </transfer>
 
     <transfer name="Quote">

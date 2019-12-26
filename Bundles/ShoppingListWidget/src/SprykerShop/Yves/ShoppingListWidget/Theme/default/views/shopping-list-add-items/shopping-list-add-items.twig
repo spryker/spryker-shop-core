@@ -7,33 +7,50 @@
 
 {% block template %}
     {% if data.isVisible %}
-        {{parent()}}
+        {{ parent() }}
     {% endif %}
 {% endblock %}
 
 {% block body %}
     <hr>
-    <div class="grid grid--bottom grid--justify">
-        <div class="col col--sm-12 col--md-3"></div>
-        <div class="col col--sm-12 col--md-2">
-        {%  if data.shoppingListOptions | length %}
-            {% include atom('select') with {
-                modifiers: ['expand'],
-                attributes: {
-                    name: 'idShoppingList'
-                },
-                data: {
-                    options: data.shoppingListOptions
-                }
-            } only %}
-        {% endif %}
-        </div>
+    {% block content %}
+        <div class="grid grid--bottom grid--justify">
+            {% block contentInner %}
+                {% set selectModifiers = ['expand'] %}
 
-        <div class="col col--sm-12 col--md-3">
-        <button type="submit" name="addToShoppingList" class="button button--expand button--success">
-            {{ 'shopping_list_add_items_widget.add_to_shopping_list' | trans }}
-        </button>
+                {% block selectContainer %}
+                    <div class="col col--sm-12 col--md-3"></div>
+                    <div class="col col--sm-12 col--md-2">
+                        {% block select %}
+                            {% if data.shoppingListOptions | length %}
+                                {% include atom('select') with {
+                                    modifiers: selectModifiers,
+                                    data: {
+                                        options: data.shoppingListOptions,
+                                    },
+                                    attributes: {
+                                        name: 'idShoppingList',
+                                    },
+                                } only %}
+                            {% endif %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+
+                {% set buttonClasses = 'button button--expand button--success' %}
+
+                {% block buttonContainer %}
+                    <div class="col col--sm-12 col--md-3">
+                        {% block button %}
+                            <button type="submit" name="addToShoppingList" class="{{ buttonClasses }}">
+                                {{ 'shopping_list_add_items_widget.add_to_shopping_list' | trans }}
+                            </button>
+                        {% endblock %}
+                    </div>
+                    <div class="col col--sm-12 col--md-1"></div>
+                    <div class="col col--sm-12 col--md-2"></div>
+                {% endblock %}
+            {% endblock %}
         </div>
-        <div class="col col--sm-12 col--md-3"></div>
-    </div>
+    {% endblock %}
 {% endblock %}
