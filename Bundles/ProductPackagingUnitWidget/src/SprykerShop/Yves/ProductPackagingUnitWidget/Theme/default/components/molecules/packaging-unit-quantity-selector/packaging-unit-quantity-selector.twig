@@ -29,7 +29,7 @@
     {% set leftColumnModifierClass = salesUnitCount ? 'col--sm-7' : 'col--sm-5' %}
     {% set rightColumnModifierClass = salesUnitCount ? 'col--sm-4' : 'col--sm-6' %}
 
-    <div class="{{ config.jsName }}__product-packaging-new-price-block product-packaging-new-price is-hidden">
+    <div class="{{ config.jsName }}__product-packaging-new-price-block is-hidden">
         <span>{{ "measurement_units.new-price" | trans }}:</span>
         <div class="{{ config.jsName }}__product-packaging-new-price-value-block"></div>
         <hr>
