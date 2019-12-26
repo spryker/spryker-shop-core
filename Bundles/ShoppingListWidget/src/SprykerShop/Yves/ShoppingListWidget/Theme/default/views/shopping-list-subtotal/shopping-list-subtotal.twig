@@ -1,14 +1,16 @@
 {% extends template('widget') %}
 
 {% define data = {
-    shoppingListSubtotal: _widget.shoppingListSubtotal
+    shoppingListSubtotal: _widget.shoppingListSubtotal,
 } %}
+
+{% set subtotalPriceClasses = 'spacing spacing--inner spacing-bottom spacing-bottom--big' %}
 
 {% block body %}
     {% include molecule('subtotal-price', 'ShoppingListWidget') with {
-        class: 'spacing spacing--inner spacing-bottom spacing-bottom--big',
+        class: subtotalPriceClasses,
         data: {
-            amount: data.shoppingListSubtotal | money
-        }
+            amount: data.shoppingListSubtotal,
+        },
     } only %}
 {% endblock %}

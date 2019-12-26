@@ -54,6 +54,10 @@
 
                             <p>{{ 'customer.order.item_quantity' | trans }}: {{ concreteItem.quantity }}</p>
 
+                            {% if concreteItem.amount %}
+                                <p>{{ 'customer.order.item_amount' | trans }}: {{ concreteItem.amount.toFloat() }}</p>
+                            {% endif %}
+
                             {% if isBundle %}
                                 <div class="spacing-bottom">
                                     {% block bundleDetailRow %}

@@ -6,19 +6,25 @@
     activeShoppingListId: _widget.activeShoppingListId,
 } %}
 
-{% set itemClass = data.isActivePage ? ' menu__item--active' : '' %}
-{% set itemClass = itemClass ~ (data.shoppingListCollection | length ? ' menu__item--has-children-list' : '') %}
+{% set itemClass = data.isActivePage ? ' menu__item--active' %}
+{% set shoppingListCollectionLength = data.shoppingListCollection | length %}
+{% set itemClass = itemClass ~ (shoppingListCollectionLength ? ' menu__item--has-children-list') %}
 
 {% block body %}
     <li class="menu__item {{ itemClass }}">
-        <a href="{{ path('shopping-list') }}" data-id="sidebar-shopping-list">{{ 'shopping_list.shopping_list' | trans }}</a>
-        {% if data.shoppingListCollection | length > 0 %}
-        {% include molecule('shopping-list-navigation', 'ShoppingListPage') with {
-            data: {
-                activeShoppingListId: data.activeShoppingListId,
-                shoppingListCollection: data.shoppingListCollection
-            }
-        } only %}
-        {% endif %}
+        {% block content %}
+            {% block link %}
+                <a href="{{ path('shopping-list') }}" data-id="sidebar-shopping-list">{{ 'shopping_list.shopping_list' | trans }}</a>
+            {% endblock %}
+
+            {% if shoppingListCollectionLength %}
+                {% include molecule('shopping-list-navigation', 'ShoppingListWidget') with {
+                    data: {
+                        activeShoppingListId: data.activeShoppingListId,
+                        shoppingListCollection: data.shoppingListCollection,
+                    },
+                } only %}
+            {% endif %}
+        {% endblock %}
     </li>
 {% endblock %}

@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
 use Generated\Shared\Transfer\ShoppingListDismissRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -19,6 +18,11 @@ class ShoppingListDismissController extends AbstractShoppingListController
 {
     protected const GLOSSARY_KEY_SHOPPING_LIST_PAGE_DISMISS_SUCCESS = 'shopping_list_page.dismiss.success';
     protected const GLOSSARY_KEY_SHOPPING_LIST_PAGE_DISMISS_FAILED = 'shopping_list_page.dismiss.failed';
+
+    /**
+     * @uses \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST
+     */
+    protected const ROUTE_SHOPPING_LIST = 'shopping-list';
 
     /**
      * @param int $idShoppingList
@@ -38,12 +42,12 @@ class ShoppingListDismissController extends AbstractShoppingListController
         if ($shoppingListShareResponseTransfer->getIsSuccess()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_SHOPPING_LIST_PAGE_DISMISS_SUCCESS);
 
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
         }
 
         $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_PAGE_DISMISS_FAILED);
 
-        return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+        return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
     }
 
     /**
@@ -80,7 +84,7 @@ class ShoppingListDismissController extends AbstractShoppingListController
             ->getShoppingList($shoppingListTransfer);
 
         if ($shoppingListTransfer->getCustomerReference() === $customerTransfer->getCustomerReference()) {
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST);
+            return $this->redirectResponseInternal(static::ROUTE_SHOPPING_LIST);
         }
 
         return [
