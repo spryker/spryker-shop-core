@@ -2,11 +2,13 @@
 
 {% define data = {
     options: form.children,
-    rowClass: rowClass
+    rowClass: rowClass,
 } %}
 
+{# @deprecated property "data-product-available" is deprecated: use "data-product-unavailable" instead. #}
 {% define attributes = {
-    'data-product-available': false
+    'data-product-available': false,
+    'data-product-unavailable': attributes['data-product-available'] | default(false),
 } %}
 
 {% block body %}
@@ -17,8 +19,8 @@
                 {% include molecule('shopping-list-product-option-list', 'ProductOptionWidget') with {
                     attributes: attributes,
                     data: {
-                        options: data.options
-                    }
+                        options: data.options,
+                    },
                 } only %}
             </td>
         </tr>

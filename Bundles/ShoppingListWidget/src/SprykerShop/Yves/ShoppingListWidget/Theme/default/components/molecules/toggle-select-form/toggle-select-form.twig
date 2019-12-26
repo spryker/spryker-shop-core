@@ -1,0 +1,21 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'toggle-select-form',
+    tag: 'toggle-select-form',
+} %}
+
+{% define data = {
+    attribute: required,
+    selectAttributes: {
+        'data-select-trigger': '',
+        'target': required,
+        'class-to-toggle': required,
+    },
+    labelOptions: {},
+} %}
+
+{% block body %}
+    {{ form_row(data.attribute, data.labelOptions | merge({ 'attr': data.selectAttributes })) }}
+{% endblock %}
+

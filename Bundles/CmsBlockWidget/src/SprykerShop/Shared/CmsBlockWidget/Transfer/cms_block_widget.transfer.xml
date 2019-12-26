@@ -7,6 +7,26 @@
     </transfer>
 
     <transfer name="CmsBlock">
+        <property name="idCmsBlock" type="int"/>
+        <property name="name" type="string"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="cmsBlockTemplate" type="CmsBlockTemplate"/>
+        <property name="glossary" type="CmsBlockGlossary"/>
+    </transfer>
+
+    <transfer name="CmsBlockTemplate">
+        <property name="templatePath" type="string"/>
+    </transfer>
+
+    <transfer name="CmsBlockGlossary">
+        <property name="glossaryPlaceholders" type="CmsBlockGlossaryPlaceholder[]" singular="glossaryPlaceholder"/>
+    </transfer>
+
+    <transfer name="CmsBlockGlossaryPlaceholder">
+        <property name="placeholder" type="string"/>
+        <property name="translationKey" type="string"/>
     </transfer>
 
     <transfer name="Store">
