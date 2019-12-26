@@ -21,15 +21,20 @@ export default class ActionSingleClickEnforcer extends Component {
         const targetElement = <HTMLElement>event.currentTarget;
         const isLink: boolean = targetElement.matches('a');
         const form: HTMLFormElement = targetElement.closest('form');
-        const submitButton = form ? <HTMLButtonElement | HTMLInputElement>form.querySelector('[type="submit"]')
-            || <HTMLButtonElement>form.getElementsByTagName('button')[0] : undefined;
+        const submitButton = form ? <HTMLButtonElement | HTMLInputElement>
+            form.querySelector('[type="submit"]') : undefined;
+        const targetButton = form ? <HTMLButtonElement>form.getElementsByTagName('button')[0] : undefined;
 
         if (submitButton) {
             this.disableElement(submitButton);
+
+            return;
         }
 
-        if (form && submitButton) {
-            form.submit();
+        if (targetButton) {
+            this.disableElement(targetButton);
+
+            return;
         }
 
         if (isLink) {
