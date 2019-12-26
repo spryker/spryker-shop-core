@@ -1,5 +1,6 @@
 {
   "include": {
-    "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure."
+    "spryker-shop/shop-ui": "ShopUi provides basic frontend infrastructure.",
+    "spryker/price": "Forward compatibility for price usage."
   }
 }
