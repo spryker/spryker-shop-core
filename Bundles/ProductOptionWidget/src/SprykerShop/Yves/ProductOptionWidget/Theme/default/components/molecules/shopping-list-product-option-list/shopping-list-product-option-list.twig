@@ -1,15 +1,17 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'shopping-list-product-option-list'
+    name: 'shopping-list-product-option-list',
 } %}
 
 {% define data = {
-    options: required
+    options: required,
 } %}
 
+{# @deprecated property "data-product-available" is deprecated: use "data-product-unavailable" instead. #}
 {% define attributes = {
-    'data-product-available': false
+    'data-product-available': false,
+    'data-product-unavailable': attributes['data-product-available'] | default(false),
 } %}
 
 {% block body %}
@@ -22,16 +24,18 @@
                 modifiers: ['expand'],
                 attributes: {
                     name: child.vars.full_name,
-                    disabled: attributes['data-product-available']
+                    disabled: attributes['data-product-unavailable'],
                 },
                 embed: {
-                    options: child.vars.choices
-                }
+                    options: child.vars.choices,
+                },
             } only %}
                 {% block options %}
                     <option value="">{{ 'product.product_options_select' | trans }}</option>
                     {% for option in embed.options %}
-                        <option value="{{option.data.getIdProductOptionValue}}" {% if option.data.getIsSelected %} selected {% endif %}>
+                        {% set optionAttributeSelected = option.data.getIsSelected ? 'selected' %}
+
+                        <option value="{{ option.data.getIdProductOptionValue }}" {{ optionAttributeSelected }}>
                             {{ option.data.getValue | trans }} {{ option.data.getPrice | money }}
                         </option>
                     {% endfor %}

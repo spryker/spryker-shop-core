@@ -15,16 +15,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class ShoppingListMenuItemWidget extends AbstractWidget
 {
     protected const PAGE_KEY_SHOPPING_LIST = 'shoppingList';
-
-    /**
-     * @var string
-     */
-    protected $activePage;
-
-    /**
-     * @var int
-     */
-    protected $activeShoppingListId;
+    protected const PARAMETER_IS_ACTIVE_PAGE = 'isActivePage';
+    protected const PARAMETER_SHOPPING_LIST_COLLECTION = 'shoppingListCollection';
+    protected const PARAMETER_ACTIVE_SHOPPING_LIST_ID = 'activeShoppingListId';
 
     /**
      * @param string $activePage
@@ -32,12 +25,9 @@ class ShoppingListMenuItemWidget extends AbstractWidget
      */
     public function __construct(string $activePage, ?int $activeEntityId = null)
     {
-        $this->activePage = $activePage;
-        $this->activeShoppingListId = $activeEntityId;
-
-        $this->addActivePageParameter();
-        $this->addShoppingListCollectionParameter();
-        $this->addActiveShoppingListIdParameter();
+        $this->addActivePageParameter($activePage);
+        $this->addShoppingListCollectionParameter($activePage);
+        $this->addActiveShoppingListIdParameter($activePage, $activeEntityId);
     }
 
     /**
@@ -57,35 +47,50 @@ class ShoppingListMenuItemWidget extends AbstractWidget
     }
 
     /**
+     * @param string $activePage
+     *
      * @return void
      */
-    protected function addActivePageParameter(): void
+    protected function addActivePageParameter(string $activePage): void
     {
-        $this->addParameter('isActivePage', $this->isShoppingListPageActive());
+        $this->addParameter(static::PARAMETER_IS_ACTIVE_PAGE, $this->isShoppingListPageActive($activePage));
     }
 
     /**
+     * @param string $activePage
+     *
      * @return void
      */
-    protected function addShoppingListCollectionParameter(): void
+    protected function addShoppingListCollectionParameter(string $activePage): void
     {
-        $this->addParameter('shoppingListCollection', $this->isShoppingListPageActive() ? $this->getCustomerShoppingListCollection() : []);
+        $this->addParameter(
+            static::PARAMETER_SHOPPING_LIST_COLLECTION,
+            $this->isShoppingListPageActive($activePage) ? $this->getCustomerShoppingListCollection() : []
+        );
     }
 
     /**
+     * @param string $activePage
+     * @param int|null $activeShoppingListId
+     *
      * @return void
      */
-    protected function addActiveShoppingListIdParameter(): void
+    protected function addActiveShoppingListIdParameter(string $activePage, ?int $activeShoppingListId = null): void
     {
-        $this->addParameter('activeShoppingListId', $this->isShoppingListPageActive() ? $this->activeShoppingListId : []);
+        $this->addParameter(
+            static::PARAMETER_ACTIVE_SHOPPING_LIST_ID,
+            $this->isShoppingListPageActive($activePage) ? $activeShoppingListId : []
+        );
     }
 
     /**
+     * @param string $activePage
+     *
      * @return bool
      */
-    protected function isShoppingListPageActive(): bool
+    protected function isShoppingListPageActive(string $activePage): bool
     {
-        return $this->activePage === static::PAGE_KEY_SHOPPING_LIST;
+        return $activePage === static::PAGE_KEY_SHOPPING_LIST;
     }
 
     /**

@@ -61,7 +61,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.amountInSalesUnitInput = <HTMLInputElement>document.getElementById('user-amount');
         this.amountDefaultInBaseUnitInput = <HTMLInputElement>document.getElementById('default-amount');
         this.amountInBaseUnitInput = <HTMLInputElement>document.getElementById('amount');
-        this.packagingUnitAmountInput = <HTMLInputElement>document.getElementById('packaging-unit-amount');
+        this.packagingUnitAmountInput = <HTMLInputElement>document.getElementsByClassName('select-measurement-unit')[0];
         this.productPackagingNewPriceBlock = <HTMLInputElement>document.getElementById('product-packaging-new-price-block');
         this.productPackagingNewPriceValueBlock = <HTMLInputElement>document.getElementById('product-packaging-new-price-value-block');
         this.itemBasePriceInput = <HTMLInputElement>document.getElementById('item-base-price');
@@ -165,7 +165,9 @@ export default class PackagingUnitQuantitySelector extends Component {
             this.measurementUnitInput.addEventListener('change', (event: Event) => this.measurementUnitInputChange(event));
         }
 
-        this.amountInSalesUnitInput.addEventListener('input', (event: Event) => this.amountInputChange());
+        if (this.amountInSalesUnitInput) {
+            this.amountInSalesUnitInput.addEventListener('input', (event: Event) => this.amountInputChange());
+        }
 
         if (this.leadSalesUnitSelect) {
             this.leadSalesUnitSelect.addEventListener('change', (event: Event) => this.leadSalesUnitSelectChange(event));

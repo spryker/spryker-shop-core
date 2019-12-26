@@ -127,8 +127,10 @@ class CartPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addCartRemoveRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/cart/remove/{sku}/', 'CartPage', 'Cart', 'removeAction');
+        $route = $this->buildRoute('/cart/remove/{sku}/{groupKey}', 'CartPage', 'Cart', 'removeAction');
         $route = $route->setRequirement('sku', static::SKU_PATTERN);
+        $route = $route->setDefault('groupKey', '');
+        
         $routeCollection->add(static::ROUTE_CART_REMOVE, $route);
 
         return $routeCollection;
