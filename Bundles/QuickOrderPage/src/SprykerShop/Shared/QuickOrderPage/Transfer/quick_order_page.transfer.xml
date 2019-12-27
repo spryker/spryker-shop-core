@@ -66,4 +66,7 @@
     <transfer name="CsvFile">
     </transfer>
 
+    <transfer name="Quote">
+    </transfer>
+
 </transfers>
