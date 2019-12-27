@@ -20,34 +20,41 @@ export default class ActionSingleClickEnforcer extends Component {
     protected onTargetClick(event: Event): void {
         const targetElement = <HTMLElement>event.currentTarget;
         const isLink: boolean = targetElement.matches('a');
-        const form: HTMLFormElement = targetElement.closest('form');
-        const submitButton = form ? <HTMLButtonElement | HTMLInputElement>
-            form.querySelector('[type="submit"]') : undefined;
-        const targetButton = form ? <HTMLButtonElement>form.getElementsByTagName('button')[0] : undefined;
-
-        if (submitButton) {
-            this.disableElement(submitButton);
-
-            return;
-        }
-
-        if (targetButton) {
-            this.disableElement(targetButton);
-
-            return;
-        }
 
         if (isLink) {
-            event.preventDefault();
-            const url: string = (<HTMLLinkElement>targetElement).href;
+            this.disableLink(event, targetElement);
 
-            window.location.href = url;
+            return;
         }
 
-        this.disableElement(targetElement);
+        const form: HTMLFormElement = targetElement.closest('form');
+
+        if (form) {
+            const buttonType = targetElement.getAttribute('type');
+            this.disableButton(targetElement);
+
+            if (buttonType === 'submit') {
+                form.submit();
+            }
+
+            return;
+        }
     }
 
-    protected disableElement(targetElement: HTMLElement): void {
+    protected disableLink(event: Event, targetElement: HTMLElement): void {
+        event.preventDefault();
+
+        if (targetElement.dataset && targetElement.dataset.disabled) {
+            return;
+        }
+
+        const url: string = (<HTMLLinkElement>targetElement).href;
+
+        targetElement.dataset.disabled = 'true';
+        window.location.href = url;
+    }
+
+    protected disableButton(targetElement: HTMLElement): void {
         targetElement.setAttribute('disabled', 'disabled');
     }
 
