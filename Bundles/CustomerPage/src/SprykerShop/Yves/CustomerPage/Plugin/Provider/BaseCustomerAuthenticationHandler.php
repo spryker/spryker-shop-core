@@ -27,7 +27,7 @@ class BaseCustomerAuthenticationHandler extends AbstractPlugin
     protected function createRefererRedirectResponse(Request $request, ?string $defaultRedirectUrl = null)
     {
         $targetUrl = $this->filterUrl(
-            $request->headers->get('Referer'),
+            $this->getConfig()->getFailureLoginUrl() ?? $request->headers->get('Referer'),
             $this->getConfig()->getYvesHost(),
             $defaultRedirectUrl ?? $this->getHomeUrl()
         );
@@ -38,20 +38,20 @@ class BaseCustomerAuthenticationHandler extends AbstractPlugin
     }
 
     /**
-     * @param string|null $refererUrl
+     * @param string|null $redirectUrl
      * @param string $allowedHost
      * @param string $fallbackUrl
      *
      * @return string|null
      */
-    protected function filterUrl($refererUrl, $allowedHost, $fallbackUrl)
+    protected function filterUrl($redirectUrl, $allowedHost, $fallbackUrl)
     {
-        if ($refererUrl === null) {
+        if ($redirectUrl === null) {
             return $fallbackUrl;
         }
 
         $allowedUrl = sprintf('#^(?P<scheme>http|https)://%s/(?P<uri>.*)$#', $allowedHost);
-        $isRefererUrlAllowed = (bool)preg_match($allowedUrl, $refererUrl, $matches);
+        $isRefererUrlAllowed = (bool)preg_match($allowedUrl, $redirectUrl, $matches);
         if ($isRefererUrlAllowed) {
             return sprintf('%s://%s/%s', $matches['scheme'], $allowedHost, $matches['uri']);
         }

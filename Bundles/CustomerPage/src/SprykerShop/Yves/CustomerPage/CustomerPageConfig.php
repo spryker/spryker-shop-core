@@ -54,4 +54,12 @@ class CustomerPageConfig extends AbstractBundleConfig
     {
         return $this->get(CustomerConstants::CUSTOMER_ANONYMOUS_PATTERN);
     }
+
+    /**
+     * @return string|null
+     */
+    public function getFailureLoginUrl(): ?string
+    {
+        return null;
+    }
 }
