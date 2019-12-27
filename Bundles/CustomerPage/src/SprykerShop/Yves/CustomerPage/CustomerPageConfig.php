@@ -56,6 +56,9 @@ class CustomerPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns URL to redirect in case of login failure
+     *
      * @return string|null
      */
     public function getFailureLoginUrl(): ?string
