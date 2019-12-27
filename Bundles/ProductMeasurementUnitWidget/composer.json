@@ -13,12 +13,11 @@
   },
   "require-dev": {
     "spryker-shop/cart-page": "*",
-    "spryker-shop/product-detail-page": "*",
     "spryker/code-sniffer": "*"
   },
   "suggest": {
-    "spryker-shop/cart-page": "If you want to use QuantitySalesUnitWidgetPlugin.",
-    "spryker-shop/product-detail-page": "if you want to use ProductMeasurementUnitWidgetPlugin."
+    "spryker-shop/cart-page": "If you want to use CartProductMeasurementUnitQuantitySelectorWidget.",
+    "spryker-shop/product-detail-page": "if you want to use ManageProductMeasurementUnitWidget."
   },
   "autoload": {
     "psr-4": {
