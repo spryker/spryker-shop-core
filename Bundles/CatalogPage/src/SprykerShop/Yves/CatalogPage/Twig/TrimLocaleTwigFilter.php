@@ -33,6 +33,9 @@ class TrimLocaleTwigFilter extends TwigFilter
         parent::__construct($this->getFilterName(), $this->getFilter());
     }
 
+    /**
+     * @return string
+     */
     public function getFilterName(): string
     {
         return static::FILTER_TRIM_LOCALE;
