@@ -56,7 +56,7 @@ class CustomerPageConfig extends AbstractBundleConfig
     }
 
     /**
-     * URL to redirect in case of login failure.
+     * URL to redirect in case of authentication failure.
      * If return value is null - will be redirected to referer URL.
      * If referer URL is null - will be redirected to home page.
      *
