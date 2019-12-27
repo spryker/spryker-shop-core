@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\QuickOrderPage\Form\Handler;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToCartClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToQuoteClientInterface;
 use SprykerShop\Yves\QuickOrderPage\Dependency\Client\QuickOrderPageToZedRequestClientInterface;
@@ -96,9 +97,9 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
             return false;
         }
 
-        $this->quoteClient->clearQuote();
+        $this->clearQuote();
 
-        return $this->addToCart($quickOrderTransfer);
+        return $this->addItemsToCart($quickOrderTransfer);
     }
 
     /**
@@ -109,6 +110,14 @@ class QuickOrderFormHandler implements QuickOrderFormHandlerInterface
     protected function hasItems(QuickOrderTransfer $quickOrderTransfer): bool
     {
         return (bool)$quickOrderTransfer->getItems()->count();
+    }
+
+    /**
+     * @return void
+     */
+    protected function clearQuote(): void
+    {
+        $this->quoteClient->setQuote(new QuoteTransfer());
     }
 
     /**

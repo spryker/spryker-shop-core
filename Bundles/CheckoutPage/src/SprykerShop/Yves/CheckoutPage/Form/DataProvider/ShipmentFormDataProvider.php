@@ -27,7 +27,6 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClient
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentCollectionForm;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentForm;
-use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface;
 
 class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
 {
@@ -67,11 +66,6 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected $checkoutPageConfig;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface
-     */
-    protected $giftCardItemsChecker;
-
-    /**
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface
      */
     protected $productBundleClient;
@@ -82,7 +76,6 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
-     * @param \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface $giftCardItemsChecker
      * @param \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig $checkoutPageConfig
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface $productBundleClient
      */
@@ -92,7 +85,6 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         Store $store,
         MoneyPluginInterface $moneyPlugin,
         CheckoutPageToShipmentServiceInterface $shipmentService,
-        GiftCardItemsCheckerInterface $giftCardItemsChecker,
         CheckoutPageConfig $checkoutPageConfig,
         CheckoutPageToProductBundleClientInterface $productBundleClient
     ) {
@@ -101,7 +93,6 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         $this->store = $store;
         $this->moneyPlugin = $moneyPlugin;
         $this->shipmentService = $shipmentService;
-        $this->giftCardItemsChecker = $giftCardItemsChecker;
         $this->checkoutPageConfig = $checkoutPageConfig;
         $this->productBundleClient = $productBundleClient;
     }
@@ -458,17 +449,30 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     protected function filterGiftCardForShipmentGroupCollection(ArrayObject $shipmentGroupCollection): ArrayObject
     {
-        $shipmentGroupForRemoveIndexes = [];
         foreach ($shipmentGroupCollection as $shipmentGroupIndex => $shipmentGroupTransfer) {
-            if ($this->giftCardItemsChecker->hasOnlyGiftCardItems($shipmentGroupTransfer->getItems())) {
-                $shipmentGroupForRemoveIndexes[] = $shipmentGroupIndex;
+            $shipmentGroupTransfer->setItems($this->removeGiftCardItem($shipmentGroupTransfer->getItems()));
+            if ($shipmentGroupTransfer->getItems()->count() === 0) {
+                $shipmentGroupCollection->offsetUnset($shipmentGroupIndex);
             }
         }
 
-        foreach ($shipmentGroupForRemoveIndexes as $shipmentGroupForRemoveIndex) {
-            $shipmentGroupCollection->offsetUnset($shipmentGroupForRemoveIndex);
+        return $shipmentGroupCollection;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function removeGiftCardItem(ArrayObject $itemTransfers): ArrayObject
+    {
+        foreach ($itemTransfers as $itemIndex => $itemTransfer) {
+            $giftCardMetadataTransfer = $itemTransfer->getGiftCardMetadata();
+            if ($giftCardMetadataTransfer && $giftCardMetadataTransfer->getIsGiftCard()) {
+                $itemTransfers->offsetUnset($itemIndex);
+            }
         }
 
-        return $shipmentGroupCollection;
+        return $itemTransfers;
     }
 }

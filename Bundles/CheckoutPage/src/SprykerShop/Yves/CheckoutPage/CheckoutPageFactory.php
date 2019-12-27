@@ -162,7 +162,6 @@ class CheckoutPageFactory extends AbstractFactory
             $this->getStore(),
             $this->getMoneyPlugin(),
             $this->getShipmentService(),
-            $this->createGiftCardItemsChecker(),
             $this->getConfig(),
             $this->getProductBundleClient()
         );
