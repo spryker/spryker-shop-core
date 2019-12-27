@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CatalogPage;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCatalogClientBridge;
@@ -22,9 +23,12 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
     public const CLIENT_CATEGORY_STORAGE = 'CLIENT_CATEGORY_STORAGE';
     public const CLIENT_CATALOG = 'CLIENT_CATALOG';
-    public const PLUGIN_CATALOG_PAGE_WIDGETS = 'PLUGIN_CATALOG_PAGE_WIDGETS';
     public const CLIENT_PRODUCT_CATEGORY_FILTER = 'CLIENT_PRODUCT_CATEGORY_FILTER';
     public const CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE = 'CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE';
+
+    public const PLUGIN_CATALOG_PAGE_WIDGETS = 'PLUGIN_CATALOG_PAGE_WIDGETS';
+
+    public const STORE = 'STORE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -39,6 +43,7 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCatalogClient($container);
         $container = $this->addProductCategoryFilterClient($container);
         $container = $this->addProductCategoryFilterStorageClient($container);
+        $container = $this->addStore($container);
         $container = $this->addCatalogPageWidgetPlugins($container);
 
         return $container;
@@ -124,6 +129,20 @@ class CatalogPageDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CLIENT_PRODUCT_CATEGORY_FILTER_STORAGE] = function (Container $container) {
             return new CatalogPageToProductCategoryFilterStorageClientBridge($container->getLocator()->productCategoryFilterStorage()->client());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addStore($container): Container
+    {
+        $container->set(static::STORE, function () {
+            return Store::getInstance();
+        });
 
         return $container;
     }
