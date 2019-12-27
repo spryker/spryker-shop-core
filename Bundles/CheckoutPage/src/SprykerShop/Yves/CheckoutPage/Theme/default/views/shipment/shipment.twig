@@ -48,20 +48,20 @@
                     <div class="col col--sm-12 col--lg-6 grid">
                         {% for item in shipmentGroupForm.vars.data.cartItems %}
                             <div class="col col--sm-12 col--lg-8">
-                                {% set item = item.bundleProduct ?? item %}
+                                {% set cartItem = item.bundleProduct ?? item %}
                                 {% embed molecule('summary-item', 'CheckoutPage') with {
                                     data: {
-                                        name: item.name,
-                                        quantity: item.quantity,
-                                        price: item.sumPrice | money,
-                                        options: item.productOptions | default({}),
+                                        name: cartItem.name,
+                                        quantity: cartItem.quantity,
+                                        price: cartItem.sumPrice | money,
+                                        options: cartItem.productOptions | default({}),
                                         bundleItems: item.bundleItems | default([]),
-                                        quantitySalesUnit: item.quantitySalesUnit,
-                                        amountSalesUnit: item.amountSalesUnit,
-                                        amount: item.amount,
-                                        groupKey: item.groupKey,
-                                        images: item.images,
-                                        sku: item.sku,
+                                        quantitySalesUnit: cartItem.quantitySalesUnit,
+                                        amountSalesUnit: cartItem.amountSalesUnit,
+                                        amount: cartItem.amount,
+                                        groupKey: cartItem.groupKey,
+                                        images: cartItem.images,
+                                        sku: cartItem.sku,
                                     },
                                     embed: {
                                         isLast: not loop.last,

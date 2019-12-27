@@ -359,9 +359,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     protected function setBundleItemLevelShippingAddresses(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() !== null
-                && $itemTransfer->getShipment()->getShippingAddress() !== null
-            ) {
+            if ($itemTransfer->getShipment() && $itemTransfer->getShipment()->getShippingAddress()) {
                 continue;
             }
 

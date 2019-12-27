@@ -129,6 +129,13 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
             }
         }
 
+        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
+            $itemShipmentTransfer = $itemTransfer->getShipment();
+            if ($itemShipmentTransfer !== null && $itemShipmentTransfer->getShipmentSelection() === null) {
+                $itemShipmentTransfer->setShipmentSelection(CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT);
+            }
+        }
+
         if ($quoteTransfer->getShipment() === null) {
             $quoteTransfer->setShipment($shipmentTransfer);
         }

@@ -70,28 +70,28 @@
 
                     {% if itemsExceptConfiguredBundles %}
                         {% for item in shipmentGroup.cartItems %}
-                            {% set item = item.bundleProduct ?? item %}
-                            {% set isConfiguredBundle = item.configuredBundleItem is defined and item.configuredBundleItem is not empty %}
-                            {% set isGiftCardExists = item.giftCardMetadata is not null and item.giftCardMetadata.isGiftCard %}
+                            {% set cartItem = item.bundleProduct ?? item %}
+                            {% set isConfiguredBundle = cartItem.configuredBundleItem is defined and cartItem.configuredBundleItem is not empty %}
+                            {% set isGiftCardExists = cartItem.giftCardMetadata is not null and cartItem.giftCardMetadata.isGiftCard %}
 
                             {% if not isConfiguredBundle %}
                                 {% embed molecule('summary-item', 'CheckoutPage') with {
                                 data: {
-                                    name: item.name,
-                                    quantity: item.quantity,
-                                    price: item.sumPrice | money,
-                                    options: item.productOptions | default({}),
+                                    name: cartItem.name,
+                                    quantity: cartItem.quantity,
+                                    price: cartItem.sumPrice | money,
+                                    options: cartItem.productOptions | default({}),
                                     bundleItems: item.bundleItems | default([]),
-                                    quantitySalesUnit: item.quantitySalesUnit,
-                                    amountSalesUnit: item.amountSalesUnit,
-                                    amount: item.amount,
-                                    images: item.images,
-                                    sku: item.sku,
-                                    groupKey: item.groupKey,
+                                    quantitySalesUnit: cartItem.quantitySalesUnit,
+                                    amountSalesUnit: cartItem.amountSalesUnit,
+                                    amount: cartItem.amount,
+                                    images: cartItem.images,
+                                    sku: cartItem.sku,
+                                    groupKey: cartItem.groupKey,
                                 },
                                 embed: {
                                     isFirst: loop.first,
-                                    item: item,
+                                    item: cartItem,
                                 },
                             } only %}
                                 {% block body %}
