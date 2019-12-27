@@ -55,7 +55,7 @@ class TrimLocaleTwigFilter extends TwigFilter
      */
     protected function trimLocale(string $filterValue): string
     {
-        return preg_filter(
+        return preg_replace(
             $this->getLocalesPattern(),
             '/',
             $filterValue
