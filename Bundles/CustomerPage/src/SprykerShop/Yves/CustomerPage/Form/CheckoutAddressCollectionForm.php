@@ -98,19 +98,6 @@ class CheckoutAddressCollectionForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-//        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
-//        $relatedBundleItemIdentifiers = [];
-//
-//        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
-//            $relatedBundleItemIdentifiers[$itemTransfer->getBundleItemIdentifier()] = $itemTransfer->getShipment();
-//        }
-//
-//        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-//            if ($itemTransfer->getRelatedBundleItemIdentifier() && isset($relatedBundleItemIdentifiers[$itemTransfer->getRelatedBundleItemIdentifier()])) {
-//                $itemTransfer->setShipment($relatedBundleItemIdentifiers[$itemTransfer->getRelatedBundleItemIdentifier()]);
-//            }
-//        }
-//        dd($quoteTransfer->getItems()->offsetGet(1));
         $this
             ->addShippingAddressSubForm($builder, $options)
             ->addItemShippingAddressSubForm($builder, $options)
@@ -526,6 +513,8 @@ class CheckoutAddressCollectionForm extends AbstractType
         if (!$options[static::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES]) {
             return $this;
         }
+
+        // TODO: fix bug with bundle quantity > 1
 
         $fieldOptions = [
             'label' => false,
