@@ -27,17 +27,15 @@ export default class ActionSingleClickEnforcer extends Component {
             return;
         }
 
+        this.disableButton(targetElement);
         const form: HTMLFormElement = targetElement.closest('form');
 
         if (form) {
             const buttonType = targetElement.getAttribute('type');
-            this.disableButton(targetElement);
 
             if (buttonType === 'submit') {
                 form.submit();
             }
-
-            return;
         }
     }
 
