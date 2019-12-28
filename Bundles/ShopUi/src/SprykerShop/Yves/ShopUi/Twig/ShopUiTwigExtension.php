@@ -272,7 +272,7 @@ class ShopUiTwigExtension extends TwigExtension
         }
 
         $locale = $this->store->getCurrentLocale();
-        $this->localesFilterPattern = '#^\/(' . $locale . ')\/#';
+        $this->localesFilterPattern = '#^\/(' . strtok($locale, '_') . ')\/#';
 
         return $this->localesFilterPattern;
     }
