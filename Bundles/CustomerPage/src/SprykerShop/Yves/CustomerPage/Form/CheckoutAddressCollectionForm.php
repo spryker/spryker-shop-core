@@ -41,6 +41,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
     public const OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES = 'can_deliver_to_multiple_shipping_addresses';
     public const OPTION_IS_CUSTOMER_LOGGED_IN = 'is_customer_logged_in';
+    public const OPTION_BUNDLE_ITEMS = 'bundleItems';
 
     public const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
     public const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
@@ -87,7 +88,8 @@ class CheckoutAddressCollectionForm extends AbstractType
         $resolver->setDefined(static::OPTION_ADDRESS_CHOICES)
             ->setRequired(static::OPTION_COUNTRY_CHOICES)
             ->setRequired(static::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES)
-            ->setRequired(static::OPTION_IS_CUSTOMER_LOGGED_IN);
+            ->setRequired(static::OPTION_IS_CUSTOMER_LOGGED_IN)
+            ->setRequired(static::OPTION_BUNDLE_ITEMS);
     }
 
     /**
@@ -117,7 +119,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     {
         $shipmentService = $this->getFactory()->getShipmentService();
 
-        $options = [
+        $fieldOptions = [
             'data_class' => AddressTransfer::class,
             'required' => true,
             'mapped' => false,
@@ -136,17 +138,17 @@ class CheckoutAddressCollectionForm extends AbstractType
             CheckoutAddressForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
         ];
 
-        $builder->add(static::FIELD_SHIPPING_ADDRESS, CheckoutAddressForm::class, $options);
+        $builder->add(static::FIELD_SHIPPING_ADDRESS, CheckoutAddressForm::class, $fieldOptions);
 
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($shipmentService) {
             $this->hydrateShippingAddressSubFormDataFromItemLevelShippingAddresses($event, $shipmentService);
             $this->hydrateShippingAddressSubFormDataFromBundleItemLevelShippingAddresses($event, $shipmentService);
         });
 
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($options) {
             $event = $this->mapSubmittedShippingAddressSubFormDataToItemLevelShippingAddresses($event);
             $event = $this->mapSubmittedShippingAddressSubFormDataToBundleItemLevelShippingAddresses($event);
-            $event = $this->copyBundleItemLevelShippingAddressesToItemLevelShippingAddresses($event);
+            $event = $this->copyBundleItemLevelShippingAddressesToItemLevelShippingAddresses($event, $options);
 
             return $event;
         });
@@ -156,14 +158,28 @@ class CheckoutAddressCollectionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormEvent $event
+     * @param array $options
      *
      * @return \Symfony\Component\Form\FormEvent
      */
-    protected function copyBundleItemLevelShippingAddressesToItemLevelShippingAddresses(FormEvent $event): FormEvent
+    protected function copyBundleItemLevelShippingAddressesToItemLevelShippingAddresses(FormEvent $event, array $options): FormEvent
     {
+        // TODO: refactor it
         $quoteTransfer = $event->getData();
         if (!($quoteTransfer instanceof QuoteTransfer)) {
             return $event;
+        }
+
+        $bundleItems = [];
+
+        foreach ($options[static::OPTION_BUNDLE_ITEMS] as $bundleItem) {
+            $bundleItems[$bundleItem->getGroupKey()] = $bundleItem->getShipment();
+        }
+
+        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
+            if (isset($bundleItems[$itemTransfer->getGroupKey()])) {
+                $itemTransfer->setShipment($bundleItems[$itemTransfer->getGroupKey()]);
+            }
         }
 
         $relatedBundleItemIdentifiers = [];
@@ -514,23 +530,25 @@ class CheckoutAddressCollectionForm extends AbstractType
             return $this;
         }
 
-        // TODO: fix bug with bundle quantity > 1
-
-        $fieldOptions = [
-            'label' => false,
-            'property_path' => static::PROPERTY_PATH_MULTI_SHIPPING_ADDRESSES_FOR_BUNDLE_ITEMS,
-            'entry_type' => CheckoutMultiShippingAddressesForm::class,
-            'entry_options' => [
-                'data_class' => ItemTransfer::class,
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+            $fieldOptions = [
                 'label' => false,
-                CheckoutMultiShippingAddressesForm::OPTION_VALIDATION_GROUP => static::GROUP_SHIPPING_ADDRESS,
-                CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $this->getMultiShippingAddressChoices($options),
-                CheckoutMultiShippingAddressesForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
-                CheckoutMultiShippingAddressesForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
-            ],
-        ];
+                'property_path' => static::PROPERTY_PATH_MULTI_SHIPPING_ADDRESSES_FOR_BUNDLE_ITEMS,
+                'data' => new \ArrayObject($options[static::OPTION_BUNDLE_ITEMS]),
+                'mapped' => false,
+                'entry_type' => CheckoutMultiShippingAddressesForm::class,
+                'entry_options' => [
+                    'data_class' => ItemTransfer::class,
+                    'label' => false,
+                    CheckoutMultiShippingAddressesForm::OPTION_VALIDATION_GROUP => static::GROUP_SHIPPING_ADDRESS,
+                    CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $this->getMultiShippingAddressChoices($options),
+                    CheckoutMultiShippingAddressesForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
+                    CheckoutMultiShippingAddressesForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
+                ],
+            ];
 
-        $builder->add(static::FIELD_MULTI_SHIPPING_ADDRESSES_FOR_BUNDLE_ITEMS, CollectionType::class, $fieldOptions);
+            $event->getForm()->add(static::FIELD_MULTI_SHIPPING_ADDRESSES_FOR_BUNDLE_ITEMS, CollectionType::class, $fieldOptions);
+        });
 
         return $this;
     }

@@ -175,16 +175,62 @@ class OrderController extends AbstractCustomerController
      */
     protected function expandShipmentGroupsWithCartItems(ArrayObject $shipmentGroupTransfers, OrderTransfer $orderTransfer): ArrayObject
     {
+        // TODO: move it to business model
+
+        $mappedBundleItems = $this->getMappedBundleItems($orderTransfer);
+
         foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
-            $cartItems = $this->getFactory()->getProductBundleClient()->getGroupedBundleItems(
-                $shipmentGroupTransfer->getItems(),
-                $orderTransfer->getBundleItems()
-            );
+            $cartItems = [];
+
+            foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
+
+                if (!$itemTransfer->getRelatedBundleItemIdentifier()) {
+                    $cartItems[$itemTransfer->getGroupKey()] = [
+                        'bundleProduct' => $itemTransfer,
+                        'bundleItems' => [],
+                    ];
+
+                    continue;
+                }
+
+                $key = 'bundle_prefix_' . $itemTransfer->getRelatedBundleItemIdentifier();
+
+                if (!isset($cartItems[$key])) {
+                    $cartItems[$key] = [
+                        'bundleProduct' => null,
+                        'bundleItems' => [],
+                    ];
+                }
+
+                $cartItems[$key]['bundleItems'][] = $itemTransfer;
+
+                if (!$cartItems[$key]['bundleProduct'] && isset($mappedBundleItems[$key])) {
+                    $cartItems[$key]['bundleProduct'] = $mappedBundleItems[$key];
+                }
+            }
 
             $shipmentGroupTransfer->setCartItems($cartItems);
         }
 
         return $shipmentGroupTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function getMappedBundleItems(OrderTransfer $orderTransfer): array
+    {
+        $bundleItems = [];
+
+        foreach ($orderTransfer->getItemGroups() as $productBundleGroupTransfer) {
+            if ($productBundleGroupTransfer->getIsBundle()) {
+                $bundleItems['bundle_prefix_' . $productBundleGroupTransfer->getBundleItem()->getBundleItemIdentifier()] = $productBundleGroupTransfer->getBundleItem();
+            }
+        }
+
+        return $bundleItems;
     }
 
     /**

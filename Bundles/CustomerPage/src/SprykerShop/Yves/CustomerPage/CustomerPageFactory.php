@@ -21,6 +21,8 @@ use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServi
 use SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpander;
 use SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
+use SprykerShop\Yves\CustomerPage\Grouper\ProductBundleGrouper;
+use SprykerShop\Yves\CustomerPage\Grouper\ProductBundleGrouperInterface;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapper;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapperInterface;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\AccessDeniedHandler;
@@ -350,5 +352,13 @@ class CustomerPageFactory extends AbstractFactory
     public function createCustomerExpander(): CustomerAddressExpanderInterface
     {
         return new CustomerAddressExpander($this->createCustomerMapper());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Grouper\ProductBundleGrouperInterface
+     */
+    public function createProductBundleGrouper(): ProductBundleGrouperInterface
+    {
+        return new ProductBundleGrouper();
     }
 }

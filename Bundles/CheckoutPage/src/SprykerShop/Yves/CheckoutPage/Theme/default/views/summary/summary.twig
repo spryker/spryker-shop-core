@@ -65,21 +65,17 @@
                     } only %}
                     {% endwidget %}
 
-                    {#{% set itemsExceptConfiguredBundles = shipmentGroup.items | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}#}
-                    {% set itemsExceptConfiguredBundles = true %}
+                    {% for item in shipmentGroup.cartItems %}
+                        {% set cartItem = item.bundleProduct ?? item %}
+                        {% set isConfiguredBundle = cartItem.configuredBundleItem is defined and cartItem.configuredBundleItem is not empty %}
+                        {% set isGiftCardExists = cartItem.giftCardMetadata is not null and cartItem.giftCardMetadata.isGiftCard %}
 
-                    {% if itemsExceptConfiguredBundles %}
-                        {% for item in shipmentGroup.cartItems %}
-                            {% set cartItem = item.bundleProduct ?? item %}
-                            {% set isConfiguredBundle = cartItem.configuredBundleItem is defined and cartItem.configuredBundleItem is not empty %}
-                            {% set isGiftCardExists = cartItem.giftCardMetadata is not null and cartItem.giftCardMetadata.isGiftCard %}
-
-                            {% if not isConfiguredBundle %}
-                                {% embed molecule('summary-item', 'CheckoutPage') with {
+                        {% if not isConfiguredBundle %}
+                            {% embed molecule('summary-item', 'CheckoutPage') with {
                                 data: {
                                     name: cartItem.name,
                                     quantity: cartItem.quantity,
-                                    price: cartItem.sumPrice | money,
+                                    price: cartItem.sumSubtotalAggregation | money,
                                     options: cartItem.productOptions | default({}),
                                     bundleItems: item.bundleItems | default([]),
                                     quantitySalesUnit: cartItem.quantitySalesUnit,
@@ -113,9 +109,8 @@
                                     {% endif %}
                                 {% endblock %}
                             {% endembed %}
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
             <div class="col col--sm-12 col--lg-6">

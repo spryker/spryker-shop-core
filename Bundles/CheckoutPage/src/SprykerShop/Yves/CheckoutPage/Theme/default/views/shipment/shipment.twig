@@ -53,7 +53,7 @@
                                     data: {
                                         name: cartItem.name,
                                         quantity: cartItem.quantity,
-                                        price: cartItem.sumPrice | money,
+                                        price: cartItem.sumSubtotalAggregation | money,
                                         options: cartItem.productOptions | default({}),
                                         bundleItems: item.bundleItems | default([]),
                                         quantitySalesUnit: cartItem.quantitySalesUnit,

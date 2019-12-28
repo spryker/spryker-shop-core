@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
@@ -40,22 +41,30 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     protected $shipmentClient;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface
+     */
+    protected $productBundleClient;
+
+    /**
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface $customerClient
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface $customerService
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface $productBundleClient
      */
     public function __construct(
         CustomerPageToCustomerClientInterface $customerClient,
         Store $store,
         CustomerPageToCustomerServiceInterface $customerService,
-        CheckoutPageToShipmentClientInterface $shipmentClient
+        CheckoutPageToShipmentClientInterface $shipmentClient,
+        CheckoutPageToProductBundleClientInterface $productBundleClient
     ) {
         parent::__construct($customerClient, $store);
 
         $this->customerService = $customerService;
         $this->customerTransfer = $this->getCustomer();
         $this->shipmentClient = $shipmentClient;
+        $this->productBundleClient = $productBundleClient;
     }
 
     /**
@@ -72,7 +81,6 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         $quoteTransfer->setBillingAddress($this->getBillingAddress($quoteTransfer));
 
         $quoteTransfer = $this->setItemLevelShippingAddresses($quoteTransfer);
-        $quoteTransfer = $this->setBundleItemLevelShippingAddresses($quoteTransfer);
 
         $quoteTransfer = $this->setBillingSameAsShipping($quoteTransfer);
 
@@ -86,12 +94,38 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
+        $quoteTransfer = $this->setBundleItemLevelShippingAddresses($quoteTransfer);
+
         return [
             CheckoutAddressCollectionForm::OPTION_ADDRESS_CHOICES => $this->getAddressChoices(),
             CheckoutAddressCollectionForm::OPTION_COUNTRY_CHOICES => $this->getAvailableCountries(),
             CheckoutAddressCollectionForm::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES => $this->canDeliverToMultipleShippingAddresses($quoteTransfer),
             CheckoutAddressCollectionForm::OPTION_IS_CUSTOMER_LOGGED_IN => $this->customerClient->isLoggedIn(),
+            CheckoutAddressCollectionForm::OPTION_BUNDLE_ITEMS => $this->getBundleItemsFromQuote($quoteTransfer),
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function getBundleItemsFromQuote(QuoteTransfer $quoteTransfer): array
+    {
+        $groupedBundleItems = $this->productBundleClient->getGroupedBundleItems(
+            $quoteTransfer->getItems(),
+            $quoteTransfer->getBundleItems()
+        );
+
+        $bundleItems = [];
+
+        foreach ($groupedBundleItems as $groupedBundleItem) {
+            if (is_array($groupedBundleItem)) {
+                $bundleItems[] = $groupedBundleItem['bundleProduct'];
+            }
+        }
+
+        return $bundleItems;
     }
 
     /**
@@ -363,7 +397,10 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
                 continue;
             }
 
-            $itemTransfer->setShipment($this->getItemShipment($itemTransfer));
+            $shipmentTransfer = $itemTransfer->getShipment() ?? new ShipmentTransfer();
+            $shipmentTransfer->setShippingAddress(new AddressTransfer());
+
+            $itemTransfer->setShipment($shipmentTransfer);
         }
 
         return $quoteTransfer;
@@ -394,9 +431,24 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function canDeliverToMultipleShippingAddresses(QuoteTransfer $quoteTransfer): bool
     {
-        return $quoteTransfer->getItems()->count() > 1
+        return $this->isItemsCountApplicable($quoteTransfer)
             && $this->shipmentClient->isMultiShipmentSelectionEnabled()
             && !$this->hasQuoteGiftCardItems($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isItemsCountApplicable(QuoteTransfer $quoteTransfer): bool
+    {
+        $items = $this->productBundleClient->getGroupedBundleItems(
+            $quoteTransfer->getItems(),
+            $quoteTransfer->getBundleItems()
+        );
+
+        return count($items) > 1;
     }
 
     /**
