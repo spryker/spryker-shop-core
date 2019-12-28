@@ -32,7 +32,6 @@ class CatalogPageTwigPlugin extends AbstractPlugin implements TwigPluginInterfac
         $productAbstractReviewTwigExtension = $this->getFactory()->createProductAbstractReviewTwigExtension();
 
         $twig->addExtension($productAbstractReviewTwigExtension);
-        $twig->addFilter($this->getFactory()->createTrimLocaleTwigFilter());
 
         return $twig;
     }

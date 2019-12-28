@@ -7,7 +7,9 @@
 
 namespace SprykerShop\Yves\ShopUi\Twig;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Twig\TwigExtension;
+use Spryker\Shared\Twig\TwigFilter;
 use SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface;
 use SprykerShop\Yves\ShopUi\Twig\Node\ShopUiDefineTwigNode;
 use SprykerShop\Yves\ShopUi\Twig\TokenParser\ShopUiDefineTwigTokenParser;
@@ -27,16 +29,30 @@ class ShopUiTwigExtension extends TwigExtension
     public const FUNCTION_GET_UI_VIEW_COMPONENT_TEMPLATE = 'view';
     public const DEFAULT_MODULE = 'ShopUi';
 
+    protected const FILTER_TRIM_LOCALE = 'trimLocale';
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
     /**
      * @var \SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface|null
      */
     protected $assetsUrlProvider;
 
     /**
+     * @var string
+     */
+    protected $localesFilterPattern;
+
+    /**
+     * @param \Spryker\Shared\Kernel\Store $store
      * @param \SprykerShop\Yves\ShopUi\Twig\Assets\AssetsUrlProviderInterface|null $assetsUrlProvider
      */
-    public function __construct(?AssetsUrlProviderInterface $assetsUrlProvider = null)
+    public function __construct(Store $store, ?AssetsUrlProviderInterface $assetsUrlProvider = null)
     {
+        $this->store = $store;
         $this->assetsUrlProvider = $assetsUrlProvider;
     }
 
@@ -55,7 +71,11 @@ class ShopUiTwigExtension extends TwigExtension
      */
     public function getFilters(): array
     {
-        return [];
+        return [
+            new TwigFilter(static::FILTER_TRIM_LOCALE, function (string $filterValue): string {
+                return $this->trimLocale($filterValue);
+            }),
+        ];
     }
 
     /**
@@ -226,5 +246,34 @@ class ShopUiTwigExtension extends TwigExtension
     protected function getViewTemplate(string $viewModule, string $viewName): string
     {
         return '@' . $viewModule . '/views/' . $viewName . '/' . $viewName . '.twig';
+    }
+
+    /**
+     * @param string $filterValue
+     *
+     * @return string
+     */
+    protected function trimLocale(string $filterValue): string
+    {
+        return preg_replace(
+            $this->getLocalePattern(),
+            '/',
+            $filterValue
+        );
+    }
+
+    /**
+     * @return string
+     */
+    protected function getLocalePattern(): string
+    {
+        if ($this->localesFilterPattern) {
+            return $this->localesFilterPattern;
+        }
+
+        $locale = $this->store->getCurrentLocale();
+        $this->localesFilterPattern = '#^\/(' . $locale . ')\/#';
+
+        return $this->localesFilterPattern;
     }
 }

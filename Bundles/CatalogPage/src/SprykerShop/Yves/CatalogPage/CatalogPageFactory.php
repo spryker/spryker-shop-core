@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CatalogPage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CatalogPage\ActiveSearchFilter\UrlGenerator;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCatalogClientInterface;
@@ -19,7 +18,6 @@ use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInte
 use SprykerShop\Yves\CatalogPage\FacetFilter\FacetFilter;
 use SprykerShop\Yves\CatalogPage\FacetFilter\FacetFilterInterface;
 use SprykerShop\Yves\CatalogPage\Twig\CatalogPageTwigExtension;
-use SprykerShop\Yves\CatalogPage\Twig\TrimLocaleTwigFilter;
 use SprykerShop\Yves\CatalogPage\Validator\PageParametersValidator;
 use SprykerShop\Yves\CatalogPage\Validator\PageParametersValidatorInterface;
 
@@ -122,21 +120,5 @@ class CatalogPageFactory extends AbstractFactory
     public function getModuleConfig(): CatalogPageConfig
     {
         return $this->getConfig();
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CatalogPage\Twig\TrimLocaleTwigFilter
-     */
-    public function createTrimLocaleTwigFilter(): TrimLocaleTwigFilter
-    {
-        return new TrimLocaleTwigFilter($this->getStore());
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore(): Store
-    {
-        return $this->getProvidedDependency(CatalogPageDependencyProvider::STORE);
     }
 }
