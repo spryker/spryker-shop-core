@@ -54,4 +54,8 @@
         <property name="merchantReference" type="string"/>
     </transfer>
 
+    <transfer name="ProductOffer">
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
 </transfers>
