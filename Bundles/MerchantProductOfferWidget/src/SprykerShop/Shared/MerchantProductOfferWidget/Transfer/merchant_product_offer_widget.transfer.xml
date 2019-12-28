@@ -41,11 +41,6 @@
         <property name="productOffer" type="ProductOffer"/>
     </transfer>
 
-    <transfer name="ProductOffer">
-        <property name="productOfferReference" type="string"/>
-        <property name="merchantReference" type="string"/>
-    </transfer>
-
     <transfer name="CurrentProductPrice">
     </transfer>
 
@@ -55,7 +50,8 @@
     </transfer>
 
     <transfer name="Item">
-        <property name="productOffer" type="ProductOffer"/>
+        <property name="productOfferReference" type="string"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
 </transfers>

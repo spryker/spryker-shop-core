@@ -49,16 +49,13 @@ class ProductOfferSoldByMerchantWidget extends AbstractWidget
      */
     protected function addMerchantProfileParameter(ItemTransfer $itemTransfer)
     {
-        if (!$itemTransfer->getProductOffer()) {
+        if (!$itemTransfer->getProductOfferReference()) {
             return $this;
         }
 
-        $itemTransfer->getProductOffer()
-            ->requireProductOfferReference();
-
         $productOfferStorageTransfer = $this->getFactory()
             ->getMerchantProductOfferStorageClient()
-            ->findProductOfferStorageByReference($itemTransfer->getProductOffer()->getProductOfferReference());
+            ->findProductOfferStorageByReference($itemTransfer->getProductOfferReference());
 
         $merchantProfileStorageTransfer = $this->getFactory()
             ->getMerchantProfileStorageClient()

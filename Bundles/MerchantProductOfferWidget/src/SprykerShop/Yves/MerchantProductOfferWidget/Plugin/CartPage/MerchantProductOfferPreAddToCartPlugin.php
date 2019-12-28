@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Plugin\CartPage;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\CartPageExtension\Dependency\Plugin\PreAddToCartPluginInterface;
 
@@ -48,11 +47,8 @@ class MerchantProductOfferPreAddToCartPlugin extends AbstractPlugin implements P
             ->getMerchantProfileStorageClient()
             ->findMerchantProfileStorageData($productOfferStorageTransfer->getIdMerchant());
 
-        $productOfferTransfer = (new ProductOfferTransfer())
-            ->setProductOfferReference($params[static::PARAM_PRODUCT_OFFER_REFERENCE])
+        $itemTransfer->setProductOfferReference($params[static::PARAM_PRODUCT_OFFER_REFERENCE])
             ->setMerchantReference($merchantProfileStorageTransfer->getMerchantReference());
-
-        $itemTransfer->setProductOffer($productOfferTransfer);
 
         return $itemTransfer;
     }
