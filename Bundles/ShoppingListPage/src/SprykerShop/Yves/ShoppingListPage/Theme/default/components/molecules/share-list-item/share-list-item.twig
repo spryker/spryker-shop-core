@@ -2,20 +2,32 @@
 
 {% define config = {
     name: 'share-list-item',
+    tag: 'li',
 } %}
 
 {% define data = {
     name: required,
-    shareForm: required
+    shareForm: required,
 } %}
 
 {% block body %}
     <div class="grid grid--middle">
-        <div class="col col--sm-6 col--md-7">
-            <label>{{ data.name }}</label>
-        </div>
-        <div class="col col--sm-6 col--md-5">
-            {{ form_row(data.shareForm) }}
-        </div>
+        {% block content %}
+            {% block labelContainer %}
+                <div class="col col--sm-6 col--md-7">
+                    {% block label %}
+                        <label>{{ data.name }}</label>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+            {% block formContainer %}
+                <div class="col col--sm-6 col--md-5">
+                    {% block form %}
+                        {{ form_row(data.shareForm) }}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        {% endblock %}
     </div>
 {% endblock %}

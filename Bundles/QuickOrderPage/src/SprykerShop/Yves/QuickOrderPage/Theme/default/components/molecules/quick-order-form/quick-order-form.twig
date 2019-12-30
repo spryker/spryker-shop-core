@@ -145,8 +145,7 @@
             </div>
 
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                {% widget 'AddItemsToShoppingListWidget' only %}
-                {% endwidget %}
+                {% widget 'AddItemsToShoppingListWidget' only %}{% endwidget %}
             {% endif %}
         {% endblock %}
     {% endembed %}

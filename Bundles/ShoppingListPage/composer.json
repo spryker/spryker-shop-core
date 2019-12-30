@@ -12,8 +12,9 @@
     "spryker/company-business-unit": "^1.5.0 || ^2.4.0",
     "spryker/company-user": "^2.8.0",
     "spryker/customer": "^7.4.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.33.0",
     "spryker/multi-cart": "^1.1.0",
+    "spryker/price": "^5.0.0",
     "spryker/product-storage": "^1.1.0",
     "spryker/shopping-list": "^2.3.0 || ^4.0.0",
     "spryker/symfony": "^3.1.0",
@@ -24,8 +25,7 @@
     "spryker-shop/customer-page": "*",
     "spryker-shop/product-option-widget": "*",
     "spryker/code-sniffer": "*",
-    "spryker/router": "*",
-    "spryker/silex": "*"
+    "spryker/router": "*"
   },
   "suggest": {
     "spryker-shop/customer-page": "Use this module when you want to show shopping lists on a customer page",
