@@ -8,7 +8,7 @@
     node: required,
     name: data.node.name | default,
     quantity: data.node.quantity | default(1),
-    price: data.node.price | default(0),
+    price: data.node.sumSubtotalAggregation | default(0),
     quantitySalesUnit: data.node.quantitySalesUnit | default(null),
 } %}
 
