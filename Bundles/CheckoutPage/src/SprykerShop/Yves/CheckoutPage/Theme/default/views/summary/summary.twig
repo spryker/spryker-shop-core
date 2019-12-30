@@ -72,23 +72,12 @@
                             {% set isGiftCardExists = item.giftCardMetadata is not null and item.giftCardMetadata.isGiftCard %}
                             {% set item = item.bundleProduct ?? item %}
 
-                            {% embed molecule('summary-item', 'CheckoutPage') with {
+                            {% embed molecule('summary-node', 'CheckoutPage') with {
                                 data: {
-                                    name: item.name,
-                                    quantity: item.quantity,
-                                    price: item.sumPrice | money,
-                                    options: item.productOptions | default({}),
-                                    bundleItems: item.bundleItems | default([]),
-                                    quantitySalesUnit: item.quantitySalesUnit,
-                                    amountSalesUnit: item.amountSalesUnit,
-                                    amount: item.amount,
-                                    images: item.images,
-                                    sku: item.sku,
-                                    groupKey: item.groupKey,
+                                    node: item,
                                 },
                                 embed: {
                                     isFirst: loop.first,
-                                    item: item,
                                 },
                             } only %}
                                 {% block body %}
@@ -97,14 +86,14 @@
                                     {{ parent() }}
 
                                     {% if widgetExists('CartNoteQuoteItemNoteWidgetPlugin') %}
-                                        {% if embed.item.cartNote %}
-                                            {{ widget('CartNoteQuoteItemNoteWidgetPlugin', embed.item) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
+                                        {% if data.node.cartNote %}
+                                            {{ widget('CartNoteQuoteItemNoteWidgetPlugin', data.node) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
                                         {% endif %}
-                                    {% elseif embed.item.cartNote %}
+                                    {% elseif data.node.cartNote %}
                                         {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
                                             data: {
                                                 label: 'cart_note.checkout_page.item_note',
-                                                note: embed.item.cartNote,
+                                                note: data.node.cartNote,
                                             },
                                         } only %}
                                     {% endif %}
