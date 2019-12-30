@@ -39,6 +39,7 @@
             companyBusinessUnitShippingAddressWidget: companyBusinessUnitShippingAddressWidget,
             isCompanyBusinessUnitShippingAddressApplicable: isCompanyBusinessUnitShippingAddressApplicable,
             jsAddressClass: jsAddressClass,
+            isBillingSameAsShippingChecked: data.forms.billing.id_customer_address.vars.choices is empty,
         },
     } only %}
         {% block fields %}
@@ -121,7 +122,7 @@
                         'target-selector': '.' ~ embed.jsAddressClass ~ '__billing-same-as-shipping',
                         'class-to-toggle': 'is-hidden',
                         'add-class-when-checked': true,
-                        'checked': true,
+                        'checked': embed.isBillingSameAsShippingChecked,
                     },
                 }) }}
             </div>
