@@ -65,7 +65,22 @@
                                     },
                                     embed: {
                                         isLast: not loop.last,
-                                    }
+                                    },
+                                } only %}
+                                    {% block body %}
+                                        {{ parent() }}
+                                        {% if embed.isLast %}<hr>{% endif %}
+                                    {% endblock %}
+                                {% endembed %}
+
+                                {# TODO: recheck #}
+                                {% embed molecule('summary-node', 'CheckoutPage') with {
+                                    data: {
+                                        node: item,
+                                    },
+                                    embed: {
+                                        isLast: not loop.last,
+                                    },
                                 } only %}
                                     {% block body %}
                                         {{ parent() }}

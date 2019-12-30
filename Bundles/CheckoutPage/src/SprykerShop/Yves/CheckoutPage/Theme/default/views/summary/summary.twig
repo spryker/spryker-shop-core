@@ -109,6 +109,37 @@
                                     {% endif %}
                                 {% endblock %}
                             {% endembed %}
+
+
+                            {# TODO: recheck #}
+                            {% embed molecule('summary-node', 'CheckoutPage') with {
+                                data: {
+                                    node: item,
+                                },
+                                embed: {
+                                    isFirst: loop.first,
+                                },
+                            } only %}
+                                {% block body %}
+                                    {% if not embed.isFirst %}<hr>{% endif %}
+
+                                    {{ parent() }}
+
+                                    {% if widgetExists('CartNoteQuoteItemNoteWidgetPlugin') %}
+                                        {% if data.node.cartNote %}
+                                            {{ widget('CartNoteQuoteItemNoteWidgetPlugin', data.node) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
+                                        {% endif %}
+                                    {% elseif data.node.cartNote %}
+                                        {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                                            data: {
+                                                label: 'cart_note.checkout_page.item_note',
+                                                note: data.node.cartNote,
+                                            },
+                                        } only %}
+                                    {% endif %}
+                                {% endblock %}
+                            {% endembed %}
+
                         {% endif %}
                     {% endfor %}
                 </div>
