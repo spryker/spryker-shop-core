@@ -7,9 +7,11 @@
 
 namespace SprykerShop\Yves\CustomerPage\Form;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
@@ -142,12 +144,10 @@ class CheckoutAddressCollectionForm extends AbstractType
 
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($shipmentService) {
             $this->hydrateShippingAddressSubFormDataFromItemLevelShippingAddresses($event, $shipmentService);
-            $this->hydrateShippingAddressSubFormDataFromBundleItemLevelShippingAddresses($event, $shipmentService);
         });
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($options) {
             $event = $this->mapSubmittedShippingAddressSubFormDataToItemLevelShippingAddresses($event);
-            $event = $this->mapSubmittedShippingAddressSubFormDataToBundleItemLevelShippingAddresses($event);
             $event = $this->copyBundleItemLevelShippingAddressesToItemLevelShippingAddresses($event, $options);
 
             return $event;
@@ -215,75 +215,87 @@ class CheckoutAddressCollectionForm extends AbstractType
         }
 
         $shipmentGroupCollection = $shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+        $bundleItemsShipmentGroupCollection = $shipmentService->groupItemsByShipment($quoteTransfer->getBundleItems());
+        $shipmentGroupCollection = $this->mergeShipmentGroupsByShipmentHash(
+            $shipmentGroupCollection,
+            $bundleItemsShipmentGroupCollection
+        );
         $form = $event->getForm();
-        $shippingAddressFrom = $form->get(static::FIELD_SHIPPING_ADDRESS);
+        $shippingAddressForm = $form->get(static::FIELD_SHIPPING_ADDRESS);
 
-        if ($shipmentGroupCollection->count() > 1) {
-            $shippingAddressFrom = $this->setDeliverToMultipleAddressesEnabled($shippingAddressFrom);
-        }
+        if (count($shipmentGroupCollection) > 1) {
+            $this->setDeliverToMultipleAddressesEnabled($shippingAddressForm);
 
-        if ($this->isDeliverToMultipleAddressesEnabled($shippingAddressFrom)) {
             return;
         }
 
-        if ($shipmentGroupCollection->count() < 1) {
-            return;
-        }
-
-        /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer|null $shipmentGroupTransfer */
-        $shipmentGroupTransfer = $shipmentGroupCollection->getIterator()->current();
-
-        if ($shipmentGroupTransfer === null) {
-            return;
-        }
-
-        $shipmentTransfer = $shipmentGroupTransfer->getShipment();
-        if ($shipmentTransfer === null) {
-            return;
-        }
-
-        $shippingAddressTransfer = $shipmentTransfer->getShippingAddress();
-        if ($shippingAddressTransfer === null) {
-            return;
-        }
-
-        $shippingAddressFrom->setData(clone $shippingAddressTransfer);
+        $this->setShippingAddressSubFormDataFromCurrentShipmentGroup($shipmentGroupCollection, $shippingAddressForm);
     }
 
     /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     * @param \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface $shipmentService
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $bundleItemsShipmentGroupCollection
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    protected function mergeShipmentGroupsByShipmentHash(
+        ArrayObject $shipmentGroupCollection,
+        ArrayObject $bundleItemsShipmentGroupCollection
+    ): ArrayObject {
+        $mergedShipmentGroupCollection = $this->getShipmentGroupCollectionIndexedByShipmentHash($shipmentGroupCollection, new ArrayObject());
+
+        return $this->mergeShipmentGroupCollectionsIndexedByShipmentHash($bundleItemsShipmentGroupCollection, $mergedShipmentGroupCollection);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $mergedShipmentGroupCollection
+     *
+     * @return ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    protected function getShipmentGroupCollectionIndexedByShipmentHash(
+        ArrayObject $shipmentGroupCollection,
+        ArrayObject $mergedShipmentGroupCollection
+    ): ArrayObject {
+        foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
+            $mergedShipmentGroupCollection[$shipmentGroupTransfer->getHash()] = $shipmentGroupTransfer;
+        }
+
+        return $mergedShipmentGroupCollection;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $bundleItemsShipmentGroupCollection
+     *
+     * @return ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    protected function mergeShipmentGroupCollectionsIndexedByShipmentHash(
+        ArrayObject $bundleItemsShipmentGroupCollection,
+        ArrayObject $mergedShipmentGroupCollection
+    ): ArrayObject {
+        foreach ($bundleItemsShipmentGroupCollection as $shipmentGroupTransfer) {
+            $mergedShipmentGroupCollection[$shipmentGroupTransfer->getHash()] = $shipmentGroupTransfer;
+        }
+
+        return $mergedShipmentGroupCollection;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param \Symfony\Component\Form\FormInterface $form
      *
      * @return void
      */
-    protected function hydrateShippingAddressSubFormDataFromBundleItemLevelShippingAddresses(
-        FormEvent $event,
-        CustomerPageToShipmentServiceInterface $shipmentService
+    protected function setShippingAddressSubFormDataFromCurrentShipmentGroup(
+        ArrayObject $shipmentGroupCollection,
+        FormInterface $form
     ): void {
-        $quoteTransfer = $event->getData();
-        if (!($quoteTransfer instanceof QuoteTransfer)) {
+        if ($this->isDeliverToMultipleAddressesEnabled($form) || $shipmentGroupCollection->count() < 1) {
             return;
         }
 
-        $shipmentGroupCollection = $shipmentService->groupItemsByShipment($quoteTransfer->getBundleItems());
-        $form = $event->getForm();
-        $shippingAddressFrom = $form->get(static::FIELD_SHIPPING_ADDRESS);
-
-        if ($shipmentGroupCollection->count() > 1) {
-            $shippingAddressFrom = $this->setDeliverToMultipleAddressesEnabled($shippingAddressFrom);
-        }
-
-        if ($this->isDeliverToMultipleAddressesEnabled($shippingAddressFrom)) {
-            return;
-        }
-
-        if ($shipmentGroupCollection->count() < 1) {
-            return;
-        }
-
-        /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer|null $shipmentGroupTransfer */
-        $shipmentGroupTransfer = $shipmentGroupCollection->getIterator()->current();
-
+        $shipmentGroupTransfer = $this->getCurrentShipmentGroupTransfer($shipmentGroupCollection);
         if ($shipmentGroupTransfer === null) {
             return;
         }
@@ -298,7 +310,7 @@ class CheckoutAddressCollectionForm extends AbstractType
             return;
         }
 
-        $shippingAddressFrom->setData(clone $shippingAddressTransfer);
+        $form->setData(clone $shippingAddressTransfer);
     }
 
     /**
@@ -323,9 +335,8 @@ class CheckoutAddressCollectionForm extends AbstractType
         $shipmentTransfer = $this->getQuoteItemShipmentTransfer($quoteTransfer);
         $shipmentTransfer->setShippingAddress($shippingAddressTransfer);
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->setShipment($shipmentTransfer);
-        }
+        $quoteTransfer = $this->mapShipmentToItemLevelShipments($quoteTransfer, $shipmentTransfer);
+        $quoteTransfer = $this->mapShipmentToBundleItemLevelShipments($quoteTransfer, $shipmentTransfer);
 
         $event->setData($quoteTransfer);
 
@@ -333,34 +344,60 @@ class CheckoutAddressCollectionForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormEvent $event
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
-     * @return \Symfony\Component\Form\FormEvent
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function mapSubmittedShippingAddressSubFormDataToBundleItemLevelShippingAddresses(FormEvent $event): FormEvent
-    {
-        $quoteTransfer = $event->getData();
-        if (!($quoteTransfer instanceof QuoteTransfer)) {
-            return $event;
+    protected function mapShipmentToItemLevelShipments(
+        QuoteTransfer $quoteTransfer,
+        ShipmentTransfer $shipmentTransfer
+    ): QuoteTransfer {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setShipment($shipmentTransfer);
         }
 
-        $form = $event->getForm();
-        $shippingAddressFrom = $form->get(static::FIELD_SHIPPING_ADDRESS);
-        if ($this->isDeliverToMultipleAddressesEnabled($shippingAddressFrom)) {
-            return $event;
-        }
+        return $quoteTransfer;
+    }
 
-        $shippingAddressTransfer = $shippingAddressFrom->getData();
-        $shipmentTransfer = $this->getQuoteItemShipmentTransfer($quoteTransfer);
-        $shipmentTransfer->setShippingAddress($shippingAddressTransfer);
-
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function mapShipmentToBundleItemLevelShipments(
+        QuoteTransfer $quoteTransfer,
+        ShipmentTransfer $shipmentTransfer
+    ): QuoteTransfer {
         foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
             $itemTransfer->setShipment($shipmentTransfer);
         }
 
-        $event->setData($quoteTransfer);
+        return $quoteTransfer;
+    }
 
-        return $event;
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
+     */
+    protected function getCurrentShipmentGroupTransfer(ArrayObject $shipmentGroupCollection): ShipmentGroupTransfer
+    {
+        return $shipmentGroupCollection->getIterator()
+            ->current();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function getCurrentQuoteItemTransfer(QuoteTransfer $quoteTransfer): ItemTransfer
+    {
+        return $quoteTransfer->getItems()
+            ->getIterator()
+            ->current();
     }
 
     /**
@@ -370,9 +407,7 @@ class CheckoutAddressCollectionForm extends AbstractType
      */
     protected function getQuoteItemShipmentTransfer(QuoteTransfer $quoteTransfer): ShipmentTransfer
     {
-        $itemTransfer = $quoteTransfer->getItems()
-            ->getIterator()
-            ->current();
+        $itemTransfer = $this->getCurrentQuoteItemTransfer($quoteTransfer);
 
         if ($itemTransfer !== null && $itemTransfer->getShipment()) {
             return $itemTransfer->getShipment();
