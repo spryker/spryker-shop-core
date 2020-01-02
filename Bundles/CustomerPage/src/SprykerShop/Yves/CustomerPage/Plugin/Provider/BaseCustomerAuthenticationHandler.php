@@ -53,8 +53,8 @@ class BaseCustomerAuthenticationHandler extends AbstractPlugin
         }
 
         $allowedUrl = sprintf('#^(?P<scheme>http|https)://%s/(?P<uri>.*)$#', $allowedHost);
-        $isRefererUrlAllowed = (bool)preg_match($allowedUrl, $redirectUrl, $matches);
-        if ($isRefererUrlAllowed) {
+        $isRedirectUrlAllowed = (bool)preg_match($allowedUrl, $redirectUrl, $matches);
+        if ($isRedirectUrlAllowed) {
             return sprintf('%s://%s/%s', $matches['scheme'], $allowedHost, $matches['uri']);
         }
 
