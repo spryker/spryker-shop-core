@@ -20,7 +20,6 @@ export default class ActionSingleClickEnforcer extends Component {
     protected onTargetClick(event: Event): void {
         const targetElement = <HTMLElement>event.currentTarget;
         const isLink: boolean = targetElement.matches('a');
-        const isButton: boolean = targetElement.matches('button');
 
         if (isLink) {
             const link = <HTMLLinkElement>targetElement;
@@ -35,6 +34,7 @@ export default class ActionSingleClickEnforcer extends Component {
         if (form) {
             const buttonType = targetElement.getAttribute('type');
             const isSubmit = buttonType === 'submit' || buttonType === 'image';
+            const isButton: boolean = targetElement.matches('button');
             const isButtonSubmit = isButton && !buttonType;
 
             if (isSubmit || isButtonSubmit) {
