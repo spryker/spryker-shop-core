@@ -24,7 +24,6 @@
                 {% endwidget %}
 
                 {% for item in shipmentGroup.cartItems %}
-                    {% set isBundle = item.bundleItems is defined %}
                     {% set concreteItem = item.bundleProduct | default(item) %}
                     {% set isConfiguredBundle = concreteItem.salesOrderConfiguredBundleItem is defined and concreteItem.salesOrderConfiguredBundleItem is not empty %}
 
@@ -51,7 +50,7 @@
                         <div class="col col--sm-8">
                             <div class="grid grid--justify">
                                 <span class="spacing-right col col--sm-9">{{ concreteItem.name }}</span>
-                                <strong class="col col--sm-3 text-right">{{ concreteItem.sumPrice | money(true, data.currencyIsoCode) }}</strong>
+                                <strong class="col col--sm-3 text-right">{{ concreteItem.sumSubtotalAggregation | money(true, data.currencyIsoCode) }}</strong>
                             </div>
 
                             <p>{{ 'customer.order.item_quantity' | trans }}: {{ concreteItem.quantity }}</p>
@@ -60,10 +59,10 @@
                                 <p>{{ 'customer.order.item_amount' | trans }}: {{ concreteItem.amount.toFloat() }}</p>
                             {% endif %}
 
-                            {% if isBundle %}
+                            {% if item.bundleItems is not empty %}
                                 <div class="spacing-bottom">
                                     {% block bundleDetailRow %}
-                                        <p>{{ "customer.order.bundled_items" | trans }}</p>
+                                        {{ 'customer.order.bundled_items' | trans }}
                                         <ul>
                                             {% for bundledItem in item.bundleItems %}
                                                 <li>
@@ -71,41 +70,24 @@
                                                 </li>
                                             {% endfor %}
                                         </ul>
-
-                                        {% if concreteItem.productOptions is not empty %}
-                                            <p>{{ "customer.order.options" | trans }}</p>
-                                            <ul>
-                                                {% for productOption in concreteItem.productOptions %}
-                                                    <li>
-                                                        &nbsp; - {{ productOption.value | trans }} {{ productOption.sumPrice | money(true, data.currencyIsoCode) }}
-                                                    </li>
-                                                {% endfor %}
-                                            </ul>
-                                        {% endif %}
                                     {% endblock %}
                                 </div>
-                            {% else %}
-                                {% if concreteItem.productOptions is not empty %}
-                                    <div>
-                                        <small>{{ 'checkout.summary.item.option.description' | trans }}</small>
-                                    </div>
+                            {% endif %}
 
-                                    {% for productOption in concreteItem.productOptions %}
-                                        <div class="spacing-bottom">
-                                            {% block detailRow %}
-                                                <div>
-                                                    &nbsp; + <small>{{ productOption.sku }}</small>
-                                                </div>
-                                                <div>
-                                                    <small>{{ productOption.value | trans }}</small>
-                                                </div>
-                                                <div>
-                                                    <small>{{ productOption.sumPrice | money(true, data.currencyIsoCode) }}</small>
-                                                </div>
-                                            {% endblock %}
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
+                            {% if concreteItem.productOptions is not empty %}
+                                <div class="spacing-bottom">
+                                    {% block detailRow %}
+                                        {{ 'customer.order.options' | trans }}
+                                        <ul>
+                                            {% for productOption in concreteItem.productOptions %}
+                                                <li>
+                                                    &nbsp; + {{ productOption.value | trans }}
+                                                    <strong>{{ productOption.sumPrice | money(true, data.currencyIsoCode) }}</strong>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endblock %}
+                                </div>
                             {% endif %}
 
                             {% if widgetExists('CartNoteOrderItemNoteWidgetPlugin') %}

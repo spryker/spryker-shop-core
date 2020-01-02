@@ -25,11 +25,6 @@
             form: data.form,
             enableStart: false,
             enableEnd: false,
-            options: {
-                attr: {
-                    class: config.jsName ~ '__form',
-                },
-            },
         },
         embed: {
             jsName: config.jsName,
@@ -38,7 +33,7 @@
         },
     } only %}
         {% block fields %}
-            <div class="{{ embed.jsName }}__list col col--sm-12">
+            <div class="col col--sm-12">
                 {% include molecule('address-item-form-field-list', 'CheckoutPage') with {
                     data: {
                         items: data.form,
@@ -56,11 +51,6 @@
             form: data.formBundle,
             enableStart: false,
             enableEnd: false,
-            options: {
-                attr: {
-                    class: config.jsName ~ '__form',
-                },
-            },
         },
         embed: {
             jsName: config.jsName,
@@ -69,10 +59,10 @@
         },
     } only %}
         {% block fields %}
-            <div class="{{ embed.jsName }}__list col col--sm-12">
+            <div class="col col--sm-12">
                 {% include molecule('address-bundle-item-form-field-list', 'CheckoutPage') with {
                     data: {
-                        bundleItems: data.form,
+                        items: data.form,
                         shippingForm: embed.shippingForm,
                         jsAddressClass: embed.jsAddressClass,
                     },
