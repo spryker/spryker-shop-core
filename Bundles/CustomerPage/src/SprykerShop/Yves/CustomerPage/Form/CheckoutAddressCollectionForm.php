@@ -189,16 +189,16 @@ class CheckoutAddressCollectionForm extends AbstractType
         CustomerPageToShipmentServiceInterface $shipmentService
     ): void {
         $quoteTransfer = $event->getData();
+
         if (!($quoteTransfer instanceof QuoteTransfer)) {
             return;
         }
 
-        $shipmentGroupCollection = $shipmentService->groupItemsByShipment($quoteTransfer->getItems());
-        $bundleItemsShipmentGroupCollection = $shipmentService->groupItemsByShipment($quoteTransfer->getBundleItems());
         $shipmentGroupCollection = $this->mergeShipmentGroupsByShipmentHash(
-            $shipmentGroupCollection,
-            $bundleItemsShipmentGroupCollection
+            $shipmentService->groupItemsByShipment($quoteTransfer->getItems()),
+            $shipmentService->groupItemsByShipment($quoteTransfer->getBundleItems())
         );
+
         $form = $event->getForm();
         $shippingAddressForm = $form->get(static::FIELD_SHIPPING_ADDRESS);
 
@@ -221,43 +221,29 @@ class CheckoutAddressCollectionForm extends AbstractType
         ArrayObject $shipmentGroupCollection,
         ArrayObject $bundleItemsShipmentGroupCollection
     ): ArrayObject {
-        $mergedShipmentGroupCollection = $this->getShipmentGroupCollectionIndexedByShipmentHash($shipmentGroupCollection, new ArrayObject());
+        $indexedShipmentGroups = $this->getShipmentGroupCollectionIndexedByShipmentHash($shipmentGroupCollection);
 
-        return $this->mergeShipmentGroupCollectionsIndexedByShipmentHash($bundleItemsShipmentGroupCollection, $mergedShipmentGroupCollection);
+        foreach ($bundleItemsShipmentGroupCollection as $shipmentGroupTransfer) {
+            $indexedShipmentGroups[$shipmentGroupTransfer->getHash()] = $shipmentGroupTransfer;
+        }
+
+        return new ArrayObject($indexedShipmentGroups);
     }
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $mergedShipmentGroupCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    protected function getShipmentGroupCollectionIndexedByShipmentHash(
-        ArrayObject $shipmentGroupCollection,
-        ArrayObject $mergedShipmentGroupCollection
-    ): ArrayObject {
+    protected function getShipmentGroupCollectionIndexedByShipmentHash(ArrayObject $shipmentGroupCollection): array
+    {
+        $indexedShipmentGroups = [];
+
         foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
-            $mergedShipmentGroupCollection[$shipmentGroupTransfer->getHash()] = $shipmentGroupTransfer;
+            $indexedShipmentGroups[$shipmentGroupTransfer->getHash()] = $shipmentGroupTransfer;
         }
 
-        return $mergedShipmentGroupCollection;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $bundleItemsShipmentGroupCollection
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $mergedShipmentGroupCollection
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
-     */
-    protected function mergeShipmentGroupCollectionsIndexedByShipmentHash(
-        ArrayObject $bundleItemsShipmentGroupCollection,
-        ArrayObject $mergedShipmentGroupCollection
-    ): ArrayObject {
-        foreach ($bundleItemsShipmentGroupCollection as $shipmentGroupTransfer) {
-            $mergedShipmentGroupCollection[$shipmentGroupTransfer->getHash()] = $shipmentGroupTransfer;
-        }
-
-        return $mergedShipmentGroupCollection;
+        return $indexedShipmentGroups;
     }
 
     /**
@@ -276,17 +262,11 @@ class CheckoutAddressCollectionForm extends AbstractType
 
         $shipmentGroupTransfer = $this->getCurrentShipmentGroupTransfer($shipmentGroupCollection);
 
-        $shipmentTransfer = $shipmentGroupTransfer->getShipment();
-        if ($shipmentTransfer === null) {
+        if (!$shipmentGroupTransfer->getShipment() || !$shipmentGroupTransfer->getShipment()->getShippingAddress()) {
             return;
         }
 
-        $shippingAddressTransfer = $shipmentTransfer->getShippingAddress();
-        if ($shippingAddressTransfer === null) {
-            return;
-        }
-
-        $form->setData(clone $shippingAddressTransfer);
+        $form->setData(clone $shipmentGroupTransfer->getShipment()->getShippingAddress());
     }
 
     /**

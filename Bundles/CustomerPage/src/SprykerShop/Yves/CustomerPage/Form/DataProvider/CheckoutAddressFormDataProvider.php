@@ -26,6 +26,11 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     protected const SANITIZED_CUSTOMER_ADDRESS_LABEL_PATTERN = '%s - %s';
 
     /**
+     * @uses \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_PRODUCT
+     */
+    protected const BUNDLE_PRODUCT = 'bundleProduct';
+
+    /**
      * @var \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface
      */
     protected $customerService;
@@ -70,7 +75,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function getData(AbstractTransfer $quoteTransfer)
     {
@@ -121,7 +126,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
 
         foreach ($groupedBundleItems as $groupedBundleItem) {
             if (is_array($groupedBundleItem)) {
-                $bundleItems[] = $groupedBundleItem['bundleProduct'];
+                $bundleItems[] = $groupedBundleItem[static::BUNDLE_PRODUCT];
             }
         }
 
