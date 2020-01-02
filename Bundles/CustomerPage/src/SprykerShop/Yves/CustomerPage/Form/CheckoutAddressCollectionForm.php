@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
@@ -199,8 +198,7 @@ class CheckoutAddressCollectionForm extends AbstractType
             $shipmentService->groupItemsByShipment($quoteTransfer->getBundleItems())
         );
 
-        $form = $event->getForm();
-        $shippingAddressForm = $form->get(static::FIELD_SHIPPING_ADDRESS);
+        $shippingAddressForm = $event->getForm()->get(static::FIELD_SHIPPING_ADDRESS);
 
         if (count($shipmentGroupCollection) > 1) {
             $this->setDeliverToMultipleAddressesEnabled($shippingAddressForm);
@@ -208,7 +206,17 @@ class CheckoutAddressCollectionForm extends AbstractType
             return;
         }
 
-        $this->setShippingAddressSubFormDataFromCurrentShipmentGroup($shipmentGroupCollection, $shippingAddressForm);
+        if ($this->isDeliverToMultipleAddressesEnabled($shippingAddressForm) || $shipmentGroupCollection->count() < 1) {
+            return;
+        }
+
+        $shipmentGroupTransfer = $shipmentGroupCollection->getIterator()->current();
+
+        if (!$shipmentGroupTransfer->getShipment() || !$shipmentGroupTransfer->getShipment()->getShippingAddress()) {
+            return;
+        }
+
+        $shippingAddressForm->setData(clone $shipmentGroupTransfer->getShipment()->getShippingAddress());
     }
 
     /**
@@ -221,52 +229,17 @@ class CheckoutAddressCollectionForm extends AbstractType
         ArrayObject $shipmentGroupCollection,
         ArrayObject $bundleItemsShipmentGroupCollection
     ): ArrayObject {
-        $indexedShipmentGroups = $this->getShipmentGroupCollectionIndexedByShipmentHash($shipmentGroupCollection);
-
-        foreach ($bundleItemsShipmentGroupCollection as $shipmentGroupTransfer) {
-            $indexedShipmentGroups[$shipmentGroupTransfer->getHash()] = $shipmentGroupTransfer;
-        }
-
-        return new ArrayObject($indexedShipmentGroups);
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
-     */
-    protected function getShipmentGroupCollectionIndexedByShipmentHash(ArrayObject $shipmentGroupCollection): array
-    {
         $indexedShipmentGroups = [];
 
         foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
             $indexedShipmentGroups[$shipmentGroupTransfer->getHash()] = $shipmentGroupTransfer;
         }
 
-        return $indexedShipmentGroups;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
-     * @return void
-     */
-    protected function setShippingAddressSubFormDataFromCurrentShipmentGroup(
-        ArrayObject $shipmentGroupCollection,
-        FormInterface $form
-    ): void {
-        if ($this->isDeliverToMultipleAddressesEnabled($form) || $shipmentGroupCollection->count() < 1) {
-            return;
+        foreach ($bundleItemsShipmentGroupCollection as $shipmentGroupTransfer) {
+            $indexedShipmentGroups[$shipmentGroupTransfer->getHash()] = $shipmentGroupTransfer;
         }
 
-        $shipmentGroupTransfer = $this->getCurrentShipmentGroupTransfer($shipmentGroupCollection);
-
-        if (!$shipmentGroupTransfer->getShipment() || !$shipmentGroupTransfer->getShipment()->getShippingAddress()) {
-            return;
-        }
-
-        $form->setData(clone $shipmentGroupTransfer->getShipment()->getShippingAddress());
+        return new ArrayObject($indexedShipmentGroups);
     }
 
     /**
@@ -336,36 +309,15 @@ class CheckoutAddressCollectionForm extends AbstractType
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
-     */
-    protected function getCurrentShipmentGroupTransfer(ArrayObject $shipmentGroupCollection): ShipmentGroupTransfer
-    {
-        return $shipmentGroupCollection->getIterator()
-            ->current();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function getCurrentQuoteItemTransfer(QuoteTransfer $quoteTransfer): ItemTransfer
-    {
-        return $quoteTransfer->getItems()
-            ->getIterator()
-            ->current();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
     protected function getQuoteItemShipmentTransfer(QuoteTransfer $quoteTransfer): ShipmentTransfer
     {
-        $itemTransfer = $this->getCurrentQuoteItemTransfer($quoteTransfer);
+        $itemTransfer = $quoteTransfer->getItems()
+            ->getIterator()
+            ->current();
 
         if ($itemTransfer !== null && $itemTransfer->getShipment()) {
             return $itemTransfer->getShipment();
@@ -500,7 +452,7 @@ class CheckoutAddressCollectionForm extends AbstractType
                 'data_class' => ItemTransfer::class,
                 'label' => false,
                 CheckoutMultiShippingAddressesForm::OPTION_VALIDATION_GROUP => static::GROUP_SHIPPING_ADDRESS,
-                CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $this->getMultiShippingAddressChoices($options),
+                CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
                 CheckoutMultiShippingAddressesForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
                 CheckoutMultiShippingAddressesForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
             ],
@@ -534,7 +486,7 @@ class CheckoutAddressCollectionForm extends AbstractType
                     'data_class' => ItemTransfer::class,
                     'label' => false,
                     CheckoutMultiShippingAddressesForm::OPTION_VALIDATION_GROUP => static::GROUP_SHIPPING_ADDRESS,
-                    CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $this->getMultiShippingAddressChoices($options),
+                    CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
                     CheckoutMultiShippingAddressesForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
                     CheckoutMultiShippingAddressesForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
                 ],
@@ -577,16 +529,6 @@ class CheckoutAddressCollectionForm extends AbstractType
         $addressChoices[static::GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES] = CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES;
 
         return $addressChoices;
-    }
-
-    /**
-     * @param array $options
-     *
-     * @return string[]
-     */
-    protected function getMultiShippingAddressChoices(array $options): array
-    {
-        return $options[static::OPTION_ADDRESS_CHOICES];
     }
 
     /**
