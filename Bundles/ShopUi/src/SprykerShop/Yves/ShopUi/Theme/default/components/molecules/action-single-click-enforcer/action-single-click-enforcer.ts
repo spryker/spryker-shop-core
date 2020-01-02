@@ -22,7 +22,8 @@ export default class ActionSingleClickEnforcer extends Component {
         const isLink: boolean = targetElement.matches('a');
 
         if (isLink) {
-            this.disableLink(event, targetElement);
+            const link = <HTMLLinkElement>targetElement;
+            this.disableLink(event, link);
 
             return;
         }
@@ -32,14 +33,15 @@ export default class ActionSingleClickEnforcer extends Component {
 
         if (form) {
             const buttonType = targetElement.getAttribute('type');
+            const isSubmit = buttonType === 'submit' || buttonType === 'image' || !buttonType;
 
-            if (buttonType === 'submit') {
+            if (isSubmit) {
                 form.submit();
             }
         }
     }
 
-    protected disableLink(event: Event, targetElement: HTMLElement): void {
+    protected disableLink(event: Event, targetElement: HTMLLinkElement): void {
         event.preventDefault();
 
         if (targetElement.dataset && targetElement.dataset.disabled) {
