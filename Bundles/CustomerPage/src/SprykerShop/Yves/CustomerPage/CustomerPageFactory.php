@@ -20,6 +20,8 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInt
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
 use SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpander;
 use SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpanderInterface;
+use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpander;
+use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
 use SprykerShop\Yves\CustomerPage\Grouper\ProductBundleGrouper;
 use SprykerShop\Yves\CustomerPage\Grouper\ProductBundleGrouperInterface;
@@ -355,10 +357,10 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CustomerPage\Grouper\ProductBundleGrouperInterface
+     * @return \SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpanderInterface
      */
-    public function createProductBundleGrouper(): ProductBundleGrouperInterface
+    public function createShipmentGroupExpander(): ShipmentGroupExpanderInterface
     {
-        return new ProductBundleGrouper();
+        return new ShipmentGroupExpander();
     }
 }

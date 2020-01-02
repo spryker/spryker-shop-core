@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
@@ -156,7 +155,9 @@ class OrderController extends AbstractCustomerController
             ->getShipmentService()
             ->groupItemsByShipment($orderTransfer->getItems());
 
-        $shipmentGroupCollection = $this->expandShipmentGroupsWithCartItems($shipmentGroupCollection, $orderTransfer);
+        $shipmentGroupCollection = $this->getFactory()
+            ->createShipmentGroupExpander()
+            ->expandShipmentGroupsWithCartItems($shipmentGroupCollection, $orderTransfer);
 
         $orderShipmentExpenses = $this->prepareOrderShipmentExpenses($orderTransfer, $shipmentGroupCollection);
 
@@ -165,72 +166,6 @@ class OrderController extends AbstractCustomerController
             'shipmentGroups' => $shipmentGroupCollection,
             'orderShipmentExpenses' => $orderShipmentExpenses,
         ];
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupTransfers
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
-     */
-    protected function expandShipmentGroupsWithCartItems(ArrayObject $shipmentGroupTransfers, OrderTransfer $orderTransfer): ArrayObject
-    {
-        // TODO: move it to business model
-
-        $mappedBundleItems = $this->getMappedBundleItems($orderTransfer);
-
-        foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
-            $cartItems = [];
-
-            foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
-
-                if (!$itemTransfer->getRelatedBundleItemIdentifier()) {
-                    $cartItems[$itemTransfer->getGroupKey()] = [
-                        'bundleProduct' => $itemTransfer,
-                        'bundleItems' => [],
-                    ];
-
-                    continue;
-                }
-
-                $key = 'bundle_prefix_' . $itemTransfer->getRelatedBundleItemIdentifier();
-
-                if (!isset($cartItems[$key])) {
-                    $cartItems[$key] = [
-                        'bundleProduct' => null,
-                        'bundleItems' => [],
-                    ];
-                }
-
-                $cartItems[$key]['bundleItems'][] = $itemTransfer;
-
-                if (!$cartItems[$key]['bundleProduct'] && isset($mappedBundleItems[$key])) {
-                    $cartItems[$key]['bundleProduct'] = $mappedBundleItems[$key];
-                }
-            }
-
-            $shipmentGroupTransfer->setCartItems($cartItems);
-        }
-
-        return $shipmentGroupTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function getMappedBundleItems(OrderTransfer $orderTransfer): array
-    {
-        $bundleItems = [];
-
-        foreach ($orderTransfer->getItemGroups() as $productBundleGroupTransfer) {
-            if ($productBundleGroupTransfer->getIsBundle()) {
-                $bundleItems['bundle_prefix_' . $productBundleGroupTransfer->getBundleItem()->getBundleItemIdentifier()] = $productBundleGroupTransfer->getBundleItem();
-            }
-        }
-
-        return $bundleItems;
     }
 
     /**
