@@ -147,8 +147,7 @@ class CheckoutAddressCollectionForm extends AbstractType
         });
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($options) {
-            $event = $this->mapSubmittedShippingAddressSubFormDataToItemLevelShippingAddresses($event);
-            $event = $this->copyBundleItemLevelShippingAddressesToItemLevelShippingAddresses($event, $options);
+            $event = $this->mapSubmittedShippingAddressSubFormDataToItemLevelShippingAddresses($event, $options);
 
             return $event;
         });
@@ -292,10 +291,11 @@ class CheckoutAddressCollectionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormEvent $event
+     * @param array $options
      *
      * @return \Symfony\Component\Form\FormEvent
      */
-    protected function mapSubmittedShippingAddressSubFormDataToItemLevelShippingAddresses(FormEvent $event): FormEvent
+    protected function mapSubmittedShippingAddressSubFormDataToItemLevelShippingAddresses(FormEvent $event, array $options): FormEvent
     {
         $quoteTransfer = $event->getData();
         if (!($quoteTransfer instanceof QuoteTransfer)) {
@@ -304,8 +304,9 @@ class CheckoutAddressCollectionForm extends AbstractType
 
         $form = $event->getForm();
         $shippingAddressFrom = $form->get(static::FIELD_SHIPPING_ADDRESS);
+
         if ($this->isDeliverToMultipleAddressesEnabled($shippingAddressFrom)) {
-            return $event;
+            return $this->copyBundleItemLevelShippingAddressesToItemLevelShippingAddresses($event, $options);
         }
 
         $shippingAddressTransfer = $shippingAddressFrom->getData();

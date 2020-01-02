@@ -56,7 +56,7 @@ class ShipmentGroupExpander implements ShipmentGroupExpanderInterface
 
         foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
             if (!$itemTransfer->getRelatedBundleItemIdentifier()) {
-                $cartItems[$itemTransfer->getGroupKey()] = [
+                $cartItems[$itemTransfer->getIdSalesOrderItem()] = [
                     static::BUNDLE_PRODUCT => $itemTransfer,
                     static::BUNDLE_ITEMS => [],
                 ];
