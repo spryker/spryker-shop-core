@@ -217,7 +217,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
 
         return $billingAddressTransfer->getIdCustomerAddress() !== null
             || $billingAddressTransfer->getIdCompanyUnitAddress() !== null
-            || !$this->isAddressEmpty($billingAddressTransfer);
+            || !(empty(trim($billingAddressTransfer->getFirstName())) && empty($billingAddressTransfer->getLastName()));
     }
 
     /**
@@ -359,20 +359,6 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    protected function getFirstItemLevelShippingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
-    {
-        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-        $itemTransfer = $quoteTransfer->getItems()->getIterator()->current();
-        $itemTransfer->requireShipment();
-
-        return $itemTransfer->getShipment()->getShippingAddress();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function setItemLevelShippingAddresses(QuoteTransfer $quoteTransfer): QuoteTransfer
@@ -418,7 +404,15 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function setBillingSameAsShipping(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $shippingAddressTransfer = $this->getFirstItemLevelShippingAddress($quoteTransfer);
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $quoteTransfer->getItems()
+            ->getIterator()
+            ->current();
+
+        $itemTransfer->requireShipment();
+
+        $shippingAddressTransfer = $itemTransfer->getShipment()->getShippingAddress();
+
         $shippingAddressHashKey = $this->customerService->getUniqueAddressKey($shippingAddressTransfer);
         $billingAddressHashKey = $this->customerService->getUniqueAddressKey($quoteTransfer->getBillingAddress());
 
@@ -436,37 +430,14 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function canDeliverToMultipleShippingAddresses(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->isItemsCountApplicable($quoteTransfer)
-            && $this->shipmentClient->isMultiShipmentSelectionEnabled()
-            && !$this->hasQuoteGiftCardItems($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isItemsCountApplicable(QuoteTransfer $quoteTransfer): bool
-    {
         $items = $this->productBundleClient->getGroupedBundleItems(
             $quoteTransfer->getItems(),
             $quoteTransfer->getBundleItems()
         );
 
-        return count($items) > 1;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return bool
-     */
-    protected function isAddressEmpty(AddressTransfer $addressTransfer): bool
-    {
-        $firstName = trim($addressTransfer->getFirstName());
-        $lastName = trim($addressTransfer->getLastName());
-
-        return empty($firstName) && empty($lastName);
+        return count($items) > 1
+            && $this->shipmentClient->isMultiShipmentSelectionEnabled()
+            && !$this->hasQuoteGiftCardItems($quoteTransfer);
     }
 
     /**
