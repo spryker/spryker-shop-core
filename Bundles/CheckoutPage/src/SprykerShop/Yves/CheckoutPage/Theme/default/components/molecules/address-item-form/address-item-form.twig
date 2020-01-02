@@ -20,53 +20,57 @@
         </div>
     {% endif %}
 
-    {% embed molecule('form') with {
-        data: {
-            form: data.form,
-            enableStart: false,
-            enableEnd: false,
-        },
-        embed: {
-            jsName: config.jsName,
-            shippingForm: data.shippingForm,
-            jsAddressClass: data.jsAddressClass,
-        },
-    } only %}
-        {% block fields %}
-            <div class="col col--sm-12">
-                {% include molecule('address-item-form-field-list', 'CheckoutPage') with {
-                    data: {
-                        items: data.form,
-                        shippingForm: embed.shippingForm,
-                        jsAddressClass: embed.jsAddressClass,
-                    },
-                } only %}
-            </div>
-        {% endblock %}
-    {% endembed %}
+    {% if data.form %}
+        {% embed molecule('form') with {
+            data: {
+                form: data.form,
+                enableStart: false,
+                enableEnd: false,
+            },
+            embed: {
+                jsName: config.jsName,
+                shippingForm: data.shippingForm,
+                jsAddressClass: data.jsAddressClass,
+            },
+        } only %}
+            {% block fields %}
+                <div class="col col--sm-12">
+                    {% include molecule('address-item-form-field-list', 'CheckoutPage') with {
+                        data: {
+                            items: data.form,
+                            shippingForm: embed.shippingForm,
+                            jsAddressClass: embed.jsAddressClass,
+                        },
+                    } only %}
+                </div>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
 
-    {% embed molecule('form') with {
-        data: {
-            form: data.formBundle,
-            enableStart: false,
-            enableEnd: false,
-        },
-        embed: {
-            jsName: config.jsName,
-            shippingForm: data.shippingForm,
-            jsAddressClass: data.jsAddressClass,
-        },
-    } only %}
-        {% block fields %}
-            <div class="col col--sm-12">
-                {% include molecule('address-bundle-item-form-field-list', 'CheckoutPage') with {
-                    data: {
-                        items: data.form,
-                        shippingForm: embed.shippingForm,
-                        jsAddressClass: embed.jsAddressClass,
-                    },
-                } only %}
-            </div>
-        {% endblock %}
-    {% endembed %}
+    {% if data.formBundle %}
+        {% embed molecule('form') with {
+            data: {
+                form: data.formBundle,
+                enableStart: false,
+                enableEnd: false,
+            },
+            embed: {
+                jsName: config.jsName,
+                shippingForm: data.shippingForm,
+                jsAddressClass: data.jsAddressClass,
+            },
+        } only %}
+            {% block fields %}
+                <div class="col col--sm-12">
+                    {% include molecule('address-bundle-item-form-field-list', 'CheckoutPage') with {
+                        data: {
+                            items: data.form,
+                            shippingForm: embed.shippingForm,
+                            jsAddressClass: embed.jsAddressClass,
+                        },
+                    } only %}
+                </div>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
 {% endblock %}

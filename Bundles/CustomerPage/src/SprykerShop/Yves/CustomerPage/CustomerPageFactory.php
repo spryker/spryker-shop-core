@@ -20,11 +20,11 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInt
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
 use SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpander;
 use SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpanderInterface;
+use SprykerShop\Yves\CustomerPage\Expander\ShipmentExpander;
+use SprykerShop\Yves\CustomerPage\Expander\ShipmentExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpander;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
-use SprykerShop\Yves\CustomerPage\Grouper\ProductBundleGrouper;
-use SprykerShop\Yves\CustomerPage\Grouper\ProductBundleGrouperInterface;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapper;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapperInterface;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\AccessDeniedHandler;
@@ -362,5 +362,13 @@ class CustomerPageFactory extends AbstractFactory
     public function createShipmentGroupExpander(): ShipmentGroupExpanderInterface
     {
         return new ShipmentGroupExpander();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Expander\ShipmentExpanderInterface
+     */
+    public function createShipmentExpander(): ShipmentExpanderInterface
+    {
+        return new ShipmentExpander();
     }
 }
