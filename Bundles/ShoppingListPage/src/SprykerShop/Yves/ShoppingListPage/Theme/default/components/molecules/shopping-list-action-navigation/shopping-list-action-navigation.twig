@@ -2,28 +2,49 @@
 
 {% define config = {
     name: 'shopping-list-action-navigation',
-    tag: 'nav'
+    tag: 'nav',
 } %}
 
 {% define data = {
     idShoppingList: required,
     hasWritePermission: required,
-    shoppingList: required
+    shoppingList: required,
 } %}
 
 {% block body %}
     {% if data.hasWritePermission %}
-        <a href="{{ url('shopping-list/update', { idShoppingList: data.idShoppingList }) }}">{{ 'customer.account.shopping_list.overview.edit' | trans }}</a>
-        <a class="spacing-left spacing-left--small" href="{{ url('shopping-list/share', { idShoppingList: data.idShoppingList }) }}">{{ 'customer.account.shopping_list.overview.share' | trans }}</a>
+        {% block updateButton %}
+            <a href="{{ url('shopping-list/update', { idShoppingList: data.idShoppingList }) }}">
+                {{- 'customer.account.shopping_list.overview.edit' | trans -}}
+            </a>
+        {% endblock %}
+
+        {% set shareButtonClasses = 'spacing-left spacing-left--small' %}
+
+        {% block shareButton %}
+            <a class="{{ shareButtonClasses }}" href="{{ url('shopping-list/share', { idShoppingList: data.idShoppingList }) }}">
+                {{- 'customer.account.shopping_list.overview.share' | trans -}}
+            </a>
+        {% endblock %}
     {% endif %}
 
-    <a class="spacing-left spacing-left--small" href="{{ url('shopping-list/print', { idShoppingList: data.idShoppingList }) }}" target="_blank">{{ 'customer.account.shopping_list.overview.print' | trans }}</a>
+    {% set printButtonClasses = 'spacing-left spacing-left--small' %}
 
-    {% widget 'ShoppingListDismissWidget' args [data.shoppingList] only %}
-    {% elsewidget 'ShoppingListDismissWidgetPlugin' args [data.shoppingList] only %} {# @deprecated Use ShoppingListDismissWidget instead. #}
-    {% endwidget %}
+    {% block printButton %}
+        <a class="{{ printButtonClasses }}" href="{{ url('shopping-list/print', { idShoppingList: data.idShoppingList }) }}" target="_blank">
+            {{- 'customer.account.shopping_list.overview.print' | trans -}}
+        </a>
+    {% endblock %}
+
+    {% widget 'ShoppingListDismissWidget' args [data.shoppingList] only %}{% endwidget %}
+
+    {% set deleteButtonClasses = 'spacing-left spacing-left--small' %}
 
     {% if data.hasWritePermission %}
-        <a class="spacing-left spacing-left--small" href="{{ url('shopping-list/delete/confirm', { idShoppingList: data.idShoppingList }) }}">{{ 'customer.account.shopping_list.overview.delete' | trans }}</a>
+        {% block deleteButton %}
+            <a class="{{ deleteButtonClasses }}" href="{{ url('shopping-list/delete/confirm', { idShoppingList: data.idShoppingList }) }}">
+                {{- 'customer.account.shopping_list.overview.delete' | trans -}}
+            </a>
+        {% endblock %}
     {% endif %}
 {% endblock %}

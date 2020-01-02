@@ -17,6 +17,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AddToCartFormHandler implements AddToCartFormHandlerInterface
 {
+    protected const PARAM_ID_SHOPPING_LIST_ITEM = 'idShoppingListItem';
+    protected const PARAM_SHOPPING_LIST_ITEM = 'shoppingListItem';
+    protected const PARAM_ID_SHOPPING_LIST = 'idShoppingList';
+    protected const PARAM_ID_ADD_ITEM = 'add-item';
+    protected const PARAM_ADD_ALL_AVAILABLE = 'add-all-available';
+
     /**
      * @var \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface
      */
