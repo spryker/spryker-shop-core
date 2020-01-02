@@ -56,13 +56,14 @@ class CustomerPageConfig extends AbstractBundleConfig
     }
 
     /**
-     * URL to redirect to in case of authentication failure.
+     * URL to redirect to in case of authentication failure if login form is placed on non-login page (e.g. header or register page).
+     * URL could be relative or absolute with domain defined in CustomerPageConfig::getYvesHost().
      * If null it will use referer URL.
-     * If that is not available, it will redirect to home page.
+     * If referer URL is not available, it will redirect to home page.
      *
      * @return string|null
      */
-    public function getFailureLoginUrl(): ?string
+    public function loginFailureRedirectUrl(): ?string
     {
         return null;
     }

@@ -27,14 +27,12 @@ class BaseCustomerAuthenticationHandler extends AbstractPlugin
     protected function createRefererRedirectResponse(Request $request, ?string $defaultRedirectUrl = null)
     {
         $targetUrl = $this->filterUrl(
-            $this->getConfig()->getFailureLoginUrl() ?? $request->headers->get('Referer'),
+            $this->getConfig()->loginFailureRedirectUrl() ?? $request->headers->get('Referer'),
             $this->getConfig()->getYvesHost(),
             $defaultRedirectUrl ?? $this->getHomeUrl()
         );
 
-        $response = $this->getFactory()->createRedirectResponse($targetUrl);
-
-        return $response;
+        return $this->getFactory()->createRedirectResponse($targetUrl);
     }
 
     /**
@@ -48,6 +46,10 @@ class BaseCustomerAuthenticationHandler extends AbstractPlugin
     {
         if ($redirectUrl === null) {
             return $fallbackUrl;
+        }
+
+        if (strpos($redirectUrl, '/') === 0) {
+            return $redirectUrl;
         }
 
         $allowedUrl = sprintf('#^(?P<scheme>http|https)://%s/(?P<uri>.*)$#', $allowedHost);
