@@ -1,6 +1,6 @@
 # ShoppingListNoteWidget Module
 [![Build Status](https://travis-ci.org/spryker-shop/shopping-list-note-widget.svg)](https://travis-ci.org/spryker-shop/shopping-list-note-widget)
-[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/shopping-list-note-widget/badge.svg)](https://coveralls.io/github/spryker-shop/shopping-list-note-widget)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 The module provides plugins to handle presentation of shopping list notes.
 

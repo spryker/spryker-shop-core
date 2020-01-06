@@ -1,16 +1,18 @@
 import Component from 'ShopUi/models/component';
 
 export default class FormDataInjector extends Component {
-    destinationForm: HTMLFormElement;
-    fieldsToInject: HTMLElement[];
+    protected destinationForm: HTMLFormElement;
+    protected fieldsToInject: HTMLElement[];
 
-    protected readyCallback(): void {
-        /* tslint:disable: deprecation */
-        this.destinationForm = <HTMLFormElement>(this.destinationFormClassName ?
-            document.getElementsByClassName(this.destinationFormClassName)[0] :
-            document.querySelector(this.destinationFormSelector));
-        /* tslint:enable: deprecation */
+    protected readyCallback(): void {}
+
+    protected init(): void {
+        this.destinationForm = <HTMLFormElement>document.getElementsByClassName(this.destinationFormClassName)[0];
         this.fieldsToInject = <HTMLElement[]>Array.from(document.querySelectorAll(this.fieldsSelector));
+
+        if (!this.destinationForm) {
+            return;
+        }
 
         this.mapEvents();
     }
@@ -22,48 +24,34 @@ export default class FormDataInjector extends Component {
     protected onSubmit(event: Event): void {
         event.preventDefault();
 
-        this.preventSubmitButton();
+        this.disableSubmitButton();
         this.injectData();
         this.destinationForm.submit();
     }
 
-    protected preventSubmitButton(): void {
+    protected disableSubmitButton(): void {
         this.destinationForm.querySelector('[type="submit"]').setAttribute('disabled', 'disabled');
     }
 
-    /**
-     * Injects data into the form fields.
-     */
-    injectData(): void {
+    protected injectData(): void {
         this.fieldsToInject.forEach((field: HTMLFormElement) => this.addField(field));
     }
 
     protected addField(field: HTMLFormElement): void {
-        const insertField: HTMLInputElement = <HTMLInputElement>document.createElement('input');
+        const fieldToInsert: HTMLInputElement = <HTMLInputElement>document.createElement('input');
 
-        insertField.setAttribute('type', 'hidden');
-        insertField.setAttribute('name', field.name);
-        insertField.setAttribute('value', field.value);
+        fieldToInsert.setAttribute('type', 'hidden');
+        fieldToInsert.setAttribute('name', field.name);
+        fieldToInsert.setAttribute('value', field.value);
 
-        this.destinationForm.appendChild(insertField);
+        this.destinationForm.appendChild(fieldToInsert);
     }
 
-    /**
-     * Gets a querySelector name of the destination form.
-     *
-     * @deprecated Use destinationFormClassName() instead.
-     */
-    get destinationFormSelector(): string {
-        return this.getAttribute('destination-form-selector');
-    }
     protected get destinationFormClassName(): string {
         return this.getAttribute('destination-form-class-name');
     }
 
-    /**
-     * Gets a querySelector name of the from fileds.
-     */
-    get fieldsSelector(): string {
+    protected get fieldsSelector(): string {
         return this.getAttribute('fields-selector');
     }
 }

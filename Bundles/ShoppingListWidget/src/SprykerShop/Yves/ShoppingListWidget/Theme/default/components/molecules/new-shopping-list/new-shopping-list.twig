@@ -1,0 +1,42 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'new-shopping-list',
+} %}
+
+{% define data = {
+    formChildren: required,
+    labelOptions: {},
+} %}
+
+{% block extraClass %} grid grid--bottom{% endblock %}
+
+{% block body %}
+    {% block shoppingListDropDown %}
+        <div class="col col--sm-12">
+            {% block shoppingListDropDownInner %}
+                {% include molecule('toggle-select-form', 'ShoppingListWidget') with {
+                    data: {
+                        attribute: attribute(data.formChildren, 'idShoppingList'),
+                        labelOptions: data.labelOptions,
+                        selectAttributes: {
+                            'target': config.jsName ~ '__field',
+                            'class-to-toggle': 'is-hidden',
+                        },
+                    },
+                } only %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block field %}
+        <div class="col col--sm-12 {{ config.jsName }}__field spacing-top">
+            {% block fieldInner %}
+                {{ form_row(attribute(
+                    data.formChildren, 'newShoppingListName'),
+                    data.labelOptions
+                ) }}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends template('widget') %}
+
+{% define data = {
+    form: _widget.form,
+    formOptions: {
+        action: url('shopping-list/create-from-cart'),
+        attr: {
+            novalidate: 'novalidate',
+        },
+    },
+    formTitle: 'cart.add-to-shopping-list.form' | trans,
+    submitButton: 'cart.add-to-shopping-list' | trans,
+    isVisible: _widget.isVisible,
+    backUrl: '',
+    isLabelHidden: true,
+} %}
+
+{% block template %}
+    {% if data.isVisible %}{{ parent() }}{% endif %}
+{% endblock %}
+
+{% block body %}
+    {{ form_start(data.form, data.formOptions) }}
+        {% block formInner %}
+            {% block content %}
+                {% block title %}
+                    <h5>{{ data.formTitle }}</h5>
+                {% endblock %}
+
+                {% block shoppingListContainer %}
+                    {% include molecule('new-shopping-list', 'ShoppingListWidget') with {
+                        data: {
+                            formChildren: data.form.children,
+                            title: data.formTitle,
+                            labelOptions: data.isLabelHidden ? { label: false } : {},
+                        },
+                    } only %}
+                {% endblock %}
+            {% endblock %}
+
+            {% set submitButtonClasses = "button button--expand button--success" %}
+            {% set backButtonClasses = "button button--secondary button--hollow" %}
+
+            {% block actions %}
+                <div class="spacing-top">
+                    {% block actionsInner %}
+                        {% if data.backUrl %}
+                            {% block backButton %}
+                                <a href="{{ data.backUrl }}" class="{{ backButtonClasses }}" data-qa="cancel-button">
+                                    {% block backButtonInner %}
+                                        {% include atom('icon') with {
+                                            modifiers: ['small'],
+                                            data: {
+                                                name: 'chevron-left',
+                                            },
+                                        } only %}
+                                        {{- 'general.back.button' | trans -}}
+                                    {% endblock %}
+                                </a>
+                            {% endblock %}
+                        {% endif %}
+
+                        {% block submitButton %}
+                            <button type="submit" class="{{ submitButtonClasses }}" data-qa="submit-button">
+                                {{ data.submitButton }}
+                            </button>
+                        {% endblock %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+            {% block formErrors %}
+                {{ form_errors(data.form) }}
+            {% endblock %}
+        {% endblock %}
+    {{ form_end(data.form) }}
+{% endblock %}

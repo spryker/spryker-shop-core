@@ -25,7 +25,6 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
     public function __construct(ProductViewTransfer $productViewTransfer, bool $isAddToCartDisabled, array $quantityOptions = [])
     {
         $salesUnits = null;
-        $idBaseUnit = null;
         $baseUnit = null;
         $productQuantityStorageTransfer = null;
 
@@ -41,36 +40,20 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
             $productQuantityStorageTransfer = $this->getFactory()
                 ->getProductQuantityStorageClient()
                 ->findProductQuantityStorage($productViewTransfer->getIdProductConcrete());
-
-            $productConcreteMeasurementUnitStorageTransfer = $this->getFactory()
-                ->getProductMeasurementUnitStorageClient()
-                ->findProductConcreteMeasurementUnitStorage($productViewTransfer->getIdProductConcrete());
-
-            if ($productConcreteMeasurementUnitStorageTransfer !== null) {
-                $idBaseUnit = $productConcreteMeasurementUnitStorageTransfer->getBaseUnit()->getIdProductMeasurementBaseUnit();
-            }
         }
 
         $minQuantityInBaseUnits = $this->getMinQuantityInBaseUnits($productQuantityStorageTransfer);
         $minQuantityInSalesUnits = $this->getMinQuantityInSalesUnits($minQuantityInBaseUnits, $salesUnits);
+        $jsonSchema = $this->prepareJsonData($baseUnit, $salesUnits, $productQuantityStorageTransfer);
 
         $this->addParameter('product', $productViewTransfer)
             ->addParameter('quantityOptions', $quantityOptions)
             ->addParameter('minQuantityInBaseUnits', $minQuantityInBaseUnits)
             ->addParameter('minQuantityInSalesUnits', $minQuantityInSalesUnits)
             ->addParameter('baseUnit', $baseUnit)
-            ->addParameter('idBaseUnit', $idBaseUnit)
             ->addParameter('salesUnits', $salesUnits)
             ->addParameter('isAddToCartDisabled', $isAddToCartDisabled)
-            ->addParameter('productQuantityStorage', $productQuantityStorageTransfer)
-            ->addParameter(
-                'jsonScheme',
-                $this->prepareJsonData(
-                    $baseUnit,
-                    $salesUnits,
-                    $productQuantityStorageTransfer
-                )
-            );
+            ->addParameter('jsonScheme', $jsonSchema);
     }
 
     /**
@@ -133,7 +116,7 @@ class ManageProductMeasurementUnitWidget extends AbstractWidget
             $jsonData['productQuantityStorage'] = $productQuantityStorageTransfer->toArray();
         }
 
-        return json_encode($jsonData, JSON_HEX_TAG);
+        return $this->getFactory()->getUtilEncodingService()->encodeJson($jsonData, JSON_HEX_TAG);
     }
 
     /**

@@ -16,10 +16,23 @@ use Symfony\Component\Form\FormView;
 class AuthController extends AbstractController
 {
     /**
-     * @return \Spryker\Yves\Kernel\View\View
+     * @uses \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_CUSTOMER_OVERVIEW
+     */
+    protected const ROUTE_CUSTOMER_OVERVIEW = 'customer/overview';
+
+    protected const GLOSSARY_KEY_CUSTOMER_ALREADY_LOGGED_IN = 'agent_page.error.customer_already_logged_in';
+
+    /**
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function loginAction()
     {
+        if ($this->getFactory()->getCustomerClient()->isLoggedIn()) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ALREADY_LOGGED_IN);
+
+            return $this->redirectResponseInternal(static::ROUTE_CUSTOMER_OVERVIEW);
+        }
+
         return $this->view([
             'loginForm' => $this->getLoginForm(),
         ], [], '@AgentPage/views/login/login.twig');

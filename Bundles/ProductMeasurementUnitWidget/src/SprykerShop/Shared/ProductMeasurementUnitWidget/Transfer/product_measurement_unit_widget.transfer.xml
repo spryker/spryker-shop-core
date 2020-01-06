@@ -18,6 +18,8 @@
 
     <transfer name="ProductMeasurementSalesUnit">
         <property name="isDefault" type="bool"/>
+        <property name="precision" type="int"/>
+        <property name="value" type="int"/>
         <property name="conversion" type="float"/>
         <property name="productMeasurementUnit" type="ProductMeasurementUnit"/>
         <property name="idProductMeasurementSalesUnit" type="int"/>
