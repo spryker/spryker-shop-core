@@ -145,7 +145,7 @@ class MultiCartController extends AbstractController
 
         $this->getFactory()
             ->getMultiCartClient()
-            ->setActiveQuote($quoteTransfer);
+            ->markQuoteAsDefault($quoteTransfer);
 
         return $this->redirectResponseInternal(static::ROUTE_CART);
     }

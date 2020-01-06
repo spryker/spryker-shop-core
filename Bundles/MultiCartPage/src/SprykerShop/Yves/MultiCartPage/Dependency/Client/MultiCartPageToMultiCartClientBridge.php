@@ -38,9 +38,9 @@ class MultiCartPageToMultiCartClientBridge implements MultiCartPageToMultiCartCl
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setActiveQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function markQuoteAsDefault(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->multiCartClient->setActiveQuote($quoteTransfer);
+        return $this->multiCartClient->markQuoteAsDefault($quoteTransfer);
     }
 
     /**
