@@ -7,10 +7,14 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+
 interface QuickOrderPageToQuoteClientInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return void
      */
-    public function clearQuote();
+    public function setQuote(QuoteTransfer $quoteTransfer);
 }

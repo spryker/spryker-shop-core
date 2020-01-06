@@ -51,7 +51,11 @@ class ViewDataTransformer implements ViewDataTransformerInterface
 
         foreach ($quickOrderFormColumnPlugins as $additionalColumnPlugin) {
             $path = $additionalColumnPlugin->getDataPath();
-            $columns[$path] = $this->getDataByPath($productConcreteTransfer, $path);
+            $data = $this->getDataByPath($productConcreteTransfer, $path);
+
+            if ($data) {
+                $columns[$path] = $data;
+            }
         }
 
         return $columns;

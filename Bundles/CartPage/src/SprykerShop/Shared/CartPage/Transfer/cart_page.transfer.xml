@@ -18,6 +18,7 @@
     <transfer name="Item">
         <property name="id" type="int"/>
         <property name="sku" type="string"/>
+        <property name="url" type="string"/>
         <property name="groupKeyPrefix" type="string"/>
         <property name="quantity" type="int"/>
         <property name="normalizableFields" type="string[]" singular="normalizableField"/>
@@ -42,6 +43,7 @@
         <property name="idProductConcrete" type="int"/>
         <property name="availableAttributes" type="array" singular="availableAttribute"/>
         <property name="sku" type="string"/>
+        <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
     </transfer>
 
     <transfer name="CommentThread">

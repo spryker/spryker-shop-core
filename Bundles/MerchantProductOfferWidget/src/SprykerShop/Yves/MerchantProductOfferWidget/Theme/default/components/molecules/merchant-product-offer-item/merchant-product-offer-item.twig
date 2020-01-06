@@ -20,29 +20,29 @@
 {% block body %}
     <div class="grid grid--nowrap">
         {% block offerInner %}
-            {% if data.shouldShowRadioButton %}
-                {% block radioCol %}
-                    <div class="col">
-                        {% block radio %}
-                            {% include atom('radio') with {
-                                class: config.jsName ~ '__trigger-' ~ data.offerReference,
-                                attributes: {
-                                    checked: data.checked,
-                                    name: data.radioGroupName,
-                                    value: data.offerReference,
-                                },
-                            } only %}
+            {% block radioCol %}
+                {% set radioColVisibilityClass = not data.shouldShowRadioButton ? 'is-hidden' %}
 
-                            {% include molecule('page-location-search-params-updater', 'MerchantProductOfferWidget') with {
-                                attributes: {
-                                    'trigger-class': config.jsName ~ '__trigger-' ~ data.offerReference,
-                                    'search-params': 'attribute[product_offer_reference]=' ~ data.offerReference,
-                                },
-                            } only %}
-                        {% endblock %}
-                    </div>
-                {% endblock %}
-            {% endif %}
+                <div class="col {{ radioColVisibilityClass }}">
+                    {% block radio %}
+                        {% include atom('radio') with {
+                            class: config.jsName ~ '__trigger-' ~ data.offerReference,
+                            attributes: {
+                                checked: data.checked,
+                                name: data.radioGroupName,
+                                value: data.offerReference,
+                            },
+                        } only %}
+
+                        {% include molecule('page-location-search-params-updater', 'MerchantProductOfferWidget') with {
+                            attributes: {
+                                'trigger-class': config.jsName ~ '__trigger-' ~ data.offerReference,
+                                'search-params': 'attribute[product_offer_reference]=' ~ data.offerReference,
+                            },
+                        } only %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
 
             {% block contentCol %}
                 <div class="col col--expand">
