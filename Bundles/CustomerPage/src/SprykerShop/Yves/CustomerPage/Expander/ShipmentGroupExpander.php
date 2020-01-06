@@ -23,7 +23,7 @@ class ShipmentGroupExpander implements ShipmentGroupExpanderInterface
      */
     protected const BUNDLE_PRODUCT = 'bundleProduct';
 
-    protected const BUNDLE_PREFIX_KEY = 'bundle_prefix_';
+    protected const BUNDLE_KEY_PREFIX = 'bundle_prefix_';
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupTransfers
@@ -108,6 +108,6 @@ class ShipmentGroupExpander implements ShipmentGroupExpanderInterface
      */
     protected function generateKey(string $bundleItemIdentifier): string
     {
-        return static::BUNDLE_PREFIX_KEY . $bundleItemIdentifier;
+        return static::BUNDLE_KEY_PREFIX . $bundleItemIdentifier;
     }
 }

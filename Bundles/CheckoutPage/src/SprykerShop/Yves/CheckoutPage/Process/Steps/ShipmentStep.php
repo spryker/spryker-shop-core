@@ -157,11 +157,11 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     protected function setDefaultShipmentSelectionForBundleItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        foreach ($quoteTransfer->getBundleItems() as $bundleItem) {
-            $itemShipmentTransfer = $bundleItem->getShipment();
+        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
+            $shipmentTransfer = $itemTransfer->getShipment();
 
-            if ($itemShipmentTransfer !== null && $itemShipmentTransfer->getShipmentSelection() === null) {
-                $itemShipmentTransfer->setShipmentSelection(CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT);
+            if ($shipmentTransfer !== null && $shipmentTransfer->getShipmentSelection() === null) {
+                $shipmentTransfer->setShipmentSelection(CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT);
             }
         }
 

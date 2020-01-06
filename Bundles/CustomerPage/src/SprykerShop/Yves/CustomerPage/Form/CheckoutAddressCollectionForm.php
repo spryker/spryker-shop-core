@@ -146,9 +146,7 @@ class CheckoutAddressCollectionForm extends AbstractType
         });
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($options) {
-            $event = $this->mapSubmittedShippingAddressSubFormDataToItemLevelShippingAddresses($event, $options);
-
-            return $event;
+            return $this->mapSubmittedShippingAddressSubFormDataToItemLevelShippingAddresses($event, $options);
         });
 
         return $this;
@@ -164,7 +162,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     {
         $quoteTransfer = $event->getData();
 
-        if (!($quoteTransfer instanceof QuoteTransfer)) {
+        if (!$quoteTransfer instanceof QuoteTransfer) {
             return $event;
         }
 
