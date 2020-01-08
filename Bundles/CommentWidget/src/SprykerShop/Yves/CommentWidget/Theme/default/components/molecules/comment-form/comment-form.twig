@@ -74,12 +74,12 @@
 
             {% block formHandlers %}
                 <div class="{{ config.name }}__handlers">
-                    <button action="{{ data.submit.action }}" class="button button--primary {{ config.jsName }}__submit-button">
+                    <button action="{{ data.submit.action }}" class="button button--primary {{ config.jsName }}__submit-button" data-init-single-click>
                         {{ data.submit.text }}
                     </button>
 
                     {% if isUpdateFormView %}
-                        <button action="{{ data.remove.action }}" class="button button--success {{ config.jsName }}__remove-button">
+                        <button action="{{ data.remove.action }}" class="button button--success {{ config.jsName }}__remove-button" data-init-single-click>
                             {{ data.remove.text }}
                         </button>
                     {% endif %}

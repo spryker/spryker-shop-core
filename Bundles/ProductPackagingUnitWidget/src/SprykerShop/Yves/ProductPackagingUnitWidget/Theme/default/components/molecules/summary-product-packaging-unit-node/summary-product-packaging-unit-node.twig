@@ -1,0 +1,119 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'summary-product-packaging-unit-node',
+} %}
+
+{% define data = {
+    node: required,
+    name: data.node.name | default,
+    quantity: data.node.quantity | default(1),
+    amount: data.node.amount | default(0),
+    price: data.node.sumPrice | default(0),
+    quantitySalesUnit: data.node.quantitySalesUnit | default(null),
+    amountSalesUnit: data.node.amountSalesUnit | default(null),
+    images: data.node.images | default([]),
+    countOfDecimalsInAmount: data.node.countOfDecimalsInAmount | default(10),
+} %}
+
+{% block body %}
+    <div class="grid">
+        {% block imageCol %}
+            <div class="col col--sm-12 col--lg-3">
+                {% block imageColInner %}
+                    {% set imageUrl = data.images ? data.images | first %}
+
+                    {% block imageCondition %}
+                        {% if imageUrl %}
+                            {% set thumbnailModifires = ['small'] %}
+
+                            {% block image %}
+                                {% include atom('thumbnail') with {
+                                    modifiers: thumbnailModifires,
+                                    attributes: {
+                                        alt: data.name | default,
+                                        src: imageUrl.externalUrlLarge,
+                                    },
+                                } only %}
+                            {% endblock %}
+                        {% else %}
+                            {% block emptyImage %}
+                                <div class="text-center">
+                                    <small>{{ 'global.no_image_available' | trans }}</small>
+                                </div>
+                            {% endblock %}
+                        {% endif %}
+                    {% endblock %}
+                {% endblock %}
+            </div>
+        {% endblock %}
+
+        {% block content %}
+            <div class="col col--sm-12 col--lg-9">
+                {% block contentInner %}
+                    {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default %}
+                    {% set salesUnitSummary = salesUnitName ? data.quantity / data.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
+
+                    {% block price %}
+                        <strong class="float-right">{{ can('SeePricePermissionPlugin') ? data.price | money : 'customer.access.cannot_see_price' | trans }}</strong>
+                    {% endblock %}
+
+                    {% block summary %}
+                        <div>
+                            {% block summaryInner %}
+                                {{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }}
+
+                                {% block summaryInformation %}
+                                    {% if salesUnitSummary %}
+                                        {{ 'product_packaging_unit_node_summary' | trans({
+                                            '%summary%': salesUnitSummary,
+                                        })}}
+                                    {% endif %}
+                                {% endblock %}
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+
+                    {% block quantity %}
+                        <div>{{ 'packaging_units.cart.quantity' | trans }}: {{ data.quantity }}</div>
+                    {% endblock %}
+
+                    {% block offerByMerchant %}
+                        {% widget 'ProductOfferSoldByMerchantWidget' args [data.node] only %}{% endwidget %}
+                    {% endblock %}
+
+                    {% block amountSalesUnit %}
+                        {% if data.amountSalesUnit is not empty %}
+                            {% set amountPerQuantity = data.amount.divide(data.quantity, data.countOfDecimalsInAmount).trim %}
+                            {% set amountPerQuantityConversion = amountPerQuantity.divide(data.amountSalesUnit.conversion, data.countOfDecimalsInAmount).trim %}
+                            {% set amountSalesUnitName = salesUnitName | default(data.amountSalesUnit.productMeasurementBaseUnit.productMeasurementUnit.name) | default %}
+
+                            {% block amountSalesUnitContainer %}
+                                <div>
+                                    {% block amountSalesUnitInner %}
+                                        {% block amountSalesUnitSymbol %}
+                                            <span class="text-secondary">&times;</span>
+                                        {% endblock %}
+                                        {{ amountPerQuantity }} {{ amountSalesUnitName | trans }}
+
+                                        {% block amountSalesUnitSummary %}
+                                            {% if amountPerQuantityConversion != amountPerQuantity %}
+                                                {{ 'product_packaging_unit_node_summary' | trans({
+                                                    '%summary%': amountPerQuantityConversion ~ ' ' ~ data.amountSalesUnit.productMeasurementUnit.name | trans,
+                                                })}}
+                                            {% endif %}
+                                        {% endblock %}
+
+                                        {{ 'product_packaging_unit_node_amount_summary' | trans({
+                                            '%summary%': data.amount ~ ' ' ~ amountSalesUnitName | trans,
+                                        })}}
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
+                        {% endif %}
+                    {% endblock %}
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}
