@@ -49,7 +49,7 @@
         {% endembed %}
     {% endif %}
 
-    {% if data.formBundle.vars.data | length %}
+    {% if data.formBundle and data.formBundle.vars.data | length %}
         {% embed molecule('form') with {
             data: {
                 form: data.formBundle,
