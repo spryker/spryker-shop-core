@@ -5,7 +5,7 @@
     form: _view.shoppingListForm,
     shoppingList: _view.shoppingList,
     shoppingListItemProducts: _view.productViewTransfers,
-    idShoppingList: _view.shoppingList.idShoppingList | default
+    idShoppingList: _view.shoppingList.idShoppingList | default,
 } %}
 
 {% block breadcrumbs %}
@@ -18,34 +18,33 @@
                 },
                 {
                     label: 'customer.account.shopping_list' | trans,
-                    url: url('shopping-list')
+                    url: url('shopping-list'),
                 },
                 {
                     label: 'customer.account.shopping_list.overview.edit' | trans,
-                }
-            ]
-        }
+                },
+            ],
+        },
     } only %}
 {% endblock %}
 
 {% block customerNavigation %}
     {% widget 'CustomerNavigationWidget' args ['shoppingList', data.idShoppingList] only %}
-    {% elsewidget 'CustomerNavigationWidgetPlugin' args ['shoppingList', data.idShoppingList] only %} {# @deprecated Use CustomerNavigationWidget instead. #}
     {% endwidget %}
 {% endblock %}
 
-{% block customerContent %}
-
-    {% set hasWritePermission = can('WriteShoppingListPermissionPlugin', data.idShoppingList) %}
-    <div class="box">
+{% block customerContentInner %}
+    {% block shoppingListProductQuickAdd %}
         {% if can('WriteShoppingListPermissionPlugin', data.shoppingList.idShoppingList) %}
             {% include molecule('shopping-list-product-quick-add', 'ShoppingListPage') with {
                 data: {
-                    activeShoppingListId: data.shoppingList.idShoppingList
-                }
+                    activeShoppingListId: data.shoppingList.idShoppingList,
+                },
             } only %}
         {% endif %}
+    {% endblock %}
 
+    {% block form %}
         {% embed molecule('form') with {
             data: {
                 form: data.form,
@@ -58,7 +57,7 @@
                     class: 'button button--success spacing-right',
                     icon: null,
                     enable: true,
-                    qa: 'submit-button'
+                    qa: 'submit-button',
                 },
 
                 cancel: {
@@ -67,9 +66,9 @@
                     icon: null,
                     url: path('shopping-list'),
                     enable: true,
-                    qa: 'back-button'
-                }
-            }
+                    qa: 'back-button',
+                },
+            },
         } only %}
             {% block fields %}
                 <div class="{{config.name}}__field col col--sm-12">
@@ -77,24 +76,23 @@
                     {{ form_row(data.form.name) }}
                 </div>
                 <div class="{{config.name}}__field col col--sm-12">
-                    {% embed molecule('shopping-list-info', 'ShoppingListPage') with {
+                    {% include molecule('shopping-list-info', 'ShoppingListPage') with {
                         data: {
-                            shoppingList: data.shoppingList
-                        }
+                            shoppingList: data.shoppingList,
+                            isShareable: false,
+                        },
                     } only %}
-                        {% block sharedBlock %}{% endblock %}
-                    {% endembed %}
                 </div>
                 <div class="{{config.name}}__field col col--sm-12">
                     {% if data.shoppingList.items is not empty %}
-                        {% include molecule('shopping-list-overview-update-table', 'ShoppingListPage') with {
+                        {% include molecule('shopping-list-overview-update', 'ShoppingListPage') with {
                             data: {
                                 shoppingListItems: data.shoppingList.items,
                                 idShoppingList: data.idShoppingList,
                                 shoppingList: data.shoppingList,
                                 shoppingListItemProducts: data.shoppingListItemProducts,
-                                form: data.form
-                            }
+                                form: data.form,
+                            },
                         } only %}
                     {% else %}
                         <hr class="box__separator">
@@ -111,8 +109,8 @@
                     <div class="col col--sm-6 text-left">
                         {% if data.cancel.enable %}
                             {% block cancel %}
-                                <a href="{{data.cancel.url}}" class="{{data.cancel.class}}" {{qa(data.cancel.qa)}}>
-                                    {{data.cancel.text}}
+                                <a href="{{ data.cancel.url }}" class="{{ data.cancel.class }}" {{ qa(data.cancel.qa) }}>
+                                    {{ data.cancel.text }}
                                 </a>
                             {% endblock %}
                         {% endif %}
@@ -120,17 +118,17 @@
                     <div class="col col--sm-6 grid grid--right">
                         {% if data.submit.enable %}
                             {% block submit %}
-                                <button type="submit" class="{{data.submit.class}}" {{qa(data.submit.qa)}}>
-                                    {{data.submit.text}}
+                                <button type="submit" class="{{ data.submit.class }}" data-init-single-click {{ qa(data.submit.qa) }}>
+                                    {{- data.submit.text -}}
                                 </button>
                             {% endblock %}
                         {% endif %}
                         <a class="button button--alert" href="{{ path('shopping-list/delete/confirm', {idShoppingList: data.idShoppingList}) }}">
-                            {{ 'customer.account.shopping_list.overview.delete' | trans }}
+                            {{- 'customer.account.shopping_list.overview.delete' | trans -}}
                         </a>
                     </div>
                 </div>
             {% endblock %}
         {% endembed %}
-    </div>
+    {% endblock %}
 {% endblock %}

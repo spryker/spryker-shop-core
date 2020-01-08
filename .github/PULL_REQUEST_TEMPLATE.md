@@ -1,3 +1,4 @@
+<!---
 
 ## For External PRs 
 Please
@@ -14,4 +15,7 @@ Go to
 
 and copy paste your PR template here (as per https://github.com/spryker/spryker/wiki/Pull-Requests guidelines).
 
-NOTE: Replace all of the content above!
+
+NOTE: Replace this block with your actual PR template
+
+-->

@@ -27,6 +27,7 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_CART_VARIANT = 'PLUGIN_CART_VARIANT';
     public const PLUGIN_CART_ITEM_TRANSFORMERS = 'PLUGIN_CART_ITEM_TRANSFORMERS';
     public const PLUGIN_CART_PAGE_WIDGETS = 'PLUGIN_CART_PAGE_WIDGETS';
+    public const PLUGIN_PRE_ADD_TO_CART = 'PLUGIN_PRE_ADD_TO_CART';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
@@ -44,6 +45,7 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartVariantAttributeMapperPlugin($container);
         $container = $this->addCartPageWidgetPlugins($container);
         $container = $this->addCartItemTransformerPlugins($container);
+        $container = $this->addPreAddToCartPlugins($container);
         $container = $this->addZedRequestClient($container);
 
         return $container;
@@ -192,6 +194,28 @@ class CartPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return \SprykerShop\Yves\CartPage\Dependency\Plugin\CartItemTransformerPluginInterface[]
      */
     protected function getCartItemTransformerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPreAddToCartPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGIN_PRE_ADD_TO_CART, function () {
+            return $this->getPreAddToCartPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPageExtension\Dependency\Plugin\PreAddToCartPluginInterface[]
+     */
+    protected function getPreAddToCartPlugins(): array
     {
         return [];
     }
