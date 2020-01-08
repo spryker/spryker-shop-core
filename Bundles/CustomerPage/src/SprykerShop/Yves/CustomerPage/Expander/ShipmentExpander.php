@@ -33,10 +33,10 @@ class ShipmentExpander implements ShipmentExpanderInterface
      */
     protected function setShipmentForBundleItems(QuoteTransfer $quoteTransfer, array $bundleItems): QuoteTransfer
     {
-        $indexedBundleItemShipments = $this->indexBundleItemShipmentsByGroupKey($bundleItems);
+        $indexedShipmentTransfers = $this->indexBundleItemShipmentsByGroupKey($bundleItems);
 
         foreach ($quoteTransfer->getBundleItems() as $bundleItem) {
-            $shipmentTransfer = $indexedBundleItemShipments[$bundleItem->getGroupKey()] ?? null;
+            $shipmentTransfer = $indexedShipmentTransfers[$bundleItem->getGroupKey()] ?? null;
 
             if ($shipmentTransfer) {
                 $bundleItem->setShipment($shipmentTransfer);
@@ -53,12 +53,12 @@ class ShipmentExpander implements ShipmentExpanderInterface
      */
     protected function setShipmentForItemsInBundle(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $indexedBundleItemShipments = $this->indexBundleItemShipmentsByBundleItemIdentifier(
+        $indexedShipmentTransfers = $this->indexBundleItemShipmentsByBundleItemIdentifier(
             $quoteTransfer->getBundleItems()->getArrayCopy()
         );
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $shipmentTransfer = $indexedBundleItemShipments[$itemTransfer->getRelatedBundleItemIdentifier()] ?? null;
+            $shipmentTransfer = $indexedShipmentTransfers[$itemTransfer->getRelatedBundleItemIdentifier()] ?? null;
 
             if ($itemTransfer->getRelatedBundleItemIdentifier() && $shipmentTransfer) {
                 $itemTransfer->setShipment($shipmentTransfer);
@@ -75,13 +75,13 @@ class ShipmentExpander implements ShipmentExpanderInterface
      */
     protected function indexBundleItemShipmentsByGroupKey(array $bundleItems): array
     {
-        $indexedBundleItemShipments = [];
+        $indexedShipmentTransfers = [];
 
         foreach ($bundleItems as $bundleItem) {
-            $indexedBundleItemShipments[$bundleItem->getGroupKey()] = $bundleItem->getShipment();
+            $indexedShipmentTransfers[$bundleItem->getGroupKey()] = $bundleItem->getShipment();
         }
 
-        return $indexedBundleItemShipments;
+        return $indexedShipmentTransfers;
     }
 
     /**
@@ -91,12 +91,12 @@ class ShipmentExpander implements ShipmentExpanderInterface
      */
     protected function indexBundleItemShipmentsByBundleItemIdentifier(array $bundleItems): array
     {
-        $indexedBundleItemShipments = [];
+        $indexedShipmentTransfers = [];
 
         foreach ($bundleItems as $bundleItem) {
-            $indexedBundleItemShipments[$bundleItem->getBundleItemIdentifier()] = $bundleItem->getShipment();
+            $indexedShipmentTransfers[$bundleItem->getBundleItemIdentifier()] = $bundleItem->getShipment();
         }
 
-        return $indexedBundleItemShipments;
+        return $indexedShipmentTransfers;
     }
 }
