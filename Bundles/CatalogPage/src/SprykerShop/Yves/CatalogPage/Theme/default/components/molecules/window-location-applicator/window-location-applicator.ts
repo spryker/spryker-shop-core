@@ -28,14 +28,47 @@ export default class WindowLocationApplicator extends Component {
     protected getQueryString(categoryUrl: string = window.location.pathname): void {
         const formData = new FormData(this.form);
         const data = new URLSearchParams(<URLSearchParams>formData);
+        let formattedData = {};
 
-        formData.forEach((value: string, key: string) => {
-            if (value.length) {
+        // Array.from(formData).forEach(entries => {
+        //     const key: string = String(entries[0]);
+        //     const value: string = String(entries[1]);
+        //
+        //     if (value.length) {
+        //         return;
+        //     }
+        //
+        //     data.delete(key);
+        // });
+
+        // formData.forEach((value: string, key: string) => {
+        //     console.log(value);
+        //     if (value.length) {
+        //         return;
+        //     }
+        //
+        //     data.delete(key);
+        // });
+
+        // debugger;
+
+        for (const [key, value] of formData.entries()) {
+            console.log(value);
+            console.log(key);
+
+            formattedData[key] = value;
+        }
+
+        Object.keys(formattedData).forEach((key: string) => {
+            console.log(formattedData[key]);
+            if (formattedData[key].length) {
                 return;
             }
 
             data.delete(key);
         });
+
+        console.log('provet');
 
         this.setWindowLocation(categoryUrl, data.toString());
     }
