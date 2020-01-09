@@ -50,7 +50,11 @@ export default class AddressFormToggler extends Component {
     }
 
     protected onTogglerChange(): void {
-        const selectedOption = <string>this.toggler.options[this.toggler.selectedIndex].value;
+        let selectedOption = '';
+
+        if (this.toggler) {
+            selectedOption = <string>this.toggler.options[this.toggler.selectedIndex].value;
+        }
 
         if (selectedOption === this.optionValueDeliverToMultipleAddresses) {
             this.toggleSubForm();
