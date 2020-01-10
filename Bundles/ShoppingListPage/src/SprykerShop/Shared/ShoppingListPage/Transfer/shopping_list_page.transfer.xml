@@ -76,6 +76,8 @@
 
     <transfer name="ShoppingListOverviewRequest">
         <property name="shoppingList" type="ShoppingList"/>
+        <property name="priceMode" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="ShoppingListOverviewResponse">
