@@ -17,7 +17,7 @@
     {% for option in data.options %}
         <li class="list__item">
             <strong>{{ option.groupName | trans }}:</strong> {{ option.value | trans }}
-            <span>{{ option.unitPrice | money }}</span>
+            <span>{{ (option.unitPrice ?? option.unitGrossPrice) | money }}</span>
         </li>
     {% endfor %}
 {% endblock %}
