@@ -4,23 +4,25 @@
   "description": "ConfigurableBundleWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker-shop/shop-application": "^1.2.0",
     "spryker-shop/shop-ui": "^1.29.0",
-    "spryker/cart": "^7.0.0",
-    "spryker/configurable-bundle": "^1.0.0",
+    "spryker/configurable-bundle": "^1.0.0 || ^2.0.0",
+    "spryker/configurable-bundle-cart": "^1.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/quote": "^2.8.0",
-    "spryker/symfony": "^3.1.0",
-    "spryker/zed-request": "^3.4.0"
+    "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
+    "spryker-shop/configurable-bundle-note-widget": "*",
     "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/router": "*",
+    "spryker/silex": "*"
   },
   "suggest": {
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+    "spryker/router": "Use this module if you want use the RouterProviderPlugin.",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
+    "spryker-shop/configurable-bundle-note-widget": "If you want to use configurable bundle note feature."
   },
   "autoload": {
     "psr-4": {
@@ -29,6 +31,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

@@ -23,6 +23,9 @@ class PasswordForm extends AbstractType
     public const FIELD_NEW_PASSWORD = 'new_password';
     public const FIELD_PASSWORD = 'password';
 
+    protected const VALIDATION_MIN_LENGTH_MESSAGE = 'validation.min_length';
+    protected const VALIDATION_MAX_LENGTH_MESSAGE = 'validation.max_length.singular';
+
     /**
      * @return string
      */
@@ -70,6 +73,9 @@ class PasswordForm extends AbstractType
                 new NotBlank(),
                 new Length([
                     'min' => $this->getConfig()->getCustomerPasswordMinLength(),
+                    'max' => $this->getConfig()->getCustomerPasswordMaxLength(),
+                    'minMessage' => static::VALIDATION_MIN_LENGTH_MESSAGE,
+                    'maxMessage' => static::VALIDATION_MAX_LENGTH_MESSAGE,
                 ]),
             ],
         ]);

@@ -22,7 +22,7 @@ class FunctionTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected const TWIG_FUNCTION_NAME_WIDGET_EXISTS = 'functionExists';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

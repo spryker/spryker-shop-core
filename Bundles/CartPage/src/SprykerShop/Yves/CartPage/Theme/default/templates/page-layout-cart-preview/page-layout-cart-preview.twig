@@ -73,7 +73,7 @@
         },
     } only %}
         {% block cartItemNote %}
-            {% widget 'CartItemNoteFormWidget' args [data.cartItem, data.cart] only %}
+            {% widget 'CartItemNoteFormWidget' args [data.product, data.cart] only %}
                 {% block body %}
                     {% set canWrite = false %}
                     {{ parent() }}
@@ -120,6 +120,14 @@
                 } only %}
                 {{ block('cartShipment') }}
             {% endblock %}
+            {% widget 'SalesOrderThresholdWidget' args [data.cart.expenses] only %}
+                {% block body %}
+                    <li class="list__item spacing-y">
+                        {{ parent() }}
+                        <hr>
+                    </li>
+                {% endblock %}
+            {% endwidget %}
             {{ block('cartPrice') }}
         {% endblock %}
     {% endembed %}

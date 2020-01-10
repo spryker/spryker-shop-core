@@ -1,10 +1,10 @@
-@mixin shopping-list-message($name: '.shopping-list-message') {
+@mixin shopping-list-page-shopping-list-message($name: '.shopping-list-message') {
     #{$name} {
         &__title {
             color: map-get($setting-color-actions, 'alert');
         }
 
-        &__name {
+        &__text {
             overflow: hidden;
             text-overflow: ellipsis;
         }

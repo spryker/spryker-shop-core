@@ -4,7 +4,7 @@
   "description": "CompanyUserInvitationPage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker-shop/customer-page-extension": "^1.0.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker-shop/shop-ui": "^1.13.0",
@@ -19,11 +19,12 @@
   "require-dev": {
     "spryker-shop/company-page": "*",
     "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/router": "*",
+    "spryker/silex": "*"
   },
   "suggest": {
-    "spryker-shop/company-page": "ADD SUGGEST DESCRIPTION",
+    "spryker-shop/company-page": "Use this module when you want to use the CompanyPage plugins.",
+    "spryker/router": "Use this module when you want to use the Router.",
     "spryker/silex": "If you want to use the shops router provider"
   },
   "autoload": {
@@ -33,9 +34,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

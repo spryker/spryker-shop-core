@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\QuoteRequestPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin` instead.
+ */
 class QuoteRequestPageControllerProvider extends AbstractYvesControllerProvider
 {
     protected const ROUTE_QUOTE_REQUEST = 'quote-request';

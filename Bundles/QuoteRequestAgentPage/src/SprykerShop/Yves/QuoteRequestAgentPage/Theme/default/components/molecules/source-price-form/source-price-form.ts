@@ -19,10 +19,12 @@ export default class SourcePriceForm extends Component {
     }
 
     protected setSourcePrice(): void {
-        if (this.sourcePrice.length > 0) {
-            this.inputValue = String(Number(this.sourcePrice));
-            this.inputContainer.classList.remove('is-hidden');
+        if (!this.sourcePrice.length) {
+            return;
         }
+
+        this.inputValue = String(this.sourcePrice);
+        this.inputContainer.classList.remove('is-hidden');
     }
 
     protected onInputType(event: Event): void {

@@ -56,7 +56,8 @@ class UploadedFileCsvTypeValidator implements UploadedFileTypeValidatorInterface
         }
 
         if (!in_array(static::CSV_SKU_COLUMN_NAME, $uploadedOrder[0], true)
-            || !in_array(static::CSV_QUANTITY_COLUMN_NAME, $uploadedOrder[0], true)) {
+            || !in_array(static::CSV_QUANTITY_COLUMN_NAME, $uploadedOrder[0], true)
+        ) {
             return false;
         }
 

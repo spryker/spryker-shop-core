@@ -24,21 +24,24 @@ export default class VolumePrice extends Component {
     /**
      * The custom class for price animation.
      */
-    highLightedClass: string;
+    highLightedClass: string = `${this.name}__price--highlighted`;
 
     /**
      * The current quantity select/input value.
+     *
+     * @deprecated
      */
     currentQuantityValue: number;
     protected timeout: number = 400;
 
-    protected readyCallback(): void {
+    protected readyCallback(): void {}
+
+    protected init(): void {
         this.productPriceElement = <HTMLElement>this.getElementsByClassName(`${this.jsName}__price`)[0];
-        this.volumePricesData = <VolumePricesData[]>JSON.parse(this.dataset.json).reverse();
         this.quantityElement = <HTMLFormElement>document.getElementsByClassName(`${this.jsName}__quantity`)[0];
-        this.highLightedClass = <string>`${this.name}__price--highlighted`;
 
         this.mapEvents();
+        this.sortVolumePriceData();
     }
 
     protected mapEvents(): void {
@@ -51,35 +54,35 @@ export default class VolumePrice extends Component {
         });
     }
 
-    protected quantityChangeHandler(event: Event): void {
-        this.currentQuantityValue = Number((<HTMLInputElement>event.target).value);
-        this.checkQuantityValue();
-    }
+    protected sortVolumePriceData(): void {
+        const volumePricesData = <VolumePricesData[]>JSON.parse(this.dataset.json);
 
-    protected checkQuantityValue(): void {
-        this.volumePricesData.every((item: VolumePricesData) => {
-            return this.checkQuantityValueCallback(item);
+        this.volumePricesData = <VolumePricesData[]>volumePricesData.sort((firstElement, secondElement) => {
+            return secondElement.count - firstElement.count;
         });
     }
 
-    protected checkQuantityValueCallback(priceData: VolumePricesData): boolean {
-        const volumePrice: string = priceData.price;
-        const volumePriceCount: number = priceData.count;
+    protected quantityChangeHandler(event: Event): void {
+        const currentQuantityValue = Number((<HTMLInputElement>event.target).value);
 
-        if (this.currentQuantityValue >= volumePriceCount) {
-            this.changePrice(volumePrice);
+        this.volumePricesData.every((item: VolumePricesData) => {
+            if (currentQuantityValue >= Number(item.count)) {
+                this.changePrice(item.price);
 
-            return false;
-        }
+                return false;
+            }
 
-        return true;
+            return true;
+        });
     }
 
     protected changePrice(price: string): void {
-        if (this.productPriceElement.innerText !== price) {
-            this.productPriceElement.innerHTML = price;
-            this.highlight();
+        if (this.productPriceElement.innerText === price) {
+            return;
         }
+
+        this.productPriceElement.innerText = price;
+        this.highlight();
     }
 
     protected highlight(): void {

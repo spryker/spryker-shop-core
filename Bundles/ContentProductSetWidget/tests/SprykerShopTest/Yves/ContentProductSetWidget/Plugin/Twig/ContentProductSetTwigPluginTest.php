@@ -29,6 +29,7 @@ use Twig\Loader\FilesystemLoader;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerShop
  * @group Yves
  * @group ContentProductSetWidget
@@ -220,7 +221,7 @@ class ContentProductSetTwigPluginTest extends Unit
     }
 
     /**
-     * @return \Twig\Environment
+     * @return \Twig\Environment|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createTwigMock(): Environment
     {
@@ -240,13 +241,14 @@ class ContentProductSetTwigPluginTest extends Unit
      */
     protected function getContext(): array
     {
+        $context = [];
         $context['app']['request'] = $this->createRequestMock();
 
         return $context;
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Request
+     * @return \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createRequestMock(): Request
     {

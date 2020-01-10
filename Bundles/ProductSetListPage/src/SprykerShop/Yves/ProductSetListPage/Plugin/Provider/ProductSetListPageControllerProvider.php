@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\ProductSetListPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\ProductSetListPage\Plugin\Router\ProductSetListPageRouteProviderPlugin` instead.
+ */
 class ProductSetListPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_PRODUCT_SETS = 'product-sets';

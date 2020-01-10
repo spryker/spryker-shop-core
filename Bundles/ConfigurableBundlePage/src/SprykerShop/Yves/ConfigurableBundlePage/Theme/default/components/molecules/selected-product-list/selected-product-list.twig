@@ -1,0 +1,63 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'selected-product-list',
+} %}
+
+{% define data = {
+    products: required,
+    form: required,
+    configurableBundleTemplateStorage: required,
+} %}
+
+{% block body %}
+    {% set slotsForm = data.form.createView.slots %}
+
+    {% for idSlot, product in data.products %}
+        {% set sku = product.sku %}
+
+        {% block productSection %}
+            {% block header %}
+                <div class="{{ config.name }}__header grid grid--justify grid--middle">
+                    {% block headerInner %}
+                        {% block title %}
+                            <h6 class="col col--sm-10">
+                                {{- data.configurableBundleTemplateStorage.slots[idSlot].name | trans -}}
+                            </h6>
+                        {% endblock %}
+
+                        {% block form %}
+                            <span class="col col--sm-1">
+                                {% block formInner %}
+                                    {% include molecule('configurator-state-form', 'ConfigurableBundlePage') with {
+                                        data: {
+                                            form: data.form.createView,
+                                            submitButtonText: 'configurable_bundle_page.edit' | trans,
+                                            action: path(
+                                                'configurable-bundle/configurator/slots', {
+                                                    'idConfigurableBundleTemplate': data.configurableBundleTemplateStorage.idConfigurableBundleTemplate,
+                                                    'idConfigurableBundleTemplateSlot': data.configurableBundleTemplateStorage.slots[idSlot].idConfigurableBundleTemplateSlot,
+                                                }
+                                            ),
+                                        },
+                                    } only %}
+                                {% endblock %}
+                            </span>
+                        {% endblock %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+            {% block product %}
+                {% include molecule('configurator-product', 'ConfigurableBundlePage') with {
+                    data: {
+                        product: product,
+                        form: data.form.createView,
+                        selectedSlotId: null,
+                        isActionActive: false,
+                    },
+                } only %}
+            {% endblock %}
+        {% endblock %}
+    {% endfor %}
+{% endblock %}

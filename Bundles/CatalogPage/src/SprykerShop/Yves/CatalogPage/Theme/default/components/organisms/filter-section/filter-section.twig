@@ -2,18 +2,22 @@
 
 {% define config = {
     name: 'filter-section',
-    tag: 'section'
+    tag: 'section',
 } %}
 
 {% define data = {
     facets: [],
+    filteredFacets: [],
     filterPath: null,
     categories: [],
-    isEmptyCategoryFilterValueVisible: null
+    isEmptyCategoryFilterValueVisible: null,
+    parentJsName: '',
 } %}
 
 {% block body %}
-    {% for filter in data.facets %}
+    {% set facets = data.filteredFacets is not empty ? data.filteredFacets : data.facets %}
+
+    {% for filter in facets %}
         {% set filterHasValues = filter.values is not defined or filter.values | length > 0 %}
 
         {% if filterHasValues %}
@@ -33,8 +37,9 @@
                         max: filter.max | default(0),
                         activeMin: filter.activeMin | default(0),
                         activeMax: filter.activeMax | default(0),
-                        isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible
-                    }
+                        isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
+                        parentJsName: data.parentJsName,
+                    },
                 } only %}
             {% endblock %}
 
@@ -42,12 +47,12 @@
         {% endif %}
     {% endfor %}
 
-    <button type="submit" class="button button--expand button--small">
+    <button type="button" class="button button--expand button--small {{ data.parentJsName }}__trigger">
         {{ 'catalog.filter.button' | trans }}
         {% include atom('icon') with {
             data: {
-                name: 'filter'
-            }
+                name: 'filter',
+            },
         } only %}
     </button>
 {% endblock %}

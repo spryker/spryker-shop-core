@@ -83,7 +83,8 @@ class QuoteRequestCartController extends AbstractController
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
         if ($request->get(QuoteRequestCartForm::SUBMIT_BUTTON_SAVE_AND_BACK) === null
-            || !$quoteRequestResponseTransfer->getIsSuccessful()) {
+            || !$quoteRequestResponseTransfer->getIsSuccessful()
+        ) {
             return $this->redirectResponseInternal(static::ROUTE_CART);
         }
 

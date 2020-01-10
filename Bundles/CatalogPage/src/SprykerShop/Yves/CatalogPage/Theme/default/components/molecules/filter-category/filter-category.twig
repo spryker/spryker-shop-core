@@ -1,20 +1,19 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'filter-category'
+    name: 'filter-category',
 } %}
 
 {% define data = {
     filter: null,
     filterPath: null,
     categories: [],
-    isEmptyCategoryFilterValueVisible: null
+    isEmptyCategoryFilterValueVisible: null,
+    parentJsName: '',
 } %}
 
 {% block component %}
-    {% if data.categories is not empty %}
-        {{parent()}}
-    {% endif %}
+    {% if data.categories is not empty %}{{ parent() }}{% endif %}
 {% endblock %}
 
 {% block body %}
@@ -27,14 +26,14 @@
                 {% set quantity = filterValue.docCount %}
             {% endfor %}
 
-            {% if data.filterPath is not empty %}
-                {% set categoryUrl = url(data.filterPath, {categoryPath: (categoryNode.url)}) %}
-            {% else %}
-                {% set categoryUrl = categoryNode.url | replace({"'": "\\'", '"':'\\"'}) %}
-            {% endif %}
+            {% set categoryUrl = data.filterPath is not empty ? url(data.filterPath, {categoryPath: ( categoryNode.url | trimLocale )}) : categoryNode.url %}
+
             {% if (quantity > 0) or (quantity <= 0 and data.isEmptyCategoryFilterValueVisible == true) %}
-                <li class="menu__item {% if hasChildren %}menu__item--has-children-list{% endif %}">
-                    <button class="link" onclick="this.form.action='{{ categoryUrl }}'" {% if quantity == 0 %}disabled="disabled"{% endif %}>
+                {% set childrenClass = hasChildren ? 'menu__item--has-children-list' %}
+                {% set isDisabled = quantity == 0 ? 'disabled' %}
+
+                <li class="menu__item {{ childrenClass }}">
+                    <button class="link {{ data.parentJsName }}__trigger" type="button" {{ isDisabled }} data-url={{ categoryUrl }}>
                         {{ categoryNode.name }} ({{ quantity }})
                     </button>
 
@@ -44,8 +43,9 @@
                                 filter: data.filter,
                                 filterPath: data.filterPath,
                                 categories: categoryNode.children,
-                                isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible
-                            }
+                                isEmptyCategoryFilterValueVisible: data.isEmptyCategoryFilterValueVisible,
+                                parentJsName: data.parentJsName,
+                            },
                         } only %}
                     {% endif %}
                 </li>

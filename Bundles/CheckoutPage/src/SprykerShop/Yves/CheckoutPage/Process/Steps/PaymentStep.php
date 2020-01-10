@@ -44,12 +44,18 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $calculationClient;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepEnterPreCheckPluginInterface[]
+     */
+    protected $checkoutPaymentStepEnterPreCheckPlugins;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToPaymentClientInterface $paymentClient
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection $paymentPlugins
      * @param string $stepRoute
-     * @param string $escapeRoute
+     * @param string|null $escapeRoute
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
+     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutPaymentStepEnterPreCheckPluginInterface[] $checkoutPaymentStepEnterPreCheckPlugins
      */
     public function __construct(
         CheckoutPageToPaymentClientInterface $paymentClient,
@@ -57,7 +63,8 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         $stepRoute,
         $escapeRoute,
         FlashMessengerInterface $flashMessenger,
-        CheckoutPageToCalculationClientInterface $calculationClient
+        CheckoutPageToCalculationClientInterface $calculationClient,
+        array $checkoutPaymentStepEnterPreCheckPlugins
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
@@ -65,6 +72,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         $this->paymentPlugins = $paymentPlugins;
         $this->flashMessenger = $flashMessenger;
         $this->calculationClient = $calculationClient;
+        $this->checkoutPaymentStepEnterPreCheckPlugins = $checkoutPaymentStepEnterPreCheckPlugins;
     }
 
     /**
@@ -76,7 +84,7 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     {
         $totals = $quoteTransfer->getTotals();
 
-        return !$totals || $totals->getPriceToPay() > 0;
+        return $this->executeCheckoutPaymentStepEnterPreCheckPlugins($quoteTransfer) && (!$totals || $totals->getPriceToPay() > 0);
     }
 
     /**
@@ -87,6 +95,9 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
+        if (!$this->executeCheckoutPaymentStepEnterPreCheckPlugins($quoteTransfer)) {
+            return $quoteTransfer;
+        }
         $paymentSelection = $this->getPaymentSelectionWithFallback($quoteTransfer);
         if ($paymentSelection === null) {
             return $quoteTransfer;
@@ -228,5 +239,21 @@ class PaymentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer)
     {
         return !$this->requireInput($dataTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     *
+     * @return bool
+     */
+    protected function executeCheckoutPaymentStepEnterPreCheckPlugins(AbstractTransfer $dataTransfer): bool
+    {
+        foreach ($this->checkoutPaymentStepEnterPreCheckPlugins as $checkoutPaymentStepEnterPreCheckPlugin) {
+            if (!$checkoutPaymentStepEnterPreCheckPlugin->check($dataTransfer)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

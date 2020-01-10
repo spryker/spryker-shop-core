@@ -1,14 +1,14 @@
+{# fe-sniffer:disabled correct-twig-component-structure #}
 {% extends model('component') %}
 
 {# @deprecated - This config.name will be renamed to 'wishlist-detail-table' with next release. #}
 {% define config = {
     name: 'wishlist-table',
-    tag: 'div'
 } %}
 
 {% define data = {
     wishlistItems: required,
-    wishlistName: required
+    wishlistName: required,
 } %}
 
 {% block body %}

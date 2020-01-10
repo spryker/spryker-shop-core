@@ -24,7 +24,7 @@ use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormHan
 class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin implements QuickOrderFormHandlerStrategyPluginInterface
 {
     /**
-     * @see \SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS
+     * @see \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST_DETAILS
      */
     protected const ROUTE_SHOPPING_LIST_DETAILS = 'shopping-list/details';
 
@@ -32,7 +32,7 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
     protected const PARAM_ADD_TO_SHOPPING_LIST = 'addToShoppingList';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns true if "add to shopping list" button was pressed.
      *
      * @api
@@ -48,7 +48,7 @@ class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin imp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds products to shopping list.
      * - Returns with a route if all items were successfully added.
      *

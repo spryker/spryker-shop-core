@@ -11,6 +11,8 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterfa
 
 /**
  * For Zed & Client PermissionDependencyProvider::getPermissionPlugins() registration
+ *
+ * @deprecated Use `Spryker\Client\CompanyUser\Plugin\CompanyUserStatusChangePermissionPlugin` instead.
  */
 class CompanyUserStatusChangePermissionPlugin implements PermissionPluginInterface
 {

@@ -4,13 +4,14 @@
   "description": "ProductPackagingUnitWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker-shop/quick-order-page-extension": "^1.0.0",
     "spryker-shop/shop-ui": "^1.13.0",
     "spryker/kernel": "^3.30.0",
     "spryker/product-measurement-unit-storage": "^1.1.0",
-    "spryker/product-packaging-unit-storage": "^2.0.0 || ^4.0.0",
+    "spryker/product-packaging-unit-storage": "^5.0.0",
     "spryker/product-quantity-storage": "^1.0.0 || ^3.0.0",
+    "spryker/transfer": "^3.18.0",
     "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
@@ -19,8 +20,7 @@
     "spryker-shop/customer-page": "*",
     "spryker-shop/money-widget": "*",
     "spryker-shop/product-detail-page": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker-shop/cart-page": "Widget plugins are available for this module.",
@@ -36,6 +36,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

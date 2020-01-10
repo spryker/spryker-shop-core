@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\CustomerPage\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin` instead.
+ */
 class CustomerPageControllerProvider extends AbstractYvesControllerProvider
 {
     public const ROUTE_LOGIN = 'login';
@@ -46,8 +49,9 @@ class CustomerPageControllerProvider extends AbstractYvesControllerProvider
             ->addRestorePasswordRoute()
             ->addCustomerOverviewRoute()
             ->addCustomerProfileRoute()
-            ->addCustomerAddressRoute()
-            ->addNewCustomerAddressRoute()
+            ->addCustomerAddressRoute();
+
+        $this->addNewCustomerAddressRoute()
             ->addUpdateCustomerAddressRoute()
             ->addDeleteCustomerAddressRoute()
             ->addRefreshCustomerAddressRoute()

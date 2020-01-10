@@ -16,7 +16,7 @@ class ShopApplicationConfig extends AbstractBundleConfig
     protected const FORM_RESOURCES_DIR = __DIR__ . '/Resources/views/Form';
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getFormThemes()
     {
@@ -34,6 +34,8 @@ class ShopApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return bool
      */
     public function isSslEnabled(): bool

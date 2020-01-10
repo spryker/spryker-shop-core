@@ -4,7 +4,6 @@ $shop-ui-tooltip-message-arrow-size: 0.5rem;
     #{$name} {
         @include helper-visibility-invisible;
         @include helper-effect-transition;
-
         display: block;
         position: absolute;
         min-width: 20rem;
@@ -22,7 +21,7 @@ $shop-ui-tooltip-message-arrow-size: 0.5rem;
             background-color: $setting-color-white;
             border: 1px solid $setting-color-light;
             text-align: center;
-            z-index: 2;
+            z-index: $setting-zi-element + 1;
         }
 
         &__arrow {
@@ -33,7 +32,7 @@ $shop-ui-tooltip-message-arrow-size: 0.5rem;
             border-top-color: transparent;
             border-left-color: transparent;
             transform: rotate(45deg);
-            z-index: 1;
+            z-index: $setting-zi-element;
         }
 
         @each $action, $setting-color-action in $setting-color-actions {

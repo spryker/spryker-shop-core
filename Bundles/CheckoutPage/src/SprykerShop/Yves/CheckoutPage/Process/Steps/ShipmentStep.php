@@ -10,12 +10,12 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
+use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
@@ -31,21 +31,45 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     protected $shipmentPlugins;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepEnterPreCheckPluginInterface[]
+     */
+    protected $checkoutShipmentStepEnterPreCheckPlugins;
+
+    /**
+     * @var \SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface
+     */
+    protected $postConditionChecker;
+
+    /**
+     * @var \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface
+     */
+    protected $giftCardItemsChecker;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection $shipmentPlugins
+     * @param \SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface $postConditionChecker
+     * @param \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface $giftCardItemsChecker
      * @param string $stepRoute
-     * @param string $escapeRoute
+     * @param string|null $escapeRoute
+     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepEnterPreCheckPluginInterface[] $checkoutShipmentStepEnterPreCheckPlugins
      */
     public function __construct(
         CheckoutPageToCalculationClientInterface $calculationClient,
         StepHandlerPluginCollection $shipmentPlugins,
+        PostConditionCheckerInterface $postConditionChecker,
+        GiftCardItemsCheckerInterface $giftCardItemsChecker,
         $stepRoute,
-        $escapeRoute
+        $escapeRoute,
+        array $checkoutShipmentStepEnterPreCheckPlugins
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
         $this->calculationClient = $calculationClient;
         $this->shipmentPlugins = $shipmentPlugins;
+        $this->postConditionChecker = $postConditionChecker;
+        $this->giftCardItemsChecker = $giftCardItemsChecker;
+        $this->checkoutShipmentStepEnterPreCheckPlugins = $checkoutShipmentStepEnterPreCheckPlugins;
     }
 
     /**
@@ -55,7 +79,9 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function requireInput(AbstractTransfer $quoteTransfer)
     {
-        return $quoteTransfer->getItems()->count() && $this->hasOnlyGiftCardItems($quoteTransfer) === false;
+        return $quoteTransfer->getItems()->count() !== 0
+            && $this->executeCheckoutShipmentStepEnterPreCheckPlugins($quoteTransfer)
+            && $this->giftCardItemsChecker->hasOnlyGiftCardItems($quoteTransfer->getItems()) === false;
     }
 
     /**
@@ -66,14 +92,14 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
-        if (!$this->requireInput($quoteTransfer)) {
-            $quoteTransfer = $this->setDefaultNoShipmentMethod($quoteTransfer);
+        if (!$this->executeCheckoutShipmentStepEnterPreCheckPlugins($quoteTransfer)) {
+            return $quoteTransfer;
         }
+        $quoteTransfer = $this->setDefaultNoShipmentMethod($quoteTransfer);
 
         $shipmentHandler = $this->shipmentPlugins->get(CheckoutPageDependencyProvider::PLUGIN_SHIPMENT_STEP_HANDLER);
-        $shipmentHandler->addToDataClass($request, $quoteTransfer);
 
-        return $this->calculationClient->recalculate($quoteTransfer);
+        return $shipmentHandler->addToDataClass($request, $quoteTransfer);
     }
 
     /**
@@ -83,51 +109,7 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     public function postCondition(AbstractTransfer $quoteTransfer)
     {
-        if ($this->hasOnlyGiftCardItems($quoteTransfer)) {
-            return true;
-        }
-
-        if (!$this->isShipmentSet($quoteTransfer)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isShipmentSet(QuoteTransfer $quoteTransfer): bool
-    {
-        if (!$quoteTransfer->getShipment()) {
-            return false;
-        }
-
-        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                return $quoteTransfer->getShipment()->getShipmentSelection() !== null;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function hasOnlyGiftCardItems(QuoteTransfer $quoteTransfer): bool
-    {
-        $onlyGiftCardItems = true;
-        foreach ($quoteTransfer->getItems() as $item) {
-            $isGiftCard = $item->getGiftCardMetadata() ? $item->getGiftCardMetadata()->getIsGiftCard() : false;
-            $onlyGiftCardItems &= $isGiftCard;
-        }
-
-        return (bool)$onlyGiftCardItems;
+        return $this->postConditionChecker->check($quoteTransfer);
     }
 
     /**
@@ -140,7 +122,18 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
         $shipmentTransfer = (new ShipmentTransfer())
             ->setShipmentSelection(CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT);
 
-        return $quoteTransfer->setShipment($shipmentTransfer);
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $itemShipmentTransfer = $itemTransfer->getShipment();
+            if ($itemShipmentTransfer !== null && $itemShipmentTransfer->getShipmentSelection() === null) {
+                $itemShipmentTransfer->setShipmentSelection(CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT);
+            }
+        }
+
+        if ($quoteTransfer->getShipment() === null) {
+            $quoteTransfer->setShipment($shipmentTransfer);
+        }
+
+        return $quoteTransfer;
     }
 
     /**
@@ -169,5 +162,21 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer)
     {
         return !$this->requireInput($dataTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     *
+     * @return bool
+     */
+    protected function executeCheckoutShipmentStepEnterPreCheckPlugins(AbstractTransfer $dataTransfer): bool
+    {
+        foreach ($this->checkoutShipmentStepEnterPreCheckPlugins as $checkoutShipmentStepEnterPreCheckPlugin) {
+            if (!$checkoutShipmentStepEnterPreCheckPlugin->check($dataTransfer)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

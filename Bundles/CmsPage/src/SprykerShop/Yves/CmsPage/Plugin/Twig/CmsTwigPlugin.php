@@ -24,7 +24,7 @@ class CmsTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected const SERVICE_TRANSLATOR = 'translator';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

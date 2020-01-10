@@ -4,7 +4,7 @@
   "description": "ResourceSharePage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker-shop/resource-share-page-extension": "^1.0.0",
     "spryker-shop/shop-application": "^1.0.0",
     "spryker/customer": "^7.0.0",
@@ -15,11 +15,12 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/router": "*",
+    "spryker/silex": "*"
   },
   "suggest": {
     "spryker-shop/customer-page": "Use RedirectUriCustomerRedirectStrategyPlugin to allow redirect when login is necessary for a shared resource: 1.21.0",
+    "spryker/router": "Use this module when you want to use the Router.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
@@ -29,6 +30,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

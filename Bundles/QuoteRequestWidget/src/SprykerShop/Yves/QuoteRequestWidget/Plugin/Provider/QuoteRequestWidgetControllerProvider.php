@@ -10,6 +10,9 @@ namespace SprykerShop\Yves\QuoteRequestWidget\Plugin\Provider;
 use Silex\Application;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
 
+/**
+ * @deprecated Use `\SprykerShop\Yves\QuoteRequestWidget\Plugin\Router\QuoteRequestWidgetRouteProviderPlugin` instead.
+ */
 class QuoteRequestWidgetControllerProvider extends AbstractYvesControllerProvider
 {
     protected const ROUTE_QUOTE_REQUEST_SAVE_CART = 'quote-request/cart/save';

@@ -30,7 +30,7 @@ class ShoppingListItemNoteWidgetPlugin extends AbstractWidgetPlugin implements S
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -42,7 +42,7 @@ class ShoppingListItemNoteWidgetPlugin extends AbstractWidgetPlugin implements S
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

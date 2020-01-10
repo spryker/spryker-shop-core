@@ -4,7 +4,7 @@
   "description": "WishlistWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/wishlist": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^8.0.0"
@@ -12,8 +12,7 @@
   "require-dev": {
     "spryker-shop/customer-page": "*",
     "spryker-shop/product-detail-page": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker-shop/customer-page": "To have customer account pages",
@@ -26,6 +25,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

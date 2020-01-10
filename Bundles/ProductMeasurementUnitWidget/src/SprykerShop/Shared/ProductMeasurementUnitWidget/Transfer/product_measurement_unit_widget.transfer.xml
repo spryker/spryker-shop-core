@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Item">
+        <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit"/>
+        <property name="id" type="int"/>
+    </transfer>
+
+    <transfer name="ProductView">
+        <property name="idProductConcrete" type="int"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementUnit">
+        <property name="idProductMeasurementUnit" type="int"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementSalesUnit">
+        <property name="isDefault" type="bool"/>
+        <property name="precision" type="int"/>
+        <property name="value" type="int"/>
+        <property name="conversion" type="float"/>
+        <property name="productMeasurementUnit" type="ProductMeasurementUnit"/>
+        <property name="idProductMeasurementSalesUnit" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConcreteMeasurementUnitStorage">
+        <property name="baseUnit" type="ProductConcreteMeasurementBaseUnit"/>
+    </transfer>
+
+    <transfer name="ProductQuantityStorage">
+        <property name="quantityMin" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConcreteMeasurementBaseUnit">
+        <property name="idProductMeasurementUnit" type="int"/>
+        <property name="idProductMeasurementBaseUnit" type="int"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementUnitStorage">
+    </transfer>
+
+</transfers>

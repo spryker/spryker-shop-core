@@ -17,7 +17,6 @@ class AddItemsToShoppingListWidget extends AbstractWidget
 {
     use PermissionAwareTrait;
 
-    protected const NAME = 'AddItemsToShoppingListWidget';
     protected const PARAM_IS_VISIBLE = 'isVisible';
     protected const PARAM_SHOPPING_LIST_OPTIONS = 'shoppingListOptions';
     protected const PARAM_SHOPPING_LIST_OPTION_VALUE = 'value';
@@ -36,22 +35,14 @@ class AddItemsToShoppingListWidget extends AbstractWidget
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
     {
-        return static::NAME;
+        return 'AddItemsToShoppingListWidget';
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string
@@ -108,7 +99,7 @@ class AddItemsToShoppingListWidget extends AbstractWidget
             return [];
         }
 
-        $shoppingListCollection = $this->getFactory()->getShoppingListClient()->getCustomerShoppingListCollection();
+        $shoppingListCollection = $this->getFactory()->getShoppingListSessionClient()->getCustomerShoppingListCollection();
 
         $shoppingListOptions = [];
         foreach ($shoppingListCollection->getShoppingLists() as $shoppingList) {

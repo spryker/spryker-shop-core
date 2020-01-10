@@ -4,7 +4,7 @@
   "description": "PriceWidget module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker-shop/shop-ui": "^1.27.0",
     "spryker/kernel": "^3.30.0",
     "spryker/price": "^5.3.0",
@@ -15,12 +15,13 @@
     "spryker-shop/product-detail-page": "*",
     "spryker-shop/shop-application": "*",
     "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/router": "*",
+    "spryker/silex": "*"
   },
   "suggest": {
     "spryker-shop/product-detail-page": "Widget plugins are available for this module.",
     "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies.",
+    "spryker/router": "If you want to use RouteProviderPlugins to be added to the Route Module.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
@@ -30,6 +31,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

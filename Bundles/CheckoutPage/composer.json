@@ -4,8 +4,9 @@
   "description": "CheckoutPage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker-shop/customer-page": "^1.15.0",
+    "php": ">=7.2",
+    "spryker-shop/checkout-page-extension": "^1.1.0",
+    "spryker-shop/customer-page": "^2.0.0",
     "spryker-shop/home-page": "^1.0.0",
     "spryker-shop/money-widget": "^1.0.0",
     "spryker-shop/shop-application": "^1.0.0",
@@ -13,18 +14,18 @@
     "spryker/application": "^3.8.0",
     "spryker/calculation": "^4.2.0",
     "spryker/cart": "^4.3.0 || ^5.0.0 || ^7.0.0",
-    "spryker/checkout": "^4.3.0 || ^6.0.0",
-    "spryker/customer": "^7.16.0",
+    "spryker/checkout": "^4.5.0 || ^6.2.0",
+    "spryker/customer": "^7.25.0",
     "spryker/glossary-storage": "^1.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.33.0",
     "spryker/messenger": "^3.1.0",
     "spryker/money": "^2.4.0",
-    "spryker/payment": "^4.3.0",
+    "spryker/payment": "^4.3.0 || ^5.0.0",
     "spryker/permission-extension": "^1.0.0",
     "spryker/price": "^5.1.0",
-    "spryker/product-bundle": "^4.1.0 || ^6.0.0",
+    "spryker/product-bundle": "^4.1.0 || ^6.0.0 || ^7.0.0",
     "spryker/quote": "^1.1.0 || ^2.0.0",
-    "spryker/shipment": "^6.2.0",
+    "spryker/shipment": "^7.0.0 || ^8.0.0",
     "spryker/step-engine": "^3.2.0",
     "spryker/symfony": "^3.1.0",
     "spryker/util-validate": "^1.0.0"
@@ -32,17 +33,22 @@
   "require-dev": {
     "spryker-shop/cart-note-widget": "*",
     "spryker-shop/checkout-widget": "*",
+    "spryker-shop/company-widget": "*",
     "spryker-shop/gift-card-widget": "*",
     "spryker-shop/product-packaging-unit-widget": "*",
     "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/router": "*",
+    "spryker/silex": "*"
   },
   "suggest": {
+    "spryker-shop/cart-code-widget": "If you want to use components from module CartCodeWidget or CheckoutVoucherFormWidget or CheckoutVoucherFormWidgetPlugin",
     "spryker-shop/cart-note-widget": "If you want to use components from module CartNoteWidget or CartNoteQuoteItemNoteWidgetPlugin.",
-    "spryker-shop/checkout-widget": "ADD SUGGEST DESCRIPTION",
-    "spryker-shop/gift-card-widget": "If you want to use components from module GiftCardWidget",
-    "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or SummaryProductPackagingUnitWidgetPlugin.",
+    "spryker-shop/checkout-widget": "Add the module if you want to use checkout widget",
+    "spryker-shop/company-widget": "Add the module if you want to use company widget",
+    "spryker-shop/configurable-bundle-widget": "Add the module if you want to use QuoteConfiguredBundleWidget.",
+    "spryker-shop/gift-card-widget": "Add the module if you want to use gift card widget",
+    "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or SummaryProductPackagingUnitWidgetPlugin: ^0.5.2",
+    "spryker/router": "Use this module when you want to use the Router.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
   "autoload": {
@@ -52,9 +58,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

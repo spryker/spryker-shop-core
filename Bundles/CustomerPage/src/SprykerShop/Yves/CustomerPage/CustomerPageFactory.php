@@ -17,7 +17,12 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClient
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
+use SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpander;
+use SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
+use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapper;
+use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapperInterface;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\AccessDeniedHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationSuccessHandler;
@@ -53,11 +58,13 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
+     * @param string|null $targetUrl
+     *
      * @return \SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureHandler
      */
-    public function createCustomerAuthenticationFailureHandler()
+    public function createCustomerAuthenticationFailureHandler(?string $targetUrl = null)
     {
-        return new CustomerAuthenticationFailureHandler($this->getFlashMessenger());
+        return new CustomerAuthenticationFailureHandler($this->getFlashMessenger(), $targetUrl);
     }
 
     /**
@@ -319,5 +326,29 @@ class CustomerPageFactory extends AbstractFactory
     public function createIsLoggedTwigFunction(): TwigFunction
     {
         return new IsLoggedTwigFunction($this->getCustomerClient());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface
+     */
+    public function getShipmentService(): CustomerPageToShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_SHIPMENT);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Mapper\CustomerMapperInterface
+     */
+    public function createCustomerMapper(): CustomerMapperInterface
+    {
+        return new CustomerMapper();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpanderInterface
+     */
+    public function createCustomerExpander(): CustomerAddressExpanderInterface
+    {
+        return new CustomerAddressExpander($this->createCustomerMapper());
     }
 }

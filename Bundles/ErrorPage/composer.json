@@ -4,20 +4,26 @@
   "description": "ErrorPage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker-shop/shop-ui": "^1.0.0",
+    "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/kernel": "^3.35.0",
     "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
     "spryker-shop/shop-application": "*",
     "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
+    "spryker/router": "*",
+    "spryker/silex": "*"
   },
   "suggest": {
     "spryker-shop/shop-application": "Use this module when using plugins that need ShopApplication dependencies.",
-    "spryker/silex": "Use this module when using plugins that need Silex dependencies."
+    "spryker/router": "If you want to use RouteProviderPlugins to be added to the Route Module.",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies.",
+    "spryker/container": "Use this module when you want to use the ErrorPageEventDispatcherPlugin.",
+    "spryker/event-dispatcher": "Use this module when you want to use the ErrorPageEventDispatcherPlugin."
   },
   "autoload": {
     "psr-4": {
@@ -26,6 +32,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
