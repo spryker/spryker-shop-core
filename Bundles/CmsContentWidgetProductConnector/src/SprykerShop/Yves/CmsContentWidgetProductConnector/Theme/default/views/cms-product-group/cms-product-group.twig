@@ -3,12 +3,12 @@
 {% define data = {
     product: product | default,
     products: products | default([]),
-    showNotAvailableProducts: showNotAvailableProducts | default(false),
+    isUnavailableProductsDisplayed: isUnavailableProductsDisplayed | default(false),
 } %}
 
 {% block body %}
     <div class="grid grid--stretch">
-        {% for product in data.products if (data.showNotAvailableProducts or product.available) %}
+        {% for product in data.products if (data.isUnavailableProductsDisplayed or product.available) %}
             {% widget 'CmsProductGroupWidget' args [product] only %}
             {% elsewidget 'ProductGroupWidgetPlugin' args [product] only %} {# @deprecated Use CmsProductGroupWidget instead. #}
             {% endwidget %}
