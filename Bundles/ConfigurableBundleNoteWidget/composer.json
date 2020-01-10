@@ -1,0 +1,42 @@
+{
+  "name": "spryker-shop/configurable-bundle-note-widget",
+  "type": "library",
+  "description": "ConfigurableBundleNoteWidget module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2",
+    "spryker-shop/shop-ui": "^1.0.0",
+    "spryker/application": "^3.8.0",
+    "spryker/configurable-bundle-note": "^1.0.0",
+    "spryker/glossary-storage": "^1.0.0",
+    "spryker/kernel": "^3.33.0",
+    "spryker/quote": "^2.0.0",
+    "spryker/symfony": "^3.1.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/router": "*"
+  },
+  "suggest": {
+    "spryker/router": "Use this module when using plugins that need Router dependencies."
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

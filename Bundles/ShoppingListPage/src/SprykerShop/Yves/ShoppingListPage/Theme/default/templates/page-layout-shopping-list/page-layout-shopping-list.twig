@@ -2,13 +2,11 @@
 
 {% define data = {
     title: 'customer.account.shopping_list' | trans,
-    activePage: 'shoppingList'
+    activePage: 'shoppingList',
 } %}
 
 {% block title %}
-    <div class="shopping-list-info shopping-list-info--reset">
-        <h3 class="shopping-list-info__name">{{ data.title }}</h3>
-    </div>
+    <h3 class="text-break">{{ data.title }}</h3>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -16,7 +14,13 @@
         data: {
             steps: [{
                 label: 'customer.account' | trans,
-            }]
-        }
+            }],
+        },
     } only %}
+{% endblock %}
+
+{% block customerContent %}
+    <div class="box">
+        {% block customerContentInner %}{% endblock %}
+    </div>
 {% endblock %}

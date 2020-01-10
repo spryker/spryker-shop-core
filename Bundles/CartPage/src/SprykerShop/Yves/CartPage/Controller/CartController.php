@@ -107,6 +107,8 @@ class CartController extends AbstractController
 
         $this->addProductOptions($request->get('product-option', []), $itemTransfer);
 
+        $itemTransfer = $this->executePreAddToCartPlugins($itemTransfer, $request->request->all());
+
         $this->getFactory()
             ->getCartClient()
             ->addItem($itemTransfer, $request->request->all());
@@ -381,5 +383,20 @@ class CartController extends AbstractController
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array $params
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function executePreAddToCartPlugins(ItemTransfer $itemTransfer, array $params): ItemTransfer
+    {
+        foreach ($this->getFactory()->getPreAddToCartPlugins() as $preAddToCartPlugin) {
+            $itemTransfer = $preAddToCartPlugin->preAddToCart($itemTransfer, $params);
+        }
+
+        return $itemTransfer;
     }
 }

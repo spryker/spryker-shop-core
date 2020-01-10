@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\ShopCmsSlot;
 
 use Spryker\Yves\Kernel\AbstractBundleConfig;
-use SprykerShop\Shared\ShopApplication\ShopApplicationConstants;
 
 class ShopCmsSlotConfig extends AbstractBundleConfig
 {
@@ -17,6 +16,6 @@ class ShopCmsSlotConfig extends AbstractBundleConfig
      */
     public function isDebugModeEnabled(): bool
     {
-        return $this->get(ShopApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
+        return false;
     }
 }

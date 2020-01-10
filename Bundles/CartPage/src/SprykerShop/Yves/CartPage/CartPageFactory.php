@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CartPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToProductStorageClientInterface;
 use SprykerShop\Yves\CartPage\Dependency\Client\CartPageToQuoteClientInterface;
@@ -125,14 +124,6 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToAvailabilityClientInterface
-     */
-    public function getAvailabilityClient(): CartPageToAvailabilityClientInterface
-    {
-        return $this->getProvidedDependency(CartPageDependencyProvider::CLIENT_AVAILABILITY);
-    }
-
-    /**
      * @return \SprykerShop\Yves\CartPage\Dependency\Client\CartPageToZedRequestClientInterface
      */
     public function getZedRequestClient(): CartPageToZedRequestClientInterface
@@ -154,6 +145,14 @@ class CartPageFactory extends AbstractFactory
     public function getCartItemTransformerPlugins()
     {
         return $this->getProvidedDependency(CartPageDependencyProvider::PLUGIN_CART_ITEM_TRANSFORMERS);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CartPageExtension\Dependency\Plugin\PreAddToCartPluginInterface[]
+     */
+    public function getPreAddToCartPlugins(): array
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::PLUGIN_PRE_ADD_TO_CART);
     }
 
     /**

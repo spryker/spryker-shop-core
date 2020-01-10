@@ -3,46 +3,64 @@
 {% define data = {
     shoppingListCollection: _view.shoppingListCollection,
     shoppingListForm: _view.shoppingListForm,
-    shoppingListResponse: _view.shoppingListResponse
+    shoppingListResponse: _view.shoppingListResponse,
 } %}
 
-{% block customerContent %}
-    <div class="box">
+{% block customerContentInner %}
+    {% block formAddShoppingList %}
         {% include molecule('form') with {
             data: {
                 form: data.shoppingListForm,
                 submit: {
                     enable: true,
-                    text: 'customer.account.shopping_list.overview.add_new' | trans
-                }
-            }
+                    text: 'customer.account.shopping_list.overview.add_new' | trans,
+                },
+            },
         } only %}
+    {% endblock %}
 
+    {% block separator %}
         <div class="spacing-y">
             <hr class="box__separator">
         </div>
+    {% endblock %}
 
+    {% block form %}
         {% if data.shoppingListCollection.shoppingLists | length %}
             <form method="POST" action="{{ path('shopping-list/add-shopping-list-to-cart') }}">
-                <button type="submit" class="button button--success" {{qa('submit-button')}}>
-                    {{ 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans }}
-                    {% include atom('icon') with {
-                        data: {
-                            name: 'shopping-cart'
-                        }
-                    } only %}
-                </button>
+                {% block formInner %}
+                    {% set formButtonClasses = 'button button--success' %}
 
-                {% include molecule('shopping-list-overview-table', 'ShoppingListPage') with {
-                    data: {
-                        shoppingLists: data.shoppingListCollection.shoppingLists,
-                        enableTableForm: true,
-                        shoppingListResponse: data.shoppingListResponse
-                    }
-                } only %}
+                    {% block formButton %}
+                        <button type="submit" class="{{ formButtonClasses }}" data-init-single-click {{ qa('submit-button') }}>
+                            {{- 'customer.account.shopping_list.overview.add_shopping_list_to_cart' | trans }}
+                            {% block formButtonIcon %}
+                                {% include atom('icon') with {
+                                    data: {
+                                        name: 'shopping-cart',
+                                    },
+                                } only %}
+                            {% endblock %}
+                        </button>
+                    {% endblock %}
+
+                    {% block shoppingListOverviewTable %}
+                        {% include molecule('shopping-list-overview', 'ShoppingListPage') with {
+                            data: {
+                                shoppingLists: data.shoppingListCollection.shoppingLists,
+                                isTableFormEnabled: true,
+                                shoppingListResponse: data.shoppingListResponse,
+                            },
+                        } only %}
+                    {% endblock %}
+                {% endblock %}
             </form>
-        {% else %}
+        {% endif %}
+    {% endblock %}
+
+    {% block emptyShoppingList %}
+        {% if not data.shoppingListCollection.shoppingLists | length %}
             {{ 'customer.account.shopping_list.overview.empty' | trans }}
         {% endif %}
-    </div>
+    {% endblock %}
 {% endblock %}

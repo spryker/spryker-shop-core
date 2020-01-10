@@ -20,10 +20,10 @@
     "spryker/kernel": "^3.33.0",
     "spryker/messenger": "^3.1.0",
     "spryker/money": "^2.4.0",
-    "spryker/payment": "^4.3.0",
+    "spryker/payment": "^4.3.0 || ^5.0.0",
     "spryker/permission-extension": "^1.0.0",
     "spryker/price": "^5.1.0",
-    "spryker/product-bundle": "^4.1.0 || ^6.0.0",
+    "spryker/product-bundle": "^4.1.0 || ^6.0.0 || ^7.0.0",
     "spryker/quote": "^1.1.0 || ^2.0.0",
     "spryker/shipment": "^7.0.0 || ^8.0.0",
     "spryker/step-engine": "^3.2.0",
@@ -38,8 +38,7 @@
     "spryker-shop/product-packaging-unit-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/router": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/silex": "*"
   },
   "suggest": {
     "spryker-shop/cart-code-widget": "If you want to use components from module CartCodeWidget or CheckoutVoucherFormWidget or CheckoutVoucherFormWidgetPlugin",
@@ -48,7 +47,7 @@
     "spryker-shop/company-widget": "Add the module if you want to use company widget",
     "spryker-shop/configurable-bundle-widget": "Add the module if you want to use QuoteConfiguredBundleWidget.",
     "spryker-shop/gift-card-widget": "Add the module if you want to use gift card widget",
-    "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or SummaryProductPackagingUnitWidgetPlugin.",
+    "spryker-shop/product-packaging-unit-widget": "If you want to use components from module ProductPackagingUnitWidget or SummaryProductPackagingUnitWidgetPlugin: ^0.5.2",
     "spryker/router": "Use this module when you want to use the Router.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },
@@ -59,9 +58,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

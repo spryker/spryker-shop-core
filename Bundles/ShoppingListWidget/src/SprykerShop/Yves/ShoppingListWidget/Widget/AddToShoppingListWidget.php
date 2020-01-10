@@ -18,15 +18,19 @@ class AddToShoppingListWidget extends AbstractWidget
 {
     use PermissionAwareTrait;
 
+    protected const PARAMETER_SKU = 'sku';
+    protected const PARAMETER_IS_DISABLED = 'isDisabled';
+    protected const PARAMETER_SHOPPING_LIST_COLLECTION = 'shoppingListCollection';
+
     /**
      * @param string $sku
      * @param bool $isDisabled
      */
     public function __construct(string $sku, bool $isDisabled)
     {
-        $this->addParameter('sku', $sku)
-            ->addParameter('isDisabled', $isDisabled)
-            ->addParameter('shoppingListCollection', $this->getShoppingListCollection());
+        $this->addParameter(static::PARAMETER_SKU, $sku)
+            ->addParameter(static::PARAMETER_IS_DISABLED, $isDisabled)
+            ->addParameter(static::PARAMETER_SHOPPING_LIST_COLLECTION, $this->getShoppingListCollection());
     }
 
     /**

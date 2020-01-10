@@ -1,6 +1,6 @@
 # SalesConfigurableBundleWidget Module
-[![Build Status](https://travis-ci.org/spryker-shop/sales-configurable-bundle-widget.svg)](https://travis-ci.org/spryker/sales-configurable-bundle-widget)
-[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/sales-configurable-bundle-widget/badge.svg)](https://coveralls.io/github/spryker/sales-configurable-bundle-widget)
+[![Build Status](https://travis-ci.org/spryker-shop/sales-configurable-bundle-widget.svg)](https://travis-ci.org/spryker-shop/sales-configurable-bundle-widget)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Widget module is responsible for displaying configurable bundles.
 

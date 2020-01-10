@@ -1,0 +1,102 @@
+{% extends molecule('shopping-list', 'ShoppingListPage') %}
+
+{% define data = {
+    idShoppingList: required,
+    shoppingListItemProducts: required,
+    form: required,
+} %}
+
+{% block contentInner %}
+    {% for key, item in data.shoppingListItems %}
+        {% block shoppingListItem %}
+            {% set idShoppingListItem = item.idShoppingListItem %}
+            {% set item = data.shoppingListItemProducts[idShoppingListItem] %}
+
+            {{ parent() }}
+        {% endblock %}
+    {% endfor %}
+    <tr class="{{ config.name }}__row">
+        <td class="{{ config.name }}__cell" colspan="6">&nbsp;</td>
+        <td class="{{ config.name }}__cell text-right">
+            <a class="button button--alert" href="{{ path('shopping-list/clear', { idShoppingList: data.idShoppingList }) }}">
+                {{- 'shopping_list.remove_all_items' | trans -}}
+            </a>
+        </td>
+    </tr>
+{% endblock %}
+
+{% block row %}
+    {{ parent() }}
+    <tr>
+        <td></td>
+        <td colspan="5">
+            {% for subForm in data.form.items[key].children if not subForm.rendered and subForm.vars.template_path is defined %}
+                {% include subForm.vars.template_path with {
+                    attributes: { 'data-product-unavailable': not isItemAvailable },
+                    'form': subForm,
+                    'rowClass': config.name ~ '__row ' ~ config.name ~ '__row--borderless ' ~ (not isItemAvailable ? config.name ~ '__row--disable' : null),
+                } only %}
+            {% endfor %}
+        </td>
+    </tr>
+{% endblock %}
+
+{% block checkboxCol %}{% endblock %}
+
+{% block thumbnailColInner %}
+    {% set hasImage = item.images is defined and item.images is not empty and item.images.0.externalUrlSmall is not empty %}
+    {% if hasImage %}
+        {% block thumbnail %}
+            {{ parent() }}
+        {% endblock %}
+    {% endif %}
+{% endblock %}
+
+{% block productCol %}
+    <td class="{{ config.name }}__cell" colspan="2">
+        {% if item.name %}
+            <a href="{{ item.url }}">{{ item.name }}</a>
+        {% endif %}
+        {% if item.sku %}
+            <div>
+                <small>{{ item.sku }}</small>
+            </div>
+        {% endif %}
+        {% for attribute in item.superAttributesDefinition if item.attributes[attribute] is defined %}
+            <div>{{ ('product.attribute.' ~ attribute) | trans }}: {{ item.attributes[attribute] }}</div>
+        {% endfor %}
+    </td>
+{% endblock %}
+
+{% block priceColInner %}
+    {% set hasPrice = item.price is not null %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block quantityColInner %}
+    {{ form_row(data.form.items[key].quantity, { 'attr': { 'readonly': not isItemAvailable }, type: 'number' }) }}
+{% endblock %}
+
+{% block availableCol %}
+    {{ parent() }}
+{% endblock %}
+
+{% block buttonCol %}
+    <td class="{{ config.name }}__cell text-center">
+        {% block buttonColInner %}
+            <a class="button button--alert" href="{{ path('shopping-list/remove-item', {
+                idShoppingList: data.idShoppingList,
+                idShoppingListItem: idShoppingListItem,
+            }) }}">
+                {{- 'customer.account.shopping_list.remove' | trans -}}
+            </a>
+        {% endblock %}
+    </td>
+{% endblock %}
+
+{% block shoppingListProductAlternative %}
+    {% set permission = can('WriteShoppingListPermissionPlugin', data.idShoppingList) %}
+
+    {{ parent() }}
+{% endblock %}

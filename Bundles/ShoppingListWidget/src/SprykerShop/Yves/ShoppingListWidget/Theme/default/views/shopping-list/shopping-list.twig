@@ -5,9 +5,6 @@
     sku: _widget.sku,
     isDisabled: _widget.isDisabled,
     maxQuantity: 10,
-    labels: {
-        shoppingListNameLabel: 'customer.account.shopping_list.overview.name' | trans
-    }
 } %}
 
 {% set quantities = [] %}
@@ -15,64 +12,85 @@
 {% for index in 1..data.maxQuantity %}
     {% set quantities = quantities | merge([{
         label: index,
-        value: index
+        value: index,
     }]) %}
 {% endfor %}
 
 {% set shoppingListOptions = [] %}
 
-{% if data.shoppingListCollection.shoppingLists|length %}
-    {% for shoppingList in data.shoppingListCollection.shoppingLists %}
-        {% set shoppingListOptions = shoppingListOptions|merge([{ value: shoppingList.idShoppingList, label: shoppingList.name }]) %}
-    {% endfor %}
-{% endif %}
+{% for shoppingList in data.shoppingListCollection.shoppingLists %}
+    {% set shoppingListOptions = shoppingListOptions|merge([{ value: shoppingList.idShoppingList, label: shoppingList.name }]) %}
+{% endfor %}
 
 {% block body %}
     <form class="js-shopping-list__form" method="POST" action="{{ path('shopping-list/add-item') }}">
-        <div class="grid grid--justify grid--bottom">
-            <div class="col col--sm-5">
-                <label>{{ 'shopping_list.item_quantity' | trans }}</label>
-                {% include atom('select') with {
-                    modifiers: ['expand'],
-                    attributes: {
-                        name: 'quantity'
-                    },
-                    data: {
-                        options: quantities
-                    }
-                } only %}
+        {% block formContent %}
+            <div class="grid grid--justify grid--bottom">
+                {% block selectContainer %}
+                    <div class="col col--sm-5">
+                        <label>{{ 'shopping_list.item_quantity' | trans }}</label>
+                        {% block select %}
+                            {% include atom('select') with {
+                                modifiers: ['expand'],
+                                data: {
+                                    options: quantities,
+                                },
+                                attributes: {
+                                    name: 'quantity',
+                                },
+                            } only %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+
+                {% block generalPart %}
+                    <div class="col col--sm-6">
+                        {% block generalPartInner %}
+                            <input type="hidden" name="sku" value="{{ data.sku }}">
+                            {% block formInjector %}
+                                {% include molecule('form-data-injector', 'ShoppingListWidget') with {
+                                    attributes: {
+                                        'destination-form-class-name': 'js-shopping-list__form',
+                                        'fields-selector': '.js-product-configurator__form select:not([name="quantity"]):not([name="id_quote"])',
+                                    },
+                                } only %}
+                            {% endblock %}
+
+                            {% set disableAttribute = data.isDisabled ? 'disabled' %}
+                            {% set buttonClasses = 'button button--expand js-add-to-shopping-list' %}
+
+                            {% block button %}
+                                <button type="submit" class="{{ buttonClasses }}" {{ qa('add-to-shopping-list-button') }} {{ disableAttribute }}>
+                                    {% block buttonInner %}
+                                        {% include atom('icon') with {
+                                            data: {
+                                                name: 'cart-plus',
+                                            },
+                                        } only %}
+                                        {{ 'page.detail.add-to-shopping-list' | trans }}
+                                    {% endblock %}
+                                </button>
+                            {% endblock %}
+
+                            {% block selectOptionsContainer %}
+                                {% if shoppingListOptions is not empty %}
+                                    {% block selectOptions %}
+                                        {% include atom('select') with {
+                                            modifiers: ['expand'],
+                                            data: {
+                                                options: shoppingListOptions,
+                                            },
+                                            attributes: {
+                                                name: 'idShoppingList',
+                                            },
+                                        } only %}
+                                    {% endblock %}
+                                {% endif %}
+                            {% endblock %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
             </div>
-            <div class="col col--sm-6">
-                <input type="hidden" name="sku" value="{{ data.sku }}">
-
-                {% include molecule('form-data-injector', 'ShoppingListWidget') with {
-                    attributes: {
-                        'destination-form-class-name': 'js-shopping-list__form',
-                        'fields-selector': '.js-product-configurator__form select:not([name="quantity"]):not([name="id_quote"])',
-                    },
-                } only %}
-
-                <button type="submit" class="button button--expand js-add-to-shopping-list" {{ qa('add-to-shopping-list-button') }} {{ data.isDisabled ? 'disabled' : '' }}>
-                    {% include atom('icon') with {
-                        data: {
-                            name: 'cart-plus'
-                        }
-                    } only %}
-                    {{ 'page.detail.add-to-shopping-list' | trans }}
-                </button>
-
-                {% if shoppingListOptions is not empty %}
-                    {% include atom('select') with {
-                        modifiers: ['expand'],
-                        attributes: {
-                            name: 'idShoppingList'
-                        },
-                        data: {
-                            options: shoppingListOptions
-                        }
-                    } only %}
-                {% endif %}
-            </div>
-        </div>
+        {% endblock %}
     </form>
 {% endblock %}

@@ -18,6 +18,8 @@ class ShoppingListNavigationMenuWidget extends AbstractWidget
 {
     use PermissionAwareTrait;
 
+    protected const PARAMETER_SHOPPING_LIST_COLLECTION = 'shoppingListCollection';
+
     public function __construct()
     {
         $this->addShoppingListCollectionParameter();
@@ -54,6 +56,6 @@ class ShoppingListNavigationMenuWidget extends AbstractWidget
      */
     protected function addShoppingListCollectionParameter(): void
     {
-        $this->addParameter('shoppingListCollection', $this->getCustomerShoppingListCollection());
+        $this->addParameter(static::PARAMETER_SHOPPING_LIST_COLLECTION, $this->getCustomerShoppingListCollection());
     }
 }

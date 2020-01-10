@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ShoppingListPage\Controller;
 
-use SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -32,7 +31,7 @@ class CartToShoppingListController extends AbstractShoppingListController
             return $response;
         }
 
-        return $this->view($response, [], '@ShoppingListPage/views/cart-to-shopping-list/create-from-cart.twig');
+        return $this->view($response, [], '@ShoppingListPage/views/create-from-cart/create-from-cart.twig');
     }
 
     /**
@@ -53,24 +52,7 @@ class CartToShoppingListController extends AbstractShoppingListController
             return $this->redirectToReferer($request);
         }
 
-        $cartToShoppingListForm = $this->getFactory()
-            ->getCartFromShoppingListForm($idQuote)
-            ->handleRequest($request);
-
-        if ($cartToShoppingListForm->isSubmitted() && $cartToShoppingListForm->isValid()) {
-            $shoppingListTransfer = $this->getFactory()
-                ->createCreateFromCartHandler()
-                ->createShoppingListFromCart($cartToShoppingListForm);
-
-            $this->addSuccessMessage(static::GLOSSARY_KEY_SHOPPING_LIST_CART_ITEMS_ADD_SUCCESS);
-
-            return $this->redirectResponseInternal(ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS, [
-                'idShoppingList' => $shoppingListTransfer->getIdShoppingList(),
-            ]);
-        }
-
         return [
-            'cartToShoppingListForm' => $cartToShoppingListForm->createView(),
             'cart' => $quoteTransfer,
         ];
     }

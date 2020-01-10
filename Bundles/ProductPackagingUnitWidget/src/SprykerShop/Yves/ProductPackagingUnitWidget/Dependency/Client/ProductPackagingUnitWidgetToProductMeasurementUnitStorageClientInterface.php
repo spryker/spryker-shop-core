@@ -39,16 +39,16 @@ interface ProductPackagingUnitWidgetToProductMeasurementUnitStorageClientInterfa
     public function findProductMeasurementUnit(int $idProductMeasurementUnit): ?ProductMeasurementUnitTransfer;
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null
      */
-    public function findProductMeasurementSalesUnitByIdProductConcrete(int $idProductConcrete): ?array;
+    public function findProductMeasurementSalesUnitByIdProduct(int $idProduct): ?array;
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null
      */
-    public function findProductMeasurementBaseUnitByIdProductConcrete(int $idProductConcrete): ?ProductMeasurementUnitTransfer;
+    public function findProductMeasurementBaseUnitByIdProduct(int $idProduct): ?ProductMeasurementUnitTransfer;
 }

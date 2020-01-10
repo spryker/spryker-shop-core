@@ -1,140 +1,34 @@
 {% extends template('widget') %}
 
+{% set quantityOptions = [] %}
+
+{% for i in 1..10 %}
+    {% set quantityOptions = quantityOptions | merge([{
+        label: i,
+        value: i,
+    }]) %}
+{% endfor %}
+
 {% define data = {
-    idProductConcrete: _widget.product.idProductConcrete | default,
-    product: _widget.product,
-    quantityOptions: _widget.quantityOptions,
-    minQuantityInBaseUnits: _widget.minQuantityInBaseUnits,
-    minQuantityInSalesUnits: _widget.minQuantityInSalesUnits,
-    baseUnit: _widget.baseUnit | default,
-    idBaseUnit: _widget.idBaseUnit | default,
     salesUnits: _widget.salesUnits | default([]),
-    jsonScheme: _widget.jsonScheme | default(''),
-    salesUnitCount : _widget.salesUnits|length,
-    isAddToCartDisabled : _widget.isAddToCartDisabled | default(false),
+    quantityOptions: _widget.quantityOptions | default(quantityOptions),
+    isAddToCartDisabled: _widget.isAddToCartDisabled | default(false),
+    baseUnit: _widget.baseUnit | default({}),
+    minQuantityInBaseUnits: _widget.minQuantityInBaseUnits | default(1),
+    minQuantityInSalesUnits: _widget.minQuantityInSalesUnits | default(1),
+    jsonScheme: _widget.jsonScheme | default,
 } %}
 
-{% set hasProductMeasurementUnit = data.salesUnitCount >= 1 %}
-{% set disabled = data.isAddToCartDisabled %}
-
 {% block body %}
-    {% if hasProductMeasurementUnit %}
-        <ul class="text-small">
-            {% for salesUnit in data.salesUnits %}
-                {% if salesUnit.productMeasurementUnit.idProductMeasurementUnit != data.baseUnit.idProductMeasurementUnit %}
-                    <li>
-                        1 {{ data.baseUnit.name | trans }}
-                        = {{ (1 / salesUnit.conversion)|round(4) }} {{ salesUnit.productMeasurementUnit.name | trans }}
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <hr>
-    {% endif %}
-
-    <div class="grid grid--bottom grid--justify">
-        <div class="col {% if hasProductMeasurementUnit %}col--sm-7{% else %}col--sm-5{% endif %}">
-            <label>
-                {{ 'cart.item_quantity' | trans }}
-
-                {% if hasProductMeasurementUnit %}
-                    <input id="sales-unit-quantity" class="input input--expand js-volume-price__quantity" type="number" value="{{ data.minQuantityInSalesUnits }}" name="sales-unit-value"/>
-                    <input id="base-unit-quantity" type="hidden" value="{{ data.minQuantityInBaseUnits }}" name="quantity"/>
-                {% else %}
-                    {% embed atom('select') with {
-                        modifiers: ['expand'],
-                        data: {
-                            options: data.quantityOptions,
-                        },
-                        attributes: {
-                            name: 'quantity',
-                        },
-                    } only %}
-                        {% block selectClass %}js-volume-price__quantity{% endblock %}
-                    {% endembed %}
-                {% endif %}
-            </label>
-        </div>
-
-        <div class="col {% if hasProductMeasurementUnit %}col--sm-4{% else %}col--sm-6{% endif %}">
-            {% if hasProductMeasurementUnit %}
-                <label>
-                    {{ 'product.measurement.sales_unit' | trans }}
-                    {% embed atom('select') with {
-                        modifiers: ['expand'],
-                        attributes: {
-                            name: 'id-product-measurement-sales-unit',
-                        },
-                        embed: {
-                            salesUnits: data.salesUnits,
-                        },
-                    } only %}
-                        {% block selectClass %}select-measurement-unit{% endblock %}
-                        {% block options %}
-                            {% for salesUnit in embed.salesUnits %}
-                                <option value="{{ salesUnit.idProductMeasurementSalesUnit }}" {{ (salesUnit.isDefault) ? 'selected' : '' }}>{{ salesUnit.productMeasurementUnit.name | trans }}</option>
-                            {% endfor %}
-                        {% endblock %}
-                    {% endembed %}
-                </label>
-            {% else %}
-                <button type="submit" id="add-to-cart-button" class="button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
-                    {% include atom('icon') with {
-                        data: {
-                            name: 'cart-plus',
-                        },
-                    } only %}
-                    {{ 'page.detail.add-to-cart' | trans }}
-                </button>
-            {% endif %}
-        </div>
-    </div>
-
-    {% if hasProductMeasurementUnit %}
-        {% include molecule('measurement-quantity-selector', 'ProductMeasurementUnitWidget') with {
-            data: {
-                json: data.jsonScheme,
-            },
-        } only %}
-
-        <div class="text-small is-hidden measurement-unit-choice">
-            <hr>
-
-            <div class="measurement-unit-notifications">
-                <div id="quantity-between-units" class="is-hidden">
-                    <span>{{ "measurement_units.recommendation.between-units-info" | trans }} (<span id="current-choice"></span>)</span>
-                </div>
-                <div id="minimum-quantity" class="is-hidden">
-                    <span>{{ "measurement_units.recommendation.min-violation" | trans }}</span>
-                </div>
-                <div id="maximum-quantity" class="is-hidden">
-                    <span>{{  "measurement_units.recommendation.max-violation" | trans }}</span>
-                </div>
-            </div>
-
-            <div id="measurement-unit-choices">
-                <span>{{ "measurement_units.recommendation.suggestion" | trans}}:</span>
-                <ul class="list"></ul>
-            </div>
-        </div>
-    {% endif %}
-
-    {% if hasProductMeasurementUnit %}
-        <hr>
-        <button type="submit" id="add-to-cart-button" class="button button--success button--expand" data-init-single-click {{ disabled ? 'disabled' : '' }} {{ qa('add-to-cart-button') }}>
-            {% include atom('icon') with {
-                data: {
-                    name: 'cart-plus',
-                },
-            } only %}
-            {{ 'page.detail.add-to-cart' | trans }}
-        </button>
-    {% endif %}
-
-    {% set translations = [] %}
-    {% for key, salesUnit in data.salesUnits %}
-        {% set translations = translations | merge({(salesUnit.productMeasurementUnit.code) : (salesUnit.productMeasurementUnit.name | trans)}) %}
-    {% endfor %}
-
-    <script type="application/json" id="measurement-unit-translation">{{ translations|json_encode|raw }}</script>
+    {% include molecule('measurement-quantity-selector', 'ProductMeasurementUnitWidget') with {
+        data: {
+            salesUnits: data.salesUnits,
+            quantityOptions: data.quantityOptions,
+            isAddToCartDisabled: data.isAddToCartDisabled,
+            baseUnit: data.baseUnit,
+            json: data.jsonScheme,
+            minQuantityInBaseUnits: data.minQuantityInBaseUnits,
+            minQuantityInSalesUnits: data.minQuantityInSalesUnits,
+        },
+    } only %}
 {% endblock %}

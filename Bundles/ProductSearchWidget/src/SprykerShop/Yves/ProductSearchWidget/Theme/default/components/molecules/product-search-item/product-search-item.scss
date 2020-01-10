@@ -1,0 +1,6 @@
+@mixin product-search-widget-product-search-item($name: '.product-search-item') {
+    @include shop-ui-product-item-list($name) {
+
+        @content;
+    }
+}
