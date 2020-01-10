@@ -449,14 +449,19 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     protected function filterGiftCardForShipmentGroupCollection(ArrayObject $shipmentGroupCollection): ArrayObject
     {
+        $updatedShipmentGroups = [];
+
         foreach ($shipmentGroupCollection as $shipmentGroupIndex => $shipmentGroupTransfer) {
             $shipmentGroupTransfer->setItems($this->removeGiftCardItem($shipmentGroupTransfer->getItems()));
+
             if ($shipmentGroupTransfer->getItems()->count() === 0) {
-                $shipmentGroupCollection->offsetUnset($shipmentGroupIndex);
+                continue;
             }
+
+            $updatedShipmentGroups[] = $shipmentGroupTransfer;
         }
 
-        return $shipmentGroupCollection;
+        return new ArrayObject($updatedShipmentGroups);
     }
 
     /**
@@ -466,13 +471,18 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     protected function removeGiftCardItem(ArrayObject $itemTransfers): ArrayObject
     {
+        $updatedItemTransfers = [];
+
         foreach ($itemTransfers as $itemIndex => $itemTransfer) {
             $giftCardMetadataTransfer = $itemTransfer->getGiftCardMetadata();
+
             if ($giftCardMetadataTransfer && $giftCardMetadataTransfer->getIsGiftCard()) {
-                $itemTransfers->offsetUnset($itemIndex);
+                continue;
             }
+
+            $updatedItemTransfers[] = $itemTransfer;
         }
 
-        return $itemTransfers;
+        return new ArrayObject($updatedItemTransfers);
     }
 }
