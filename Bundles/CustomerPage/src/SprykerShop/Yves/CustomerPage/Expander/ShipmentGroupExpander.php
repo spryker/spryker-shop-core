@@ -37,7 +37,7 @@ class ShipmentGroupExpander implements ShipmentGroupExpanderInterface
 
         foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
             $shipmentGroupTransfer->setCartItems(
-                $this->mapShipmentGroupCartItems($shipmentGroupTransfer, $mappedBundleItems)
+                $this->mapShipmentGroupToCartItems($shipmentGroupTransfer, $mappedBundleItems)
             );
         }
 
@@ -50,7 +50,7 @@ class ShipmentGroupExpander implements ShipmentGroupExpanderInterface
      *
      * @return array
      */
-    protected function mapShipmentGroupCartItems(ShipmentGroupTransfer $shipmentGroupTransfer, array $mappedBundleItems): array
+    protected function mapShipmentGroupToCartItems(ShipmentGroupTransfer $shipmentGroupTransfer, array $mappedBundleItems): array
     {
         $cartItems = [];
 
