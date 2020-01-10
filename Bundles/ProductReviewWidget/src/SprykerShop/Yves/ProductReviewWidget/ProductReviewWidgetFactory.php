@@ -16,6 +16,9 @@ use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetTo
 use SprykerShop\Yves\ProductReviewWidget\Form\DataProvider\ProductReviewFormDataProvider;
 use SprykerShop\Yves\ProductReviewWidget\Form\ProductReviewForm;
 
+/**
+ * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetConfig getConfig()
+ */
 class ProductReviewWidgetFactory extends SprykerProductReviewFactory
 {
     /**
