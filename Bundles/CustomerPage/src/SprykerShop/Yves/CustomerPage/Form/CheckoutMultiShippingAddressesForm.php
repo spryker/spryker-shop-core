@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\CustomerPage\Form;
 use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -74,7 +76,30 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
      */
     protected function addShippingAddressField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_SHIPPING_ADDRESS, CheckoutAddressForm::class, [
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+            $this->addShippingAddressFieldForRegularItem($event, $options);
+        });
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormEvent $event
+     * @param array $options
+     *
+     * @return void
+     */
+    protected function addShippingAddressFieldForRegularItem(FormEvent $event, array $options): void
+    {
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $event->getData();
+        $form = $event->getForm();
+
+        if ($itemTransfer->getRelatedBundleItemIdentifier()) {
+            return;
+        }
+
+        $form->add(static::FIELD_SHIPPING_ADDRESS, CheckoutAddressForm::class, [
             'property_path' => static::PROPERTY_PATH_SHIPPING_ADDRESS,
             'data_class' => AddressTransfer::class,
             'required' => true,
@@ -103,8 +128,6 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
             CheckoutAddressForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
             CheckoutAddressForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
         ]);
-
-        return $this;
     }
 
     /**

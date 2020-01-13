@@ -22,6 +22,7 @@ use Spryker\Yves\Kernel\PermissionAwareTrait;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Form\Steps\ShipmentCollectionForm;
@@ -65,12 +66,18 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     protected $checkoutPageConfig;
 
     /**
+     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface
+     */
+    protected $productBundleClient;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface $glossaryStorageClient
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
      * @param \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig $checkoutPageConfig
+     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface $productBundleClient
      */
     public function __construct(
         CheckoutPageToShipmentClientInterface $shipmentClient,
@@ -78,7 +85,8 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         Store $store,
         MoneyPluginInterface $moneyPlugin,
         CheckoutPageToShipmentServiceInterface $shipmentService,
-        CheckoutPageConfig $checkoutPageConfig
+        CheckoutPageConfig $checkoutPageConfig,
+        CheckoutPageToProductBundleClientInterface $productBundleClient
     ) {
         $this->shipmentClient = $shipmentClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
@@ -86,6 +94,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         $this->moneyPlugin = $moneyPlugin;
         $this->shipmentService = $shipmentService;
         $this->checkoutPageConfig = $checkoutPageConfig;
+        $this->productBundleClient = $productBundleClient;
     }
 
     /**
@@ -117,6 +126,7 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
         $shipmentGroupCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+        $shipmentGroupCollection = $this->expandShipmentGroupsWithCartItems($shipmentGroupCollection, $quoteTransfer);
         $shipmentGroupCollection = $this->filterGiftCardForShipmentGroupCollection($shipmentGroupCollection);
 
         $options = [
@@ -131,6 +141,26 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
         $options[ShipmentForm::OPTION_SHIPMENT_METHODS] = $this->createAvailableShipmentChoiceList($quoteTransfer);
 
         return $options;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupTransfers
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    protected function expandShipmentGroupsWithCartItems(ArrayObject $shipmentGroupTransfers, QuoteTransfer $quoteTransfer): ArrayObject
+    {
+        foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
+            $cartItems = $this->productBundleClient->getGroupedBundleItems(
+                $shipmentGroupTransfer->getItems(),
+                $quoteTransfer->getBundleItems()
+            );
+
+            $shipmentGroupTransfer->setCartItems($cartItems);
+        }
+
+        return $shipmentGroupTransfers;
     }
 
     /**
@@ -419,14 +449,19 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     protected function filterGiftCardForShipmentGroupCollection(ArrayObject $shipmentGroupCollection): ArrayObject
     {
+        $updatedShipmentGroups = [];
+
         foreach ($shipmentGroupCollection as $shipmentGroupIndex => $shipmentGroupTransfer) {
             $shipmentGroupTransfer->setItems($this->removeGiftCardItem($shipmentGroupTransfer->getItems()));
+
             if ($shipmentGroupTransfer->getItems()->count() === 0) {
-                $shipmentGroupCollection->offsetUnset($shipmentGroupIndex);
+                continue;
             }
+
+            $updatedShipmentGroups[] = $shipmentGroupTransfer;
         }
 
-        return $shipmentGroupCollection;
+        return new ArrayObject($updatedShipmentGroups);
     }
 
     /**
@@ -436,13 +471,18 @@ class ShipmentFormDataProvider implements StepEngineFormDataProviderInterface
      */
     protected function removeGiftCardItem(ArrayObject $itemTransfers): ArrayObject
     {
+        $updatedItemTransfers = [];
+
         foreach ($itemTransfers as $itemIndex => $itemTransfer) {
             $giftCardMetadataTransfer = $itemTransfer->getGiftCardMetadata();
+
             if ($giftCardMetadataTransfer && $giftCardMetadataTransfer->getIsGiftCard()) {
-                $itemTransfers->offsetUnset($itemIndex);
+                continue;
             }
+
+            $updatedItemTransfers[] = $itemTransfer;
         }
 
-        return $itemTransfers;
+        return new ArrayObject($updatedItemTransfers);
     }
 }

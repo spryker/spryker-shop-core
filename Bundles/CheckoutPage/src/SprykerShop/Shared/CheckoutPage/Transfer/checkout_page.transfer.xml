@@ -28,6 +28,7 @@
     <transfer name="ShipmentGroup">
         <property name="hash" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="cartItems" type="array" singular="cartItem"/>
         <property name="shipment" type="Shipment"/>
     </transfer>
 

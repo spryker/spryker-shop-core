@@ -65,42 +65,39 @@
                     } only %}
                     {% endwidget %}
 
-                    {% set itemsExceptConfiguredBundles = shipmentGroup.items | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}
+                    {% for item in shipmentGroup.cartItems %}
+                        {% set cartItem = item.bundleProduct ?? item %}
+                        {% set isConfiguredBundle = cartItem.configuredBundleItem is defined and cartItem.configuredBundleItem is not empty %}
+                        {% set isGiftCardExists = cartItem.giftCardMetadata is not null and cartItem.giftCardMetadata.isGiftCard %}
 
-                    {% if itemsExceptConfiguredBundles %}
-                        {% for item in itemsExceptConfiguredBundles %}
-                            {% set isGiftCardExists = item.giftCardMetadata is not null and item.giftCardMetadata.isGiftCard %}
-                            {% set item = item.bundleProduct ?? item %}
-
+                        {% if not isConfiguredBundle %}
                             {% embed molecule('summary-node', 'CheckoutPage') with {
                                 data: {
-                                    node: item,
-                                },
-                                embed: {
-                                    isFirst: loop.first,
+                                    node: cartItem,
+                                    bundleItems: item.bundleItems | default([]),
                                 },
                             } only %}
                                 {% block body %}
-                                    {% if not embed.isFirst %}<hr>{% endif %}
-
                                     {{ parent() }}
 
-                                    {% if widgetExists('CartNoteQuoteItemNoteWidgetPlugin') %}
-                                        {% if data.node.cartNote %}
+                                    {% if data.node.cartNote %}
+                                        {% if widgetExists('CartNoteQuoteItemNoteWidgetPlugin') %}
                                             {{ widget('CartNoteQuoteItemNoteWidgetPlugin', data.node) }} {# @deprecated Use molecule('note-list', 'CartNoteWidget') instead. #}
+                                        {% else %}
+                                            {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                                                data: {
+                                                    label: 'cart_note.checkout_page.item_note',
+                                                    note: data.node.cartNote,
+                                                },
+                                            } only %}
                                         {% endif %}
-                                    {% elseif data.node.cartNote %}
-                                        {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
-                                            data: {
-                                                label: 'cart_note.checkout_page.item_note',
-                                                note: data.node.cartNote,
-                                            },
-                                        } only %}
                                     {% endif %}
                                 {% endblock %}
                             {% endembed %}
-                        {% endfor %}
-                    {% endif %}
+
+                            {% if not loop.last %}<hr>{% endif %}
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
             <div class="col col--sm-12 col--lg-6">
