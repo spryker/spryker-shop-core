@@ -200,7 +200,7 @@ class CompanyUnitAddressForm extends AbstractType
             'constraints' => [
                 $this->createNotBlankConstraint(),
                 $this->createZipCodeLengthConstraint($options),
-                $this->createZipCodePatternConstraint($options),
+                $this->createZipCodeConstraint($options),
             ],
         ]);
 
@@ -306,7 +306,7 @@ class CompanyUnitAddressForm extends AbstractType
      *
      * @return \Symfony\Component\Validator\Constraints\Regex
      */
-    protected function createZipCodePatternConstraint(array $options): Regex
+    protected function createZipCodeConstraint(array $options): Regex
     {
         return new Regex([
             'pattern' => $this->getConfig()->getZipCodeConstraintPattern(),
