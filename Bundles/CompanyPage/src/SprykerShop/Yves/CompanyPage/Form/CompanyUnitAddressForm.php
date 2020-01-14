@@ -19,6 +19,9 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
+/**
+ * @method \SprykerShop\Yves\CompanyPage\CompanyPageConfig getConfig()
+ */
 class CompanyUnitAddressForm extends AbstractType
 {
     public const FIELD_ID_COMPANY_UNIT_ADDRESS = 'id_company_unit_address';
@@ -37,6 +40,8 @@ class CompanyUnitAddressForm extends AbstractType
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
     protected const VALIDATION_MIN_LENGTH_MESSAGE = 'validation.min_length';
     protected const VALIDATION_ADDRESS_NUMBER_MESSAGE = 'validation.address_number';
+    protected const VALIDATION_ZIP_CODE_LENGTH_MESSAGE = 'validation.max_length.plural';
+    protected const VALIDATION_ZIP_CODE_MESSAGE = 'validation.zip_code';
 
     /**
      * @return string
@@ -194,6 +199,8 @@ class CompanyUnitAddressForm extends AbstractType
             'required' => true,
             'constraints' => [
                 $this->createNotBlankConstraint(),
+                $this->createZipCodeLengthConstraint($options),
+                $this->createZipCodePatternConstraint($options),
             ],
         ]);
 
@@ -269,6 +276,20 @@ class CompanyUnitAddressForm extends AbstractType
      *
      * @return \Symfony\Component\Validator\Constraints\Length
      */
+    protected function createZipCodeLengthConstraint(array $options)
+    {
+        return new Length([
+            'max' => 15,
+            'groups' => $this->getValidationGroup($options),
+            'maxMessage' => static::VALIDATION_ZIP_CODE_LENGTH_MESSAGE,
+        ]);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Symfony\Component\Validator\Constraints\Length
+     */
     protected function createMinLengthConstraint(array $options)
     {
         $validationGroup = $this->getValidationGroup($options);
@@ -277,6 +298,20 @@ class CompanyUnitAddressForm extends AbstractType
             'min' => 3,
             'groups' => $validationGroup,
             'minMessage' => static::VALIDATION_MIN_LENGTH_MESSAGE,
+        ]);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createZipCodePatternConstraint(array $options): Regex
+    {
+        return new Regex([
+            'pattern' => $this->getConfig()->getZipCodeConstraintPattern(),
+            'message' => static::VALIDATION_ZIP_CODE_MESSAGE,
+            'groups' => $this->getValidationGroup($options),
         ]);
     }
 
@@ -304,6 +339,7 @@ class CompanyUnitAddressForm extends AbstractType
     protected function getValidationGroup(array $options): string
     {
         $validationGroup = Constraint::DEFAULT_GROUP;
+
         if (!empty($options['validation_group'])) {
             $validationGroup = $options['validation_group'];
         }
