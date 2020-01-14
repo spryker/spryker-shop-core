@@ -15,12 +15,6 @@
         data: {
             form: data.forms.shipment,
             cart: data.forms.shipment.vars.data,
-            attributes: [],
-            options: {
-                attr: {
-                    id: 'payment-form',
-                },
-            },
             submit: {
                 enable: true,
                 text: 'checkout.step.payment' | trans,
@@ -46,23 +40,18 @@
                         </h3>
                     </div>
                     <div class="col col--sm-12 col--lg-6 grid">
-                        {% for item in shipmentGroupForm.vars.data.items %}
+                        {% for item in shipmentGroupForm.vars.data.cartItems %}
                             <div class="col col--sm-12 col--lg-8">
-                                {% set item = item.bundleProduct ?? item %}
+                                {% set cartItem = item.bundleProduct ?? item %}
 
-                                {% embed molecule('summary-node', 'CheckoutPage') with {
+                                {% include molecule('summary-node', 'CheckoutPage') with {
                                     data: {
-                                        node: item,
-                                    },
-                                    embed: {
-                                        isLast: not loop.last,
+                                        node: cartItem,
+                                        bundleItems: item.bundleItems | default([]),
                                     },
                                 } only %}
-                                    {% block body %}
-                                        {{ parent() }}
-                                        {% if embed.isLast %}<hr>{% endif %}
-                                    {% endblock %}
-                                {% endembed %}
+
+                                {% if not loop.last %}<hr>{% endif %}
                             </div>
                         {% endfor %}
                     </div>

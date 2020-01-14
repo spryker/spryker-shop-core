@@ -6,6 +6,7 @@
         shipping: _view.addressesForm.shippingAddress,
         billing: _view.addressesForm.billingAddress,
         items: _view.addressesForm.multiShippingAddresses | default([]),
+        bundleItems: _view.addressesForm.multiShippingAddressesForBundleItems | default([]),
     },
     isMultipleShipmentEnabled: _view.addressesForm.isMultipleShipmentEnabled.vars.value,
     title: 'checkout.step.address.title' | trans,
@@ -32,6 +33,7 @@
                 shipping: data.forms.shipping,
                 billing: data.forms.billing,
                 items: data.forms.items,
+                bundleItems: data.forms.bundleItems,
             },
             isMultipleShipmentEnabled: data.isMultipleShipmentEnabled,
             companyBusinessUnitShippingAddressWidget: companyBusinessUnitShippingAddressWidget,
@@ -106,6 +108,7 @@
                     class: embed.jsAddressClass ~ '__items-target col col--sm-12 is-hidden',
                     data: {
                         form: embed.forms.items,
+                        formBundle: embed.forms.bundleItems,
                         shippingForm: embed.forms.shipping,
                         jsAddressClass: embed.jsAddressClass,
                     },
