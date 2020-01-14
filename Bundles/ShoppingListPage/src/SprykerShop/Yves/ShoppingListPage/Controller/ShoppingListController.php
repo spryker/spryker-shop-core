@@ -84,8 +84,14 @@ class ShoppingListController extends AbstractShoppingListController
             ->setIdShoppingList($idShoppingList)
             ->setIdCompanyUser($this->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
 
+        $priceMode = $this->getFactory()
+            ->getPriceClient()
+            ->getCurrentPriceMode();
+
         $shoppingListOverviewRequest = (new ShoppingListOverviewRequestTransfer())
-            ->setShoppingList($shoppingListTransfer);
+            ->setShoppingList($shoppingListTransfer)
+            ->setCurrencyIsoCode($this->getCurrentCurrencyCode())
+            ->setPriceMode($priceMode);
 
         $shoppingListOverviewResponseTransfer = $this->getFactory()
             ->getShoppingListClient()
@@ -352,5 +358,19 @@ class ShoppingListController extends AbstractShoppingListController
         return $this->getFactory()
             ->getShoppingListClient()
             ->addItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * Should be replaced with CurrencyClient::getCurrent() method call in next major release.
+     *
+     * @return string
+     */
+    protected function getCurrentCurrencyCode(): string
+    {
+        return $this->getFactory()
+            ->getMultiCartClient()
+            ->getDefaultCart()
+            ->getCurrency()
+            ->getCode();
     }
 }
