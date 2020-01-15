@@ -26,6 +26,8 @@ class CodeController extends AbstractController
     protected const MESSAGE_TYPE_SUCCESS = 'success';
     protected const MESSAGE_TYPE_ERROR = 'error';
 
+    protected const GLOSSARY_KEY_CODE_APPLY_FAILED = 'cart.code.apply.failed';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -47,6 +49,8 @@ class CodeController extends AbstractController
         $cartCodeResponseTransfer = $this->getFactory()
             ->getCartCodeClient()
             ->addCartCode($this->createCartCodeRequestTransfer($quoteTransfer, $code));
+
+        $this->processResponseMessages($cartCodeResponseTransfer);
 
         return $this->redirectResponse($cartCodeResponseTransfer, $request);
     }
@@ -100,11 +104,47 @@ class CodeController extends AbstractController
         $this->getFactory()->getQuoteClient()->setQuote($cartCodeResponseTransfer->getQuote());
         $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
 
+        return $this->redirectResponseExternal($request->headers->get('referer'));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer
+     *
+     * @return void
+     */
+    protected function processResponseMessages(CartCodeResponseTransfer $cartCodeResponseTransfer): void
+    {
         foreach ($cartCodeResponseTransfer->getMessages() as $messageTransfer) {
-            $this->handleMessage($messageTransfer);
+            if ($messageTransfer->getType() !== static::MESSAGE_TYPE_ERROR) {
+                $this->handleMessage($messageTransfer);
+            }
         }
 
-        return $this->redirectResponseExternal($request->headers->get('referer'));
+        if ($this->isSuccessMessageExists($cartCodeResponseTransfer)) {
+            return;
+        }
+
+        $messageTransfer = (new MessageTransfer())
+            ->setValue(static::GLOSSARY_KEY_CODE_APPLY_FAILED)
+            ->setType(static::MESSAGE_TYPE_ERROR);
+
+        $this->handleMessage($messageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer
+     *
+     * @return bool
+     */
+    protected function isSuccessMessageExists(CartCodeResponseTransfer $cartCodeResponseTransfer): bool
+    {
+        foreach ($cartCodeResponseTransfer->getMessages() as $messageTransfer) {
+            if ($messageTransfer->getType() === static::MESSAGE_TYPE_SUCCESS) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
