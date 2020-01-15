@@ -105,9 +105,7 @@ class CodeController extends AbstractController
         $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
 
         foreach ($cartCodeResponseTransfer->getMessages() as $messageTransfer) {
-            if ($messageTransfer->getType() !== static::MESSAGE_TYPE_ERROR) {
-                $this->handleMessage($messageTransfer);
-            }
+            $this->handleMessage($messageTransfer);
         }
 
         return $this->redirectResponseExternal($request->headers->get('referer'));
@@ -124,11 +122,7 @@ class CodeController extends AbstractController
             return;
         }
 
-        $messageTransfer = (new MessageTransfer())
-            ->setValue(static::GLOSSARY_KEY_CODE_APPLY_FAILED)
-            ->setType(static::MESSAGE_TYPE_ERROR);
-
-        $this->handleMessage($messageTransfer);
+        $this->addErrorMessage(static::GLOSSARY_KEY_CODE_APPLY_FAILED);
     }
 
     /**
@@ -169,12 +163,13 @@ class CodeController extends AbstractController
      */
     protected function handleMessage(MessageTransfer $messageTransfer): void
     {
+        if ($messageTransfer->getType() === static::MESSAGE_TYPE_ERROR) {
+            return;
+        }
+
         switch ($messageTransfer->getType()) {
             case self::MESSAGE_TYPE_SUCCESS:
                 $this->addSuccessMessage($messageTransfer->getValue());
-                break;
-            case self::MESSAGE_TYPE_ERROR:
-                $this->addErrorMessage($messageTransfer->getValue());
                 break;
             default:
                 $this->addInfoMessage($messageTransfer->getValue());
