@@ -50,7 +50,7 @@ class CodeController extends AbstractController
             ->getCartCodeClient()
             ->addCartCode($this->createCartCodeRequestTransfer($quoteTransfer, $code));
 
-        $this->processResponseMessages($cartCodeResponseTransfer);
+        $this->processErrorResponseMessage($cartCodeResponseTransfer);
 
         return $this->redirectResponse($cartCodeResponseTransfer, $request);
     }
@@ -104,6 +104,12 @@ class CodeController extends AbstractController
         $this->getFactory()->getQuoteClient()->setQuote($cartCodeResponseTransfer->getQuote());
         $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
 
+        foreach ($cartCodeResponseTransfer->getMessages() as $messageTransfer) {
+            if ($messageTransfer->getType() !== static::MESSAGE_TYPE_ERROR) {
+                $this->handleMessage($messageTransfer);
+            }
+        }
+
         return $this->redirectResponseExternal($request->headers->get('referer'));
     }
 
@@ -112,14 +118,8 @@ class CodeController extends AbstractController
      *
      * @return void
      */
-    protected function processResponseMessages(CartCodeResponseTransfer $cartCodeResponseTransfer): void
+    protected function processErrorResponseMessage(CartCodeResponseTransfer $cartCodeResponseTransfer): void
     {
-        foreach ($cartCodeResponseTransfer->getMessages() as $messageTransfer) {
-            if ($messageTransfer->getType() !== static::MESSAGE_TYPE_ERROR) {
-                $this->handleMessage($messageTransfer);
-            }
-        }
-
         if ($this->isSuccessMessageExists($cartCodeResponseTransfer)) {
             return;
         }
