@@ -305,7 +305,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     protected createChoiceElement(qtyInBaseUnits: number): HTMLSpanElement {
         if (qtyInBaseUnits <= 0) {
-            return;
+            return undefined;
         }
 
         const choiceElem = document.createElement('span');
@@ -336,7 +336,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.qtyInBaseUnitInput.value = String(qtyInBaseUnits);
         this.qtyInSalesUnitInput.value = String(this.round(qtyInSalesUnits, this.decimals));
         if (!this.puError && !this.isAddToCartDisabled) {
-            this.addToCartButton.removeAttribute("disabled");
+            this.addToCartButton.removeAttribute('disabled');
             this.qtyInSalesUnitInput.removeAttribute('disabled');
         }
         this.muChoiceNotificationElement.classList.add(HIDDEN_CLASS_NAME);
@@ -350,8 +350,11 @@ export default class PackagingUnitQuantitySelector extends Component {
             return this.getMinQuantity();
         }
 
-        if ((qtyInBaseUnits - this.getMinQuantity()) % this.getQuantityInterval() !== 0 || (this.getMaxQuantity() > 0 && qtyInBaseUnits > this.getMaxQuantity())) {
-            return this.getMinChoice(this.convertBaseUnitsAmountToCurrentSalesUnitsAmount(qtyInBaseUnits - 1));
+        if ((qtyInBaseUnits - this.getMinQuantity()) % this.getQuantityInterval() !== 0 || (this.getMaxQuantity() > 0
+            && qtyInBaseUnits > this.getMaxQuantity())) {
+            return this.getMinChoice(
+                this.convertBaseUnitsAmountToCurrentSalesUnitsAmount(qtyInBaseUnits - 1)
+            );
         }
 
         return qtyInBaseUnits;
@@ -372,14 +375,17 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
 
         if ((qtyInBaseUnits - this.getMinQuantity()) % this.getQuantityInterval() !== 0) {
-            return this.getMaxChoice(this.convertBaseUnitsAmountToCurrentSalesUnitsAmount((qtyInBaseUnits + 1) / this.currentSalesUnit.conversion), minChoice);
+            return this.getMaxChoice(this.convertBaseUnitsAmountToCurrentSalesUnitsAmount(
+                (qtyInBaseUnits + 1) / this.currentSalesUnit.conversion
+            ), minChoice);
         }
 
         return qtyInBaseUnits;
     }
 
     protected convertBaseUnitsAmountToCurrentSalesUnitsAmount(qtyInBaseUnits: number): number {
-        return Math.round(qtyInBaseUnits / this.currentSalesUnit.conversion * this.currentSalesUnit.precision) / this.currentSalesUnit.precision;
+        return Math.round(qtyInBaseUnits / this.currentSalesUnit.conversion * this.currentSalesUnit.precision) /
+            this.currentSalesUnit.precision;
     }
 
     protected floor(value: number): number {
