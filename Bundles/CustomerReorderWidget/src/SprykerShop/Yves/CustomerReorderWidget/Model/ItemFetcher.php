@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Model;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -108,25 +107,26 @@ class ItemFetcher implements ItemFetcherInterface
                     ->setBundleItems($orderTransfer->getBundleItems())
             );
 
-        $idSalesOrderData = $this->getIdSalesOrderDataForBundleItems($orderTransfer->getItems());
-        $itemTransfers = $this->setIdSalesOrderForBundleItems($itemTransfers, $idSalesOrderData);
+        $itemTransfers = $this->expandBundleItemsWithIdSalesOrderItem($orderTransfer, $itemTransfers);
 
         return $this->cleanUpItems($itemTransfers);
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     * @param int[] $idSalesOrderData
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function setIdSalesOrderForBundleItems(array $itemTransfers, array $idSalesOrderData): array
+    protected function expandBundleItemsWithIdSalesOrderItem(OrderTransfer $orderTransfer, array $itemTransfers): array
     {
+        $salesOrderItemIds = $this->getSalesOrderItemIdsForBundleItems($orderTransfer);
+
         foreach ($itemTransfers as $itemTransfer) {
             $bundleItemIdentifier = $itemTransfer->getBundleItemIdentifier();
 
             if ($bundleItemIdentifier) {
-                $itemTransfer->setIdSalesOrderItem($idSalesOrderData[$bundleItemIdentifier] ?? null);
+                $itemTransfer->setIdSalesOrderItem($salesOrderItemIds[$bundleItemIdentifier] ?? null);
             }
         }
 
@@ -134,23 +134,23 @@ class ItemFetcher implements ItemFetcherInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return int[]
      */
-    protected function getIdSalesOrderDataForBundleItems(ArrayObject $itemTransfers): array
+    protected function getSalesOrderItemIdsForBundleItems(OrderTransfer $orderTransfer): array
     {
-        $idSalesOrderData = [];
+        $salesOrderItemIds = [];
 
-        foreach ($itemTransfers as $itemTransfer) {
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
             $relatedBundleItemIdentifier = $itemTransfer->getRelatedBundleItemIdentifier();
 
-            if ($relatedBundleItemIdentifier && !isset($idSalesOrderData[$relatedBundleItemIdentifier])) {
-                $idSalesOrderData[$relatedBundleItemIdentifier] = $itemTransfer->getIdSalesOrderItem();
+            if ($relatedBundleItemIdentifier && !isset($salesOrderItemIds[$relatedBundleItemIdentifier])) {
+                $salesOrderItemIds[$relatedBundleItemIdentifier] = $itemTransfer->getIdSalesOrderItem();
             }
         }
 
-        return $idSalesOrderData;
+        return $salesOrderItemIds;
     }
 
     /**
