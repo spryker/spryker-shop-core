@@ -399,7 +399,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     protected multiply(a: number, b: number): number {
-        const result =
+        const result = ((a * this.factor) * (b * this.factor)) / Math.pow(this.factor, this.degree[0]);
 
         return Math.round(result * Math.pow(this.factor, this.degree[1])) / Math.pow(this.factor, this.degree[1]);
     }
@@ -567,7 +567,7 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     protected initCurrentLeadSalesUnit(): void {
-        if (!this.currentLeadSalesUnit) {
+        if (!this.leadSalesUnits) {
             return;
         }
 
