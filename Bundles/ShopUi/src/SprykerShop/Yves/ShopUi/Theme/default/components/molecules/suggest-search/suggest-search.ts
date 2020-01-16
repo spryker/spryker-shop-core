@@ -215,7 +215,7 @@ export default class SuggestSearch extends Component {
         if (this.hint) {
             this.updateHintInput();
         }
-        if (this.hint == undefined || !this.getSearchValue()) {
+        if (this.hint === undefined || !this.getSearchValue()) {
             this.setHintValue('');
         }
         this.navigation = this.getNavigation();
