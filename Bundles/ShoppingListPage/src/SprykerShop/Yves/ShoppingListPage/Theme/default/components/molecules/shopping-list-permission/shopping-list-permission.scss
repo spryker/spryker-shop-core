@@ -2,7 +2,7 @@
     #{$name} {
         color: $setting-color-dark;
 
-        &__full {
+        &__full-access {
             color: map-get($setting-color-actions, 'success');
         }
 

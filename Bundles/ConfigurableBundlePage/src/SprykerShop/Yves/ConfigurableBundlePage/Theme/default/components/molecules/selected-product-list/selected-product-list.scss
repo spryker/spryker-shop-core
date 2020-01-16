@@ -1,0 +1,12 @@
+@mixin configurable-bundle-page-selected-product-list($name: '.selected-product-list') {
+    #{$name} {
+        &__header {
+            margin: map-get($setting-spacing, 'reset') map-get($setting-spacing, 'default') -#{map-get($setting-spacing, 'default')};
+            padding: map-get($setting-spacing, 'default');
+            border: 1px solid $setting-color-lighter;
+            border-bottom: 0;
+        }
+
+        @content;
+    }
+}

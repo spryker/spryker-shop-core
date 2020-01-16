@@ -1,0 +1,11 @@
+@mixin shopping-list-page-shopping-list-overview($name: '.shopping-list-overview') {
+    #{$name} {
+        &__name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+
+        @content;
+    }
+}

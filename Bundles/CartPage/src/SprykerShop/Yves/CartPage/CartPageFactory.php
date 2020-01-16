@@ -151,6 +151,14 @@ class CartPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\CartPageExtension\Dependency\Plugin\PreAddToCartPluginInterface[]
+     */
+    public function getPreAddToCartPlugins(): array
+    {
+        return $this->getProvidedDependency(CartPageDependencyProvider::PLUGIN_PRE_ADD_TO_CART);
+    }
+
+    /**
      * @return \SprykerShop\Yves\CartPage\Mapper\CartItemsAttributeMapper
      */
     public function createCartItemsAttributeMapper()

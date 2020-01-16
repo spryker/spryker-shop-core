@@ -26,11 +26,18 @@ class CustomerAuthenticationFailureHandler extends BaseCustomerAuthenticationHan
     protected $flashMessenger;
 
     /**
-     * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
+     * @var string|null
      */
-    public function __construct(FlashMessengerInterface $flashMessenger)
+    protected $targetUrl;
+
+    /**
+     * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger
+     * @param string|null $targetUrl
+     */
+    public function __construct(FlashMessengerInterface $flashMessenger, ?string $targetUrl = null)
     {
         $this->flashMessenger = $flashMessenger;
+        $this->targetUrl = $targetUrl;
     }
 
     /**
@@ -43,6 +50,6 @@ class CustomerAuthenticationFailureHandler extends BaseCustomerAuthenticationHan
     {
         $this->flashMessenger->addErrorMessage(static::MESSAGE_CUSTOMER_AUTHENTICATION_FAILED);
 
-        return $this->createRefererRedirectResponse($request);
+        return $this->createRefererRedirectResponse($request, $this->targetUrl);
     }
 }

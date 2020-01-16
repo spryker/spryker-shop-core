@@ -7,10 +7,13 @@
 
 namespace SprykerShop\Yves\CartCodeWidget\Controller;
 
-use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\CartCodeWidget\Form\CartCodeForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -23,6 +26,8 @@ class CodeController extends AbstractController
     protected const MESSAGE_TYPE_SUCCESS = 'success';
     protected const MESSAGE_TYPE_ERROR = 'error';
 
+    protected const GLOSSARY_KEY_CODE_APPLY_FAILED = 'cart.code.apply.failed';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -30,33 +35,24 @@ class CodeController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $form = $this->getFactory()
-            ->getCartCodeForm()
-            ->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $code = (string)$form->get(CartCodeForm::FIELD_CODE)->getData();
-
-            $quoteTransfer = $this->getFactory()
-                ->getQuoteClient()
-                ->getQuote();
-
-            $cartCodeOperationResultTransfers = $this->getFactory()
-                ->getCartCodeClient()
-                ->addCandidate($quoteTransfer, $code);
-
-            $this->getFactory()
-                ->getQuoteClient()
-                ->setQuote($cartCodeOperationResultTransfers->getQuote());
-
-            $this->getFactory()
-                ->getZedRequestClient()
-                ->addFlashMessagesFromLastZedRequest();
-
-            $this->handleCartCodeOperationResult($cartCodeOperationResultTransfers);
+        $form = $this->getFactory()->getCartCodeForm()->handleRequest($request);
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->redirectResponseExternal($request->headers->get('referer'));
         }
 
-        return $this->redirectResponseExternal($request->headers->get('referer'));
+        $code = (string)$form->get(CartCodeForm::FIELD_CODE)->getData();
+
+        $quoteTransfer = $this->getFactory()
+            ->getQuoteClient()
+            ->getQuote();
+
+        $cartCodeResponseTransfer = $this->getFactory()
+            ->getCartCodeClient()
+            ->addCartCode($this->createCartCodeRequestTransfer($quoteTransfer, $code));
+
+        $this->processErrorResponseMessage($cartCodeResponseTransfer);
+
+        return $this->redirectResponse($cartCodeResponseTransfer, $request);
     }
 
     /**
@@ -67,27 +63,16 @@ class CodeController extends AbstractController
     public function removeAction(Request $request)
     {
         $code = (string)$request->query->get(static::PARAM_CODE);
-        if (!empty($code)) {
-            $quoteTransfer = $this->getFactory()
-                ->getQuoteClient()
-                ->getQuote();
-
-            $cartCodeOperationResultTransfers = $this->getFactory()
-                ->getCartCodeClient()
-                ->removeCode($quoteTransfer, $code);
-
-            $this->getFactory()
-                ->getQuoteClient()
-                ->setQuote($cartCodeOperationResultTransfers->getQuote());
-
-            $this->getFactory()
-                ->getZedRequestClient()
-                ->addFlashMessagesFromLastZedRequest();
-
-            $this->handleCartCodeOperationResult($cartCodeOperationResultTransfers);
+        if (empty($code)) {
+            return $this->redirectResponseExternal($request->headers->get('referer'));
         }
 
-        return $this->redirectResponseExternal($request->headers->get('referer'));
+        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+        $cartCodeResponseTransfer = $this->getFactory()
+            ->getCartCodeClient()
+            ->removeCartCode($this->createCartCodeRequestTransfer($quoteTransfer, $code));
+
+        return $this->redirectResponse($cartCodeResponseTransfer, $request);
     }
 
     /**
@@ -97,37 +82,78 @@ class CodeController extends AbstractController
      */
     public function clearAction(Request $request)
     {
-        $quoteTransfer = $this->getFactory()
-            ->getQuoteClient()
-            ->getQuote();
+        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
 
-        $cartCodeOperationResultTransfers = $this->getFactory()
+        $cartCodeResponseTransfer = $this->getFactory()
             ->getCartCodeClient()
-            ->clearCodes($quoteTransfer);
+            ->clearCartCodes($this->createCartCodeRequestTransfer($quoteTransfer));
 
-        $this->getFactory()
-            ->getQuoteClient()
-            ->setQuote($cartCodeOperationResultTransfers->getQuote());
+        return $this->redirectResponse($cartCodeResponseTransfer, $request);
+    }
 
-        $this->getFactory()
-            ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
+    /**
+     * @param \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function redirectResponse(
+        CartCodeResponseTransfer $cartCodeResponseTransfer,
+        Request $request
+    ): RedirectResponse {
+        $this->getFactory()->getQuoteClient()->setQuote($cartCodeResponseTransfer->getQuote());
+        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
 
-        $this->handleCartCodeOperationResult($cartCodeOperationResultTransfers);
+        foreach ($cartCodeResponseTransfer->getMessages() as $messageTransfer) {
+            $this->handleMessage($messageTransfer);
+        }
 
         return $this->redirectResponseExternal($request->headers->get('referer'));
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartCodeOperationResultTransfer $cartCodeOperationResultTransfer
+     * @param \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer
      *
      * @return void
      */
-    protected function handleCartCodeOperationResult(CartCodeOperationResultTransfer $cartCodeOperationResultTransfer): void
+    protected function processErrorResponseMessage(CartCodeResponseTransfer $cartCodeResponseTransfer): void
     {
-        foreach ($cartCodeOperationResultTransfer->getMessages() as $messageTransfer) {
-            $this->handleMessage($messageTransfer);
+        if ($this->isSuccessMessageExists($cartCodeResponseTransfer)) {
+            return;
         }
+
+        $this->addErrorMessage(static::GLOSSARY_KEY_CODE_APPLY_FAILED);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer
+     *
+     * @return bool
+     */
+    protected function isSuccessMessageExists(CartCodeResponseTransfer $cartCodeResponseTransfer): bool
+    {
+        foreach ($cartCodeResponseTransfer->getMessages() as $messageTransfer) {
+            if ($messageTransfer->getType() === static::MESSAGE_TYPE_SUCCESS) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string|null $code
+     *
+     * @return \Generated\Shared\Transfer\CartCodeRequestTransfer
+     */
+    protected function createCartCodeRequestTransfer(
+        QuoteTransfer $quoteTransfer,
+        ?string $code = null
+    ): CartCodeRequestTransfer {
+        return (new CartCodeRequestTransfer())
+            ->setQuote($quoteTransfer)
+            ->setCartCode($code);
     }
 
     /**
@@ -137,12 +163,13 @@ class CodeController extends AbstractController
      */
     protected function handleMessage(MessageTransfer $messageTransfer): void
     {
+        if ($messageTransfer->getType() === static::MESSAGE_TYPE_ERROR) {
+            return;
+        }
+
         switch ($messageTransfer->getType()) {
             case self::MESSAGE_TYPE_SUCCESS:
                 $this->addSuccessMessage($messageTransfer->getValue());
-                break;
-            case self::MESSAGE_TYPE_ERROR:
-                $this->addErrorMessage($messageTransfer->getValue());
                 break;
             default:
                 $this->addInfoMessage($messageTransfer->getValue());

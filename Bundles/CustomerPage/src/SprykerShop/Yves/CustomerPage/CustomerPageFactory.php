@@ -20,6 +20,10 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInt
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
 use SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpander;
 use SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpanderInterface;
+use SprykerShop\Yves\CustomerPage\Expander\ShipmentExpander;
+use SprykerShop\Yves\CustomerPage\Expander\ShipmentExpanderInterface;
+use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpander;
+use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapper;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapperInterface;
@@ -58,11 +62,13 @@ class CustomerPageFactory extends AbstractFactory
     }
 
     /**
+     * @param string|null $targetUrl
+     *
      * @return \SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureHandler
      */
-    public function createCustomerAuthenticationFailureHandler()
+    public function createCustomerAuthenticationFailureHandler(?string $targetUrl = null)
     {
-        return new CustomerAuthenticationFailureHandler($this->getFlashMessenger());
+        return new CustomerAuthenticationFailureHandler($this->getFlashMessenger(), $targetUrl);
     }
 
     /**
@@ -348,5 +354,21 @@ class CustomerPageFactory extends AbstractFactory
     public function createCustomerExpander(): CustomerAddressExpanderInterface
     {
         return new CustomerAddressExpander($this->createCustomerMapper());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpanderInterface
+     */
+    public function createShipmentGroupExpander(): ShipmentGroupExpanderInterface
+    {
+        return new ShipmentGroupExpander();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Expander\ShipmentExpanderInterface
+     */
+    public function createShipmentExpander(): ShipmentExpanderInterface
+    {
+        return new ShipmentExpander();
     }
 }

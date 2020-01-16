@@ -20,6 +20,9 @@ use SprykerShop\Yves\ProductReviewWidget\ProductReviewSearchRequestBuilder\Produ
 use SprykerShop\Yves\ProductReviewWidget\ProductReviewSearchRequestBuilder\ProductReviewSearchRequestBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetConfig getConfig()
+ */
 class ProductReviewWidgetFactory extends SprykerProductReviewFactory
 {
     /**
