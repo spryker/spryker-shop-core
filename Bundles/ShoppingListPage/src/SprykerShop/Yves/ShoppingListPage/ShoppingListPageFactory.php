@@ -18,6 +18,7 @@ use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompan
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCompanyUserClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToMultiCartClientInterface;
+use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToPriceClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToProductStorageClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface;
 use SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToZedRequestClientInterface;
@@ -227,5 +228,13 @@ class ShoppingListPageFactory extends AbstractFactory
     public function getUtilEncodingService(): ShoppingListPageToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ShoppingListPageDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToPriceClientInterface
+     */
+    public function getPriceClient(): ShoppingListPageToPriceClientInterface
+    {
+        return $this->getProvidedDependency(ShoppingListPageDependencyProvider::CLIENT_PRICE);
     }
 }

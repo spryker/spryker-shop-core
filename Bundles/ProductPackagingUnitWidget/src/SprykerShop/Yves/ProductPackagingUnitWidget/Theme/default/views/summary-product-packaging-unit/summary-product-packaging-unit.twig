@@ -1,23 +1,13 @@
 {% extends template('widget') %}
 
 {% define data = {
-    name: _widget.item.name,
-    quantity:  _widget.item.quantity,
-    amount: _widget.item.amount,
-    price: _widget.item.price,
-    quantitySalesUnit: _widget.item.quantitySalesUnit,
-    amountSalesUnit: _widget.item.amountSalesUnit,
+    node: _widget.item,
 } %}
 
 {% block body %}
-    {% include molecule('summary-product-packaging-unit', 'ProductPackagingUnitWidget') with {
+    {% include molecule('summary-product-packaging-unit-node', 'ProductPackagingUnitWidget') with {
         data: {
-            name: data.name,
-            quantity: data.quantity,
-            amount: data.amount,
-            price: data.price,
-            quantitySalesUnit: data.quantitySalesUnit,
-            amountSalesUnit: data.amountSalesUnit,
+            node: data.node,
         },
     } only %}
 {% endblock body %}

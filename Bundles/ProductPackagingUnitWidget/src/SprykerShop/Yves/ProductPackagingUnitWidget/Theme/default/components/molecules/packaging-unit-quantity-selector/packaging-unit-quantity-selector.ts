@@ -309,7 +309,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
 
         const choiceElem = document.createElement('span');
-        const qtyInSalesUnits = qtyInBaseUnits / this.currentSalesUnit.conversion;
+        const qtyInSalesUnits = this.convertBaseUnitsAmountToCurrentSalesUnitsAmount(qtyInBaseUnits);
         const measurementSalesUnitName = this.getUnitName(this.currentSalesUnit.product_measurement_unit.code);
         const measurementBaseUnitName = this.getUnitName(this.baseUnit.code);
 
@@ -336,7 +336,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         this.qtyInBaseUnitInput.value = String(qtyInBaseUnits);
         this.qtyInSalesUnitInput.value = String(this.round(qtyInSalesUnits, this.decimals));
         if (!this.puError && !this.isAddToCartDisabled) {
-            this.addToCartButton.removeAttribute('disabled');
+            this.addToCartButton.removeAttribute("disabled");
             this.qtyInSalesUnitInput.removeAttribute('disabled');
         }
         this.muChoiceNotificationElement.classList.add(HIDDEN_CLASS_NAME);
@@ -350,9 +350,8 @@ export default class PackagingUnitQuantitySelector extends Component {
             return this.getMinQuantity();
         }
 
-        if ((qtyInBaseUnits - this.getMinQuantity()) % this.getQuantityInterval() !== 0 ||
-            (this.getMaxQuantity() > 0 && qtyInBaseUnits > this.getMaxQuantity())) {
-            return this.getMinChoice((qtyInBaseUnits - 1) / this.currentSalesUnit.conversion);
+        if ((qtyInBaseUnits - this.getMinQuantity()) % this.getQuantityInterval() !== 0 || (this.getMaxQuantity() > 0 && qtyInBaseUnits > this.getMaxQuantity())) {
+            return this.getMinChoice(this.convertBaseUnitsAmountToCurrentSalesUnitsAmount(qtyInBaseUnits - 1));
         }
 
         return qtyInBaseUnits;
@@ -373,12 +372,14 @@ export default class PackagingUnitQuantitySelector extends Component {
         }
 
         if ((qtyInBaseUnits - this.getMinQuantity()) % this.getQuantityInterval() !== 0) {
-            return this.getMaxChoice((
-                qtyInBaseUnits + 1) / this.currentSalesUnit.conversion, minChoice
-            );
+            return this.getMaxChoice(this.convertBaseUnitsAmountToCurrentSalesUnitsAmount((qtyInBaseUnits + 1) / this.currentSalesUnit.conversion), minChoice);
         }
 
         return qtyInBaseUnits;
+    }
+
+    protected convertBaseUnitsAmountToCurrentSalesUnitsAmount(qtyInBaseUnits: number): number {
+        return Math.round(qtyInBaseUnits / this.currentSalesUnit.conversion * this.currentSalesUnit.precision) / this.currentSalesUnit.precision;
     }
 
     protected floor(value: number): number {
@@ -398,9 +399,9 @@ export default class PackagingUnitQuantitySelector extends Component {
     }
 
     protected multiply(a: number, b: number): number {
-        const result = ((a * this.factor) * (b * this.factor)) / Math.pow(this.factor, this.degree[0]);
+        const result =
 
-        return Math.floor(result * Math.pow(this.factor, this.degree[1])) / Math.pow(this.factor, this.degree[1]);
+        return Math.round(result * Math.pow(this.factor, this.degree[1])) / Math.pow(this.factor, this.degree[1]);
     }
 
     protected getMinQuantity(): number {
@@ -439,7 +440,7 @@ export default class PackagingUnitQuantitySelector extends Component {
         const salesUnit = this.getSalesUnitById(salesUnitId);
         let qtyInSalesUnits = Number(this.qtyInSalesUnitInput.value);
         const qtyInBaseUnits = this.multiply(qtyInSalesUnits, this.currentSalesUnit.conversion);
-        qtyInSalesUnits = qtyInBaseUnits / salesUnit.conversion;
+        qtyInSalesUnits = this.convertBaseUnitsAmountToCurrentSalesUnitsAmount(qtyInBaseUnits);
         this.currentSalesUnit = salesUnit;
 
         if (isFinite(qtyInSalesUnits)) {

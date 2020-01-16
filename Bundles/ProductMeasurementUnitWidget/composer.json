@@ -8,16 +8,16 @@
     "spryker-shop/shop-ui": "^1.13.0",
     "spryker/kernel": "^3.30.0",
     "spryker/product-measurement-unit-storage": "^1.1.0",
-    "spryker/product-quantity-storage": "^1.0.0 || ^3.0.0"
+    "spryker/product-quantity-storage": "^1.0.0 || ^3.0.0",
+    "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
     "spryker-shop/cart-page": "*",
-    "spryker-shop/product-detail-page": "*",
     "spryker/code-sniffer": "*"
   },
   "suggest": {
-    "spryker-shop/cart-page": "If you want to use QuantitySalesUnitWidgetPlugin.",
-    "spryker-shop/product-detail-page": "if you want to use ProductMeasurementUnitWidgetPlugin."
+    "spryker-shop/cart-page": "If you want to use CartProductMeasurementUnitQuantitySelectorWidget.",
+    "spryker-shop/product-detail-page": "if you want to use ManageProductMeasurementUnitWidget."
   },
   "autoload": {
     "psr-4": {

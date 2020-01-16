@@ -1,0 +1,40 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'summary-product-packaging-unit-node-by-default',
+} %}
+
+{% define data = {
+    node: required,
+    name: data.node.name | default,
+    quantity: data.node.quantity | default(1),
+    price: data.node.sumSubtotalAggregation | default(0),
+    quantitySalesUnit: data.node.quantitySalesUnit | default(null),
+} %}
+
+{% block body %}
+    {% block price %}
+        <strong class="float-right">{{ can('SeePricePermissionPlugin') ? data.price : 'customer.access.cannot_see_price' | trans }}</strong>
+    {% endblock %}
+
+    {% block summary %}
+        {% set salesUnitName = data.quantitySalesUnit.productMeasurementUnit.name | default %}
+        {% set salesUnitSummary = salesUnitName ? data.quantity / data.quantitySalesUnit.conversion ~ ' ' ~ salesUnitName | trans %}
+
+        {% block summaryContainer %}
+            <div>
+                {% block summaryInner %}
+                    {{ data.quantity }} <span class="text-secondary">&times;</span> {{ data.name }}
+
+                    {% block summaryInformation %}
+                        {% if salesUnitSummary %}
+                            {{ 'product_packaging_unit_node_summary' | trans({
+                                '%summary%': salesUnitSummary,
+                            })}}
+                        {% endif %}
+                    {% endblock %}
+                {% endblock %}
+            </div>
+        {% endblock %}
+    {% endblock %}
+{% endblock %}

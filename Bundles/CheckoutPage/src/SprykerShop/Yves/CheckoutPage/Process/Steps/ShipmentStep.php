@@ -119,18 +119,50 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
      */
     protected function setDefaultNoShipmentMethod(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
+        $quoteTransfer = $this->setDefaultShipmentSelectionForItems($quoteTransfer);
+        $quoteTransfer = $this->setDefaultShipmentSelectionForBundleItems($quoteTransfer);
+
         $shipmentTransfer = (new ShipmentTransfer())
             ->setShipmentSelection(CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT);
 
+        if ($quoteTransfer->getShipment() === null) {
+            $quoteTransfer->setShipment($shipmentTransfer);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setDefaultShipmentSelectionForItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemShipmentTransfer = $itemTransfer->getShipment();
+
             if ($itemShipmentTransfer !== null && $itemShipmentTransfer->getShipmentSelection() === null) {
                 $itemShipmentTransfer->setShipmentSelection(CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT);
             }
         }
 
-        if ($quoteTransfer->getShipment() === null) {
-            $quoteTransfer->setShipment($shipmentTransfer);
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setDefaultShipmentSelectionForBundleItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
+            $shipmentTransfer = $itemTransfer->getShipment();
+
+            if ($shipmentTransfer !== null && $shipmentTransfer->getShipmentSelection() === null) {
+                $shipmentTransfer->setShipmentSelection(CheckoutPageConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT);
+            }
         }
 
         return $quoteTransfer;

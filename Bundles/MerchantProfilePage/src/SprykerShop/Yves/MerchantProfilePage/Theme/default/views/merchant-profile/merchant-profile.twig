@@ -61,7 +61,7 @@
                                                             {% block email %}
                                                                 {% include molecule('information-item', 'MerchantProfilePage') with {
                                                                     data: {
-                                                                        title: 'mearchant_profile.email' | trans,
+                                                                        title: 'merchant_profile.email' | trans,
                                                                         text: data.merchantProfile.publicEmail | trans,
                                                                     },
                                                                 } only %}
@@ -77,7 +77,7 @@
                                                                 {% block address %}
                                                                     {% embed molecule('information-item', 'MerchantProfilePage') with {
                                                                         data: {
-                                                                            title: 'mearchant_profile.address' | trans,
+                                                                            title: 'merchant_profile.address' | trans,
                                                                         },
                                                                         embed: {
                                                                             addresses: merchantAddresses,
@@ -102,7 +102,7 @@
                                                             {% block phone %}
                                                                 {% include molecule('information-item', 'MerchantProfilePage') with {
                                                                     data: {
-                                                                        title: 'mearchant_profile.phone' | trans,
+                                                                        title: 'merchant_profile.phone' | trans,
                                                                         text: data.merchantProfile.publicPhone | trans,
                                                                     },
                                                                 } only %}
@@ -115,7 +115,7 @@
                                                             {% block deliveryTime %}
                                                                 {% include molecule('information-item', 'MerchantProfilePage') with {
                                                                     data: {
-                                                                        title: 'mearchant_profile.delivery_time' | trans,
+                                                                        title: 'merchant_profile.delivery_time' | trans,
                                                                         text: data.merchantProfile.deliveryTimeGlossaryKey | trans,
                                                                     },
                                                                 } only %}
@@ -196,19 +196,19 @@
         {% set additionalArticlesClass = 'box' %}
         {% set informationArticles = [
             {
-                'title': 'mearchant_profile.terms_and_conditions' | trans,
+                'title': 'merchant_profile.terms_and_conditions' | trans,
                 'text': data.merchantProfile.termsConditionsGlossaryKey | trans,
             },
             {
-                'title': 'mearchant_profile.cancellation_policy' | trans,
+                'title': 'merchant_profile.cancellation_policy' | trans,
                 'text': data.merchantProfile.cancellationPolicyGlossaryKey | trans,
             },
             {
-                'title': 'mearchant_profile.imprint' | trans,
+                'title': 'merchant_profile.imprint' | trans,
                 'text': data.merchantProfile.imprintGlossaryKey | trans,
             },
             {
-                'title': 'mearchant_profile.privacy' | trans,
+                'title': 'merchant_profile.privacy' | trans,
                 'text': data.merchantProfile.dataPrivacyGlossaryKey | trans,
             },
         ] %}

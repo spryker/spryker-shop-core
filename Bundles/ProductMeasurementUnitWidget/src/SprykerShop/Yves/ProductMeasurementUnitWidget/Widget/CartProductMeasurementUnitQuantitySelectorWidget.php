@@ -20,53 +20,23 @@ class CartProductMeasurementUnitQuantitySelectorWidget extends AbstractWidget
      */
     public function __construct(ItemTransfer $itemTransfer)
     {
-        $this->addParameter('itemTransfer', $itemTransfer)
-            ->addParameter('isBaseUnit', $this->isBaseUnit($itemTransfer))
-            ->addParameter('hasSalesUnit', $this->hasSalesUnit($itemTransfer));
+        $this->addParameter('itemTransfer', $itemTransfer);
+        $this->addParameter('quantitySalesUnit', $itemTransfer->getQuantitySalesUnit());
+        $this->addParameter('quantitySalesUnitPrecision', $this->getQuantitySalesUnitPrecision($itemTransfer));
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return bool
+     * @return float|null
      */
-    protected function isBaseUnit(ItemTransfer $itemTransfer): bool
+    protected function getQuantitySalesUnitPrecision(ItemTransfer $itemTransfer): ?float
     {
-        $quantitySalesUnitTransfer = $itemTransfer->getQuantitySalesUnit();
-
-        if ($quantitySalesUnitTransfer === null) {
-            return true;
+        if ($itemTransfer->getQuantitySalesUnit() === null) {
+            return null;
         }
 
-        $productConcreteMeasurementUnitStorageTransfer = $this->getFactory()
-            ->getProductMeasurementUnitStorageClient()
-            ->findProductConcreteMeasurementUnitStorage($itemTransfer->getId());
-
-        if ($productConcreteMeasurementUnitStorageTransfer !== null) {
-            $baseUnitTransfer = $productConcreteMeasurementUnitStorageTransfer->getBaseUnit();
-
-            if ($baseUnitTransfer->getIdProductMeasurementUnit() === $quantitySalesUnitTransfer->getProductMeasurementUnit()->getIdProductMeasurementUnit()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
-    protected function hasSalesUnit(ItemTransfer $itemTransfer): bool
-    {
-        $quantitySalesUnitTransfer = $itemTransfer->getQuantitySalesUnit();
-
-        if ($quantitySalesUnitTransfer === null) {
-            return false;
-        }
-
-        return (bool)$quantitySalesUnitTransfer->getIdProductMeasurementSalesUnit();
+        return $itemTransfer->getQuantitySalesUnit()->getValue() / $itemTransfer->getQuantitySalesUnit()->getPrecision();
     }
 
     /**

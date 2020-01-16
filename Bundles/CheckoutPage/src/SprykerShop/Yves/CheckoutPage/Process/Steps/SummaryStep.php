@@ -115,11 +115,31 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
                 $quoteTransfer->getItems(),
                 $quoteTransfer->getBundleItems()
             ),
-            'shipmentGroups' => $shipmentGroups,
+            'shipmentGroups' => $this->expandShipmentGroupsWithCartItems($shipmentGroups, $quoteTransfer),
             'totalCosts' => $this->getTotalCosts($shipmentGroups),
             'isPlaceableOrder' => $isPlaceableOrderResponseTransfer->getIsSuccess(),
             'isPlaceableOrderErrors' => $isPlaceableOrderResponseTransfer->getErrors(),
         ];
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupTransfers
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    protected function expandShipmentGroupsWithCartItems(ArrayObject $shipmentGroupTransfers, QuoteTransfer $quoteTransfer): ArrayObject
+    {
+        foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
+            $cartItems = $this->productBundleClient->getGroupedBundleItems(
+                $shipmentGroupTransfer->getItems(),
+                $quoteTransfer->getBundleItems()
+            );
+
+            $shipmentGroupTransfer->setCartItems($cartItems);
+        }
+
+        return $shipmentGroupTransfers;
     }
 
     /**

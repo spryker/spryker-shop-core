@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\ProductMeasurementUnitWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientInterface;
 use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Client\ProductMeasurementUnitWidgetToProductQuantityStorageClientInterface;
+use SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Service\ProductMeasurementUnitWidgetToUtilEncodingServiceInterface;
 
 class ProductMeasurementUnitWidgetFactory extends AbstractFactory
 {
@@ -27,5 +28,13 @@ class ProductMeasurementUnitWidgetFactory extends AbstractFactory
     public function getProductQuantityStorageClient(): ProductMeasurementUnitWidgetToProductQuantityStorageClientInterface
     {
         return $this->getProvidedDependency(ProductMeasurementUnitWidgetDependencyProvider::CLIENT_PRODUCT_QUANTITY_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\ProductMeasurementUnitWidget\Dependency\Service\ProductMeasurementUnitWidgetToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ProductMeasurementUnitWidgetToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(ProductMeasurementUnitWidgetDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

@@ -155,6 +155,10 @@ class OrderController extends AbstractCustomerController
             ->getShipmentService()
             ->groupItemsByShipment($orderTransfer->getItems());
 
+        $shipmentGroupCollection = $this->getFactory()
+            ->createShipmentGroupExpander()
+            ->expandShipmentGroupsWithCartItems($shipmentGroupCollection, $orderTransfer);
+
         $orderShipmentExpenses = $this->prepareOrderShipmentExpenses($orderTransfer, $shipmentGroupCollection);
 
         return [
