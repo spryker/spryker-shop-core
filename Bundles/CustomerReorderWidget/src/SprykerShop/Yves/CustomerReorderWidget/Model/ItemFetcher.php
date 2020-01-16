@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerReorderWidget\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -107,7 +108,49 @@ class ItemFetcher implements ItemFetcherInterface
                     ->setBundleItems($orderTransfer->getBundleItems())
             );
 
+        $idSalesOrderData = $this->getIdSalesOrderDataForBundleItems($orderTransfer->getItems());
+        $itemTransfers = $this->setIdSalesOrderForBundleItems($itemTransfers, $idSalesOrderData);
+
         return $this->cleanUpItems($itemTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param int[] $idSalesOrderData
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function setIdSalesOrderForBundleItems(array $itemTransfers, array $idSalesOrderData): array
+    {
+        foreach ($itemTransfers as $itemTransfer) {
+            $bundleItemIdentifier = $itemTransfer->getBundleItemIdentifier();
+
+            if ($bundleItemIdentifier) {
+                $itemTransfer->setIdSalesOrderItem($idSalesOrderData[$bundleItemIdentifier] ?? null);
+            }
+        }
+
+        return $itemTransfers;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return int[]
+     */
+    protected function getIdSalesOrderDataForBundleItems(ArrayObject $itemTransfers): array
+    {
+        $idSalesOrderData = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $relatedBundleItemIdentifier = $itemTransfer->getRelatedBundleItemIdentifier();
+
+            if ($relatedBundleItemIdentifier && !isset($idSalesOrderData[$relatedBundleItemIdentifier])) {
+                $idSalesOrderData[$relatedBundleItemIdentifier] = $itemTransfer->getIdSalesOrderItem();
+            }
+        }
+
+        return $idSalesOrderData;
     }
 
     /**
