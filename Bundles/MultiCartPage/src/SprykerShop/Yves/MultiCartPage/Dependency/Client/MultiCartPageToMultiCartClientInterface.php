@@ -22,7 +22,7 @@ interface MultiCartPageToMultiCartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setDefaultQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function markQuoteAsDefault(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer

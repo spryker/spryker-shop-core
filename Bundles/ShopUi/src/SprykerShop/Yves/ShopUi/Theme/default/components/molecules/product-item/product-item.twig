@@ -10,7 +10,7 @@
     name: data.product.name | default,
     sku: data.product.sku | default,
     url: data.product.url | default,
-    image: data.product.images ? data.product.images.0.externalUrlSmall | default,
+    image: data.product.images is defined ? data.product.images.0.externalUrlSmall | default,
     idProductAbstract: data.product.idProductAbstract | default,
     currencyIsoCode: null,
 } %}
@@ -18,13 +18,18 @@
 {%- block extraClass %} box {{ config.jsName }}{% endblock -%}
 
 {% block body %}
-    {% block imageContainer %}
-        <a class="{{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">
-            {% block image %}
+    {% block thumbnailWrapper %}
+        {% set extraClass = '' %}
+        {% set modifiers = [] %}
+
+        {% block imageContainer %}
+            {% macro thumbnail(src, alt='', extraClass='', modifiers=[]) %}
                 {% embed atom('thumbnail') with {
+                    class: extraClass,
+                    modifiers: modifiers,
                     attributes: {
-                        src: data.image,
-                        alt: data.name,
+                        src: src,
+                        alt: alt,
                     },
                     embed: {
                         jsName: config.jsName,
@@ -36,22 +41,53 @@
                         {{ parent() }}
                     {% endblock %}
                 {% endembed %}
+            {% endmacro %}
+
+            {% block image %}
+                {% if data.url %}
+                    {% block imageLink %}
+                        <a class="{{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">
+                            {{ _self.thumbnail(data.image, data.name, extraClass, modifiers) }}
+                        </a>
+                    {% endblock %}
+                {% endif %}
+                {% if not data.url %}
+                    {% block productThumbnail %}
+                        {{ _self.thumbnail(data.image, data.name, extraClass, modifiers) }}
+                    {% endblock %}
+                {% endif %}
             {% endblock %}
-        </a>
+        {% endblock %}
     {% endblock %}
 
     {% block labels %}
-        {% widget 'ProductAbstractLabelWidget' args [data.idProductAbstract] only %}{% endwidget %}
+        {% if data.idProductAbstract %}
+            {% block productAbstractLabels %}
+                {% widget 'ProductAbstractLabelWidget' args [data.idProductAbstract] only %}{% endwidget %}
+            {% endblock %}
+        {% endif %}
     {% endblock %}
 
     {% block groups %}
-        {% widget 'ProductGroupWidget' args [data.idProductAbstract] only %}{% endwidget %}
+        {% if data.idProductAbstract %}
+            {% block productAbstractGroups %}
+                {% widget 'ProductGroupWidget' args [data.idProductAbstract] only %}{% endwidget %}
+            {% endblock %}
+        {% endif %}
     {% endblock %}
 
     {% block content %}
         {% block name %}
-            {% if data.name %}
-                <a class="{{ config.name }}__name {{ config.jsName }}__name {{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">{{ data.name }}</a>
+            {% if data.name and data.url %}
+                {% block link %}
+                    <a class="{{ config.name }}__name {{ config.jsName }}__name {{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">{{ data.name }}</a>
+                {% endblock %}
+            {% endif %}
+
+            {% if data.name and not data.url %}
+                {% block title %}
+                    <span class="{{ config.name }}__name {{ config.jsName }}__name">{{ data.name }}</span>
+                {% endblock %}
             {% endif %}
         {% endblock %}
 
@@ -62,11 +98,15 @@
         {% endblock %}
 
         {% block rating %}
-            {% widget 'DisplayProductAbstractReviewWidget' args [data.idProductAbstract] with {
-                data: {
-                    productItemJsName: config.jsName,
-                },
-            } only %}{% endwidget %}
+            {% if data.idProductAbstract %}
+                {% block productAbstractRating %}
+                    {% widget 'DisplayProductAbstractReviewWidget' args [data.idProductAbstract] with {
+                        data: {
+                            productItemJsName: config.jsName,
+                        },
+                    } only %}{% endwidget %}
+                {% endblock %}
+            {% endif %}
         {% endblock %}
 
         {% block priceContainer %}
@@ -82,7 +122,7 @@
                             },
                         } only %}
                     {% else %}
-                        {{ 'customer.access.cannot_see_price' | trans }}
+                        {{- 'customer.access.cannot_see_price' | trans -}}
                     {% endif %}
                 {% endblock %}
             </div>
@@ -92,15 +132,27 @@
     {% block actionsContainer %}
         <div class="{{ config.name }}__actions">
             {% block actions %}
-                <a class="button button--expand {{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">
-                    {{- 'product.view' | trans -}}
-                    {%- include atom('icon') with {
-                        modifiers: ['small'],
-                        data: {
-                            name: 'angle-double-right',
-                        },
-                    } only -%}
-                </a>
+                {% if data.url %}
+                    {% block action %}
+                        <a class="button button--expand {{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">
+                            {% block actionInner %}
+                                {{- 'product.view' | trans -}}
+
+                                {% set iconModifiers = ['small'] %}
+                                {% set iconName = 'angle-double-right' %}
+
+                                {% block icon %}
+                                    {%- include atom('icon') with {
+                                        modifiers: iconModifiers,
+                                        data: {
+                                            name: iconName,
+                                        },
+                                    } only -%}
+                                {% endblock %}
+                            {% endblock %}
+                        </a>
+                    {% endblock %}
+                {% endif %}
             {% endblock %}
         </div>
     {% endblock %}

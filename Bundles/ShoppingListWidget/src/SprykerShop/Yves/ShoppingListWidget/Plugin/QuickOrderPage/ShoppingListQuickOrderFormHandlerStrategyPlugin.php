@@ -24,7 +24,7 @@ use SprykerShop\Yves\QuickOrderPageExtension\Dependency\Plugin\QuickOrderFormHan
 class ShoppingListQuickOrderFormHandlerStrategyPlugin extends AbstractPlugin implements QuickOrderFormHandlerStrategyPluginInterface
 {
     /**
-     * @see \SprykerShop\Yves\ShoppingListPage\Plugin\Provider\ShoppingListPageControllerProvider::ROUTE_SHOPPING_LIST_DETAILS
+     * @see \SprykerShop\Yves\ShoppingListPage\Plugin\Router\ShoppingListPageRouteProviderPlugin::ROUTE_SHOPPING_LIST_DETAILS
      */
     protected const ROUTE_SHOPPING_LIST_DETAILS = 'shopping-list/details';
 

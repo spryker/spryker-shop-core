@@ -101,6 +101,8 @@
     </transfer>
 
     <transfer name="Item">
+        <property name="sourceUnitGrossPrice" type="int"/>
+        <property name="sourceUnitNetPrice" type="int"/>
     </transfer>
 
 </transfers>

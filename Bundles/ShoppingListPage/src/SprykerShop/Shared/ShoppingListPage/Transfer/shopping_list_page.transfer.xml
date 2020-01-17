@@ -54,13 +54,6 @@
         <property name="shoppingListItem" type="ShoppingListItem"/>
     </transfer>
 
-    <transfer name="ShoppingListFromCartRequest">
-        <property name="idShoppingList" type="int"/>
-        <property name="shoppingListName" type="string"/>
-        <property name="customer" type="Customer"/>
-        <property name="idQuote" type="int"/>
-    </transfer>
-
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
         <property name="customerReference" type="string"/>
@@ -83,6 +76,8 @@
 
     <transfer name="ShoppingListOverviewRequest">
         <property name="shoppingList" type="ShoppingList"/>
+        <property name="priceMode" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="ShoppingListOverviewResponse">
@@ -159,6 +154,11 @@
     </transfer>
 
     <transfer name="Quote">
+        <property name="currency" type="Currency"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
     </transfer>
 
 </transfers>

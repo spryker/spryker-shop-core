@@ -1,6 +1,6 @@
 # QuoteRequestWidget Module
-[![Build Status](https://travis-ci.org/spryker-shop/quote-request-widget.svg)](https://travis-ci.org/spryker/quote-request-widget)
-[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/quote-request-widget/badge.svg)](https://coveralls.io/github/spryker/quote-request-widget)
+[![Build Status](https://travis-ci.org/spryker-shop/quote-request-widget.svg)](https://travis-ci.org/spryker-shop/quote-request-widget)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Widget module is responsible for displaying a 
 list of quote requests in agent account menu in top navigation.

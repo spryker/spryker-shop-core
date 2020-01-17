@@ -1,6 +1,6 @@
 # PriceProductVolumeWidget Module
-[![Build Status](https://travis-ci.org/spryker-shop/price-product-volume-widget.svg)](https://travis-ci.org/spryker-shop/volume-price-product-widget)
-[![Coverage Status](https://coveralls.io/repos/github/spryker-shop/price-product-volume-widget/badge.svg)](https://coveralls.io/github/spryker-shop/volume-price-product-widget)
+[![Build Status](https://travis-ci.org/spryker-shop/price-product-volume-widget.svg)](https://travis-ci.org/spryker-shop/price-product-volume-widget)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 PriceProductVolumeWidget provides widget to show information about volume price for product.
 

@@ -1,0 +1,25 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'price',
+} %}
+
+{% define data = {
+    price: required,
+} %}
+
+{% block body %}
+    {% if can('SeePricePermissionPlugin') %}
+        {% block price %}
+            {% include molecule('money-price') with {
+                data: {
+                    amount: data.price,
+                },
+            } only %}
+        {% endblock %}
+    {% else %}
+        {% block message %}
+            {{ 'customer.access.cannot_see_price' | trans }}
+        {% endblock %}
+    {% endif %}
+{% endblock %}

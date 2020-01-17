@@ -26,6 +26,7 @@ class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = parent::provideDependencies($container);
         $container = $this->addShoppingListClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addShoppingListSessionClient($container);
@@ -40,9 +41,9 @@ class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addShoppingListClient(Container $container): Container
     {
-        $container[static::CLIENT_SHOPPING_LIST] = function (Container $container) {
+        $container->set(static::CLIENT_SHOPPING_LIST, function (Container $container) {
             return new ShoppingListWidgetToShoppingListClientBridge($container->getLocator()->shoppingList()->client());
-        };
+        });
 
         return $container;
     }
@@ -54,9 +55,9 @@ class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new ShoppingListWidgetToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -68,9 +69,9 @@ class ShoppingListWidgetDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addShoppingListSessionClient(Container $container): Container
     {
-        $container[static::CLIENT_SHOPPING_LIST_SESSION] = function (Container $container) {
+        $container->set(static::CLIENT_SHOPPING_LIST_SESSION, function (Container $container) {
             return new ShoppingListWidgetToShoppingListSessionClientBridge($container->getLocator()->shoppingListSession()->client());
-        };
+        });
 
         return $container;
     }

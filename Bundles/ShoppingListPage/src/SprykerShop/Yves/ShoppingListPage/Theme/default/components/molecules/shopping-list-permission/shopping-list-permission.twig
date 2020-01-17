@@ -2,17 +2,21 @@
 
 {% define config = {
     name: 'shopping-list-permission',
-    tag: 'span'
+    tag: 'span',
 } %}
 
 {% define data = {
-    hasWritePermission: required
+    hasWritePermission: required,
 } %}
 
 {% block body %}
-    {% if data.hasWritePermission %}
-        <span class="{{ config.name }}__full">{{ 'customer.account.shopping_list.permissions.FULL_ACCESS' | trans }}</span>
-    {% else %}
-        <span>{{ 'customer.account.shopping_list.permissions.READ_ONLY' | trans }}</span>
-    {% endif %}
+    {% set fullAccessClasses = config.name ~ '__full-access' %}
+
+    {% block content %}
+        {% if data.hasWritePermission %}
+            <span class="{{ fullAccessClasses }}">{{ 'customer.account.shopping_list.permissions.FULL_ACCESS' | trans }}</span>
+        {% else %}
+            <span>{{ 'customer.account.shopping_list.permissions.READ_ONLY' | trans }}</span>
+        {% endif %}
+    {% endblock %}
 {% endblock %}

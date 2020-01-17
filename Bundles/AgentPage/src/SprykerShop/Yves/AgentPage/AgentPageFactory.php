@@ -50,19 +50,23 @@ class AgentPageFactory extends AbstractFactory
     }
 
     /**
+     * @param string|null $targetUrl
+     *
      * @return \Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface
      */
-    public function createAgentAuthenticationSuccessHandler(): AuthenticationSuccessHandlerInterface
+    public function createAgentAuthenticationSuccessHandler(?string $targetUrl = null): AuthenticationSuccessHandlerInterface
     {
-        return new AgentAuthenticationSuccessHandler();
+        return new AgentAuthenticationSuccessHandler($targetUrl);
     }
 
     /**
+     * @param string|null $targetUrl
+     *
      * @return \Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface
      */
-    public function createAgentAuthenticationFailureHandler(): AuthenticationFailureHandlerInterface
+    public function createAgentAuthenticationFailureHandler(?string $targetUrl = null): AuthenticationFailureHandlerInterface
     {
-        return new AgentAuthenticationFailureHandler();
+        return new AgentAuthenticationFailureHandler($targetUrl);
     }
 
     /**
@@ -79,6 +83,8 @@ class AgentPageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement. Use `new RedirectResponse()` where you need it.
+     *
      * @param string $url
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -129,6 +135,8 @@ class AgentPageFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated The application shouldn't be accessed and will be removed.
+     *
      * @return \Spryker\Yves\Kernel\Application
      */
     public function getApplication(): Application
