@@ -23,7 +23,7 @@
         {% set modifiers = [] %}
 
         {% block imageContainer %}
-            {% macro thumbnail(src, alt='', extraClass='', modifiers=[]) %}
+            {% macro thumbnail(src, alt='', extraClass='', modifiers=[], jsName) %}
                 {% embed atom('thumbnail') with {
                     class: extraClass,
                     modifiers: modifiers,
@@ -32,7 +32,7 @@
                         alt: alt,
                     },
                     embed: {
-                        jsName: config.jsName,
+                        jsName: jsName,
                     },
                 } only %}
                     {% block image %}
@@ -47,13 +47,13 @@
                 {% if data.url %}
                     {% block imageLink %}
                         <a class="{{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">
-                            {{ _self.thumbnail(data.image, data.name, extraClass, modifiers) }}
+                            {{ _self.thumbnail(data.image, data.name, extraClass, modifiers, config.jsName) }}
                         </a>
                     {% endblock %}
                 {% endif %}
                 {% if not data.url %}
                     {% block productThumbnail %}
-                        {{ _self.thumbnail(data.image, data.name, extraClass, modifiers) }}
+                        {{ _self.thumbnail(data.image, data.name, extraClass, modifiers, config.jsName) }}
                     {% endblock %}
                 {% endif %}
             {% endblock %}
