@@ -1,6 +1,6 @@
 {% extends template('page-blank') %}
 
-{%- block class -%}js-page-layout-main__side-drawer-container{%- endblock -%}
+{%- block class -%}js-page-layout-main{%- endblock -%}
 
 {% block body %}
     {% block notifications %}
@@ -11,7 +11,7 @@
         {% include organism('side-drawer') with {
             class: 'is-hidden-lg-xl',
             attributes: {
-                'container-selector': 'js-page-layout-main__side-drawer-container',
+                'container-selector': 'js-page-layout-main',
                 'trigger-selector': 'js-page-layout-main__side-drawer-trigger',
             },
         } only %}
