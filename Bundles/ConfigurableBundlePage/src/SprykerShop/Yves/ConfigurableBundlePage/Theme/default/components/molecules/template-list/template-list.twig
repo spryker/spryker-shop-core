@@ -51,7 +51,7 @@
                                                                             {% include atom('thumbnail') with {
                                                                                 modifiers: imageModifiers,
                                                                                 attributes: {
-                                                                                    src: publicPath(template.images.0.externalUrlSmall),
+                                                                                    src: template.images.0.externalUrlSmall,
                                                                                     alt: template.name | trans,
                                                                                 },
                                                                             } only %}
