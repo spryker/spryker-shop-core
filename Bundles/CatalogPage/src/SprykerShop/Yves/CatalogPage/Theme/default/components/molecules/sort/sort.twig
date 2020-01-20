@@ -6,53 +6,64 @@
 
 {% define data = {
     parentJsName: '',
+    pagination: {},
+    sort: {},
 } %}
 
 {% block body %}
     <div class="grid grid--middle">
-        <div class="{{config.name}}__col col col--lg-3 is-hidden-sm-md">
-            <strong>{{ _view.pagination.numFound }}</strong> {{ "catalog.itemsFound"|trans }}
+        <div class="{{ config.name }}__col col col--lg-3 is-hidden-sm-md">
+            <strong>{{ data.pagination.numFound }}</strong> {{ 'catalog.itemsFound' | trans }}
         </div>
 
-        <div class="{{config.name}}__col col col--sm-3 col--md-2">
+        <div class="{{ config.name }}__col col col--sm-3 col--md-2">
             {% embed atom('select') with {
                 modifiers: ['expand'],
                 attributes: {
-                    name: 'ipp'
+                    name: 'ipp',
                 },
                 embed: {
-                    pagination: _view.pagination
-                }
+                    pagination: data.pagination,
+                },
             } only %}
                 {% block options %}
                     {% for limit in embed.pagination.config.validItemsPerPageOptions %}
-                        <option value="{{ limit }}" {% if limit == embed.pagination.currentItemsPerPage %}selected{% endif %}>{{ limit }}</option>
+                        {% set selectedOption = (limit == embed.pagination.currentItemsPerPage) ? 'selected' %}
+
+                        <option value="{{ limit }}" {{ selectedOption }}>{{ limit }}</option>
                     {% endfor %}
                 {% endblock %}
             {% endembed %}
         </div>
 
-        <div class="{{config.name}}__col col col--sm-7 col--md-8 col--lg-6">
+        <div class="{{ config.name }}__col col col--sm-7 col--md-8 col--lg-6">
             {% embed atom('select') with {
                 modifiers: ['expand'],
                 attributes: {
-                    name: 'sort'
+                    name: 'sort',
                 },
                 embed: {
-                    sort: _view.sort
-                }
+                    sort: data.sort,
+                },
             } only %}
                 {% block options %}
                     <option value="">{{ 'catalog.sort.relevance' | trans }}</option>
+
                     {% for sortParamName in embed.sort.sortParamNames %}
-                        <option value="{{ sortParamName }}" {% if sortParamName == embed.sort.currentSortParam %}selected{% endif %}>{{ ('catalog.sort.' ~ sortParamName) | trans }}</option>
+                        {% set selectedOption = (sortParamName == embed.sort.currentSortParam) ? 'selected' %}
+
+                        <option value="{{ sortParamName }}" {{ selectedOption }}>
+                            {{ ('catalog.sort.' ~ sortParamName) | trans }}
+                        </option>
                     {% endfor %}
                 {% endblock %}
             {% endembed %}
         </div>
 
         <div class="{{ config.name }}__col col col--sm-2 col--lg-1">
-            <button type="button" class="button button--expand {{ data.parentJsName }}__trigger">
+            {% set buttonJsName = data.parentJsName ? data.parentJsName ~ '__trigger' %}
+
+            <button type="button" class="button button--expand {{ buttonJsName }}">
                 {% include atom('icon') with {
                     data: {
                         name: 'sort',

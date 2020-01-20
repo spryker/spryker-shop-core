@@ -11,19 +11,21 @@
     isEmptyCategoryFilterValueVisible: _view.isEmptyCategoryFilterValueVisible | default,
     filterPath: _view.filterPath | default,
     viewMode: _view.viewMode | default,
-
+    sort: _view.sort,
     title: _view.category.name | default,
     metaTitle: _view.pageTitle | default(_view.category.name | default),
     metaDescription: _view.pageDescription | default,
     metaKeywords: _view.pageKeywords | default,
-
     pagination: {
         parameters: app.request.query.all(),
         currentPage: _view.pagination.currentPage,
         paginationPath: app.request.getPathInfo(),
         maxPage: _view.pagination.maxPage,
-        showAlwaysFirstAndLast: true
-    }
+        showAlwaysFirstAndLast: true,
+        numFound: _view.pagination.numFound,
+        config: _view.pagination.config,
+        currentItemsPerPage: _view.pagination.currentItemsPerPage,
+    },
 } %}
 
 {% block form %}

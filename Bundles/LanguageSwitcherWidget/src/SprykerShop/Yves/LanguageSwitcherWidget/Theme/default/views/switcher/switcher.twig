@@ -2,7 +2,8 @@
 
 {% define data = {
     languages: _widget.languages,
-    currentLanguage: _widget.currentLanguage
+    currentLanguage: _widget.currentLanguage,
+    schemeAndHttpHost: app.request.getSchemeAndHttpHost(),
 } %}
 
 {% block body %}
@@ -15,15 +16,16 @@
                 },
                 embed: {
                     languages: data.languages,
-                    currentLanguage: data.currentLanguage
-                }
+                    currentLanguage: data.currentLanguage,
+                    schemeAndHttpHost: data.schemeAndHttpHost,
+                },
             } only %}
                 {% block options %}
                     {% for language, url in embed.languages %}
-                        <option
-                            value="{{ app.request.getSchemeAndHttpHost() }}{{ url }}"
-                            {{ (language == embed.currentLanguage) ? 'selected' : ''}}>
-                                {{ language }}
+                        {% set selectedOption = (language == embed.currentLanguage) ? 'selected' %}
+
+                        <option value="{{ embed.schemeAndHttpHost }}{{ url }}" {{ selectedOption }}>
+                            {{ language }}
                         </option>
                     {% endfor %}
                 {% endblock %}
