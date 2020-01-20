@@ -5,13 +5,10 @@
     tag: 'li',
 } %}
 
+{# @deprecated property "activePage" is deprecated. #}
 {% define data = {
-    activePage: '',
+    activePage: null,
 } %}
-
-{% block extraClass %}
-    {{ 'menu__item' ~ (data.activePage == 'quoteRequestAgent' ? ' menu__item--active') }}
-{% endblock %}
 
 {% block body %}
     <a href="{{ url('agent/quote-request') }}"

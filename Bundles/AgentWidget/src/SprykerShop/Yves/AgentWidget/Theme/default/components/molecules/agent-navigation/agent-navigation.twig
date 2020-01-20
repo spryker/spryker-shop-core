@@ -29,7 +29,9 @@
                 </li>
 
                 {% block additional %}
-                    {% include molecule('quote-request-menu-item', 'QuoteRequestAgentWidget') ignore missing only %}
+                    {% include molecule('quote-request-menu-item', 'QuoteRequestAgentWidget') ignore missing with {
+                        class: 'menu__item',
+                    } only %}
                 {% endblock %}
 
                 <li class="menu__item">
