@@ -1,16 +1,14 @@
-{# fe-sniffer:disabled correct-twig-component-structure #}
 {% extends model('component') %}
 
-{% define data = {
-    activePage: null
-} %}
-
 {% define config = {
+    name: 'quote-request-menu-item',
     tag: 'li',
-    name: 'menu__item' ~ (data.activePage == 'quoteRequestAgent' ? ' menu__item--active' : ''),
 } %}
 
-{% set itemClass = data.activePage ? ' menu__item--active' : '' %}
+{# @deprecated property "activePage" is deprecated. #}
+{% define data = {
+    activePage: null,
+} %}
 
 {% block body %}
     <a href="{{ url('agent/quote-request') }}"

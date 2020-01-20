@@ -2,11 +2,11 @@
 
 {% define config = {
     name: 'agent-navigation',
-    tag: 'nav'
+    tag: 'nav',
 } %}
 
 {% define data = {
-    activePage: required
+    activePage: required,
 } %}
 
 {%- macro isActive(page, activePage) -%}
@@ -17,13 +17,11 @@
 
 {% block body %}
     <ul class="menu">
-        <li class="menu__item {{macros.isActive('overview', data.activePage)}}">
+        <li class="menu__item {{ macros.isActive('overview', data.activePage) }}">
             <a href="{{ path('agent/overview') }}">{{ 'agent.account.overview' | trans }}</a>
         </li>
         {% include molecule('quote-request-menu-item', 'QuoteRequestAgentWidget') ignore missing with {
-            data: {
-                activePage: data.activePage
-            }
+            class: 'menu__item ' ~ macros.isActive('quoteRequestAgent', data.activePage),
         } only %}
     </ul>
 {% endblock %}
