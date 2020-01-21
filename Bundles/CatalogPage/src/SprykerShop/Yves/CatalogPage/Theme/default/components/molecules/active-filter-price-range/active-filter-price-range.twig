@@ -14,12 +14,13 @@
     activeMax: required,
     min: 0,
     max: 0,
+    hasParameterName: app.request.query.has(data.filter.config.parameterName),
 } %}
 
 {% set currentValue = data.activeMin | money  ~ ' - ' ~ data.activeMax | money %}
 
 {% block component %}
-    {% set isNotDefault = app.request.query.has(data.filter.config.parameterName) and can('SeePricePermissionPlugin') %}
+    {% set isNotDefault = data.hasParameterName and can('SeePricePermissionPlugin') %}
 
     {% if isNotDefault %}
         {% include molecule('active-filter', 'CatalogPage') with {

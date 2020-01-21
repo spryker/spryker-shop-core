@@ -2,12 +2,13 @@
 
 {% define data = {
     currencies: _widget.currencies,
-    currentCurrency: _widget.currentCurrency
+    currentCurrency: _widget.currentCurrency,
+    requestUri: app.request.requestUri,
 } %}
 
-{% block template %}
+{% block component %}
     {% if data.currencies is not empty %}
-        {{parent()}}
+        {{ parent() }}
     {% endif %}
 {% endblock %}
 
@@ -26,11 +27,13 @@
         } only %}
             {% block options %}
                 {% for currency in embed.currencies %}
-                    <option value="{{ currency.code }}" {{ (currency.code == embed.currentCurrency) ? 'selected' : ''}}>{{ currency.name | trans }}</option>
+                    {% set selectedOption = (currency.code == embed.currentCurrency) ? 'selected' %}
+
+                    <option value="{{ currency.code }}" {{ selectedOption }}>{{ currency.name | trans }}</option>
                 {% endfor %}
             {% endblock %}
         {% endembed %}
 
-        <input type="hidden" name="referrer-url" value="{{ app.request.requestUri }}">
+        <input type="hidden" name="referrer-url" value="{{ data.requestUri }}">
     </form>
 {% endblock %}
