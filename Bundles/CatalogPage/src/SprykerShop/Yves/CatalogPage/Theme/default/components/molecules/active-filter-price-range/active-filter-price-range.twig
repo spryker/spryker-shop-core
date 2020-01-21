@@ -14,7 +14,7 @@
     activeMax: required,
     min: 0,
     max: 0,
-    hasParameterName: app.request.query.has(data.filter.config.parameterName),
+    hasParameterName: app.request.query.has(data.filter.config.parameterName) | default(false),
 } %}
 
 {% set currentValue = data.activeMin | money  ~ ' - ' ~ data.activeMax | money %}

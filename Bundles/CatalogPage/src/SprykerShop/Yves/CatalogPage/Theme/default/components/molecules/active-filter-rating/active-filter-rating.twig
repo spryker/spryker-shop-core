@@ -3,7 +3,7 @@
 
 {% define data = {
     value: data.filter.min ~ ' ' ~ 'catalog.filter.active_rating_up' | trans,
-    hasParameterName: app.request.query.has(data.filter.config.parameterName),
+    hasParameterName: app.request.query.has(data.filter.config.parameterName) | default(false),
 } %}
 
 {% block component %}
