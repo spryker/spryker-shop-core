@@ -2,7 +2,7 @@
 
 {% define config = {
     name: 'quick-order-row',
-    tag: 'quick-order-row'
+    tag: 'quick-order-row',
 } %}
 
 {% define data = {
@@ -10,7 +10,6 @@
     quantityField: required,
     skuField: required,
     product: null,
-
     autocomplete: {
         skuFieldName: required,
         skuFieldValue: null,
@@ -40,6 +39,7 @@
         <div class="col col--sm-4 spacing spacing--inner">
             {% block search %}
                 {% set skuFieldValue = (data.autocomplete.skuFieldValue | length > 1) ? data.autocomplete.skuFieldValue : data.skuField.vars.value %}
+
                 {% widget 'ProductConcreteSearchWidget' args [
                     'ajax-provider' ~ data.index,
                     data.autocomplete.skuFieldName ~ '[sku]',
@@ -50,24 +50,23 @@
             {% endblock %}
         </div>
 
-        <div class="col col--sm-7 {{config.jsName}}__target {{config.jsName}}__target-{{data.index}}">
-            {{parent()}}
+        <div class="col col--sm-7 {{ config.jsName }}__target {{ config.jsName }}__target-{{ data.index }}">
+            {{ parent() }}
         </div>
 
         <div class="col col--sm-1 spacing spacing--inner">
             {% block delete %}
-                <a href="#remove"
-                    class="button button--expand button--warning js-quick-order-form__remove-row-trigger"
-                    data-row-index="{{ data.index }}">
+                <button type="button"
+                        class="button button--expand button--warning js-quick-order-form__remove-row-trigger"
+                        data-row-index="{{ data.index }}">
                     {% include atom('icon') with {
                         modifiers: ['small'],
                         data: {
-                            name: 'times'
-                        }
+                            name: 'times',
+                        },
                     } only %}
-                </a>
+                </button>
             {% endblock %}
         </div>
-
     </div>
 {% endblock %}
