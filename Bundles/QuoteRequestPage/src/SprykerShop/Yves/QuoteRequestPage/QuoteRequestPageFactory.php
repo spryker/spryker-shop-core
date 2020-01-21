@@ -16,12 +16,17 @@ use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCustom
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToPersistentCartClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToShipmentServiceInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToUtilDateTimeServiceInterface;
+use SprykerShop\Yves\QuoteRequestPage\Extractor\ShipmentCostExtractor;
+use SprykerShop\Yves\QuoteRequestPage\Extractor\ShipmentCostExtractorInterface;
 use SprykerShop\Yves\QuoteRequestPage\Form\DataProvider\QuoteRequestFormDataProvider;
 use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandler;
 use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandlerInterface;
 use SprykerShop\Yves\QuoteRequestPage\Form\QuoteRequestEditItemsConfirmForm;
 use SprykerShop\Yves\QuoteRequestPage\Form\QuoteRequestForm;
+use SprykerShop\Yves\QuoteRequestPage\Grouper\ShipmentGrouper;
+use SprykerShop\Yves\QuoteRequestPage\Grouper\ShipmentGrouperInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -71,6 +76,24 @@ class QuoteRequestPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\QuoteRequestPage\Grouper\ShipmentGrouperInterface
+     */
+    public function createShipmentGrouper(): ShipmentGrouperInterface
+    {
+        return new ShipmentGrouper(
+            $this->getShipmentService()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestPage\Extractor\ShipmentCostExtractorInterface
+     */
+    public function createShipmentCostExtractor(): ShipmentCostExtractorInterface
+    {
+        return new ShipmentCostExtractor();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -89,6 +112,14 @@ class QuoteRequestPageFactory extends AbstractFactory
     public function getUtilDateTimeService(): QuoteRequestPageToUtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::SERVICE_UTIL_DATE_TIME);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToShipmentServiceInterface
+     */
+    public function getShipmentService(): QuoteRequestPageToShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::SERVICE_SHIPMENT);
     }
 
     /**

@@ -4,9 +4,12 @@
     title: 'quote_request_page.quote_request' | trans,
     quoteRequestForm: _view.quoteRequestForm,
     quoteRequest: _view.quoteRequestForm.vars.value,
+    shipmentGroups: _view.shipmentGroups | default([]),
+    totalShippingCosts: _view.totalShippingCosts,
 } %}
 
 {% set quote = data.quoteRequest.latestVersion.quote %}
+{% set hasMultiShipments = data.shipmentGroups | length > 1 %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -93,63 +96,135 @@
                         } only %}
                     </div>
                 {% endif %}
-                {% widget 'QuoteConfiguredBundleWidget' args [quote] with {
-                    data: {
-                        isEditable: false,
-                    },
-                } only %}
-                {% endwidget %}
 
-                {% set cartItems = quote.items | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}
-                {% for cartItem in cartItems %}
-                    {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
+                {% if hasMultiShipments %}
+                    {% for shipmentGroup in data.shipmentGroups %}
+                        <div class="grid grid--stretch grid--justify">
+                            <div class="col col--sm-12 col--lg-12">
+                                <div class="box">
+                                    <h4>{{ 'checkout.step.shipment.title' | trans }} n&#176;{{ loop.index }}</h4>
+                                    <hr>
+                                    <h6><strong>{{ 'checkout.step.summary.products' | trans }}</strong></h6>
+
+                                    {% widget 'QuoteConfiguredBundleWidget' args [quote, shipmentGroup.items] with {
+                                        data: {
+                                            isEditable: false,
+                                            isQuantitySummaryVisible: true,
+                                        },
+                                    } only %}
+                                    {% endwidget %}
+
+                                    {% for item in shipmentGroup.items %}
+                                        {% set cartItem = item.bundleProduct ?? item %}
+                                        {% set isConfiguredBundle = cartItem.configuredBundleItem is defined and cartItem.configuredBundleItem is not empty %}
+                                        {% set isGiftCardExists = cartItem.giftCardMetadata is not null and cartItem.giftCardMetadata.isGiftCard %}
+
+                                        {% if not isConfiguredBundle %}
+                                            {% embed molecule('summary-node', 'CheckoutPage') with {
+                                                data: {
+                                                    node: cartItem,
+                                                    bundleItems: item.bundleItems | default([]),
+                                                },
+                                            } only %}
+                                                {% block body %}
+                                                    {{ parent() }}
+
+                                                    {% if data.node.cartNote %}
+                                                        {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                                                            data: {
+                                                                label: 'cart_note.checkout_page.item_note',
+                                                                note: data.node.cartNote,
+                                                            },
+                                                        } only %}
+                                                    {% endif %}
+                                                {% endblock %}
+                                            {% endembed %}
+
+                                            {% if not loop.last %}<hr>{% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            {% include molecule('quote-request-shipment-group', 'QuoteRequestPage') ignore missing with {
+                                class: 'list spacing-y',
+                                data: {
+                                    shipmentGroup: shipmentGroup,
+                                }
+                            } only %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% widget 'QuoteConfiguredBundleWidget' args [quote] with {
                         data: {
-                            product: cartItem,
-                        },
-                        embed: {
-                            priceMode: quote.priceMode,
-                            currency: quote.currency,
+                            isEditable: false,
                         },
                     } only %}
-                        {% block additionalInformation %}
-                            {% include molecule('quote-request-item-summary', 'QuoteRequestPage') with {
-                                data: {
-                                    priceMode: embed.priceMode,
-                                    unitPrice: data.product.unitPrice | money(true, embed.currency.code),
-                                    subtotalPrice: data.product.sumSubtotalAggregation | money(true, embed.currency.code),
-                                    cartItem: data.product,
-                                    currency: embed.currency,
-                                },
-                            } only %}
-                        {% endblock %}
+                    {% endwidget %}
 
-                        {% block actions %}
-                            {% if data.product.amountSalesUnit is empty %}
-                                {{ 'cart.item_quantity' | trans }}:
-                                <strong>{{ data.product.quantity }}</strong>
+                    {% set cartItems = quote.items | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}
+                    {% for cartItem in cartItems %}
+                        {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
+                            data: {
+                                product: cartItem,
+                            },
+                            embed: {
+                                priceMode: quote.priceMode,
+                                currency: quote.currency,
+                            },
+                        } only %}
+                            {% block additionalInformation %}
+                                {% include molecule('quote-request-item-summary', 'QuoteRequestPage') with {
+                                    data: {
+                                        priceMode: embed.priceMode,
+                                        unitPrice: data.product.unitPrice | money(true, embed.currency.code),
+                                        subtotalPrice: data.product.sumSubtotalAggregation | money(true, embed.currency.code),
+                                        cartItem: data.product,
+                                        currency: embed.currency,
+                                    },
+                                } only %}
+                            {% endblock %}
 
-                                {% if data.product.quantitySalesUnit %}
-                                    {% set value = data.product.quantitySalesUnit.value %}
-                                    {% set precision = data.product.quantitySalesUnit.precision %}
-                                    {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+                            {% block actions %}
+                                {% if data.product.amountSalesUnit is empty %}
+                                    {{ 'cart.item_quantity' | trans }}:
+                                    <strong>{{ data.product.quantity }}</strong>
 
-                                    <p>
-                                        <small class="text-secondary">
-                                            [= {{ value / precision }} {{ salesUnitName | trans }}]
-                                        </small>
-                                    </p>
+                                    {% if data.product.quantitySalesUnit %}
+                                        {% set value = data.product.quantitySalesUnit.value %}
+                                        {% set precision = data.product.quantitySalesUnit.precision %}
+                                        {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+
+                                        <p>
+                                            <small class="text-secondary">
+                                                [= {{ value / precision }} {{ salesUnitName | trans }}]
+                                            </small>
+                                        </p>
+                                    {% endif %}
                                 {% endif %}
-                            {% endif %}
-                        {% endblock %}
-                    {% endembed %}
-                {% endfor %}
+                            {% endblock %}
+                        {% endembed %}
+                    {% endfor %}
+                {% endif %}
             </div>
 
             <div class="col col--sm-12 col--xl-4">
+
+                {% include molecule('quote-request-delivery-summary', 'QuoteRequestPage') ignore missing with {
+                    class: 'list spacing-y',
+                    data: {
+                        quote: quote,
+                        hasMultiShipments: hasMultiShipments,
+                        isEditable: true,
+                    }
+                } only %}
+
                 <div class="box">
                     {% include molecule('quote-request-cart-summary', 'QuoteRequestPage') with {
                         data: {
                             cart: quote,
+                            shipmentGroups: data.shipmentGroups,
+                            totalShippingCosts: data.totalShippingCosts,
                         },
                     } only %}
                 </div>

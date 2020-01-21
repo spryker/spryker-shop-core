@@ -15,6 +15,7 @@ use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCustom
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToPersistentCartClientBridge;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientBridge;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientBridge;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToShipmentServiceBridge;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToUtilDateTimeServiceBridge;
 
 class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvider
@@ -27,6 +28,7 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
+    public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     public const PLUGINS_QUOTE_REQUEST_FORM_METADATA_FIELD = 'PLUGINS_QUOTE_REQUEST_FORM_METADATA_FIELD';
 
@@ -46,6 +48,7 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addCustomerClient($container);
 
         $container = $this->addUtilDateTimeService($container);
+        $container = $this->addShipmentService($container);
 
         $container = $this->addQuoteRequestFormMetadataFieldPlugins($container);
 
@@ -59,9 +62,9 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCompanyUserClient(Container $container): Container
     {
-        $container[static::CLIENT_COMPANY_USER] = function (Container $container) {
+        $container->set(static::CLIENT_COMPANY_USER, function (Container $container) {
             return new QuoteRequestPageToCompanyUserClientBridge($container->getLocator()->companyUser()->client());
-        };
+        });
 
         return $container;
     }
@@ -73,9 +76,9 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addQuoteRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_QUOTE_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE_REQUEST, function (Container $container) {
             return new QuoteRequestPageToQuoteRequestClientBridge($container->getLocator()->quoteRequest()->client());
-        };
+        });
 
         return $container;
     }
@@ -87,9 +90,9 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCartClient(Container $container): Container
     {
-        $container[static::CLIENT_CART] = function (Container $container) {
+        $container->set(static::CLIENT_CART, function (Container $container) {
             return new QuoteRequestPageToCartClientBridge($container->getLocator()->cart()->client());
-        };
+        });
 
         return $container;
     }
@@ -115,9 +118,9 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addPersistentCartClient(Container $container): Container
     {
-        $container[static::CLIENT_PERSISTENT_CART] = function (Container $container) {
+        $container->set(static::CLIENT_PERSISTENT_CART, function (Container $container) {
             return new QuoteRequestPageToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());
-        };
+        });
 
         return $container;
     }
@@ -129,9 +132,9 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new QuoteRequestPageToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -143,9 +146,23 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addUtilDateTimeService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_DATE_TIME] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
             return new QuoteRequestPageToUtilDateTimeServiceBridge($container->getLocator()->utilDateTime()->service());
-        };
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addShipmentService(Container $container): Container
+    {
+        $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
+            return new QuoteRequestPageToShipmentServiceBridge($container->getLocator()->shipment()->service());
+        });
 
         return $container;
     }
@@ -157,9 +174,9 @@ class QuoteRequestPageDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new QuoteRequestPageToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }

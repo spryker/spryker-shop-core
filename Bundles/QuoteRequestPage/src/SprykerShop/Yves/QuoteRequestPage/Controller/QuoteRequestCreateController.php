@@ -48,9 +48,7 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
             return $this->processQuoteRequestForm($quoteRequestForm);
         }
 
-        return [
-            'quoteRequestForm' => $quoteRequestForm->createView(),
-        ];
+        return $this->getViewParameters($quoteRequestForm);
     }
 
     /**
@@ -74,8 +72,24 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
+        return $this->getViewParameters($quoteRequestForm);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $quoteRequestForm
+     *
+     * @return array
+     */
+    protected function getViewParameters(FormInterface $quoteRequestForm): array
+    {
+        $shipmentGroupTransfers = $this->getFactory()
+            ->createShipmentGrouper()
+            ->groupItemsByShippingAddress($quoteRequestForm->getData());
+
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
+            'shipmentGroups' => $shipmentGroupTransfers,
+            'totalShippingCosts' => $this->getFactory()->createShipmentCostExtractor()->extractTotalShipmentCosts($shipmentGroupTransfers),
         ];
     }
 }

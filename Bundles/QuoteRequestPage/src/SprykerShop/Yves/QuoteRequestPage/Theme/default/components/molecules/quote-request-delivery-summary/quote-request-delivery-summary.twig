@@ -1,0 +1,83 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-request-delivery-summary',
+} %}
+
+{% define data = {
+    quote: required,
+    hasMultiShipments: false,
+    isEditable: false,
+} %}
+
+{% block body %}
+
+    <div class="box">
+        <h6>{{ 'checkout.step.summary.delivery_address' | trans }}</h6>
+        <hr>
+        {% if data.hasMultiShipments %}
+            {{ 'Multiple shipment methods.' | trans }}
+        {% elseif data.quote.shipment.shippingAddress %}
+            {% embed molecule('display-address') with {
+                data: {
+                    address: data.quote.shipment.shippingAddress,
+                },
+            } only %}
+                {% block addressBadgeLabel %}{% endblock %}
+            {% endembed %}
+        {% endif %}
+
+
+        {% if not data.hasMultiShipments and not data.quote.shipment.shippingAddress %}
+            {{ 'No address added.' | trans }}
+        {% endif %}
+
+        {% if data.isEditable %}
+            <a href="{{ url('checkout-address') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-address') }}>
+                {{ 'general.edit.button' | trans }}
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="box">
+        <h6>{{ 'checkout.step.summary.delivery_method' | trans }}</h6>
+        <hr>
+        {% if data.hasMultiShipments %}
+            {{ 'Multiple delivery addresses.' | trans }}
+        {% elseif data.quote.shipment.method %}
+            {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
+                data: {
+                    carrierName: data.quote.shipment.method.carrierName,
+                    methodName: data.quote.shipment.method.name,
+                    storeCurrencyPrice: data.quote.shipment.method.storeCurrencyPrice,
+                    currencyIsoCode: data.quote.shipment.method.currencyIsoCode,
+                },
+            } only %}
+        {% endif %}
+
+        {% if not data.hasMultiShipments and not data.quote.shipment.method %}
+            {{ 'No shipment method added.' | trans }}
+        {% endif %}
+
+        {% if data.isEditable %}
+            <a href="{{ url('checkout-shipment') }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
+                {{ 'general.edit.button' | trans }}
+            </a>
+        {% endif %}
+    </div>
+
+    {% if data.quote.billingAddress %}
+        <div class="box">
+            <h6>{{ 'checkout.step.summary.billing_address' | trans }}</h6>
+            <hr>
+            {% embed molecule('display-address') with {
+                data: {
+                    address: data.quote.billingAddress,
+                },
+            } only %}
+                {% block addressBadgeLabel %}{% endblock %}
+            {% endembed %}
+        </div>
+    {% endif %}
+
+{% endblock %}
