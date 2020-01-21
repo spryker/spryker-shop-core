@@ -10,16 +10,16 @@
     filterPath: null,
     viewMode: null,
     isEmptyCategoryFilterValueVisible: null,
-    sort: null,
+    sort: _view.sort,
     pagination: {
         currentPage: required,
         maxPage: required,
         parameters: app.request.query.all(),
         paginationPath: app.request.getPathInfo(),
         showAlwaysFirstAndLast: true,
-        numFound: null,
-        config: [],
-        currentItemsPerPage: [],
+        numFound: _view.pagination.numFound,
+        config: _view.pagination.config,
+        currentItemsPerPage: _view.pagination.currentItemsPerPage,
     },
 } %}
 

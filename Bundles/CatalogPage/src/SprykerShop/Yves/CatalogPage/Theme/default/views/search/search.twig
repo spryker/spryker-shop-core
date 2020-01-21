@@ -12,21 +12,19 @@
     isEmptyCategoryFilterValueVisible: _view.isEmptyCategoryFilterValueVisible | default,
     filterPath: _view.filterPath | default,
     viewMode: _view.viewMode | default,
-    sort: _view.sort,
+
     title: ('global.search.results' | trans) ~ ' ' ~ _view.searchString,
     metaTitle: _view.pageTitle | default(_view.category.name | default),
     metaDescription: _view.pageDescription | default,
     metaKeywords: _view.pageKeywords | default,
+
     pagination: {
         parameters: app.request.query.all(),
         currentPage: _view.pagination.currentPage,
         paginationPath: app.request.attributes.get('_route'),
         maxPage: _view.pagination.maxPage,
-        showAlwaysFirstAndLast: true,
-        numFound: _view.pagination.numFound,
-        config: _view.pagination.config,
-        currentItemsPerPage: _view.pagination.currentItemsPerPage,
-    },
+        showAlwaysFirstAndLast: true
+    }
 } %}
 
 {% block breadcrumbs %}

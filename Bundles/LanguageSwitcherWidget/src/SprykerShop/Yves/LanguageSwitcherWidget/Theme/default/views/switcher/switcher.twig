@@ -22,7 +22,7 @@
             } only %}
                 {% block options %}
                     {% for language, url in embed.languages %}
-                        {% set selectedOption = (language == embed.currentLanguage) ? 'selected' %}
+                        {% set selectedOption = language == embed.currentLanguage ? 'selected' %}
 
                         <option value="{{ embed.schemeAndHttpHost }}{{ url }}" {{ selectedOption }}>
                             {{ language }}

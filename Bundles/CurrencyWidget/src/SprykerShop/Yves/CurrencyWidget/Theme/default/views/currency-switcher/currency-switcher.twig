@@ -27,7 +27,7 @@
         } only %}
             {% block options %}
                 {% for currency in embed.currencies %}
-                    {% set selectedOption = (currency.code == embed.currentCurrency) ? 'selected' %}
+                    {% set selectedOption = currency.code == embed.currentCurrency ? 'selected' %}
 
                     <option value="{{ currency.code }}" {{ selectedOption }}>{{ currency.name | trans }}</option>
                 {% endfor %}

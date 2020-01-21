@@ -12,7 +12,7 @@
 {% block body %}
     <div class="grid grid--middle">
         <div class="{{ config.name }}__col col col--lg-3 is-hidden-sm-md">
-            <strong>{{ data.pagination.numFound }}</strong> {{ 'cms.page.itemsFound' | trans }}
+            <strong>{{ data.pagination.numFound | default }}</strong> {{ 'cms.page.itemsFound' | trans }}
         </div>
         <div class="{{ config.name }}__col col col--sm-3 col--md-2">
             {% embed atom('select') with {
@@ -25,8 +25,8 @@
                 },
             } only %}
                 {% block options %}
-                    {% for limit in embed.pagination.config.validItemsPerPageOptions %}
-                        {% set selectedOption = (limit == embed.pagination.currentItemsPerPage) ? 'selected' %}
+                    {% for limit in embed.pagination.config.validItemsPerPageOptions | default([]) %}
+                        {% set selectedOption = limit == embed.pagination.currentItemsPerPage | default ? 'selected' %}
 
                         <option value="{{ limit }}" {{ selectedOption }}>{{ limit }}</option>
                     {% endfor %}
@@ -46,8 +46,8 @@
                 {% block options %}
                     <option value="">{{ 'cms.page.sort.relevance' | trans }}</option>
 
-                    {% for sortParamName in embed.sort.sortParamNames %}
-                        {% set selectedOption = (sortParamName == embed.sort.currentSortParam) ? 'selected' %}
+                    {% for sortParamName in embed.sort.sortParamNames | default([]) %}
+                        {% set selectedOption = sortParamName == embed.sort.currentSortParam | default ? 'selected' %}
 
                         <option value="{{ sortParamName }}" {{ selectedOption }}>
                             {{ ('cms.page.sort.' ~ sortParamName) | trans }}

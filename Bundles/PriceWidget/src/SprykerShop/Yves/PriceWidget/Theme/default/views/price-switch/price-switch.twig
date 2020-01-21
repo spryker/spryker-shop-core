@@ -27,7 +27,7 @@
         } only %}
             {% block options %}
                 {% for priceMode in embed.priceModes %}
-                    {% set selectedOption = (priceMode == embed.currentPriceMode) ? 'selected' %}
+                    {% set selectedOption = priceMode == embed.currentPriceMode ? 'selected' %}
 
                     <option value="{{ priceMode }}" {{ selectedOption }}>{{ ('price.mode.' ~ priceMode | lower) | trans }}</option>
                 {% endfor %}
