@@ -1,0 +1,1 @@
+Displays configurable bundle templates list. The list item contains a template image if the image is defined or a name if the image is not defined, and a "Select" button, which redirects to the configurator page.

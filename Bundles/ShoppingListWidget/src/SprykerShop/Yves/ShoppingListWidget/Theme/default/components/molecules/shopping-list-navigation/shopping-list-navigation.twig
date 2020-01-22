@@ -1,0 +1,41 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'shopping-list-navigation',
+    tag: 'nav',
+} %}
+
+{% define data = {
+    activeShoppingListId: 0,
+    shoppingListCollection: required,
+} %}
+
+{% block component %}
+    {% if data.shoppingListCollection | length %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% block list %}
+        <ul class="menu">
+            {% block listInner %}
+                {% for shoppingList in data.shoppingListCollection %}
+                    {% set activeClass = shoppingList.idShoppingList == data.activeShoppingListId ? 'menu__item--active' %}
+
+                    {% block item %}
+                        <li class="menu__item {{ config.name }}__item {{ activeClass }}">
+                            {% block itemInner %}
+                                <a href="{{ path('shopping-list/details', { idShoppingList: (shoppingList.idShoppingList) }) }}">
+                                    {%- block linkInner -%}
+                                        {{ shoppingList.name }}
+                                    {%- endblock -%}
+                                </a>
+                            {% endblock %}
+                        </li>
+                    {% endblock %}
+                {% endfor %}
+            {% endblock %}
+        </ul>
+    {% endblock %}
+{% endblock %}

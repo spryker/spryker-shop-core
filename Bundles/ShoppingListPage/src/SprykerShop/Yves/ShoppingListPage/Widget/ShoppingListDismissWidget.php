@@ -15,6 +15,9 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ShoppingListDismissWidget extends AbstractWidget
 {
+    protected const PARAMETER_SHOPPING_LIST = 'shoppingList';
+    protected const PARAMETER_IS_OWNER = 'isOwner';
+
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      */
@@ -47,7 +50,7 @@ class ShoppingListDismissWidget extends AbstractWidget
      */
     protected function addShoppingListParam(ShoppingListTransfer $shoppingListTransfer): void
     {
-        $this->addParameter('shoppingList', $shoppingListTransfer);
+        $this->addParameter(static::PARAMETER_SHOPPING_LIST, $shoppingListTransfer);
     }
 
     /**
@@ -59,6 +62,6 @@ class ShoppingListDismissWidget extends AbstractWidget
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
 
-        $this->addParameter('isOwner', $shoppingListTransfer->getCustomerReference() === $customerTransfer->getCustomerReference());
+        $this->addParameter(static::PARAMETER_IS_OWNER, $shoppingListTransfer->getCustomerReference() === $customerTransfer->getCustomerReference());
     }
 }

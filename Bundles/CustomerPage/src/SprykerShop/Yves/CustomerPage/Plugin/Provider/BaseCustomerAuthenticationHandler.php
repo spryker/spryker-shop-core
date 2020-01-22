@@ -20,38 +20,41 @@ class BaseCustomerAuthenticationHandler extends AbstractPlugin
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string|null $defaultRedirectUrl
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function createRefererRedirectResponse(Request $request)
+    protected function createRefererRedirectResponse(Request $request, ?string $defaultRedirectUrl = null)
     {
         $targetUrl = $this->filterUrl(
-            $request->headers->get('Referer'),
+            $this->getConfig()->loginFailureRedirectUrl() ?? $request->headers->get('Referer'),
             $this->getConfig()->getYvesHost(),
-            $this->getHomeUrl()
+            $defaultRedirectUrl ?? $this->getHomeUrl()
         );
 
-        $response = $this->getFactory()->createRedirectResponse($targetUrl);
-
-        return $response;
+        return $this->getFactory()->createRedirectResponse($targetUrl);
     }
 
     /**
-     * @param string|null $refererUrl
+     * @param string|null $redirectUrl
      * @param string $allowedHost
      * @param string $fallbackUrl
      *
      * @return string|null
      */
-    protected function filterUrl($refererUrl, $allowedHost, $fallbackUrl)
+    protected function filterUrl($redirectUrl, $allowedHost, $fallbackUrl)
     {
-        if ($refererUrl === null) {
+        if ($redirectUrl === null) {
             return $fallbackUrl;
         }
 
+        if (strpos($redirectUrl, '/') === 0) {
+            return $redirectUrl;
+        }
+
         $allowedUrl = sprintf('#^(?P<scheme>http|https)://%s/(?P<uri>.*)$#', $allowedHost);
-        $isRefererUrlAllowed = (bool)preg_match($allowedUrl, $refererUrl, $matches);
-        if ($isRefererUrlAllowed) {
+        $isRedirectUrlAllowed = (bool)preg_match($allowedUrl, $redirectUrl, $matches);
+        if ($isRedirectUrlAllowed) {
             return sprintf('%s://%s/%s', $matches['scheme'], $allowedHost, $matches['uri']);
         }
 
@@ -59,6 +62,8 @@ class BaseCustomerAuthenticationHandler extends AbstractPlugin
     }
 
     /**
+     * @deprecated The `application` is deprecated and should not be accessed.
+     *
      * @return string
      */
     protected function getHomeUrl()

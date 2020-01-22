@@ -14,7 +14,7 @@
 
 {% define config = {
     name: 'pagination',
-    tag: 'nav'
+    tag: 'nav',
 } %}
 
 {% define data = {
@@ -25,11 +25,14 @@
     maxPage: 10,
     extremePagesLimit: 1,
     nearbyPagesLimit: 2,
-    anchor: '#'
+    anchor: '#',
 } %}
 
+{% block component %}
+    {% if data.maxPage > 1 %}{{ parent() }}{% endif %}
+{% endblock %}
+
 {% block body %}
-    {% if data.maxPage > 1 %}
     <ul>
         {% if data.currentPage > 1 %}
             <li class="{{config.name}}__item">
@@ -91,5 +94,4 @@
             </li>
         {% endif %}
     </ul>
-    {% endif %}
 {% endblock %}

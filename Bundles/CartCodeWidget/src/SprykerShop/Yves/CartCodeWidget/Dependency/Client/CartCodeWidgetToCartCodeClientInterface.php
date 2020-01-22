@@ -7,31 +7,29 @@
 
 namespace SprykerShop\Yves\CartCodeWidget\Dependency\Client;
 
-use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 
 interface CartCodeWidgetToCartCodeClientInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function addCandidate(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer;
+    public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer;
+    public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function clearCodes(QuoteTransfer $quoteTransfer): CartCodeOperationResultTransfer;
+    public function clearCartCodes(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
 }

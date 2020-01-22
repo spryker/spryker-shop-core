@@ -1,0 +1,100 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    title: _view.configurableBundleTemplateStorage.name | trans,
+    form: _view.form,
+    configurableBundleTemplateStorage: _view.configurableBundleTemplateStorage,
+    selectedSlotId: _view.selectedSlotId | default(null),
+    productConcreteCriteriaFilter: _view.productConcreteCriteriaFilter | default(null),
+    selectedProduct: _view.selectedProduct | default(null),
+    isSummaryPageUnlocked: _view.isSummaryPageUnlocked | default(false),
+} %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'configurable_bundle_page.configurable_bundle_list' | trans,
+                    url: path('configurable-bundle/configurator/template-selection'),
+                },
+                {
+                    label: data.configurableBundleTemplateStorage.name | trans,
+                    withChevron: false,
+                },
+            ],
+        },
+    } only %}
+{% endblock %}
+
+{% block content %}
+    <div class="grid grid--stretch">
+        {% block configuratorContent %}
+            {% block configuratorSidebar %}
+                <div class="col col--sm-12 col--md-3">
+                    {% block configuratorSidebarInner %}
+                        {% include molecule('configurator-sidebar', 'ConfigurableBundlePage') with {
+                            data: {
+                                form: data.form,
+                                configurableBundleTemplateStorage: data.configurableBundleTemplateStorage,
+                                isSeparateItemUnlocked: data.isSummaryPageUnlocked,
+                                selectedSlotId: data.selectedSlotId,
+                            },
+                        } only %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+            {% block configuratorProducts %}
+                {% set wrapperClasses = data.selectedSlotId ? 'col col--sm-12 col--md-9' : 'grid grid--stretch col col--expand' %}
+
+                {% block configuratorProductsInner %}
+                    <div class="{{ wrapperClasses }}">
+                        {% block slotProducts %}
+                            {% if data.selectedSlotId and data.selectedProduct %}
+                                {% block configuratorSelectedItem %}
+                                    {% include molecule('configurator-product', 'ConfigurableBundlePage') with {
+                                        data: {
+                                            product: data.selectedProduct,
+                                            form: data.form.createView,
+                                            selectedSlotId: data.selectedSlotId,
+                                            isSelected: true,
+                                        },
+                                    } only %}
+                                {% endblock %}
+                            {% endif %}
+
+                            {% if data.selectedSlotId %}
+                                {% block configuratorUnselectedProducts %}
+                                    {% widget 'ProductConcreteSearchGridWidget' args [data.productConcreteCriteriaFilter] %}
+                                        {% block body %}
+                                            {% for product in data.products %}
+                                                {% include molecule('configurator-product', 'ConfigurableBundlePage') with {
+                                                    data: {
+                                                        product: product,
+                                                        form: data.form.createView,
+                                                        selectedSlotId: data.selectedSlotId,
+                                                    },
+                                                } only %}
+                                            {% endfor %}
+
+                                            {% if data.products is empty %}
+                                                <p class="spacing-x">{{ 'product_search_widget.search.no_results' | trans }}</p>
+                                            {% endif %}
+                                        {% endblock %}
+                                    {% endwidget %}
+                                {% endblock %}
+                            {% endif %}
+
+                            {% if not data.selectedSlotId %}
+                                {% block chooseSlotMessage %}
+                                    {% include molecule('configurator-message', 'ConfigurableBundlePage') only %}
+                                {% endblock %}
+                            {% endif %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            {% endblock %}
+        {% endblock %}
+    </div>
+{% endblock %}

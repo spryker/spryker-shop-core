@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 
 class MerchantProductOfferWidgetToMerchantProductOfferStorageClientBridge implements MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface
 {
@@ -22,6 +23,16 @@ class MerchantProductOfferWidgetToMerchantProductOfferStorageClientBridge implem
     public function __construct($merchantProductOfferStorageClient)
     {
         $this->merchantProductOfferStorageClient = $merchantProductOfferStorageClient;
+    }
+
+    /**
+     * @param string $productOfferReference
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer|null
+     */
+    public function findProductOfferStorageByReference(string $productOfferReference): ?ProductOfferStorageTransfer
+    {
+        return $this->merchantProductOfferStorageClient->findProductOfferStorageByReference($productOfferReference);
     }
 
     /**

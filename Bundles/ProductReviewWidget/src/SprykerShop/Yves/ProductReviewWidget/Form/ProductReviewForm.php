@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 
 /**
  * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetConfig getConfig()
  */
 class ProductReviewForm extends AbstractType
 {
@@ -32,6 +33,9 @@ class ProductReviewForm extends AbstractType
     public const UNSELECTED_RATING = -1;
     public const MINIMUM_RATING = 1;
 
+    /**
+     * @deprecated Use `ProductReviewWidgetConfig::GLOSSARY_KEY_INVALID_RATING_VALIDATION_MESSAGE` instead.
+     */
     protected const VALIDATION_RATING_MESSAGE = 'validation.choice';
 
     /**
@@ -80,7 +84,7 @@ class ProductReviewForm extends AbstractType
                     new GreaterThanOrEqual(['value' => static::MINIMUM_RATING]),
                     new LessThanOrEqual(['value' => $this->getFactory()->getProductReviewClient()->getMaximumRating()]),
                 ],
-                'invalid_message' => static::VALIDATION_RATING_MESSAGE,
+                'invalid_message' => $this->getConfig()->getInvalidRatingValidationMessageGlossaryKey(),
             ]
         );
 

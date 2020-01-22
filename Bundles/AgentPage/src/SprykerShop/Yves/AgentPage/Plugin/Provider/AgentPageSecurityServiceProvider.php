@@ -17,6 +17,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener;
 
 /**
+ * @deprecated Will be removed with the next major release.
+ * @see \SprykerShop\Yves\AgentPage\Plugin\Security\AgentPageSecurityPlugin
+ *
  * @method \SprykerShop\Yves\AgentPage\AgentPageFactory getFactory()
  * @method \SprykerShop\Yves\AgentPage\AgentPageConfig getConfig()
  */

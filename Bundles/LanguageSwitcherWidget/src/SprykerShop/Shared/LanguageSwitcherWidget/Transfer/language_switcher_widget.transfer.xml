@@ -5,6 +5,8 @@
 
     <transfer name="UrlStorage">
         <property name="localeUrls" type="UrlStorage[]" singular="urlStorage"/>
+        <property name="localeName" type="string"/>
+        <property name="url" type="string"/>
     </transfer>
 
 </transfers>

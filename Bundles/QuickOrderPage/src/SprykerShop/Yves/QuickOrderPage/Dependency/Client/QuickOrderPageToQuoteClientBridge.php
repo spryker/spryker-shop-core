@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\QuickOrderPage\Dependency\Client;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+
 class QuickOrderPageToQuoteClientBridge implements QuickOrderPageToQuoteClientInterface
 {
     /**
@@ -23,10 +25,12 @@ class QuickOrderPageToQuoteClientBridge implements QuickOrderPageToQuoteClientIn
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return void
      */
-    public function clearQuote()
+    public function setQuote(QuoteTransfer $quoteTransfer)
     {
-        $this->quoteClient->clearQuote();
+        $this->quoteClient->setQuote($quoteTransfer);
     }
 }
