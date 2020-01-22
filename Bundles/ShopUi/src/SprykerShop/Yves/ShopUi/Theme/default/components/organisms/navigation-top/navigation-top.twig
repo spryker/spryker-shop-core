@@ -18,6 +18,10 @@
 {% block body %}
     <ul class="menu {{menuClass}}">
         <li class="menu__item">
+            {% widget 'MerchantSwitcherSelectorFormWidget' %}
+            {% endwidget %}
+        </li>
+        <li class="menu__item">
             {% widget 'PriceModeSwitcherWidget' only %}
             {% elsewidget 'PriceModeSwitcherWidgetPlugin' only %} {# @deprecated Use PriceModeSwitcherWidget instead. #}
             {% endwidget %}

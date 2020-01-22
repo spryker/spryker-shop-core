@@ -1,0 +1,30 @@
+{% extends template('widget') %}
+
+{% define data = {
+    activeMerchantTransfers: _widget.activeMerchantTransfers,
+    selectedMerchantReference: _widget.selectedMerchantReference
+} %}
+
+{% block body %}
+    {#    <form method="GET" action="{{ path('price-mode-switch') }}">#}
+    <form method="GET">
+        {% embed atom('select') with {
+            modifiers: ['naked'],
+            attributes: {
+                'onchange': 'this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);',
+                name: 'merchant-switcher-selector',
+                'data-form-submitter': true,
+            },
+            embed: {
+                activeMerchantTransfers: data.activeMerchantTransfers,
+                selectedMerchantReference: data.selectedMerchantReference,
+            },
+        } only %}
+            {% block options %}
+                {% for activeMerchant in embed.activeMerchantTransfers %}
+                    <option value="{{ activeMerchant.merchantKey }}" {{ (activeMerchant.merchantKey == embed.selectedMerchantReference) ? 'selected' : ''}}>{{ activeMerchant.name }}</option>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+    </form>
+{% endblock %}
