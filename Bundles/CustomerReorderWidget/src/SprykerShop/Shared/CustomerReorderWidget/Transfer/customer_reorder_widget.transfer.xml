@@ -60,7 +60,6 @@
     </transfer>
 
     <transfer name="SalesOrderConfiguredBundleItem">
-        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
 </transfers>
