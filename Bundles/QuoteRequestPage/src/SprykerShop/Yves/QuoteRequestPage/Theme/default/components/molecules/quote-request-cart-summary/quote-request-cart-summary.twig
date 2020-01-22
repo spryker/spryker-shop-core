@@ -7,7 +7,7 @@
 {% define data = {
     cart: required,
     shipmentGroups: [],
-    totalShippingCosts: null,
+    totalShipmentCosts: null,
 } %}
 
 {% block body %}
@@ -41,10 +41,10 @@
         } only %}
 
         {% block cartShipment %}
-            {% if data.totalShippingCosts %}
+            {% if data.totalShipmentCosts %}
                 <ul class="list spacing-y">
                     <li>
-                        <strong class="float-right">{{ data.totalShippingCosts | money(true, data.cart.currency.code) }}</strong>
+                        <strong class="float-right">{{ data.totalShipmentCosts | money(true, data.cart.currency.code) }}</strong>
                         <strong>{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
                         {% for shipmentGroup in data.shipmentGroups %}
                             <div class="grid grid--justify">

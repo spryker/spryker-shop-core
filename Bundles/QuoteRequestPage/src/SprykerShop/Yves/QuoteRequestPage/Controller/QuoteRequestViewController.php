@@ -107,7 +107,7 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
             'isQuoteRequestReady' => $quoteRequestClient->isQuoteRequestReady($quoteRequestTransfer),
             'isQuoteRequestEditable' => $quoteRequestClient->isQuoteRequestEditable($quoteRequestTransfer),
             'shipmentGroups' => $shipmentGroupTransfers,
-            'totalShippingCosts' => $this->getFactory()->createShipmentCostExtractor()->extractTotalShipmentCosts($shipmentGroupTransfers),
+            'totalShipmentCosts' => $this->getFactory()->createShipmentCostExtractor()->extractTotalShipmentCosts($shipmentGroupTransfers),
         ];
     }
 

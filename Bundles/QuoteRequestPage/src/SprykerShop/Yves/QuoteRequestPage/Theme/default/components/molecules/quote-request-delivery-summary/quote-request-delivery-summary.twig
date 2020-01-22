@@ -17,7 +17,7 @@
         <hr>
         {% if data.hasMultiShipments %}
             {{ 'Multiple shipment methods.' | trans }}
-        {% elseif data.quote.shipment.shippingAddress %}
+        {% elseif data.quote.shipment and  data.quote.shipment.shippingAddress %}
             {% embed molecule('display-address') with {
                 data: {
                     address: data.quote.shipment.shippingAddress,
@@ -27,8 +27,7 @@
             {% endembed %}
         {% endif %}
 
-
-        {% if not data.hasMultiShipments and not data.quote.shipment.shippingAddress %}
+        {% if not data.hasMultiShipments and (not data.quote.shipment or not data.quote.shipment.shippingAddress) %}
             {{ 'No address added.' | trans }}
         {% endif %}
 
@@ -44,7 +43,7 @@
         <hr>
         {% if data.hasMultiShipments %}
             {{ 'Multiple delivery addresses.' | trans }}
-        {% elseif data.quote.shipment.method %}
+        {% elseif data.quote.shipment and data.quote.shipment.method %}
             {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
                 data: {
                     carrierName: data.quote.shipment.method.carrierName,
@@ -55,7 +54,7 @@
             } only %}
         {% endif %}
 
-        {% if not data.hasMultiShipments and not data.quote.shipment.method %}
+        {% if not data.hasMultiShipments and (not data.quote.shipment or not data.quote.shipment.shippingAddress) %}
             {{ 'No shipment method added.' | trans }}
         {% endif %}
 

@@ -26,7 +26,7 @@
     quoteRequest: _view.quoteRequestForm.vars.value,
     latestVersion: _view.quoteRequestForm.vars.value.latestVersion,
     shipmentGroups: _view.shipmentGroups | default([]),
-    totalShippingCosts: _view.totalShippingCosts,
+    totalShipmentCosts: _view.totalShipmentCosts,
 } %}
 
 {% set quote = data.latestVersion ? data.latestVersion.quote : null %}
@@ -209,7 +209,7 @@
                         data: {
                             cart: quote,
                             shipmentGroups: data.shipmentGroups,
-                            totalShippingCosts: data.totalShippingCosts,
+                            totalShipmentCosts: data.totalShipmentCosts,
                         },
                     } only %}
                 </div>

@@ -16,12 +16,12 @@ class ShipmentCostExtractor implements ShipmentCostExtractorInterface
      */
     public function extractTotalShipmentCosts(array $shipmentGroupTransfers): int
     {
-        $totalShippingCosts = 0;
+        $totalShipmentCosts = 0;
 
         foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
-            $totalShippingCosts += $shipmentGroupTransfer->getShipment()->getMethod()->getStoreCurrencyPrice();
+            $totalShipmentCosts += $shipmentGroupTransfer->getShipment()->getMethod()->getStoreCurrencyPrice();
         }
 
-        return $totalShippingCosts;
+        return $totalShipmentCosts;
     }
 }

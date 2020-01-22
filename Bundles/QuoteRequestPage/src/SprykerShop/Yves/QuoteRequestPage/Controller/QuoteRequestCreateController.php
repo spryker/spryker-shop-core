@@ -89,7 +89,7 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
             'shipmentGroups' => $shipmentGroupTransfers,
-            'totalShippingCosts' => $this->getFactory()->createShipmentCostExtractor()->extractTotalShipmentCosts($shipmentGroupTransfers),
+            'totalShipmentCosts' => $this->getFactory()->createShipmentCostExtractor()->extractTotalShipmentCosts($shipmentGroupTransfers),
         ];
     }
 }
