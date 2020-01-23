@@ -25,12 +25,13 @@ class ProductLabelWidgetToProductLabelStorageClientBridge implements ProductLabe
     /**
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName)
+    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, ?string $storeName = null)
     {
-        return $this->productLabelStorageClient->findLabelsByIdProductAbstract($idProductAbstract, $localeName);
+        return $this->productLabelStorageClient->findLabelsByIdProductAbstract($idProductAbstract, $localeName, $storeName);
     }
 
     /**
