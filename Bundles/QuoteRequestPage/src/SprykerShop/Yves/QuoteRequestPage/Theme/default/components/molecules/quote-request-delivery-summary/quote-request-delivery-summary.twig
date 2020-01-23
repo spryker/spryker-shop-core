@@ -17,7 +17,7 @@
         <hr>
         {% if data.hasMultiShipments %}
             {{ 'Multiple shipment methods.' | trans }}
-        {% elseif data.quote.shipment and  data.quote.shipment.shippingAddress %}
+        {% elseif data.quote.shipment and data.quote.shipment.shippingAddress %}
             {% embed molecule('display-address') with {
                 data: {
                     address: data.quote.shipment.shippingAddress,

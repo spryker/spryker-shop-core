@@ -122,34 +122,48 @@
                                 } only %}
                                 {% endwidget %}
 
-                                {% for item in shipmentGroup.items %}
-                                    {% set cartItem = item.bundleProduct ?? item %}
-                                    {% set isConfiguredBundle = cartItem.configuredBundleItem is defined and cartItem.configuredBundleItem is not empty %}
-                                    {% set isGiftCardExists = cartItem.giftCardMetadata is not null and cartItem.giftCardMetadata.isGiftCard %}
+                                {% set cartItems = shipmentGroup.items | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}
+                                {% for cartItem in cartItems %}
+                                    {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
+                                        data: {
+                                            product: cartItem,
+                                        },
+                                        embed: {
+                                            priceMode: quote.priceMode,
+                                            currency: quote.currency,
+                                        },
+                                    } only %}
+                                        {% block additionalInformation %}
+                                            {% include molecule('quote-request-item-summary', 'QuoteRequestPage') with {
+                                                data: {
+                                                    priceMode: embed.priceMode,
+                                                    unitPrice: data.product.unitPrice | money(true, embed.currency.code),
+                                                    subtotalPrice: data.product.sumSubtotalAggregation | money(true, embed.currency.code),
+                                                    cartItem: data.product,
+                                                    currency: embed.currency,
+                                                },
+                                            } only %}
+                                        {% endblock %}
 
-                                    {% if not isConfiguredBundle %}
-                                        {% embed molecule('summary-node', 'CheckoutPage') with {
-                                            data: {
-                                                node: cartItem,
-                                                bundleItems: item.bundleItems | default([]),
-                                            },
-                                        } only %}
-                                            {% block body %}
-                                                {{ parent() }}
+                                        {% block actions %}
+                                            {% if data.product.amountSalesUnit is empty %}
+                                                {{ 'cart.item_quantity' | trans }}:
+                                                <strong>{{ data.product.quantity }}</strong>
 
-                                                {% if data.node.cartNote %}
-                                                    {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
-                                                        data: {
-                                                            label: 'cart_note.checkout_page.item_note',
-                                                            note: data.node.cartNote,
-                                                        },
-                                                    } only %}
+                                                {% if data.product.quantitySalesUnit %}
+                                                    {% set value = data.product.quantitySalesUnit.value %}
+                                                    {% set precision = data.product.quantitySalesUnit.precision %}
+                                                    {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+
+                                                    <p>
+                                                        <small class="text-secondary">
+                                                            [= {{ value / precision }} {{ salesUnitName | trans }}]
+                                                        </small>
+                                                    </p>
                                                 {% endif %}
-                                            {% endblock %}
-                                        {% endembed %}
-
-                                        {% if not loop.last %}<hr>{% endif %}
-                                    {% endif %}
+                                            {% endif %}
+                                        {% endblock %}
+                                    {% endembed %}
                                 {% endfor %}
                             </div>
                         </div>
