@@ -8,14 +8,13 @@
 namespace SprykerShop\Yves\MerchantSwitcherWidget\Widget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
+use SprykerShop\Shared\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig;
 
 /**
  * @method \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetFactory getFactory()
  */
 class MerchantSwitcherSelectorFormWidget extends AbstractWidget
 {
-    protected const COOKIE_MERCHANT_REFERENCE = 'merchant_switcher_selector.merchant_reference';
-
     public function __construct()
     {
         $this->addParameters();
@@ -46,7 +45,7 @@ class MerchantSwitcherSelectorFormWidget extends AbstractWidget
         $request = $this->getApplication()['request'];
 
         $activeMerchantTransfers = $this->getFactory()->createActiveMerchantReader()->getActiveMerchants()->getMerchants();
-        $selectedMerchantReference = $request->cookies->get(static::COOKIE_MERCHANT_REFERENCE);
+        $selectedMerchantReference = $request->cookies->get(MerchantSwitcherWidgetConfig::MERCHANT_SELECTOR_COOKIE_IDENTIFIER);
 
         if (!$selectedMerchantReference) {
             /** @var \Generated\Shared\Transfer\MerchantTransfer $selectedMerchant */

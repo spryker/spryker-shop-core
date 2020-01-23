@@ -6,13 +6,12 @@
 } %}
 
 {% block body %}
-    {#    <form method="GET" action="{{ path('price-mode-switch') }}">#}
-    <form method="GET">
+        <form method="GET" action="{{ path('switch-merchant') }}">
         {% embed atom('select') with {
             modifiers: ['naked'],
             attributes: {
                 'onchange': 'this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);',
-                name: 'merchant-switcher-selector',
+                name: 'merchant-reference',
                 'data-form-submitter': true,
             },
             embed: {
@@ -26,5 +25,7 @@
                 {% endfor %}
             {% endblock %}
         {% endembed %}
+
+        <input type="hidden" name="referrer-url" value="{{ app.request.requestUri }}">
     </form>
 {% endblock %}
