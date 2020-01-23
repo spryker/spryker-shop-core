@@ -21,7 +21,9 @@ class ProductGroupColorWidget extends AbstractWidget
     {
         $this->addParameter(
             'productGroupItems',
-            $this->getFactory()->getProductGroupReader()->getProductGroups($idProductAbstract)
+            $this->getFactory()
+                ->getProductGroupReader()
+                ->getProductGroups($idProductAbstract, $this->getLocale())
         )
             ->addParameter('idProductAbstract', $idProductAbstract);
     }

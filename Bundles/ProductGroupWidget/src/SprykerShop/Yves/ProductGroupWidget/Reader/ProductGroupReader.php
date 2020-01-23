@@ -57,10 +57,11 @@ class ProductGroupReader implements ProductGroupReaderInterface
 
     /**
      * @param int $idProductAbstract
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    protected function getProductGroupTransfers(int $idProductAbstract): array
+    protected function getProductGroupTransfers(int $idProductAbstract, string $localeName): array
     {
         $productAbstractGroupStorageTransfer = $this->productGroupStorageClient
             ->findProductGroupItemsByIdProductAbstract($idProductAbstract);
@@ -68,7 +69,7 @@ class ProductGroupReader implements ProductGroupReaderInterface
         return $this->productStorageClient
             ->getProductAbstractViewTransfers(
                 $productAbstractGroupStorageTransfer->getGroupProductAbstractIds(),
-                $this->getLocale()
+                $localeName
             );
     }
 

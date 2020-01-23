@@ -11,8 +11,9 @@ interface ProductGroupReaderInterface
 {
     /**
      * @param int $idProductAbstract
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function getProductGroups(int $idProductAbstract): array;
+    public function getProductGroups(int $idProductAbstract, string $localeName): array;
 }
