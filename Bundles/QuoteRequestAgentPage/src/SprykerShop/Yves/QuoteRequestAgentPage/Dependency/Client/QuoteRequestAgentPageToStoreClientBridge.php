@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class QuoteRequestAgentPageToStoreClientBridge implements QuoteRequestAgentPageToStoreClientInterface
 {
     /**
@@ -25,7 +27,7 @@ class QuoteRequestAgentPageToStoreClientBridge implements QuoteRequestAgentPageT
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore()
+    public function getCurrentStore(): StoreTransfer
     {
         return $this->storeClient->getCurrentStore();
     }

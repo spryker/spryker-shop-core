@@ -14,5 +14,5 @@ interface QuoteRequestAgentPageToUtilDateTimeServiceInterface
      *
      * @return string
      */
-    public function formatDate($date);
+    public function formatDate($date): string;
 }

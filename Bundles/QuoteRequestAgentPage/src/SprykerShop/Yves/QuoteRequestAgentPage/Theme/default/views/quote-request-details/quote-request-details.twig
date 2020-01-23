@@ -8,10 +8,13 @@
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
     isQuoteRequestRevisable: _view.isQuoteRequestRevisable,
     isQuoteRequestEditable: _view.isQuoteRequestEditable,
+    shipmentGroups: _view.shipmentGroups | default([]),
+    totalShipmentCosts: _view.totalShipmentCosts,
 } %}
 
 {% set isLatestVersion = (data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion) ? true : false %}
 {% set quote = (data.isQuoteRequestEditable and isLatestVersion) ? data.quoteRequest.latestVersion.quote : data.version.quote %}
+{% set hasMultiShipments = data.shipmentGroups | length > 1 %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {
@@ -115,7 +118,66 @@
                     } only %}
                 </div>
             {% endif %}
-            {% if quote is not empty %}
+
+            {% if hasMultiShipments %}
+                {% for shipmentGroup in data.shipmentGroups %}
+                    <div class="grid grid--stretch grid--justify">
+                        <div class="col col--sm-12 col--lg-12">
+                            <div class="box">
+                                <h4>{{ 'checkout.step.shipment.title' | trans }} n&#176;{{ loop.index }}</h4>
+                                <hr>
+                                <h6><strong>{{ 'checkout.step.summary.products' | trans }}</strong></h6>
+
+                                {% widget 'QuoteConfiguredBundleWidget' args [quote, shipmentGroup.items] with {
+                                    data: {
+                                        isEditable: false,
+                                        isQuantitySummaryVisible: true,
+                                    },
+                                } only %}
+                                {% endwidget %}
+
+                                {% for item in shipmentGroup.items %}
+                                    {% set cartItem = item.bundleProduct ?? item %}
+                                    {% set isConfiguredBundle = cartItem.configuredBundleItem is defined and cartItem.configuredBundleItem is not empty %}
+                                    {% set isGiftCardExists = cartItem.giftCardMetadata is not null and cartItem.giftCardMetadata.isGiftCard %}
+
+                                    {% if not isConfiguredBundle %}
+                                        {% embed molecule('summary-node', 'CheckoutPage') with {
+                                            data: {
+                                                node: cartItem,
+                                                bundleItems: item.bundleItems | default([]),
+                                            },
+                                        } only %}
+                                            {% block body %}
+                                                {{ parent() }}
+
+                                                {% if data.node.cartNote %}
+                                                    {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
+                                                        data: {
+                                                            label: 'cart_note.checkout_page.item_note',
+                                                            note: data.node.cartNote,
+                                                        },
+                                                    } only %}
+                                                {% endif %}
+                                            {% endblock %}
+                                        {% endembed %}
+
+                                        {% if not loop.last %}<hr>{% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        {% include molecule('quote-request-shipment-group', 'QuoteRequestPage') ignore missing with {
+                            class: 'list spacing-y',
+                            data: {
+                                shipmentGroup: shipmentGroup,
+                            }
+                        } only %}
+                    </div>
+                {% endfor %}
+            {% else %}
+
                 {% widget 'QuoteConfiguredBundleWidget' args [quote] with {
                     data: {
                         isEditable: false,
@@ -171,10 +233,21 @@
 
         <div class="col col--sm-12 col--xl-4">
             {% if quote and quote.items | length %}
+
+                {% include molecule('quote-request-delivery-summary', 'QuoteRequestPage') ignore missing with {
+                    class: 'list spacing-y',
+                    data: {
+                        quote: quote,
+                        hasMultiShipments: hasMultiShipments,
+                    }
+                } only %}
+
                 <div class="box">
                     {% include molecule('quote-request-cart-summary', 'QuoteRequestPage') ignore missing with {
                         data: {
                             cart: quote,
+                            shipmentGroups: data.shipmentGroups,
+                            totalShipmentCosts: data.totalShipmentCosts,
                         },
                     } only %}
                 </div>

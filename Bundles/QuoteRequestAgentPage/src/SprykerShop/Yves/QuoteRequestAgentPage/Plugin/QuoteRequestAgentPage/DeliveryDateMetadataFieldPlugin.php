@@ -63,7 +63,7 @@ class DeliveryDateMetadataFieldPlugin extends AbstractPlugin implements QuoteReq
     protected function createDeliveryDateConstraint(): Constraint
     {
         return new Callback([
-            'callback' => function ($deliveryDate, ExecutionContextInterface $context) {
+            'callback' => function ($deliveryDate, ExecutionContextInterface $context): void {
                 if (!$deliveryDate) {
                     return;
                 }

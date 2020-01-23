@@ -18,13 +18,18 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPa
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestAgentClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToStoreClientInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToShipmentServiceInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToUtilDateTimeServiceInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ShipmentCostExtractor;
+use SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ShipmentCostExtractorInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider\QuoteRequestAgentFormDataProvider;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandler;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandlerInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentCreateForm;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentEditItemsConfirmForm;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentForm;
+use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouper;
+use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -92,6 +97,24 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface
+     */
+    public function createShipmentGrouper(): ShipmentGrouperInterface
+    {
+        return new ShipmentGrouper(
+            $this->getShipmentService()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ShipmentCostExtractorInterface
+     */
+    public function createShipmentCostExtractor(): ShipmentCostExtractorInterface
+    {
+        return new ShipmentCostExtractor();
+    }
+
+    /**
      * @return \Symfony\Component\Form\FormFactory
      */
     public function getFormFactory(): FormFactory
@@ -113,6 +136,14 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     public function getQuoteRequestClient(): QuoteRequestAgentPageToQuoteRequestClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::CLIENT_QUOTE_REQUEST);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToShipmentServiceInterface
+     */
+    public function getShipmentService(): QuoteRequestAgentPageToShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::SERVICE_SHIPMENT);
     }
 
     /**
