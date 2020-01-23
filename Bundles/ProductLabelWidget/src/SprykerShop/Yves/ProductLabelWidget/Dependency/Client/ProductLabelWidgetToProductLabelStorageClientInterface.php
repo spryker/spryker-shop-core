@@ -20,10 +20,11 @@ interface ProductLabelWidgetToProductLabelStorageClientInterface
     /**
      * @param array $idProductLabels
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabels(array $idProductLabels, $localeName);
+    public function findLabels(array $idProductLabels, string $localeName, ?string $storeName = null);
 
     /**
      * @param string $labelName
