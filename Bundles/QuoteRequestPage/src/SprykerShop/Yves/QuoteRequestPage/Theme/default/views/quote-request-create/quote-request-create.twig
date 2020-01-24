@@ -89,7 +89,10 @@
                         <div class="grid grid--stretch grid--justify">
                             <div class="col col--sm-12 col--lg-12">
                                 <div class="box">
-                                    <h4>{{ 'checkout.step.shipment.title' | trans }} n&#176;{{ loop.index }}</h4>
+                                    <h4>{{ 'quote_request_page.quote_request.shipment_counter' | trans({
+                                            '%index%': loop.index,
+                                            '%length%': data.shipmentGroups | length,
+                                        }) }}</h4>
                                     <hr>
                                     <h6><strong>{{ 'checkout.step.summary.products' | trans }}</strong></h6>
 
@@ -144,15 +147,15 @@
                                             {% endblock %}
                                         {% endembed %}
                                     {% endfor %}
+
+                                    {% include molecule('quote-request-shipment-information', 'QuoteRequestPage') with {
+                                        data: {
+                                            shipment: shipmentGroup.shipment,
+                                            showAddress: true,
+                                        },
+                                    } only %}
                                 </div>
                             </div>
-
-                            {% include molecule('quote-request-shipment-group', 'QuoteRequestPage') ignore missing with {
-                                class: 'list spacing-y',
-                                data: {
-                                    shipmentGroup: shipmentGroup,
-                                }
-                            } only %}
                         </div>
                     {% endfor %}
                 {% else %}
@@ -206,11 +209,18 @@
                             {% endblock %}
                         {% endembed %}
                     {% endfor %}
+
+                    <h4 class="spacing-x spacing-top spacing-top--big">{{ 'quote_request_page.quote_request.title_shipment_method' | trans }}</h4>
+                    {% include molecule('quote-request-shipment-information', 'QuoteRequestPage') with {
+                        data: {
+                            shipment: quote.shipment,
+                        },
+                    } only %}
                 {% endif %}
             </div>
 
             <div class="col col--sm-12 col--xl-4">
-                {% include molecule('quote-request-delivery-summary', 'QuoteRequestPage') ignore missing with {
+                {% include molecule('quote-request-delivery-summary', 'QuoteRequestPage') with {
                     class: 'list spacing-y',
                     data: {
                         quote: quote,
