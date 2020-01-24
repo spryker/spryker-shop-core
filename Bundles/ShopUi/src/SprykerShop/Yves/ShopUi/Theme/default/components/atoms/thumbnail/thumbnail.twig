@@ -2,11 +2,15 @@
 
 {% define config = {
     name: 'thumbnail',
-    tag: 'span'
+    tag: 'span',
 } %}
 
 {% block attributes %}{% endblock %}
 
 {% block body %}
-    <img class="{{config.name}}__image" {{component.renderAttributes(attributes)}}>
+    {% set additionalClass = '' %}
+
+    {% block image %}
+        <img class="{{ config.name }}__image {{ additionalClass }}" {{ component.renderAttributes(attributes) }}>
+    {% endblock %}
 {% endblock %}

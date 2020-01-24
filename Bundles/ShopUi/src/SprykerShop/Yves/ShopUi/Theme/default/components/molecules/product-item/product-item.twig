@@ -2,7 +2,7 @@
 
 {% define config = {
     name: 'product-item',
-    tag: 'article',
+    tag: 'product-item',
 } %}
 
 {% define data = {
@@ -15,7 +15,7 @@
     currencyIsoCode: null,
 } %}
 
-{%- block extraClass %} box{% endblock -%}
+{%- block extraClass %} box {{ config.jsName }}{% endblock -%}
 
 {% block body %}
     {% block thumbnailWrapper %}
@@ -23,28 +23,37 @@
         {% set modifiers = [] %}
 
         {% block imageContainer %}
-            {% macro thumbnail(src, alt='', extraClass='', modifiers=[]) %}
-                {% include atom('thumbnail') with {
+            {% macro thumbnail(src, alt='', extraClass='', modifiers=[], jsName) %}
+                {% embed atom('thumbnail') with {
                     class: extraClass,
                     modifiers: modifiers,
                     attributes: {
                         src: src,
                         alt: alt,
                     },
+                    embed: {
+                        jsName: jsName,
+                    },
                 } only %}
+                    {% block image %}
+                        {% set additionalClass = embed.jsName ~ '__image' %}
+
+                        {{ parent() }}
+                    {% endblock %}
+                {% endembed %}
             {% endmacro %}
 
             {% block image %}
                 {% if data.url %}
                     {% block imageLink %}
-                        <a href="{{ path(data.url) }}">
-                            {{ _self.thumbnail(data.image, data.name, extraClass, modifiers) }}
+                        <a class="{{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">
+                            {{ _self.thumbnail(data.image, data.name, extraClass, modifiers, config.jsName) }}
                         </a>
                     {% endblock %}
                 {% endif %}
                 {% if not data.url %}
                     {% block productThumbnail %}
-                        {{ _self.thumbnail(data.image, data.name, extraClass, modifiers) }}
+                        {{ _self.thumbnail(data.image, data.name, extraClass, modifiers, config.jsName) }}
                     {% endblock %}
                 {% endif %}
             {% endblock %}
@@ -71,13 +80,13 @@
         {% block name %}
             {% if data.name and data.url %}
                 {% block link %}
-                    <a class="{{ config.name }}__name" href="{{ path(data.url) }}">{{ data.name }}</a>
+                    <a class="{{ config.name }}__name {{ config.jsName }}__name {{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">{{ data.name }}</a>
                 {% endblock %}
             {% endif %}
 
             {% if data.name and not data.url %}
                 {% block title %}
-                    <span class="{{ config.name }}__name">{{ data.name }}</span>
+                    <span class="{{ config.name }}__name {{ config.jsName }}__name">{{ data.name }}</span>
                 {% endblock %}
             {% endif %}
         {% endblock %}
@@ -91,7 +100,11 @@
         {% block rating %}
             {% if data.idProductAbstract %}
                 {% block productAbstractRating %}
-                    {% widget 'DisplayProductAbstractReviewWidget' args [data.idProductAbstract] only %}{% endwidget %}
+                    {% widget 'DisplayProductAbstractReviewWidget' args [data.idProductAbstract] with {
+                        data: {
+                            productItemJsName: config.jsName,
+                        },
+                    } only %}{% endwidget %}
                 {% endblock %}
             {% endif %}
         {% endblock %}
@@ -105,6 +118,7 @@
                                 amount: data.product.prices.DEFAULT | default(null),
                                 originalAmount: data.product.prices.ORIGINAL | default(null),
                                 currencyIsoCode: data.currencyIsoCode,
+                                productItemJsName: config.jsName,
                             },
                         } only %}
                     {% else %}
@@ -120,7 +134,7 @@
             {% block actions %}
                 {% if data.url %}
                     {% block action %}
-                        <a class="button button--expand" href="{{ path(data.url) }}">
+                        <a class="button button--expand {{ config.jsName }}__link-detail-page" href="{{ path(data.url) }}">
                             {% block actionInner %}
                                 {{- 'product.view' | trans -}}
 
