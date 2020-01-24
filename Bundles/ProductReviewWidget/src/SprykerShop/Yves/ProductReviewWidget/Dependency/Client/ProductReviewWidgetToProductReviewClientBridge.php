@@ -70,12 +70,13 @@ class ProductReviewWidgetToProductReviewClientBridge implements ProductReviewWid
     }
 
     /**
-     * @param array $ratingAggregation
+     * @param \Generated\Shared\Transfer\ProductReviewSummaryTransfer $productReviewSummaryTransfer
      *
      * @return \Generated\Shared\Transfer\ProductReviewSummaryTransfer
      */
-    public function calculateProductReviewSummary(array $ratingAggregation): ProductReviewSummaryTransfer
-    {
-        return $this->productReviewClient->calculateProductReviewSummary($ratingAggregation);
+    public function calculateProductReviewSummary(
+        ProductReviewSummaryTransfer $productReviewSummaryTransfer
+    ): ProductReviewSummaryTransfer {
+        return $this->productReviewClient->calculateProductReviewSummary($productReviewSummaryTransfer);
     }
 }
