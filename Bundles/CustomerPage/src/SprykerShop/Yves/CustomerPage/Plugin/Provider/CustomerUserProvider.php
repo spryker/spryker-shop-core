@@ -79,7 +79,7 @@ class CustomerUserProvider extends AbstractPlugin implements UserProviderInterfa
      */
     public function supportsClass($class)
     {
-        return $class === Customer::class;
+        return $class === Customer::class || is_subclass_of($class, Customer::class);
     }
 
     /**
