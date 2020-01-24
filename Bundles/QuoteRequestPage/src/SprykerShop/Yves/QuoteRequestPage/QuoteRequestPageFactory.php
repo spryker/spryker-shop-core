@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\QuoteRequestPage;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\QuoteRequestPage\Calculator\ShipmentCostCalculator;
+use SprykerShop\Yves\QuoteRequestPage\Calculator\ShipmentCostCalculatorInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompanyUserClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCustomerClientInterface;
@@ -18,8 +20,6 @@ use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteC
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToShipmentServiceInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToUtilDateTimeServiceInterface;
-use SprykerShop\Yves\QuoteRequestPage\Extractor\ShipmentCostExtractor;
-use SprykerShop\Yves\QuoteRequestPage\Extractor\ShipmentCostExtractorInterface;
 use SprykerShop\Yves\QuoteRequestPage\Form\DataProvider\QuoteRequestFormDataProvider;
 use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandler;
 use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandlerInterface;
@@ -86,11 +86,11 @@ class QuoteRequestPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteRequestPage\Extractor\ShipmentCostExtractorInterface
+     * @return \SprykerShop\Yves\QuoteRequestPage\Calculator\ShipmentCostCalculatorInterface
      */
-    public function createShipmentCostExtractor(): ShipmentCostExtractorInterface
+    public function createShipmentCostCalculator(): ShipmentCostCalculatorInterface
     {
-        return new ShipmentCostExtractor();
+        return new ShipmentCostCalculator();
     }
 
     /**

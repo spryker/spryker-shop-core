@@ -9,7 +9,7 @@
     isQuoteRequestReady: _view.isQuoteRequestReady,
     isQuoteRequestEditable: _view.isQuoteRequestEditable,
     shipmentGroups: _view.shipmentGroups | default([]),
-    totalShipmentCosts: _view.totalShipmentCosts,
+    shipmentTotal: _view.shipmentTotal,
 } %}
 
 {% set isLatestVersion = (data.version.idQuoteRequestVersion == data.quoteRequest.latestVisibleVersion.idQuoteRequestVersion) ? true : false %}
@@ -257,7 +257,7 @@
                         data: {
                             cart: quote,
                             shipmentGroups: data.shipmentGroups,
-                            totalShipmentCosts: data.totalShipmentCosts,
+                            shipmentTotal: data.shipmentTotal,
                         },
                     } only %}
                 </div>

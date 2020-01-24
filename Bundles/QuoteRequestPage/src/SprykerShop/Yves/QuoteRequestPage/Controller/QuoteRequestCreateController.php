@@ -82,14 +82,16 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
      */
     protected function getViewParameters(FormInterface $quoteRequestForm): array
     {
+        $quoteRequestTransfer = $quoteRequestForm->getData();
+
         $shipmentGroupTransfers = $this->getFactory()
             ->createShipmentGrouper()
-            ->groupItemsByShippingAddress($quoteRequestForm->getData());
+            ->groupItemsByShippingAddress($quoteRequestTransfer);
 
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
             'shipmentGroups' => $shipmentGroupTransfers,
-            'totalShipmentCosts' => $this->getFactory()->createShipmentCostExtractor()->extractTotalShipmentCosts($shipmentGroupTransfers),
+            'shipmentTotal' => $this->getFactory()->createShipmentCostCalculator()->calculateTotalShipmentCosts($quoteRequestTransfer),
         ];
     }
 }
