@@ -9,7 +9,11 @@
     'simple-carousel-class-name': 'js-simple-carousel',
 } %}
 
-{% block listDataAttributes %}
-    data-product-image-src="{{ item.images ? item.images[0].externalUrlSmall }}"
-    href="{{ item.url ? item.url }}"
+{% block selection %}
+    {% set listDataAttributes = {
+        'data-product-image-src': item.images ? item.images[0].externalUrlSmall,
+        href: item.url ? item.url,
+    } %}
+
+    {{ parent() }}
 {% endblock %}
