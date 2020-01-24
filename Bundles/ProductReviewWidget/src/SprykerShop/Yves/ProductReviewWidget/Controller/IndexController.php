@@ -59,7 +59,9 @@ class IndexController extends AbstractController
             'hasCustomer' => $hasCustomer,
             'productReviews' => $productReviews['productReviews'],
             'pagination' => $productReviews['pagination'],
-            'summary' => $this->getFactory()->getProductReviewClient()->calculateProductReviewSummary($productReviewSummaryTransfer),
+            'summary' => $this->getFactory()
+                ->getProductReviewClient()
+                ->calculateProductReviewSummary($productReviewSummaryTransfer),
             'maximumRating' => $this->getFactory()->getProductReviewClient()->getMaximumRating(),
         ];
     }
