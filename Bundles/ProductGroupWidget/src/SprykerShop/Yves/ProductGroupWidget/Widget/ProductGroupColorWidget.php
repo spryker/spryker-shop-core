@@ -19,18 +19,15 @@ class ProductGroupColorWidget extends AbstractWidget
      */
     public function __construct(int $idProductAbstract)
     {
-        $this->addParameter(
-            'productGroupItems',
-            $this->getFactory()
-                ->getProductGroupReader()
-                ->getProductGroups($idProductAbstract, $this->getLocale())
-        )
+        $productViewTransfers = $this->getFactory()
+            ->getProductGroupReader()
+            ->getProductGroups($idProductAbstract, $this->getLocale());
+
+        $this->addParameter('productGroupItems', $productViewTransfers)
             ->addParameter('idProductAbstract', $idProductAbstract);
     }
 
     /**
-     * @api
-     *
      * @return string
      */
     public static function getName(): string
@@ -39,8 +36,6 @@ class ProductGroupColorWidget extends AbstractWidget
     }
 
     /**
-     * @api
-     *
      * @return string
      */
     public static function getTemplate(): string

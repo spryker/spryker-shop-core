@@ -45,12 +45,13 @@ class ProductGroupReader implements ProductGroupReaderInterface
 
     /**
      * @param int $idProductAbstract
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function getProductGroups(int $idProductAbstract): array
+    public function getProductGroups(int $idProductAbstract, string $localeName): array
     {
-        $productViewTransfers = $this->getProductGroupTransfers($idProductAbstract);
+        $productViewTransfers = $this->getProductGroupTransfers($idProductAbstract, $localeName);
 
         return $this->getExpandedProductViewTransfers($productViewTransfers);
     }
