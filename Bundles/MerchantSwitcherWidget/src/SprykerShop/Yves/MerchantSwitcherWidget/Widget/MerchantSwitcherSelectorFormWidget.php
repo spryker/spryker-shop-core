@@ -12,6 +12,7 @@ use SprykerShop\Shared\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig;
 
 /**
  * @method \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig getConfig()
  */
 class MerchantSwitcherSelectorFormWidget extends AbstractWidget
 {
@@ -41,19 +42,21 @@ class MerchantSwitcherSelectorFormWidget extends AbstractWidget
      */
     protected function addParameters(): void
     {
-        /** @var \Symfony\Component\HttpFoundation\Request $request */
-        $request = $this->getApplication()['request'];
+        if ($this->getConfig()->isEnableMerchantSwitcher()) {
+            /** @var \Symfony\Component\HttpFoundation\Request $request */
+            $request = $this->getApplication()['request'];
 
-        $activeMerchantTransfers = $this->getFactory()->createActiveMerchantReader()->getActiveMerchants()->getMerchants();
-        $selectedMerchantReference = $request->cookies->get(MerchantSwitcherWidgetConfig::MERCHANT_SELECTOR_COOKIE_IDENTIFIER);
+            $activeMerchantTransfers = $this->getFactory()->createActiveMerchantReader()->getActiveMerchants()->getMerchants();
+            $selectedMerchantReference = $request->cookies->get(MerchantSwitcherWidgetConfig::MERCHANT_SELECTOR_COOKIE_IDENTIFIER);
 
-        if (!$selectedMerchantReference) {
-            /** @var \Generated\Shared\Transfer\MerchantTransfer $selectedMerchant */
-            $selectedMerchant = $activeMerchantTransfers->getIterator()->current();
-            $selectedMerchantReference = $selectedMerchant->getMerchantKey();
+            if (!$selectedMerchantReference) {
+                /** @var \Generated\Shared\Transfer\MerchantTransfer $selectedMerchant */
+                $selectedMerchant = $activeMerchantTransfers->getIterator()->current();
+                $selectedMerchantReference = $selectedMerchant->getMerchantKey();
+            }
+
+            $this->addParameter('activeMerchantTransfers', $activeMerchantTransfers);
+            $this->addParameter('selectedMerchantReference', $selectedMerchantReference);
         }
-
-        $this->addParameter('activeMerchantTransfers', $activeMerchantTransfers);
-        $this->addParameter('selectedMerchantReference', $selectedMerchantReference);
     }
 }
