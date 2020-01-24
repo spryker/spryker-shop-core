@@ -31,6 +31,6 @@ class QuoteRequestCheckerCheckoutAddressStepEnterPreCheckPlugin extends Abstract
     {
         return $this->getFactory()
             ->getQuoteRequestClient()
-            ->isQuoteRequestInQuoteCheckoutProcess($quoteTransfer);
+            ->isQuoteInQuoteRequestProcess($quoteTransfer);
     }
 }

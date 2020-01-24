@@ -31,6 +31,6 @@ class QuoteRequestCheckerCheckoutShipmentStepEnterPreCheckPlugin extends Abstrac
     {
         return $this->getFactory()
             ->getQuoteRequestClient()
-            ->isQuoteRequestInQuoteCheckoutProcess($quoteTransfer);
+            ->isQuoteInQuoteRequestProcess($quoteTransfer);
     }
 }

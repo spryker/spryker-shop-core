@@ -166,8 +166,8 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
      *
      * @return bool
      */
-    public function isQuoteRequestInQuoteCheckoutProcess(QuoteTransfer $quoteTransfer): bool
+    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->quoteRequestClient->isQuoteRequestInQuoteCheckoutProcess($quoteTransfer);
+        return $this->quoteRequestClient->isQuoteInQuoteRequestProcess($quoteTransfer);
     }
 }
