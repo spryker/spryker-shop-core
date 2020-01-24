@@ -35,11 +35,13 @@ export default class RatingSelector extends Component {
     }
 
     protected mapCustomEvents(): void {
-        if (this.productItem) {
-            this.productItem.addEventListener(EVENT_UPDATE_RATING, (event: Event) => {
-                this.updateRating((<CustomEvent>event).detail.rating);
-            });
+        if (!this.productItem) {
+            return;
         }
+
+        this.productItem.addEventListener(EVENT_UPDATE_RATING, (event: Event) => {
+            this.updateRating((<CustomEvent>event).detail.rating);
+        });
     }
 
     protected onStepClick(event: Event): void {

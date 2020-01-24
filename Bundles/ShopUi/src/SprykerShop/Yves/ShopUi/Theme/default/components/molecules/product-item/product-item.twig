@@ -35,9 +35,11 @@
                         jsName: jsName,
                     },
                 } only %}
-                    {% block additionalClass -%}
-                        {{ embed.jsName }}__image
-                    {%- endblock %}
+                    {% block image %}
+                        {% set additionalClass = embed.jsName ~ '__image' %}
+
+                        {{ parent() }}
+                    {% endblock %}
                 {% endembed %}
             {% endmacro %}
 

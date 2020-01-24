@@ -17,13 +17,15 @@ export default class ProductSetDetails extends Component {
     }
 
     protected mapEvents(): void {
-        if (this.productItems) {
-            this.productItems.forEach((element: ProductItem, index: number) => {
-                element.addEventListener(EVENT_UPDATE_ADD_TO_CART_URL, (event: Event) => {
-                    this.onCustomEvent((<CustomEvent>event).detail.sku, index);
-                });
-            });
+        if (!this.productItems) {
+            return;
         }
+
+        this.productItems.forEach((element: ProductItem, index: number) => {
+            element.addEventListener(EVENT_UPDATE_ADD_TO_CART_URL, (event: Event) => {
+                this.onCustomEvent((<CustomEvent>event).detail.sku, index);
+            });
+        });
     }
 
     protected onCustomEvent(sku: string, index: number): void {
