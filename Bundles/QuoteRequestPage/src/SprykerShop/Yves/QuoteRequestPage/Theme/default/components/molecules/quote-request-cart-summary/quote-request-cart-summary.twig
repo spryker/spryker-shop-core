@@ -30,7 +30,7 @@
             {% endblock %}
         {% endwidget %}
 
-        {% include molecule('quote-request-discount-summary', 'QuoteRequestPage') ignore missing with {
+        {% include molecule('quote-request-discount-summary', 'QuoteRequestPage') with {
             class: 'list spacing-y',
             data: {
                 voucherDiscounts: data.cart.voucherDiscounts,
