@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -138,7 +139,7 @@ class CheckoutController extends AbstractController
         );
 
         if (!is_array($response)) {
-            return $response;
+            return $this->executeCheckoutShipmentPostExecutePlugins($response);
         }
 
         return $this->view(
@@ -310,5 +311,23 @@ class CheckoutController extends AbstractController
     protected function createStepProcess()
     {
         return $this->getFactory()->createCheckoutProcess();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\RedirectResponse $response
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeCheckoutShipmentPostExecutePlugins(RedirectResponse $response): RedirectResponse
+    {
+        $quoteTransfer = $this->getFactory()
+            ->getQuoteClient()
+            ->getQuote();
+
+        $response = $this->getFactory()
+            ->createCheckoutShipmentPostExecuter()
+            ->executeCheckoutShipmentPostExecutePlugins($response, $quoteTransfer, $this->getRouter());
+
+        return $response;
     }
 }

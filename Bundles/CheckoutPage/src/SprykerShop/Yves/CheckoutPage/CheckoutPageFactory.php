@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CheckoutPage;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\CheckoutPage\CheckoutShipmentOperation\CheckoutShipmentPostExecuter;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToGlossaryStorageClientInterface;
@@ -259,10 +260,28 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPageExtension\Dependency\Plugin\CheckoutShipmentPostExecuteStrategyPluginInterface[]
+     */
+    protected function getCheckoutShipmentPostExecuteStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_SHIPMENT_POST_EXECUTE);
+    }
+
+    /**
      * @return \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface
      */
     public function createGiftCardItemsChecker(): GiftCardItemsCheckerInterface
     {
         return new GiftCardItemsChecker();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPage\CheckoutShipmentOperation\CheckoutShipmentPostExecuterInterface
+     */
+    public function createCheckoutShipmentPostExecuter()
+    {
+        return new CheckoutShipmentPostExecuter(
+            $this->getCheckoutShipmentPostExecuteStrategyPlugins()
+        );
     }
 }

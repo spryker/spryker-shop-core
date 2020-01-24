@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 class QuoteRequestAgentWidgetToCustomerClientBridge implements QuoteRequestAgentWidgetToCustomerClientInterface
 {
     /**
@@ -25,7 +27,7 @@ class QuoteRequestAgentWidgetToCustomerClientBridge implements QuoteRequestAgent
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer()
+    public function getCustomer(): ?CustomerTransfer
     {
         return $this->customerClient->getCustomer();
     }

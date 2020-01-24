@@ -29,6 +29,16 @@ class QuoteRequestAgentAbstractController extends AbstractController
     protected const ROUTE_CART = 'cart';
 
     /**
+     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::CHECKOUT_ADDRESS
+     */
+    protected const ROUTE_CHECKOUT_ADDRESS = 'checkout-address';
+
+    /**
+     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::CHECKOUT_SHIPMENT
+     */
+    protected const ROUTE_CHECKOUT_SHIPMENT = 'checkout-shipment';
+
+    /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Provider\QuoteRequestAgentPageControllerProvider::ROUTE_QUOTE_REQUEST_AGENT_EDIT_ITEMS
      */
     protected const ROUTE_QUOTE_REQUEST_AGENT_EDIT_ITEMS = 'agent/quote-request/edit-items';
