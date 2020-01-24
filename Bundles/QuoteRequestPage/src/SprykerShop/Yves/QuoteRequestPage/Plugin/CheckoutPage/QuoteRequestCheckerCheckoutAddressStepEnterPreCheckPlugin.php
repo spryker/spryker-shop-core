@@ -9,17 +9,17 @@ namespace SprykerShop\Yves\QuoteRequestPage\Plugin\CheckoutPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepEnterPreCheckPluginInterface;
+use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutAddressStepEnterPreCheckPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
  */
-class QuoteRequestCheckerCheckoutShipmentStepEnterPreCheckPluginInterface extends AbstractPlugin implements CheckoutShipmentStepEnterPreCheckPluginInterface
+class QuoteRequestCheckerCheckoutAddressStepEnterPreCheckPlugin extends AbstractPlugin implements CheckoutAddressStepEnterPreCheckPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Checks if the shipment step must be hidden.
-     * - Returns true if if quote request version reference and custom shipment price are set.
+     * - Checks if the address step must be hidden.
+     * - Returns true if quote request version reference and custom shipment price are set, false otherwise..
      *
      * @api
      *
@@ -31,6 +31,6 @@ class QuoteRequestCheckerCheckoutShipmentStepEnterPreCheckPluginInterface extend
     {
         return $this->getFactory()
             ->getQuoteRequestClient()
-            ->isQuoteRequestVersionReferenceAndCustomShipmentPriceSet($quoteTransfer);
+            ->isQuoteRequestInQuoteCheckoutProcess($quoteTransfer);
     }
 }

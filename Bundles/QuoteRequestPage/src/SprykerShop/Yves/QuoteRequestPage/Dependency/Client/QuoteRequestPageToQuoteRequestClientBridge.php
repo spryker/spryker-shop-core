@@ -166,8 +166,8 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
      *
      * @return bool
      */
-    public function isQuoteRequestVersionReferenceAndCustomShipmentPriceSet(QuoteTransfer $quoteTransfer): bool
+    public function isQuoteRequestInQuoteCheckoutProcess(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->quoteRequestClient->isQuoteRequestVersionReferenceAndCustomShipmentPriceSet($quoteTransfer);
+        return $this->quoteRequestClient->isQuoteRequestInQuoteCheckoutProcess($quoteTransfer);
     }
 }

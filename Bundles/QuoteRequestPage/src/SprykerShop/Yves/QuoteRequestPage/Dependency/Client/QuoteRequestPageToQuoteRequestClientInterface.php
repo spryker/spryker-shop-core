@@ -114,5 +114,5 @@ interface QuoteRequestPageToQuoteRequestClientInterface
      *
      * @return bool
      */
-    public function isQuoteRequestVersionReferenceAndCustomShipmentPriceSet(QuoteTransfer $quoteTransfer): bool;
+    public function isQuoteRequestInQuoteCheckoutProcess(QuoteTransfer $quoteTransfer): bool;
 }
