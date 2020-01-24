@@ -38,7 +38,9 @@ export default class ActionSingleClickEnforcer extends Component {
             const isButtonSubmit = isButton && !buttonType;
 
             if (isSubmit || isButtonSubmit) {
+                const submitEvent: Event = new Event('submit');
                 form.submit();
+                form.dispatchEvent(submitEvent);
             }
         }
     }
