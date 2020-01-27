@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QuoteRequestAgentCheckoutShipmentController extends QuoteRequestAgentAbstractController
 {
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART = 'quote_request_page.quote_request.converted_to_cart';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $quoteRequestReference
@@ -27,12 +29,6 @@ class QuoteRequestAgentCheckoutShipmentController extends QuoteRequestAgentAbstr
     public function indexAction(Request $request, string $quoteRequestReference)
     {
         $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
-
-//        if ($quoteTransfer->getQuoteRequestReference() && ($quoteTransfer->getQuoteRequestReference() !== $quoteRequestReference)) {
-//            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT_ITEMS_CONFIRM, [
-//                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
-//            ]);
-//        }
 
         $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
 
@@ -58,7 +54,7 @@ class QuoteRequestAgentCheckoutShipmentController extends QuoteRequestAgentAbstr
             ->convertQuoteRequestToQuote($quoteRequestTransfer);
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
-//            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART);
+            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART);
         }
 
         $this->handleQuoteResponseErrors($quoteResponseTransfer);
