@@ -42,7 +42,7 @@ class MerchantSwitcherSelectorFormWidget extends AbstractWidget
      */
     protected function addParameters(): void
     {
-        if ($this->getConfig()->isEnableMerchantSwitcher()) {
+        if ($this->getConfig()->isMerchantSwitcherEnabled()) {
             /** @var \Symfony\Component\HttpFoundation\Request $request */
             $request = $this->getApplication()['request'];
 

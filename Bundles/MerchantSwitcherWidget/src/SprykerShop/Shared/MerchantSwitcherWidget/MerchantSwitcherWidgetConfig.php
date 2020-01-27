@@ -19,18 +19,17 @@ class MerchantSwitcherWidgetConfig extends AbstractBundleConfig
      */
     public const MERCHANT_SELECTOR_COOKIE_IDENTIFIER = 'merchant_switcher_selector_merchant_reference';
 
+    protected const ENABLE_MERCHANT_SWITCHER = true;
+
     /**
      * Specification:
      * - Enables/disables all merchant switcher functionality.
      *
      * @api
-     */
-    public const ENABLE_MERCHANT_SWITCHER = true;
-
-    /**
+     *
      * @return bool
      */
-    public function isEnableMerchantSwitcher(): bool
+    public function isMerchantSwitcherEnabled(): bool
     {
         return static::ENABLE_MERCHANT_SWITCHER;
     }

@@ -17,8 +17,8 @@ class MerchantSwitcherWidgetConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isEnableMerchantSwitcher(): bool
+    public function isMerchantSwitcherEnabled(): bool
     {
-        return $this->getSharedConfig()->isEnableMerchantSwitcher();
+        return $this->getSharedConfig()->isMerchantSwitcherEnabled();
     }
 }
