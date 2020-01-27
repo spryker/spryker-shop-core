@@ -5,9 +5,9 @@ export default class ProductDetailColorSelector extends ColorSelector {
     protected simpleCarousel: SimpleCarousel;
 
     protected init(): void {
-        this.simpleCarousel = <SimpleCarousel>document.getElementsByClassName(this.simpleCarouselClassName)[0];
-
         super.init();
+
+        this.simpleCarousel = <SimpleCarousel>document.getElementsByClassName(this.simpleCarouselClassName)[0];
     }
 
     protected mapEvents(): void {
