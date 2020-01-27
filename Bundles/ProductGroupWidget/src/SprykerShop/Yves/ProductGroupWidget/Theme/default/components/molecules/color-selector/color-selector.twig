@@ -14,10 +14,6 @@
     'active-item-class-name': config.name ~ '__item--active',
 } %}
 
-{% block component %}
-    {% if data.items %}{{ parent() }}{% endif %}
-{% endblock %}
-
 {% block body %}
     {% for item in data.items %}
         {% block item %}
