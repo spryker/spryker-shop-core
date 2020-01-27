@@ -11,7 +11,6 @@
             {% embed atom('select') with {
                 modifiers: ['naked'],
                 attributes: {
-                    'onchange': 'this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);',
                     name: 'merchant-reference',
                     'data-form-submitter': true,
                 },
