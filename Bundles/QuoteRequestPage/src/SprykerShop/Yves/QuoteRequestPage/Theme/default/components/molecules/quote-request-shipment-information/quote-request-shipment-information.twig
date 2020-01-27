@@ -13,10 +13,10 @@
     <div class="box">
         {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
             data: {
-                carrierName: data.shipment.method.carrierName,
-                methodName: data.shipment.method.name,
-                storeCurrencyPrice: data.shipment.method.storeCurrencyPrice,
-                currencyIsoCode: data.shipment.method.currencyIsoCode,
+                carrierName: data.method.carrierName,
+                methodName: data.method.name,
+                storeCurrencyPrice: data.method.storeCurrencyPrice,
+                currencyIsoCode: data.method.currencyIsoCode,
             },
         } only %}
 
@@ -27,7 +27,7 @@
 
             {% embed molecule('display-address') with {
                 data: {
-                    address: data.shipment.shippingAddress,
+                    address: data.shippingAddress,
                 },
             } only %}
                 {% block addressBadgeLabel %}{% endblock %}
