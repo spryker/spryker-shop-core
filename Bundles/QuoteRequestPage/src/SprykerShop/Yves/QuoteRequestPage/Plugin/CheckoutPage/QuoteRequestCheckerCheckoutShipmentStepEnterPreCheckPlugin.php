@@ -30,6 +30,6 @@ class QuoteRequestCheckerCheckoutShipmentStepEnterPreCheckPlugin extends Abstrac
     {
         return $this->getFactory()
             ->getQuoteRequestClient()
-            ->shouldCheckoutShipmentStepBeHidden($quoteTransfer);
+            ->isQuoteRequestForQuoteWithCustomShipmentPrice($quoteTransfer);
     }
 }

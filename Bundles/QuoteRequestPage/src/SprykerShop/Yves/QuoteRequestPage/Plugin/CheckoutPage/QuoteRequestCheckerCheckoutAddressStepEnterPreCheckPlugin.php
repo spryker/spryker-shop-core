@@ -30,6 +30,6 @@ class QuoteRequestCheckerCheckoutAddressStepEnterPreCheckPlugin extends Abstract
     {
         return $this->getFactory()
             ->getQuoteRequestClient()
-            ->shouldCheckoutAddressStepBeHidden($quoteTransfer);
+            ->isQuoteRequestForQuoteWithCustomShipmentPrice($quoteTransfer);
     }
 }

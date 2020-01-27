@@ -166,18 +166,8 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
      *
      * @return bool
      */
-    public function shouldCheckoutAddressStepBeHidden(QuoteTransfer $quoteTransfer): bool
+    public function isQuoteRequestForQuoteWithCustomShipmentPrice(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->quoteRequestClient->shouldCheckoutAddressStepBeHidden($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function shouldCheckoutShipmentStepBeHidden(QuoteTransfer $quoteTransfer): bool
-    {
-        return $this->quoteRequestClient->shouldCheckoutShipmentStepBeHidden($quoteTransfer);
+        return $this->quoteRequestClient->isQuoteRequestForQuoteWithCustomShipmentPrice($quoteTransfer);
     }
 }
