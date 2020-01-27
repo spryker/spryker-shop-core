@@ -62,7 +62,7 @@ class AgentUserProvider extends AbstractPlugin implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return is_a($class, Agent::class) || is_a($class, Customer::class);
+        return is_a($class, Agent::class, true) || is_a($class, Customer::class, true);
     }
 
     /**
