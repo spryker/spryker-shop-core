@@ -1,0 +1,19 @@
+{% extends molecule('color-selector', 'ProductGroupWidget') %}
+
+{% define config = {
+    name: 'product-detail-color-selector',
+    tag: 'product-detail-color-selector',
+} %}
+
+{% define attributes = {
+    'simple-carousel-class-name': 'js-simple-carousel',
+} %}
+
+{% block selection %}
+    {% set listDataAttributes = {
+        'data-product-image-src': item.images ? item.images[0].externalUrlSmall,
+        href: item.url ? item.url,
+    } %}
+
+    {{ parent() }}
+{% endblock %}

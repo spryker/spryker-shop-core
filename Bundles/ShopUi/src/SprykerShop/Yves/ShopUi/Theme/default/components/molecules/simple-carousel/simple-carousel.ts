@@ -5,62 +5,51 @@ export default class SimpleCarousel extends Component {
      * Switches a slide to a previous one.
      */
     triggerPrev: HTMLElement;
-
     /**
      * Switches a slide to a next one.
      */
     triggerNext: HTMLElement;
-
     /**
      * The current slider.
      */
     slider: HTMLElement;
-
     /**
      * The number of the slides.
      */
     slidesCount: number;
-
     /**
      * The slider width.
      */
     slideWidth: number;
-
     /**
-     * Thr dot-switch elements below the slides.
+     * The dot-switch elements below the slides.
      */
     dots: HTMLElement[];
-
     /**
      * The number of views.
      */
     viewsCount: number;
-
     /**
      * The index of the active slide.
      */
     viewCurrentIndex: number = 0;
-
     /**
      * Dot element selector.
+     * @deprecated Use dotClassName instead.
      */
-    readonly dotSelector: string;
-
+    readonly dotSelector: string = `${this.jsName}__dot`;
     /**
      * Dot element "is current" modifier.
      */
-    readonly dotCurrentModifier: string;
+    readonly dotCurrentModifier: string = `${this.name}__dot--current`;
+    protected readonly dotClassName: string = `${this.jsName}__dot`;
     protected fullSliderWidth: number = 100;
-
-    constructor() {
-        super();
-
-        this.dotSelector = `${this.jsName}__dot`;
-        this.dotCurrentModifier = `${this.name}__dot--current`;
-    }
+    protected defaultImageUrl: string;
+    protected currentSlideImage: HTMLImageElement;
 
     protected readyCallback(): void {
         this.slidesCount = this.getElementsByClassName(`${this.jsName}__slide`).length;
+        this.getCurrentSlideImage();
 
         if (this.slidesCount <= 1) {
             return;
@@ -70,9 +59,8 @@ export default class SimpleCarousel extends Component {
         this.triggerNext = <HTMLElement>this.getElementsByClassName(`${this.jsName}__next`)[0];
         this.slider = <HTMLElement>this.getElementsByClassName(`${this.jsName}__slider`)[0];
         this.slideWidth = this.fullSliderWidth / this.slidesToShow;
-        this.dots = <HTMLElement[]>Array.from(this.getElementsByClassName(this.dotSelector));
+        this.dots = <HTMLElement[]>Array.from(this.getElementsByClassName(this.dotClassName));
         this.viewsCount = this.getViewsCount();
-
         this.mapEvents();
     }
 
@@ -117,7 +105,6 @@ export default class SimpleCarousel extends Component {
      */
     loadPrevViewIndex(): void {
         this.viewCurrentIndex = this.viewCurrentIndex - 1;
-
         if (this.viewCurrentIndex < 0) {
             this.viewCurrentIndex = this.viewsCount - 1;
         }
@@ -128,7 +115,6 @@ export default class SimpleCarousel extends Component {
      */
     loadNextViewIndex(): void {
         this.viewCurrentIndex = this.viewCurrentIndex + 1;
-
         if (this.viewCurrentIndex >= this.viewsCount) {
             this.viewCurrentIndex = 0;
         }
@@ -140,7 +126,6 @@ export default class SimpleCarousel extends Component {
      */
     loadViewIndexFromDot(dot: HTMLElement): void {
         this.viewCurrentIndex = this.dots.indexOf(dot);
-
         if (this.viewCurrentIndex === -1) {
             this.viewCurrentIndex = 0;
         }
@@ -158,6 +143,7 @@ export default class SimpleCarousel extends Component {
 
         const offset = - (slidesToSlide * this.slideWidth);
         this.slider.style.transform = `translateX(${offset}%)`;
+        this.getCurrentSlideImage();
     }
 
     /**
@@ -168,15 +154,31 @@ export default class SimpleCarousel extends Component {
             return;
         }
 
-        this
-            .querySelector(`.${this.dotSelector}.${this.dotCurrentModifier}`)
-            .classList
+        this.querySelector(`.${this.dotClassName}.${this.dotCurrentModifier}`).classList
             .remove(this.dotCurrentModifier);
+        this.dots[this.viewCurrentIndex].classList.add(this.dotCurrentModifier);
+    }
 
-        this
-            .dots[this.viewCurrentIndex]
-            .classList
-            .add(this.dotCurrentModifier);
+    /**
+     * Sets the new slide image with a new URL.
+     * @param url An image URL.
+     */
+    setNewImageUrl(url: string): void {
+        this.currentSlideImage.src = url;
+    }
+
+    /**
+     * Sets the slide image with a default URL.
+     */
+    restoreDefaultImageUrl(): void {
+        this.currentSlideImage.src = this.defaultImageUrl;
+    }
+
+    protected getCurrentSlideImage(): void {
+        const currentSlide = <HTMLElement>this.getElementsByClassName(`${this.jsName}__slide`)[this.viewCurrentIndex];
+
+        this.currentSlideImage = currentSlide.getElementsByTagName('img')[0];
+        this.defaultImageUrl = this.currentSlideImage.src;
     }
 
     /**

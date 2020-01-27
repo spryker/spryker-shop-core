@@ -24,12 +24,12 @@ export default class ColorSelector extends Component {
         this.setActiveItemSelection();
     }
 
-    protected setActiveItemSelection(): void {
+    protected setActiveItemSelection(selection?: HTMLElement): void {
         this.triggers.forEach((element: HTMLElement) => {
             element.classList.remove(this.activeItemClassName);
         });
 
-        this.currentSelection.classList.add(this.activeItemClassName);
+        (selection || this.currentSelection).classList.add(this.activeItemClassName);
     }
 
     protected get activeItemClassName(): string {
