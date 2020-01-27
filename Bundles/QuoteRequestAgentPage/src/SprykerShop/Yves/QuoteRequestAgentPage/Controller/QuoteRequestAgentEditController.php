@@ -125,7 +125,7 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
             'shipmentGroups' => $shipmentGroupTransfers,
-            'totalShipmentCosts' => $this->getFactory()->createShipmentCostExtractor()->extractTotalShipmentCosts($shipmentGroupTransfers),
+            'shipmentTotal' => $this->getFactory()->createShipmentCostCalculator()->calculateTotalShipmentCosts($quoteRequestTransfer),
         ];
     }
 

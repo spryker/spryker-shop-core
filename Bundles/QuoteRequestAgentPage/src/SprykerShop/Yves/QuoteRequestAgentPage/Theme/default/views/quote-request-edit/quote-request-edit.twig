@@ -5,7 +5,7 @@
     quoteRequestForm: _view.quoteRequestForm,
     quoteRequest: _view.quoteRequestForm.vars.value,
     shipmentGroups: _view.shipmentGroups | default([]),
-    totalShipmentCosts: _view.totalShipmentCosts,
+    shipmentTotal: _view.shipmentTotal,
 } %}
 
 {% set quote = data.quoteRequest.latestVersion.quote %}
@@ -103,7 +103,10 @@
                     <div class="grid grid--stretch grid--justify">
                         <div class="col col--sm-12 col--lg-12">
                             <div class="box">
-                                <h4>{{ 'checkout.step.shipment.title' | trans }} n&#176;{{ loop.index }}</h4>
+                                <h4>{{ 'quote_request_page.quote_request.shipment_counter' | trans({
+                                        '%index%': loop.index,
+                                        '%length%': data.shipmentGroups | length,
+                                    }) }}</h4>
                                 <hr>
                                 <h6><strong>{{ 'checkout.step.summary.products' | trans }}</strong></h6>
 
@@ -115,47 +118,60 @@
                                 } only %}
                                 {% endwidget %}
 
-                                {% for item in shipmentGroup.items %}
-                                    {% set cartItem = item.bundleProduct ?? item %}
-                                    {% set isConfiguredBundle = cartItem.configuredBundleItem is defined and cartItem.configuredBundleItem is not empty %}
-                                    {% set isGiftCardExists = cartItem.giftCardMetadata is not null and cartItem.giftCardMetadata.isGiftCard %}
+                                {% set cartItems = shipmentGroup.items | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}
+                                {% for cartItem in cartItems %}
+                                    {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
+                                        data: {
+                                            product: cartItem,
+                                        },
+                                        embed: {
+                                            priceMode: quote.priceMode,
+                                            currency: quote.currency,
+                                        },
+                                    } only %}
+                                        {% block additionalInformation %}
+                                            {% include molecule('quote-request-item-summary', 'QuoteRequestPage') with {
+                                                data: {
+                                                    priceMode: embed.priceMode,
+                                                    unitPrice: data.product.unitPrice | money(true, embed.currency.code),
+                                                    subtotalPrice: data.product.sumSubtotalAggregation | money(true, embed.currency.code),
+                                                    cartItem: data.product,
+                                                    currency: embed.currency,
+                                                },
+                                            } only %}
+                                        {% endblock %}
 
-                                    {% if not isConfiguredBundle %}
-                                        {% embed molecule('summary-node', 'CheckoutPage') with {
-                                            data: {
-                                                node: cartItem,
-                                                bundleItems: item.bundleItems | default([]),
-                                            },
-                                        } only %}
-                                            {% block body %}
-                                                {{ parent() }}
+                                        {% block actions %}
+                                            {% if data.product.amountSalesUnit is empty %}
+                                                {{ 'cart.item_quantity' | trans }}:
+                                                <strong>{{ data.product.quantity }}</strong>
 
-                                                {% if data.node.cartNote %}
-                                                    {% include molecule('note-list', 'CartNoteWidget') ignore missing with {
-                                                        data: {
-                                                            label: 'cart_note.checkout_page.item_note',
-                                                            note: data.node.cartNote,
-                                                        },
-                                                    } only %}
+                                                {% if data.product.quantitySalesUnit %}
+                                                    {% set value = data.product.quantitySalesUnit.value %}
+                                                    {% set precision = data.product.quantitySalesUnit.precision %}
+                                                    {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+
+                                                    <p>
+                                                        <small class="text-secondary">
+                                                            [= {{ value / precision }} {{ salesUnitName | trans }}]
+                                                        </small>
+                                                    </p>
                                                 {% endif %}
-                                            {% endblock %}
-                                        {% endembed %}
-
-                                        {% if not loop.last %}<hr>{% endif %}
-                                    {% endif %}
+                                            {% endif %}
+                                        {% endblock %}
+                                    {% endembed %}
                                 {% endfor %}
+                                {% include molecule('quote-request-shipment-information', 'QuoteRequestPage') with {
+                                    data: {
+                                        shipment: shipmentGroup.shipment,
+                                        showAddress: true,
+                                    },
+                                } only %}
                             </div>
                         </div>
-
-                        {% include molecule('quote-request-shipment-group', 'QuoteRequestPage') ignore missing with {
-                            class: 'list spacing-y',
-                            data: {
-                                shipmentGroup: shipmentGroup,
-                            }
-                        } only %}
                     </div>
                 {% endfor %}
-            {% else %}
+                {% else %}
                 {% widget 'QuoteConfiguredBundleWidget' args [quote] with {
                     data: {
                         itemForms: data.quoteRequestForm.latestVersion.quote.items,
@@ -278,6 +294,13 @@
                         {% endblock %}
                     {% endembed %}
                 {% endfor %}
+
+                    <h4 class="spacing-x spacing-top spacing-top--big">{{ 'quote_request_page.quote_request.title_shipment_method' | trans }}</h4>
+                    {% include molecule('quote-request-shipment-information', 'QuoteRequestPage') with {
+                        data: {
+                            shipment: quote.shipment,
+                        },
+                    } only %}
             {% endif %}
         </div>
 
@@ -294,26 +317,38 @@
                     }
                 } only %}
                     {% block addAddressButton %}
-                        <a href="{{ url('agent/quote-request/checkout-address', {quoteRequestReference: data.quoteRequestReference}) }}" title="{{ 'quote_request_agent_page.add_address.button' | trans }}" {{ qa('cart-go-to-address') }}>
-                            {{ 'quote_request_agent_page.add_address.button' | trans }}
+                        <a href="{{ url('agent/quote-request/checkout-address', {quoteRequestReference: data.quoteRequestReference}) }}"
+                           class="button button--expand button--edit-items"
+                           title="{{ 'quote_request_page.quote_request.cta_add_address' | trans }}"
+                            {{ qa('cart-go-to-address') }}>
+                            {{ 'quote_request_page.quote_request.cta_add_address' | trans }}
                         </a>
                     {% endblock %}
 
                     {% block editAddressButton %}
-                        <a href="{{ url('agent/quote-request/checkout-address', {quoteRequestReference: data.quoteRequestReference}) }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-address') }}>
-                            {{ 'general.edit.button' | trans }}
+                        <a href="{{ url('agent/quote-request/checkout-address', {quoteRequestReference: data.quoteRequestReference}) }}"
+                           class="button button--expand button--edit-items"
+                           title="{{ 'quote_request_page.quote_request.cta_edit_address' | trans }}"
+                            {{ qa('cart-go-to-address') }}>
+                            {{ 'quote_request_page.quote_request.cta_edit_address' | trans }}
                         </a>
                     {% endblock %}
 
                     {% block addShipmentButton %}
-                        <a href="{{ url('agent/quote-request/checkout-shipment', {quoteRequestReference: data.quoteRequestReference}) }}" title="{{ 'quote_request_agent_page.add_shipment.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
-                            {{ 'quote_request_agent_page.add_shipment.button' | trans }}
+                        <a href="{{ url('agent/quote-request/checkout-shipment', {quoteRequestReference: data.quoteRequestReference}) }}"
+                           class="button button--expand button--edit-items"
+                           title="{{ 'quote_request_page.quote_request.cta_add_shipment_method' | trans }}"
+                            {{ qa('cart-go-to-shipment') }}>
+                            {{ 'quote_request_page.quote_request.cta_add_shipment_method' | trans }}
                         </a>
                     {% endblock %}
 
                     {% block editShipmentButton %}
-                        <a href="{{ url('agent/quote-request/checkout-shipment', {quoteRequestReference: data.quoteRequestReference}) }}" title="{{ 'general.edit.button' | trans }}" {{ qa('cart-go-to-shipment') }}>
-                            {{ 'general.edit.button' | trans }}
+                        <a href="{{ url('agent/quote-request/checkout-shipment', {quoteRequestReference: data.quoteRequestReference}) }}"
+                           class="button button--expand button--edit-items"
+                           title="{{ 'quote_request_page.quote_request.cta_edit_shipment_method' | trans }}"
+                            {{ qa('cart-go-to-shipment') }}>
+                            {{ 'quote_request_page.quote_request.cta_edit_shipment_method' | trans }}
                         </a>
                     {% endblock %}
                 {% endembed %}
@@ -323,7 +358,7 @@
                         data: {
                             cart: quote,
                             shipmentGroups: data.shipmentGroups,
-                            totalShipmentCosts: data.totalShipmentCosts,
+                            shipmentTotal: data.shipmentTotal,
                         },
                     } only %}
                 </div>

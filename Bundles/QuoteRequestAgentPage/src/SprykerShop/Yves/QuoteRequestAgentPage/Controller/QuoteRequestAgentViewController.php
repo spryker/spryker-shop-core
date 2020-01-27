@@ -103,7 +103,7 @@ class QuoteRequestAgentViewController extends QuoteRequestAgentAbstractControlle
             'isQuoteRequestRevisable' => $quoteRequestAgentClient->isQuoteRequestRevisable($quoteRequestTransfer),
             'isQuoteRequestEditable' => $quoteRequestAgentClient->isQuoteRequestEditable($quoteRequestTransfer),
             'shipmentGroups' => $shipmentGroupTransfers,
-            'totalShipmentCosts' => $this->getFactory()->createShipmentCostExtractor()->extractTotalShipmentCosts($shipmentGroupTransfers),
+            'shipmentTotal' => $this->getFactory()->createShipmentCostExtractor()->extractshipmentTotal($shipmentGroupTransfers),
         ];
     }
 

@@ -10,6 +10,8 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\QuoteRequestAgentPage\Calculator\ShipmentCostCalculator;
+use SprykerShop\Yves\QuoteRequestAgentPage\Calculator\ShipmentCostCalculatorInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCompanyUserClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCustomerClientInterface;
@@ -20,8 +22,6 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPa
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToStoreClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToShipmentServiceInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToUtilDateTimeServiceInterface;
-use SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ShipmentCostExtractor;
-use SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ShipmentCostExtractorInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider\QuoteRequestAgentFormDataProvider;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandler;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandlerInterface;
@@ -107,11 +107,11 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ShipmentCostExtractorInterface
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Calculator\ShipmentCostCalculatorInterface
      */
-    public function createShipmentCostExtractor(): ShipmentCostExtractorInterface
+    public function createShipmentCostCalculator(): ShipmentCostCalculatorInterface
     {
-        return new ShipmentCostExtractor();
+        return new ShipmentCostCalculator();
     }
 
     /**

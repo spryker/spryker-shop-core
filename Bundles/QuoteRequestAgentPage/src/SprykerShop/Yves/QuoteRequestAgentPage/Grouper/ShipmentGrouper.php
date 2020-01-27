@@ -33,11 +33,6 @@ class ShipmentGrouper implements ShipmentGrouperInterface
      */
     public function groupItemsByShippingAddress(QuoteRequestTransfer $quoteRequestTransfer): array
     {
-        $quoteRequestTransfer
-            ->requireLatestVersion()
-            ->getLatestVersion()
-                ->requireQuote();
-
         $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
 
         if ($this->hasItemsWithEmptyShippingAddress($quoteTransfer)) {
