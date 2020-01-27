@@ -11,14 +11,14 @@
 
 {% block body %}
     <div class="box">
-{#        {% include molecule('delivery-information', 'CustomerPage') ignore missing with {#}
-{#            data: {#}
-{#                carrierName: data.shipment.method.carrierName,#}
-{#                methodName: data.shipment.method.name,#}
-{#                storeCurrencyPrice: data.shipment.method.storeCurrencyPrice,#}
-{#                currencyIsoCode: data.shipment.method.currencyIsoCode,#}
-{#            },#}
-{#        } only %}#}
+        {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
+            data: {
+                carrierName: data.shipment.method.carrierName,
+                methodName: data.shipment.method.name,
+                storeCurrencyPrice: data.shipment.method.storeCurrencyPrice,
+                currencyIsoCode: data.shipment.method.currencyIsoCode,
+            },
+        } only %}
 
         {% if data.showAddress %}
             <hr class="box__separator spacing-y spacing-y--big">
