@@ -15,6 +15,7 @@
 
 {% block selection %}
     {% set listDataAttributes = {
+        type: 'button',
         'data-product-image-src': item.images ? item.images[0].externalUrlSmall,
         'data-product-name': item.name ? item.name,
         'data-product-rating': item.rating ? item.rating.averageRating,
