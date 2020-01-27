@@ -171,7 +171,7 @@
                         </div>
                     </div>
                 {% endfor %}
-                {% else %}
+            {% else %}
                 {% widget 'QuoteConfiguredBundleWidget' args [quote] with {
                     data: {
                         itemForms: data.quoteRequestForm.latestVersion.quote.items,
@@ -296,11 +296,7 @@
                 {% endfor %}
 
                     <h4 class="spacing-x spacing-top spacing-top--big">{{ 'quote_request_page.quote_request.title_shipment_method' | trans }}</h4>
-                    {% include molecule('quote-request-shipment-information', 'QuoteRequestPage') with {
-                        data: {
-                            shipment: quote.shipment,
-                        },
-                    } only %}
+
             {% endif %}
         </div>
 
