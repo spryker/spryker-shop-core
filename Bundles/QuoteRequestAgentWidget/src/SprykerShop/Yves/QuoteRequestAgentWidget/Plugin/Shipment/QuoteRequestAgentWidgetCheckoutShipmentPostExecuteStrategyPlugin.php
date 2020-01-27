@@ -17,10 +17,11 @@ class QuoteRequestAgentWidgetCheckoutShipmentPostExecuteStrategyPlugin extends A
 {
     protected const ROUTE_REDIRECT_CHECKOUT_SHIPMENT = 'checkout-shipment';
     protected const ROUTE_REDIRECT_CODE = 302;
+    protected const MESSAGE_SHIPMENT_SUCCESS_SAVE = 'global.shipment.success.save';
 
     /**
      * {@inheritDoc}
-     * -
+     * - Checks if this is an Agent.
      *
      * @api
      *
@@ -39,7 +40,7 @@ class QuoteRequestAgentWidgetCheckoutShipmentPostExecuteStrategyPlugin extends A
 
     /**
      * {@inheritDoc}
-     *  -
+     *  - Returns a redirect response with additional header.
      *
      * @api
      *
@@ -49,6 +50,9 @@ class QuoteRequestAgentWidgetCheckoutShipmentPostExecuteStrategyPlugin extends A
      */
     public function execute(ChainRouterInterface $router): RedirectResponse
     {
-        return new RedirectResponse($router->generate(self::ROUTE_REDIRECT_CHECKOUT_SHIPMENT, []), self::ROUTE_REDIRECT_CODE);
+        $response = new RedirectResponse($router->generate(self::ROUTE_REDIRECT_CHECKOUT_SHIPMENT, []), self::ROUTE_REDIRECT_CODE);
+        $response->headers->set(self::MESSAGE_SHIPMENT_SUCCESS_SAVE, self::MESSAGE_SHIPMENT_SUCCESS_SAVE);
+
+        return $response;
     }
 }

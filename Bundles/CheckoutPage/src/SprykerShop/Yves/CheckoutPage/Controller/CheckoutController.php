@@ -24,6 +24,7 @@ class CheckoutController extends AbstractController
     use PermissionAwareTrait;
 
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
+    protected const MESSAGE_SHIPMENT_SUCCESS_SAVE = 'global.shipment.success.save';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
@@ -139,7 +140,10 @@ class CheckoutController extends AbstractController
         );
 
         if (!is_array($response)) {
-            return $this->executeCheckoutShipmentPostExecutePlugins($response);
+            $response = $this->executeCheckoutShipmentPostExecutePlugins($response);
+            $this->showSuccessMassageIfExists($response);
+
+            return $response;
         }
 
         return $this->view(
@@ -329,5 +333,17 @@ class CheckoutController extends AbstractController
             ->executeCheckoutShipmentPostExecutePlugins($response, $quoteTransfer, $this->getRouter());
 
         return $response;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\RedirectResponse $response
+     *
+     * @return void
+     */
+    protected function showSuccessMassageIfExists(RedirectResponse $response): void
+    {
+        if ($response->headers->has(self::MESSAGE_SHIPMENT_SUCCESS_SAVE)) {
+            $this->addSuccessMessage($response->headers->get(self::MESSAGE_SHIPMENT_SUCCESS_SAVE));
+        }
     }
 }

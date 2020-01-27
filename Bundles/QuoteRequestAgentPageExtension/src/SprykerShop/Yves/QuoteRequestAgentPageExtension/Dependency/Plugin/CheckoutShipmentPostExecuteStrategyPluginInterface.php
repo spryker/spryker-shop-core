@@ -15,7 +15,7 @@ interface CheckoutShipmentPostExecuteStrategyPluginInterface
 {
     /**
      * Specification:
-     *  -
+     *  - Checks if this plugin is applicable for provided quote.
      *
      * @api
      *
@@ -27,7 +27,7 @@ interface CheckoutShipmentPostExecuteStrategyPluginInterface
 
     /**
      * Specification:
-     *  -
+     *  - Performs post execution checkout shipment action.
      *
      * @api
      *
