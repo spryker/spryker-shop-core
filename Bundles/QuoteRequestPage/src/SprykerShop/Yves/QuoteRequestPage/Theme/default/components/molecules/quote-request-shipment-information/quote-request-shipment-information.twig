@@ -27,7 +27,7 @@
 
             {% embed molecule('display-address') with {
                 data: {
-                    address: data.shippingAddress,
+                    address: data.shipment.shippingAddress,
                 },
             } only %}
                 {% block addressBadgeLabel %}{% endblock %}

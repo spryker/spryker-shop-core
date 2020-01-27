@@ -328,9 +328,13 @@ class CheckoutController extends AbstractController
             ->getQuoteClient()
             ->getQuote();
 
-        $response = $this->getFactory()
-            ->createCheckoutShipmentPostExecuter()
-            ->executeCheckoutShipmentPostExecutePlugins($response, $quoteTransfer, $this->getRouter());
+        $checkoutShipmentPostExecutePlugins = $this->getFactory()->getCheckoutShipmentPostExecuteStrategyPlugins();
+
+        foreach ($checkoutShipmentPostExecutePlugins as $checkoutShipmentPostExecuteStrategyPlugin) {
+            if ($checkoutShipmentPostExecuteStrategyPlugin->isApplicable($quoteTransfer)) {
+                $response = $checkoutShipmentPostExecuteStrategyPlugin->execute($this->getRouter());
+            }
+        }
 
         return $response;
     }
