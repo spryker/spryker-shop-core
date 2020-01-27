@@ -18,8 +18,7 @@ class QuoteRequestCheckerCheckoutShipmentStepEnterPreCheckPlugin extends Abstrac
 {
     /**
      * {@inheritDoc}
-     * - Checks if the shipment step must be hidden.
-     * - Returns true if quote request version reference and custom shipment price are set, false otherwise.
+     * - Checks if the shipment step should be hidden, returns true if quote request version reference and custom shipment price are set, false otherwise.
      *
      * @api
      *
@@ -31,6 +30,6 @@ class QuoteRequestCheckerCheckoutShipmentStepEnterPreCheckPlugin extends Abstrac
     {
         return $this->getFactory()
             ->getQuoteRequestClient()
-            ->isQuoteInQuoteRequestProcess($quoteTransfer);
+            ->shouldCheckoutShipmentStepBeHidden($quoteTransfer);
     }
 }

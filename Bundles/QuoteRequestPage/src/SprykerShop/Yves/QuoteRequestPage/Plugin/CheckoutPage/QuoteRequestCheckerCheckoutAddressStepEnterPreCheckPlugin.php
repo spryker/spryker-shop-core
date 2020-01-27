@@ -18,8 +18,7 @@ class QuoteRequestCheckerCheckoutAddressStepEnterPreCheckPlugin extends Abstract
 {
     /**
      * {@inheritDoc}
-     * - Checks if the address step must be hidden.
-     * - Returns true if quote request version reference and custom shipment price are set, false otherwise..
+     * - Checks if the address step should be hidden, returns true if quote request version reference and custom shipment price are set, false otherwise.
      *
      * @api
      *
@@ -31,6 +30,6 @@ class QuoteRequestCheckerCheckoutAddressStepEnterPreCheckPlugin extends Abstract
     {
         return $this->getFactory()
             ->getQuoteRequestClient()
-            ->isQuoteInQuoteRequestProcess($quoteTransfer);
+            ->shouldCheckoutAddressStepBeHidden($quoteTransfer);
     }
 }
