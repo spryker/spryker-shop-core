@@ -2,8 +2,7 @@
 
 {% define data = {
     activeMerchantTransfers: _widget.activeMerchantTransfers | default([]),
-    selectedMerchantReference: _widget.selectedMerchantReference | default,
-    requestUri: app.request.requestUri,
+    selectedMerchantReference: _widget.selectedMerchantReference | default
 } %}
 
 {% block body %}
@@ -11,8 +10,7 @@
         {% include molecule('merchant-selector', 'MerchantSwitcherWidget') with {
             data: {
                 activeMerchantTransfers: data.activeMerchantTransfers,
-                selectedMerchantReference: data.selectedMerchantReference,
-                requestUri: data.requestUri,
+                selectedMerchantReference: data.selectedMerchantReference
             },
         } only %}
     {% endif %}

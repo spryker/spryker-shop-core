@@ -8,8 +8,7 @@
 {% define data = {
     activeMerchantTransfers: required,
     selectedMerchantReference: required,
-    requestUri: required,
-    selectedMerchantNameTemplate: 'TargetMerchantName',
+    selectedMerchantNameTemplate: 'TargetMerchantName'
 } %}
 
 {% define attributes = {
@@ -51,7 +50,5 @@
                 {% endblock %}
             {% endembed %}
         {% endblock %}
-
-        <input type="hidden" name="referrer-url" value="{{ data.requestUri }}">
     </form>
 {% endblock %}
