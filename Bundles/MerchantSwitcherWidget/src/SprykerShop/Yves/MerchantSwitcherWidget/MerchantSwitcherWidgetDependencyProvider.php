@@ -9,11 +9,13 @@ namespace SprykerShop\Yves\MerchantSwitcherWidget;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientBridge;
 
 class MerchantSwitcherWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_MERCHANT_SEARCH = 'CLIENT_MERCHANT_SEARCH';
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -25,6 +27,7 @@ class MerchantSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
         $container = parent::provideDependencies($container);
 
         $container = $this->addMerchantSearchClient($container);
+        $container = $this->addApplication($container);
 
         return $container;
     }
@@ -39,6 +42,22 @@ class MerchantSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
         $container->set(static::CLIENT_MERCHANT_SEARCH, function (Container $container) {
             return new MerchantSwitcherWidgetToMerchantSearchClientBridge($container->getLocator()->merchantSearch()->client());
         });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addApplication(Container $container): Container
+    {
+        $container[static::PLUGIN_APPLICATION] = function () {
+            $pimplePlugin = new Pimple();
+
+            return $pimplePlugin->getApplication();
+        };
 
         return $container;
     }

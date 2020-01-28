@@ -7,10 +7,12 @@
 
 namespace SprykerShop\Yves\MerchantSwitcherWidget;
 
+use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\MerchantSwitcherWidget\ActiveMerchantReader\ActiveMerchantReader;
-use SprykerShop\Yves\MerchantSwitcherWidget\ActiveMerchantReader\ActiveMerchantReaderInterface;
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientInterface;
+use SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader\MerchantReader;
+use SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader\MerchantReaderInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig getConfig()
@@ -18,12 +20,13 @@ use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWi
 class MerchantSwitcherWidgetFactory extends AbstractFactory
 {
     /**
-     * @return \SprykerShop\Yves\MerchantSwitcherWidget\ActiveMerchantReader\ActiveMerchantReaderInterface
+     * @return \SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader\MerchantReaderInterface
      */
-    public function createActiveMerchantReader(): ActiveMerchantReaderInterface
+    public function createMerchantReader(): MerchantReaderInterface
     {
-        return new ActiveMerchantReader(
-            $this->getMerchantSearchClient()
+        return new MerchantReader(
+            $this->getMerchantSearchClient(),
+            $this->getRequest()
         );
     }
 
@@ -33,5 +36,21 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
     public function getMerchantSearchClient(): MerchantSwitcherWidgetToMerchantSearchClientInterface
     {
         return $this->getProvidedDependency(MerchantSwitcherWidgetDependencyProvider::CLIENT_MERCHANT_SEARCH);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    public function getRequest(): Request
+    {
+        return $this->getApplication()['request'];
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Communication\Application
+     */
+    public function getApplication(): Application
+    {
+        return $this->getProvidedDependency(MerchantSwitcherWidgetDependencyProvider::PLUGIN_APPLICATION);
     }
 }

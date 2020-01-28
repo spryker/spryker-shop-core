@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\MerchantSwitcherWidget\Widget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
-use SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig;
 
 /**
  * @method \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetFactory getFactory()
@@ -22,24 +21,8 @@ class MerchantSwitcherSelectorFormWidget extends AbstractWidget
             return;
         }
 
-        /** @var \Symfony\Component\HttpFoundation\Request $request */
-        $request = $this->getApplication()['request'];
-
-        $activeMerchantTransfers = $this->getFactory()
-            ->createActiveMerchantReader()
-            ->getActiveMerchants()
-            ->getMerchants();
-
-        $selectedMerchantReference = $request->cookies->get(MerchantSwitcherWidgetConfig::MERCHANT_SELECTOR_COOKIE_IDENTIFIER);
-
-        if (!$selectedMerchantReference) {
-            /** @var \Generated\Shared\Transfer\MerchantTransfer $selectedMerchantTransfer */
-            $selectedMerchantTransfer = $activeMerchantTransfers->getIterator()->current();
-            $selectedMerchantReference = $selectedMerchantTransfer->getMerchantKey();
-        }
-
-        $this->addParameter('activeMerchantTransfers', $activeMerchantTransfers);
-        $this->addParameter('selectedMerchantReference', $selectedMerchantReference);
+        $this->addActiveMerchantTransfersParameter();
+        $this->addSelectedMerchantReferenceParameter();
     }
 
     /**
@@ -56,5 +39,30 @@ class MerchantSwitcherSelectorFormWidget extends AbstractWidget
     public static function getTemplate(): string
     {
         return '@MerchantSwitcherWidget/views/merchant-switcher-selector-form-widget/merchant-switcher-selector-form-widget.twig';
+    }
+
+    /**
+     * @return void
+     */
+    protected function addActiveMerchantTransfersParameter(): void
+    {
+        $activeMerchantTransfers = $this->getFactory()
+            ->createMerchantReader()
+            ->getActiveMerchants()
+            ->getMerchants();
+
+        $this->addParameter('activeMerchantTransfers', $activeMerchantTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    protected function addSelectedMerchantReferenceParameter(): void
+    {
+        $selectedMerchantReference = $this->getFactory()
+            ->createMerchantReader()
+            ->getSelectedMerchantReference();
+
+        $this->addParameter('selectedMerchantReference', $selectedMerchantReference);
     }
 }
