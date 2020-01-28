@@ -7,7 +7,6 @@
 {% define data = {
     cart: required,
     shipmentGroups: [],
-    shipmentTotal: null,
 } %}
 
 {% block body %}
@@ -41,20 +40,22 @@
         } only %}
 
         {% block cartShipment %}
-            <ul class="list spacing-y">
-                <li>
-                    <strong class="float-right">{{ data.shipmentTotal | money(true, data.cart.currency.code) }}</strong>
-                    <strong>{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
-                    {% for shipmentGroup in data.shipmentGroups %}
-                        <div class="grid grid--justify">
-                            <span class="col col--sm-10">{{ shipmentGroup.shipment.method.carrierName }}
-                                - {{ shipmentGroup.shipment.method.name }}</span>
-                            <span class="col col--expand text-right">{{ shipmentGroup.shipment.method.storeCurrencyPrice | money(true, data.cart.currency.code) }}</span>
-                        </div>
-                    {% endfor %}
-                    <hr>
-                </li>
-            </ul>
+            {% if data.cart.totals.shipmentTotal %}
+                <ul class="list spacing-y">
+                    <li>
+                        <strong class="float-right">{{ data.cart.totals.shipmentTotal | money(true, data.cart.currency.code) }}</strong>
+                        <strong>{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
+                        {% for shipmentGroup in data.shipmentGroups %}
+                            <div class="grid grid--justify">
+                                <span class="col col--sm-10">{{ shipmentGroup.shipment.method.carrierName }}
+                                    - {{ shipmentGroup.shipment.method.name }}</span>
+                                <span class="col col--expand text-right">{{ shipmentGroup.shipment.method.storeCurrencyPrice | money(true, data.cart.currency.code) }}</span>
+                            </div>
+                        {% endfor %}
+                        <hr>
+                    </li>
+                </ul>
+            {% endif %}
         {% endblock %}
 
         <ul class="list spacing-y">
