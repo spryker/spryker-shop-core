@@ -15,9 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MerchantSwitcherController extends AbstractController
 {
-    protected const URL_PARAM_MERCHANT_REFERENCE = 'merchant-reference';
-    protected const URL_PARAM_REFERRER_URL = 'referrer-url';
+    protected const PARAM_MERCHANT_REFERENCE = 'merchant-reference';
     protected const HEADER_REFERER = 'referer';
+    protected const COOKIE_TIME_EXPIRATION = 10 * 365 * 24 * 60 * 60;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -26,9 +26,9 @@ class MerchantSwitcherController extends AbstractController
      */
     public function switchMerchantAction(Request $request): RedirectResponse
     {
-        $merchantReference = $request->get(static::URL_PARAM_MERCHANT_REFERENCE);
+        $merchantReference = $request->get(static::PARAM_MERCHANT_REFERENCE);
 
-        $cookie = Cookie::create(MerchantSwitcherWidgetConfig::MERCHANT_SELECTOR_COOKIE_IDENTIFIER, $merchantReference, time() + (10 * 365 * 24 * 60 * 60));
+        $cookie = Cookie::create(MerchantSwitcherWidgetConfig::MERCHANT_SELECTOR_COOKIE_IDENTIFIER, $merchantReference, time() + static::COOKIE_TIME_EXPIRATION);
 
         $response = $this->createRedirectResponse($request);
         $response->headers->setCookie($cookie);

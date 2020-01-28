@@ -26,7 +26,7 @@ class MerchantSwitcherWidgetRouteProviderPlugin extends AbstractRouteProviderPlu
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
-        $routeCollection = $this->addMerchantSwitchRoute($routeCollection);
+        $routeCollection = $this->addSwitchMerchantRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -36,7 +36,7 @@ class MerchantSwitcherWidgetRouteProviderPlugin extends AbstractRouteProviderPlu
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
      */
-    protected function addMerchantSwitchRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addSwitchMerchantRoute(RouteCollection $routeCollection): RouteCollection
     {
         $routeCollection->add(
             static::ROUTE_SWITCH_MERCHANT,
