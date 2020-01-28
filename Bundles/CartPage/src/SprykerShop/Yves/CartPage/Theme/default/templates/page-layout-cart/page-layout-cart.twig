@@ -9,6 +9,7 @@
     attributes: _view.attributes,
     request: app.request,
     title: 'cart.cart' | trans,
+    requestUri: app.request.requestUri,
 } %}
 
 {% block breadcrumbs %}
@@ -61,7 +62,7 @@
                             {% widget 'CommentThreadWidget' args [
                                 data.cart.idQuote,
                                 'quote',
-                                app.request.requestUri,
+                                data.requestUri,
                                 data.cart.commentThread
                             ] only %}
                             {% endwidget %}
@@ -172,7 +173,7 @@
                                 {% widget 'CommentThreadWidget' args [
                                     data.cart.idQuote,
                                     'quote',
-                                    app.request.requestUri,
+                                    data.requestUri,
                                     data.cart.commentThread
                                 ] only %}
                                 {% endwidget %}

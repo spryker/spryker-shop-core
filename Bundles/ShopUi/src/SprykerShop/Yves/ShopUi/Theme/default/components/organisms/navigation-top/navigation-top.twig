@@ -10,6 +10,9 @@
     showUserMenu: not (hideUserMenu | default(false)),
     isInline: true,
     withSeparators: true,
+    pathInfo: app.request.pathInfo,
+    queryString: app.request.queryString,
+    requestUri: app.request.requestUri,
 } %}
 
 {% set cartQuantity = data.cartQuantity > 0 ? data.cartQuantity ~ ' ' : '' %}
@@ -31,14 +34,14 @@
         {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
         <li class="menu__item">
             {% widget 'LanguageSwitcherWidget' args [
-                app.request.pathInfo,
-                app.request.queryString,
-                app.request.requestUri
+                data.pathInfo,
+                data.queryString,
+                data.requestUri
             ] only %}
             {% elsewidget 'LanguageSwitcherWidgetPlugin' args [
-                app.request.pathInfo,
-                app.request.queryString,
-                app.request.requestUri
+                data.pathInfo,
+                data.queryString,
+                data.requestUri
             ] only %} {# @deprecated Use LanguageSwitcherWidget instead. #}
             {% endwidget %}
         </li>
