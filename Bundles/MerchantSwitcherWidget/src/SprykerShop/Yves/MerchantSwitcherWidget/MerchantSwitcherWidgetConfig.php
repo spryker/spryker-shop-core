@@ -14,6 +14,8 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
  */
 class MerchantSwitcherWidgetConfig extends AbstractBundleConfig
 {
+    public const MERCHANT_SELECTOR_COOKIE_IDENTIFIER = 'merchant_switcher_selector-merchant_reference';
+
     /**
      * @return bool
      */

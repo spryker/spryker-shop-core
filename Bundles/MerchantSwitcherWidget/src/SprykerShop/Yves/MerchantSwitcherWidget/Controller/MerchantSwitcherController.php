@@ -7,16 +7,17 @@
 
 namespace SprykerShop\Yves\MerchantSwitcherWidget\Controller;
 
-use SprykerShop\Shared\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig;
+use SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class MerchantSwitcherSelectorFormWidgetController extends AbstractController
+class MerchantSwitcherController extends AbstractController
 {
-    public const URL_PARAM_PRICE_MODE = 'merchant-reference';
-    public const URL_PARAM_REFERRER_URL = 'referrer-url';
+    protected const URL_PARAM_MERCHANT_REFERENCE = 'merchant-reference';
+    protected const URL_PARAM_REFERRER_URL = 'referrer-url';
+    protected const HEADER_REFERER = 'referer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -25,9 +26,9 @@ class MerchantSwitcherSelectorFormWidgetController extends AbstractController
      */
     public function switchMerchantAction(Request $request): RedirectResponse
     {
-        $merchantReference = $request->get(self::URL_PARAM_PRICE_MODE);
+        $merchantReference = $request->get(static::URL_PARAM_MERCHANT_REFERENCE);
 
-        $cookie = Cookie::create(MerchantSwitcherWidgetConfig::MERCHANT_SELECTOR_COOKIE_IDENTIFIER, $merchantReference);
+        $cookie = Cookie::create(MerchantSwitcherWidgetConfig::MERCHANT_SELECTOR_COOKIE_IDENTIFIER, $merchantReference, time() + (10 * 365 * 24 * 60 * 60));
 
         $response = $this->createRedirectResponse($request);
         $response->headers->setCookie($cookie);
@@ -42,8 +43,6 @@ class MerchantSwitcherSelectorFormWidgetController extends AbstractController
      */
     protected function createRedirectResponse(Request $request): RedirectResponse
     {
-        return $this->redirectResponseExternal(
-            urldecode($request->get(static::URL_PARAM_REFERRER_URL))
-        );
+        return $this->redirectResponseExternal($request->headers->get(static::HEADER_REFERER));
     }
 }

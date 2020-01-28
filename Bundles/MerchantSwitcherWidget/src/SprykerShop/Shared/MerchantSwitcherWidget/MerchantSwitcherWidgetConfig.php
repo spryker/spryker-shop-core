@@ -11,19 +11,11 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class MerchantSwitcherWidgetConfig extends AbstractBundleConfig
 {
-    /**
-     * Specification:
-     * - Identifier key for saving a selected merchant value to cookie.
-     *
-     * @api
-     */
-    public const MERCHANT_SELECTOR_COOKIE_IDENTIFIER = 'merchant_switcher_selector_merchant_reference';
-
     protected const ENABLE_MERCHANT_SWITCHER = true;
 
     /**
      * Specification:
-     * - Enables/disables all merchant switcher functionality.
+     * - Enables/disables merchant switcher functionality.
      *
      * @api
      *

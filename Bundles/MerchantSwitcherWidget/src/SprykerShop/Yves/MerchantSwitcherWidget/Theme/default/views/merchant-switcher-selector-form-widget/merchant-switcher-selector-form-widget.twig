@@ -7,7 +7,7 @@
 
 {% block body %}
     {% if data.activeMerchantTransfers is not empty %}
-        <form method="GET" action="{{ path('switch-merchant') }}">
+        <form method="POST" action="{{ path('switch-merchant') }}">
             {% embed atom('select') with {
                 modifiers: ['naked'],
                 attributes: {
@@ -20,13 +20,11 @@
                 },
             } only %}
                 {% block options %}
-                    {% for activeMerchant in embed.activeMerchantTransfers %}
-                        <option value="{{ activeMerchant.merchantKey }}" {{ (activeMerchant.merchantKey == embed.selectedMerchantReference) ? 'selected' : ''}}>{{ activeMerchant.name }}</option>
+                    {% for activeMerchantTransfer in embed.activeMerchantTransfers %}
+                        <option value="{{ activeMerchantTransfer.merchantKey }}" {{ (activeMerchantTransfer.merchantKey == embed.selectedMerchantReference) ? 'selected' : ''}}>{{ activeMerchantTransfer.name }}</option>
                     {% endfor %}
                 {% endblock %}
             {% endembed %}
-
-            <input type="hidden" name="referrer-url" value="{{ app.request.requestUri }}">
         </form>
     {% endif %}
 {% endblock %}

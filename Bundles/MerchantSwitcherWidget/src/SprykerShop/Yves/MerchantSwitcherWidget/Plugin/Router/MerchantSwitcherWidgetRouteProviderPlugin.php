@@ -10,9 +10,9 @@ namespace SprykerShop\Yves\MerchantSwitcherWidget\Plugin\Router;
 use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 use Spryker\Yves\Router\Route\RouteCollection;
 
-class MerchantSwitcherSelectorFormWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
+class MerchantSwitcherWidgetRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-    protected const ROUTE_MERCHANT_SWITCH = 'switch-merchant';
+    protected const ROUTE_SWITCH_MERCHANT = 'switch-merchant';
 
     /**
      * Specification:
@@ -39,8 +39,8 @@ class MerchantSwitcherSelectorFormWidgetRouteProviderPlugin extends AbstractRout
     protected function addMerchantSwitchRoute(RouteCollection $routeCollection): RouteCollection
     {
         $routeCollection->add(
-            static::ROUTE_MERCHANT_SWITCH,
-            $this->buildRoute('/merchant/merchant-switch', 'MerchantSwitcherWidget', 'MerchantSwitcherSelectorFormWidget', 'switchMerchant')
+            static::ROUTE_SWITCH_MERCHANT,
+            $this->buildPostRoute('/merchant/switch', 'MerchantSwitcherWidget', 'MerchantSwitcher', 'switchMerchant')
         );
 
         return $routeCollection;
