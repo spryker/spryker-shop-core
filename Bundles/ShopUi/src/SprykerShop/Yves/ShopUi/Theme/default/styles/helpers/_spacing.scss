@@ -4,6 +4,11 @@
  * @param {List} $sides [[]] List of sides to set properties.
  */
 @mixin helper-spacing($name, $sides: []) {
+    @include helper-spacing-outer($name, $sides: []);
+    @include helper-spacing-inner($name, $sides: []);
+}
+
+@mixin helper-spacing-outer($name, $sides: []) {
     #{$name} {
         @each $spacing-name, $spacing-value in $setting-spacing {
             @if $spacing-name == 'default' {
@@ -29,7 +34,9 @@
 
         @content;
     }
+}
 
+@mixin helper-spacing-inner($name, $sides: []) {
     #{$name}--inner {
         @each $spacing-name, $spacing-value in $setting-spacing {
             @if $spacing-name == 'default' {
