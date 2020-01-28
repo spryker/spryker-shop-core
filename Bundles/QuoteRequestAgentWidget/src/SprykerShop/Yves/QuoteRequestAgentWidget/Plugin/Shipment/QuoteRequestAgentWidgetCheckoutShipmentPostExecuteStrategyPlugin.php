@@ -16,8 +16,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class QuoteRequestAgentWidgetCheckoutShipmentPostExecuteStrategyPlugin extends AbstractPlugin implements CheckoutShipmentPostExecuteStrategyPluginInterface
 {
     protected const ROUTE_REDIRECT_CHECKOUT_SHIPMENT = 'checkout-shipment';
-    protected const ROUTE_REDIRECT_CODE = 302;
-    protected const MESSAGE_SHIPMENT_SUCCESS_SAVE = 'global.shipment.success.save';
+    protected const GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE = 'global.shipment.success.save';
 
     /**
      * {@inheritDoc}
@@ -31,11 +30,7 @@ class QuoteRequestAgentWidgetCheckoutShipmentPostExecuteStrategyPlugin extends A
      */
     public function isApplicable(QuoteTransfer $quoteTransfer): bool
     {
-        if ($quoteTransfer->getQuoteRequestReference() && $quoteTransfer->getQuoteRequestVersionReference()) {
-            return true;
-        }
-
-        return false;
+        return $quoteTransfer->getQuoteRequestReference() && $quoteTransfer->getQuoteRequestVersionReference();
     }
 
     /**
@@ -50,9 +45,9 @@ class QuoteRequestAgentWidgetCheckoutShipmentPostExecuteStrategyPlugin extends A
      */
     public function execute(ChainRouterInterface $router): RedirectResponse
     {
-        $response = new RedirectResponse($router->generate(self::ROUTE_REDIRECT_CHECKOUT_SHIPMENT, []), self::ROUTE_REDIRECT_CODE);
-        $response->headers->set(self::MESSAGE_SHIPMENT_SUCCESS_SAVE, self::MESSAGE_SHIPMENT_SUCCESS_SAVE);
+        $redirectResponse = new RedirectResponse($router->generate(static::ROUTE_REDIRECT_CHECKOUT_SHIPMENT));
+        $redirectResponse->headers->set(static::GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE, static::GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE);
 
-        return $response;
+        return $redirectResponse;
     }
 }

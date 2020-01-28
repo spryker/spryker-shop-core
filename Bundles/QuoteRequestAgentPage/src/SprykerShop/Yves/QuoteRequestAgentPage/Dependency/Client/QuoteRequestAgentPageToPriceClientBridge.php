@@ -25,7 +25,7 @@ class QuoteRequestAgentPageToPriceClientBridge implements QuoteRequestAgentPageT
     /**
      * @return string
      */
-    public function getCurrentPriceMode(): string
+    public function getCurrentPriceMode()
     {
         return $this->priceClient->getCurrentPriceMode();
     }

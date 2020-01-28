@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -84,7 +83,7 @@ class QuoteRequestAgentCheckoutAddressController extends QuoteRequestAgentAbstra
             ->getCompanyUserClient()
             ->findCompanyUser();
 
-        if ($companyUserTransfer && ($companyUserTransfer->getIdCompanyUser() !== $quoteRequestTransfer->getCompanyUser()->getIdCompanyUser())) {
+        if ($companyUserTransfer && $companyUserTransfer->getIdCompanyUser() !== $quoteRequestTransfer->getCompanyUser()->getIdCompanyUser()) {
             return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT_ITEMS, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
                 static::PARAM_SWITCH_USER => '_exit',
@@ -92,21 +91,9 @@ class QuoteRequestAgentCheckoutAddressController extends QuoteRequestAgentAbstra
         }
 
         if ($quoteTransfer->getQuoteRequestReference() === $quoteRequestTransfer->getQuoteRequestReference()) {
-            return $this->redirectResponseInternal(static::ROUTE_CART);
+            return $this->redirectResponseInternal(static::ROUTE_CHECKOUT_ADDRESS);
         }
 
         return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     *
-     * @return void
-     */
-    protected function handleQuoteResponseErrors(QuoteResponseTransfer $quoteResponseTransfer): void
-    {
-        foreach ($quoteResponseTransfer->getErrors() as $errorTransfer) {
-            $this->addErrorMessage($errorTransfer->getMessage());
-        }
     }
 }

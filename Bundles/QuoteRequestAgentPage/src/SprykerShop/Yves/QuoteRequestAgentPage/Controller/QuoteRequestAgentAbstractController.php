@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -112,6 +113,18 @@ class QuoteRequestAgentAbstractController extends AbstractController
     {
         foreach ($quoteRequestResponseTransfer->getMessages() as $messageTransfer) {
             $this->addErrorMessage($messageTransfer->getValue());
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return void
+     */
+    protected function handleQuoteResponseErrors(QuoteResponseTransfer $quoteResponseTransfer): void
+    {
+        foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
+            $this->addErrorMessage($quoteErrorTransfer->getMessage());
         }
     }
 }

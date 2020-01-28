@@ -83,8 +83,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CHECKOUT_ADDRESS_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_ADDRESS_STEP_ENTER_PRE_CHECK';
     public const PLUGINS_CHECKOUT_SHIPMENT_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_SHIPMENT_STEP_ENTER_PRE_CHECK';
     public const PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK';
-
-    public const PLUGINS_CHECKOUT_SHIPMENT_POST_EXECUTE = 'PLUGINS_CHECKOUT_SHIPMENT_POST_EXECUTE';
+    public const PLUGINS_CHECKOUT_SHIPMENT_POST_EXECUTE_STRATEGY = 'PLUGINS_CHECKOUT_SHIPMENT_POST_EXECUTE_STRATEGY';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -799,7 +798,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCheckoutShipmentPostExecuteStrategyPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_CHECKOUT_SHIPMENT_POST_EXECUTE, function () {
+        $container->set(static::PLUGINS_CHECKOUT_SHIPMENT_POST_EXECUTE_STRATEGY, function () {
             return $this->getCheckoutShipmentPostExecuteStrategyPlugins();
         });
 

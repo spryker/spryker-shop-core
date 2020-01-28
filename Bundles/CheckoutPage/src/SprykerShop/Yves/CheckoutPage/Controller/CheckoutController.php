@@ -24,7 +24,7 @@ class CheckoutController extends AbstractController
     use PermissionAwareTrait;
 
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
-    protected const MESSAGE_SHIPMENT_SUCCESS_SAVE = 'global.shipment.success.save';
+    protected const GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE = 'global.shipment.success.save';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
@@ -141,7 +141,7 @@ class CheckoutController extends AbstractController
 
         if (!is_array($response)) {
             $response = $this->executeCheckoutShipmentPostExecutePlugins($response);
-            $this->showSuccessMassageIfExists($response);
+            $this->showSuccessMessageIfExists($response);
 
             return $response;
         }
@@ -328,9 +328,9 @@ class CheckoutController extends AbstractController
             ->getQuoteClient()
             ->getQuote();
 
-        $checkoutShipmentPostExecutePlugins = $this->getFactory()->getCheckoutShipmentPostExecuteStrategyPlugins();
+        $checkoutShipmentPostExecuteStrategyPlugins = $this->getFactory()->getCheckoutShipmentPostExecuteStrategyPlugins();
 
-        foreach ($checkoutShipmentPostExecutePlugins as $checkoutShipmentPostExecuteStrategyPlugin) {
+        foreach ($checkoutShipmentPostExecuteStrategyPlugins as $checkoutShipmentPostExecuteStrategyPlugin) {
             if ($checkoutShipmentPostExecuteStrategyPlugin->isApplicable($quoteTransfer)) {
                 $response = $checkoutShipmentPostExecuteStrategyPlugin->execute($this->getRouter());
             }
@@ -344,10 +344,10 @@ class CheckoutController extends AbstractController
      *
      * @return void
      */
-    protected function showSuccessMassageIfExists(RedirectResponse $response): void
+    protected function showSuccessMessageIfExists(RedirectResponse $response): void
     {
-        if ($response->headers->has(self::MESSAGE_SHIPMENT_SUCCESS_SAVE)) {
-            $this->addSuccessMessage($response->headers->get(self::MESSAGE_SHIPMENT_SUCCESS_SAVE));
+        if ($response->headers->has(self::GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE)) {
+            $this->addSuccessMessage($response->headers->get(self::GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE));
         }
     }
 }

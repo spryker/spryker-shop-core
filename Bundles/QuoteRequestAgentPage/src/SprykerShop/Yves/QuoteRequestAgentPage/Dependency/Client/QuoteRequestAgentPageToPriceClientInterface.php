@@ -12,5 +12,5 @@ interface QuoteRequestAgentPageToPriceClientInterface
     /**
      * @return string
      */
-    public function getCurrentPriceMode(): string;
+    public function getCurrentPriceMode();
 }

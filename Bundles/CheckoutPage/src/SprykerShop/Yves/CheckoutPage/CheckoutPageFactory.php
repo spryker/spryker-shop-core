@@ -263,7 +263,7 @@ class CheckoutPageFactory extends AbstractFactory
      */
     public function getCheckoutShipmentPostExecuteStrategyPlugins(): array
     {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_SHIPMENT_POST_EXECUTE);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_SHIPMENT_POST_EXECUTE_STRATEGY);
     }
 
     /**

@@ -7,12 +7,10 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 interface QuoteRequestAgentPageToStoreClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore(): StoreTransfer;
+    public function getCurrentStore();
 }

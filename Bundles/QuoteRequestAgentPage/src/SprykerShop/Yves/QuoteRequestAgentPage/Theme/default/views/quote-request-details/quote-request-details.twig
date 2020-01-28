@@ -9,7 +9,6 @@
     isQuoteRequestRevisable: _view.isQuoteRequestRevisable,
     isQuoteRequestEditable: _view.isQuoteRequestEditable,
     shipmentGroups: _view.shipmentGroups | default([]),
-    shipmentTotal: _view.shipmentTotal,
 } %}
 
 {% set isLatestVersion = (data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion) ? true : false %}
@@ -257,7 +256,6 @@
 
         <div class="col col--sm-12 col--xl-4">
             {% if quote and quote.items | length %}
-
                 {% include molecule('quote-request-delivery-summary', 'QuoteRequestPage') ignore missing with {
                     class: 'list spacing-y',
                     data: {
@@ -271,7 +269,6 @@
                         data: {
                             cart: quote,
                             shipmentGroups: data.shipmentGroups,
-                            shipmentTotal: data.shipmentTotal,
                         },
                     } only %}
                 </div>

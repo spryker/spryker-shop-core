@@ -16,10 +16,10 @@ interface QuoteRequestAgentPageToQuoteClientInterface
      *
      * @return void
      */
-    public function setQuote(QuoteTransfer $quoteTransfer): void;
+    public function setQuote(QuoteTransfer $quoteTransfer);
 
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getQuote(): QuoteTransfer;
+    public function getQuote();
 }

@@ -7,12 +7,10 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-
 interface QuoteRequestAgentPageToCustomerClientInterface
 {
     /***
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer(): ?CustomerTransfer;
+    public function getCustomer();
 }
