@@ -27,7 +27,7 @@
 {% endblock %}
 
 {% block body %}
-    <form class="{{ config.jsName }}__form {% block formClass %}{% endblock %}" method="GET" action="{{ path('switch-merchant') }}">
+    <form class="{{ config.jsName }}__form {% block formClass %}{% endblock %}" method="POST" action="{{ path('switch-merchant') }}">
         {% block merchantSwitcher %}
             {% embed atom('select') with {
                 modifiers: ['naked'],
@@ -43,9 +43,9 @@
                 {% block selectClass %}{{ embed.jsName }}__select{% endblock %}
 
                 {% block options %}
-                    {% for activeMerchant in embed.activeMerchantTransfers %}
-                        <option value="{{ activeMerchant.merchantKey }}" {{ activeMerchant.merchantKey == embed.selectedMerchantReference ? 'selected' }}>
-                            {{ activeMerchant.name }}
+                    {% for activeMerchantTransfer in embed.activeMerchantTransfers %}
+                        <option value="{{ activeMerchantTransfer.merchantKey }}" {{ activeMerchantTransfer.merchantKey == embed.selectedMerchantReference ? 'selected' }}>
+                            {{ activeMerchantTransfer.name }}
                         </option>
                     {% endfor %}
                 {% endblock %}
