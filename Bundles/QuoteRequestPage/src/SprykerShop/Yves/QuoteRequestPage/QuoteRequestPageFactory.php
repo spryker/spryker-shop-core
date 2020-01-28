@@ -23,7 +23,9 @@ use SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToUtilD
 use SprykerShop\Yves\QuoteRequestPage\Form\DataProvider\QuoteRequestFormDataProvider;
 use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandler;
 use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandlerInterface;
+use SprykerShop\Yves\QuoteRequestPage\Form\QuoteRequestEditAddressConfirmForm;
 use SprykerShop\Yves\QuoteRequestPage\Form\QuoteRequestEditItemsConfirmForm;
+use SprykerShop\Yves\QuoteRequestPage\Form\QuoteRequestEditShipmentConfirmForm;
 use SprykerShop\Yves\QuoteRequestPage\Form\QuoteRequestForm;
 use SprykerShop\Yves\QuoteRequestPage\Grouper\ShipmentGrouper;
 use SprykerShop\Yves\QuoteRequestPage\Grouper\ShipmentGrouperInterface;
@@ -102,6 +104,32 @@ class QuoteRequestPageFactory extends AbstractFactory
     {
         return $this->getFormFactory()->create(
             QuoteRequestEditItemsConfirmForm::class,
+            $quoteRequestTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getQuoteRequestEditAddressConfirmForm(QuoteRequestTransfer $quoteRequestTransfer): FormInterface
+    {
+        return $this->getFormFactory()->create(
+            QuoteRequestEditAddressConfirmForm::class,
+            $quoteRequestTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getQuoteRequestEditShipmentConfirmForm(QuoteRequestTransfer $quoteRequestTransfer): FormInterface
+    {
+        return $this->getFormFactory()->create(
+            QuoteRequestEditShipmentConfirmForm::class,
             $quoteRequestTransfer
         );
     }
