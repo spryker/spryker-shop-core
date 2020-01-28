@@ -1,0 +1,57 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'merchant-selector',
+    tag: 'merchant-selector',
+} %}
+
+{% define data = {
+    activeMerchantTransfers: required,
+    selectedMerchantReference: required,
+    requestUri: required,
+    selectedMerchantNameTemplate: 'TargetMerchantName',
+} %}
+
+{% define attributes = {
+    'selected-merchant-name-template': data.selectedMerchantNameTemplate,
+    'message-template': 'merchant_switcher.message' | trans({
+        '%currentMerchant%': block('currentMerchant'),
+        '%selectedMerchant%': data.selectedMerchantNameTemplate,
+    }),
+} %}
+
+{% block currentMerchant %}
+    {%- for activeMerchant in data.activeMerchantTransfers %}
+        {{- activeMerchant.merchantKey == data.selectedMerchantReference ? activeMerchant.name -}}
+    {% endfor -%}
+{% endblock %}
+
+{% block body %}
+    <form class="{{ config.jsName }}__form {% block formClass %}{% endblock %}" method="GET" action="{{ path('switch-merchant') }}">
+        {% block merchantSwitcher %}
+            {% embed atom('select') with {
+                modifiers: ['naked'],
+                attributes: {
+                    name: 'merchant-reference',
+                },
+                embed: {
+                    jsName: config.jsName,
+                    activeMerchantTransfers: data.activeMerchantTransfers,
+                    selectedMerchantReference: data.selectedMerchantReference,
+                },
+            } only %}
+                {% block selectClass %}{{ embed.jsName }}__select{% endblock %}
+
+                {% block options %}
+                    {% for activeMerchant in embed.activeMerchantTransfers %}
+                        <option value="{{ activeMerchant.merchantKey }}" {{ activeMerchant.merchantKey == embed.selectedMerchantReference ? 'selected' }}>
+                            {{ activeMerchant.name }}
+                        </option>
+                    {% endfor %}
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+
+        <input type="hidden" name="referrer-url" value="{{ data.requestUri }}">
+    </form>
+{% endblock %}

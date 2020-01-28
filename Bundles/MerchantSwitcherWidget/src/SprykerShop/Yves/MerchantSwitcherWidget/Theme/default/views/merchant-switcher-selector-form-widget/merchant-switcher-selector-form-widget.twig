@@ -2,29 +2,18 @@
 
 {% define data = {
     activeMerchantTransfers: _widget.activeMerchantTransfers | default([]),
-    selectedMerchantReference: _widget.selectedMerchantReference | default
+    selectedMerchantReference: _widget.selectedMerchantReference | default,
+    requestUri: app.request.requestUri,
 } %}
 
 {% block body %}
-    {% if data.activeMerchantTransfers is not empty %}
-        <form method="POST" action="{{ path('switch-merchant') }}">
-            {% embed atom('select') with {
-                modifiers: ['naked'],
-                attributes: {
-                    name: 'merchant-reference',
-                    'data-form-submitter': true,
-                },
-                embed: {
-                    activeMerchantTransfers: data.activeMerchantTransfers,
-                    selectedMerchantReference: data.selectedMerchantReference,
-                },
-            } only %}
-                {% block options %}
-                    {% for activeMerchantTransfer in embed.activeMerchantTransfers %}
-                        <option value="{{ activeMerchantTransfer.merchantKey }}" {{ (activeMerchantTransfer.merchantKey == embed.selectedMerchantReference) ? 'selected' : ''}}>{{ activeMerchantTransfer.name }}</option>
-                    {% endfor %}
-                {% endblock %}
-            {% endembed %}
-        </form>
+    {% if data.activeMerchantTransfers %}
+        {% include molecule('merchant-selector', 'MerchantSwitcherWidget') with {
+            data: {
+                activeMerchantTransfers: data.activeMerchantTransfers,
+                selectedMerchantReference: data.selectedMerchantReference,
+                requestUri: data.requestUri,
+            },
+        } only %}
     {% endif %}
 {% endblock %}
