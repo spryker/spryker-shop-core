@@ -28,7 +28,7 @@
     {% endif %}
 {% endblock %}
 
-{% block orderInformatopn %}
+{% block orderInformation %}
     {% for child in data.quoteRequestForm.latestVersion.metadata %}
         <div class="col col--sm-12 col--xl-6">
             <div class="box">
@@ -38,7 +38,7 @@
     {% endfor %}
 {% endblock %}
 
-{% block rgqInformatopn %}
+{% block rfqInformation %}
     <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}: <b>{{ data.quoteRequestForm.vars.value.createdAt | formatDateTime }}</b></p>
     <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:</p>
     <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:</p>
@@ -54,14 +54,14 @@
         }
     } only %}
 
-    <div class="box">
-        {% include molecule('quote-request-cart-summary', 'QuoteRequestPage') with {
-            data: {
-                cart: quote,
-                shipmentGroups: data.shipmentGroups,
-            },
-        } only %}
-    </div>
+    {% include molecule('quote-request-cart-summary', 'QuoteRequestPage') with {
+        class: 'box',
+        data: {
+            cart: quote,
+            shipmentGroups: data.shipmentGroups,
+        },
+    } only %}
+
     <div class="box spacing-top spacing-top--big">
         <a class="button button--expand button--cancel" href="{{ url('cart') }}">
             {{ 'quote_request_page.quote_request.actions.cancel' | trans }}

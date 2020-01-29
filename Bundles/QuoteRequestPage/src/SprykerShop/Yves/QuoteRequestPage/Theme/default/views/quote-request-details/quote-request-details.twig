@@ -17,7 +17,7 @@
     {{ parent() }}
 {% endblock %}
 
-{% block orderInformatopn %}
+{% block orderInformation %}
     {% for key, value in data.version.metadata %}
         <div class="col col--sm-12 col--xl-6">
             <div class="box">
@@ -29,8 +29,8 @@
     {% endfor %}
 {% endblock %}
 
-{% block rgqInformatopn %}
-    <h6>{{ "quote_request_page.quote_request.labels.information" | trans }}</h6>
+{% block rfqInformation %}
+    <h6>{{ 'quote_request_page.quote_request.labels.information' | trans }}</h6>
     <hr class="box__separator">
     <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}:
         <b>{{ data.quoteRequest.createdAt | formatDateTime }}</b>
@@ -44,7 +44,7 @@
         </p>
     {% endif %}
     <hr class="box__separator">
-    <h6>{{ "quote_request_page.quote_request.labels.version_information" | trans }}</h6>
+    <h6>{{ 'quote_request_page.quote_request.labels.version_information' | trans }}</h6>
     <hr class="box__separator">
     <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
         {% embed atom('select') with {
@@ -78,14 +78,13 @@
             }
         } only %}
 
-        <div class="box">
-            {% include molecule('quote-request-cart-summary', 'QuoteRequestPage') with {
-                data: {
-                    cart: quote,
-                    shipmentGroups: data.shipmentGroups,
-                },
-            } only %}
-        </div>
+        {% include molecule('quote-request-cart-summary', 'QuoteRequestPage') with {
+            class: 'box',
+            data: {
+                cart: quote,
+                shipmentGroups: data.shipmentGroups,
+            },
+        } only %}
     {% endif %}
 
     <div class="box">

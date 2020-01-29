@@ -33,13 +33,13 @@
     <div class="grid">
         <div class="col col--sm-12 col--xl-8">
             <div class="box">
-                {% block orderInformatopn %}{% endblock %}
+                {% block orderInformation %}{% endblock %}
             </div>
         </div>
 
         <div class="col col--sm-12 col--xl-4">
             <div class="box">
-                {% block rgqInformatopn %}{% endblock %}
+                {% block rfqInformation %}{% endblock %}
             </div>
         </div>
     </div>
@@ -48,7 +48,7 @@
         <div class="col col--sm-12 col--xl-8">
             {% block rfqContent %}
                 {% if quote %}
-                    {% if quote.priceMode is not empty %}
+                    {% if quote.priceMode %}
                         <div class="box">
                             {% include molecule('price-mode') with {
                                 data: {
