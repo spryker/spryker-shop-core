@@ -14,5 +14,5 @@ interface QuoteRequestAgentWidgetToMessengerClientInterface
      *
      * @return void
      */
-    public function addSuccessMessage(string $message): void;
+    public function addSuccessMessage($message);
 }
