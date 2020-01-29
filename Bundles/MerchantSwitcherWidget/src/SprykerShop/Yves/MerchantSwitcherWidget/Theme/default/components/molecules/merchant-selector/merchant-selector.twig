@@ -6,24 +6,18 @@
 } %}
 
 {% define data = {
-    activeMerchantTransfers: required,
-    selectedMerchantReference: required,
-    selectedMerchantNameTemplate: 'TargetMerchantName'
+    merchantList: required,
+    currentMerchantReference: required,
+    newMerchantNameTemplate: 'TargetMerchantName',
 } %}
 
 {% define attributes = {
-    'selected-merchant-name-template': data.selectedMerchantNameTemplate,
+    'new-merchant-name-template': data.newMerchantNameTemplate,
     'message-template': 'merchant_switcher.message' | trans({
-        '%currentMerchant%': block('currentMerchant'),
-        '%selectedMerchant%': data.selectedMerchantNameTemplate,
+        '%currentMerchant%': block('currentMerchantName'),
+        '%newMerchant%': data.newMerchantNameTemplate,
     }),
 } %}
-
-{% block currentMerchant %}
-    {%- for activeMerchant in data.activeMerchantTransfers %}
-        {{- activeMerchant.merchantKey == data.selectedMerchantReference ? activeMerchant.name -}}
-    {% endfor -%}
-{% endblock %}
 
 {% block body %}
     <form class="{{ config.jsName }}__form {% block formClass %}{% endblock %}" method="POST" action="{{ path('switch-merchant') }}">
@@ -35,17 +29,26 @@
                 },
                 embed: {
                     jsName: config.jsName,
-                    activeMerchantTransfers: data.activeMerchantTransfers,
-                    selectedMerchantReference: data.selectedMerchantReference,
+                    merchantList: data.merchantList,
+                    currentMerchantReference: data.currentMerchantReference,
                 },
             } only %}
                 {% block selectClass %}{{ embed.jsName }}__select{% endblock %}
 
                 {% block options %}
-                    {% for activeMerchantTransfer in embed.activeMerchantTransfers %}
-                        <option value="{{ activeMerchantTransfer.merchantKey }}" {{ activeMerchantTransfer.merchantKey == embed.selectedMerchantReference ? 'selected' }}>
-                            {{ activeMerchantTransfer.name }}
-                        </option>
+                    {% for merchant in embed.merchantList %}
+                        {% if merchant.merchantKey == embed.currentMerchantReference %}
+                            {% block currentMerchantName %}
+                                {{- merchant.name -}}
+                            {% endblock %}
+                            <option value="{{ merchant.merchantKey }}" selected>
+                                {{ block('currentMerchantName') }}
+                            </option>
+                        {% else %}
+                            <option value="{{ merchant.merchantKey }}">
+                                {{ merchant.name }}
+                            </option>
+                        {% endif %}
                     {% endfor %}
                 {% endblock %}
             {% endembed %}

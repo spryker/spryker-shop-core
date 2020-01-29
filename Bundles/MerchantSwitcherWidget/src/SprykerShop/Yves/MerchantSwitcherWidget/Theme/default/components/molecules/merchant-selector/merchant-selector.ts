@@ -3,14 +3,14 @@ import Component from 'ShopUi/models/component';
 export default class MerchantSelector extends Component {
     protected form: HTMLFormElement;
     protected select: HTMLSelectElement;
-    protected selectedIndex: number;
+    protected initiallySelectedIndex: number;
 
     protected readyCallback(): void {}
 
     protected init(): void {
         this.form = <HTMLFormElement>this.getElementsByClassName(`${this.jsName}__form`)[0];
         this.select = <HTMLSelectElement>this.form.getElementsByClassName(`${this.jsName}__select`)[0];
-        this.selectedIndex = this.select.selectedIndex;
+        this.initiallySelectedIndex = this.select.selectedIndex;
         this.mapEvents();
     }
 
@@ -19,31 +19,35 @@ export default class MerchantSelector extends Component {
     }
 
     protected onChangeHandler(): void {
-        const previousOption: HTMLOptionElement = this.select.options[this.selectedIndex];
         const message: string = this.getCurrentMessage();
         const isFormSubmitConfirmed: boolean = confirm(message);
 
-        if (isConfirmSubmittingForm) {
+        if (isFormSubmitConfirmed) {
             this.form.submit();
 
             return;
         }
 
-        previousOption.selected = true;
+        this.setInitialOption();
     }
 
     protected getCurrentMessage(): string {
-        const selectedIndex: number = this.select.selectedIndex;
-        const selectedOptionText: string = this.select.options[selectedIndex].text;
+        const newMerchantIndex: number = this.select.selectedIndex;
+        const newMerchantOptionText: string = this.select.options[newMerchantIndex].text;
 
-        return this.messageTemplate.replace(this.selectedMerchantNameTemplate, selectedOptionText);
+        return this.messageTemplate.replace(this.newMerchantNameTemplate, newMerchantOptionText);
+    }
+
+    protected setInitialOption(): void {
+        const initialMerchantOption: HTMLOptionElement = this.select.options[this.initiallySelectedIndex];
+        initialMerchantOption.selected = true;
     }
 
     protected get messageTemplate(): string {
         return this.getAttribute('message-template');
     }
 
-    protected get selectedMerchantNameTemplate(): string {
-        return this.getAttribute('selected-merchant-name-template');
+    protected get newMerchantNameTemplate(): string {
+        return this.getAttribute('new-merchant-name-template');
     }
 }
