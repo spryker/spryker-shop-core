@@ -21,7 +21,7 @@ export default class MerchantSelector extends Component {
     protected onChangeHandler(): void {
         const previousOption: HTMLOptionElement = this.select.options[this.selectedIndex];
         const message: string = this.getCurrentMessage();
-        const isConfirmSubmittingForm: boolean = confirm(message);
+        const isFormSubmitConfirmed: boolean = confirm(message);
 
         if (isConfirmSubmittingForm) {
             this.form.submit();
