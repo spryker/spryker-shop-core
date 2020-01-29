@@ -7,7 +7,6 @@
 {% define data = {
     cart: required,
     shipmentGroups: [],
-    shipmentTotal: null,
 } %}
 
 {% block body %}
@@ -37,14 +36,14 @@
                 ruleDiscounts: data.cart.cartRuleDiscounts,
                 discountTotal: data.cart.totals.discountTotal,
                 currency: data.cart.currency,
-            }
+            },
         } only %}
 
         {% block cartShipment %}
-            {% if data.shipmentTotal %}
+            {% if data.cart.totals.shipmentTotal %}
                 <ul class="list spacing-y">
                     <li>
-                        <strong class="float-right">{{ data.shipmentTotal | money(true, data.cart.currency.code) }}</strong>
+                        <strong class="float-right">{{ data.cart.totals.shipmentTotal | money(true, data.cart.currency.code) }}</strong>
                         <strong>{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
                         {% for shipmentGroup in data.shipmentGroups %}
                             <div class="grid grid--justify">

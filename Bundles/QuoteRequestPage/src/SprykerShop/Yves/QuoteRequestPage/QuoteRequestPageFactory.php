@@ -10,8 +10,6 @@ namespace SprykerShop\Yves\QuoteRequestPage;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\QuoteRequestPage\Calculator\ShipmentCostCalculator;
-use SprykerShop\Yves\QuoteRequestPage\Calculator\ShipmentCostCalculatorInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCompanyUserClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCustomerClientInterface;
@@ -85,14 +83,6 @@ class QuoteRequestPageFactory extends AbstractFactory
         return new ShipmentGrouper(
             $this->getShipmentService()
         );
-    }
-
-    /**
-     * @return \SprykerShop\Yves\QuoteRequestPage\Calculator\ShipmentCostCalculatorInterface
-     */
-    public function createShipmentCostCalculator(): ShipmentCostCalculatorInterface
-    {
-        return new ShipmentCostCalculator();
     }
 
     /**
