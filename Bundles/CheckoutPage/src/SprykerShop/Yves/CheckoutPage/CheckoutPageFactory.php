@@ -259,11 +259,11 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentPostExecuteStrategyPluginInterface[]
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentPostExecutionRedirectStrategyPluginInterface[]
      */
-    public function getCheckoutShipmentPostExecuteStrategyPlugins(): array
+    public function getCheckoutShipmentPostExecuteRedirectStrategyPlugins(): array
     {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_SHIPMENT_POST_EXECUTE_STRATEGY);
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_SHIPMENT_POST_EXECUTE_REDIRECT_STRATEGY);
     }
 
     /**
