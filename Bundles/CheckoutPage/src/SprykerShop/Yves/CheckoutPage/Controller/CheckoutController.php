@@ -346,8 +346,8 @@ class CheckoutController extends AbstractController
      */
     protected function showSuccessMessageIfExists(RedirectResponse $response): void
     {
-        if ($response->headers->has(self::GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE)) {
-            $this->addSuccessMessage($response->headers->get(self::GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE));
+        if ($response->headers->has(static::GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE)) {
+            $this->addSuccessMessage($response->headers->get(static::GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE));
         }
     }
 }
