@@ -123,6 +123,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCheckoutAddressStepEnterPreCheckPlugins($container);
         $container = $this->addCheckoutShipmentStepEnterPreCheckPlugins($container);
         $container = $this->addCheckoutPaymentStepEnterPreCheckPlugins($container);
+        $container = $this->addCheckoutSummaryStepEnterPreCheckPlugins($container);
 
         $container = $this->addCustomerStepSubForms($container);
         $container = $this->addAddressStepSubForms($container);
