@@ -53,6 +53,10 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection = $this->addQuoteRequestCancelRoute($routeCollection);
         $routeCollection = $this->addQuoteRequestDetailsRoute($routeCollection);
         $routeCollection = $this->addQuoteRequestConvertToCartRoute($routeCollection);
+        $routeCollection = $this->addQuoteRequestEditAddressRoute($routeCollection);
+        $routeCollection = $this->addQuoteRequestEditAddressConfirmRoute($routeCollection);
+        $routeCollection = $this->addQuoteRequestEditShipmentRoute($routeCollection);
+        $routeCollection = $this->addQuoteRequestEditShipmentConfirmRoute($routeCollection);
 
         return $routeCollection;
     }

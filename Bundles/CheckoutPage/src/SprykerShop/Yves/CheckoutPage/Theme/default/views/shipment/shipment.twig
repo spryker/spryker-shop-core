@@ -2,6 +2,7 @@
 
 {% define data = {
     backUrl: _view.previousStepUrl,
+    quoteTransfer: _view.quoteTransfer,
     forms: {
         shipment: _view.shipmentCollectionForm,
     },
@@ -15,6 +16,7 @@
         data: {
             form: data.forms.shipment,
             cart: data.forms.shipment.vars.data,
+            quote: data.quoteTransfer,
             submit: {
                 enable: true,
                 text: 'checkout.step.payment' | trans,
@@ -84,6 +86,14 @@
                 </article>
                 <div class="col col--sm-12 spacing spacing--inner"><hr></div>
             {% endfor %}
+        {% endblock %}
+        {% block actions %}
+            {% set quoteRequestCheckoutWidget = findWidget('QuoteRequestCheckoutWidget', [data.quoteTransfer]) %}
+            {% if quoteRequestCheckoutWidget and quoteRequestCheckoutWidget.isVisible %}
+                {% widget quoteRequestCheckoutWidget only %}{% endwidget %}
+            {% else %}
+                {{ parent() }}
+            {% endif %}
         {% endblock %}
     {% endembed %}
 {% endblock %}

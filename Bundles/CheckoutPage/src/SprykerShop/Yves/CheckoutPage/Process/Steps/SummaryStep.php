@@ -78,7 +78,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function requireInput(AbstractTransfer $quoteTransfer)
     {
-        return true;
+        return $this->executeCheckoutSummaryStepEnterPreCheckPlugins($quoteTransfer);
     }
 
     /**
