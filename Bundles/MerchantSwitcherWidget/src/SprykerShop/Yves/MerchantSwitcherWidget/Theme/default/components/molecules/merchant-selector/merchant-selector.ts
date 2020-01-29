@@ -1,8 +1,14 @@
 import Component from 'ShopUi/models/component';
 
+interface MerchantName {
+    subString: string;
+    newSubString: string;
+}
+
 export default class MerchantSelector extends Component {
     protected form: HTMLFormElement;
     protected select: HTMLSelectElement;
+    protected message: string;
     protected initiallySelectedIndex: number;
 
     protected readyCallback(): void {}
@@ -11,6 +17,7 @@ export default class MerchantSelector extends Component {
         this.form = <HTMLFormElement>this.getElementsByClassName(`${this.jsName}__form`)[0];
         this.select = <HTMLSelectElement>this.form.getElementsByClassName(`${this.jsName}__select`)[0];
         this.initiallySelectedIndex = this.select.selectedIndex;
+        this.message = this.messageTemplate;
         this.mapEvents();
     }
 
@@ -19,8 +26,8 @@ export default class MerchantSelector extends Component {
     }
 
     protected onChangeHandler(): void {
-        const message: string = this.getCurrentMessage();
-        const isFormSubmitConfirmed: boolean = confirm(message);
+        this.createMessage();
+        const isFormSubmitConfirmed: boolean = confirm(this.message);
 
         if (isFormSubmitConfirmed) {
             this.form.submit();
@@ -31,11 +38,20 @@ export default class MerchantSelector extends Component {
         this.setInitialOption();
     }
 
-    protected getCurrentMessage(): string {
-        const newMerchantIndex: number = this.select.selectedIndex;
-        const newMerchantOptionText: string = this.select.options[newMerchantIndex].text;
+    protected createMessage()  {
+        const currentMerchantOptionText: string = this.select.options[this.initiallySelectedIndex].text;
+        const newMerchantOptionText: string = this.select.options[this.select.selectedIndex].text;
+        const currentMerchant: MerchantName = {
+            subString: this.currentMerchantNameTemplate,
+            newSubString: currentMerchantOptionText
+        };
+        const newMerchant: MerchantName = {
+            subString: this.newMerchantNameTemplate,
+            newSubString: newMerchantOptionText
+        };
+        const merchantList: MerchantName[] = [currentMerchant, newMerchant];
 
-        return this.messageTemplate.replace(this.newMerchantNameTemplate, newMerchantOptionText);
+        this.setMerchantNames(merchantList);
     }
 
     protected setInitialOption(): void {
@@ -43,8 +59,22 @@ export default class MerchantSelector extends Component {
         initialMerchantOption.selected = true;
     }
 
+    protected setMerchantNames(merchantList: MerchantName[]): void {
+        merchantList.forEach((merchant: MerchantName) => {
+            this.messageText = this.message.replace(merchant.subString, merchant.newSubString);
+        })
+    }
+
+    protected set messageText(newMessage: string) {
+        this.message = newMessage;
+    }
+
     protected get messageTemplate(): string {
         return this.getAttribute('message-template');
+    }
+
+    protected get currentMerchantNameTemplate(): string {
+        return this.getAttribute('current-merchant-name-template');
     }
 
     protected get newMerchantNameTemplate(): string {

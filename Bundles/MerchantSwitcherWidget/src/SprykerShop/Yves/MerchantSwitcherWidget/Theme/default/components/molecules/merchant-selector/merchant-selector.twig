@@ -8,13 +8,15 @@
 {% define data = {
     merchantList: required,
     currentMerchantReference: required,
-    newMerchantNameTemplate: 'TargetMerchantName',
+    currentMerchantNameTemplate: 'currentMerchantName',
+    newMerchantNameTemplate: 'newMerchantName',
 } %}
 
 {% define attributes = {
+    'current-merchant-name-template': data.currentMerchantNameTemplate,
     'new-merchant-name-template': data.newMerchantNameTemplate,
     'message-template': 'merchant_switcher.message' | trans({
-        '%currentMerchant%': block('currentMerchantName'),
+        '%currentMerchant%': data.currentMerchantNameTemplate,
         '%newMerchant%': data.newMerchantNameTemplate,
     }),
 } %}
@@ -37,18 +39,9 @@
 
                 {% block options %}
                     {% for merchant in embed.merchantList %}
-                        {% if merchant.merchantKey == embed.currentMerchantReference %}
-                            {% block currentMerchantName %}
-                                {{- merchant.name -}}
-                            {% endblock %}
-                            <option value="{{ merchant.merchantKey }}" selected>
-                                {{ block('currentMerchantName') }}
-                            </option>
-                        {% else %}
-                            <option value="{{ merchant.merchantKey }}">
-                                {{ merchant.name }}
-                            </option>
-                        {% endif %}
+                        <option value="{{ merchant.merchantKey }}" {{ merchant.merchantKey == embed.currentMerchantReference ? 'selected' }}>
+                            {{ merchant.name }}
+                        </option>
                     {% endfor %}
                 {% endblock %}
             {% endembed %}
