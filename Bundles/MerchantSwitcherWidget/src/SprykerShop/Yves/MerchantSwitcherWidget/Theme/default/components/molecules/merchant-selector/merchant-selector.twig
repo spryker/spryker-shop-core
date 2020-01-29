@@ -41,7 +41,14 @@
                     currentMerchantReference: data.currentMerchantReference,
                 },
             } only %}
-                {% block selectClass %}{{ embed.jsName }}__select{% endblock %}
+                {% block body %}
+                    <div class="grid grid--justify">
+                        <div class="col spacing spacing--inner spacing--small">{{ 'merchant_switcher.label' | trans }}</div>
+                        {{ parent() }}
+                    </div>
+                {% endblock %}
+
+                {% block selectClass %}{{ embed.jsName }}__select col{% endblock %}
 
                 {% block options %}
                     {% for merchant in embed.merchantList %}
