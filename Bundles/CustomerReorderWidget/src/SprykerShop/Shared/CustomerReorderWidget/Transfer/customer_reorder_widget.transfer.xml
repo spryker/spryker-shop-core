@@ -58,4 +58,8 @@
     <transfer name="Address">
         <property name="idSalesOrderAddress" type="int"/>
     </transfer>
+
+    <transfer name="SalesOrderConfiguredBundleItem">
+    </transfer>
+
 </transfers>
