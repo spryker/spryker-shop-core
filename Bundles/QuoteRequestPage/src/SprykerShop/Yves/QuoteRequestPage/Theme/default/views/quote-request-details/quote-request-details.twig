@@ -29,8 +29,8 @@
     {% endfor %}
 {% endblock %}
 
-{% block rgqInformation %}
-    <h6>{{ "quote_request_page.quote_request.labels.information" | trans }}</h6>
+{% block rfqInformation %}
+    <h6>{{ 'quote_request_page.quote_request.labels.information' | trans }}</h6>
     <hr class="box__separator">
     <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}:
         <b>{{ data.quoteRequest.createdAt | formatDateTime }}</b>
@@ -44,7 +44,7 @@
         </p>
     {% endif %}
     <hr class="box__separator">
-    <h6>{{ "quote_request_page.quote_request.labels.version_information" | trans }}</h6>
+    <h6>{{ 'quote_request_page.quote_request.labels.version_information' | trans }}</h6>
     <hr class="box__separator">
     <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
         {% embed atom('select') with {
