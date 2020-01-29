@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuoteRequestAgentWidget\Plugin\Shipment;
+namespace SprykerShop\Yves\QuoteRequestAgentWidget\Plugin\CheckoutPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentPostExecuteStrategyPluginInterface;
+use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentPostExecutionRedirectStrategyPluginInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestAgentWidget\QuoteRequestAgentWidgetFactory getFactory()
  */
-class QuoteRequestAgentWidgetCheckoutShipmentPostExecuteStrategyPlugin extends AbstractPlugin implements CheckoutShipmentPostExecuteStrategyPluginInterface
+class QuoteRequestAgentWidgetCheckoutShipmentPostExecuteRedirectStrategyPlugin extends AbstractPlugin implements CheckoutShipmentPostExecutionRedirectStrategyPluginInterface
 {
     protected const ROUTE_REDIRECT_CHECKOUT_SHIPMENT = 'checkout-shipment';
     protected const GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE = 'global.shipment.success.save';
@@ -43,8 +43,6 @@ class QuoteRequestAgentWidgetCheckoutShipmentPostExecuteStrategyPlugin extends A
      *
      * @param \Symfony\Component\HttpFoundation\RedirectResponse $redirectResponse
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @throws \ErrorException
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */

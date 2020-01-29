@@ -325,7 +325,7 @@ class CheckoutController extends AbstractController
             ->getQuoteClient()
             ->getQuote();
 
-        $checkoutShipmentPostExecuteStrategyPlugins = $this->getFactory()->getCheckoutShipmentPostExecuteStrategyPlugins();
+        $checkoutShipmentPostExecuteStrategyPlugins = $this->getFactory()->getCheckoutShipmentPostExecuteRedirectStrategyPlugins();
 
         foreach ($checkoutShipmentPostExecuteStrategyPlugins as $checkoutShipmentPostExecuteStrategyPlugin) {
             if ($checkoutShipmentPostExecuteStrategyPlugin->isApplicable($quoteTransfer)) {
