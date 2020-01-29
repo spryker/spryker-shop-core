@@ -9,10 +9,12 @@ namespace SprykerShop\Yves\QuoteRequestAgentWidget\Plugin\Shipment;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\QuoteRequestAgentPageExtension\Dependency\Plugin\CheckoutShipmentPostExecuteStrategyPluginInterface;
-use Symfony\Cmf\Component\Routing\ChainRouterInterface;
+use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentPostExecuteStrategyPluginInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+/**
+ * @method \SprykerShop\Yves\QuoteRequestAgentWidget\QuoteRequestAgentWidgetFactory getFactory()
+ */
 class QuoteRequestAgentWidgetCheckoutShipmentPostExecuteStrategyPlugin extends AbstractPlugin implements CheckoutShipmentPostExecuteStrategyPluginInterface
 {
     protected const ROUTE_REDIRECT_CHECKOUT_SHIPMENT = 'checkout-shipment';
@@ -35,19 +37,22 @@ class QuoteRequestAgentWidgetCheckoutShipmentPostExecuteStrategyPlugin extends A
 
     /**
      * {@inheritDoc}
-     *  - Returns a redirect response with additional header.
+     *  - Returns a redirect response with a success message.
      *
      * @api
      *
-     * @param \Symfony\Cmf\Component\Routing\ChainRouterInterface $router
+     * @param \Symfony\Component\HttpFoundation\RedirectResponse $redirectResponse
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @throws \ErrorException
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute(ChainRouterInterface $router): RedirectResponse
+    public function execute(RedirectResponse $redirectResponse, QuoteTransfer $quoteTransfer): RedirectResponse
     {
-        $redirectResponse = new RedirectResponse($router->generate(static::ROUTE_REDIRECT_CHECKOUT_SHIPMENT));
-        $redirectResponse->headers->set(static::GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE, static::GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE);
+        $checkoutShipmentUrl = $this->getFactory()->getRouterService()->generate(static::ROUTE_REDIRECT_CHECKOUT_SHIPMENT);
+        $this->getFactory()->getFlashMessenger()->addSuccessMessage(static::GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE);
 
-        return $redirectResponse;
+        return $this->getFactory()->createRedirectResponse($checkoutShipmentUrl);
     }
 }

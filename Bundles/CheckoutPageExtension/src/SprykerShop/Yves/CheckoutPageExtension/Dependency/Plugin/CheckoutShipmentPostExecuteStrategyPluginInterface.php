@@ -5,10 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuoteRequestAgentPageExtension\Dependency\Plugin;
+namespace SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 interface CheckoutShipmentPostExecuteStrategyPluginInterface
@@ -31,9 +30,10 @@ interface CheckoutShipmentPostExecuteStrategyPluginInterface
      *
      * @api
      *
-     * @param \Symfony\Cmf\Component\Routing\ChainRouterInterface $router
+     * @param \Symfony\Component\HttpFoundation\RedirectResponse $redirectResponse
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute(ChainRouterInterface $router): RedirectResponse;
+    public function execute(RedirectResponse $redirectResponse, QuoteTransfer $quoteTransfer): RedirectResponse;
 }

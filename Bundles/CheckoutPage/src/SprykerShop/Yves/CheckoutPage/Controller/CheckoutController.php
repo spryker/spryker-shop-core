@@ -140,10 +140,7 @@ class CheckoutController extends AbstractController
         );
 
         if (!is_array($response)) {
-            $response = $this->executeCheckoutShipmentPostExecutePlugins($response);
-            $this->showSuccessMessageIfExists($response);
-
-            return $response;
+            return $this->executeCheckoutShipmentPostExecutePlugins($response);
         }
 
         return $this->view(
@@ -332,22 +329,10 @@ class CheckoutController extends AbstractController
 
         foreach ($checkoutShipmentPostExecuteStrategyPlugins as $checkoutShipmentPostExecuteStrategyPlugin) {
             if ($checkoutShipmentPostExecuteStrategyPlugin->isApplicable($quoteTransfer)) {
-                $response = $checkoutShipmentPostExecuteStrategyPlugin->execute($this->getRouter());
+                return $checkoutShipmentPostExecuteStrategyPlugin->execute($response, $quoteTransfer);
             }
         }
 
         return $response;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\RedirectResponse $response
-     *
-     * @return void
-     */
-    protected function showSuccessMessageIfExists(RedirectResponse $response): void
-    {
-        if ($response->headers->has(static::GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE)) {
-            $this->addSuccessMessage($response->headers->get(static::GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE));
-        }
     }
 }
