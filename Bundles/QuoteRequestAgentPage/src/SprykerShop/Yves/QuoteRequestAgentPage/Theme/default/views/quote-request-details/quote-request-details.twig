@@ -130,62 +130,14 @@
                                 <hr>
                                 <h6><strong>{{ 'checkout.step.summary.products' | trans }}</strong></h6>
 
-                                {% widget 'QuoteConfiguredBundleWidget' args [quote, shipmentGroup.items] with {
+                                {% include organism('product-and-shipment-view', 'QuoteRequestPage') ignore missing with {
                                     data: {
-                                        isEditable: false,
-                                        isQuantitySummaryVisible: true,
-                                    },
-                                } only %}
-                                {% endwidget %}
-
-                                {% set cartItems = shipmentGroup.items | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}
-                                {% for cartItem in cartItems %}
-                                    {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
-                                        data: {
-                                            product: cartItem,
-                                        },
-                                        embed: {
-                                            priceMode: quote.priceMode,
-                                            currency: quote.currency,
-                                        },
-                                    } only %}
-                                        {% block additionalInformation %}
-                                            {% include molecule('quote-request-item-summary', 'QuoteRequestPage') with {
-                                                data: {
-                                                    priceMode: embed.priceMode,
-                                                    unitPrice: data.product.unitPrice | money(true, embed.currency.code),
-                                                    subtotalPrice: data.product.sumSubtotalAggregation | money(true, embed.currency.code),
-                                                    cartItem: data.product,
-                                                    currency: embed.currency,
-                                                },
-                                            } only %}
-                                        {% endblock %}
-
-                                        {% block actions %}
-                                            {% if data.product.amountSalesUnit is empty %}
-                                                {{ 'cart.item_quantity' | trans }}:
-                                                <strong>{{ data.product.quantity }}</strong>
-
-                                                {% if data.product.quantitySalesUnit %}
-                                                    {% set value = data.product.quantitySalesUnit.value %}
-                                                    {% set precision = data.product.quantitySalesUnit.precision %}
-                                                    {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default('') %}
-
-                                                    <p>
-                                                        <small class="text-secondary">
-                                                            [= {{ value / precision }} {{ salesUnitName | trans }}]
-                                                        </small>
-                                                    </p>
-                                                {% endif %}
-                                            {% endif %}
-                                        {% endblock %}
-                                    {% endembed %}
-                                {% endfor %}
-
-                                {% include molecule('quote-request-shipment-information', 'QuoteRequestPage') with {
-                                    data: {
+                                        quote: quote,
+                                        items: shipmentGroup.items,
                                         shipment: shipmentGroup.shipment,
-                                        showAddress: true,
+                                        hasMultiShipments: hasMultiShipments,
+                                        isConfiguredBundleEditable: false,
+                                        isConfiguredBundleQuantitySummaryVisible: true,
                                     },
                                 } only %}
                             </div>
@@ -193,62 +145,13 @@
                     </div>
                 {% endfor %}
             {% else %}
-
-                {% widget 'QuoteConfiguredBundleWidget' args [quote] with {
+                {% include organism('product-and-shipment-view', 'QuoteRequestPage') ignore missing with {
                     data: {
-                        isEditable: false,
-                    },
-                } only %}
-                {% endwidget %}
-
-                {% set cartItems = quote.items | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}
-                {% for cartItem in cartItems %}
-                    {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
-                        data: {
-                            product: cartItem,
-                        },
-                        embed: {
-                            priceMode: quote.priceMode,
-                            currency: quote.currency,
-                        },
-                    } only %}
-                        {% block additionalInformation %}
-                            {% include molecule('quote-request-item-summary', 'QuoteRequestPage') ignore missing with {
-                                data: {
-                                    priceMode: embed.priceMode,
-                                    unitPrice: data.product.unitPrice | money(true, embed.currency.code),
-                                    subtotalPrice: data.product.sumSubtotalAggregation | money(true, embed.currency.code),
-                                    cartItem: data.product,
-                                    currency: embed.currency,
-                                },
-                            } only %}
-                        {% endblock %}
-
-                        {% block actions %}
-                            {% if data.product.amountSalesUnit is empty %}
-                                {{ 'cart.item_quantity' | trans }}:
-                                <strong>{{ data.product.quantity }}</strong>
-
-                                {% if data.product.quantitySalesUnit %}
-                                    {% set value = data.product.quantitySalesUnit.value %}
-                                    {% set precision = data.product.quantitySalesUnit.precision %}
-                                    {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default('') %}
-
-                                    <p>
-                                        <small class="text-secondary">
-                                            [= {{ value / precision }} {{ salesUnitName | trans }}]
-                                        </small>
-                                    </p>
-                                {% endif %}
-                            {% endif %}
-                        {% endblock %}
-                    {% endembed %}
-                {% endfor %}
-
-                <h4 class="spacing-x spacing-top spacing-top--big">{{ 'quote_request_page.quote_request.title_shipment_method' | trans }}</h4>
-                {% include molecule('quote-request-shipment-information', 'QuoteRequestPage') with {
-                    data: {
+                        quote: quote,
+                        items: quote.items,
                         shipment: quote.shipment,
+                        hasMultiShipments: hasMultiShipments,
+                        isConfiguredBundleEditable: false,
                     },
                 } only %}
             {% endif %}
