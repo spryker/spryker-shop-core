@@ -21,6 +21,12 @@
     }),
 } %}
 
+{% block component %}
+    {% if data.merchantList %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 {% block body %}
     <form class="{{ config.jsName }}__form {% block formClass %}{% endblock %}" method="POST" action="{{ path('switch-merchant') }}">
         {% block merchantSelect %}

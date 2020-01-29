@@ -26,19 +26,14 @@ export default class MerchantSelector extends Component {
     }
 
     protected onChangeHandler(): void {
-        this.createMessage();
-        const isFormSubmitConfirmed: boolean = confirm(this.message);
-
-        if (isFormSubmitConfirmed) {
-            this.form.submit();
-
-            return;
-        }
-
-        this.setInitialOption();
+        this.createMessageText();
+        this.setMerchant();
     }
 
-    protected createMessage()  {
+    /**
+     * Creates a text of the confirmation question.
+     */
+    createMessageText(): void  {
         const currentMerchantOptionText: string = this.select.options[this.initiallySelectedIndex].text;
         const newMerchantOptionText: string = this.select.options[this.select.selectedIndex].text;
         const currentMerchant: MerchantName = {
@@ -54,6 +49,21 @@ export default class MerchantSelector extends Component {
         this.setMerchantNames(merchantList);
     }
 
+    /**
+     * Sets merchant after according answer of confirmation question.
+     */
+    setMerchant(): void {
+        const isFormSubmitConfirmed: boolean = confirm(this.message);
+
+        if (isFormSubmitConfirmed) {
+            this.form.submit();
+
+            return;
+        }
+
+        this.setInitialOption();
+    }
+
     protected setInitialOption(): void {
         const initialMerchantOption: HTMLOptionElement = this.select.options[this.initiallySelectedIndex];
         initialMerchantOption.selected = true;
@@ -62,7 +72,7 @@ export default class MerchantSelector extends Component {
     protected setMerchantNames(merchantList: MerchantName[]): void {
         merchantList.forEach((merchant: MerchantName) => {
             this.messageText = this.message.replace(merchant.subString, merchant.newSubString);
-        })
+        });
     }
 
     protected set messageText(newMessage: string) {
