@@ -10,7 +10,7 @@
         {% include molecule('merchant-selector', 'MerchantSwitcherWidget') with {
             data: {
                 activeMerchantTransfers: data.activeMerchantTransfers,
-                selectedMerchantReference: data.selectedMerchantReference
+                selectedMerchantReference: data.selectedMerchantReference,
             },
         } only %}
     {% endif %}
