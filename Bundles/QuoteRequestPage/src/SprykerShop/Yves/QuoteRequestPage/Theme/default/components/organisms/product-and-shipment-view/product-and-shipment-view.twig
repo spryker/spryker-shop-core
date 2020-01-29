@@ -59,7 +59,7 @@
                                 {% if data.product.quantitySalesUnit %}
                                     {% set value = data.product.quantitySalesUnit.value %}
                                     {% set precision = data.product.quantitySalesUnit.precision %}
-                                    {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+                                    {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default %}
 
                                     <p>
                                         <small class="text-secondary">

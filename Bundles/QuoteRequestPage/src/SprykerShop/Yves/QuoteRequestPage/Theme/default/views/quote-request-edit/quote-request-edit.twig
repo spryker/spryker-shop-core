@@ -27,7 +27,7 @@
     {% endif %}
 {% endblock %}
 
-{% block orderInformatopn %}
+{% block orderInformation %}
     {% for child in data.quoteRequestForm.latestVersion.metadata %}
         <div class="col col--sm-12 col--xl-6">
             <div class="box">
@@ -37,25 +37,25 @@
     {% endfor %}
 {% endblock %}
 
-{% block rgqInformatopn %}
-    <h6>{{ "quote_request_page.quote_request.labels.information" | trans }}</h6>
+{% block rfqInformation %}
+    <h6>{{ 'quote_request_page.quote_request.labels.information' | trans }}</h6>
     <hr class="box__separator">
     <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}:
-        <b>{{ data.quoteRequest.createdAt | formatDateTime }}</b>
+        <strong>{{ data.quoteRequest.createdAt | formatDateTime }}</strong>
     </p>
     <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:
         <span class="request-status request-status--{{ data.quoteRequest.status }}">{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</span>
     </p>
     {% if data.quoteRequest.validUntil %}
         <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
-            <b>{{ data.quoteRequest.validUntil | formatDateTime }}</b>
+            <strong>{{ data.quoteRequest.validUntil | formatDateTime }}</strong>
         </p>
     {% endif %}
     <hr class="box__separator">
-    <h6>{{ "quote_request_page.quote_request.labels.version_information" | trans }}</h6>
+    <h6>{{ 'quote_request_page.quote_request.labels.version_information' | trans }}</h6>
     <hr class="box__separator">
     <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
-        <b>{{ data.quoteRequest.latestVersion ? data.quoteRequest.latestVersion.versionReference : null }}</b>
+        <strong>{{ data.quoteRequest.latestVersion ? data.quoteRequest.latestVersion.versionReference : null }}</strong>
     </p>
 {% endblock %}
 
@@ -66,21 +66,21 @@
             quote: quote,
             hasMultiShipments: hasMultiShipments,
             isEditable: true,
-            quoteRequestReference: data.quoteRequest.quoteRequestReference
-        }
+            quoteRequestReference: data.quoteRequest.quoteRequestReference,
+        },
     } only %}
 
-    <div class="box">
-        {% include molecule('quote-request-cart-summary', 'QuoteRequestPage') with {
-            data: {
-                cart: quote,
-                shipmentGroups: data.shipmentGroups,
-            },
-        } only %}
-    </div>
+    {% include molecule('quote-request-cart-summary', 'QuoteRequestPage') with {
+        class: 'box',
+        data: {
+            cart: quote,
+            shipmentGroups: data.shipmentGroups,
+        },
+    } only %}
+
     <div class="box spacing-top spacing-top--big">
         <a class="button button--expand button--hollow"
-           href="{{ url('quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference}) }}" data-init-single-click>
+           href="{{ url('quote-request/details', { quoteRequestReference: data.quoteRequest.quoteRequestReference }) }}" data-init-single-click>
             {{ 'quote_request_page.quote_request.actions.back_to_view' | trans }}
         </a>
         <hr class="box__separator">
