@@ -27,7 +27,7 @@ class QuoteRequestAgentPageToUtilDateTimeServiceBridge implements QuoteRequestAg
      *
      * @return string
      */
-    public function formatDate($date): string
+    public function formatDate($date)
     {
         return $this->utilDateTimeService->formatDate($date);
     }
