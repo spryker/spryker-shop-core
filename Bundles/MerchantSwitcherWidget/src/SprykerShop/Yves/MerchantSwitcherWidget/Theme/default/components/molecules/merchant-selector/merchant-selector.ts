@@ -27,7 +27,7 @@ export default class MerchantSelector extends Component {
     /**
      * Updates a text of the confirmation question.
      */
-    createMessageText(): void  {
+    updateMessageText(): void  {
         const currentMerchantOptionText: string = this.select.options[this.initiallySelectedIndex].text;
         const newMerchantOptionText: string = this.select.options[this.select.selectedIndex].text;
 
