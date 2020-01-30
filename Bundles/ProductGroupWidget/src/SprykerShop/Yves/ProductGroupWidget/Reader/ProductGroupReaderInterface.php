@@ -7,13 +7,15 @@
 
 namespace SprykerShop\Yves\ProductGroupWidget\Reader;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
+
 interface ProductGroupReaderInterface
 {
     /**
-     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function getProductGroups(int $idProductAbstract, string $localeName): array;
+    public function getProductGroups(ProductViewTransfer $productViewTransfer, string $localeName): array;
 }
