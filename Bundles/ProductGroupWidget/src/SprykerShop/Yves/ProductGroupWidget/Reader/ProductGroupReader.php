@@ -44,34 +44,42 @@ class ProductGroupReader implements ProductGroupReaderInterface
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function getProductGroups(int $idProductAbstract, string $localeName): array
+    public function getProductGroups(ProductViewTransfer $productViewTransfer, string $localeName): array
     {
-        $productViewTransfers = $this->getProductGroupTransfers($idProductAbstract, $localeName);
+        $productViewTransfers = $this->getProductGroupTransfers($productViewTransfer, $localeName);
 
         return $this->getExpandedProductViewTransfers($productViewTransfers);
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    protected function getProductGroupTransfers(int $idProductAbstract, string $localeName): array
+    protected function getProductGroupTransfers(ProductViewTransfer $productViewTransfer, string $localeName): array
     {
-        $productAbstractGroupStorageTransfer = $this->productGroupStorageClient
-            ->findProductGroupItemsByIdProductAbstract($idProductAbstract);
+        $selectedAttributes = $productViewTransfer->getSelectedAttributes();
 
-        return $this->productStorageClient
-            ->getProductAbstractViewTransfers(
-                $productAbstractGroupStorageTransfer->getGroupProductAbstractIds(),
-                $localeName
+        $productAbstractGroupStorageTransfer = $this->productGroupStorageClient
+            ->findProductGroupItemsByIdProductAbstract($productViewTransfer->getIdProductAbstract());
+
+        $productAbstractViewTransfers = [];
+
+        foreach ($productAbstractGroupStorageTransfer->getGroupProductAbstractIds() as $productAbstractId) {
+            $productAbstractViewTransfers[] = $this->productStorageClient->findProductAbstractViewTransfer(
+                $productAbstractId,
+                $localeName,
+                $selectedAttributes
             );
+        }
+
+        return $productAbstractViewTransfers;
     }
 
     /**
@@ -82,7 +90,7 @@ class ProductGroupReader implements ProductGroupReaderInterface
     protected function getExpandedProductViewTransfers(array $productViewTransfers): array
     {
         foreach ($productViewTransfers as $productViewTransfer) {
-            $productViewTransfer = $this->expandProductViewTransfer($productViewTransfer);
+            $this->expandProductViewTransfer($productViewTransfer);
         }
 
         return $productViewTransfers;
