@@ -60,7 +60,7 @@
 {% endblock %}
 
 {% block rfqSidebar %}
-    {% include molecule('quote-request-delivery-summary', 'QuoteRequestPage') ignore missing with {
+    {% include molecule('quote-request-delivery-summary', 'QuoteRequestPage') with {
         class: 'list spacing-y',
         data: {
             quote: quote,
