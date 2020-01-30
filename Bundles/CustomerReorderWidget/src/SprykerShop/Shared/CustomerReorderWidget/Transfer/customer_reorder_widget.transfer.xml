@@ -14,6 +14,8 @@
         <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit"/>
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
         <property name="shipment" type="Shipment"/>
+        <property name="bundleItemIdentifier" type="string"/>
+        <property name="relatedBundleItemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="Shipment">
