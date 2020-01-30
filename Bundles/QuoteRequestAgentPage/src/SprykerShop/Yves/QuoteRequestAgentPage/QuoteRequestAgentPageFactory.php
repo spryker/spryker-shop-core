@@ -115,7 +115,10 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     {
         return new CompanyUserImpersonator(
             $this->getMessengerClient(),
-            $this->getRouterService()
+            $this->getRouterService(),
+            $this->getQuoteRequestAgentClient(),
+            $this->getCompanyUserClient(),
+            $this->getQuoteClient()
         );
     }
 

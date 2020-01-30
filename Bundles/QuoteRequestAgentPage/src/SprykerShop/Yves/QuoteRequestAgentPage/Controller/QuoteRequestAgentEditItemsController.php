@@ -68,7 +68,7 @@ class QuoteRequestAgentEditItemsController extends QuoteRequestAgentAbstractCont
 
         return $this->getFactory()
             ->createCompanyUserImpersonator()
-            ->redirectImpersonatedUserWithPreparedQuoteAndMessage($quoteRequestTransfer, $quoteTransfer, static::ROUTE_CART);
+            ->impersonateCompanyUser($quoteRequestTransfer, static::ROUTE_CART);
     }
 
     /**
@@ -95,7 +95,7 @@ class QuoteRequestAgentEditItemsController extends QuoteRequestAgentAbstractCont
         if ($quoteRequestAgentEditItemsConfirmForm->isSubmitted()) {
             return $this->getFactory()
                 ->createCompanyUserImpersonator()
-                ->redirectImpersonatedUserWithPreparedQuoteAndMessage($quoteRequestAgentEditItemsConfirmForm->getData(), $quoteTransfer, static::ROUTE_CART);
+                ->impersonateCompanyUser($quoteRequestAgentEditItemsConfirmForm->getData(), static::ROUTE_CART);
         }
 
         return [

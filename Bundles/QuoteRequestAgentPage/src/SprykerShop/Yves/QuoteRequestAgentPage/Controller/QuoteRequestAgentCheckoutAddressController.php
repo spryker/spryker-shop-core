@@ -27,12 +27,10 @@ class QuoteRequestAgentCheckoutAddressController extends QuoteRequestAgentAbstra
      */
     public function executeIndexAction(Request $request, string $quoteRequestReference)
     {
-        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
-
         $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
 
         return $this->getFactory()
             ->createCompanyUserImpersonator()
-            ->redirectImpersonatedUserWithPreparedQuoteAndMessage($quoteRequestTransfer, $quoteTransfer, static::ROUTE_CHECKOUT_ADDRESS);
+            ->impersonateCompanyUser($quoteRequestTransfer, static::ROUTE_CHECKOUT_ADDRESS);
     }
 }

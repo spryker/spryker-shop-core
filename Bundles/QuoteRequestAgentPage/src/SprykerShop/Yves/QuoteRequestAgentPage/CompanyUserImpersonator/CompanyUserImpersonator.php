@@ -10,15 +10,14 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage\CompanyUserImpersonator;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Yves\Kernel\AbstractPlugin;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCompanyUserClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToMessengerClientInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteClientInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestAgentClientInterface;
 use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-/**
- * @method \SprykerShop\Yves\QuoteRequestAgentPage\QuoteRequestAgentPageFactory getFactory()
- */
-class CompanyUserImpersonator extends AbstractPlugin implements CompanyUserImpersonatorInterface
+class CompanyUserImpersonator implements CompanyUserImpersonatorInterface
 {
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART = 'quote_request_page.quote_request.converted_to_cart';
     protected const PARAM_SWITCH_USER = '_switch_user';
@@ -44,33 +43,57 @@ class CompanyUserImpersonator extends AbstractPlugin implements CompanyUserImper
     protected $router;
 
     /**
+     * @var \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestAgentClientInterface
+     */
+    protected $quoteRequestAgentClient;
+
+    /**
+     * @var \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCompanyUserClientInterface
+     */
+    protected $companyUserClient;
+
+    /**
+     * @var \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteClientInterface
+     */
+    protected $quoteClient;
+
+    /**
      * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToMessengerClientInterface $messengerClient
      * @param \Symfony\Cmf\Component\Routing\ChainRouterInterface $router
+     * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestAgentClientInterface $quoteRequestAgentClient
+     * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCompanyUserClientInterface $companyUserClient
+     * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteClientInterface $quoteClient
      */
-    public function __construct(QuoteRequestAgentPageToMessengerClientInterface $messengerClient, ChainRouterInterface $router)
-    {
+    public function __construct(
+        QuoteRequestAgentPageToMessengerClientInterface $messengerClient,
+        ChainRouterInterface $router,
+        QuoteRequestAgentPageToQuoteRequestAgentClientInterface $quoteRequestAgentClient,
+        QuoteRequestAgentPageToCompanyUserClientInterface $companyUserClient,
+        QuoteRequestAgentPageToQuoteClientInterface $quoteClient
+    ) {
         $this->messengerClient = $messengerClient;
         $this->router = $router;
+        $this->quoteRequestAgentClient = $quoteRequestAgentClient;
+        $this->companyUserClient = $companyUserClient;
+        $this->quoteClient = $quoteClient;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $routeToRedirect
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function redirectImpersonatedUserWithPreparedQuoteAndMessage(QuoteRequestTransfer $quoteRequestTransfer, QuoteTransfer $quoteTransfer, string $routeToRedirect): RedirectResponse
+    public function impersonateCompanyUser(QuoteRequestTransfer $quoteRequestTransfer, string $routeToRedirect): RedirectResponse
     {
+        $quoteTransfer = $this->quoteClient->getQuote();
         $redirectResponse = $this->checkCompanyUserImpersonation($quoteRequestTransfer, $quoteTransfer, $routeToRedirect);
 
         if ($redirectResponse) {
             return $redirectResponse;
         }
 
-        $quoteResponseTransfer = $this->getFactory()
-            ->getQuoteRequestAgentClient()
-            ->convertQuoteRequestToQuote($quoteRequestTransfer);
+        $quoteResponseTransfer = $this->quoteRequestAgentClient->convertQuoteRequestToQuote($quoteRequestTransfer);
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->messengerClient->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART);
@@ -78,9 +101,7 @@ class CompanyUserImpersonator extends AbstractPlugin implements CompanyUserImper
 
         $this->handleQuoteResponseErrors($quoteResponseTransfer);
 
-        $companyUserTransfer = $this->getFactory()
-            ->getCompanyUserClient()
-            ->findCompanyUser();
+        $companyUserTransfer = $this->companyUserClient->findCompanyUser();
 
         if (!$companyUserTransfer) {
             return $this->redirectResponseInternal($routeToRedirect, [
@@ -100,9 +121,7 @@ class CompanyUserImpersonator extends AbstractPlugin implements CompanyUserImper
      */
     protected function checkCompanyUserImpersonation(QuoteRequestTransfer $quoteRequestTransfer, QuoteTransfer $quoteTransfer, string $routeToRedirect): ?RedirectResponse
     {
-        $companyUserTransfer = $this->getFactory()
-            ->getCompanyUserClient()
-            ->findCompanyUser();
+        $companyUserTransfer = $this->companyUserClient->findCompanyUser();
 
         if ($companyUserTransfer && $companyUserTransfer->getIdCompanyUser() !== $quoteRequestTransfer->getCompanyUser()->getIdCompanyUser()) {
             return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT_ITEMS, [
