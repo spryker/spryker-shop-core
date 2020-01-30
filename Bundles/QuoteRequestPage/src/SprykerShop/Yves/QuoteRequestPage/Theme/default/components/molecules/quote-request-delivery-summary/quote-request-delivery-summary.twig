@@ -8,6 +8,7 @@
     quote: required,
     hasMultiShipments: false,
     isEditable: false,
+    quoteRequestReference: ''
 } %}
 
 {% set hasShipment = data.quote.shipment is not null %}
@@ -15,6 +16,7 @@
 {% set hasShipmentAddress = data.hasMultiShipments or hasSingleShippingAddress %}
 {% set hasSingleShippingMethod = hasShipment and data.quote.shipment.method %}
 {% set hasShipmentMethod = data.hasMultiShipments or hasSingleShippingMethod %}
+{% set quoteRequestReference = data.quoteRequestReference %}
 
 {% block body %}
     <div class="box">
@@ -62,7 +64,7 @@
             <p class="spacing-y">{{ 'quote_request_page.quote_request.empty_address' | trans }}</p>
 
             {% if data.isEditable %}
-                <a href="{{ url('checkout-address') }}"
+                <a href="{{ url('quote-request/edit-address', {quoteRequestReference: quoteRequestReference}) }}"
                    class="button button--expand button--edit-items"
                    title="{{ 'quote_request_page.quote_request.cta_add_address' | trans }}"
                     {{ qa('cart-go-to-address') }}>
@@ -72,7 +74,7 @@
         {% endif %}
 
         {% if data.quote.billingAddress and data.isEditable %}
-            <a href="{{ url('checkout-address') }}"
+            <a href="{{ url('quote-request/edit-address', {quoteRequestReference: quoteRequestReference}) }}"
                class="button button--expand button--edit-items"
                title="{{ 'quote_request_page.quote_request.cta_edit_address' | trans }}"
                 {{ qa('cart-go-to-address') }}>
@@ -104,7 +106,7 @@
             <p class="spacing-y">{{ 'quote_request_page.quote_request.empty_shipment_method' | trans }}</p>
 
             {% if data.isEditable %}
-                <a href="{{ url('checkout-shipment') }}"
+                <a href="{{ url('quote-request/edit-shipment', {quoteRequestReference: quoteRequestReference}) }}"
                    class="button button--expand button--edit-items"
                    title="{{ 'quote_request_page.quote_request.cta_edit_shipment_method' | trans }}"
                     {{ qa('cart-go-to-shipment') }}>
@@ -114,7 +116,7 @@
         {% endif %}
 
         {% if hasShipmentMethod and data.isEditable %}
-            <a href="{{ url('checkout-shipment') }}"
+            <a href="{{ url('quote-request/edit-shipment', {quoteRequestReference: quoteRequestReference}) }}"
                class="button button--expand button--edit-items"
                title="{{ 'quote_request_page.quote_request.cta_edit_shipment_method' | trans }}"
                 {{ qa('cart-go-to-shipment') }}>

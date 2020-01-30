@@ -17,13 +17,16 @@ class QuoteRequestCheckoutWidget extends AbstractWidget
 {
     protected const WIDGET_NAME = 'QuoteRequestCheckoutWidget';
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
+    protected const PARAMETER_BACK_URL = 'backUrl';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $backUrl
      */
-    public function __construct(QuoteTransfer $quoteTransfer)
+    public function __construct(QuoteTransfer $quoteTransfer, string $backUrl)
     {
         $this->addIsQuoteRequestReferenceSet($quoteTransfer);
+        $this->addBackUrl($backUrl);
     }
 
     /**
@@ -53,5 +56,15 @@ class QuoteRequestCheckoutWidget extends AbstractWidget
             static::PARAMETER_IS_VISIBLE,
             $this->getFactory()->getQuoteRequestClient()->isQuoteRequestReferenceSet($quoteTransfer)
         );
+    }
+
+    /**
+     * @param string $backUrl
+     *
+     * @return void
+     */
+    protected function addBackUrl(string $backUrl): void
+    {
+        $this->addParameter(static::PARAMETER_BACK_URL, $backUrl);
     }
 }

@@ -1,7 +1,8 @@
 {% extends template('widget') %}
 
 {% define data = {
-    isVisible: _widget.isVisible
+    isVisible: _widget.isVisible,
+    backUrl: _widget.backUrl,
 } %}
 
 {% block body %}
@@ -9,6 +10,9 @@
         <button type="submit" name="save" class="button button--expand button--success">
             {{ 'quote_request_page.quote_request.actions.save' | trans }}
         </button>
+        <a href="{{ data.backUrl }}">
+            {{ 'general.back.button' | trans }}
+        </a>
         <a href="{{ path('quote-request/cart/clear') }}">
             {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
         </a>

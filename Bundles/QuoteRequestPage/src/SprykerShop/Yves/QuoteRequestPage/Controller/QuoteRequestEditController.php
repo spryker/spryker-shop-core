@@ -74,6 +74,7 @@ class QuoteRequestEditController extends QuoteRequestAbstractController
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
             'shipmentGroups' => $shipmentGroupTransfers,
+            'quoteRequestReference' => $quoteRequestTransfer->getQuoteRequestReference(),
         ];
     }
 

@@ -17,6 +17,7 @@
             form: data.forms.shipment,
             cart: data.forms.shipment.vars.data,
             quote: data.quoteTransfer,
+            backUrl: data.backUrl,
             submit: {
                 enable: true,
                 text: 'checkout.step.payment' | trans,
@@ -88,7 +89,7 @@
             {% endfor %}
         {% endblock %}
         {% block actions %}
-            {% set quoteRequestCheckoutWidget = findWidget('QuoteRequestCheckoutWidget', [data.quoteTransfer]) %}
+            {% set quoteRequestCheckoutWidget = findWidget('QuoteRequestCheckoutWidget', [data.quote, data.backUrl]) %}
             {% if quoteRequestCheckoutWidget and quoteRequestCheckoutWidget.isVisible %}
                 {% widget quoteRequestCheckoutWidget only %}{% endwidget %}
             {% else %}
