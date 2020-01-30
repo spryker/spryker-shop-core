@@ -10,24 +10,30 @@
 } %}
 
 {% block body %}
-    {% if can('SeePricePermissionPlugin') %}
-        <h6 class="text-secondary float-right">
-            {% widget 'ProductBundleItemCounterWidget' args [data.cart] only %}
-            {% nowidget %}
-                {{ data.cart.items | length }} {{ 'item' | trans }}
-            {% endwidget %}
-        </h6>
-        <h6>{{ 'cart.your-order' | trans }}</h6>
-        <hr>
-
-        {% widget 'SalesOrderThresholdWidget' args [data.cart.expenses] only %}
-            {% block body %}
-                <li class="list__item spacing-y">
-                    {{ parent() }}
-                    <hr>
-                </li>
-            {% endblock %}
+    <h6 class="text-secondary float-right">
+        {% widget 'ProductBundleItemCounterWidget' args [data.cart] only %}
+        {% nowidget %}
+            {{ data.cart.items | length }} {{ 'item' | trans }}
         {% endwidget %}
+    </h6>
+    <h6>{{ 'cart.your-order' | trans }}</h6>
+    <hr>
+
+    {% widget 'SalesOrderThresholdWidget' args [data.cart.expenses] only %}
+        {% block body %}
+            <li class="list__item spacing-y">
+                {{ parent() }}
+                <hr>
+            </li>
+        {% endblock %}
+    {% endwidget %}
+
+    <ul class="list spacing-y">
+
+        <li class="list__item spacing-y">
+            {{ 'cart.price.subtotal' | trans }}
+            <span class="float-right">{{ data.cart.totals.subtotal | money(true, data.cart.currency.code) }}</span>
+        </li>
 
         {% include molecule('quote-request-discount-summary', 'QuoteRequestPage') with {
             class: 'list spacing-y',
@@ -42,7 +48,7 @@
         {% block cartShipment %}
             {% if data.cart.totals.shipmentTotal %}
                 <ul class="list spacing-y">
-                    <li>
+                    <li class="list__item">
                         <strong class="float-right">{{ data.cart.totals.shipmentTotal | money(true, data.cart.currency.code) }}</strong>
                         <strong>{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
                         {% for shipmentGroup in data.shipmentGroups %}
@@ -58,22 +64,15 @@
             {% endif %}
         {% endblock %}
 
-        <ul class="list spacing-y">
+        <li class="list__item spacing-y">
+            {{ 'cart.total.tax_total' | trans }}
+            <span class="float-right">{{ data.cart.totals.taxTotal.amount | money(true, data.cart.currency.code) }}</span>
+        </li>
 
-            <li class="list__item spacing-y">
-                {{ 'cart.price.subtotal' | trans }}
-                <span class="float-right">{{ data.cart.totals.subtotal | money(true, data.cart.currency.code) }}</span>
-            </li>
-
-            <li class="list__item spacing-y">
-                {{ 'cart.total.tax_total' | trans }}
-                <span class="float-right">{{ data.cart.totals.taxTotal.amount | money(true, data.cart.currency.code) }}</span>
-            </li>
-            <li class="list__item spacing-y">
-                {{ 'cart.price.grand.total' | trans }}
-                <strong class="float-right">{{ data.cart.totals.grandTotal | money(true, data.cart.currency.code) }}</strong>
-            </li>
-        </ul>
-    {% endif %}
+        <li class="list__item spacing-y">
+            {{ 'cart.price.grand.total' | trans }}
+            <strong class="float-right">{{ data.cart.totals.grandTotal | money(true, data.cart.currency.code) }}</strong>
+        </li>
+    </ul>
 
 {% endblock %}
