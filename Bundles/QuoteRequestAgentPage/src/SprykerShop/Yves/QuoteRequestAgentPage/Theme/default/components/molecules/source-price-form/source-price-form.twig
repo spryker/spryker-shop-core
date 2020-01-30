@@ -5,10 +5,8 @@
     tag: 'source-price-form'
 } %}
 
-{# @deprecated property "priceFiled" is deprecated: use "priceForm" instead. #}
 {% define data = {
-    priceFiled: null,
-    priceForm: data.priceFiled | default(null),
+    priceForm: null,
     checkboxName: required,
     checkboxValue: required,
     isChecked: required,
