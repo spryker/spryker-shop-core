@@ -29,7 +29,8 @@
     "spryker-shop/configurable-bundle-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/router": "*",
-    "spryker/silex": "*"
+    "spryker/silex": "*",
+    "spryker-shop/quote-request-page": "*"
   },
   "suggest": {
     "spryker-shop/agent-page": "If you want to use agent layout templates: ^1.2.0",

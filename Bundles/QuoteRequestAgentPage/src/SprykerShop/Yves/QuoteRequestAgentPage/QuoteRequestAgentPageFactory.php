@@ -27,7 +27,9 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider\QuoteRequestAgentFo
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandler;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandlerInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentCreateForm;
+use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentEditAddressConfirmForm;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentEditItemsConfirmForm;
+use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentEditShipmentConfirmForm;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentForm;
 use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouper;
 use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface;
@@ -65,6 +67,32 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     {
         return $this->getFormFactory()->create(
             QuoteRequestAgentEditItemsConfirmForm::class,
+            $quoteRequestTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getQuoteRequestAgentEditAddressConfirmForm(QuoteRequestTransfer $quoteRequestTransfer): FormInterface
+    {
+        return $this->getFormFactory()->create(
+            QuoteRequestAgentEditAddressConfirmForm::class,
+            $quoteRequestTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getQuoteRequestAgentEditShipmentConfirmForm(QuoteRequestTransfer $quoteRequestTransfer): FormInterface
+    {
+        return $this->getFormFactory()->create(
+            QuoteRequestAgentEditShipmentConfirmForm::class,
             $quoteRequestTransfer
         );
     }

@@ -20,6 +20,16 @@ class QuoteRequestAgentCheckoutAddressController extends QuoteRequestAgentAbstra
     protected const ROUTE_CHECKOUT_ADDRESS = 'checkout-address';
 
     /**
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_AGENT_EDIT_ADDRESS_CONFIRM
+     */
+    public const ROUTE_QUOTE_REQUEST_AGENT_EDIT_ADDRESS_CONFIRM = 'agent/quote-request/edit-address-confirm';
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS
+     */
+    protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS = 'agent/quote-request/checkout-address';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $quoteRequestReference
      *
@@ -27,10 +37,68 @@ class QuoteRequestAgentCheckoutAddressController extends QuoteRequestAgentAbstra
      */
     public function executeIndexAction(Request $request, string $quoteRequestReference)
     {
+        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+
+        if ($quoteTransfer->getQuoteRequestReference() && ($quoteTransfer->getQuoteRequestReference() !== $quoteRequestReference)) {
+            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT_ADDRESS_CONFIRM, [
+                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
+            ]);
+        }
+
         $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
 
         return $this->getFactory()
             ->createCompanyUserImpersonator()
             ->impersonateCompanyUser($quoteRequestTransfer, static::ROUTE_CHECKOUT_ADDRESS);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $quoteRequestReference
+     *
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function confirmAction(Request $request, string $quoteRequestReference)
+    {
+        $response = $this->executeConfirmAction($request, $quoteRequestReference);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->view($response, [], '@QuoteRequestAgentPage/views/quote-request-edit-address-confirm/quote-request-edit-address-confirm.twig');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $quoteRequestReference
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeConfirmAction(Request $request, string $quoteRequestReference)
+    {
+        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+
+        if ($quoteTransfer->getQuoteRequestReference() === $quoteRequestReference) {
+            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS, [
+                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
+            ]);
+        }
+
+        $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
+        $quoteRequestAgentEditAddressConfirmForm = $this->getFactory()
+            ->getQuoteRequestAgentEditAddressConfirmForm($quoteRequestTransfer)
+            ->handleRequest($request);
+
+        if ($quoteRequestAgentEditAddressConfirmForm->isSubmitted()) {
+            return $this->getFactory()
+                ->createCompanyUserImpersonator()
+                ->impersonateCompanyUser($quoteRequestAgentEditAddressConfirmForm->getData(), static::ROUTE_CHECKOUT_ADDRESS);
+        }
+
+        return [
+            'quoteRequestEditAddressConfirmForm' => $quoteRequestAgentEditAddressConfirmForm->createView(),
+            'quoteRequestReference' => $quoteTransfer->getQuoteRequestReference(),
+        ];
     }
 }
