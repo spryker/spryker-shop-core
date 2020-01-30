@@ -18,7 +18,7 @@ class QuoteRequestCheckerCheckoutSummaryStepEnterPreCheckPlugin extends Abstract
 {
     /**
      * {@inheritDoc}
-     * - Checks if the summary step should be hidden, returns true if quote request version reference is set, false otherwise.
+     * - Checks if the summary step should be shown, returns false if quote request version reference is set, true otherwise.
      *
      * @api
      *
