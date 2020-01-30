@@ -137,7 +137,7 @@ class CompanyUserImpersonator extends AbstractPlugin implements CompanyUserImper
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function redirectResponseInternal($path, $parameters = [], $code = 302)
+    protected function redirectResponseInternal($path, $parameters = [], $code = 302): RedirectResponse
     {
         return new RedirectResponse($this->router->generate($path, $parameters), $code);
     }
