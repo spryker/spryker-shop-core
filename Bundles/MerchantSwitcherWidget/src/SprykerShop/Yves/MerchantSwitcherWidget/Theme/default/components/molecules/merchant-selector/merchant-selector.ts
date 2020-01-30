@@ -1,10 +1,5 @@
 import Component from 'ShopUi/models/component';
 
-interface MerchantName {
-    currentName: string;
-    newName: string;
-}
-
 export default class MerchantSelector extends Component {
     protected form: HTMLFormElement;
     protected select: HTMLSelectElement;
@@ -36,17 +31,19 @@ export default class MerchantSelector extends Component {
     createMessageText(): void  {
         const currentMerchantOptionText: string = this.select.options[this.initiallySelectedIndex].text;
         const newMerchantOptionText: string = this.select.options[this.select.selectedIndex].text;
-        const currentMerchant: MerchantName = {
-            subString: this.currentMerchantNameTemplate,
-            newSubString: currentMerchantOptionText
+        const currentMerchant = {
+            placeholder: this.currentMerchantNameTemplate,
+            name: currentMerchantOptionText
         };
-        const newMerchant: MerchantName = {
-            subString: this.newMerchantNameTemplate,
-            newSubString: newMerchantOptionText
+        const newMerchant = {
+            placeholder: this.newMerchantNameTemplate,
+            name: newMerchantOptionText
         };
-        const merchantList: MerchantName[] = [currentMerchant, newMerchant];
+        const merchantList = [currentMerchant, newMerchant];
 
-        this.setMerchantNames(merchantList);
+        merchantList.forEach(merchant => {
+            this.messageText = this.message.replace(merchant.placeholder, merchant.name);
+        });
     }
 
     /**
@@ -61,18 +58,12 @@ export default class MerchantSelector extends Component {
             return;
         }
 
-        this.setInitialOption();
+        this.selectInitialOption();
     }
 
     protected selectInitialOption(): void {
         const initialMerchantOption: HTMLOptionElement = this.select.options[this.initiallySelectedIndex];
         initialMerchantOption.selected = true;
-    }
-
-    protected setMerchantNames(merchantList: MerchantName[]): void {
-        merchantList.forEach((merchant: MerchantName) => {
-            this.messageText = this.message.replace(merchant.subString, merchant.newSubString);
-        });
     }
 
     protected set messageText(newMessage: string) {
