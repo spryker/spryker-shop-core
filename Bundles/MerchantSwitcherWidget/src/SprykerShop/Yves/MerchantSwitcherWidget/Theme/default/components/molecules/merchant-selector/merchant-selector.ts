@@ -2,7 +2,7 @@ import Component from 'ShopUi/models/component';
 
 interface MerchantName {
     subString: string;
-    newSubString: string;
+    newName: string;
 }
 
 export default class MerchantSelector extends Component {
