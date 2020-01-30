@@ -20,7 +20,7 @@ export default class MerchantSelector extends Component {
     }
 
     protected onChangeHandler(): void {
-        this.createMessageText();
+        this.updateMessageText();
         this.setMerchant();
     }
 
@@ -32,8 +32,8 @@ export default class MerchantSelector extends Component {
         const newMerchantOptionText: string = this.select.options[this.select.selectedIndex].text;
 
         this.message = this.messageTemplate;
-        this.messageText = this.message.replace(this.currentMerchantNameTemplate, currentMerchantOptionText);
-        this.messageText = this.message.replace(this.newMerchantNameTemplate, newMerchantOptionText);
+        this.message = this.message.replace(this.currentMerchantNameTemplate, currentMerchantOptionText);
+        this.message = this.message.replace(this.newMerchantNameTemplate, newMerchantOptionText);
     }
 
     /**
@@ -54,10 +54,6 @@ export default class MerchantSelector extends Component {
     protected selectInitialOption(): void {
         const initialMerchantOption: HTMLOptionElement = this.select.options[this.initiallySelectedIndex];
         initialMerchantOption.selected = true;
-    }
-
-    protected set messageText(newMessage: string) {
-        this.message = newMessage;
     }
 
     protected get messageTemplate(): string {
