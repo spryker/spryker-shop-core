@@ -1,7 +1,7 @@
 import Component from 'ShopUi/models/component';
 
 interface MerchantName {
-    subString: string;
+    currentName: string;
     newName: string;
 }
 
