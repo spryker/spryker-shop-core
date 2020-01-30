@@ -48,7 +48,7 @@
         {% block cartShipment %}
             {% if data.cart.totals.shipmentTotal %}
                 <ul class="list spacing-y">
-                    <li>
+                    <li class="list__item">
                         <strong class="float-right">{{ data.cart.totals.shipmentTotal | money(true, data.cart.currency.code) }}</strong>
                         <strong>{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
                         {% for shipmentGroup in data.shipmentGroups %}

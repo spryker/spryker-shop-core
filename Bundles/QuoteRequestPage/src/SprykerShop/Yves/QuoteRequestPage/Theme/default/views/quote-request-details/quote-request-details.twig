@@ -10,7 +10,7 @@
     breadcrumbLabel: '#' ~ _view.quoteRequest.quoteRequestReference,
 } %}
 
-{% set isLatestVersion = (data.version.idQuoteRequestVersion == data.quoteRequest.latestVisibleVersion.idQuoteRequestVersion) ? true : false %}
+{% set isLatestVersion = (data.version.idQuoteRequestVersion == data.quoteRequest.latestVisibleVersion.idQuoteRequestVersion) %}
 
 {% block content %}
     {% set quote = data.version.quote %}
@@ -60,7 +60,8 @@
         } only %}
             {% block options %}
                 {% for versionReference in embed.versionReferences %}
-                    <option value="{{ versionReference }}" {{ (versionReference == embed.currentVersionReference) ? 'selected'}}>{{ versionReference }}</option>
+                    {% set selectedOption = (versionReference == embed.currentVersionReference) ? 'selected' %}
+                    <option value="{{ versionReference }}" {{ selectedOption }}>{{ versionReference }}</option>
                 {% endfor %}
             {% endblock %}
         {% endembed %}
@@ -69,12 +70,12 @@
 
 {% block rfqSidebar %}
     {% if quote.items is not empty %}
-        {% include molecule('quote-request-delivery-summary', 'QuoteRequestPage') ignore missing with {
+        {% include molecule('quote-request-delivery-summary', 'QuoteRequestPage') with {
             class: 'list spacing-y',
             data: {
                 quote: quote,
                 hasMultiShipments: hasMultiShipments,
-            }
+            },
         } only %}
 
         {% include molecule('quote-request-cart-summary', 'QuoteRequestPage') with {
