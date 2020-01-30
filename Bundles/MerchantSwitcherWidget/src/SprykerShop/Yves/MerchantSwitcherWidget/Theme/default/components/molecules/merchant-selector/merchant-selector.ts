@@ -12,6 +12,7 @@ export default class MerchantSelector extends Component {
         this.form = <HTMLFormElement>this.getElementsByClassName(`${this.jsName}__form`)[0];
         this.select = <HTMLSelectElement>this.form.getElementsByClassName(`${this.jsName}__select`)[0];
         this.initiallySelectedIndex = this.select.selectedIndex;
+        this.message = this.messageTemplate;
         this.mapEvents();
     }
 
@@ -31,7 +32,6 @@ export default class MerchantSelector extends Component {
         const currentMerchantOptionText: string = this.select.options[this.initiallySelectedIndex].text;
         const newMerchantOptionText: string = this.select.options[this.select.selectedIndex].text;
 
-        this.message = this.messageTemplate;
         this.message = this.message.replace(this.currentMerchantNameTemplate, currentMerchantOptionText);
         this.message = this.message.replace(this.newMerchantNameTemplate, newMerchantOptionText);
     }
