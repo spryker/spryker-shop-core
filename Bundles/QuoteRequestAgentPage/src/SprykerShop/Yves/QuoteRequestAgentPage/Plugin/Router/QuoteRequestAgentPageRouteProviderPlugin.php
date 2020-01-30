@@ -223,7 +223,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
      */
     protected function addQuoteRequestAgentCheckoutAddressRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/agent/quote-request/checkout-address/{quoteRequestReference}', 'QuoteRequestAgentPage', 'QuoteRequestAgentCheckoutAddress', 'indexAction');
+        $route = $this->buildRoute('/agent/quote-request/checkout-address/{quoteRequestReference}', 'QuoteRequestAgentPage', 'QuoteRequestAgentCheckoutAddress', 'executeIndexAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
         $routeCollection->add(static::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS, $route);
 
@@ -239,7 +239,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
      */
     protected function addQuoteRequestAgentCheckoutShipmentRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/agent/quote-request/checkout-shipment/{quoteRequestReference}', 'QuoteRequestAgentPage', 'QuoteRequestAgentCheckoutShipment', 'indexAction');
+        $route = $this->buildRoute('/agent/quote-request/checkout-shipment/{quoteRequestReference}', 'QuoteRequestAgentPage', 'QuoteRequestAgentCheckoutShipment', 'executeIndexAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
         $routeCollection->add(static::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT, $route);
 

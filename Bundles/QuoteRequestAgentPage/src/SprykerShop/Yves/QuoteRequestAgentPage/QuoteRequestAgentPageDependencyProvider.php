@@ -9,9 +9,11 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCompanyUserClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCustomerClientBridge;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToMessengerClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPriceClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestAgentClientBridge;
@@ -30,9 +32,11 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
     public const CLIENT_PRICE = 'CLIENT_PRICE';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_STORE = 'CLIENT_STORE';
+    public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
+    public const SERVICE_ROUTER = 'routers';
 
     public const PLUGINS_QUOTE_REQUEST_AGENT_FORM_METADATA_FIELD = 'PLUGINS_QUOTE_REQUEST_AGENT_FORM_METADATA_FIELD';
 
@@ -52,9 +56,11 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addPriceClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addStoreClient($container);
+        $container = $this->addMessengerClient($container);
 
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addShipmentService($container);
+        $container = $this->addRouterService($container);
 
         $container = $this->addQuoteRequestAgentFormMetadataFieldPlugins($container);
 
@@ -221,5 +227,35 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
     protected function getQuoteRequestAgentFormMetadataFieldPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addRouterService(Container $container): Container
+    {
+        $container->set(static::SERVICE_ROUTER, function () {
+            return (new Pimple())->getApplication()->get(static::SERVICE_ROUTER);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addMessengerClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_MESSENGER, function (Container $container) {
+            return new QuoteRequestAgentPageToMessengerClientBridge(
+                $container->getLocator()->messenger()->client()
+            );
+        });
+
+        return $container;
     }
 }

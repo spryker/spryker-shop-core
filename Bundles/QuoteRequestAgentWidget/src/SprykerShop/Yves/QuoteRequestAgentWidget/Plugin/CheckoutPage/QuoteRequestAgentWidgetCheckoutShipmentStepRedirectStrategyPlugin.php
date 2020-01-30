@@ -9,13 +9,13 @@ namespace SprykerShop\Yves\QuoteRequestAgentWidget\Plugin\CheckoutPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentPostExecutionRedirectStrategyPluginInterface;
+use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepRedirectStrategyPluginInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestAgentWidget\QuoteRequestAgentWidgetFactory getFactory()
  */
-class QuoteRequestAgentWidgetCheckoutShipmentPostExecuteRedirectStrategyPlugin extends AbstractPlugin implements CheckoutShipmentPostExecutionRedirectStrategyPluginInterface
+class QuoteRequestAgentWidgetCheckoutShipmentStepRedirectStrategyPlugin extends AbstractPlugin implements CheckoutShipmentStepRedirectStrategyPluginInterface
 {
     protected const ROUTE_REDIRECT_CHECKOUT_SHIPMENT = 'checkout-shipment';
     protected const GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE = 'global.shipment.success.save';
@@ -51,6 +51,6 @@ class QuoteRequestAgentWidgetCheckoutShipmentPostExecuteRedirectStrategyPlugin e
         $checkoutShipmentUrl = $this->getFactory()->getRouterService()->generate(static::ROUTE_REDIRECT_CHECKOUT_SHIPMENT);
         $this->getFactory()->getFlashMessenger()->addSuccessMessage(static::GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE);
 
-        return $this->getFactory()->createRedirectResponse($checkoutShipmentUrl);
+        return new RedirectResponse($checkoutShipmentUrl);
     }
 }

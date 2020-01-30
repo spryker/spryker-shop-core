@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -23,21 +22,6 @@ class QuoteRequestAgentAbstractController extends AbstractController
      */
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
     protected const PARAM_SWITCH_USER = '_switch_user';
-
-    /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
-     */
-    protected const ROUTE_CART = 'cart';
-
-    /**
-     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::CHECKOUT_ADDRESS
-     */
-    protected const ROUTE_CHECKOUT_ADDRESS = 'checkout-address';
-
-    /**
-     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::CHECKOUT_SHIPMENT
-     */
-    protected const ROUTE_CHECKOUT_SHIPMENT = 'checkout-shipment';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Provider\QuoteRequestAgentPageControllerProvider::ROUTE_QUOTE_REQUEST_AGENT_EDIT_ITEMS
@@ -113,18 +97,6 @@ class QuoteRequestAgentAbstractController extends AbstractController
     {
         foreach ($quoteRequestResponseTransfer->getMessages() as $messageTransfer) {
             $this->addErrorMessage($messageTransfer->getValue());
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     *
-     * @return void
-     */
-    protected function handleQuoteResponseErrors(QuoteResponseTransfer $quoteResponseTransfer): void
-    {
-        foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
-            $this->addErrorMessage($quoteErrorTransfer->getMessage());
         }
     }
 }

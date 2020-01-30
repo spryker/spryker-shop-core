@@ -12,11 +12,9 @@ use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToCustomerClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToMessengerClientBridge;
-use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToMessengerClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToPersistentCartClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteRequestAgentClientBridge;
-use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 
 class QuoteRequestAgentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -109,7 +107,7 @@ class QuoteRequestAgentWidgetDependencyProvider extends AbstractBundleDependency
      */
     protected function addRouterService(Container $container): Container
     {
-        $container->set(static::SERVICE_ROUTER, function (): ChainRouterInterface {
+        $container->set(static::SERVICE_ROUTER, function () {
             return (new Pimple())->getApplication()->get(static::SERVICE_ROUTER);
         });
 
@@ -123,7 +121,7 @@ class QuoteRequestAgentWidgetDependencyProvider extends AbstractBundleDependency
      */
     protected function addMessengerClient(Container $container): Container
     {
-        $container->set(static::CLIENT_MESSENGER, function (Container $container): QuoteRequestAgentWidgetToMessengerClientInterface {
+        $container->set(static::CLIENT_MESSENGER, function (Container $container) {
             return new QuoteRequestAgentWidgetToMessengerClientBridge(
                 $container->getLocator()->messenger()->client()
             );

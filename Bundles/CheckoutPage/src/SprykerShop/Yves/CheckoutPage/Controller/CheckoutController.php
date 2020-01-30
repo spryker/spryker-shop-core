@@ -140,7 +140,7 @@ class CheckoutController extends AbstractController
         );
 
         if (!is_array($response)) {
-            return $this->executeCheckoutShipmentPostExecutePlugins($response);
+            return $this->executeCheckoutShipmentStepRedirectPlugins($response);
         }
 
         return $this->view(
@@ -319,17 +319,17 @@ class CheckoutController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeCheckoutShipmentPostExecutePlugins(RedirectResponse $response): RedirectResponse
+    protected function executeCheckoutShipmentStepRedirectPlugins(RedirectResponse $response): RedirectResponse
     {
         $quoteTransfer = $this->getFactory()
             ->getQuoteClient()
             ->getQuote();
 
-        $checkoutShipmentPostExecuteStrategyPlugins = $this->getFactory()->getCheckoutShipmentPostExecuteRedirectStrategyPlugins();
+        $checkoutShipmentStepRedirectStrategyPlugins = $this->getFactory()->getCheckoutShipmentStepRedirectStrategyPlugins();
 
-        foreach ($checkoutShipmentPostExecuteStrategyPlugins as $checkoutShipmentPostExecuteStrategyPlugin) {
-            if ($checkoutShipmentPostExecuteStrategyPlugin->isApplicable($quoteTransfer)) {
-                return $checkoutShipmentPostExecuteStrategyPlugin->execute($response, $quoteTransfer);
+        foreach ($checkoutShipmentStepRedirectStrategyPlugins as $checkoutShipmentStepRedirectStrategyPlugin) {
+            if ($checkoutShipmentStepRedirectStrategyPlugin->isApplicable($quoteTransfer)) {
+                return $checkoutShipmentStepRedirectStrategyPlugin->execute($response, $quoteTransfer);
             }
         }
 

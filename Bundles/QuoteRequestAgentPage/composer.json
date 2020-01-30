@@ -13,20 +13,20 @@
     "spryker/company-user": "^2.10.0",
     "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.30.0",
+    "spryker/messenger": "^3.0.0",
     "spryker/price": "^5.0.0",
     "spryker/quote": "^2.0.0",
     "spryker/quote-request": "^2.0.0",
     "spryker/quote-request-agent": "^2.0.0",
+    "spryker/shipment": "^8.0.0",
     "spryker/store": "^1.8.0",
     "spryker/symfony": "^3.1.0",
-    "spryker/shipment": "^8.0.0",
     "spryker/util-date-time": "^1.0.0"
   },
   "require-dev": {
     "spryker-shop/agent-page": "*",
     "spryker-shop/cart-page": "*",
     "spryker-shop/configurable-bundle-widget": "*",
-    "spryker-shop/quote-request-page": "*",
     "spryker/code-sniffer": "*",
     "spryker/router": "*",
     "spryker/silex": "*"
@@ -36,7 +36,7 @@
     "spryker-shop/cart-page": "If you want to use cart page molecules: ^3.2.0",
     "spryker-shop/configurable-bundle-widget": "If you want to use configurable bundle widget functionality",
     "spryker-shop/company-user-agent-widget": "If you want to use company user auto-complete form: ^1.0.0",
-    "spryker-shop/quote-request-page": "If you want to use quote request page molecules: ^2.0.0",
+    "spryker-shop/quote-request-page": "If you want to use quote request page molecules: ^3.0.0",
     "spryker/router": "Use this module if you want use the RouterProviderPlugin.",
     "spryker/silex": "Use this module when using plugins that need Silex dependencies."
   },

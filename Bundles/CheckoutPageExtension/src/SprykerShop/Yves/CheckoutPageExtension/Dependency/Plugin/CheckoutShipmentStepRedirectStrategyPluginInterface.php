@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-interface CheckoutShipmentPostExecutionRedirectStrategyPluginInterface
+interface CheckoutShipmentStepRedirectStrategyPluginInterface
 {
     /**
      * Specification:

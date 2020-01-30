@@ -20,7 +20,6 @@ use SprykerShop\Yves\QuoteRequestAgentWidget\Handler\QuoteRequestAgentCartHandle
 use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestAgentWidget\QuoteRequestAgentWidgetConfig getConfig()
@@ -84,16 +83,6 @@ class QuoteRequestAgentWidgetFactory extends AbstractFactory
     public function getCustomerClient(): QuoteRequestAgentWidgetToCustomerClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestAgentWidgetDependencyProvider::CLIENT_CUSTOMER);
-    }
-
-    /**
-     * @param string $targetUrl
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function createRedirectResponse(string $targetUrl): RedirectResponse
-    {
-        return new RedirectResponse($targetUrl);
     }
 
     /**

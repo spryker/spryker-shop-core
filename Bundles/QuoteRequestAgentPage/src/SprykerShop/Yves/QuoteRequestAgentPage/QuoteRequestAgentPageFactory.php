@@ -10,9 +10,12 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\QuoteRequestAgentPage\CompanyUserImpersonator\CompanyUserImpersonator;
+use SprykerShop\Yves\QuoteRequestAgentPage\CompanyUserImpersonator\CompanyUserImpersonatorInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCompanyUserClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCustomerClientInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToMessengerClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPriceClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestAgentClientInterface;
@@ -28,6 +31,7 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentEditItemsConfir
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentForm;
 use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouper;
 use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface;
+use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -101,6 +105,17 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     {
         return new ShipmentGrouper(
             $this->getShipmentService()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\CompanyUserImpersonator\CompanyUserImpersonatorInterface
+     */
+    public function createCompanyUserImpersonator(): CompanyUserImpersonatorInterface
+    {
+        return new CompanyUserImpersonator(
+            $this->getMessengerClient(),
+            $this->getRouterService()
         );
     }
 
@@ -198,5 +213,21 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     public function getStoreClient(): QuoteRequestAgentPageToStoreClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToMessengerClientInterface
+     */
+    public function getMessengerClient(): QuoteRequestAgentPageToMessengerClientInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::CLIENT_MESSENGER);
+    }
+
+    /**
+     * @return \Symfony\Cmf\Component\Routing\ChainRouterInterface
+     */
+    public function getRouterService(): ChainRouterInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::SERVICE_ROUTER);
     }
 }
