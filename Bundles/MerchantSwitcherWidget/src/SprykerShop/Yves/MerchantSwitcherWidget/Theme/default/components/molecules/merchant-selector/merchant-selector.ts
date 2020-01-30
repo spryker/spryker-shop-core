@@ -64,7 +64,7 @@ export default class MerchantSelector extends Component {
         this.setInitialOption();
     }
 
-    protected setInitialOption(): void {
+    protected selectInitialOption(): void {
         const initialMerchantOption: HTMLOptionElement = this.select.options[this.initiallySelectedIndex];
         initialMerchantOption.selected = true;
     }
