@@ -1,0 +1,15 @@
+{% extends template('widget') %}
+
+{% define data = {
+    merchantList: _widget.activeMerchantTransfers | default([]),
+    currentMerchantReference: _widget.selectedMerchantReference | default,
+} %}
+
+{% block body %}
+    {% include molecule('merchant-selector', 'MerchantSwitcherWidget') with {
+        data: {
+            merchantList: data.merchantList,
+            currentMerchantReference: data.currentMerchantReference,
+        },
+    } only %}
+{% endblock %}
