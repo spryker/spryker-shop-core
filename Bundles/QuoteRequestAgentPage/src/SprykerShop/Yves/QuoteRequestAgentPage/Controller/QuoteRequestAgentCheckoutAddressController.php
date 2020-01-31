@@ -22,7 +22,7 @@ class QuoteRequestAgentCheckoutAddressController extends QuoteRequestAgentAbstra
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_AGENT_EDIT_ADDRESS_CONFIRM
      */
-    public const ROUTE_QUOTE_REQUEST_AGENT_EDIT_ADDRESS_CONFIRM = 'agent/quote-request/edit-address-confirm';
+    protected const ROUTE_QUOTE_REQUEST_AGENT_EDIT_ADDRESS_CONFIRM = 'agent/quote-request/edit-address-confirm';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuoteRequestAgentPage\CompanyUserImpersonator;
+namespace SprykerShop\Yves\QuoteRequestAgentPage\Impersonator;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Symfony\Component\HttpFoundation\RedirectResponse;

@@ -10,8 +10,6 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\QuoteRequestAgentPage\CompanyUserImpersonator\CompanyUserImpersonator;
-use SprykerShop\Yves\QuoteRequestAgentPage\CompanyUserImpersonator\CompanyUserImpersonatorInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCompanyUserClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCustomerClientInterface;
@@ -33,6 +31,8 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentEditShipmentCon
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentForm;
 use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouper;
 use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Impersonator\CompanyUserImpersonator;
+use SprykerShop\Yves\QuoteRequestAgentPage\Impersonator\CompanyUserImpersonatorInterface;
 use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
@@ -137,7 +137,7 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteRequestAgentPage\CompanyUserImpersonator\CompanyUserImpersonatorInterface
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Impersonator\CompanyUserImpersonatorInterface
      */
     public function createCompanyUserImpersonator(): CompanyUserImpersonatorInterface
     {
