@@ -54,6 +54,8 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
         $routeCollection = $this->addQuoteRequestConvertToCartRoute($routeCollection);
         $routeCollection = $this->addQuoteRequestAgentCheckoutAddressRoute($routeCollection);
         $routeCollection = $this->addQuoteRequestAgentCheckoutShipmentRoute($routeCollection);
+        $routeCollection = $this->addQuoteRequestAgentCheckoutAddressConfirmRoute($routeCollection);
+        $routeCollection = $this->addQuoteRequestAgentCheckoutShipmentConfirmRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -239,7 +241,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
      */
-    protected function addQuoteRequestEditAddressConfirmRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addQuoteRequestAgentCheckoutAddressConfirmRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/agent/quote-request/checkout-address-confirm/{quoteRequestReference}', 'QuoteRequestAgentPage', 'QuoteRequestAgentCheckoutAddress', 'confirmAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
@@ -271,7 +273,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection
      */
-    protected function addQuoteRequestEditShipmentConfirmRoute(RouteCollection $routeCollection): RouteCollection
+    protected function addQuoteRequestAgentCheckoutShipmentConfirmRoute(RouteCollection $routeCollection): RouteCollection
     {
         $route = $this->buildRoute('/agent/quote-request/checkout-shipment-confirm/{quoteRequestReference}', 'QuoteRequestAgentPage', 'QuoteRequestAgentCheckoutShipment', 'confirmAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
