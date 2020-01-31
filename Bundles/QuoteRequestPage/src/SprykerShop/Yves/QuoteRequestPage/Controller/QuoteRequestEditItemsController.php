@@ -65,7 +65,7 @@ class QuoteRequestEditItemsController extends QuoteRequestAbstractController
 
         $quoteRequestTransfer = $this->getCompanyUserQuoteRequestByReference($quoteRequestReference);
 
-        return $this->convertQuoteRequestToQuote($quoteRequestTransfer);
+        return $this->convertQuoteRequest($quoteRequestTransfer);
     }
 
     /**
@@ -91,7 +91,7 @@ class QuoteRequestEditItemsController extends QuoteRequestAbstractController
             ->handleRequest($request);
 
         if ($quoteRequestEditItemsConfirmForm->isSubmitted()) {
-            return $this->convertQuoteRequestToQuote($quoteRequestEditItemsConfirmForm->getData());
+            return $this->convertQuoteRequest($quoteRequestEditItemsConfirmForm->getData());
         }
 
         return [
@@ -105,7 +105,7 @@ class QuoteRequestEditItemsController extends QuoteRequestAbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): RedirectResponse
+    protected function convertQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): RedirectResponse
     {
         $quoteResponseTransfer = $this->getFactory()
             ->getQuoteRequestClient()
