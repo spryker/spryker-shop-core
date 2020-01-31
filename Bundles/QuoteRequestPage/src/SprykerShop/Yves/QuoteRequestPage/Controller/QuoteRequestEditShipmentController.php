@@ -65,7 +65,7 @@ class QuoteRequestEditShipmentController extends QuoteRequestAbstractController
 
         $quoteRequestTransfer = $this->getCompanyUserQuoteRequestByReference($quoteRequestReference);
 
-        return $this->convertQuoteRequest($quoteRequestTransfer);
+        return $this->convertQuoteRequestToQuote($quoteRequestTransfer);
     }
 
     /**
@@ -91,7 +91,7 @@ class QuoteRequestEditShipmentController extends QuoteRequestAbstractController
             ->handleRequest($request);
 
         if ($quoteRequestEditShipmentConfirmForm->isSubmitted()) {
-            return $this->convertQuoteRequest($quoteRequestEditShipmentConfirmForm->getData());
+            return $this->convertQuoteRequestToQuote($quoteRequestEditShipmentConfirmForm->getData());
         }
 
         return [
@@ -105,7 +105,7 @@ class QuoteRequestEditShipmentController extends QuoteRequestAbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function convertQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): RedirectResponse
+    protected function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): RedirectResponse
     {
         $quoteResponseTransfer = $this->getFactory()
             ->getQuoteRequestClient()
@@ -127,8 +127,8 @@ class QuoteRequestEditShipmentController extends QuoteRequestAbstractController
      */
     protected function handleQuoteResponseErrors(QuoteResponseTransfer $quoteResponseTransfer): void
     {
-        foreach ($quoteResponseTransfer->getErrors() as $errorTransfer) {
-            $this->addErrorMessage($errorTransfer->getMessage());
+        foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
+            $this->addErrorMessage($quoteErrorTransfer->getMessage());
         }
     }
 }
