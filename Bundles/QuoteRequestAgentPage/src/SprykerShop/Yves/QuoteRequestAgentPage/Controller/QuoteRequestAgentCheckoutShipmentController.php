@@ -63,7 +63,7 @@ class QuoteRequestAgentCheckoutShipmentController extends QuoteRequestAgentAbstr
 
         return $this->getFactory()
             ->createCompanyUserImpersonator()
-            ->impersonateCompanyUser($quoteRequestTransfer, static::ROUTE_CHECKOUT_SHIPMENT);
+            ->impersonateCompanyUser($quoteRequestTransfer, static::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT, static::ROUTE_CHECKOUT_SHIPMENT);
     }
 
     /**
@@ -107,7 +107,7 @@ class QuoteRequestAgentCheckoutShipmentController extends QuoteRequestAgentAbstr
         if ($quoteRequestAgentEditShipmentConfirmForm->isSubmitted()) {
             return $this->getFactory()
                 ->createCompanyUserImpersonator()
-                ->impersonateCompanyUser($quoteRequestAgentEditShipmentConfirmForm->getData(), static::ROUTE_CHECKOUT_SHIPMENT);
+                ->impersonateCompanyUser($quoteRequestAgentEditShipmentConfirmForm->getData(), static::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT, static::ROUTE_CHECKOUT_SHIPMENT);
         }
 
         return [

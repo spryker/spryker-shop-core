@@ -79,13 +79,14 @@ class CompanyUserImpersonator implements CompanyUserImpersonatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     * @param string $routeToRedirect
+     * @param string $urlFrom
+     * @param string $urlTo
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function impersonateCompanyUser(QuoteRequestTransfer $quoteRequestTransfer, string $routeToRedirect): RedirectResponse
+    public function impersonateCompanyUser(QuoteRequestTransfer $quoteRequestTransfer, string $urlFrom, string $urlTo): RedirectResponse
     {
-        $redirectResponse = $this->checkCompanyUserImpersonation($quoteRequestTransfer, $routeToRedirect);
+        $redirectResponse = $this->checkCompanyUserImpersonation($quoteRequestTransfer, $urlFrom, $urlTo);
 
         if ($redirectResponse) {
             return $redirectResponse;
@@ -102,34 +103,35 @@ class CompanyUserImpersonator implements CompanyUserImpersonatorInterface
         $companyUserTransfer = $this->companyUserClient->findCompanyUser();
 
         if (!$companyUserTransfer) {
-            return $this->redirectResponseInternal($routeToRedirect, [
+            return $this->redirectResponseInternal($urlTo, [
                 static::PARAM_SWITCH_USER => $quoteRequestTransfer->getCompanyUser()->getCustomer()->getEmail(),
             ]);
         }
 
-        return $this->redirectResponseInternal($routeToRedirect);
+        return $this->redirectResponseInternal($urlTo);
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     * @param string $routeToRedirect
+     * @param string $urlFrom
+     * @param string $urlTo
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
      */
-    protected function checkCompanyUserImpersonation(QuoteRequestTransfer $quoteRequestTransfer, string $routeToRedirect): ?RedirectResponse
+    protected function checkCompanyUserImpersonation(QuoteRequestTransfer $quoteRequestTransfer, string $urlFrom, string $urlTo): ?RedirectResponse
     {
         $companyUserTransfer = $this->companyUserClient->findCompanyUser();
         $quoteTransfer = $this->quoteClient->getQuote();
 
         if ($companyUserTransfer && $companyUserTransfer->getIdCompanyUser() !== $quoteRequestTransfer->getCompanyUser()->getIdCompanyUser()) {
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT_ITEMS, [
+            return $this->redirectResponseInternal($urlFrom, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestTransfer->getQuoteRequestReference(),
                 static::PARAM_SWITCH_USER => '_exit',
             ]);
         }
 
         if ($quoteTransfer->getQuoteRequestReference() === $quoteRequestTransfer->getQuoteRequestReference()) {
-            return $this->redirectResponseInternal($routeToRedirect);
+            return $this->redirectResponseInternal($urlTo);
         }
 
         return null;

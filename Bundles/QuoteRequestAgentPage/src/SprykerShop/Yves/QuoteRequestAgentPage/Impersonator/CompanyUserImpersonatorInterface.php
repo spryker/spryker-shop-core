@@ -14,9 +14,10 @@ interface CompanyUserImpersonatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     * @param string $routeToRedirect
+     * @param string $urlFrom
+     * @param string $urlTo
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function impersonateCompanyUser(QuoteRequestTransfer $quoteRequestTransfer, string $routeToRedirect): RedirectResponse;
+    public function impersonateCompanyUser(QuoteRequestTransfer $quoteRequestTransfer, string $urlFrom, string $urlTo): RedirectResponse;
 }
