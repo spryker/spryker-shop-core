@@ -28,6 +28,8 @@ interface ProductLabelWidgetToProductLabelStorageClientInterface
     public function findLabels(array $idProductLabels, $localeName, ?string $storeName = null);
 
     /**
+     * @deprecated Not used anymore. Will be removed with next major release.
+     *
      * @param string $labelName
      * @param string $localeName
      * @param string|null $storeName
