@@ -84,7 +84,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CHECKOUT_SHIPMENT_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_SHIPMENT_STEP_ENTER_PRE_CHECK';
     public const PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK';
     public const PLUGINS_CHECKOUT_SUMMARY_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_SUMMARY_STEP_ENTER_PRE_CHECK';
-    public const PLUGINS_CHECKOUT_SHIPMENT_POST_EXECUTION_REDIRECT_STRATEGY = 'PLUGINS_CHECKOUT_SHIPMENT_POST_EXECUTION_REDIRECT_STRATEGY';
+    public const PLUGINS_CHECKOUT_SHIPMENT_STEP_REDIRECT_STRATEGY = 'PLUGINS_CHECKOUT_SHIPMENT_STEP_REDIRECT_STRATEGY';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -133,7 +133,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addShipmentService($container);
         $container = $this->addCustomerService($container);
         $container = $this->addAddressStepExecutorAddressTransferExpanderPlugins($container);
-        $container = $this->addCheckoutShipmentPostExecutionRedirectStrategyPlugins($container);
+        $container = $this->addCheckoutShipmentPostExecuteRedirectStrategyPlugins($container);
 
         return $container;
     }
@@ -820,19 +820,19 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCheckoutShipmentPostExecutionRedirectStrategyPlugins(Container $container): Container
+    protected function addCheckoutShipmentPostExecuteRedirectStrategyPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_CHECKOUT_SHIPMENT_POST_EXECUTION_REDIRECT_STRATEGY, function () {
-            return $this->getCheckoutShipmentPostExecutionRedirectStrategyPlugins();
+        $container->set(static::PLUGINS_CHECKOUT_SHIPMENT_STEP_REDIRECT_STRATEGY, function () {
+            return $this->getCheckoutShipmentPostExecuteRedirectStrategyPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentPostExecutionRedirectStrategyPluginInterface[]
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentPostExecuteRedirectStrategyPluginInterface[]
      */
-    protected function getCheckoutShipmentPostExecutionRedirectStrategyPlugins(): array
+    protected function getCheckoutShipmentPostExecuteRedirectStrategyPlugins(): array
     {
         return [];
     }

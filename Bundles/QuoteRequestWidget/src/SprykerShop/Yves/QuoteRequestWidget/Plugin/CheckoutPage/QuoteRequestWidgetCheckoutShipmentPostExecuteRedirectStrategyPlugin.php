@@ -9,18 +9,18 @@ namespace SprykerShop\Yves\QuoteRequestWidget\Plugin\CheckoutPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentPostExecutionRedirectStrategyPluginInterface;
+use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentPostExecuteRedirectStrategyPluginInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestWidget\QuoteRequestWidgetFactory getFactory()
  */
-class QuoteRequestWidgetCheckoutShipmentPostExecuteRedirectStrategyPlugin extends AbstractPlugin implements CheckoutShipmentPostExecutionRedirectStrategyPluginInterface
+class QuoteRequestWidgetCheckoutShipmentPostExecuteRedirectStrategyPlugin extends AbstractPlugin implements CheckoutShipmentPostExecuteRedirectStrategyPluginInterface
 {
     /**
-     * @uses @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_EDIT
+     * @uses \SprykerShop\Yves\QuoteRequestWidget\Plugin\Router\QuoteRequestWidgetRouteProviderPlugin::ROUTE_QUOTE_REQUEST_SAVE_CART
      */
-    protected const ROUTE_QUOTE_REQUEST_EDIT = 'quote-request/edit';
+    protected const ROUTE_QUOTE_REQUEST_SAVE_CART = 'quote-request/cart/save';
 
     /**
      * {@inheritDoc}
@@ -44,15 +44,14 @@ class QuoteRequestWidgetCheckoutShipmentPostExecuteRedirectStrategyPlugin extend
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\RedirectResponse $redirectResponse
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute(RedirectResponse $redirectResponse, QuoteTransfer $quoteTransfer): RedirectResponse
+    public function execute(RedirectResponse $redirectResponse): RedirectResponse
     {
         $checkoutShipmentUrl = $this->getFactory()
             ->getRouterService()
-            ->generate(static::ROUTE_QUOTE_REQUEST_EDIT, ['quoteRequestReference' => $quoteTransfer->getQuoteRequestReference()]);
+            ->generate(static::ROUTE_QUOTE_REQUEST_SAVE_CART);
 
         return $this->getFactory()->createRedirectResponse($checkoutShipmentUrl);
     }

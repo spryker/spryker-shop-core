@@ -114,5 +114,5 @@ interface QuoteRequestPageToQuoteRequestClientInterface
      *
      * @return bool
      */
-    public function isQuoteRequestReferenceSet(QuoteTransfer $quoteTransfer): bool;
+    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool;
 }

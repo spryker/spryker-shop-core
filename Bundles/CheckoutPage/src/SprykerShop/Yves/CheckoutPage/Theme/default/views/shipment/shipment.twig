@@ -2,7 +2,6 @@
 
 {% define data = {
     backUrl: _view.previousStepUrl,
-    quoteTransfer: _view.quoteTransfer,
     forms: {
         shipment: _view.shipmentCollectionForm,
     },
@@ -16,7 +15,6 @@
         data: {
             form: data.forms.shipment,
             cart: data.forms.shipment.vars.data,
-            quote: data.quoteTransfer,
             backUrl: data.backUrl,
             submit: {
                 enable: true,
@@ -89,7 +87,7 @@
             {% endfor %}
         {% endblock %}
         {% block actions %}
-            {% set quoteRequestCheckoutWidget = findWidget('QuoteRequestCheckoutWidget', [data.quote, data.backUrl]) %}
+            {% set quoteRequestCheckoutWidget = findWidget('QuoteRequestCheckoutWidget', [data.cart, data.backUrl]) %}
             {% if quoteRequestCheckoutWidget and quoteRequestCheckoutWidget.isVisible %}
                 {% widget quoteRequestCheckoutWidget only %}{% endwidget %}
             {% else %}

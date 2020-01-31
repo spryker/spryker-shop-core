@@ -115,18 +115,6 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
-     */
-    public function getTemplateVariables(AbstractTransfer $quoteTransfer)
-    {
-        return [
-            'quoteTransfer' => $quoteTransfer,
-        ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function setDefaultNoShipmentMethod(QuoteTransfer $quoteTransfer): QuoteTransfer

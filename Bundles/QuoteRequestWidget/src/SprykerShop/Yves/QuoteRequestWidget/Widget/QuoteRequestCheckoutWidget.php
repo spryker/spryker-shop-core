@@ -15,7 +15,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class QuoteRequestCheckoutWidget extends AbstractWidget
 {
-    protected const WIDGET_NAME = 'QuoteRequestCheckoutWidget';
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
     protected const PARAMETER_BACK_URL = 'backUrl';
 
@@ -25,8 +24,8 @@ class QuoteRequestCheckoutWidget extends AbstractWidget
      */
     public function __construct(QuoteTransfer $quoteTransfer, string $backUrl)
     {
-        $this->addIsQuoteRequestReferenceSet($quoteTransfer);
-        $this->addBackUrl($backUrl);
+        $this->addIsQuoteRequestReferenceSetParameter($quoteTransfer);
+        $this->addBackUrlParameter($backUrl);
     }
 
     /**
@@ -34,7 +33,7 @@ class QuoteRequestCheckoutWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return static::WIDGET_NAME;
+        return 'QuoteRequestCheckoutWidget';
     }
 
     /**
@@ -50,11 +49,11 @@ class QuoteRequestCheckoutWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function addIsQuoteRequestReferenceSet(QuoteTransfer $quoteTransfer): void
+    protected function addIsQuoteRequestReferenceSetParameter(QuoteTransfer $quoteTransfer): void
     {
         $this->addParameter(
             static::PARAMETER_IS_VISIBLE,
-            $this->getFactory()->getQuoteRequestClient()->isQuoteRequestReferenceSet($quoteTransfer)
+            $this->getFactory()->getQuoteRequestClient()->isQuoteInQuoteRequestProcess($quoteTransfer)
         );
     }
 
@@ -63,7 +62,7 @@ class QuoteRequestCheckoutWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function addBackUrl(string $backUrl): void
+    protected function addBackUrlParameter(string $backUrl): void
     {
         $this->addParameter(static::PARAMETER_BACK_URL, $backUrl);
     }

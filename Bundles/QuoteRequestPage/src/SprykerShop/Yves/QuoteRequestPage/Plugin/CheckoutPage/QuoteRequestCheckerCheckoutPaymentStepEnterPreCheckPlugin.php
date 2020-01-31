@@ -18,7 +18,7 @@ class QuoteRequestCheckerCheckoutPaymentStepEnterPreCheckPlugin extends Abstract
 {
     /**
      * {@inheritDoc}
-     * - Checks if the payment step should be shown, returns false if quote request version reference is set, true otherwise.
+     * - Checks if the payment step should be shown, returns false if quote is in quote request process, true otherwise.
      *
      * @api
      *
@@ -28,6 +28,6 @@ class QuoteRequestCheckerCheckoutPaymentStepEnterPreCheckPlugin extends Abstract
      */
     public function check(QuoteTransfer $quoteTransfer): bool
     {
-        return !$this->getFactory()->getQuoteRequestClient()->isQuoteRequestReferenceSet($quoteTransfer);
+        return !$this->getFactory()->getQuoteRequestClient()->isQuoteInQuoteRequestProcess($quoteTransfer);
     }
 }
