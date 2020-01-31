@@ -35,6 +35,19 @@ class QuoteRequestAgentCheckoutAddressController extends QuoteRequestAgentAbstra
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
      */
+    public function indexAction(Request $request, string $quoteRequestReference)
+    {
+        $response = $this->executeIndexAction($request, $quoteRequestReference);
+
+        return $response;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $quoteRequestReference
+     *
+     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function executeIndexAction(Request $request, string $quoteRequestReference)
     {
         $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();

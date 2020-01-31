@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage\CompanyUserImpersonator;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCompanyUserClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToMessengerClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteClientInterface;
@@ -86,8 +85,7 @@ class CompanyUserImpersonator implements CompanyUserImpersonatorInterface
      */
     public function impersonateCompanyUser(QuoteRequestTransfer $quoteRequestTransfer, string $routeToRedirect): RedirectResponse
     {
-        $quoteTransfer = $this->quoteClient->getQuote();
-        $redirectResponse = $this->checkCompanyUserImpersonation($quoteRequestTransfer, $quoteTransfer, $routeToRedirect);
+        $redirectResponse = $this->checkCompanyUserImpersonation($quoteRequestTransfer, $routeToRedirect);
 
         if ($redirectResponse) {
             return $redirectResponse;
@@ -114,14 +112,14 @@ class CompanyUserImpersonator implements CompanyUserImpersonatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $routeToRedirect
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
      */
-    protected function checkCompanyUserImpersonation(QuoteRequestTransfer $quoteRequestTransfer, QuoteTransfer $quoteTransfer, string $routeToRedirect): ?RedirectResponse
+    protected function checkCompanyUserImpersonation(QuoteRequestTransfer $quoteRequestTransfer, string $routeToRedirect): ?RedirectResponse
     {
         $companyUserTransfer = $this->companyUserClient->findCompanyUser();
+        $quoteTransfer = $this->quoteClient->getQuote();
 
         if ($companyUserTransfer && $companyUserTransfer->getIdCompanyUser() !== $quoteRequestTransfer->getCompanyUser()->getIdCompanyUser()) {
             return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT_ITEMS, [
