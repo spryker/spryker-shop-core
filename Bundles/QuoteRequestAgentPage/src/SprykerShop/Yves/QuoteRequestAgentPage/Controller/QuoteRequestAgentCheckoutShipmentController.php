@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Controller;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,9 +21,9 @@ class QuoteRequestAgentCheckoutShipmentController extends QuoteRequestAgentAbstr
     protected const ROUTE_CHECKOUT_SHIPMENT = 'checkout-shipment';
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_AGENT_EDIT_SHIPMENT_CONFIRM
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT_CONFIRM
      */
-    public const ROUTE_QUOTE_REQUEST_AGENT_EDIT_SHIPMENT_CONFIRM = 'agent/quote-request/edit-shipment-confirm';
+    protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT_CONFIRM = 'agent/quote-request/checkout-shipment-confirm';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Plugin\Router\QuoteRequestAgentPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT
@@ -33,9 +34,9 @@ class QuoteRequestAgentCheckoutShipmentController extends QuoteRequestAgentAbstr
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $quoteRequestReference
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(Request $request, string $quoteRequestReference)
+    public function indexAction(Request $request, string $quoteRequestReference): RedirectResponse
     {
         $response = $this->executeIndexAction($request, $quoteRequestReference);
 
@@ -46,14 +47,14 @@ class QuoteRequestAgentCheckoutShipmentController extends QuoteRequestAgentAbstr
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $quoteRequestReference
      *
-     * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function executeIndexAction(Request $request, string $quoteRequestReference)
+    public function executeIndexAction(Request $request, string $quoteRequestReference): RedirectResponse
     {
         $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
 
         if ($quoteTransfer->getQuoteRequestReference() && ($quoteTransfer->getQuoteRequestReference() !== $quoteRequestReference)) {
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT_SHIPMENT_CONFIRM, [
+            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT_CONFIRM, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
             ]);
         }
