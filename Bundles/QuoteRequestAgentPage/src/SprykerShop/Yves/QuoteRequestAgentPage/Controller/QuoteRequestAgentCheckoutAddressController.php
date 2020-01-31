@@ -80,7 +80,7 @@ class QuoteRequestAgentCheckoutAddressController extends QuoteRequestAgentAbstra
             return $response;
         }
 
-        return $this->view($response, [], '@QuoteRequestAgentPage/views/quote-request-edit-address-confirm/quote-request-edit-address-confirm.twig');
+        return $this->view($response, [], '@QuoteRequestAgentPage/views/quote-request-checkout-address-confirm/quote-request-checkout-address-confirm.twig');
     }
 
     /**
