@@ -14,5 +14,5 @@ interface RedirectResponseGeneratorInterface
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function getRedirectResponse(): RedirectResponse;
+    public function generateCheckoutShipmentRedirect(): RedirectResponse;
 }

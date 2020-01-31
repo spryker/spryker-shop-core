@@ -41,7 +41,7 @@ class RedirectResponseGenerator implements RedirectResponseGeneratorInterface
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function getRedirectResponse(): RedirectResponse
+    public function generateCheckoutShipmentRedirect(): RedirectResponse
     {
         $checkoutShipmentUrl = $this->router->generate(static::ROUTE_REDIRECT_CHECKOUT_SHIPMENT);
         $this->messengerClient->addSuccessMessage(static::GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE);
