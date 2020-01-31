@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\ProductGroupWidget\Widget;
 
-use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
 /**
@@ -16,16 +15,17 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class ProductGroupColorWidget extends AbstractWidget
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param int $idProductAbstract
+     * @param array $selectedAttributes
      */
-    public function __construct(ProductViewTransfer $productViewTransfer)
+    public function __construct(int $idProductAbstract, array $selectedAttributes = [])
     {
         $productViewTransfers = $this->getFactory()
             ->getProductGroupReader()
-            ->getProductGroups($productViewTransfer, $this->getLocale());
+            ->getProductGroups($idProductAbstract, $this->getLocale(), $selectedAttributes);
 
         $this->addParameter('productGroupItems', $productViewTransfers)
-            ->addParameter('idProductAbstract', $productViewTransfer->getIdProductAbstract());
+            ->addParameter('idProductAbstract', $idProductAbstract);
     }
 
     /**
