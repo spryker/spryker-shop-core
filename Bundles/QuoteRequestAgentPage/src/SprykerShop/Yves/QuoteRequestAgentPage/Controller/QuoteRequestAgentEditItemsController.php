@@ -78,7 +78,7 @@ class QuoteRequestAgentEditItemsController extends QuoteRequestAgentAbstractCont
 
         $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
 
-        $this->impersonateCompanyUser($quoteRequestTransfer, $quoteTransfer);
+        return $this->impersonateCompanyUser($quoteRequestTransfer, $quoteTransfer);
     }
 
     /**

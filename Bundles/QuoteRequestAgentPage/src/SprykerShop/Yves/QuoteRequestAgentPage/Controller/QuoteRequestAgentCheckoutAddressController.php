@@ -63,7 +63,7 @@ class QuoteRequestAgentCheckoutAddressController extends QuoteRequestAgentAbstra
 
         $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
 
-        $this->impersonateCompanyUser($quoteRequestTransfer, $quoteTransfer);
+        return $this->impersonateCompanyUser($quoteRequestTransfer, $quoteTransfer);
     }
 
     /**

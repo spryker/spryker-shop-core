@@ -63,7 +63,7 @@ class QuoteRequestAgentCheckoutShipmentController extends QuoteRequestAgentAbstr
 
         $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
 
-        $this->impersonateCompanyUser($quoteRequestTransfer, $quoteTransfer);
+        return $this->impersonateCompanyUser($quoteRequestTransfer, $quoteTransfer);
     }
 
     /**
