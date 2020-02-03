@@ -16,7 +16,18 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class QuickOrderCsvUploadedFileParserStrategyPlugin extends AbstractPlugin implements QuickOrderUploadedFileParserStrategyPluginInterface
 {
-    protected const CSV_FILE_MIME_TYPE = 'text/csv';
+    protected const CSV_FILE_MIME_TYPES = [
+        'text/csv',
+        'text/plain',
+        'text/x-csv',
+        'application/vnd.ms-excel',
+        'application/csv',
+        'application/x-csv',
+        'text/comma-separated-values',
+        'text/x-comma-separated-values',
+        'text/tab-separated-values',
+        'application/octet-stream',
+    ];
 
     /**
      * {@inheritDoc}
@@ -30,7 +41,7 @@ class QuickOrderCsvUploadedFileParserStrategyPlugin extends AbstractPlugin imple
      */
     public function isApplicable(UploadedFile $file): bool
     {
-        return $file->getClientMimeType() === static::CSV_FILE_MIME_TYPE;
+        return in_array($file->getClientMimeType(), static::CSV_FILE_MIME_TYPES);
     }
 
     /**
