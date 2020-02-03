@@ -41,7 +41,7 @@ class QuickOrderCsvUploadedFileParserStrategyPlugin extends AbstractPlugin imple
      */
     public function isApplicable(UploadedFile $file): bool
     {
-        return in_array($file->getClientMimeType(), static::CSV_FILE_MIME_TYPES);
+        return in_array($file->getClientMimeType(), static::CSV_FILE_MIME_TYPES, true);
     }
 
     /**
