@@ -11,7 +11,7 @@
     shipmentGroups: _view.shipmentGroups | default([]),
 } %}
 
-{% set isLatestVersion = (data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion) ? true : false %}
+{% set isLatestVersion = data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion %}
 {% set quote = (data.isQuoteRequestEditable and isLatestVersion) ? data.quoteRequest.latestVersion.quote : data.version.quote %}
 {% set hasMultiShipments = data.shipmentGroups | length > 1 %}
 
