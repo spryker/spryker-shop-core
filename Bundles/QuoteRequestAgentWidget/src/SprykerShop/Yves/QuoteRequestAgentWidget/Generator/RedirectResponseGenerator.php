@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class RedirectResponseGenerator implements RedirectResponseGeneratorInterface
 {
+    /**
+     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::CHECKOUT_SHIPMENT
+     */
     protected const ROUTE_REDIRECT_CHECKOUT_SHIPMENT = 'checkout-shipment';
     protected const GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE = 'global.shipment.success.save';
 

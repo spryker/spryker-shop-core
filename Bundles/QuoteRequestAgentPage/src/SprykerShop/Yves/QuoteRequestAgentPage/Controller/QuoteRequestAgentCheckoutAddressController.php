@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Controller;
 
+use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -61,9 +63,7 @@ class QuoteRequestAgentCheckoutAddressController extends QuoteRequestAgentAbstra
 
         $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
 
-        return $this->getFactory()
-            ->createCompanyUserImpersonator()
-            ->impersonateCompanyUser($quoteRequestTransfer, static::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS, static::ROUTE_CHECKOUT_ADDRESS);
+        $this->impersonateCompanyUser($quoteRequestTransfer, $quoteTransfer);
     }
 
     /**
@@ -105,14 +105,40 @@ class QuoteRequestAgentCheckoutAddressController extends QuoteRequestAgentAbstra
             ->handleRequest($request);
 
         if ($quoteRequestAgentEditAddressConfirmForm->isSubmitted()) {
-            return $this->getFactory()
-                ->createCompanyUserImpersonator()
-                ->impersonateCompanyUser($quoteRequestAgentEditAddressConfirmForm->getData(), static::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS, static::ROUTE_CHECKOUT_ADDRESS);
+            $this->impersonateCompanyUser($quoteRequestAgentEditAddressConfirmForm->getData(), $quoteTransfer);
         }
 
         return [
             'quoteRequestEditAddressConfirmForm' => $quoteRequestAgentEditAddressConfirmForm->createView(),
             'quoteRequestReference' => $quoteTransfer->getQuoteRequestReference(),
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function impersonateCompanyUser(QuoteRequestTransfer $quoteRequestTransfer, QuoteTransfer $quoteTransfer)
+    {
+        $companyUserTransfer = $this->getFactory()->getCompanyUserClient()->findCompanyUser();
+        $impersonationRedirectParams = $this->getFactory()
+            ->createCompanyUserImpersonator()
+            ->getImpersonationCompanyUserExitParams($quoteRequestTransfer, $companyUserTransfer);
+
+        if ($impersonationRedirectParams) {
+            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS, $impersonationRedirectParams);
+        }
+
+        $this->getFactory()
+            ->createCompanyUserImpersonator()
+            ->convertQuoteRequestToQuote($quoteRequestTransfer, $quoteTransfer);
+
+        $impersonationRedirectParams = $this->getFactory()
+            ->createCompanyUserImpersonator()
+            ->getImpersonationCompanyUserEmailParams($quoteRequestTransfer, $companyUserTransfer);
+
+        return $this->redirectResponseInternal(static::ROUTE_CHECKOUT_ADDRESS, $impersonationRedirectParams);
     }
 }

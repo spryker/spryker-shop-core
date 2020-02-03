@@ -24,7 +24,6 @@ class CheckoutController extends AbstractController
     use PermissionAwareTrait;
 
     public const MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
-    protected const GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE = 'global.shipment.success.save';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
