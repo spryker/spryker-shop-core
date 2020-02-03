@@ -13,10 +13,11 @@
     "spryker/cart": "^5.0.0 || ^7.0.0",
     "spryker/company-user": "^2.10.0",
     "spryker/customer": "^7.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.33.0",
     "spryker/persistent-cart": "^1.8.0 || ^3.0.0",
     "spryker/quote": "^2.0.0",
     "spryker/quote-request": "^2.2.0",
+    "spryker/shipment": "^8.0.0",
     "spryker/symfony": "^3.1.0",
     "spryker/util-date-time": "^1.0.0"
   },
@@ -47,8 +48,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
   },
   "extra": {
     "branch-alias": {
