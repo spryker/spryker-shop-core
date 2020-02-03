@@ -4,7 +4,7 @@
     title: 'quote_request_page.quote_request' | trans,
     form: _view.quoteRequestEditAddressConfirmForm,
     quoteRequest: _view.quoteRequestEditAddressConfirmForm.vars.value,
-    quoteRequestReference: _view.quoteRequestReference
+    quoteRequestReference: _view.quoteRequestReference,
 } %}
 
 {% block breadcrumbs %}
@@ -17,26 +17,25 @@
                 },
                 {
                     label: 'quote_request_page.quote_request' | trans,
-                    url: path('agent/quote-request')
+                    url: path('agent/quote-request'),
                 },
                 {
                     label: '#' ~ data.quoteRequest.quoteRequestReference,
-                    url: path('agent/quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference})
+                    url: path('agent/quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference}),
                 },
                 {
                     label: 'quote_request_page.quote_request.actions.edit' | trans,
-                    url: path('agent/quote-request/edit', {quoteRequestReference: data.quoteRequest.quoteRequestReference})
+                    url: path('agent/quote-request/edit', {quoteRequestReference: data.quoteRequest.quoteRequestReference}),
                 },
                 {
                     label: 'quote_request_page.quote_request.cta_edit_address' | trans,
-                }
-            ]
-        }
+                },
+            ],
+        },
     } only %}
 {% endblock %}
 
 {% block agentContent %}
-
     <div class="box">
         {{ 'quote_request_page.quote_request.edit_items_confirm' | trans({
             '%link%': url('agent/quote-request/edit', {quoteRequestReference: data.quoteRequestReference}),
@@ -56,5 +55,4 @@
             }
         } only %}
     </div>
-
 {% endblock %}

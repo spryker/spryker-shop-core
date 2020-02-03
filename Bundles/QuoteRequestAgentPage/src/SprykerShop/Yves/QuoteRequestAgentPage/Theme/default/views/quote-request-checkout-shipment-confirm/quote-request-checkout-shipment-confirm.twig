@@ -36,7 +36,6 @@
 {% endblock %}
 
 {% block agentContent %}
-
     <div class="box">
         {{ 'quote_request_page.quote_request.edit_items_confirm' | trans({
             '%link%': url('agent/quote-request/edit', {quoteRequestReference: data.quoteRequestReference}),
@@ -56,5 +55,4 @@
             }
         } only %}
     </div>
-
 {% endblock %}
