@@ -19,7 +19,7 @@ class QuoteRequestAgentWidgetCheckoutShipmentStepRedirectStrategyPlugin extends 
 {
     /**
      * {@inheritDoc}
-     * - Checks quote request references applicable for Agent.
+     * - Checks if quote contains request references applicable for Agent.
      *
      * @api
      *
@@ -34,7 +34,7 @@ class QuoteRequestAgentWidgetCheckoutShipmentStepRedirectStrategyPlugin extends 
 
     /**
      * {@inheritDoc}
-     *  - Returns a redirect response with a success message.
+     *  - Returns a redirect response.
      *
      * @api
      *
@@ -45,6 +45,8 @@ class QuoteRequestAgentWidgetCheckoutShipmentStepRedirectStrategyPlugin extends 
      */
     public function execute(RedirectResponse $redirectResponse, QuoteTransfer $quoteTransfer): RedirectResponse
     {
-        return $this->getFactory()->getRedirectResponseGenerator()->generateCheckoutShipmentRedirect();
+        return $this->getFactory()
+            ->getRedirectResponseGenerator()
+            ->generateCheckoutShipmentRedirect();
     }
 }

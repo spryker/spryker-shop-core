@@ -7,17 +7,33 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Impersonator;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CompanyUserImpersonatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     * @param string $urlFrom
-     * @param string $urlTo
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
-    public function impersonateCompanyUser(QuoteRequestTransfer $quoteRequestTransfer, string $urlFrom, string $urlTo): RedirectResponse;
+    public function getImpersonationCompanyUserExitParams(QuoteRequestTransfer $quoteRequestTransfer, ?CompanyUserTransfer $companyUserTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
+     *
+     * @return array
+     */
+    public function getImpersonationCompanyUserEmailParams(QuoteRequestTransfer $quoteRequestTransfer, ?CompanyUserTransfer $companyUserTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer, QuoteTransfer $quoteTransfer): void;
 }

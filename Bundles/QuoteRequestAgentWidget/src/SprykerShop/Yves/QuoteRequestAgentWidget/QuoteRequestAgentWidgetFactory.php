@@ -54,7 +54,7 @@ class QuoteRequestAgentWidgetFactory extends AbstractFactory
     {
         return new RedirectResponseGenerator(
             $this->getRouterService(),
-            $this->getFlashMessenger()
+            $this->getMessengerClient()
         );
     }
 
@@ -109,7 +109,7 @@ class QuoteRequestAgentWidgetFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToMessengerClientInterface
      */
-    public function getFlashMessenger(): QuoteRequestAgentWidgetToMessengerClientInterface
+    public function getMessengerClient(): QuoteRequestAgentWidgetToMessengerClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestAgentWidgetDependencyProvider::CLIENT_MESSENGER);
     }

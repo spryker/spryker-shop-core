@@ -143,10 +143,7 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     {
         return new CompanyUserImpersonator(
             $this->getMessengerClient(),
-            $this->getRouterService(),
-            $this->getQuoteRequestAgentClient(),
-            $this->getCompanyUserClient(),
-            $this->getQuoteClient()
+            $this->getQuoteRequestAgentClient()
         );
     }
 
@@ -252,13 +249,5 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     public function getMessengerClient(): QuoteRequestAgentPageToMessengerClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::CLIENT_MESSENGER);
-    }
-
-    /**
-     * @return \Symfony\Cmf\Component\Routing\ChainRouterInterface
-     */
-    public function getRouterService(): ChainRouterInterface
-    {
-        return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::SERVICE_ROUTER);
     }
 }
