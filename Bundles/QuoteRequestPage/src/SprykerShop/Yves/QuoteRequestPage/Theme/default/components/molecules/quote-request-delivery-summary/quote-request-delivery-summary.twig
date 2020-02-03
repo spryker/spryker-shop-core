@@ -64,7 +64,7 @@
 
             {% if data.isEditable and data.quoteRequestReference %}
                 {% block addAddressButton %}
-                    <a href="{{ url('checkout-address', {quoteRequestReference: data.quoteRequestReference}) }}"
+                    <a href="{{ url('checkout-address', { quoteRequestReference: data.quoteRequestReference }) }}"
                        class="button button--expand button--edit-items"
                        title="{{ 'quote_request_page.quote_request.cta_add_address' | trans }}"
                         {{ qa('cart-go-to-address') }}>
