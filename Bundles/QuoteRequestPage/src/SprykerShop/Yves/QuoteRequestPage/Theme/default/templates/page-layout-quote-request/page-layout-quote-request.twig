@@ -1,30 +1,29 @@
 {% extends template('page-layout-main') %}
 
 {% define data = {
-    title: 'quote_request_page.quote_request' | trans,
     shipmentGroups: _view.shipmentGroups | default([]),
-    breadcrumbLabel: '',
+    breadcrumbExtend: [],
 } %}
 
 {% set hasMultiShipments = data.shipmentGroups | length > 1 %}
 {% set quote = null %}
 
 {% block breadcrumbs %}
+    {% set breadcrumbSteps = [
+        {
+            label: 'customer.account' | trans,
+            url: path('customer/overview'),
+        },
+        {
+            label: 'quote_request_page.quote_request' | trans,
+            url: path('quote-request'),
+        },
+    ] %}
+    {% set breadcrumbSteps = breadcrumbSteps | merge(data.breadcrumbExtend) %}
+
     {% include molecule('breadcrumb') with {
         data: {
-            steps: [
-                {
-                    label: 'customer.account' | trans,
-                    url: path('customer/overview'),
-                },
-                {
-                    label: 'quote_request_page.quote_request' | trans,
-                    url: path('quote-request')
-                },
-                {
-                    label: data.breadcrumbLabel,
-                },
-            ],
+            steps: breadcrumbSteps,
         },
     } only %}
 {% endblock %}
@@ -48,28 +47,38 @@
         <div class="col col--sm-12 col--xl-8">
             {% block rfqContent %}
                 {% if quote %}
-                    {% if quote.priceMode %}
-                        <div class="box">
-                            {% include molecule('price-mode') with {
-                                data: {
-                                    priceMode: quote.priceMode,
-                                },
-                            } only %}
-                        </div>
-                    {% endif %}
-
                     {% if hasMultiShipments %}
-                        {% for shipmentGroup in data.shipmentGroups %}
-                            <div class="grid grid--stretch grid--justify">
-                                <div class="col col--sm-12 col--lg-12">
-                                    <div class="box">
-                                        <h4>{{ 'quote_request_page.quote_request.shipment_counter' | trans({
-                                                '%index%': loop.index,
-                                                '%length%': data.shipmentGroups | length,
-                                            }) }}</h4>
-                                        <hr>
-                                        <h6><strong>{{ 'checkout.step.summary.products' | trans }}</strong></h6>
+                        {% block priceModeForMultiShipments %}
+                            {% if quote.priceMode %}
+                                <div class="box">
+                                    {% include molecule('price-mode') with {
+                                        data: {
+                                            priceMode: quote.priceMode,
+                                        },
+                                    } only %}
+                                </div>
+                            {% endif %}
+                        {% endblock %}
 
+                        {% block productsWrapperForMultiShipments %}
+                            {% for shipmentGroup in data.shipmentGroups %}
+                                <div class="box">
+                                    {% block titleForMultiShipments %}
+                                        <div class="grid grid--justify">
+                                            <h4 class="col">
+                                                {{ 'quote_request_page.quote_request.shipment_counter' | trans({
+                                                    '%index%': loop.index,
+                                                    '%length%': data.shipmentGroups | length,
+                                                }) }}
+                                            </h4>
+
+                                            <div class="col">
+                                                {{ quote.items | length }}
+                                            </div>
+                                        </div>
+                                    {% endblock %}
+
+                                    {% block productsForMultiShipments %}
                                         {% include organism('product-and-shipment-view', 'QuoteRequestPage') ignore missing with {
                                             data: {
                                                 quote: quote,
@@ -80,20 +89,41 @@
                                                 isConfiguredBundleQuantitySummaryVisible: true,
                                             },
                                         } only %}
-                                    </div>
+                                    {% endblock %}
+                                </div>
+                            {% endfor %}
+                        {% endblock %}
+                    {% endif %}
+
+                    {% if not hasMultiShipments %}
+                        {% block priceModeForSingleShipment %}
+                            <div class="box grid grid--justify">
+                                {% if quote.priceMode %}
+                                    {% include molecule('price-mode') with {
+                                        class: 'col',
+                                        data: {
+                                            priceMode: quote.priceMode,
+                                        },
+                                    } only %}
+                                {% endif %}
+
+                                <div class="col">
+                                    {{ quote.items | length }}
                                 </div>
                             </div>
-                        {% endfor %}
-                    {% else %}
-                        {% include organism('product-and-shipment-view', 'QuoteRequestPage') ignore missing with {
-                            data: {
-                                quote: quote,
-                                items: quote.items,
-                                shipment: quote.shipment,
-                                hasMultiShipments: hasMultiShipments,
-                                isConfiguredBundleEditable: false,
-                            },
-                        } only %}
+                        {% endblock %}
+
+                        {% block productsForSingleShipment %}
+                            {% include organism('product-and-shipment-view', 'QuoteRequestPage') ignore missing with {
+                                data: {
+                                    quote: quote,
+                                    items: quote.items,
+                                    shipment: quote.shipment,
+                                    hasMultiShipments: hasMultiShipments,
+                                    isConfiguredBundleEditable: false,
+                                },
+                            } only %}
+                        {% endblock %}
                     {% endif %}
                 {% endif %}
             {% endblock %}

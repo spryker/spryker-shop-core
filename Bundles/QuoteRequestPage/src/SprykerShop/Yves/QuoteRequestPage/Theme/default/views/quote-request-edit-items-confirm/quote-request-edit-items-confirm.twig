@@ -1,60 +1,50 @@
-{% extends template('page-layout-customer', 'CustomerPage') %}
+{% extends template('page-layout-quote-request', 'QuoteRequestPage') %}
 
 {% define data = {
-    title: 'quote_request_page.quote_request' | trans,
+    title: 'quote_request_page.quote_request.title_attention' | trans,
     form: _view.quoteRequestEditItemsConfirmForm,
     quoteRequest: _view.quoteRequestEditItemsConfirmForm.vars.value,
-    quoteRequestReference: _view.quoteRequestReference
+    quoteRequestReference: _view.quoteRequestReference,
+    breadcrumbExtend: [
+        {
+            label: '#' ~ _view.quoteRequestEditItemsConfirmForm.vars.value.quoteRequestReference,
+            url: path('quote-request/details', {
+                quoteRequestReference: _view.quoteRequestEditItemsConfirmForm.vars.value.quoteRequestReference,
+            }),
+        },
+        {
+            label: 'quote_request_page.quote_request.breadcrumb.edit' | trans,
+            url: path('quote-request/edit', {
+                quoteRequestReference: _view.quoteRequestEditItemsConfirmForm.vars.value.quoteRequestReference,
+            }),
+        },
+        {
+            label: 'quote_request_page.quote_request.breadcrumb.attention' | trans,
+        },
+    ],
 } %}
 
-{% block breadcrumbs %}
-    {% include molecule('breadcrumb') with {
-        data: {
-            steps: [
-                {
-                    label: 'customer.account' | trans,
-                    url: path('customer/overview'),
-                },
-                {
-                    label: 'quote_request_page.quote_request' | trans,
-                    url: path('quote-request')
-                },
-                {
-                    label: '#' ~ data.quoteRequest.quoteRequestReference,
-                    url: path('quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference})
-                },
-                {
-                    label: 'quote_request_page.quote_request.actions.edit' | trans,
-                    url: path('quote-request/edit', {quoteRequestReference: data.quoteRequest.quoteRequestReference})
-                },
-                {
-                    label: 'quote_request_page.quote_request.actions.edit_items' | trans,
-                }
-            ]
-        }
-    } only %}
-{% endblock %}
-
 {% block content %}
-
     <div class="box">
-        {{ 'quote_request_page.quote_request.edit_items_confirm' | trans({
-            '%link%': url('quote-request/edit', {quoteRequestReference: data.quoteRequestReference}),
-            '%reference%': data.quoteRequestReference,
-        }) | raw }}
+        <p>
+            {{ 'quote_request_page.quote_request.edit_items_confirm' | trans({
+                '%link%': url('quote-request/edit', {quoteRequestReference: data.quoteRequestReference}),
+                '%reference%': data.quoteRequestReference,
+            }) | raw }}
+        </p>
+
         {% include molecule('form') with {
             data: {
                 form: data.form,
                 submit: {
-                    enable: true
+                    enable: true,
                 },
                 cancel: {
                     enable: true,
                     url: url('quote-request/edit', {quoteRequestReference: data.quoteRequest.quoteRequestReference}),
-                    text: 'general.back.button' | trans
-                }
-            }
+                    text: 'general.back.button' | trans,
+                },
+            },
         } only %}
     </div>
-
 {% endblock %}

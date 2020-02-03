@@ -31,18 +31,30 @@
 
 {% block customerContent %}
     <div class="box">
-        {% if data.quoteRequests | length %}
-            {% include molecule('quote-request-view-table', 'QuoteRequestPage') with {
-                data: {
-                    quoteRequests: data.quoteRequests,
-                },
-            } only %}
-            <hr class="box__separator">
-            {% include molecule('pagination') with {
-                data: data.pagination,
-            } only %}
-        {% else %}
-            {{ 'quote_request_page.quote_request.view.empty' | trans }}
-        {% endif %}
+        {% block quoteRequests %}
+            {% if data.quoteRequests | length %}
+                {% block quoteRequestList %}
+                    {% include molecule('quote-request-view-table', 'QuoteRequestPage') with {
+                        data: {
+                            quoteRequests: data.quoteRequests,
+                        },
+                    } only %}
+                {% endblock %}
+
+                {% block separator %}
+                    <hr class="box__separator">
+                {% endblock %}
+
+                {% block pagination %}
+                    {% include molecule('pagination') with {
+                        data: data.pagination,
+                    } only %}
+                {% endblock %}
+            {% else %}
+                {% block emptyQuoteRequest %}
+                    {{ 'quote_request_page.quote_request.view.empty' | trans }}
+                {% endblock %}
+            {% endif %}
+        {% endblock %}
     </div>
 {% endblock %}

@@ -1,9 +1,23 @@
 {% extends template('page-layout-quote-request', 'QuoteRequestPage') %}
 
 {% define data = {
+    title: 'quote_request_page.quote_request.title_edit' | trans({
+        '%id%': _view.quoteRequestForm.vars.value.quoteRequestReference,
+    }),
     quoteRequestForm: _view.quoteRequestForm,
     quoteRequest: _view.quoteRequestForm.vars.value,
     breadcrumbLabel: 'quote_request_page.quote_request.actions.edit' | trans,
+    breadcrumbExtend: [
+        {
+            label: '#' ~ _view.quoteRequestForm.vars.value.quoteRequestReference,
+            url: url('quote-request/details', {
+                quoteRequestReference: _view.quoteRequestForm.vars.value.quoteRequestReference,
+            }),
+        },
+        {
+            label: 'quote_request_page.quote_request.breadcrumb.edit' | trans,
+        },
+    ],
 } %}
 
 {% block content %}

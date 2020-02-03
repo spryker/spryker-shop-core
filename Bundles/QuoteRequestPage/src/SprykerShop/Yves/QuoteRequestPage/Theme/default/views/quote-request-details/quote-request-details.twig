@@ -1,13 +1,18 @@
 {% extends template('page-layout-quote-request', 'QuoteRequestPage') %}
 
 {% define data = {
+    title: '#' ~ _view.quoteRequest.quoteRequestReference,
     quoteRequest: _view.quoteRequest,
     quoteRequestVersionReferences: _view.quoteRequestVersionReferences,
     version: _view.version,
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
     isQuoteRequestReady: _view.isQuoteRequestReady,
     isQuoteRequestEditable: _view.isQuoteRequestEditable,
-    breadcrumbLabel: '#' ~ _view.quoteRequest.quoteRequestReference,
+    breadcrumbExtend: [
+        {
+            label: '#' ~ _view.quoteRequest.quoteRequestReference,
+        },
+    ],
 } %}
 
 {% set isLatestVersion = (data.version.idQuoteRequestVersion == data.quoteRequest.latestVisibleVersion.idQuoteRequestVersion) %}

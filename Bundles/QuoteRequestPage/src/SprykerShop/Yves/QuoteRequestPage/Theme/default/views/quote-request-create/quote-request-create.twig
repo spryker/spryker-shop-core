@@ -1,10 +1,15 @@
 {% extends template('page-layout-quote-request', 'QuoteRequestPage') %}
 
 {% define data = {
+    title: 'quote_request_page.quote_request.title_create' | trans,
     quoteRequestForm: _view.quoteRequestForm,
     quoteRequest: _view.quoteRequestForm.vars.value,
     latestVersion: _view.quoteRequestForm.vars.value.latestVersion,
-    breadcrumbLabel: 'quote_request_page.quote_request.create' | trans,
+    breadcrumbExtend: [
+        {
+            label: 'quote_request_page.quote_request.breadcrumb.create' | trans,
+        },
+    ],
 } %}
 
 {% block content %}
