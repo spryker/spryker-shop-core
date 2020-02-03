@@ -33,7 +33,6 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouper;
 use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Impersonator\CompanyUserImpersonator;
 use SprykerShop\Yves\QuoteRequestAgentPage\Impersonator\CompanyUserImpersonatorInterface;
-use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 

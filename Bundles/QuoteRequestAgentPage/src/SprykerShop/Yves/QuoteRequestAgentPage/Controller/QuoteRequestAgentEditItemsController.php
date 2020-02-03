@@ -7,8 +7,6 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Controller;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\ImpersonationRedirectTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Symfony\Component\HttpFoundation\RedirectResponse;

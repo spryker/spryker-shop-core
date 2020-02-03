@@ -84,6 +84,8 @@ class CompanyUserImpersonator implements CompanyUserImpersonatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
      */
     public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer, QuoteTransfer $quoteTransfer): void
     {
