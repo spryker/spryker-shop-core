@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/merchant-switcher-widget",
+  "type": "library",
   "description": "MerchantSwitcherWidget module",
   "license": "proprietary",
   "require": {
@@ -13,6 +14,9 @@
     "spryker/code-sniffer": "*",
     "spryker/router": "*"
   },
+  "suggest": {
+    "spryker/router": "Use this module when you want to use the Router."
+  },
   "autoload": {
     "psr-4": {
       "SprykerShop\\": "src/SprykerShop/"
@@ -21,8 +25,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
   },
   "extra": {
     "branch-alias": {
@@ -31,8 +35,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/router": "Use this module when you want to use the Router."
   }
 }
