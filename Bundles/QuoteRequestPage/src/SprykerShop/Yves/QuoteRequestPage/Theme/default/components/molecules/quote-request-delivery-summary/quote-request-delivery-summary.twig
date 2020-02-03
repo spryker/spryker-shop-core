@@ -75,7 +75,7 @@
         {% endif %}
 
         {% set hasEditAddressButton = data.quote.billingAddress and data.isEditable and data.quoteRequestReference %}
-        {% if hasAddressButton %}
+        {% if hasEditAddressButton %}
             {% block editAddressButton %}
                 <a href="{{ url('checkout-address', { quoteRequestReference: data.quoteRequestReference }) }}"
                    class="button button--expand button--edit-items"
