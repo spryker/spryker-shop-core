@@ -18,6 +18,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class QuoteRequestAgentWidgetCheckoutShipmentStepRedirectStrategyPlugin extends AbstractPlugin implements CheckoutShipmentStepRedirectStrategyPluginInterface
 {
     /**
+     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::CHECKOUT_SHIPMENT
+     */
+    protected const ROUTE_REDIRECT_CHECKOUT_SHIPMENT = 'checkout-shipment';
+    protected const GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE = 'global.shipment.success.save';
+
+    /**
      * {@inheritDoc}
      * - Checks if quote contains request references applicable for Agent.
      *
@@ -45,10 +51,9 @@ class QuoteRequestAgentWidgetCheckoutShipmentStepRedirectStrategyPlugin extends 
      */
     public function execute(RedirectResponse $redirectResponse, QuoteTransfer $quoteTransfer): RedirectResponse
     {
-        $redirectUrl = $this->getFactory()
-            ->getRedirectResponseGenerator()
-            ->generateCheckoutShipmentRedirectUrl();
+        $checkoutShipmentUrl = $this->getFactory()->getRouterService()->generate(static::ROUTE_REDIRECT_CHECKOUT_SHIPMENT);
+        $this->getFactory()->getMessengerClient()->addSuccessMessage(static::GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE);
 
-        return $this->getFactory()->createRedirectResponse($redirectUrl);
+        return $this->getFactory()->createRedirectResponse($checkoutShipmentUrl);
     }
 }

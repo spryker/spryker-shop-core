@@ -40,6 +40,21 @@ class QuoteRequestConverter implements QuoteRequestConverterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer, QuoteTransfer $quoteTransfer): void
+    {
+        if ($quoteTransfer->getQuoteRequestReference() !== $quoteRequestTransfer->getQuoteRequestReference()) {
+            $quoteResponseTransfer = $this->quoteRequestAgentClient->convertQuoteRequestToQuote($quoteRequestTransfer);
+
+            $this->handleImpersonationConvertQuoteResponseMessages($quoteResponseTransfer);
+        }
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return void
@@ -52,21 +67,6 @@ class QuoteRequestConverter implements QuoteRequestConverterInterface
 
         foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
             $this->messengerClient->addErrorMessage($quoteErrorTransfer->getMessage());
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer, QuoteTransfer $quoteTransfer): void
-    {
-        if ($quoteTransfer->getQuoteRequestReference() !== $quoteRequestTransfer->getQuoteRequestReference()) {
-            $quoteResponseTransfer = $this->quoteRequestAgentClient->convertQuoteRequestToQuote($quoteRequestTransfer);
-
-            $this->handleImpersonationConvertQuoteResponseMessages($quoteResponseTransfer);
         }
     }
 }
