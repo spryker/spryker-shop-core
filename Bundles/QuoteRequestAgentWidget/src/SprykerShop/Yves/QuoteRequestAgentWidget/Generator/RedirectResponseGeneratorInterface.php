@@ -7,12 +7,10 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentWidget\Generator;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
-
 interface RedirectResponseGeneratorInterface
 {
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return string
      */
-    public function generateCheckoutShipmentRedirect(): RedirectResponse;
+    public function generateCheckoutShipmentRedirectUrl(): string;
 }

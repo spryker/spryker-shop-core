@@ -9,10 +9,6 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage\Impersonator;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToMessengerClientInterface;
-use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestAgentClientInterface;
 
 class CompanyUserImpersonator implements CompanyUserImpersonatorInterface
 {
@@ -23,28 +19,6 @@ class CompanyUserImpersonator implements CompanyUserImpersonatorInterface
     protected const PARAM_SWITCH_USER = '_switch_user';
 
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART = 'quote_request_page.quote_request.converted_to_cart';
-
-    /**
-     * @var \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToMessengerClientInterface
-     */
-    protected $messengerClient;
-
-    /**
-     * @var \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestAgentClientInterface
-     */
-    protected $quoteRequestAgentClient;
-
-    /**
-     * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToMessengerClientInterface $messengerClient
-     * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestAgentClientInterface $quoteRequestAgentClient
-     */
-    public function __construct(
-        QuoteRequestAgentPageToMessengerClientInterface $messengerClient,
-        QuoteRequestAgentPageToQuoteRequestAgentClientInterface $quoteRequestAgentClient
-    ) {
-        $this->messengerClient = $messengerClient;
-        $this->quoteRequestAgentClient = $quoteRequestAgentClient;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
@@ -79,36 +53,5 @@ class CompanyUserImpersonator implements CompanyUserImpersonatorInterface
         }
 
         return [];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer, QuoteTransfer $quoteTransfer): void
-    {
-        if ($quoteTransfer->getQuoteRequestReference() !== $quoteRequestTransfer->getQuoteRequestReference()) {
-            $quoteResponseTransfer = $this->quoteRequestAgentClient->convertQuoteRequestToQuote($quoteRequestTransfer);
-
-            if ($quoteResponseTransfer->getIsSuccessful()) {
-                $this->messengerClient->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART);
-            }
-
-            $this->handleQuoteResponseErrors($quoteResponseTransfer);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     *
-     * @return void
-     */
-    protected function handleQuoteResponseErrors(QuoteResponseTransfer $quoteResponseTransfer): void
-    {
-        foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
-            $this->messengerClient->addErrorMessage($quoteErrorTransfer->getMessage());
-        }
     }
 }

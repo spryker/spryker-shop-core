@@ -9,7 +9,6 @@ namespace SprykerShop\Yves\QuoteRequestAgentWidget\Generator;
 
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToMessengerClientInterface;
 use Symfony\Cmf\Component\Routing\ChainRouterInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class RedirectResponseGenerator implements RedirectResponseGeneratorInterface
 {
@@ -42,13 +41,13 @@ class RedirectResponseGenerator implements RedirectResponseGeneratorInterface
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return string
      */
-    public function generateCheckoutShipmentRedirect(): RedirectResponse
+    public function generateCheckoutShipmentRedirectUrl(): string
     {
         $checkoutShipmentUrl = $this->router->generate(static::ROUTE_REDIRECT_CHECKOUT_SHIPMENT);
         $this->messengerClient->addSuccessMessage(static::GLOSSARY_KEY_SHIPMENT_SUCCESS_SAVE);
 
-        return new RedirectResponse($checkoutShipmentUrl);
+        return $checkoutShipmentUrl;
     }
 }

@@ -78,7 +78,7 @@ class QuoteRequestAgentEditItemsController extends QuoteRequestAgentAbstractCont
 
         $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
 
-        return $this->impersonateCompanyUser($quoteRequestTransfer, $quoteTransfer);
+        return $this->prepareImpersonationRedirect($quoteRequestTransfer, $quoteTransfer);
     }
 
     /**
@@ -103,7 +103,7 @@ class QuoteRequestAgentEditItemsController extends QuoteRequestAgentAbstractCont
             ->handleRequest($request);
 
         if ($quoteRequestAgentEditItemsConfirmForm->isSubmitted()) {
-            $this->impersonateCompanyUser($quoteRequestAgentEditItemsConfirmForm->getData(), $quoteTransfer);
+            $this->prepareImpersonationRedirect($quoteRequestAgentEditItemsConfirmForm->getData(), $quoteTransfer);
         }
 
         return [
@@ -118,7 +118,7 @@ class QuoteRequestAgentEditItemsController extends QuoteRequestAgentAbstractCont
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function impersonateCompanyUser(QuoteRequestTransfer $quoteRequestTransfer, QuoteTransfer $quoteTransfer)
+    protected function prepareImpersonationRedirect(QuoteRequestTransfer $quoteRequestTransfer, QuoteTransfer $quoteTransfer)
     {
         $companyUserTransfer = $this->getFactory()->getCompanyUserClient()->findCompanyUser();
         $impersonationRedirectParams = $this->getFactory()
@@ -129,9 +129,7 @@ class QuoteRequestAgentEditItemsController extends QuoteRequestAgentAbstractCont
             return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT_ITEMS, $impersonationRedirectParams);
         }
 
-        $this->getFactory()
-            ->createCompanyUserImpersonator()
-            ->convertQuoteRequestToQuote($quoteRequestTransfer, $quoteTransfer);
+        $this->getFactory()->createQuoteRequestConverter()->convertQuoteRequestToQuote($quoteRequestTransfer, $quoteTransfer);
 
         $impersonationRedirectParams = $this->getFactory()
             ->createCompanyUserImpersonator()

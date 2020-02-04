@@ -45,8 +45,10 @@ class QuoteRequestAgentWidgetCheckoutShipmentStepRedirectStrategyPlugin extends 
      */
     public function execute(RedirectResponse $redirectResponse, QuoteTransfer $quoteTransfer): RedirectResponse
     {
-        return $this->getFactory()
+        $redirectUrl = $this->getFactory()
             ->getRedirectResponseGenerator()
-            ->generateCheckoutShipmentRedirect();
+            ->generateCheckoutShipmentRedirectUrl();
+
+        return $this->getFactory()->createRedirectResponse($redirectUrl);
     }
 }
