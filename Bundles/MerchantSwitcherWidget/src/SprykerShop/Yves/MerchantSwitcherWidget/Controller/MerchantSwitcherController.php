@@ -7,12 +7,14 @@
 
 namespace SprykerShop\Yves\MerchantSwitcherWidget\Controller;
 
-use SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetFactory getFactory()
+ */
 class MerchantSwitcherController extends AbstractController
 {
     protected const PARAM_MERCHANT_REFERENCE = 'merchant-reference';
@@ -27,7 +29,11 @@ class MerchantSwitcherController extends AbstractController
     {
         $merchantReference = $request->get(static::PARAM_MERCHANT_REFERENCE);
 
-        $cookie = Cookie::create(MerchantSwitcherWidgetConfig::MERCHANT_SELECTOR_COOKIE_IDENTIFIER, $merchantReference, time() + MerchantSwitcherWidgetConfig::COOKIE_TIME_EXPIRATION);
+        $cookie = Cookie::create(
+            $this->getFactory()->getConfig()->getMerchantSelectorCookieIdentifier(),
+            $merchantReference,
+            time() + $this->getFactory()->getConfig()->getCookieTimeExpiration()
+        );
 
         $response = $this->createRedirectResponse($request);
         $response->headers->setCookie($cookie);

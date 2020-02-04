@@ -21,7 +21,7 @@ class MerchantSwitcherSelectorFormWidget extends AbstractWidget
             return;
         }
 
-        $this->addActiveMerchantTransfersParameter();
+        $this->addMerchantTransfersParameter();
         $this->addSelectedMerchantReferenceParameter();
     }
 
@@ -44,14 +44,14 @@ class MerchantSwitcherSelectorFormWidget extends AbstractWidget
     /**
      * @return void
      */
-    protected function addActiveMerchantTransfersParameter(): void
+    protected function addMerchantTransfersParameter(): void
     {
-        $activeMerchantTransfers = $this->getFactory()
+        $merchantTransfers = $this->getFactory()
             ->createMerchantReader()
             ->getActiveMerchants()
             ->getMerchants();
 
-        $this->addParameter('activeMerchantTransfers', $activeMerchantTransfers);
+        $this->addParameter('merchantTransfers', $merchantTransfers);
     }
 
     /**

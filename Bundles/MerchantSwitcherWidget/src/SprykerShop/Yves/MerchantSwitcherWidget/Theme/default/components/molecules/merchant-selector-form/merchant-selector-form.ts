@@ -1,6 +1,6 @@
 import Component from 'ShopUi/models/component';
 
-export default class MerchantSelector extends Component {
+export default class MerchantSelectorForm extends Component {
     protected form: HTMLFormElement;
     protected select: HTMLSelectElement;
     protected message: string;
