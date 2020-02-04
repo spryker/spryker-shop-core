@@ -25,15 +25,23 @@ class MerchantReader implements MerchantReaderInterface
     protected $request;
 
     /**
+     * @var \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig
+     */
+    protected $merchantSwitcherWidgetConfig;
+
+    /**
      * @param \SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientInterface $merchantSearchClient
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig $merchantSwitcherWidgetConfig
      */
     public function __construct(
         MerchantSwitcherWidgetToMerchantSearchClientInterface $merchantSearchClient,
-        Request $request
+        Request $request,
+        MerchantSwitcherWidgetConfig $merchantSwitcherWidgetConfig
     ) {
         $this->merchantSearchClient = $merchantSearchClient;
         $this->request = $request;
+        $this->merchantSwitcherWidgetConfig = $merchantSwitcherWidgetConfig;
     }
 
     /**
@@ -49,7 +57,7 @@ class MerchantReader implements MerchantReaderInterface
      */
     public function getSelectedMerchantReference(): string
     {
-        $selectedMerchantReference = $this->request->cookies->get(MerchantSwitcherWidgetConfig::MERCHANT_SELECTOR_COOKIE_IDENTIFIER);
+        $selectedMerchantReference = $this->request->cookies->get($this->merchantSwitcherWidgetConfig->getMerchantSelectorCookieIdentifier());
 
         if ($selectedMerchantReference) {
             return $selectedMerchantReference;
