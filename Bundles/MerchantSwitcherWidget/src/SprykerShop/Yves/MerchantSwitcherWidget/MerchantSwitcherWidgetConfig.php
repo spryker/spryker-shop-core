@@ -19,7 +19,7 @@ class MerchantSwitcherWidgetConfig extends AbstractBundleConfig
     /**
      * Ten years in seconds.
      */
-    protected const COOKIE_TIME_EXPIRATION = 315360000;
+    protected const MERCHANT_SELECTOR_COOKIE_TIME_EXPIRATION = 315360000;
 
     /**
      * @return bool
@@ -32,7 +32,7 @@ class MerchantSwitcherWidgetConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getMerchantSelectorCookieTimeExpiration(): string
+    public function getMerchantSelectorCookieIdentifier(): string
     {
         return static::MERCHANT_SELECTOR_COOKIE_IDENTIFIER;
     }
@@ -40,8 +40,8 @@ class MerchantSwitcherWidgetConfig extends AbstractBundleConfig
     /**
      * @return int
      */
-    public function getCookieTimeExpiration(): int
+    public function getMerchantSelectorCookieTimeExpiration(): int
     {
-        return static::COOKIE_TIME_EXPIRATION;
+        return static::MERCHANT_SELECTOR_COOKIE_TIME_EXPIRATION;
     }
 }

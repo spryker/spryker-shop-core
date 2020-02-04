@@ -30,9 +30,9 @@ class MerchantSwitcherController extends AbstractController
         $merchantReference = $request->get(static::PARAM_MERCHANT_REFERENCE);
 
         $cookie = Cookie::create(
-            $this->getFactory()->getConfig()->getMerchantSelectorCookieTimeExpiration(),
+            $this->getFactory()->getConfig()->getMerchantSelectorCookieIdentifier(),
             $merchantReference,
-            time() + $this->getFactory()->getConfig()->getCookieTimeExpiration()
+            time() + $this->getFactory()->getConfig()->getMerchantSelectorCookieTimeExpiration()
         );
 
         $response = $this->createRedirectResponse($request);
