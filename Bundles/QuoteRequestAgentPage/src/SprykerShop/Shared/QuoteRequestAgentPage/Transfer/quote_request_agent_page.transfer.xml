@@ -40,6 +40,7 @@
         <property name="versionReference" type="string"/>
         <property name="quote" type="Quote"/>
         <property name="metadata" type="array" singular="metadata"/>
+        <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
     </transfer>
 
     <transfer name="Quote">
@@ -103,6 +104,10 @@
     <transfer name="Item">
         <property name="sourceUnitGrossPrice" type="int"/>
         <property name="sourceUnitNetPrice" type="int"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="sourcePrice" type="MoneyValue"/>
     </transfer>
 
 </transfers>

@@ -154,7 +154,7 @@ class CompanyUserImpersonator implements CompanyUserImpersonatorInterface
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function redirectResponseInternal($path, $parameters = [], $code = 302): RedirectResponse
+    protected function redirectResponseInternal(string $path, array $parameters = [], int $code = 302): RedirectResponse
     {
         return new RedirectResponse($this->router->generate($path, $parameters), $code);
     }

@@ -7,18 +7,22 @@
 {% define data = {
     shipment: required,
     showAddress: false,
+    priceMode: null,
 } %}
 
 {% block body %}
     <div class="box">
-        {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
-            data: {
-                carrierName: data.shipment.method.carrierName,
-                methodName: data.shipment.method.name,
-                storeCurrencyPrice: data.shipment.method.storeCurrencyPrice,
-                currencyIsoCode: data.shipment.method.currencyIsoCode,
-            },
-        } only %}
+        {% if data.shipment.method %}
+            {% include molecule('delivery-method-information', 'CustomerPage') ignore missing with {
+                data: {
+                    method: data.shipment.method,
+                    priceMode: data.priceMode,
+                },
+            } only %}
+        {% endif %}
+
+        {% block actions %}
+        {% endblock %}
 
         {% if data.showAddress %}
             <hr class="box__separator spacing-y spacing-y--big">

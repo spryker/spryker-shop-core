@@ -7,10 +7,12 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPriceClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentForm;
+use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface;
 
 class QuoteRequestAgentFormDataProvider
 {
@@ -25,15 +27,38 @@ class QuoteRequestAgentFormDataProvider
     protected $priceClient;
 
     /**
+     * @var \SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface
+     */
+    protected $shipmentGrouper;
+
+    /**
      * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPriceClientInterface $priceClient
+     * @param \SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface $shipmentGrouper
      */
     public function __construct(
         QuoteRequestAgentPageToCartClientInterface $cartClient,
-        QuoteRequestAgentPageToPriceClientInterface $priceClient
+        QuoteRequestAgentPageToPriceClientInterface $priceClient,
+        ShipmentGrouperInterface $shipmentGrouper
     ) {
         $this->cartClient = $cartClient;
         $this->priceClient = $priceClient;
+        $this->shipmentGrouper = $shipmentGrouper;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     */
+    public function getData(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer
+    {
+        $shipmentGroupTransfers = $this->shipmentGrouper->groupItemsByShippingAddress($quoteRequestTransfer);
+
+        $quoteRequestTransfer->getLatestVersion()
+            ->setShipmentGroups(new ArrayObject($shipmentGroupTransfers));
+
+        return $quoteRequestTransfer;
     }
 
     /**
