@@ -16,7 +16,7 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     protected const UPLOAD_ROW_COUNT_LIMIT = 1000;
     protected const DEFAULT_DISPLAYED_ROW_COUNT = 8;
     protected const MAX_ALLOWED_QUANTITY = 100000;
-    protected const CSV_FILE_MIME_TYPES = [
+    protected const ALLOWED_CSV_FILE_MIME_TYPES = [
         'text/csv',
         'text/plain',
         'text/x-csv',
@@ -70,10 +70,10 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    public function getCsvFileMimeTypes(): array
+    public function getAllowedCsvFileMimeTypes(): array
     {
-        return static::CSV_FILE_MIME_TYPES;
+        return static::ALLOWED_CSV_FILE_MIME_TYPES;
     }
 }

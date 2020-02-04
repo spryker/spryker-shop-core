@@ -28,7 +28,7 @@ class QuickOrderCsvUploadedFileValidatorStrategyPlugin extends AbstractPlugin im
      */
     public function isApplicable(UploadedFile $file): bool
     {
-        $allowedCsvFileMimeTypes = $this->getFactory()->getModuleConfig()->getCsvFileMimeTypes();
+        $allowedCsvFileMimeTypes = $this->getFactory()->getModuleConfig()->getAllowedCsvFileMimeTypes();
 
         return in_array($file->getClientMimeType(), $allowedCsvFileMimeTypes, true);
     }
