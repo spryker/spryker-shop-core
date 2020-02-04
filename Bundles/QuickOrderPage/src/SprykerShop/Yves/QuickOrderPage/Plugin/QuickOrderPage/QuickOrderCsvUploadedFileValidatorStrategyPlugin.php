@@ -16,19 +16,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class QuickOrderCsvUploadedFileValidatorStrategyPlugin extends AbstractPlugin implements QuickOrderUploadedFileValidatorStrategyPluginInterface
 {
-    protected const CSV_FILE_MIME_TYPES = [
-        'text/csv',
-        'text/plain',
-        'text/x-csv',
-        'application/vnd.ms-excel',
-        'application/csv',
-        'application/x-csv',
-        'text/comma-separated-values',
-        'text/x-comma-separated-values',
-        'text/tab-separated-values',
-        'application/octet-stream',
-    ];
-
     /**
      * {@inheritDoc}
      * - Returns true if the provided mime type matches the expected mime type.
@@ -41,7 +28,9 @@ class QuickOrderCsvUploadedFileValidatorStrategyPlugin extends AbstractPlugin im
      */
     public function isApplicable(UploadedFile $file): bool
     {
-        return in_array($file->getClientMimeType(), static::CSV_FILE_MIME_TYPES, true);
+        $allowedCsvFileMimeTypes = $this->getFactory()->getModuleConfig()->getCsvFileMimeTypes();
+
+        return in_array($file->getClientMimeType(), $allowedCsvFileMimeTypes, true);
     }
 
     /**
