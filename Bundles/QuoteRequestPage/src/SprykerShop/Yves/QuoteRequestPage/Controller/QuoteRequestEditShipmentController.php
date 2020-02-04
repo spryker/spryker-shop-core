@@ -57,10 +57,12 @@ class QuoteRequestEditShipmentController extends QuoteRequestAbstractController
     {
         $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
 
-        if ($quoteTransfer->getQuoteRequestReference() && $quoteTransfer->getQuoteRequestReference() !== $quoteRequestReference) {
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT_CONFIRM, [
-                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
-            ]);
+        if ($quoteTransfer->getQuoteRequestReference()
+            && $quoteTransfer->getQuoteRequestReference() !== $quoteRequestReference) {
+            return $this->redirectResponseInternal(
+                static::ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT_CONFIRM,
+                [static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference]
+            );
         }
 
         $quoteRequestTransfer = $this->getCompanyUserQuoteRequestByReference($quoteRequestReference);
@@ -79,9 +81,10 @@ class QuoteRequestEditShipmentController extends QuoteRequestAbstractController
         $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
 
         if ($quoteTransfer->getQuoteRequestReference() === $quoteRequestReference) {
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT, [
-                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
-            ]);
+            return $this->redirectResponseInternal(
+                static::ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT,
+                [static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference]
+            );
         }
 
         $quoteRequestTransfer = $this->getCompanyUserQuoteRequestByReference($quoteRequestReference);
