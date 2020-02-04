@@ -32,7 +32,7 @@ class MerchantSwitcherWidgetConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getMerchantSelectorCookieIdentifier(): string
+    public function getMerchantSelectorCookieTimeExpiration(): string
     {
         return static::MERCHANT_SELECTOR_COOKIE_IDENTIFIER;
     }
