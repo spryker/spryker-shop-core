@@ -57,7 +57,7 @@ class MerchantReader implements MerchantReaderInterface
 
         /** @var \Generated\Shared\Transfer\MerchantTransfer $selectedMerchantTransfer */
         $selectedMerchantTransfer = $this->getActiveMerchants()->getMerchants()->getIterator()->current();
-        $selectedMerchantReference = $selectedMerchantTransfer->getMerchantKey();
+        $selectedMerchantReference = $selectedMerchantTransfer->getMerchantReference();
 
         return $selectedMerchantReference;
     }

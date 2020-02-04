@@ -15,6 +15,7 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class MerchantSwitcherWidgetConfig extends AbstractBundleConfig
 {
     public const MERCHANT_SELECTOR_COOKIE_IDENTIFIER = 'merchant_switcher_selector-merchant_reference';
+    public const COOKIE_TIME_EXPIRATION = 10 * 365 * 24 * 60 * 60;
 
     /**
      * @return bool

@@ -17,7 +17,6 @@ class MerchantSwitcherController extends AbstractController
 {
     protected const PARAM_MERCHANT_REFERENCE = 'merchant-reference';
     protected const HEADER_REFERER = 'referer';
-    protected const COOKIE_TIME_EXPIRATION = 10 * 365 * 24 * 60 * 60;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -28,7 +27,7 @@ class MerchantSwitcherController extends AbstractController
     {
         $merchantReference = $request->get(static::PARAM_MERCHANT_REFERENCE);
 
-        $cookie = Cookie::create(MerchantSwitcherWidgetConfig::MERCHANT_SELECTOR_COOKIE_IDENTIFIER, $merchantReference, time() + static::COOKIE_TIME_EXPIRATION);
+        $cookie = Cookie::create(MerchantSwitcherWidgetConfig::MERCHANT_SELECTOR_COOKIE_IDENTIFIER, $merchantReference, time() + MerchantSwitcherWidgetConfig::COOKIE_TIME_EXPIRATION);
 
         $response = $this->createRedirectResponse($request);
         $response->headers->setCookie($cookie);
