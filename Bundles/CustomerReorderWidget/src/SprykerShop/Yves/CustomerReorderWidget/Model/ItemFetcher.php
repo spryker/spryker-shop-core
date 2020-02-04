@@ -107,7 +107,50 @@ class ItemFetcher implements ItemFetcherInterface
                     ->setBundleItems($orderTransfer->getBundleItems())
             );
 
+        $itemTransfers = $this->expandBundleItemsWithIdSalesOrderItem($orderTransfer, $itemTransfers);
+
         return $this->cleanUpItems($itemTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function expandBundleItemsWithIdSalesOrderItem(OrderTransfer $orderTransfer, array $itemTransfers): array
+    {
+        $salesOrderItemIds = $this->getSalesOrderItemIdsForBundleItems($orderTransfer);
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $bundleItemIdentifier = $itemTransfer->getBundleItemIdentifier();
+
+            if ($bundleItemIdentifier) {
+                $itemTransfer->setIdSalesOrderItem($salesOrderItemIds[$bundleItemIdentifier] ?? null);
+            }
+        }
+
+        return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return int[]
+     */
+    protected function getSalesOrderItemIdsForBundleItems(OrderTransfer $orderTransfer): array
+    {
+        $salesOrderItemIds = [];
+
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            $relatedBundleItemIdentifier = $itemTransfer->getRelatedBundleItemIdentifier();
+
+            if ($relatedBundleItemIdentifier && !isset($salesOrderItemIds[$relatedBundleItemIdentifier])) {
+                $salesOrderItemIds[$relatedBundleItemIdentifier] = $itemTransfer->getIdSalesOrderItem();
+            }
+        }
+
+        return $salesOrderItemIds;
     }
 
     /**

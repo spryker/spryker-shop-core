@@ -115,4 +115,11 @@ interface QuoteRequestPageToQuoteRequestClientInterface
      * @return bool
      */
     public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestForQuoteWithCustomShipmentPrice(QuoteTransfer $quoteTransfer): bool;
 }

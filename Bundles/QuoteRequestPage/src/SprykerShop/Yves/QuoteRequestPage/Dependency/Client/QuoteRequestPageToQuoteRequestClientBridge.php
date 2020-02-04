@@ -166,8 +166,14 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
      *
      * @return bool
      */
+<<<<<<< HEAD
     public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool
     {
         return $this->quoteRequestClient->isQuoteInQuoteRequestProcess($quoteTransfer);
+=======
+    public function isQuoteRequestForQuoteWithCustomShipmentPrice(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteRequestClient->isQuoteRequestForQuoteWithCustomShipmentPrice($quoteTransfer);
+>>>>>>> feature/ps-9877/dev-rfq-shipment-cost
     }
 }
