@@ -18,15 +18,6 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     protected const MAX_ALLOWED_QUANTITY = 100000;
     protected const ALLOWED_CSV_FILE_MIME_TYPES = [
         'text/csv',
-        'text/plain',
-        'text/x-csv',
-        'application/vnd.ms-excel',
-        'application/csv',
-        'application/x-csv',
-        'text/comma-separated-values',
-        'text/x-comma-separated-values',
-        'text/tab-separated-values',
-        'application/octet-stream',
     ];
 
     /**
