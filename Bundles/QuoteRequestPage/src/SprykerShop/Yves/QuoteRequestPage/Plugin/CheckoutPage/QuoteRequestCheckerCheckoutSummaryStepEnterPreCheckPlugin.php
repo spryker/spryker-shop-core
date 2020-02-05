@@ -18,7 +18,7 @@ class QuoteRequestCheckerCheckoutSummaryStepEnterPreCheckPlugin extends Abstract
 {
     /**
      * {@inheritDoc}
-     * - Checks if the summary step should be shown, returns false if quote is in quote request process, true otherwise.
+     * - Returns false if quote is in quote request process, true otherwise.
      *
      * @api
      *

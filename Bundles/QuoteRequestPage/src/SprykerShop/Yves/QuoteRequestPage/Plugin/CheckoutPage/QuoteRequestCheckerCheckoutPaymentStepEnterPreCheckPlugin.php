@@ -18,7 +18,7 @@ class QuoteRequestCheckerCheckoutPaymentStepEnterPreCheckPlugin extends Abstract
 {
     /**
      * {@inheritDoc}
-     * - Checks if the payment step should be shown, returns false if quote is in quote request process, true otherwise.
+     * - Returns false if quote is in quote request process, true otherwise.
      *
      * @api
      *

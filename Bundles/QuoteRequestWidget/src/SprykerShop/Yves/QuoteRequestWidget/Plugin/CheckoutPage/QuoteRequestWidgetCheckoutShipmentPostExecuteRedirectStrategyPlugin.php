@@ -24,7 +24,7 @@ class QuoteRequestWidgetCheckoutShipmentPostExecuteRedirectStrategyPlugin extend
 
     /**
      * {@inheritDoc}
-     * - Checks if this plugin is applicable for provided quote.
+     * - Returns true if quote request reference is set, false otherwise.
      *
      * @api
      *
