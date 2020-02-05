@@ -67,7 +67,7 @@ class MerchantReader implements MerchantReaderInterface
         /** @var \Generated\Shared\Transfer\MerchantTransfer $selectedMerchantTransfer */
         $selectedMerchantTransfer = $this->getActiveMerchants()->getMerchants()->getIterator()->current();
 
-        if ($selectedMerchantTransfer instanceof MerchantTransfer) {
+        if (!$selectedMerchantTransfer instanceof MerchantTransfer) {
             return '';
         }
 
