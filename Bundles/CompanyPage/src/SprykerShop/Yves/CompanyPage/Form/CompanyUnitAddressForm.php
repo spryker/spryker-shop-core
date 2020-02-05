@@ -276,7 +276,7 @@ class CompanyUnitAddressForm extends AbstractType
      *
      * @return \Symfony\Component\Validator\Constraints\Length
      */
-    protected function createZipCodeLengthConstraint(array $options)
+    protected function createZipCodeLengthConstraint(array $options): Length
     {
         return new Length([
             'max' => 15,
