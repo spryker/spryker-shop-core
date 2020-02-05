@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\MerchantProductOfferWidget;
 
+use Generated\Shared\Transfer\ShopContextTransfer;
+use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProfileStorageClientInterface;
@@ -17,6 +19,8 @@ use SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReade
 
 class MerchantProductOfferWidgetFactory extends AbstractFactory
 {
+    protected const SERVICE_SHOP_CONTEXT = 'SERVICE_SHOP_CONTEXT';
+
     /**
      * @return \SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReaderInterface
      */
@@ -26,7 +30,8 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
             $this->getMerchantProfileStorageClient(),
             $this->getMerchantProductOfferStorageClient(),
             $this->getPriceProductServiceClient(),
-            $this->getPriceProductStorageClient()
+            $this->getPriceProductStorageClient(),
+            $this->getShopContext()
         );
     }
 
@@ -60,5 +65,21 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
     public function getPriceProductStorageClient(): MerchantProductOfferWidgetToPriceProductStorageClientInterface
     {
         return $this->getProvidedDependency(MerchantProductOfferWidgetDependencyProvider::CLIENT_PRICE_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Communication\Application
+     */
+    public function getApplication(): Application
+    {
+        return $this->getProvidedDependency(MerchantProductOfferWidgetDependencyProvider::PLUGIN_APPLICATION);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShopContextTransfer
+     */
+    public function getShopContext(): ShopContextTransfer
+    {
+        return $this->getApplication()[static::SERVICE_SHOP_CONTEXT];
     }
 }
