@@ -106,4 +106,8 @@
         <property name="shipment" type="Shipment"/>
     </transfer>
 
+    <transfer name="Shipment">
+        <property name="shippingAddress" type="Address"/>
+    </transfer>
+
 </transfers>
