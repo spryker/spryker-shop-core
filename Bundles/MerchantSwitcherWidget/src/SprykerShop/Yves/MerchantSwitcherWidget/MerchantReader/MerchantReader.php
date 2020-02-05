@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader;
 
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientInterface;
 use SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,8 +66,13 @@ class MerchantReader implements MerchantReaderInterface
 
         /** @var \Generated\Shared\Transfer\MerchantTransfer $selectedMerchantTransfer */
         $selectedMerchantTransfer = $this->getActiveMerchants()->getMerchants()->getIterator()->current();
-        $selectedMerchantReference = $selectedMerchantTransfer->getMerchantReference();
 
-        return $selectedMerchantReference;
+        if ($selectedMerchantTransfer instanceof MerchantTransfer) {
+            return '';
+        }
+
+        $selectedMerchantTransfer->requireMerchantReference();
+
+        return $selectedMerchantTransfer->getMerchantReference();
     }
 }
