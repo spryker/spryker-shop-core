@@ -9,7 +9,14 @@ namespace SprykerShop\Yves\OrderCustomReferenceWidget\Validator;
 
 class OrderCustomReferenceValidator implements OrderCustomReferenceValidatorInterface
 {
+    /**
+     * @uses \Spryker\Zed\OrderCustomReference\Business\Validator\OrderCustomReferenceValidator::ORDER_CUSTOM_REFERENCE_MIN_LENGTH
+     */
     protected const ORDER_CUSTOM_REFERENCE_MIN_LENGTH = 1;
+
+    /**
+     * @uses \Spryker\Zed\OrderCustomReference\Business\Validator\OrderCustomReferenceValidator::ORDER_CUSTOM_REFERENCE_MAX_LENGTH
+     */
     protected const ORDER_CUSTOM_REFERENCE_MAX_LENGTH = 255;
 
     /**
