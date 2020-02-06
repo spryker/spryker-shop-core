@@ -19,119 +19,140 @@
 
 {% block content %}
     {% set quote = data.version.quote %}
+
     {{ parent() }}
 {% endblock %}
 
 {% block orderInformation %}
-    {% for key, value in data.version.metadata %}
-        <div class="col col--sm-12 col--xl-6">
-            <div class="box">
-                <label class="label">{{ ('quote_request_page.quote_request.metadata.label.' ~ key) | trans }}</label>
-                <hr class="box__separator">
-                <p class="text-break">{{ value }}</p>
-            </div>
-        </div>
-    {% endfor %}
-{% endblock %}
+    <div class="grid">
+        {% for key, value in data.version.metadata %}
+            {% block orderInformationBoxWrapper %}
+                <div class="col col--sm-12 col--xl-6 spacing spacing--big spacing--inner">
+                    {% block orderInformationBoxInner %}
+                        <label class="label">{{ ('quote_request_page.quote_request.metadata.label.' ~ key) | trans }}</label>
 
-{% block rfqInformation %}
-    <h6>{{ 'quote_request_page.quote_request.labels.information' | trans }}</h6>
-    <hr class="box__separator">
-    <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}:
-        <b>{{ data.quoteRequest.createdAt | formatDateTime }}</b>
-    </p>
-    <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:
-        <span class="request-status request-status--{{ data.quoteRequest.status }}">{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</span>
-    </p>
-    {% if data.quoteRequest.validUntil %}
-        <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
-            <b>{{ data.quoteRequest.validUntil | formatDateTime }}</b>
-        </p>
-    {% endif %}
-    <hr class="box__separator">
-    <h6>{{ 'quote_request_page.quote_request.labels.version_information' | trans }}</h6>
-    <hr class="box__separator">
-    <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
-        {% embed atom('select') with {
-            modifiers: ['naked'],
-            attributes: {
-                name: 'quote-request-versions',
-                onchange: 'this.options[this.selectedIndex].value && (window.location.search = "quote-request-version-reference=" + this.options[this.selectedIndex].value);',
-            },
-            embed: {
-                versionReferences: data.quoteRequestVersionReferences,
-                currentVersionReference: data.version ? data.version.versionReference : null,
-            },
-        } only %}
-            {% block options %}
-                {% for versionReference in embed.versionReferences %}
-                    {% set selectedOption = (versionReference == embed.currentVersionReference) ? 'selected' %}
-                    <option value="{{ versionReference }}" {{ selectedOption }}>{{ versionReference }}</option>
-                {% endfor %}
+                        {% if value %}
+                            <p class="text-break">{{ value }}</p>
+                        {% endif %}
+                    {% endblock %}
+                </div>
             {% endblock %}
-        {% endembed %}
-    </p>
+        {% endfor %}
+    </div>
 {% endblock %}
 
-{% block rfqSidebar %}
-    {% if quote.items is not empty %}
+{% block quoteRequestInformation %}
+    {% include molecule('quote-request-information', 'QuoteRequestPage') with {
+        data: {
+            quoteRequest: data.quoteRequest,
+            quoteRequestVersionReferences: data.quoteRequestVersionReferences,
+            version: data.version,
+        },
+    } only %}
+{% endblock %}
+
+{% block quoteRequestSidebar %}
+    {% block delivery %}
         {% include molecule('quote-request-delivery-summary', 'QuoteRequestPage') with {
-            class: 'list spacing-y',
             data: {
                 quote: quote,
                 hasMultiShipments: hasMultiShipments,
                 quoteRequestReference: data.quoteRequest.quoteRequestReference,
             },
         } only %}
+    {% endblock %}
 
+    {% block summary %}
         {% include molecule('quote-request-cart-summary', 'QuoteRequestPage') with {
-            class: 'box',
             data: {
                 cart: quote,
                 shipmentGroups: data.shipmentGroups,
             },
         } only %}
-    {% endif %}
+    {% endblock %}
 
-    <div class="box">
-        <a class="button button--expand button--hollow" href="{{ url('quote-request') }}">
-            {{ 'quote_request_page.quote_request.actions.back_to_list' | trans }}
-        </a>
+    {% set classButtonBack = 'button button--expand button--hollow' %}
+    {% set classButtonCancel = 'button button--expand' %}
+    {% set classButtonRevise = 'button button--expand button--hollow' %}
+    {% set classButtonConvertToCart = 'button button--expand button--success' %}
+    {% set classButtonEdit = 'button button--expand button--success' %}
+    {% set classButtonSendToAgent = 'button button--expand button--success' %}
 
-        {% if data.version and data.version.idQuoteRequestVersion == data.quoteRequest.latestVisibleVersion.idQuoteRequestVersion %}
-            {% if data.isQuoteRequestCancelable %}
-                <hr class="box__separator">
-                <a class="button button--expand button--cancel"
-                   href="{{ path('quote-request/cancel', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
-                    {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
+    {% block actions %}
+        <div class="box">
+            {% block actionBack %}
+                <a class="{{ classButtonBack }}" href="{{ url('quote-request') }}">
+                    {{ 'quote_request_page.quote_request.actions.back_to_list' | trans }}
                 </a>
+            {% endblock %}
+
+            {% if data.version and data.version.idQuoteRequestVersion == data.quoteRequest.latestVisibleVersion.idQuoteRequestVersion %}
+                {% if data.isQuoteRequestCancelable %}
+                    {% block actionSeparator1 %}
+                        <hr class="box__separator">
+                    {% endblock %}
+
+                    {% block actionCancel %}
+                        <a class="{{ classButtonCancel }}"
+                           href="{{ path('quote-request/cancel', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}"
+                           data-init-single-click>
+                            {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
+                        </a>
+                    {% endblock %}
+                {% endif %}
+
+                {% if data.isQuoteRequestReady %}
+                    {% block actionSeparator2 %}
+                        <hr class="box__separator">
+                    {% endblock %}
+
+                    {% block actionRevise %}
+                        <a class="{{ classButtonRevise }}"
+                           href="{{ path('quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}"
+                           data-init-single-click>
+                            {{ 'quote_request_page.quote_request.actions.revise' | trans }}
+                        </a>
+                    {% endblock %}
+
+                    {% block actionSeparator3 %}
+                        <hr class="box__separator">
+                    {% endblock %}
+
+                    {% block actionConvertToCart %}
+                        <a class="{{ classButtonConvertToCart }}"
+                           href="{{ path('quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}"
+                           data-init-single-click>
+                            {{ 'quote_request_page.quote_request.actions.convert_to_cart' | trans }}
+                        </a>
+                    {% endblock %}
+                {% endif %}
+
+                {% if data.isQuoteRequestEditable %}
+                    {% block actionSeparator4 %}
+                        <hr class="box__separator">
+                    {% endblock %}
+
+                    {% block actionEdit %}
+                        <a class="{{ classButtonEdit }}"
+                           href="{{ path('quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}"
+                           data-init-single-click>
+                            {{ 'quote_request_page.quote_request.actions.edit' | trans }}
+                        </a>
+                    {% endblock %}
+
+                    {% block actionSeparator5 %}
+                        <hr class="box__separator">
+                    {% endblock %}
+
+                    {% block actionSendToAgent %}
+                        <a class="{{ classButtonSendToAgent }}"
+                           href="{{ path('quote-request/send-to-user', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}"
+                           data-init-single-click>
+                            {{ 'quote_request_page.quote_request.actions.send_to_agent' | trans }}
+                        </a>
+                    {% endblock %}
+                {% endif %}
             {% endif %}
-
-            {% if data.isQuoteRequestReady %}
-                <hr class="box__separator">
-                <a class="button button--expand button--hollow"
-                   href="{{ path('quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
-                    {{ 'quote_request_page.quote_request.actions.revise' | trans }}
-                </a>
-                <hr class="box__separator">
-                <a class="button button--expand button--success"
-                   href="{{ path('quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
-                    {{ 'quote_request_page.quote_request.actions.convert_to_cart' | trans }}
-                </a>
-            {% endif %}
-
-            {% if data.isQuoteRequestEditable %}
-                <hr class="box__separator">
-                <a class="button button--expand button--success"
-                   href="{{ path('quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
-                    {{ 'quote_request_page.quote_request.actions.edit' | trans }}
-                </a>
-                <hr class="box__separator">
-                <a class="button button--expand button--success"
-                   href="{{ path('quote-request/send-to-user', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
-                    {{ 'quote_request_page.quote_request.actions.send_to_agent' | trans }}
-                </a>
-            {% endif %}
-        {% endif %}
-    </div>
+        </div>
+    {% endblock %}
 {% endblock %}

@@ -1,0 +1,25 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'status',
+    tag: 'span',
+} %}
+
+{% define data = {
+    label: required,
+    status: required,
+} %}
+
+{% block extraClass %}
+    {{ config.name }}--{{ data.status }}
+{% endblock %}
+
+{% block component %}
+    {% if data.status %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {{ data.label }}
+{% endblock %}

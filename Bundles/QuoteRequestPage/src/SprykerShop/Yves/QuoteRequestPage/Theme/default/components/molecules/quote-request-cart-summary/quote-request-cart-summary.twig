@@ -9,6 +9,10 @@
     shipmentGroups: [],
 } %}
 
+{% block extraClass %}
+    box
+{% endblock %}
+
 {% block body %}
     <h6 class="text-secondary float-right">
         {% widget 'ProductBundleItemCounterWidget' args [data.cart] only %}

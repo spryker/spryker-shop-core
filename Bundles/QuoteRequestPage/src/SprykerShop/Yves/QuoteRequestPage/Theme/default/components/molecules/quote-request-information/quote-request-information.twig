@@ -1,0 +1,138 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-request-information',
+} %}
+
+{% define data = {
+    quoteRequest: required,
+    quoteRequestVersionReferences: null,
+    version: null,
+    hasVersionMessage: false,
+} %}
+
+{% block body %}
+    {% block date %}
+        <p>
+            {{ 'quote_request_page.quote_request.labels.date' | trans }}:
+            <span class="text-secondary">{{ data.quoteRequest.createdAt | formatDateTime }}</span>
+        </p>
+    {% endblock %}
+
+    {% set hasCompany = data.quoteRequest.companyUser and data.quoteRequest.companyUser.company %}
+    {% if hasCompany %}
+        {% block company %}
+            <p>
+                {{ 'quote_request_page.quote_request.labels.company' | trans }}:
+                <span class="text-secondary">
+                    {{ data.quoteRequest.companyUser.company.name }}
+                </span>
+            </p>
+        {% endblock %}
+    {% endif %}
+
+    {% set hasBusinessUnit = data.quoteRequest.companyUser and data.quoteRequest.companyUser.companyBusinessUnit %}
+    {% if hasBusinessUnit %}
+        {% block BusinessUnit %}
+            <p>
+                {{ 'quote_request_page.quote_request.labels.business_unit' | trans }}:
+                <span class="text-secondary">
+                    {{ data.quoteRequest.companyUser.companyBusinessUnit.name }}
+                </span>
+            </p>
+        {% endblock %}
+    {% endif %}
+
+    {% set hasCustomer = data.quoteRequest.companyUser and data.quoteRequest.companyUser.customer %}
+    {% if hasCustomer %}
+        {% block customer %}
+            <p>
+                {{ 'quote_request_page.quote_request.labels.customer' | trans }}:
+                <span class="text-secondary">
+                    {{ data.quoteRequest.companyUser.customer.firstName }} {{ data.quoteRequest.companyUser.customer.lastName }}
+                </span>
+            </p>
+        {% endblock %}
+    {% endif %}
+
+    {% block status %}
+        <p>
+            {{ 'quote_request_page.quote_request.labels.status' | trans }}:
+
+            {% if data.quoteRequest.status %}
+                {% include molecule('status') with {
+                    data: {
+                        label: ('quote_request.status.' ~ data.quoteRequest.status) | trans,
+                        status: data.quoteRequest.status,
+                    },
+                } only %}
+            {% else %}
+                --
+            {% endif %}
+        </p>
+    {% endblock %}
+
+    {% block additionalContent %}
+        {% block validUntil %}
+            <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
+                {% if data.quoteRequest.validUntil %}
+                    <span class="text-secondary">{{ data.quoteRequest.validUntil | formatDateTime }}</span>
+                {% else %}
+                    --
+                {% endif %}
+            </p>
+        {% endblock %}
+
+        {% block history %}
+            <p class="grid grid--middle">
+                <span class="col">
+                    {{ 'quote_request_page.quote_request.labels.history' | trans }}:
+                </span>
+
+                {% if data.quoteRequestVersionReferences %}
+                    <span class="col">
+                        {#            {% include molecule('quote-request-history-select', 'QuoteRequestPage') ignore missing with {#}
+                        {#                class: 'grid grid--justify grid--middle',#}
+                        {#                data: {#}
+                        {#                    quoteRequestVersionReferences: data.quoteRequestVersionReferences,#}
+                        {#                    version: data.version,#}
+                        {#                },#}
+                        {#            } only %}#}
+                        {% embed atom('select') with {
+                            modifiers: ['naked'],
+                            attributes: {
+                                name: 'quote-request-versions',
+                                onchange: 'this.options[this.selectedIndex].value && (window.location.search = "quote-request-version-reference=" + this.options[this.selectedIndex].value);',
+                            },
+                            embed: {
+                                versionReferences: data.quoteRequestVersionReferences,
+                                currentVersionReference: data.version ? data.version.versionReference : null,
+                            },
+                        } only %}
+                            {% block options %}
+                                {% for versionReference in embed.versionReferences %}
+                                    {% set selectedOption = (versionReference == embed.currentVersionReference) ? 'selected' %}
+                                    <option value="{{ versionReference }}" {{ selectedOption }}>{{ versionReference }}</option>
+                                {% endfor %}
+                            {% endblock %}
+                        {% endembed %}
+                    </span>
+                {% else %}
+                    <span class="col">&nbsp;--</span>
+                {% endif %}
+            </p>
+        {% endblock %}
+
+        {% if data.hasVersionMessage %}
+            {% block latestVersionVisibilityStatus %}
+                <p>
+                    <strong>
+                        {{- data.quoteRequest.isLatestVersionVisible ?
+                        'quote_request_page.quote_request.labels.latest_version_is_visible' | trans :
+                        'quote_request_page.quote_request.labels.latest_version_is_hidden' | trans -}}
+                    </strong>
+                </p>
+            {% endblock %}
+        {% endif %}
+    {% endblock %}
+{% endblock %}

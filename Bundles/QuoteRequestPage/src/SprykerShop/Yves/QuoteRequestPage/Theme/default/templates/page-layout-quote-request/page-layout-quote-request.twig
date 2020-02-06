@@ -29,92 +29,134 @@
 {% endblock %}
 
 {% block content %}
-    <div class="grid">
-        <div class="col col--sm-12 col--xl-8">
-            <div class="box">
-                {% block orderInformation %}{% endblock %}
+    {% if not quote or quote.items is empty %}
+        {% block emptyPage %}
+            <div class="box text-center">
+                {% include atom('icon') with {
+                    modifiers: ['biggest'],
+                    class: 'text-alt',
+                    data: {
+                        name: 'shopping-cart',
+                    },
+                } only %}
+                <h6>{{ 'quote_request_page.quote_request.empty_page' | trans }}</h6>
+            </div>
+        {% endblock %}
+    {% else %}
+        {{ block('contentInner') }}
+    {% endif %}
+{% endblock %}
+
+{% block contentInner %}
+    {% set counterItems = quote.items ? quote.items | length : 0 %}
+    {% set gridClass = 'grid' %}
+    {% set leftColClass = 'col col--sm-12 col--xl-8' %}
+    {% set rightColClass = 'col col--sm-12 col--xl-4' %}
+
+    {% block sectionInformation %}
+        <div class="{{ gridClass }}">
+            <div class="{{ leftColClass }}">
+                <div class="box">
+                    {% block orderInformation %}{% endblock %}
+                </div>
+            </div>
+
+            <div class="{{ rightColClass }}">
+                <div class="box">
+                    {% block quoteRequestInformation %}{% endblock %}
+                </div>
             </div>
         </div>
+    {% endblock %}
 
-        <div class="col col--sm-12 col--xl-4">
-            <div class="box">
-                {% block rfqInformation %}{% endblock %}
-            </div>
-        </div>
-    </div>
+    {% block separator %}
+        <hr class="spacing-x">
+    {% endblock %}
 
-    <div class="grid">
-        <div class="col col--sm-12 col--xl-8">
-            {% block rfqContent %}
-                {% if quote %}
-                    {% if hasMultiShipments %}
-                        {% block priceModeForMultiShipments %}
-                            {% if quote.priceMode %}
-                                <div class="box">
-                                    {% include molecule('price-mode') with {
-                                        data: {
-                                            priceMode: quote.priceMode,
-                                        },
-                                    } only %}
-                                </div>
-                            {% endif %}
-                        {% endblock %}
+    {% block sectionContainer %}
+        <div class="{{ gridClass }}">
+            <div class="{{ leftColClass }}">
+                {% block priceModeWrapper %}
+                    {% set priceModeWrapperClass = 'grid grid--justify spacing--big' %}
+                    {% set priceModeModifiers = [] %}
+                    {% set priceModeClass = 'col' %}
+                    {% set numberOfItemsClass = 'col' %}
 
-                        {% block productsWrapperForMultiShipments %}
-                            {% for shipmentGroup in data.shipmentGroups %}
-                                <div class="box">
-                                    {% block titleForMultiShipments %}
-                                        <div class="grid grid--justify">
-                                            <h4 class="col">
-                                                {{ 'quote_request_page.quote_request.shipment_counter' | trans({
-                                                    '%index%': loop.index,
-                                                    '%length%': data.shipmentGroups | length,
-                                                }) }}
-                                            </h4>
-
-                                            <div class="col">
-                                                {{ quote.items | length }}
-                                            </div>
-                                        </div>
-                                    {% endblock %}
-
-                                    {% block productsForMultiShipments %}
-                                        {% include organism('product-and-shipment-view', 'QuoteRequestPage') ignore missing with {
-                                            data: {
-                                                quote: quote,
-                                                items: shipmentGroup.items,
-                                                shipment: shipmentGroup.shipment,
-                                                hasMultiShipments: hasMultiShipments,
-                                                isConfiguredBundleEditable: false,
-                                                isConfiguredBundleQuantitySummaryVisible: true,
-                                            },
-                                        } only %}
-                                    {% endblock %}
-                                </div>
-                            {% endfor %}
-                        {% endblock %}
-                    {% endif %}
-
-                    {% if not hasMultiShipments %}
-                        {% block priceModeForSingleShipment %}
-                            <div class="box grid grid--justify">
+                    {% block priceModeInner %}
+                        <div class="{{ priceModeWrapperClass }}">
+                            {% block priceMode %}
                                 {% if quote.priceMode %}
                                     {% include molecule('price-mode') with {
-                                        class: 'col',
+                                        modifiers: priceModeModifiers,
+                                        class: priceModeClass,
                                         data: {
                                             priceMode: quote.priceMode,
                                         },
                                     } only %}
                                 {% endif %}
+                            {% endblock %}
 
-                                <div class="col">
-                                    {{ quote.items | length }}
+                            {% block itemsCounter %}
+                                {% if not hasMultiShipments %}
+                                    <div class="{{ numberOfItemsClass }}">
+                                        {{ _self.numberOfItems(counterItems) }}
+                                    </div>
+                                {% endif %}
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+                {% endblock %}
+            </div>
+
+            <div class="{{ leftColClass }}">
+                {% block quoteRequestContent %}
+                    {% if hasMultiShipments %}
+                        {% for shipmentGroup in data.shipmentGroups %}
+                            {% block wrapperForMultiShipmentItem %}
+                                <div class="box">
+                                    {% block innerForMultiShipmentItem %}
+                                        {% set titleMultiShipmentWrapperClass = 'grid grid--justify' %}
+                                        {% set titleMultiShipmentClass = 'col' %}
+                                        {% set numberOfItemsClass = 'col' %}
+
+                                        {% block titleForMultiShipments %}
+                                            <div class="{{ titleMultiShipmentWrapperClass }}">
+                                                {% block titleForMultiShipmens %}
+                                                    <h4 class="{{ titleMultiShipmentClass }}">
+                                                        {{ 'quote_request_page.quote_request.shipment_counter' | trans({
+                                                            '%index%': loop.index,
+                                                            '%length%': data.shipmentGroups | length,
+                                                        }) }}
+                                                    </h4>
+                                                {% endblock %}
+
+                                                {% block itemsCounterForMultiShipmens %}
+                                                    <div class="{{ numberOfItemsClass }}">
+                                                        {{ _self.numberOfItems(counterItems) }}
+                                                    </div>
+                                                {% endblock %}
+                                            </div>
+                                        {% endblock %}
+
+                                        {% block productsForMultiShipments %}
+                                            {% include organism('product-and-shipment-view', 'QuoteRequestPage') with {
+                                                data: {
+                                                    quote: quote,
+                                                    items: shipmentGroup.items,
+                                                    shipment: shipmentGroup.shipment,
+                                                    hasMultiShipments: hasMultiShipments,
+                                                    isConfiguredBundleEditable: false,
+                                                    isConfiguredBundleQuantitySummaryVisible: true,
+                                                },
+                                            } only %}
+                                        {% endblock %}
+                                    {% endblock %}
                                 </div>
-                            </div>
-                        {% endblock %}
-
+                            {% endblock %}
+                        {% endfor %}
+                    {% else %}
                         {% block productsForSingleShipment %}
-                            {% include organism('product-and-shipment-view', 'QuoteRequestPage') ignore missing with {
+                            {% include organism('product-and-shipment-view', 'QuoteRequestPage') with {
                                 data: {
                                     quote: quote,
                                     items: quote.items,
@@ -125,13 +167,24 @@
                             } only %}
                         {% endblock %}
                     {% endif %}
-                {% endif %}
-            {% endblock %}
-        </div>
+                {% endblock %}
+            </div>
 
-        <div class="col col--sm-12 col--xl-4">
-            {% block rfqSidebar %}{% endblock %}
+            <div class="{{ rightColClass }}">
+                {% block quoteRequestSidebar %}{% endblock %}
+            </div>
         </div>
-    </div>
+    {% endblock %}
 {% endblock %}
 
+{% macro numberOfItems(counterItems) %}
+    {% if (counterItems == 1) %}
+        {{ 'quote_request_page.quote_request.item' | trans({
+            '%count%': counterItems,
+        }) }}
+    {% else %}
+        {{ 'quote_request_page.quote_request.items' | trans({
+            '%count%': counterItems,
+        }) }}
+    {% endif %}
+{% endmacro %}
