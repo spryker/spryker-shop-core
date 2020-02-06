@@ -151,6 +151,14 @@
     </div>
 
     <div class="box">
+        {% include molecule('quote-readonly-order-custom-reference', 'OrderCustomReferenceWidget') ignore missing with {
+            data: {
+                quote: data.cart,
+            },
+        } only %}
+    </div>
+
+    <div class="box">
         <h4>{{ 'checkout.step.summary.payment' | trans }}</h4>
         <hr>
         <div class="grid grid--stretch grid--justify">

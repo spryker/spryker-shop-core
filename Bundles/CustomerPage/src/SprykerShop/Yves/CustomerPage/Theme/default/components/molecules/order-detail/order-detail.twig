@@ -28,6 +28,13 @@
                     {{ 'customer.order.date' | trans }}:
                     <strong>{{ data.order.createdAt | formatDateTime }}</strong>
                 </li>
+                <li>
+                    {% include molecule('order-readonly-order-custom-reference', 'OrderCustomReferenceWidget') ignore missing with {
+                        data: {
+                            order: data.order,
+                        },
+                    } only %}
+                </li>
             </ul>
             <hr class="box__separator">
             {% include molecule('order-detail-table', 'CustomerPage') with {

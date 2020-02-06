@@ -21,7 +21,7 @@
             {% endblock %}
         {% endif %}
 
-        {% if not canWrite and data.form.orderCustomReference.vars.value is not empty %}
+        {% if not canWrite and data.orderCustomReference is not empty %}
             {% block orderCustomReferenceReadOnly %}
                 {% include molecule('quote-readonly-order-custom-reference', 'OrderCustomReferenceWidget') ignore missing with {
                     data: {
