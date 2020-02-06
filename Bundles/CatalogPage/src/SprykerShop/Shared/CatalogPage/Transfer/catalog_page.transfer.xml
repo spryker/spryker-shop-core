@@ -34,4 +34,7 @@
         <property name="parameterName" type="string"/>
     </transfer>
 
+    <transfer name="FacetSearchResultValue">
+    </transfer>
+
 </transfers>
