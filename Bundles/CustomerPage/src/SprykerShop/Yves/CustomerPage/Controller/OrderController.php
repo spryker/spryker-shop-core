@@ -181,7 +181,8 @@ class OrderController extends AbstractCustomerController
         $orderShipmentExpenses = [];
 
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() !== CustomerPageConfig::SHIPMENT_EXPENSE_TYPE
+            if (
+                $expenseTransfer->getType() !== CustomerPageConfig::SHIPMENT_EXPENSE_TYPE
                 || $expenseTransfer->getShipment() === null
             ) {
                 continue;
