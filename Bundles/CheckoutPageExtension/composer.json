@@ -8,7 +8,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/symfony": "*"
+    "spryker/symfony": "^3.1.0"
   },
   "suggest": {
     "spryker/symfony": "If you want to use CheckoutPage expander plugins."

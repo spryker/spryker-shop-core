@@ -9,13 +9,13 @@ namespace SprykerShop\Yves\QuoteRequestWidget\Plugin\CheckoutPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentPostExecuteRedirectStrategyPluginInterface;
+use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepRedirectStrategyPluginInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestWidget\QuoteRequestWidgetFactory getFactory()
  */
-class QuoteRequestWidgetCheckoutShipmentPostExecuteRedirectStrategyPlugin extends AbstractPlugin implements CheckoutShipmentPostExecuteRedirectStrategyPluginInterface
+class QuoteRequestWidgetCheckoutShipmentStepRedirectStrategyPlugin extends AbstractPlugin implements CheckoutShipmentStepRedirectStrategyPluginInterface
 {
     /**
      * @uses \SprykerShop\Yves\QuoteRequestWidget\Plugin\Router\QuoteRequestWidgetRouteProviderPlugin::ROUTE_QUOTE_REQUEST_SAVE_CART
@@ -44,10 +44,11 @@ class QuoteRequestWidgetCheckoutShipmentPostExecuteRedirectStrategyPlugin extend
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\RedirectResponse $redirectResponse
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute(RedirectResponse $redirectResponse): RedirectResponse
+    public function execute(RedirectResponse $redirectResponse, QuoteTransfer $quoteTransfer): RedirectResponse
     {
         $checkoutShipmentUrl = $this->getFactory()
             ->getRouterService()

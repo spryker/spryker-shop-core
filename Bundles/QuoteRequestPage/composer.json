@@ -25,7 +25,6 @@
     "spryker-shop/cart-page": "*",
     "spryker-shop/customer-page": "*",
     "spryker-shop/product-option-widget": "*",
-    "spryker-shop/product-packaging-unit-widget": "*",
     "spryker/code-sniffer": "*",
     "spryker/router": "*",
     "spryker/silex": "*"
