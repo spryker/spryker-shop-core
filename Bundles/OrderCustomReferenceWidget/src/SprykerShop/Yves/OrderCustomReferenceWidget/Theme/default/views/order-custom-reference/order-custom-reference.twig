@@ -1,0 +1,34 @@
+{% extends template('widget') %}
+
+{% define data = {
+    quote: _widget.quote,
+    orderCustomReference: _widget.quote.orderCustomReference,
+    backUrl: _widget.backUrl,
+} %}
+
+{% block body %}
+    {% set canWrite = (data.quote is not empty) and (not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.quote.idQuote)) %}
+
+    {% block orderCustomReference %}
+        {% if canWrite %}
+            {% block referenceForm %}
+                {% include molecule('order-custom-reference-form', 'OrderCustomReferenceWidget') ignore missing with {
+                    data: {
+                        orderCustomReference: data.orderCustomReference,
+                        backUrl: data.backUrl,
+                    },
+                } only %}
+            {% endblock %}
+        {% endif %}
+
+        {% if not canWrite and data.form.orderCustomReference.vars.value is not empty %}
+            {% block orderCustomReferenceReadOnly %}
+                {% include molecule('quote-readonly-order-custom-reference', 'OrderCustomReferenceWidget') ignore missing with {
+                    data: {
+                        quote: data.quote,
+                    },
+                } only %}
+            {% endblock %}
+        {% endif %}
+    {% endblock %}
+{% endblock %}

@@ -179,6 +179,14 @@
                             </div>
                         {% endif %}
 
+                        {% block orderCustomReference %}
+                            {% widget 'OrderCustomReferenceWidget' args [
+                                data.cart,
+                                app.request.requestUri
+                            ] only %}
+                            {% endwidget %}
+                        {% endblock %}
+
                         {% if data.isQuoteEditable and data.cart.idQuote %}
                             {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] only %}
                             {% elsewidget 'CartToShoppingListWidgetPlugin' args [data.cart.idQuote] only %} {# @deprecated Use CreateShoppingListFromCartWidget instead. #}
