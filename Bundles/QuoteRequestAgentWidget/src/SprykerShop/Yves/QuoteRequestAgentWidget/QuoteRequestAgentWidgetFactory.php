@@ -10,14 +10,17 @@ namespace SprykerShop\Yves\QuoteRequestAgentWidget;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToCustomerClientInterface;
+use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToMessengerClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToPersistentCartClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteRequestAgentClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Form\QuoteRequestAgentCartForm;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Handler\QuoteRequestAgentCartHandler;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Handler\QuoteRequestAgentCartHandlerInterface;
+use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestAgentWidget\QuoteRequestAgentWidgetConfig getConfig()
@@ -41,6 +44,16 @@ class QuoteRequestAgentWidgetFactory extends AbstractFactory
             $this->getQuoteClient(),
             $this->getQuoteRequestAgentClient()
         );
+    }
+
+    /**
+     * @param string $redirectUrl
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function createRedirectResponse(string $redirectUrl): RedirectResponse
+    {
+        return new RedirectResponse($redirectUrl);
     }
 
     /**
@@ -81,5 +94,21 @@ class QuoteRequestAgentWidgetFactory extends AbstractFactory
     public function getCustomerClient(): QuoteRequestAgentWidgetToCustomerClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestAgentWidgetDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Symfony\Cmf\Component\Routing\ChainRouterInterface
+     */
+    public function getRouterService(): ChainRouterInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestAgentWidgetDependencyProvider::SERVICE_ROUTER);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToMessengerClientInterface
+     */
+    public function getMessengerClient(): QuoteRequestAgentWidgetToMessengerClientInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestAgentWidgetDependencyProvider::CLIENT_MESSENGER);
     }
 }
