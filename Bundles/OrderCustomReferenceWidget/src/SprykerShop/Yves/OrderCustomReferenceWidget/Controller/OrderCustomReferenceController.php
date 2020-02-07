@@ -47,7 +47,7 @@ class OrderCustomReferenceController extends AbstractController
             ->createOrderCustomReferenceValidator()
             ->isOrderCustomReferenceLengthValid($orderCustomReference);
 
-        if ($isOrderCustomReferenceLengthValid) {
+        if (!$isOrderCustomReferenceLengthValid) {
             $this->addErrorMessage(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH);
 
             return $this->redirectResponseExternal($backUrl);

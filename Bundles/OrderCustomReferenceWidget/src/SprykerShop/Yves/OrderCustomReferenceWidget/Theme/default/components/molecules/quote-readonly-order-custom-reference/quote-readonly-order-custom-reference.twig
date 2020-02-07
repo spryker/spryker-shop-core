@@ -11,7 +11,7 @@
 {% block body %}
     {% if data.quote.orderCustomReference is not empty %}
         {% block readonlyOrderCustomReference %}
-            <h6 class="{{ config.name }}__title">{{ 'order_custom_reference.reference' | trans }}</h6>
+            <h6 class="{{ config.name }}__title">{{ 'order_custom_reference.title' | trans }}</h6>
             <p class="spacing spacing--reset">{{ data.quote.orderCustomReference | escape | nl2br }}</p>
         {% endblock %}
     {% endif %}
