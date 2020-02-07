@@ -135,20 +135,18 @@ export default class AutocompleteForm extends Component {
     protected mapSuggestionItemsEvents(): void {
         const self = this;
         this.suggestionItems.forEach((item: HTMLElement) => {
-            item.addEventListener('click', (event: Event) => self.onItemClick(event));
-            item.addEventListener('mouseover', (event: Event) => this.onItemSelected(event));
+            item.addEventListener('click', () => self.onItemClick(item));
+            item.addEventListener('mouseover', () => this.onItemSelected(item));
         });
     }
 
-    protected onItemClick(event: Event): void {
-        const targetElement = <HTMLElement>event.target;
-        this.inputText = targetElement.textContent.trim();
-        this.inputValue = targetElement.getAttribute(this.valueAttributeName);
+    protected onItemClick(item: HTMLElement): void {
+        this.inputText = item.textContent.trim();
+        this.inputValue = item.getAttribute(this.valueAttributeName);
         this.dispatchCustomEvent(Events.SET, {text: this.inputText, value: this.inputValue});
     }
 
-    protected onItemSelected(event: Event): void {
-        const item = <HTMLElement>event.target;
+    protected onItemSelected(item: HTMLElement): void {
         this.changeSelectedItem(item);
     }
 
