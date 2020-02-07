@@ -10,18 +10,33 @@
     method: 'POST',
 } %}
 
-{% block body %}
-    {% block form %}
-        <form class="{{ config.jsName }}__form" method="{{ data.method }}" action="{{ path('order-custom-reference/save') }}">
-            <input type="hidden" name="backUrl" value="{{ data.backUrl }}">
-            <input type="text" name="orderCustomReference" value="{{ data.orderCustomReference }}">
+{% set classTitle = '' %}
+{% set classForm = '' %}
+{% set classInput = 'input input--expand spacing-bottom spacing-bottom--small' %}
+{% set classButton = 'button' %}
 
-            {% block formHandlers %}
-                <div class="{{ config.name }}__handlers">
-                    <button class="button button--primary {{ config.jsName }}__submit-button" data-init-single-click>
+{% block body %}
+    {% block title %}
+        <h5 class="{{ classTitle }}">{{ 'order_custom_reference.title_form' | trans }}</h5>
+    {% endblock %}
+
+    {% block form %}
+        <form class="{{ classForm }}" method="{{ data.method }}" action="{{ path('order-custom-reference/save') }}">
+            {% block formInner %}
+                <input type="hidden" name="backUrl" value="{{ data.backUrl }}">
+
+                {% block input %}
+                    <input type="text"
+                           class="{{ classInput }}"
+                           name="orderCustomReference"
+                           value="{{ data.orderCustomReference }}">
+                {% endblock %}
+
+                {% block action %}
+                    <button class="{{ classButton }}" data-init-single-click>
                         {{ 'order_custom_reference.save' | trans }}
                     </button>
-                </div>
+                {% endblock %}
             {% endblock %}
         </form>
     {% endblock %}

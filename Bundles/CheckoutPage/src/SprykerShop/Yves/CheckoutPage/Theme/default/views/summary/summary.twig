@@ -150,13 +150,18 @@
         {% endfor %}
     </div>
 
-    <div class="box">
-        {% include molecule('quote-readonly-order-custom-reference', 'OrderCustomReferenceWidget') ignore missing with {
+    {% if data.cart.orderCustomReference %}
+        {% embed molecule('order-custom-reference-view', 'OrderCustomReferenceWidget') ignore missing with {
+            class: 'box',
             data: {
-                quote: data.cart,
+                orderCustomReference: data.cart.orderCustomReference,
             },
         } only %}
-    </div>
+            {% block title %}
+                <h6 class="{{ classTitle }}">{{ data.title }}</h6>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
 
     <div class="box">
         <h4>{{ 'checkout.step.summary.payment' | trans }}</h4>

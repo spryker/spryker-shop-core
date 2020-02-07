@@ -12,7 +12,7 @@
     {% block orderCustomReference %}
         {% if canWrite %}
             {% block referenceForm %}
-                {% include molecule('order-custom-reference-form', 'OrderCustomReferenceWidget') ignore missing with {
+                {% include molecule('order-custom-reference-form', 'OrderCustomReferenceWidget') with {
                     data: {
                         orderCustomReference: data.orderCustomReference,
                         backUrl: data.backUrl,
@@ -22,10 +22,10 @@
         {% endif %}
 
         {% if not canWrite and data.orderCustomReference is not empty %}
-            {% block orderCustomReferenceReadOnly %}
-                {% include molecule('quote-readonly-order-custom-reference', 'OrderCustomReferenceWidget') ignore missing with {
+            {% block referenceView %}
+                {% include molecule('order-custom-reference-view', 'OrderCustomReferenceWidget') with {
                     data: {
-                        quote: data.quote,
+                        orderCustomReference: data.quote.orderCustomReference,
                     },
                 } only %}
             {% endblock %}

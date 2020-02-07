@@ -28,13 +28,27 @@
                     {{ 'customer.order.date' | trans }}:
                     <strong>{{ data.order.createdAt | formatDateTime }}</strong>
                 </li>
-                <li>
-                    {% include molecule('order-readonly-order-custom-reference', 'OrderCustomReferenceWidget') ignore missing with {
+
+                {% if data.order.orderCustomReference %}
+                    {% embed molecule('order-custom-reference-view', 'OrderCustomReferenceWidget') ignore missing with {
+                        config: {
+                            tag: 'li',
+                        },
                         data: {
-                            order: data.order,
+                            orderCustomReference: data.order.orderCustomReference,
                         },
                     } only %}
-                </li>
+                        {% block title %}
+                            {{ data.title }}:
+                        {% endblock %}
+
+                        {% block textWrapper %}
+                            <strong>
+                                {{ block('text') }}
+                            </strong>
+                        {% endblock %}
+                    {% endembed %}
+                {% endif %}
             </ul>
             <hr class="box__separator">
             {% include molecule('order-detail-table', 'CustomerPage') with {

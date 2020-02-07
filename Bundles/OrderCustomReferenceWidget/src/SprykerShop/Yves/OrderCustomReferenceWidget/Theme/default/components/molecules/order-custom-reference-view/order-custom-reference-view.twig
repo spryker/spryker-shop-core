@@ -1,0 +1,33 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-custom-reference-view',
+} %}
+
+{% define data = {
+    title: 'order_custom_reference.title' | trans,
+    orderCustomReference: required,
+} %}
+
+{% block component %}
+    {% if data.orderCustomReference is not empty %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% set classTitle = '' %}
+{% set classText = '' %}
+
+{% block body %}
+    {% block title %}
+        <h5 class="{{ classTitle }}">{{ data.title }}</h5>
+    {% endblock %}
+
+    {% block textWrapper %}
+        <p class="{{ classText }}">
+            {% block text %}
+                {{ data.orderCustomReference | escape | nl2br }}
+            {% endblock %}
+        </p>
+    {% endblock %}
+{% endblock %}
