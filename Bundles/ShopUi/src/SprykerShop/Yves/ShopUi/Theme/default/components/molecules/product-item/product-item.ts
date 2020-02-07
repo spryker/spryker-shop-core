@@ -9,6 +9,7 @@ export const EVENT_UPDATE_ADD_TO_CART_URL = 'updateAddToCartUrl';
  */
 export interface ProductItemData {
     imageUrl: string;
+    labels: { text: string; type: string; };
     nameValue: string;
     ratingValue: number;
     defaultPrice: string;
@@ -19,6 +20,7 @@ export interface ProductItemData {
 
 export default class ProductItem extends Component {
     protected productImage: HTMLImageElement;
+    protected productLabels: HTMLElement[];
     protected productName: HTMLElement;
     protected productRating: HTMLInputElement;
     protected productDefaultPrice: HTMLElement;
@@ -30,6 +32,7 @@ export default class ProductItem extends Component {
 
     protected init(): void {
         this.productImage = <HTMLImageElement>this.getElementsByClassName(`${this.jsName}__image`)[0];
+        this.productLabels = <HTMLElement[]>Array.from(this.getElementsByClassName(`${this.jsName}__label`));
         this.productName = <HTMLElement>this.getElementsByClassName(`${this.jsName}__name`)[0];
         this.productRating = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__rating`)[0];
         this.productDefaultPrice = <HTMLElement>this.getElementsByClassName(`${this.jsName}__default-price`)[0];

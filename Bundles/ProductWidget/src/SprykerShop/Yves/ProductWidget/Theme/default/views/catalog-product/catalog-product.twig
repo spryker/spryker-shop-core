@@ -28,7 +28,11 @@
             },
         } only %}
             {% block labels %}
-                {% widget 'ProductConcreteLabelWidget' args [data.product.id_product_labels] only %}{% endwidget %}
+                {% widget 'ProductConcreteLabelWidget' args [data.product.id_product_labels] with {
+                    data: {
+                        productItemJsName: config.jsName,
+                    },
+                } only %}{% endwidget %}
             {% endblock %}
 
             {% block rating %}

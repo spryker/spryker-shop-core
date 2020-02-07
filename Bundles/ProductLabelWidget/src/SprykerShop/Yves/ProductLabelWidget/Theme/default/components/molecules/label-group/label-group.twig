@@ -33,7 +33,7 @@
                 modifiers: componentModifiers,
                 data: {
                     text: label.text,
-                    additionalClass: labelTextClass
+                    additionalClass: labelTextClass,
                 },
             },
             with_context = false
@@ -48,10 +48,29 @@
 
     <div class="grid grid--justify">
         {% if leftColumnComponents is not empty %}
-            <div class="col col--expand">{{leftColumnComponents | join | raw}}</div>
+            <div class="col col--expand">{{ leftColumnComponents | join | raw }}</div>
+        {% else %}
+            <div class="col col--expand">
+                {% include molecule('tag', 'ProductLabelWidget') with {
+                    class: labelClass ~ ' is-hidden',
+                    data: {
+                        additionalClass: labelTextClass,
+                    },
+                } only %}
+            </div>
         {% endif %}
+
         {% if rightColumnComponents is not empty %}
-            <div class="col col--expand text-right">{{rightColumnComponents | join | raw}}</div>
+            <div class="col col--expand text-right">{{ rightColumnComponents | join | raw }}</div>
+        {% else %}
+            <div class="col col--expand text-right">
+                {% include molecule('flag', 'ProductLabelWidget') with {
+                    class: labelClass ~ ' is-hidden',
+                    data: {
+                        additionalClass: labelTextClass,
+                    },
+                } only %}
+            </div>
         {% endif %}
     </div>
 {% endblock %}

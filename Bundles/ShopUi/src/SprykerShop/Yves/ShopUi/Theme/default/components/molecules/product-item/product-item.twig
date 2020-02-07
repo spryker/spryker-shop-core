@@ -63,7 +63,6 @@
     {% block labels %}
         {% if data.idProductAbstract %}
             {% block productAbstractLabels %}
-                <pre>{{ dump(config.jsName) }}</pre>
                 {% widget 'ProductAbstractLabelWidget' args [data.idProductAbstract] with {
                     data: {
                         productItemJsName: config.jsName,
