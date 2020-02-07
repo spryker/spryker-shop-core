@@ -12,8 +12,8 @@
 {% block body %}
     {% set leftColumnComponents = [] %}
     {% set rightColumnComponents = [] %}
-    {% set labelClass = data.productItemJsName ? data.productItemJsName ~ '__label' %}
-    {% set labelTextClass = data.productItemJsName ? data.productItemJsName ~ '__label-text' %}
+    {% set labelJsClass = data.productItemJsName ? data.productItemJsName ~ '__label' %}
+    {% set labelTextJsClass = data.productItemJsName ? data.productItemJsName ~ '__label-text' %}
 
     {% for label in data.labels %}
         {% set componentName = 'flag' %}
@@ -29,11 +29,11 @@
                 molecule(componentName, 'ProductLabelWidget')
             ],
             {
-                class: labelClass,
+                class: labelJsClass,
                 modifiers: componentModifiers,
                 data: {
                     text: label.text,
-                    additionalClass: labelTextClass,
+                    textClass: labelTextJsClass,
                 },
             },
             with_context = false
@@ -49,15 +49,15 @@
     <div class="grid grid--justify">
         {% if leftColumnComponents is not empty %}
             <div class="col col--expand">{{ leftColumnComponents | join | raw }}</div>
-        {% else %}
-            <div class="col col--expand">
-                {% include molecule('tag', 'ProductLabelWidget') with {
-                    class: labelClass ~ ' is-hidden',
-                    data: {
-                        additionalClass: labelTextClass,
-                    },
-                } only %}
-            </div>
+        {#{% else %}#}
+            {#<div class="col col--expand">#}
+                {#{% include molecule('tag', 'ProductLabelWidget') with {#}
+                    {#class: labelJsClass ~ ' is-hidden',#}
+                    {#data: {#}
+                        {#additionalClass: labelTextJsClass,#}
+                    {#},#}
+                {#} only %}#}
+            {#</div>#}
         {% endif %}
 
         {% if rightColumnComponents is not empty %}
@@ -65,9 +65,9 @@
         {% else %}
             <div class="col col--expand text-right">
                 {% include molecule('flag', 'ProductLabelWidget') with {
-                    class: labelClass ~ ' is-hidden',
+                    class: labelJsClass ~ ' is-hidden',
                     data: {
-                        additionalClass: labelTextClass,
+                        textClass: labelTextJsClass,
                     },
                 } only %}
             </div>

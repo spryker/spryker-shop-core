@@ -6,12 +6,16 @@
 
 {% define data = {
     text: '',
-    additionalClass: '',
+    textClass: '',
+} %}
+
+{% define attributes = {
+    'data-config-name': config.name,
 } %}
 
 {% block body %}
     <div class="{{ config.name }}__content">
-        <span class="{{ config.name }}__text {{ data.additionalClass }}">
+        <span class="{{ config.name }}__text">
             {% include atom('icon') with {
                 modifiers: ['small'],
                 class: config.name ~ '__icon',
@@ -19,7 +23,7 @@
                     name: 'bookmark',
                 },
             } only %}
-                {{ data.text }}
+            <span class="{{ data.textClass }}">{{ data.text }}</span>
         </span>
     </div>
 {% endblock %}

@@ -9,13 +9,18 @@ export const EVENT_UPDATE_ADD_TO_CART_URL = 'updateAddToCartUrl';
  */
 export interface ProductItemData {
     imageUrl: string;
-    labels: { text: string; type: string; };
+    labels: object[];
     nameValue: string;
     ratingValue: number;
     defaultPrice: string;
     originalPrice: string;
     detailPageUrl: string;
     addToCartUrl: string;
+}
+
+export interface ProductItemLabelsData {
+    text: string;
+    type: string;
 }
 
 export default class ProductItem extends Component {
@@ -51,6 +56,7 @@ export default class ProductItem extends Component {
      */
     updateProductItemData(data: ProductItemData): void {
         this.newImageUrl = data.imageUrl;
+        this.newLabels = data.labels;
         this.newNameValue = data.nameValue;
         this.newRatingValue = data.ratingValue;
         this.newDefaultPrice = data.defaultPrice;
@@ -63,6 +69,24 @@ export default class ProductItem extends Component {
         if (this.productImage) {
             this.productImage.src = imageUrl;
         }
+    }
+
+    protected set newLabels(labels: object[]) {
+        if (!labels.length) {
+            this.productLabels.forEach((element: HTMLElement) => element.classList.add(this.classToToggle));
+
+            return;
+        }
+
+        labels.forEach((element: ProductItemLabelsData, index: number) => {
+            const labelClassName: string = this.productLabels[index].getAttribute('data-config-name');
+            const labelTypeModifier = `${labelClassName}--${element.type}`;
+            const labelTextContent = <HTMLElement>this.productLabels[index].getElementsByClassName(`${this.jsName}__label-text`)[0];
+
+            this.productLabels[index].classList.add(labelTypeModifier);
+            this.productLabels[index].classList.remove(this.classToToggle);
+            labelTextContent.innerText = element.text;
+        });
     }
 
     protected set newNameValue(name: string) {
@@ -162,5 +186,9 @@ export default class ProductItem extends Component {
         if (this.productLinkAddToCart) {
             return this.productLinkAddToCart.href;
         }
+    }
+
+    protected get classToToggle(): string {
+        return this.getAttribute('class-to-toggle');
     }
 }
