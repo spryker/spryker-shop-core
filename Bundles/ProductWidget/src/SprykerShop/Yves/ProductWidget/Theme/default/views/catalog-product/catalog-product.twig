@@ -33,7 +33,11 @@
 
             {% block rating %}
                 {% if data.product.rating is defined %}
-                    {% widget 'ProductReviewDisplayWidget' args [data.product.rating] only %}{% endwidget %}
+                    {% widget 'ProductReviewDisplayWidget' args [data.product.rating] with {
+                        data: {
+                            productItemJsName: config.jsName,
+                        },
+                    } only %}{% endwidget %}
                 {% endif %}
             {% endblock %}
         {% endembed %}

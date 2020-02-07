@@ -63,7 +63,12 @@
     {% block labels %}
         {% if data.idProductAbstract %}
             {% block productAbstractLabels %}
-                {% widget 'ProductAbstractLabelWidget' args [data.idProductAbstract] only %}{% endwidget %}
+                <pre>{{ dump(config.jsName) }}</pre>
+                {% widget 'ProductAbstractLabelWidget' args [data.idProductAbstract] with {
+                    data: {
+                        productItemJsName: config.jsName,
+                    },
+                } only %}{% endwidget %}
             {% endblock %}
         {% endif %}
     {% endblock %}

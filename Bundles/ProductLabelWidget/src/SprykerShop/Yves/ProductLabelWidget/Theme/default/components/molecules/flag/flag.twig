@@ -2,22 +2,22 @@
 
 {% define config = {
     name: 'flag',
-    tag: 'span'
 } %}
 
 {% define data = {
-    text: ''
+    text: '',
+    additionalClass: '',
 } %}
 
 {% block body %}
-    <span class="{{config.name}}__text">
+    <span class="{{ config.name }}__text {{ data.additionalClass }}">
         {% include atom('icon') with {
             modifiers: ['small'],
             class: config.name ~ '__icon',
             data: {
-                name: 'bookmark'
-            }
+                name: 'bookmark',
+            },
         } only %}
-        {{data.text}}
+        {{ data.text }}
     </span>
 {% endblock %}

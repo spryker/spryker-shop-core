@@ -101,9 +101,11 @@
     </span>
 
     {% block input %}
+        {% set hiddenInputJsName = data.productItemJsName ? data.productItemJsName ~ '__rating' %}
+
         <input
             type="hidden"
-            class="{{ config.jsName }}__input {{ data.productItemJsName }}__rating"
+            class="{{ config.jsName }}__input {{ hiddenInputJsName }}"
             {% if data.inputId %}id="{{ data.inputId }}"{% endif %}
             name="{{ data.inputName }}"
             value="{{ data.value }}"

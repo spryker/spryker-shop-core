@@ -6,11 +6,14 @@
 
 {% define data = {
     labels: [],
+    productItemJsName: '',
 }  %}
 
 {% block body %}
     {% set leftColumnComponents = [] %}
     {% set rightColumnComponents = [] %}
+    {% set labelClass = data.productItemJsName ? data.productItemJsName ~ '__label' %}
+    {% set labelTextClass = data.productItemJsName ? data.productItemJsName ~ '__label-text' %}
 
     {% for label in data.labels %}
         {% set componentName = 'flag' %}
@@ -26,15 +29,16 @@
                 molecule(componentName, 'ProductLabelWidget')
             ],
             {
+                class: labelClass,
                 modifiers: componentModifiers,
                 data: {
-                    text: label.text
-                }
+                    text: label.text,
+                    additionalClass: labelTextClass
+                },
             },
             with_context = false
         ) %}
 
-        {% set component = '<div>' ~ component ~ '</div>' %}
         {% if label.type == 'template:tag' %}
             {% set leftColumnComponents = leftColumnComponents | merge([component]) %}
         {% else %}

@@ -2,7 +2,8 @@
 
 {% define data = {
     value: _widget.rating | default(0),
-    maxValue: _widget.maximumRating
+    maxValue: _widget.maximumRating,
+    productItemJsName: '',
 } %}
 
 {% block body %}
@@ -11,11 +12,12 @@
             data: {
                 value: data.value,
                 maxValue: data.maxValue,
-                useHalfSteps: true
+                useHalfSteps: true,
+                productItemJsName: data.productItemJsName,
             },
             attributes: {
-                readonly: true
-            }
+                readonly: true,
+            },
         } only %}
     </p>
 {% endblock %}
