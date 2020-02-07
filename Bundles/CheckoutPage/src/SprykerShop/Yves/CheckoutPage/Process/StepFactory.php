@@ -208,7 +208,8 @@ class StepFactory extends AbstractFactory
             $this->getConfig(),
             CheckoutPageControllerProvider::CHECKOUT_SUMMARY,
             HomePageControllerProvider::ROUTE_HOME,
-            $this->getCheckoutClient()
+            $this->getCheckoutClient(),
+            $this->getCheckoutSummaryStepEnterPreCheckPlugins()
         );
     }
 
@@ -372,6 +373,14 @@ class StepFactory extends AbstractFactory
     public function getCheckoutPaymentStepEnterPreCheckPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutSummaryStepEnterPreCheckPluginInterface[]
+     */
+    public function getCheckoutSummaryStepEnterPreCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_SUMMARY_STEP_ENTER_PRE_CHECK);
     }
 
     /**

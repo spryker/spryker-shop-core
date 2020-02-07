@@ -95,4 +95,12 @@
         <property name="maxPerPage" type="int"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="shippingAddress" type="Address"/>
+    </transfer>
+
 </transfers>

@@ -15,13 +15,12 @@ use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgent
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToQuoteRequestAgentClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Form\QuoteRequestAgentCartForm;
-use SprykerShop\Yves\QuoteRequestAgentWidget\Generator\RedirectResponseGenerator;
-use SprykerShop\Yves\QuoteRequestAgentWidget\Generator\RedirectResponseGeneratorInterface;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Handler\QuoteRequestAgentCartHandler;
 use SprykerShop\Yves\QuoteRequestAgentWidget\Handler\QuoteRequestAgentCartHandlerInterface;
 use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestAgentWidget\QuoteRequestAgentWidgetConfig getConfig()
@@ -48,14 +47,13 @@ class QuoteRequestAgentWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteRequestAgentWidget\Generator\RedirectResponseGeneratorInterface
+     * @param string $redirectUrl
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function getRedirectResponseGenerator(): RedirectResponseGeneratorInterface
+    public function createRedirectResponse(string $redirectUrl): RedirectResponse
     {
-        return new RedirectResponseGenerator(
-            $this->getRouterService(),
-            $this->getFlashMessenger()
-        );
+        return new RedirectResponse($redirectUrl);
     }
 
     /**
@@ -109,7 +107,7 @@ class QuoteRequestAgentWidgetFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\QuoteRequestAgentWidget\Dependency\Client\QuoteRequestAgentWidgetToMessengerClientInterface
      */
-    public function getFlashMessenger(): QuoteRequestAgentWidgetToMessengerClientInterface
+    public function getMessengerClient(): QuoteRequestAgentWidgetToMessengerClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestAgentWidgetDependencyProvider::CLIENT_MESSENGER);
     }

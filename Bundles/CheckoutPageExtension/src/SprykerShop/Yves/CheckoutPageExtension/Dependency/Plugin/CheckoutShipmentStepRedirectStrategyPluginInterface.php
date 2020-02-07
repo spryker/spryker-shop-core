@@ -26,7 +26,7 @@ interface CheckoutShipmentStepRedirectStrategyPluginInterface
 
     /**
      * Specification:
-     * - Performs post execution checkout shipment action.
+     * - Performs checkout shipment post execution redirect.
      *
      * @api
      *
