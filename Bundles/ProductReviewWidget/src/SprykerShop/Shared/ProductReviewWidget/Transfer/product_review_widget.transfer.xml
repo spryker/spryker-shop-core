@@ -46,4 +46,7 @@
     <transfer name="ProductReviewStorage">
     </transfer>
 
+    <transfer name="ProductReviewError">
+    </transfer>
+
 </transfers>
