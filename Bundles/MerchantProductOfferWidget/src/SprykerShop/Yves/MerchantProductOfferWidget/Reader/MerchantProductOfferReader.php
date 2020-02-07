@@ -14,12 +14,12 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Generated\Shared\Transfer\ShopContextTransfer;
 use SprykerShop\Shared\MerchantProductOfferWidget\MerchantProductOfferWidgetConfig;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProfileStorageClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToPriceProductStorageClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Service\MerchantProductOfferWidgetToPriceProductClientInterface;
+use SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolverInterface;
 
 class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
 {
@@ -44,29 +44,29 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
     protected $priceProductStorageClient;
 
     /**
-     * @var \Generated\Shared\Transfer\ShopContextTransfer
+     * @var \SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolverInterface
      */
-    protected $shopContextTransfer;
+    protected $shopContextResolver;
 
     /**
      * @param \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProfileStorageClientInterface $merchantProfileStorageClient
      * @param \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient
      * @param \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Service\MerchantProductOfferWidgetToPriceProductClientInterface $priceProductClient
      * @param \SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToPriceProductStorageClientInterface $priceProductStorageClient
-     * @param \Generated\Shared\Transfer\ShopContextTransfer $shopContextTransfer
+     * @param \SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolverInterface $shopContextResolver
      */
     public function __construct(
         MerchantProductOfferWidgetToMerchantProfileStorageClientInterface $merchantProfileStorageClient,
         MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient,
         MerchantProductOfferWidgetToPriceProductClientInterface $priceProductClient,
         MerchantProductOfferWidgetToPriceProductStorageClientInterface $priceProductStorageClient,
-        ShopContextTransfer $shopContextTransfer
+        ShopContextResolverInterface $shopContextResolver
     ) {
         $this->merchantProfileStorageClient = $merchantProfileStorageClient;
         $this->merchantProductOfferStorageClient = $merchantProductOfferStorageClient;
         $this->priceProductClient = $priceProductClient;
         $this->priceProductStorageClient = $priceProductStorageClient;
-        $this->shopContextTransfer = $shopContextTransfer;
+        $this->shopContextResolver = $shopContextResolver;
     }
 
     /**
@@ -83,7 +83,7 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
         $productOfferStorageList = [];
 
         $productOfferStorageCriteriaTransfer = (new ProductOfferStorageCriteriaTransfer())
-            ->fromArray($this->shopContextTransfer->toArray(), true);
+            ->fromArray($this->shopContextResolver->resolve()->toArray(), true);
         $productOfferStorageCriteriaTransfer->setSku($productViewTransfer->getSku());
 
         $productOfferStorageCollection = $this->merchantProductOfferStorageClient->getProductOfferStorageCollection($productOfferStorageCriteriaTransfer);

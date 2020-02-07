@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\MerchantProductOfferWidget;
 
-use Generated\Shared\Transfer\ShopContextTransfer;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProductOfferWidgetToMerchantProductOfferStorageClientInterface;
@@ -16,6 +15,8 @@ use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Client\MerchantProduc
 use SprykerShop\Yves\MerchantProductOfferWidget\Dependency\Service\MerchantProductOfferWidgetToPriceProductClientInterface;
 use SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReader;
 use SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReaderInterface;
+use SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolver;
+use SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolverInterface;
 
 class MerchantProductOfferWidgetFactory extends AbstractFactory
 {
@@ -31,7 +32,7 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
             $this->getMerchantProductOfferStorageClient(),
             $this->getPriceProductServiceClient(),
             $this->getPriceProductStorageClient(),
-            $this->getShopContext()
+            $this->createShopContextResolver()
         );
     }
 
@@ -76,10 +77,10 @@ class MerchantProductOfferWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShopContextTransfer
+     * @return \SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolverInterface
      */
-    public function getShopContext(): ShopContextTransfer
+    public function createShopContextResolver(): ShopContextResolverInterface
     {
-        return $this->getApplication()[static::SERVICE_SHOP_CONTEXT];
+        return new ShopContextResolver($this->getApplication());
     }
 }

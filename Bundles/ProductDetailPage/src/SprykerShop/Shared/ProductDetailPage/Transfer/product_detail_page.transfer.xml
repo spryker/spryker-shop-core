@@ -10,7 +10,8 @@
         <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
     </transfer>
 
-    <transfer name="ProductOfferStorageCriteria">
+    <transfer name="ProductStorageCriteria">
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="ShopContext">

@@ -7,15 +7,14 @@
 
 namespace SprykerShop\Yves\ProductDetailPage;
 
-use Generated\Shared\Transfer\ShopContextTransfer;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\ProductDetailPage\Dependency\Client\ProductDetailPageToProductStorageClientInterface;
+use SprykerShop\Yves\ProductDetailPage\Resolver\ShopContextResolver;
+use SprykerShop\Yves\ProductDetailPage\Resolver\ShopContextResolverInterface;
 
 class ProductDetailPageFactory extends AbstractFactory
 {
-    protected const SERVICE_SHOP_CONTEXT = 'SERVICE_SHOP_CONTEXT';
-
     /**
      * @return string[]
      */
@@ -41,10 +40,10 @@ class ProductDetailPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShopContextTransfer
+     * @return \SprykerShop\Yves\ProductDetailPage\Resolver\ShopContextResolverInterface
      */
-    public function getShopContext(): ShopContextTransfer
+    public function createShopContextResolver(): ShopContextResolverInterface
     {
-        return $this->getApplication()[static::SERVICE_SHOP_CONTEXT];
+        return new ShopContextResolver($this->getApplication());
     }
 }

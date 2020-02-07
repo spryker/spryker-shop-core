@@ -7,7 +7,7 @@
 
 namespace SprykerShop\Yves\ProductDetailPage\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
+use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 
 interface ProductDetailPageToProductStorageClientInterface
 {
@@ -15,11 +15,11 @@ interface ProductDetailPageToProductStorageClientInterface
      * @param array $data
      * @param string $localeName
      * @param array $selectedAttributes
-     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer|null $productOfferStorageCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductStorageCriteriaTransfer|null $productStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = [], ?ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer = null);
+    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = [], ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null);
 
     /**
      * @param int $idProductAbstract
