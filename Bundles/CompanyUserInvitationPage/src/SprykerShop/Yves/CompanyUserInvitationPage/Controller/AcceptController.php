@@ -46,7 +46,8 @@ class AcceptController extends AbstractController
             );
         }
 
-        if ($companyUserInvitationTransfer->getCompanyUserInvitationStatusKey()
+        if (
+            $companyUserInvitationTransfer->getCompanyUserInvitationStatusKey()
             === CompanyUserInvitationConfig::INVITATION_STATUS_DELETED
         ) {
             return $this->redirectToRouteWithErrorMessage(
@@ -55,7 +56,8 @@ class AcceptController extends AbstractController
             );
         }
 
-        if ($companyUserInvitationTransfer->getCompanyUserInvitationStatusKey()
+        if (
+            $companyUserInvitationTransfer->getCompanyUserInvitationStatusKey()
             === CompanyUserInvitationConfig::INVITATION_STATUS_ACCEPTED
         ) {
             return $this->redirectToRouteWithErrorMessage(
