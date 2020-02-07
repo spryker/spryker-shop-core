@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
  */
-class QuoteRequestEditItemsController extends QuoteRequestAbstractController
+class QuoteRequestEditAddressController extends QuoteRequestAbstractController
 {
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CONVERTED_TO_CART = 'quote_request_page.quote_request.converted_to_cart';
 
@@ -45,7 +45,7 @@ class QuoteRequestEditItemsController extends QuoteRequestAbstractController
             return $response;
         }
 
-        return $this->view($response, [], '@QuoteRequestPage/views/quote-request-edit-items-confirm/quote-request-edit-items-confirm.twig');
+        return $this->view($response, [], '@QuoteRequestPage/views/quote-request-edit-address-confirm/quote-request-edit-address-confirm.twig');
     }
 
     /**
@@ -57,15 +57,17 @@ class QuoteRequestEditItemsController extends QuoteRequestAbstractController
     {
         $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
 
-        if ($quoteTransfer->getQuoteRequestReference() && ($quoteTransfer->getQuoteRequestReference() !== $quoteRequestReference)) {
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT_ITEMS_CONFIRM, [
-                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
-            ]);
+        if ($quoteTransfer->getQuoteRequestReference()
+            && $quoteTransfer->getQuoteRequestReference() !== $quoteRequestReference) {
+            return $this->redirectResponseInternal(
+                static::ROUTE_QUOTE_REQUEST_EDIT_ADDRESS_CONFIRM,
+                [static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference]
+            );
         }
 
         $quoteRequestTransfer = $this->getCompanyUserQuoteRequestByReference($quoteRequestReference);
 
-        return $this->convertQuoteRequest($quoteRequestTransfer);
+        return $this->convertQuoteRequestToQuote($quoteRequestTransfer);
     }
 
     /**
@@ -79,23 +81,24 @@ class QuoteRequestEditItemsController extends QuoteRequestAbstractController
         $quoteTransfer = $this->getFactory()->getCartClient()->getQuote();
 
         if ($quoteTransfer->getQuoteRequestReference() === $quoteRequestReference) {
-            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT_ITEMS, [
-                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
-            ]);
+            return $this->redirectResponseInternal(
+                static::ROUTE_QUOTE_REQUEST_EDIT_ADDRESS,
+                [static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference]
+            );
         }
 
         $quoteRequestTransfer = $this->getCompanyUserQuoteRequestByReference($quoteRequestReference);
 
-        $quoteRequestEditItemsConfirmForm = $this->getFactory()
-            ->getQuoteRequestEditItemsConfirmForm($quoteRequestTransfer)
+        $quoteRequestEditAddressConfirmForm = $this->getFactory()
+            ->getQuoteRequestEditAddressConfirmForm($quoteRequestTransfer)
             ->handleRequest($request);
 
-        if ($quoteRequestEditItemsConfirmForm->isSubmitted()) {
-            return $this->convertQuoteRequest($quoteRequestEditItemsConfirmForm->getData());
+        if ($quoteRequestEditAddressConfirmForm->isSubmitted()) {
+            return $this->convertQuoteRequestToQuote($quoteRequestEditAddressConfirmForm->getData());
         }
 
         return [
-            'quoteRequestEditItemsConfirmForm' => $quoteRequestEditItemsConfirmForm->createView(),
+            'quoteRequestEditAddressConfirmForm' => $quoteRequestEditAddressConfirmForm->createView(),
             'quoteRequestReference' => $quoteTransfer->getQuoteRequestReference(),
         ];
     }
@@ -105,7 +108,7 @@ class QuoteRequestEditItemsController extends QuoteRequestAbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function convertQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): RedirectResponse
+    protected function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): RedirectResponse
     {
         $quoteResponseTransfer = $this->getFactory()
             ->getQuoteRequestClient()
@@ -117,7 +120,7 @@ class QuoteRequestEditItemsController extends QuoteRequestAbstractController
 
         $this->handleQuoteResponseErrors($quoteResponseTransfer);
 
-        return $this->redirectResponseInternal(static::ROUTE_CART);
+        return $this->redirectResponseInternal(static::ROUTE_CHECKOUT_ADDRESS);
     }
 
     /**

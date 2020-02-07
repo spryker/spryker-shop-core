@@ -64,14 +64,6 @@ class QuoteRequestCartController extends AbstractController
      */
     protected function executeSaveAction(Request $request): RedirectResponse
     {
-        $quoteRequestCartForm = $this->getFactory()
-            ->getQuoteRequestCartForm()
-            ->handleRequest($request);
-
-        if (!$quoteRequestCartForm->isSubmitted()) {
-            return $this->redirectResponseInternal(static::ROUTE_CART);
-        }
-
         $quoteRequestResponseTransfer = $this->getFactory()
             ->createQuoteRequestCartHandler()
             ->updateQuoteRequestQuote();
@@ -82,17 +74,17 @@ class QuoteRequestCartController extends AbstractController
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
-        if ($request->get(QuoteRequestCartForm::SUBMIT_BUTTON_SAVE_AND_BACK) === null
-            || !$quoteRequestResponseTransfer->getIsSuccessful()
+        if ($request->get(QuoteRequestCartForm::SUBMIT_BUTTON_SAVE) === null
+            && $quoteRequestResponseTransfer->getIsSuccessful()
         ) {
-            return $this->redirectResponseInternal(static::ROUTE_CART);
+            $this->reloadQuoteForCustomer();
+
+            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
+                static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
+            ]);
         }
 
-        $this->reloadQuoteForCustomer();
-
-        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_EDIT, [
-            static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
-        ]);
+        return $this->redirectResponseInternal(static::ROUTE_CART);
     }
 
     /**
