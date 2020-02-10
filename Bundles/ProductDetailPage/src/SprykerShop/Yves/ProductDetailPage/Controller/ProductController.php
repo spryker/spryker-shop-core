@@ -57,8 +57,6 @@ class ProductController extends AbstractController
             ->createShopContextResolver()
             ->resolve();
 
-//        var_dump($shopContextTransfer->toArray());
-
         $productStorageCriteriaTransfer = (new ProductStorageCriteriaTransfer())
             ->fromArray($shopContextTransfer->toArray());
 
