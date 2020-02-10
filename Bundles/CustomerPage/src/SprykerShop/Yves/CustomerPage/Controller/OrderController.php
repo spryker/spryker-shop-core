@@ -191,6 +191,7 @@ class OrderController extends AbstractCustomerController
             $shipmentHashKey = $this->findShipmentHashKeyByShipmentExpense($shipmentGroupCollection, $expenseTransfer);
             if ($shipmentHashKey === null) {
                 $orderShipmentExpenses[] = $expenseTransfer;
+
                 continue;
             }
 
