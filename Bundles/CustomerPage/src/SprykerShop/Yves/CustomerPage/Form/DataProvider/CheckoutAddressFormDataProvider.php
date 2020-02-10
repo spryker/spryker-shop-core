@@ -343,7 +343,11 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         }
 
         $shipmentShippingAddress = $this->getShipmentShippingAddress($shipmentTransfer);
-        if ($shipmentFromQuoteItems !== null && !$shipmentShippingAddress->getIdCustomerAddress() && !$shipmentTransfer->getShippingAddress()) {
+        if (
+            $shipmentFromQuoteItems !== null
+            && !$shipmentTransfer->getShippingAddress()
+            && !($shipmentShippingAddress->getIdCustomerAddress() || $shipmentShippingAddress->getIdCompanyUnitAddress())
+        ) {
             return $shipmentFromQuoteItems;
         }
 
@@ -491,14 +495,24 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         }
 
         $shipmentGroups = $this->shipmentService->groupItemsByShipment(
-            array_filter($quoteTransfer->getItems()->getArrayCopy(), function (ItemTransfer $itemTransfer) {
-                return $itemTransfer->getShipment() !== null;
-            })
+            $this->filterQuoteItemsWithShipment($quoteTransfer->getItems()->getArrayCopy())
         );
         if ($shipmentGroups->count() !== 1) {
             return null;
         }
 
         return $shipmentGroups->offsetGet(0)->getShipment();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function filterQuoteItemsWithShipment(array $itemTransfers): array
+    {
+        return array_filter($itemTransfers, function (ItemTransfer $itemTransfer) {
+            return $itemTransfer->getShipment() !== null;
+        });
     }
 }
