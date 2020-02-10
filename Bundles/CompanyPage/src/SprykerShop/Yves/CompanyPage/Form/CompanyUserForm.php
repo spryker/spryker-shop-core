@@ -22,6 +22,9 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \SprykerShop\Yves\CompanyPage\CompanyPageConfig getConfig()
+ */
 class CompanyUserForm extends AbstractType
 {
     public const FIELD_ID_CUSTOMER = 'id_customer';
