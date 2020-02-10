@@ -28,6 +28,7 @@ class ViewDataTransformer implements ViewDataTransformerInterface
         foreach ($productConcreteTransfers as $productConcreteTransfer) {
             if ($productConcreteTransfer === null) {
                 $products[] = null;
+
                 continue;
             }
 
