@@ -46,9 +46,12 @@
 
                                                                     {% if isTitleImage %}
                                                                         {% set imageClass = '' %}
+                                                                        {% set imageUrl = template.images.0.externalUrlSmall | default %}
 
                                                                         {% block templateTitleImage %}
-                                                                            <img class="{{ imageClass }}" src="{{ template.images.0.externalUrlSmall }}" alt="{{ template.name | trans }}">
+                                                                            {% if imageUrl %}
+                                                                                <img class="{{ imageClass }}" src="{{ imageUrl }}" alt="{{ template.name | trans }}">
+                                                                            {% endif %}
                                                                         {% endblock %}
 
                                                                         {% block templateItemNameInner %}
