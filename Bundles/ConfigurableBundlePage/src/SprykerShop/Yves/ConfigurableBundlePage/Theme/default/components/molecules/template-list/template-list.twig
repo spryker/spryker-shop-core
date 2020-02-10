@@ -48,13 +48,7 @@
                                                                         {% set imageModifiers = ['without-spaces'] %}
 
                                                                         {% block templateTitleImage %}
-                                                                            {% include atom('thumbnail') with {
-                                                                                modifiers: imageModifiers,
-                                                                                attributes: {
-                                                                                    src: template.images.0.externalUrlSmall,
-                                                                                    alt: template.name | trans,
-                                                                                },
-                                                                            } only %}
+                                                                            <img src="{{ template.images.0.externalUrlSmall }}" alt="{{ template.name | trans }}">
                                                                         {% endblock %}
 
                                                                         {% block templateItemNameInner %}
