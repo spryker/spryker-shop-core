@@ -113,7 +113,8 @@ class AddressProvider implements AddressProviderInterface
         $companyBusinessUnitAddressData = $companyBusinessUnitAddressTransfer->toArray();
 
         foreach ($formAddressData as $formAddressKey => $formAddressValue) {
-            if (!isset($companyBusinessUnitAddressData[$formAddressKey])
+            if (
+                !isset($companyBusinessUnitAddressData[$formAddressKey])
                 || $companyBusinessUnitAddressData[$formAddressKey] !== $formAddressValue
             ) {
                 return false;

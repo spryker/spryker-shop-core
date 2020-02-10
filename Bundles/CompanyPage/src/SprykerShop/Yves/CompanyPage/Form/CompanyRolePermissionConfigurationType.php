@@ -16,6 +16,9 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \SprykerShop\Yves\CompanyPage\CompanyPageConfig getConfig()
+ */
 class CompanyRolePermissionConfigurationType extends AbstractType
 {
     protected const FIELD_ID_COMPANY_ROLE = 'idCompanyRole';
