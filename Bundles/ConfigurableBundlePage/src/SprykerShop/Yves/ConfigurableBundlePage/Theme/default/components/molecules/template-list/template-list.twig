@@ -45,10 +45,10 @@
                                                                     {% endmacro %}
 
                                                                     {% if isTitleImage %}
-                                                                        {% set imageModifiers = ['without-spaces'] %}
+                                                                        {% set imageClass = '' %}
 
                                                                         {% block templateTitleImage %}
-                                                                            <img src="{{ template.images.0.externalUrlSmall }}" alt="{{ template.name | trans }}">
+                                                                            <img class="{{ imageClass }}" src="{{ template.images.0.externalUrlSmall }}" alt="{{ template.name | trans }}">
                                                                         {% endblock %}
 
                                                                         {% block templateItemNameInner %}
