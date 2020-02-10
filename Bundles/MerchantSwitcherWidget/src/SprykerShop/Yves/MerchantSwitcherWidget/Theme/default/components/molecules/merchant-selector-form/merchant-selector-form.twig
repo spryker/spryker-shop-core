@@ -1,8 +1,8 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'merchant-selector',
-    tag: 'merchant-selector',
+    name: 'merchant-selector-form',
+    tag: 'merchant-selector-form',
 } %}
 
 {% define data = {
@@ -52,7 +52,7 @@
 
                 {% block options %}
                     {% for merchant in embed.merchantList %}
-                        <option value="{{ merchant.merchantKey }}" {{ merchant.merchantKey == embed.currentMerchantReference ? 'selected' }}>
+                        <option value="{{ merchant.merchantReference }}" {{ merchant.merchantReference == embed.currentMerchantReference ? 'selected' }}>
                             {{ merchant.name }}
                         </option>
                     {% endfor %}

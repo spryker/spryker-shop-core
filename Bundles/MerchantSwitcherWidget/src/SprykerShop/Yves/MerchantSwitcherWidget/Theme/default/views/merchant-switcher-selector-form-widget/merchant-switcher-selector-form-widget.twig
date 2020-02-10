@@ -1,12 +1,12 @@
 {% extends template('widget') %}
 
 {% define data = {
-    merchantList: _widget.activeMerchantTransfers | default([]),
+    merchantList: _widget.merchantTransfers | default([]),
     currentMerchantReference: _widget.selectedMerchantReference | default,
 } %}
 
 {% block body %}
-    {% include molecule('merchant-selector', 'MerchantSwitcherWidget') with {
+    {% include molecule('merchant-selector-form', 'MerchantSwitcherWidget') with {
         data: {
             merchantList: data.merchantList,
             currentMerchantReference: data.currentMerchantReference,

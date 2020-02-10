@@ -32,6 +32,8 @@ class MerchantSwitcherWidgetRouteProviderPlugin extends AbstractRouteProviderPlu
     }
 
     /**
+     * @uses \SprykerShop\Yves\MerchantSwitcherWidget\Controller\MerchantSwitcherController::switchMerchantAction()
+     *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
      * @return \Spryker\Yves\Router\Route\RouteCollection

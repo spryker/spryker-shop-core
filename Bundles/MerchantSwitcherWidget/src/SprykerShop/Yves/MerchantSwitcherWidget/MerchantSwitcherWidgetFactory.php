@@ -26,7 +26,8 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
     {
         return new MerchantReader(
             $this->getMerchantSearchClient(),
-            $this->getRequest()
+            $this->getRequest(),
+            $this->getConfig()
         );
     }
 

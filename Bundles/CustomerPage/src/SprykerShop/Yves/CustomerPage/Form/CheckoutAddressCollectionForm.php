@@ -125,7 +125,8 @@ class CheckoutAddressCollectionForm extends AbstractType
             'required' => true,
             'mapped' => false,
             'validation_groups' => function (FormInterface $form) {
-                if ($this->isIdCustomerAddressFieldNotEmpty($form)
+                if (
+                    $this->isIdCustomerAddressFieldNotEmpty($form)
                     || $this->isIdCompanyUnitAddressFieldNotEmpty($form)
                 ) {
                     return false;
@@ -410,7 +411,8 @@ class CheckoutAddressCollectionForm extends AbstractType
                     return false;
                 }
 
-                if ($this->isIdCustomerAddressExistAndNotEmpty($form)
+                if (
+                    $this->isIdCustomerAddressExistAndNotEmpty($form)
                     || $this->isIdCompanyUnitAddressFieldExistAndNotEmpty($form)
                 ) {
                     return false;

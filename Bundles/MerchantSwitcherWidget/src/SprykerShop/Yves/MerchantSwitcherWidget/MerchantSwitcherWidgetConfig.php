@@ -14,7 +14,12 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
  */
 class MerchantSwitcherWidgetConfig extends AbstractBundleConfig
 {
-    public const MERCHANT_SELECTOR_COOKIE_IDENTIFIER = 'merchant_switcher_selector-merchant_reference';
+    protected const MERCHANT_SELECTOR_COOKIE_IDENTIFIER = 'merchant_switcher_selector-merchant_reference';
+
+    /**
+     * Ten years in seconds.
+     */
+    protected const MERCHANT_SELECTOR_COOKIE_TIME_EXPIRATION = 315360000;
 
     /**
      * @return bool
@@ -22,5 +27,21 @@ class MerchantSwitcherWidgetConfig extends AbstractBundleConfig
     public function isMerchantSwitcherEnabled(): bool
     {
         return $this->getSharedConfig()->isMerchantSwitcherEnabled();
+    }
+
+    /**
+     * @return string
+     */
+    public function getMerchantSelectorCookieIdentifier(): string
+    {
+        return static::MERCHANT_SELECTOR_COOKIE_IDENTIFIER;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMerchantSelectorCookieTimeExpiration(): int
+    {
+        return static::MERCHANT_SELECTOR_COOKIE_TIME_EXPIRATION;
     }
 }
