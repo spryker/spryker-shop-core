@@ -1,15 +1,24 @@
 {% extends template('widget') %}
 
+{% set quantityOptions = [] %}
+
+{% for i in 1..10 %}
+    {% set quantityOptions = quantityOptions | merge([{
+        label: i,
+        value: i,
+    }]) %}
+{% endfor %}
+
 {% define data = {
     product: _widget.product,
-    quantityOptions: _widget.quantityOptions,
+    quantityOptions: _widget.quantityOptions | default(quantityOptions),
     salesUnits: _widget.salesUnits | default([]),
     leadProductSalesUnits: _widget.leadProductSalesUnits | default([]),
     productPackagingUnit: _widget.productPackagingUnit,
     isAddToCartDisabled: _widget.isAddToCartDisabled | default(false),
     isAmountVariable: _widget.productPackagingUnit.isAmountVariable | default(false),
     isSelfLead: _widget.packagingUnitIsSelfLead,
-    jsonScheme: _widget.jsonScheme | default,
+    jsonScheme: _widget.jsonScheme,
     minQuantityInBaseUnit: _widget.minQuantityInBaseUnit | default(1),
     minQuantityInSalesUnits: _widget.minQuantityInSalesUnits | default(1),
 } %}
@@ -24,8 +33,8 @@
             leadProductSalesUnits: data.leadProductSalesUnits,
             productPackagingUnit: data.productPackagingUnit,
             isAddToCartDisabled: data.isAddToCartDisabled,
-            packagingUnitIsAmountVariable: data.packagingUnitIsAmountVariable,
-            packagingUnitIsSelfLead: data.packagingUnitIsSelfLead,
+            packagingUnitIsAmountVariable: data.isAmountVariable,
+            packagingUnitIsSelfLead: data.isSelfLead,
             minQuantityInBaseUnit: data.minQuantityInBaseUnit,
             minQuantityInSalesUnits: data.minQuantityInSalesUnits,
         },
