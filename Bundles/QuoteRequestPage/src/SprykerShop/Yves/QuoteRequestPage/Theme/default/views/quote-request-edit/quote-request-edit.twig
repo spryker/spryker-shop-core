@@ -7,8 +7,10 @@
     quoteRequestForm: _view.quoteRequestForm,
     quoteRequest: _view.quoteRequestForm.vars.value,
     quoteRequestReference: _view.quoteRequestReference,
-    breadcrumbLabel: 'quote_request_page.quote_request.actions.edit' | trans,
-    breadcrumbExtend: [
+} %}
+
+{% block breadcrumbs %}
+    {% set breadcrumbExtend = [
         {
             label: '#' ~ _view.quoteRequestForm.vars.value.quoteRequestReference,
             url: url('quote-request/details', {
@@ -18,8 +20,10 @@
         {
             label: 'quote_request_page.quote_request.breadcrumb.edit' | trans,
         },
-    ],
-} %}
+    ] %}
+
+    {{ parent() }}
+{% endblock %}
 
 {% block content %}
     {% set quote = data.quoteRequest.latestVersion.quote %}

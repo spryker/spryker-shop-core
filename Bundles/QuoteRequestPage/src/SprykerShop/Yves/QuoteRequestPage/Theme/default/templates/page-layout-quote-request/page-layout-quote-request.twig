@@ -2,11 +2,11 @@
 
 {% define data = {
     shipmentGroups: _view.shipmentGroups | default([]),
-    breadcrumbExtend: [],
 } %}
 
 {% set hasMultiShipments = data.shipmentGroups | length > 1 %}
 {% set quote = null %}
+{% set breadcrumbExtend = [] %}
 
 {% block breadcrumbs %}
     {% set breadcrumbSteps = [
@@ -19,7 +19,7 @@
             url: path('quote-request'),
         },
     ] %}
-    {% set breadcrumbSteps = breadcrumbSteps | merge(data.breadcrumbExtend) %}
+    {% set breadcrumbSteps = breadcrumbSteps | merge(breadcrumbExtend) %}
 
     {% include molecule('breadcrumb') with {
         data: {

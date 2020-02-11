@@ -1,50 +1,15 @@
-{% extends template('page-layout-quote-request', 'QuoteRequestPage') %}
+{% extends template('page-layout-confirmation', 'QuoteRequestPage') %}
 
 {% define data = {
-    title: 'quote_request_page.quote_request.title_attention' | trans,
     form: _view.quoteRequestEditItemsConfirmForm,
     quoteRequest: _view.quoteRequestEditItemsConfirmForm.vars.value,
-    quoteRequestReference: _view.quoteRequestReference,
-    breadcrumbExtend: [
-        {
-            label: '#' ~ _view.quoteRequestEditItemsConfirmForm.vars.value.quoteRequestReference,
-            url: path('quote-request/details', {
-                quoteRequestReference: _view.quoteRequestEditItemsConfirmForm.vars.value.quoteRequestReference,
-            }),
-        },
-        {
-            label: 'quote_request_page.quote_request.breadcrumb.edit' | trans,
-            url: path('quote-request/edit', {
-                quoteRequestReference: _view.quoteRequestEditItemsConfirmForm.vars.value.quoteRequestReference,
-            }),
-        },
-        {
-            label: 'quote_request_page.quote_request.breadcrumb.attention' | trans,
-        },
-    ],
 } %}
 
-{% block content %}
-    <div class="box">
-        <p>
-            {{ 'quote_request_page.quote_request.edit_items_confirm' | trans({
-                '%link%': url('quote-request/edit', {quoteRequestReference: data.quoteRequestReference}),
-                '%reference%': data.quoteRequestReference,
-            }) | raw }}
-        </p>
-
-        {% include molecule('form') with {
-            data: {
-                form: data.form,
-                submit: {
-                    enable: true,
-                },
-                cancel: {
-                    enable: true,
-                    url: url('quote-request/edit', {quoteRequestReference: data.quoteRequest.quoteRequestReference}),
-                    text: 'general.back.button' | trans,
-                },
-            },
-        } only %}
-    </div>
+{% block message %}
+    <p>
+        {{ 'quote_request_page.quote_request.edit_items_confirm' | trans({
+            '%link%': url('quote-request/edit', {quoteRequestReference: data.quoteRequestReference}),
+            '%reference%': data.quoteRequestReference,
+        }) | raw }}
+    </p>
 {% endblock %}

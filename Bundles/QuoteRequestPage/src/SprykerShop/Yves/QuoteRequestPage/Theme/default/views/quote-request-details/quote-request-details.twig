@@ -8,14 +8,19 @@
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
     isQuoteRequestReady: _view.isQuoteRequestReady,
     isQuoteRequestEditable: _view.isQuoteRequestEditable,
-    breadcrumbExtend: [
-        {
-            label: '#' ~ _view.quoteRequest.quoteRequestReference,
-        },
-    ],
 } %}
 
 {% set isLatestVersion = (data.version.idQuoteRequestVersion == data.quoteRequest.latestVisibleVersion.idQuoteRequestVersion) %}
+
+{% block breadcrumbs %}
+    {% set breadcrumbExtend = [
+        {
+            label: '#' ~ _view.quoteRequest.quoteRequestReference,
+        },
+    ] %}
+
+    {{ parent() }}
+{% endblock %}
 
 {% block content %}
     {% set quote = data.version.quote %}

@@ -5,12 +5,17 @@
     quoteRequestForm: _view.quoteRequestForm,
     quoteRequest: _view.quoteRequestForm.vars.value,
     latestVersion: _view.quoteRequestForm.vars.value.latestVersion,
-    breadcrumbExtend: [
+} %}
+
+{% block breadcrumbs %}
+    {% set breadcrumbExtend = [
         {
             label: 'quote_request_page.quote_request.breadcrumb.create' | trans,
         },
-    ],
-} %}
+    ] %}
+
+    {{ parent() }}
+{% endblock %}
 
 {% block content %}
     {% set quote = data.latestVersion ? data.latestVersion.quote %}
