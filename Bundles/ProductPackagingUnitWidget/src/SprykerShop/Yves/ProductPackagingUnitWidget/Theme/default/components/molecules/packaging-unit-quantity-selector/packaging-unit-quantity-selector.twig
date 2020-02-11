@@ -16,7 +16,7 @@
 
 {% define config = {
     name: 'packaging-unit-quantity-selector',
-    tag: 'packaging-unit-quantity-selector'
+    tag: 'packaging-unit-quantity-selector',
 } %}
 
 {% define attributes = {
@@ -152,7 +152,9 @@
         {% endif %}
 
         <div class="col {{ rightColumnModifierClass }}">
-            {% if salesUnitCount and data.leadProductSalesUnits | length > 1 %}
+            {% set isProductSalesUnitsMultiply = salesUnitCount and data.leadProductSalesUnits | length > 1 %}
+            {% set isProductSalesUnitSingle = salesUnitCount and data.leadProductSalesUnits | length == 1 %}
+            {% if isProductSalesUnitsMultiply %}
                 <label>
                     {{ 'product.measurement.sales_unit' | trans }}
                     {% embed atom('select') with {
@@ -176,7 +178,7 @@
                 </label>
             {% endif %}
 
-            {% if salesUnitCount and data.leadProductSalesUnits | length == 1 %}
+            {% if isProductSalesUnitSingle %}
                 {{ data.leadProductSalesUnits[0].productMeasurementUnit.name | trans }}
                 <input type="hidden" name="amount-id-product-measurement-sales-unit[{{ data.product.sku }}]"
                        value="{{ data.leadProductSalesUnits[0].idProductMeasurementSalesUnit }}">
