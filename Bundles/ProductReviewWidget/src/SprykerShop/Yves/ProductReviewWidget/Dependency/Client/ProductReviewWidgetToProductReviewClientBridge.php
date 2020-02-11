@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductReviewRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSummaryTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Generated\Shared\Transfer\RatingAggregationTransfer;
 
 class ProductReviewWidgetToProductReviewClientBridge implements ProductReviewWidgetToProductReviewClientInterface
 {
@@ -70,13 +71,12 @@ class ProductReviewWidgetToProductReviewClientBridge implements ProductReviewWid
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductReviewSummaryTransfer $productReviewSummaryTransfer
+     * @param \Generated\Shared\Transfer\RatingAggregationTransfer $ratingAggregationTransfer
      *
      * @return \Generated\Shared\Transfer\ProductReviewSummaryTransfer
      */
-    public function calculateProductReviewSummary(
-        ProductReviewSummaryTransfer $productReviewSummaryTransfer
-    ): ProductReviewSummaryTransfer {
-        return $this->productReviewClient->calculateProductReviewSummary($productReviewSummaryTransfer);
+    public function calculateProductReviewSummary(RatingAggregationTransfer $ratingAggregationTransfer): ProductReviewSummaryTransfer
+    {
+        return $this->productReviewClient->calculateProductReviewSummary($ratingAggregationTransfer);
     }
 }

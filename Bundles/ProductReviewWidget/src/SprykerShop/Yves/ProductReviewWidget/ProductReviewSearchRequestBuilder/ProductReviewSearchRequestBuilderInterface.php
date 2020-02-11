@@ -13,8 +13,9 @@ interface ProductReviewSearchRequestBuilderInterface
 {
     /**
      * @param int $idProductAbstract
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer
      */
-    public function createProductReviewSearchRequestTransfer(int $idProductAbstract): ProductReviewSearchRequestTransfer;
+    public function createProductReviewSearchRequestTransfer(int $idProductAbstract, array $params = []): ProductReviewSearchRequestTransfer;
 }
