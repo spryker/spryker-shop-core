@@ -5,20 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuoteRequestAgentPage\CompanyUserImpersonator;
+namespace SprykerShop\Yves\QuoteRequestAgentPage\Converter;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
-interface CompanyUserImpersonatorInterface
+interface QuoteRequestConverterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $routeToRedirect
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return void
      */
-    public function redirectImpersonatedUserWithPreparedQuoteAndMessage(QuoteRequestTransfer $quoteRequestTransfer, QuoteTransfer $quoteTransfer, string $routeToRedirect): RedirectResponse;
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer, QuoteTransfer $quoteTransfer): void;
 }

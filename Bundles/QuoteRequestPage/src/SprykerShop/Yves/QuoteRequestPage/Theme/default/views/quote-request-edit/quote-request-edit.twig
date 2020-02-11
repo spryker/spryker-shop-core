@@ -6,6 +6,7 @@
     }),
     quoteRequestForm: _view.quoteRequestForm,
     quoteRequest: _view.quoteRequestForm.vars.value,
+    quoteRequestReference: _view.quoteRequestReference,
     breadcrumbLabel: 'quote_request_page.quote_request.actions.edit' | trans,
     breadcrumbExtend: [
         {
@@ -61,7 +62,7 @@
                 quote: quote,
                 hasMultiShipments: hasMultiShipments,
                 isEditable: true,
-                quoteRequestReference: data.quoteRequest.quoteRequestReference,
+                quoteRequestReference: data.quoteRequestReference,
             },
         } only %}
     {% endblock %}

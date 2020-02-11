@@ -10,8 +10,8 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
-use SprykerShop\Yves\QuoteRequestAgentPage\CompanyUserImpersonator\CompanyUserImpersonator;
-use SprykerShop\Yves\QuoteRequestAgentPage\CompanyUserImpersonator\CompanyUserImpersonatorInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Converter\QuoteRequestConverter;
+use SprykerShop\Yves\QuoteRequestAgentPage\Converter\QuoteRequestConverterInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCompanyUserClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCustomerClientInterface;
@@ -27,11 +27,14 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider\QuoteRequestAgentFo
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandler;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandlerInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentCreateForm;
+use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentEditAddressConfirmForm;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentEditItemsConfirmForm;
+use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentEditShipmentConfirmForm;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentForm;
 use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouper;
 use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface;
-use Symfony\Cmf\Component\Routing\ChainRouterInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Impersonator\CompanyUserImpersonator;
+use SprykerShop\Yves\QuoteRequestAgentPage\Impersonator\CompanyUserImpersonatorInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -65,6 +68,32 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     {
         return $this->getFormFactory()->create(
             QuoteRequestAgentEditItemsConfirmForm::class,
+            $quoteRequestTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getQuoteRequestAgentEditAddressConfirmForm(QuoteRequestTransfer $quoteRequestTransfer): FormInterface
+    {
+        return $this->getFormFactory()->create(
+            QuoteRequestAgentEditAddressConfirmForm::class,
+            $quoteRequestTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getQuoteRequestAgentEditShipmentConfirmForm(QuoteRequestTransfer $quoteRequestTransfer): FormInterface
+    {
+        return $this->getFormFactory()->create(
+            QuoteRequestAgentEditShipmentConfirmForm::class,
             $quoteRequestTransfer
         );
     }
@@ -109,13 +138,21 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\QuoteRequestAgentPage\CompanyUserImpersonator\CompanyUserImpersonatorInterface
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Impersonator\CompanyUserImpersonatorInterface
      */
     public function createCompanyUserImpersonator(): CompanyUserImpersonatorInterface
     {
-        return new CompanyUserImpersonator(
+        return new CompanyUserImpersonator();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Converter\QuoteRequestConverterInterface
+     */
+    public function createQuoteRequestConverter(): QuoteRequestConverterInterface
+    {
+        return new QuoteRequestConverter(
             $this->getMessengerClient(),
-            $this->getRouterService()
+            $this->getQuoteRequestAgentClient()
         );
     }
 
@@ -221,13 +258,5 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     public function getMessengerClient(): QuoteRequestAgentPageToMessengerClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::CLIENT_MESSENGER);
-    }
-
-    /**
-     * @return \Symfony\Cmf\Component\Routing\ChainRouterInterface
-     */
-    public function getRouterService(): ChainRouterInterface
-    {
-        return $this->getProvidedDependency(QuoteRequestAgentPageDependencyProvider::SERVICE_ROUTER);
     }
 }

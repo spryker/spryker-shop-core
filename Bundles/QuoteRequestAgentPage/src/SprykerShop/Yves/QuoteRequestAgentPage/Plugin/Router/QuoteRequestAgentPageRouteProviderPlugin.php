@@ -23,7 +23,9 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
     protected const ROUTE_QUOTE_REQUEST_AGENT_REVISE = 'agent/quote-request/revise';
     protected const ROUTE_QUOTE_REQUEST_AGENT_CONVERT_TO_CART = 'agent/quote-request/convert-to-cart';
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS = 'agent/quote-request/checkout-address';
+    protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS_CONFIRM = 'agent/quote-request/checkout-address-confirm';
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT = 'agent/quote-request/checkout-shipment';
+    protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT_CONFIRM = 'agent/quote-request/checkout-shipment-confirm';
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
     protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-]+';
@@ -52,6 +54,8 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
         $routeCollection = $this->addQuoteRequestConvertToCartRoute($routeCollection);
         $routeCollection = $this->addQuoteRequestAgentCheckoutAddressRoute($routeCollection);
         $routeCollection = $this->addQuoteRequestAgentCheckoutShipmentRoute($routeCollection);
+        $routeCollection = $this->addQuoteRequestAgentCheckoutAddressConfirmRoute($routeCollection);
+        $routeCollection = $this->addQuoteRequestAgentCheckoutShipmentConfirmRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -215,7 +219,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
     }
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentCheckoutAddressController::addAction()
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentCheckoutAddressController::indexAction()
      *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
@@ -223,7 +227,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
      */
     protected function addQuoteRequestAgentCheckoutAddressRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/agent/quote-request/checkout-address/{quoteRequestReference}', 'QuoteRequestAgentPage', 'QuoteRequestAgentCheckoutAddress', 'executeIndexAction');
+        $route = $this->buildRoute('/agent/quote-request/checkout-address/{quoteRequestReference}', 'QuoteRequestAgentPage', 'QuoteRequestAgentCheckoutAddress', 'indexAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
         $routeCollection->add(static::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS, $route);
 
@@ -231,7 +235,23 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
     }
 
     /**
-     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentCheckoutShipmentController::addAction()
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentEditItemsController::confirmAction()
+     *
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addQuoteRequestAgentCheckoutAddressConfirmRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute('/agent/quote-request/checkout-address-confirm/{quoteRequestReference}', 'QuoteRequestAgentPage', 'QuoteRequestAgentCheckoutAddress', 'confirmAction');
+        $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS_CONFIRM, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentCheckoutShipmentController::indexAction()
      *
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
      *
@@ -239,9 +259,25 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
      */
     protected function addQuoteRequestAgentCheckoutShipmentRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/agent/quote-request/checkout-shipment/{quoteRequestReference}', 'QuoteRequestAgentPage', 'QuoteRequestAgentCheckoutShipment', 'executeIndexAction');
+        $route = $this->buildRoute('/agent/quote-request/checkout-shipment/{quoteRequestReference}', 'QuoteRequestAgentPage', 'QuoteRequestAgentCheckoutShipment', 'indexAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
         $routeCollection->add(static::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentEditItemsController::confirmAction()
+     *
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addQuoteRequestAgentCheckoutShipmentConfirmRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute('/agent/quote-request/checkout-shipment-confirm/{quoteRequestReference}', 'QuoteRequestAgentPage', 'QuoteRequestAgentCheckoutShipment', 'confirmAction');
+        $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
+        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT_CONFIRM, $route);
 
         return $routeCollection;
     }

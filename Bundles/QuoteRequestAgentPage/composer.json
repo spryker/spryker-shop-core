@@ -27,6 +27,7 @@
     "spryker-shop/agent-page": "*",
     "spryker-shop/cart-page": "*",
     "spryker-shop/configurable-bundle-widget": "*",
+    "spryker-shop/quote-request-page": "*",
     "spryker/code-sniffer": "*",
     "spryker/router": "*",
     "spryker/silex": "*"
