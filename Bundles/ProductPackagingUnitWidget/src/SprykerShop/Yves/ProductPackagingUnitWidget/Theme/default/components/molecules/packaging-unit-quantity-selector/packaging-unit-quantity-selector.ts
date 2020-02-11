@@ -305,7 +305,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     protected createChoiceElement(qtyInBaseUnits: number): HTMLSpanElement {
         if (qtyInBaseUnits <= 0) {
-            return undefined;
+            return;
         }
 
         const choiceElement = document.createElement('span');
