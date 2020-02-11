@@ -345,7 +345,6 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         $shipmentShippingAddress = $this->getShipmentShippingAddress($shipmentTransfer);
         if (
             $shipmentFromQuoteItems !== null
-            && !$shipmentTransfer->getShippingAddress()
             && !($shipmentShippingAddress->getIdCustomerAddress() || $shipmentShippingAddress->getIdCompanyUnitAddress())
         ) {
             return $shipmentFromQuoteItems;
