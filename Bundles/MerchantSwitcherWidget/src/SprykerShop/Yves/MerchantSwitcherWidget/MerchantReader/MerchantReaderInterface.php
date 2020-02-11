@@ -7,14 +7,14 @@
 
 namespace SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader;
 
-use Generated\Shared\Transfer\MerchantCollectionTransfer;
+use ArrayObject;
 
 interface MerchantReaderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantTransfer[]
      */
-    public function getActiveMerchants(): MerchantCollectionTransfer;
+    public function getActiveMerchants(): ArrayObject;
 
     /**
      * @return string
