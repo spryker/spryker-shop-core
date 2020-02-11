@@ -308,7 +308,7 @@ export default class PackagingUnitQuantitySelector extends Component {
             return undefined;
         }
 
-        const choiceElem = document.createElement('span');
+        const choiceElement = document.createElement('span');
         const qtyInSalesUnits = this.convertBaseUnitsAmountToCurrentSalesUnitsAmount(qtyInBaseUnits);
         const measurementSalesUnitName = this.getUnitName(this.currentSalesUnit.product_measurement_unit.code);
         const measurementBaseUnitName = this.getUnitName(this.baseUnit.code);
