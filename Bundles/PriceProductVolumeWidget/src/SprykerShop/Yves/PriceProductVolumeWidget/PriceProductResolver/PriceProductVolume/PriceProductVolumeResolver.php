@@ -159,6 +159,7 @@ class PriceProductVolumeResolver implements PriceProductVolumeResolverInterface
             }
 
             $this->fillVolumeProductPriceCollectionFromStorage($priceProductVolumeCollection, $priceProductTransfer);
+
             break;
         }
 
