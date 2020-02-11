@@ -29,6 +29,8 @@ export default class ProductSetDetails extends Component {
     }
 
     protected onCustomEvent(sku: string, index: number): void {
-        this.targets[index].value = sku;
+        if (this.targets[index]) {
+            this.targets[index].value = sku;
+        }
     }
 }
