@@ -34,14 +34,16 @@ class CheckBusinessOnBehalfCompanyUserHandlerPlugin extends AbstractPlugin imple
     public function handle(FilterControllerEvent $event): void
     {
         $companySelectUrl = $this->getFactory()->getApplication()->path(static::COMPANY_REDIRECT_ROUTE);
-        if ($companySelectUrl === $event->getRequest()->getRequestUri()
+        if (
+            $companySelectUrl === $event->getRequest()->getRequestUri()
             || !$this->isCompanyControllerRequested($event)
         ) {
             return;
         }
 
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-        if ($customerTransfer
+        if (
+            $customerTransfer
             && $customerTransfer->getIsOnBehalf()
             && !$customerTransfer->getCompanyUserTransfer()
         ) {
