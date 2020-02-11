@@ -7,7 +7,9 @@
 
 namespace SprykerShop\Yves\CatalogPage;
 
+use Generated\Shared\Transfer\ShopContextTransfer;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\CatalogPage\ActiveSearchFilter\UrlGenerator;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCatalogClientInterface;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCategoryStorageClientInterface;
@@ -26,6 +28,8 @@ use SprykerShop\Yves\CatalogPage\Validator\PageParametersValidatorInterface;
  */
 class CatalogPageFactory extends AbstractFactory
 {
+    protected const SERVICE_SHOP_CONTEXT = 'shop_context';
+
     /**
      * @return \SprykerShop\Yves\CatalogPage\ActiveSearchFilter\UrlGeneratorInterface
      */
@@ -120,5 +124,21 @@ class CatalogPageFactory extends AbstractFactory
     public function getModuleConfig(): CatalogPageConfig
     {
         return $this->getConfig();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShopContextTransfer
+     */
+    public function getShopContext(): ShopContextTransfer
+    {
+        return $this->getApplication()[static::SERVICE_SHOP_CONTEXT];
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\Application
+     */
+    public function getApplication(): Application
+    {
+        return $this->getProvidedDependency(CatalogPageDependencyProvider::PLUGIN_APPLICATION);
     }
 }

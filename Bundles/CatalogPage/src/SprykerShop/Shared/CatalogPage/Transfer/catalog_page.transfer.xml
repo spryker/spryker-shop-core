@@ -37,4 +37,8 @@
     <transfer name="FacetSearchResultValue">
     </transfer>
 
+    <transfer name="ShopContext">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
 </transfers>
