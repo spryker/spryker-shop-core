@@ -582,7 +582,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     protected createAmountChoiceElement(amountInBaseUnits: number): HTMLSpanElement {
         if (amountInBaseUnits > 0) {
-            const choiceElem = document.createElement('span');
+            const choiceElement = document.createElement('span');
             const amountInSalesUnits = (((amountInBaseUnits * this.precision) / this.currentLeadSalesUnit.conversion) /
                 this.precision).toFixed(this.numberOfDecimalPlaces);
             const measurementSalesUnitName = this.getUnitName(this.currentLeadSalesUnit.product_measurement_unit.code);
