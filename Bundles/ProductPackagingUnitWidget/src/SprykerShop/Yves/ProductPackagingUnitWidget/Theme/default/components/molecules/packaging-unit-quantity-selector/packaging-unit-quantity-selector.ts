@@ -106,7 +106,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
     /* tslint:enable: no-magic-numbers */
 
-    protected readyCallback(event?: Event): void {}
+    protected readyCallback(): void {}
 
     protected init(): void {
         this.qtyInSalesUnitInput = <HTMLInputElement>
