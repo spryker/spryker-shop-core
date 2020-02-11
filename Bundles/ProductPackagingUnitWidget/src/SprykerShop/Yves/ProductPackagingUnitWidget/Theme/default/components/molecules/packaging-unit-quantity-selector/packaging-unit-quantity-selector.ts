@@ -222,7 +222,7 @@ export default class PackagingUnitQuantitySelector extends Component {
 
         if (this.leadSalesUnitSelect) {
             this.leadSalesUnitSelect.addEventListener(
-                'change', (event: Event) => this.leadSalesUnitSelectChange(event));
+                'change', (event: Event) => this.onLeadSalesUnitSelectChange(event));
         }
     }
 
