@@ -25,7 +25,7 @@
     <li class="list__item">
         {{ data.method.name }}
 
-        {% if sourceUnitPrice is not null %}
+        {% if sourceUnitPrice is defined %}
             <span><s>{{ data.method.storeCurrencyPrice | money(true, data.method.currencyIsoCode) }}</s> {{ sourceUnitPrice | money(true, data.method.currencyIsoCode) }}</span>
         {% else %}
             <span>{{ data.method.storeCurrencyPrice | money(true, data.method.currencyIsoCode) }}</span>
