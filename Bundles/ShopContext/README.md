@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/shop-context.svg)](https://travis-ci.org/spryker-shop/shop-context)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
-{{ADD DESCRIPTION HERE}}
+The module provides the functionality for ShopApplication to work with shop context.
 
 ## Installation
 
