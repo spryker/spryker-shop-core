@@ -13,16 +13,21 @@
 {% block body %}
     <div class="box">
         {% if data.shipment.method %}
-            {% include molecule('delivery-method-information', 'CustomerPage') ignore missing with {
-                data: {
-                    method: data.shipment.method,
-                    priceMode: data.priceMode,
-                },
-            } only %}
-        {% endif %}
+            <div class="grid grid--justify">
+                {% include molecule('delivery-method-information', 'CustomerPage') ignore missing with {
+                    class: 'col',
+                    data: {
+                        method: data.shipment.method,
+                        priceMode: data.priceMode,
+                    },
+                } only %}
 
-        {% block actions %}
-        {% endblock %}
+                <div class="col col--sm-12 col--lg-4">
+                    {% block actions %}
+                    {% endblock %}
+                </div>
+            </div>
+        {% endif %}
 
         {% if data.showAddress %}
             <hr class="box__separator spacing-y spacing-y--big">
