@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/shop-context",
+  "type": "library",
   "description": "ShopContext module",
   "license": "proprietary",
   "require": {
@@ -9,7 +10,11 @@
     "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/container": "*"
+  },
+  "suggest": {
+    "spryker/container": "ADD SUGGEST DESCRIPTION"
   },
   "autoload": {
     "psr-4": {
@@ -18,7 +23,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "scripts": {},
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
@@ -26,8 +34,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/container": "ADD SUGGEST DESCRIPTION"
   }
 }
