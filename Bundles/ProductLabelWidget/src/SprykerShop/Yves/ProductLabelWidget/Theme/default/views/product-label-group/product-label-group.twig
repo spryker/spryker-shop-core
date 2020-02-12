@@ -6,6 +6,7 @@
 } %}
 
 {% set labels = labels | default([]) %}
+
 {% for item in data.dictionary %}
     {% set labels = labels | merge([{
         text: item.getName() | default,

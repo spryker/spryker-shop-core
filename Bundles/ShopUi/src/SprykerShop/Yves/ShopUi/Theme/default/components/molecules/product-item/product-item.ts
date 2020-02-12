@@ -10,6 +10,7 @@ export const EVENT_UPDATE_ADD_TO_CART_URL = 'updateAddToCartUrl';
  */
 export interface ProductItemData {
     imageUrl: string;
+    imageAlt: string;
     labels: ProductItemLabelsData[];
     nameValue: string;
     ratingValue: number;
@@ -19,7 +20,7 @@ export interface ProductItemData {
     addToCartUrl: string;
 }
 
-export interface ProductItemLabelsData {
+interface ProductItemLabelsData {
     text: string;
     type: string;
 }
@@ -59,6 +60,7 @@ export default class ProductItem extends Component {
      */
     updateProductItemData(data: ProductItemData): void {
         this.newImageUrl = data.imageUrl;
+        this.newImageAlt = data.nameValue;
         this.newLabels = data.labels;
         this.newNameValue = data.nameValue;
         this.newRatingValue = data.ratingValue;
@@ -74,6 +76,12 @@ export default class ProductItem extends Component {
         }
     }
 
+    protected set newImageAlt(imageAlt: string) {
+        if (this.productImage) {
+            this.productImage.alt = imageAlt;
+        }
+    }
+
     protected set newLabels(labels: ProductItemLabelsData[]) {
         if (!labels.length) {
             this.productLabelFlags.forEach((element: HTMLElement) => element.classList.add(this.classToToggle));
@@ -82,12 +90,7 @@ export default class ProductItem extends Component {
             return;
         }
 
-        labels.forEach((element: ProductItemLabelsData, index: number) => {
-            this.createProductLabelFlagClones(index);
-            this.deleteProductLabelFlagClones(labels);
-            this.deleteProductLabelFlagModifiers(index);
-            this.updateProductLabelFlags(element, index);
-        });
+        this.updateProductLabels(labels);
     }
 
     protected set newNameValue(name: string) {
@@ -126,13 +129,21 @@ export default class ProductItem extends Component {
         this.dispatchCustomEvent(EVENT_UPDATE_ADD_TO_CART_URL, {sku: addToCartUrl.split('/').pop()});
     }
 
+    protected updateProductLabelTag(element: ProductItemLabelsData): void {
+        const labelTagTextContent = <HTMLElement>this.productLabelTag.getElementsByClassName(`${this.jsName}__label-tag-text`)[0];
+
+        this.productLabelFlags.forEach((flag: HTMLElement) => flag.classList.add(this.classToToggle));
+        this.productLabelTag.classList.remove(this.classToToggle);
+        labelTagTextContent.innerText = element.text;
+    }
+
     protected createProductLabelFlagClones(index: number): void {
         if (index < 1) {
             return;
         }
 
-        const cloneLabel = this.productLabelFlags[0].cloneNode(true);
-        this.productLabelFlags[0].parentNode.insertBefore(cloneLabel, this.productLabelFlags[0].nextSibling);
+        const cloneLabelFlag = this.productLabelFlags[0].cloneNode(true);
+        this.productLabelFlags[0].parentNode.insertBefore(cloneLabelFlag, this.productLabelFlags[0].nextSibling);
         this.productLabelFlags = <HTMLElement[]>Array.from(this.getElementsByClassName(`${this.jsName}__label-flag`));
     }
 
@@ -154,15 +165,33 @@ export default class ProductItem extends Component {
     }
 
     protected updateProductLabelFlags(element: ProductItemLabelsData, index: number): void {
-        const labelClassName: string = this.productLabelFlags[index].getAttribute('data-config-name');
-        const labelTextContent = <HTMLElement>this.productLabelFlags[index].getElementsByClassName(`${this.jsName}__label-flag-text`)[0];
+        const labelFlagClassName: string = this.productLabelFlags[index].getAttribute('data-config-name');
+        const labelFlagTextContent = <HTMLElement>this.productLabelFlags[index].getElementsByClassName(`${this.jsName}__label-flag-text`)[0];
 
         if (element.type) {
-            this.productLabelFlags[index].classList.add(`${labelClassName}--${element.type}`);
+            this.productLabelFlags[index].classList.add(`${labelFlagClassName}--${element.type}`);
         }
 
+        this.productLabelTag.classList.add(this.classToToggle);
         this.productLabelFlags[index].classList.remove(this.classToToggle);
-        labelTextContent.innerText = element.text;
+        labelFlagTextContent.innerText = element.text;
+    }
+
+    protected updateProductLabels(labels: ProductItemLabelsData[]): void {
+        labels.forEach((element: ProductItemLabelsData, index: number) => {
+            const labelTagType = this.productLabelTag.getAttribute('data-label-tag-type');
+
+            if (element.type === labelTagType) {
+                this.updateProductLabelTag(element);
+
+                return;
+            }
+
+            this.createProductLabelFlagClones(index);
+            this.deleteProductLabelFlagClones(labels);
+            this.deleteProductLabelFlagModifiers(index);
+            this.updateProductLabelFlags(element, index);
+        });
     }
 
     /**
