@@ -1,0 +1,44 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-request-summary-shipment',
+    tag: 'li'
+} %}
+
+{% define data = {
+    shipmentGroups: required,
+    shipmentTotal: required,
+    currencyCode: required,
+} %}
+
+{% block extraClass %}
+    list__item
+{% endblock %}
+
+{% block component %}
+    {% if data.shipmentTotal and data.currencyCode %}
+        <li class="list__item">
+            <hr>
+        </li>
+        {{parent()}}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="grid grid--justify">
+        <strong class="col">{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
+        <strong class="col">{{ data.shipmentTotal | money(true, data.currencyCode) }}</strong>
+    </div>
+
+    {% for shipmentGroup in data.shipmentGroups %}
+        <div class="grid grid--justify">
+            <span class="col">
+                {{ shipmentGroup.shipment.method.carrierName | default }}
+                - {{ shipmentGroup.shipment.method.name | default }}
+            </span>
+            <span class="col">
+                {{ shipmentGroup.shipment.method.storeCurrencyPrice | money(true, data.currencyCode) }}
+            </span>
+        </div>
+    {% endfor %}
+{% endblock %}

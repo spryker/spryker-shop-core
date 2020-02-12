@@ -48,7 +48,6 @@
 {% endblock %}
 
 {% block contentInner %}
-    {% set counterItems = quote.items ? quote.items | length : 0 %}
     {% set gridClass = 'grid' %}
     {% set leftColClass = 'col col--sm-12 col--xl-8' %}
     {% set rightColClass = 'col col--sm-12 col--xl-4' %}
@@ -99,7 +98,9 @@
                             {% block itemsCounter %}
                                 {% if not hasMultiShipments %}
                                     <div class="{{ numberOfItemsClass }}">
-                                        {{ _self.numberOfItems(counterItems) }}
+                                        {{ 'quote_request_page.quote_request.item' | trans({
+                                            '%count%': quote.items | length,
+                                        }) }}
                                     </div>
                                 {% endif %}
                             {% endblock %}
@@ -132,7 +133,9 @@
 
                                                 {% block itemsCounterForMultiShipmens %}
                                                     <div class="{{ numberOfItemsClass }}">
-                                                        {{ _self.numberOfItems(counterItems) }}
+                                                        {{ 'quote_request_page.quote_request.item' | trans({
+                                                            '%count%': quote.items | length,
+                                                        }) }}
                                                     </div>
                                                 {% endblock %}
                                             </div>
@@ -176,15 +179,3 @@
         </div>
     {% endblock %}
 {% endblock %}
-
-{% macro numberOfItems(counterItems) %}
-    {% if (counterItems == 1) %}
-        {{ 'quote_request_page.quote_request.item' | trans({
-            '%count%': counterItems,
-        }) }}
-    {% else %}
-        {{ 'quote_request_page.quote_request.items' | trans({
-            '%count%': counterItems,
-        }) }}
-    {% endif %}
-{% endmacro %}

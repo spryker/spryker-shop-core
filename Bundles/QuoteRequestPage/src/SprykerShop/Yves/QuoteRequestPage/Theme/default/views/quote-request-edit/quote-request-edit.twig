@@ -72,7 +72,7 @@
     {% endblock %}
 
     {% block summary %}
-        {% include molecule('quote-request-cart-summary', 'QuoteRequestPage') with {
+        {% include molecule('quote-request-summary', 'QuoteRequestPage') with {
             data: {
                 cart: quote,
                 shipmentGroups: data.shipmentGroups,
