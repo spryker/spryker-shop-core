@@ -52,7 +52,7 @@ class ProductGroupReader implements ProductGroupReaderInterface
      */
     public function getProductGroups(int $idProductAbstract, string $localeName, array $selectedAttributes = []): array
     {
-        $productViewTransfers = $this->getProductGroupTransfers($idProductAbstract, $localeName, $selectedAttributes);
+        $productViewTransfers = $this->getProductViewTransfers($idProductAbstract, $localeName, $selectedAttributes);
 
         return $this->getExpandedProductViewTransfers($productViewTransfers);
     }
@@ -64,22 +64,16 @@ class ProductGroupReader implements ProductGroupReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    protected function getProductGroupTransfers(int $idProductAbstract, string $localeName, array $selectedAttributes = []): array
+    protected function getProductViewTransfers(int $idProductAbstract, string $localeName, array $selectedAttributes = []): array
     {
         $productAbstractGroupStorageTransfer = $this->productGroupStorageClient
             ->findProductGroupItemsByIdProductAbstract($idProductAbstract);
 
-        $productAbstractViewTransfers = [];
-
-        foreach ($productAbstractGroupStorageTransfer->getGroupProductAbstractIds() as $productAbstractId) {
-            $productAbstractViewTransfers[] = $this->productStorageClient->findProductAbstractViewTransfer(
-                $productAbstractId,
-                $localeName,
-                $selectedAttributes
-            );
-        }
-
-        return $productAbstractViewTransfers;
+        return $this->productStorageClient->getProductAbstractViewTransfers(
+            $productAbstractGroupStorageTransfer->getGroupProductAbstractIds(),
+            $localeName,
+            $selectedAttributes
+        );
     }
 
     /**

@@ -8,33 +8,20 @@
 namespace SprykerShop\Yves\ProductReviewWidget\ProductReviewSearchRequestBuilder;
 
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
-use Symfony\Component\HttpFoundation\Request;
 
 class ProductReviewSearchRequestBuilder implements ProductReviewSearchRequestBuilderInterface
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\Request
-     */
-    protected $applicationRequest;
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $applicationRequest
-     */
-    public function __construct(Request $applicationRequest)
-    {
-        $this->applicationRequest = $applicationRequest;
-    }
-
-    /**
      * @param int $idProductAbstract
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer
      */
-    public function createProductReviewSearchRequestTransfer(int $idProductAbstract): ProductReviewSearchRequestTransfer
+    public function createProductReviewSearchRequestTransfer(int $idProductAbstract, array $params = []): ProductReviewSearchRequestTransfer
     {
         $productReviewSearchRequestTransfer = new ProductReviewSearchRequestTransfer();
         $productReviewSearchRequestTransfer->setIdProductAbstract($idProductAbstract);
-        $productReviewSearchRequestTransfer->setRequestParams($this->applicationRequest->query->all());
+        $productReviewSearchRequestTransfer->setRequestParams($params);
 
         return $productReviewSearchRequestTransfer;
     }

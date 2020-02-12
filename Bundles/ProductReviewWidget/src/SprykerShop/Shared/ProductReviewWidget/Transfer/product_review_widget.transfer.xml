@@ -54,4 +54,8 @@
         <property name="rating" type="ProductReviewSummary"/>
     </transfer>
 
+    <transfer name="RatingAggregation">
+        <property name="ratingAggregation" type="array" singular="ratingAggregation"/>
+    </transfer>
+
 </transfers>

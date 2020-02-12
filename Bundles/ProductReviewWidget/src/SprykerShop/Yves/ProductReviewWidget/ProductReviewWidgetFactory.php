@@ -113,6 +113,6 @@ class ProductReviewWidgetFactory extends SprykerProductReviewFactory
      */
     public function createProductReviewSearchRequestBuilder(): ProductReviewSearchRequestBuilderInterface
     {
-        return new ProductReviewSearchRequestBuilder($this->getApplicationRequest());
+        return new ProductReviewSearchRequestBuilder();
     }
 }

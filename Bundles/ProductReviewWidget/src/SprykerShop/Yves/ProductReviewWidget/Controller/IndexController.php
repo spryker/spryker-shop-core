@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\ProductReviewWidget\Controller;
 
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
-use Generated\Shared\Transfer\ProductReviewSummaryTransfer;
+use Generated\Shared\Transfer\RatingAggregationTransfer;
 use Spryker\Shared\Storage\StorageConstants;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,8 +52,8 @@ class IndexController extends AbstractController
             ->getProductReviewClient()
             ->findProductReviewsInSearch($productReviewSearchRequestTransfer);
 
-        $productReviewSummaryTransfer = (new ProductReviewSummaryTransfer());
-        $productReviewSummaryTransfer->setRatingAggregation($productReviews['ratingAggregation']);
+        $ratingAggregationTransfer = (new RatingAggregationTransfer());
+        $ratingAggregationTransfer->setRatingAggregation($productReviews['ratingAggregation']);
 
         return [
             'hasCustomer' => $hasCustomer,
@@ -61,7 +61,7 @@ class IndexController extends AbstractController
             'pagination' => $productReviews['pagination'],
             'summary' => $this->getFactory()
                 ->getProductReviewClient()
-                ->calculateProductReviewSummary($productReviewSummaryTransfer),
+                ->calculateProductReviewSummary($ratingAggregationTransfer),
             'maximumRating' => $this->getFactory()->getProductReviewClient()->getMaximumRating(),
         ];
     }

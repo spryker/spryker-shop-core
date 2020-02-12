@@ -12,6 +12,9 @@ use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 
 class ProductViewExpander implements ProductViewExpanderInterface
 {
+    /**
+     * @see \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART_ADD
+     */
     protected const URL_PATH_ADD_TO_CART = 'cart/add';
     protected const URL_PARAMETER_SKU = 'sku';
 
