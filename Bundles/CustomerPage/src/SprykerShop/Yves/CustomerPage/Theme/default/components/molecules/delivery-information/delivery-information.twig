@@ -16,7 +16,7 @@
 
 {% if data.sourcePrice %}
     {% set priceModeGross = 'GROSS_MODE' %}
-    {% set sourceUnitPrice = (data.priceMode == priceModeGross) ? data.sourcePrice.grossAmount : data.sourcePrice.netAmount %}
+    {% set sourceUnitPrice = data.priceMode == priceModeGross ? data.sourcePrice.grossAmount : data.sourcePrice.netAmount %}
 {% endif %}
 
 {% block extraClass -%}
