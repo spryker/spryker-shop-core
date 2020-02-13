@@ -258,10 +258,8 @@ class CatalogController extends AbstractController
         }
 
         $shopContextTransfer = $this->getFactory()->getShopContext();
-
-        if ($shopContextTransfer->getMerchantReference()) {
-            $parameters[static::MERCHANT_REFERENCE] = $shopContextTransfer->getMerchantReference();
-        }
+        $shopContextParameters = $shopContextTransfer->modifiedToArray(true, false);
+        $parameters = array_merge($parameters, $shopContextParameters);
 
         if ($this->can('SeePricePermissionPlugin')) {
             return $parameters;

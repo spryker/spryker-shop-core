@@ -19,9 +19,8 @@
 
     {% for filter in facets %}
         {% set filterHasValues = filter.values is not defined or filter.values | length > 0 %}
-        {% set showFilter = filterHasValues and filter.config.type != 'hidden' %}
 
-        {% if showFilter %}
+        {% if filterHasValues %}
             {% block filters %}
                 <h6>{{ ('product.filter.' ~ filter.name | lower) | trans }}</h6>
 
