@@ -107,6 +107,7 @@ class OrderController extends AbstractCustomerController
 
         $customerTransfer = $this->getLoggedInCustomerTransfer();
         $orderListTransfer->setIdCustomer($customerTransfer->getIdCustomer());
+        $orderListTransfer->setCustomer($customerTransfer);
 
         $filterTransfer = $this->createFilterTransfer();
         $orderListTransfer->setFilter($filterTransfer);
