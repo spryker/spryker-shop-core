@@ -22,11 +22,11 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class QuoteRequestAgentMoneyValueSubForm extends AbstractType
 {
-    protected const ERROR_MESSAGE_PRICE = 'quote_request_agent_page.form.invalid_price';
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_AGENT_INVALID_PRICE = 'quote_request_agent_page.form.invalid_price';
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
 
     /**
-     * @uses \Spryker\Shared\Calculation\CalculationPriceMode::PRICE_MODE_GROSS
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
      */
     protected const PRICE_MODE_GROSS = 'GROSS_MODE';
 
@@ -131,7 +131,7 @@ class QuoteRequestAgentMoneyValueSubForm extends AbstractType
     {
         return new Regex([
             'pattern' => static::PATTERN_MONEY,
-            'message' => static::ERROR_MESSAGE_PRICE,
+            'message' => static::GLOSSARY_KEY_QUOTE_REQUEST_AGENT_INVALID_PRICE,
             'groups' => $this->getValidationGroup($options),
         ]);
     }
@@ -145,7 +145,7 @@ class QuoteRequestAgentMoneyValueSubForm extends AbstractType
     {
         $validationGroup = Constraint::DEFAULT_GROUP;
 
-        if (!empty($options['validation_group'])) {
+        if (isset($options['validation_group'])) {
             $validationGroup = $options['validation_group'];
         }
 
