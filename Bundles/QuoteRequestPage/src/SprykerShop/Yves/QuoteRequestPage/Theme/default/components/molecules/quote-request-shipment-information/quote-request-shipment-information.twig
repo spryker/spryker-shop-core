@@ -14,11 +14,15 @@
     <div class="box">
         {% if data.shipment.method %}
             <div class="grid grid--justify">
-                {% include molecule('delivery-method-information', 'CustomerPage') ignore missing with {
+                {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
                     class: 'col',
                     data: {
-                        method: data.shipment.method,
+                        carrierName: data.shipment.method.carrierName,
+                        methodName: data.shipment.method.name,
+                        storeCurrencyPrice: data.shipment.method.storeCurrencyPrice,
+                        currencyIsoCode: data.shipment.method.currencyIsoCode,
                         priceMode: data.priceMode,
+                        sourcePrice: data.shipment.method.sourcePrice,
                     },
                 } only %}
 
