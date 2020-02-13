@@ -16,6 +16,7 @@ class MerchantSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
 {
     public const CLIENT_MERCHANT_SEARCH = 'CLIENT_MERCHANT_SEARCH';
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -28,6 +29,7 @@ class MerchantSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
 
         $container = $this->addMerchantSearchClient($container);
         $container = $this->addApplication($container);
+        $container = $this->addQuoteClient($container);
 
         return $container;
     }
@@ -57,6 +59,20 @@ class MerchantSwitcherWidgetDependencyProvider extends AbstractBundleDependencyP
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuoteClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
+            return $container->getLocator()->quote()->client();
         });
 
         return $container;

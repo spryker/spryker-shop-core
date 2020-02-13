@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\MerchantSwitcherWidget;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientInterface;
+use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToQuoteClientInterface;
 use SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader\MerchantReader;
 use SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader\MerchantReaderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,5 +54,13 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
     public function getApplication(): Application
     {
         return $this->getProvidedDependency(MerchantSwitcherWidgetDependencyProvider::PLUGIN_APPLICATION);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToQuoteClientInterface
+     */
+    public function getQuoteClient(): MerchantSwitcherWidgetToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(MerchantSwitcherWidgetDependencyProvider::CLIENT_QUOTE);
     }
 }

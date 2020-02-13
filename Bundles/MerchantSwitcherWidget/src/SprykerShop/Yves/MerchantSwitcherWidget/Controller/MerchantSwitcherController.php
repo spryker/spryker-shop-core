@@ -30,6 +30,8 @@ class MerchantSwitcherController extends AbstractController
     {
         $merchantReference = $request->get(static::PARAM_MERCHANT_REFERENCE);
 
+        $this->updateQuoteWithMerchantReference($merchantReference);
+
         $cookie = Cookie::create(
             $this->getFactory()->getConfig()->getMerchantSelectorCookieIdentifier(),
             $merchantReference,
@@ -50,5 +52,19 @@ class MerchantSwitcherController extends AbstractController
     protected function createRedirectResponse(Request $request): RedirectResponse
     {
         return $this->redirectResponseExternal($request->headers->get(static::HEADER_REFERER));
+    }
+
+    /**
+     * @param string $merchantReference
+     *
+     * @return void
+     */
+    protected function updateQuoteWithMerchantReference(string $merchantReference): void
+    {
+        $quoteClient = $this->getFactory()->getQuoteClient();
+
+        $quoteTransfer = $quoteClient->getQuote();
+        $quoteTransfer->setMerchantReference($merchantReference);
+        $quoteClient->setQuote($quoteTransfer);
     }
 }

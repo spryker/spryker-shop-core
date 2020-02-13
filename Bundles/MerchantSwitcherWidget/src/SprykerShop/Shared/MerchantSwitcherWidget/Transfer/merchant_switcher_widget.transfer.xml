@@ -11,4 +11,8 @@
         <property name="merchantReference" type="string"/>
     </transfer>
 
+    <transfer name="Quote">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
 </transfers>
