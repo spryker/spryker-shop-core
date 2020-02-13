@@ -19,6 +19,9 @@ class MerchantShopContextExpanderPlugin extends AbstractPlugin implements ShopCo
 {
     /**
      * {@inheritDoc}
+     * - Expands selected merchant reference.
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\ShopContextTransfer $shopContextTransfer
      *
