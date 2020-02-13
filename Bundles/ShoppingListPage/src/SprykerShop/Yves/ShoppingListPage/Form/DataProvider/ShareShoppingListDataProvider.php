@@ -133,6 +133,7 @@ class ShareShoppingListDataProvider
                 $shoppingListCompanyUserTransfer->setCompanyUser($companyUserTransfer);
 
                 $shoppingListCompanyUserTransfers[$idCompanyUser] = $shoppingListCompanyUserTransfer;
+
                 continue;
             }
 
@@ -200,6 +201,7 @@ class ShareShoppingListDataProvider
                 $shoppingListCompanyBusinessUnit->setCompanyBusinessUnit($companyBusinessUnitTransfer);
 
                 $shoppingListCompanyBusinessUnits[$idCompanyBusinessUnit] = $shoppingListCompanyBusinessUnit;
+
                 continue;
             }
 
