@@ -14,21 +14,23 @@
     sourcePrice: null,
 } %}
 
-{% if data.sourcePrice %}
-    {% set priceModeGross = 'GROSS_MODE' %}
-    {% set sourceUnitPrice = (data.priceMode == priceModeGross) ? data.sourcePrice.grossAmount : data.sourcePrice.netAmount %}
-{% endif %}
-
 {% block extraClass -%}
     list
 {%- endblock %}
+
+{% set priceModeGross = 'GROSS_MODE' %}
+{% set sourceUnitPrice = '' %}
+
+{% if data.sourcePrice %}
+    {% set sourceUnitPrice = (data.priceMode == priceModeGross) ? data.sourcePrice.grossAmount : data.sourcePrice.netAmount %}
+{% endif %}
 
 {% block body %}
     <li class="list__item">{{ data.carrierName }}</li>
     <li class="list__item">
         {{ data.methodName }}
         <span>
-            {% if sourceUnitPrice is defined and sourceUnitPrice %}
+            {% if sourceUnitPrice %}
                 <s>{{ data.storeCurrencyPrice | money(true, data.currencyIsoCode) }}</s>
                 {{ sourceUnitPrice | money(true, data.currencyIsoCode) }}
             {% else %}
