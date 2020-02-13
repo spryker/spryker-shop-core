@@ -6,6 +6,7 @@
 
 {% define data = {
     orders: required,
+    isOrderSearchEnabled: false
 } %}
 
 {% block body %}
@@ -15,8 +16,11 @@
         <table class="table table--expand">
             <thead>
                 <tr>
-                    <th>{{ 'customer.order.order_id' | trans }}</th>
+                    <th>{{ 'customer.order.reference' | trans }}</th>
                     <th>{{ 'customer.order.date' | trans }}</th>
+                    {% if data.isOrderSearchEnabled %}
+                        <th>{{ 'customer.order.number_of_items' | trans }}</th>
+                    {% endif %}
                     <th>{{ 'customer.order.total' | trans }}</th>
                     <th>{{ 'customer.table.actions' | trans }}</th>
                 </tr>
@@ -26,6 +30,9 @@
                     <tr>
                         <td>{{ order.orderReference }}</td>
                         <td>{{ date(order.createdAt) | formatDateTime }}</td>
+                        {% if data.isOrderSearchEnabled %}
+                            <td>{{ order.items | length }}</td>
+                        {% endif %}
                         <td>{{ order.totals.grandTotal | default(0) | money(true, order.currencyIsoCode) }}</td>
                         <td>
                             <ul class="menu menu--inline">

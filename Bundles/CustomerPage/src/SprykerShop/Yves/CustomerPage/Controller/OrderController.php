@@ -58,6 +58,7 @@ class OrderController extends AbstractCustomerController
         return [
             'pagination' => $orderListTransfer->getPagination(),
             'orderList' => $orderListTransfer->getOrders(),
+            'isOrderSearchEnabled' => $isOrderSearchEnabled,
         ];
     }
 
