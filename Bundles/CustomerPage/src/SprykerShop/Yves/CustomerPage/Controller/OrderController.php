@@ -48,18 +48,36 @@ class OrderController extends AbstractCustomerController
      */
     protected function executeIndexAction(Request $request): array
     {
+        $isOrderSearchEnabled = $this->getFactory()
+            ->getConfig()
+            ->isOrderSearchEnabled();
+
         $orderListTransfer = $this->createOrderListTransfer($request);
-
-        $orderListTransfer = $this->getFactory()
-            ->getSalesClient()
-            ->getPaginatedCustomerOrdersOverview($orderListTransfer);
-
-        $orderList = $orderListTransfer->getOrders();
+        $orderListTransfer = $this->getOrderList($orderListTransfer, $isOrderSearchEnabled);
 
         return [
             'pagination' => $orderListTransfer->getPagination(),
-            'orderList' => $orderList,
+            'orderList' => $orderListTransfer->getOrders(),
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param bool $isOrderSearchEnabled
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    protected function getOrderList(OrderListTransfer $orderListTransfer, bool $isOrderSearchEnabled): OrderListTransfer
+    {
+        if ($isOrderSearchEnabled) {
+            return $this->getFactory()
+                ->getSalesClient()
+                ->searchOrders($orderListTransfer);
+        }
+
+        return $this->getFactory()
+            ->getSalesClient()
+            ->getPaginatedCustomerOrdersOverview($orderListTransfer);
     }
 
     /**

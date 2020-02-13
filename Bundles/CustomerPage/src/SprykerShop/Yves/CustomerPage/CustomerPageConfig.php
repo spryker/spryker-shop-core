@@ -18,6 +18,8 @@ class CustomerPageConfig extends AbstractBundleConfig
      */
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;
 
+    protected const IS_ORDER_SEARCH_ENABLED = false;
+
     /**
      * @uses \Spryker\Zed\Customer\CustomerConfig::MAX_LENGTH_CUSTOMER_PASSWORD
      */
@@ -66,5 +68,13 @@ class CustomerPageConfig extends AbstractBundleConfig
     public function loginFailureRedirectUrl(): ?string
     {
         return null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOrderSearchEnabled(): bool
+    {
+        return static::IS_ORDER_SEARCH_ENABLED;
     }
 }

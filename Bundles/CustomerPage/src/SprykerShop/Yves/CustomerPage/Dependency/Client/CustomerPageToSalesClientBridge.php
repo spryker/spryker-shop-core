@@ -54,4 +54,14 @@ class CustomerPageToSalesClientBridge implements CustomerPageToSalesClientInterf
     {
         return $this->salesClient->getOrderDetails($orderTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer
+    {
+        return $this->salesClient->searchOrders($orderListTransfer);
+    }
 }
