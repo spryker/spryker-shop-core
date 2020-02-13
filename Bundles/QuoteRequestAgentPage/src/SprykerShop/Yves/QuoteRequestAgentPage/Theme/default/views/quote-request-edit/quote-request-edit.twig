@@ -393,7 +393,7 @@
                         {% endblock %}
                     {% endembed %}
                 {% endfor %}
-                {% embed molecule('quote-request-shipment-information', 'QuoteRequestPage') with {
+                {% embed molecule('quote-request-shipment-information', 'QuoteRequestPage') ignore missing with {
                     data: {
                         shipment: quote.shipment,
                         priceMode: quote.priceMode,
