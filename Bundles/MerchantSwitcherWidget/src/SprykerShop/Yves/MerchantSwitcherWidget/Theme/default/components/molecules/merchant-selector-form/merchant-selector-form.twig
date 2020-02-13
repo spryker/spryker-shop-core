@@ -1,0 +1,63 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'merchant-selector-form',
+    tag: 'merchant-selector-form',
+} %}
+
+{% define data = {
+    merchantList: required,
+    currentMerchantReference: required,
+    currentMerchantNameTemplate: '%currentMerchantNamePlaceholder%',
+    newMerchantNameTemplate: '%newMerchantNamePlaceholder%',
+} %}
+
+{% define attributes = {
+    'current-merchant-name-template': data.currentMerchantNameTemplate,
+    'new-merchant-name-template': data.newMerchantNameTemplate,
+    'message-template': 'merchant_switcher.message' | trans({
+        '%currentMerchant%': data.currentMerchantNameTemplate,
+        '%newMerchant%': data.newMerchantNameTemplate,
+    }),
+} %}
+
+{% block component %}
+    {% if data.merchantList %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <form class="{{ config.jsName }}__form {% block formClass %}{% endblock %}" method="POST" action="{{ path('switch-merchant') }}">
+        {% block merchantSelect %}
+            {% embed atom('select') with {
+                modifiers: ['naked'],
+                attributes: {
+                    name: 'merchant-reference',
+                },
+                embed: {
+                    jsName: config.jsName,
+                    merchantList: data.merchantList,
+                    currentMerchantReference: data.currentMerchantReference,
+                },
+            } only %}
+                {% block body %}
+                    <div class="grid grid--justify">
+                        <div class="col spacing spacing--inner spacing--small">{{ 'merchant_switcher.label' | trans }}</div>
+                        {{ parent() }}
+                    </div>
+                {% endblock %}
+
+                {% block selectClass %}{{ embed.jsName }}__select col{% endblock %}
+
+                {% block options %}
+                    {% for merchant in embed.merchantList %}
+                        <option value="{{ merchant.merchantReference }}" {{ merchant.merchantReference == embed.currentMerchantReference ? 'selected' }}>
+                            {{ merchant.name }}
+                        </option>
+                    {% endfor %}
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    </form>
+{% endblock %}
