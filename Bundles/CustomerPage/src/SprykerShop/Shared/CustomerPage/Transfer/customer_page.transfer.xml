@@ -292,4 +292,25 @@
         <property name="bundleItem" type="Item"/>
     </transfer>
 
+    <transfer name="Totals">
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="Country">
+    </transfer>
+
+    <transfer name="CalculatedDiscount">
+    </transfer>
+
+    <transfer name="ItemState">
+    </transfer>
+
+    <transfer name="ShipmentCarrier">
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+    </transfer>
+
 </transfers>
