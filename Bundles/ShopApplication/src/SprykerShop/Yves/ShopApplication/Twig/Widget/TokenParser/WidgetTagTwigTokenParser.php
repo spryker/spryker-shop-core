@@ -243,16 +243,16 @@ class WidgetTagTwigTokenParser extends AbstractTokenParser
                     $index = count($elsewidgets) / 2;
                     $elsewidgets[] = new ConstantExpression($index, $token->getLine());
                     $elsewidgets[] = $this->parseElsewidget($stream, $token);
-                    break;
 
+                    break;
                 case static::TOKEN_NOWIDGET:
                     $nodes[static::NODE_NOWIDGET] = $this->parseNowidget($stream);
-                    break;
 
+                    break;
                 case static::TOKEN_ENDWIDGET:
                     $end = true;
-                    break;
 
+                    break;
                 default:
                     throw new SyntaxError(
                         sprintf(

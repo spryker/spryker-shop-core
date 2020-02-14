@@ -18,6 +18,11 @@
 {% block body %}
     <ul class="menu {{menuClass}}">
         <li class="menu__item">
+            {% widget 'MerchantSwitcherSelectorFormWidget' %}
+            {% endwidget %}
+        </li>
+        {% if data.withSeparators %}<li class="menu__separator"></li>{% endif %}
+        <li class="menu__item">
             {% widget 'PriceModeSwitcherWidget' only %}
             {% elsewidget 'PriceModeSwitcherWidgetPlugin' only %} {# @deprecated Use PriceModeSwitcherWidget instead. #}
             {% endwidget %}
