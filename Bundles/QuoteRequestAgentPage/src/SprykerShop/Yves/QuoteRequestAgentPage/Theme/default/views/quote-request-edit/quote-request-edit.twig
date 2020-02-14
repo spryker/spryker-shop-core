@@ -4,7 +4,8 @@
     title: 'quote_request_page.quote_request' | trans,
     quoteRequestForm: _view.quoteRequestForm,
     quoteRequest: _view.quoteRequestForm.vars.value,
-    shipmentGroups: _view.shipmentGroups | default([]),
+    shipmentGroupForms: _view.quoteRequestForm.latestVersion.shipmentGroups | default([]),
+    shipmentGroups: _view.quoteRequestForm.latestVersion.shipmentGroups.vars.value | default([]),
 } %}
 
 {% set quote = data.quoteRequest.latestVersion.quote %}
@@ -179,10 +180,11 @@
                                         embed: {
                                             priceMode: quote.priceMode,
                                             currency: quote.currency,
+                                            itemForms: data.quoteRequestForm.latestVersion.quote.items,
                                         },
                                     } only %}
                                         {% block additionalInformation %}
-                                            {% include molecule('quote-request-item-summary', 'QuoteRequestPage') with {
+                                            {% include molecule('quote-request-item-summary', 'QuoteRequestPage') ignore missing with {
                                                 data: {
                                                     priceMode: embed.priceMode,
                                                     unitPrice: data.product.unitPrice | money(true, embed.currency.code),
@@ -210,15 +212,60 @@
                                                     </p>
                                                 {% endif %}
                                             {% endif %}
+
+                                            {% for itemForm in embed.itemForms if data.product.groupKey == itemForm.vars.value.groupKey %}
+                                                {% set unitSourcePrice = itemForm.sourceUnitGrossPrice is defined ? itemForm.sourceUnitGrossPrice.vars.value : null %}
+                                                {% set unitSourcePrice = itemForm.sourceUnitNetPrice is defined ? itemForm.sourceUnitNetPrice.vars.value : unitSourcePrice %}
+
+                                                {% include molecule('source-price-form', 'QuoteRequestAgentPage') with {
+                                                    data: {
+                                                        priceForm: itemForm,
+                                                        checkboxName: 'use_default_price',
+                                                        checkboxValue: 1,
+                                                        isChecked: unitSourcePrice == null,
+                                                        checkboxLabel: 'quote_request_page.quote_request.use_default_price' | trans,
+                                                    },
+                                                    attributes: {
+                                                        price: unitSourcePrice,
+                                                    },
+                                                } only %}
+                                            {% endfor %}
+
                                         {% endblock %}
                                     {% endembed %}
                                 {% endfor %}
-                                {% include molecule('quote-request-shipment-information', 'QuoteRequestPage') with {
+                                {% embed molecule('quote-request-shipment-information', 'QuoteRequestPage') ignore missing with {
                                     data: {
                                         shipment: shipmentGroup.shipment,
                                         showAddress: true,
+                                        priceMode: quote.priceMode,
+                                    },
+                                    embed: {
+                                        shipmentGroupForms: data.shipmentGroupForms,
+                                        shipmentHash: shipmentGroup.hash,
                                     },
                                 } only %}
+                                    {% block actions %}
+                                        {% for shipmentGroupForm in embed.shipmentGroupForms if embed.shipmentHash == shipmentGroupForm.vars.value.hash %}
+                                            {% set unitSourcePrice = shipmentGroupForm.shipment.method.sourcePrice.grossAmount is defined ? shipmentGroupForm.shipment.method.sourcePrice.grossAmount.vars.value : null %}
+                                            {% set unitSourcePrice = shipmentGroupForm.shipment.method.sourcePrice.netAmount is defined ? shipmentGroupForm.shipment.method.sourcePrice.netAmount.vars.value : unitSourcePrice %}
+
+                                            {% include molecule('source-price-form', 'QuoteRequestAgentPage') with {
+                                                data: {
+                                                    priceForm: shipmentGroupForm,
+                                                    checkboxName: 'use_default_price',
+                                                    checkboxValue: 1,
+                                                    isChecked: unitSourcePrice == null,
+                                                    checkboxLabel: 'quote_request_page.quote_request.use_default_price' | trans,
+                                                },
+                                                attributes: {
+                                                    price: unitSourcePrice,
+                                                },
+                                            } only %}
+                                        {% endfor %}
+
+                                    {% endblock %}
+                                {% endembed %}
                             </div>
                         </div>
                     </div>
@@ -346,6 +393,35 @@
                         {% endblock %}
                     {% endembed %}
                 {% endfor %}
+                {% embed molecule('quote-request-shipment-information', 'QuoteRequestPage') ignore missing with {
+                    data: {
+                        shipment: quote.shipment,
+                        priceMode: quote.priceMode,
+                    },
+                    embed: {
+                        shipmentGroupForm: data.shipmentGroupForms | first,
+                    },
+                } only %}
+                    {% block actions %}
+                        {% if embed.shipmentGroupForm %}
+                            {% set unitSourcePrice = embed.shipmentGroupForm.shipment.method.sourcePrice.grossAmount is defined ? embed.shipmentGroupForm.shipment.method.sourcePrice.grossAmount.vars.value : null %}
+                            {% set unitSourcePrice = embed.shipmentGroupForm.shipment.method.sourcePrice.netAmount is defined ? embed.shipmentGroupForm.shipment.method.sourcePrice.netAmount.vars.value : unitSourcePrice %}
+
+                            {% include molecule('source-price-form', 'QuoteRequestAgentPage') with {
+                                data: {
+                                    priceForm: embed.shipmentGroupForm,
+                                    checkboxName: 'use_default_price',
+                                    checkboxValue: 1,
+                                    isChecked: unitSourcePrice == null,
+                                    checkboxLabel: 'quote_request_page.quote_request.use_default_price' | trans,
+                                },
+                                attributes: {
+                                    price: unitSourcePrice,
+                                },
+                            } only %}
+                        {% endif %}
+                    {% endblock %}
+                {% endembed %}
             {% endif %}
         </div>
 

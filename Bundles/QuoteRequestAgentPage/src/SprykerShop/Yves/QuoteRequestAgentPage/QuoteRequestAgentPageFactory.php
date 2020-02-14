@@ -54,7 +54,7 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
 
         return $this->getFormFactory()->create(
             QuoteRequestAgentForm::class,
-            $quoteRequestTransfer,
+            $quoteRequestAgentFormDataProvider->getData($quoteRequestTransfer),
             $quoteRequestAgentFormDataProvider->getOptions($quoteRequestTransfer)
         );
     }
@@ -105,7 +105,8 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     {
         return new QuoteRequestAgentFormDataProvider(
             $this->getCartClient(),
-            $this->getPriceClient()
+            $this->getPriceClient(),
+            $this->createShipmentGrouper()
         );
     }
 
