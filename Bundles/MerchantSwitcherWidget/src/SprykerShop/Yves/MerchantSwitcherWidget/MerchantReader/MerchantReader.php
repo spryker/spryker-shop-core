@@ -55,7 +55,7 @@ class MerchantReader implements MerchantReaderInterface
                 $this->selectedMerchantCookie->removeMerchantReference();
             }
 
-            return '';
+            return null;
         }
 
         $selectedMerchantReference = $selectedMerchantTransfer->getMerchantReference();
