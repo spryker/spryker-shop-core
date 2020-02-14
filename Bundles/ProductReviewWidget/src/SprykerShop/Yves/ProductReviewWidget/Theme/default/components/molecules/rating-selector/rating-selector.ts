@@ -25,7 +25,7 @@ export default class RatingSelector extends Component {
             this.mapEvents();
         }
 
-        this.mapCustomEvents();
+        this.mapUpdateRatingEvents();
     }
 
     protected mapEvents(): void {
@@ -34,7 +34,7 @@ export default class RatingSelector extends Component {
         });
     }
 
-    protected mapCustomEvents(): void {
+    protected mapUpdateRatingEvents(): void {
         if (!this.productItem) {
             return;
         }

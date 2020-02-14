@@ -23,12 +23,12 @@ export default class ProductSetDetails extends Component {
 
         this.productItems.forEach((element: ProductItem, index: number) => {
             element.addEventListener(EVENT_UPDATE_ADD_TO_CART_URL, (event: Event) => {
-                this.onCustomEvent((<CustomEvent>event).detail.sku, index);
+                this.updateAddToCartUrls((<CustomEvent>event).detail.sku, index);
             });
         });
     }
 
-    protected onCustomEvent(sku: string, index: number): void {
+    protected updateAddToCartUrls(sku: string, index: number): void {
         this.targets[index].value = sku;
     }
 }

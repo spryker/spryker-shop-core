@@ -36,7 +36,7 @@
                     },
                 } only %}
                     {% block image %}
-                        {% set additionalClass = embed.jsName ~ '__image' %}
+                        {% set additionalImageClass = embed.jsName ~ '__image' %}
 
                         {{ parent() }}
                     {% endblock %}
@@ -102,7 +102,7 @@
                 {% block productAbstractRating %}
                     {% widget 'DisplayProductAbstractReviewWidget' args [data.idProductAbstract] with {
                         data: {
-                            productItemJsName: config.jsName,
+                            parentJsName: config.jsName,
                         },
                     } only %}{% endwidget %}
                 {% endblock %}
@@ -118,7 +118,7 @@
                                 amount: data.product.prices.DEFAULT | default(null),
                                 originalAmount: data.product.prices.ORIGINAL | default(null),
                                 currencyIsoCode: data.currencyIsoCode,
-                                productItemJsName: config.jsName,
+                                parentJsName: config.jsName,
                             },
                         } only %}
                     {% else %}
