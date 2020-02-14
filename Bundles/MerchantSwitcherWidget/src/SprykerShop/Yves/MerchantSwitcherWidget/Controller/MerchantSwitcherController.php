@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\MerchantSwitcherWidget\Controller;
 
+use Generated\Shared\Transfer\MerchantSwitchRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -30,7 +32,13 @@ class MerchantSwitcherController extends AbstractController
     {
         $merchantReference = $request->get(static::PARAM_MERCHANT_REFERENCE);
 
-        $this->updateQuoteWithMerchantReference($merchantReference);
+        $quoteTransfer = $this->updateQuoteWithMerchantReference($merchantReference);
+        $this->getFactory()
+            ->getMerchantSwitcherClient()
+            ->switchMerchant(
+                (new MerchantSwitchRequestTransfer())
+                    ->setQuote($quoteTransfer)
+            );
 
         $cookie = Cookie::create(
             $this->getFactory()->getConfig()->getMerchantSelectorCookieIdentifier(),
@@ -57,14 +65,16 @@ class MerchantSwitcherController extends AbstractController
     /**
      * @param string $merchantReference
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function updateQuoteWithMerchantReference(string $merchantReference): void
+    protected function updateQuoteWithMerchantReference(string $merchantReference): QuoteTransfer
     {
         $quoteClient = $this->getFactory()->getQuoteClient();
 
         $quoteTransfer = $quoteClient->getQuote();
         $quoteTransfer->setMerchantReference($merchantReference);
         $quoteClient->setQuote($quoteTransfer);
+
+        return $quoteTransfer;
     }
 }

@@ -15,4 +15,11 @@
         <property name="merchantReference" type="string"/>
     </transfer>
 
+    <transfer name="MerchantSwitchRequest">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="MerchantSwitchResponse">
+    </transfer>
+
 </transfers>
