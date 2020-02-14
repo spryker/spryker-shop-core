@@ -13,7 +13,7 @@
     <transfer name="ShopContext">
     </transfer>
 
-    <transfer name="ProductStorageCriteriaTransfer">
+    <transfer name="ProductStorageCriteria">
     </transfer>
 
 </transfers>
