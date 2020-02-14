@@ -29,7 +29,7 @@ class MerchantSwitcherController extends AbstractController
     {
         $merchantReference = $request->get(static::PARAM_MERCHANT_REFERENCE);
 
-        $this->getFactory()->createSelectedMerchantCookie()->setMerchantSelector($merchantReference);
+        $this->getFactory()->createSelectedMerchantCookie()->setMerchantReference($merchantReference);
 
         return $this->createRedirectResponse($request);
     }

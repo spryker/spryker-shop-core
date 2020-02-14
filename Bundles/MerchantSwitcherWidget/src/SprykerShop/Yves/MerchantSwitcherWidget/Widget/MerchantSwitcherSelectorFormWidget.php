@@ -52,7 +52,7 @@ class MerchantSwitcherSelectorFormWidget extends AbstractWidget
             return;
         }
 
-        $selectedMerchantReference = $merchantReader->getSelectedMerchantReference();
+        $selectedMerchantReference = $merchantReader->extractSelectedMerchantReference();
 
         $this->addParameter('merchantTransfers', $merchantTransfers);
         $this->addParameter('selectedMerchantReference', $selectedMerchantReference);

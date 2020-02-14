@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader;
 interface MerchantReaderInterface
 {
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSelectedMerchantReference(): string;
+    public function extractSelectedMerchantReference(): ?string;
 }

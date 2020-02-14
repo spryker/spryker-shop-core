@@ -12,17 +12,17 @@ interface SelectedMerchantCookieInterface
     /**
      * @return string
      */
-    public function getMerchantSelector(): string;
+    public function getMerchantReference(): string;
 
     /**
      * @param string $selectedMerchantReference
      *
      * @return void
      */
-    public function setMerchantSelector(string $selectedMerchantReference): void;
+    public function setMerchantReference(string $selectedMerchantReference): void;
 
     /**
      * @return void
      */
-    public function removeMerchantSelector(): void;
+    public function removeMerchantReference(): void;
 }
