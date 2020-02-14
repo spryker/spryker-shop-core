@@ -12,7 +12,7 @@ use SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 
-class MerchantCookie implements MerchantCookieInterface
+class SelectedMerchantCookie implements SelectedMerchantCookieInterface
 {
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -47,7 +47,7 @@ class MerchantCookie implements MerchantCookieInterface
     /**
      * @return string
      */
-    public function getMerchantSelectorCookieIdentifier(): string
+    public function getMerchantSelector(): string
     {
         return $this->request->cookies->get($this->merchantSwitcherWidgetConfig->getMerchantSelectorCookieIdentifier(), '');
     }
@@ -57,7 +57,7 @@ class MerchantCookie implements MerchantCookieInterface
      *
      * @return void
      */
-    public function setMerchantSelectorCookieIdentifier(string $selectedMerchantReference): void
+    public function setMerchantSelector(string $selectedMerchantReference): void
     {
         $this->cookies->append(Cookie::create(
             $this->merchantSwitcherWidgetConfig->getMerchantSelectorCookieIdentifier(),
@@ -69,7 +69,7 @@ class MerchantCookie implements MerchantCookieInterface
     /**
      * @return void
      */
-    public function removeMerchantSelectorCookieIdentifier(): void
+    public function removeMerchantSelector(): void
     {
         $this->cookies->append(Cookie::create(
             $this->merchantSwitcherWidgetConfig->getMerchantSelectorCookieIdentifier(),

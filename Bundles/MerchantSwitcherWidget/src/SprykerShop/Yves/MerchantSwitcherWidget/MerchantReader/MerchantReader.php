@@ -7,9 +7,7 @@
 
 namespace SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader;
 
-use ArrayObject;
-use Generated\Shared\Transfer\MerchantTransfer;
-use SprykerShop\Yves\MerchantSwitcherWidget\Cookie\MerchantCookieInterface;
+use SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookieInterface;
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientInterface;
 
 class MerchantReader implements MerchantReaderInterface
@@ -20,28 +18,20 @@ class MerchantReader implements MerchantReaderInterface
     protected $merchantSearchClient;
 
     /**
-     * @var \SprykerShop\Yves\MerchantSwitcherWidget\Cookie\MerchantCookieInterface
+     * @var \SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookieInterface
      */
     protected $merchantCookie;
 
     /**
      * @param \SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientInterface $merchantSearchClient
-     * @param \SprykerShop\Yves\MerchantSwitcherWidget\Cookie\MerchantCookieInterface $merchantCookie
+     * @param \SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookieInterface $merchantCookie
      */
     public function __construct(
         MerchantSwitcherWidgetToMerchantSearchClientInterface $merchantSearchClient,
-        MerchantCookieInterface $merchantCookie
+        SelectedMerchantCookieInterface $merchantCookie
     ) {
         $this->merchantSearchClient = $merchantSearchClient;
         $this->merchantCookie = $merchantCookie;
-    }
-
-    /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantTransfer[]
-     */
-    public function getActiveMerchants(): ArrayObject
-    {
-        return $this->merchantSearchClient->getActiveMerchants()->getMerchants();
     }
 
     /**
@@ -49,27 +39,27 @@ class MerchantReader implements MerchantReaderInterface
      */
     public function getSelectedMerchantReference(): string
     {
-        $selectedMerchantReference = $this->merchantCookie->getMerchantSelectorCookieIdentifier();
-        $merchantTransfers = $this->getActiveMerchants();
+        $selectedMerchantReference = $this->merchantCookie->getMerchantSelector();
+        $merchantTransfers = $this->merchantSearchClient->getActiveMerchants()->getMerchants();
 
         foreach ($merchantTransfers as $merchantTransfer) {
             if ($selectedMerchantReference === $merchantTransfer->getMerchantReference()) {
                 return $selectedMerchantReference;
             }
         }
-        /** @var \Generated\Shared\Transfer\MerchantTransfer $selectedMerchantTransfer */
-        $selectedMerchantTransfer = $merchantTransfers->getIterator()->current();
+        /** @var \Generated\Shared\Transfer\MerchantTransfer|false $selectedMerchantTransfer */
+        $selectedMerchantTransfer = reset($merchantTransfers);
 
-        if (!$selectedMerchantTransfer instanceof MerchantTransfer) {
+        if (!$selectedMerchantTransfer) {
             if ($selectedMerchantReference) {
-                $this->merchantCookie->removeMerchantSelectorCookieIdentifier();
+                $this->merchantCookie->removeMerchantSelector();
             }
 
             return '';
         }
 
         $selectedMerchantReference = $selectedMerchantTransfer->getMerchantReference();
-        $this->merchantCookie->setMerchantSelectorCookieIdentifier($selectedMerchantReference);
+        $this->merchantCookie->setMerchantSelector($selectedMerchantReference);
 
         return $selectedMerchantReference;
     }

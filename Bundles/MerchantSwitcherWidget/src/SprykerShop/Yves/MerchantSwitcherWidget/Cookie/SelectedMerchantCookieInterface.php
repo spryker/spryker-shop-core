@@ -7,22 +7,22 @@
 
 namespace SprykerShop\Yves\MerchantSwitcherWidget\Cookie;
 
-interface MerchantCookieInterface
+interface SelectedMerchantCookieInterface
 {
     /**
      * @return string
      */
-    public function getMerchantSelectorCookieIdentifier(): string;
+    public function getMerchantSelector(): string;
 
     /**
      * @param string $selectedMerchantReference
      *
      * @return void
      */
-    public function setMerchantSelectorCookieIdentifier(string $selectedMerchantReference): void;
+    public function setMerchantSelector(string $selectedMerchantReference): void;
 
     /**
      * @return void
      */
-    public function removeMerchantSelectorCookieIdentifier(): void;
+    public function removeMerchantSelector(): void;
 }

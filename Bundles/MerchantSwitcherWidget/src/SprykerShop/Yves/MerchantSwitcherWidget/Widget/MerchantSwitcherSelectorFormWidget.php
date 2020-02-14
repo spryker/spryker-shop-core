@@ -46,7 +46,7 @@ class MerchantSwitcherSelectorFormWidget extends AbstractWidget
     protected function addMerchantParameters(): void
     {
         $merchantReader = $this->getFactory()->createMerchantReader();
-        $merchantTransfers = $merchantReader->getActiveMerchants();
+        $merchantTransfers = $this->getFactory()->getMerchantSearchClient()->getActiveMerchants()->getMerchants();
 
         if (!count($merchantTransfers)) {
             return;
