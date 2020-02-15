@@ -51,25 +51,6 @@ class OrderController extends AbstractCustomerController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     * @param bool $isOrderSearchEnabled
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    protected function getOrderList(OrderListTransfer $orderListTransfer, bool $isOrderSearchEnabled): OrderListTransfer
-    {
-        if ($isOrderSearchEnabled) {
-            return $this->getFactory()
-                ->getSalesClient()
-                ->searchOrders($orderListTransfer);
-        }
-
-        return $this->getFactory()
-            ->getSalesClient()
-            ->getPaginatedCustomerOrdersOverview($orderListTransfer);
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
