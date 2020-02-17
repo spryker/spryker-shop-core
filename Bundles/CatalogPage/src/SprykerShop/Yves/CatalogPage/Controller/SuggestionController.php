@@ -30,8 +30,9 @@ class SuggestionController extends AbstractController
             return $this->jsonResponse();
         }
 
-        $shopContextTransfer = $this->getFactory()->getShopContext();
-        $shopContextParameters = $shopContextTransfer->modifiedToArray(true, false);
+        $shopContextParameters = $this->getFactory()
+            ->getShopContext()
+            ->modifiedToArray(true, false);
         $parameters = array_merge($request->query->all(), $shopContextParameters);
 
         $searchResults = $this

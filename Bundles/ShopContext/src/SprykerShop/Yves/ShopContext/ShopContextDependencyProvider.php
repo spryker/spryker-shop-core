@@ -21,6 +21,8 @@ class ShopContextDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = parent::provideDependencies($container);
+
         $container = $this->addShopContextExpanderPlugins($container);
 
         return $container;
@@ -33,9 +35,9 @@ class ShopContextDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addShopContextExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_SHOP_CONTEXT_EXPANDER] = function () {
+        $container->set(static::PLUGINS_SHOP_CONTEXT_EXPANDER, function () {
             return $this->getShopContextExpanderPlugins();
-        };
+        });
 
         return $container;
     }
