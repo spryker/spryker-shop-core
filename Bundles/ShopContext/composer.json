@@ -14,7 +14,7 @@
     "spryker/container": "*"
   },
   "suggest": {
-    "spryker/container": "ADD SUGGEST DESCRIPTION"
+    "spryker/container": "Add this module when you want to use the Container."
   },
   "autoload": {
     "psr-4": {

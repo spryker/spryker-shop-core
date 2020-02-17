@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 class SuggestionController extends AbstractController
 {
     public const PARAM_SEARCH_QUERY = 'q';
-    public const MERCHANT_REFERENCE = 'merchant_reference';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

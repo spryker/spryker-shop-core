@@ -32,7 +32,6 @@ class CatalogController extends AbstractController
     protected const URL_PARAM_FILTER_BY_PRICE = 'price';
     protected const URL_PARAM_SORTING = 'sort';
     protected const PRICE_SORTING_DIRECTIONS = ['price_desc', 'price_asc'];
-    protected const MERCHANT_REFERENCE = 'merchant_reference';
 
     /**
      * @param array $categoryNode
