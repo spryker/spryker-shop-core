@@ -21,14 +21,17 @@ export default class ColorSelector extends Component {
     protected onTriggerSelection(event: Event): void {
         event.preventDefault();
         this.currentSelection = <HTMLElement>event.currentTarget;
+        this.resetActiveItemSelections();
         this.setActiveItemSelection();
     }
 
-    protected setActiveItemSelection(selection?: HTMLElement): void {
+    protected resetActiveItemSelections(): void {
         this.triggers.forEach((element: HTMLElement) => {
             element.classList.remove(this.activeItemClassName);
         });
+    }
 
+    protected setActiveItemSelection(selection?: HTMLElement): void {
         (selection || this.currentSelection).classList.add(this.activeItemClassName);
     }
 

@@ -11,19 +11,23 @@
     originalAmount: null,
     noPriceText: '---',
     currencyIsoCode: null,
-    productItemJsName: '',
+    parentJsName: '',
 } %}
 
 {% block body %}
-    {% if data.originalAmount is not empty and data.originalAmount > data.amount %}
-        <span class="{{ config.name }}__amount {{ config.name }}__amount--original {{ data.productItemJsName }}__original-price">
+    {% if data.originalAmount is not empty and data.originalAmount > data.amount -%}
+        {% set originalPriceJsName = data.parentJsName ? data.parentJsName ~ '__original-price' %}
+
+        <span class="{{ config.name }}__amount {{ config.name }}__amount--original {{ originalPriceJsName }}">
             {{- data.originalAmount | money(true, data.currencyIsoCode) -}}
         </span>
-    {% endif %}
+    {%- endif -%}
 
-    {% if data.amount is empty %}
+    {% if data.amount is empty -%}
         {{ data.noPriceText }}
-    {% else %}
+    {%- else -%}
+        {% set defaultPriceJsName = data.parentJsName ? data.parentJsName ~ '__default-price' %}
+
         <span class="{{ config.name }}__amount">
             {% include atom('icon') with {
                 class: config.name ~ '__tag',
@@ -31,9 +35,9 @@
                     name: 'tag',
                 },
             } only %}
-            <span class="{{ data.productItemJsName }}__default-price">
+            <span class="{{ defaultPriceJsName }}">
                 {{- data.amount | money(true, data.currencyIsoCode) -}}
             </span>
         </span>
-    {% endif %}
+    {%- endif -%}
 {% endblock %}

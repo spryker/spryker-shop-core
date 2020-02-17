@@ -1,13 +1,13 @@
 /* tslint:disable: max-file-line-count */
 import Component from '../../../models/component';
 
-export const EVENT_UPDATE_RATING = 'updateRating';
-export const EVENT_UPDATE_ADD_TO_CART_URL = 'updateAddToCartUrl';
-
 /**
  * @event updateRating An event emitted when the product rating has been updated.
  * @event updateAddToCartUrl An event emitted when the product 'add to cart' URL has been updated.
  */
+export const EVENT_UPDATE_RATING = 'updateRating';
+export const EVENT_UPDATE_ADD_TO_CART_URL = 'updateAddToCartUrl';
+
 export interface ProductItemData {
     imageUrl: string;
     imageAlt: string;
@@ -59,30 +59,39 @@ export default class ProductItem extends Component {
      * @param data A data object for setting the product card information.
      */
     updateProductItemData(data: ProductItemData): void {
-        this.newImageUrl = data.imageUrl;
-        this.newImageAlt = data.nameValue;
-        this.newLabels = data.labels;
-        this.newNameValue = data.nameValue;
-        this.newRatingValue = data.ratingValue;
-        this.newDefaultPrice = data.defaultPrice;
-        this.newOriginalPrice = data.originalPrice;
-        this.newDetailPageUrl = data.detailPageUrl;
-        this.newAddToCartUrl = data.addToCartUrl;
+        this.imageUrl = data.imageUrl;
+        this.imageAlt = data.nameValue;
+        this.labels = data.labels;
+        this.nameValue = data.nameValue;
+        this.ratingValue = data.ratingValue;
+        this.defaultPrice = data.defaultPrice;
+        this.originalPrice = data.originalPrice;
+        this.detailPageUrl = data.detailPageUrl;
+        this.addToCartUrl = data.addToCartUrl;
     }
 
-    protected set newImageUrl(imageUrl: string) {
+    /**
+     * Sets the product card image URL.
+     */
+    set imageUrl(imageUrl: string) {
         if (this.productImage) {
             this.productImage.src = imageUrl;
         }
     }
 
-    protected set newImageAlt(imageAlt: string) {
+    /**
+     * Sets the product card image alt.
+     */
+    set imageAlt(imageAlt: string) {
         if (this.productImage) {
             this.productImage.alt = imageAlt;
         }
     }
 
-    protected set newLabels(labels: ProductItemLabelsData[]) {
+    /**
+     * Sets the product card labels.
+     */
+    set labels(labels: ProductItemLabelsData[]) {
         if (!labels.length) {
             this.productLabelFlags.forEach((element: HTMLElement) => element.classList.add(this.classToToggle));
             this.productLabelTag.classList.add(this.classToToggle);
@@ -93,35 +102,53 @@ export default class ProductItem extends Component {
         this.updateProductLabels(labels);
     }
 
-    protected set newNameValue(name: string) {
+    /**
+     * Sets the product card name.
+     */
+    set nameValue(name: string) {
         if (this.productName) {
             this.productName.innerText = name;
         }
     }
 
-    protected set newRatingValue(rating: number) {
+    /**
+     * Sets the product card rating.
+     */
+    set ratingValue(rating: number) {
         this.dispatchCustomEvent(EVENT_UPDATE_RATING, {rating});
     }
 
-    protected set newDefaultPrice(defaultPrice: string) {
+    /**
+     * Sets the product card default price.
+     */
+    set defaultPrice(defaultPrice: string) {
         if (this.productDefaultPrice) {
             this.productDefaultPrice.innerText = defaultPrice;
         }
     }
 
-    protected set newOriginalPrice(originalPrice: string) {
+    /**
+     * Sets the product card original price.
+     */
+    set originalPrice(originalPrice: string) {
         if (this.productOriginalPrice) {
             this.productOriginalPrice.innerText = originalPrice;
         }
     }
 
-    protected set newDetailPageUrl(detailPageUrl: string) {
+    /**
+     * Sets the product card detail page URL.
+     */
+    set detailPageUrl(detailPageUrl: string) {
         if (this.productLinkDetailPage) {
             this.productLinkDetailPage.forEach((element: HTMLAnchorElement) => element.href = detailPageUrl);
         }
     }
 
-    protected set newAddToCartUrl(addToCartUrl: string) {
+    /**
+     * Sets the product card 'add to cart' URL.
+     */
+    set addToCartUrl(addToCartUrl: string) {
         if (this.productLinkAddToCart) {
             this.productLinkAddToCart.href = addToCartUrl;
         }

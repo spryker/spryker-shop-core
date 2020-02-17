@@ -13,13 +13,13 @@
     useHalfSteps: false,
     inputId: '',
     inputName: 'rating',
-    productItemJsName: '',
+    parentJsName: '',
 } %}
 
 {% define attributes = {
     'readonly': false,
     'disable-if-empty-value': false,
-    'product-item-class-name': data.productItemJsName,
+    'product-item-class-name': data.parentJsName,
 } %}
 
 {% set singleStepValue = (data.maxValue - data.minValue) / (data.steps - 1) %}
@@ -101,7 +101,7 @@
     </span>
 
     {% block input %}
-        {% set hiddenInputJsName = data.productItemJsName ? data.productItemJsName ~ '__rating' %}
+        {% set hiddenInputJsName = data.parentJsName ? data.parentJsName ~ '__rating' %}
 
         <input
             type="hidden"
