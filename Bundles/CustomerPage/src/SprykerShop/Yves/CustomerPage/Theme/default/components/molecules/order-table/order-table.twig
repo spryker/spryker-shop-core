@@ -6,7 +6,8 @@
 
 {% define data = {
     orders: required,
-    isOrderSearchEnabled: false
+    isOrderSearchEnabled: required,
+    isOrderSearchOrderItemsVisible: required
 } %}
 
 {% block body %}
@@ -18,7 +19,7 @@
                 <tr>
                     <th>{{ 'customer.order.reference' | trans }}</th>
                     <th>{{ 'customer.order.date' | trans }}</th>
-                    {% if data.isOrderSearchEnabled %}
+                    {% if data.isOrderSearchEnabled and data.isOrderSearchOrderItemsVisible %}
                         <th>{{ 'customer.order.number_of_items' | trans }}</th>
                     {% endif %}
                     <th>{{ 'customer.order.total' | trans }}</th>
@@ -30,8 +31,8 @@
                     <tr>
                         <td>{{ order.orderReference }}</td>
                         <td>{{ date(order.createdAt) | formatDateTime }}</td>
-                        {% if data.isOrderSearchEnabled %}
-                            <td>{{ order.items | length }}</td>
+                        {% if data.isOrderSearchEnabled and data.isOrderSearchOrderItemsVisible %}
+                            <td>{{ order.items.count }}</td>
                         {% endif %}
                         <td>{{ order.totals.grandTotal | default(0) | money(true, order.currencyIsoCode) }}</td>
                         <td>

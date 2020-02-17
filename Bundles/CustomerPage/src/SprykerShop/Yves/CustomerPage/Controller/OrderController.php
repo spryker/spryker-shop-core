@@ -67,10 +67,13 @@ class OrderController extends AbstractCustomerController
             ->createOrderReader()
             ->getOrderList($request);
 
+        $customerPageConfig = $this->getFactory()->getConfig();
+
         return [
             'pagination' => $orderListTransfer->getPagination(),
             'orderList' => $orderListTransfer->getOrders(),
-            'isOrderSearchEnabled' => $this->getFactory()->getConfig()->isOrderSearchEnabled(),
+            'isOrderSearchEnabled' => $customerPageConfig->isOrderSearchEnabled(),
+            'isOrderSearchOrderItemsVisible' => $customerPageConfig->isOrderSearchOrderItemsVisible(),
         ];
     }
 

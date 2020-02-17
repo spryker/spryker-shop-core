@@ -3,6 +3,7 @@
 {% define data = {
     orders: _view.orderList,
     isOrderSearchEnabled: _view.isOrderSearchEnabled,
+    isOrderSearchOrderItemsVisible: _view.isOrderSearchOrderItemsVisible,
 
     pagination: {
         parameters: {},
@@ -23,7 +24,8 @@
         {% include molecule('order-table', 'CustomerPage') with {
             data: {
                 orders: data.orders,
-                isOrderSearchEnabled: data.isOrderSearchEnabled
+                isOrderSearchEnabled: data.isOrderSearchEnabled,
+                isOrderSearchOrderItemsVisible: data.isOrderSearchOrderItemsVisible
             }
         } only %}
         <hr>
