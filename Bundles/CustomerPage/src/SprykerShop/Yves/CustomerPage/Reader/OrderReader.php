@@ -21,9 +21,6 @@ class OrderReader implements OrderReaderInterface
     protected const PARAM_PER_PAGE = 'perPage';
 
     protected const DEFAULT_PAGE = 1;
-    protected const DEFAULT_PER_PAGE = 10;
-    protected const DEFAULT_SORT_FIELD = 'created_at';
-    protected const DEFAULT_SORT_DIRECTION = 'DESC';
 
     /**
      * @var \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface
@@ -101,8 +98,8 @@ class OrderReader implements OrderReaderInterface
     protected function createFilterTransfer(): FilterTransfer
     {
         $filterTransfer = new FilterTransfer();
-        $filterTransfer->setOrderBy(static::DEFAULT_SORT_FIELD);
-        $filterTransfer->setOrderDirection(static::DEFAULT_SORT_DIRECTION);
+        $filterTransfer->setOrderBy($this->customerPageConfig->getDefaultOrderHistorySortField());
+        $filterTransfer->setOrderDirection($this->customerPageConfig->getDefaultOrderHistorySortDirection());
 
         return $filterTransfer;
     }
@@ -120,7 +117,7 @@ class OrderReader implements OrderReaderInterface
             $request->query->getInt(static::PARAM_PAGE, static::DEFAULT_PAGE)
         );
         $paginationTransfer->setMaxPerPage(
-            $request->query->getInt(static::PARAM_PER_PAGE, static::DEFAULT_PER_PAGE)
+            $request->query->getInt(static::PARAM_PER_PAGE, $this->customerPageConfig->getDefaultOrderHistoryPerPage())
         );
 
         return $paginationTransfer;

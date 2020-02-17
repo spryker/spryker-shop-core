@@ -20,6 +20,10 @@ class CustomerPageConfig extends AbstractBundleConfig
 
     protected const IS_ORDER_SEARCH_ENABLED = false;
 
+    protected const DEFAULT_ORDER_HISTORY_PER_PAGE = 10;
+    protected const DEFAULT_ORDER_HISTORY_SORT_FIELD = 'created_at';
+    protected const DEFAULT_ORDER_HISTORY_SORT_DIRECTION = 'DESC';
+
     /**
      * @uses \Spryker\Zed\Customer\CustomerConfig::MAX_LENGTH_CUSTOMER_PASSWORD
      */
@@ -76,5 +80,29 @@ class CustomerPageConfig extends AbstractBundleConfig
     public function isOrderSearchEnabled(): bool
     {
         return static::IS_ORDER_SEARCH_ENABLED;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDefaultOrderHistoryPerPage(): int
+    {
+        return static::DEFAULT_ORDER_HISTORY_PER_PAGE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultOrderHistorySortField(): string
+    {
+        return static::DEFAULT_ORDER_HISTORY_SORT_FIELD;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultOrderHistorySortDirection(): string
+    {
+        return static::DEFAULT_ORDER_HISTORY_SORT_DIRECTION;
     }
 }
