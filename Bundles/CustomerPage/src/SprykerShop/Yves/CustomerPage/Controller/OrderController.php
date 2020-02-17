@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +15,31 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class OrderController extends AbstractCustomerController
 {
+    /**
+     * @deprecated Will be removed without replacement.
+     */
+    public const ORDER_LIST_LIMIT = 10;
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
+    public const ORDER_LIST_SORT_FIELD = 'created_at';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
+    public const ORDER_LIST_SORT_DIRECTION = 'DESC';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
+    public const PARAM_PAGE = 'page';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
+    public const DEFAULT_PAGE = 1;
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

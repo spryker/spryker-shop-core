@@ -76,19 +76,21 @@ class OrderReader implements OrderReaderInterface
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    protected function createOrderListTransfer(Request $request)
+    protected function createOrderListTransfer(Request $request): OrderListTransfer
     {
         $orderListTransfer = new OrderListTransfer();
 
-        if ($this->customerClient->isLoggedIn()) {
-            $customerTransfer = $this->customerClient->getCustomer();
-
-            $orderListTransfer->setCustomer($customerTransfer);
-            $orderListTransfer->setIdCustomer($customerTransfer->getIdCustomer());
-        }
-
         $orderListTransfer->setFilter($this->createFilterTransfer());
         $orderListTransfer->setPagination($this->createPaginationTransfer($request));
+
+        if (!$this->customerClient->isLoggedIn()) {
+            return $orderListTransfer;
+        }
+
+        $customerTransfer = $this->customerClient->getCustomer();
+
+        $orderListTransfer->setCustomer($customerTransfer);
+        $orderListTransfer->setIdCustomer($customerTransfer->getIdCustomer());
 
         return $orderListTransfer;
     }
@@ -96,7 +98,7 @@ class OrderReader implements OrderReaderInterface
     /**
      * @return \Generated\Shared\Transfer\FilterTransfer
      */
-    protected function createFilterTransfer()
+    protected function createFilterTransfer(): FilterTransfer
     {
         $filterTransfer = new FilterTransfer();
         $filterTransfer->setOrderBy(static::DEFAULT_SORT_FIELD);
@@ -110,7 +112,7 @@ class OrderReader implements OrderReaderInterface
      *
      * @return \Generated\Shared\Transfer\PaginationTransfer
      */
-    protected function createPaginationTransfer(Request $request)
+    protected function createPaginationTransfer(Request $request): PaginationTransfer
     {
         $paginationTransfer = new PaginationTransfer();
 

@@ -34,7 +34,7 @@
     </transfer>
 
     <transfer name="OrderList">
-        <property name="idCustomer" type="int"/>
+        <property name="idCustomer" type="int" deprecated="use Customer property instead."/>
         <property name="filter" type="Filter"/>
         <property name="orders" type="Order[]" singular="order"/>
         <property name="pagination" type="Pagination"/>
