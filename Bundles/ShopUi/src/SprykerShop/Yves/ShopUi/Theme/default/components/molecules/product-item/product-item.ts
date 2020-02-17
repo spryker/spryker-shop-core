@@ -58,6 +58,7 @@ export default class ProductItem extends Component {
 
     /**
      * Sets the product card image URL.
+     * @param imageUrl A product card image URL.
      */
     set imageUrl(imageUrl: string) {
         if (this.productImage) {
@@ -67,6 +68,7 @@ export default class ProductItem extends Component {
 
     /**
      * Sets the product card name.
+     * @param name A product card name.
      */
     set nameValue(name: string) {
         if (this.productName) {
@@ -76,6 +78,7 @@ export default class ProductItem extends Component {
 
     /**
      * Sets the product card rating.
+     * @param rating A product card rating.
      */
     set ratingValue(rating: number) {
         this.dispatchCustomEvent(EVENT_UPDATE_RATING, {rating});
@@ -83,6 +86,7 @@ export default class ProductItem extends Component {
 
     /**
      * Sets the product card default price.
+     * @param defaultPrice A product card default price.
      */
     set defaultPrice(defaultPrice: string) {
         if (this.productDefaultPrice) {
@@ -92,6 +96,7 @@ export default class ProductItem extends Component {
 
     /**
      * Sets the product card original price.
+     * @param originalPrice A product card original price.
      */
     set originalPrice(originalPrice: string) {
         if (this.productOriginalPrice) {
@@ -101,6 +106,7 @@ export default class ProductItem extends Component {
 
     /**
      * Sets the product card detail page URL.
+     * @param detailPageUrl A product card detail page URL.
      */
     set detailPageUrl(detailPageUrl: string) {
         if (this.productLinkDetailPage) {
@@ -110,6 +116,7 @@ export default class ProductItem extends Component {
 
     /**
      * Sets the product card 'add to cart' URL.
+     * @param addToCartUrl A product card 'add to cart' URL.
      */
     set addToCartUrl(addToCartUrl: string) {
         if (this.productLinkAddToCart) {

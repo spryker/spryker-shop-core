@@ -20,7 +20,7 @@ export default class ProductDetailColorSelector extends ColorSelector {
 
     protected onTriggerSelection(event: Event): void {
         super.onTriggerSelection(event);
-        this.imageCarousel.setNewImageUrl(this.imageUrl);
+        this.imageCarousel.slideImageUrl = this.imageUrl;
     }
 
     protected onTriggerUnselection(): void {

@@ -21,7 +21,7 @@ export default class ImageCarousel extends SimpleCarousel {
      * Sets the new slide image with a new URL.
      * @param url An image URL.
      */
-    setNewImageUrl(url: string): void {
+    set slideImageUrl(url: string) {
         this.currentSlideImage.src = url;
     }
 
