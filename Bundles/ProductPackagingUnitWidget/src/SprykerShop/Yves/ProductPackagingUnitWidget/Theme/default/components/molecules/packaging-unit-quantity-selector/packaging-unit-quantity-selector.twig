@@ -152,7 +152,7 @@
         {% endif %}
 
         <div class="col {{ rightColumnModifierClass }}">
-            {% set isProductSalesUnitsMultiply = salesUnitCount and data.leadProductSalesUnits | length > 1 %}
+            {% set isProductSalesUnitsMultiple = salesUnitCount and data.leadProductSalesUnits | length > 1 %}
             {% set isProductSalesUnitSingle = salesUnitCount and data.leadProductSalesUnits | length == 1 %}
             {% if isProductSalesUnitsMultiply %}
                 <label>
