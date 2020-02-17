@@ -486,7 +486,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function resolveShipmentForSingleAddressDelivery(QuoteTransfer $quoteTransfer): ?ShipmentTransfer
     {
-        if (!$quoteTransfer->getItems()->count() === 0) {
+        if ($quoteTransfer->getItems()->count() === 0) {
             return null;
         }
 
