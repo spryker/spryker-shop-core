@@ -10,26 +10,44 @@
     version: required,
 } %}
 
+{% set classWrapper = 'grid grid--middle' %}
+{% set classLabel = 'col' %}
+{% set classValue = 'col' %}
+
 {% block body %}
-    <span class="col col--sm-4 col--md-2 col--xl-4">
-        {{ 'quote_request_page.quote_request.labels.history' | trans }}:
-    </span>
-    <span class="col col--sm-8 col--md-10 col--xl-8">
-        {% embed molecule('custom-select') with {
-            modifiers: ['light', 'full-width'],
-            attributes: {
-                name: 'quote-request-versions',
-            },
-            embed: {
-                versionReferences: data.quoteRequestVersionReferences,
-                currentVersionReference: data.version ? data.version.versionReference : null,
-            },
-        } only %}
-            {% block options %}
-                {% for versionReference in embed.versionReferences %}
-                    <option value="{{ versionReference }}" {{ (versionReference == embed.currentVersionReference) ? 'selected' }}>{{ versionReference }}</option>
-                {% endfor %}
-            {% endblock %}
-        {% endembed %}
-    </span>
+    <p class="{{ classWrapper }}">
+        {% block label %}
+            <span class="{{ classLabel }}">
+                {{ 'quote_request_page.quote_request.labels.history' | trans }}:
+            </span>
+        {% endblock %}
+
+        {% block value %}
+            <span class="{{ classValue }}">
+                {% if data.quoteRequestVersionReferences %}
+                    {% embed atom('select') with {
+                        modifiers: ['naked'],
+                        attributes: {
+                            name: 'quote-request-versions',
+                        },
+                        embed: {
+                            versionReferences: data.quoteRequestVersionReferences,
+                            currentVersionReference: data.version ? data.version.versionReference : null,
+                        },
+                    } only %}
+                        {% block options %}
+                            {% for versionReference in embed.versionReferences %}
+                                {% set selectedOption = (versionReference == embed.currentVersionReference) ? 'selected' %}
+                                <option value="{{ versionReference }}" {{ selectedOption }}>{{ versionReference }}</option>
+                            {% endfor %}
+                        {% endblock %}
+                    {% endembed %}
+                {% else %}
+                    <span class="text-secondary">
+                        &nbsp;--
+                    </span>
+                {% endif %}
+            </span>
+        {% endblock %}
+    </p>
 {% endblock %}

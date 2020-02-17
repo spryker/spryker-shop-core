@@ -43,22 +43,22 @@
         <hr>
     {% endblock %}
 
-    {% set classList = 'list spacing-y' %}
-    {% set classItem = 'list__item grid grid--justify' %}
+    {% set classList = 'spacing-y' %}
+    {% set classItem = 'grid grid--justify' %}
     {% set classItemTitle = 'col' %}
     {% set classItemValue = 'col' %}
 
     {% block list %}
-        <ul class="{{ classList }}">
+        <div class="{{ classList }}">
             {% block subtotal %}
-                <li class="{{ classItem }}">
+                <div class="{{ classItem }}">
                     <span class="{{ classItemTitle }}">
                         {{ 'cart.price.subtotal' | trans }}
                     </span>
                     <span class="{{ classItemValue }}">
                         {{ data.cart.totals.subtotal | money(true, data.cart.currency.code) }}
                     </span>
-                </li>
+                </div>
             {% endblock %}
 
             {% block discount %}
@@ -89,41 +89,35 @@
                     },
                 } only %}
                     {% block body %}
-                        <li class="{{ embed.classItem }}">
-                            <hr>
-                        </li>
-                        <li class="{{ embed.classItem }}">
+                        <hr>
+                        <div class="{{ embed.classItem }}">
                             {{ parent() }}
-                        </li>
+                        </div>
                     {% endblock %}
                 {% endwidget %}
             {% endblock %}
 
             {% block taxSeparator %}
-                <li class="{{ classItem }}">
-                    <hr>
-                </li>
+                <hr>
             {% endblock %}
 
             {% block tax %}
-                <li class="{{ classItem }}">
-                    {{ 'cart.total.tax_total' | trans }}
-                    <span class="float-right">{{ data.cart.totals.taxTotal.amount | money(true, data.cart.currency.code) }}</span>
-                </li>
+                <div class="{{ classItem }}">
+                    <span class="{{ classItemTitle }}">{{ 'cart.total.tax_total' | trans }}</span>
+                    <span class="{{ classItemValue }}">{{ data.cart.totals.taxTotal.amount | money(true, data.cart.currency.code) }}</span>
+                </div>
             {% endblock %}
 
             {% block grandTotalSeparator %}
-                <li class="{{ classItem }}">
-                    <hr>
-                </li>
+                <hr>
             {% endblock %}
 
             {% block grandTotal %}
-                <li class="{{ classItem }}">
-                    {{ 'cart.price.grand.total' | trans }}
-                    <strong class="float-right">{{ data.cart.totals.grandTotal | money(true, data.cart.currency.code) }}</strong>
-                </li>
+                <div class="{{ classItem }}">
+                    <span class="{{ classItemTitle }}">{{ 'cart.price.grand.total' | trans }}</span>
+                    <strong class="{{ classItemValue }}">{{ data.cart.totals.grandTotal | money(true, data.cart.currency.code) }}</strong>
+                </div>
             {% endblock %}
-        </ul>
+        </div>
     {% endblock %}
 {% endblock %}

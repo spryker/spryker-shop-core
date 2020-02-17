@@ -2,7 +2,6 @@
 
 {% define config = {
     name: 'quote-request-summary-shipment',
-    tag: 'li'
 } %}
 
 {% define data = {
@@ -11,34 +10,36 @@
     currencyCode: required,
 } %}
 
-{% block extraClass %}
-    list__item
-{% endblock %}
-
 {% block component %}
     {% if data.shipmentTotal and data.currencyCode %}
-        <li class="list__item">
-            <hr>
-        </li>
+        <hr>
         {{parent()}}
     {% endif %}
 {% endblock %}
 
+{% set classShipment = 'grid grid--justify' %}
+{% set classShipmentTitle = 'col' %}
+{% set classShipmentValue = 'col' %}
+
 {% block body %}
-    <div class="grid grid--justify">
-        <strong class="col">{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
-        <strong class="col">{{ data.shipmentTotal | money(true, data.currencyCode) }}</strong>
-    </div>
+    {% block title %}
+        <div class="{{ classShipment }}">
+            <strong class="{{ classShipmentTitle }}">{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
+            <strong class="{{ classShipmentValue }}">{{ data.shipmentTotal | money(true, data.currencyCode) }}</strong>
+        </div>
+    {% endblock %}
 
     {% for shipmentGroup in data.shipmentGroups %}
-        <div class="grid grid--justify">
-            <span class="col">
-                {{ shipmentGroup.shipment.method.carrierName | default }}
-                - {{ shipmentGroup.shipment.method.name | default }}
-            </span>
-            <span class="col">
-                {{ shipmentGroup.shipment.method.storeCurrencyPrice | money(true, data.currencyCode) }}
-            </span>
-        </div>
+        {% block summaryShipment %}
+            <div class="{{ classShipment }}">
+                <span class="{{ classShipmentTitle }}">
+                    {{ shipmentGroup.shipment.method.carrierName | default }}
+                    - {{ shipmentGroup.shipment.method.name | default }}
+                </span>
+                <span class="{{ classShipmentValue }}">
+                    {{ shipmentGroup.shipment.method.storeCurrencyPrice | money(true, data.currencyCode) }}
+                </span>
+            </div>
+        {% endblock %}
     {% endfor %}
 {% endblock %}

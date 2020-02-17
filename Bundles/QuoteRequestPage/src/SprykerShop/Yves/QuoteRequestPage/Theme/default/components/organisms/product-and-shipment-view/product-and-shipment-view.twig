@@ -30,7 +30,7 @@
         {% block productListInner %}
             {% for cartItem in cartItems %}
                 {% block productItem %}
-                    {% embed molecule('product-cart-item', 'CartPage') with {
+                    {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
                         data: {
                             product: cartItem,
                         },
@@ -77,21 +77,11 @@
 
     {% block shipmentInformation %}
         {% if data.shipment %}
-            {% if not data.hasMultiShipments %}
-                {% set classTitleShipmentMethod = 'spacing-x spacing-top spacing-top--big' %}
-
-                {% block shipmentInformationTitle %}
-                    <h4 class="{{ classTitleShipmentMethod }}">
-                        {{ 'quote_request_page.quote_request.title_shipment_method' | trans }}
-                    </h4>
-                {% endblock %}
-            {% endif %}
-
             {% block shipmentInformationContent %}
                 {% include molecule('quote-request-shipment-information', 'QuoteRequestPage') with {
                     data: {
                         shipment: data.shipment,
-                        showAddress: data.hasMultiShipments,
+                        hasMultiShipments: data.hasMultiShipments,
                         priceMode: data.quote.priceMode,
                     },
                 } only %}

@@ -11,7 +11,7 @@ export default class QuoteRequestHistorySelect extends Component {
     }
 
     protected mapEvents(): void {
-        this.select.addEventListener('change', (event: Event) => this.onChange());
+        this.select.addEventListener('change', () => this.onChange());
     }
 
     protected onChange(): void {
