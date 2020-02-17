@@ -6,8 +6,8 @@
 
 {% define data = {
     orders: required,
-    isOrderSearchEnabled: required,
-    isOrderSearchOrderItemsVisible: required
+    isOrderSearchEnabled: false,
+    isOrderSearchOrderItemsVisible: true
 } %}
 
 {% block body %}
@@ -56,6 +56,17 @@
                             </ul>
                         </td>
                     </tr>
+                    {% if data.isOrderSearchEnabled and data.isOrderSearchOrderItemsVisible %}
+                        <tr>
+                            <td colspan="100%">
+                                {% include molecule('order-items-table', 'CustomerPage') with {
+                                    data: {
+                                        items: order.items,
+                                    },
+                                } only %}
+                            </td>
+                        </tr>
+                    {% endif %}
                 {% endfor %}
             </tbody>
         </table>
