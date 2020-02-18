@@ -13,6 +13,9 @@ use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
+ */
 class OrderController extends AbstractCustomerController
 {
     /**
