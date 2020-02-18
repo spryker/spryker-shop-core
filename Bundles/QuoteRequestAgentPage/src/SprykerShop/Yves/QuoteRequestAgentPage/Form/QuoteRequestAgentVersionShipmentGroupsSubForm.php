@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Form;
 
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -56,38 +57,20 @@ class QuoteRequestAgentVersionShipmentGroupsSubForm extends AbstractType
     protected function addShipmentForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            ShipmentGroupTransfer::SHIPMENT,
-            QuoteRequestAgentShipmentSubForm::class,
+            ShipmentMethodTransfer::SOURCE_PRICE,
+            QuoteRequestAgentMoneyValueSubForm::class,
             [
                 QuoteRequestAgentForm::OPTION_PRICE_MODE => $options[QuoteRequestAgentForm::OPTION_PRICE_MODE],
+                'property_path' => 'shipment.method.sourcePrice',
             ]
         );
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-            return $this->copySubmittedShipmentMethodPricesToItemShipmentMethods($event);
+            return $this->getFactory()
+                ->createQuoteRequestAgentFormEventsListener()
+                ->copySubmittedShipmentMethodPricesToItemShipmentMethods($event);
         });
 
         return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     *
-     * @return \Symfony\Component\Form\FormEvent
-     */
-    protected function copySubmittedShipmentMethodPricesToItemShipmentMethods(FormEvent $event): FormEvent
-    {
-        /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer */
-        $shipmentGroupTransfer = $event->getData();
-
-        $shipmentMethodSourcePrice = $shipmentGroupTransfer->getShipment()->getMethod()->getSourcePrice();
-
-        foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->getShipment()->getMethod()->setSourcePrice($shipmentMethodSourcePrice);
-        }
-
-        $event->setData($shipmentGroupTransfer);
-
-        return $event;
     }
 }

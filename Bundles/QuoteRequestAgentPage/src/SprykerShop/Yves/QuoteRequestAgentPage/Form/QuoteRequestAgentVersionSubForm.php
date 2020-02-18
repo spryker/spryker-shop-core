@@ -102,44 +102,11 @@ class QuoteRequestAgentVersionSubForm extends AbstractType
         ]);
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-            return $this->copySubmittedItemShipmentMethodPricesToQuoteShipmentMethod($event);
+            return $this->getFactory()
+                ->createQuoteRequestAgentFormEventsListener()
+                ->copySubmittedItemShipmentMethodPricesToQuoteShipmentMethod($event);
         });
 
         return $this;
-    }
-
-    /**
-     * @deprecated Will be removed without replacement. BC-reason only.
-     *
-     * @param \Symfony\Component\Form\FormEvent $event
-     *
-     * @return \Symfony\Component\Form\FormEvent
-     */
-    protected function copySubmittedItemShipmentMethodPricesToQuoteShipmentMethod(FormEvent $event): FormEvent
-    {
-        /** @var \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer */
-        $quoteRequestVersionTransfer = $event->getData();
-        $quoteShipment = $quoteRequestVersionTransfer->getQuote()->getShipment();
-
-        if (!$quoteShipment || !$quoteShipment->getMethod()) {
-            return $event;
-        }
-
-        /** @var \Generated\Shared\Transfer\ShipmentTransfer|null $itemShipment */
-        $itemShipment = $quoteRequestVersionTransfer->getShipmentGroups()
-            ->getIterator()
-            ->current()
-            ->getShipment();
-
-        if (!$itemShipment || !$itemShipment->getMethod()) {
-            return $event;
-        }
-
-        $itemShipmentMethodSourcePrice = $itemShipment->getMethod()->getSourcePrice();
-        $quoteShipment->getMethod()->setSourcePrice($itemShipmentMethodSourcePrice);
-
-        $event->setData($quoteRequestVersionTransfer);
-
-        return $event;
     }
 }

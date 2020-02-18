@@ -22,7 +22,6 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class QuoteRequestAgentMoneyValueSubForm extends AbstractType
 {
-    protected const GLOSSARY_KEY_QUOTE_REQUEST_AGENT_INVALID_PRICE = 'quote_request_agent_page.form.invalid_price';
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
 
     /**
@@ -131,7 +130,7 @@ class QuoteRequestAgentMoneyValueSubForm extends AbstractType
     {
         return new Regex([
             'pattern' => static::PATTERN_MONEY,
-            'message' => static::GLOSSARY_KEY_QUOTE_REQUEST_AGENT_INVALID_PRICE,
+            'message' => 'quote_request_agent_page.form.invalid_price',
             'groups' => $this->getValidationGroup($options),
         ]);
     }

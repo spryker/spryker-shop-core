@@ -247,8 +247,8 @@
                                 } only %}
                                     {% block actions %}
                                         {% for shipmentGroupForm in embed.shipmentGroupForms if embed.shipmentHash == shipmentGroupForm.vars.value.hash %}
-                                            {% set unitSourcePrice = shipmentGroupForm.shipment.method.sourcePrice.grossAmount is defined ? shipmentGroupForm.shipment.method.sourcePrice.grossAmount.vars.value : null %}
-                                            {% set unitSourcePrice = shipmentGroupForm.shipment.method.sourcePrice.netAmount is defined ? shipmentGroupForm.shipment.method.sourcePrice.netAmount.vars.value : unitSourcePrice %}
+                                            {% set unitSourcePrice = shipmentGroupForm.sourcePrice.grossAmount is defined ? shipmentGroupForm.sourcePrice.grossAmount.vars.value : null %}
+                                            {% set unitSourcePrice = shipmentGroupForm.sourcePrice.netAmount is defined ? shipmentGroupForm.sourcePrice.netAmount.vars.value : unitSourcePrice %}
 
                                             {% include molecule('source-price-form', 'QuoteRequestAgentPage') with {
                                                 data: {
@@ -404,8 +404,8 @@
                 } only %}
                     {% block actions %}
                         {% if embed.shipmentGroupForm %}
-                            {% set unitSourcePrice = embed.shipmentGroupForm.shipment.method.sourcePrice.grossAmount is defined ? embed.shipmentGroupForm.shipment.method.sourcePrice.grossAmount.vars.value : null %}
-                            {% set unitSourcePrice = embed.shipmentGroupForm.shipment.method.sourcePrice.netAmount is defined ? embed.shipmentGroupForm.shipment.method.sourcePrice.netAmount.vars.value : unitSourcePrice %}
+                            {% set unitSourcePrice = embed.shipmentGroupForm.sourcePrice.grossAmount is defined ? embed.shipmentGroupForm.sourcePrice.grossAmount.vars.value : null %}
+                            {% set unitSourcePrice = embed.shipmentGroupForm.sourcePrice.netAmount is defined ? embed.shipmentGroupForm.sourcePrice.netAmount.vars.value : unitSourcePrice %}
 
                             {% include molecule('source-price-form', 'QuoteRequestAgentPage') with {
                                 data: {
