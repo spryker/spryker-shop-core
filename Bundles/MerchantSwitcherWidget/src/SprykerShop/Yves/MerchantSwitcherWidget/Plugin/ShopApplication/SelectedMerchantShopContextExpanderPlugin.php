@@ -18,7 +18,7 @@ use SprykerShop\Yves\ShopContextExtension\Dependency\Plugin\ShopContextExpanderP
 class SelectedMerchantShopContextExpanderPlugin extends AbstractPlugin implements ShopContextExpanderPluginInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      * - Expands ShopContextTransfer with merchant reference from cookie.
      *
      * @api

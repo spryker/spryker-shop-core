@@ -19,7 +19,7 @@ class ShopContextApplicationPlugin extends AbstractPlugin implements Application
     protected const SERVICE_SHOP_CONTEXT = 'shop_context';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @api
      *
