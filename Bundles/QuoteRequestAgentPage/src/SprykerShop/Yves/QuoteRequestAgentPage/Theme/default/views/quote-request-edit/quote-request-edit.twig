@@ -1,7 +1,9 @@
 {% extends template('page-layout-quote-request', 'QuoteRequestAgentPage') %}
 
 {% define data = {
-    title: 'quote_request_page.quote_request' | trans,
+    title: 'quote_request_page.quote_request.title_edit' | trans({
+        '%id%': _view.quoteRequestForm.vars.value.quoteRequestReference,
+    }),
     quoteRequestForm: _view.quoteRequestForm,
     quoteRequest: _view.quoteRequestForm.vars.value,
     shipmentGroupForms: _view.quoteRequestForm.latestVersion.shipmentGroups | default([]),
@@ -12,27 +14,17 @@
 {% set hasMultiShipments = data.shipmentGroups | length > 1 %}
 
 {% block breadcrumbs %}
-    {% include molecule('breadcrumb') with {
-        data: {
-            steps: [
-                {
-                    label: 'agent.account.page_title' | trans,
-                    url: path('agent/overview'),
-                },
-                {
-                    label: 'quote_request_page.quote_request' | trans,
-                    url: path('agent/quote-request')
-                },
-                {
-                    label: '#' ~ data.quoteRequest.quoteRequestReference,
-                    url: path('agent/quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference})
-                },
-                {
-                    label: 'quote_request_page.quote_request.actions.edit' | trans,
-                },
-            ],
+    {% set breadcrumbExtend = [
+        {
+            label: '#' ~ data.quoteRequest.quoteRequestReference,
+            url: path('agent/quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference})
         },
-    } only %}
+        {
+            label: 'quote_request_page.quote_request.breadcrumb.edit' | trans,
+        },
+    ] %}
+
+    {{ parent() }}
 {% endblock %}
 
 {% block content %}

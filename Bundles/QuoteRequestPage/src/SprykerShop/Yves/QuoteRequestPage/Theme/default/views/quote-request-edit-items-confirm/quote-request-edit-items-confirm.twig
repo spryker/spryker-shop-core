@@ -8,7 +8,7 @@
 {% block message %}
     <p>
         {{ 'quote_request_page.quote_request.edit_items_confirm' | trans({
-            '%link%': url('quote-request/edit', {quoteRequestReference: data.quoteRequestReference}),
+            '%link%': url('quote-request/edit', { quoteRequestReference: data.quoteRequestReference }),
             '%reference%': data.quoteRequestReference,
         }) | raw }}
     </p>

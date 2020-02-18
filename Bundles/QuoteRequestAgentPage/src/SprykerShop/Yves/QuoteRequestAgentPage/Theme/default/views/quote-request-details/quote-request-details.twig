@@ -1,229 +1,178 @@
-{% extends template('page-layout-quote-request', 'QuoteRequestAgentPage') %}
+{% extends template('page-layout-quote-request', 'QuoteRequestPage') %}
 
 {% define data = {
-    title: 'quote_request_page.quote_request' | trans,
+    title: '#' ~ _view.quoteRequest.quoteRequestReference,
     quoteRequest: _view.quoteRequest,
     quoteRequestVersionReferences: _view.quoteRequestVersionReferences,
     version: _view.version,
     isQuoteRequestCancelable: _view.isQuoteRequestCancelable,
     isQuoteRequestRevisable: _view.isQuoteRequestRevisable,
     isQuoteRequestEditable: _view.isQuoteRequestEditable,
-    shipmentGroups: _view.shipmentGroups | default([]),
 } %}
 
 {% set isLatestVersion = data.version.idQuoteRequestVersion == data.quoteRequest.latestVersion.idQuoteRequestVersion %}
-{% set quote = (data.isQuoteRequestEditable and isLatestVersion) ? data.quoteRequest.latestVersion.quote : data.version.quote %}
-{% set hasMultiShipments = data.shipmentGroups | length > 1 %}
 
 {% block breadcrumbs %}
-    {% include molecule('breadcrumb') with {
-        data: {
-            steps: [
-                {
-                    label: 'agent.account.page_title' | trans,
-                    url: path('agent/overview'),
-                },
-                {
-                    label: 'quote_request_page.quote_request' | trans,
-                    url: path('agent/quote-request')
-                },
-                {
-                    label: '#' ~ data.quoteRequest.quoteRequestReference,
-                },
-            ],
+    {% set breadcrumbExtend = [
+        {
+            label: '#' ~ data.quoteRequest.quoteRequestReference,
         },
-    } only %}
+    ] %}
+
+    {{ parent() }}
 {% endblock %}
 
+
 {% block content %}
+    {% set quote = (data.isQuoteRequestEditable and isLatestVersion) ? data.quoteRequest.latestVersion.quote : data.version.quote %}
 
+    {{ parent() }}
+{% endblock %}
+
+{% block orderInformation %}
     <div class="grid">
-        <div class="col col--sm-12 col--xl-8">
-            <div class="box">
-                {% for key, value in data.version.metadata %}
-                    <div class="col col--sm-12 col--xl-6">
-                        <div class="box">
-                            <label class="label">{{ ('quote_request_page.quote_request.metadata.label.' ~ key) | trans }}</label>
-                            <hr class="box__separator">
-                            <p class="text-break">{{ value }}</p>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
+        {% for key, value in data.version.metadata %}
+            <div class="col col--sm-12 col--xl-6 spacing spacing--big spacing--inner">
+                <label class="label">{{ ('quote_request_page.quote_request.metadata.label.' ~ key) | trans }}</label>
 
-        <div class="col col--sm-12 col--xl-4">
-            <div class="box">
-                <h6>{{ "quote_request_page.quote_request.labels.information" | trans }}</h6>
-                <hr class="box__separator">
-                <p>{{ 'quote_request_page.quote_request.labels.date' | trans }}:
-                    <b>{{ data.quoteRequest.createdAt | formatDateTime }}</b>
-                </p>
-                <p>{{ 'quote_request_page.quote_request.labels.company' | trans }}:
-                    <b>{{ data.quoteRequest.companyUser.company.name }}</b>
-                </p>
-                <p>{{ 'quote_request_page.quote_request.labels.business_unit' | trans }}:
-                    <b>{{ data.quoteRequest.companyUser.companyBusinessUnit ? data.quoteRequest.companyUser.companyBusinessUnit.name : '' }}</b>
-                </p>
-                <p>{{ 'quote_request_page.quote_request.labels.customer' | trans }}:
-                    <b>{{ data.quoteRequest.companyUser.customer.firstName }} {{ data.quoteRequest.companyUser.customer.lastName }}</b>
-                </p>
-                <p>{{ 'quote_request_page.quote_request.labels.status' | trans }}:
-                    <span class="request-status request-status--{{ data.quoteRequest.status }}">{{ ('quote_request.status.' ~ data.quoteRequest.status) | trans }}</span>
-                </p>
-                {% if data.quoteRequest.validUntil %}
-                    <p>{{ 'quote_request_page.quote_request.labels.valid_till' | trans }}:
-                        <b>{{ data.quoteRequest.validUntil | formatDateTime }}</b>
-                    </p>
-                {% endif %}
-                <hr class="box__separator">
-                <h6>{{ "quote_request_page.quote_request.labels.version_information" | trans }}</h6>
-                <hr class="box__separator">
-                <p>{{ 'quote_request_page.quote_request.labels.history' | trans }}:
-                    {% embed atom('select') with {
-                        modifiers: ['naked'],
-                        attributes: {
-                            name: 'quote-request-versions',
-                            onchange: 'this.options[this.selectedIndex].value && (window.location.search = "quote-request-version-reference=" + this.options[this.selectedIndex].value);',
-                        },
-                        embed: {
-                            versionReferences: data.quoteRequestVersionReferences,
-                            currentVersionReference: data.version ? data.version.versionReference : null,
-                        },
-                    } only %}
-                        {% block options %}
-                            {% for versionReference in embed.versionReferences %}
-                                <option value="{{ versionReference }}" {{ (versionReference == embed.currentVersionReference) ? 'selected' : '' }}>{{ versionReference }}</option>
-                            {% endfor %}
-                        {% endblock %}
-                    {% endembed %}
-                </p>
-                {% if data.quoteRequest.isLatestVersionVisible %}
-                    <p><b>{{ 'quote_request_page.quote_request.labels.latest_version_is_visible' | trans }}</b></p>
-                {% else %}
-                    <p><b>{{ 'quote_request_page.quote_request.labels.latest_version_is_hidden' | trans }}</b></p>
+                {% if value %}
+                    <p class="text-break">{{ value }}</p>
                 {% endif %}
             </div>
-        </div>
+        {% endfor %}
     </div>
-    <div class="grid">
-        <div class="col col--sm-12 col--xl-8">
-            {% if quote and quote.priceMode is not empty %}
-                <div class="box">
-                    {% include molecule('price-mode') with {
-                        data: {
-                            priceMode: quote.priceMode,
-                        },
-                    } only %}
-                </div>
-            {% endif %}
+{% endblock %}
 
-            {% if hasMultiShipments %}
-                {% for shipmentGroup in data.shipmentGroups %}
-                    <div class="grid grid--stretch grid--justify">
-                        <div class="col col--sm-12 col--lg-12">
-                            <div class="box">
-                                <h4>{{ 'quote_request_page.quote_request.shipment_counter' | trans({
-                                        '%index%': loop.index,
-                                        '%length%': data.shipmentGroups | length,
-                                    }) }}</h4>
-                                <hr>
-                                <h6><strong>{{ 'checkout.step.summary.products' | trans }}</strong></h6>
+{% block quoteRequestInformation %}
+    {% include molecule('quote-request-information', 'QuoteRequestPage') ignore missing with {
+        data: {
+            quoteRequest: data.quoteRequest,
+            quoteRequestVersionReferences: data.quoteRequestVersionReferences,
+            version: data.version,
+        },
+    } only %}
 
-                                {% include organism('product-and-shipment-view', 'QuoteRequestPage') ignore missing with {
-                                    data: {
-                                        quote: quote,
-                                        items: shipmentGroup.items,
-                                        shipment: shipmentGroup.shipment,
-                                        hasMultiShipments: hasMultiShipments,
-                                        isConfiguredBundleEditable: false,
-                                        isConfiguredBundleQuantitySummaryVisible: true,
-                                    },
-                                } only %}
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% else %}
-                {% include organism('product-and-shipment-view', 'QuoteRequestPage') ignore missing with {
-                    data: {
-                        quote: quote,
-                        items: quote.items,
-                        shipment: quote.shipment,
-                        hasMultiShipments: hasMultiShipments,
-                        isConfiguredBundleEditable: false,
-                    },
-                } only %}
-            {% endif %}
-        </div>
+    {% if data.quoteRequest.isLatestVersionVisible %}
+        {% block textVisibleForCustomer %}
+            <strong>{{ 'quote_request_page.quote_request.labels.latest_version_is_visible' | trans }}</strong>
+        {% endblock %}
+    {% else %}
+        {% block textHiddenForCustomer %}
+            <strong>{{ 'quote_request_page.quote_request.labels.latest_version_is_hidden' | trans }}</strong>
+        {% endblock %}
+    {% endif %}
+{% endblock %}
 
-        <div class="col col--sm-12 col--xl-4">
-            {% if quote and quote.items | length %}
-                {% include molecule('quote-request-delivery-summary', 'QuoteRequestPage') ignore missing with {
-                    class: 'list spacing-y',
-                    data: {
-                        quote: quote,
-                        hasMultiShipments: hasMultiShipments,
-                    },
-                } only %}
+{% block quoteRequestSidebar %}
+    {% if quote and quote.items | length %}
+        {% block delivery %}
+            {% include molecule('quote-request-delivery-summary', 'QuoteRequestPage') ignore missing with {
+                data: {
+                    quote: quote,
+                    hasMultiShipments: hasMultiShipments,
+                    quoteRequestReference: data.quoteRequest.quoteRequestReference,
+                },
+            } only %}
+        {% endblock %}
 
-                <div class="box">
-                    {% include molecule('quote-request-summary', 'QuoteRequestPage') ignore missing with {
-                        data: {
-                            cart: quote,
-                            shipmentGroups: data.shipmentGroups,
-                        },
-                    } only %}
-                </div>
-            {% endif %}
-            <div class="box">
-                <a class="button button--expand button--hollow" href="{{ url('agent/quote-request') }}">
+        {% block summary %}
+            {% include molecule('quote-request-summary', 'QuoteRequestPage') ignore missing with {
+                data: {
+                    cart: quote,
+                    shipmentGroups: data.shipmentGroups,
+                },
+            } only %}
+        {% endblock %}
+    {% endif %}
+
+    {% set classButtonBack = 'button button--expand button--hollow' %}
+    {% set classButtonCancel = 'button button--expand' %}
+    {% set classButtonEdit = 'button button--expand button--success' %}
+    {% set classButtonSendToCustomer = 'button button--expand button--success' %}
+    {% set classButtonRevise = 'button button--expand button--hollow' %}
+    {% set classButtonConvertToCart = 'button button--expand button--success' %}
+
+    {% block actions %}
+        <div class="box">
+            {% block actionBack %}
+                <a class="{{ classButtonBack }}" href="{{ url('agent/quote-request') }}">
                     {{ 'quote_request_page.quote_request.actions.back_to_list' | trans }}
                 </a>
+            {% endblock %}
 
-                {% if isLatestVersion %}
+            {% if isLatestVersion %}
 
-                    {% if data.isQuoteRequestCancelable %}
+                {% if data.isQuoteRequestCancelable %}
+                    {% block actionSeparator1 %}
                         <hr class="box__separator">
-                        <a class="button button--expand button--cancel"
-                           href="{{ path('agent/quote-request/cancel', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
+                    {% endblock %}
+
+                    {% block actionCancel %}
+                        <a class="{{ classButtonCancel }}"
+                           href="{{ path('agent/quote-request/cancel', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}"
+                           data-init-single-click>
                             {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
                         </a>
-                    {% endif %}
+                    {% endblock %}
+                {% endif %}
 
-                    {% if data.isQuoteRequestEditable %}
+                {% if data.isQuoteRequestEditable %}
+                    {% block actionSeparator2 %}
                         <hr class="box__separator">
-                        <a class="button button--expand button--success"
-                           href="{{ path('agent/quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
+                    {% endblock %}
+
+                    {% block actionEdit %}
+                        <a class="{{ classButtonEdit }}"
+                           href="{{ path('agent/quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}"
+                           data-init-single-click>
                             {{ 'quote_request_page.quote_request.actions.edit' | trans }}
                         </a>
-                        {% if data.quoteRequest.latestVersion.quote.items is not empty %}
-                            <hr class="box__separator">
-                            <a class="button button--expand button--success"
-                               href="{{ path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
-                                {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
-                            </a>
-                        {% endif %}
-                    {% endif %}
+                    {% endblock %}
+                {% endif %}
 
-                    {% if data.isQuoteRequestRevisable %}
+                {% set showSendToCustomerButton = data.isQuoteRequestEditable and data.quoteRequest.latestVersion.quote.items is not empty %}
+                {% if showSendToCustomerButton %}
+                    {% block actionSeparator3 %}
                         <hr class="box__separator">
-                        <a class="button button--expand button--hollow"
-                           href="{{ path('agent/quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
+                    {% endblock %}
+
+                    {% block actionSendToCustomer %}
+                        <a class="{{ classButtonSendToCustomer }}"
+                           href="{{ path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}"
+                           data-init-single-click>
+                            {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
+                        </a>
+                    {% endblock %}
+                {% endif %}
+
+                {% if data.isQuoteRequestRevisable %}
+                    {% block actionSeparator4 %}
+                        <hr class="box__separator">
+                    {% endblock %}
+
+                    {% block actionRevise %}
+                        <a class="{{ classButtonRevise }}"
+                           href="{{ path('agent/quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}"
+                           data-init-single-click>
                             {{ 'quote_request_page.quote_request.actions.revise' | trans }}
                         </a>
-                    {% endif %}
+                    {% endblock %}
+                {% endif %}
 
-                    {% if data.quoteRequest.status == 'ready' %}
+                {% if data.quoteRequest.status == 'ready' %}
+                    {% block actionSeparator5 %}
                         <hr class="box__separator">
-                        <a class="button button--expand button--success"
-                           href="{{ path('agent/quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}" data-init-single-click>
+                    {% endblock %}
+
+                    {% block actionConvertToCart %}
+                        <a class="{{ classButtonConvertToCart }}"
+                           href="{{ path('agent/quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}"
+                           data-init-single-click>
                             {{ 'quote_request_page.quote_request.actions.convert_to_cart' | trans }}
                         </a>
-                    {% endif %}
+                    {% endblock %}
                 {% endif %}
-            </div>
+            {% endif %}
         </div>
-    </div>
-
+    {% endblock %}
 {% endblock %}

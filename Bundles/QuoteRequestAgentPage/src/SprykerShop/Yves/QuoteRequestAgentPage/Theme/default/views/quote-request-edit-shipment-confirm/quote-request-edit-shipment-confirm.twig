@@ -1,13 +1,13 @@
 {% extends template('page-layout-confirmation', 'QuoteRequestAgentPage') %}
 
 {% define data = {
-    form: _view.quoteRequestEditItemsConfirmForm,
-    quoteRequest: _view.quoteRequestEditItemsConfirmForm.vars.value,
+    form: _view.quoteRequestEditShipmentConfirmForm,
+    quoteRequest: _view.quoteRequestEditShipmentConfirmForm.vars.value,
 } %}
 
 {% block message %}
     <p>
-        {{ 'quote_request_page.quote_request.edit_items_confirm' | trans({
+        {{ 'quote_request_page.quote_request.edit_shipment_confirm' | trans({
             '%link%': url('agent/quote-request/edit', { quoteRequestReference: data.quoteRequestReference }),
             '%reference%': data.quoteRequestReference,
         }) | raw }}
