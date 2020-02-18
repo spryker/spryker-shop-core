@@ -7,7 +7,7 @@
 
 {% define data = {
     items: required,
-    colors: [],
+    colorAttributeName: 'colorCode',
     selectionTag: 'button',
 } %}
 
@@ -19,7 +19,7 @@
     {% for item in data.items %}
         {% block item %}
             {% set activeClassName = loop.first ? attributes['active-item-class-name'] %}
-            {% set backgroundColor = data.colors[loop.index] is defined ? 'background-color: ' ~ data.colors[loop.index] ~ ';' %}
+            {% set backgroundColor = item[data.colorAttributeName] is defined ? 'background-color: ' ~ item[data.colorAttributeName] ~ ';' %}
             {% set listDataAttributes = {} %}
 
             {% block selection %}
