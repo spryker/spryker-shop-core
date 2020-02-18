@@ -10,8 +10,8 @@ namespace SprykerShop\Yves\OrderCustomReferenceWidget;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\OrderCustomReferenceWidget\Dependency\Client\OrderCustomReferenceWidgetToOrderCustomReferenceClientInterface;
 use SprykerShop\Yves\OrderCustomReferenceWidget\Dependency\Client\OrderCustomReferenceWidgetToQuoteClientInterface;
-use SprykerShop\Yves\OrderCustomReferenceWidget\Setter\QuoteSetter;
-use SprykerShop\Yves\OrderCustomReferenceWidget\Setter\QuoteSetterInterface;
+use SprykerShop\Yves\OrderCustomReferenceWidget\Setter\OrderCustomReferenceSetter;
+use SprykerShop\Yves\OrderCustomReferenceWidget\Setter\OrderCustomReferenceSetterInterface;
 use SprykerShop\Yves\OrderCustomReferenceWidget\Validator\OrderCustomReferenceValidator;
 use SprykerShop\Yves\OrderCustomReferenceWidget\Validator\OrderCustomReferenceValidatorInterface;
 
@@ -42,11 +42,11 @@ class OrderCustomReferenceWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Yves\OrderCustomReferenceWidget\Setter\QuoteSetterInterface
+     * @return \SprykerShop\Yves\OrderCustomReferenceWidget\Setter\OrderCustomReferenceSetterInterface
      */
-    public function createQuoteSetter(): QuoteSetterInterface
+    public function createOrderCustomReferenceSetter(): OrderCustomReferenceSetterInterface
     {
-        return new QuoteSetter(
+        return new OrderCustomReferenceSetter(
             $this->getQuoteClient(),
             $this->getOrderCustomReferenceClient(),
             $this->createOrderCustomReferenceValidator()

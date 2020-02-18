@@ -9,16 +9,12 @@ namespace SprykerShop\Yves\OrderCustomReferenceWidget\Setter;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
-interface QuoteSetterInterface
+interface OrderCustomReferenceSetterInterface
 {
     /**
      * @param string $orderCustomReference
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setQuote(
-        string $orderCustomReference,
-        QuoteResponseTransfer $quoteResponseTransfer
-    ): QuoteResponseTransfer;
+    public function setOrderCustomReference(string $orderCustomReference): QuoteResponseTransfer;
 }

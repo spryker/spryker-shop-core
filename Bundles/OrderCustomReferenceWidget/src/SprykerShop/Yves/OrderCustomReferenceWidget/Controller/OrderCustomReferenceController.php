@@ -44,8 +44,8 @@ class OrderCustomReferenceController extends AbstractController
         $orderCustomReference = $request->request->get(static::PARAMETER_ORDER_CUSTOM_REFERENCE);
 
         $quoteResponseTransfer = $this->getFactory()
-            ->createQuoteSetter()
-            ->setQuote($orderCustomReference, (new QuoteResponseTransfer()));
+            ->createOrderCustomReferenceSetter()
+            ->setOrderCustomReference($orderCustomReference);
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_SAVED);

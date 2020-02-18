@@ -13,7 +13,7 @@ use SprykerShop\Yves\OrderCustomReferenceWidget\Dependency\Client\OrderCustomRef
 use SprykerShop\Yves\OrderCustomReferenceWidget\Dependency\Client\OrderCustomReferenceWidgetToQuoteClientInterface;
 use SprykerShop\Yves\OrderCustomReferenceWidget\Validator\OrderCustomReferenceValidatorInterface;
 
-class QuoteSetter implements QuoteSetterInterface
+class OrderCustomReferenceSetter implements OrderCustomReferenceSetterInterface
 {
     protected const GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH = 'order_custom_reference.validation.error.message_invalid_length';
 
@@ -49,23 +49,16 @@ class QuoteSetter implements QuoteSetterInterface
 
     /**
      * @param string $orderCustomReference
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setQuote(
-        string $orderCustomReference,
-        QuoteResponseTransfer $quoteResponseTransfer
-    ): QuoteResponseTransfer {
+    public function setOrderCustomReference(string $orderCustomReference): QuoteResponseTransfer
+    {
         $isOrderCustomReferenceLengthValid = $this->orderCustomReferenceValidator
             ->isOrderCustomReferenceLengthValid($orderCustomReference);
 
         if (!$isOrderCustomReferenceLengthValid) {
-            $quoteResponseTransfer->addError(
-                (new QuoteErrorTransfer())->setMessage(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH)
-            );
-
-            return $quoteResponseTransfer;
+            return $this->createQuoteResponseTransferWithError(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH);
         }
 
         $quoteTransfer = $this->quoteClient->getQuote();
@@ -78,5 +71,19 @@ class QuoteSetter implements QuoteSetterInterface
         }
 
         return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function createQuoteResponseTransferWithError(string $message): QuoteResponseTransfer
+    {
+        $quoteErrorTransfer = (new QuoteErrorTransfer())->setMessage($message);
+
+        return (new QuoteResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addError($quoteErrorTransfer);
     }
 }
