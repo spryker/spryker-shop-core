@@ -32,6 +32,8 @@ use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationFailureH
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerAuthenticationSuccessHandler;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerSecurityServiceProvider;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerUserProvider;
+use SprykerShop\Yves\CustomerPage\Reader\OrderReader;
+use SprykerShop\Yves\CustomerPage\Reader\OrderReaderInterface;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
 use SprykerShop\Yves\CustomerPage\Twig\GetUsernameTwigFunction;
 use SprykerShop\Yves\CustomerPage\Twig\IsLoggedTwigFunction;
@@ -150,6 +152,18 @@ class CustomerPageFactory extends AbstractFactory
         $application = $this->getApplication();
 
         return $application['security.token_storage'];
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Reader\OrderReaderInterface
+     */
+    public function createOrderReader(): OrderReaderInterface
+    {
+        return new OrderReader(
+            $this->getSalesClient(),
+            $this->getCustomerClient(),
+            $this->getConfig()
+        );
     }
 
     /**

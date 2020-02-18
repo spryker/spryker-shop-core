@@ -8,21 +8,39 @@
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
+ */
 class OrderController extends AbstractCustomerController
 {
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const ORDER_LIST_LIMIT = 10;
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const ORDER_LIST_SORT_FIELD = 'created_at';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const ORDER_LIST_SORT_DIRECTION = 'DESC';
 
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PARAM_PAGE = 'page';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const DEFAULT_PAGE = 1;
 
     /**
@@ -48,17 +66,14 @@ class OrderController extends AbstractCustomerController
      */
     protected function executeIndexAction(Request $request): array
     {
-        $orderListTransfer = $this->createOrderListTransfer($request);
-
         $orderListTransfer = $this->getFactory()
-            ->getSalesClient()
-            ->getPaginatedCustomerOrdersOverview($orderListTransfer);
-
-        $orderList = $orderListTransfer->getOrders();
+            ->createOrderReader()
+            ->getOrderList($request);
 
         return [
             'pagination' => $orderListTransfer->getPagination(),
-            'orderList' => $orderList,
+            'orderList' => $orderListTransfer->getOrders(),
+            'isOrderSearchEnabled' => $this->getFactory()->getConfig()->isOrderSearchEnabled(),
         ];
     }
 
@@ -76,53 +91,6 @@ class OrderController extends AbstractCustomerController
             $this->getFactory()->getCustomerOrderViewWidgetPlugins(),
             '@CustomerPage/views/order-detail/order-detail.twig'
         );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    protected function createOrderListTransfer(Request $request)
-    {
-        $orderListTransfer = new OrderListTransfer();
-
-        $customerTransfer = $this->getLoggedInCustomerTransfer();
-        $orderListTransfer->setIdCustomer($customerTransfer->getIdCustomer());
-
-        $filterTransfer = $this->createFilterTransfer();
-        $orderListTransfer->setFilter($filterTransfer);
-
-        $paginationTransfer = $this->createPaginationTransfer($request);
-        $orderListTransfer->setPagination($paginationTransfer);
-
-        return $orderListTransfer;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\PaginationTransfer
-     */
-    protected function createPaginationTransfer(Request $request)
-    {
-        $paginationTransfer = new PaginationTransfer();
-        $paginationTransfer->setPage($request->query->getInt(self::PARAM_PAGE, self::DEFAULT_PAGE));
-        $paginationTransfer->setMaxPerPage(self::ORDER_LIST_LIMIT);
-
-        return $paginationTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\FilterTransfer
-     */
-    protected function createFilterTransfer()
-    {
-        $filterTransfer = new FilterTransfer();
-        $filterTransfer->setOrderBy(self::ORDER_LIST_SORT_FIELD);
-        $filterTransfer->setOrderDirection(self::ORDER_LIST_SORT_DIRECTION);
-
-        return $filterTransfer;
     }
 
     /**

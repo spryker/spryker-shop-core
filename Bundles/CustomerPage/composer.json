@@ -15,7 +15,7 @@
     "spryker/kernel": "^3.33.0",
     "spryker/product-bundle": "^4.1.0 || ^6.0.0 || ^7.0.0",
     "spryker/quote": "^1.0.0 || ^2.1.0",
-    "spryker/sales": "^8.15.0 || ^10.0.0 || ^11.0.0",
+    "spryker/sales": "^8.15.0 || ^10.0.0 || ^11.1.0",
     "spryker/security-extension": "^1.0.0",
     "spryker/shipment": "^7.0.0 || ^8.0.0",
     "spryker/step-engine": "^3.1.0",
