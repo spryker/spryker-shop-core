@@ -40,8 +40,9 @@ class AvailabilityNotificationWidgetToAvailabilityNotificationClientBridge imple
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    public function unsubscribeByCustomerReferenceAndSku(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
-    {
+    public function unsubscribeByCustomerReferenceAndSku(
+        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+    ): AvailabilityNotificationSubscriptionResponseTransfer {
         return $this->availabilityNotificationClient->unsubscribeByCustomerReferenceAndSku($availabilityNotificationSubscriptionTransfer);
     }
 }
