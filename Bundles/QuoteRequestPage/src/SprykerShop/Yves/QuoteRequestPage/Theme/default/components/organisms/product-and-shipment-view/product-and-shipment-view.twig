@@ -1,0 +1,96 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'product-and-shipment-view',
+} %}
+
+{% define data = {
+    quote: required,
+    items: required,
+    shipment: required,
+    hasMultiShipments: required,
+    isConfiguredBundleEditable: true,
+    isConfiguredBundleQuantitySummaryVisible: false,
+} %}
+
+{% block body %}
+    {% block configuredBundle %}
+        {% widget 'QuoteConfiguredBundleWidget' args [data.quote, data.items] with {
+            data: {
+                isEditable: data.isConfiguredBundleEditable,
+                isQuantitySummaryVisible: data.isConfiguredBundleQuantitySummaryVisible,
+            },
+        } only %}
+        {% endwidget %}
+    {% endblock %}
+
+    {% block productList %}
+        {% set cartItems = data.items | filter(item => item.configuredBundleItem is not defined or item.configuredBundleItem is empty) %}
+
+        {% block productListInner %}
+            {% for cartItem in cartItems %}
+                {% block productItem %}
+                    {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
+                        data: {
+                            product: cartItem,
+                        },
+                        embed: {
+                            priceMode: data.quote.priceMode,
+                            currency: data.quote.currency,
+                        },
+                    } only %}
+                        {% block additionalInformation %}
+                            {% include molecule('quote-request-item-summary', 'QuoteRequestPage') with {
+                                data: {
+                                    priceMode: embed.priceMode,
+                                    unitPrice: data.product.unitPrice | money(true, embed.currency.code),
+                                    subtotalPrice: data.product.sumSubtotalAggregation | money(true, embed.currency.code),
+                                    cartItem: data.product,
+                                    currency: embed.currency,
+                                },
+                            } only %}
+                        {% endblock %}
+
+                        {% block actions %}
+                            {% if data.product.amountSalesUnit is empty %}
+                                {{ 'cart.item_quantity' | trans }}:
+                                <strong>{{ data.product.quantity }}</strong>
+
+                                {% if data.product.quantitySalesUnit %}
+                                    {% set value = data.product.quantitySalesUnit.value %}
+                                    {% set precision = data.product.quantitySalesUnit.precision %}
+                                    {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default %}
+
+                                    <p>
+                                        <small class="text-secondary">
+                                            [= {{ value / precision }} {{ salesUnitName | trans }}]
+                                        </small>
+                                    </p>
+                                {% endif %}
+                            {% endif %}
+                        {% endblock %}
+                    {% endembed %}
+                {% endblock %}
+            {% endfor %}
+        {% endblock %}
+    {% endblock %}
+
+    {% block shipmentInformation %}
+        {% if data.shipment %}
+            {% block shipmentInformationTitle %}
+                {% if not data.hasMultiShipments %}
+                    <h4 class="spacing-x spacing-top spacing-top--big">{{ 'quote_request_page.quote_request.title_shipment_method' | trans }}</h4>
+                {% endif %}
+            {% endblock %}
+
+            {% block shipmentInformationContent %}
+                {% include molecule('quote-request-shipment-information', 'QuoteRequestPage') with {
+                    data: {
+                        shipment: data.shipment,
+                        showAddress: data.hasMultiShipments,
+                    },
+                } only %}
+            {% endblock %}
+        {% endif %}
+    {% endblock %}
+{% endblock %}

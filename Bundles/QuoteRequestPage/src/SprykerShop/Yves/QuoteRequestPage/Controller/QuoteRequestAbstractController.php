@@ -54,9 +54,39 @@ class QuoteRequestAbstractController extends AbstractController
     protected const ROUTE_QUOTE_REQUEST_EDIT_ITEMS = 'quote-request/edit-items';
 
     /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_EDIT_ADDRESS
+     */
+    protected const ROUTE_QUOTE_REQUEST_EDIT_ADDRESS = 'quote-request/edit-address';
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_EDIT_ADDRESS_CONFIRM
+     */
+    protected const ROUTE_QUOTE_REQUEST_EDIT_ADDRESS_CONFIRM = 'quote-request/edit-address-confirm';
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT
+     */
+    protected const ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT = 'quote-request/edit-shipment';
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT_CONFIRM
+     */
+    protected const ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT_CONFIRM = 'quote-request/edit-shipment-confirm';
+
+    /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
      */
     protected const ROUTE_CART = 'cart';
+
+    /**
+     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::CHECKOUT_ADDRESS
+     */
+    protected const ROUTE_CHECKOUT_ADDRESS = 'checkout-address';
+
+    /**
+     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::CHECKOUT_SHIPMENT
+     */
+    protected const ROUTE_CHECKOUT_SHIPMENT = 'checkout-shipment';
 
     /**
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException

@@ -16,12 +16,17 @@ use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCustom
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToPersistentCartClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface;
+use SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToShipmentServiceInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToUtilDateTimeServiceInterface;
 use SprykerShop\Yves\QuoteRequestPage\Form\DataProvider\QuoteRequestFormDataProvider;
 use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandler;
 use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandlerInterface;
+use SprykerShop\Yves\QuoteRequestPage\Form\QuoteRequestEditAddressConfirmForm;
 use SprykerShop\Yves\QuoteRequestPage\Form\QuoteRequestEditItemsConfirmForm;
+use SprykerShop\Yves\QuoteRequestPage\Form\QuoteRequestEditShipmentConfirmForm;
 use SprykerShop\Yves\QuoteRequestPage\Form\QuoteRequestForm;
+use SprykerShop\Yves\QuoteRequestPage\Grouper\ShipmentGrouper;
+use SprykerShop\Yves\QuoteRequestPage\Grouper\ShipmentGrouperInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -71,6 +76,16 @@ class QuoteRequestPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\QuoteRequestPage\Grouper\ShipmentGrouperInterface
+     */
+    public function createShipmentGrouper(): ShipmentGrouperInterface
+    {
+        return new ShipmentGrouper(
+            $this->getShipmentService()
+        );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -84,11 +99,45 @@ class QuoteRequestPageFactory extends AbstractFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getQuoteRequestEditAddressConfirmForm(QuoteRequestTransfer $quoteRequestTransfer): FormInterface
+    {
+        return $this->getFormFactory()->create(
+            QuoteRequestEditAddressConfirmForm::class,
+            $quoteRequestTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getQuoteRequestEditShipmentConfirmForm(QuoteRequestTransfer $quoteRequestTransfer): FormInterface
+    {
+        return $this->getFormFactory()->create(
+            QuoteRequestEditShipmentConfirmForm::class,
+            $quoteRequestTransfer
+        );
+    }
+
+    /**
      * @return \SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToUtilDateTimeServiceInterface
      */
     public function getUtilDateTimeService(): QuoteRequestPageToUtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::SERVICE_UTIL_DATE_TIME);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToShipmentServiceInterface
+     */
+    public function getShipmentService(): QuoteRequestPageToShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestPageDependencyProvider::SERVICE_SHIPMENT);
     }
 
     /**

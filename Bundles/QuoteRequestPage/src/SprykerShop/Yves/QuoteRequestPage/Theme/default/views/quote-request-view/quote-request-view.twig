@@ -1,16 +1,33 @@
-{% extends template('page-layout-quote-request', 'QuoteRequestPage') %}
+{% extends template('page-layout-customer', 'CustomerPage') %}
 
 {% define data = {
+    title: 'quote_request_page.quote_request' | trans,
+    activePage: 'quoteRequest',
     quoteRequests: _view.quoteRequests,
-
     pagination: {
         parameters: {},
         currentPage: _view.pagination.page,
         paginationPath: 'quote-request',
         maxPage: _view.pagination.lastPage,
-        showAlwaysFirstAndLast: true
+        showAlwaysFirstAndLast: true,
     },
 } %}
+
+{% block breadcrumbs %}
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'customer.account' | trans,
+                    url: url('customer/overview'),
+                },
+                {
+                    label: 'quote_request_page.quote_request' | trans,
+                },
+            ],
+        },
+    } only %}
+{% endblock %}
 
 {% block customerContent %}
     <div class="box">
@@ -18,11 +35,11 @@
             {% include molecule('quote-request-view-table', 'QuoteRequestPage') with {
                 data: {
                     quoteRequests: data.quoteRequests,
-                }
+                },
             } only %}
             <hr class="box__separator">
             {% include molecule('pagination') with {
-                data: data.pagination
+                data: data.pagination,
             } only %}
         {% else %}
             {{ 'quote_request_page.quote_request.view.empty' | trans }}

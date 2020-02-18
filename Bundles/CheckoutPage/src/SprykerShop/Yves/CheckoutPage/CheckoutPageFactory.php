@@ -259,6 +259,14 @@ class CheckoutPageFactory extends AbstractFactory
     }
 
     /**
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepRedirectStrategyPluginInterface[]
+     */
+    public function getCheckoutShipmentStepRedirectStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_SHIPMENT_STEP_REDIRECT_STRATEGY);
+    }
+
+    /**
      * @return \SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface
      */
     public function createGiftCardItemsChecker(): GiftCardItemsCheckerInterface

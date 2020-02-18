@@ -67,8 +67,14 @@ class QuoteRequestEditController extends QuoteRequestAbstractController
             return $this->processQuoteRequestForm($quoteRequestForm, $request);
         }
 
+        $shipmentGroupTransfers = $this->getFactory()
+            ->createShipmentGrouper()
+            ->groupItemsByShippingAddress($quoteRequestTransfer);
+
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
+            'shipmentGroups' => $shipmentGroupTransfers,
+            'quoteRequestReference' => $quoteRequestTransfer->getQuoteRequestReference(),
         ];
     }
 
