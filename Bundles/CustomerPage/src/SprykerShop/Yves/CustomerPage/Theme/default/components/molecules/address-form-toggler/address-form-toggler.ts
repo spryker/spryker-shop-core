@@ -55,7 +55,7 @@ export default class AddressFormToggler extends Component {
         if (selectedOption === this.optionValueDeliverToMultipleAddresses) {
             this.toggleSubForm();
         } else {
-            this.toggleForm(!!selectedOption);
+            this.toggleForm(!!selectedOption || selectedOption !== '0');
         }
     }
 

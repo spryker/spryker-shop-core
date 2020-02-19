@@ -21,6 +21,7 @@
     isCustomAddress: app.request.get('customAddress')[_widget.formType]  | default(not _widget.formAddressTransfer.idCustomerAddress),
     currentCompanyBusinessUnitAddress: _widget.currentCompanyBusinessUnitAddress,
     isCurrentAddressEmpty: _widget.isCurrentAddressEmpty,
+    hasDisabledOption: false,
 } %}
 
 {% block body %}
@@ -75,6 +76,7 @@
             items: data.items,
             shippingAddress: shippingAddress,
             jsAddressClass: data.jsAddressClass,
+            hasDisabledOption: data.hasDisabledOption,
         },
     } only %}
         {% block selectClass -%}
@@ -93,14 +95,18 @@
                 address.city)
             %}
             {% define option = {
-                selected: isSelected,
+                selected: not embed.hasDisabledOption ? isSelected,
                 value: address.key,
                 label: fullName
             } %}
             {{ parent() }}
         {% endblock %}
         {% block optionsGroup %}
-            <option value="">{{ 'company.account.add_new_address' | trans }}</option>
+            {% if embed.hasDisabledOption %}
+                <option value="" disabled selected>{{ 'checkout.step.address.select_address' | trans }}</option>
+            {% endif %}
+
+            <option value="0">{{ 'company.account.add_new_address' | trans }}</option>
 
             {% if embed.customerAddresses %}
                 <optgroup label="{{ 'page.checkout.address.option_group.customer' | trans }}">

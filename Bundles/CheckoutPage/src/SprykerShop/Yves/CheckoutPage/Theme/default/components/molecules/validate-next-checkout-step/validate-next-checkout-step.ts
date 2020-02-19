@@ -98,7 +98,7 @@ export default class ValidateNextCheckoutStep extends Component {
             return;
         }
 
-        if (this.isFormFieldsEmpty) {
+        if (this.isFormFieldsEmpty || this.isDropdownTriggerHasDisabledOption) {
             this.disableNextStepButton(true);
 
             return;
@@ -113,6 +113,12 @@ export default class ValidateNextCheckoutStep extends Component {
     disableNextStepButton(isDisabled: boolean): void {
         if (this.target) {
             this.target.disabled = isDisabled;
+        }
+    }
+
+    protected get isDropdownTriggerHasDisabledOption(): boolean {
+        if (this.dropdownTriggers) {
+            return this.dropdownTriggers.some((element: HTMLSelectElement) => !element.value);
         }
     }
 
