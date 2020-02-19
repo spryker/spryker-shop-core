@@ -99,7 +99,6 @@ export default class ValidateNextCheckoutStep extends Component {
         }
 
         if (this.isFormFieldsEmpty || this.isDropdownTriggerPreSelected) {
-            console.log('true');
             this.disableNextStepButton(true);
 
             return;
@@ -118,10 +117,10 @@ export default class ValidateNextCheckoutStep extends Component {
     }
 
     protected get isDropdownTriggerPreSelected(): boolean {
-        // if (!this.dropdownTriggers) {
-        //     return;
-        // }
-        console.log(this.dropdownTriggers);
+        if (!this.dropdownTriggers) {
+            return;
+        }
+
         return this.dropdownTriggers.some((element: HTMLSelectElement) => !element.value);
     }
 
