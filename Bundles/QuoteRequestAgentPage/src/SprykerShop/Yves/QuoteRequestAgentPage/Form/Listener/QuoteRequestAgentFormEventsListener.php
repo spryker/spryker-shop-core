@@ -42,18 +42,17 @@ class QuoteRequestAgentFormEventsListener implements QuoteRequestAgentFormEvents
     public function copySubmittedItemShipmentMethodPricesToQuoteShipmentMethod(FormEvent $event): FormEvent
     {
         /** @var \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer */
-        $quoteRequestVersionTransfer = $event->getData();
+        $quoteRequestVersionTransfer = $event->getForm()->getParent()->getParent()->getData();
+        /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer */
+        $shipmentGroupTransfer = $event->getData();
+
         $quoteShipment = $quoteRequestVersionTransfer->getQuote()->getShipment();
 
         if (!$quoteShipment || !$quoteShipment->getMethod()) {
             return $event;
         }
 
-        /** @var \Generated\Shared\Transfer\ShipmentTransfer|null $itemShipment */
-        $itemShipment = $quoteRequestVersionTransfer->getShipmentGroups()
-            ->getIterator()
-            ->current()
-            ->getShipment();
+        $itemShipment = $shipmentGroupTransfer->getShipment();
 
         if (!$itemShipment || !$itemShipment->getMethod()) {
             return $event;
@@ -62,7 +61,7 @@ class QuoteRequestAgentFormEventsListener implements QuoteRequestAgentFormEvents
         $itemShipmentMethodSourcePrice = $itemShipment->getMethod()->getSourcePrice();
         $quoteShipment->getMethod()->setSourcePrice($itemShipmentMethodSourcePrice);
 
-        $event->setData($quoteRequestVersionTransfer);
+        $event->setData($shipmentGroupTransfer);
 
         return $event;
     }

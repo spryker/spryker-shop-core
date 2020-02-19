@@ -66,9 +66,15 @@ class QuoteRequestAgentVersionShipmentGroupsSubForm extends AbstractType
         );
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-            return $this->getFactory()
+            $event = $this->getFactory()
                 ->createQuoteRequestAgentFormEventsListener()
                 ->copySubmittedShipmentMethodPricesToItemShipmentMethods($event);
+
+            $event = $this->getFactory()
+                ->createQuoteRequestAgentFormEventsListener()
+                ->copySubmittedItemShipmentMethodPricesToQuoteShipmentMethod($event);
+
+            return $event;
         });
 
         return $this;

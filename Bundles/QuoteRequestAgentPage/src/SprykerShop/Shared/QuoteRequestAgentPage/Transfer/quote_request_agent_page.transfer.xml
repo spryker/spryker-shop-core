@@ -40,7 +40,6 @@
         <property name="versionReference" type="string"/>
         <property name="quote" type="Quote"/>
         <property name="metadata" type="array" singular="metadata"/>
-        <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
     </transfer>
 
     <transfer name="Quote">

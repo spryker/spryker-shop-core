@@ -56,7 +56,7 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
 
         return $this->getFormFactory()->create(
             QuoteRequestAgentForm::class,
-            $quoteRequestAgentFormDataProvider->getData($quoteRequestTransfer),
+            $quoteRequestTransfer,
             $quoteRequestAgentFormDataProvider->getOptions($quoteRequestTransfer)
         );
     }
