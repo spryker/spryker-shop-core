@@ -14,7 +14,7 @@ use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AfterCustomerAuthen
 /**
  * @method \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetFactory getFactory()
  */
-class MerchantSwitcherAfterCustomerAuthenticationSuccessPlugin extends AbstractPlugin implements AfterCustomerAuthenticationSuccessPluginInterface
+class MerchantSwitchCartAfterCustomerAuthenticationSuccessPlugin extends AbstractPlugin implements AfterCustomerAuthenticationSuccessPluginInterface
 {
     /**
      * {@inheritDoc}
