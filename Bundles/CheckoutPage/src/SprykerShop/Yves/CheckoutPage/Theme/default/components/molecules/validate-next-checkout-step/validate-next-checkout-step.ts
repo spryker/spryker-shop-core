@@ -117,11 +117,9 @@ export default class ValidateNextCheckoutStep extends Component {
     }
 
     protected get isDropdownTriggerPreSelected(): boolean {
-        if (!this.dropdownTriggers) {
-            return;
+        if (this.dropdownTriggers) {
+            return this.dropdownTriggers.some((element: HTMLSelectElement) => !element.value);
         }
-
-        return this.dropdownTriggers.some((element: HTMLSelectElement) => !element.value);
     }
 
     /**
