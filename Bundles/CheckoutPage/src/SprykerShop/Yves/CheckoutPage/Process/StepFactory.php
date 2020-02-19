@@ -40,7 +40,6 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\PostConditionChecke
 use SprykerShop\Yves\CheckoutPage\Process\Steps\StepExecutorInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\SuccessStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\SummaryStep;
-use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerPageControllerProvider;
 use SprykerShop\Yves\HomePage\Plugin\Provider\HomePageControllerProvider;
 
 /**
@@ -50,6 +49,18 @@ class StepFactory extends AbstractFactory
 {
     protected const ERROR_CODE_GENERAL_FAILURE = 399;
     protected const ROUTE_CART = 'cart';
+
+    /**
+     * @uses \SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin::ROUTE_HOME
+     */
+    protected const ROUTE_HOME = 'home';
+
+    /**
+     * @uses \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_LOGOUT
+     */
+    protected const ROUTE_LOGOUT = 'logout';
+
+    protected const CHECKOUT_CUSTOMER = 'checkout-customer';
 
     /**
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection
@@ -115,7 +126,7 @@ class StepFactory extends AbstractFactory
     {
         return new EntryStep(
             static::ROUTE_CART,
-            HomePageControllerProvider::ROUTE_HOME
+            static::ROUTE_HOME
         );
     }
 
@@ -127,9 +138,9 @@ class StepFactory extends AbstractFactory
         return new CustomerStep(
             $this->getCustomerClient(),
             $this->getCustomerStepHandler(),
-            CheckoutPageControllerProvider::CHECKOUT_CUSTOMER,
-            HomePageControllerProvider::ROUTE_HOME,
-            $this->getApplication()->path(CustomerPageControllerProvider::ROUTE_LOGOUT)
+            static::CHECKOUT_CUSTOMER,
+            static::ROUTE_HOME,
+            $this->getApplication()->path(static::ROUTE_LOGOUT)
         );
     }
 
