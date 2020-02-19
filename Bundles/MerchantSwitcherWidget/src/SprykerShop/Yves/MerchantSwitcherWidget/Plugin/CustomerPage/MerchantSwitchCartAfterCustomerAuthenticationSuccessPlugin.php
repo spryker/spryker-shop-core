@@ -18,8 +18,8 @@ class MerchantSwitchCartAfterCustomerAuthenticationSuccessPlugin extends Abstrac
 {
     /**
      * {@inheritDoc}
-     * - Switch ItemTransfer.merchantReference for current Quote according to selected merchant reference.
-     * - Switch ItemTransfer.offerReference for current Quote according to selected merchant reference.
+     * - Sets merchant reference value to cookies if a customer's quote contains it and the quote is not empty.
+     * - If the quote is empty or the quote doesn't contain merchant reference gets merchant reference from cookies and sets to quote.
      *
      * @api
      *
@@ -31,10 +31,12 @@ class MerchantSwitchCartAfterCustomerAuthenticationSuccessPlugin extends Abstrac
         $merchantReference = $quoteTransfer->getMerchantReference();
 
         if ($merchantReference && $quoteTransfer->getItems()->count()) {
-            //set cookie
+            $this->getFactory()->createSelectedMerchantCookie()->setMerchantReference($merchantReference);
+
+            return;
         }
 
-        //get cookie
+        $merchantReference = $this->getFactory()->createSelectedMerchantCookie()->getMerchantReference();
         $merchantSwitchRequestTransfer = (new MerchantSwitchRequestTransfer())
             ->setQuote($quoteTransfer)
             ->setMerchantReference($merchantReference);
