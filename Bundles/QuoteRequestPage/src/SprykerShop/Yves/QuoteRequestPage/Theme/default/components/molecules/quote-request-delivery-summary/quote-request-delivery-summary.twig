@@ -64,7 +64,7 @@
                     {% endblock %}
 
                     {% block textMultipleDelivery %}
-                        <p class="spacing-y">{{ 'quote_request_page.quote_request.multiple_delivery_address' | trans }}</p>
+                        <p>{{ 'quote_request_page.quote_request.multiple_delivery_address' | trans }}</p>
                     {% endblock %}
                 {% endif %}
 
@@ -90,7 +90,7 @@
                     {% endblock %}
 
                     {% block textEmptyDeliveryAddress %}
-                        <p class="spacing-y">{{ 'quote_request_page.quote_request.empty_delivery_address' | trans }}</p>
+                        <p>{{ 'quote_request_page.quote_request.empty_delivery_address' | trans }}</p>
                     {% endblock %}
                 {% endif %}
             {% endblock %}
@@ -99,7 +99,7 @@
                 {% block addAddressButtonWrapper %}
                     {% if not data.quote.billingAddress and not hasShipmentAddress %}
                         {% block textEmptyAddresses %}
-                            <p class="spacing-y">{{ 'quote_request_page.quote_request.empty_address' | trans }}</p>
+                            <p>{{ 'quote_request_page.quote_request.empty_address' | trans }}</p>
                         {% endblock %}
 
                         {% if data.isEditable and data.quoteRequestReference %}
@@ -165,7 +165,7 @@
                 {% block addShipmentButtonWrapper %}
                     {% if not hasShipmentMethod %}
                         {% block textEmptyShipmentMethod %}
-                            <p class="spacing-y">{{ 'quote_request_page.quote_request.empty_shipment_method' | trans }}</p>
+                            <p>{{ 'quote_request_page.quote_request.empty_shipment_method' | trans }}</p>
                         {% endblock %}
 
                         {% if data.isEditable and data.quoteRequestReference %}
