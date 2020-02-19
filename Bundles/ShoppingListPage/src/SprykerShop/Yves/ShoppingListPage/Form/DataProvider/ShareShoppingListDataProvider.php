@@ -60,8 +60,12 @@ class ShareShoppingListDataProvider
      * @param \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToCustomerClientInterface $customerClient
      * @param \SprykerShop\Yves\ShoppingListPage\Dependency\Client\ShoppingListPageToShoppingListClientInterface $shoppingListClient
      */
-    public function __construct(ShoppingListPageToCompanyBusinessUnitClientInterface $companyBusinessUnitClient, ShoppingListPageToCompanyUserClientInterface $companyUserClient, ShoppingListPageToCustomerClientInterface $customerClient, ShoppingListPageToShoppingListClientInterface $shoppingListClient)
-    {
+    public function __construct(
+        ShoppingListPageToCompanyBusinessUnitClientInterface $companyBusinessUnitClient,
+        ShoppingListPageToCompanyUserClientInterface $companyUserClient,
+        ShoppingListPageToCustomerClientInterface $customerClient,
+        ShoppingListPageToShoppingListClientInterface $shoppingListClient
+    ) {
         $this->companyBusinessUnitClient = $companyBusinessUnitClient;
         $this->companyUserClient = $companyUserClient;
         $this->customerClient = $customerClient;
