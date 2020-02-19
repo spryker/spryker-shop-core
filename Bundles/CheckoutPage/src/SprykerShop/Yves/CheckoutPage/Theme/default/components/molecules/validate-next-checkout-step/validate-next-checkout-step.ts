@@ -51,7 +51,7 @@ export default class ValidateNextCheckoutStep extends Component {
     protected mapTriggerEvents(): void {
         if (this.triggers) {
             this.triggers.forEach((element: HTMLFormElement) => {
-                element.addEventListener('change', () => this.onTriggerChange());
+                element.addEventListener('input', () => this.onTriggerChange());
             });
         }
     }
@@ -98,7 +98,8 @@ export default class ValidateNextCheckoutStep extends Component {
             return;
         }
 
-        if (this.isFormFieldsEmpty || this.isDropdownTriggerHasDisabledOption) {
+        if (this.isFormFieldsEmpty || this.isDropdownTriggerPreSelected) {
+            console.log('true');
             this.disableNextStepButton(true);
 
             return;
@@ -116,10 +117,12 @@ export default class ValidateNextCheckoutStep extends Component {
         }
     }
 
-    protected get isDropdownTriggerHasDisabledOption(): boolean {
-        if (this.dropdownTriggers) {
-            return this.dropdownTriggers.some((element: HTMLSelectElement) => !element.value);
-        }
+    protected get isDropdownTriggerPreSelected(): boolean {
+        // if (!this.dropdownTriggers) {
+        //     return;
+        // }
+        console.log(this.dropdownTriggers);
+        return this.dropdownTriggers.some((element: HTMLSelectElement) => !element.value);
     }
 
     /**

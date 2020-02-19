@@ -21,6 +21,7 @@ export default class AddressFormToggler extends Component {
     protected billingSameAsShippingToggler: HTMLInputElement;
     protected parentTarget: HTMLElement;
     protected eventToggleForm: CustomEvent = new CustomEvent(EVENT_TOGGLE_FORM);
+    protected readonly togglerPlaceholderValue: string = '0';
 
     protected readyCallback(): void {
         if (this.triggerSelector) {
@@ -55,7 +56,7 @@ export default class AddressFormToggler extends Component {
         if (selectedOption === this.optionValueDeliverToMultipleAddresses) {
             this.toggleSubForm();
         } else {
-            this.toggleForm(!!selectedOption || selectedOption !== '0');
+            this.toggleForm(selectedOption !== this.togglerPlaceholderValue);
         }
     }
 

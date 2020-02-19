@@ -80,8 +80,8 @@
         },
     } only %}
         {% block selectClass -%}
-            {{ embed.jsAddressClass }}__form-select-{{ embed.formType }}
-            {{ embed.itemShippingTriggerJsClass ? embed.itemShippingTriggerJsClass }}
+            {{- embed.jsAddressClass ? embed.jsAddressClass ~ '__form-select-' ~ embed.formType -}}
+            {{- embed.itemShippingTriggerJsClass ? embed.itemShippingTriggerJsClass -}}
         {%- endblock %}
         {% block option %}
             {% set isSelected = embed.defaultAddressKey == address.key %}
