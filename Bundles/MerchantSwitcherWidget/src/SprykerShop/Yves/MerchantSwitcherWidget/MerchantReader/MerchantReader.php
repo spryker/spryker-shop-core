@@ -63,6 +63,8 @@ class MerchantReader implements MerchantReaderInterface
 
         foreach ($merchantTransfers as $merchantTransfer) {
             if ($selectedMerchantReference === $merchantTransfer->getMerchantReference()) {
+                $this->switchMerchantInQuote($selectedMerchantReference);
+
                 return $selectedMerchantReference;
             }
         }
@@ -93,6 +95,10 @@ class MerchantReader implements MerchantReaderInterface
     protected function switchMerchantInQuote(string $merchantReference): void
     {
         $quoteTransfer = $this->quoteClient->getQuote();
+
+        if ($quoteTransfer->getMerchantReference() === $merchantReference) {
+            return;
+        }
 
         $merchantSwitchRequestTransfer = new MerchantSwitchRequestTransfer();
         $merchantSwitchRequestTransfer->setMerchantReference($merchantReference);
