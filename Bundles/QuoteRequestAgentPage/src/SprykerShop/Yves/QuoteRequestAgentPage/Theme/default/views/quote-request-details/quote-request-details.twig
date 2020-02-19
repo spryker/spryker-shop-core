@@ -1,4 +1,4 @@
-{% extends template('page-layout-quote-request', 'QuoteRequestPage') %}
+{% extends template('page-layout-quote-request', 'QuoteRequestAgentPage') %}
 
 {% define data = {
     title: '#' ~ _view.quoteRequest.quoteRequestReference,
@@ -52,15 +52,15 @@
         },
     } only %}
 
-    {% if data.quoteRequest.isLatestVersionVisible %}
-        {% block textVisibleForCustomer %}
-            <strong>{{ 'quote_request_page.quote_request.labels.latest_version_is_visible' | trans }}</strong>
-        {% endblock %}
-    {% else %}
-        {% block textHiddenForCustomer %}
-            <strong>{{ 'quote_request_page.quote_request.labels.latest_version_is_hidden' | trans }}</strong>
-        {% endblock %}
-    {% endif %}
+    {% block latestVersionVisibilityStatus %}
+        <p>
+            <strong>
+                {{- data.quoteRequest.isLatestVersionVisible ?
+                'quote_request_page.quote_request.labels.latest_version_is_visible' | trans :
+                'quote_request_page.quote_request.labels.latest_version_is_hidden' | trans -}}
+            </strong>
+        </p>
+    {% endblock %}
 {% endblock %}
 
 {% block quoteRequestSidebar %}

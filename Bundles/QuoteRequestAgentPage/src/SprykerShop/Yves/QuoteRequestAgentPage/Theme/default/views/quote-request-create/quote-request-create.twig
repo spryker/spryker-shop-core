@@ -1,19 +1,30 @@
-{% extends template('page-layout-quote-request', 'QuoteRequestAgentPage') %}
+{% extends template('page-layout-agent', 'AgentPage') %}
 
 {% define data = {
     title: 'quote_request_page.quote_request.title_create' | trans,
+    activePage: 'quoteRequestAgent',
     quoteRequestCreateForm: _view.quoteRequestCreateForm,
     impersonatedCustomer: _view.impersonatedCustomer,
 } %}
 
 {% block breadcrumbs %}
-    {% set breadcrumbExtend = [
-        {
-            label: 'quote_request_page.quote_request.breadcrumb.create' | trans,
+    {% include molecule('breadcrumb') with {
+        data: {
+            steps: [
+                {
+                    label: 'agent.account.page_title' | trans,
+                    url: path('agent/overview'),
+                },
+                {
+                    label: 'quote_request_page.quote_request' | trans,
+                    url: path('agent/quote-request'),
+                },
+                {
+                    label: 'quote_request_page.quote_request.breadcrumb.create' | trans,
+                },
+            ],
         },
-    ] %}
-
-    {{ parent() }}
+    } only %}
 {% endblock %}
 
 {% block agentContent %}

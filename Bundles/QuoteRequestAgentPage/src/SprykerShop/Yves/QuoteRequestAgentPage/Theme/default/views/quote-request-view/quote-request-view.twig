@@ -1,7 +1,8 @@
-{% extends template('page-layout-quote-request', 'QuoteRequestAgentPage') %}
+{% extends template('page-layout-agent', 'AgentPage') %}
 
 {% define data = {
     title: 'quote_request_page.quote_request' | trans,
+    activePage: 'quoteRequestAgent',
     quoteRequests: _view.quoteRequests,
 
     pagination: {

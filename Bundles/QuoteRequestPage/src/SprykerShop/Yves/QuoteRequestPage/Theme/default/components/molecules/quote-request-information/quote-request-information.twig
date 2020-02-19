@@ -8,7 +8,6 @@
     quoteRequest: required,
     quoteRequestVersionReferences: null,
     version: null,
-    hasVersionMessage: false,
 } %}
 
 {% block body %}
@@ -95,17 +94,5 @@
                 },
             } only %}
         {% endblock %}
-
-        {% if data.hasVersionMessage %}
-            {% block latestVersionVisibilityStatus %}
-                <p>
-                    <strong>
-                        {{- data.quoteRequest.isLatestVersionVisible ?
-                        'quote_request_page.quote_request.labels.latest_version_is_visible' | trans :
-                        'quote_request_page.quote_request.labels.latest_version_is_hidden' | trans -}}
-                    </strong>
-                </p>
-            {% endblock %}
-        {% endif %}
     {% endblock %}
 {% endblock %}

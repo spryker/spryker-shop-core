@@ -87,7 +87,7 @@
         {% set classButtonSend = 'button button--expand button--success' %}
 
         <div class="box spacing-top spacing-top--big">
-            {% block actionCancel %}
+            {% block actionBack %}
                 <a class="{{ classButtonBack }}"
                    href="{{ url('quote-request/details', { quoteRequestReference: data.quoteRequest.quoteRequestReference }) }}"
                    data-init-single-click>

@@ -1,11 +1,4 @@
-{% extends template('page-layout-agent', 'AgentPage') %}
-
-{% define data = {
-    title: 'quote_request_page.quote_request' | trans,
-    activePage: 'quoteRequestAgent',
-} %}
-
-{% set breadcrumbExtend = [] %}
+{% extends template('page-layout-quote-request', 'QuoteRequestPage') %}
 
 {% block breadcrumbs %}
     {% set breadcrumbSteps = [
