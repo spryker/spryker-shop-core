@@ -32,13 +32,7 @@ class MerchantSwitcherController extends AbstractController
     {
         $merchantReference = $request->get(static::PARAM_MERCHANT_REFERENCE);
 
-        $quoteTransfer = $this->updateQuoteWithMerchantReference($merchantReference);
-        $this->getFactory()
-            ->getMerchantSwitcherClient()
-            ->switchMerchant(
-                (new MerchantSwitchRequestTransfer())
-                    ->setQuote($quoteTransfer)
-            );
+        $this->updateQuoteWithMerchantReference($merchantReference);
 
         $cookie = Cookie::create(
             $this->getFactory()->getConfig()->getMerchantSelectorCookieIdentifier(),
@@ -72,7 +66,15 @@ class MerchantSwitcherController extends AbstractController
         $quoteClient = $this->getFactory()->getQuoteClient();
 
         $quoteTransfer = $quoteClient->getQuote();
-        $quoteTransfer->setMerchantReference($merchantReference);
+
+        $quoteTransfer = $this->getFactory()
+            ->getMerchantSwitcherClient()
+            ->switchMerchant(
+                (new MerchantSwitchRequestTransfer())
+                    ->setQuote($quoteTransfer)
+                    ->setMerchantReference($merchantReference)
+            )->getQuote();
+
         $quoteClient->setQuote($quoteTransfer);
 
         return $quoteTransfer;
