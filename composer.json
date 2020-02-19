@@ -124,8 +124,6 @@
     "spryker-shop/shop-application-extension": "*",
     "spryker-shop/shop-cms-slot": "*",
     "spryker-shop/shop-cms-slot-extension": "*",
-    "spryker-shop/shop-context": "*",
-    "spryker-shop/shop-context-extension": "*",
     "spryker-shop/shop-permission": "*",
     "spryker-shop/shop-router": "*",
     "spryker-shop/shop-router-extension": "*",
