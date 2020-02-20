@@ -45,6 +45,7 @@ class ProductBundleItemsMultiCartItemsListWidget extends AbstractWidget
         foreach ($groupedItems as $groupedItem) {
             if ($groupedItem instanceof ItemTransfer) {
                 $transformedCartItems[] = $groupedItem;
+
                 continue;
             }
 
