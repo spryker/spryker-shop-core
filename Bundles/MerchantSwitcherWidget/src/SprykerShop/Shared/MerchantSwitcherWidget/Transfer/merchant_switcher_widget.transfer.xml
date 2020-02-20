@@ -25,4 +25,7 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
+    <transfer name="Item">
+    </transfer>
+
 </transfers>
