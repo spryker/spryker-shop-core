@@ -82,6 +82,7 @@ export default class ProductItem extends Component {
 
     /**
      * Sets the product card image alt.
+     * @param imageAlt A product card image alt.
      */
     set imageAlt(imageAlt: string) {
         if (this.productImage) {
@@ -91,6 +92,7 @@ export default class ProductItem extends Component {
 
     /**
      * Sets the product card labels.
+     * @param labels An array of product card labels.
      */
     set labels(labels: ProductItemLabelsData[]) {
         if (!labels.length) {

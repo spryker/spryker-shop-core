@@ -3,7 +3,7 @@
 {% define data = {
     value: _widget.rating | default(0),
     maxValue: _widget.maximumRating,
-    productItemJsName: '',
+    parentJsName: '',
 } %}
 
 {% block body %}
@@ -13,7 +13,7 @@
                 value: data.value,
                 maxValue: data.maxValue,
                 useHalfSteps: true,
-                productItemJsName: data.productItemJsName,
+                parentJsName: data.parentJsName,
             },
             attributes: {
                 readonly: true,

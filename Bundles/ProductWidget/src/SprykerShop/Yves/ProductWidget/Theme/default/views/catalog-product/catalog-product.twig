@@ -30,7 +30,7 @@
             {% block labels %}
                 {% widget 'ProductConcreteLabelWidget' args [data.product.id_product_labels] with {
                     data: {
-                        productItemJsName: config.jsName,
+                        parentJsName: config.jsName,
                     },
                 } only %}{% endwidget %}
             {% endblock %}
@@ -39,7 +39,7 @@
                 {% if data.product.rating is defined %}
                     {% widget 'ProductReviewDisplayWidget' args [data.product.rating] with {
                         data: {
-                            productItemJsName: config.jsName,
+                            parentJsName: config.jsName,
                         },
                     } only %}{% endwidget %}
                 {% endif %}

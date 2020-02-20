@@ -69,7 +69,7 @@
             {% block productAbstractLabels %}
                 {% widget 'ProductAbstractLabelWidget' args [data.idProductAbstract] with {
                     data: {
-                        productItemJsName: config.jsName,
+                        parentJsName: config.jsName,
                     },
                 } only %}{% endwidget %}
             {% endblock %}
@@ -85,6 +85,14 @@
     {% endblock %}
 
     {% block content %}
+        {% block colors %}
+            {% widget 'ProductGroupColorWidget' args [data.idProductAbstract, data.product.selectedAttributes ?? []] use view('product-item-color-selector', 'ProductGroupWidget') with {
+                data: {
+                    parentJsName: config.jsName,
+                },
+            } only %}{% endwidget %}
+        {% endblock %}
+
         {% block name %}
             {% if data.name and data.url %}
                 {% block link %}

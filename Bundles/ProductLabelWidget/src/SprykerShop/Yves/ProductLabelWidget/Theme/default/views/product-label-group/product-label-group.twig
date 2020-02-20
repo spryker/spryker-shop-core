@@ -2,7 +2,7 @@
 
 {% define data = {
     dictionary: _widget.productLabelDictionaryItemTransfers,
-    productItemJsName: '',
+    parentJsName: '',
 } %}
 
 {% set labels = labels | default([]) %}
@@ -18,7 +18,7 @@
     {% include molecule('label-group', 'ProductLabelWidget') with {
         data: {
             labels: labels,
-            productItemJsName: data.productItemJsName,
+            parentJsName: data.parentJsName,
         },
     } only %}
 {% endblock %}

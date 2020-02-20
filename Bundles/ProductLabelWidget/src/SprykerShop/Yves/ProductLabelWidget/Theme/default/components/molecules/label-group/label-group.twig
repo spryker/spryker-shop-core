@@ -6,7 +6,7 @@
 
 {% define data = {
     labels: [],
-    productItemJsName: '',
+    parentJsName: '',
 }  %}
 
 {% block body %}
@@ -17,14 +17,14 @@
     {% for label in data.labels %}
         {% set componentName = 'flag' %}
         {% set componentModifiers = [label.type] %}
-        {% set labelJsClass = data.productItemJsName ? data.productItemJsName ~ '__label-flag' %}
-        {% set labelTextJsClass = data.productItemJsName ? data.productItemJsName ~ '__label-flag-text' %}
+        {% set labelJsClass = data.parentJsName ? data.parentJsName ~ '__label-flag' %}
+        {% set labelTextJsClass = data.parentJsName ? data.parentJsName ~ '__label-flag-text' %}
 
         {% if label.type == labelTagType %}
             {% set componentName = 'tag' %}
             {% set componentModifiers = [] %}
-            {% set labelJsClass = data.productItemJsName ? data.productItemJsName ~ '__label-tag' %}
-            {% set labelTextJsClass = data.productItemJsName ? data.productItemJsName ~ '__label-tag-text' %}
+            {% set labelJsClass = data.parentJsName ? data.parentJsName ~ '__label-tag' %}
+            {% set labelTextJsClass = data.parentJsName ? data.parentJsName ~ '__label-tag-text' %}
         {% endif %}
 
         {% set component = include(
@@ -56,8 +56,8 @@
         {% if leftColumnComponents %}
             <div class="col col--expand">{{ leftColumnComponents | join | raw }}</div>
         {% else %}
-            {% set labelJsClass = data.productItemJsName ? data.productItemJsName ~ '__label-tag' %}
-            {% set labelTextJsClass = data.productItemJsName ? data.productItemJsName ~ '__label-tag-text' %}
+            {% set labelJsClass = data.parentJsName ? data.parentJsName ~ '__label-tag' %}
+            {% set labelTextJsClass = data.parentJsName ? data.parentJsName ~ '__label-tag-text' %}
 
             <div class="col col--expand">
                 {% include molecule('tag', 'ProductLabelWidget') with {
@@ -75,8 +75,8 @@
         {% if rightColumnComponents %}
             <div class="col col--expand text-right">{{ rightColumnComponents | join | raw }}</div>
         {% else %}
-            {% set labelJsClass = data.productItemJsName ? data.productItemJsName ~ '__label-flag' %}
-            {% set labelTextJsClass = data.productItemJsName ? data.productItemJsName ~ '__label-flag-text' %}
+            {% set labelJsClass = data.parentJsName ? data.parentJsName ~ '__label-flag' %}
+            {% set labelTextJsClass = data.parentJsName ? data.parentJsName ~ '__label-flag-text' %}
 
             <div class="col col--expand text-right">
                 {% include molecule('flag', 'ProductLabelWidget') with {
