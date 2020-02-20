@@ -12,4 +12,4 @@ filter:
   excluded_paths:
 
 build_failure_conditions:
-  - 'project.metric("scrutinizer.quality", < 9.88)'
+  - 'project.metric("scrutinizer.quality", < 9.85)'
