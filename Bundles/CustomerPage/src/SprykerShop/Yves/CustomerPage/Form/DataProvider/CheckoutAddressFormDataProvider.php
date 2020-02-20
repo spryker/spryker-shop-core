@@ -18,6 +18,7 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClient
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
 use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
 
 class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider implements StepEngineFormDataProviderInterface
@@ -51,18 +52,25 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     protected $productBundleClient;
 
     /**
+     * @var \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface
+     */
+    protected $shipmentService;
+
+    /**
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface $customerClient
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface $customerService
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface $shipmentClient
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface $productBundleClient
+     * @param \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface $shipmentService
      */
     public function __construct(
         CustomerPageToCustomerClientInterface $customerClient,
         Store $store,
         CustomerPageToCustomerServiceInterface $customerService,
         CustomerPageToShipmentClientInterface $shipmentClient,
-        CustomerPageToProductBundleClientInterface $productBundleClient
+        CustomerPageToProductBundleClientInterface $productBundleClient,
+        CustomerPageToShipmentServiceInterface $shipmentService
     ) {
         parent::__construct($customerClient, $store);
 
@@ -70,6 +78,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         $this->customerTransfer = $this->getCustomer();
         $this->shipmentClient = $shipmentClient;
         $this->productBundleClient = $productBundleClient;
+        $this->shipmentService = $shipmentService;
     }
 
     /**
@@ -322,17 +331,23 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer|null $previouslySelectedShipmentMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    protected function getItemShipment(ItemTransfer $itemTransfer): ShipmentTransfer
+    protected function getItemShipment(ItemTransfer $itemTransfer, ?ShipmentTransfer $previouslySelectedShipmentMethod): ShipmentTransfer
     {
         $shipmentTransfer = $itemTransfer->getShipment();
         if ($shipmentTransfer === null) {
             $shipmentTransfer = new ShipmentTransfer();
         }
 
-        $shipmentTransfer->setShippingAddress($this->getShipmentShippingAddress($shipmentTransfer));
+        $shipmentShippingAddress = $this->getShipmentShippingAddress($shipmentTransfer);
+        if ($previouslySelectedShipmentMethod !== null && !$this->isShippingAddressDefined($shipmentShippingAddress)) {
+            return $previouslySelectedShipmentMethod;
+        }
+
+        $shipmentTransfer->setShippingAddress($shipmentShippingAddress);
 
         return $shipmentTransfer;
     }
@@ -363,6 +378,8 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function setItemLevelShippingAddresses(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
+        $previouslySelectedShipmentMethod = $this->resolveShipmentForSingleAddressDelivery($quoteTransfer);
+
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (
                 $itemTransfer->getShipment() !== null
@@ -371,7 +388,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
                 continue;
             }
 
-            $itemTransfer->setShipment($this->getItemShipment($itemTransfer));
+            $itemTransfer->setShipment($this->getItemShipment($itemTransfer, $previouslySelectedShipmentMethod));
         }
 
         return $quoteTransfer;
@@ -460,5 +477,48 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
+     */
+    protected function resolveShipmentForSingleAddressDelivery(QuoteTransfer $quoteTransfer): ?ShipmentTransfer
+    {
+        if ($quoteTransfer->getItems()->count() === 0) {
+            return null;
+        }
+
+        $shipmentGroups = $this->shipmentService->groupItemsByShipment(
+            $this->filterQuoteItemsWithShipment($quoteTransfer->getItems()->getArrayCopy())
+        );
+        if ($shipmentGroups->count() !== 1) {
+            return null;
+        }
+
+        return $shipmentGroups->offsetGet(0)->getShipment();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function filterQuoteItemsWithShipment(array $itemTransfers): array
+    {
+        return array_filter($itemTransfers, function (ItemTransfer $itemTransfer) {
+            return $itemTransfer->getShipment() !== null;
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $shipmentShippingAddress
+     *
+     * @return bool
+     */
+    protected function isShippingAddressDefined(AddressTransfer $shipmentShippingAddress): bool
+    {
+        return $shipmentShippingAddress->getIdCustomerAddress() || $shipmentShippingAddress->getIdCompanyUnitAddress();
     }
 }

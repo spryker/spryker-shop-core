@@ -253,7 +253,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addShipmentClient(Container $container): Container
     {
-        $container->set(self::CLIENT_SHIPMENT, function (Container $container) {
+        $container->set(static::CLIENT_SHIPMENT, function (Container $container) {
             return new CheckoutPageToShipmentClientBridge($container->getLocator()->shipment()->client());
         });
 

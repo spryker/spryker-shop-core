@@ -156,7 +156,8 @@ class CustomerPageFactory extends AbstractFactory
             $this->getStore(),
             $this->getCustomerService(),
             $this->getShipmentClient(),
-            $this->getProductBundleClient()
+            $this->getProductBundleClient(),
+            $this->getShipmentService()
         );
     }
 
