@@ -14,6 +14,8 @@ use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Authenticator\CustomerAuthenticator;
 use SprykerShop\Yves\CustomerPage\Authenticator\CustomerAuthenticatorInterface;
+use SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolver;
+use SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolverInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
@@ -157,7 +159,8 @@ class CustomerPageFactory extends AbstractFactory
             $this->getCustomerService(),
             $this->getShipmentClient(),
             $this->getProductBundleClient(),
-            $this->getShipmentService()
+            $this->getShipmentService(),
+            $this->createAddressChoicesResolver()
         );
     }
 
@@ -389,6 +392,14 @@ class CustomerPageFactory extends AbstractFactory
     public function createShipmentExpander(): ShipmentExpanderInterface
     {
         return new ShipmentExpander();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolverInterface
+     */
+    public function createAddressChoicesResolver(): AddressChoicesResolverInterface
+    {
+        return new AddressChoicesResolver();
     }
 
     /**
