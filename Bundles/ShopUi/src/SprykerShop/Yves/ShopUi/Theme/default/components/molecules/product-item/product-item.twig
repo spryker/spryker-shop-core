@@ -15,6 +15,10 @@
     currencyIsoCode: null,
 } %}
 
+{% define attributes = {
+    'class-to-toggle': 'is-hidden',
+} %}
+
 {%- block extraClass %} box {{ config.jsName }}{% endblock -%}
 
 {% block body %}
@@ -63,7 +67,11 @@
     {% block labels %}
         {% if data.idProductAbstract %}
             {% block productAbstractLabels %}
-                {% widget 'ProductAbstractLabelWidget' args [data.idProductAbstract] only %}{% endwidget %}
+                {% widget 'ProductAbstractLabelWidget' args [data.idProductAbstract] with {
+                    data: {
+                        productItemJsName: config.jsName,
+                    },
+                } only %}{% endwidget %}
             {% endblock %}
         {% endif %}
     {% endblock %}

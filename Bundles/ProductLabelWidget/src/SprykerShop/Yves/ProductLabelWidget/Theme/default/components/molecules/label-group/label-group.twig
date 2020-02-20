@@ -6,19 +6,25 @@
 
 {% define data = {
     labels: [],
+    productItemJsName: '',
 }  %}
 
 {% block body %}
     {% set leftColumnComponents = [] %}
     {% set rightColumnComponents = [] %}
+    {% set labelTagType = 'template:tag' %}
 
     {% for label in data.labels %}
         {% set componentName = 'flag' %}
         {% set componentModifiers = [label.type] %}
+        {% set labelJsClass = data.productItemJsName ? data.productItemJsName ~ '__label-flag' %}
+        {% set labelTextJsClass = data.productItemJsName ? data.productItemJsName ~ '__label-flag-text' %}
 
-        {% if label.type == 'template:tag' %}
+        {% if label.type == labelTagType %}
             {% set componentName = 'tag' %}
             {% set componentModifiers = [] %}
+            {% set labelJsClass = data.productItemJsName ? data.productItemJsName ~ '__label-tag' %}
+            {% set labelTextJsClass = data.productItemJsName ? data.productItemJsName ~ '__label-tag-text' %}
         {% endif %}
 
         {% set component = include(
@@ -26,16 +32,20 @@
                 molecule(componentName, 'ProductLabelWidget')
             ],
             {
+                class: labelJsClass,
                 modifiers: componentModifiers,
                 data: {
-                    text: label.text
-                }
+                    text: label.text,
+                    textClass: labelTextJsClass,
+                },
+                attributes: {
+                    'data-label-tag-type': label.type == labelTagType ? labelTagType,
+                },
             },
             with_context = false
         ) %}
 
-        {% set component = '<div>' ~ component ~ '</div>' %}
-        {% if label.type == 'template:tag' %}
+        {% if label.type == labelTagType %}
             {% set leftColumnComponents = leftColumnComponents | merge([component]) %}
         {% else %}
             {% set rightColumnComponents = rightColumnComponents | merge([component]) %}
@@ -43,11 +53,39 @@
     {% endfor %}
 
     <div class="grid grid--justify">
-        {% if leftColumnComponents is not empty %}
-            <div class="col col--expand">{{leftColumnComponents | join | raw}}</div>
+        {% if leftColumnComponents %}
+            <div class="col col--expand">{{ leftColumnComponents | join | raw }}</div>
+        {% else %}
+            {% set labelJsClass = data.productItemJsName ? data.productItemJsName ~ '__label-tag' %}
+            {% set labelTextJsClass = data.productItemJsName ? data.productItemJsName ~ '__label-tag-text' %}
+
+            <div class="col col--expand">
+                {% include molecule('tag', 'ProductLabelWidget') with {
+                    class: labelJsClass ~ ' is-hidden',
+                    data: {
+                        textClass: labelTextJsClass,
+                    },
+                    attributes: {
+                        'data-label-tag-type': labelTagType,
+                    },
+                } only %}
+            </div>
         {% endif %}
-        {% if rightColumnComponents is not empty %}
-            <div class="col col--expand text-right">{{rightColumnComponents | join | raw}}</div>
+
+        {% if rightColumnComponents %}
+            <div class="col col--expand text-right">{{ rightColumnComponents | join | raw }}</div>
+        {% else %}
+            {% set labelJsClass = data.productItemJsName ? data.productItemJsName ~ '__label-flag' %}
+            {% set labelTextJsClass = data.productItemJsName ? data.productItemJsName ~ '__label-flag-text' %}
+
+            <div class="col col--expand text-right">
+                {% include molecule('flag', 'ProductLabelWidget') with {
+                    class: labelJsClass ~ ' is-hidden',
+                    data: {
+                        textClass: labelTextJsClass,
+                    },
+                } only %}
+            </div>
         {% endif %}
     </div>
 {% endblock %}

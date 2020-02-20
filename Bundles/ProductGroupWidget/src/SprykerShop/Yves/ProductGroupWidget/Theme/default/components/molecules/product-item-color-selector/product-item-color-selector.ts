@@ -22,6 +22,8 @@ export default class ProductItemColorSelector extends ColorSelector {
     protected getProductItemData(): void {
         this.productItemData = {
             imageUrl: this.imageUrl,
+            imageAlt: this.nameValue,
+            labels: this.labels ? JSON.parse(this.labels) : [],
             nameValue: this.nameValue,
             ratingValue: this.ratingValue,
             defaultPrice: this.defaultPrice,
@@ -33,6 +35,10 @@ export default class ProductItemColorSelector extends ColorSelector {
 
     protected get imageUrl(): string {
         return this.currentSelection.getAttribute('data-product-image-src');
+    }
+
+    protected get labels(): string {
+        return this.currentSelection.getAttribute('data-product-labels');
     }
 
     protected get nameValue(): string {

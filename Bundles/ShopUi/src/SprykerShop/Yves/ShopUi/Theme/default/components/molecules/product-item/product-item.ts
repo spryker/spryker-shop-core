@@ -1,3 +1,4 @@
+/* tslint:disable: max-file-line-count */
 import Component from '../../../models/component';
 
 /**
@@ -9,6 +10,8 @@ export const EVENT_UPDATE_ADD_TO_CART_URL = 'updateAddToCartUrl';
 
 export interface ProductItemData {
     imageUrl: string;
+    imageAlt: string;
+    labels: ProductItemLabelsData[];
     nameValue: string;
     ratingValue: number;
     defaultPrice: string;
@@ -17,8 +20,15 @@ export interface ProductItemData {
     addToCartUrl: string;
 }
 
+interface ProductItemLabelsData {
+    text: string;
+    type: string;
+}
+
 export default class ProductItem extends Component {
     protected productImage: HTMLImageElement;
+    protected productLabelFlags: HTMLElement[];
+    protected productLabelTag: HTMLElement;
     protected productName: HTMLElement;
     protected productRating: HTMLInputElement;
     protected productDefaultPrice: HTMLElement;
@@ -30,6 +40,8 @@ export default class ProductItem extends Component {
 
     protected init(): void {
         this.productImage = <HTMLImageElement>this.getElementsByClassName(`${this.jsName}__image`)[0];
+        this.productLabelFlags = <HTMLElement[]>Array.from(this.getElementsByClassName(`${this.jsName}__label-flag`));
+        this.productLabelTag = <HTMLElement>this.getElementsByClassName(`${this.jsName}__label-tag`)[0];
         this.productName = <HTMLElement>this.getElementsByClassName(`${this.jsName}__name`)[0];
         this.productRating = <HTMLInputElement>this.getElementsByClassName(`${this.jsName}__rating`)[0];
         this.productDefaultPrice = <HTMLElement>this.getElementsByClassName(`${this.jsName}__default-price`)[0];
@@ -48,6 +60,8 @@ export default class ProductItem extends Component {
      */
     updateProductItemData(data: ProductItemData): void {
         this.imageUrl = data.imageUrl;
+        this.imageAlt = data.nameValue;
+        this.labels = data.labels;
         this.nameValue = data.nameValue;
         this.ratingValue = data.ratingValue;
         this.defaultPrice = data.defaultPrice;
@@ -64,6 +78,29 @@ export default class ProductItem extends Component {
         if (this.productImage) {
             this.productImage.src = imageUrl;
         }
+    }
+
+    /**
+     * Sets the product card image alt.
+     */
+    set imageAlt(imageAlt: string) {
+        if (this.productImage) {
+            this.productImage.alt = imageAlt;
+        }
+    }
+
+    /**
+     * Sets the product card labels.
+     */
+    set labels(labels: ProductItemLabelsData[]) {
+        if (!labels.length) {
+            this.productLabelFlags.forEach((element: HTMLElement) => element.classList.add(this.classToToggle));
+            this.productLabelTag.classList.add(this.classToToggle);
+
+            return;
+        }
+
+        this.updateProductLabels(labels);
     }
 
     /**
@@ -124,6 +161,71 @@ export default class ProductItem extends Component {
         }
 
         this.dispatchCustomEvent(EVENT_UPDATE_ADD_TO_CART_URL, {sku: addToCartUrl.split('/').pop()});
+    }
+
+    protected updateProductLabelTag(element: ProductItemLabelsData): void {
+        const labelTagTextContent = <HTMLElement>this.productLabelTag.getElementsByClassName(`${this.jsName}__label-tag-text`)[0];
+
+        this.productLabelFlags.forEach((flag: HTMLElement) => flag.classList.add(this.classToToggle));
+        this.productLabelTag.classList.remove(this.classToToggle);
+        labelTagTextContent.innerText = element.text;
+    }
+
+    protected createProductLabelFlagClones(index: number): void {
+        if (index < 1) {
+            return;
+        }
+
+        const cloneLabelFlag = this.productLabelFlags[0].cloneNode(true);
+        this.productLabelFlags[0].parentNode.insertBefore(cloneLabelFlag, this.productLabelFlags[0].nextSibling);
+        this.productLabelFlags = <HTMLElement[]>Array.from(this.getElementsByClassName(`${this.jsName}__label-flag`));
+    }
+
+    protected deleteProductLabelFlagClones(labels: ProductItemLabelsData[]): void {
+        while (this.productLabelFlags.length > labels.length) {
+            this.productLabelFlags[this.productLabelFlags.length - 1].remove();
+            this.productLabelFlags = <HTMLElement[]>Array.from(
+                this.getElementsByClassName(`${this.jsName}__label-flag`)
+            );
+        }
+    }
+
+    protected deleteProductLabelFlagModifiers(index: number): void {
+        this.productLabelFlags[index].classList.forEach((element: string) => {
+            if (element.includes('--')) {
+                this.productLabelFlags[index].classList.remove(element);
+            }
+        });
+    }
+
+    protected updateProductLabelFlags(element: ProductItemLabelsData, index: number): void {
+        const labelFlagClassName: string = this.productLabelFlags[index].getAttribute('data-config-name');
+        const labelFlagTextContent = <HTMLElement>this.productLabelFlags[index].getElementsByClassName(`${this.jsName}__label-flag-text`)[0];
+
+        if (element.type) {
+            this.productLabelFlags[index].classList.add(`${labelFlagClassName}--${element.type}`);
+        }
+
+        this.productLabelTag.classList.add(this.classToToggle);
+        this.productLabelFlags[index].classList.remove(this.classToToggle);
+        labelFlagTextContent.innerText = element.text;
+    }
+
+    protected updateProductLabels(labels: ProductItemLabelsData[]): void {
+        labels.forEach((element: ProductItemLabelsData, index: number) => {
+            const labelTagType = this.productLabelTag.getAttribute('data-label-tag-type');
+
+            if (element.type === labelTagType) {
+                this.updateProductLabelTag(element);
+
+                return;
+            }
+
+            this.createProductLabelFlagClones(index);
+            this.deleteProductLabelFlagClones(labels);
+            this.deleteProductLabelFlagModifiers(index);
+            this.updateProductLabelFlags(element, index);
+        });
     }
 
     /**
@@ -187,5 +289,9 @@ export default class ProductItem extends Component {
         if (this.productLinkAddToCart) {
             return this.productLinkAddToCart.href;
         }
+    }
+
+    protected get classToToggle(): string {
+        return this.getAttribute('class-to-toggle');
     }
 }

@@ -14,9 +14,19 @@
 } %}
 
 {% block selection %}
+    {% set labels = labels | default([]) %}
+
+    {% for label in item.labels %}
+        {% set labels = labels | merge([{
+            text: label.name | default,
+            type: label.frontEndReference | default,
+        }]) %}
+    {% endfor %}
+
     {% set listDataAttributes = {
         type: 'button',
         'data-product-image-src': item.images ? item.images[0].externalUrlSmall,
+        'data-product-labels': labels | json_encode,
         'data-product-name': item.name ? item.name,
         'data-product-rating': item.rating ? item.rating.averageRating,
         'data-product-default-price': item.prices['DEFAULT'] is defined ? (item.prices['DEFAULT'] | money),
