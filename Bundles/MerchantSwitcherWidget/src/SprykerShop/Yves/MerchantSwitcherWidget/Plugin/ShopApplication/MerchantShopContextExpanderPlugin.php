@@ -8,8 +8,8 @@
 namespace SprykerShop\Yves\MerchantSwitcherWidget\Plugin\ShopApplication;
 
 use Generated\Shared\Transfer\ShopContextTransfer;
+use Spryker\Shared\ShopContextExtension\Dependency\Plugin\ShopContextExpanderPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\ShopContextExtension\Dependency\Plugin\ShopContextExpanderPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetFactory getFactory()

@@ -20,8 +20,6 @@ use SprykerShop\Yves\MerchantProductOfferWidget\Resolver\ShopContextResolverInte
 
 class MerchantProductOfferWidgetFactory extends AbstractFactory
 {
-    protected const SERVICE_SHOP_CONTEXT = 'SERVICE_SHOP_CONTEXT';
-
     /**
      * @return \SprykerShop\Yves\MerchantProductOfferWidget\Reader\MerchantProductOfferReaderInterface
      */
