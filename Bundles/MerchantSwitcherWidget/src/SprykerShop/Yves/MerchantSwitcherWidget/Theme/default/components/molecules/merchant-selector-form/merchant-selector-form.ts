@@ -32,7 +32,7 @@ export default class MerchantSelectorForm extends Component {
         const currentMerchantOptionText: string = this.select.options[this.initiallySelectedIndex].text;
         const newMerchantOptionText: string = this.select.options[this.select.selectedIndex].text;
 
-        this.message = this.message.replace(this.currentMerchantNameTemplate, currentMerchantOptionText);
+        this.message = this.messageTemplate.replace(this.currentMerchantNameTemplate, currentMerchantOptionText);
         this.message = this.message.replace(this.newMerchantNameTemplate, newMerchantOptionText);
     }
 
