@@ -615,6 +615,7 @@ class QuickOrderController extends AbstractController
                 continue;
             }
             $response = $quickOrderFormHandlerStrategyPlugin->execute($quickOrderForm->getData(), $request->request->all());
+
             break;
         }
 
