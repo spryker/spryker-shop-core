@@ -17,6 +17,8 @@ use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWi
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToQuoteClientInterface;
 use SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader\MerchantReader;
 use SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader\MerchantReaderInterface;
+use SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcher\MerchantSwitcher;
+use SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcher\MerchantSwitcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -31,9 +33,18 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
     {
         return new MerchantReader(
             $this->getMerchantSearchClient(),
-            $this->createSelectedMerchantCookie(),
-            $this->getMerchantSwitcherClient(),
-            $this->getQuoteClient()
+            $this->createSelectedMerchantCookie()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcher\MerchantSwitcherInterface
+     */
+    public function createMerchantSwitcher(): MerchantSwitcherInterface
+    {
+        return new MerchantSwitcher(
+            $this->getQuoteClient(),
+            $this->getMerchantSwitcherClient()
         );
     }
 

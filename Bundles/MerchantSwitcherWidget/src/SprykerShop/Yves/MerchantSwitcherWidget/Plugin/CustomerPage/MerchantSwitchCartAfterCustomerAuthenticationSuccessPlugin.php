@@ -13,6 +13,7 @@ use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\AfterCustomerAuthen
 
 /**
  * @method \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetFactory getFactory()
+ * @method \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig getConfig()
  */
 class MerchantSwitchCartAfterCustomerAuthenticationSuccessPlugin extends AbstractPlugin implements AfterCustomerAuthenticationSuccessPluginInterface
 {
@@ -27,6 +28,10 @@ class MerchantSwitchCartAfterCustomerAuthenticationSuccessPlugin extends Abstrac
      */
     public function execute(): void
     {
+        if (!$this->getFactory()->getConfig()->isMerchantSwitcherEnabled()) {
+            return;
+        }
+
         $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
         $merchantReference = $quoteTransfer->getMerchantReference();
 
