@@ -55,9 +55,7 @@ class MerchantSwitcherController extends AbstractController
      */
     protected function updateQuoteWithMerchantReference(string $merchantReference): QuoteTransfer
     {
-        $quoteClient = $this->getFactory()->getQuoteClient();
-
-        $quoteTransfer = $quoteClient->getQuote();
+        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
 
         $quoteTransfer = $this->getFactory()
             ->getMerchantSwitcherClient()
@@ -67,7 +65,7 @@ class MerchantSwitcherController extends AbstractController
                     ->setMerchantReference($merchantReference)
             )->getQuote();
 
-        $quoteClient->setQuote($quoteTransfer);
+        $this->getFactory()->getQuoteClient()->setQuote($quoteTransfer);
 
         return $quoteTransfer;
     }
