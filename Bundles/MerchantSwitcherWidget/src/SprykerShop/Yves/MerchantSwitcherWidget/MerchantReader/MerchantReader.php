@@ -7,11 +7,8 @@
 
 namespace SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader;
 
-use Generated\Shared\Transfer\MerchantCollectionTransfer;
-use Generated\Shared\Transfer\MerchantTransfer;
+use SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookieInterface;
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientInterface;
-use SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig;
-use Symfony\Component\HttpFoundation\Request;
 
 class MerchantReader implements MerchantReaderInterface
 {
@@ -21,58 +18,49 @@ class MerchantReader implements MerchantReaderInterface
     protected $merchantSearchClient;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Request
+     * @var \SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookieInterface
      */
-    protected $request;
-
-    /**
-     * @var \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig
-     */
-    protected $merchantSwitcherWidgetConfig;
+    protected $selectedMerchantCookie;
 
     /**
      * @param \SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientInterface $merchantSearchClient
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetConfig $merchantSwitcherWidgetConfig
+     * @param \SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookieInterface $selectedMerchantCookie
      */
     public function __construct(
         MerchantSwitcherWidgetToMerchantSearchClientInterface $merchantSearchClient,
-        Request $request,
-        MerchantSwitcherWidgetConfig $merchantSwitcherWidgetConfig
+        SelectedMerchantCookieInterface $selectedMerchantCookie
     ) {
         $this->merchantSearchClient = $merchantSearchClient;
-        $this->request = $request;
-        $this->merchantSwitcherWidgetConfig = $merchantSwitcherWidgetConfig;
+        $this->selectedMerchantCookie = $selectedMerchantCookie;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     * @return string|null
      */
-    public function getActiveMerchants(): MerchantCollectionTransfer
+    public function extractSelectedMerchantReference(): ?string
     {
-        return $this->merchantSearchClient->getActiveMerchants();
-    }
+        $selectedMerchantReference = $this->selectedMerchantCookie->getMerchantReference();
+        $merchantTransfers = $this->merchantSearchClient->getActiveMerchants()->getMerchants();
 
-    /**
-     * @return string
-     */
-    public function getSelectedMerchantReference(): string
-    {
-        $selectedMerchantReference = $this->request->cookies->get($this->merchantSwitcherWidgetConfig->getMerchantSelectorCookieIdentifier());
+        foreach ($merchantTransfers as $merchantTransfer) {
+            if ($selectedMerchantReference === $merchantTransfer->getMerchantReference()) {
+                return $selectedMerchantReference;
+            }
+        }
+        /** @var \Generated\Shared\Transfer\MerchantTransfer|false $selectedMerchantTransfer */
+        $selectedMerchantTransfer = reset($merchantTransfers);
 
-        if ($selectedMerchantReference) {
-            return $selectedMerchantReference;
+        if (!$selectedMerchantTransfer) {
+            if ($selectedMerchantReference) {
+                $this->selectedMerchantCookie->removeMerchantReference();
+            }
+
+            return null;
         }
 
-        /** @var \Generated\Shared\Transfer\MerchantTransfer $selectedMerchantTransfer */
-        $selectedMerchantTransfer = $this->getActiveMerchants()->getMerchants()->getIterator()->current();
+        $selectedMerchantReference = $selectedMerchantTransfer->getMerchantReference();
+        $this->selectedMerchantCookie->setMerchantReference($selectedMerchantReference);
 
-        if (!$selectedMerchantTransfer instanceof MerchantTransfer) {
-            return '';
-        }
-
-        $selectedMerchantTransfer->requireMerchantReference();
-
-        return $selectedMerchantTransfer->getMerchantReference();
+        return $selectedMerchantReference;
     }
 }

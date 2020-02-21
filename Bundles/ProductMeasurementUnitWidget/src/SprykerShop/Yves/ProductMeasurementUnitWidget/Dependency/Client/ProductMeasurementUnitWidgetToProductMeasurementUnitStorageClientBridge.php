@@ -21,9 +21,8 @@ class ProductMeasurementUnitWidgetToProductMeasurementUnitStorageClientBridge im
     /**
      * @param \Spryker\Client\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageClientInterface $productMeasurementUnitStorageClient
      */
-    public function __construct(
-        $productMeasurementUnitStorageClient
-    ) {
+    public function __construct($productMeasurementUnitStorageClient)
+    {
         $this->productMeasurementUnitStorageClient = $productMeasurementUnitStorageClient;
     }
 
