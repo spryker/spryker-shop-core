@@ -4,6 +4,7 @@
     orders: _view.orderList,
     isOrderSearchEnabled: _view.isOrderSearchEnabled,
     isOrderSearchOrderItemsVisible: _view.isOrderSearchOrderItemsVisible,
+    orderSearchForm: _view.orderSearchForm | default(null),
 
     pagination: {
         parameters: {},
@@ -25,7 +26,8 @@
             data: {
                 orders: data.orders,
                 isOrderSearchEnabled: data.isOrderSearchEnabled,
-                isOrderSearchOrderItemsVisible: data.isOrderSearchOrderItemsVisible
+                isOrderSearchOrderItemsVisible: data.isOrderSearchOrderItemsVisible,
+                orderSearchForm: data.orderSearchForm
             }
         } only %}
         <hr>

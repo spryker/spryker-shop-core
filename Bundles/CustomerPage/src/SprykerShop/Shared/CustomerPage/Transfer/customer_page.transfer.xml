@@ -319,4 +319,8 @@
     <transfer name="ShipmentMethod">
     </transfer>
 
+    <transfer name="OrderSearchForm">
+
+    </transfer>
+
 </transfers>

@@ -7,10 +7,14 @@
 
 namespace SprykerShop\Yves\CustomerPage\Form;
 
+use Generated\Shared\Transfer\OrderSearchFormTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\AddressFormDataProvider;
+use SprykerShop\Yves\CustomerPage\Form\DataProvider\OrderSearchFormDataProvider;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \SprykerShop\Yves\CustomerPage\CustomerPageConfig getConfig()
@@ -92,6 +96,28 @@ class FormFactory extends AbstractFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderSearchFormTransfer|null $orderSearchFormTransfer
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getOrderSearchForm(?OrderSearchFormTransfer $orderSearchFormTransfer = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(OrderSearchForm::class, $orderSearchFormTransfer, $options);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Form\DataProvider\OrderSearchFormDataProvider
+     */
+    public function createOrderSearchFormDataProvider(): OrderSearchFormDataProvider
+    {
+        return new OrderSearchFormDataProvider(
+            $this->getConfig(),
+            $this->getGlossaryStorageClient()
+        );
+    }
+
+    /**
      * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface
      */
     public function getCustomerClient()
@@ -105,5 +131,21 @@ class FormFactory extends AbstractFactory
     public function getStore()
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): CustomerPageToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormFormExpanderPluginInterface[]
+     */
+    public function getOrderSearchFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_ORDER_SEARCH_FORM_EXPANDER);
     }
 }

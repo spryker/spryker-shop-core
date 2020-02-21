@@ -71,12 +71,20 @@ class OrderController extends AbstractCustomerController
             ->getOrderList($request);
 
         $customerPageConfig = $this->getFactory()->getConfig();
+        $orderSearchFormDataProvider = $this->getFactory()
+            ->createCustomerFormFactory()
+            ->createOrderSearchFormDataProvider();
+
+        $orderSearchForm = $this->getFactory()
+            ->createCustomerFormFactory()
+            ->getOrderSearchForm(null, $orderSearchFormDataProvider->getOptions($this->getLocale()));
 
         return [
             'pagination' => $orderListTransfer->getPagination(),
             'orderList' => $orderListTransfer->getOrders(),
             'isOrderSearchEnabled' => $customerPageConfig->isOrderSearchEnabled(),
             'isOrderSearchOrderItemsVisible' => $customerPageConfig->isOrderSearchOrderItemsVisible(),
+            'orderSearchForm' => $orderSearchForm->createView(),
         ];
     }
 

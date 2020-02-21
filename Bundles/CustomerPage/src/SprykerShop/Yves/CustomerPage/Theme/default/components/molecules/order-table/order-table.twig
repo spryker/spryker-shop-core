@@ -7,7 +7,8 @@
 {% define data = {
     orders: required,
     isOrderSearchEnabled: false,
-    isOrderSearchOrderItemsVisible: true
+    isOrderSearchOrderItemsVisible: true,
+    orderSearchForm: null
 } %}
 
 {% block body %}
@@ -15,6 +16,17 @@
         <p>{{ 'customer.account.no_order' | trans }}</p>
     {% else %}
         <table class="table table--expand">
+            {% if (data.orderSearchForm) %}
+                {{ form_start(data.orderSearchForm) }}
+
+                {{ form_row(data.orderSearchForm.searchGroup) }}
+                {{ form_row(data.orderSearchForm.searchText) }}
+
+                <button type="submit" name="submit" class="button button--success">
+                    {{ 'customer.order_history.apply' | trans }}
+                </button>
+            {% endif %}
+
             <thead>
                 <tr>
                     <th>{{ 'customer.order.reference' | trans }}</th>
@@ -26,6 +38,9 @@
                     <th>{{ 'customer.table.actions' | trans }}</th>
                 </tr>
             </thead>
+            {% if (data.orderSearchForm) %}
+                {{ form_end(data.orderSearchForm) }}
+            {% endif %}
             <tbody>
                 {% for order in data.orders %}
                     <tr>
