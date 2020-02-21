@@ -17,6 +17,7 @@
   "require-dev": {
     "spryker-shop/availability-widget": "*",
     "spryker-shop/cms-block-widget": "*",
+    "spryker-shop/product-group-widget": "*",
     "spryker-shop/product-review-widget": "*",
     "spryker-shop/wishlist-widget": "*",
     "spryker/code-sniffer": "*"
@@ -24,6 +25,7 @@
   "suggest": {
     "spryker-shop/availability-widget": "If you want to use components from module AvailabilityWidget or AvailabilityWidgetPlugin.",
     "spryker-shop/cms-block-widget": "If you want to use components from module CmsBlockWidget or ProductCmsBlockWidgetPlugin.",
+    "spryker-shop/product-group-widget": "If you want to use components from module ProductGroupColorWidget or ProductGroupWidget",
     "spryker-shop/product-review-widget": "If you want to use ProductDetailPageReviewWidget or ProductReviewWidgetPlugin.",
     "spryker-shop/wishlist-widget": "If you want to use components from module WishlistWidget or WishlistWidgetPlugin."
   },
