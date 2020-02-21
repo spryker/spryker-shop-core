@@ -9,7 +9,7 @@
 
 {% for item in data.dictionary %}
     {% set labels = labels | merge([{
-        text: item.getName() | default,
+        text: item.getKey() | default,
         type: item.getFrontEndReference() | default,
     }]) %}
 {% endfor %}

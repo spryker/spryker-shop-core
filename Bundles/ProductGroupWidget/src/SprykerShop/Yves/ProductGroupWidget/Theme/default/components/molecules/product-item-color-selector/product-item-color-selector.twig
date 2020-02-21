@@ -18,7 +18,7 @@
 
     {% for label in item.labels %}
         {% set labels = labels | merge([{
-            text: label.name | default,
+            text: label.key | default,
             type: label.frontEndReference | default,
         }]) %}
     {% endfor %}

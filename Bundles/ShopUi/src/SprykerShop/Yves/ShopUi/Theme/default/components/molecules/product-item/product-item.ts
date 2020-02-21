@@ -102,7 +102,19 @@ export default class ProductItem extends Component {
             return;
         }
 
-        this.updateProductLabels(labels);
+        const labelTagType = this.productLabelTag.getAttribute('data-label-tag-type');
+        const labelFlags = labels.filter((element: ProductItemLabelsData) => element.type !== labelTagType);
+        const labelTag = labels.filter((element: ProductItemLabelsData) => element.type === labelTagType);
+
+        if (!labelTag[0]) {
+            this.productLabelTag.classList.add(this.classToToggle);
+        }
+
+        if (!labelFlags.length) {
+            this.productLabelFlags.forEach((element: HTMLElement) => element.classList.add(this.classToToggle));
+        }
+
+        this.updateProductLabels(labelFlags, labelTag[0]);
     }
 
     /**
@@ -168,7 +180,6 @@ export default class ProductItem extends Component {
     protected updateProductLabelTag(element: ProductItemLabelsData): void {
         const labelTagTextContent = <HTMLElement>this.productLabelTag.getElementsByClassName(`${this.jsName}__label-tag-text`)[0];
 
-        this.productLabelFlags.forEach((flag: HTMLElement) => flag.classList.add(this.classToToggle));
         this.productLabelTag.classList.remove(this.classToToggle);
         labelTagTextContent.innerText = element.text;
     }
@@ -183,8 +194,8 @@ export default class ProductItem extends Component {
         this.productLabelFlags = <HTMLElement[]>Array.from(this.getElementsByClassName(`${this.jsName}__label-flag`));
     }
 
-    protected deleteProductLabelFlagClones(labels: ProductItemLabelsData[]): void {
-        while (this.productLabelFlags.length > labels.length) {
+    protected deleteProductLabelFlagClones(labelFlags: ProductItemLabelsData[]): void {
+        while (this.productLabelFlags.length > labelFlags.length) {
             this.productLabelFlags[this.productLabelFlags.length - 1].remove();
             this.productLabelFlags = <HTMLElement[]>Array.from(
                 this.getElementsByClassName(`${this.jsName}__label-flag`)
@@ -208,26 +219,23 @@ export default class ProductItem extends Component {
             this.productLabelFlags[index].classList.add(`${labelFlagClassName}--${element.type}`);
         }
 
-        this.productLabelTag.classList.add(this.classToToggle);
         this.productLabelFlags[index].classList.remove(this.classToToggle);
         labelFlagTextContent.innerText = element.text;
     }
 
-    protected updateProductLabels(labels: ProductItemLabelsData[]): void {
-        labels.forEach((element: ProductItemLabelsData, index: number) => {
-            const labelTagType = this.productLabelTag.getAttribute('data-label-tag-type');
+    protected updateProductLabels(labelFlags: ProductItemLabelsData[], labelTag: ProductItemLabelsData): void {
+        if (labelTag) {
+            this.updateProductLabelTag(labelTag);
+        }
 
-            if (element.type === labelTagType) {
-                this.updateProductLabelTag(element);
-
-                return;
-            }
-
-            this.createProductLabelFlagClones(index);
-            this.deleteProductLabelFlagClones(labels);
-            this.deleteProductLabelFlagModifiers(index);
-            this.updateProductLabelFlags(element, index);
-        });
+        if (labelFlags.length) {
+            labelFlags.forEach((element: ProductItemLabelsData, index: number) => {
+                this.createProductLabelFlagClones(index);
+                this.deleteProductLabelFlagClones(labelFlags);
+                this.deleteProductLabelFlagModifiers(index);
+                this.updateProductLabelFlags(element, index);
+            });
+        }
     }
 
     /**
