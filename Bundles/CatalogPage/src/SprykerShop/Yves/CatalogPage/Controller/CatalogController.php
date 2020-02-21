@@ -256,6 +256,11 @@ class CatalogController extends AbstractController
             $this->addErrorMessage(static::MESSAGE_PAGE_NOT_FOUND);
         }
 
+        $shopContextParameters = $this->getFactory()
+            ->getShopContext()
+            ->modifiedToArray(true, false);
+        $parameters = array_merge($parameters, $shopContextParameters);
+
         if ($this->can('SeePricePermissionPlugin')) {
             return $parameters;
         }

@@ -30,10 +30,15 @@ class SuggestionController extends AbstractController
             return $this->jsonResponse();
         }
 
+        $shopContextParameters = $this->getFactory()
+            ->getShopContext()
+            ->modifiedToArray(true, false);
+        $parameters = array_merge($request->query->all(), $shopContextParameters);
+
         $searchResults = $this
             ->getFactory()
             ->getCatalogClient()
-            ->catalogSuggestSearch($searchString, $request->query->all());
+            ->catalogSuggestSearch($searchString, $parameters);
 
         return $this->jsonResponse([
             'completion' => ($searchResults['completion'] ? $searchResults['completion'][0] : null),
