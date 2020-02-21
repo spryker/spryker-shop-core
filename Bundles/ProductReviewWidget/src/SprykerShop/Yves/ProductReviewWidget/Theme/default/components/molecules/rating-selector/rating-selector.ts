@@ -29,6 +29,10 @@ export default class RatingSelector extends Component {
     }
 
     protected mapEvents(): void {
+        this.mapStepClickEvent();
+    }
+
+    protected mapStepClickEvent() {
         this.steps.forEach((step: HTMLElement) => {
             step.addEventListener('click', (event: Event) => this.onStepClick(event));
         });
@@ -39,6 +43,10 @@ export default class RatingSelector extends Component {
             return;
         }
 
+        this.mapProductItemUpdateRatingCustomEvent();
+    }
+
+    protected mapProductItemUpdateRatingCustomEvent() {
         this.productItem.addEventListener(EVENT_UPDATE_RATING, (event: Event) => {
             this.updateRating((<CustomEvent>event).detail.rating);
         });

@@ -23,6 +23,10 @@ export default class LabelGroup extends Component {
             return;
         }
 
+        this.mapProductItemUpdateLabelsCustomEvent();
+    }
+
+    protected mapProductItemUpdateLabelsCustomEvent() {
         this.productItem.addEventListener(EVENT_UPDATE_LABELS, (event: Event) => {
             this.setProductLabels((<CustomEvent>event).detail.labels);
         });

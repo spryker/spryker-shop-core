@@ -12,7 +12,10 @@ export default class ProductDetailColorSelector extends ColorSelector {
 
     protected mapEvents(): void {
         super.mapEvents();
+        this.mapTriggerMouseleaveEvent();
+    }
 
+    protected mapTriggerMouseleaveEvent() {
         this.triggers.forEach((element: HTMLElement) => {
             element.addEventListener('mouseleave', () => this.onTriggerUnselection());
         });
