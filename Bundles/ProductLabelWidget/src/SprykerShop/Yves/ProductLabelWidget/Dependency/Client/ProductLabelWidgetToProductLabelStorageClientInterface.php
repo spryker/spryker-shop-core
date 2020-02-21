@@ -26,15 +26,4 @@ interface ProductLabelWidgetToProductLabelStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
     public function findLabels(array $idProductLabels, $localeName, ?string $storeName = null);
-
-    /**
-     * @deprecated Not used anymore. Will be removed with next major release.
-     *
-     * @param string $labelName
-     * @param string $localeName
-     * @param string|null $storeName
-     *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
-     */
-    public function findLabelByName($labelName, $localeName, ?string $storeName = null);
 }
