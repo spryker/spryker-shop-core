@@ -19,11 +19,11 @@
     {% for label in item.labels %}
         {% set labels = labels | merge([{
             text: label.key | default,
-            type: label.frontEndReference | default,
+            type: (label.frontEndReference | lower | replace(' ', '-')) | default,
         }]) %}
     {% endfor %}
 
-    {% set listDataAttributes = {
+    {% set dataAttributesList = {
         type: 'button',
         'data-product-image-src': item.images ? item.images[0].externalUrlSmall,
         'data-product-labels': labels | json_encode,

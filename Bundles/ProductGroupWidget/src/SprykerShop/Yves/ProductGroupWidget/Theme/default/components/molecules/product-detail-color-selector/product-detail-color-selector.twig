@@ -10,7 +10,7 @@
 } %}
 
 {% block selection %}
-    {% set listDataAttributes = {
+    {% set dataAttributesList = {
         'data-product-image-src': item.images ? item.images[0].externalUrlSmall,
         href: item.url ? item.url,
     } %}

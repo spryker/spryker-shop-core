@@ -6,6 +6,7 @@ export default class ImageCarousel extends SimpleCarousel {
 
     protected readyCallback(): void {
         this.getCurrentSlideImage();
+        this.setDefaultImageUrl();
         super.readyCallback();
     }
 
@@ -15,6 +16,7 @@ export default class ImageCarousel extends SimpleCarousel {
     slide(): void {
         super.slide();
         this.getCurrentSlideImage();
+        this.setDefaultImageUrl();
     }
 
     /**
@@ -36,6 +38,9 @@ export default class ImageCarousel extends SimpleCarousel {
         const currentSlide = <HTMLElement>this.getElementsByClassName(`${this.jsName}__slide`)[this.viewCurrentIndex];
 
         this.currentSlideImage = currentSlide.getElementsByTagName('img')[0];
+    }
+
+    protected setDefaultImageUrl(): void {
         this.defaultImageUrl = this.currentSlideImage.src;
     }
 }

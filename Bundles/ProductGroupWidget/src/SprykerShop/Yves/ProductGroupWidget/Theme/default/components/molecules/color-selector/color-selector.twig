@@ -20,13 +20,13 @@
         {% block item %}
             {% set activeClassName = loop.first ? attributes['active-item-class-name'] %}
             {% set backgroundColor = item[data.colorAttributeName] is defined ? 'background-color: ' ~ item[data.colorAttributeName] ~ ';' %}
-            {% set listDataAttributes = {} %}
+            {% set dataAttributesList = {} %}
 
             {% block selection %}
                 <{{ data.selectionTag }}
                     class="{{ config.name }}__item {{ activeClassName }} {{ config.jsName }}__item"
                     style="{{ backgroundColor }}"
-                    {{ component.renderAttributes(listDataAttributes) }}>
+                    {{ component.renderAttributes(dataAttributesList) }}>
                 </{{ data.selectionTag }}>
             {% endblock %}
         {% endblock %}
