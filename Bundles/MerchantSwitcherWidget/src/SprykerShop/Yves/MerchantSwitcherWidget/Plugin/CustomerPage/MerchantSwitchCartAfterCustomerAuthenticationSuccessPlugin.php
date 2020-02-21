@@ -19,7 +19,7 @@ class MerchantSwitchCartAfterCustomerAuthenticationSuccessPlugin extends Abstrac
 {
     /**
      * {@inheritDoc}
-     * - Sets merchant reference value to cookies if a customer's quote contains it and the quote is not empty.
+     * - Sets merchant reference value to cookies if a customer's quote contains it, and the quote is not empty.
      * - If the quote is empty or the quote doesn't contain merchant reference gets merchant reference from cookies and sets to quote.
      *
      * @api
