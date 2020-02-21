@@ -1,1 +1,1 @@
-This component is deprecated. Use view "error404" instead.
+This template is deprecated. Use view "error404" instead.

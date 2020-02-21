@@ -1,1 +1,1 @@
-This component is deprecated. Use view "menu-item-company-widget" instead.
+This view is deprecated. Use view "menu-item-company-widget" instead.
