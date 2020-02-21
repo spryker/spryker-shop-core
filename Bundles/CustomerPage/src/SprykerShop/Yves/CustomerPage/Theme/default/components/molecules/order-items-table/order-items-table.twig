@@ -1,0 +1,15 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-items-table'
+} %}
+
+{% define data = {
+    items: required
+} %}
+
+{% block body %}
+    {% for item in data.items %}
+        <div>{{ item.name }} - {{ item.sku }} - x{{ item.quantity }}</div>
+    {% endfor %}
+{% endblock %}

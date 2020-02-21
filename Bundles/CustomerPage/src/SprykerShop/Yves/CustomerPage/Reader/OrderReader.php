@@ -8,6 +8,7 @@
 namespace SprykerShop\Yves\CustomerPage\Reader;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\OrderListFormatTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use SprykerShop\Yves\CustomerPage\CustomerPageConfig;
@@ -79,10 +80,7 @@ class OrderReader implements OrderReaderInterface
 
         $orderListTransfer->setFilter($this->createFilterTransfer());
         $orderListTransfer->setPagination($this->createPaginationTransfer($request));
-
-        if (!$this->customerClient->isLoggedIn()) {
-            return $orderListTransfer;
-        }
+        $orderListTransfer->setFormat($this->createOrderListFormatTransfer());
 
         $customerTransfer = $this->customerClient->getCustomer();
 
@@ -90,6 +88,20 @@ class OrderReader implements OrderReaderInterface
         $orderListTransfer->setIdCustomer($customerTransfer->getIdCustomer());
 
         return $orderListTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OrderListFormatTransfer
+     */
+    protected function createOrderListFormatTransfer(): OrderListFormatTransfer
+    {
+        $orderListFormatTransfer = new OrderListFormatTransfer();
+
+        $orderListFormatTransfer->setExpandWithItems(
+            $this->customerPageConfig->isOrderSearchEnabled() && $this->customerPageConfig->isOrderSearchOrderItemsVisible()
+        );
+
+        return $orderListFormatTransfer;
     }
 
     /**
