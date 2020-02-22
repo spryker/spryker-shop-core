@@ -36,16 +36,13 @@ class OrderCustomReferenceSetter implements OrderCustomReferenceSetterInterface
     }
 
     /**
-     * @param string $orderCustomReference
+     * @param string|null $orderCustomReference
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setOrderCustomReference(string $orderCustomReference): QuoteResponseTransfer
+    public function setOrderCustomReference(?string $orderCustomReference): QuoteResponseTransfer
     {
-        $quoteTransfer = $this->quoteClient->getQuote();
-        $quoteTransfer->setOrderCustomReference($orderCustomReference);
-
-        $quoteResponseTransfer = $this->orderCustomReferenceClient->setOrderCustomReference($quoteTransfer);
+        $quoteResponseTransfer = $this->orderCustomReferenceClient->setOrderCustomReference($orderCustomReference);
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());

@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 interface OrderCustomReferenceSetterInterface
 {
     /**
-     * @param string $orderCustomReference
+     * @param string|null $orderCustomReference
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setOrderCustomReference(string $orderCustomReference): QuoteResponseTransfer;
+    public function setOrderCustomReference(?string $orderCustomReference): QuoteResponseTransfer;
 }
