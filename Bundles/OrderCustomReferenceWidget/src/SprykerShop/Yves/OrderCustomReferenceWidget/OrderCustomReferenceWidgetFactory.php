@@ -12,19 +12,9 @@ use SprykerShop\Yves\OrderCustomReferenceWidget\Dependency\Client\OrderCustomRef
 use SprykerShop\Yves\OrderCustomReferenceWidget\Dependency\Client\OrderCustomReferenceWidgetToQuoteClientInterface;
 use SprykerShop\Yves\OrderCustomReferenceWidget\Setter\OrderCustomReferenceSetter;
 use SprykerShop\Yves\OrderCustomReferenceWidget\Setter\OrderCustomReferenceSetterInterface;
-use SprykerShop\Yves\OrderCustomReferenceWidget\Validator\OrderCustomReferenceValidator;
-use SprykerShop\Yves\OrderCustomReferenceWidget\Validator\OrderCustomReferenceValidatorInterface;
 
 class OrderCustomReferenceWidgetFactory extends AbstractFactory
 {
-    /**
-     * @return \SprykerShop\Yves\OrderCustomReferenceWidget\Validator\OrderCustomReferenceValidatorInterface
-     */
-    public function createOrderCustomReferenceValidator(): OrderCustomReferenceValidatorInterface
-    {
-        return new OrderCustomReferenceValidator();
-    }
-
     /**
      * @return \SprykerShop\Yves\OrderCustomReferenceWidget\Dependency\Client\OrderCustomReferenceWidgetToOrderCustomReferenceClientInterface
      */
@@ -48,8 +38,7 @@ class OrderCustomReferenceWidgetFactory extends AbstractFactory
     {
         return new OrderCustomReferenceSetter(
             $this->getQuoteClient(),
-            $this->getOrderCustomReferenceClient(),
-            $this->createOrderCustomReferenceValidator()
+            $this->getOrderCustomReferenceClient()
         );
     }
 }
