@@ -19,7 +19,10 @@ class OrderCustomReferenceController extends AbstractController
 {
     protected const PARAMETER_BACK_URL = 'backUrl';
     protected const PARAMETER_ORDER_CUSTOM_REFERENCE = 'orderCustomReference';
+
     protected const GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_SAVED = 'order_custom_reference.reference_saved';
+
+    protected const FORM_ORDER_CUSTOM_REFERENCE = 'order_custom_reference_form';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -40,8 +43,10 @@ class OrderCustomReferenceController extends AbstractController
      */
     protected function executeSaveAction(Request $request): RedirectResponse
     {
-        $backUrl = $request->request->get(static::PARAMETER_BACK_URL);
-        $orderCustomReference = $request->request->get(static::PARAMETER_ORDER_CUSTOM_REFERENCE);
+        $requestParameters = $request->request->get(static::FORM_ORDER_CUSTOM_REFERENCE);
+
+        $orderCustomReference = $requestParameters[static::PARAMETER_ORDER_CUSTOM_REFERENCE] ?? '';
+        $backUrl = $requestParameters[static::PARAMETER_BACK_URL];
 
         $quoteResponseTransfer = $this->getFactory()
             ->createOrderCustomReferenceSetter()

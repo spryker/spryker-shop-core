@@ -1,18 +1,14 @@
 {% extends model('component') %}
 
+{% define data = {
+    form: required,
+} %}
+
 {% define config = {
     name: 'order-custom-reference-form',
 } %}
 
-{% define data = {
-    orderCustomReference: required,
-    backUrl: required,
-    method: 'POST',
-} %}
-
 {% set classTitle = '' %}
-{% set classForm = '' %}
-{% set classInput = 'input input--expand spacing-bottom spacing-bottom--small' %}
 {% set classButton = 'button' %}
 
 {% block body %}
@@ -21,23 +17,12 @@
     {% endblock %}
 
     {% block form %}
-        <form class="{{ classForm }}" method="{{ data.method }}" action="{{ path('order-custom-reference/save') }}">
-            {% block formInner %}
-                <input type="hidden" name="backUrl" value="{{ data.backUrl }}">
-
-                {% block input %}
-                    <input type="text"
-                           class="{{ classInput }}"
-                           name="orderCustomReference"
-                           value="{{ data.orderCustomReference }}">
-                {% endblock %}
-
-                {% block action %}
-                    <button type="submit" class="{{ classButton }}" data-init-single-click>
-                        {{ 'order_custom_reference.save' | trans }}
-                    </button>
-                {% endblock %}
-            {% endblock %}
-        </form>
+        {{ form_start(data.form) }}
+        {% block action %}
+            <button type="submit" class="{{ classButton }}" data-init-single-click>
+                {{ 'order_custom_reference.save' | trans }}
+            </button>
+        {% endblock %}
+        {{ form_end(data.form) }}
     {% endblock %}
 {% endblock %}
