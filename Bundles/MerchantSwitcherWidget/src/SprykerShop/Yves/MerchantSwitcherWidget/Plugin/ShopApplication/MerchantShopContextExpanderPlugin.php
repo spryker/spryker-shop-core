@@ -35,7 +35,7 @@ class MerchantShopContextExpanderPlugin extends AbstractPlugin implements ShopCo
 
         $selectedMerchantReference = $this->getFactory()
             ->createMerchantReader()
-            ->getSelectedMerchantReference();
+            ->extractSelectedMerchantReference();
 
         $shopContextTransfer->setMerchantReference($selectedMerchantReference);
 
