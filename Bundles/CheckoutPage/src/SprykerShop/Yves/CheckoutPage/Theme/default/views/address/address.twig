@@ -217,12 +217,12 @@
                         },
                     } only %}
 
-                    {#{% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {#}
-                        {#attributes: {#}
-                            {#'trigger-selector': '.' ~ embed.jsAddressClass ~ '__form-select-billingAddress',#}
-                            {#'target-selector': '.' ~ embed.jsAddressClass ~ '__billing',#}
-                        {#},#}
-                    {#} only %}#}
+                    {% include molecule('address-form-toggler', 'CustomerPage') ignore missing with {
+                        attributes: {
+                            'trigger-selector': '.' ~ embed.jsAddressClass ~ '__form-select-billingAddress',
+                            'target-selector': '.' ~ embed.jsAddressClass ~ '__billing',
+                        },
+                    } only %}
                 </div>
 
                 <div class="col">
