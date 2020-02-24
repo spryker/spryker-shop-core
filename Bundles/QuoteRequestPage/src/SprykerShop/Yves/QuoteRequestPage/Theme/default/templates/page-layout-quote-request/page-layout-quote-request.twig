@@ -120,9 +120,9 @@
                                         {% set titleMultiShipmentClass = 'col' %}
                                         {% set numberOfItemsClass = 'col' %}
 
-                                        {% block titleForMultiShipments %}
+                                        {% block titleForMultiShipmentsWrapper %}
                                             <div class="{{ titleMultiShipmentWrapperClass }}">
-                                                {% block titleForMultiShipmens %}
+                                                {% block titleForMultiShipments %}
                                                     <h4 class="{{ titleMultiShipmentClass }}">
                                                         {{ 'quote_request_page.quote_request.shipment_counter' | trans({
                                                             '%index%': loop.index,
@@ -131,7 +131,7 @@
                                                     </h4>
                                                 {% endblock %}
 
-                                                {% block itemsCounterForMultiShipmens %}
+                                                {% block itemsCounterForMultiShipments %}
                                                     <div class="{{ numberOfItemsClass }}">
                                                         {{ 'quote_request_page.quote_request.item' | trans({
                                                             '%count%': quote.items | length,

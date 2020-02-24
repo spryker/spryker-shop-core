@@ -64,10 +64,10 @@
             {% block discount %}
                 {% include molecule('quote-request-summary-discount', 'QuoteRequestPage') with {
                     data: {
-                        voucherDiscounts: data.cart.voucherDiscounts,
-                        ruleDiscounts: data.cart.cartRuleDiscounts,
-                        discountTotal: data.cart.totals.discountTotal,
-                        currency: data.cart.currency,
+                        voucherDiscounts: data.cart.voucherDiscounts | default,
+                        ruleDiscounts: data.cart.cartRuleDiscounts | default,
+                        discountTotal: data.cart.totals.discountTotal | default,
+                        currency: data.cart.currency | default,
                     },
                 } only %}
             {% endblock %}

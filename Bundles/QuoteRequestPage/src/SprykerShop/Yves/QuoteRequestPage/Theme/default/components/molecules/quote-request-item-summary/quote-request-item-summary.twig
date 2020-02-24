@@ -38,12 +38,12 @@
         </div>
     {% endblock %}
 
-    {% if data.cartItem.productOptions | length > 0 %}
+    {% if data.cartItem.productOptions | length %}
         {% block productOptions %}
             {% include molecule('product-options', 'ProductOptionWidget') ignore missing with {
                 data: {
                     options: data.cartItem.productOptions,
-                }
+                },
             } only %}
         {% endblock %}
     {% endif %}

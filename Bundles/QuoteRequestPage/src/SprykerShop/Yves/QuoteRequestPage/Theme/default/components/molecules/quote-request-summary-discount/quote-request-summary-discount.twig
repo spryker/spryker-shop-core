@@ -15,7 +15,7 @@
 {% block component %}
     {% if data.discountTotal and (data.voucherDiscounts is not empty or data.ruleDiscounts is not empty) %}
         <hr>
-        {{parent()}}
+        {{ parent() }}
     {% endif %}
 {% endblock %}
 
@@ -32,8 +32,8 @@
                         {% include atom('icon') with {
                             modifiers: ['smaller'],
                             data: {
-                                name: 'times'
-                            }
+                                name: 'times',
+                            },
                         } only %}
                         {{ 'cart.vouchers.clear-all' | trans }}
                     </a>
@@ -55,8 +55,8 @@
                                     {% include atom('icon') with {
                                         modifiers: ['smaller'],
                                         data: {
-                                            name: 'times'
-                                        }
+                                            name: 'times',
+                                        },
                                     } only %}
                                     {{ 'cart.voucher.remove' | trans }}
                                 </a>

@@ -12,9 +12,9 @@
 {% block breadcrumbs %}
     {% set breadcrumbExtend = [
         {
-            label: '#' ~ _view.quoteRequestForm.vars.value.quoteRequestReference,
+            label: '#' ~ data.quoteRequestForm.vars.value.quoteRequestReference,
             url: url('quote-request/details', {
-                quoteRequestReference: _view.quoteRequestForm.vars.value.quoteRequestReference,
+                quoteRequestReference: data.quoteRequestForm.vars.value.quoteRequestReference,
             }),
         },
         {
