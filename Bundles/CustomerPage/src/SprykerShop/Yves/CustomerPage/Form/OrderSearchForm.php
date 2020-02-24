@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerPage\Form;
 
-use Generated\Shared\Transfer\OrderSearchFormTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -20,23 +19,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class OrderSearchForm extends AbstractType
 {
-    public const OPTION_ORDER_SEARCH_GROUPS = 'OPTION_ORDER_SEARCH_GROUPS';
+    public const FIELD_SEARCH_GROUP = 'searchGroup';
+    public const FIELD_SEARCH_TEXT = 'searchText';
 
-    protected const FIELD_SEARCH_GROUP = 'searchGroup';
-    protected const FIELD_SEARCH_TEXT = 'searchText';
+    public const OPTION_ORDER_SEARCH_GROUPS = 'OPTION_ORDER_SEARCH_GROUPS';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_ORDER_SEARCH_GROUPS);
-
-        $resolver->setDefaults([
-            'data_class' => OrderSearchFormTransfer::class,
-        ]);
     }
 
     /**

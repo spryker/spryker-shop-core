@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
@@ -66,25 +67,35 @@ class OrderController extends AbstractCustomerController
      */
     protected function executeIndexAction(Request $request): array
     {
+        $filterFieldTransfers = new ArrayObject();
+        $customerPageConfig = $this->getFactory()->getConfig();
+
+        if ($customerPageConfig->isOrderSearchEnabled()) {
+            $orderSearchFormDataProvider = $this->getFactory()
+                ->createCustomerFormFactory()
+                ->createOrderSearchFormDataProvider();
+
+            $orderSearchForm = $this->getFactory()
+                ->createCustomerFormFactory()
+                ->getOrderSearchForm([], $orderSearchFormDataProvider->getOptions($this->getLocale()))
+                ->handleRequest($request);
+
+            $filterFieldTransfers = $this->getFactory()
+                ->createCustomerFormFactory()
+                ->createOrderSearchFormHandler()
+                ->handleOrderSearchFormSubmit($orderSearchForm);
+        }
+
         $orderListTransfer = $this->getFactory()
             ->createOrderReader()
-            ->getOrderList($request);
-
-        $customerPageConfig = $this->getFactory()->getConfig();
-        $orderSearchFormDataProvider = $this->getFactory()
-            ->createCustomerFormFactory()
-            ->createOrderSearchFormDataProvider();
-
-        $orderSearchForm = $this->getFactory()
-            ->createCustomerFormFactory()
-            ->getOrderSearchForm(null, $orderSearchFormDataProvider->getOptions($this->getLocale()));
+            ->getOrderList($request, $filterFieldTransfers);
 
         return [
             'pagination' => $orderListTransfer->getPagination(),
             'orderList' => $orderListTransfer->getOrders(),
             'isOrderSearchEnabled' => $customerPageConfig->isOrderSearchEnabled(),
             'isOrderSearchOrderItemsVisible' => $customerPageConfig->isOrderSearchOrderItemsVisible(),
-            'orderSearchForm' => $orderSearchForm->createView(),
+            'orderSearchForm' => isset($orderSearchForm) ? $orderSearchForm->createView() : null,
         ];
     }
 

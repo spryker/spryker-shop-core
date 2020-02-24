@@ -7,13 +7,14 @@
 
 namespace SprykerShop\Yves\CustomerPage\Form;
 
-use Generated\Shared\Transfer\OrderSearchFormTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\AddressFormDataProvider;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\OrderSearchFormDataProvider;
+use SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandler;
+use SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandlerInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -96,14 +97,14 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderSearchFormTransfer|null $orderSearchFormTransfer
+     * @param array $data
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getOrderSearchForm(?OrderSearchFormTransfer $orderSearchFormTransfer = null, array $options = []): FormInterface
+    public function getOrderSearchForm(array $data = [], array $options = []): FormInterface
     {
-        return $this->getFormFactory()->create(OrderSearchForm::class, $orderSearchFormTransfer, $options);
+        return $this->getFormFactory()->create(OrderSearchForm::class, $data, $options);
     }
 
     /**
@@ -115,6 +116,14 @@ class FormFactory extends AbstractFactory
             $this->getConfig(),
             $this->getGlossaryStorageClient()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandlerInterface
+     */
+    public function createOrderSearchFormHandler(): OrderSearchFormHandlerInterface
+    {
+        return new OrderSearchFormHandler();
     }
 
     /**
