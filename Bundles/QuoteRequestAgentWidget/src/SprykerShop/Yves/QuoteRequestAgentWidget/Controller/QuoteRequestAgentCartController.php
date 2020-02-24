@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class QuoteRequestAgentCartController extends AbstractController
 {
     protected const GLOSSARY_KEY_QUOTE_REQUEST_UPDATED = 'quote_request_page.quote_request.updated';
+    protected const KEY_HEADER_REFERER = 'referer';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
@@ -86,7 +87,7 @@ class QuoteRequestAgentCartController extends AbstractController
             $request->get(QuoteRequestAgentCartForm::SUBMIT_BUTTON_SAVE_AND_BACK) === null
             || !$quoteRequestResponseTransfer->getIsSuccessful()
         ) {
-            return $this->redirectResponseInternal(static::ROUTE_CART);
+            return $this->createRefererRedirect($request);
         }
 
         $this->reloadQuoteForCustomer();
@@ -94,6 +95,21 @@ class QuoteRequestAgentCartController extends AbstractController
         return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT, [
             static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function createRefererRedirect(Request $request): RedirectResponse
+    {
+        $redirectUrl = $request->headers->get(
+            static::KEY_HEADER_REFERER,
+            $this->getRouter()->generate(static::ROUTE_CART)
+        );
+
+        return new RedirectResponse($redirectUrl);
     }
 
     /**
