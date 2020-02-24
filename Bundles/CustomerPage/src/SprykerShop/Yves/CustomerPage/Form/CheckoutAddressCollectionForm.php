@@ -38,7 +38,9 @@ class CheckoutAddressCollectionForm extends AbstractType
     public const FIELD_MULTI_SHIPPING_ADDRESSES_FOR_BUNDLE_ITEMS = 'multiShippingAddressesForBundleItems';
     public const FIELD_IS_MULTIPLE_SHIPMENT_ENABLED = 'isMultipleShipmentEnabled';
 
-    public const OPTION_ADDRESS_CHOICES = 'address_choices';
+    public const OPTION_SINGLE_SHIPPING_ADDRESS_CHOICES = 'single_shipping_address_choices';
+    public const OPTION_MULTIPLE_SHIPPING_ADDRESS_CHOICES = 'multiple_shipping_addresses_choices';
+    public const OPTION_BILLING_ADDRESS_CHOICES = 'billing_addresses_choices';
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
     public const OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES = 'can_deliver_to_multiple_shipping_addresses';
     public const OPTION_IS_CUSTOMER_LOGGED_IN = 'is_customer_logged_in';
@@ -49,10 +51,6 @@ class CheckoutAddressCollectionForm extends AbstractType
     public const GROUP_BILLING_SAME_AS_SHIPPING = self::FIELD_BILLING_SAME_AS_SHIPPING;
 
     public const VALIDATION_BILLING_SAME_AS_SHIPPING_MESSAGE = 'Billing address should not be specified when shipping to multiple addresses.';
-
-    protected const GLOSSARY_KEY_ADD_NEW_ADDRESS = 'customer.address.add_new_address';
-    protected const GLOSSARY_KEY_SAVE_NEW_ADDRESS = 'customer.address.save_new_address';
-    protected const GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES = 'customer.account.deliver_to_multiple_addresses';
 
     protected const PROPERTY_PATH_MULTI_SHIPPING_ADDRESSES = 'items';
     protected const PROPERTY_PATH_MULTI_SHIPPING_ADDRESSES_FOR_BUNDLE_ITEMS = 'bundleItems';
@@ -83,10 +81,14 @@ class CheckoutAddressCollectionForm extends AbstractType
 
                 return $validationGroups;
             },
-            static::OPTION_ADDRESS_CHOICES => [],
+            static::OPTION_SINGLE_SHIPPING_ADDRESS_CHOICES => [],
+            static::OPTION_MULTIPLE_SHIPPING_ADDRESS_CHOICES => [],
+            static::OPTION_BILLING_ADDRESS_CHOICES => [],
         ]);
 
-        $resolver->setDefined(static::OPTION_ADDRESS_CHOICES)
+        $resolver->setDefined(static::OPTION_SINGLE_SHIPPING_ADDRESS_CHOICES)
+            ->setDefined(static::OPTION_MULTIPLE_SHIPPING_ADDRESS_CHOICES)
+            ->setDefined(static::OPTION_BILLING_ADDRESS_CHOICES)
             ->setRequired(static::OPTION_COUNTRY_CHOICES)
             ->setRequired(static::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES)
             ->setRequired(static::OPTION_IS_CUSTOMER_LOGGED_IN)
@@ -135,7 +137,7 @@ class CheckoutAddressCollectionForm extends AbstractType
                 return [static::GROUP_SHIPPING_ADDRESS];
             },
             CheckoutAddressForm::OPTION_VALIDATION_GROUP => static::GROUP_SHIPPING_ADDRESS,
-            CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $this->getShippingAddressChoices($options),
+            CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_SINGLE_SHIPPING_ADDRESS_CHOICES],
             CheckoutAddressForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
             CheckoutAddressForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
         ];
@@ -422,7 +424,7 @@ class CheckoutAddressCollectionForm extends AbstractType
             },
             'required' => true,
             CheckoutAddressForm::OPTION_VALIDATION_GROUP => static::GROUP_BILLING_ADDRESS,
-            CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
+            CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_BILLING_ADDRESS_CHOICES],
             CheckoutAddressForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
             CheckoutAddressForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
         ];
@@ -452,7 +454,7 @@ class CheckoutAddressCollectionForm extends AbstractType
                 'data_class' => ItemTransfer::class,
                 'label' => false,
                 CheckoutMultiShippingAddressesForm::OPTION_VALIDATION_GROUP => static::GROUP_SHIPPING_ADDRESS,
-                CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
+                CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_MULTIPLE_SHIPPING_ADDRESS_CHOICES],
                 CheckoutMultiShippingAddressesForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
                 CheckoutMultiShippingAddressesForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
             ],
@@ -486,7 +488,7 @@ class CheckoutAddressCollectionForm extends AbstractType
                     'data_class' => ItemTransfer::class,
                     'label' => false,
                     CheckoutMultiShippingAddressesForm::OPTION_VALIDATION_GROUP => static::GROUP_SHIPPING_ADDRESS,
-                    CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
+                    CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_MULTIPLE_SHIPPING_ADDRESS_CHOICES],
                     CheckoutMultiShippingAddressesForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
                     CheckoutMultiShippingAddressesForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
                 ],
@@ -515,23 +517,6 @@ class CheckoutAddressCollectionForm extends AbstractType
     }
 
     /**
-     * @param array $options
-     *
-     * @return string[]
-     */
-    protected function getShippingAddressChoices(array $options): array
-    {
-        if (!$options[static::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES]) {
-            return $options[static::OPTION_ADDRESS_CHOICES];
-        }
-
-        $addressChoices = $options[static::OPTION_ADDRESS_CHOICES];
-        $addressChoices[static::GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES] = CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES;
-
-        return $addressChoices;
-    }
-
-    /**
      * @return \Symfony\Component\Validator\Constraints\IsFalse
      */
     protected function createBillingSameAsShippingConstraint(): IsFalse
@@ -550,7 +535,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     protected function isIdCustomerAddressFieldNotEmpty(FormInterface $form): bool
     {
         return !$form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
-            || $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() !== CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS;
+            || $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() !== CheckoutAddressForm::VALUE_NEW_ADDRESS_IS_EMPTY;
     }
 
     /**
@@ -572,7 +557,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     protected function isIdCustomerAddressExistAndNotEmpty(FormInterface $form): bool
     {
         return $form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
-            && $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() !== CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS;
+            && $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() !== CheckoutAddressForm::VALUE_NEW_ADDRESS_IS_EMPTY;
     }
 
     /**

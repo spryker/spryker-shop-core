@@ -27,8 +27,11 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
     public const OPTION_IS_CUSTOMER_LOGGED_IN = 'is_customer_logged_in';
     public const OPTION_VALIDATION_GROUP = 'validation_group';
+    public const OPTION_PLACEHOLDER = 'placeholder';
 
     protected const PROPERTY_PATH_SHIPPING_ADDRESS = 'shipment.shippingAddress';
+
+    protected const GLOSSARY_KEY_SELECT_ADDRESS = 'checkout.step.address.select_address';
 
     /**
      * @return string|null
@@ -49,9 +52,11 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
 
         $resolver->setDefaults([
             static::OPTION_ADDRESS_CHOICES => [],
+            static::OPTION_PLACEHOLDER => false,
         ]);
 
         $resolver->setDefined(static::OPTION_ADDRESS_CHOICES)
+            ->setDefined(static::OPTION_PLACEHOLDER)
             ->setRequired(static::OPTION_COUNTRY_CHOICES)
             ->setRequired(static::OPTION_IS_CUSTOMER_LOGGED_IN)
             ->setRequired(static::OPTION_VALIDATION_GROUP);
@@ -125,6 +130,7 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
             },
             CheckoutAddressForm::OPTION_VALIDATION_GROUP => $options[static::OPTION_VALIDATION_GROUP],
             CheckoutAddressForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
+            CheckoutAddressForm::OPTION_PLACEHOLDER => static::GLOSSARY_KEY_SELECT_ADDRESS,
             CheckoutAddressForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
             CheckoutAddressForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
         ]);
@@ -176,7 +182,7 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
     protected function isIdCustomerAddressEmpty(FormInterface $form): bool
     {
         return $form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
-            && $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() === CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS;
+            && $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() === CheckoutAddressForm::VALUE_NEW_ADDRESS_IS_EMPTY;
     }
 
     /**

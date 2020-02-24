@@ -20,6 +20,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServi
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
 use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
+use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressForm;
 
 class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider implements StepEngineFormDataProviderInterface
 {
@@ -109,11 +110,15 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
         $quoteTransfer = $this->setBundleItemLevelShippingAddresses($quoteTransfer);
+        $canDeliverToMultipleShippingAddresses = $this->canDeliverToMultipleShippingAddresses($quoteTransfer);
+        $defaultAddressChoices = $this->getAddressChoices();
 
         return [
-            CheckoutAddressCollectionForm::OPTION_ADDRESS_CHOICES => $this->getAddressChoices(),
+            CheckoutAddressCollectionForm::OPTION_SINGLE_SHIPPING_ADDRESS_CHOICES => $this->getSingleShippingAddressChoices($defaultAddressChoices, $canDeliverToMultipleShippingAddresses),
+            CheckoutAddressCollectionForm::OPTION_MULTIPLE_SHIPPING_ADDRESS_CHOICES => $defaultAddressChoices,
+            CheckoutAddressCollectionForm::OPTION_BILLING_ADDRESS_CHOICES => $defaultAddressChoices,
             CheckoutAddressCollectionForm::OPTION_COUNTRY_CHOICES => $this->getAvailableCountries(),
-            CheckoutAddressCollectionForm::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES => $this->canDeliverToMultipleShippingAddresses($quoteTransfer),
+            CheckoutAddressCollectionForm::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES => $canDeliverToMultipleShippingAddresses,
             CheckoutAddressCollectionForm::OPTION_IS_CUSTOMER_LOGGED_IN => $this->customerClient->isLoggedIn(),
             CheckoutAddressCollectionForm::OPTION_BUNDLE_ITEMS => $this->getBundleItemsFromQuote($quoteTransfer),
         ];
@@ -234,19 +239,30 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
      */
     protected function getAddressChoices()
     {
+        $choices = $this->getDefaultAddressChoices();
         if ($this->customerTransfer === null) {
-            return [];
+            return $choices;
         }
 
         $customerAddressesTransfer = $this->customerTransfer->getAddresses();
 
         if ($customerAddressesTransfer === null || count($customerAddressesTransfer->getAddresses()) === 0) {
-            return [];
+            return $choices;
         }
 
-        $choices = $this->getCustomerAddressChoices($customerAddressesTransfer->getAddresses());
+        $choices = $this->addCustomerAddressChoices($customerAddressesTransfer->getAddresses(), $choices);
 
         return $this->sanitizeDuplicatedCustomerAddressChoices($choices);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultAddressChoices(): array
+    {
+        return [
+            CheckoutAddressForm::GLOSSARY_KEY_SAVE_NEW_ADDRESS => CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS,
+        ];
     }
 
     /**
@@ -270,13 +286,12 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
 
     /**
      * @param iterable|\ArrayObject|\Generated\Shared\Transfer\AddressTransfer[] $customerAddressesCollection
+     * @param array $choices
      *
      * @return string[]
      */
-    protected function getCustomerAddressChoices(iterable $customerAddressesCollection): array
+    protected function addCustomerAddressChoices(iterable $customerAddressesCollection, array $choices = []): array
     {
-        $choices = [];
-
         foreach ($customerAddressesCollection as $addressTransfer) {
             $idCustomerAddress = $addressTransfer->getIdCustomerAddress();
             if ($idCustomerAddress === null) {
@@ -327,6 +342,23 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     protected function getSanitizedCustomerAddressChoices(string $addressLabel, int $itemNumber): string
     {
         return sprintf(static::SANITIZED_CUSTOMER_ADDRESS_LABEL_PATTERN, $addressLabel, $itemNumber);
+    }
+
+    /**
+     * @param array $customerAddressChoices
+     * @param bool $canDeliverToMultipleShippingAddresses
+     *
+     * @return string[]
+     */
+    protected function getSingleShippingAddressChoices(array $customerAddressChoices, bool $canDeliverToMultipleShippingAddresses): array
+    {
+        if ($canDeliverToMultipleShippingAddresses === false) {
+            return $customerAddressChoices;
+        }
+
+        $customerAddressChoices[CheckoutAddressForm::GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES] = CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES;
+
+        return $customerAddressChoices;
     }
 
     /**
