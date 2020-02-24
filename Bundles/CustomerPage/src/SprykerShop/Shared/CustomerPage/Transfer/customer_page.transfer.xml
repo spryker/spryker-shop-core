@@ -31,6 +31,7 @@
         <property name="store" type="string"/>
         <property name="currencyIsoCode" type="string"/>
         <property name="itemGroups" type="ProductBundleGroup[]" singular="itemGroup"/>
+        <property name="orderCustomReference" type="string" />
     </transfer>
 
     <transfer name="OrderList">

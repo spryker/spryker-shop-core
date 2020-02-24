@@ -3,7 +3,7 @@
 {% define data = {
     quote: _widget.quote,
     orderCustomReference: _widget.quote.orderCustomReference,
-    backUrl: _widget.backUrl,
+    orderCustomReferenceForm: _widget.orderCustomReferenceForm,
 } %}
 
 {% block body %}
@@ -14,8 +14,7 @@
             {% block referenceForm %}
                 {% include molecule('order-custom-reference-form', 'OrderCustomReferenceWidget') with {
                     data: {
-                        orderCustomReference: data.orderCustomReference,
-                        backUrl: data.backUrl,
+                        form: data.orderCustomReferenceForm
                     },
                 } only %}
             {% endblock %}

@@ -16,7 +16,10 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class OrderCustomReferenceWidget extends AbstractWidget
 {
     protected const PARAMETER_QUOTE = 'quote';
+    protected const PARAMETER_ORDER_CUSTOM_REFERENCE = 'orderCustomReference';
     protected const PARAMETER_BACK_URL = 'backUrl';
+
+    protected const FORM_ORDER_CUSTOM_REFERENCE = 'orderCustomReferenceForm';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -27,7 +30,7 @@ class OrderCustomReferenceWidget extends AbstractWidget
         string $backUrl
     ) {
         $this->addQuoteParameter($quoteTransfer);
-        $this->addBackUrlParameter($backUrl);
+        $this->addOrderCustomReferenceFormParameter($quoteTransfer->getOrderCustomReference(), $backUrl);
     }
 
     /**
@@ -57,12 +60,21 @@ class OrderCustomReferenceWidget extends AbstractWidget
     }
 
     /**
+     * @param string|null $orderCustomReference
      * @param string $backUrl
      *
      * @return void
      */
-    protected function addBackUrlParameter(string $backUrl): void
+    protected function addOrderCustomReferenceFormParameter(?string $orderCustomReference, string $backUrl): void
     {
-        $this->addParameter(static::PARAMETER_BACK_URL, $backUrl);
+        $this->addParameter(
+            static::FORM_ORDER_CUSTOM_REFERENCE,
+            $this->getFactory()->getOrderCustomReferenceForm(
+                [
+                    static::PARAMETER_ORDER_CUSTOM_REFERENCE => $orderCustomReference,
+                    static::PARAMETER_BACK_URL => $backUrl,
+                ]
+            )->createView()
+        );
     }
 }

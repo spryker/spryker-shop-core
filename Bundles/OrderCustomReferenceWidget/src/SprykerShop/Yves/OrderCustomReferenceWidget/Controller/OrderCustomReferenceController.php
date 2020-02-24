@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\OrderCustomReferenceWidget\Controller;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,8 +19,10 @@ class OrderCustomReferenceController extends AbstractController
 {
     protected const PARAMETER_BACK_URL = 'backUrl';
     protected const PARAMETER_ORDER_CUSTOM_REFERENCE = 'orderCustomReference';
+
     protected const GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_SAVED = 'order_custom_reference.reference_saved';
-    protected const GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH = 'order_custom_reference.validation.error.message_invalid_length';
+
+    protected const FORM_ORDER_CUSTOM_REFERENCE = 'order_custom_reference_form';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -40,31 +43,33 @@ class OrderCustomReferenceController extends AbstractController
      */
     protected function executeSaveAction(Request $request): RedirectResponse
     {
-        $backUrl = $request->request->get(static::PARAMETER_BACK_URL);
-        $orderCustomReference = $request->request->get(static::PARAMETER_ORDER_CUSTOM_REFERENCE);
+        $requestParameters = $request->request->get(static::FORM_ORDER_CUSTOM_REFERENCE);
 
-        $isOrderCustomReferenceLengthValid = $this->getFactory()
-            ->createOrderCustomReferenceValidator()
-            ->isOrderCustomReferenceLengthValid($orderCustomReference);
-
-        if (!$isOrderCustomReferenceLengthValid) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH);
-
-            return $this->redirectResponseExternal($backUrl);
-        }
-
-        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
-        $quoteTransfer->setOrderCustomReference($orderCustomReference);
+        $orderCustomReference = $requestParameters[static::PARAMETER_ORDER_CUSTOM_REFERENCE] ?? '';
+        $backUrl = $requestParameters[static::PARAMETER_BACK_URL];
 
         $quoteResponseTransfer = $this->getFactory()
-            ->getOrderCustomReferenceClient()
-            ->setOrderCustomReference($quoteTransfer);
+            ->createOrderCustomReferenceSetter()
+            ->setOrderCustomReference($orderCustomReference);
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
-            $this->getFactory()->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
             $this->addSuccessMessage(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_SAVED);
         }
 
+        $this->handleQuoteResponseTransferErrors($quoteResponseTransfer);
+
         return $this->redirectResponseExternal($backUrl);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return void
+     */
+    protected function handleQuoteResponseTransferErrors(QuoteResponseTransfer $quoteResponseTransfer): void
+    {
+        foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
+            $this->addErrorMessage($quoteErrorTransfer->getMessage());
+        }
     }
 }

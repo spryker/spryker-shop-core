@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\OrderCustomReferenceWidget\Dependency\Client;
+namespace SprykerShop\Yves\OrderCustomReferenceWidget\Setter;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
-interface OrderCustomReferenceWidgetToOrderCustomReferenceClientInterface
+interface OrderCustomReferenceSetterInterface
 {
     /**
      * @param string|null $orderCustomReference
