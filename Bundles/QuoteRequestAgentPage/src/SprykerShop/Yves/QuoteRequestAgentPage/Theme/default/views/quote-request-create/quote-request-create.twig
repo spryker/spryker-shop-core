@@ -47,7 +47,7 @@
                             'suggested-item-class-name': 'company-user-list__container-item',
                             'value-data-attribute': 'data-value',
                             'query-string': 'pattern',
-                            'auto-init': data.impersonatedCustomer,
+                            'auto-init': data.impersonatedCustomer ? true : false,
                         },
                     } only %}
                 {% endblock %}
