@@ -28,6 +28,6 @@ class QuoteRequestCheckerCheckoutSummaryStepEnterPreCheckPlugin extends Abstract
      */
     public function check(QuoteTransfer $quoteTransfer): bool
     {
-        return !$this->getFactory()->getQuoteRequestClient()->isQuoteInQuoteRequestProcess($quoteTransfer);
+        return !$this->getFactory()->getQuoteRequestClient()->isQuoteRequestReferenceForQuote($quoteTransfer);
     }
 }
