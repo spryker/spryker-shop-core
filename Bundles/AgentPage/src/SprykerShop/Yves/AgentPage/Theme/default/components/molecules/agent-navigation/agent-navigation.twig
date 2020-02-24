@@ -20,8 +20,8 @@
         <li class="menu__item {{ macros.isActive('overview', data.activePage) }}">
             <a href="{{ path('agent/overview') }}">{{ 'agent.account.overview' | trans }}</a>
         </li>
-        {% include molecule('quote-request-menu-item', 'QuoteRequestAgentWidget') ignore missing with {
-            class: 'menu__item ' ~ macros.isActive('quoteRequestAgent', data.activePage),
-        } only %}
+        <li class="menu__item {{ macros.isActive('quoteRequestAgent', data.activePage) }}">
+            <a href="{{ url('agent/quote-request') }}" data-id="sidebar-quote-request">{{ 'agent.account.quote_request' | trans }}</a>
+        </li>
     </ul>
 {% endblock %}

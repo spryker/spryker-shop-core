@@ -25,17 +25,17 @@
             </div>
             <ul class="{{ config.name }}__dropdown-item menu" position-right>
                 <li class="menu__item">
-                    <a href="{{ path('agent/overview') }}">{{ "agent.account.overview" | trans }}</a>
+                    <a href="{{ path('agent/overview') }}">{{ 'agent.account.overview' | trans }}</a>
                 </li>
 
                 {% block additional %}
-                    {% include molecule('quote-request-menu-item', 'QuoteRequestAgentWidget') ignore missing with {
-                        class: 'menu__item',
-                    } only %}
+                    <li class="menu__item">
+                        <a href="{{ url('agent/quote-request') }}" data-id="sidebar-quote-request">{{ 'agent.account.quote_request' | trans }}</a>
+                    </li>
                 {% endblock %}
 
                 <li class="menu__item">
-                    <a href="{{ path('agent_logout') }}">{{ "agent.control_bar.logout" | trans }}</a>
+                    <a href="{{ path('agent_logout') }}">{{ 'agent.control_bar.logout' | trans }}</a>
                 </li>
             </ul>
         </li>
