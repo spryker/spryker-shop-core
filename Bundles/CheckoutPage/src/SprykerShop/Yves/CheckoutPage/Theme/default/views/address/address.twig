@@ -8,6 +8,7 @@
         items: _view.addressesForm.multiShippingAddresses | default([]),
         bundleItems: _view.addressesForm.multiShippingAddressesForBundleItems | default([]),
     },
+    backUrl: _view.previousStepUrl,
     isMultipleShipmentEnabled: _view.addressesForm.isMultipleShipmentEnabled.vars.value,
     title: 'checkout.step.address.title' | trans,
 } %}
@@ -26,6 +27,11 @@
                 enable: true,
                 text: 'general.next.button' | trans,
                 class: 'button button--saccess ' ~ jsAddressClass ~ '__form-submit',
+            },
+            cancel: {
+                enable: true,
+                url: data.backUrl,
+                text: 'general.back.button' | trans,
             },
         },
         embed: {
