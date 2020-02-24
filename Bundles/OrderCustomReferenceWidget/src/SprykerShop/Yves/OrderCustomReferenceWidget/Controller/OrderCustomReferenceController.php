@@ -48,15 +48,25 @@ class OrderCustomReferenceController extends AbstractController
         $orderCustomReference = $requestParameters[static::PARAMETER_ORDER_CUSTOM_REFERENCE] ?? '';
         $backUrl = $requestParameters[static::PARAMETER_BACK_URL];
 
-        $quoteResponseTransfer = $this->getFactory()
-            ->createOrderCustomReferenceSetter()
-            ->setOrderCustomReference($orderCustomReference);
+        $orderCustomReferenceForm = $this->getFactory()
+            ->getOrderCustomReferenceForm($requestParameters)
+            ->handleRequest($request);
+        $quoteClient = $this->getFactory()->getQuoteClient();
 
-        if ($quoteResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_SAVED);
+        if ($orderCustomReferenceForm->isSubmitted() && $orderCustomReferenceForm->isValid()) {
+            $quoteResponseTransfer = $this->getFactory()
+                ->getOrderCustomReferenceClient()
+                ->setOrderCustomReference(
+                    $quoteClient->getQuote(),
+                    $orderCustomReference
+                );
+
+            if ($quoteResponseTransfer->getIsSuccessful()) {
+                $quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
+                $this->addSuccessMessage(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_SAVED);
+            }
+            $this->handleQuoteResponseTransferErrors($quoteResponseTransfer);
         }
-
-        $this->handleQuoteResponseTransferErrors($quoteResponseTransfer);
 
         return $this->redirectResponseExternal($backUrl);
     }

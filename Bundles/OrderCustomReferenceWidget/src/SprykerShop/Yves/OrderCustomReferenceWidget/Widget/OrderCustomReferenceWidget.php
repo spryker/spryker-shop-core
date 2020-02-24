@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\OrderCustomReferenceWidget\Widget;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
+use SprykerShop\Yves\OrderCustomReferenceWidget\Form\OrderCustomReferenceForm;
 
 /**
  * @method \SprykerShop\Yves\OrderCustomReferenceWidget\OrderCustomReferenceWidgetFactory getFactory()
@@ -16,8 +17,6 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 class OrderCustomReferenceWidget extends AbstractWidget
 {
     protected const PARAMETER_QUOTE = 'quote';
-    protected const PARAMETER_ORDER_CUSTOM_REFERENCE = 'orderCustomReference';
-    protected const PARAMETER_BACK_URL = 'backUrl';
 
     protected const FORM_ORDER_CUSTOM_REFERENCE = 'orderCustomReferenceForm';
 
@@ -30,7 +29,7 @@ class OrderCustomReferenceWidget extends AbstractWidget
         string $backUrl
     ) {
         $this->addQuoteParameter($quoteTransfer);
-        $this->addOrderCustomReferenceFormParameter($quoteTransfer->getOrderCustomReference(), $backUrl);
+        $this->addOrderCustomReferenceFormParameter($quoteTransfer, $backUrl);
     }
 
     /**
@@ -60,19 +59,19 @@ class OrderCustomReferenceWidget extends AbstractWidget
     }
 
     /**
-     * @param string|null $orderCustomReference
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $backUrl
      *
      * @return void
      */
-    protected function addOrderCustomReferenceFormParameter(?string $orderCustomReference, string $backUrl): void
+    protected function addOrderCustomReferenceFormParameter(QuoteTransfer $quoteTransfer, string $backUrl): void
     {
         $this->addParameter(
             static::FORM_ORDER_CUSTOM_REFERENCE,
             $this->getFactory()->getOrderCustomReferenceForm(
                 [
-                    static::PARAMETER_ORDER_CUSTOM_REFERENCE => $orderCustomReference,
-                    static::PARAMETER_BACK_URL => $backUrl,
+                    OrderCustomReferenceForm::FIELD_ORDER_CUSTOM_REFERENCE => $quoteTransfer->getOrderCustomReference(),
+                    OrderCustomReferenceForm::FIELD_BACK_URL => $backUrl,
                 ]
             )->createView()
         );

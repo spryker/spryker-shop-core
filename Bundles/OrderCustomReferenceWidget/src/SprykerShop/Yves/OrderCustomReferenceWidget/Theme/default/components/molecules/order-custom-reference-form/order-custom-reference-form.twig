@@ -17,12 +17,17 @@
     {% endblock %}
 
     {% block form %}
-        {{ form_start(data.form) }}
-        {% block action %}
-            <button type="submit" class="{{ classButton }}" data-init-single-click>
-                {{ 'order_custom_reference.save' | trans }}
-            </button>
-        {% endblock %}
-        {{ form_end(data.form) }}
+        {% include molecule('form') with {
+            data: {
+                form: data.form,
+                submit: {
+                    enable: true,
+                    text: 'order_custom_reference.save' | trans
+                },
+                options: {
+                    action: path('order-custom-reference/save')
+                }
+            }
+        } only %}
     {% endblock %}
 {% endblock %}
