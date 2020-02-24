@@ -7,7 +7,7 @@
 } %}
 
 {% block body %}
-    {% set canWrite = (data.quote is not empty) and (not is_granted('ROLE_USER') or can('WriteSharedCartPermissionPlugin', data.quote.idQuote)) %}
+    {% set canWrite = can('WriteSharedCartPermissionPlugin', data.quote.idQuote) %}
 
     {% block orderCustomReference %}
         {% if canWrite %}

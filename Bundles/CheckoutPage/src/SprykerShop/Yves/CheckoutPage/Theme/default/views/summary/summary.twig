@@ -150,7 +150,8 @@
         {% endfor %}
     </div>
 
-    {% if data.cart.orderCustomReference %}
+    {% set isOrderCustomReference = data.cart.orderCustomReference is defined and data.cart.orderCustomReference %}
+    {% if isOrderCustomReference %}
         {% embed molecule('order-custom-reference-view', 'OrderCustomReferenceWidget') ignore missing with {
             class: 'box',
             data: {

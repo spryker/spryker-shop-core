@@ -29,7 +29,8 @@
                     <strong>{{ data.order.createdAt | formatDateTime }}</strong>
                 </li>
 
-                {% if data.order.orderCustomReference %}
+                {% set isOrderCustomReference = data.order.orderCustomReference is defined and data.order.orderCustomReference %}
+                {% if isOrderCustomReference %}
                     {% embed molecule('order-custom-reference-view', 'OrderCustomReferenceWidget') ignore missing with {
                         config: {
                             tag: 'li',
