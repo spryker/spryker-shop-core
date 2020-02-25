@@ -32,7 +32,7 @@ class SuggestionController extends AbstractController
 
         $shopContextParameters = $this->getFactory()
             ->getShopContext()
-            ->modifiedToArray(true, false);
+            ->modifiedToArray();
         $parameters = array_merge($request->query->all(), $shopContextParameters);
 
         $searchResults = $this

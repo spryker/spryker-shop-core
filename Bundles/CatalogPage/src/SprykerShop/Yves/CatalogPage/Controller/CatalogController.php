@@ -258,7 +258,7 @@ class CatalogController extends AbstractController
 
         $shopContextParameters = $this->getFactory()
             ->getShopContext()
-            ->modifiedToArray(true, false);
+            ->modifiedToArray();
         $parameters = array_merge($parameters, $shopContextParameters);
 
         if ($this->can('SeePricePermissionPlugin')) {
