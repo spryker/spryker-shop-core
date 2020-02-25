@@ -7,8 +7,11 @@
 
 namespace SprykerShop\Yves\MerchantSwitcherWidget;
 
+use ArrayObject;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookie;
+use SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookieInterface;
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientInterface;
 use SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader\MerchantReader;
 use SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader\MerchantReaderInterface;
@@ -26,6 +29,17 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
     {
         return new MerchantReader(
             $this->getMerchantSearchClient(),
+            $this->createSelectedMerchantCookie()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookieInterface
+     */
+    public function createSelectedMerchantCookie(): SelectedMerchantCookieInterface
+    {
+        return new SelectedMerchantCookie(
+            $this->getCookies(),
             $this->getRequest(),
             $this->getConfig()
         );
@@ -45,6 +59,14 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
     public function getRequest(): Request
     {
         return $this->getApplication()['request'];
+    }
+
+    /**
+     * @return \ArrayObject|\Symfony\Component\HttpFoundation\Cookie[]
+     */
+    public function getCookies(): ArrayObject
+    {
+        return $this->getApplication()['cookies'];
     }
 
     /**
