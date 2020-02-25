@@ -110,4 +110,7 @@
         <property name="shippingAddress" type="Address"/>
     </transfer>
 
+    <transfer name="Address">
+    </transfer>
+
 </transfers>
