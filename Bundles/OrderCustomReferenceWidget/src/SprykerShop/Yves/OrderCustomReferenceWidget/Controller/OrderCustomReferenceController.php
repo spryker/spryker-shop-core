@@ -18,9 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class OrderCustomReferenceController extends AbstractController
 {
-    protected const PARAMETER_BACK_URL = 'backUrl';
-    protected const PARAMETER_ORDER_CUSTOM_REFERENCE = 'orderCustomReference';
-
     protected const GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_SAVED = 'order_custom_reference.reference_saved';
 
     protected const FORM_ORDER_CUSTOM_REFERENCE = 'order_custom_reference_form';
