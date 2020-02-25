@@ -25,11 +25,11 @@ class ProductLabelWidgetToProductLabelStorageClientBridge implements ProductLabe
     /**
      * @param int $idProductAbstract
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, ?string $storeName = null)
+    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, string $storeName)
     {
         return $this->productLabelStorageClient->findLabelsByIdProductAbstract($idProductAbstract, $localeName, $storeName);
     }
@@ -37,11 +37,11 @@ class ProductLabelWidgetToProductLabelStorageClientBridge implements ProductLabe
     /**
      * @param array $idProductLabels
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabels(array $idProductLabels, $localeName, ?string $storeName = null)
+    public function findLabels(array $idProductLabels, $localeName, string $storeName)
     {
         return $this->productLabelStorageClient->findLabels($idProductLabels, $localeName, $storeName);
     }
