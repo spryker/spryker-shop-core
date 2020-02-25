@@ -261,7 +261,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     protected function getDefaultAddressChoices(): array
     {
         return [
-            CheckoutAddressForm::GLOSSARY_KEY_SAVE_NEW_ADDRESS => CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS,
+            CheckoutAddressForm::GLOSSARY_KEY_ACCOUNT_ADD_NEW_ADDRESS => CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS,
         ];
     }
 
