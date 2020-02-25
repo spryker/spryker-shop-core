@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\OrderCustomReferenceWidget\Controller;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Yves\Kernel\Controller\AbstractController;
+use SprykerShop\Yves\OrderCustomReferenceWidget\Form\OrderCustomReferenceForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -45,9 +46,6 @@ class OrderCustomReferenceController extends AbstractController
     {
         $requestParameters = $request->request->get(static::FORM_ORDER_CUSTOM_REFERENCE);
 
-        $orderCustomReference = $requestParameters[static::PARAMETER_ORDER_CUSTOM_REFERENCE] ?? '';
-        $backUrl = $requestParameters[static::PARAMETER_BACK_URL];
-
         $orderCustomReferenceForm = $this->getFactory()
             ->getOrderCustomReferenceForm($requestParameters)
             ->handleRequest($request);
@@ -58,7 +56,7 @@ class OrderCustomReferenceController extends AbstractController
                 ->getOrderCustomReferenceClient()
                 ->setOrderCustomReference(
                     $quoteClient->getQuote(),
-                    $orderCustomReference
+                    $orderCustomReferenceForm->getData()[OrderCustomReferenceForm::FIELD_ORDER_CUSTOM_REFERENCE] ?? ''
                 );
 
             if ($quoteResponseTransfer->getIsSuccessful()) {
@@ -68,7 +66,9 @@ class OrderCustomReferenceController extends AbstractController
             $this->handleQuoteResponseTransferErrors($quoteResponseTransfer);
         }
 
-        return $this->redirectResponseExternal($backUrl);
+        return $this->redirectResponseExternal(
+            $orderCustomReferenceForm->getData()[OrderCustomReferenceForm::FIELD_BACK_URL]
+        );
     }
 
     /**
