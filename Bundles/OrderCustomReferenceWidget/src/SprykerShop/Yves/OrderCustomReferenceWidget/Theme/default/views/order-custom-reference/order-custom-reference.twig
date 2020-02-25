@@ -6,6 +6,12 @@
     orderCustomReferenceForm: _widget.orderCustomReferenceForm,
 } %}
 
+{%- block template -%}
+    {% if data.quote.idQuote %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 {% block body %}
     {% set canWrite = can('WriteSharedCartPermissionPlugin', data.quote.idQuote) %}
 
