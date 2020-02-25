@@ -94,7 +94,7 @@ class OrderController extends AbstractCustomerController
             'pagination' => $orderListTransfer->getPagination(),
             'orderList' => $orderListTransfer->getOrders(),
             'isOrderSearchEnabled' => $customerPageConfig->isOrderSearchEnabled(),
-            'isOrderSearchOrderItemsVisible' => $customerPageConfig->isOrderSearchOrderItemsVisible(),
+            'isOrderSearchOrderItemsVisible' => $orderListTransfer->getFormat()->getExpandWithItems(),
             'orderSearchForm' => isset($orderSearchForm) ? $orderSearchForm->createView() : null,
         ];
     }

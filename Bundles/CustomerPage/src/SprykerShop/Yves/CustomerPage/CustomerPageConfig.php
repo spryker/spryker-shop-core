@@ -19,7 +19,6 @@ class CustomerPageConfig extends AbstractBundleConfig
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;
 
     protected const IS_ORDER_SEARCH_ENABLED = false;
-    protected const IS_ORDER_SEARCH_ORDER_ITEMS_VISIBLE = true;
 
     protected const DEFAULT_ORDER_HISTORY_PER_PAGE = 10;
     protected const DEFAULT_ORDER_HISTORY_SORT_FIELD = 'created_at';
@@ -88,14 +87,6 @@ class CustomerPageConfig extends AbstractBundleConfig
     public function isOrderSearchEnabled(): bool
     {
         return static::IS_ORDER_SEARCH_ENABLED;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isOrderSearchOrderItemsVisible(): bool
-    {
-        return static::IS_ORDER_SEARCH_ORDER_ITEMS_VISIBLE;
     }
 
     /**

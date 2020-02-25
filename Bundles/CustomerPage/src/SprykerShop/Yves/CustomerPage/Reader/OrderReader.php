@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use SprykerShop\Yves\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
+use SprykerShop\Yves\CustomerPage\Form\OrderSearchForm;
 use Symfony\Component\HttpFoundation\Request;
 
 class OrderReader implements OrderReaderInterface
@@ -84,7 +85,7 @@ class OrderReader implements OrderReaderInterface
 
         $orderListTransfer->setFilter($this->createFilterTransfer());
         $orderListTransfer->setPagination($this->createPaginationTransfer($request));
-        $orderListTransfer->setFormat($this->createOrderListFormatTransfer());
+        $orderListTransfer->setFormat($this->createOrderListFormatTransfer($request));
 
         $customerTransfer = $this->customerClient->getCustomer();
 
@@ -95,15 +96,18 @@ class OrderReader implements OrderReaderInterface
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Generated\Shared\Transfer\OrderListFormatTransfer
      */
-    protected function createOrderListFormatTransfer(): OrderListFormatTransfer
+    protected function createOrderListFormatTransfer(Request $request): OrderListFormatTransfer
     {
         $orderListFormatTransfer = new OrderListFormatTransfer();
 
-        $orderListFormatTransfer->setExpandWithItems(
-            $this->customerPageConfig->isOrderSearchEnabled() && $this->customerPageConfig->isOrderSearchOrderItemsVisible()
-        );
+        $expandWithItems = $this->customerPageConfig->isOrderSearchEnabled()
+            && isset($request->get(OrderSearchForm::FORM_NAME)[OrderSearchForm::FIELD_IS_ORDER_ITEMS_VISIBLE]);
+
+        $orderListFormatTransfer->setExpandWithItems($expandWithItems);
 
         return $orderListFormatTransfer;
     }
