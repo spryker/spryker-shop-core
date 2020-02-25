@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\CustomerPage\Form;
 
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,8 +22,11 @@ class OrderSearchForm extends AbstractType
 {
     public const FIELD_SEARCH_GROUP = 'searchGroup';
     public const FIELD_SEARCH_TEXT = 'searchText';
+    public const FIELD_DATE_FROM = 'dateFrom';
+    public const FIELD_DATE_TO = 'dateTo';
 
     public const OPTION_ORDER_SEARCH_GROUPS = 'OPTION_ORDER_SEARCH_GROUPS';
+    public const OPTION_CURRENT_TIMEZONE = 'OPTION_CURRENT_TIMEZONE';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -31,7 +35,10 @@ class OrderSearchForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setRequired(static::OPTION_ORDER_SEARCH_GROUPS);
+        $resolver->setRequired([
+            static::OPTION_ORDER_SEARCH_GROUPS,
+            static::OPTION_CURRENT_TIMEZONE,
+        ]);
     }
 
     /**
@@ -43,7 +50,9 @@ class OrderSearchForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addSearchGroupField($builder, $options)
-            ->addSearchTextField($builder);
+            ->addSearchTextField($builder)
+            ->addDateFromField($builder, $options)
+            ->addDateToField($builder, $options);
 
         $this->executeOrderSearchFormExpanderPlugins($builder, $options);
     }
@@ -78,6 +87,42 @@ class OrderSearchForm extends AbstractType
         $builder->add(static::FIELD_SEARCH_TEXT, TextType::class, [
             'label' => false,
             'required' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addDateFromField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_DATE_FROM, DateTimeType::class, [
+            'label' => false,
+            'widget' => 'single_text',
+            'required' => false,
+            'view_timezone' => $options[static::OPTION_CURRENT_TIMEZONE],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addDateToField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_DATE_TO, DateTimeType::class, [
+            'label' => false,
+            'widget' => 'single_text',
+            'required' => false,
+            'view_timezone' => $options[static::OPTION_CURRENT_TIMEZONE],
         ]);
 
         return $this;

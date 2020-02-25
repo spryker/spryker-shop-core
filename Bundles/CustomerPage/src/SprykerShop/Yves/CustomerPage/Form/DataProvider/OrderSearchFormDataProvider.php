@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerPage\Form\DataProvider;
 
+use Spryker\Shared\Kernel\Store;
 use SprykerShop\Yves\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientInterface;
 use SprykerShop\Yves\CustomerPage\Form\OrderSearchForm;
@@ -24,15 +25,23 @@ class OrderSearchFormDataProvider
     protected $glossaryStorageClient;
 
     /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
      * @param \SprykerShop\Yves\CustomerPage\CustomerPageConfig $customerPageConfig
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientInterface $glossaryStorageClient
+     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         CustomerPageConfig $customerPageConfig,
-        CustomerPageToGlossaryStorageClientInterface $glossaryStorageClient
+        CustomerPageToGlossaryStorageClientInterface $glossaryStorageClient,
+        Store $store
     ) {
         $this->customerPageConfig = $customerPageConfig;
         $this->glossaryStorageClient = $glossaryStorageClient;
+        $this->store = $store;
     }
 
     /**
@@ -44,6 +53,7 @@ class OrderSearchFormDataProvider
     {
         return [
             OrderSearchForm::OPTION_ORDER_SEARCH_GROUPS => $this->getOrderSearchGroups($localeName),
+            OrderSearchForm::OPTION_CURRENT_TIMEZONE => $this->getStoreTimezone(),
         ];
     }
 
@@ -62,5 +72,13 @@ class OrderSearchFormDataProvider
         }
 
         return $searchGroups;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStoreTimezone(): ?string
+    {
+        return $this->store->getContexts()['*']['timezone'] ?? null;
     }
 }

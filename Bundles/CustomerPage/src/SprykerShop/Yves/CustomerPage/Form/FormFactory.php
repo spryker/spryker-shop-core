@@ -114,7 +114,8 @@ class FormFactory extends AbstractFactory
     {
         return new OrderSearchFormDataProvider(
             $this->getConfig(),
-            $this->getGlossaryStorageClient()
+            $this->getGlossaryStorageClient(),
+            $this->getStore()
         );
     }
 

@@ -16,8 +16,11 @@
         {% if (data.orderSearchForm) %}
             {{ form_start(data.orderSearchForm) }}
 
-            {{ form_row(data.orderSearchForm.searchGroup) }}
+            {{ form_row(data.orderSearchForm.searchGroup, {'label': 'customer.order_history.search_group.label' | trans}) }}
             {{ form_row(data.orderSearchForm.searchText) }}
+
+            {{ form_row(data.orderSearchForm.dateFrom, {'label': 'customer.order_history.date_from.label' | trans}) }}
+            {{ form_row(data.orderSearchForm.dateTo, {'label': 'customer.order_history.date_to.label' | trans}) }}
 
             <button type="submit" name="submit" class="button button--success">
                 {{ 'customer.order_history.apply' | trans }}
