@@ -8,6 +8,7 @@
     "spryker-shop/shop-application": "^1.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/merchant-search": "^0.1.0",
+    "spryker/shop-context-extension": "^0.1.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
