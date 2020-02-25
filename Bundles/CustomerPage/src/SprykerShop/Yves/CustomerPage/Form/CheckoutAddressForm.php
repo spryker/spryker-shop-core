@@ -33,7 +33,8 @@ class CheckoutAddressForm extends AddressForm
     public const VALUE_ADD_NEW_ADDRESS = '0';
     public const VALUE_NEW_ADDRESS_IS_EMPTY = null;
 
-    public const GLOSSARY_KEY_SAVE_NEW_ADDRESS = 'customer.account.add_new_address';
+    public const GLOSSARY_KEY_ACCOUNT_ADD_NEW_ADDRESS = 'customer.account.add_new_address';
+    public const GLOSSARY_KEY_SAVE_NEW_ADDRESS = 'customer.address.save_new_address';
     public const GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES = 'customer.account.deliver_to_multiple_addresses';
     public const GLOSSARY_PAGE_CHECKOUT_ADDRESS_ADDRESS_SELECT_LABEL = 'page.checkout.address.address_select.label';
 
