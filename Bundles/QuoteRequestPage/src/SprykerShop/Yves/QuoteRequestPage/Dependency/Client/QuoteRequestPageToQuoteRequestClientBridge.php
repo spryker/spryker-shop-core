@@ -176,16 +176,6 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
      *
      * @return bool
      */
-    public function isQuoteRequestReferenceForQuote(QuoteTransfer $quoteTransfer): bool
-    {
-        return $this->quoteRequestClient->isQuoteRequestReferenceForQuote($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
     public function isQuoteRequestForQuoteWithCustomShipmentPrice(QuoteTransfer $quoteTransfer): bool
     {
         return $this->quoteRequestClient->isQuoteRequestForQuoteWithCustomShipmentPrice($quoteTransfer);
