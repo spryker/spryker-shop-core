@@ -103,7 +103,7 @@
                                     {{ form_row(item.shippingAddress.id_customer_address, {
                                         label: 'page.checkout.address.delivery.address_select' | trans,
                                         attr: {
-                                            class: config.jsName ~ '__trigger ' ~ config.jsName ~ '__trigger--' ~ loop.index,
+                                            class: addressSelectJsName ~ config.jsName ~ '__trigger--' ~ loop.index,
                                         },
                                     }) }}
                                 {% endif %}
@@ -141,6 +141,7 @@
                                 'trigger-selector': '.' ~ config.jsName ~ '__trigger--' ~ loop.index,
                                 'target-selector': '.' ~ config.jsName ~ '__item-shipping--' ~ loop.index,
                                 'parent-target-class-name': config.jsName,
+                                'is-trigger-has-pre-selected-option': true,
                             },
                         } only %}
                     {% endif %}
