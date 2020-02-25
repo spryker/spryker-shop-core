@@ -11,6 +11,10 @@
         <property name="merchantReference" type="string"/>
     </transfer>
 
+    <transfer name="ShopContext">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
     <transfer name="MerchantSwitchRequest">
         <property name="merchantReference" type="string"/>
         <property name="quote" type="Quote"/>
