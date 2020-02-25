@@ -7,13 +7,14 @@
 {% define data = {
     voucherDiscounts: null,
     ruleDiscounts: null,
-    discountTotal: null,
+    discountTotal: required,
     currency: required,
     isQuoteEditable: false,
 } %}
 
 {% block component %}
-    {% if data.discountTotal and (data.voucherDiscounts is not empty or data.ruleDiscounts is not empty) %}
+    {% set hasDiscount = data.discountTotal and (data.voucherDiscounts or data.ruleDiscounts) %}
+    {% if hasDiscount %}
         <hr>
         {{ parent() }}
     {% endif %}

@@ -108,11 +108,10 @@
                     {% endblock %}
 
                     {% block actionCancel %}
-                        <a class="{{ classButtonCancel }}"
-                           href="{{ path('agent/quote-request/cancel', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}"
-                           data-init-single-click>
-                            {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
-                        </a>
+                        {{ _self.button(
+                            path('agent/quote-request/cancel', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
+                            'quote_request_page.quote_request.actions.cancel',
+                            classButtonCancel) }}
                     {% endblock %}
                 {% endif %}
 
@@ -122,11 +121,10 @@
                     {% endblock %}
 
                     {% block actionEdit %}
-                        <a class="{{ classButtonEdit }}"
-                           href="{{ path('agent/quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}"
-                           data-init-single-click>
-                            {{ 'quote_request_page.quote_request.actions.edit' | trans }}
-                        </a>
+                        {{ _self.button(
+                            path('agent/quote-request/edit', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
+                            'quote_request_page.quote_request.actions.edit',
+                            classButtonEdit) }}
                     {% endblock %}
                 {% endif %}
 
@@ -137,11 +135,10 @@
                     {% endblock %}
 
                     {% block actionSendToCustomer %}
-                        <a class="{{ classButtonSendToCustomer }}"
-                           href="{{ path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}"
-                           data-init-single-click>
-                            {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
-                        </a>
+                        {{ _self.button(
+                            path('agent/quote-request/send-to-customer', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
+                            'quote_request_page.quote_request.actions.send_to_customer',
+                            classButtonSendToCustomer) }}
                     {% endblock %}
                 {% endif %}
 
@@ -151,11 +148,10 @@
                     {% endblock %}
 
                     {% block actionRevise %}
-                        <a class="{{ classButtonRevise }}"
-                           href="{{ path('agent/quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}"
-                           data-init-single-click>
-                            {{ 'quote_request_page.quote_request.actions.revise' | trans }}
-                        </a>
+                        {{ _self.button(
+                            path('agent/quote-request/revise', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
+                            'quote_request_page.quote_request.actions.revise',
+                            classButtonRevise) }}
                     {% endblock %}
                 {% endif %}
 
@@ -165,14 +161,23 @@
                     {% endblock %}
 
                     {% block actionConvertToCart %}
-                        <a class="{{ classButtonConvertToCart }}"
-                           href="{{ path('agent/quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }) }}"
-                           data-init-single-click>
-                            {{ 'quote_request_page.quote_request.actions.convert_to_cart' | trans }}
-                        </a>
+                        {{ _self.button(
+                            path('agent/quote-request/convert-to-cart', { quoteRequestReference: (data.quoteRequest.quoteRequestReference) }),
+                            'quote_request_page.quote_request.actions.convert_to_cart',
+                            classButtonConvertToCart) }}
                     {% endblock %}
                 {% endif %}
             {% endif %}
         </div>
     {% endblock %}
 {% endblock %}
+
+{%- macro button(quoteRequestPath, text, className) -%}
+    {% block actionTemplate %}
+        <a class="{{ className }}"
+           href="{{ quoteRequestPath }}"
+           data-init-single-click>
+            {{ text | trans }}
+        </a>
+    {% endblock %}
+{%- endmacro -%}

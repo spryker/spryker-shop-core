@@ -11,6 +11,10 @@ export default class QuoteRequestHistorySelect extends Component {
     }
 
     protected mapEvents(): void {
+        this.mapSelectChangeEvent();
+    }
+
+    protected mapSelectChangeEvent(): void {
         this.select.addEventListener('change', () => this.onChange());
     }
 
@@ -21,7 +25,7 @@ export default class QuoteRequestHistorySelect extends Component {
         }
     }
 
-    get versionReferenceTitle(): string {
+    protected get versionReferenceTitle(): string {
         return this.getAttribute('version-reference-title');
     }
 }

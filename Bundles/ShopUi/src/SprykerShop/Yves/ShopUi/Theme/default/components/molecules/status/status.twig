@@ -10,12 +10,12 @@
     status: required,
 } %}
 
-{% block extraClass %}
-    {{ config.name }}--{{ data.status }}
+{% block class %}
+    {{ parent }} {{ config.name }}--{{ data.status }}
 {% endblock %}
 
 {% block component %}
-    {% if data.status and data.label%}
+    {% if data.status and data.label %}
         {{ parent() }}
     {% endif %}
 {% endblock %}
