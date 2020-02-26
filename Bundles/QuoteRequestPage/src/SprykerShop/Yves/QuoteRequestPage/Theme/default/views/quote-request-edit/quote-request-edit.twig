@@ -112,7 +112,7 @@
             {% endblock %}
 
             {% block actionSave %}
-                <button type="submit" name="save" class="{{ classButtonSave }}">
+                <button type="submit" name="save" class="{{ classButtonSave }}" data-init-single-click>
                     {{ 'quote_request_page.quote_request.actions.save' | trans }}
                 </button>
             {% endblock %}
@@ -122,7 +122,7 @@
             {% endblock %}
 
             {% block actionSend %}
-                <button type="submit" name="sendToUser" class="{{ classButtonSend }}">
+                <button type="submit" name="sendToUser" class="{{ classButtonSend }}" data-init-single-click>
                     {{ 'quote_request_page.quote_request.actions.send_to_agent' | trans }}
                 </button>
             {% endblock %}

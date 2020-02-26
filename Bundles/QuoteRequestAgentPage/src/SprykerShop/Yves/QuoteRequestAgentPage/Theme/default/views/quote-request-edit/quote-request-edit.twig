@@ -78,7 +78,7 @@
         {% endblock %}
     {% endembed %}
 
-    {% block visibilityVersionTogler %}
+    {% block visibilityVersionToggler %}
         {{ form_row(data.quoteRequestForm.isLatestVersionVisible) }}
     {% endblock %}
 {% endblock %}
@@ -193,7 +193,7 @@
                         {% if data.product.quantitySalesUnit %}
                             {% set value = data.product.quantitySalesUnit.value %}
                             {% set precision = data.product.quantitySalesUnit.precision %}
-                            {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+                            {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default %}
 
                             <p>
                                 <small class="text-secondary">
@@ -499,7 +499,7 @@
             {% endblock %}
 
             {% block actionSave %}
-                <button type="submit" name="save" class="{{ classButtonSave }}">
+                <button type="submit" name="save" class="{{ classButtonSave }}" data-init-single-click>
                     {{ 'quote_request_page.quote_request.actions.save' | trans }}
                 </button>
             {% endblock %}
@@ -510,7 +510,7 @@
                 {% endblock %}
 
                 {% block actionSend %}
-                    <button type="submit" name="sendToCustomer" class="{{ classButtonSend }}">
+                    <button type="submit" name="sendToCustomer" class="{{ classButtonSend }}" data-init-single-click>
                         {{ 'quote_request_page.quote_request.actions.send_to_customer' | trans }}
                     </button>
                 {% endblock %}

@@ -155,7 +155,8 @@
                     {% endblock %}
                 {% endif %}
 
-                {% if data.quoteRequest.status == 'ready' %}
+                {% set readyStatus = 'ready' %}
+                {% if data.quoteRequest.status == readyStatus %}
                     {% block actionSeparator5 %}
                         <hr class="box__separator">
                     {% endblock %}
