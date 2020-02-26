@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerPage\CustomerAddress;
 
+use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
@@ -28,7 +29,7 @@ class AddressChoicesResolver implements AddressChoicesResolverInterface
 
         $customerAddressesTransfer = $customerTransfer->getAddresses();
 
-        if ($customerAddressesTransfer === null || count($customerAddressesTransfer->getAddresses()) === 0) {
+        if (!$this->isCustomerHasAddress($customerAddressesTransfer)) {
             return [];
         }
 
@@ -115,5 +116,15 @@ class AddressChoicesResolver implements AddressChoicesResolverInterface
     protected function getSanitizedCustomerAddressChoices(string $addressLabel, int $itemNumber): string
     {
         return sprintf(static::SANITIZED_CUSTOMER_ADDRESS_LABEL_PATTERN, $addressLabel, $itemNumber);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressesTransfer|null $customerAddressesTransfer
+     *
+     * @return bool
+     */
+    protected function isCustomerHasAddress(?AddressesTransfer $customerAddressesTransfer): bool
+    {
+        return $customerAddressesTransfer === null || count($customerAddressesTransfer->getAddresses()) === 0;
     }
 }
