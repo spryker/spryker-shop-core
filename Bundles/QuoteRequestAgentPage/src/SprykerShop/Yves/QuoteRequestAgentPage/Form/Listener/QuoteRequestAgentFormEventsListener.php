@@ -46,20 +46,20 @@ class QuoteRequestAgentFormEventsListener implements QuoteRequestAgentFormEvents
         /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer */
         $shipmentGroupTransfer = $event->getData();
 
-        $quoteShipment = $quoteRequestVersionTransfer->getQuote()->getShipment();
+        $quoteShipmentTransfer = $quoteRequestVersionTransfer->getQuote()->getShipment();
 
-        if (!$quoteShipment || !$quoteShipment->getMethod()) {
+        if (!$quoteShipmentTransfer || !$quoteShipmentTransfer->getMethod()) {
             return $event;
         }
 
-        $itemShipment = $shipmentGroupTransfer->getShipment();
+        $itemShipmentTransfer = $shipmentGroupTransfer->getShipment();
 
-        if (!$itemShipment || !$itemShipment->getMethod()) {
+        if (!$itemShipmentTransfer || !$itemShipmentTransfer->getMethod()) {
             return $event;
         }
 
-        $itemShipmentMethodSourcePrice = $itemShipment->getMethod()->getSourcePrice();
-        $quoteShipment->getMethod()->setSourcePrice($itemShipmentMethodSourcePrice);
+        $itemShipmentMethodSourcePriceTransfer = $itemShipmentTransfer->getMethod()->getSourcePrice();
+        $quoteShipmentTransfer->getMethod()->setSourcePrice($itemShipmentMethodSourcePriceTransfer);
 
         $event->setData($shipmentGroupTransfer);
 
