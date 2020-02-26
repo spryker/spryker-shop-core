@@ -50,8 +50,8 @@ class OrderCustomReferenceController extends AbstractController
             $quoteResponseTransfer = $this->getFactory()
                 ->getOrderCustomReferenceClient()
                 ->setOrderCustomReference(
-                    $quoteClient->getQuote(),
-                    $orderCustomReferenceForm->getData()[OrderCustomReferenceForm::FIELD_ORDER_CUSTOM_REFERENCE] ?? ''
+                    $orderCustomReferenceForm->getData()[OrderCustomReferenceForm::FIELD_ORDER_CUSTOM_REFERENCE] ?? '',
+                    $quoteClient->getQuote()
                 );
 
             if ($quoteResponseTransfer->getIsSuccessful()) {
