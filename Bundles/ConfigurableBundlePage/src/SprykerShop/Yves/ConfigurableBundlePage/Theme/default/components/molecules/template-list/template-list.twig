@@ -45,16 +45,13 @@
                                                                     {% endmacro %}
 
                                                                     {% if isTitleImage %}
-                                                                        {% set imageModifiers = ['without-spaces'] %}
+                                                                        {% set imageClass = '' %}
+                                                                        {% set imageUrl = template.images.0.externalUrlSmall | default %}
 
                                                                         {% block templateTitleImage %}
-                                                                            {% include atom('thumbnail') with {
-                                                                                modifiers: imageModifiers,
-                                                                                attributes: {
-                                                                                    src: publicPath(template.images.0.externalUrlSmall),
-                                                                                    alt: template.name | trans,
-                                                                                },
-                                                                            } only %}
+                                                                            {% if imageUrl %}
+                                                                                <img class="{{ imageClass }}" src="{{ imageUrl }}" alt="{{ template.name | trans }}">
+                                                                            {% endif %}
                                                                         {% endblock %}
 
                                                                         {% block templateItemNameInner %}

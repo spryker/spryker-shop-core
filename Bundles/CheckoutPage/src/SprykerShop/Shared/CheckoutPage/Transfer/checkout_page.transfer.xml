@@ -168,4 +168,10 @@
         <property name="idCommentThread" type="int"/>
     </transfer>
 
+    <transfer name="MoneyValue">
+    </transfer>
+
+    <transfer name="ShipmentCarrier">
+    </transfer>
+
 </transfers>
