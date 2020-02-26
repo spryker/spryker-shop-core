@@ -82,9 +82,9 @@ class OrderSearchForm extends AbstractType
             'choices' => $options[static::OPTION_ORDER_SEARCH_GROUPS],
             'data' => reset($options[static::OPTION_ORDER_SEARCH_GROUPS]),
             'placeholder' => false,
-            'label' => false,
             'required' => false,
             'choice_translation_domain' => true,
+            'label' => 'customer.order_history.search',
         ]);
 
         return $this;
@@ -114,10 +114,10 @@ class OrderSearchForm extends AbstractType
     protected function addDateFromField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_DATE_FROM, DateTimeType::class, [
-            'label' => false,
             'widget' => 'single_text',
             'required' => false,
             'view_timezone' => $options[static::OPTION_CURRENT_TIMEZONE],
+            'label' => 'customer.order_history.date_from',
         ]);
 
         return $this;
@@ -132,10 +132,10 @@ class OrderSearchForm extends AbstractType
     protected function addDateToField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_DATE_TO, DateTimeType::class, [
-            'label' => false,
             'widget' => 'single_text',
             'required' => false,
             'view_timezone' => $options[static::OPTION_CURRENT_TIMEZONE],
+            'label' => 'customer.order_history.date_to',
         ]);
 
         return $this;
@@ -149,8 +149,8 @@ class OrderSearchForm extends AbstractType
     protected function addIsOrderItemsVisibleField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_ORDER_ITEMS_VISIBLE, CheckboxType::class, [
-            'label' => false,
             'required' => false,
+            'label' => 'customer.order_history.is_order_items_visible',
         ]);
 
         return $this;
