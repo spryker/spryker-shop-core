@@ -30,11 +30,11 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServi
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToCustomerServiceInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceBridge;
 use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToUtilValidateServiceBridge;
-use SprykerShop\Yves\CheckoutPage\Exception\MissingCheckoutAddressFormDataProviderPluginException;
-use SprykerShop\Yves\CheckoutPage\Exception\MissingCustomerStepHandlerException;
 use SprykerShop\Yves\CheckoutPage\Plugin\CheckoutBreadcrumbPlugin;
 use SprykerShop\Yves\CheckoutPage\Plugin\ShipmentFormDataProviderPlugin;
 use SprykerShop\Yves\CheckoutPage\Plugin\ShipmentHandlerPlugin;
+use SprykerShop\Yves\CustomerPage\Plugin\CheckoutPage\CheckoutAddressFormDataProviderPlugin;
+use SprykerShop\Yves\CustomerPage\Plugin\CustomerStepHandler;
 use SprykerShop\Yves\MoneyWidget\Plugin\MoneyPlugin;
 
 class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
@@ -752,36 +752,28 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @throws \SprykerShop\Yves\CheckoutPage\Exception\MissingCheckoutAddressFormDataProviderPluginException
-     *
      * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */
     protected function getCheckoutAddressFormDataProviderPlugin(): StepEngineFormDataProviderInterface
     {
-        throw new MissingCheckoutAddressFormDataProviderPluginException(
-            sprintf(
-                'Missing instance of %s! You need to configure CheckoutAddressFormDataProviderPlugin ' .
-                'in your own CheckoutPageDependencyProvider::getCheckoutAddressFormDataProviderPlugin() ' .
-                'to be able to handle Address step in checkout.',
-                StepEngineFormDataProviderInterface::class
-            )
-        );
+        trigger_error('CheckoutAddressFormDataProviderPlugin will not be provided after next major. ' .
+            'You need to configure CheckoutAddressFormDataProviderPlugin ' .
+            'in your own CheckoutPageDependencyProvider::getCheckoutAddressFormDataProviderPlugin() ' .
+            'to be able to handle Address step in checkout.', E_USER_DEPRECATED);
+
+        return new CheckoutAddressFormDataProviderPlugin();
     }
 
     /**
-     * @throws \SprykerShop\Yves\CheckoutPage\Exception\MissingCustomerStepHandlerException
-     *
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface
      */
     protected function getCustomerStepHandler(): StepHandlerPluginInterface
     {
-        throw new MissingCustomerStepHandlerException(
-            sprintf(
-                'Missing instance of %s! You need to configure CheckoutAddressFormDataProviderPlugin ' .
-                'in your own CheckoutPageDependencyProvider::getCustomerStepHandler() ' .
-                'to be able to handle Customer step in checkout.',
-                StepHandlerPluginInterface::class
-            )
-        );
+        trigger_error('CustomerStepHandler will not be provided after next major. ' .
+            'Missing instance of %s! You need to configure CustomerStepHandler ' .
+            'in your own CheckoutPageDependencyProvider::getCustomerStepHandler() ' .
+            'to be able to handle Customer step in checkout.', E_USER_DEPRECATED);
+
+        return new CustomerStepHandler();
     }
 }

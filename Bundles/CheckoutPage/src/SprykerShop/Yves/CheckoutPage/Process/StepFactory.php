@@ -40,7 +40,6 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\PostConditionChecke
 use SprykerShop\Yves\CheckoutPage\Process\Steps\StepExecutorInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\SuccessStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\SummaryStep;
-use SprykerShop\Yves\HomePage\Plugin\Provider\HomePageControllerProvider;
 
 /**
  * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
@@ -49,11 +48,6 @@ class StepFactory extends AbstractFactory
 {
     protected const ERROR_CODE_GENERAL_FAILURE = 399;
     protected const ROUTE_CART = 'cart';
-
-    /**
-     * @uses \SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin::ROUTE_HOME
-     */
-    protected const ROUTE_HOME = 'home';
 
     /**
      * @uses \SprykerShop\Yves\CustomerPage\Plugin\Router\CustomerPageRouteProviderPlugin::ROUTE_LOGOUT
@@ -126,7 +120,7 @@ class StepFactory extends AbstractFactory
     {
         return new EntryStep(
             static::ROUTE_CART,
-            static::ROUTE_HOME
+            $this->getConfig()->getEscapeRoute()
         );
     }
 
@@ -139,7 +133,7 @@ class StepFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->getCustomerStepHandler(),
             static::CHECKOUT_CUSTOMER,
-            static::ROUTE_HOME,
+            $this->getConfig()->getEscapeRoute(),
             $this->getApplication()->path(static::ROUTE_LOGOUT)
         );
     }
@@ -155,7 +149,7 @@ class StepFactory extends AbstractFactory
             $this->createAddressStepPostConditionChecker(),
             $this->getConfig(),
             CheckoutPageControllerProvider::CHECKOUT_ADDRESS,
-            HomePageControllerProvider::ROUTE_HOME,
+            $this->getConfig()->getEscapeRoute(),
             $this->getCheckoutAddressStepEnterPreCheckPlugins()
         );
     }
@@ -171,7 +165,7 @@ class StepFactory extends AbstractFactory
             $this->createShipmentStepPostConditionChecker(),
             $this->createGiftCardItemsChecker(),
             CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
-            HomePageControllerProvider::ROUTE_HOME,
+            $this->getConfig()->getEscapeRoute(),
             $this->getCheckoutShipmentStepEnterPreCheckPlugins()
         );
     }
@@ -201,7 +195,7 @@ class StepFactory extends AbstractFactory
             $this->getPaymentClient(),
             $this->getPaymentMethodHandler(),
             CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
-            HomePageControllerProvider::ROUTE_HOME,
+            $this->getConfig()->getEscapeRoute(),
             $this->getFlashMessenger(),
             $this->getCalculationClient(),
             $this->getCheckoutPaymentStepEnterPreCheckPlugins()
@@ -218,7 +212,7 @@ class StepFactory extends AbstractFactory
             $this->getShipmentService(),
             $this->getConfig(),
             CheckoutPageControllerProvider::CHECKOUT_SUMMARY,
-            HomePageControllerProvider::ROUTE_HOME,
+            $this->getConfig()->getEscapeRoute(),
             $this->getCheckoutClient()
         );
     }
@@ -234,7 +228,7 @@ class StepFactory extends AbstractFactory
             $this->getStore()->getCurrentLocale(),
             $this->getGlossaryStorageClient(),
             CheckoutPageControllerProvider::CHECKOUT_PLACE_ORDER,
-            HomePageControllerProvider::ROUTE_HOME,
+            $this->getConfig()->getEscapeRoute(),
             [
                 static::ERROR_CODE_GENERAL_FAILURE => self::ROUTE_CART,
                 'payment failed' => CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
@@ -253,7 +247,7 @@ class StepFactory extends AbstractFactory
             $this->getCartClient(),
             $this->getConfig(),
             CheckoutPageControllerProvider::CHECKOUT_SUCCESS,
-            HomePageControllerProvider::ROUTE_HOME
+            $this->getConfig()->getEscapeRoute()
         );
     }
 
