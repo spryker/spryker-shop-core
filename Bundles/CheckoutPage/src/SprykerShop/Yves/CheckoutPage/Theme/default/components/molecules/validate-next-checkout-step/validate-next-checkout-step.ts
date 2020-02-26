@@ -16,12 +16,9 @@ export default class ValidateNextCheckoutStep extends Component {
     protected readyCallback(): void {
         this.containers = <HTMLElement[]>Array.from(document.querySelectorAll(this.containerSelector));
         this.target = <HTMLButtonElement>document.querySelector(this.targetSelector);
-
-        if (this.dropdownTriggerSelector) {
-            this.dropdownTriggers = <HTMLSelectElement[]>Array.from(document.querySelectorAll(
-                this.dropdownTriggerSelector
-            ));
-        }
+        this.dropdownTriggers = <HTMLSelectElement[]>Array.from(document.querySelectorAll(
+            this.dropdownTriggerSelector
+        ));
 
         if (this.parentTargetClassName) {
             this.parentTarget = <HTMLElement>document.getElementsByClassName(this.parentTargetClassName)[0];
@@ -37,11 +34,9 @@ export default class ValidateNextCheckoutStep extends Component {
     protected mapEvents(): void {
         this.mapTriggerEvents();
 
-        if (this.dropdownTriggers) {
-            this.dropdownTriggers.forEach((element: HTMLSelectElement) => {
-                element.addEventListener('change', () => this.onDropdownTriggerChange());
-            });
-        }
+        this.dropdownTriggers.forEach((element: HTMLSelectElement) => {
+            element.addEventListener('change', () => this.onDropdownTriggerChange());
+        });
 
         if (this.parentTarget) {
             this.parentTarget.addEventListener('toggleForm', () => this.onDropdownTriggerChange());
@@ -117,9 +112,7 @@ export default class ValidateNextCheckoutStep extends Component {
     }
 
     protected get isDropdownTriggerPreSelected(): boolean {
-        if (this.dropdownTriggers) {
-            return this.dropdownTriggers.some((element: HTMLSelectElement) => !element.value);
-        }
+        return this.dropdownTriggers.some((element: HTMLSelectElement) => !element.value);
     }
 
     /**
