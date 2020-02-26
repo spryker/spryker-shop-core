@@ -74,7 +74,8 @@ class BusinessOnBehalfController extends AbstractController
     protected function isDefaultFieldSelected(Request $request): bool
     {
         $isDefault = false;
-        if ($request->request->has(CompanyUserAccountSelectorForm::FORM_NAME)
+        if (
+            $request->request->has(CompanyUserAccountSelectorForm::FORM_NAME)
             && isset($request->request->get(CompanyUserAccountSelectorForm::FORM_NAME)[CompanyUserAccountSelectorForm::FIELD_IS_DEFAULT])
             && $request->request->get(CompanyUserAccountSelectorForm::FORM_NAME)[CompanyUserAccountSelectorForm::FIELD_IS_DEFAULT]
         ) {

@@ -10,4 +10,7 @@
     <transfer name="ProductView">
     </transfer>
 
+    <transfer name="Wishlist">
+    </transfer>
+
 </transfers>

@@ -16,6 +16,7 @@
         <property name="merchantUrl" type="string"/>
         <property name="fkMerchant" type="int"/>
         <property name="urlCollection" type="Url[]" singular="url"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="ProductView">
@@ -47,4 +48,21 @@
         <property name="type" type="string"/>
         <property name="productOfferReference" type="string"/>
     </transfer>
+
+    <transfer name="Item">
+        <property name="productOfferReference" type="string"/>
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOffer">
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorageCriteria">
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="ShopContext">
+    </transfer>
+
 </transfers>

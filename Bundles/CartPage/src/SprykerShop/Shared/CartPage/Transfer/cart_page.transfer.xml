@@ -18,6 +18,7 @@
     <transfer name="Item">
         <property name="id" type="int"/>
         <property name="sku" type="string"/>
+        <property name="url" type="string"/>
         <property name="groupKeyPrefix" type="string"/>
         <property name="quantity" type="int"/>
         <property name="normalizableFields" type="string[]" singular="normalizableField"/>
@@ -52,6 +53,9 @@
 
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
     </transfer>
 
 </transfers>

@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerPage\Form;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -34,12 +35,14 @@ class CheckoutAddressCollectionForm extends AbstractType
     public const FIELD_BILLING_ADDRESS = 'billingAddress';
     public const FIELD_BILLING_SAME_AS_SHIPPING = 'billingSameAsShipping';
     public const FIELD_MULTI_SHIPPING_ADDRESSES = 'multiShippingAddresses';
+    public const FIELD_MULTI_SHIPPING_ADDRESSES_FOR_BUNDLE_ITEMS = 'multiShippingAddressesForBundleItems';
     public const FIELD_IS_MULTIPLE_SHIPMENT_ENABLED = 'isMultipleShipmentEnabled';
 
     public const OPTION_ADDRESS_CHOICES = 'address_choices';
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
     public const OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES = 'can_deliver_to_multiple_shipping_addresses';
     public const OPTION_IS_CUSTOMER_LOGGED_IN = 'is_customer_logged_in';
+    public const OPTION_BUNDLE_ITEMS = 'bundleItems';
 
     public const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
     public const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
@@ -52,6 +55,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     protected const GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES = 'customer.account.deliver_to_multiple_addresses';
 
     protected const PROPERTY_PATH_MULTI_SHIPPING_ADDRESSES = 'items';
+    protected const PROPERTY_PATH_MULTI_SHIPPING_ADDRESSES_FOR_BUNDLE_ITEMS = 'bundleItems';
 
     /**
      * @return string
@@ -85,7 +89,8 @@ class CheckoutAddressCollectionForm extends AbstractType
         $resolver->setDefined(static::OPTION_ADDRESS_CHOICES)
             ->setRequired(static::OPTION_COUNTRY_CHOICES)
             ->setRequired(static::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES)
-            ->setRequired(static::OPTION_IS_CUSTOMER_LOGGED_IN);
+            ->setRequired(static::OPTION_IS_CUSTOMER_LOGGED_IN)
+            ->setRequired(static::OPTION_BUNDLE_ITEMS);
     }
 
     /**
@@ -99,6 +104,7 @@ class CheckoutAddressCollectionForm extends AbstractType
         $this
             ->addShippingAddressSubForm($builder, $options)
             ->addItemShippingAddressSubForm($builder, $options)
+            ->addItemShippingAddressForBundlesSubForm($builder, $options)
             ->addSameAsShippingCheckboxField($builder)
             ->addBillingAddressSubForm($builder, $options)
             ->addIsMultipleShipmentEnabledField($builder, $options);
@@ -114,12 +120,13 @@ class CheckoutAddressCollectionForm extends AbstractType
     {
         $shipmentService = $this->getFactory()->getShipmentService();
 
-        $options = [
+        $fieldOptions = [
             'data_class' => AddressTransfer::class,
             'required' => true,
             'mapped' => false,
             'validation_groups' => function (FormInterface $form) {
-                if ($this->isIdCustomerAddressFieldNotEmpty($form)
+                if (
+                    $this->isIdCustomerAddressFieldNotEmpty($form)
                     || $this->isIdCompanyUnitAddressFieldNotEmpty($form)
                 ) {
                     return false;
@@ -133,17 +140,40 @@ class CheckoutAddressCollectionForm extends AbstractType
             CheckoutAddressForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
         ];
 
-        $builder->add(static::FIELD_SHIPPING_ADDRESS, CheckoutAddressForm::class, $options);
+        $builder->add(static::FIELD_SHIPPING_ADDRESS, CheckoutAddressForm::class, $fieldOptions);
 
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($shipmentService) {
             $this->hydrateShippingAddressSubFormDataFromItemLevelShippingAddresses($event, $shipmentService);
         });
 
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-            $this->mapSubmittedShippingAddressSubFormDataToItemLevelShippingAddresses($event);
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($options) {
+            return $this->mapSubmittedShippingAddressSubFormDataToItemLevelShippingAddresses($event, $options);
         });
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormEvent $event
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormEvent
+     */
+    protected function copyBundleItemLevelShippingAddressesToItemLevelShippingAddresses(FormEvent $event, array $options): FormEvent
+    {
+        $quoteTransfer = $event->getData();
+
+        if (!$quoteTransfer instanceof QuoteTransfer) {
+            return $event;
+        }
+
+        $quoteTransfer = $this->getFactory()
+            ->createShipmentExpander()
+            ->expandShipmentForBundleItems($quoteTransfer, $options[static::OPTION_BUNDLE_ITEMS]);
+
+        $event->setData($quoteTransfer);
+
+        return $event;
     }
 
     /**
@@ -157,52 +187,67 @@ class CheckoutAddressCollectionForm extends AbstractType
         CustomerPageToShipmentServiceInterface $shipmentService
     ): void {
         $quoteTransfer = $event->getData();
+
         if (!($quoteTransfer instanceof QuoteTransfer)) {
             return;
         }
 
-        $shipmentGroupCollection = $shipmentService->groupItemsByShipment($quoteTransfer->getItems());
-        $form = $event->getForm();
-        $shippingAddressFrom = $form->get(static::FIELD_SHIPPING_ADDRESS);
+        $shipmentGroupCollection = $this->mergeShipmentGroupsByShipmentHash(
+            $shipmentService->groupItemsByShipment($quoteTransfer->getItems()),
+            $shipmentService->groupItemsByShipment($quoteTransfer->getBundleItems())
+        );
 
-        if ($shipmentGroupCollection->count() > 1) {
-            $shippingAddressFrom = $this->setDeliverToMultipleAddressesEnabled($shippingAddressFrom);
-        }
+        $shippingAddressForm = $event->getForm()->get(static::FIELD_SHIPPING_ADDRESS);
 
-        if ($this->isDeliverToMultipleAddressesEnabled($shippingAddressFrom)) {
+        if (count($shipmentGroupCollection) > 1) {
+            $this->setDeliverToMultipleAddressesEnabled($shippingAddressForm);
+
             return;
         }
 
-        if ($shipmentGroupCollection->count() < 1) {
+        if ($this->isDeliverToMultipleAddressesEnabled($shippingAddressForm) || $shipmentGroupCollection->count() < 1) {
             return;
         }
 
-        /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer|null $shipmentGroupTransfer */
         $shipmentGroupTransfer = $shipmentGroupCollection->getIterator()->current();
 
-        if ($shipmentGroupTransfer === null) {
+        if (!$shipmentGroupTransfer->getShipment() || !$shipmentGroupTransfer->getShipment()->getShippingAddress()) {
             return;
         }
 
-        $shipmentTransfer = $shipmentGroupTransfer->getShipment();
-        if ($shipmentTransfer === null) {
-            return;
+        $shippingAddressForm->setData(clone $shipmentGroupTransfer->getShipment()->getShippingAddress());
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $bundleItemsShipmentGroupCollection
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    protected function mergeShipmentGroupsByShipmentHash(
+        ArrayObject $shipmentGroupCollection,
+        ArrayObject $bundleItemsShipmentGroupCollection
+    ): ArrayObject {
+        $indexedShipmentGroups = [];
+
+        foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
+            $indexedShipmentGroups[$shipmentGroupTransfer->getHash()] = $shipmentGroupTransfer;
         }
 
-        $shippingAddressTransfer = $shipmentTransfer->getShippingAddress();
-        if ($shippingAddressTransfer === null) {
-            return;
+        foreach ($bundleItemsShipmentGroupCollection as $shipmentGroupTransfer) {
+            $indexedShipmentGroups[$shipmentGroupTransfer->getHash()] = $shipmentGroupTransfer;
         }
 
-        $shippingAddressFrom->setData(clone $shippingAddressTransfer);
+        return new ArrayObject($indexedShipmentGroups);
     }
 
     /**
      * @param \Symfony\Component\Form\FormEvent $event
+     * @param array $options
      *
      * @return \Symfony\Component\Form\FormEvent
      */
-    protected function mapSubmittedShippingAddressSubFormDataToItemLevelShippingAddresses(FormEvent $event): FormEvent
+    protected function mapSubmittedShippingAddressSubFormDataToItemLevelShippingAddresses(FormEvent $event, array $options): FormEvent
     {
         $quoteTransfer = $event->getData();
         if (!($quoteTransfer instanceof QuoteTransfer)) {
@@ -211,21 +256,55 @@ class CheckoutAddressCollectionForm extends AbstractType
 
         $form = $event->getForm();
         $shippingAddressFrom = $form->get(static::FIELD_SHIPPING_ADDRESS);
+
         if ($this->isDeliverToMultipleAddressesEnabled($shippingAddressFrom)) {
-            return $event;
+            return $this->copyBundleItemLevelShippingAddressesToItemLevelShippingAddresses($event, $options);
         }
 
         $shippingAddressTransfer = $shippingAddressFrom->getData();
         $shipmentTransfer = $this->getQuoteItemShipmentTransfer($quoteTransfer);
         $shipmentTransfer->setShippingAddress($shippingAddressTransfer);
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->setShipment($shipmentTransfer);
-        }
+        $quoteTransfer = $this->mapShipmentToItemLevelShipments($quoteTransfer, $shipmentTransfer);
+        $quoteTransfer = $this->mapShipmentToBundleItemLevelShipments($quoteTransfer, $shipmentTransfer);
 
         $event->setData($quoteTransfer);
 
         return $event;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function mapShipmentToItemLevelShipments(
+        QuoteTransfer $quoteTransfer,
+        ShipmentTransfer $shipmentTransfer
+    ): QuoteTransfer {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setShipment($shipmentTransfer);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function mapShipmentToBundleItemLevelShipments(
+        QuoteTransfer $quoteTransfer,
+        ShipmentTransfer $shipmentTransfer
+    ): QuoteTransfer {
+        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
+            $itemTransfer->setShipment($shipmentTransfer);
+        }
+
+        return $quoteTransfer;
     }
 
     /**
@@ -258,7 +337,7 @@ class CheckoutAddressCollectionForm extends AbstractType
         }
 
         $selectedDeliverToMultiShipmentAddressTransfer = (new AddressTransfer())
-            ->setIdCustomerAddress(CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES);
+            ->setIdCustomerAddress((int)CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES);
 
         $form->setData($selectedDeliverToMultiShipmentAddressTransfer);
 
@@ -332,7 +411,8 @@ class CheckoutAddressCollectionForm extends AbstractType
                     return false;
                 }
 
-                if ($this->isIdCustomerAddressExistAndNotEmpty($form)
+                if (
+                    $this->isIdCustomerAddressExistAndNotEmpty($form)
                     || $this->isIdCompanyUnitAddressFieldExistAndNotEmpty($form)
                 ) {
                     return false;
@@ -372,13 +452,48 @@ class CheckoutAddressCollectionForm extends AbstractType
                 'data_class' => ItemTransfer::class,
                 'label' => false,
                 CheckoutMultiShippingAddressesForm::OPTION_VALIDATION_GROUP => static::GROUP_SHIPPING_ADDRESS,
-                CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $this->getMultiShippingAddressChoices($options),
+                CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
                 CheckoutMultiShippingAddressesForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
                 CheckoutMultiShippingAddressesForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
             ],
         ];
 
         $builder->add(static::FIELD_MULTI_SHIPPING_ADDRESSES, CollectionType::class, $fieldOptions);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addItemShippingAddressForBundlesSubForm(FormBuilderInterface $builder, array $options)
+    {
+        if (!$options[static::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES] || !count($options[static::OPTION_BUNDLE_ITEMS])) {
+            return $this;
+        }
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+            $fieldOptions = [
+                'label' => false,
+                'property_path' => static::PROPERTY_PATH_MULTI_SHIPPING_ADDRESSES_FOR_BUNDLE_ITEMS,
+                'data' => new ArrayObject($options[static::OPTION_BUNDLE_ITEMS]),
+                'mapped' => false,
+                'entry_type' => CheckoutMultiShippingAddressesForm::class,
+                'entry_options' => [
+                    'data_class' => ItemTransfer::class,
+                    'label' => false,
+                    CheckoutMultiShippingAddressesForm::OPTION_VALIDATION_GROUP => static::GROUP_SHIPPING_ADDRESS,
+                    CheckoutMultiShippingAddressesForm::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
+                    CheckoutMultiShippingAddressesForm::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
+                    CheckoutMultiShippingAddressesForm::OPTION_IS_CUSTOMER_LOGGED_IN => $options[static::OPTION_IS_CUSTOMER_LOGGED_IN],
+                ],
+            ];
+
+            $event->getForm()->add(static::FIELD_MULTI_SHIPPING_ADDRESSES_FOR_BUNDLE_ITEMS, CollectionType::class, $fieldOptions);
+        });
 
         return $this;
     }
@@ -414,16 +529,6 @@ class CheckoutAddressCollectionForm extends AbstractType
         $addressChoices[static::GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES] = CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES;
 
         return $addressChoices;
-    }
-
-    /**
-     * @param array $options
-     *
-     * @return string[]
-     */
-    protected function getMultiShippingAddressChoices(array $options): array
-    {
-        return $options[static::OPTION_ADDRESS_CHOICES];
     }
 
     /**

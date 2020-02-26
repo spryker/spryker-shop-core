@@ -26,6 +26,8 @@ class CodeController extends AbstractController
     protected const MESSAGE_TYPE_SUCCESS = 'success';
     protected const MESSAGE_TYPE_ERROR = 'error';
 
+    protected const GLOSSARY_KEY_CODE_APPLY_FAILED = 'cart.code.apply.failed';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -47,6 +49,8 @@ class CodeController extends AbstractController
         $cartCodeResponseTransfer = $this->getFactory()
             ->getCartCodeClient()
             ->addCartCode($this->createCartCodeRequestTransfer($quoteTransfer, $code));
+
+        $this->processErrorResponseMessage($cartCodeResponseTransfer);
 
         return $this->redirectResponse($cartCodeResponseTransfer, $request);
     }
@@ -108,6 +112,36 @@ class CodeController extends AbstractController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer
+     *
+     * @return void
+     */
+    protected function processErrorResponseMessage(CartCodeResponseTransfer $cartCodeResponseTransfer): void
+    {
+        if ($this->isSuccessMessageExists($cartCodeResponseTransfer)) {
+            return;
+        }
+
+        $this->addErrorMessage(static::GLOSSARY_KEY_CODE_APPLY_FAILED);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer
+     *
+     * @return bool
+     */
+    protected function isSuccessMessageExists(CartCodeResponseTransfer $cartCodeResponseTransfer): bool
+    {
+        foreach ($cartCodeResponseTransfer->getMessages() as $messageTransfer) {
+            if ($messageTransfer->getType() === static::MESSAGE_TYPE_SUCCESS) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string|null $code
      *
@@ -129,12 +163,14 @@ class CodeController extends AbstractController
      */
     protected function handleMessage(MessageTransfer $messageTransfer): void
     {
+        if ($messageTransfer->getType() === static::MESSAGE_TYPE_ERROR) {
+            return;
+        }
+
         switch ($messageTransfer->getType()) {
             case self::MESSAGE_TYPE_SUCCESS:
                 $this->addSuccessMessage($messageTransfer->getValue());
-                break;
-            case self::MESSAGE_TYPE_ERROR:
-                $this->addErrorMessage($messageTransfer->getValue());
+
                 break;
             default:
                 $this->addInfoMessage($messageTransfer->getValue());

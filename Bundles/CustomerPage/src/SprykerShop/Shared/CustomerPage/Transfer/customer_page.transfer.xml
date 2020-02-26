@@ -30,6 +30,7 @@
         <property name="priceMode" type="string"/>
         <property name="store" type="string"/>
         <property name="currencyIsoCode" type="string"/>
+        <property name="itemGroups" type="ProductBundleGroup[]" singular="itemGroup"/>
     </transfer>
 
     <transfer name="OrderList">
@@ -106,6 +107,7 @@
         <property name="billingSameAsShipping" type="bool"/>
         <property name="commentThread" type="CommentThread"/>
         <property name="customer" type="Customer"/>
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
     </transfer>
 
     <transfer name="Item">
@@ -128,6 +130,8 @@
         <property name="isOrdered" type="bool"/>
         <property name="shipment" type="Shipment"/>
         <property name="giftCardMetadata" type="GiftCardMetadata"/>
+        <property name="relatedBundleItemIdentifier" type="string"/>
+        <property name="bundleItemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="ItemCollection">
@@ -244,6 +248,7 @@
         <property name="shipment" type="Shipment"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="hash" type="string"/>
+        <property name="cartItems" type="array" singular="cartItem"/>
     </transfer>
 
     <transfer name="Customer">
@@ -280,6 +285,32 @@
 
     <transfer name="GiftCardMetadata">
         <property name="isGiftCard" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductBundleGroup">
+        <property name="isBundle" type="bool"/>
+        <property name="bundleItem" type="Item"/>
+    </transfer>
+
+    <transfer name="Totals">
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="Country">
+    </transfer>
+
+    <transfer name="CalculatedDiscount">
+    </transfer>
+
+    <transfer name="ItemState">
+    </transfer>
+
+    <transfer name="ShipmentCarrier">
+    </transfer>
+
+    <transfer name="ShipmentMethod">
     </transfer>
 
 </transfers>

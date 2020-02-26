@@ -155,6 +155,10 @@ class OrderController extends AbstractCustomerController
             ->getShipmentService()
             ->groupItemsByShipment($orderTransfer->getItems());
 
+        $shipmentGroupCollection = $this->getFactory()
+            ->createShipmentGroupExpander()
+            ->expandShipmentGroupsWithCartItems($shipmentGroupCollection, $orderTransfer);
+
         $orderShipmentExpenses = $this->prepareOrderShipmentExpenses($orderTransfer, $shipmentGroupCollection);
 
         return [
@@ -177,7 +181,8 @@ class OrderController extends AbstractCustomerController
         $orderShipmentExpenses = [];
 
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() !== CustomerPageConfig::SHIPMENT_EXPENSE_TYPE
+            if (
+                $expenseTransfer->getType() !== CustomerPageConfig::SHIPMENT_EXPENSE_TYPE
                 || $expenseTransfer->getShipment() === null
             ) {
                 continue;
@@ -186,6 +191,7 @@ class OrderController extends AbstractCustomerController
             $shipmentHashKey = $this->findShipmentHashKeyByShipmentExpense($shipmentGroupCollection, $expenseTransfer);
             if ($shipmentHashKey === null) {
                 $orderShipmentExpenses[] = $expenseTransfer;
+
                 continue;
             }
 

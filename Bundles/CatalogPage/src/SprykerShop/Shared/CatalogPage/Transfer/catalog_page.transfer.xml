@@ -34,4 +34,10 @@
         <property name="parameterName" type="string"/>
     </transfer>
 
+    <transfer name="FacetSearchResultValue">
+    </transfer>
+
+    <transfer name="ShopContext">
+    </transfer>
+
 </transfers>

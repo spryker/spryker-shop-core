@@ -11,4 +11,7 @@
         <property name="categories" singular="category" type="ProductCategoryStorage[]"/>
     </transfer>
 
+    <transfer name="ProductCategoryStorage">
+    </transfer>
+
 </transfers>
