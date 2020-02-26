@@ -116,7 +116,7 @@
                     {% set formJsName = data.parentJsName ? data.parentJsName ~ '__item-shipping' %}
 
                     {% include molecule('form') with {
-                        class: formJsName ~ ' ' ~ (hasShippingAddressesAndApplicable ? ' is-hidden ') ~ config.jsName ~ '__item-shipping--' ~ loop.index,
+                        class: formJsName ~ ' ' ~ (hasShippingAddressesAndApplicable ? 'is-hidden ') ~ config.jsName ~ '__item-shipping--' ~ loop.index,
                         data: {
                             form: item.shippingAddress,
                             enableStart: false,
