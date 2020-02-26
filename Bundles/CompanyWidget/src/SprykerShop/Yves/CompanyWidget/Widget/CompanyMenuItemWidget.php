@@ -48,7 +48,8 @@ class CompanyMenuItemWidget extends AbstractWidget
      */
     protected function getCompanyName(?CustomerTransfer $customerTransfer): string
     {
-        if ($customerTransfer !== null
+        if (
+            $customerTransfer !== null
             && $customerTransfer->getCompanyUserTransfer() !== null
             && $customerTransfer->getCompanyUserTransfer()->getCompanyBusinessUnit() !== null
             && $customerTransfer->getCompanyUserTransfer()->getCompanyBusinessUnit()->getCompany() !== null
