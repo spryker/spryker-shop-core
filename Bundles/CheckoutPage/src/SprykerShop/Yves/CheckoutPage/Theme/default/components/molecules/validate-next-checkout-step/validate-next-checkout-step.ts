@@ -13,7 +13,9 @@ export default class ValidateNextCheckoutStep extends Component {
     protected parentTarget: HTMLElement;
     protected readonly requiredFormFieldSelectors: string = 'select[required], input[required]';
 
-    protected readyCallback(): void {
+    protected readyCallback(): void {}
+
+    protected init(): void {
         this.containers = <HTMLElement[]>Array.from(document.querySelectorAll(this.containerSelector));
         this.target = <HTMLButtonElement>document.querySelector(this.targetSelector);
         this.dropdownTriggers = <HTMLSelectElement[]>Array.from(document.querySelectorAll(
