@@ -77,7 +77,7 @@ class OrderSearchFormDataProvider
     /**
      * @return string|null
      */
-    public function getStoreTimezone(): ?string
+    protected function getStoreTimezone(): ?string
     {
         return $this->store->getContexts()['*']['timezone'] ?? null;
     }

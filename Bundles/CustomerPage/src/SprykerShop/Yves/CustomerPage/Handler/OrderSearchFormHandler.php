@@ -40,7 +40,7 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
 
     /**
      * @param array $orderSearchFormData
-     * @param \ArrayObject $filterFieldTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\FilterFieldTransfer[]
      */
@@ -62,7 +62,7 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
 
     /**
      * @param array $orderSearchFormData
-     * @param \ArrayObject $filterFieldTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\FilterFieldTransfer[]
      */
