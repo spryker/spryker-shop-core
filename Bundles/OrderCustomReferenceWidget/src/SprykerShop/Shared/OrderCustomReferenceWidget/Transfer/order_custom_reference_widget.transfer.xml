@@ -13,4 +13,8 @@
         <property name="errors" type="QuoteError[]" singular="error"/>
     </transfer>
 
+    <transfer name="QuoteError">
+        <property name="message" type="string"/>
+    </transfer>
+
 </transfers>
