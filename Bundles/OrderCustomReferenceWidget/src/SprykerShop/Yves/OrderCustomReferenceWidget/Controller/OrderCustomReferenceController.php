@@ -41,10 +41,8 @@ class OrderCustomReferenceController extends AbstractController
      */
     protected function executeSaveAction(Request $request): RedirectResponse
     {
-        $requestParameters = $request->request->get(static::FORM_ORDER_CUSTOM_REFERENCE);
-
         $orderCustomReferenceForm = $this->getFactory()
-            ->getOrderCustomReferenceForm($requestParameters)
+            ->getOrderCustomReferenceForm()
             ->handleRequest($request);
         $quoteClient = $this->getFactory()->getQuoteClient();
 
