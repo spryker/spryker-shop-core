@@ -60,7 +60,7 @@
                                     {% widget companyBusinessUnitShippingAddressWidget with {
                                         data: {
                                             itemShippingTriggerJsClass: addressSelectJsName ~ config.jsName ~ '__trigger--' ~ loop.index,
-                                            hasPreSelectedOption: true,
+                                            hasPreselectedOption: true,
                                         },
                                         embed: {
                                             index: loop.index,
@@ -141,7 +141,7 @@
                                 'trigger-selector': '.' ~ config.jsName ~ '__trigger--' ~ loop.index,
                                 'target-selector': '.' ~ config.jsName ~ '__item-shipping--' ~ loop.index,
                                 'parent-target-class-name': config.jsName,
-                                'is-trigger-has-pre-selected-option': true,
+                                'is-trigger-has-preselected-option': true,
                             },
                         } only %}
                     {% endif %}

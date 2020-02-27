@@ -90,7 +90,7 @@ export default class AddressFormToggler extends Component {
     }
 
     protected setTriggerPreSelectedOption(): void {
-        if (!this.isTriggerHasPreSelectedOption) {
+        if (!this.isTriggerHasPreselectedOption) {
             return;
         }
 
@@ -158,7 +158,7 @@ export default class AddressFormToggler extends Component {
         return this.getAttribute('parent-target-class-name');
     }
 
-    protected get isTriggerHasPreSelectedOption(): boolean {
-        return this.hasAttribute('is-trigger-has-pre-selected-option');
+    protected get isTriggerHasPreselectedOption(): boolean {
+        return this.hasAttribute('is-trigger-has-preselected-option');
     }
 }

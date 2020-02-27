@@ -51,7 +51,7 @@ export default class ValidateNextCheckoutStep extends Component {
     protected mapTriggerEvents(): void {
         if (this.triggers) {
             this.triggers.forEach((element: HTMLFormElement) => {
-                element.addEventListener('input', () => this.onTriggerChange());
+                element.addEventListener('input', () => this.onTriggerInput());
             });
         }
     }
@@ -83,13 +83,13 @@ export default class ValidateNextCheckoutStep extends Component {
         }, []);
     }
 
-    protected onTriggerChange(): void {
+    protected onTriggerInput(): void {
         this.fillFormFieldsCollection();
         this.toggleDisablingNextStepButton();
     }
 
     protected onDropdownTriggerChange(): void {
-        this.onTriggerChange();
+        this.onTriggerInput();
         this.mapTriggerEvents();
     }
 
