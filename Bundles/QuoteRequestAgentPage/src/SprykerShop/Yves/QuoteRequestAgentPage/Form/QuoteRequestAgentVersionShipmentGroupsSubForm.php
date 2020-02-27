@@ -7,19 +7,19 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Form;
 
-use ArrayObject;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestAgentPage\QuoteRequestAgentPageFactory getFactory()
  * @method \SprykerShop\Yves\QuoteRequestAgentPage\QuoteRequestAgentPageConfig getConfig()
  */
-class QuoteRequestAgentVersionQuoteSubForm extends AbstractType
+class QuoteRequestAgentVersionShipmentGroupsSubForm extends AbstractType
 {
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -29,13 +29,11 @@ class QuoteRequestAgentVersionQuoteSubForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => QuoteTransfer::class,
+            'data_class' => ShipmentGroupTransfer::class,
             'label' => false,
         ]);
         $resolver->setRequired([
             QuoteRequestAgentForm::OPTION_PRICE_MODE,
-            QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID,
-            QuoteRequestAgentForm::OPTION_SHIPMENT_GROUPS,
         ]);
     }
 
@@ -47,7 +45,7 @@ class QuoteRequestAgentVersionQuoteSubForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addItemsField($builder, $options);
+        $this->addShipmentForm($builder, $options);
     }
 
     /**
@@ -56,36 +54,29 @@ class QuoteRequestAgentVersionQuoteSubForm extends AbstractType
      *
      * @return $this
      */
-    protected function addItemsField(FormBuilderInterface $builder, array $options)
+    protected function addShipmentForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(QuoteTransfer::ITEMS, CollectionType::class, [
-            'required' => false,
-            'label' => false,
-            'entry_type' => QuoteRequestAgentVersionItemsSubForm::class,
-            'disabled' => !$options[QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID],
-            'entry_options' => [
+        $builder->add(
+            ShipmentMethodTransfer::SOURCE_PRICE,
+            QuoteRequestAgentMoneyValueSubForm::class,
+            [
                 QuoteRequestAgentForm::OPTION_PRICE_MODE => $options[QuoteRequestAgentForm::OPTION_PRICE_MODE],
-            ],
-        ]);
+                'property_path' => 'shipment.method.sourcePrice',
+            ]
+        );
 
-        $builder->get(QuoteTransfer::ITEMS)
-            ->addModelTransformer($this->createArrayObjectModelTransformer());
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+            $event = $this->getFactory()
+                ->createQuoteRequestAgentFormEventsListener()
+                ->copySubmittedShipmentMethodPricesToItemShipmentMethods($event);
+
+            $event = $this->getFactory()
+                ->createQuoteRequestAgentFormEventsListener()
+                ->copySubmittedItemShipmentMethodPricesToQuoteShipmentMethod($event);
+
+            return $event;
+        });
 
         return $this;
-    }
-
-    /**
-     * @return \Symfony\Component\Form\CallbackTransformer
-     */
-    protected function createArrayObjectModelTransformer(): CallbackTransformer
-    {
-        return new CallbackTransformer(
-            function ($value) {
-                return (array)$value;
-            },
-            function ($value) {
-                return new ArrayObject($value);
-            }
-        );
     }
 }
