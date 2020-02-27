@@ -33,7 +33,9 @@ export default class LabelGroup extends Component {
     }
 
     /**
-     * Sets the product labels.
+     * Hides the product labels if data is empty.
+     * Splits the labels object to labelFlags and labelTag accordingly.
+     * Calls the method for updating product labels.
      * @param labels An array of product labels.
      */
     setProductLabels(labels: ProductItemLabelsData[]) {
@@ -56,7 +58,7 @@ export default class LabelGroup extends Component {
             this.productLabelFlags.forEach((element: HTMLElement) => element.classList.add(this.classToToggle));
         }
 
-        this.updateProductLabels(labelFlags, labelTag);
+        this.updateProductLabels(labelFlags, labelTag[0]);
     }
 
     protected updateProductLabelTag(element: ProductItemLabelsData): void {
@@ -66,12 +68,9 @@ export default class LabelGroup extends Component {
         labelTagTextContent.innerText = element.text;
     }
 
-    protected createProductLabelFlagClones(index: number): void {
-        if (index < 1) {
-            return;
-        }
-
+    protected createProductLabelFlagClones(): void {
         const cloneLabelFlag = this.productLabelFlags[0].cloneNode(true);
+
         this.productLabelFlags[0].parentNode.insertBefore(cloneLabelFlag, this.productLabelFlags[0].nextSibling);
         this.productLabelFlags = <HTMLElement[]>Array.from(this.getElementsByClassName(`${this.jsName}__label-flag`));
     }
@@ -105,14 +104,17 @@ export default class LabelGroup extends Component {
         labelFlagTextContent.innerText = element.text;
     }
 
-    protected updateProductLabels(labelFlags: ProductItemLabelsData[], labelTag: ProductItemLabelsData[]): void {
-        if (labelTag.length) {
-            this.updateProductLabelTag(labelTag[0]);
+    protected updateProductLabels(labelFlags: ProductItemLabelsData[], labelTag: ProductItemLabelsData): void {
+        if (labelTag) {
+            this.updateProductLabelTag(labelTag);
         }
 
         if (labelFlags.length) {
             labelFlags.forEach((element: ProductItemLabelsData, index: number) => {
-                this.createProductLabelFlagClones(index);
+                if (index >= 1) {
+                    this.createProductLabelFlagClones();
+                }
+
                 this.deleteProductLabelFlagClones(labelFlags);
                 this.deleteProductLabelFlagModifiers(index);
                 this.updateProductLabelFlags(element, index);
