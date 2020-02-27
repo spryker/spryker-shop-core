@@ -26,6 +26,8 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentP
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider\QuoteRequestAgentFormDataProvider;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandler;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandlerInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Form\Listener\QuoteRequestAgentFormEventsListener;
+use SprykerShop\Yves\QuoteRequestAgentPage\Form\Listener\QuoteRequestAgentFormEventsListenerInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentCreateForm;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentEditAddressConfirmForm;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentEditItemsConfirmForm;
@@ -105,7 +107,8 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     {
         return new QuoteRequestAgentFormDataProvider(
             $this->getCartClient(),
-            $this->getPriceClient()
+            $this->getPriceClient(),
+            $this->createShipmentGrouper()
         );
     }
 
@@ -154,6 +157,14 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
             $this->getMessengerClient(),
             $this->getQuoteRequestAgentClient()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Form\Listener\QuoteRequestAgentFormEventsListenerInterface
+     */
+    public function createQuoteRequestAgentFormEventsListener(): QuoteRequestAgentFormEventsListenerInterface
+    {
+        return new QuoteRequestAgentFormEventsListener();
     }
 
     /**
