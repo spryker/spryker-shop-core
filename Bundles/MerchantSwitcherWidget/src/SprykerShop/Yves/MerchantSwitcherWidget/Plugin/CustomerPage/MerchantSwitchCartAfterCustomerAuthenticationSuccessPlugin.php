@@ -46,6 +46,6 @@ class MerchantSwitchCartAfterCustomerAuthenticationSuccessPlugin extends Abstrac
             ->setQuote($quoteTransfer)
             ->setMerchantReference($merchantReference);
 
-        $this->getFactory()->getMerchantSwitcherClient()->switchMerchant($merchantSwitchRequestTransfer);
+        $this->getFactory()->getMerchantSwitcherClient()->switchMerchantInQuote($merchantSwitchRequestTransfer);
     }
 }

@@ -30,8 +30,8 @@ class MerchantSwitcherWidgetToMerchantSwitcherClientBridge implements MerchantSw
      *
      * @return \Generated\Shared\Transfer\MerchantSwitchResponseTransfer
      */
-    public function switchMerchant(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer
+    public function switchMerchantInQuote(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer
     {
-        return $this->merchantSwitcherClient->switchMerchant($merchantSwitchRequestTransfer);
+        return $this->merchantSwitcherClient->switchMerchantInQuote($merchantSwitchRequestTransfer);
     }
 }

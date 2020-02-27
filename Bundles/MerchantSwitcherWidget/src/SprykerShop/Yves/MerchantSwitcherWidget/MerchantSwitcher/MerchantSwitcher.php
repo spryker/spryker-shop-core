@@ -52,7 +52,7 @@ class MerchantSwitcher implements MerchantSwitcherInterface
         $merchantSwitchRequestTransfer->setMerchantReference($merchantReference);
         $merchantSwitchRequestTransfer->setQuote($quoteTransfer);
 
-        $quoteTransfer = $this->merchantSwitcherClient->switchMerchant($merchantSwitchRequestTransfer)->getQuote();
+        $quoteTransfer = $this->merchantSwitcherClient->switchMerchantInQuote($merchantSwitchRequestTransfer)->getQuote();
 
         $this->quoteClient->setQuote($quoteTransfer);
     }
