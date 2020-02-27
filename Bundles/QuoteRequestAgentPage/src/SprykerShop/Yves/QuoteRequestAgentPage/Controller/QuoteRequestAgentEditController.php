@@ -128,13 +128,9 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
         }
 
         $quoteRequestForm = $this->assertQuoteRequestVersion($quoteRequestForm);
-        $shipmentGroupTransfers = $this->getFactory()
-            ->createShipmentGrouper()
-            ->groupItemsByShippingAddress($quoteRequestTransfer);
 
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
-            'shipmentGroups' => $shipmentGroupTransfers,
         ];
     }
 

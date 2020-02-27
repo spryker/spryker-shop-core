@@ -58,4 +58,11 @@
         <property name="productOfferReference" type="string"/>
     </transfer>
 
+    <transfer name="ProductOfferStorageCriteria">
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="ShopContext">
+    </transfer>
+
 </transfers>

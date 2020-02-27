@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\QuoteRequestAgentPage\Form;
 
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -32,6 +33,7 @@ class QuoteRequestAgentVersionSubForm extends AbstractType
         $resolver->setRequired([
             QuoteRequestAgentForm::OPTION_PRICE_MODE,
             QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID,
+            QuoteRequestAgentForm::OPTION_SHIPMENT_GROUPS,
         ]);
     }
 
@@ -44,7 +46,8 @@ class QuoteRequestAgentVersionSubForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addMetadataForm($builder)
-            ->addQuoteForm($builder, $options);
+            ->addQuoteForm($builder, $options)
+            ->addShipmentGroupsForm($builder, $options);
     }
 
     /**
@@ -73,8 +76,32 @@ class QuoteRequestAgentVersionSubForm extends AbstractType
             [
                 QuoteRequestAgentForm::OPTION_PRICE_MODE => $options[QuoteRequestAgentForm::OPTION_PRICE_MODE],
                 QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID => $options[QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID],
+                QuoteRequestAgentForm::OPTION_SHIPMENT_GROUPS => $options[QuoteRequestAgentForm::OPTION_SHIPMENT_GROUPS],
             ]
         );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addShipmentGroupsForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(QuoteRequestAgentForm::FIELD_SHIPMENT_GROUPS, CollectionType::class, [
+            'required' => false,
+            'label' => false,
+            'entry_type' => QuoteRequestAgentVersionShipmentGroupsSubForm::class,
+            'disabled' => !$options[QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID],
+            'mapped' => false,
+            'data' => $options[QuoteRequestAgentForm::OPTION_SHIPMENT_GROUPS],
+            'entry_options' => [
+                QuoteRequestAgentForm::OPTION_PRICE_MODE => $options[QuoteRequestAgentForm::OPTION_PRICE_MODE],
+            ],
+        ]);
 
         return $this;
     }
