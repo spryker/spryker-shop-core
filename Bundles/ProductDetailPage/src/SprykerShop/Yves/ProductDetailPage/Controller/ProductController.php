@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\ProductDetailPage\Controller;
 
+use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Shared\Storage\StorageConstants;
 use SprykerShop\Yves\ProductDetailPage\Exception\ProductAccessDeniedException;
@@ -52,9 +53,16 @@ class ProductController extends AbstractController
      */
     protected function executeDetailAction(array $productData, Request $request): array
     {
+        $shopContextTransfer = $this->getFactory()
+            ->createShopContextResolver()
+            ->resolve();
+
+        $productStorageCriteriaTransfer = (new ProductStorageCriteriaTransfer())
+            ->fromArray($shopContextTransfer->toArray());
+
         $productViewTransfer = $this->getFactory()
             ->getProductStorageClient()
-            ->mapProductStorageData($productData, $this->getLocale(), $this->getSelectedAttributes($request));
+            ->mapProductStorageData($productData, $this->getLocale(), $this->getSelectedAttributes($request), $productStorageCriteriaTransfer);
 
         $this->assertProductRestrictions($productViewTransfer);
 

@@ -25,12 +25,12 @@ class QuoteRequestAgentPageToShipmentServiceBridge implements QuoteRequestAgentP
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransferCollection
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShipment(iterable $itemTransfers): ArrayObject
+    public function groupItemsByShipment(iterable $itemTransferCollection): ArrayObject
     {
-        return $this->shipmentService->groupItemsByShipment($itemTransfers);
+        return $this->shipmentService->groupItemsByShipment($itemTransferCollection);
     }
 }

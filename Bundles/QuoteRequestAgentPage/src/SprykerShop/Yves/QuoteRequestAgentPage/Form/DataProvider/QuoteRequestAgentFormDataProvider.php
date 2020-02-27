@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider;
 
-use ArrayObject;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPriceClientInterface;
@@ -49,21 +48,6 @@ class QuoteRequestAgentFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
-     */
-    public function getData(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer
-    {
-        $shipmentGroupTransfers = $this->shipmentGrouper->groupItemsByShippingAddress($quoteRequestTransfer);
-
-        $quoteRequestTransfer->getLatestVersion()
-            ->setShipmentGroups(new ArrayObject($shipmentGroupTransfers));
-
-        return $quoteRequestTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
      * @return array
      */
     public function getOptions(QuoteRequestTransfer $quoteRequestTransfer): array
@@ -71,6 +55,7 @@ class QuoteRequestAgentFormDataProvider
         return [
             QuoteRequestAgentForm::OPTION_PRICE_MODE => $this->getPriceMode($quoteRequestTransfer),
             QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID => $this->isQuoteValid($quoteRequestTransfer),
+            QuoteRequestAgentForm::OPTION_SHIPMENT_GROUPS => $this->shipmentGrouper->groupItemsByShippingAddress($quoteRequestTransfer),
         ];
     }
 

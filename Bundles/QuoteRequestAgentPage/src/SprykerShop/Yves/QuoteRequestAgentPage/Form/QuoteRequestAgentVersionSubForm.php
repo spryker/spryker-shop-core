@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -35,6 +33,7 @@ class QuoteRequestAgentVersionSubForm extends AbstractType
         $resolver->setRequired([
             QuoteRequestAgentForm::OPTION_PRICE_MODE,
             QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID,
+            QuoteRequestAgentForm::OPTION_SHIPMENT_GROUPS,
         ]);
     }
 
@@ -77,6 +76,7 @@ class QuoteRequestAgentVersionSubForm extends AbstractType
             [
                 QuoteRequestAgentForm::OPTION_PRICE_MODE => $options[QuoteRequestAgentForm::OPTION_PRICE_MODE],
                 QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID => $options[QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID],
+                QuoteRequestAgentForm::OPTION_SHIPMENT_GROUPS => $options[QuoteRequestAgentForm::OPTION_SHIPMENT_GROUPS],
             ]
         );
 
@@ -91,55 +91,18 @@ class QuoteRequestAgentVersionSubForm extends AbstractType
      */
     protected function addShipmentGroupsForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(QuoteRequestVersionTransfer::SHIPMENT_GROUPS, CollectionType::class, [
+        $builder->add(QuoteRequestAgentForm::FIELD_SHIPMENT_GROUPS, CollectionType::class, [
             'required' => false,
             'label' => false,
             'entry_type' => QuoteRequestAgentVersionShipmentGroupsSubForm::class,
             'disabled' => !$options[QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID],
+            'mapped' => false,
+            'data' => $options[QuoteRequestAgentForm::OPTION_SHIPMENT_GROUPS],
             'entry_options' => [
                 QuoteRequestAgentForm::OPTION_PRICE_MODE => $options[QuoteRequestAgentForm::OPTION_PRICE_MODE],
             ],
         ]);
 
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
-            return $this->copySubmittedItemShipmentMethodPricesToQuoteShipmentMethod($event);
-        });
-
         return $this;
-    }
-
-    /**
-     * @deprecated Will be removed without replacement. BC-reason only.
-     *
-     * @param \Symfony\Component\Form\FormEvent $event
-     *
-     * @return \Symfony\Component\Form\FormEvent
-     */
-    protected function copySubmittedItemShipmentMethodPricesToQuoteShipmentMethod(FormEvent $event): FormEvent
-    {
-        /** @var \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer */
-        $quoteRequestVersionTransfer = $event->getData();
-        $quoteShipment = $quoteRequestVersionTransfer->getQuote()->getShipment();
-
-        if (!$quoteShipment || !$quoteShipment->getMethod()) {
-            return $event;
-        }
-
-        /** @var \Generated\Shared\Transfer\ShipmentTransfer|null $itemShipment */
-        $itemShipment = $quoteRequestVersionTransfer->getShipmentGroups()
-            ->getIterator()
-            ->current()
-            ->getShipment();
-
-        if (!$itemShipment || !$itemShipment->getMethod()) {
-            return $event;
-        }
-
-        $itemShipmentMethodSourcePrice = $itemShipment->getMethod()->getSourcePrice();
-        $quoteShipment->getMethod()->setSourcePrice($itemShipmentMethodSourcePrice);
-
-        $event->setData($quoteRequestVersionTransfer);
-
-        return $event;
     }
 }
