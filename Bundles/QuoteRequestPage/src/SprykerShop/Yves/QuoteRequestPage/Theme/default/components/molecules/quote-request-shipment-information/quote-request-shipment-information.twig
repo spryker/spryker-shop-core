@@ -12,7 +12,7 @@
 
 {% block body %}
     <div class="box">
-        {% if data.shipment.method is defined %}
+        {% if data.shipment.method is defined and data.shipment.method is not null %}
             <div class="grid grid--justify">
                 {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
                     class: 'col',

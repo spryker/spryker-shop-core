@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Validator;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestClientInterface;
@@ -49,12 +50,13 @@ class ShipmentValidator implements ShipmentValidatorInterface
      */
     protected function validateItemLevelShipment(QuoteTransfer $quoteTransfer): bool
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getShipment() || !$itemTransfer->getShipment()->getShippingAddress()) {
-                return false;
+        $itemTransfersWithShipment = array_filter(
+            $quoteTransfer->getItems()->getArrayCopy(),
+            function (ItemTransfer $itemTransfer): bool {
+                return $itemTransfer->getShipment() && $itemTransfer->getShipment()->getMethod();
             }
-        }
+        );
 
-        return true;
+        return !$itemTransfersWithShipment || count($itemTransfersWithShipment) === count($quoteTransfer->getItems());
     }
 }
