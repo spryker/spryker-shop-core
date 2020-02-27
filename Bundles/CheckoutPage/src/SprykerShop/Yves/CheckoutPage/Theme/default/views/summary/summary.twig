@@ -150,6 +150,20 @@
         {% endfor %}
     </div>
 
+    {% set isOrderCustomReference = data.cart.orderCustomReference is defined and data.cart.orderCustomReference %}
+    {% if isOrderCustomReference %}
+        {% embed molecule('order-custom-reference-view', 'OrderCustomReferenceWidget') ignore missing with {
+            class: 'box',
+            data: {
+                orderCustomReference: data.cart.orderCustomReference,
+            },
+        } only %}
+            {% block title %}
+                <h6 class="{{ classTitle }}">{{ data.title }}</h6>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+
     <div class="box">
         <h4>{{ 'checkout.step.summary.payment' | trans }}</h4>
         <hr>
