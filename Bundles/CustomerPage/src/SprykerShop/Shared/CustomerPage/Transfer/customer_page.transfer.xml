@@ -63,10 +63,10 @@
         <property name="joinType" type="string"/>
         <property name="relation" type="string"/>
         <property name="condition" type="string"/>
-        <property name="whereConditions" type="WhereCondition[]" singular="whereCondition"/>
+        <property name="queryWhereConditions" type="QueryWhereCondition[]" singular="queryWhereCondition"/>
     </transfer>
 
-    <transfer name="WhereCondition">
+    <transfer name="QueryWhereCondition">
         <property name="column" type="string"/>
         <property name="value" type="string"/>
         <property name="comparison" type="string"/>

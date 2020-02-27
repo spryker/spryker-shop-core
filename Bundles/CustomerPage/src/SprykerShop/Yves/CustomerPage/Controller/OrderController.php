@@ -68,26 +68,23 @@ class OrderController extends AbstractCustomerController
     protected function executeIndexAction(Request $request): array
     {
         $filterFieldTransfers = new ArrayObject();
-        $customerPageConfig = $this->getFactory()->getConfig();
+        $customerPageFactory = $this->getFactory();
+        $customerPageConfig = $customerPageFactory->getConfig();
 
         if ($customerPageConfig->isOrderSearchEnabled()) {
-            $orderSearchFormDataProvider = $this->getFactory()
-                ->createCustomerFormFactory()
+            $orderSearchFormDataProvider = $customerPageFactory->createCustomerFormFactory()
                 ->createOrderSearchFormDataProvider();
 
-            $orderSearchForm = $this->getFactory()
-                ->createCustomerFormFactory()
+            $orderSearchForm = $customerPageFactory->createCustomerFormFactory()
                 ->getOrderSearchForm([], $orderSearchFormDataProvider->getOptions($this->getLocale()))
                 ->handleRequest($request);
 
-            $filterFieldTransfers = $this->getFactory()
-                ->createCustomerFormFactory()
+            $filterFieldTransfers = $customerPageFactory->createCustomerFormFactory()
                 ->createOrderSearchFormHandler()
                 ->handleOrderSearchFormSubmit($orderSearchForm);
         }
 
-        $orderListTransfer = $this->getFactory()
-            ->createOrderReader()
+        $orderListTransfer = $customerPageFactory->createOrderReader()
             ->getOrderList($request, $filterFieldTransfers);
 
         return [
