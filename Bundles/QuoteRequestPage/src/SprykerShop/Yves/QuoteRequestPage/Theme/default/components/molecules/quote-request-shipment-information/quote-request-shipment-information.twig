@@ -10,6 +10,15 @@
     priceMode: null,
 } %}
 
+{% set shipmentMethod = data.shipment.method is defined ? data.shipment.method %}
+{% set shippingAddress = data.shipment.shippingAddress is defined ? data.shipment.shippingAddress %}
+
+{% block component %}
+    {% if shipmentMethod or shippingAddress %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 {% block body %}
     {% block titleWrapper %}
         {% if not data.hasMultiShipments %}
@@ -26,18 +35,18 @@
     {% block shipmentInformationWrapper %}
         <div class="box">
             {% block shipmentInformation %}
-                {% if data.shipment.method is defined and data.shipment.method %}
+                {% if shipmentMethod %}
                     {% block shipmentMethod %}
                         <div class="grid grid--justify">
                             {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
                                 class: 'col',
                                 data: {
-                                    carrierName: data.shipment.method.carrierName,
-                                    methodName: data.shipment.method.name,
-                                    storeCurrencyPrice: data.shipment.method.storeCurrencyPrice,
-                                    currencyIsoCode: data.shipment.method.currencyIsoCode,
+                                    carrierName: shipmentMethod.carrierName,
+                                    methodName: shipmentMethod.name,
+                                    storeCurrencyPrice: shipmentMethod.storeCurrencyPrice,
+                                    currencyIsoCode: shipmentMethod.currencyIsoCode,
                                     priceMode: data.priceMode,
-                                    sourcePrice: data.shipment.method.sourcePrice,
+                                    sourcePrice: shipmentMethod.sourcePrice,
                                 },
                             } only %}
 
@@ -49,7 +58,7 @@
                     {% endblock %}
                 {% endif %}
 
-                {% if data.hasMultiShipments %}
+                {% if data.hasMultiShipments and shippingAddress %}
                     {% block shipmentAddress %}
                         {% block shipmentAddressSeparator1 %}
                             <hr class="box__separator spacing-y spacing-y--big">
@@ -66,7 +75,7 @@
                         {% block shipmentAddressInner %}
                             {% embed molecule('display-address') with {
                                 data: {
-                                    address: data.shipment.shippingAddress,
+                                    address: shippingAddress,
                                 },
                             } only %}
                                 {% block addressBadgeLabel %}{% endblock %}

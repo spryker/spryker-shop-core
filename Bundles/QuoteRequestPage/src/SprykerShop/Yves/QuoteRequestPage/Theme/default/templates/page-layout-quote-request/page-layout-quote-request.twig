@@ -74,17 +74,17 @@
 
     {% block sectionContainer %}
         <div class="{{ gridClass }}">
-            <div class="{{ leftColClass }}">
-                {% block priceModeWrapper %}
-                    {% set priceModeWrapperClass = 'grid grid--justify spacing--big' %}
-                    {% set priceModeModifiers = [] %}
-                    {% set priceModeClass = 'col' %}
-                    {% set numberOfItemsClass = 'col' %}
+            {% if quote.priceMode %}
+                <div class="{{ leftColClass }}">
+                    {% block priceModeWrapper %}
+                        {% set priceModeWrapperClass = 'grid grid--justify spacing--big' %}
+                        {% set priceModeModifiers = [] %}
+                        {% set priceModeClass = 'col' %}
+                        {% set numberOfItemsClass = 'col' %}
 
-                    {% block priceModeInner %}
-                        <div class="{{ priceModeWrapperClass }}">
-                            {% block priceMode %}
-                                {% if quote.priceMode %}
+                        {% block priceModeInner %}
+                            <div class="{{ priceModeWrapperClass }}">
+                                {% block priceMode %}
                                     {% include molecule('price-mode') with {
                                         modifiers: priceModeModifiers,
                                         class: priceModeClass,
@@ -92,22 +92,22 @@
                                             priceMode: quote.priceMode,
                                         },
                                     } only %}
-                                {% endif %}
-                            {% endblock %}
+                                {% endblock %}
 
-                            {% block itemsCounter %}
-                                {% if not hasMultiShipments %}
-                                    <div class="{{ numberOfItemsClass }}">
-                                        {{ 'quote_request_page.quote_request.item' | trans({
-                                            '%count%': quote.items | length,
-                                        }) }}
-                                    </div>
-                                {% endif %}
-                            {% endblock %}
-                        </div>
+                                {% block itemsCounter %}
+                                    {% if not hasMultiShipments and quote.items | length %}
+                                        <div class="{{ numberOfItemsClass }}">
+                                            {{ 'quote_request_page.quote_request.item' | trans({
+                                                '%count%': quote.items | length,
+                                            }) }}
+                                        </div>
+                                    {% endif %}
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
                     {% endblock %}
-                {% endblock %}
-            </div>
+                </div>
+            {% endif %}
 
             <div class="{{ leftColClass }}">
                 {% block quoteRequestContent %}

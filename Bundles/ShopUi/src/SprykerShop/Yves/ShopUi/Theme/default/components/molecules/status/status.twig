@@ -11,13 +11,7 @@
 } %}
 
 {% block class %}
-    {{ parent }} {{ config.name }}--{{ data.status }}
-{% endblock %}
-
-{% block component %}
-    {% if data.status and data.label %}
-        {{ parent() }}
-    {% endif %}
+    {{ parent() }} {{ config.name }}--{{ data.status }}
 {% endblock %}
 
 {% block body %}

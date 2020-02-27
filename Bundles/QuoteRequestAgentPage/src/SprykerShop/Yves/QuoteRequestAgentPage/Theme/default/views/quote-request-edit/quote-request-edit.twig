@@ -27,7 +27,7 @@
 {% block content %}
     {% set quote = data.quoteRequest.latestVersion.quote %}
 
-    {{ parent() }}
+    {{ block('contentInner') }}
 {% endblock %}
 
 {% block contentInner %}

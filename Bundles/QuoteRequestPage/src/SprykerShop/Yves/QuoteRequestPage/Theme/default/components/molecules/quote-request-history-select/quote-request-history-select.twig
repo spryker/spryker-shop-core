@@ -14,48 +14,49 @@
     'version-reference-title': 'quote-request-version-reference',
 } %}
 
-{% set classWrapper = 'grid grid--middle' %}
+{% block extraClass %}
+    grid grid--middle spacing-bottom
+{% endblock %}
+
 {% set classLabel = 'col' %}
 {% set classValue = 'col' %}
 
 {% block body %}
-    <p class="{{ classWrapper }}">
-        {% block label %}
-            <span class="{{ classLabel }}">
-                {{ 'quote_request_page.quote_request.labels.history' | trans }}:
-            </span>
-        {% endblock %}
+    {% block label %}
+        <span class="{{ classLabel }}">
+            {{ 'quote_request_page.quote_request.labels.history' | trans }}:
+        </span>
+    {% endblock %}
 
-        {% block value %}
-            <span class="{{ classValue }}">
-                {% if data.quoteRequestVersionReferences %}
-                    {% block select %}
-                        {% embed atom('select') with {
-                            modifiers: ['naked'],
-                            attributes: {
-                                name: 'quote-request-versions',
-                            },
-                            embed: {
-                                versionReferences: data.quoteRequestVersionReferences,
-                                currentVersionReference: data.version ? data.version.versionReference : null,
-                            },
-                        } only %}
-                            {% block options %}
-                                {% for versionReference in embed.versionReferences %}
-                                    {% set selectedOption = (versionReference == embed.currentVersionReference) ? 'selected' %}
-                                    <option value="{{ versionReference }}" {{ selectedOption }}>{{ versionReference }}</option>
-                                {% endfor %}
-                            {% endblock %}
-                        {% endembed %}
-                    {% endblock %}
-                {% else %}
-                    {% block emptyValue %}
-                        <span class="text-secondary">
-                            &nbsp;--
-                        </span>
-                    {% endblock %}
-                {% endif %}
-            </span>
-        {% endblock %}
-    </p>
+    {% block value %}
+        <span class="{{ classValue }}">
+            {% if data.quoteRequestVersionReferences %}
+                {% block select %}
+                    {% embed atom('select') with {
+                        modifiers: ['naked'],
+                        attributes: {
+                            name: 'quote-request-versions',
+                        },
+                        embed: {
+                            versionReferences: data.quoteRequestVersionReferences,
+                            currentVersionReference: data.version ? data.version.versionReference : null,
+                        },
+                    } only %}
+                        {% block options %}
+                            {% for versionReference in embed.versionReferences %}
+                                {% set selectedOption = (versionReference == embed.currentVersionReference) ? 'selected' %}
+                                <option value="{{ versionReference }}" {{ selectedOption }}>{{ versionReference }}</option>
+                            {% endfor %}
+                        {% endblock %}
+                    {% endembed %}
+                {% endblock %}
+            {% else %}
+                {% block emptyValue %}
+                    <span class="text-secondary">
+                        &nbsp;--
+                    </span>
+                {% endblock %}
+            {% endif %}
+        </span>
+    {% endblock %}
 {% endblock %}
