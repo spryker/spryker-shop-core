@@ -99,11 +99,8 @@ class CheckoutAddressForm extends AddressForm
             'label' => static::GLOSSARY_PAGE_CHECKOUT_ADDRESS_ADDRESS_SELECT_LABEL,
         ]);
 
-        $callbackTransformer = new CallbackTransformer(
-            $this->getAddressSelectFieldCallbackTransformer(),
-            $this->getAddressSelectFieldCallbackReverseTransformer()
-        );
-        $builder->get(static::FIELD_ID_CUSTOMER_ADDRESS)->addModelTransformer($callbackTransformer);
+        $builder->get(static::FIELD_ID_CUSTOMER_ADDRESS)
+            ->addModelTransformer($this->getFactory()->createAddressSelectTransformer());
 
         return $this;
     }
@@ -168,26 +165,6 @@ class CheckoutAddressForm extends AddressForm
     {
         return function (?bool $value): bool {
             return !$value;
-        };
-    }
-
-    /**
-     * @return \Closure
-     */
-    protected function getAddressSelectFieldCallbackTransformer(): Closure
-    {
-        return function ($value): ?string {
-            return $value;
-        };
-    }
-
-    /**
-     * @return \Closure
-     */
-    protected function getAddressSelectFieldCallbackReverseTransformer(): Closure
-    {
-        return function ($value): ?string {
-            return $value === static::VALUE_ADD_NEW_ADDRESS ? static::VALUE_NEW_ADDRESS_IS_EMPTY : $value;
         };
     }
 }
