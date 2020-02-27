@@ -298,7 +298,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
                 continue;
             }
 
-            $choices[$idCustomerAddress] = $this->getAddressLabel($addressTransfer);
+            $choices[$this->getAddressLabel($addressTransfer)] = $idCustomerAddress;
         }
 
         return $choices;
@@ -314,7 +314,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         $sanitizedChoices = [];
         $choicesCounts = [];
 
-        foreach ($choices as $idAddress => $addressLabel) {
+        foreach ($choices as $addressLabel => $idAddress) {
             if (isset($sanitizedChoices[$addressLabel])) {
                 $originAddressLabel = $addressLabel;
                 if (!isset($choicesCounts[$originAddressLabel])) {
@@ -328,7 +328,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
             $sanitizedChoices[$addressLabel] = $idAddress;
         }
 
-        ksort($sanitizedChoices, SORT_NATURAL);
+        asort($sanitizedChoices, SORT_NATURAL);
 
         return $sanitizedChoices;
     }

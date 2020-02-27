@@ -51,7 +51,7 @@
 
                 {% block multiShippingAddresses %}
                     {% set formFieldUniqueName = 'multiShippingAddresses' %}
-                    {% set addressSelectJsName = data.parentJsName ? data.parentJsName ~ '__trigger ' %}
+                    {% set addressSelectJsName = data.parentJsName ? data.parentJsName ~ '__trigger' %}
 
                     {% if hasShippingAddressesAndApplicable %}
                         <div class="col col--sm-3 spacing spacing--inner">
@@ -59,7 +59,7 @@
                                 {% if isCompanyBusinessUnitShippingAddressApplicable %}
                                     {% widget companyBusinessUnitShippingAddressWidget with {
                                         data: {
-                                            itemShippingTriggerJsClass: addressSelectJsName ~ config.jsName ~ '__trigger--' ~ loop.index,
+                                            itemShippingTriggerJsClass: addressSelectJsName ~ ' ' ~ config.jsName ~ '__trigger--' ~ loop.index,
                                             hasPreselectedOption: true,
                                         },
                                         embed: {
@@ -103,7 +103,7 @@
                                     {{ form_row(item.shippingAddress.id_customer_address, {
                                         label: 'page.checkout.address.delivery.address_select' | trans,
                                         attr: {
-                                            class: addressSelectJsName ~ config.jsName ~ '__trigger--' ~ loop.index,
+                                            class: addressSelectJsName ~ ' ' ~ config.jsName ~ '__trigger--' ~ loop.index,
                                         },
                                     }) }}
                                 {% endif %}
@@ -113,10 +113,10 @@
                 {% endblock %}
 
                 <div class="col col--sm-12">
-                    {% set formJsName = data.parentJsName ? data.parentJsName ~ '__item-shipping ' %}
+                    {% set formJsName = data.parentJsName ? data.parentJsName ~ '__item-shipping' %}
 
                     {% include molecule('form') with {
-                        class: formJsName ~ (hasShippingAddressesAndApplicable ? ' is-hidden ') ~ config.jsName ~ '__item-shipping--' ~ loop.index,
+                        class: formJsName ~ ' ' ~ (hasShippingAddressesAndApplicable ? 'is-hidden ') ~ config.jsName ~ '__item-shipping--' ~ loop.index,
                         data: {
                             form: item.shippingAddress,
                             enableStart: false,

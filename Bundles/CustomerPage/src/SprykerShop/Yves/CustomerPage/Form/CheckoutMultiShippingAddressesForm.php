@@ -182,7 +182,7 @@ class CheckoutMultiShippingAddressesForm extends AbstractType
     protected function isIdCustomerAddressEmpty(FormInterface $form): bool
     {
         return $form->has(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)
-            && $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() === CheckoutAddressForm::VALUE_NEW_ADDRESS_IS_EMPTY;
+            && $form->get(CheckoutAddressForm::FIELD_ID_CUSTOMER_ADDRESS)->getData() === CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS;
     }
 
     /**

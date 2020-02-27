@@ -99,6 +99,9 @@ class CheckoutAddressForm extends AddressForm
             'label' => static::GLOSSARY_PAGE_CHECKOUT_ADDRESS_ADDRESS_SELECT_LABEL,
         ]);
 
+        $builder->get(static::FIELD_ID_CUSTOMER_ADDRESS)
+            ->addModelTransformer($this->getFactory()->createAddressSelectTransformer());
+
         return $this;
     }
 
