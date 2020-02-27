@@ -12,10 +12,10 @@
 
     {% set activeFilters = [] %}
     {% set dateFilters = ['dateFrom', 'dateTo'] %}
-    {% set filtersIgnoreList = ['_token','searchGroup', 'searchText', 'isOrderItemsVisible'] %}
+    {% set filterFields = ['dateFrom', 'dateTo'] %}
 
     {% for field in data.orderSearchForm.children %}
-        {% if field.vars.value is not empty and field.vars.name not in filtersIgnoreList %}
+        {% if field.vars.value is not empty and field.vars.name in filterFields %}
             {% set fitlerValue = field.vars.name in dateFilters ?
                 field.vars.value | date('d.m.Y H:i')
                 : field.vars.value %}

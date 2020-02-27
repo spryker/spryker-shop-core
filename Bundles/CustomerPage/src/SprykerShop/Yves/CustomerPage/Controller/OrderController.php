@@ -7,8 +7,8 @@
 
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,7 +67,7 @@ class OrderController extends AbstractCustomerController
      */
     protected function executeIndexAction(Request $request): array
     {
-        $filterFieldTransfers = new ArrayObject();
+        $orderListTransfer = new OrderListTransfer();
         $customerPageFactory = $this->getFactory();
         $customerPageConfig = $customerPageFactory->getConfig();
 
@@ -79,13 +79,13 @@ class OrderController extends AbstractCustomerController
                 ->getOrderSearchForm([], $orderSearchFormDataProvider->getOptions($this->getLocale()))
                 ->handleRequest($request);
 
-            $filterFieldTransfers = $customerPageFactory->createCustomerFormFactory()
+            $orderListTransfer = $customerPageFactory->createCustomerFormFactory()
                 ->createOrderSearchFormHandler()
-                ->handleOrderSearchFormSubmit($orderSearchForm);
+                ->handleOrderSearchFormSubmit($orderSearchForm, $orderListTransfer);
         }
 
         $orderListTransfer = $customerPageFactory->createOrderReader()
-            ->getOrderList($request, $filterFieldTransfers);
+            ->getOrderList($request, $orderListTransfer);
 
         return [
             'pagination' => $orderListTransfer->getPagination(),

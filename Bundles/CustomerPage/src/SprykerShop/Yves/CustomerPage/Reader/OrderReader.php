@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerPage\Reader;
 
-use ArrayObject;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListFormatTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
@@ -15,7 +14,6 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use SprykerShop\Yves\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
-use SprykerShop\Yves\CustomerPage\Form\OrderSearchForm;
 use Symfony\Component\HttpFoundation\Request;
 
 class OrderReader implements OrderReaderInterface
@@ -57,17 +55,15 @@ class OrderReader implements OrderReaderInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \ArrayObject|\Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getOrderList(Request $request, ArrayObject $filterFieldTransfers): OrderListTransfer
+    public function getOrderList(Request $request, OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        $orderListTransfer = $this->createOrderListTransfer($request);
+        $orderListTransfer = $this->expandOrderListTransfer($request, $orderListTransfer);
 
         if ($this->customerPageConfig->isOrderSearchEnabled()) {
-            $orderListTransfer->setFilterFields($filterFieldTransfers);
-
             return $this->salesClient->searchOrders($orderListTransfer);
         }
 
@@ -76,40 +72,30 @@ class OrderReader implements OrderReaderInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    protected function createOrderListTransfer(Request $request): OrderListTransfer
+    protected function expandOrderListTransfer(Request $request, OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        $orderListTransfer = new OrderListTransfer();
-
-        $orderListTransfer->setFilter($this->createFilterTransfer());
-        $orderListTransfer->setPagination($this->createPaginationTransfer($request));
-        $orderListTransfer->setFormat($this->createOrderListFormatTransfer($request));
-
         $customerTransfer = $this->customerClient->getCustomer();
 
         $orderListTransfer->setCustomer($customerTransfer);
         $orderListTransfer->setIdCustomer($customerTransfer->getIdCustomer());
 
+        if (!$orderListTransfer->getFilter()) {
+            $orderListTransfer->setFilter($this->createFilterTransfer());
+        }
+
+        if (!$orderListTransfer->getPagination()) {
+            $orderListTransfer->setPagination($this->createPaginationTransfer($request));
+        }
+
+        if (!$orderListTransfer->getFormat()) {
+            $orderListTransfer->setFormat(new OrderListFormatTransfer());
+        }
+
         return $orderListTransfer;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\OrderListFormatTransfer
-     */
-    protected function createOrderListFormatTransfer(Request $request): OrderListFormatTransfer
-    {
-        $orderListFormatTransfer = new OrderListFormatTransfer();
-
-        $expandWithItems = $this->customerPageConfig->isOrderSearchEnabled()
-            && isset($request->get(OrderSearchForm::FORM_NAME)[OrderSearchForm::FIELD_IS_ORDER_ITEMS_VISIBLE]);
-
-        $orderListFormatTransfer->setExpandWithItems($expandWithItems);
-
-        return $orderListFormatTransfer;
     }
 
     /**

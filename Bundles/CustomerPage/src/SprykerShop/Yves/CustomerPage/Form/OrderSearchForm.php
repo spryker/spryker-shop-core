@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,6 +27,8 @@ class OrderSearchForm extends AbstractType
     public const FIELD_DATE_FROM = 'dateFrom';
     public const FIELD_DATE_TO = 'dateTo';
     public const FIELD_IS_ORDER_ITEMS_VISIBLE = 'isOrderItemsVisible';
+    public const FIELD_ORDER_BY = 'orderBy';
+    public const FIELD_ORDER_DIRECTION = 'orderDirection';
 
     public const OPTION_ORDER_SEARCH_GROUPS = 'OPTION_ORDER_SEARCH_GROUPS';
     public const OPTION_CURRENT_TIMEZONE = 'OPTION_CURRENT_TIMEZONE';
@@ -65,7 +68,9 @@ class OrderSearchForm extends AbstractType
             ->addSearchTextField($builder)
             ->addDateFromField($builder, $options)
             ->addDateToField($builder, $options)
-            ->addIsOrderItemsVisibleField($builder);
+            ->addIsOrderItemsVisibleField($builder)
+            ->addOrderByField($builder)
+            ->addOrderDirectionField($builder);
 
         $this->executeOrderSearchFormExpanderPlugins($builder, $options);
     }
@@ -152,6 +157,36 @@ class OrderSearchForm extends AbstractType
             'required' => false,
             'label' => 'customer.order_history.is_order_items_visible',
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addOrderByField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_ORDER_BY, HiddenType::class, [
+            'required' => false,
+            'label' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addOrderDirectionField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_ORDER_DIRECTION, HiddenType::class, [
+            'required' => false,
+            'label' => false,
+            ]);
 
         return $this;
     }

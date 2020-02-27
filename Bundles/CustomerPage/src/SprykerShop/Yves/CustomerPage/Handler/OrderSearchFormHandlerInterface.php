@@ -7,15 +7,19 @@
 
 namespace SprykerShop\Yves\CustomerPage\Handler;
 
-use ArrayObject;
+use Generated\Shared\Transfer\OrderListTransfer;
 use Symfony\Component\Form\FormInterface;
 
 interface OrderSearchFormHandlerInterface
 {
     /**
      * @param \Symfony\Component\Form\FormInterface $orderSearchForm
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\FilterFieldTransfer[]
+     * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function handleOrderSearchFormSubmit(FormInterface $orderSearchForm): ArrayObject;
+    public function handleOrderSearchFormSubmit(
+        FormInterface $orderSearchForm,
+        OrderListTransfer $orderListTransfer
+    ): OrderListTransfer;
 }
