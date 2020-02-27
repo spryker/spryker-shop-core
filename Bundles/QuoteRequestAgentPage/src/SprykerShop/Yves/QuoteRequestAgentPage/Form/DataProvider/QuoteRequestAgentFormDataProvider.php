@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPriceClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\QuoteRequestAgentForm;
+use SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface;
 
 class QuoteRequestAgentFormDataProvider
 {
@@ -25,15 +26,23 @@ class QuoteRequestAgentFormDataProvider
     protected $priceClient;
 
     /**
+     * @var \SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface
+     */
+    protected $shipmentGrouper;
+
+    /**
      * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCartClientInterface $cartClient
      * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPriceClientInterface $priceClient
+     * @param \SprykerShop\Yves\QuoteRequestAgentPage\Grouper\ShipmentGrouperInterface $shipmentGrouper
      */
     public function __construct(
         QuoteRequestAgentPageToCartClientInterface $cartClient,
-        QuoteRequestAgentPageToPriceClientInterface $priceClient
+        QuoteRequestAgentPageToPriceClientInterface $priceClient,
+        ShipmentGrouperInterface $shipmentGrouper
     ) {
         $this->cartClient = $cartClient;
         $this->priceClient = $priceClient;
+        $this->shipmentGrouper = $shipmentGrouper;
     }
 
     /**
@@ -46,6 +55,7 @@ class QuoteRequestAgentFormDataProvider
         return [
             QuoteRequestAgentForm::OPTION_PRICE_MODE => $this->getPriceMode($quoteRequestTransfer),
             QuoteRequestAgentForm::OPTION_IS_QUOTE_VALID => $this->isQuoteValid($quoteRequestTransfer),
+            QuoteRequestAgentForm::OPTION_SHIPMENT_GROUPS => $this->shipmentGrouper->groupItemsByShippingAddress($quoteRequestTransfer),
         ];
     }
 
