@@ -104,7 +104,7 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
     {
         $quoteRequestAgentClient = $this->getFactory()->getQuoteRequestAgentClient();
         $quoteRequestTransfer = $this->getQuoteRequestByReference($quoteRequestReference);
-//dd($quoteRequestTransfer->getLatestVersion()->getQuote());
+
         if ($quoteRequestAgentClient->isQuoteRequestRevisable($quoteRequestTransfer)) {
             return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_REVISE, [
                 static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestReference,
