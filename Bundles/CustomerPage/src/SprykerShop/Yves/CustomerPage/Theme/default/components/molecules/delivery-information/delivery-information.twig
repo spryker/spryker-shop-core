@@ -14,8 +14,8 @@
     sourcePrice: null,
 } %}
 
-{% block extraClass -%}
-    list
+{% block class -%}
+    {{ parent() }} list
 {%- endblock %}
 
 {% set priceModeGross = 'GROSS_MODE' %}
