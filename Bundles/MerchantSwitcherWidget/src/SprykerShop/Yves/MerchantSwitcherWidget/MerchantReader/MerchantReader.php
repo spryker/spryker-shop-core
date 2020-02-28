@@ -9,6 +9,7 @@ namespace SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader;
 
 use SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookieInterface;
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientInterface;
+use SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcher\MerchantSwitcherInterface;
 
 class MerchantReader implements MerchantReaderInterface
 {
@@ -23,15 +24,23 @@ class MerchantReader implements MerchantReaderInterface
     protected $selectedMerchantCookie;
 
     /**
+     * @var \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcher\MerchantSwitcherInterface
+     */
+    protected $merchantSwitcher;
+
+    /**
      * @param \SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientInterface $merchantSearchClient
      * @param \SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookieInterface $selectedMerchantCookie
+     * @param \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcher\MerchantSwitcherInterface $merchantSwitcher
      */
     public function __construct(
         MerchantSwitcherWidgetToMerchantSearchClientInterface $merchantSearchClient,
-        SelectedMerchantCookieInterface $selectedMerchantCookie
+        SelectedMerchantCookieInterface $selectedMerchantCookie,
+        MerchantSwitcherInterface $merchantSwitcher
     ) {
         $this->merchantSearchClient = $merchantSearchClient;
         $this->selectedMerchantCookie = $selectedMerchantCookie;
+        $this->merchantSwitcher = $merchantSwitcher;
     }
 
     /**
@@ -44,6 +53,8 @@ class MerchantReader implements MerchantReaderInterface
 
         foreach ($merchantTransfers as $merchantTransfer) {
             if ($selectedMerchantReference === $merchantTransfer->getMerchantReference()) {
+                $this->merchantSwitcher->switchMerchantInQuote($selectedMerchantReference);
+
                 return $selectedMerchantReference;
             }
         }
@@ -60,6 +71,7 @@ class MerchantReader implements MerchantReaderInterface
 
         $selectedMerchantReference = $selectedMerchantTransfer->getMerchantReference();
         $this->selectedMerchantCookie->setMerchantReference($selectedMerchantReference);
+        $this->merchantSwitcher->switchMerchantInQuote($selectedMerchantReference);
 
         return $selectedMerchantReference;
     }
