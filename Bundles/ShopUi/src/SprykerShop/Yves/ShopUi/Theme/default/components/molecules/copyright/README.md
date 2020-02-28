@@ -1,1 +1,1 @@
-Displays a footer copyright.
+Displays a copyright text.
