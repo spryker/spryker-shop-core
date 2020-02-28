@@ -7,7 +7,9 @@
 
 namespace SprykerShop\Yves\CatalogPage;
 
+use Generated\Shared\Transfer\ShopContextTransfer;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Kernel\Application;
 use SprykerShop\Yves\CatalogPage\ActiveSearchFilter\UrlGenerator;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCatalogClientInterface;
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToCategoryStorageClientInterface;
@@ -17,6 +19,8 @@ use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToProductCategoryF
 use SprykerShop\Yves\CatalogPage\Dependency\Client\CatalogPageToSearchClientInterface;
 use SprykerShop\Yves\CatalogPage\FacetFilter\FacetFilter;
 use SprykerShop\Yves\CatalogPage\FacetFilter\FacetFilterInterface;
+use SprykerShop\Yves\CatalogPage\Resolver\ShopContextResolver;
+use SprykerShop\Yves\CatalogPage\Resolver\ShopContextResolverInterface;
 use SprykerShop\Yves\CatalogPage\Twig\CatalogPageTwigExtension;
 use SprykerShop\Yves\CatalogPage\Validator\PageParametersValidator;
 use SprykerShop\Yves\CatalogPage\Validator\PageParametersValidatorInterface;
@@ -26,6 +30,8 @@ use SprykerShop\Yves\CatalogPage\Validator\PageParametersValidatorInterface;
  */
 class CatalogPageFactory extends AbstractFactory
 {
+    protected const SERVICE_SHOP_CONTEXT = 'shop_context';
+
     /**
      * @return \SprykerShop\Yves\CatalogPage\ActiveSearchFilter\UrlGeneratorInterface
      */
@@ -120,5 +126,29 @@ class CatalogPageFactory extends AbstractFactory
     public function getModuleConfig(): CatalogPageConfig
     {
         return $this->getConfig();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShopContextTransfer
+     */
+    public function getShopContext(): ShopContextTransfer
+    {
+        return $this->createShopContextResolver()->resolve();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CatalogPage\Resolver\ShopContextResolverInterface
+     */
+    public function createShopContextResolver(): ShopContextResolverInterface
+    {
+        return new ShopContextResolver($this->getApplication());
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\Application
+     */
+    public function getApplication(): Application
+    {
+        return $this->getProvidedDependency(CatalogPageDependencyProvider::PLUGIN_APPLICATION);
     }
 }
