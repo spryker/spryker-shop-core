@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Validator;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestClientInterface;
@@ -50,13 +49,26 @@ class ShipmentValidator implements ShipmentValidatorInterface
      */
     protected function validateItemLevelShipment(QuoteTransfer $quoteTransfer): bool
     {
-        $itemTransfersWithShipment = array_filter(
-            $quoteTransfer->getItems()->getArrayCopy(),
-            function (ItemTransfer $itemTransfer): bool {
-                return $itemTransfer->getShipment() && $itemTransfer->getShipment()->getMethod();
-            }
-        );
+        $itemTransfersWithShipment = $this->getItemTransfersWithShipment($quoteTransfer);
 
         return !$itemTransfersWithShipment || count($itemTransfersWithShipment) === count($quoteTransfer->getItems());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    protected function getItemTransfersWithShipment(QuoteTransfer $quoteTransfer): array
+    {
+        $itemTransfersWithShipment = [];
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() && $itemTransfer->getShipment()->getMethod()) {
+                $itemTransfersWithShipment[] = $itemTransfer;
+            }
+        }
+
+        return $itemTransfersWithShipment;
     }
 }
