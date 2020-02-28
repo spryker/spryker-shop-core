@@ -54,6 +54,7 @@ class OrderSearchFormDataProvider
         return [
             OrderSearchForm::OPTION_ORDER_SEARCH_GROUPS => $this->getOrderSearchGroups($localeName),
             OrderSearchForm::OPTION_CURRENT_TIMEZONE => $this->getStoreTimezone(),
+            OrderSearchForm::OPTION_PER_PAGE => $this->customerPageConfig->getOrderSearchPerPage(),
         ];
     }
 
