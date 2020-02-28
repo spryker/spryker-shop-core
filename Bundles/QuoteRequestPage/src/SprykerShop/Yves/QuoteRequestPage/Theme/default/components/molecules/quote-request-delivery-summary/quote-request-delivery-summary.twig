@@ -17,121 +17,184 @@
 {% set hasSingleShippingMethod = hasShipment and data.quote.shipment.method %}
 {% set hasShipmentMethod = data.hasMultiShipments or hasSingleShippingMethod %}
 {% set quoteRequestReference = data.quoteRequestReference %}
+{% set urlEditAddress = 'quote-request/edit-address' %}
+{% set urlEditShipment = 'quote-request/edit-shipment' %}
 
 {% block body %}
-    <div class="box">
-        <h6>{{ 'quote_request_page.quote_request.title_addresses' | trans }}</h6>
-        <hr>
+    {% block address %}
+        <div class="box">
+            {% block titleAddress %}
+                <h6>{{ 'quote_request_page.quote_request.title_addresses' | trans }}</h6>
+            {% endblock %}
 
-        {% if data.quote.billingAddress %}
-            <strong>{{ 'quote_request_page.quote_request.title_billing_address' | trans }}</strong>
-            {% embed molecule('display-address') with {
-                data: {
-                    address: data.quote.billingAddress,
-                },
-            } only %}
-                {% block addressBadgeLabel %}{% endblock %}
-            {% endembed %}
-            <hr>
-        {% endif %}
+            {% block addressSeparator %}
+                <hr>
+            {% endblock %}
 
-        {% macro titleDeliveryAddress() %}
-            <strong>{{ 'quote_request_page.quote_request.title_delivery_address' | trans }}</strong>
-        {% endmacro %}
+            {% block billingWrapper %}
+                {% if data.quote.billingAddress %}
+                    {% block billingSubtitle %}
+                        <strong>{{ 'quote_request_page.quote_request.title_billing_address' | trans }}</strong>
+                    {% endblock %}
 
-        {% if data.hasMultiShipments %}
-            {{ _self.titleDeliveryAddress() }}
-            <p class="spacing-y">{{ 'quote_request_page.quote_request.multiple_delivery_address' | trans }}</p>
-        {% endif %}
+                    {% block billingAddress %}
+                        {% embed molecule('display-address') with {
+                            data: {
+                                address: data.quote.billingAddress,
+                            },
+                        } only %}
+                            {% block addressBadgeLabel %}{% endblock %}
+                        {% endembed %}
+                    {% endblock %}
 
-        {% if not data.hasMultiShipments and hasSingleShippingAddress %}
-            {{ _self.titleDeliveryAddress() }}
-            {% embed molecule('display-address') with {
-                data: {
-                    address: data.quote.shipment.shippingAddress,
-                },
-            } only %}
-                {% block addressBadgeLabel %}{% endblock %}
-            {% endembed %}
-        {% endif %}
+                    {% block billingSeparator %}
+                        <hr>
+                    {% endblock %}
+                {% endif %}
+            {% endblock %}
 
-        {% if data.quote.billingAddress and not hasShipmentAddress %}
-            {{ _self.titleDeliveryAddress() }}
-            <p class="spacing-y">{{ 'quote_request_page.quote_request.empty_delivery_address' | trans }}</p>
-        {% endif %}
+            {% block deliveryWrapper %}
+                {% macro titleDeliveryAddress() %}
+                    <strong>{{ 'quote_request_page.quote_request.title_delivery_address' | trans }}</strong>
+                {% endmacro %}
 
-        {% if not data.quote.billingAddress and not hasShipmentAddress %}
-            <p class="spacing-y">{{ 'quote_request_page.quote_request.empty_address' | trans }}</p>
+                {% if data.hasMultiShipments %}
+                    {% block deliverySubtitle1 %}
+                        {{ _self.titleDeliveryAddress() }}
+                    {% endblock %}
 
-            {% if data.isEditable and data.quoteRequestReference %}
-                {% block addAddressButton %}
-                    <a href="{{ url('quote-request/edit-address', {quoteRequestReference: quoteRequestReference}) }}"
-                       class="button button--expand button--edit-items"
-                       title="{{ 'quote_request_page.quote_request.cta_add_address' | trans }}"
-                        {{ qa('cart-go-to-address') }}>
-                        {{ 'quote_request_page.quote_request.cta_add_address' | trans }}
-                    </a>
+                    {% block textMultipleDelivery %}
+                        <p>{{ 'quote_request_page.quote_request.multiple_delivery_address' | trans }}</p>
+                    {% endblock %}
+                {% endif %}
+
+                {% if not data.hasMultiShipments and hasSingleShippingAddress %}
+                    {% block deliverySubtitle2 %}
+                        {{ _self.titleDeliveryAddress() }}
+                    {% endblock %}
+
+                    {% block deliveryAddress %}
+                        {% embed molecule('display-address') with {
+                            data: {
+                                address: data.quote.shipment.shippingAddress,
+                            },
+                        } only %}
+                            {% block addressBadgeLabel %}{% endblock %}
+                        {% endembed %}
+                    {% endblock %}
+                {% endif %}
+
+                {% if data.quote.billingAddress and not hasShipmentAddress %}
+                    {% block deliverySubtitle3 %}
+                        {{ _self.titleDeliveryAddress() }}
+                    {% endblock %}
+
+                    {% block textEmptyDeliveryAddress %}
+                        <p>{{ 'quote_request_page.quote_request.empty_delivery_address' | trans }}</p>
+                    {% endblock %}
+                {% endif %}
+            {% endblock %}
+
+            {% block addressActions %}
+                {% block addAddressButtonWrapper %}
+                    {% if not data.quote.billingAddress and not hasShipmentAddress %}
+                        {% block textEmptyAddresses %}
+                            <p>{{ 'quote_request_page.quote_request.empty_address' | trans }}</p>
+                        {% endblock %}
+
+                        {% if data.isEditable and data.quoteRequestReference %}
+                            {% block addAddressButton %}
+                                <a href="{{ url(urlEditAddress, {quoteRequestReference: quoteRequestReference}) }}"
+                                   class="button button--expand button--edit-items"
+                                   title="{{ 'quote_request_page.quote_request.cta_add_address' | trans }}"
+                                    {{ qa('cart-go-to-address') }}>
+                                    {{ 'quote_request_page.quote_request.cta_add_address' | trans }}
+                                </a>
+                            {% endblock %}
+                        {% endif %}
+                    {% endif %}
+                {% endblock %}
+
+                {% block editAddressButtonWrapper %}
+                    {% set hasEditAddressButton = data.quote.billingAddress and data.isEditable and data.quoteRequestReference %}
+                    {% if hasEditAddressButton %}
+                        {% block editAddressButton %}
+                            <a href="{{ url(urlEditAddress, {quoteRequestReference: quoteRequestReference}) }}"
+                               class="button button--expand button--edit-items"
+                               title="{{ 'quote_request_page.quote_request.cta_edit_address' | trans }}"
+                                {{ qa('cart-go-to-address') }}>
+                                {{ 'quote_request_page.quote_request.cta_edit_address' | trans }}
+                            </a>
+                        {% endblock %}
+                    {% endif %}
+                {% endblock %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block shipmentMethod %}
+        <div class="box">
+            {% block titleShipmentMethod %}
+                <h6>{{ 'quote_request_page.quote_request.title_shipment_method' | trans }}</h6>
+            {% endblock %}
+
+            {% block shipmentMethodSeparator %}
+                <hr>
+            {% endblock %}
+
+            {% if data.hasMultiShipments %}
+                {% block textMultipleShipmentMethod %}
+                    {{ 'quote_request_page.quote_request.multiple_shipment_method' | trans }}
                 {% endblock %}
             {% endif %}
-        {% endif %}
 
-        {% set hasEditAddressButton = data.quote.billingAddress and data.isEditable and data.quoteRequestReference %}
-        {% if hasEditAddressButton %}
-            {% block editAddressButton %}
-                <a href="{{ url('quote-request/edit-address', {quoteRequestReference: quoteRequestReference}) }}"
-                   class="button button--expand button--edit-items"
-                   title="{{ 'quote_request_page.quote_request.cta_edit_address' | trans }}"
-                    {{ qa('cart-go-to-address') }}>
-                    {{ 'quote_request_page.quote_request.cta_edit_address' | trans }}
-                </a>
-            {% endblock %}
-        {% endif %}
-    </div>
-
-    <div class="box">
-        <h6>{{ 'quote_request_page.quote_request.title_shipment_method' | trans }}</h6>
-        <hr>
-
-        {% if data.hasMultiShipments %}
-            {{ 'quote_request_page.quote_request.multiple_shipment_method' | trans }}
-        {% endif %}
-
-        {% if not data.hasMultiShipments and hasSingleShippingMethod %}
-            {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
-                data: {
-                    carrierName: data.quote.shipment.method.carrierName,
-                    methodName: data.quote.shipment.method.name,
-                    storeCurrencyPrice: data.quote.shipment.method.storeCurrencyPrice,
-                    currencyIsoCode: data.quote.shipment.method.currencyIsoCode,
-                },
-            } only %}
-        {% endif %}
-
-        {% if not hasShipmentMethod %}
-            <p class="spacing-y">{{ 'quote_request_page.quote_request.empty_shipment_method' | trans }}</p>
-
-            {% if data.isEditable and data.quoteRequestReference %}
-                {% block addShipmentButton %}
-                    <a href="{{ url('quote-request/edit-shipment', {quoteRequestReference: quoteRequestReference}) }}"
-                       class="button button--expand button--edit-items"
-                       title="{{ 'quote_request_page.quote_request.cta_add_shipment_method' | trans }}"
-                        {{ qa('cart-go-to-shipment') }}>
-                        {{ 'quote_request_page.quote_request.cta_add_shipment_method' | trans }}
-                    </a>
+            {% if not data.hasMultiShipments and hasSingleShippingMethod %}
+                {% block shipmentMethodInformation %}
+                    {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
+                        data: {
+                            carrierName: data.quote.shipment.method.carrierName,
+                            methodName: data.quote.shipment.method.name,
+                            storeCurrencyPrice: data.quote.shipment.method.storeCurrencyPrice,
+                            currencyIsoCode: data.quote.shipment.method.currencyIsoCode,
+                        },
+                    } only %}
                 {% endblock %}
             {% endif %}
-        {% endif %}
 
-        {% set hasGoShipmentButton = hasShipmentMethod and data.isEditable and data.quoteRequestReference %}
-        {% if hasGoShipmentButton %}
-            {% block editShipmentButton %}
-                <a href="{{ url('quote-request/edit-shipment', {quoteRequestReference: quoteRequestReference}) }}"
-                   class="button button--expand button--edit-items"
-                   title="{{ 'quote_request_page.quote_request.cta_edit_shipment_method' | trans }}"
-                    {{ qa('cart-go-to-shipment') }}>
-                    {{ 'quote_request_page.quote_request.cta_edit_shipment_method' | trans }}
-                </a>
+            {% block shipmentMethodActions %}
+                {% block addShipmentButtonWrapper %}
+                    {% if not hasShipmentMethod %}
+                        {% block textEmptyShipmentMethod %}
+                            <p>{{ 'quote_request_page.quote_request.empty_shipment_method' | trans }}</p>
+                        {% endblock %}
+
+                        {% if data.isEditable and data.quoteRequestReference %}
+                            {% block addShipmentButton %}
+                                <a href="{{ url(urlEditShipment, {quoteRequestReference: quoteRequestReference}) }}"
+                                   class="button button--expand button--edit-items"
+                                   title="{{ 'quote_request_page.quote_request.cta_add_shipment_method' | trans }}"
+                                    {{ qa('cart-go-to-shipment') }}>
+                                    {{ 'quote_request_page.quote_request.cta_add_shipment_method' | trans }}
+                                </a>
+                            {% endblock %}
+                        {% endif %}
+                    {% endif %}
+                {% endblock %}
+
+                {% block editShipmentButtonWrapper %}
+                    {% set hasGoShipmentButton = hasShipmentMethod and data.isEditable and data.quoteRequestReference %}
+                    {% if hasGoShipmentButton %}
+                        {% block editShipmentButton %}
+                            <a href="{{ url(urlEditShipment, {quoteRequestReference: quoteRequestReference}) }}"
+                               class="button button--expand button--edit-items"
+                               title="{{ 'quote_request_page.quote_request.cta_edit_shipment_method' | trans }}"
+                                {{ qa('cart-go-to-shipment') }}>
+                                {{ 'quote_request_page.quote_request.cta_edit_shipment_method' | trans }}
+                            </a>
+                        {% endblock %}
+                    {% endif %}
+                {% endblock %}
             {% endblock %}
-        {% endif %}
-    </div>
+        </div>
+    {% endblock %}
 {% endblock %}

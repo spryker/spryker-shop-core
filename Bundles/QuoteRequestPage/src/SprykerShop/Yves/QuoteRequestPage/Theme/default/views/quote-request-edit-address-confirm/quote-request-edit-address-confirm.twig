@@ -1,60 +1,15 @@
-{% extends template('page-layout-customer', 'CustomerPage') %}
+{% extends template('page-layout-confirmation', 'QuoteRequestPage') %}
 
 {% define data = {
-    title: 'quote_request_page.quote_request' | trans,
     form: _view.quoteRequestEditAddressConfirmForm,
     quoteRequest: _view.quoteRequestEditAddressConfirmForm.vars.value,
-    quoteRequestReference: _view.quoteRequestReference
 } %}
 
-{% block breadcrumbs %}
-    {% include molecule('breadcrumb') with {
-        data: {
-            steps: [
-                {
-                    label: 'customer.account' | trans,
-                    url: path('customer/overview'),
-                },
-                {
-                    label: 'quote_request_page.quote_request' | trans,
-                    url: path('quote-request')
-                },
-                {
-                    label: '#' ~ data.quoteRequest.quoteRequestReference,
-                    url: path('quote-request/details', {quoteRequestReference: data.quoteRequest.quoteRequestReference})
-                },
-                {
-                    label: 'quote_request_page.quote_request.actions.edit' | trans,
-                    url: path('quote-request/edit', {quoteRequestReference: data.quoteRequest.quoteRequestReference})
-                },
-                {
-                    label: 'quote_request_page.quote_request.actions.edit_address' | trans,
-                }
-            ]
-        }
-    } only %}
-{% endblock %}
-
-{% block content %}
-
-    <div class="box">
+{% block message %}
+    <p>
         {{ 'quote_request_page.quote_request.edit_address_confirm' | trans({
-            '%link%': url('quote-request/edit', {quoteRequestReference: data.quoteRequestReference}),
+            '%link%': url('quote-request/edit', { quoteRequestReference: data.quoteRequestReference }),
             '%reference%': data.quoteRequestReference,
         }) | raw }}
-        {% include molecule('form') with {
-            data: {
-                form: data.form,
-                submit: {
-                    enable: true
-                },
-                cancel: {
-                    enable: true,
-                    url: url('quote-request/edit', {quoteRequestReference: data.quoteRequest.quoteRequestReference}),
-                    text: 'general.back.button' | trans
-                }
-            }
-        } only %}
-    </div>
-
+    </p>
 {% endblock %}
