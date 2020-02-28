@@ -22,7 +22,7 @@ class QuoteRequestCheckoutAddressWidget extends AbstractWidget
      */
     public function __construct(QuoteTransfer $quoteTransfer)
     {
-        $this->addIsQuoteRequestReferenceSetParameter($quoteTransfer);
+        $this->addIsVisibleParameter($quoteTransfer);
     }
 
     /**
@@ -46,7 +46,7 @@ class QuoteRequestCheckoutAddressWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function addIsQuoteRequestReferenceSetParameter(QuoteTransfer $quoteTransfer): void
+    protected function addIsVisibleParameter(QuoteTransfer $quoteTransfer): void
     {
         $this->addParameter(
             static::PARAMETER_IS_VISIBLE,
