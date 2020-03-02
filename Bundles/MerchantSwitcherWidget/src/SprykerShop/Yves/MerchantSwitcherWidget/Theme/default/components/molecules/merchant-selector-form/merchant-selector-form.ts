@@ -1,6 +1,12 @@
 import Component from 'ShopUi/models/component';
+import AjaxProvider from "ShopUi/components/molecules/ajax-provider/ajax-provider";
 
 export default class MerchantSelectorForm extends Component {
+    /**
+     * Performs the Ajax operations.
+     */
+    ajaxProvider: AjaxProvider;
+
     protected form: HTMLFormElement;
     protected select: HTMLSelectElement;
     protected message: string;
@@ -9,6 +15,7 @@ export default class MerchantSelectorForm extends Component {
     protected readyCallback(): void {}
 
     protected init(): void {
+        this.ajaxProvider = <AjaxProvider>this.getElementsByClassName(`${this.jsName}__provider`)[0];
         this.form = <HTMLFormElement>this.getElementsByClassName(`${this.jsName}__form`)[0];
         this.select = <HTMLSelectElement>this.form.getElementsByClassName(`${this.jsName}__select`)[0];
         this.initiallySelectedIndex = this.select.selectedIndex;
@@ -39,16 +46,19 @@ export default class MerchantSelectorForm extends Component {
     /**
      * Sets merchant after according answer of confirmation question.
      */
-    setMerchant(): void {
-        const isFormSubmitConfirmed: boolean = confirm(this.message);
-
-        if (isFormSubmitConfirmed) {
-            this.form.submit();
-
+    async setMerchant(): Promise<void> {
+        if (!confirm(this.message)) {
             return;
         }
 
-        this.selectInitialOption();
+        this.ajaxProvider.queryParams.set('merchant-reference', this.select.value);
+
+        try {
+            await this.ajaxProvider.fetch();
+            document.location.reload();
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     protected selectInitialOption(): void {

@@ -8,7 +8,7 @@
 namespace SprykerShop\Yves\MerchantSwitcherWidget\Controller;
 
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -17,31 +17,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MerchantSwitcherController extends AbstractController
 {
-    protected const PARAM_MERCHANT_REFERENCE = 'merchant-reference';
-    protected const HEADER_REFERER = 'referer';
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function switchMerchantAction(Request $request): RedirectResponse
+    public function switchMerchantAction(Request $request): JsonResponse
     {
-        $merchantReference = $request->get(static::PARAM_MERCHANT_REFERENCE);
+        $merchantReference = $request->query->get('merchant-reference');
 
         $this->getFactory()->createMerchantSwitcher()->switchMerchantInQuote($merchantReference);
         $this->getFactory()->createSelectedMerchantCookie()->setMerchantReference($merchantReference);
 
-        return $this->createRedirectResponse($request);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function createRedirectResponse(Request $request): RedirectResponse
-    {
-        return $this->redirectResponseExternal($request->headers->get(static::HEADER_REFERER));
+        return new JsonResponse();
     }
 }
