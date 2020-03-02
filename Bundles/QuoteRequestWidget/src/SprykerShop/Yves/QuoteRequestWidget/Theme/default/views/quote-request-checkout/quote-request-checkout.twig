@@ -7,14 +7,22 @@
 
 {% block body %}
     {% if data.isVisible %}
-        <button type="submit" class="button button--success">
-            {{ 'quote_request_page.quote_request.actions.save' | trans }}
-        </button>
-        <a href="{{ data.backUrl }}" class="button button--secondary button--hollow">
-            {{ 'general.back.button' | trans }}
-        </a>
-        <a href="{{ path('quote-request/cart/clear') }}" class="button button--secondary button--hollow">
-            {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
-        </a>
+        {% block saveButton %}
+            <button type="submit" class="button button--success">
+                {{ 'quote_request_page.quote_request.actions.save' | trans }}
+            </button>
+        {% endblock %}
+
+        {% block backButton %}
+            <a href="{{ data.backUrl }}" class="button button--secondary button--hollow">
+                {{ 'general.back.button' | trans }}
+            </a>
+        {% endblock %}
+
+        {% block cancelButton %}
+            <a href="{{ path('quote-request/cart/clear') }}" class="button button--secondary button--hollow">
+                {{ 'quote_request_page.quote_request.actions.cancel' | trans }}
+            </a>
+        {% endblock %}
     {% endif %}
 {% endblock %}
