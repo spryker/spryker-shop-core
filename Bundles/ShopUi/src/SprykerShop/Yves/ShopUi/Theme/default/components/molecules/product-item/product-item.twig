@@ -125,7 +125,7 @@
             <div class="spacing-y">
                 {% block price %}
                     {% if can('SeePricePermissionPlugin') %}
-                        {% include molecule('money-price') with {
+                        {% embed molecule('money-price') with {
                             data: {
                                 amount: data.product.prices.DEFAULT | default(null),
                                 originalAmount: data.product.prices.ORIGINAL | default(null),
@@ -133,6 +133,12 @@
                                 parentJsName: config.jsName,
                             },
                         } only %}
+                            {% block originalPrice %}
+                                {% block originalPriceInner %}
+                                    {{ parent() }}
+                                {% endblock %}
+                            {% endblock %}
+                        {% endembed %}
                     {% else %}
                         {{- 'customer.access.cannot_see_price' | trans -}}
                     {% endif %}
