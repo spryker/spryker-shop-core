@@ -29,27 +29,24 @@
                     <strong>{{ data.order.createdAt | formatDateTime }}</strong>
                 </li>
 
-                {% set isOrderCustomReference = data.order.orderCustomReference is defined and data.order.orderCustomReference %}
-                {% if isOrderCustomReference %}
-                    {% embed molecule('order-custom-reference-view', 'OrderCustomReferenceWidget') ignore missing with {
-                        config: {
-                            tag: 'li',
-                        },
-                        data: {
-                            orderCustomReference: data.order.orderCustomReference,
-                        },
-                    } only %}
-                        {% block title %}
-                            {{ data.title }}:
-                        {% endblock %}
+                {% embed molecule('order-custom-reference-view', 'OrderCustomReferenceWidget') ignore missing with {
+                    config: {
+                        tag: 'li',
+                    },
+                    data: {
+                        order: data.order,
+                    },
+                } only %}
+                    {% block title %}
+                        {{ data.title }}:
+                    {% endblock %}
 
-                        {% block textWrapper %}
-                            <strong class="text-break">
-                                {{ block('text') }}
-                            </strong>
-                        {% endblock %}
-                    {% endembed %}
-                {% endif %}
+                    {% block textWrapper %}
+                        <strong class="text-break">
+                            {{ block('text') }}
+                        </strong>
+                    {% endblock %}
+                {% endembed %}
             </ul>
             <hr class="box__separator">
             {% include molecule('order-detail-table', 'CustomerPage') with {

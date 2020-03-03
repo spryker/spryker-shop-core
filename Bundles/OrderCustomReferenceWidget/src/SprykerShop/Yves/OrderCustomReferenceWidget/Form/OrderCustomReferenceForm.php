@@ -17,6 +17,8 @@ class OrderCustomReferenceForm extends AbstractType
     public const FIELD_BACK_URL = 'backUrl';
     public const FIELD_ORDER_CUSTOM_REFERENCE = 'orderCustomReference';
 
+    protected const GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE = 'order_custom_reference.title';
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -51,7 +53,11 @@ class OrderCustomReferenceForm extends AbstractType
     {
         $builder->add(
             static::FIELD_ORDER_CUSTOM_REFERENCE,
-            TextType::class
+            TextType::class,
+            [
+                'label' => static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE,
+                'required' => false,
+            ]
         );
 
         return $this;
