@@ -95,9 +95,10 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
             $request->query->get(static::PARAM_QUOTE_REQUEST_VERSION_REFERENCE)
         );
 
-        $shipmentGroupTransfers = $this->getFactory()
-            ->createShipmentGrouper()
-            ->groupItemsByShippingAddress($quoteRequestTransfer);
+        $shipmentGrouper = $this->getFactory()->createShipmentGrouper();
+
+        $shipmentGroupTransfers = $shipmentGrouper->groupItemsByShippingAddress($quoteRequestTransfer);
+        $itemTransfersWithoutShipment = $shipmentGrouper->getItemsWithoutShipment($quoteRequestTransfer->getLatestVersion()->getQuote());
 
         return [
             'quoteRequest' => $quoteRequestTransfer,
@@ -107,6 +108,7 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
             'isQuoteRequestReady' => $quoteRequestClient->isQuoteRequestReady($quoteRequestTransfer),
             'isQuoteRequestEditable' => $quoteRequestClient->isQuoteRequestEditable($quoteRequestTransfer),
             'shipmentGroups' => $shipmentGroupTransfers,
+            'itemsWithoutShipment' => $itemTransfersWithoutShipment,
         ];
     }
 

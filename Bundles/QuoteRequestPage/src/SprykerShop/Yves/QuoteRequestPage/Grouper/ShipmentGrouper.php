@@ -35,28 +35,52 @@ class ShipmentGrouper implements ShipmentGrouperInterface
     {
         $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
 
-        if ($this->hasItemsWithEmptyShippingAddress($quoteTransfer)) {
-            return [];
-        }
-
         return $this->shipmentService
-            ->groupItemsByShipment($quoteTransfer->getItems())
+            ->groupItemsByShipment($this->getItemsWithShipment($quoteTransfer))
             ->getArrayCopy();
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return bool
+     * @return array
      */
-    protected function hasItemsWithEmptyShippingAddress(QuoteTransfer $quoteTransfer): bool
+    protected function getItemsWithShipment(QuoteTransfer $quoteTransfer): array
     {
+        $itemTransfersWithShipment = [];
+
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getShipment() || !$itemTransfer->getShipment()->getShippingAddress()) {
-                return true;
+            if (
+                $itemTransfer->getShipment()
+                && $itemTransfer->getShipment()->getMethod()
+                && $itemTransfer->getShipment()->getShippingAddress()
+            ) {
+                $itemTransfersWithShipment[] = $itemTransfer;
             }
         }
 
-        return false;
+        return $itemTransfersWithShipment;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    public function getItemsWithoutShipment(QuoteTransfer $quoteTransfer): array
+    {
+        $itemTransfersWithoutShipment = [];
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if (
+                !$itemTransfer->getShipment()
+                || !$itemTransfer->getShipment()->getMethod()
+                || !$itemTransfer->getShipment()->getShippingAddress()
+            ) {
+                $itemTransfersWithoutShipment[] = $itemTransfer;
+            }
+        }
+
+        return $itemTransfersWithoutShipment;
     }
 }
