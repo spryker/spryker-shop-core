@@ -17,14 +17,13 @@
         <h5 class="{{ classTitle }}">{{ data.title }}</h5>
     {% endblock %}
 
-    {% set isOrderCustomReference = data.orderCustomReference is defined and data.orderCustomReference %}
-    {% if isOrderCustomReference %}
-    {% block textWrapper %}
-        <p class="{{ classText }}">
-            {% block text %}
-                {{ data.orderCustomReference | escape | nl2br }}
-            {% endblock %}
-        </p>
-    {% endblock %}
+    {% if data.orderCustomReference %}
+        {% block textWrapper %}
+            <p class="{{ classText }}">
+                {% block text %}
+                    {{ data.orderCustomReference | escape | nl2br }}
+                {% endblock %}
+            </p>
+        {% endblock %}
     {% endif %}
 {% endblock %}
