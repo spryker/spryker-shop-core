@@ -25,10 +25,10 @@ class AddressSelectTransformer implements DataTransformerInterface
     /**
      * @param mixed $value
      *
-     * @return string|null
+     * @return int|null
      */
-    public function reverseTransform($value): ?string
+    public function reverseTransform($value): ?int
     {
-        return $value === CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS ? CheckoutAddressForm::VALUE_NEW_ADDRESS_IS_EMPTY : $value;
+        return $value === CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS ? CheckoutAddressForm::VALUE_NEW_ADDRESS_IS_EMPTY : (int)$value;
     }
 }
