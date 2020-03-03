@@ -1,5 +1,5 @@
 import Component from 'ShopUi/models/component';
-import AjaxProvider from "ShopUi/components/molecules/ajax-provider/ajax-provider";
+import AjaxProvider from 'ShopUi/components/molecules/ajax-provider/ajax-provider';
 
 export default class MerchantSelectorForm extends Component {
     protected ajaxProvider: AjaxProvider;
