@@ -233,17 +233,10 @@
                 </div>
 
                 <div class="col">
-                    {% set quoteRequestCheckoutWidget = findWidget('QuoteRequestCheckoutWidget', [data.form.vars.value, data.backUrl]) %}
-
-                    {% if quoteRequestCheckoutWidget and quoteRequestCheckoutWidget.isVisible %}
-                        {% widget quoteRequestCheckoutWidget only %}
-                            {% block body %}
-                                {% block cancelButton %}
-                                    {{ parent() }}
-                                {% endblock %}
-                            {% endblock %}
-                        {% endwidget %}
-                    {% endif %}
+                    {% widget 'QuoteRequestCheckoutWidget' args [data.form.vars.value, data.backUrl] only %}
+                        {% block saveButton %}{% endblock %}
+                        {% block backButton %}{% endblock %}
+                    {% endwidget %}
 
                     {{ parent() }}
                 </div>
