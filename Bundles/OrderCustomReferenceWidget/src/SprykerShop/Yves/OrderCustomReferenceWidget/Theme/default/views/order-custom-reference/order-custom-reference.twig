@@ -2,7 +2,7 @@
 
 {% define data = {
     quote: _widget.quote,
-    orderCustomReference: _widget.quote.orderCustomReference,
+    orderCustomReference: _widget.quote.orderCustomReference | default,
     orderCustomReferenceForm: _widget.orderCustomReferenceForm,
 } %}
 
@@ -26,7 +26,7 @@
             {% endblock %}
         {% endif %}
 
-        {% if not canWrite and data.orderCustomReference %}
+        {% if not canWrite %}
             {% block referenceView %}
                 {% include molecule('order-custom-reference-view', 'OrderCustomReferenceWidget') with {
                     data: {

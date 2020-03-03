@@ -19,6 +19,7 @@
     shipmentGroups: _view.shipmentGroups,
     isPlaceableOrder: _view.isPlaceableOrder,
     isPlaceableOrderErrors: _view.isPlaceableOrderErrors,
+    orderCustomReference: data.cart.orderCustomReference | default,
 
     forms: {
         summary: _view.summaryForm,
@@ -153,7 +154,7 @@
     {% embed molecule('order-custom-reference-view', 'OrderCustomReferenceWidget') ignore missing with {
         class: 'box',
         data: {
-            order: data.cart,
+            orderCustomReference: data.orderCustomReference,
         },
     } only %}
         {% block title %}

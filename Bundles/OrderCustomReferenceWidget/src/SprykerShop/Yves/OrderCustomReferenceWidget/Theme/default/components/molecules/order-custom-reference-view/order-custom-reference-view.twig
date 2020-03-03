@@ -6,14 +6,8 @@
 
 {% define data = {
     title: 'order_custom_reference.title' | trans,
-    order: required,
+    orderCustomReference: required,
 } %}
-
-{% block component %}
-    {% if data.order %}
-        {{ parent() }}
-    {% endif %}
-{% endblock %}
 
 {% set classTitle = '' %}
 {% set classText = 'text-break' %}
@@ -23,14 +17,14 @@
         <h5 class="{{ classTitle }}">{{ data.title }}</h5>
     {% endblock %}
 
-    {% set isOrderCustomReference = data.order.orderCustomReference is defined and data.order.orderCustomReference %}
+    {% set isOrderCustomReference = data.orderCustomReference is defined and data.orderCustomReference %}
     {% if isOrderCustomReference %}
-        {% block textWrapper %}
-            <p class="{{ classText }}">
-                {% block text %}
-                    {{ data.order.orderCustomReference | escape | nl2br }}
-                {% endblock %}
-            </p>
-        {% endblock %}
+    {% block textWrapper %}
+        <p class="{{ classText }}">
+            {% block text %}
+                {{ data.orderCustomReference | escape | nl2br }}
+            {% endblock %}
+        </p>
+    {% endblock %}
     {% endif %}
 {% endblock %}

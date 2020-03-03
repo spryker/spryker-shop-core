@@ -11,6 +11,7 @@
     shipmentGroups: data.orderItems | default([]),
     orderShipmentExpenses: data.orderShipmentExpenses | default([]),
     order: required,
+    orderCustomReference: data.order.orderCustomReference | default,
 } %}
 
 {% block body %}
@@ -34,7 +35,7 @@
                         tag: 'li',
                     },
                     data: {
-                        order: data.order,
+                        orderCustomReference: data.orderCustomReference,
                     },
                 } only %}
                     {% block title %}
