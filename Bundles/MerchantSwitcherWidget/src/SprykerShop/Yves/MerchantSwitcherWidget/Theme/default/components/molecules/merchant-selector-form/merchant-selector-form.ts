@@ -2,11 +2,8 @@ import Component from 'ShopUi/models/component';
 import AjaxProvider from "ShopUi/components/molecules/ajax-provider/ajax-provider";
 
 export default class MerchantSelectorForm extends Component {
-    /**
-     * Performs the Ajax operations.
-     */
-    ajaxProvider: AjaxProvider;
 
+    protected ajaxProvider: AjaxProvider;
     protected form: HTMLFormElement;
     protected select: HTMLSelectElement;
     protected message: string;
@@ -59,11 +56,6 @@ export default class MerchantSelectorForm extends Component {
         } catch (e) {
             console.error(e);
         }
-    }
-
-    protected selectInitialOption(): void {
-        const initialMerchantOption: HTMLOptionElement = this.select.options[this.initiallySelectedIndex];
-        initialMerchantOption.selected = true;
     }
 
     protected get messageTemplate(): string {
