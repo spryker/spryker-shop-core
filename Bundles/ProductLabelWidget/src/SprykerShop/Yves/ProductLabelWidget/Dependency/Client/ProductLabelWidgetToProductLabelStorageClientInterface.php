@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\ProductLabelWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
+
 interface ProductLabelWidgetToProductLabelStorageClientInterface
 {
     /**
@@ -32,4 +34,12 @@ interface ProductLabelWidgetToProductLabelStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
     public function findLabelByName($labelName, $localeName);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $locale
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductView(ProductViewTransfer $productViewTransfer, string $locale): ProductViewTransfer;
 }
