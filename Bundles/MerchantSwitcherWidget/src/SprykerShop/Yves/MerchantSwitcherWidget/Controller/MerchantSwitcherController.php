@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\MerchantSwitcherWidget\Controller;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcherWidgetFactory getFactory()
@@ -20,9 +21,9 @@ class MerchantSwitcherController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function switchMerchantAction(Request $request): JsonResponse
+    public function switchMerchantAction(Request $request): Response
     {
         $merchantReference = $request->query->get('merchant-reference');
 
