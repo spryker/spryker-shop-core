@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\ProductLabelWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
+
 class ProductLabelWidgetToProductLabelStorageClientBridge implements ProductLabelWidgetToProductLabelStorageClientInterface
 {
     /**
@@ -44,5 +46,16 @@ class ProductLabelWidgetToProductLabelStorageClientBridge implements ProductLabe
     public function findLabels(array $idProductLabels, $localeName, string $storeName)
     {
         return $this->productLabelStorageClient->findLabels($idProductLabels, $localeName, $storeName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $locale
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductView(ProductViewTransfer $productViewTransfer, string $locale): ProductViewTransfer
+    {
+        return $this->productLabelStorageClient->expandProductView($productViewTransfer, $locale);
     }
 }
