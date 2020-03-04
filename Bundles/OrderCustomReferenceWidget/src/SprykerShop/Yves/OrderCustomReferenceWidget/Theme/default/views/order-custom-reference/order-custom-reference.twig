@@ -5,6 +5,7 @@
     orderCustomReference: _widget.quote.orderCustomReference,
     orderCustomReferenceForm: _widget.orderCustomReferenceForm,
     isEditable: _widget.isEditable,
+    isGuest: _widget.isGuest,
 } %}
 
 {% block body %}
@@ -21,13 +22,21 @@
             {% endblock %}
         {% endif %}
 
-        {% if not canWrite %}
+        {% if not canWrite and not data.isGuest %}
             {% block referenceView %}
                 {% include molecule('order-custom-reference-view', 'OrderCustomReferenceWidget') with {
                     data: {
                         orderCustomReference: data.quote.orderCustomReference,
                     },
                 } only %}
+            {% endblock %}
+        {% endif %}
+
+        {% if data.isGuest %}
+            {% block referenceCartView %}
+                <input placeholder="{{ 'order_custom_reference.placeholder.login' | trans }}"
+                       value="{{ data.orderCustomReference }}"
+                       class="input input--expand" disabled>
             {% endblock %}
         {% endif %}
     {% endblock %}

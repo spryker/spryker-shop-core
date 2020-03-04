@@ -191,4 +191,16 @@
         </div>
     {% endif %}
 
+    {% block orderCustomReference %}
+        {% widget 'OrderCustomReferenceWidget' args [
+            data.cart,
+            app.request.requestUri
+        ] only %}
+            {% block referenceCartView %}
+                {{ parent() }}
+                <hr>
+            {% endblock %}
+        {% endwidget %}
+    {% endblock %}
+
 {% endblock %}

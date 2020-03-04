@@ -18,6 +18,7 @@ class OrderCustomReferenceWidget extends AbstractWidget
 {
     protected const PARAMETER_QUOTE = 'quote';
     protected const PARAMETER_IS_EDITABLE = 'isEditable';
+    protected const PARAMETER_IS_GUEST = 'isGuest';
 
     protected const FORM_ORDER_CUSTOM_REFERENCE = 'orderCustomReferenceForm';
 
@@ -32,6 +33,7 @@ class OrderCustomReferenceWidget extends AbstractWidget
         $this->addQuoteParameter($quoteTransfer);
         $this->addOrderCustomReferenceFormParameter($quoteTransfer, $backUrl);
         $this->addIsEditableParameter($quoteTransfer);
+        $this->addIsGuest($quoteTransfer);
     }
 
     /**
@@ -87,6 +89,16 @@ class OrderCustomReferenceWidget extends AbstractWidget
     protected function addIsEditableParameter(QuoteTransfer $quoteTransfer): void
     {
         $this->addParameter(static::PARAMETER_IS_EDITABLE, $this->isEditable($quoteTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addIsGuest(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_IS_GUEST, empty($quoteTransfer->getCustomer()));
     }
 
     /**
