@@ -96,7 +96,7 @@ class OrderCustomReferenceWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function addIsGuest(QuoteTransfer $quoteTransfer): void
+    protected function addIsGuestParameter(QuoteTransfer $quoteTransfer): void
     {
         $this->addParameter(static::PARAMETER_IS_GUEST, empty($quoteTransfer->getCustomer()));
     }
