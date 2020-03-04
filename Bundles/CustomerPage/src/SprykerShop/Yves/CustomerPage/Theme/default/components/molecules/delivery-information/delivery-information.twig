@@ -29,13 +29,13 @@
     <li class="list__item">{{ data.carrierName }}</li>
     <li class="list__item">
         {{ data.methodName }}
-        <span>
-            {% if sourceUnitPrice %}
-                <s>{{ data.storeCurrencyPrice | money(true, data.currencyIsoCode) }}</s>
-                {{ sourceUnitPrice | money(true, data.currencyIsoCode) }}
-            {% else %}
-                {{ data.storeCurrencyPrice | money(true, data.currencyIsoCode) }}
-            {% endif %}
-        </span>
+    </li>
+    <li class="list__item">
+        {% if sourceUnitPrice or sourceUnitPrice is same as(0) %}
+            <s>{{ data.storeCurrencyPrice | money(true, data.currencyIsoCode) }}</s>
+            {{ sourceUnitPrice | money(true, data.currencyIsoCode) }}
+        {% else %}
+            {{ data.storeCurrencyPrice | money(true, data.currencyIsoCode) }}
+        {% endif %}
     </li>
 {% endblock %}

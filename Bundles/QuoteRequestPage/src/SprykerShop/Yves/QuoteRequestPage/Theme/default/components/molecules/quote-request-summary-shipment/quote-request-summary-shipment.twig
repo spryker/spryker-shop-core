@@ -8,10 +8,11 @@
     shipmentGroups: required,
     shipmentTotal: required,
     currencyCode: required,
+    priceMode: null,
 } %}
 
 {% block component %}
-    {% if data.shipmentTotal and data.currencyCode %}
+    {% if (data.shipmentTotal or data.shipmentTotal is same as(0)) and data.currencyCode %}
         <hr>
         {{ parent() }}
     {% endif %}
@@ -20,6 +21,9 @@
 {% set classShipment = 'grid grid--justify' %}
 {% set classShipmentTitle = 'col' %}
 {% set classShipmentValue = 'col' %}
+
+{% set priceModeGross = 'GROSS_MODE' %}
+{% set sourceUnitPrice = '' %}
 
 {% block body %}
     {% block title %}
@@ -30,6 +34,15 @@
     {% endblock %}
 
     {% for shipmentGroup in data.shipmentGroups %}
+        {% set isShipmentMethod = (shipmentGroup.shipment is not empty and shipmentGroup.shipment.method is not empty) %}
+        {% set shipmentSourcePrice = isShipmentMethod and shipmentGroup.shipment.method.sourcePrice is defined ? shipmentGroup.shipment.method.sourcePrice %}
+
+        {% if shipmentSourcePrice %}
+            {% set sourceUnitPrice = (data.priceMode == priceModeGross) ? shipmentSourcePrice.grossAmount : shipmentSourcePrice.netAmount %}
+        {% else %}
+            {% set sourceUnitPrice = shipmentGroup.shipment.method.storeCurrencyPrice %}
+        {% endif %}
+
         {% block summaryShipment %}
             <div class="{{ classShipment }}">
                 <span class="{{ classShipmentTitle }}">
@@ -37,7 +50,7 @@
                     - {{ shipmentGroup.shipment.method.name | default }}
                 </span>
                 <span class="{{ classShipmentValue }}">
-                    {{ shipmentGroup.shipment.method.storeCurrencyPrice | money(true, data.currencyCode) }}
+                    {{ sourceUnitPrice | money(true, data.currencyCode) }}
                 </span>
             </div>
         {% endblock %}

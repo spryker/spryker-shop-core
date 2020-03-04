@@ -30,8 +30,11 @@
         expenses: _view.quoteTransfer.expenses,
         voucherDiscounts: _view.quoteTransfer.voucherDiscounts,
         cartRuleDiscounts: _view.quoteTransfer.cartRuleDiscounts,
-        totalCosts: _view.totalCosts,
+        totalCosts: _view.quoteTransfer.totals.shipmentTotal or _view.quoteTransfer.totals.shipmentTotal is same as(0)
+            ? _view.quoteTransfer.totals.shipmentTotal
+            : _view.totalCosts,
         shipmentGroups: _view.shipmentGroups,
+        priceMode: _view.quoteTransfer.priceMode,
 
         prices: {
             subTotal: _view.quoteTransfer.totals.subtotal,
@@ -116,17 +119,21 @@
                         {{ 'general.edit.button' | trans }}
                     </a>
                 </div>
-
                 {% if not isGiftCardExists %}
                     <div class="box">
                         <h6>{{ 'checkout.step.summary.delivery_method' | trans }}</h6>
                         <hr>
+                        {% set isShipmentMethod = (shipmentGroup.shipment is not empty and shipmentGroup.shipment.method is not empty) %}
+                        {% set shipmentTotalPrice = isShipmentMethod and shipmentGroup.shipment.method.sourcePrice is defined ? shipmentGroup.shipment.method.sourcePrice %}
+
                         {% include molecule('delivery-information', 'CustomerPage') ignore missing with {
                             data: {
                                 carrierName: shipmentGroup.shipment.method.carrierName,
                                 methodName: shipmentGroup.shipment.method.name,
                                 storeCurrencyPrice: shipmentGroup.shipment.method.storeCurrencyPrice,
                                 currencyIsoCode: shipmentGroup.shipment.method.currencyIsoCode,
+                                priceMode: data.cart.priceMode,
+                                sourcePrice: shipmentTotalPrice,
                             },
                         } only %}
 
