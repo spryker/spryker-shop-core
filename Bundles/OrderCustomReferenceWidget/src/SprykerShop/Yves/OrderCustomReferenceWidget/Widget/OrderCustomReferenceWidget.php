@@ -33,7 +33,7 @@ class OrderCustomReferenceWidget extends AbstractWidget
         $this->addQuoteParameter($quoteTransfer);
         $this->addOrderCustomReferenceFormParameter($quoteTransfer, $backUrl);
         $this->addIsEditableParameter($quoteTransfer);
-        $this->addIsGuest($quoteTransfer);
+        $this->addIsGuestParameter($quoteTransfer);
     }
 
     /**
