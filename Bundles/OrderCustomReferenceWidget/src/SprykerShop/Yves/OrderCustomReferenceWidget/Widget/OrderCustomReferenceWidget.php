@@ -17,6 +17,7 @@ use SprykerShop\Yves\OrderCustomReferenceWidget\Form\OrderCustomReferenceForm;
 class OrderCustomReferenceWidget extends AbstractWidget
 {
     protected const PARAMETER_QUOTE = 'quote';
+    protected const PARAMETER_IS_EDITABLE = 'isEditable';
 
     protected const FORM_ORDER_CUSTOM_REFERENCE = 'orderCustomReferenceForm';
 
@@ -30,6 +31,7 @@ class OrderCustomReferenceWidget extends AbstractWidget
     ) {
         $this->addQuoteParameter($quoteTransfer);
         $this->addOrderCustomReferenceFormParameter($quoteTransfer, $backUrl);
+        $this->addIsEditableParameter($quoteTransfer);
     }
 
     /**
@@ -75,5 +77,37 @@ class OrderCustomReferenceWidget extends AbstractWidget
                 ]
             )->createView()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addIsEditableParameter(QuoteTransfer $quoteTransfer): void
+    {
+        $this->addParameter(static::PARAMETER_IS_EDITABLE, $this->isEditable($quoteTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isEditable(QuoteTransfer $quoteTransfer): bool
+    {
+        if (!$quoteTransfer->getCustomer()) {
+            return false;
+        }
+
+        if (!$quoteTransfer->getCustomer()->getCompanyUserTransfer()) {
+            return false;
+        }
+
+        if (!$quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()) {
+            return false;
+        }
+
+        return true;
     }
 }
