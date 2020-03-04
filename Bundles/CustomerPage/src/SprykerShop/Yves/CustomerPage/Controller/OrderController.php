@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerPage\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
@@ -66,17 +67,32 @@ class OrderController extends AbstractCustomerController
      */
     protected function executeIndexAction(Request $request): array
     {
-        $orderListTransfer = $this->getFactory()
-            ->createOrderReader()
-            ->getOrderList($request);
+        $filterFieldTransfers = new ArrayObject();
+        $customerPageFactory = $this->getFactory();
+        $customerPageConfig = $customerPageFactory->getConfig();
 
-        $customerPageConfig = $this->getFactory()->getConfig();
+        if ($customerPageConfig->isOrderSearchEnabled()) {
+            $orderSearchFormDataProvider = $customerPageFactory->createCustomerFormFactory()
+                ->createOrderSearchFormDataProvider();
+
+            $orderSearchForm = $customerPageFactory->createCustomerFormFactory()
+                ->getOrderSearchForm([], $orderSearchFormDataProvider->getOptions($this->getLocale()))
+                ->handleRequest($request);
+
+            $filterFieldTransfers = $customerPageFactory->createCustomerFormFactory()
+                ->createOrderSearchFormHandler()
+                ->handleOrderSearchFormSubmit($orderSearchForm);
+        }
+
+        $orderListTransfer = $customerPageFactory->createOrderReader()
+            ->getOrderList($request, $filterFieldTransfers);
 
         return [
             'pagination' => $orderListTransfer->getPagination(),
             'orderList' => $orderListTransfer->getOrders(),
             'isOrderSearchEnabled' => $customerPageConfig->isOrderSearchEnabled(),
-            'isOrderSearchOrderItemsVisible' => $customerPageConfig->isOrderSearchOrderItemsVisible(),
+            'isOrderSearchOrderItemsVisible' => $orderListTransfer->getFormat()->getExpandWithItems(),
+            'orderSearchForm' => isset($orderSearchForm) ? $orderSearchForm->createView() : null,
         ];
     }
 

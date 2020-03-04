@@ -19,11 +19,17 @@ class CustomerPageConfig extends AbstractBundleConfig
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;
 
     protected const IS_ORDER_SEARCH_ENABLED = false;
-    protected const IS_ORDER_SEARCH_ORDER_ITEMS_VISIBLE = true;
 
     protected const DEFAULT_ORDER_HISTORY_PER_PAGE = 10;
     protected const DEFAULT_ORDER_HISTORY_SORT_FIELD = 'created_at';
     protected const DEFAULT_ORDER_HISTORY_SORT_DIRECTION = 'DESC';
+
+    protected const ORDER_SEARCH_GROUPS = [
+        'customer.order_history.search_group.all' => 'all',
+        'customer.order_history.search_group.order_reference' => 'orderReference',
+        'customer.order_history.search_group.product_name' => 'itemName',
+        'customer.order_history.search_group.product_sku' => 'itemSku',
+    ];
 
     /**
      * @uses \Spryker\Zed\Customer\CustomerConfig::MAX_LENGTH_CUSTOMER_PASSWORD
@@ -84,14 +90,6 @@ class CustomerPageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return bool
-     */
-    public function isOrderSearchOrderItemsVisible(): bool
-    {
-        return static::IS_ORDER_SEARCH_ORDER_ITEMS_VISIBLE;
-    }
-
-    /**
      * @return int
      */
     public function getDefaultOrderHistoryPerPage(): int
@@ -113,5 +111,13 @@ class CustomerPageConfig extends AbstractBundleConfig
     public function getDefaultOrderHistorySortDirection(): string
     {
         return static::DEFAULT_ORDER_HISTORY_SORT_DIRECTION;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getOrderSearchGroups(): array
+    {
+        return static::ORDER_SEARCH_GROUPS;
     }
 }
