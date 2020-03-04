@@ -8,7 +8,6 @@
 namespace SprykerShop\Yves\QuoteRequestPage\Grouper;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ShipmentGrouperInterface
 {
@@ -18,11 +17,4 @@ interface ShipmentGrouperInterface
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
     public function groupItemsByShippingAddress(QuoteRequestTransfer $quoteRequestTransfer): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array
-     */
-    public function getItemsWithoutShipment(QuoteTransfer $quoteTransfer): array;
 }

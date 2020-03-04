@@ -23,6 +23,8 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPa
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToStoreClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToShipmentServiceInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToUtilDateTimeServiceInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Filter\ItemsFilter;
+use SprykerShop\Yves\QuoteRequestAgentPage\Filter\ItemsFilterInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider\QuoteRequestAgentFormDataProvider;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandler;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandlerInterface;
@@ -136,8 +138,17 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     public function createShipmentGrouper(): ShipmentGrouperInterface
     {
         return new ShipmentGrouper(
-            $this->getShipmentService()
+            $this->getShipmentService(),
+            $this->createItemsFilter()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Filter\ItemsFilterInterface
+     */
+    public function createItemsFilter(): ItemsFilterInterface
+    {
+        return new ItemsFilter();
     }
 
     /**

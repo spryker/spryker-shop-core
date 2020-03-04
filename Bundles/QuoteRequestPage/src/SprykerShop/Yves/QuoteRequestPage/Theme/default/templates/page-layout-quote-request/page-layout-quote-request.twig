@@ -2,6 +2,7 @@
 
 {% define data = {
     shipmentGroups: _view.shipmentGroups | default([]),
+    itemsWithShipment: _view.itemsWithShipment | default([]),
     itemsWithoutShipment: _view.itemsWithoutShipment | default([]),
 } %}
 
@@ -99,7 +100,7 @@
                                     {% if not hasMultiShipments and quote.items | length %}
                                         <div class="{{ numberOfItemsClass }}">
                                             {{ 'quote_request_page.quote_request.item' | trans({
-                                                '%count%': quote.items | length,
+                                                '%count%': data.itemsWithShipment | length,
                                             }) }}
                                         </div>
                                     {% endif %}
@@ -163,7 +164,7 @@
                             {% include organism('product-and-shipment-view', 'QuoteRequestPage') with {
                                 data: {
                                     quote: quote,
-                                    items: quote.items,
+                                    items: data.itemsWithShipment,
                                     shipment: quote.shipment,
                                     hasMultiShipments: hasMultiShipments,
                                     isConfiguredBundleEditable: false,
@@ -172,7 +173,7 @@
                         {% endblock %}
                     {% endif %}
                     {% if data.itemsWithoutShipment %}
-                        {% block productsWithoutShipment %}
+                        {% block wrapperForProductsWithoutShipment %}
                             <div class="box">
                                 {% block titleForItemsWithoutShipmentWrapper %}
                                     {% set titleItemsWithoutShipmentWrapperClass = 'grid grid--justify' %}
@@ -194,15 +195,17 @@
                                         {% endblock %}
                                     </div>
                                 {% endblock %}
-                                {% include organism('product-and-shipment-view', 'QuoteRequestPage') with {
-                                    data: {
-                                        quote: quote,
-                                        items: data.itemsWithoutShipment,
-                                        shipment: null,
-                                        hasMultiShipments: false,
-                                        isConfiguredBundleEditable: false,
-                                    },
-                                } only %}
+                                {% block productsWithoutShipment %}
+                                    {% include organism('product-and-shipment-view', 'QuoteRequestPage') with {
+                                        data: {
+                                            quote: quote,
+                                            items: data.itemsWithoutShipment,
+                                            shipment: null,
+                                            hasMultiShipments: false,
+                                            isConfiguredBundleEditable: false,
+                                        },
+                                    } only %}
+                                {% endblock %}
                             </div>
                         {% endblock %}
                     {% endif %}

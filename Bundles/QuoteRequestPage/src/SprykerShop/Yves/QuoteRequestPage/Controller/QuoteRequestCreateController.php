@@ -88,9 +88,14 @@ class QuoteRequestCreateController extends QuoteRequestAbstractController
             ->createShipmentGrouper()
             ->groupItemsByShippingAddress($quoteRequestTransfer);
 
+        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
+        $itemsFilter = $this->getFactory()->createItemsFilter();
+
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
             'shipmentGroups' => $shipmentGroupTransfers,
+            'itemsWithShipment' => $itemsFilter->getItemsWithShipment($quoteTransfer),
+            'itemsWithoutShipment' => $itemsFilter->getItemsWithoutShipment($quoteTransfer),
         ];
     }
 }

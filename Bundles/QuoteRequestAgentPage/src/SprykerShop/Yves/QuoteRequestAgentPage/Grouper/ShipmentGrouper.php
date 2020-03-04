@@ -8,8 +8,8 @@
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Grouper;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToShipmentServiceInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Filter\ItemsFilterInterface;
 
 class ShipmentGrouper implements ShipmentGrouperInterface
 {
@@ -19,11 +19,20 @@ class ShipmentGrouper implements ShipmentGrouperInterface
     protected $shipmentService;
 
     /**
-     * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToShipmentServiceInterface $shipmentService
+     * @var \SprykerShop\Yves\QuoteRequestAgentPage\Filter\ItemsFilterInterface
      */
-    public function __construct(QuoteRequestAgentPageToShipmentServiceInterface $shipmentService)
-    {
+    protected $itemsFilter;
+
+    /**
+     * @param \SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToShipmentServiceInterface $shipmentService
+     * @param \SprykerShop\Yves\QuoteRequestAgentPage\Filter\ItemsFilterInterface $itemsFilter
+     */
+    public function __construct(
+        QuoteRequestAgentPageToShipmentServiceInterface $shipmentService,
+        ItemsFilterInterface $itemsFilter
+    ) {
         $this->shipmentService = $shipmentService;
+        $this->itemsFilter = $itemsFilter;
     }
 
     /**
@@ -35,52 +44,12 @@ class ShipmentGrouper implements ShipmentGrouperInterface
     {
         $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
 
+        if ($this->itemsFilter->isQuoteLevelShipmentUsed($quoteTransfer)) {
+            return [];
+        }
+
         return $this->shipmentService
-            ->groupItemsByShipment($this->getItemsWithShipment($quoteTransfer))
+            ->groupItemsByShipment($this->itemsFilter->getItemsWithShipment($quoteTransfer))
             ->getArrayCopy();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array
-     */
-    protected function getItemsWithShipment(QuoteTransfer $quoteTransfer): array
-    {
-        $itemTransfersWithShipment = [];
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (
-                $itemTransfer->getShipment()
-                && $itemTransfer->getShipment()->getMethod()
-                && $itemTransfer->getShipment()->getShippingAddress()
-            ) {
-                $itemTransfersWithShipment[] = $itemTransfer;
-            }
-        }
-
-        return $itemTransfersWithShipment;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array
-     */
-    public function getItemsWithoutShipment(QuoteTransfer $quoteTransfer): array
-    {
-        $itemTransfersWithoutShipment = [];
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (
-                !$itemTransfer->getShipment()
-                || !$itemTransfer->getShipment()->getMethod()
-                || !$itemTransfer->getShipment()->getShippingAddress()
-            ) {
-                $itemTransfersWithoutShipment[] = $itemTransfer;
-            }
-        }
-
-        return $itemTransfersWithoutShipment;
     }
 }
