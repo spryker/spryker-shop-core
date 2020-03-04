@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerPage\Reader;
 
-use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -15,9 +14,9 @@ interface OrderReaderInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \ArrayObject|\Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getOrderList(Request $request, ArrayObject $filterFieldTransfers): OrderListTransfer;
+    public function getOrderList(Request $request, OrderListTransfer $orderListTransfer): OrderListTransfer;
 }

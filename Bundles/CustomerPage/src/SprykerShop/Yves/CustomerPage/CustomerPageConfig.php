@@ -24,6 +24,8 @@ class CustomerPageConfig extends AbstractBundleConfig
     protected const DEFAULT_ORDER_HISTORY_SORT_FIELD = 'created_at';
     protected const DEFAULT_ORDER_HISTORY_SORT_DIRECTION = 'DESC';
 
+    protected const ORDER_SEARCH_PER_PAGE = 10;
+
     protected const ORDER_SEARCH_GROUPS = [
         'customer.order_history.search_group.all' => 'all',
         'customer.order_history.search_group.order_reference' => 'orderReference',
@@ -119,5 +121,13 @@ class CustomerPageConfig extends AbstractBundleConfig
     public function getOrderSearchGroups(): array
     {
         return static::ORDER_SEARCH_GROUPS;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrderSearchPerPage(): int
+    {
+        return static::ORDER_SEARCH_PER_PAGE;
     }
 }
