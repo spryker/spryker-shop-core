@@ -5,6 +5,7 @@
 
     <transfer name="Quote">
         <property name="orderCustomReference" type="string"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="QuoteResponse">
@@ -15,6 +16,14 @@
 
     <transfer name="QuoteError">
         <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
 </transfers>
