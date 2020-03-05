@@ -11,6 +11,7 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Yves\CustomerPage\CustomerPageDependencyProvider;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorageClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\AddressFormDataProvider;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\OrderSearchFormDataProvider;
 use SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandler;
@@ -114,6 +115,7 @@ class FormFactory extends AbstractFactory
     {
         return new OrderSearchFormDataProvider(
             $this->getConfig(),
+            $this->getSalesClient(),
             $this->getGlossaryStorageClient(),
             $this->getStore()
         );
@@ -149,6 +151,14 @@ class FormFactory extends AbstractFactory
     public function getGlossaryStorageClient(): CustomerPageToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface
+     */
+    public function getSalesClient(): CustomerPageToSalesClientInterface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_SALES);
     }
 
     /**

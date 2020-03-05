@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\CustomerPage\Handler;
 
+use ArrayObject;
 use DateTime;
 use Generated\Shared\Transfer\FilterFieldTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
@@ -36,7 +37,15 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
 
         $orderSearchFormData = $orderSearchForm->getData();
 
-        $orderListTransfer = $this->handleSearchGroupInputs($orderSearchFormData, $orderListTransfer);
+        if ($orderSearchFormData[OrderSearchForm::FIELD_RESET]) {
+            $orderSearchForm->setData([]);
+
+            return $orderListTransfer
+                ->setFilterFields(new ArrayObject())
+                ->setFilter(null);
+        }
+
+        $orderListTransfer = $this->handleSearchTypeInputs($orderSearchFormData, $orderListTransfer);
         $orderListTransfer = $this->handleDateInputs($orderSearchFormData, $orderListTransfer);
         $orderListTransfer = $this->handleOrderInputs($orderSearchFormData, $orderListTransfer);
         $orderListTransfer = $this->handleIsOrderItemsVisibleInput($orderSearchFormData, $orderListTransfer);
@@ -51,16 +60,16 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    protected function handleSearchGroupInputs(
+    protected function handleSearchTypeInputs(
         array $orderSearchFormData,
         OrderListTransfer $orderListTransfer
     ): OrderListTransfer {
-        $searchGroup = $orderSearchFormData[OrderSearchForm::FIELD_SEARCH_GROUP] ?? null;
+        $searchType = $orderSearchFormData[OrderSearchForm::FIELD_SEARCH_TYPE] ?? null;
         $searchText = $orderSearchFormData[OrderSearchForm::FIELD_SEARCH_TEXT] ?? null;
 
-        if ($searchGroup && $searchText) {
+        if ($searchType && $searchText) {
             $orderListTransfer->addFilterField(
-                $this->createFilterFieldTransfer($searchGroup, trim($searchText))
+                $this->createFilterFieldTransfer($searchType, trim($searchText))
             );
         }
 

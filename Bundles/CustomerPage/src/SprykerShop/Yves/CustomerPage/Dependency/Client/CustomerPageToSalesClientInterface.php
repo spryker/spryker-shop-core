@@ -39,4 +39,9 @@ interface CustomerPageToSalesClientInterface
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer;
+
+    /**
+     * @return string[]
+     */
+    public function getOrderSearchTypes(): array;
 }
