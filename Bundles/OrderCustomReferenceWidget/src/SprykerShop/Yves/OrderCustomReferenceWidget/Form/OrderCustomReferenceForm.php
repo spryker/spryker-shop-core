@@ -53,7 +53,7 @@ class OrderCustomReferenceForm extends AbstractType
             static::FIELD_ORDER_CUSTOM_REFERENCE,
             TextType::class,
             [
-                'label' => 'order_custom_reference.title',
+                'label' => false,
                 'required' => false,
                 'attr' => [
                     'placeholder' => 'order_custom_reference.form.placeholder',
