@@ -221,7 +221,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     {
         $totalsTransfer = $quoteTransfer->getTotals();
 
-        if ($totalsTransfer && ($totalsTransfer->getShipmentTotal() || $totalsTransfer->getShipmentTotal() === 0)) {
+        if ($totalsTransfer && $totalsTransfer->getShipmentTotal() !== null) {
             return $totalsTransfer->getShipmentTotal();
         }
 
