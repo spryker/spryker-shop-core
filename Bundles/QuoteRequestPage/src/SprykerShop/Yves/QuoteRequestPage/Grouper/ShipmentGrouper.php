@@ -8,8 +8,9 @@
 namespace SprykerShop\Yves\QuoteRequestPage\Grouper;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use SprykerShop\Yves\QuoteRequestPage\Checker\QuoteCheckerInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToShipmentServiceInterface;
-use SprykerShop\Yves\QuoteRequestPage\Filter\ItemsFilterInterface;
+use SprykerShop\Yves\QuoteRequestPage\Extractor\ItemExtractorInterface;
 
 class ShipmentGrouper implements ShipmentGrouperInterface
 {
@@ -19,20 +20,28 @@ class ShipmentGrouper implements ShipmentGrouperInterface
     protected $shipmentService;
 
     /**
-     * @var \SprykerShop\Yves\QuoteRequestPage\Filter\ItemsFilterInterface
+     * @var \SprykerShop\Yves\QuoteRequestPage\Extractor\ItemExtractorInterface
      */
-    protected $itemsFilter;
+    protected $itemExtractor;
+
+    /**
+     * @var \SprykerShop\Yves\QuoteRequestPage\Checker\QuoteCheckerInterface
+     */
+    protected $quoteChecker;
 
     /**
      * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToShipmentServiceInterface $shipmentService
-     * @param \SprykerShop\Yves\QuoteRequestPage\Filter\ItemsFilterInterface $itemsFilter
+     * @param \SprykerShop\Yves\QuoteRequestPage\Extractor\ItemExtractorInterface $itemExtractor
+     * @param \SprykerShop\Yves\QuoteRequestPage\Checker\QuoteCheckerInterface $quoteChecker
      */
     public function __construct(
         QuoteRequestPageToShipmentServiceInterface $shipmentService,
-        ItemsFilterInterface $itemsFilter
+        ItemExtractorInterface $itemExtractor,
+        QuoteCheckerInterface $quoteChecker
     ) {
         $this->shipmentService = $shipmentService;
-        $this->itemsFilter = $itemsFilter;
+        $this->itemExtractor = $itemExtractor;
+        $this->quoteChecker = $quoteChecker;
     }
 
     /**
@@ -42,14 +51,12 @@ class ShipmentGrouper implements ShipmentGrouperInterface
      */
     public function groupItemsByShippingAddress(QuoteRequestTransfer $quoteRequestTransfer): array
     {
-        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
-
-        if ($this->itemsFilter->isQuoteLevelShipmentUsed($quoteTransfer)) {
+        if ($this->quoteChecker->isQuoteLevelShipmentUsed($quoteRequestTransfer)) {
             return [];
         }
 
         return $this->shipmentService
-            ->groupItemsByShipment($this->itemsFilter->getItemsWithShipment($quoteTransfer))
+            ->groupItemsByShipment($this->itemExtractor->extractItemsWithShipment($quoteRequestTransfer))
             ->getArrayCopy();
     }
 }

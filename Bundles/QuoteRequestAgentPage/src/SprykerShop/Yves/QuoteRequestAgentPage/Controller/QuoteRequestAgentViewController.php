@@ -95,8 +95,7 @@ class QuoteRequestAgentViewController extends QuoteRequestAgentAbstractControlle
             ->createShipmentGrouper()
             ->groupItemsByShippingAddress($quoteRequestTransfer);
 
-        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
-        $itemsFilter = $this->getFactory()->createItemsFilter();
+        $itemExtractor = $this->getFactory()->createItemExtractor();
 
         return [
             'quoteRequest' => $quoteRequestTransfer,
@@ -106,8 +105,8 @@ class QuoteRequestAgentViewController extends QuoteRequestAgentAbstractControlle
             'isQuoteRequestRevisable' => $quoteRequestAgentClient->isQuoteRequestRevisable($quoteRequestTransfer),
             'isQuoteRequestEditable' => $quoteRequestAgentClient->isQuoteRequestEditable($quoteRequestTransfer),
             'shipmentGroups' => $shipmentGroupTransfers,
-            'itemsWithShipment' => $itemsFilter->getItemsWithShipment($quoteTransfer),
-            'itemsWithoutShipment' => $itemsFilter->getItemsWithoutShipment($quoteTransfer),
+            'itemsWithShipment' => $itemExtractor->extractItemsWithShipment($quoteRequestTransfer),
+            'itemsWithoutShipment' => $itemExtractor->extractItemsWithoutShipment($quoteRequestTransfer),
         ];
     }
 

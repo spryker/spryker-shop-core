@@ -518,7 +518,6 @@
 
         {% block productListInner %}
             {% for cartItem in data.items %}
-
                 {% block productItem %}
                     {% embed molecule('product-cart-item', 'CartPage') ignore missing with {
                         data: {
@@ -550,7 +549,7 @@
                                 {% if data.product.quantitySalesUnit %}
                                     {% set value = data.product.quantitySalesUnit.value %}
                                     {% set precision = data.product.quantitySalesUnit.precision %}
-                                    {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default('') %}
+                                    {% set salesUnitName = data.product.quantitySalesUnit.productMeasurementUnit.name | default %}
 
                                     <p>
                                         <small class="text-secondary">
