@@ -22,7 +22,7 @@
 {% set sourceUnitPrice = '' %}
 
 {% if data.sourcePrice %}
-    {% set sourceUnitPrice = (data.priceMode == priceModeGross) ? data.sourcePrice.grossAmount : data.sourcePrice.netAmount %}
+    {% set sourceUnitPrice = data.priceMode == priceModeGross ? data.sourcePrice.grossAmount : data.sourcePrice.netAmount %}
 {% endif %}
 
 {% block body %}
