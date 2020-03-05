@@ -1,26 +1,21 @@
-{% extends template('page-layout-agent', 'AgentPage') %}
-
-{% define data = {
-    title: 'quote_request_page.quote_request' | trans,
-    activePage: 'quoteRequestAgent'
-} %}
-
-{% block title %}
-    <h3>{{ data.title }}</h3>
-{% endblock %}
+{% extends template('page-layout-quote-request', 'QuoteRequestPage') %}
 
 {% block breadcrumbs %}
+    {% set breadcrumbSteps = [
+        {
+            label: 'agent.account.page_title' | trans,
+            url: path('agent/overview'),
+        },
+        {
+            label: 'quote_request_page.quote_request' | trans,
+            url: path('agent/quote-request'),
+        },
+    ] %}
+    {% set breadcrumbSteps = breadcrumbSteps | merge(breadcrumbExtend) %}
+
     {% include molecule('breadcrumb') with {
         data: {
-            steps: [
-                {
-                    label: 'agent.account.page_title' | trans,
-                    url: path('agent/overview'),
-                },
-                {
-                    label: 'quote_request_page.quote_request' | trans,
-                },
-            ]
-        }
+            steps: breadcrumbSteps,
+        },
     } only %}
 {% endblock %}

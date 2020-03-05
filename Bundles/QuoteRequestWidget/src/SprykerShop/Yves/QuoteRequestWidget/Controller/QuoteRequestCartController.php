@@ -74,7 +74,8 @@ class QuoteRequestCartController extends AbstractController
 
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
-        if ($request->get(QuoteRequestCartForm::SUBMIT_BUTTON_SAVE) === null
+        if (
+            $request->get(QuoteRequestCartForm::SUBMIT_BUTTON_SAVE) === null
             && $quoteRequestResponseTransfer->getIsSuccessful()
         ) {
             $this->reloadQuoteForCustomer();
