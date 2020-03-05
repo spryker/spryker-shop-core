@@ -33,11 +33,11 @@
     {% endblock %}
 
     {% for shipmentGroup in data.shipmentGroups %}
-        {% set isShipmentMethod = shipmentGroup.shipment is not empty and shipmentGroup.shipment.method is not empty %}
+        {% set isShipmentMethod = shipmentGroup.shipment is defined and shipmentGroup.shipment and shipmentGroup.shipment.method %}
         {% set shipmentSourcePrice = isShipmentMethod and shipmentGroup.shipment.method.sourcePrice is defined ? shipmentGroup.shipment.method.sourcePrice %}
 
         {% if shipmentSourcePrice %}
-            {% set sourceUnitPrice = data.priceMode == priceModeGross ? shipmentSourcePrice.grossAmount : shipmentSourcePrice.netAmount %}
+            {% set sourceUnitPrice = (data.priceMode == priceModeGross) ? shipmentSourcePrice.grossAmount : shipmentSourcePrice.netAmount %}
         {% else %}
             {% set sourceUnitPrice = shipmentGroup.shipment.method.storeCurrencyPrice %}
         {% endif %}

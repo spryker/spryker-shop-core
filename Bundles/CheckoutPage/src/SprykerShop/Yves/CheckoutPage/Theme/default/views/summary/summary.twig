@@ -123,7 +123,7 @@
                     <div class="box">
                         <h6>{{ 'checkout.step.summary.delivery_method' | trans }}</h6>
                         <hr>
-                        {% set isShipmentMethod = shipmentGroup.shipment is not empty and shipmentGroup.shipment.method is not empty %}
+                        {% set isShipmentMethod = shipmentGroup.shipment is defined and shipmentGroup.shipment and shipmentGroup.shipment.method %}
                         {% set shipmentTotalPrice = isShipmentMethod and shipmentGroup.shipment.method.sourcePrice is defined ? shipmentGroup.shipment.method.sourcePrice %}
 
                         {% include molecule('delivery-information', 'CustomerPage') ignore missing with {

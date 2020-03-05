@@ -22,20 +22,23 @@
 {% set sourceUnitPrice = '' %}
 
 {% if data.sourcePrice %}
-    {% set sourceUnitPrice = data.priceMode == priceModeGross ? data.sourcePrice.grossAmount : data.sourcePrice.netAmount %}
+    {% set sourceUnitPrice = (data.priceMode == priceModeGross) ? data.sourcePrice.grossAmount : data.sourcePrice.netAmount %}
 {% endif %}
 
 {% block body %}
     <li class="list__item">{{ data.carrierName }}</li>
     <li class="list__item">
-        {{ data.methodName }}
+        {{ data.methodName }}<br>
+        <span>
+            {% if sourceUnitPrice or sourceUnitPrice is same as(0) %}
+                <s>{{ data.storeCurrencyPrice | money(true, data.currencyIsoCode) }}</s>
+                {{ sourceUnitPrice | money(true, data.currencyIsoCode) }}
+            {% else %}
+                {{ data.storeCurrencyPrice | money(true, data.currencyIsoCode) }}
+            {% endif %}
+        </span>
     </li>
     <li class="list__item">
-        {% if sourceUnitPrice or sourceUnitPrice is same as(0) %}
-            <s>{{ data.storeCurrencyPrice | money(true, data.currencyIsoCode) }}</s>
-            {{ sourceUnitPrice | money(true, data.currencyIsoCode) }}
-        {% else %}
-            {{ data.storeCurrencyPrice | money(true, data.currencyIsoCode) }}
-        {% endif %}
+
     </li>
 {% endblock %}
