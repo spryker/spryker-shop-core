@@ -108,4 +108,7 @@
     <transfer name="Address">
     </transfer>
 
+    <transfer name="ShipmentMethod">
+    </transfer>
+
 </transfers>
