@@ -41,7 +41,7 @@ class QuoteChecker implements QuoteCheckerInterface
      *
      * @return bool
      */
-    protected function isItemWithShipment(ItemTransfer $itemTransfer): bool
+    public function isItemWithShipment(ItemTransfer $itemTransfer): bool
     {
         return $itemTransfer->getShipment()
             && $itemTransfer->getShipment()->getMethod()

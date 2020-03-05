@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Extractor;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use SprykerShop\Yves\QuoteRequestAgentPage\Checker\QuoteCheckerInterface;
 
@@ -42,7 +41,7 @@ class ItemExtractor implements ItemExtractorInterface
         $itemTransfersWithShipment = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($this->isItemWithShipment($itemTransfer)) {
+            if ($this->quoteChecker->isItemWithShipment($itemTransfer)) {
                 $itemTransfersWithShipment[] = $itemTransfer;
             }
         }
@@ -65,23 +64,11 @@ class ItemExtractor implements ItemExtractorInterface
         $itemTransfersWithoutShipment = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$this->isItemWithShipment($itemTransfer)) {
+            if (!$this->quoteChecker->isItemWithShipment($itemTransfer)) {
                 $itemTransfersWithoutShipment[] = $itemTransfer;
             }
         }
 
         return $itemTransfersWithoutShipment;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
-    protected function isItemWithShipment(ItemTransfer $itemTransfer): bool
-    {
-        return $itemTransfer->getShipment()
-            && $itemTransfer->getShipment()->getMethod()
-            && $itemTransfer->getShipment()->getShippingAddress();
     }
 }

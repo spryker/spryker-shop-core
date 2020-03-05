@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\QuoteRequestAgentPage\Checker;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 
 interface QuoteCheckerInterface
@@ -19,4 +20,11 @@ interface QuoteCheckerInterface
      * @return bool
      */
     public function isQuoteLevelShipmentUsed(QuoteRequestTransfer $quoteRequestTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    public function isItemWithShipment(ItemTransfer $itemTransfer): bool;
 }
