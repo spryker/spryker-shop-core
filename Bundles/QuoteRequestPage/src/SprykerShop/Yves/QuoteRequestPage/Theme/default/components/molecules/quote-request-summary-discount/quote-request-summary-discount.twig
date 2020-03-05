@@ -1,0 +1,89 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'quote-request-summary-discount',
+} %}
+
+{% define data = {
+    voucherDiscounts: null,
+    ruleDiscounts: null,
+    discountTotal: required,
+    currency: required,
+    isQuoteEditable: false,
+} %}
+
+{% block component %}
+    {% set hasDiscount = data.discountTotal and (data.voucherDiscounts or data.ruleDiscounts) %}
+    {% if hasDiscount %}
+        <hr>
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% set classDiscount = 'grid grid--justify' %}
+{% set classDiscountTitle = 'col' %}
+{% set classDiscountValue = 'col' %}
+
+{% block body %}
+    {% if data.voucherDiscounts is not empty %}
+        {% block voucherDiscountsWrapper %}
+            {% if data.isQuoteEditable %}
+                {% block voucherDiscountsRemoveAction %}
+                    <a class="float-right text-small" href="{{ url('discount/voucher/clear') }}">
+                        {% include atom('icon') with {
+                            modifiers: ['smaller'],
+                            data: {
+                                name: 'times',
+                            },
+                        } only %}
+                        {{ 'cart.vouchers.clear-all' | trans }}
+                    </a>
+                {% endblock %}
+            {% endif %}
+
+            {% block voucherDiscountsTitle %}
+                <strong>{{ 'cart.vouchers' | trans }}</strong>
+            {% endblock %}
+
+            {% for voucherDiscount in data.voucherDiscounts %}
+                {% block voucherDiscounts %}
+                    <div class="{{ classDiscount }}">
+                        <span class="{{ classDiscountTitle }}">
+                            {{ voucherDiscount.displayName }}
+                            {% if data.isQuoteEditable %}
+                                <br>
+                                <a class="text-small" href="{{ url('discount/voucher/remove', {'code': voucherDiscount.voucherCode}) }}">
+                                    {% include atom('icon') with {
+                                        modifiers: ['smaller'],
+                                        data: {
+                                            name: 'times',
+                                        },
+                                    } only %}
+                                    {{ 'cart.voucher.remove' | trans }}
+                                </a>
+                            {% endif %}
+                        </span>
+                        <span class="{{ classDiscountValue }}">- {{ voucherDiscount.amount | money(true, data.currency.code) }}</span>
+                    </div>
+                {% endblock %}
+            {% endfor %}
+        {% endblock %}
+    {% endif %}
+
+    {% if data.ruleDiscounts is not empty %}
+        {% block ruleDiscountsWrapper %}
+            {% block ruleDiscountsTitle %}
+                <strong>{{ 'cart.discounts' | trans }}</strong>
+            {% endblock %}
+
+            {% for ruleDiscount in data.ruleDiscounts %}
+                {% block ruleDiscounts %}
+                    <div class="{{ classDiscount }}">
+                        <span class="{{ classDiscountTitle }}">{{ ruleDiscount.displayName }}</span>
+                        <span class="{{ classDiscountValue }}">- {{ ruleDiscount.amount | money(true, data.currency.code) }}</span>
+                    </div>
+                {% endblock %}
+            {% endfor %}
+        {% endblock %}
+    {% endif %}
+{% endblock %}

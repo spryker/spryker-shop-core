@@ -1,0 +1,54 @@
+{% extends template('page-layout-quote-request', 'QuoteRequestAgentPage') %}
+
+{% define data = {
+    title: 'quote_request_page.quote_request.title_attention' | trans,
+    form: required,
+    quoteRequest: required,
+    quoteRequestReference: _view.quoteRequestReference,
+} %}
+
+{% block breadcrumbs %}
+    {% set breadcrumbExtend = [
+        {
+            label: '#' ~ data.quoteRequest.quoteRequestReference,
+            url: path('agent/quote-request/details', {
+                quoteRequestReference: data.quoteRequest.quoteRequestReference,
+            }),
+        },
+        {
+            label: 'quote_request_page.quote_request.breadcrumb.edit' | trans,
+            url: path('agent/quote-request/edit', {
+                quoteRequestReference: data.quoteRequest.quoteRequestReference,
+            }),
+        },
+        {
+            label: 'quote_request_page.quote_request.breadcrumb.attention' | trans,
+        },
+    ] %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="box">
+        {% block message %}{% endblock %}
+
+        {% block form %}
+            {% include molecule('form') with {
+                data: {
+                    form: data.form,
+                    submit: {
+                        enable: true,
+                    },
+                    cancel: {
+                        enable: true,
+                        url: url('agent/quote-request/edit', {
+                            quoteRequestReference: data.quoteRequest.quoteRequestReference,
+                        }),
+                        text: 'general.back.button' | trans,
+                    },
+                },
+            } only %}
+        {% endblock %}
+    </div>
+{% endblock %}

@@ -77,17 +77,12 @@
 
     {% block shipmentInformation %}
         {% if data.shipment %}
-            {% block shipmentInformationTitle %}
-                {% if not data.hasMultiShipments %}
-                    <h4 class="spacing-x spacing-top spacing-top--big">{{ 'quote_request_page.quote_request.title_shipment_method' | trans }}</h4>
-                {% endif %}
-            {% endblock %}
-
             {% block shipmentInformationContent %}
                 {% include molecule('quote-request-shipment-information', 'QuoteRequestPage') with {
                     data: {
                         shipment: data.shipment,
-                        showAddress: data.hasMultiShipments,
+                        hasMultiShipments: data.hasMultiShipments,
+                        priceMode: data.quote.priceMode,
                     },
                 } only %}
             {% endblock %}

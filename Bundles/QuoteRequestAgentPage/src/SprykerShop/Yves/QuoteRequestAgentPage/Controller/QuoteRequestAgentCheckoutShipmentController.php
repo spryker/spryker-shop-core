@@ -80,7 +80,7 @@ class QuoteRequestAgentCheckoutShipmentController extends QuoteRequestAgentAbstr
             return $response;
         }
 
-        return $this->view($response, [], '@QuoteRequestAgentPage/views/quote-request-checkout-shipment-confirm/quote-request-checkout-shipment-confirm.twig');
+        return $this->view($response, [], '@QuoteRequestAgentPage/views/quote-request-edit-shipment-confirm/quote-request-edit-shipment-confirm.twig');
     }
 
     /**
