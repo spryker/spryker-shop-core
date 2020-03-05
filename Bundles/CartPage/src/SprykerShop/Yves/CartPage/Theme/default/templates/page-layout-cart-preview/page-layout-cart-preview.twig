@@ -6,6 +6,7 @@
     request: app.request,
     isQuoteEditable: false,
     isQuoteValid: false,
+    requestUri: app.request.requestUri,
 } %}
 
 {% block header %}
@@ -192,15 +193,18 @@
     {% endif %}
 
     {% block orderCustomReference %}
-        {% widget 'OrderCustomReferenceWidget' args [
-            data.cart,
-            app.request.requestUri
-        ] only %}
-            {% block referenceCartView %}
-                {{ parent() }}
-                <hr>
-            {% endblock %}
-        {% endwidget %}
+        {% if data.cart.orderCustomReference is defined and data.cart.orderCustomReference is not empty %}
+            <div class="box">
+                {% widget 'OrderCustomReferenceWidget' args [
+                    data.cart,
+                    data.requestUri
+                ] only %}
+                    {% block referenceView %}
+                        {{ parent() }}
+                    {% endblock %}
+                {% endwidget %}
+            </div>
+        {% endif %}
     {% endblock %}
 
 {% endblock %}

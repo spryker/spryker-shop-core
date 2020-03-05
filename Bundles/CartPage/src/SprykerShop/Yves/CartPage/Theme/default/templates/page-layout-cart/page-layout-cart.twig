@@ -9,6 +9,7 @@
     attributes: _view.attributes,
     request: app.request,
     title: 'cart.cart' | trans,
+    requestUri: app.request.requestUri,
 } %}
 
 {% block breadcrumbs %}
@@ -184,14 +185,14 @@
                         {% block orderCustomReference %}
                             {% widget 'OrderCustomReferenceWidget' args [
                                 data.cart,
-                                app.request.requestUri
+                                data.requestUri
                             ] only %}
                                 {% block referenceForm %}
                                     {{ parent() }}
                                     <hr>
                                 {% endblock %}
 
-                                {% block referenceCartView %}
+                                {% block referenceView %}
                                     {{ parent() }}
                                     <hr>
                                 {% endblock %}

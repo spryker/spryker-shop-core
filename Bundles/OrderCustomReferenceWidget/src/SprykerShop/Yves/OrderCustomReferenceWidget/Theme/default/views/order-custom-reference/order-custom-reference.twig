@@ -5,8 +5,13 @@
     orderCustomReference: _widget.quote.orderCustomReference,
     orderCustomReferenceForm: _widget.orderCustomReferenceForm,
     isEditable: _widget.isEditable,
-    isGuest: _widget.isGuest,
 } %}
+
+{%- block template -%}
+    {% if data.quote.idQuote %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
 
 {% block body %}
     {% set canWrite = data.isEditable or can('WriteSharedCartPermissionPlugin', data.quote.idQuote) %}
@@ -22,21 +27,13 @@
             {% endblock %}
         {% endif %}
 
-        {% if not canWrite and not data.isGuest %}
+        {% if not canWrite %}
             {% block referenceView %}
                 {% include molecule('order-custom-reference-view', 'OrderCustomReferenceWidget') with {
                     data: {
                         orderCustomReference: data.quote.orderCustomReference,
                     },
                 } only %}
-            {% endblock %}
-        {% endif %}
-
-        {% if data.isGuest %}
-            {% block referenceCartView %}
-                <input placeholder="{{ 'order_custom_reference.placeholder.login' | trans }}"
-                       value="{{ data.orderCustomReference }}"
-                       class="input input--expand" disabled>
             {% endblock %}
         {% endif %}
     {% endblock %}
