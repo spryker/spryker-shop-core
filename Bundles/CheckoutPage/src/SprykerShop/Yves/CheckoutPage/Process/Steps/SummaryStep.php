@@ -196,7 +196,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer[]|\ArrayObject $shipmentGroups
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroups
      *
      * @return int
      */
@@ -212,7 +212,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer[]|\ArrayObject $shipmentGroups
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroups
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int
