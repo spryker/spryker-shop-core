@@ -44,6 +44,7 @@
         <property name="totals" type="Totals"/>
         <property name="quoteRequestReference" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
     </transfer>
 
     <transfer name="Totals">
@@ -101,6 +102,7 @@
 
     <transfer name="Shipment">
         <property name="shippingAddress" type="Address"/>
+        <property name="method" type="ShipmentMethod"/>
     </transfer>
 
     <transfer name="Address">
