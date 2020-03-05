@@ -18,7 +18,7 @@ use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationCli
 use SprykerShop\Yves\CheckoutPage\GiftCard\GiftCardItemsCheckerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
+class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterface, \Spryker\Yves\StepEngine\Dependency\Step\StepWithCodeInterface
 {
     /**
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface
@@ -210,5 +210,10 @@ class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterfa
         }
 
         return true;
+    }
+
+    public function getCode(): string
+    {
+        return 'shipment';
     }
 }

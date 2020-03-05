@@ -29,4 +29,12 @@ class QuoteRequestPageToQuoteClientBridge implements QuoteRequestPageToQuoteClie
     {
         $this->quoteClient->clearQuote();
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote()
+    {
+        return $this->quoteClient->getQuote();
+    }
 }

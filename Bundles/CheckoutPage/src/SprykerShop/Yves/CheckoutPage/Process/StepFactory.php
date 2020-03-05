@@ -35,6 +35,7 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\EntryStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PaymentStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PlaceOrderStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\Resolver\StepResolver;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\PostConditionChecker as ShipmentStepPostConditionChecker;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\StepExecutorInterface;
@@ -95,17 +96,34 @@ class StepFactory extends AbstractFactory
             CheckoutPageControllerProvider::CHECKOUT_ERROR
         );
 
-        $stepCollection
-            ->addStep($this->createEntryStep())
-            ->addStep($this->createCustomerStep())
-            ->addStep($this->createAddressStep())
-            ->addStep($this->createShipmentStep())
-            ->addStep($this->createPaymentStep())
-            ->addStep($this->createSummaryStep())
-            ->addStep($this->createPlaceOrderStep())
-            ->addStep($this->createSuccessStep());
+        return $this->resolveSteps($stepCollection);
+    }
 
-        return $stepCollection;
+    public function resolveSteps(StepCollectionInterface $stepCollection)
+    {
+        $steps = [
+            $this->createEntryStep(),
+            $this->createCustomerStep(),
+            $this->createAddressStep(),
+            $this->createShipmentStep(),
+            $this->createPaymentStep(),
+            $this->createSummaryStep(),
+            $this->createPlaceOrderStep(),
+            $this->createSuccessStep(),
+        ];
+
+        return (new StepResolver($this->getQuoteClient(), $this->getCheckoutStepResolverStrategyPlugins()))
+            ->resolveSteps($steps, $stepCollection);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface[]
+     */
+    protected function getCheckoutStepResolverStrategyPlugins(): array
+    {
+        return [
+            new \SprykerShop\Yves\QuoteRequestPage\Plugin\CheckoutPage\QRCheckoutStepResolverStrategyPlugin(),
+        ];
     }
 
     /**

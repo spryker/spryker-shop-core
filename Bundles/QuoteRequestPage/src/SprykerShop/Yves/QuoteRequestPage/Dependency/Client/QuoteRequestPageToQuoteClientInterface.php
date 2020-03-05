@@ -13,4 +13,9 @@ interface QuoteRequestPageToQuoteClientInterface
      * @return void
      */
     public function clearQuote();
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote();
 }

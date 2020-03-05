@@ -13,7 +13,7 @@ use SprykerShop\Yves\CheckoutPage\CheckoutPageConfig;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterface
+class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterface, \Spryker\Yves\StepEngine\Dependency\Step\StepWithCodeInterface
 {
     /**
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface
@@ -155,5 +155,10 @@ class AddressStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         }
 
         return true;
+    }
+
+    public function getCode(): string
+    {
+        return 'address';
     }
 }
