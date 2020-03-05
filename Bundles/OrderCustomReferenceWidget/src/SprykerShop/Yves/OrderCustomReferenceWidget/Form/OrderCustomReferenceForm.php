@@ -55,6 +55,9 @@ class OrderCustomReferenceForm extends AbstractType
             [
                 'label' => 'order_custom_reference.title',
                 'required' => false,
+                'attr' => [
+                    'placeholder' => 'order_custom_reference.form.placeholder',
+                ],
             ]
         );
 
