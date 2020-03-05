@@ -17,6 +17,8 @@ class QuoteRequestAgentWidgetConfig extends AbstractBundleConfig
     public const STATUS_CLOSED = 'closed';
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getExcludedOverviewStatuses(): array
