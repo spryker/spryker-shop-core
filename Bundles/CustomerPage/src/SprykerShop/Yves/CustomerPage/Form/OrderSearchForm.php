@@ -22,7 +22,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class OrderSearchForm extends AbstractType
 {
-    public const FIELD_SEARCH_GROUP = 'searchGroup';
+    public const FIELD_SEARCH_TYPE = 'searchType';
     public const FIELD_SEARCH_TEXT = 'searchText';
     public const FIELD_DATE_FROM = 'dateFrom';
     public const FIELD_DATE_TO = 'dateTo';
@@ -31,8 +31,9 @@ class OrderSearchForm extends AbstractType
     public const FIELD_ORDER_DIRECTION = 'orderDirection';
     public const FIELD_PAGE = 'page';
     public const FIELD_PER_PAGE = 'perPage';
+    public const FIELD_RESET = 'reset';
 
-    public const OPTION_ORDER_SEARCH_GROUPS = 'OPTION_ORDER_SEARCH_GROUPS';
+    public const OPTION_ORDER_SEARCH_TYPES = 'OPTION_ORDER_SEARCH_TYPES';
     public const OPTION_CURRENT_TIMEZONE = 'OPTION_CURRENT_TIMEZONE';
     public const OPTION_PER_PAGE = 'OPTION_PER_PAGE';
 
@@ -46,7 +47,7 @@ class OrderSearchForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([
-            static::OPTION_ORDER_SEARCH_GROUPS,
+            static::OPTION_ORDER_SEARCH_TYPES,
             static::OPTION_CURRENT_TIMEZONE,
             static::OPTION_PER_PAGE,
         ]);
@@ -68,7 +69,7 @@ class OrderSearchForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addSearchGroupField($builder, $options)
+        $this->addSearchTypeField($builder, $options)
             ->addSearchTextField($builder)
             ->addDateFromField($builder, $options)
             ->addDateToField($builder, $options)
@@ -76,7 +77,8 @@ class OrderSearchForm extends AbstractType
             ->addOrderByField($builder)
             ->addOrderDirectionField($builder)
             ->addPageField($builder)
-            ->addPerPageField($builder, $options);
+            ->addPerPageField($builder, $options)
+            ->addResetField($builder);
 
         $this->executeOrderSearchFormExpanderPlugins($builder, $options);
     }
@@ -87,14 +89,13 @@ class OrderSearchForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSearchGroupField(FormBuilderInterface $builder, array $options)
+    protected function addSearchTypeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_SEARCH_GROUP, ChoiceType::class, [
-            'choices' => $options[static::OPTION_ORDER_SEARCH_GROUPS],
-            'data' => reset($options[static::OPTION_ORDER_SEARCH_GROUPS]),
+        $builder->add(static::FIELD_SEARCH_TYPE, ChoiceType::class, [
+            'choices' => $options[static::OPTION_ORDER_SEARCH_TYPES],
+            'data' => reset($options[static::OPTION_ORDER_SEARCH_TYPES]),
             'placeholder' => false,
             'required' => false,
-            'choice_translation_domain' => true,
             'label' => 'customer.order_history.search',
         ]);
 
@@ -223,6 +224,21 @@ class OrderSearchForm extends AbstractType
         $builder->add(static::FIELD_PER_PAGE, HiddenType::class, [
             'data' => $options[static::OPTION_PER_PAGE],
             'required' => true,
+            'label' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addResetField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_RESET, HiddenType::class, [
+            'required' => false,
             'label' => false,
         ]);
 

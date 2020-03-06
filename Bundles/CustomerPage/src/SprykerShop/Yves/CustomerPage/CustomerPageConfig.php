@@ -26,13 +26,6 @@ class CustomerPageConfig extends AbstractBundleConfig
 
     protected const ORDER_SEARCH_PER_PAGE = 10;
 
-    protected const ORDER_SEARCH_GROUPS = [
-        'customer.order_history.search_group.all' => 'all',
-        'customer.order_history.search_group.order_reference' => 'orderReference',
-        'customer.order_history.search_group.product_name' => 'itemName',
-        'customer.order_history.search_group.product_sku' => 'itemSku',
-    ];
-
     /**
      * @uses \Spryker\Zed\Customer\CustomerConfig::MAX_LENGTH_CUSTOMER_PASSWORD
      */
@@ -113,14 +106,6 @@ class CustomerPageConfig extends AbstractBundleConfig
     public function getDefaultOrderHistorySortDirection(): string
     {
         return static::DEFAULT_ORDER_HISTORY_SORT_DIRECTION;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getOrderSearchGroups(): array
-    {
-        return static::ORDER_SEARCH_GROUPS;
     }
 
     /**

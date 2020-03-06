@@ -7,11 +7,18 @@
 
 namespace SprykerShop\Yves\MerchantSwitcherWidget;
 
+use ArrayObject;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Yves\Kernel\AbstractFactory;
+use SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookie;
+use SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookieInterface;
 use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSearchClientInterface;
+use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSwitcherClientInterface;
+use SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToQuoteClientInterface;
 use SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader\MerchantReader;
 use SprykerShop\Yves\MerchantSwitcherWidget\MerchantReader\MerchantReaderInterface;
+use SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcher\MerchantSwitcher;
+use SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcher\MerchantSwitcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -26,6 +33,29 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
     {
         return new MerchantReader(
             $this->getMerchantSearchClient(),
+            $this->createSelectedMerchantCookie(),
+            $this->createMerchantSwitcher()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MerchantSwitcherWidget\MerchantSwitcher\MerchantSwitcherInterface
+     */
+    public function createMerchantSwitcher(): MerchantSwitcherInterface
+    {
+        return new MerchantSwitcher(
+            $this->getQuoteClient(),
+            $this->getMerchantSwitcherClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MerchantSwitcherWidget\Cookie\SelectedMerchantCookieInterface
+     */
+    public function createSelectedMerchantCookie(): SelectedMerchantCookieInterface
+    {
+        return new SelectedMerchantCookie(
+            $this->getCookies(),
             $this->getRequest(),
             $this->getConfig()
         );
@@ -48,10 +78,34 @@ class MerchantSwitcherWidgetFactory extends AbstractFactory
     }
 
     /**
+     * @return \ArrayObject|\Symfony\Component\HttpFoundation\Cookie[]
+     */
+    public function getCookies(): ArrayObject
+    {
+        return $this->getApplication()['cookies'];
+    }
+
+    /**
      * @return \Spryker\Shared\Kernel\Communication\Application
      */
     public function getApplication(): Application
     {
         return $this->getProvidedDependency(MerchantSwitcherWidgetDependencyProvider::PLUGIN_APPLICATION);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToQuoteClientInterface
+     */
+    public function getQuoteClient(): MerchantSwitcherWidgetToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(MerchantSwitcherWidgetDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\MerchantSwitcherWidget\Dependency\Client\MerchantSwitcherWidgetToMerchantSwitcherClientInterface
+     */
+    public function getMerchantSwitcherClient(): MerchantSwitcherWidgetToMerchantSwitcherClientInterface
+    {
+        return $this->getProvidedDependency(MerchantSwitcherWidgetDependencyProvider::CLIENT_MERCHANT_SWITCHER);
     }
 }

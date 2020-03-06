@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
+use SprykerShop\Yves\CustomerPage\Form\OrderSearchForm;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -76,12 +78,13 @@ class OrderController extends AbstractCustomerController
                 ->createOrderSearchFormDataProvider();
 
             $orderSearchForm = $customerPageFactory->createCustomerFormFactory()
-                ->getOrderSearchForm([], $orderSearchFormDataProvider->getOptions($this->getLocale()))
-                ->handleRequest($request);
+                ->getOrderSearchForm([], $orderSearchFormDataProvider->getOptions($this->getLocale()));
 
-            $orderListTransfer = $customerPageFactory->createCustomerFormFactory()
-                ->createOrderSearchFormHandler()
-                ->handleOrderSearchFormSubmit($orderSearchForm, $orderListTransfer);
+            $orderListTransfer = $this->handleOrderSearchFormSubmit(
+                $request,
+                $orderSearchForm,
+                $orderListTransfer
+            );
         }
 
         $orderListTransfer = $customerPageFactory->createOrderReader()
@@ -110,6 +113,32 @@ class OrderController extends AbstractCustomerController
             $this->getFactory()->getCustomerOrderViewWidgetPlugins(),
             '@CustomerPage/views/order-detail/order-detail.twig'
         );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\Form\FormInterface $orderSearchForm
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    protected function handleOrderSearchFormSubmit(
+        Request $request,
+        FormInterface $orderSearchForm,
+        OrderListTransfer $orderListTransfer
+    ): OrderListTransfer {
+        $isReset = $request->request->get(OrderSearchForm::FORM_NAME)[OrderSearchForm::FIELD_RESET] ?? null;
+
+        if ($isReset) {
+            return $orderListTransfer;
+        }
+
+        $orderSearchForm->handleRequest($request);
+
+        return $this->getFactory()
+            ->createCustomerFormFactory()
+            ->createOrderSearchFormHandler()
+            ->handleOrderSearchFormSubmit($orderSearchForm, $orderListTransfer);
     }
 
     /**
