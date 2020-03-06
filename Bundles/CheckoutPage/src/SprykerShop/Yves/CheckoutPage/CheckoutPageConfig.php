@@ -27,6 +27,8 @@ class CheckoutPageConfig extends AbstractBundleConfig
     public const ESCAPE_ROUTE = 'home';
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function cleanCartAfterOrderCreation()
@@ -35,6 +37,8 @@ class CheckoutPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getEscapeRoute(): string

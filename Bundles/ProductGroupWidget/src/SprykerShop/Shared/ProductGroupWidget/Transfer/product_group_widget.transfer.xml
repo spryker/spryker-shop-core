@@ -8,6 +8,12 @@
     </transfer>
 
     <transfer name="ProductView">
+        <property name="rating" type="ProductReviewSummary"/>
+        <property name="addToCartUrl" type="string"/>
+    </transfer>
+
+    <transfer name="ProductReviewSummary">
+        <property name="averageRating" type="float"/>
     </transfer>
 
 </transfers>
