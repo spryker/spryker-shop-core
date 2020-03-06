@@ -9,7 +9,7 @@ namespace SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-interface OrderSearchFormFormExpanderPluginInterface
+interface OrderSearchFormExpanderPluginInterface
 {
     /**
      * Specification:
