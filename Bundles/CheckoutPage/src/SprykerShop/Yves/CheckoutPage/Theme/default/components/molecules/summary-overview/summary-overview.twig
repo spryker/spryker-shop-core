@@ -22,6 +22,7 @@
     cartQuantity: cartQuantity is defined ? cartQuantity : app['cart.quantity'] | default,
     shipmentGroups: required,
     priceMode: null,
+    shipmentExpenseType: null,
 
     prices: {
         subTotal: required,
@@ -68,19 +69,12 @@
         <li>
             <strong class="float-right">{{ data.totalCosts | money }}</strong>
             <strong>{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
-            {% for shipmentGroup in data.shipmentGroups %}
-                {% set isShipmentMethod = shipmentGroup.shipment is defined and shipmentGroup.shipment and shipmentGroup.shipment.method %}
-                {% set shipmentSourcePrice = isShipmentMethod and shipmentGroup.shipment.method.sourcePrice is defined ? shipmentGroup.shipment.method.sourcePrice %}
-
-                {% if shipmentSourcePrice %}
-                    {% set sourceUnitPrice = (data.priceMode == priceModeGross) ? shipmentSourcePrice.grossAmount : shipmentSourcePrice.netAmount %}
-                {% else %}
-                    {% set sourceUnitPrice = shipmentGroup.shipment.method.storeCurrencyPrice %}
-                {% endif %}
+            {% for expense in data.expenses if expense.type == data.shipmentExpenseType %}
+                {% set sourceUnitPrice = (data.priceMode == priceModeGross) ? expense.unitGrossPrice : expense.unitNetPrice %}
 
                 <div class="grid grid--justify">
-                    <span class="col col--sm-10">{{ shipmentGroup.shipment.method.carrierName }}
-                        - {{ shipmentGroup.shipment.method.name }}</span>
+                    <span class="col col--sm-10">{{ expense.shipment.method.carrierName }}
+                        - {{ expense.shipment.method.name }}</span>
                     <span class="col col--expand text-right">{{ sourceUnitPrice | money }}</span>
                 </div>
             {% endfor %}
