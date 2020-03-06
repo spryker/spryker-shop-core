@@ -72,11 +72,6 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     }
 
     /**
-     * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE.
-     */
-    protected const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
@@ -136,7 +131,6 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
             'totalCosts' => $this->getShipmentTotalCosts($shipmentGroups, $quoteTransfer),
             'isPlaceableOrder' => $isPlaceableOrderResponseTransfer->getIsSuccess(),
             'isPlaceableOrderErrors' => $isPlaceableOrderResponseTransfer->getErrors(),
-            'shipmentExpenseType' => static::SHIPMENT_EXPENSE_TYPE,
         ];
     }
 

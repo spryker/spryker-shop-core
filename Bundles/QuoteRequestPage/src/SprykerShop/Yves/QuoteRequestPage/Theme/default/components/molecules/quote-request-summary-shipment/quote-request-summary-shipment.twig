@@ -9,6 +9,7 @@
     shipmentTotal: required,
     currencyCode: required,
     priceMode: null,
+    expenses: [],
 } %}
 
 {% block component %}
@@ -23,6 +24,7 @@
 {% set classShipmentValue = 'col' %}
 
 {% set priceModeGross = 'GROSS_MODE' %}
+{% set shipmentExpenseType = 'SHIPMENT_EXPENSE_TYPE' %}
 
 {% block body %}
     {% block title %}
@@ -31,22 +33,14 @@
             <strong class="{{ classShipmentValue }}">{{ data.shipmentTotal | money(true, data.currencyCode) }}</strong>
         </div>
     {% endblock %}
-
-    {% for shipmentGroup in data.shipmentGroups %}
-        {% set isShipmentMethod = shipmentGroup.shipment is defined and shipmentGroup.shipment and shipmentGroup.shipment.method %}
-        {% set shipmentSourcePrice = isShipmentMethod and shipmentGroup.shipment.method.sourcePrice is defined ? shipmentGroup.shipment.method.sourcePrice %}
-
-        {% if shipmentSourcePrice %}
-            {% set sourceUnitPrice = (data.priceMode == priceModeGross) ? shipmentSourcePrice.grossAmount : shipmentSourcePrice.netAmount %}
-        {% else %}
-            {% set sourceUnitPrice = shipmentGroup.shipment.method.storeCurrencyPrice %}
-        {% endif %}
+    {% for expense in data.expenses if expense.type == shipmentExpenseType %}
+        {% set sourceUnitPrice = (data.priceMode == priceModeGross) ? expense.unitGrossPrice : expense.unitNetPrice %}
 
         {% block summaryShipment %}
             <div class="{{ classShipment }}">
                 <span class="{{ classShipmentTitle }}">
-                    {{ shipmentGroup.shipment.method.carrierName | default }}
-                    - {{ shipmentGroup.shipment.method.name | default }}
+                    {{ expense.shipment.method.carrierName | default }}
+                    - {{ expense.shipment.method.name | default }}
                 </span>
                 <span class="{{ classShipmentValue }}">
                     {{ sourceUnitPrice | money(true, data.currencyCode) }}

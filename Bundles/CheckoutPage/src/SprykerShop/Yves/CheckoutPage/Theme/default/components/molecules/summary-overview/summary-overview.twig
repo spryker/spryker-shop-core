@@ -22,7 +22,6 @@
     cartQuantity: cartQuantity is defined ? cartQuantity : app['cart.quantity'] | default,
     shipmentGroups: required,
     priceMode: null,
-    shipmentExpenseType: null,
 
     prices: {
         subTotal: required,
@@ -34,6 +33,7 @@
 } %}
 
 {% set priceModeGross = 'GROSS_MODE' %}
+{% set shipmentExpenseType = 'SHIPMENT_EXPENSE_TYPE' %}
 
 {% macro itemDiscounts(discounts, title) %}
     {% if discounts | length %}
@@ -69,7 +69,7 @@
         <li>
             <strong class="float-right">{{ data.totalCosts | money }}</strong>
             <strong>{{ 'checkout.step.summary.shipment_costs_total' | trans }}</strong>
-            {% for expense in data.expenses if expense.type == data.shipmentExpenseType %}
+            {% for expense in data.expenses if expense.type == shipmentExpenseType %}
                 {% set sourceUnitPrice = (data.priceMode == priceModeGross) ? expense.unitGrossPrice : expense.unitNetPrice %}
 
                 <div class="grid grid--justify">
