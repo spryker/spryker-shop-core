@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block body %}
-    {% set canWrite = data.isEditable or can('WriteSharedCartPermissionPlugin', data.quote.idQuote) %}
+    {% set canWrite = data.isEditable and data.quote.idQuote is not empty %}
 
     {% block orderCustomReference %}
         {% if canWrite %}

@@ -197,7 +197,8 @@
             <div class="box">
                 {% widget 'OrderCustomReferenceWidget' args [
                     data.cart,
-                    data.requestUri
+                    data.requestUri,
+                    data.isQuoteEditable
                 ] only %}
                     {% block referenceView %}
                         {{ parent() }}

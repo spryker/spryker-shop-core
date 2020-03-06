@@ -185,7 +185,8 @@
                         {% block orderCustomReference %}
                             {% widget 'OrderCustomReferenceWidget' args [
                                 data.cart,
-                                data.requestUri
+                                data.requestUri,
+                                'true'
                             ] only %}
                                 {% block referenceForm %}
                                     {{ parent() }}

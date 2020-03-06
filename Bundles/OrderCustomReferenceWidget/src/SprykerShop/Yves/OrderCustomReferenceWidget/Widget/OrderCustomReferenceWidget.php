@@ -24,14 +24,16 @@ class OrderCustomReferenceWidget extends AbstractWidget
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $backUrl
+     * @param bool $isEditable
      */
     public function __construct(
         QuoteTransfer $quoteTransfer,
-        string $backUrl
+        string $backUrl,
+        bool $isEditable
     ) {
         $this->addQuoteParameter($quoteTransfer);
         $this->addOrderCustomReferenceFormParameter($quoteTransfer, $backUrl);
-        $this->addIsEditableParameter($quoteTransfer);
+        $this->addIsEditableParameter($isEditable);
     }
 
     /**
@@ -80,34 +82,12 @@ class OrderCustomReferenceWidget extends AbstractWidget
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param bool $isEditable
      *
      * @return void
      */
-    protected function addIsEditableParameter(QuoteTransfer $quoteTransfer): void
+    protected function addIsEditableParameter(bool $isEditable): void
     {
-        $this->addParameter(static::PARAMETER_IS_EDITABLE, $this->isEditable($quoteTransfer));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isEditable(QuoteTransfer $quoteTransfer): bool
-    {
-        if (!$quoteTransfer->getCustomer()) {
-            return false;
-        }
-
-        if (!$quoteTransfer->getCustomer()->getCompanyUserTransfer()) {
-            return false;
-        }
-
-        if (!$quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()) {
-            return false;
-        }
-
-        return true;
+        $this->addParameter(static::PARAMETER_IS_EDITABLE, $isEditable);
     }
 }
