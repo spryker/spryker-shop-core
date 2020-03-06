@@ -125,6 +125,6 @@ class AddressChoicesResolver implements AddressChoicesResolverInterface
      */
     protected function isCustomerHasAddress(?AddressesTransfer $customerAddressesTransfer): bool
     {
-        return $customerAddressesTransfer === null || count($customerAddressesTransfer->getAddresses()) === 0;
+        return $customerAddressesTransfer !== null && count($customerAddressesTransfer->getAddresses()) !== 0;
     }
 }
