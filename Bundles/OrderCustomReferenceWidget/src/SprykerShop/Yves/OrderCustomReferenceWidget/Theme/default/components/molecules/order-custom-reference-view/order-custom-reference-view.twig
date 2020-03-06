@@ -9,12 +9,6 @@
     orderCustomReference: required,
 } %}
 
-{% block component %}
-    {% if data.orderCustomReference %}
-        {{ parent() }}
-    {% endif %}
-{% endblock %}
-
 {% set classTitle = '' %}
 {% set classText = 'text-break' %}
 
@@ -23,11 +17,13 @@
         <h5 class="{{ classTitle }}">{{ data.title }}</h5>
     {% endblock %}
 
-    {% block textWrapper %}
-        <p class="{{ classText }}">
-            {% block text %}
-                {{ data.orderCustomReference | escape | nl2br }}
-            {% endblock %}
-        </p>
-    {% endblock %}
+    {% if data.orderCustomReference %}
+        {% block textWrapper %}
+            <p class="{{ classText }}">
+                {% block text %}
+                    {{ data.orderCustomReference | escape | nl2br }}
+                {% endblock %}
+            </p>
+        {% endblock %}
+    {% endif %}
 {% endblock %}

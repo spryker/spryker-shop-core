@@ -51,7 +51,14 @@ class OrderCustomReferenceForm extends AbstractType
     {
         $builder->add(
             static::FIELD_ORDER_CUSTOM_REFERENCE,
-            TextType::class
+            TextType::class,
+            [
+                'label' => false,
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'order_custom_reference.form.placeholder',
+                ],
+            ]
         );
 
         return $this;

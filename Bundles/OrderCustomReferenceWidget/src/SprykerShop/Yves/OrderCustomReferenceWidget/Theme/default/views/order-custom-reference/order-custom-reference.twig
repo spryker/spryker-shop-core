@@ -26,7 +26,7 @@
             {% endblock %}
         {% endif %}
 
-        {% if not canWrite and data.orderCustomReference %}
+        {% if not canWrite %}
             {% block referenceView %}
                 {% include molecule('order-custom-reference-view', 'OrderCustomReferenceWidget') with {
                     data: {
