@@ -55,12 +55,13 @@ class OrderReader implements OrderReaderInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getOrderList(Request $request): OrderListTransfer
+    public function getOrderList(Request $request, OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        $orderListTransfer = $this->createOrderListTransfer($request);
+        $orderListTransfer = $this->expandOrderListTransfer($request, $orderListTransfer);
 
         if ($this->customerPageConfig->isOrderSearchEnabled()) {
             return $this->salesClient->searchOrders($orderListTransfer);
@@ -71,37 +72,30 @@ class OrderReader implements OrderReaderInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    protected function createOrderListTransfer(Request $request): OrderListTransfer
+    protected function expandOrderListTransfer(Request $request, OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        $orderListTransfer = new OrderListTransfer();
-
-        $orderListTransfer->setFilter($this->createFilterTransfer());
-        $orderListTransfer->setPagination($this->createPaginationTransfer($request));
-        $orderListTransfer->setFormat($this->createOrderListFormatTransfer());
-
         $customerTransfer = $this->customerClient->getCustomer();
 
         $orderListTransfer->setCustomer($customerTransfer);
         $orderListTransfer->setIdCustomer($customerTransfer->getIdCustomer());
 
+        if (!$orderListTransfer->getFilter()) {
+            $orderListTransfer->setFilter($this->createFilterTransfer());
+        }
+
+        if (!$orderListTransfer->getPagination()) {
+            $orderListTransfer->setPagination($this->createPaginationTransfer($request));
+        }
+
+        if (!$orderListTransfer->getFormat()) {
+            $orderListTransfer->setFormat(new OrderListFormatTransfer());
+        }
+
         return $orderListTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\OrderListFormatTransfer
-     */
-    protected function createOrderListFormatTransfer(): OrderListFormatTransfer
-    {
-        $orderListFormatTransfer = new OrderListFormatTransfer();
-
-        $orderListFormatTransfer->setExpandWithItems(
-            $this->customerPageConfig->isOrderSearchEnabled() && $this->customerPageConfig->isOrderSearchOrderItemsVisible()
-        );
-
-        return $orderListFormatTransfer;
     }
 
     /**
