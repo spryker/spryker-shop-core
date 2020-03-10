@@ -292,7 +292,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addCheckoutSaveRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute(static::ROUTE_QUOTE_REQUEST_SAVE, 'QuoteRequestPage', 'QuoteRequestSave', 'saveAction');
+        $route = $this->buildRoute('/quote-request/save', 'QuoteRequestPage', 'QuoteRequestSave', 'saveAction');
         $routeCollection->add(static::ROUTE_QUOTE_REQUEST_SAVE, $route);
 
         return $routeCollection;

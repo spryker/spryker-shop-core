@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ShipmentStep extends AbstractBaseStep implements StepWithBreadcrumbInterface, StepWithCodeInterface
 {
     protected const STEP_CODE = 'shipment';
+
     /**
      * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface
      */

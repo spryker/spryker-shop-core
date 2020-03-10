@@ -407,7 +407,7 @@ class StepFactory extends AbstractFactory
     /**
      * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface[]
      */
-    protected function getCheckoutStepResolverStrategyPlugins(): array
+    public function getCheckoutStepResolverStrategyPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_STEP_RESOLVER_STRATEGY);
     }
