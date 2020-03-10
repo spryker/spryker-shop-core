@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteRequestAgentPageToQuoteRequestClientInterface
 {
@@ -31,4 +32,11 @@ interface QuoteRequestAgentPageToQuoteRequestClientInterface
     public function getQuoteRequestVersionCollectionByFilter(
         QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer
     ): QuoteRequestVersionCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestForQuoteWithCustomShipmentPrice(QuoteTransfer $quoteTransfer): bool;
 }
