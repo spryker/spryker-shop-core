@@ -24,10 +24,8 @@ class OrderCustomReferenceWidget extends AbstractWidget
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $backUrl
      */
-    public function __construct(
-        QuoteTransfer $quoteTransfer,
-        string $backUrl
-    ) {
+    public function __construct(QuoteTransfer $quoteTransfer, string $backUrl)
+    {
         $this->addQuoteParameter($quoteTransfer);
         $this->addOrderCustomReferenceFormParameter($quoteTransfer, $backUrl);
     }
