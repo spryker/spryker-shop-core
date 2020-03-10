@@ -43,6 +43,8 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Impersonator\CompanyUserImpersonator;
 use SprykerShop\Yves\QuoteRequestAgentPage\Impersonator\CompanyUserImpersonatorInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Resolver\CheckoutStepResolver;
 use SprykerShop\Yves\QuoteRequestAgentPage\Resolver\CheckoutStepResolverInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Validator\ShipmentValidator;
+use SprykerShop\Yves\QuoteRequestAgentPage\Validator\ShipmentValidatorInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -178,6 +180,14 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
             $this->getMessengerClient(),
             $this->getQuoteRequestAgentClient()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Validator\ShipmentValidatorInterface
+     */
+    public function createShipmentValidator(): ShipmentValidatorInterface
+    {
+        return new ShipmentValidator($this->getQuoteRequestClient());
     }
 
     /**

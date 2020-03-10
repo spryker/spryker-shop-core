@@ -18,6 +18,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class QuoteRequestSaveController extends AbstractController
 {
     protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_SAVED = 'quote_request_page.quote_request.saved';
 
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
@@ -35,6 +36,8 @@ class QuoteRequestSaveController extends AbstractController
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
     /**
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function saveAction(): RedirectResponse
@@ -73,7 +76,7 @@ class QuoteRequestSaveController extends AbstractController
         $quoteRequestResponseTransfer = $this->getFactory()->getQuoteRequestClient()
             ->updateQuoteRequest($quoteRequestTransfer);
         if ($quoteRequestResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage('Quote Saved');// ToDo glossary
+            $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_SAVED);
 
             $this->reloadQuoteForCustomer();
 
