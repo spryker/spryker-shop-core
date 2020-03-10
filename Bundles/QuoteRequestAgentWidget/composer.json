@@ -5,7 +5,6 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker-shop/checkout-page-extension": "^1.2.0",
     "spryker-shop/shop-application": "^1.2.0",
     "spryker-shop/shop-ui": "^1.0.0",
     "spryker/application": "^3.8.0",

@@ -14,12 +14,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class QuoteRequestAgentSaveController extends QuoteRequestAgentAbstractController
 {
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_UPDATED = 'quote_request_page.quote_request.updated';
+
     /**
      * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
      */
     protected const ROUTE_CHECKOUT = 'cart';
-
-    protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -59,6 +60,7 @@ class QuoteRequestAgentSaveController extends QuoteRequestAgentAbstractControlle
         }
 
         $this->reloadQuoteForCustomer();
+        $this->addSuccessMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_UPDATED);
 
         return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT_EDIT, [
             static::PARAM_QUOTE_REQUEST_REFERENCE => $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteRequestReference(),

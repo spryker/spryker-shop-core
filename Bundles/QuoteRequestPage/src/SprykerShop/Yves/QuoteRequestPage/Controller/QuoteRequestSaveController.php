@@ -65,7 +65,7 @@ class QuoteRequestSaveController extends AbstractController
             ->getQuoteRequest($quoteRequestFilterTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);// ToDo glossary
+            $this->addErrorMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
 
             return $this->redirectResponseInternal(static::ROUTE_CHECKOUT);
         }

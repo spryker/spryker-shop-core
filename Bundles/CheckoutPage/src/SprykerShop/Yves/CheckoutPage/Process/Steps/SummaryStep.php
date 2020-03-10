@@ -40,18 +40,12 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     protected $checkoutPageConfig;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutSummaryStepEnterPreCheckPluginInterface[]
-     */
-    protected $checkoutSummaryStepEnterPreCheckPlugins;
-
-    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface $productBundleClient
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
      * @param \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig $checkoutPageConfig
      * @param string $stepRoute
      * @param string|null $escapeRoute
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCheckoutClientInterface $checkoutClient
-     * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutSummaryStepEnterPreCheckPluginInterface[] $checkoutSummaryStepEnterPreCheckPlugins
      */
     public function __construct(
         CheckoutPageToProductBundleClientInterface $productBundleClient,
@@ -59,8 +53,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         CheckoutPageConfig $checkoutPageConfig,
         $stepRoute,
         $escapeRoute,
-        CheckoutPageToCheckoutClientInterface $checkoutClient,
-        array $checkoutSummaryStepEnterPreCheckPlugins
+        CheckoutPageToCheckoutClientInterface $checkoutClient
     ) {
         parent::__construct($stepRoute, $escapeRoute);
 
@@ -68,7 +61,6 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         $this->shipmentService = $shipmentService;
         $this->checkoutPageConfig = $checkoutPageConfig;
         $this->checkoutClient = $checkoutClient;
-        $this->checkoutSummaryStepEnterPreCheckPlugins = $checkoutSummaryStepEnterPreCheckPlugins;
     }
 
     /**
@@ -78,7 +70,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function requireInput(AbstractTransfer $quoteTransfer)
     {
-        return $this->executeCheckoutSummaryStepEnterPreCheckPlugins($quoteTransfer);
+        return true;
     }
 
     /**
@@ -89,10 +81,6 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
      */
     public function execute(Request $request, AbstractTransfer $quoteTransfer)
     {
-        if (!$this->executeCheckoutSummaryStepEnterPreCheckPlugins($quoteTransfer)) {
-            return $quoteTransfer;
-        }
-
         $this->markCheckoutConfirmed($request, $quoteTransfer);
 
         return $quoteTransfer;
@@ -220,22 +208,6 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() === null) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function executeCheckoutSummaryStepEnterPreCheckPlugins(AbstractTransfer $quoteTransfer): bool
-    {
-        foreach ($this->checkoutSummaryStepEnterPreCheckPlugins as $checkoutSummaryStepEnterPreCheckPlugin) {
-            if (!$checkoutSummaryStepEnterPreCheckPlugin->check($quoteTransfer)) {
                 return false;
             }
         }

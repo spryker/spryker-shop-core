@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Yves\Kernel\PermissionAwareTrait;
 use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -139,7 +138,7 @@ class CheckoutController extends AbstractController
         );
 
         if (!is_array($response)) {
-            return $this->executeCheckoutShipmentStepRedirectPlugins($response);
+            return $response;
         }
 
         return $this->view(
@@ -311,27 +310,5 @@ class CheckoutController extends AbstractController
     protected function createStepProcess()
     {
         return $this->getFactory()->createCheckoutProcess();
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\RedirectResponse $response
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function executeCheckoutShipmentStepRedirectPlugins(RedirectResponse $response): RedirectResponse
-    {
-        $quoteTransfer = $this->getFactory()
-            ->getQuoteClient()
-            ->getQuote();
-
-        $checkoutShipmentStepRedirectStrategyPlugins = $this->getFactory()->getCheckoutShipmentStepRedirectStrategyPlugins();
-
-        foreach ($checkoutShipmentStepRedirectStrategyPlugins as $checkoutShipmentStepRedirectStrategyPlugin) {
-            if ($checkoutShipmentStepRedirectStrategyPlugin->isApplicable($quoteTransfer)) {
-                return $checkoutShipmentStepRedirectStrategyPlugin->execute($response, $quoteTransfer);
-            }
-        }
-
-        return $response;
     }
 }
