@@ -9,11 +9,12 @@ namespace SprykerShop\Yves\QuoteRequestPage\Plugin\CheckoutPage;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
  */
-class QRCheckoutStepResolverStrategyPlugin extends AbstractPlugin implements \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface
+class QuoteRequestInProcessCheckoutStepResolverStrategyPlugin extends AbstractPlugin implements CheckoutStepResolverStrategyPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -32,30 +33,8 @@ class QRCheckoutStepResolverStrategyPlugin extends AbstractPlugin implements \Sp
      */
     public function execute(array $steps): array
     {
-        $resolvedSteps = [
-            new \SprykerShop\Yves\QuoteRequestPage\CheckoutStep\EntryStep(
-                'cart',
-                'quote-request'
-            ),
-        ];
-        $neededSteps = [
-            'address',
-            'shipment',
-        ];
-        foreach ($steps as $step) {
-            if (!($step instanceof \Spryker\Yves\StepEngine\Dependency\Step\StepWithCodeInterface) || !in_array($step->getCode(), $neededSteps)) {
-                continue;
-            }
-
-            $resolvedSteps[] = $step;
-        }
-
-        $resolvedSteps[] =
-            new \SprykerShop\Yves\QuoteRequestPage\CheckoutStep\SaveRFQStep(
-                'quote-request/checkout/save',
-                'quote-request'
-            );
-
-        return $resolvedSteps;
+        return $this->getFactory()
+            ->createCheckoutStepResolver()
+            ->resolveCheckoutStepsForQuoteInQuoteRequestProcess($steps);
     }
 }

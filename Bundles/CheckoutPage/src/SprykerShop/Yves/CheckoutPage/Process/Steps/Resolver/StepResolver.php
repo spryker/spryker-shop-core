@@ -10,7 +10,7 @@ namespace SprykerShop\Yves\CheckoutPage\Process\Steps\Resolver;
 use Spryker\Yves\StepEngine\Process\StepCollectionInterface;
 use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
 
-class StepResolver
+class StepResolver implements StepResolverInterface
 {
     /**
      * @var \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface[]
@@ -26,8 +26,10 @@ class StepResolver
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface $quoteClient
      * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface[] $checkoutStepResolverStrategyPlugins
      */
-    public function __construct(CheckoutPageToQuoteClientInterface $quoteClient,array $checkoutStepResolverStrategyPlugins)
-    {
+    public function __construct(
+        CheckoutPageToQuoteClientInterface $quoteClient,
+        array $checkoutStepResolverStrategyPlugins
+    ) {
         $this->checkoutStepResolverStrategyPlugins = $checkoutStepResolverStrategyPlugins;
         $this->quoteClient = $quoteClient;
     }

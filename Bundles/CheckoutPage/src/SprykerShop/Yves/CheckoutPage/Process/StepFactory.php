@@ -36,6 +36,7 @@ use SprykerShop\Yves\CheckoutPage\Process\Steps\PaymentStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PlaceOrderStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\PostConditionCheckerInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\Resolver\StepResolver;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\Resolver\StepResolverInterface;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep\PostConditionChecker as ShipmentStepPostConditionChecker;
 use SprykerShop\Yves\CheckoutPage\Process\Steps\StepExecutorInterface;
@@ -99,9 +100,22 @@ class StepFactory extends AbstractFactory
         return $this->resolveSteps($stepCollection);
     }
 
-    public function resolveSteps(StepCollectionInterface $stepCollection)
+    /**
+     * @param \Spryker\Yves\StepEngine\Process\StepCollectionInterface $stepCollection
+     *
+     * @return \Spryker\Yves\StepEngine\Process\StepCollectionInterface
+     */
+    public function resolveSteps(StepCollectionInterface $stepCollection): StepCollectionInterface
     {
-        $steps = [
+        return $this->createStepResolver()->resolveSteps($this->getSteps(), $stepCollection);
+    }
+
+    /**
+     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
+     */
+    public function getSteps(): array
+    {
+        return [
             $this->createEntryStep(),
             $this->createCustomerStep(),
             $this->createAddressStep(),
@@ -111,19 +125,17 @@ class StepFactory extends AbstractFactory
             $this->createPlaceOrderStep(),
             $this->createSuccessStep(),
         ];
-
-        return (new StepResolver($this->getQuoteClient(), $this->getCheckoutStepResolverStrategyPlugins()))
-            ->resolveSteps($steps, $stepCollection);
     }
 
     /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface[]
+     * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\Resolver\StepResolverInterface
      */
-    protected function getCheckoutStepResolverStrategyPlugins(): array
+    public function createStepResolver(): StepResolverInterface
     {
-        return [
-            new \SprykerShop\Yves\QuoteRequestPage\Plugin\CheckoutPage\QRCheckoutStepResolverStrategyPlugin(),
-        ];
+        return new StepResolver(
+            $this->getQuoteClient(),
+            $this->getCheckoutStepResolverStrategyPlugins()
+        );
     }
 
     /**
@@ -399,6 +411,14 @@ class StepFactory extends AbstractFactory
     public function getCheckoutSummaryStepEnterPreCheckPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_SUMMARY_STEP_ENTER_PRE_CHECK);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface[]
+     */
+    protected function getCheckoutStepResolverStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_STEP_RESOLVER_STRATEGY);
     }
 
     /**

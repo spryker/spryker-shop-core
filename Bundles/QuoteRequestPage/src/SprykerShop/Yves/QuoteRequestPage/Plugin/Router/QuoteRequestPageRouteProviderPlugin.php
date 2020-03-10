@@ -26,6 +26,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_QUOTE_REQUEST_CANCEL = 'quote-request/cancel';
     protected const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
     protected const ROUTE_QUOTE_REQUEST_CONVERT_TO_CART = 'quote-request/convert-to-cart';
+    protected const ROUTE_QUOTE_REQUEST_SAVE = 'quote-request/save';
 
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
@@ -291,8 +292,8 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
      */
     protected function addCheckoutSaveRoute(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->buildRoute('/quote-request/checkout/save', 'QuoteRequestPage', 'Checkout', 'saveAction');
-        $routeCollection->add('quote-request/checkout/save', $route);
+        $route = $this->buildRoute(static::ROUTE_QUOTE_REQUEST_SAVE, 'QuoteRequestPage', 'QuoteRequestSave', 'saveAction');
+        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_SAVE, $route);
 
         return $routeCollection;
     }

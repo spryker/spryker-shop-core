@@ -85,6 +85,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_PAYMENT_STEP_ENTER_PRE_CHECK';
     public const PLUGINS_CHECKOUT_SUMMARY_STEP_ENTER_PRE_CHECK = 'PLUGINS_CHECKOUT_SUMMARY_STEP_ENTER_PRE_CHECK';
     public const PLUGINS_CHECKOUT_SHIPMENT_STEP_REDIRECT_STRATEGY = 'PLUGINS_CHECKOUT_SHIPMENT_STEP_REDIRECT_STRATEGY';
+    public const PLUGINS_CHECKOUT_STEP_RESOLVER_STRATEGY = 'PLUGINS_CHECKOUT_STEP_RESOLVER_STRATEGY';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -134,6 +135,7 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerService($container);
         $container = $this->addAddressStepExecutorAddressTransferExpanderPlugins($container);
         $container = $this->addCheckoutShipmentStepRedirectStrategyPlugins($container);
+        $container = $this->addCheckoutStepResolverStrategyPlugins($container);
 
         return $container;
     }
@@ -833,6 +835,28 @@ class CheckoutPageDependencyProvider extends AbstractBundleDependencyProvider
      * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepRedirectStrategyPluginInterface[]
      */
     protected function getCheckoutShipmentStepRedirectStrategyPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCheckoutStepResolverStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CHECKOUT_STEP_RESOLVER_STRATEGY, function () {
+            return $this->getCheckoutStepResolverStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface[]
+     */
+    protected function getCheckoutStepResolverStrategyPlugins(): array
     {
         return [];
     }

@@ -13,6 +13,7 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPa
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCompanyUserClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToCustomerClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToMessengerClientBridge;
+use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPersistentCartClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToPriceClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteClientBridge;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToQuoteRequestAgentClientBridge;
@@ -32,6 +33,7 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_STORE = 'CLIENT_STORE';
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+    public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
 
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
@@ -55,6 +57,7 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addCustomerClient($container);
         $container = $this->addStoreClient($container);
         $container = $this->addMessengerClient($container);
+        $container = $this->addPersistentCartClient($container);
 
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addShipmentService($container);
@@ -236,6 +239,22 @@ class QuoteRequestAgentPageDependencyProvider extends AbstractBundleDependencyPr
         $container->set(static::CLIENT_MESSENGER, function (Container $container) {
             return new QuoteRequestAgentPageToMessengerClientBridge(
                 $container->getLocator()->messenger()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPersistentCartClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PERSISTENT_CART, function (Container $container) {
+            return new QuoteRequestAgentPageToPersistentCartClientBridge(
+                $container->getLocator()->persistentCart()->client()
             );
         });
 

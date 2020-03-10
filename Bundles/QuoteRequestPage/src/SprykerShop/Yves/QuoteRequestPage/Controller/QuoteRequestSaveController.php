@@ -8,14 +8,20 @@
 namespace SprykerShop\Yves\QuoteRequestPage\Controller;
 
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\QuoteRequestPage\QuoteRequestPageFactory getFactory()
  */
-class CheckoutController extends \SprykerShop\Yves\ShopApplication\Controller\AbstractController
+class QuoteRequestSaveController extends AbstractController
 {
     protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
+
+    /**
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
+     */
     protected const ROUTE_CHECKOUT = 'cart';
 
     /**
@@ -28,7 +34,10 @@ class CheckoutController extends \SprykerShop\Yves\ShopApplication\Controller\Ab
      */
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
-    public function saveAction()
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function saveAction(): RedirectResponse
     {
         $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
 
@@ -41,7 +50,7 @@ class CheckoutController extends \SprykerShop\Yves\ShopApplication\Controller\Ab
         $companyUserTransfer = $this->getFactory()->getCompanyUserClient()->findCompanyUser();
 
         if (!$companyUserTransfer) {
-            throw new NotFoundHttpException("Only company users are allowed to access this page");
+            throw new NotFoundHttpException('Only company users are allowed to access this page');
         }
 
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
@@ -53,7 +62,7 @@ class CheckoutController extends \SprykerShop\Yves\ShopApplication\Controller\Ab
             ->getQuoteRequest($quoteRequestFilterTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage('Quote request not found');
+            $this->addErrorMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);// ToDo glossary
 
             return $this->redirectResponseInternal(static::ROUTE_CHECKOUT);
         }
@@ -64,7 +73,7 @@ class CheckoutController extends \SprykerShop\Yves\ShopApplication\Controller\Ab
         $quoteRequestResponseTransfer = $this->getFactory()->getQuoteRequestClient()
             ->updateQuoteRequest($quoteRequestTransfer);
         if ($quoteRequestResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage('Quote Saved');
+            $this->addSuccessMessage('Quote Saved');// ToDo glossary
 
             $this->reloadQuoteForCustomer();
 

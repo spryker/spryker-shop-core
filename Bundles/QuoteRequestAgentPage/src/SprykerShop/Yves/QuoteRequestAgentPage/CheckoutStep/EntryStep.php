@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\QuoteRequestPage\CheckoutStep;
+namespace SprykerShop\Yves\QuoteRequestAgentPage\CheckoutStep;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Yves\StepEngine\Dependency\Step\AbstractBaseStep;
 use Symfony\Component\HttpFoundation\Request;
 
-class SaveRFQStep extends \Spryker\Yves\StepEngine\Dependency\Step\AbstractBaseStep implements \Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface
+class EntryStep extends AbstractBaseStep
 {
     /**
      * Requirements for this step, return true when satisfied.
@@ -20,9 +20,9 @@ class SaveRFQStep extends \Spryker\Yves\StepEngine\Dependency\Step\AbstractBaseS
      *
      * @return bool
      */
-    public function preCondition(AbstractTransfer $quoteTransfer)
+    public function preCondition(AbstractTransfer $quoteTransfer): bool
     {
-        return !$this->isCartEmpty($quoteTransfer);
+        return (bool)count($quoteTransfer->getItems());
     }
 
     /**
@@ -32,9 +32,9 @@ class SaveRFQStep extends \Spryker\Yves\StepEngine\Dependency\Step\AbstractBaseS
      *
      * @return bool
      */
-    public function requireInput(AbstractTransfer $dataTransfer)
+    public function requireInput(AbstractTransfer $dataTransfer): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -53,50 +53,12 @@ class SaveRFQStep extends \Spryker\Yves\StepEngine\Dependency\Step\AbstractBaseS
     /**
      * Conditions that should be met for this step to be marked as completed. returns true when satisfied.
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
-     *
-     * @return bool
-     */
-    public function postCondition(AbstractTransfer $dataTransfer)
-    {
-        return false;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function isCartEmpty(QuoteTransfer $quoteTransfer)
+    public function postCondition(AbstractTransfer $quoteTransfer): bool
     {
-        return count($quoteTransfer->getItems()) === 0;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBreadcrumbItemTitle()
-    {
-        return 'Save RFQ';
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
-     *
-     * @return bool
-     */
-    public function isBreadcrumbItemEnabled(AbstractTransfer $dataTransfer)
-    {
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
-     *
-     * @return bool
-     */
-    public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer)
-    {
-        return false;
+        return true;
     }
 }
