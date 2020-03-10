@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Yves\CompanyBusinessUnitWidget\Expander;
+namespace SprykerShop\Yves\CompanyBusinessUnitWidget\FormExpander;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-interface OrderSearchFormFormExpanderInterface
+interface OrderSearchFormExpanderInterface
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

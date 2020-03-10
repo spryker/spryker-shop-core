@@ -8,13 +8,13 @@
 namespace SprykerShop\Yves\CompanyBusinessUnitWidget\Plugin\CustomerPage;
 
 use Spryker\Yves\Kernel\AbstractPlugin;
-use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormFormExpanderPluginInterface;
+use SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormExpanderPluginInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \SprykerShop\Yves\CompanyBusinessUnitWidget\CompanyBusinessUnitWidgetFactory getFactory()
  */
-class CompanyBusinessUnitOrderSearchFormFormExpanderPlugin extends AbstractPlugin implements OrderSearchFormFormExpanderPluginInterface
+class CompanyBusinessUnitOrderSearchFormExpanderPlugin extends AbstractPlugin implements OrderSearchFormExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -30,7 +30,7 @@ class CompanyBusinessUnitOrderSearchFormFormExpanderPlugin extends AbstractPlugi
     public function expand(FormBuilderInterface $builder, array $options): void
     {
         $this->getFactory()
-            ->createOrderSearchFormFormExpander()
+            ->createOrderSearchFormExpander()
             ->expandOrderSearchFormWithBusinessUnitField($builder, $options);
     }
 }
