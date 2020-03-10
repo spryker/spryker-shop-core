@@ -4,6 +4,7 @@
     quote: _widget.quote,
     orderCustomReference: _widget.quote.orderCustomReference,
     orderCustomReferenceForm: _widget.orderCustomReferenceForm,
+    isEditable: _widget.isEditable,
 } %}
 
 {%- block template -%}
@@ -13,7 +14,7 @@
 {% endblock %}
 
 {% block body %}
-    {% set canWrite = can('WriteSharedCartPermissionPlugin', data.quote.idQuote) %}
+    {% set canWrite = data.isEditable and data.quote.idQuote is not empty %}
 
     {% block orderCustomReference %}
         {% if canWrite %}

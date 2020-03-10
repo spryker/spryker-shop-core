@@ -9,15 +9,20 @@
     orderCustomReference: required,
 } %}
 
+{% block component %}
+    {% if data.orderCustomReference is not empty %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 {% set classTitle = '' %}
 {% set classText = 'text-break' %}
 
 {% block body %}
-    {% block title %}
-        <h5 class="{{ classTitle }}">{{ data.title }}</h5>
-    {% endblock %}
-
     {% if data.orderCustomReference %}
+        {% block title %}
+            <h5 class="{{ classTitle }}">{{ data.title }}</h5>
+        {% endblock %}
         {% block textWrapper %}
             <p class="{{ classText }}">
                 {% block text %}

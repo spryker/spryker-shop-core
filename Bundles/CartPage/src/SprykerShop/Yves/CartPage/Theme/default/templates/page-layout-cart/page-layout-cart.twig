@@ -9,6 +9,7 @@
     attributes: _view.attributes,
     request: app.request,
     title: 'cart.cart' | trans,
+    requestUri: app.request.requestUri,
 } %}
 
 {% block breadcrumbs %}
@@ -179,24 +180,25 @@
                                     <hr>
                                 {% endblock %}
                             {% endwidget %}
-
-                            {% block orderCustomReference %}
-                                {% widget 'OrderCustomReferenceWidget' args [
-                                    data.cart,
-                                    app.request.requestUri
-                                ] only %}
-                                    {% block referenceForm %}
-                                        {{ parent() }}
-                                        <hr>
-                                    {% endblock %}
-
-                                    {% block referenceView %}
-                                        {{ parent() }}
-                                        <hr>
-                                    {% endblock %}
-                                {% endwidget %}
-                            {% endblock %}
                         {% endif %}
+
+                        {% block orderCustomReference %}
+                            {% widget 'OrderCustomReferenceWidget' args [
+                                data.cart,
+                                data.requestUri,
+                                'true'
+                            ] only %}
+                                {% block referenceForm %}
+                                    {{ parent() }}
+                                    <hr>
+                                {% endblock %}
+
+                                {% block referenceView %}
+                                    {{ parent() }}
+                                    <hr>
+                                {% endblock %}
+                            {% endwidget %}
+                        {% endblock %}
 
                         {% if data.isQuoteEditable and data.cart.idQuote %}
                             {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] only %}
