@@ -18,8 +18,5 @@ interface OrderCustomReferenceWidgetToOrderCustomReferenceClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setOrderCustomReference(
-        string $orderCustomReference,
-        QuoteTransfer $quoteTransfer
-    ): QuoteResponseTransfer;
+    public function setOrderCustomReference(string $orderCustomReference, QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }
