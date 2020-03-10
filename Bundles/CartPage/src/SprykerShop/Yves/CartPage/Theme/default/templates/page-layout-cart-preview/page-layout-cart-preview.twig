@@ -194,17 +194,16 @@
 
     {% block orderCustomReference %}
         {% if data.cart.orderCustomReference is defined and data.cart.orderCustomReference is not empty %}
-            <div class="box">
-                {% widget 'OrderCustomReferenceWidget' args [
-                    data.cart,
-                    data.requestUri,
-                    data.isQuoteEditable
-                ] only %}
-                    {% block referenceView %}
-                        {{ parent() }}
-                    {% endblock %}
-                {% endwidget %}
-            </div>
+            {% widget 'OrderCustomReferenceWidget' args [
+                data.cart,
+                data.requestUri,
+                data.isQuoteEditable
+            ] only %}
+                {% block referenceView %}
+                    {{ parent() }}
+                    <hr>
+                {% endblock %}
+            {% endwidget %}
         {% endif %}
     {% endblock %}
 

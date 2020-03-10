@@ -169,17 +169,15 @@
                         {% endif %}
 
                         {% if data.cart.idQuote is not empty %}
-                            {% widget 'CommentThreadWidget' args [
-                                data.cart.idQuote,
-                                'quote',
-                                app.request.requestUri,
-                                data.cart.commentThread
-                            ] only %}
-                                {% block body %}
-                                    {{ parent() }}
-                                    <hr>
-                                {% endblock %}
-                            {% endwidget %}
+                            <div class="box">
+                                {% widget 'CommentThreadWidget' args [
+                                    data.cart.idQuote,
+                                    'quote',
+                                    app.request.requestUri,
+                                    data.cart.commentThread
+                                ] only %}
+                                {% endwidget %}
+                            </div>
                         {% endif %}
 
                         {% block orderCustomReference %}
