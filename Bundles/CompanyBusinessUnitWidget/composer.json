@@ -6,8 +6,8 @@
   "require": {
     "php": ">=7.2",
     "spryker-shop/customer-page-extension": "^1.3.0",
-    "spryker/company-business-unit-sales-connector": "*",
-    "spryker/customer": "*",
+    "spryker/company-business-unit-sales-connector": "^1.0.0",
+    "spryker/customer": "^7.0.0.",
     "spryker/kernel": "^3.33.0",
     "spryker/symfony": "^3.0.0"
   },
