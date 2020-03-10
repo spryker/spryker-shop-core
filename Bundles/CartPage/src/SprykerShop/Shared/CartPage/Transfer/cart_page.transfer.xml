@@ -9,6 +9,7 @@
         <property name="quoteRequestVersionReference" type="string"/>
         <property name="commentThread" type="CommentThread"/>
         <property name="customer" type="Customer"/>
+        <property name="totals" type="Totals"/>
     </transfer>
 
     <transfer name="QuoteApproval">
@@ -56,6 +57,10 @@
     </transfer>
 
     <transfer name="CompanyUser">
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="shipmentTotal" type="int"/>
     </transfer>
 
 </transfers>
