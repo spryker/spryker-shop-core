@@ -12,6 +12,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface CheckoutStepResolverStrategyPluginInterface
 {
     /**
+     * Specification:
+     * - Checks if this plugin is applicable for steps resolving.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
@@ -19,6 +24,11 @@ interface CheckoutStepResolverStrategyPluginInterface
     public function isApplicable(QuoteTransfer $quoteTransfer): bool;
 
     /**
+     * Specification:
+     * - Filters out checkout steps.
+     *
+     * @api
+     *
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[] $steps
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]

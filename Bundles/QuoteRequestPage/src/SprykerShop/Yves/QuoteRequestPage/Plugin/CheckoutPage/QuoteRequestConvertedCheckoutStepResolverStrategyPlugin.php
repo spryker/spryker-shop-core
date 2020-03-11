@@ -17,6 +17,11 @@ use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolve
 class QuoteRequestConvertedCheckoutStepResolverStrategyPlugin extends AbstractPlugin implements CheckoutStepResolverStrategyPluginInterface
 {
     /**
+     * {@inheritDoc}
+     * - Returns true if request reference is empty and custom shipment price is set, false otherwise.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
@@ -29,6 +34,11 @@ class QuoteRequestConvertedCheckoutStepResolverStrategyPlugin extends AbstractPl
     }
 
     /**
+     * {@inheritDoc}
+     * - Returns checkout steps suitable for quote with custom shipment prices.
+     *
+     * @api
+     *
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]|\Spryker\Yves\StepEngine\Dependency\Step\StepWithCodeInterface[] $steps
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]|\Spryker\Yves\StepEngine\Dependency\Step\StepWithCodeInterface[]

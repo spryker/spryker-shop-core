@@ -17,6 +17,11 @@ use SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolve
 class QuoteRequestInProcessCheckoutStepResolverStrategyPlugin extends AbstractPlugin implements CheckoutStepResolverStrategyPluginInterface
 {
     /**
+     * {@inheritDoc}
+     * - Returns true if quote request reference is set and quote request version reference is empty, false otherwise.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
@@ -27,6 +32,11 @@ class QuoteRequestInProcessCheckoutStepResolverStrategyPlugin extends AbstractPl
     }
 
     /**
+     * {@inheritDoc}
+     * - Returns checkout steps suitable when buyer is editing shipment data for request for quote.
+     *
+     * @api
+     *
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]|\Spryker\Yves\StepEngine\Dependency\Step\StepWithCodeInterface[] $steps
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]|\Spryker\Yves\StepEngine\Dependency\Step\StepWithCodeInterface[]
