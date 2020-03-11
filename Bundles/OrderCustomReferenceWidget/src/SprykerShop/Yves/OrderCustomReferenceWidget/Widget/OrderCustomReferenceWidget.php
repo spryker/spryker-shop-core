@@ -17,23 +17,17 @@ use SprykerShop\Yves\OrderCustomReferenceWidget\Form\OrderCustomReferenceForm;
 class OrderCustomReferenceWidget extends AbstractWidget
 {
     protected const PARAMETER_QUOTE = 'quote';
-    protected const PARAMETER_IS_EDITABLE = 'isEditable';
 
     protected const FORM_ORDER_CUSTOM_REFERENCE = 'orderCustomReferenceForm';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $backUrl
-     * @param bool $isEditable
      */
-    public function __construct(
-        QuoteTransfer $quoteTransfer,
-        string $backUrl,
-        bool $isEditable
-    ) {
+    public function __construct(QuoteTransfer $quoteTransfer, string $backUrl)
+    {
         $this->addQuoteParameter($quoteTransfer);
         $this->addOrderCustomReferenceFormParameter($quoteTransfer, $backUrl);
-        $this->addIsEditableParameter($isEditable);
     }
 
     /**
@@ -79,15 +73,5 @@ class OrderCustomReferenceWidget extends AbstractWidget
                 ]
             )->createView()
         );
-    }
-
-    /**
-     * @param bool $isEditable
-     *
-     * @return void
-     */
-    protected function addIsEditableParameter(bool $isEditable): void
-    {
-        $this->addParameter(static::PARAMETER_IS_EDITABLE, $isEditable);
     }
 }

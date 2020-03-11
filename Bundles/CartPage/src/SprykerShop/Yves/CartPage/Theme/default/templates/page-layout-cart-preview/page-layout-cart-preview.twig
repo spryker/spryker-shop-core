@@ -6,7 +6,6 @@
     request: app.request,
     isQuoteEditable: false,
     isQuoteValid: false,
-    requestUri: app.request.requestUri,
 } %}
 
 {% block header %}
@@ -193,18 +192,16 @@
     {% endif %}
 
     {% block orderCustomReference %}
-        {% if data.cart.orderCustomReference is defined and data.cart.orderCustomReference is not empty %}
-            {% widget 'OrderCustomReferenceWidget' args [
-                data.cart,
-                data.requestUri,
-                data.isQuoteEditable
-            ] only %}
-                {% block referenceView %}
-                    {{ parent() }}
-                    <hr>
-                {% endblock %}
-            {% endwidget %}
-        {% endif %}
+        {% embed molecule('order-custom-reference-view', 'OrderCustomReferenceWidget') ignore missing with {
+            data: {
+                orderCustomReference: data.cart.orderCustomReference | default,
+            },
+        } only %}
+            {% block body %}
+                {{ parent() }}
+                <hr>
+            {% endblock %}
+        {% endembed %}
     {% endblock %}
 
 {% endblock %}
