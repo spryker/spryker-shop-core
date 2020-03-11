@@ -184,12 +184,7 @@
                                 data.cart,
                                 '/cart'
                             ] only %}
-                                {% block referenceForm %}
-                                    {{ parent() }}
-                                    <hr>
-                                {% endblock %}
-
-                                {% block referenceView %}
+                                {% block body %}
                                     {{ parent() }}
                                     <hr>
                                 {% endblock %}
