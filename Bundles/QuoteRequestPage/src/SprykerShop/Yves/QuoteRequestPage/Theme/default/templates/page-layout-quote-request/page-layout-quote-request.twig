@@ -97,7 +97,7 @@
                                 {% endblock %}
 
                                 {% block itemsCounter %}
-                                    {% if not hasMultiShipments and quote.items | length %}
+                                    {% if not hasMultiShipments and data.itemsWithShipment | length %}
                                         <div class="{{ numberOfItemsClass }}">
                                             {{ 'quote_request_page.quote_request.item' | trans({
                                                 '%count%': data.itemsWithShipment | length,
