@@ -23,7 +23,7 @@ class SaveRequestForQuoteStep extends AbstractBaseStep implements StepWithBreadc
      */
     public function preCondition(AbstractTransfer $quoteTransfer): bool
     {
-        return (bool)count($quoteTransfer->getItems());
+        return (bool)$quoteTransfer->getItems()->count();
     }
 
     /**

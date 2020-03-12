@@ -22,7 +22,7 @@ class EntryStep extends AbstractBaseStep
      */
     public function preCondition(AbstractTransfer $quoteTransfer): bool
     {
-        return (bool)count($quoteTransfer->getItems());
+        return (bool)$quoteTransfer->getItems()->count();
     }
 
     /**

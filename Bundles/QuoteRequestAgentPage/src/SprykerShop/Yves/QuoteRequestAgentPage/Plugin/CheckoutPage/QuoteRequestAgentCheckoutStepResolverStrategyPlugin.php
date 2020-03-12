@@ -18,7 +18,7 @@ class QuoteRequestAgentCheckoutStepResolverStrategyPlugin extends AbstractPlugin
 {
     /**
      * {@inheritDoc}
-     * - Returns true is quote request reference and quote request version reference are set.
+     * - Returns true if quote request reference and quote request version reference are set.
      *
      * @api
      *

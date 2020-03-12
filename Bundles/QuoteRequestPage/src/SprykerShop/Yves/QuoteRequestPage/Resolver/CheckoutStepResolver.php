@@ -57,7 +57,7 @@ class CheckoutStepResolver implements CheckoutStepResolverInterface
         ];
 
         foreach ($steps as $step) {
-            if (!($step instanceof StepWithCodeInterface) || !in_array($step->getCode(), $neededSteps)) {
+            if (!$step instanceof StepWithCodeInterface || !in_array($step->getCode(), $neededSteps, true)) {
                 continue;
             }
 
@@ -83,7 +83,7 @@ class CheckoutStepResolver implements CheckoutStepResolverInterface
         ];
 
         foreach ($steps as $step) {
-            if (($step instanceof StepWithCodeInterface) && in_array($step->getCode(), $stepsToRemove)) {
+            if ($step instanceof StepWithCodeInterface && in_array($step->getCode(), $stepsToRemove, true)) {
                 continue;
             }
 

@@ -39,12 +39,10 @@ class QuoteRequestAgentSaveController extends QuoteRequestAgentAbstractControlle
             ->getQuoteRequestAgentClient()
             ->findQuoteRequestByReference($quoteTransfer->getQuoteRequestReference());
 
-        if (!$quoteRequestTransfer) {
-            if (!$quoteTransfer->getQuoteRequestReference()) {
-                $this->addErrorMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
+        if (!$quoteRequestTransfer && !$quoteTransfer->getQuoteRequestReference()) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
 
-                return $this->redirectResponseInternal(static::ROUTE_CHECKOUT);
-            }
+            return $this->redirectResponseInternal(static::ROUTE_CHECKOUT);
         }
 
         $quoteRequestTransfer->getLatestVersion()->setQuote($quoteTransfer);
