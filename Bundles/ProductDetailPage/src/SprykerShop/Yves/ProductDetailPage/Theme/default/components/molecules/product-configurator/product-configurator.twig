@@ -76,6 +76,10 @@
         {% endwidget %}
     {% endblock %}
 
+    {% block colors %}
+        {% widget 'ProductGroupColorWidget' args [data.product.idProductAbstract, data.product.selectedAttributes ?? []] use view('product-detail-color-selector', 'ProductGroupWidget') only %}{% endwidget %}
+    {% endblock %}
+
     {% embed molecule('variant-configurator', 'ProductDetailPage') with {
         data: {
             superAttributes: data.product.attributeMap.superAttributes,

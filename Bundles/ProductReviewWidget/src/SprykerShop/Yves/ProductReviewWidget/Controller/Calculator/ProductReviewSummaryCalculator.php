@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ProductReviewSummaryTransfer;
 use SprykerShop\Yves\ProductReviewWidget\Dependency\Client\ProductReviewWidgetToProductReviewClientInterface;
 use SprykerShop\Yves\ProductReviewWidget\Form\ProductReviewForm;
 
+/**
+ * @deprecated Use `\Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculator` instead.
+ */
 class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorInterface
 {
     public const MINIMUM_RATING = ProductReviewForm::MINIMUM_RATING;

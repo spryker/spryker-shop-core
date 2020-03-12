@@ -11,24 +11,43 @@
     originalAmount: null,
     noPriceText: '---',
     currencyIsoCode: null,
+    parentJsName: '',
 } %}
 
 {% block body %}
-    {% if data.originalAmount is not empty and data.originalAmount > data.amount -%}
-        <span class="{{ config.name }}__amount {{ config.name }}__amount--original">{{ data.originalAmount | money(true, data.currencyIsoCode) }}</span>
-    {%- endif -%}
+    {% block originalPrice %}
+        {% if data.originalAmount is not empty and data.originalAmount > data.amount -%}
+            {% block originalPriceInner %}
+                {% set originalPriceJsName = data.parentJsName ? data.parentJsName ~ '__original-price' %}
 
-    {% if data.amount is empty -%}
-        {{ data.noPriceText }}
-    {%- else -%}
-        <span class="{{config.name}}__amount">
-            {% include atom('icon') with {
-                class: config.name ~ '__tag',
-                data: {
-                    name: 'tag',
-                },
-            } only %}
-            {{ data.amount | money(true, data.currencyIsoCode) }}
-        </span>
-    {%- endif -%}
+                <span class="{{ config.name }}__amount {{ config.name }}__amount--original {{ originalPriceJsName }}">
+                    {{- data.originalAmount | money(true, data.currencyIsoCode) -}}
+                </span>
+            {% endblock %}
+        {%- endif -%}
+    {% endblock %}
+
+    {% block defaultPrice %}
+        {% if data.amount is empty -%}
+            {% block defaultPriceNoText %}
+                {{ data.noPriceText }}
+            {% endblock %}
+        {%- else -%}
+            {% block defaultPriceInner %}
+                {% set defaultPriceJsName = data.parentJsName ? data.parentJsName ~ '__default-price' %}
+
+                <span class="{{ config.name }}__amount">
+                    {% include atom('icon') with {
+                        class: config.name ~ '__tag',
+                        data: {
+                            name: 'tag',
+                        },
+                    } only %}
+                    <span class="{{ defaultPriceJsName }}">
+                        {{- data.amount | money(true, data.currencyIsoCode) -}}
+                    </span>
+                </span>
+            {% endblock %}
+        {%- endif -%}
+    {% endblock %}
 {% endblock %}

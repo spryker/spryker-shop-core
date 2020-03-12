@@ -7,6 +7,8 @@
 
 namespace SprykerShop\Yves\ProductLabelWidget\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
+
 class ProductLabelWidgetToProductLabelStorageClientBridge implements ProductLabelWidgetToProductLabelStorageClientInterface
 {
     /**
@@ -25,33 +27,35 @@ class ProductLabelWidgetToProductLabelStorageClientBridge implements ProductLabe
     /**
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName)
+    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, string $storeName)
     {
-        return $this->productLabelStorageClient->findLabelsByIdProductAbstract($idProductAbstract, $localeName);
+        return $this->productLabelStorageClient->findLabelsByIdProductAbstract($idProductAbstract, $localeName, $storeName);
     }
 
     /**
      * @param array $idProductLabels
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabels(array $idProductLabels, $localeName)
+    public function findLabels(array $idProductLabels, $localeName, string $storeName)
     {
-        return $this->productLabelStorageClient->findLabels($idProductLabels, $localeName);
+        return $this->productLabelStorageClient->findLabels($idProductLabels, $localeName, $storeName);
     }
 
     /**
-     * @param string $labelName
-     * @param string $localeName
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $locale
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function findLabelByName($labelName, $localeName)
+    public function expandProductView(ProductViewTransfer $productViewTransfer, string $locale): ProductViewTransfer
     {
-        return $this->productLabelStorageClient->findLabelByName($labelName, $localeName);
+        return $this->productLabelStorageClient->expandProductView($productViewTransfer, $locale);
     }
 }

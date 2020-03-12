@@ -1,21 +1,24 @@
 {% extends template('widget') %}
 
 {% define data = {
-    dictionary: _widget.productLabelDictionaryItemTransfers
+    dictionary: _widget.productLabelDictionaryItemTransfers,
+    parentJsName: '',
 } %}
 
 {% set labels = labels | default([]) %}
+
 {% for item in data.dictionary %}
     {% set labels = labels | merge([{
-        text: item.getName() | default(''),
-        type: item.getFrontEndReference() | default('')
+        text: item.getKey() | default,
+        type: (item.getFrontEndReference() | lower | replace(' ', '-')) | default,
     }]) %}
 {% endfor %}
 
 {% block body %}
     {% include molecule('label-group', 'ProductLabelWidget') with {
         data: {
-            labels: labels
-        }
+            labels: labels,
+            parentJsName: data.parentJsName,
+        },
     } only %}
 {% endblock %}
