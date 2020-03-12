@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -29,8 +30,6 @@ class OrderSearchForm extends AbstractType
     public const FIELD_IS_ORDER_ITEMS_VISIBLE = 'isOrderItemsVisible';
     public const FIELD_ORDER_BY = 'orderBy';
     public const FIELD_ORDER_DIRECTION = 'orderDirection';
-    public const FIELD_PAGE = 'page';
-    public const FIELD_PER_PAGE = 'perPage';
     public const FIELD_RESET = 'reset';
 
     public const OPTION_ORDER_SEARCH_TYPES = 'OPTION_ORDER_SEARCH_TYPES';
@@ -69,6 +68,8 @@ class OrderSearchForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $builder->setMethod(Request::METHOD_GET);
+
         $this->addSearchTypeField($builder, $options)
             ->addSearchTextField($builder)
             ->addDateFromField($builder, $options)
@@ -76,8 +77,6 @@ class OrderSearchForm extends AbstractType
             ->addIsOrderItemsVisibleField($builder)
             ->addOrderByField($builder)
             ->addOrderDirectionField($builder)
-            ->addPageField($builder)
-            ->addPerPageField($builder, $options)
             ->addResetField($builder);
 
         $this->executeOrderSearchFormExpanderPlugins($builder, $options);
@@ -194,38 +193,6 @@ class OrderSearchForm extends AbstractType
             'required' => false,
             'label' => false,
             ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addPageField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_PAGE, HiddenType::class, [
-            'required' => false,
-            'label' => false,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addPerPageField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add(static::FIELD_PER_PAGE, HiddenType::class, [
-            'data' => $options[static::OPTION_PER_PAGE],
-            'required' => true,
-            'label' => false,
-        ]);
 
         return $this;
     }

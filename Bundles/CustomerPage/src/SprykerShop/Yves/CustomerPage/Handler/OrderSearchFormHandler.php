@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\FilterFieldTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListFormatTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Form\OrderSearchForm;
 use Symfony\Component\Form\FormInterface;
@@ -67,17 +66,10 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
 
         $orderSearchFormData = $orderSearchForm->getData();
 
-        if ($orderSearchFormData[OrderSearchForm::FIELD_RESET]) {
-            $orderSearchForm->setData([]);
-
-            return $orderListTransfer->setFilter(null);
-        }
-
         $orderListTransfer = $this->handleSearchTypeInputs($orderSearchFormData, $orderListTransfer);
         $orderListTransfer = $this->handleDateInputs($orderSearchFormData, $orderListTransfer);
         $orderListTransfer = $this->handleOrderInputs($orderSearchFormData, $orderListTransfer);
         $orderListTransfer = $this->handleIsOrderItemsVisibleInput($orderSearchFormData, $orderListTransfer);
-        $orderListTransfer = $this->handlePaginationInputs($orderSearchFormData, $orderListTransfer);
 
         $orderListTransfer = $this->executeOrderSearchFormHandlerPlugins($orderSearchFormData, $orderListTransfer);
 
@@ -181,24 +173,6 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
         );
 
         return $orderListTransfer->setFormat($orderListFormatTransfer);
-    }
-
-    /**
-     * @param array $orderSearchFormData
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    protected function handlePaginationInputs(
-        array $orderSearchFormData,
-        OrderListTransfer $orderListTransfer
-    ): OrderListTransfer {
-        $paginationTransfer = new PaginationTransfer();
-
-        $paginationTransfer->setPage($orderSearchFormData[OrderSearchForm::FIELD_PAGE] ?? 1);
-        $paginationTransfer->setMaxPerPage($orderSearchFormData[OrderSearchForm::FIELD_PER_PAGE]);
-
-        return $orderListTransfer->setPagination($paginationTransfer);
     }
 
     /**

@@ -127,7 +127,7 @@ class OrderController extends AbstractCustomerController
         FormInterface $orderSearchForm,
         OrderListTransfer $orderListTransfer
     ): OrderListTransfer {
-        $isReset = $request->request->get(OrderSearchForm::FORM_NAME)[OrderSearchForm::FIELD_RESET] ?? null;
+        $isReset = $request->query->get(OrderSearchForm::FORM_NAME)[OrderSearchForm::FIELD_RESET] ?? null;
 
         if ($isReset) {
             return $orderListTransfer;
