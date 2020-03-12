@@ -12,6 +12,8 @@ use SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusiness
 use SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCustomerClientInterface;
 use SprykerShop\Yves\CompanyBusinessUnitWidget\FormExpander\OrderSearchFormExpander;
 use SprykerShop\Yves\CompanyBusinessUnitWidget\FormExpander\OrderSearchFormExpanderInterface;
+use SprykerShop\Yves\CompanyBusinessUnitWidget\FormHandler\OrderSearchFormHandler;
+use SprykerShop\Yves\CompanyBusinessUnitWidget\FormHandler\OrderSearchFormHandlerInterface;
 
 class CompanyBusinessUnitWidgetFactory extends AbstractFactory
 {
@@ -22,6 +24,16 @@ class CompanyBusinessUnitWidgetFactory extends AbstractFactory
     {
         return new OrderSearchFormExpander(
             $this->getCompanyBusinessUnitSalesConnectorClient(),
+            $this->getCustomerClient()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CompanyBusinessUnitWidget\FormHandler\OrderSearchFormHandlerInterface
+     */
+    public function createOrderSearchFormHandler(): OrderSearchFormHandlerInterface
+    {
+        return new OrderSearchFormHandler(
             $this->getCustomerClient()
         );
     }

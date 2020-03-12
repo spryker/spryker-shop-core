@@ -14,8 +14,6 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToGlossaryStorag
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\AddressFormDataProvider;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\OrderSearchFormDataProvider;
-use SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandler;
-use SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandlerInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -119,14 +117,6 @@ class FormFactory extends AbstractFactory
             $this->getGlossaryStorageClient(),
             $this->getStore()
         );
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandlerInterface
-     */
-    public function createOrderSearchFormHandler(): OrderSearchFormHandlerInterface
-    {
-        return new OrderSearchFormHandler();
     }
 
     /**

@@ -136,7 +136,6 @@ class OrderController extends AbstractCustomerController
         $orderSearchForm->handleRequest($request);
 
         return $this->getFactory()
-            ->createCustomerFormFactory()
             ->createOrderSearchFormHandler()
             ->handleOrderSearchFormSubmit($orderSearchForm, $orderListTransfer);
     }

@@ -5,6 +5,7 @@
 
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitCollection">
@@ -17,6 +18,17 @@
     <transfer name="CompanyBusinessUnit">
         <property name="idCompanyBusinessUnit" type="int"/>
         <property name="name" type="string"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="FilterField">
+        <property name="value" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="OrderList">
+        <property name="filterFields" type="FilterField[]" singular="filterField"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
 </transfers>

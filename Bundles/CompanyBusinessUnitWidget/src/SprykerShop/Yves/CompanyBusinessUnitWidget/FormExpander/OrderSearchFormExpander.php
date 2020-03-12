@@ -15,7 +15,16 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class OrderSearchFormExpander implements OrderSearchFormExpanderInterface
 {
-    protected const FIELD_BUSINESS_UNIT = 'businessUnit';
+    /**
+     * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander::FILTER_FIELD_TYPE_COMPANY_BUSINESS_UNIT
+     */
+    protected const FIELD_COMPANY_BUSINESS_UNIT = 'companyBusinessUnit';
+
+    protected const CHOICE_CUSTOMER = 'customer';
+    protected const CHOICE_COMPANY = 'company';
+
+    protected const GLOSSARY_KEY_CHOICE_MY_ORDERS = 'company_business_unit_widget.choice.my_orders';
+    protected const GLOSSARY_KEY_CHOICE_COMPANY_ORDERS = 'company_business_unit_widget.choice.company_orders';
 
     /**
      * @var \SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client\CompanyBusinessUnitWidgetToCompanyBusinessUnitSalesConnectorClientInterface
@@ -48,7 +57,7 @@ class OrderSearchFormExpander implements OrderSearchFormExpanderInterface
     public function expandOrderSearchFormWithBusinessUnitField(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
-            static::FIELD_BUSINESS_UNIT,
+            static::FIELD_COMPANY_BUSINESS_UNIT,
             ChoiceType::class,
             [
                 'choices' => $this->getCompanyBusinessUnitChoices(),
@@ -60,7 +69,7 @@ class OrderSearchFormExpander implements OrderSearchFormExpanderInterface
     }
 
     /**
-     * @return int[]
+     * @return string[]
      */
     protected function getCompanyBusinessUnitChoices(): array
     {
@@ -80,21 +89,19 @@ class OrderSearchFormExpander implements OrderSearchFormExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer
      *
-     * @return int[]
+     * @return string[]
      */
     protected function getChoicesFromCompanyBusinessUnitCollection(
         CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer
     ): array {
-        $choices = [];
-
-        $choices['company_business_unit_widget.choice.my_orders'] = -1;
+        $choices = [static::GLOSSARY_KEY_CHOICE_MY_ORDERS => static::CHOICE_CUSTOMER];
 
         foreach ($companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
-            $choices[$companyBusinessUnitTransfer->getName()] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
+            $choices[$companyBusinessUnitTransfer->getName()] = $companyBusinessUnitTransfer->getUuid();
         }
 
         if (count($choices) > 2) {
-            $choices['company_business_unit_widget.choice.company_orders'] = 0;
+            $choices[static::GLOSSARY_KEY_CHOICE_COMPANY_ORDERS] = static::CHOICE_COMPANY;
         }
 
         return $choices;

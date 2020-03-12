@@ -25,6 +25,8 @@ use SprykerShop\Yves\CustomerPage\Expander\ShipmentExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpander;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
+use SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandler;
+use SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandlerInterface;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapper;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapperInterface;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\AccessDeniedHandler;
@@ -384,5 +386,24 @@ class CustomerPageFactory extends AbstractFactory
     public function createShipmentExpander(): ShipmentExpanderInterface
     {
         return new ShipmentExpander();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Handler\OrderSearchFormHandlerInterface
+     */
+    public function createOrderSearchFormHandler(): OrderSearchFormHandlerInterface
+    {
+        return new OrderSearchFormHandler(
+            $this->getCustomerClient(),
+            $this->getOrderSearchFormHandlerPlugins()
+        );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\OrderSearchFormHandlerPluginInterface[]
+     */
+    public function getOrderSearchFormHandlerPlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::PLUGINS_ORDER_SEARCH_FORM_HANDLER);
     }
 }
