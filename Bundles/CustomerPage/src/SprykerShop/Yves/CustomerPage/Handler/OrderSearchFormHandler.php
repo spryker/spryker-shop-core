@@ -7,7 +7,6 @@
 
 namespace SprykerShop\Yves\CustomerPage\Handler;
 
-use ArrayObject;
 use DateTime;
 use Generated\Shared\Transfer\FilterFieldTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
@@ -35,14 +34,6 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
         }
 
         $orderSearchFormData = $orderSearchForm->getData();
-
-        if ($orderSearchFormData[OrderSearchForm::FIELD_RESET]) {
-            $orderSearchForm->setData([]);
-
-            return $orderListTransfer
-                ->setFilterFields(new ArrayObject())
-                ->setFilter(null);
-        }
 
         $orderListTransfer = $this->handleSearchTypeInputs($orderSearchFormData, $orderListTransfer);
         $orderListTransfer = $this->handleDateInputs($orderSearchFormData, $orderListTransfer);
