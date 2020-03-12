@@ -42,6 +42,22 @@ class StepResolver implements StepResolverInterface
      */
     public function resolveSteps(array $steps, StepCollectionInterface $stepCollection): StepCollectionInterface
     {
+        $steps = $this->executeCheckoutStepResolverStrategyPlugins($steps);
+
+        foreach ($steps as $step) {
+            $stepCollection->addStep($step);
+        }
+
+        return $stepCollection;
+    }
+
+    /**
+     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[] $steps
+     *
+     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
+     */
+    protected function executeCheckoutStepResolverStrategyPlugins(array $steps): array
+    {
         $quoteTransfer = $this->quoteClient->getQuote();
 
         foreach ($this->checkoutStepResolverStrategyPlugins as $checkoutStepResolverStrategyPlugin) {
@@ -50,10 +66,6 @@ class StepResolver implements StepResolverInterface
             }
         }
 
-        foreach ($steps as $step) {
-            $stepCollection->addStep($step);
-        }
-
-        return $stepCollection;
+        return $steps;
     }
 }
