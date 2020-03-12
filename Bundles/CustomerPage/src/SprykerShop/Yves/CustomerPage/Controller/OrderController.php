@@ -130,7 +130,9 @@ class OrderController extends AbstractCustomerController
         $isReset = $request->query->get(OrderSearchForm::FORM_NAME)[OrderSearchForm::FIELD_RESET] ?? null;
 
         if ($isReset) {
-            return $orderListTransfer;
+            return $this->getFactory()
+                ->createOrderSearchFormHandler()
+                ->resetFilterFields($orderListTransfer);
         }
 
         $orderSearchForm->handleRequest($request);

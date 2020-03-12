@@ -77,6 +77,23 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function resetFilterFields(OrderListTransfer $orderListTransfer): OrderListTransfer
+    {
+        $orderListTransfer->setFilterFields(new ArrayObject());
+
+        $filterFieldTransfer = $this->createFilterFieldTransfer(
+            static::FILTER_FIELD_TYPE_CUSTOMER_REFERENCE,
+            $this->customerClient->getCustomer()->getCustomerReference()
+        );
+
+        return $orderListTransfer->addFilterField($filterFieldTransfer);
+    }
+
+    /**
      * @param array $orderSearchFormData
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
@@ -173,23 +190,6 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
         );
 
         return $orderListTransfer->setFormat($orderListFormatTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    protected function resetFilterFields(OrderListTransfer $orderListTransfer): OrderListTransfer
-    {
-        $orderListTransfer->setFilterFields(new ArrayObject());
-
-        $filterFieldTransfer = $this->createFilterFieldTransfer(
-            static::FILTER_FIELD_TYPE_CUSTOMER_REFERENCE,
-            $this->customerClient->getCustomer()->getCustomerReference()
-        );
-
-        return $orderListTransfer->addFilterField($filterFieldTransfer);
     }
 
     /**

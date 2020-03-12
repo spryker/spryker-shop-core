@@ -22,4 +22,11 @@ interface OrderSearchFormHandlerInterface
         FormInterface $orderSearchForm,
         OrderListTransfer $orderListTransfer
     ): OrderListTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function resetFilterFields(OrderListTransfer $orderListTransfer): OrderListTransfer;
 }
