@@ -177,19 +177,19 @@
                                 ] only %}
                                 {% endwidget %}
                             </div>
-                        {% endif %}
 
-                        {% block orderCustomReference %}
-                            {% widget 'OrderCustomReferenceWidget' args [
-                                data.cart,
-                                '/cart'
-                            ] only %}
-                                {% block body %}
-                                    {{ parent() }}
-                                    <hr>
-                                {% endblock %}
-                            {% endwidget %}
-                        {% endblock %}
+                            {% block orderCustomReference %}
+                                {% widget 'OrderCustomReferenceWidget' args [
+                                    data.cart,
+                                    '/cart'
+                                ] only %}
+                                    {% block body %}
+                                        {{ parent() }}
+                                        <hr>
+                                    {% endblock %}
+                                {% endwidget %}
+                            {% endblock %}
+                        {% endif %}
 
                         {% if data.isQuoteEditable and data.cart.idQuote %}
                             {% widget 'CreateShoppingListFromCartWidget' args [data.cart.idQuote] only %}

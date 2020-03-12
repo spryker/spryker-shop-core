@@ -2,38 +2,13 @@
 
 {% define data = {
     quote: _widget.quote,
-    orderCustomReference: _widget.quote.orderCustomReference,
     orderCustomReferenceForm: _widget.orderCustomReferenceForm,
 } %}
 
-{%- block template -%}
-    {% if data.quote.idQuote %}
-        {{ parent() }}
-    {% endif %}
-{% endblock %}
-
 {% block body %}
-    {% set canWrite = data.quote.idQuote is not empty %}
-
-    {% block orderCustomReference %}
-        {% if canWrite %}
-            {% block referenceForm %}
-                {% include molecule('order-custom-reference-form', 'OrderCustomReferenceWidget') with {
-                    data: {
-                        form: data.orderCustomReferenceForm
-                    },
-                } only %}
-            {% endblock %}
-        {% endif %}
-
-        {% if not canWrite %}
-            {% block referenceView %}
-                {% include molecule('order-custom-reference-view', 'OrderCustomReferenceWidget') with {
-                    data: {
-                        orderCustomReference: data.quote.orderCustomReference,
-                    },
-                } only %}
-            {% endblock %}
-        {% endif %}
-    {% endblock %}
+    {% include molecule('order-custom-reference-form', 'OrderCustomReferenceWidget') with {
+        data: {
+            form: data.orderCustomReferenceForm,
+        },
+    } only %}
 {% endblock %}
