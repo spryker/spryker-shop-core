@@ -27,7 +27,9 @@ class PriceProductVolumeWidgetPlugin extends AbstractWidgetPlugin implements Pri
      */
     public function initialize(ProductViewTransfer $productViewTransfer): void
     {
-        $widget = new CurrentProductPriceVolumeWidget($productViewTransfer->getCurrentProductPrice());
+        $widget = new CurrentProductPriceVolumeWidget(
+            $productViewTransfer->requireCurrentProductPrice()->getCurrentProductPrice()
+        );
 
         $this->parameters = $widget->getParameters();
     }

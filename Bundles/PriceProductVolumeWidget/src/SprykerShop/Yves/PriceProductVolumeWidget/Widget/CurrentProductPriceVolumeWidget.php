@@ -24,7 +24,7 @@ class CurrentProductPriceVolumeWidget extends AbstractWidget
         $this->addParameter('product', $currentProductPriceTransfer)
             ->addParameter(
                 'volumeProductPrices',
-                $this->findPriceProductVolume($currentProductPriceTransfer)
+                $this->getPriceProductVolume($currentProductPriceTransfer)
             );
     }
 
@@ -49,7 +49,7 @@ class CurrentProductPriceVolumeWidget extends AbstractWidget
      *
      * @return \Generated\Shared\Transfer\PriceProductVolumeCollectionTransfer
      */
-    protected function findPriceProductVolume(CurrentProductPriceTransfer $currentProductPriceTransfer): PriceProductVolumeCollectionTransfer
+    protected function getPriceProductVolume(CurrentProductPriceTransfer $currentProductPriceTransfer): PriceProductVolumeCollectionTransfer
     {
         return $this->getFactory()
             ->createPriceProductVolumeResolver()

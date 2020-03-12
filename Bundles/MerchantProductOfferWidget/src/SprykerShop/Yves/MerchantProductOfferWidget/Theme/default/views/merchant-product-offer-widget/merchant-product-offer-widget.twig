@@ -31,7 +31,7 @@
                                         merchantUrl: productOffer.merchantProfile.merchantUrl,
                                         price: productOffer.price.price | default(null),
                                         currencyIsoCode: productOffer.price.currency.code | default(null),
-                                        shouldShowRadioButton: data.productOfferCollection | length > 1
+                                        shouldShowRadioButton: data.productOfferCollection | length > 1,
                                     },
                                     embed : {
                                         currentProductPrice: productOffer.price,

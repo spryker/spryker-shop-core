@@ -13,7 +13,7 @@
         {% block priceTable %}
             {% include molecule('volume-price-table', 'PriceProductVolumeWidget') with {
                 data: {
-                    volumePrices: data.volumeProductPrices.volumePrices
+                    volumePrices: data.volumeProductPrices.volumePrices,
                 }
             } only %}
         {% endblock %}
