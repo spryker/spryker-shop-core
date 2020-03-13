@@ -28,7 +28,14 @@
 {% endblock %}
 
 {% block body %}
-    <form class="{{ config.jsName }}__form {% block formClass %}{% endblock %}" method="POST" action="{{ path('switch-merchant') }}">
+    {% include molecule('ajax-provider') with {
+        class: config.jsName ~ '__provider',
+        attributes: {
+            method: 'POST',
+            url: path('switch-merchant'),
+        },
+    } only %}
+    <form class="{{ config.jsName }}__form {% block formClass %}{% endblock %}" method="POST" autocomplete="off" action="{{ path('switch-merchant') }}">
         {% block merchantSelect %}
             {% embed atom('select') with {
                 modifiers: ['naked'],

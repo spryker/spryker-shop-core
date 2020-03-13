@@ -18,6 +18,8 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     protected const MAX_ALLOWED_QUANTITY = 100000;
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTextOrderRowSplitterPattern(): string
@@ -26,6 +28,8 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getTextOrderSeparators(): array
@@ -34,6 +38,8 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getDefaultDisplayedRowCount(): int
@@ -42,6 +48,8 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getUploadRowCountLimit(): int
@@ -50,6 +58,8 @@ class QuickOrderPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getMaxAllowedQuantity(): int

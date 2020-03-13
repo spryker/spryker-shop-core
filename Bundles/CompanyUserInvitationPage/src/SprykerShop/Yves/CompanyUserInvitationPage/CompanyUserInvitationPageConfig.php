@@ -18,6 +18,8 @@ class CompanyUserInvitationPageConfig extends AbstractBundleConfig
     public const IMPORT_ERRORS_FILE_PREFIX = '_IMPORT_ERRORS_FILE_';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getInvitationFileDelimiter(): string

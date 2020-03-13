@@ -37,6 +37,8 @@ class CatalogPageConfig extends AbstractBundleConfig
      * - If return value is true - category will be shown, but gray out.
      * - If return value is false - category will be hidden from customer.
      *
+     * @api
+     *
      * @return bool
      */
     public function isEmptyCategoryFilterValueVisible(): bool
@@ -45,6 +47,8 @@ class CatalogPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getCatalogPageLimit(): int
@@ -53,6 +57,8 @@ class CatalogPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getDefaultItemsPerPage(): int
@@ -61,6 +67,8 @@ class CatalogPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getParameterItemsPerPage(): string
@@ -69,6 +77,8 @@ class CatalogPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getParameterNamePage(): string

@@ -17,6 +17,8 @@ class ProductReplacementForWidgetConfig extends AbstractBundleConfig
     public const RESOURCE_TYPE_ATTRIBUTE_MAP = 'attribute_map';
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isProductReplacementFilterActive(): bool

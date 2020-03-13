@@ -99,8 +99,9 @@ class ConfiguredBundleRequestMapper implements ConfiguredBundleRequestMapperInte
      *
      * @return \Generated\Shared\Transfer\ConfiguredBundleTransfer
      */
-    protected function getMappedConfiguredBundleTransfer(ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer): ConfiguredBundleTransfer
-    {
+    protected function getMappedConfiguredBundleTransfer(
+        ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
+    ): ConfiguredBundleTransfer {
         $configurableBundleTransfer = (new ConfigurableBundleTemplateTransfer())->fromArray(
             $configurableBundleTemplateStorageTransfer->toArray(),
             true
