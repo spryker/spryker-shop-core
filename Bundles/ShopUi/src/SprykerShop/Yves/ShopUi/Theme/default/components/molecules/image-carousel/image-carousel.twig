@@ -1,0 +1,20 @@
+{% extends molecule('simple-carousel') %}
+
+{% define config = {
+    name: 'image-carousel',
+    tag: 'image-carousel',
+} %}
+
+{% block extraClass %}
+    {{ config.jsName }}
+{% endblock %}
+
+{% block slide %}
+    {% include atom('thumbnail') with {
+        modifiers: ['bigger'],
+        attributes: {
+            itemprop: 'image',
+            src: slide.externalUrlLarge,
+        },
+    } only %}
+{% endblock %}

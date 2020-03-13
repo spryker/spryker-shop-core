@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class QuoteRequestAgentPageToQuoteRequestClientBridge implements QuoteRequestAgentPageToQuoteRequestClientInterface
 {
@@ -47,5 +48,15 @@ class QuoteRequestAgentPageToQuoteRequestClientBridge implements QuoteRequestAge
         QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer
     ): QuoteRequestVersionCollectionTransfer {
         return $this->quoteRequestClient->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestForQuoteWithCustomShipmentPrice(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteRequestClient->isQuoteRequestForQuoteWithCustomShipmentPrice($quoteTransfer);
     }
 }
