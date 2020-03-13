@@ -52,22 +52,6 @@ class CheckoutAddressCollectionForm extends AbstractType
 
     public const VALIDATION_BILLING_SAME_AS_SHIPPING_MESSAGE = 'Billing address should not be specified when shipping to multiple addresses.';
 
-    /**
-     * @deprecated Will be removed without replacement
-     */
-    protected const GLOSSARY_KEY_ADD_NEW_ADDRESS = 'customer.address.add_new_address';
-
-    /**
-     * @deprecated Will be removed without replacement
-     */
-    protected const GLOSSARY_KEY_SAVE_NEW_ADDRESS = 'customer.address.save_new_address';
-
-    /**
-     * @deprecated Use `\SprykerShop\Yves\CustomerPage\Form\CheckoutAddressForm::GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES` instead.
-     * @see \SprykerShop\Yves\CustomerPage\Form\CheckoutAddressForm::GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES
-     */
-    protected const GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES = 'customer.account.deliver_to_multiple_addresses';
-
     protected const PROPERTY_PATH_MULTI_SHIPPING_ADDRESSES = 'items';
     protected const PROPERTY_PATH_MULTI_SHIPPING_ADDRESSES_FOR_BUNDLE_ITEMS = 'bundleItems';
 
