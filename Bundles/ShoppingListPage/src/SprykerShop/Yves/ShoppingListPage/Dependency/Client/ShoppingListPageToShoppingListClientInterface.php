@@ -53,7 +53,9 @@ interface ShoppingListPageToShoppingListClientInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function getShoppingListItemCollectionTransfer(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer;
+    public function getShoppingListItemCollectionTransfer(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionTransfer
@@ -95,7 +97,9 @@ interface ShoppingListPageToShoppingListClientInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
      */
-    public function getShoppingListOverviewWithoutProductDetails(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer;
+    public function getShoppingListOverviewWithoutProductDetails(
+        ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
+    ): ShoppingListOverviewResponseTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
@@ -107,7 +111,9 @@ interface ShoppingListPageToShoppingListClientInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer
      */
-    public function addItemCollectionToCart(ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer): ShoppingListAddToCartRequestCollectionTransfer;
+    public function addItemCollectionToCart(
+        ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer
+    ): ShoppingListAddToCartRequestCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListDismissRequestTransfer $shoppingListDismissRequest
