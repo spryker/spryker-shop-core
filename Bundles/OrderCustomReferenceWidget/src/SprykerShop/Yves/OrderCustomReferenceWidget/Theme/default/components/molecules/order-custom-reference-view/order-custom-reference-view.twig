@@ -10,7 +10,7 @@
 } %}
 
 {% block component %}
-    {% if data.orderCustomReference is not empty %}
+    {% if data.orderCustomReference %}
         {{ parent() }}
     {% endif %}
 {% endblock %}
