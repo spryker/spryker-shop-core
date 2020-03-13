@@ -22,7 +22,7 @@ class CmsProductSetContentWidgetConfigurationProvider implements CmsContentWidge
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getAvailableTemplates()
     {
