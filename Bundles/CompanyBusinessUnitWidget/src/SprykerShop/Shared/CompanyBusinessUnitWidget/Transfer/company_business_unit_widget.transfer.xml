@@ -13,12 +13,14 @@
     </transfer>
 
     <transfer name="CompanyUser">
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
         <property name="idCompanyBusinessUnit" type="int"/>
         <property name="name" type="string"/>
         <property name="uuid" type="string"/>
+        <property name="company" type="Company"/>
     </transfer>
 
     <transfer name="FilterField">
@@ -29,6 +31,10 @@
     <transfer name="OrderList">
         <property name="filterFields" type="FilterField[]" singular="filterField"/>
         <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="Company">
+        <property name="uuid" type="string"/>
     </transfer>
 
 </transfers>
