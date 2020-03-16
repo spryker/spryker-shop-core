@@ -1,0 +1,110 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-active-filters',
+} %}
+
+{% define data = {
+    orderSearchForm: required,
+    jsPrefix: required,
+} %}
+
+{% block extraClass %}
+    spacing-bottom spacing-bottom--big
+{% endblock %}
+
+{% block component %}
+    {% set activeFilters = [] %}
+    {% set dateFilters = ['dateFrom', 'dateTo'] %}
+    {% set filterFields = ['dateFrom', 'dateTo'] %}
+
+    {% for field in data.orderSearchForm.children %}
+        {% if field.vars.value and field.vars.name in filterFields %}
+            {% set fitlerValue = field.vars.name in dateFilters ?
+                field.vars.value | date('d.m.Y H:i')
+                : field.vars.value %}
+            {% set filter = [{
+                name: field.vars.name,
+                label: field.vars.label,
+                value: fitlerValue,
+            }] %}
+            {% set activeFilters =  activeFilters | merge(filter) %}
+        {% endif %}
+    {% endfor %}
+
+    {% if (activeFilters | length) %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% set titleClass = '' %}
+    {% set activeItemClass = 'link link--small spacing-left' %}
+    {% set activeItemKeyClass = '' %}
+    {% set activeItemValueClass = '' %}
+    {% set resetClass = 'link link--small spacing-left ' ~ data.jsPrefix ~ 'reset-trigger' %}
+
+    {% block title %}
+        <small class="{{ titleClass }}">
+            {{ 'customer.order_history.active_filters' | trans }}:
+        </small>
+    {% endblock %}
+
+    {% for filter in activeFilters %}
+        {% block activeFilter %}
+            <span class="{{ activeItemClass }} {{ data.jsPrefix ~ filter.name }}-trigger" set-value="">
+                {% block activeFilterKey %}
+                    <strong class="{{ activeItemKeyClass }}">{{ filter.label | trans }}:</strong>
+                {% endblock %}
+
+                {% block activeFilterValue %}
+                    <span class="{{ activeItemValueClass }}">{{ filter.value }}</span>
+                {% endblock %}
+
+                {% block activeFilterIcon %}
+                    &times;
+                {% endblock %}
+            </span>
+        {% endblock %}
+    {% endfor %}
+
+    {% block resetTrigger %}
+        <span class="{{ resetClass }}" set-value="1">
+            {% block resetText %}
+                <span class="{{ activeItemKeyClass }}">{{ 'customer.order_history.reset_all' | trans }}</span>
+            {% endblock %}
+
+            {% block resetIcon %}
+                &times;
+            {% endblock %}
+        </span>
+    {% endblock %}
+
+    {% for filter in activeFilters %}
+        {% block activeFilterReset %}
+            {% include molecule('form-value-setter', 'CustomerPage') with {
+                attributes: {
+                    'trigger-class': data.jsPrefix ~ filter.name ~ '-trigger',
+                    'target-class': data.jsPrefix ~ filter.name ~ '-target',
+                },
+            } only %}
+        {% endblock %}
+    {% endfor %}
+
+    {% block resetAll %}
+        {{ form_row(data.orderSearchForm.reset, {
+            attr: {
+                class: data.jsPrefix ~ 'reset-target',
+            }}) }}
+        {% include molecule('form-value-setter', 'CustomerPage') with {
+            attributes: {
+                'trigger-class': data.jsPrefix ~ 'reset-trigger',
+                'target-class': data.jsPrefix ~ 'reset-target',
+            },
+        } only %}
+    {% endblock %}
+
+    {% block separator %}
+        <hr class="box__separator spacing-top spacing-top--big">
+    {% endblock %}
+{% endblock %}

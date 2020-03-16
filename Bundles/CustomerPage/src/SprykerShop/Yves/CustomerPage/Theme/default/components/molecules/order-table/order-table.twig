@@ -6,41 +6,60 @@
 
 {% define data = {
     orders: required,
+    orderSearchForm: null,
     isOrderSearchEnabled: false,
     isOrderSearchOrderItemsVisible: true,
-    orderSearchForm: null
 } %}
 
 {% block body %}
+    {% set orderByValue = data.orderSearchForm.orderBy.vars.value %}
+    {% set orderDirectionValue = data.orderSearchForm.orderDirection.vars.value %}
+
+    {{ form_row(data.orderSearchForm.orderBy, {
+        attr: {
+            class: data.jsPrefix ~ 'orderBy-target',
+        }}) }}
+    {{ form_row(data.orderSearchForm.orderDirection, {
+        attr: {
+            class: data.jsPrefix ~ 'orderDirection-target',
+        }}) }}
     <table class="table table--expand">
-        {% if (data.orderSearchForm) %}
-            {{ form_start(data.orderSearchForm) }}
-
-            {{ form_row(data.orderSearchForm.searchType) }}
-            {{ form_row(data.orderSearchForm.searchText) }}
-
-            {{ form_row(data.orderSearchForm.dateFrom) }}
-            {{ form_row(data.orderSearchForm.dateTo) }}
-
-            {{ form_row(data.orderSearchForm.isOrderItemsVisible) }}
-
-            <button type="submit" name="submit" class="button button--success">
-                {{ 'customer.order_history.apply' | trans }}
-            </button>
-
-            <hr/>
-
-            {% include molecule('active-filters', 'CustomerPage') with {
-                data: {
-                    orderSearchForm: data.orderSearchForm,
-                },
-            } only %}
-        {% endif %}
-
         <thead>
             <tr>
-                <th>{{ 'customer.order.reference' | trans }}</th>
-                <th>{{ 'customer.order.date' | trans }}</th>
+                <th class="{{ data.jsPrefix }}orderBy-trigger {{ data.jsPrefix }}orderDirection-trigger"
+                    set-value="orderReference"
+                    set-value-direction="{{ (orderDirectionValue == 'ASC') ? 'DESC' : 'ASC' }}">
+                    {{ 'customer.order.reference' | trans }}
+
+                    {% set iconName = 'sort-none' %}
+                    {% if (orderByValue == 'orderReference') %}
+                        {% set iconName = (orderDirectionValue == 'ASC') ? 'sort-asc' : 'sort-desc' %}
+                    {% endif %}
+
+                    {% include atom('icon') with {
+                        modifiers: ['small'],
+                        data: {
+                            name: iconName,
+                        }
+                    } only %}
+                </th>
+                <th class="{{ data.jsPrefix }}orderBy-trigger {{ data.jsPrefix }}orderDirection-trigger"
+                    set-value="date"
+                    set-value-direction="{{ (orderDirectionValue == 'ASC') ? 'DESC' : 'ASC' }}">
+                    {{ 'customer.order.date' | trans }}
+
+                    {% set iconName = 'sort-none' %}
+                    {% if (orderByValue == 'date') %}
+                        {% set iconName = (orderDirectionValue == 'ASC') ? 'sort-asc' : 'sort-desc' %}
+                    {% endif %}
+
+                    {% include atom('icon') with {
+                        modifiers: ['small'],
+                        data: {
+                            name: iconName,
+                        }
+                    } only %}
+                </th>
                 {% if data.isOrderSearchEnabled and data.isOrderSearchOrderItemsVisible %}
                     <th>{{ 'customer.order.number_of_items' | trans }}</th>
                 {% endif %}
@@ -48,13 +67,10 @@
                 <th>{{ 'customer.table.actions' | trans }}</th>
             </tr>
         </thead>
-        {% if (data.orderSearchForm) %}
-            {{ form_end(data.orderSearchForm) }}
-        {% endif %}
         <tbody>
             {% if data.orders is empty %}
                 <tr>
-                    <td colspan="100%">{{ 'customer.account.no_order' | trans }}</td>
+                    <td colspan="100">{{ 'customer.account.no_order' | trans }}</td>
                 </tr>
             {% endif %}
 
@@ -89,8 +105,8 @@
                 </tr>
                 {% if data.isOrderSearchEnabled and data.isOrderSearchOrderItemsVisible %}
                     <tr>
-                        <td colspan="100%">
-                            {% include molecule('order-items-table', 'CustomerPage') with {
+                        <td colspan="100">
+                            {% include molecule('order-table-products', 'CustomerPage') with {
                                 data: {
                                     items: order.items,
                                 },
@@ -101,4 +117,20 @@
             {% endfor %}
         </tbody>
     </table>
+
+
+    {% include molecule('form-value-setter', 'CustomerPage') with {
+        attributes: {
+            'trigger-class': data.jsPrefix ~ 'orderBy-trigger',
+            'target-class': data.jsPrefix ~ 'orderBy-target',
+        },
+    } only %}
+
+    {% include molecule('form-value-setter', 'CustomerPage') with {
+        attributes: {
+            'trigger-class': data.jsPrefix ~ 'orderDirection-trigger',
+            'target-class': data.jsPrefix ~ 'orderDirection-target',
+            'value-field': 'set-value-direction',
+        },
+    } only %}
 {% endblock %}

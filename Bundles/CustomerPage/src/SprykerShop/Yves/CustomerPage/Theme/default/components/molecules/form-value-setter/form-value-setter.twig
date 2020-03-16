@@ -1,0 +1,12 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'form-value-setter',
+    tag: 'form-value-setter',
+} %}
+
+{% define attributes = {
+    'trigger-class': required,
+    'target-class': required,
+    'value-field': 'set-value',
+} %}
