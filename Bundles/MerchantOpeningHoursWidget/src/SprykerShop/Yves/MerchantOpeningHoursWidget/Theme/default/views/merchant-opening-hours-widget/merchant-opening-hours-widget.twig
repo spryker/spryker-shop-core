@@ -1,0 +1,47 @@
+{% extends template('widget') %}
+
+{% define data = {
+    merchantOpeningHours: _widget.merchantOpeningHours,
+} %}
+
+{% block template %}
+    <div class="box">
+        {% block schedule %}
+            <div class="grid">
+                {% block schedulelInner %}
+                    <div class="col col--sm-12 col--lg-6">
+                        {% block weekdaySchedule %}
+                            {% include molecule('weekday-schedule', 'MerchantOpeningHoursWidget') with {
+                                data: {
+                                    scheduleData: data.merchantOpeningHours.weekdaySchedule | default([]),
+                                    title: 'merchant_opening_hours.opening_hours_title' | trans,
+                                },
+                            } only %}
+                        {% endblock %}
+                    </div>
+
+                    <div class="col col--sm-12 col--lg-6">
+                        {% block specialOpeningHours %}
+                            {% include molecule('schedule-list', 'MerchantOpeningHoursWidget') with {
+                                data: {
+                                    scheduleData: data.merchantOpeningHours.dateSchedule | default([]),
+                                    title: 'merchant_opening_hours.special_opening_hours_title' | trans,
+                                },
+                            } only %}
+                        {% endblock %}
+
+                        {% block holidays %}
+                            {% include molecule('schedule-list', 'MerchantOpeningHoursWidget') with {
+                                data: {
+                                    scheduleData: data.merchantOpeningHours.dateSchedule | default([]),
+                                    isHoliday: true,
+                                    title: 'merchant_opening_hours.public_holidays_title' | trans,
+                                },
+                            } only %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

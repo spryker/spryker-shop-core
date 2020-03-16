@@ -1,0 +1,30 @@
+{
+  "name": "spryker-shop/merchant-profile-widget",
+  "description": "MerchantProfileWidget module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2"
+  },
+  "require-dev": {
+    "spryker-shop/merchant-page": "*"
+  },
+  "suggest": {
+    "spryker-shop/merchant-page": "To use information-item molecule."
+  },
+  "autoload": {
+    "psr-4": {
+      "SprykerShop\\": "src/SprykerShop/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {},
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

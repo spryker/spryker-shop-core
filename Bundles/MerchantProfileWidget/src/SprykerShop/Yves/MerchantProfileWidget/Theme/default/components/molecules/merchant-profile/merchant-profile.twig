@@ -1,0 +1,178 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'merchant-profile',
+} %}
+
+{% define data = {
+    idMerchant: required,
+    merchantStorageProfile: required,
+} %}
+
+{%- block class -%}
+    {{ parent() }} spacing-bottom spacing-bottom--big
+{%- endblock -%}
+
+{% block body %}
+    <div class="grid">
+        {% block contentInner %}
+            <div class="col col--sm-12 col--lg-5">
+                {% set additionaImageClass = 'box' %}
+
+                {% block image %}
+                    {% include atom('thumbnail') with {
+                        class: additionaImageClass,
+                        modifiers: ['bigger'],
+                        attributes: {
+                            alt: merchantName | default,
+                            src: data.merchantStorageProfile.bannerUrlGlossaryKey | trans,
+                        },
+                    } only %}
+                {% endblock %}
+            </div>
+
+            <div class="col col--sm-12 col--lg-7">
+                {% block detailContainer %}
+                    <div class="box">
+                        {% block detail %}
+                            <div class="grid">
+                                {% block detailInner %}
+                                    <div class="col col--sm-12 col--lg-12 col--xl-10">
+                                        {% block description %}
+                                            <p>{{ data.merchantStorageProfile.descriptionGlossaryKey | trans }}</p>
+                                        {% endblock %}
+
+                                        {% block information %}
+                                            <div class="grid">
+                                                {% block informationInner %}
+                                                    {% block emailCol %}
+                                                        <div class="col col--sm-12 col--lg-6">
+                                                            {% block email %}
+                                                                {% include molecule('information-item', 'MerchantPage') with {
+                                                                    data: {
+                                                                        title: 'merchant_profile.email' | trans,
+                                                                        text: data.merchantStorageProfile.publicEmail | trans,
+                                                                    },
+                                                                } only %}
+                                                            {% endblock %}
+                                                        </div>
+                                                    {% endblock %}
+
+                                                    {% block addressCol %}
+                                                        {% set merchantAddresses = data.merchantStorageProfile.addressCollection | default([]) %}
+
+                                                        {% if merchantAddresses %}
+                                                            <div class="col col--sm-12 col--lg-6">
+                                                                {% block address %}
+                                                                    {% embed molecule('information-item', 'MerchantPage') with {
+                                                                        data: {
+                                                                            title: 'merchant_profile.address' | trans,
+                                                                        },
+                                                                        embed: {
+                                                                            addresses: merchantAddresses,
+                                                                        },
+                                                                    } only %}
+                                                                        {% block text %}
+                                                                            {% for address in embed.addresses %}
+                                                                                <div>{{ address.address1 }} {{ address.address2 }}</div>
+                                                                                <div>{{ address.zipCode }} {{ address.city}}</div>
+                                                                                <div>{{ address.address3 }}</div>
+                                                                                <div>{{ address.countryName }}</div>
+                                                                            {% endfor %}
+                                                                        {% endblock %}
+                                                                    {% endembed %}
+                                                                {% endblock %}
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endblock %}
+
+                                                    {% block phoneCol %}
+                                                        <div class="col col--sm-12 col--lg-6">
+                                                            {% block phone %}
+                                                                {% include molecule('information-item', 'MerchantPage') with {
+                                                                    data: {
+                                                                        title: 'merchant_profile.phone' | trans,
+                                                                        text: data.merchantStorageProfile.publicPhone | trans,
+                                                                    },
+                                                                } only %}
+                                                            {% endblock %}
+                                                        </div>
+                                                    {% endblock %}
+
+                                                    {% block deliveryTimeCol %}
+                                                        <div class="col col--sm-12 col--lg-6">
+                                                            {% block deliveryTime %}
+                                                                {% include molecule('information-item', 'MerchantPage') with {
+                                                                    data: {
+                                                                        title: 'merchant_profile.delivery_time' | trans,
+                                                                        text: data.merchantStorageProfile.deliveryTimeGlossaryKey | trans,
+                                                                    },
+                                                                } only %}
+                                                            {% endblock %}
+                                                        </div>
+                                                    {% endblock %}
+                                                {% endblock %}
+                                            </div>
+                                        {% endblock %}
+                                    </div>
+
+                                    <div class="col col--sm-3 col--lg-2">
+                                        {% set additionalLogoClass = 'box' %}
+
+                                        {% block logo %}
+                                            {% include atom('thumbnail') with {
+                                                class: additionalLogoClass,
+                                                modifiers: ['small'],
+                                                attributes: {
+                                                    alt: merchantName | default,
+                                                    src: data.merchantStorageProfile.logoUrl | trans,
+                                                },
+                                            } only %}
+                                        {% endblock %}
+                                    </div>
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+
+                {% widget 'MerchantOpeningHoursWidget' args [data.idMerchant] only %}{% endwidget %}
+            </div>
+        {% endblock %}
+    </div>
+
+    {% block additional %}
+        {% set additionalArticlesClass = 'box' %}
+        {% set informationArticles = [
+            {
+                'title': 'merchant_profile.terms_and_conditions' | trans,
+                'text': data.merchantStorageProfile.termsConditionsGlossaryKey | trans,
+            },
+            {
+                'title': 'merchant_profile.cancellation_policy' | trans,
+                'text': data.merchantStorageProfile.cancellationPolicyGlossaryKey | trans,
+            },
+            {
+                'title': 'merchant_profile.imprint' | trans,
+                'text': data.merchantStorageProfile.imprintGlossaryKey | trans,
+            },
+            {
+                'title': 'merchant_profile.privacy' | trans,
+                'text': data.merchantStorageProfile.dataPrivacyGlossaryKey | trans,
+            },
+        ] %}
+
+        {% block additionalContainer %}
+            <div class="{{ additionalArticlesClass }}">
+                {% for informationArticle in informationArticles %}
+                    {% block additionalInformation %}
+                        <div class="spacing-bottom spacing-bottom--big">
+                            <h5>{{ informationArticle.title }}</h5>
+                            <p>{{ informationArticle.text | raw }}</p>
+                        </div>
+                    {% endblock %}
+                {% endfor %}
+            </div>
+        {% endblock %}
+    {% endblock %}
+{% endblock %}

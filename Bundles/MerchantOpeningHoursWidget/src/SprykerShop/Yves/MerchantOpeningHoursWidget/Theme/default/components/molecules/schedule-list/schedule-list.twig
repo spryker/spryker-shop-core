@@ -1,0 +1,74 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'schedule-list',
+} %}
+
+{% define data = {
+    scheduleData: required,
+    itemsLimit: 2,
+    isHoliday: false,
+    title: required,
+} %}
+
+{% macro scheduleTime(scheduleItem, scheduleList, key) %}
+    {% if scheduleItem.timeFrom and scheduleItem.timeTo %}
+        {% set defaultTime = scheduleItem.timeFrom | date('H:i', false) ~ ' - ' ~ scheduleItem.timeTo | date('H:i', false) %}
+    {% else %}
+        {% set defaultTime = 'merchant_opening_hours.opening_hours_closed' | trans %}
+    {% endif %}
+
+    {% if key in scheduleList | keys %}
+        {% set complexTime = scheduleList[key].time ~ ' | ' ~ defaultTime %}
+
+        {{ complexTime }}
+    {% else %}
+        {{ defaultTime }}
+    {% endif %}
+{% endmacro %}
+
+{% block body %}
+    {% set scheduleList = [] %}
+    {% set todayTimestamp = "now" | date('Y-m-d') | date('U') %}
+    {% set scheduleItemCounter = 0 %}
+
+    {% for scheduleItem in data.scheduleData %}
+        {% set dateTimestamp = (scheduleItem.date ~ ' ' ~ scheduleItem.timeTo) | date('U') %}
+        {% set isWorkingHours = scheduleItem.timeTo and scheduleItem.timeFrom %}
+        {% set isDayAllowed = data.isHoliday ? not isWorkingHours : isWorkingHours %}
+        {% set isNotPastDay = (dateTimestamp >= todayTimestamp and scheduleItemCounter < data.itemsLimit) or data.itemsLimit is null %}
+        {% set localizedDay = 'merchant_opening_hours.day.title.' ~ scheduleItem.date | date('l') | capitalize %}
+
+        {% if isDayAllowed and isNotPastDay %}
+            {% set scheduleItemCounter = scheduleItemCounter + 1 %}
+            {% set time = _self.scheduleTime(scheduleItem, scheduleList, scheduleItem.date) %}
+            {% set scheduleList = scheduleList | merge({
+                (scheduleItem.date): {
+                    note: scheduleItem.note | trans,
+                    date: scheduleItem.date | date('d.m.Y, ', false) ~ localizedDay | trans,
+                    time: data.isHoliday ? '' : time,
+                },
+            }) %}
+        {% endif %}
+    {% endfor %}
+
+    {% block schedule %}
+        {% embed molecule('information-item', 'MerchantOpeningHoursWidget') with {
+            data: {
+                title: data.title,
+            },
+            embed: {
+                scheduleList: scheduleList,
+            },
+        } only %}
+            {% block text %}
+                {% for scheduleItem in embed.scheduleList %}
+                    {% set title = scheduleItem.note ? scheduleItem.date ~ ' (' ~ scheduleItem.note ~ ')' : scheduleItem.date %}
+                    {% set time = scheduleItem.time ? ': ' ~ scheduleItem.time : '' %}
+
+                    <div>{{ title ~ time }}</div>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+    {% endblock %}
+{% endblock %}
