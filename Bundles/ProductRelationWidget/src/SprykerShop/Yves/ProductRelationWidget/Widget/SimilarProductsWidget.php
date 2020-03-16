@@ -49,6 +49,6 @@ class SimilarProductsWidget extends AbstractWidget
     {
         return $this->getFactory()
             ->getProductRelationStorageClient()
-            ->findRelatedProducts($productViewTransfer->getIdProductAbstract(), $this->getLocale());
+            ->findRelatedProducts($productViewTransfer->getIdProductAbstract(), $this->getLocale(), APPLICATION_STORE);
     }
 }

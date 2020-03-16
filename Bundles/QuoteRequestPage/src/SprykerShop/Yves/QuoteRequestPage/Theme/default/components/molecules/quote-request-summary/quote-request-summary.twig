@@ -78,6 +78,8 @@
                         shipmentGroups: data.shipmentGroups,
                         shipmentTotal: data.cart.totals.shipmentTotal | default,
                         currencyCode: data.cart.currency.code | default,
+                        priceMode: data.cart.priceMode,
+                        expenses: data.cart.expenses
                     },
                 } only %}
             {% endblock %}

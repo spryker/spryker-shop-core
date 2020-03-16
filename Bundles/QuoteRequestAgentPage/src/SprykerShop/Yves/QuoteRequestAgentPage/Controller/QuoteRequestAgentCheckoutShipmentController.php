@@ -105,7 +105,7 @@ class QuoteRequestAgentCheckoutShipmentController extends QuoteRequestAgentAbstr
             ->handleRequest($request);
 
         if ($quoteRequestAgentEditShipmentConfirmForm->isSubmitted()) {
-            $this->prepareImpersonationRedirect($quoteRequestAgentEditShipmentConfirmForm->getData(), $quoteTransfer);
+            return $this->prepareImpersonationRedirect($quoteRequestAgentEditShipmentConfirmForm->getData(), $quoteTransfer);
         }
 
         return [

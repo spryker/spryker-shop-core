@@ -116,7 +116,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
                 $quoteTransfer->getBundleItems()
             ),
             'shipmentGroups' => $this->expandShipmentGroupsWithCartItems($shipmentGroups, $quoteTransfer),
-            'totalCosts' => $this->getTotalCosts($shipmentGroups),
+            'totalCosts' => $this->getShipmentTotalCosts($shipmentGroups, $quoteTransfer),
             'isPlaceableOrder' => $isPlaceableOrderResponseTransfer->getIsSuccess(),
             'isPlaceableOrderErrors' => $isPlaceableOrderResponseTransfer->getErrors(),
         ];
@@ -184,7 +184,7 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer[]|\ArrayObject $shipmentGroups
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroups
      *
      * @return int
      */
@@ -197,6 +197,23 @@ class SummaryStep extends AbstractBaseStep implements StepWithBreadcrumbInterfac
         }
 
         return $totalCosts;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroups
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int
+     */
+    protected function getShipmentTotalCosts(ArrayObject $shipmentGroups, QuoteTransfer $quoteTransfer): int
+    {
+        $totalsTransfer = $quoteTransfer->getTotals();
+
+        if ($totalsTransfer && $totalsTransfer->getShipmentTotal() !== null) {
+            return $totalsTransfer->getShipmentTotal();
+        }
+
+        return $this->getTotalCosts($shipmentGroups);
     }
 
     /**

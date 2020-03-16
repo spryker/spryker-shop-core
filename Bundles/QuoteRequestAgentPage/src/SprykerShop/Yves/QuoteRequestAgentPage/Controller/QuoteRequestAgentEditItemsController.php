@@ -103,7 +103,7 @@ class QuoteRequestAgentEditItemsController extends QuoteRequestAgentAbstractCont
             ->handleRequest($request);
 
         if ($quoteRequestAgentEditItemsConfirmForm->isSubmitted()) {
-            $this->prepareImpersonationRedirect($quoteRequestAgentEditItemsConfirmForm->getData(), $quoteTransfer);
+            return $this->prepareImpersonationRedirect($quoteRequestAgentEditItemsConfirmForm->getData(), $quoteTransfer);
         }
 
         return [
