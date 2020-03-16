@@ -21,7 +21,6 @@ use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClient
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
 use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
-use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressForm;
 
 class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider implements StepEngineFormDataProviderInterface
 {
