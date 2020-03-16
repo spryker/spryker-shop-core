@@ -96,6 +96,7 @@ class OrderController extends AbstractCustomerController
             'isOrderSearchEnabled' => $customerPageConfig->isOrderSearchEnabled(),
             'isOrderSearchOrderItemsVisible' => $orderListTransfer->getFormat()->getExpandWithItems(),
             'orderSearchForm' => isset($orderSearchForm) ? $orderSearchForm->createView() : null,
+            'filterFields' => $orderListTransfer->getFilterFields()->getArrayCopy(),
         ];
     }
 

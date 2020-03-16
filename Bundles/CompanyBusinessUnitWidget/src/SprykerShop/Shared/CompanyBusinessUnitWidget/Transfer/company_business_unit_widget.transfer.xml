@@ -28,6 +28,10 @@
         <property name="type" type="string"/>
     </transfer>
 
+    <transfer name="FilterFieldCollection">
+        <property name="filterFields" type="FilterField[]" singular="filterField"/>
+    </transfer>
+
     <transfer name="OrderList">
         <property name="filterFields" type="FilterField[]" singular="filterField"/>
         <property name="customer" type="Customer"/>

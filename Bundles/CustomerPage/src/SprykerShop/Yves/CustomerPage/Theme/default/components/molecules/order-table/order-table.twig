@@ -8,8 +8,15 @@
     orders: required,
     isOrderSearchEnabled: false,
     isOrderSearchOrderItemsVisible: true,
-    orderSearchForm: null
+    orderSearchForm: null,
+    filterFields: [],
 } %}
+
+{% set companyUserNameWidget = data.orders.count and data.filterFields ?
+    findWidget('CompanyUserNameWidget', [(data.orders | first), data.filterFields])
+    : null %}
+
+{% set isCompanyUserColumnsVisible = companyUserNameWidget ? companyUserNameWidget.isVisible : false %}
 
 {% block body %}
     <table class="table table--expand">
@@ -41,6 +48,10 @@
             <tr>
                 <th>{{ 'customer.order.reference' | trans }}</th>
                 <th>{{ 'customer.order.date' | trans }}</th>
+                {% if isCompanyUserColumnsVisible %}
+                    <th>{{ 'customer.order.company_user' | trans }}</th>
+                    <th>{{ 'customer.order.email' | trans }}</th>
+                {% endif %}
                 {% if data.isOrderSearchEnabled and data.isOrderSearchOrderItemsVisible %}
                     <th>{{ 'customer.order.number_of_items' | trans }}</th>
                 {% endif %}
@@ -62,6 +73,12 @@
                 <tr>
                     <td>{{ order.orderReference }}</td>
                     <td>{{ date(order.createdAt) | formatDateTime }}</td>
+                    {% widget 'CompanyUserNameWidget' args [order, data.filterFields, isCompanyUserColumnsVisible] only %}
+                        {% block content %}
+                            <td>{{ data.order.firstName ~ ' ' ~ data.order.lastName }}</td>
+                            <td>{{ data.order.email }}</td>
+                        {% endblock %}
+                    {% endwidget %}
                     {% if data.isOrderSearchEnabled and data.isOrderSearchOrderItemsVisible %}
                         <td>{{ order.items.count }}</td>
                     {% endif %}

@@ -9,6 +9,8 @@ namespace SprykerShop\Yves\CompanyBusinessUnitWidget\Dependency\Client;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\FilterFieldCheckRequestTransfer;
+use Generated\Shared\Transfer\FilterFieldCheckResponseTransfer;
 
 class CompanyBusinessUnitWidgetToCompanyBusinessUnitSalesConnectorClientBridge implements CompanyBusinessUnitWidgetToCompanyBusinessUnitSalesConnectorClientInterface
 {
@@ -34,5 +36,16 @@ class CompanyBusinessUnitWidgetToCompanyBusinessUnitSalesConnectorClientBridge i
         CompanyUserTransfer $companyUserTransfer
     ): CompanyBusinessUnitCollectionTransfer {
         return $this->companyBusinessUnitSalesConnectorClient->getPermittedCompanyBusinessUnitCollection($companyUserTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\FilterFieldCheckResponseTransfer
+     */
+    public function isCompanyRelatedFiltersSet(
+        FilterFieldCheckRequestTransfer $filterFieldCheckRequestTransfer
+    ): FilterFieldCheckResponseTransfer {
+        return $this->companyBusinessUnitSalesConnectorClient->isCompanyRelatedFiltersSet($filterFieldCheckRequestTransfer);
     }
 }
