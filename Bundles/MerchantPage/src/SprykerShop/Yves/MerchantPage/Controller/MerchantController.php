@@ -7,6 +7,7 @@
 
 namespace SprykerShop\Yves\MerchantPage\Controller;
 
+use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Spryker\Yves\Kernel\View\View;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,17 +18,13 @@ use Symfony\Component\HttpFoundation\Request;
 class MerchantController extends AbstractController
 {
     /**
-     * @param array $merchantProfile
+     * @param \Generated\Shared\Transfer\MerchantStorageTransfer $merchantStorageTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Spryker\Yves\Kernel\View\View
      */
-    public function indexAction(array $merchantProfile, Request $request): View
+    public function indexAction(MerchantStorageTransfer $merchantStorageTransfer, Request $request): View
     {
-        $merchantStorageTransfer = $this->getFactory()
-            ->getMerchantStorageClient()
-            ->mapMerchantStorageData($merchantProfile);
-
         return $this->view(
             [
                 'merchant' => $merchantStorageTransfer,

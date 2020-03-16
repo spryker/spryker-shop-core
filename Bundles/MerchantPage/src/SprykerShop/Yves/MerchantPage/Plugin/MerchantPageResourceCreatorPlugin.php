@@ -11,9 +11,12 @@ use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use SprykerShop\Yves\StorageRouterExtension\Dependency\Plugin\ResourceCreatorPluginInterface;
 
+/**
+ * @method \SprykerShop\Yves\MerchantPage\MerchantPageFactory getFactory()
+ */
 class MerchantPageResourceCreatorPlugin extends AbstractPlugin implements ResourceCreatorPluginInterface
 {
-    public const ATTRIBUTE_MERCHANT_PROFILE = 'merchantProfile';
+    public const ATTRIBUTE_MERCHANT_STORAGE_TRANSFER = 'merchantStorageTransfer';
 
     /**
      * @return string
@@ -55,7 +58,9 @@ class MerchantPageResourceCreatorPlugin extends AbstractPlugin implements Resour
     public function mergeResourceData(array $data): array
     {
         return [
-            static::ATTRIBUTE_MERCHANT_PROFILE => $data,
+            static::ATTRIBUTE_MERCHANT_STORAGE_TRANSFER => $this->getFactory()
+                ->getMerchantStorageClient()
+                ->mapMerchantStorageData($data),
         ];
     }
 }
