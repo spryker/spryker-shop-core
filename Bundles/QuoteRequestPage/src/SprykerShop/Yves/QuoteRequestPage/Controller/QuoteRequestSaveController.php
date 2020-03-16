@@ -18,16 +18,6 @@ class QuoteRequestSaveController extends QuoteRequestAbstractController
     protected const GLOSSARY_KEY_QUOTE_REQUEST_SAVED = 'quote_request_page.quote_request.saved';
 
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
-     */
-    protected const ROUTE_CHECKOUT = 'cart';
-
-    /**
-     * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::ROUTE_QUOTE_REQUEST_EDIT
-     */
-    protected const ROUTE_QUOTE_REQUEST_EDIT = 'quote-request/edit';
-
-    /**
      * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Provider\QuoteRequestPageControllerProvider::PARAM_QUOTE_REQUEST_REFERENCE
      */
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
@@ -42,7 +32,7 @@ class QuoteRequestSaveController extends QuoteRequestAbstractController
         if (!$quoteTransfer->getQuoteRequestReference()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
 
-            return $this->redirectResponseInternal(static::ROUTE_CHECKOUT);
+            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST);
         }
 
         $quoteRequestTransfer = $this->getCompanyUserQuoteRequestByReference($quoteTransfer->getQuoteRequestReference());
@@ -62,7 +52,7 @@ class QuoteRequestSaveController extends QuoteRequestAbstractController
             ]);
         }
 
-        return $this->redirectResponseInternal(static::ROUTE_CHECKOUT);
+        return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST);
     }
 
     /**

@@ -12,10 +12,7 @@ use Spryker\Yves\StepEngine\Process\StepCollectionInterface;
 interface StepResolverInterface
 {
     /**
-     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[] $steps
-     * @param \Spryker\Yves\StepEngine\Process\StepCollectionInterface $stepCollection
-     *
      * @return \Spryker\Yves\StepEngine\Process\StepCollectionInterface
      */
-    public function resolveSteps(array $steps, StepCollectionInterface $stepCollection): StepCollectionInterface;
+    public function resolveSteps(): StepCollectionInterface;
 }

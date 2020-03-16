@@ -30,16 +30,16 @@ class CheckoutStepResolver implements CheckoutStepResolverInterface
     /**
      * @var \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
-    protected $exitStep;
+    protected $saveRequestForQuoteStep;
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $entryStep
-     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $exitStep
+     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $saveRequestForQuoteStep
      */
-    public function __construct(StepInterface $entryStep, StepInterface $exitStep)
+    public function __construct(StepInterface $entryStep, StepInterface $saveRequestForQuoteStep)
     {
         $this->entryStep = $entryStep;
-        $this->exitStep = $exitStep;
+        $this->saveRequestForQuoteStep = $saveRequestForQuoteStep;
     }
 
     /**
@@ -64,7 +64,7 @@ class CheckoutStepResolver implements CheckoutStepResolverInterface
             $resolvedSteps[] = $step;
         }
 
-        $resolvedSteps[] = $this->exitStep;
+        $resolvedSteps[] = $this->saveRequestForQuoteStep;
 
         return $resolvedSteps;
     }

@@ -41,9 +41,9 @@ use Symfony\Component\Form\FormInterface;
 class QuoteRequestPageFactory extends AbstractFactory
 {
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::ROUTE_CART
+     * @uses \SprykerShop\Yves\CheckoutPage\Plugin\Router\CheckoutPageRouteProviderPlugin::CHECKOUT_INDEX
      */
-    protected const ROUTE_CART = 'cart';
+    protected const ROUTE_CHECKOUT_INDEX = 'checkout-index';
 
     /**
      * @uses \SprykerShop\Yves\QuoteRequestPage\Plugin\Router\QuoteRequestPageRouteProviderPlugin::ROUTE_QUOTE_REQUEST
@@ -150,7 +150,7 @@ class QuoteRequestPageFactory extends AbstractFactory
     public function createEntryStep(): StepInterface
     {
         return new EntryStep(
-            static::ROUTE_CART,
+            static::ROUTE_CHECKOUT_INDEX,
             static::ROUTE_QUOTE_REQUEST
         );
     }

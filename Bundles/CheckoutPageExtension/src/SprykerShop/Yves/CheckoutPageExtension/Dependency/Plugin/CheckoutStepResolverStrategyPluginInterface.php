@@ -25,13 +25,14 @@ interface CheckoutStepResolverStrategyPluginInterface
 
     /**
      * Specification:
-     * - Filters out checkout steps.
+     * - Modifies checkout steps.
      *
      * @api
      *
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[] $steps
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
      */
-    public function execute(array $steps): array;
+    public function execute(array $steps, QuoteTransfer $quoteTransfer): array;
 }

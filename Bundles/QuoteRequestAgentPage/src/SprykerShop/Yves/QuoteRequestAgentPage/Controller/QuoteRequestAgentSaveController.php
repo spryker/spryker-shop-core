@@ -18,11 +18,6 @@ class QuoteRequestAgentSaveController extends QuoteRequestAgentAbstractControlle
     protected const GLOSSARY_KEY_QUOTE_REQUEST_UPDATED = 'quote_request_page.quote_request.updated';
 
     /**
-     * @uses \SprykerShop\Yves\CartPage\Plugin\Router\CartPageRouteProviderPlugin::ROUTE_CART
-     */
-    protected const ROUTE_CHECKOUT = 'cart';
-
-    /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function saveAction(): RedirectResponse
@@ -32,7 +27,7 @@ class QuoteRequestAgentSaveController extends QuoteRequestAgentAbstractControlle
         if (!$quoteTransfer->getQuoteRequestReference()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
 
-            return $this->redirectResponseInternal(static::ROUTE_CHECKOUT);
+            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT);
         }
 
         $quoteRequestTransfer = $this->getFactory()
@@ -42,7 +37,7 @@ class QuoteRequestAgentSaveController extends QuoteRequestAgentAbstractControlle
         if (!$quoteRequestTransfer && !$quoteTransfer->getQuoteRequestReference()) {
             $this->addErrorMessage(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
 
-            return $this->redirectResponseInternal(static::ROUTE_CHECKOUT);
+            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT);
         }
 
         $quoteRequestTransfer->getLatestVersion()->setQuote($quoteTransfer);
@@ -54,7 +49,7 @@ class QuoteRequestAgentSaveController extends QuoteRequestAgentAbstractControlle
         $this->handleResponseErrors($quoteRequestResponseTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
-            return $this->redirectResponseInternal(static::ROUTE_CHECKOUT);
+            return $this->redirectResponseInternal(static::ROUTE_QUOTE_REQUEST_AGENT);
         }
 
         $this->reloadQuoteForCustomer();

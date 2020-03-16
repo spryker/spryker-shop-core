@@ -38,10 +38,11 @@ class QuoteRequestAgentCheckoutStepResolverStrategyPlugin extends AbstractPlugin
      * @api
      *
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[] $steps
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
      */
-    public function execute(array $steps): array
+    public function execute(array $steps, QuoteTransfer $quoteTransfer): array
     {
         return $this->getFactory()->createCheckoutStepResolver()->resolveCheckoutSteps($steps);
     }

@@ -68,7 +68,7 @@ class SaveRequestForQuoteStep extends AbstractBaseStep implements StepWithBreadc
      */
     public function getBreadcrumbItemTitle(): string
     {
-        return 'checkout.step.save_rfq.title';
+        return 'quote_request_agent_page.checkout.step.save_rfq.title';
     }
 
     /**

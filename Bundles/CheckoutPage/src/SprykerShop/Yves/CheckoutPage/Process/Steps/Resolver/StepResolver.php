@@ -23,32 +23,45 @@ class StepResolver implements StepResolverInterface
     protected $quoteClient;
 
     /**
+     * @var \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
+     */
+    protected $steps;
+
+    /**
+     * @var \Spryker\Yves\StepEngine\Process\StepCollectionInterface
+     */
+    protected $stepCollection;
+
+    /**
      * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface $quoteClient
      * @param \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutStepResolverStrategyPluginInterface[] $checkoutStepResolverStrategyPlugins
+     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[] $steps
+     * @param \Spryker\Yves\StepEngine\Process\StepCollectionInterface $stepCollection
      */
     public function __construct(
         CheckoutPageToQuoteClientInterface $quoteClient,
-        array $checkoutStepResolverStrategyPlugins
+        array $checkoutStepResolverStrategyPlugins,
+        array $steps,
+        StepCollectionInterface $stepCollection
     ) {
         $this->checkoutStepResolverStrategyPlugins = $checkoutStepResolverStrategyPlugins;
         $this->quoteClient = $quoteClient;
+        $this->steps = $steps;
+        $this->stepCollection = $stepCollection;
     }
 
     /**
-     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[] $steps
-     * @param \Spryker\Yves\StepEngine\Process\StepCollectionInterface $stepCollection
-     *
      * @return \Spryker\Yves\StepEngine\Process\StepCollectionInterface
      */
-    public function resolveSteps(array $steps, StepCollectionInterface $stepCollection): StepCollectionInterface
+    public function resolveSteps(): StepCollectionInterface
     {
-        $steps = $this->executeCheckoutStepResolverStrategyPlugins($steps);
+        $steps = $this->executeCheckoutStepResolverStrategyPlugins($this->steps);
 
         foreach ($steps as $step) {
-            $stepCollection->addStep($step);
+            $this->stepCollection->addStep($step);
         }
 
-        return $stepCollection;
+        return $this->stepCollection;
     }
 
     /**
@@ -62,7 +75,7 @@ class StepResolver implements StepResolverInterface
 
         foreach ($this->checkoutStepResolverStrategyPlugins as $checkoutStepResolverStrategyPlugin) {
             if ($checkoutStepResolverStrategyPlugin->isApplicable($quoteTransfer)) {
-                $steps = $checkoutStepResolverStrategyPlugin->execute($steps);
+                $steps = $checkoutStepResolverStrategyPlugin->execute($steps, $quoteTransfer);
             }
         }
 
