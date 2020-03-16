@@ -8,10 +8,10 @@
     name: 'order-custom-reference-form',
 } %}
 
-{% set classTitle = '' %}
-{% set classButton = 'button' %}
-
 {% block body %}
+    {% set classTitle = '' %}
+    {% set classButton = 'button' %}
+
     {% block title %}
         <h5 class="{{ classTitle }}">{{ 'order_custom_reference.title' | trans }}</h5>
     {% endblock %}
@@ -26,8 +26,8 @@
                 },
                 options: {
                     action: path('order-custom-reference/save'),
-                }
-            }
+                },
+            },
         } only %}
     {% endblock %}
 {% endblock %}

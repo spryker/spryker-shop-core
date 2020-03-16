@@ -29,7 +29,7 @@
                     <strong>{{ data.order.createdAt | formatDateTime }}</strong>
                 </li>
 
-                {% embed molecule('order-custom-reference-view', 'OrderCustomReferenceWidget') ignore missing with {
+                {% embed molecule('order-custom-reference', 'OrderCustomReferenceWidget') ignore missing with {
                     config: {
                         tag: 'li',
                     },

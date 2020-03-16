@@ -192,7 +192,7 @@
     {% endif %}
 
     {% block orderCustomReference %}
-        {% embed molecule('order-custom-reference-view', 'OrderCustomReferenceWidget') ignore missing with {
+        {% embed molecule('order-custom-reference', 'OrderCustomReferenceWidget') ignore missing with {
             data: {
                 orderCustomReference: data.cart.orderCustomReference | default,
             },

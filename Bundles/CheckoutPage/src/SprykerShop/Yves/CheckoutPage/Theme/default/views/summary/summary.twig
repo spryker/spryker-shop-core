@@ -150,7 +150,7 @@
         {% endfor %}
     </div>
 
-    {% embed molecule('order-custom-reference-view', 'OrderCustomReferenceWidget') ignore missing with {
+    {% embed molecule('order-custom-reference', 'OrderCustomReferenceWidget') ignore missing with {
         class: 'box',
         data: {
             orderCustomReference: data.cart.orderCustomReference | default,

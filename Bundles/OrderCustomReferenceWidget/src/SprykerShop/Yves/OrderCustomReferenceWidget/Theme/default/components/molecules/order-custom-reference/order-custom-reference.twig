@@ -1,7 +1,7 @@
 {% extends model('component') %}
 
 {% define config = {
-    name: 'order-custom-reference-view',
+    name: 'order-custom-reference',
 } %}
 
 {% define data = {
@@ -15,14 +15,15 @@
     {% endif %}
 {% endblock %}
 
-{% set classTitle = '' %}
-{% set classText = 'text-break' %}
-
 {% block body %}
+    {% set classTitle = '' %}
+    {% set classText = 'text-break' %}
+
     {% if data.orderCustomReference %}
         {% block title %}
             <h5 class="{{ classTitle }}">{{ data.title }}</h5>
         {% endblock %}
+
         {% block textWrapper %}
             <p class="{{ classText }}">
                 {% block text %}
