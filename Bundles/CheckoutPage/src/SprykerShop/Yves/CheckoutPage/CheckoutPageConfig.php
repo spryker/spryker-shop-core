@@ -22,6 +22,11 @@ class CheckoutPageConfig extends AbstractBundleConfig
     public const PAYMENT_METHOD_NAME_NO_PAYMENT = 'Nopayment';
 
     /**
+     * @uses \SprykerShop\Yves\HomePage\Plugin\Router\HomePageRouteProviderPlugin::ROUTE_HOME
+     */
+    public const ESCAPE_ROUTE = 'home';
+
+    /**
      * @api
      *
      * @return bool
@@ -29,5 +34,15 @@ class CheckoutPageConfig extends AbstractBundleConfig
     public function cleanCartAfterOrderCreation()
     {
         return true;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getEscapeRoute(): string
+    {
+        return static::ESCAPE_ROUTE;
     }
 }

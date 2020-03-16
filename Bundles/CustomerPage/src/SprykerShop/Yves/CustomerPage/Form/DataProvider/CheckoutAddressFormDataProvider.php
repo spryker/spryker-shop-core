@@ -14,11 +14,12 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface;
+use SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolverInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
 use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressCollectionForm;
 use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressForm;
 
@@ -43,35 +44,42 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     protected $customerTransfer;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface
+     * @var \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface
      */
     protected $shipmentClient;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface
+     * @var \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface
      */
     protected $productBundleClient;
 
     /**
-     * @var \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface
+     * @var \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface
      */
     protected $shipmentService;
+
+    /**
+     * @var \SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolverInterface
+     */
+    protected $addressChoicesResolver;
 
     /**
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface $customerClient
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface $customerService
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToShipmentClientInterface $shipmentClient
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToProductBundleClientInterface $productBundleClient
-     * @param \SprykerShop\Yves\CheckoutPage\Dependency\Service\CheckoutPageToShipmentServiceInterface $shipmentService
+     * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface $shipmentClient
+     * @param \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface $productBundleClient
+     * @param \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface $shipmentService
+     * @param \SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolverInterface $addressChoicesResolver
      */
     public function __construct(
         CustomerPageToCustomerClientInterface $customerClient,
         Store $store,
         CustomerPageToCustomerServiceInterface $customerService,
-        CheckoutPageToShipmentClientInterface $shipmentClient,
-        CheckoutPageToProductBundleClientInterface $productBundleClient,
-        CheckoutPageToShipmentServiceInterface $shipmentService
+        CustomerPageToShipmentClientInterface $shipmentClient,
+        CustomerPageToProductBundleClientInterface $productBundleClient,
+        CustomerPageToShipmentServiceInterface $shipmentService,
+        AddressChoicesResolverInterface $addressChoicesResolver
     ) {
         parent::__construct($customerClient, $store);
 
@@ -80,6 +88,7 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         $this->shipmentClient = $shipmentClient;
         $this->productBundleClient = $productBundleClient;
         $this->shipmentService = $shipmentService;
+        $this->addressChoicesResolver = $addressChoicesResolver;
     }
 
     /**
@@ -111,10 +120,13 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     {
         $quoteTransfer = $this->setBundleItemLevelShippingAddresses($quoteTransfer);
         $canDeliverToMultipleShippingAddresses = $this->canDeliverToMultipleShippingAddresses($quoteTransfer);
-        $defaultAddressChoices = $this->getAddressChoices();
+        $defaultAddressChoices = $this->addressChoicesResolver->getAddressChoices($this->customerTransfer);
 
         return [
-            CheckoutAddressCollectionForm::OPTION_SINGLE_SHIPPING_ADDRESS_CHOICES => $this->getSingleShippingAddressChoices($defaultAddressChoices, $canDeliverToMultipleShippingAddresses),
+            CheckoutAddressCollectionForm::OPTION_SINGLE_SHIPPING_ADDRESS_CHOICES => $this->addressChoicesResolver->getSingleShippingAddressChoices(
+                $defaultAddressChoices,
+                $canDeliverToMultipleShippingAddresses
+            ),
             CheckoutAddressCollectionForm::OPTION_MULTIPLE_SHIPPING_ADDRESS_CHOICES => $defaultAddressChoices,
             CheckoutAddressCollectionForm::OPTION_BILLING_ADDRESS_CHOICES => $defaultAddressChoices,
             CheckoutAddressCollectionForm::OPTION_COUNTRY_CHOICES => $this->getAvailableCountries(),
@@ -232,133 +244,6 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
         return $billingAddressTransfer->getIdCustomerAddress() !== null
             || $billingAddressTransfer->getIdCompanyUnitAddress() !== null
             || !(empty(trim($billingAddressTransfer->getFirstName())) && empty($billingAddressTransfer->getLastName()));
-    }
-
-    /**
-     * @return array
-     */
-    protected function getAddressChoices()
-    {
-        $choices = $this->getDefaultAddressChoices();
-        if ($this->customerTransfer === null) {
-            return $choices;
-        }
-
-        $customerAddressesTransfer = $this->customerTransfer->getAddresses();
-
-        if ($customerAddressesTransfer === null || count($customerAddressesTransfer->getAddresses()) === 0) {
-            return $choices;
-        }
-
-        $choices = $this->addCustomerAddressChoices($customerAddressesTransfer->getAddresses(), $choices);
-
-        return $this->sanitizeDuplicatedCustomerAddressChoices($choices);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDefaultAddressChoices(): array
-    {
-        return [
-            CheckoutAddressForm::GLOSSARY_KEY_ACCOUNT_ADD_NEW_ADDRESS => CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS,
-        ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return string
-     */
-    protected function getAddressLabel(AddressTransfer $addressTransfer): string
-    {
-        return sprintf(
-            static::ADDRESS_LABEL_PATTERN,
-            $addressTransfer->getSalutation(),
-            $addressTransfer->getFirstName(),
-            $addressTransfer->getLastName(),
-            $addressTransfer->getAddress1(),
-            $addressTransfer->getAddress2(),
-            $addressTransfer->getZipCode(),
-            $addressTransfer->getCity()
-        );
-    }
-
-    /**
-     * @param iterable|\ArrayObject|\Generated\Shared\Transfer\AddressTransfer[] $customerAddressesCollection
-     * @param array $choices
-     *
-     * @return string[]
-     */
-    protected function addCustomerAddressChoices(iterable $customerAddressesCollection, array $choices = []): array
-    {
-        foreach ($customerAddressesCollection as $addressTransfer) {
-            $idCustomerAddress = $addressTransfer->getIdCustomerAddress();
-            if ($idCustomerAddress === null) {
-                continue;
-            }
-
-            $choices[$this->getAddressLabel($addressTransfer)] = $idCustomerAddress;
-        }
-
-        return $choices;
-    }
-
-    /**
-     * @param iterable|string[] $choices
-     *
-     * @return string[]
-     */
-    protected function sanitizeDuplicatedCustomerAddressChoices(iterable $choices): array
-    {
-        $sanitizedChoices = [];
-        $choicesCounts = [];
-
-        foreach ($choices as $addressLabel => $idAddress) {
-            if (isset($sanitizedChoices[$addressLabel])) {
-                $originAddressLabel = $addressLabel;
-                if (!isset($choicesCounts[$originAddressLabel])) {
-                    $choicesCounts[$originAddressLabel] = 1;
-                }
-
-                $addressLabel = $this->getSanitizedCustomerAddressChoices($addressLabel, $choicesCounts[$originAddressLabel]);
-                $choicesCounts[$originAddressLabel]++;
-            }
-
-            $sanitizedChoices[$addressLabel] = $idAddress;
-        }
-
-        asort($sanitizedChoices, SORT_NATURAL);
-
-        return $sanitizedChoices;
-    }
-
-    /**
-     * @param string $addressLabel
-     * @param int $itemNumber
-     *
-     * @return string
-     */
-    protected function getSanitizedCustomerAddressChoices(string $addressLabel, int $itemNumber): string
-    {
-        return sprintf(static::SANITIZED_CUSTOMER_ADDRESS_LABEL_PATTERN, $addressLabel, $itemNumber);
-    }
-
-    /**
-     * @param array $customerAddressChoices
-     * @param bool $canDeliverToMultipleShippingAddresses
-     *
-     * @return string[]
-     */
-    protected function getSingleShippingAddressChoices(array $customerAddressChoices, bool $canDeliverToMultipleShippingAddresses): array
-    {
-        if ($canDeliverToMultipleShippingAddresses === false) {
-            return $customerAddressChoices;
-        }
-
-        $customerAddressChoices[CheckoutAddressForm::GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES] = CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES;
-
-        return $customerAddressChoices;
     }
 
     /**
