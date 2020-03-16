@@ -13,6 +13,8 @@ use SprykerShop\Shared\AgentPage\AgentPageConstants;
 class AgentPageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getAgentFirewallRegex(): string

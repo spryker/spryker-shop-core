@@ -100,8 +100,8 @@ class CartControllerProvider extends AbstractYvesControllerProvider
     }
 
     /**
-     * @uses CartControllerProvider::getQuantityFromRequest()
-     * @uses CartController::quickAddAction()
+     * @uses \SprykerShop\Yves\CartPage\Plugin\Provider\CartControllerProvider::getQuantityFromRequest()
+     * @uses \SprykerShop\Yves\CartPage\Controller\CartController::quickAddAction()
      *
      * @return $this
      */
