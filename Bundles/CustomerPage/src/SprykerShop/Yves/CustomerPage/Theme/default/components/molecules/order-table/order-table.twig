@@ -9,56 +9,20 @@
     orderSearchForm: null,
     isOrderSearchEnabled: false,
     isOrderSearchOrderItemsVisible: true,
+    jsPrefix: '',
 } %}
 
 {% block body %}
-    {% set orderByValue = data.orderSearchForm.orderBy.vars.value %}
-    {% set orderDirectionValue = data.orderSearchForm.orderDirection.vars.value %}
-
-    {{ form_row(data.orderSearchForm.orderBy, {
-        attr: {
-            class: data.jsPrefix ~ 'orderBy-target',
-        }}) }}
-    {{ form_row(data.orderSearchForm.orderDirection, {
-        attr: {
-            class: data.jsPrefix ~ 'orderDirection-target',
-        }}) }}
     <table class="table table--expand">
         <thead>
             <tr>
-                <th class="{{ data.jsPrefix }}orderBy-trigger {{ data.jsPrefix }}orderDirection-trigger"
-                    set-value="orderReference"
-                    set-value-direction="{{ (orderDirectionValue == 'ASC') ? 'DESC' : 'ASC' }}">
+                <th {{ _self.sortingAttributes('orderReference', data.orderSearchForm, data.jsPrefix) }}>
                     {{ 'customer.order.reference' | trans }}
-
-                    {% set iconName = 'sort-none' %}
-                    {% if (orderByValue == 'orderReference') %}
-                        {% set iconName = (orderDirectionValue == 'ASC') ? 'sort-asc' : 'sort-desc' %}
-                    {% endif %}
-
-                    {% include atom('icon') with {
-                        modifiers: ['small'],
-                        data: {
-                            name: iconName,
-                        }
-                    } only %}
+                    {{ _self.sortingIcon('orderReference', data.orderSearchForm) }}
                 </th>
-                <th class="{{ data.jsPrefix }}orderBy-trigger {{ data.jsPrefix }}orderDirection-trigger"
-                    set-value="date"
-                    set-value-direction="{{ (orderDirectionValue == 'ASC') ? 'DESC' : 'ASC' }}">
+                <th {{ _self.sortingAttributes('date', data.orderSearchForm, data.jsPrefix) }}>
                     {{ 'customer.order.date' | trans }}
-
-                    {% set iconName = 'sort-none' %}
-                    {% if (orderByValue == 'date') %}
-                        {% set iconName = (orderDirectionValue == 'ASC') ? 'sort-asc' : 'sort-desc' %}
-                    {% endif %}
-
-                    {% include atom('icon') with {
-                        modifiers: ['small'],
-                        data: {
-                            name: iconName,
-                        }
-                    } only %}
+                    {{ _self.sortingIcon('date', data.orderSearchForm) }}
                 </th>
                 {% if data.isOrderSearchEnabled and data.isOrderSearchOrderItemsVisible %}
                     <th>{{ 'customer.order.number_of_items' | trans }}</th>
@@ -118,19 +82,59 @@
         </tbody>
     </table>
 
+    {% if data.orderSearchForm %}
+        {{ form_row(data.orderSearchForm.orderBy, {
+            attr: {
+                class: data.jsPrefix ~ 'orderBy-target',
+            }}) }}
 
-    {% include molecule('form-value-setter', 'CustomerPage') with {
-        attributes: {
-            'trigger-class': data.jsPrefix ~ 'orderBy-trigger',
-            'target-class': data.jsPrefix ~ 'orderBy-target',
-        },
-    } only %}
+        {{ form_row(data.orderSearchForm.orderDirection, {
+            attr: {
+                class: data.jsPrefix ~ 'orderDirection-target',
+            }}) }}
 
-    {% include molecule('form-value-setter', 'CustomerPage') with {
-        attributes: {
-            'trigger-class': data.jsPrefix ~ 'orderDirection-trigger',
-            'target-class': data.jsPrefix ~ 'orderDirection-target',
-            'value-field': 'set-value-direction',
-        },
-    } only %}
+        {% include molecule('form-value-setter', 'CustomerPage') with {
+            attributes: {
+                'trigger-class': data.jsPrefix ~ 'orderBy-trigger',
+                'target-class': data.jsPrefix ~ 'orderBy-target',
+            },
+        } only %}
+
+        {% include molecule('form-value-setter', 'CustomerPage') with {
+            attributes: {
+                'trigger-class': data.jsPrefix ~ 'orderDirection-trigger',
+                'target-class': data.jsPrefix ~ 'orderDirection-target',
+                'value-field': 'set-value-direction',
+            },
+        } only %}
+    {% endif %}
+
+    {%- macro sortingAttributes(orderByValue, orderSearchForm, jsPrefix, class='') -%}
+        {% if orderSearchForm %}
+            {% set orderDirection = orderSearchForm.orderDirection.vars.value %}
+
+            class="{{ class }} {{ jsPrefix }}orderBy-trigger {{ jsPrefix }}orderDirection-trigger"
+            set-value="{{ orderByValue }}"
+            set-value-direction="{{ (orderDirection == 'ASC') ? 'DESC' : 'ASC' }}"
+        {% endif %}
+    {%- endmacro -%}
+
+    {%- macro sortingIcon(orderByValue, orderSearchForm) -%}
+        {% if orderSearchForm %}
+            {% set orderDirection = orderSearchForm.orderDirection.vars.value %}
+            {% set orderBy = orderSearchForm.orderBy.vars.value %}
+            {% set iconName = 'sort-none' %}
+
+            {% if (orderBy == orderByValue) %}
+                {% set iconName = (orderDirection == 'ASC') ? 'sort-asc' : 'sort-desc' %}
+            {% endif %}
+
+            {% include atom('icon') with {
+                modifiers: ['small'],
+                data: {
+                    name: iconName,
+                },
+            } only %}
+        {% endif %}
+    {%- endmacro -%}
 {% endblock %}
