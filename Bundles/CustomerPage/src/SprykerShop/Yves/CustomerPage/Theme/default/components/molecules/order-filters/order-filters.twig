@@ -57,13 +57,13 @@
     {% endblock %}
 
     {% set row3Class = 'form__fields grid grid--middle grid--justify' %}
-    {% set isOrderItemsVisibleClass = 'form__field col' %}
+    {% set orderItemsVisibleClass = 'form__field col' %}
     {% set actionWrapperClass = 'form__field col text-right' %}
     {% set actionClass = 'button button--success' %}
 
     {% block row3 %}
         <div class="{{ row3Class }}">
-            <div class="{{ isOrderItemsVisibleClass }}">
+            <div class="{{ orderItemsVisibleClass }}">
                 {{ form_row(data.orderSearchForm.isOrderItemsVisible) }}
             </div>
             <div class="{{ actionWrapperClass }}">
