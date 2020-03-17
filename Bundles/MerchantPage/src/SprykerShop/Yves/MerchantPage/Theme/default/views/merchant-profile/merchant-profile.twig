@@ -4,7 +4,7 @@
     merchant: _view.merchant,
 } %}
 
-{% set merchantName = data.merchant.merchantName %}
+{% set merchantName = data.merchant.name %}
 
 {% block breadcrumbs %}
     {% include molecule('breadcrumb') with {

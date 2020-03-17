@@ -15,7 +15,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
  */
 class ProductOfferSoldByMerchantWidget extends AbstractWidget
 {
-    protected const PARAMETER_MERCHANT_PROFILE = 'merchantProfile';
+    protected const PARAMETER_MERCHANT = 'merchant';
     protected const PARAMETER_CURRENT_LOCALE = 'currentLocale';
 
     /**
@@ -23,7 +23,7 @@ class ProductOfferSoldByMerchantWidget extends AbstractWidget
      */
     public function __construct(ItemTransfer $itemTransfer)
     {
-        $this->addMerchantProfileParameter($itemTransfer);
+        $this->addMerchantParameter($itemTransfer);
     }
 
     /**
@@ -47,7 +47,7 @@ class ProductOfferSoldByMerchantWidget extends AbstractWidget
      *
      * @return $this
      */
-    protected function addMerchantProfileParameter(ItemTransfer $itemTransfer)
+    protected function addMerchantParameter(ItemTransfer $itemTransfer)
     {
         if (!$itemTransfer->getProductOfferReference()) {
             return $this;
@@ -57,11 +57,11 @@ class ProductOfferSoldByMerchantWidget extends AbstractWidget
             ->getMerchantProductOfferStorageClient()
             ->findProductOfferStorageByReference($itemTransfer->getProductOfferReference());
 
-        $merchantProfileStorageTransfer = $this->getFactory()
-            ->getMerchantProfileStorageClient()
-            ->findMerchantProfileStorageData($productOfferStorageTransfer->getIdMerchant());
+        $merchantStorageTransfer = $this->getFactory()
+            ->getMerchantStorageClient()
+            ->findOne($productOfferStorageTransfer->getIdMerchant());
 
-        $this->addParameter(static::PARAMETER_MERCHANT_PROFILE, $merchantProfileStorageTransfer);
+        $this->addParameter(static::PARAMETER_MERCHANT, $merchantStorageTransfer);
 
         return $this;
     }

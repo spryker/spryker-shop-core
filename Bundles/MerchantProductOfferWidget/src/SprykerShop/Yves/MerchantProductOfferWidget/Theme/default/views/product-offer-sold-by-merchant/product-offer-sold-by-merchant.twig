@@ -1,22 +1,22 @@
 {% extends template('widget') %}
 
 {% define data = {
-    merchantProfile: _widget.merchantProfile | default,
+    merchant: _widget.merchant | default,
     locale: app.locale,
 } %}
 
 {% block template %}
-    {% if data.merchantProfile %}
-        {% set merchantProfileUrl = null %}
+    {% if data.merchant %}
+        {% set merchantUrl = null %}
 
-        {% for urlTransfer in  data.merchantProfile.urlCollection %}
+        {% for urlTransfer in  data.merchant.urlCollection %}
             {% if urlTransfer.localeName == data.locale %}
-                {% set merchantProfileUrl = urlTransfer.url %}
+                {% set merchantUrl = urlTransfer.url %}
             {% endif %}
         {% endfor %}
 
         <p>
-            {{ 'merchant_product_offer.sold_by' | trans }} <a href="{{ merchantProfileUrl }}" target="_blank" >{{ data.merchantProfile.merchantName }}</a>
+            {{ 'merchant_product_offer.sold_by' | trans }} <a href="{{ merchantUrl }}" target="_blank" >{{ data.merchant.name }}</a>
         </p>
     {% endif %}
 {% endblock %}
