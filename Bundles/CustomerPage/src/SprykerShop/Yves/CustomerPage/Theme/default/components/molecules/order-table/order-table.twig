@@ -86,24 +86,26 @@
         {{ form_row(data.orderSearchForm.orderBy, {
             attr: {
                 class: data.jsPrefix ~ 'orderBy-target',
-            }}) }}
+            }})
+        }}
 
         {{ form_row(data.orderSearchForm.orderDirection, {
             attr: {
                 class: data.jsPrefix ~ 'orderDirection-target',
-            }}) }}
+            }})
+        }}
 
         {% include molecule('form-value-setter', 'CustomerPage') with {
             attributes: {
-                'trigger-class': data.jsPrefix ~ 'orderBy-trigger',
-                'target-class': data.jsPrefix ~ 'orderBy-target',
+                'trigger-class-name': data.jsPrefix ~ 'orderBy-trigger',
+                'target-class-name': data.jsPrefix ~ 'orderBy-target',
             },
         } only %}
 
         {% include molecule('form-value-setter', 'CustomerPage') with {
             attributes: {
-                'trigger-class': data.jsPrefix ~ 'orderDirection-trigger',
-                'target-class': data.jsPrefix ~ 'orderDirection-target',
+                'trigger-class-name': data.jsPrefix ~ 'orderDirection-trigger',
+                'target-class-name': data.jsPrefix ~ 'orderDirection-target',
                 'value-field': 'set-value-direction',
             },
         } only %}
@@ -125,7 +127,7 @@
             {% set orderBy = orderSearchForm.orderBy.vars.value %}
             {% set iconName = 'sort-none' %}
 
-            {% if (orderBy == orderByValue) %}
+            {% if orderBy == orderByValue %}
                 {% set iconName = (orderDirection == 'ASC') ? 'sort-asc' : 'sort-desc' %}
             {% endif %}
 

@@ -32,7 +32,7 @@
         {% endif %}
     {% endfor %}
 
-    {% if (activeFilters | length) %}
+    {% if activeFilters | length %}
         {{ parent() }}
     {% endif %}
 {% endblock %}
@@ -84,8 +84,8 @@
         {% block activeFilterReset %}
             {% include molecule('form-value-setter', 'CustomerPage') with {
                 attributes: {
-                    'trigger-class': data.jsPrefix ~ filter.name ~ '-trigger',
-                    'target-class': data.jsPrefix ~ filter.name ~ '-target',
+                    'trigger-class-name': data.jsPrefix ~ filter.name ~ '-trigger',
+                    'target-class-name': data.jsPrefix ~ filter.name ~ '-target',
                 },
             } only %}
         {% endblock %}
@@ -95,11 +95,12 @@
         {{ form_row(data.orderSearchForm.reset, {
             attr: {
                 class: data.jsPrefix ~ 'reset-target',
-            }}) }}
+            }})
+        }}
         {% include molecule('form-value-setter', 'CustomerPage') with {
             attributes: {
-                'trigger-class': data.jsPrefix ~ 'reset-trigger',
-                'target-class': data.jsPrefix ~ 'reset-target',
+                'trigger-class-name': data.jsPrefix ~ 'reset-trigger',
+                'target-class-name': data.jsPrefix ~ 'reset-target',
             },
         } only %}
     {% endblock %}

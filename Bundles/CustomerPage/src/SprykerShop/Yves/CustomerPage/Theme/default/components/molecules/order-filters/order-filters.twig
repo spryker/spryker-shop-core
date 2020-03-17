@@ -39,13 +39,15 @@
                 {{ form_row(data.orderSearchForm.dateFrom, {
                     attr: {
                         class: data.jsPrefix ~ data.orderSearchForm.dateFrom.vars.name ~ '-target',
-                    }}) }}
+                    }})
+                }}
             </div>
             <div class="{{ dateToClass }}">
                 {{ form_row(data.orderSearchForm.dateTo, {
                     attr: {
                         class: data.jsPrefix ~ data.orderSearchForm.dateTo.vars.name ~ '-target',
-                    }}) }}
+                    }})
+                }}
             </div>
         </div>
     {% endblock %}

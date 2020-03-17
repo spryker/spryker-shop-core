@@ -7,8 +7,8 @@ export default class FormValueSetter extends Component {
     protected readyCallback(): void {}
 
     protected init(): void {
-        this.triggers = <HTMLElement[]>Array.from(document.getElementsByClassName(this.triggerClass));
-        this.target = <HTMLInputElement>document.getElementsByClassName(this.targetClass)[0];
+        this.triggers = <HTMLElement[]>Array.from(document.getElementsByClassName(this.triggerClassName));
+        this.target = <HTMLInputElement>document.getElementsByClassName(this.targetClassName)[0];
         this.mapEvents();
     }
 
@@ -30,12 +30,12 @@ export default class FormValueSetter extends Component {
         form.submit();
     }
 
-    protected get triggerClass(): string {
-        return this.getAttribute('trigger-class');
+    protected get triggerClassName(): string {
+        return this.getAttribute('trigger-class-name');
     }
 
-    protected get targetClass(): string {
-        return this.getAttribute('target-class');
+    protected get targetClassName(): string {
+        return this.getAttribute('target-class-name');
     }
 
     protected get valueAttribute(): string {

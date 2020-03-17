@@ -22,43 +22,62 @@
 
 {% block customerContent %}
     <div class="box">
-        <h5>{{ 'customer.order.all_orders' | trans }}</h5>
+        {% block customerTitle %}
+            <h5>{{ 'customer.order.all_orders' | trans }}</h5>
+        {% endblock %}
 
-        {% if (data.orderSearchForm) %}
-            {{ form_start(data.orderSearchForm) }}
+        {% block filterSection %}
+            {% if data.orderSearchForm %}
+                {% block formStart %}
+                    {{ form_start(data.orderSearchForm) }}
+                {% endblock %}
 
-            {% include molecule('order-filters', 'CustomerPage') with {
+                {% block orderFilters %}
+                    {% include molecule('order-filters', 'CustomerPage') with {
+                        data: {
+                            orderSearchForm: data.orderSearchForm,
+                            jsPrefix: jsPrefix,
+                        },
+                    } only %}
+                {% endblock %}
+
+                {% block orderActiveFilters %}
+                    {% include molecule('order-active-filters', 'CustomerPage') with {
+                        data: {
+                            orderSearchForm: data.orderSearchForm,
+                            jsPrefix: jsPrefix,
+                        },
+                    } only %}
+                {% endblock %}
+            {% endif %}
+        {% endblock %}
+
+        {% block orderTable %}
+            {% include molecule('order-table', 'CustomerPage') with {
                 data: {
+                    orders: data.orders,
                     orderSearchForm: data.orderSearchForm,
+                    isOrderSearchEnabled: data.isOrderSearchEnabled,
+                    isOrderSearchOrderItemsVisible: data.isOrderSearchOrderItemsVisible,
                     jsPrefix: jsPrefix,
-                },
+                }
             } only %}
+        {% endblock %}
 
-            {% include molecule('order-active-filters', 'CustomerPage') with {
-                data: {
-                    orderSearchForm: data.orderSearchForm,
-                    jsPrefix: jsPrefix,
-                },
+        {% block separator %}
+            <hr>
+        {% endblock %}
+
+        {% block pagination %}
+            {% include molecule('pagination') with {
+                data: data.pagination,
             } only %}
-        {% endif %}
+        {% endblock %}
 
-        {% include molecule('order-table', 'CustomerPage') with {
-            data: {
-                orders: data.orders,
-                orderSearchForm: data.orderSearchForm,
-                isOrderSearchEnabled: data.isOrderSearchEnabled,
-                isOrderSearchOrderItemsVisible: data.isOrderSearchOrderItemsVisible,
-                jsPrefix: jsPrefix,
-            }
-        } only %}
-
-        <hr>
-        {% include molecule('pagination') with {
-            data: data.pagination
-        } only %}
-
-        {% if (data.orderSearchForm) %}
-            {{ form_end(data.orderSearchForm) }}
+        {% if data.orderSearchForm %}
+            {% block endForm %}
+                {{ form_end(data.orderSearchForm) }}
+            {% endblock %}
         {% endif %}
     </div>
 {% endblock %}
