@@ -31,6 +31,7 @@ use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpander;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Form\DataProvider\CheckoutAddressFormDataProvider;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
+use SprykerShop\Yves\CustomerPage\Form\Transformer\AddressSelectTransformer;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapper;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapperInterface;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\AccessDeniedHandler;
@@ -41,6 +42,7 @@ use SprykerShop\Yves\CustomerPage\Plugin\Provider\CustomerUserProvider;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
 use SprykerShop\Yves\CustomerPage\Twig\GetUsernameTwigFunction;
 use SprykerShop\Yves\CustomerPage\Twig\IsLoggedTwigFunction;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -162,6 +164,14 @@ class CustomerPageFactory extends AbstractFactory
             $this->getShipmentService(),
             $this->createAddressChoicesResolver()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createAddressSelectTransformer(): DataTransformerInterface
+    {
+        return new AddressSelectTransformer();
     }
 
     /**

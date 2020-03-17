@@ -118,11 +118,18 @@ class CheckoutAddressFormDataProvider extends AbstractAddressFormDataProvider im
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
         $quoteTransfer = $this->setBundleItemLevelShippingAddresses($quoteTransfer);
+        $canDeliverToMultipleShippingAddresses = $this->canDeliverToMultipleShippingAddresses($quoteTransfer);
+        $defaultAddressChoices = $this->addressChoicesResolver->getAddressChoices($this->customerTransfer);
 
         return [
-            CheckoutAddressCollectionForm::OPTION_ADDRESS_CHOICES => $this->addressChoicesResolver->getAddressChoicesForCustomer($this->customerTransfer),
+            CheckoutAddressCollectionForm::OPTION_SINGLE_SHIPPING_ADDRESS_CHOICES => $this->addressChoicesResolver->getSingleShippingAddressChoices(
+                $defaultAddressChoices,
+                $canDeliverToMultipleShippingAddresses
+            ),
+            CheckoutAddressCollectionForm::OPTION_MULTIPLE_SHIPPING_ADDRESS_CHOICES => $defaultAddressChoices,
+            CheckoutAddressCollectionForm::OPTION_BILLING_ADDRESS_CHOICES => $defaultAddressChoices,
             CheckoutAddressCollectionForm::OPTION_COUNTRY_CHOICES => $this->getAvailableCountries(),
-            CheckoutAddressCollectionForm::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES => $this->canDeliverToMultipleShippingAddresses($quoteTransfer),
+            CheckoutAddressCollectionForm::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES => $canDeliverToMultipleShippingAddresses,
             CheckoutAddressCollectionForm::OPTION_IS_CUSTOMER_LOGGED_IN => $this->customerClient->isLoggedIn(),
             CheckoutAddressCollectionForm::OPTION_BUNDLE_ITEMS => $this->getBundleItemsFromQuote($quoteTransfer),
         ];

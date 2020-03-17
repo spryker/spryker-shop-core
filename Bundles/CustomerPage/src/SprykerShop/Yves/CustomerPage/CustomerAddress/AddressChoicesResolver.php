@@ -10,6 +10,7 @@ namespace SprykerShop\Yves\CustomerPage\CustomerAddress;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use SprykerShop\Yves\CustomerPage\Form\CheckoutAddressForm;
 
 class AddressChoicesResolver implements AddressChoicesResolverInterface
 {
@@ -21,39 +22,49 @@ class AddressChoicesResolver implements AddressChoicesResolverInterface
      *
      * @return string[]
      */
-    public function getAddressChoicesForCustomer(?CustomerTransfer $customerTransfer): array
+    public function getAddressChoices(?CustomerTransfer $customerTransfer): array
     {
+        $choices = $this->getDefaultAddressChoices();
         if ($customerTransfer === null) {
-            return [];
+            return $choices;
         }
 
         $customerAddressesTransfer = $customerTransfer->getAddresses();
 
         if (!$this->isCustomerHasAddress($customerAddressesTransfer)) {
-            return [];
+            return $choices;
         }
 
-        $choices = $this->getCustomerAddressChoices($customerAddressesTransfer->getAddresses());
+        $choices = $this->addCustomerAddressChoices($customerAddressesTransfer->getAddresses(), $choices);
 
         return $this->sanitizeDuplicatedCustomerAddressChoices($choices);
     }
 
     /**
+     * @return array
+     */
+    protected function getDefaultAddressChoices(): array
+    {
+        return [
+            CheckoutAddressForm::GLOSSARY_KEY_ACCOUNT_ADD_NEW_ADDRESS => CheckoutAddressForm::VALUE_ADD_NEW_ADDRESS,
+        ];
+    }
+
+    /**
      * @param iterable|\ArrayObject|\Generated\Shared\Transfer\AddressTransfer[] $customerAddressesCollection
+     * @param array $choices
      *
      * @return string[]
      */
-    protected function getCustomerAddressChoices(iterable $customerAddressesCollection): array
+    protected function addCustomerAddressChoices(iterable $customerAddressesCollection, array $choices = []): array
     {
-        $choices = [];
-
         foreach ($customerAddressesCollection as $addressTransfer) {
             $idCustomerAddress = $addressTransfer->getIdCustomerAddress();
             if ($idCustomerAddress === null) {
                 continue;
             }
 
-            $choices[$idCustomerAddress] = $this->getAddressLabel($addressTransfer);
+            $choices[$this->getAddressLabel($addressTransfer)] = $idCustomerAddress;
         }
 
         return $choices;
@@ -88,7 +99,7 @@ class AddressChoicesResolver implements AddressChoicesResolverInterface
         $sanitizedChoices = [];
         $choicesCounts = [];
 
-        foreach ($choices as $idAddress => $addressLabel) {
+        foreach ($choices as $addressLabel => $idAddress) {
             if (isset($sanitizedChoices[$addressLabel])) {
                 $originAddressLabel = $addressLabel;
                 if (!isset($choicesCounts[$originAddressLabel])) {
@@ -102,7 +113,7 @@ class AddressChoicesResolver implements AddressChoicesResolverInterface
             $sanitizedChoices[$addressLabel] = $idAddress;
         }
 
-        ksort($sanitizedChoices, SORT_NATURAL);
+        asort($sanitizedChoices, SORT_NATURAL);
 
         return $sanitizedChoices;
     }
@@ -116,6 +127,23 @@ class AddressChoicesResolver implements AddressChoicesResolverInterface
     protected function getSanitizedCustomerAddressChoices(string $addressLabel, int $itemNumber): string
     {
         return sprintf(static::SANITIZED_CUSTOMER_ADDRESS_LABEL_PATTERN, $addressLabel, $itemNumber);
+    }
+
+    /**
+     * @param array $customerAddressChoices
+     * @param bool $canDeliverToMultipleShippingAddresses
+     *
+     * @return string[]
+     */
+    public function getSingleShippingAddressChoices(array $customerAddressChoices, bool $canDeliverToMultipleShippingAddresses): array
+    {
+        if ($canDeliverToMultipleShippingAddresses === false) {
+            return $customerAddressChoices;
+        }
+
+        $customerAddressChoices[CheckoutAddressForm::GLOSSARY_KEY_DELIVER_TO_MULTIPLE_ADDRESSES] = CheckoutAddressForm::VALUE_DELIVER_TO_MULTIPLE_ADDRESSES;
+
+        return $customerAddressChoices;
     }
 
     /**

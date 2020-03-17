@@ -16,5 +16,13 @@ interface AddressChoicesResolverInterface
      *
      * @return string[]
      */
-    public function getAddressChoicesForCustomer(?CustomerTransfer $customerTransfer): array;
+    public function getAddressChoices(?CustomerTransfer $customerTransfer): array;
+
+    /**
+     * @param array $customerAddressChoices
+     * @param bool $canDeliverToMultipleShippingAddresses
+     *
+     * @return string[]
+     */
+    public function getSingleShippingAddressChoices(array $customerAddressChoices, bool $canDeliverToMultipleShippingAddresses): array;
 }
