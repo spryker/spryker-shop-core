@@ -446,8 +446,8 @@ export default class PackagingUnitQuantitySelector extends Component {
         const salesUnit = this.getSalesUnitById(salesUnitId);
         let qtyInSalesUnits = Number(this.qtyInSalesUnitInput.value);
         const qtyInBaseUnits = this.multiply(qtyInSalesUnits, this.currentSalesUnit.conversion);
-        qtyInSalesUnits = this.convertBaseUnitsAmountToCurrentSalesUnitsAmount(qtyInBaseUnits);
         this.currentSalesUnit = salesUnit;
+        qtyInSalesUnits = this.convertBaseUnitsAmountToCurrentSalesUnitsAmount(qtyInBaseUnits);
 
         if (isFinite(qtyInSalesUnits)) {
             this.qtyInSalesUnitInput.value = String(this.round(qtyInSalesUnits, this.decimals));
