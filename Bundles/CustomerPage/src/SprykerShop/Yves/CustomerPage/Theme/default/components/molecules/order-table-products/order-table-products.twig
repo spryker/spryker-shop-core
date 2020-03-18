@@ -6,6 +6,7 @@
 
 {% define data = {
     items: required,
+    priceMode: required,
 } %}
 
 {% block body %}
@@ -13,12 +14,36 @@
         {% embed molecule('product-item-list') with {
             data: {
                 product: item,
+                image: item.metadata.image,
+            },
+            embed: {
+                priceMode: data.priceMode,
             },
         } only %}
             {%- block extraClass %}{% endblock -%}
 
-            {% block actions %}
-                {{ data.product.quantity }}
+            {% block content %}
+                {% set priceModeGross = 'GROSS_MODE' %}
+
+                <div class="col col--sm-9 col--md-10 grid">
+                    <div class="col col--sm-12 col--md-6 col--middle">
+                        {{ block('name') }}
+                        {{ block('sku') }}
+                    </div>
+                    <div class="col col--sm-4 col--md-2 col--middle text-right">
+                        {{ (embed.priceMode == priceModeGross) ?
+                            data.product.unitGrossPrice | money :
+                            data.product.unitNetPrice | money }}
+                    </div>
+                    <div class="col col--sm-4 col--md-2 col--middle text-right">
+                        {{ data.product.quantity }}
+                    </div>
+                    <div class="col col--sm-4 col--md-2 col--middle text-right">
+                        {{ (embed.priceMode == priceModeGross) ?
+                            data.product.unitGrossPrice | money :
+                            data.product.unitNetPrice | money }}
+                    </div>
+                </div>
             {% endblock -%}
 
             {% block actionsContainer %}{% endblock -%}

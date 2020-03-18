@@ -18,11 +18,11 @@ export default class FormValueSetter extends Component {
 
     protected mapTriggerClickEvent(): void {
         this.triggers.forEach((trigger: HTMLElement) => {
-            trigger.addEventListener('click', (event: Event) => this.setValue(event, trigger));
+            trigger.addEventListener('click', () => this.setValue(trigger));
         });
     }
 
-    protected setValue(event: Event, trigger: HTMLElement): void {
+    protected setValue(trigger: HTMLElement): void {
         const value: string = trigger.getAttribute(this.valueAttribute);
         this.target.value = value;
 

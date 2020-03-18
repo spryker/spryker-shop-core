@@ -73,6 +73,7 @@
                             {% include molecule('order-table-products', 'CustomerPage') with {
                                 data: {
                                     items: order.items,
+                                    priceMode: order.priceMode,
                                 },
                             } only %}
                         </td>
