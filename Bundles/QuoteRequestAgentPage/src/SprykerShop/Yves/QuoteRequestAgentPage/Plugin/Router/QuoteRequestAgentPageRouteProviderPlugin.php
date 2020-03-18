@@ -26,6 +26,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_ADDRESS_CONFIRM = 'agent/quote-request/checkout-address-confirm';
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT = 'agent/quote-request/checkout-shipment';
     protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT_CONFIRM = 'agent/quote-request/checkout-shipment-confirm';
+    protected const ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SAVE = 'agent/quote-request/checkout-save';
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
     protected const QUOTE_REQUEST_REFERENCE_REGEX = '[a-zA-Z0-9-]+';
@@ -56,6 +57,7 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
         $routeCollection = $this->addQuoteRequestAgentCheckoutShipmentRoute($routeCollection);
         $routeCollection = $this->addQuoteRequestAgentCheckoutAddressConfirmRoute($routeCollection);
         $routeCollection = $this->addQuoteRequestAgentCheckoutShipmentConfirmRoute($routeCollection);
+        $routeCollection = $this->addQuoteRequestAgentCheckoutSaveRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -278,6 +280,21 @@ class QuoteRequestAgentPageRouteProviderPlugin extends AbstractRouteProviderPlug
         $route = $this->buildRoute('/agent/quote-request/checkout-shipment-confirm/{quoteRequestReference}', 'QuoteRequestAgentPage', 'QuoteRequestAgentCheckoutShipment', 'confirmAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
         $routeCollection->add(static::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SHIPMENT_CONFIRM, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @uses \SprykerShop\Yves\QuoteRequestAgentPage\Controller\QuoteRequestAgentSaveController::saveAction()
+     *
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addQuoteRequestAgentCheckoutSaveRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute('/agent/quote-request/checkout-save', 'QuoteRequestAgentPage', 'QuoteRequestAgentSave', 'saveAction');
+        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_AGENT_CHECKOUT_SAVE, $route);
 
         return $routeCollection;
     }

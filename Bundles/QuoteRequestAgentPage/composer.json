@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker-shop/checkout-page-extension": "^1.2.0",
     "spryker-shop/quote-request-agent-page-extension": "^1.0.0",
     "spryker-shop/shop-application": "^1.2.0",
     "spryker-shop/shop-ui": "^1.28.1",
@@ -14,11 +15,13 @@
     "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/messenger": "^3.0.0",
+    "spryker/persistent-cart": "^3.0.0",
     "spryker/price": "^5.0.0",
     "spryker/quote": "^2.0.0",
     "spryker/quote-request": "^2.0.0",
     "spryker/quote-request-agent": "^2.0.0",
     "spryker/shipment": "^8.0.0",
+    "spryker/step-engine": "^3.3.0",
     "spryker/store": "^1.8.0",
     "spryker/symfony": "^3.1.0",
     "spryker/util-date-time": "^1.0.0"
