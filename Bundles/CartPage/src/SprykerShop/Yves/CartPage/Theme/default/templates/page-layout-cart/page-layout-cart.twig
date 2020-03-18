@@ -178,6 +178,18 @@
                                 ] only %}
                                 {% endwidget %}
                             </div>
+
+                            {% block orderCustomReference %}
+                                {% widget 'OrderCustomReferenceWidget' args [
+                                    data.cart,
+                                    '/cart'
+                                ] only %}
+                                    {% block body %}
+                                        {{ parent() }}
+                                        <hr>
+                                    {% endblock %}
+                                {% endwidget %}
+                            {% endblock %}
                         {% endif %}
 
                         {% if data.isQuoteEditable and data.cart.idQuote %}
