@@ -27,13 +27,14 @@
             {% endfor %}
 
             {% set categoryUrl = data.filterPath is not empty ? url(data.filterPath, {categoryPath: ( categoryNode.url | trimLocale )}) : categoryNode.url %}
+            {% set triggerButtonJsName = data.parentJsName ? data.parentJsName ~ '__trigger' %}
 
             {% if (quantity > 0) or (quantity <= 0 and data.isEmptyCategoryFilterValueVisible == true) %}
                 {% set childrenClass = hasChildren ? 'menu__item--has-children-list' %}
                 {% set isDisabled = quantity == 0 ? 'disabled' %}
 
                 <li class="menu__item {{ childrenClass }}">
-                    <button class="link {{ data.parentJsName }}__trigger" type="button" {{ isDisabled }} data-url={{ categoryUrl }}>
+                    <button class="link {{ triggerButtonJsName }}" type="button" {{ isDisabled }} data-url={{ categoryUrl }}>
                         {{ categoryNode.name }} ({{ quantity }})
                     </button>
 

@@ -42,7 +42,7 @@
             discountTotal: _view.quoteTransfer.totals.discounttotal | default,
         },
     },
-
+    requestUri: app.request.requestUri,
     title: 'checkout.step.summary.title' | trans,
 } %}
 
@@ -200,7 +200,7 @@
                     {% widget 'CommentThreadWidget' args [
                         data.cart.idQuote,
                         'quote',
-                        app.request.requestUri,
+                        data.requestUri,
                         data.cart.commentThread
                     ] only %}
                     {% endwidget %}

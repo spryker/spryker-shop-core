@@ -32,6 +32,8 @@ class CustomerPageConfig extends AbstractBundleConfig
     protected const MAX_LENGTH_CUSTOMER_PASSWORD = 72;
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getYvesHost()
@@ -40,6 +42,8 @@ class CustomerPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getCustomerPasswordMinLength(): int
@@ -48,6 +52,8 @@ class CustomerPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getCustomerPasswordMaxLength(): int
@@ -56,6 +62,8 @@ class CustomerPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getAnonymousPattern(): string
@@ -68,6 +76,8 @@ class CustomerPageConfig extends AbstractBundleConfig
      * URL could be relative or absolute with domain defined in CustomerPageConfig::getYvesHost().
      * If null it will use referer URL.
      * If referer URL is not available, it will redirect to home page.
+     *
+     * @api
      *
      * @return string|null
      */

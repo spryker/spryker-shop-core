@@ -6,6 +6,7 @@
     request: app.request,
     isQuoteEditable: false,
     isQuoteValid: false,
+    requestUri: app.request.requestUri,
 } %}
 
 {% block header %}
@@ -53,7 +54,7 @@
                     {% widget 'CommentThreadWidget' args [
                         data.cart.idQuote,
                         'quote',
-                        app.request.requestUri,
+                        data.requestUri,
                         data.cart.commentThread
                     ] only %}
                     {% endwidget %}
@@ -184,7 +185,7 @@
             {% widget 'CommentThreadWidget' args [
                 data.cart.idQuote,
                 'quote',
-                app.request.requestUri,
+                data.requestUri,
                 data.cart.commentThread
             ] only %}
             {% endwidget %}
