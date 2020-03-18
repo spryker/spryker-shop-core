@@ -16,6 +16,8 @@ use Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener;
 class WebProfilerWidgetConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return bool
      */
     public function isWebProfilerEnabled()
@@ -24,6 +26,8 @@ class WebProfilerWidgetConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getWebProfilerTemplatePaths(): array
@@ -36,6 +40,8 @@ class WebProfilerWidgetConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getProfilerCacheDirectory(): string

@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker-shop/merchant-profile-widget.svg)](https://travis-ci.org/spryker-shop/merchant-profile-widget)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
-This module provides molecule for the merchant profile information.
+This module provides a merchant-profile molecule for for introducing merchant profile information.
 
 ## Installation
 

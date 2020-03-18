@@ -32,16 +32,16 @@
             embed: {
                 jsName: config.jsName,
                 shippingForm: data.shippingForm,
-                jsAddressClass: data.jsAddressClass,
             },
         } only %}
             {% block fields %}
                 <div class="col col--sm-12">
                     {% include molecule('address-item-form-field-list', 'CheckoutPage') with {
+                        class: embed.jsName ~ '__items',
                         data: {
                             items: data.form,
                             shippingForm: embed.shippingForm,
-                            jsAddressClass: embed.jsAddressClass,
+                            parentJsName: embed.jsName,
                         },
                     } only %}
                 </div>
@@ -59,20 +59,40 @@
             embed: {
                 jsName: config.jsName,
                 shippingForm: data.shippingForm,
-                jsAddressClass: data.jsAddressClass,
             },
         } only %}
             {% block fields %}
                 <div class="col col--sm-12">
                     {% include molecule('address-bundle-item-form-field-list', 'CheckoutPage') with {
+                        class: embed.jsName ~ '__items',
                         data: {
                             items: data.form,
                             shippingForm: embed.shippingForm,
-                            jsAddressClass: embed.jsAddressClass,
+                            parentJsName: embed.jsName,
                         },
                     } only %}
                 </div>
             {% endblock %}
         {% endembed %}
     {% endif %}
+
+    {% block stepValidation %}
+        {% include molecule('is-next-checkout-step-enabled', 'CheckoutPage') with {
+            attributes: {
+                'trigger-selector': '.' ~ data.jsAddressClass ~ '__form-select-shippingAddress',
+                'target-selector': '.' ~ config.jsName ~ '__validate-next-checkout-step',
+            },
+        } only %}
+
+        {% include molecule('validate-next-checkout-step', 'CheckoutPage') with {
+            class: config.jsName ~ '__validate-next-checkout-step',
+            attributes: {
+                'container-selector': '.' ~ config.jsName ~ '__item-shipping',
+                'target-selector': '.' ~ data.jsAddressClass ~ '__form-submit',
+                'dropdown-trigger-selector': '.' ~ config.jsName ~ '__trigger',
+                'parent-target-class-name': config.jsName ~ '__items',
+                'is-enable': false,
+            },
+        } only %}
+    {% endblock %}
 {% endblock %}
