@@ -92,12 +92,18 @@ class StepFactory extends AbstractFactory
      */
     public function createStepCollection()
     {
-        $stepCollection = new StepCollection(
+        return new StepCollection(
             $this->getUrlGenerator(),
             CheckoutPageControllerProvider::CHECKOUT_ERROR
         );
+    }
 
-        return $this->createStepResolver($stepCollection)->resolveSteps();
+    /**
+     * @return \Spryker\Yves\StepEngine\Process\StepCollectionInterface
+     */
+    public function getResolvedStepCollection(): StepCollectionInterface
+    {
+        return $this->createStepResolver()->resolveSteps();
     }
 
     /**
@@ -118,17 +124,15 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @param \Spryker\Yves\StepEngine\Process\StepCollectionInterface $stepCollection
-     *
      * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\Resolver\StepResolverInterface
      */
-    public function createStepResolver(StepCollectionInterface $stepCollection): StepResolverInterface
+    public function createStepResolver(): StepResolverInterface
     {
         return new StepResolver(
             $this->getQuoteClient(),
             $this->getCheckoutStepResolverStrategyPlugins(),
             $this->getSteps(),
-            $stepCollection
+            $this->createStepCollection()
         );
     }
 
