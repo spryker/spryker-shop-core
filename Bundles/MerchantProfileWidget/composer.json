@@ -6,7 +6,8 @@
     "php": ">=7.2"
   },
   "require-dev": {
-    "spryker-shop/merchant-page": "*"
+    "spryker-shop/merchant-page": "*",
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker-shop/merchant-page": "To use information-item molecule."
@@ -18,7 +19,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "scripts": {},
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
