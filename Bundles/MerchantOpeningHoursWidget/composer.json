@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/merchant-opening-hours-widget",
+  "type": "library",
   "description": "MerchantOpeningHoursWidget module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/merchant-profile-widget",
+  "type": "library",
   "description": "MerchantProfileWidget module",
   "license": "proprietary",
   "require": {

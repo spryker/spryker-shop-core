@@ -1,5 +1,6 @@
 {
   "name": "spryker-shop/merchant-page",
+  "type": "library",
   "description": "MerchantPage module",
   "license": "proprietary",
   "require": {
