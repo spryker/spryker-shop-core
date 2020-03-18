@@ -1,0 +1,18 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'copyright',
+} %}
+
+{% block body %}
+    {% set textContentClasses = 'text-center text-small text-secondary' %}
+    {% set textCopyrightClasses = 'text-center text-secondary' %}
+
+    {% block textContent %}
+        <p class="{{ textContentClasses }}">{{ 'footer.copyright.content_text' | trans }}</p>
+    {% endblock %}
+
+    {% block textCopyright %}
+        <p class="{{ textCopyrightClasses }}">{{ 'footer.copyright.text' | trans | raw }}</p>
+    {% endblock %}
+{% endblock %}
