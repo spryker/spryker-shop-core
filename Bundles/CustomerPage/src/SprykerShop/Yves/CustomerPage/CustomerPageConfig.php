@@ -87,6 +87,8 @@ class CustomerPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isOrderSearchEnabled(): bool
@@ -95,6 +97,8 @@ class CustomerPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getDefaultOrderHistoryPerPage(): int
@@ -103,6 +107,8 @@ class CustomerPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultOrderHistorySortField(): string
@@ -111,6 +117,8 @@ class CustomerPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultOrderHistorySortDirection(): string
@@ -119,6 +127,8 @@ class CustomerPageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getOrderSearchPerPage(): int
