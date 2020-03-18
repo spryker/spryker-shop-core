@@ -35,7 +35,7 @@ class CheckoutPageFactory extends AbstractFactory
     public function createCheckoutProcess()
     {
         return $this->createStepFactory()->createStepEngine(
-            $this->createStepFactory()->getResolvedStepCollection()
+            $this->createStepFactory()->createStepResolver()->resolveSteps()
         );
     }
 

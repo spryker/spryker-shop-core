@@ -99,14 +99,6 @@ class StepFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\StepEngine\Process\StepCollectionInterface
-     */
-    public function getResolvedStepCollection(): StepCollectionInterface
-    {
-        return $this->createStepResolver()->resolveSteps();
-    }
-
-    /**
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
      */
     public function getSteps(): array
