@@ -2,12 +2,13 @@
 
 {% define data = {
     priceModes: _widget.priceModes | default([]),
-    currentPriceMode: _widget.currentPriceMode | default
+    currentPriceMode: _widget.currentPriceMode | default,
+    requestUri: app.request.requestUri,
 } %}
 
-{% block template %}
+{% block component %}
     {% if data.priceModes is not empty %}
-        {{parent()}}
+        {{ parent() }}
     {% endif %}
 {% endblock %}
 
@@ -26,11 +27,13 @@
         } only %}
             {% block options %}
                 {% for priceMode in embed.priceModes %}
-                    <option value="{{ priceMode }}" {{ (priceMode == embed.currentPriceMode) ? 'selected' : ''}}>{{ ('price.mode.' ~ priceMode | lower) | trans }}</option>
+                    {% set selectedOption = priceMode == embed.currentPriceMode ? 'selected' %}
+
+                    <option value="{{ priceMode }}" {{ selectedOption }}>{{ ('price.mode.' ~ priceMode | lower) | trans }}</option>
                 {% endfor %}
             {% endblock %}
         {% endembed %}
 
-        <input type="hidden" name="referrer-url" value="{{ app.request.requestUri }}">
+        <input type="hidden" name="referrer-url" value="{{ data.requestUri }}">
     </form>
 {% endblock %}

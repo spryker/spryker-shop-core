@@ -18,14 +18,14 @@ class Error403Controller extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Spryker\Yves\Kernel\View\View
      */
     public function indexAction(Request $request)
     {
-        return $this->viewResponse([
+        return $this->view([
             'error' => $this->getErrorMessage($request),
             'hideUserMenu' => true,
-        ]);
+        ], [], '@ErrorPage/views/error403/error403.twig');
     }
 
     /**
