@@ -1,7 +1,10 @@
 {% extends template('widget') %}
 
+{# @deprecated property "idProductAbstract" is deprecated #}
 {% define data = {
-    idProductAbstract: _widget.idProductAbstract
+    idProductAbstract: _widget.idProductAbstract,
+    value: _widget.productReviewStorageTransfer.averageRating | default(0),
+    maxValue: _widget.maximumRating,
 } %}
 
 {% block body %}
@@ -9,11 +12,11 @@
     {% include molecule('rating-selector', 'ProductReviewWidget') with {
         modifiers: ['expand'],
         data: {
-            value: _widget.productReviewStorageTransfer.averageRating | default(0),
-            maxValue: _widget.maximumRating
+            value: data.value,
+            maxValue: data.maxValue,
         },
         attributes: {
-            readonly: true
-        }
+            readonly: true,
+        },
     } only %}
 {% endblock %}

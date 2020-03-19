@@ -78,8 +78,9 @@ class ShoppingListPageToShoppingListClientBridge implements ShoppingListPageToSh
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function getShoppingListItemCollectionTransfer(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
-    {
+    public function getShoppingListItemCollectionTransfer(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
         return $this->shoppingListClient->getShoppingListItemCollectionTransfer($shoppingListItemCollectionTransfer);
     }
 
@@ -138,8 +139,9 @@ class ShoppingListPageToShoppingListClientBridge implements ShoppingListPageToSh
      *
      * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
      */
-    public function getShoppingListOverviewWithoutProductDetails(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer
-    {
+    public function getShoppingListOverviewWithoutProductDetails(
+        ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
+    ): ShoppingListOverviewResponseTransfer {
         return $this->shoppingListClient->getShoppingListOverviewWithoutProductDetails($shoppingListOverviewRequestTransfer);
     }
 
@@ -156,8 +158,9 @@ class ShoppingListPageToShoppingListClientBridge implements ShoppingListPageToSh
      *
      * @return \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer
      */
-    public function addItemCollectionToCart(ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer): ShoppingListAddToCartRequestCollectionTransfer
-    {
+    public function addItemCollectionToCart(
+        ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer
+    ): ShoppingListAddToCartRequestCollectionTransfer {
         return $this->shoppingListClient->addItemCollectionToCart($shoppingListAddToCartRequestCollectionTransfer);
     }
 

@@ -8,15 +8,20 @@
 namespace SprykerShop\Yves\CustomerPage;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Twig\TwigFunction;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerShop\Shared\CustomerPage\CustomerPageConfig;
 use SprykerShop\Yves\CustomerPage\Authenticator\CustomerAuthenticator;
 use SprykerShop\Yves\CustomerPage\Authenticator\CustomerAuthenticatorInterface;
+use SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolver;
+use SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolverInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToProductBundleClientInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToQuoteClientInteface;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToSalesClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface;
+use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface;
 use SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface;
 use SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpander;
 use SprykerShop\Yves\CustomerPage\Expander\CustomerAddressExpanderInterface;
@@ -24,7 +29,9 @@ use SprykerShop\Yves\CustomerPage\Expander\ShipmentExpander;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentExpanderInterface;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpander;
 use SprykerShop\Yves\CustomerPage\Expander\ShipmentGroupExpanderInterface;
+use SprykerShop\Yves\CustomerPage\Form\DataProvider\CheckoutAddressFormDataProvider;
 use SprykerShop\Yves\CustomerPage\Form\FormFactory;
+use SprykerShop\Yves\CustomerPage\Form\Transformer\AddressSelectTransformer;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapper;
 use SprykerShop\Yves\CustomerPage\Mapper\CustomerMapperInterface;
 use SprykerShop\Yves\CustomerPage\Plugin\Provider\AccessDeniedHandler;
@@ -37,6 +44,7 @@ use SprykerShop\Yves\CustomerPage\Reader\OrderReaderInterface;
 use SprykerShop\Yves\CustomerPage\Security\Customer;
 use SprykerShop\Yves\CustomerPage\Twig\GetUsernameTwigFunction;
 use SprykerShop\Yves\CustomerPage\Twig\IsLoggedTwigFunction;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -142,6 +150,30 @@ class CustomerPageFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->getTokenStorage()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Form\DataProvider\CheckoutAddressFormDataProvider
+     */
+    public function createCheckoutAddressFormDataProvider(): CheckoutAddressFormDataProvider
+    {
+        return new CheckoutAddressFormDataProvider(
+            $this->getCustomerClient(),
+            $this->getStore(),
+            $this->getCustomerService(),
+            $this->getShipmentClient(),
+            $this->getProductBundleClient(),
+            $this->getShipmentService(),
+            $this->createAddressChoicesResolver()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createAddressSelectTransformer(): DataTransformerInterface
+    {
+        return new AddressSelectTransformer();
     }
 
     /**
@@ -384,5 +416,37 @@ class CustomerPageFactory extends AbstractFactory
     public function createShipmentExpander(): ShipmentExpanderInterface
     {
         return new ShipmentExpander();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\CustomerAddress\AddressChoicesResolverInterface
+     */
+    public function createAddressChoicesResolver(): AddressChoicesResolverInterface
+    {
+        return new AddressChoicesResolver();
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToShipmentClientInterface
+     */
+    public function getShipmentClient(): CustomerPageToShipmentClientInterface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::CLIENT_SHIPMENT);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore(): Store
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToCustomerServiceInterface
+     */
+    public function getCustomerService(): CustomerPageToCustomerServiceInterface
+    {
+        return $this->getProvidedDependency(CustomerPageDependencyProvider::SERVICE_CUSTOMER);
     }
 }
