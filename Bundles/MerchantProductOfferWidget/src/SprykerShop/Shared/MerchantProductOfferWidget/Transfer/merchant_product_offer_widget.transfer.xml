@@ -13,6 +13,9 @@
 
     <transfer name="MerchantStorage">
         <property name="merchantUrl" type="string"/>
+        <property name="merchantReference" type="string"/>
+        <property name="idMerchant" type="int"/>
+        <property name="urlCollection" type="Url[]" singular="url"/>
     </transfer>
 
     <transfer name="ProductView">
