@@ -30,7 +30,7 @@ class QuoteRequestConvertedCheckoutStepResolverStrategyPlugin extends AbstractPl
     {
         return $this->getFactory()
             ->getQuoteRequestClient()
-            ->isQuoteRequestForQuoteWithCustomShipmentPrice($quoteTransfer);
+            ->isEditableQuoteShipmentSourcePrice($quoteTransfer);
     }
 
     /**

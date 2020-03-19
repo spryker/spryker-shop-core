@@ -35,7 +35,7 @@ class ShipmentValidator implements ShipmentValidatorInterface
     {
         $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
 
-        if (!$this->quoteRequestClient->isQuoteRequestForQuoteWithCustomShipmentPrice($quoteTransfer)) {
+        if (!$this->quoteRequestClient->isEditableQuoteShipmentSourcePrice($quoteTransfer)) {
             return true;
         }
 

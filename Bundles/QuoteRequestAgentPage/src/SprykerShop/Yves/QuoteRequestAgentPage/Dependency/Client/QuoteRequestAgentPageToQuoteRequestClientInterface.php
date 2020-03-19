@@ -38,5 +38,5 @@ interface QuoteRequestAgentPageToQuoteRequestClientInterface
      *
      * @return bool
      */
-    public function isQuoteRequestForQuoteWithCustomShipmentPrice(QuoteTransfer $quoteTransfer): bool;
+    public function isEditableQuoteShipmentSourcePrice(QuoteTransfer $quoteTransfer): bool;
 }

@@ -54,5 +54,5 @@ interface QuoteRequestWidgetToQuoteRequestClientInterface
      *
      * @return bool
      */
-    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool;
+    public function isEditableQuoteRequestVersion(QuoteTransfer $quoteTransfer): bool;
 }

@@ -53,7 +53,7 @@ class QuoteRequestCheckoutWidget extends AbstractWidget
     {
         $this->addParameter(
             static::PARAMETER_IS_VISIBLE,
-            $this->getFactory()->getQuoteRequestClient()->isQuoteInQuoteRequestProcess($quoteTransfer)
+            $this->getFactory()->getQuoteRequestClient()->isEditableQuoteRequestVersion($quoteTransfer)
         );
     }
 

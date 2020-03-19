@@ -167,9 +167,9 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
      *
      * @return bool
      */
-    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool
+    public function isEditableQuoteRequestVersion(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->quoteRequestClient->isQuoteInQuoteRequestProcess($quoteTransfer);
+        return $this->quoteRequestClient->isEditableQuoteRequestVersion($quoteTransfer);
     }
 
     /**
@@ -177,8 +177,8 @@ class QuoteRequestPageToQuoteRequestClientBridge implements QuoteRequestPageToQu
      *
      * @return bool
      */
-    public function isQuoteRequestForQuoteWithCustomShipmentPrice(QuoteTransfer $quoteTransfer): bool
+    public function isEditableQuoteShipmentSourcePrice(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->quoteRequestClient->isQuoteRequestForQuoteWithCustomShipmentPrice($quoteTransfer);
+        return $this->quoteRequestClient->isEditableQuoteShipmentSourcePrice($quoteTransfer);
     }
 }

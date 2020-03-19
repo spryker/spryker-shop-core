@@ -55,8 +55,8 @@ class QuoteRequestAgentPageToQuoteRequestClientBridge implements QuoteRequestAge
      *
      * @return bool
      */
-    public function isQuoteRequestForQuoteWithCustomShipmentPrice(QuoteTransfer $quoteTransfer): bool
+    public function isEditableQuoteShipmentSourcePrice(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->quoteRequestClient->isQuoteRequestForQuoteWithCustomShipmentPrice($quoteTransfer);
+        return $this->quoteRequestClient->isEditableQuoteShipmentSourcePrice($quoteTransfer);
     }
 }

@@ -28,7 +28,7 @@ class QuoteRequestInProcessCheckoutStepResolverStrategyPlugin extends AbstractPl
      */
     public function isApplicable(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->getFactory()->getQuoteRequestClient()->isQuoteInQuoteRequestProcess($quoteTransfer);
+        return $this->getFactory()->getQuoteRequestClient()->isEditableQuoteRequestVersion($quoteTransfer);
     }
 
     /**
