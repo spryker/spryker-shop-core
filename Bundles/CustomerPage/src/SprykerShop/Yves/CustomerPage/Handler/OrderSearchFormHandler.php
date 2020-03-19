@@ -10,7 +10,6 @@ namespace SprykerShop\Yves\CustomerPage\Handler;
 use ArrayObject;
 use DateTime;
 use Generated\Shared\Transfer\FilterFieldTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListFormatTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use SprykerShop\Yves\CustomerPage\Dependency\Client\CustomerPageToCustomerClientInterface;
@@ -23,6 +22,11 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
      * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::FILTER_TYPE_CUSTOMER_REFERENCE
      */
     protected const FILTER_FIELD_TYPE_CUSTOMER_REFERENCE = 'customerReference';
+
+    /**
+     * @see \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::ORDER_BY_COLUMN_MAPPING
+     */
+    protected const FILTER_FIELD_TYPE_DATE = 'date';
 
     protected const DATE_FORMAT = 'Y-m-d H:i:s';
 
@@ -61,7 +65,7 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
         $orderListTransfer = $this->resetFilterFields($orderListTransfer);
 
         if (!$orderSearchForm->isSubmitted() || !$orderSearchForm->isValid()) {
-            return $orderListTransfer;
+            return $this->addOrderByFilter($orderListTransfer, static::FILTER_FIELD_TYPE_DATE);
         }
 
         $orderSearchFormData = $orderSearchForm->getData();
@@ -162,15 +166,11 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
         $orderBy = $orderSearchFormData[OrderSearchForm::FIELD_ORDER_BY] ?? null;
         $orderDirection = $orderSearchFormData[OrderSearchForm::FIELD_ORDER_DIRECTION] ?? null;
 
-        if ($orderBy && $orderDirection) {
-            $filterTransfer = (new FilterTransfer())
-                ->setOrderBy($orderBy)
-                ->setOrderDirection($orderDirection);
-
-            $orderListTransfer->setFilter($filterTransfer);
+        if (!$orderBy) {
+            $orderBy = static::FILTER_FIELD_TYPE_DATE;
         }
 
-        return $orderListTransfer;
+        return $this->addOrderByFilter($orderListTransfer, $orderBy, $orderDirection);
     }
 
     /**
@@ -210,6 +210,32 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
         }
 
         return $orderListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param string $orderBy
+     * @param string|null $orderDirection
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    protected function addOrderByFilter(
+        OrderListTransfer $orderListTransfer,
+        string $orderBy,
+        ?string $orderDirection = null
+    ): OrderListTransfer {
+        if (!$orderDirection) {
+            $orderDirection = 'DESC';
+        }
+
+        /**
+         * @see \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::addOrderByFilter()
+         */
+        $orderByFilterValue = sprintf('%s::%s', $orderBy, $orderDirection);
+
+        return $orderListTransfer->addFilterField(
+            $this->createFilterFieldTransfer(OrderSearchForm::FIELD_ORDER_BY, $orderByFilterValue)
+        );
     }
 
     /**
