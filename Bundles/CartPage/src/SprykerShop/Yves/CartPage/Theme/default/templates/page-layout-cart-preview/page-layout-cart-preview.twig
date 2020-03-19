@@ -192,4 +192,17 @@
         </div>
     {% endif %}
 
+    {% block orderCustomReference %}
+        {% embed molecule('order-custom-reference', 'OrderCustomReferenceWidget') ignore missing with {
+            data: {
+                orderCustomReference: data.cart.orderCustomReference | default,
+            },
+        } only %}
+            {% block body %}
+                {{ parent() }}
+                <hr>
+            {% endblock %}
+        {% endembed %}
+    {% endblock %}
+
 {% endblock %}

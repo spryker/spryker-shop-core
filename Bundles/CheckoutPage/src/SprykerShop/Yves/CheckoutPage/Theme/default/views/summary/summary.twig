@@ -150,6 +150,17 @@
         {% endfor %}
     </div>
 
+    {% embed molecule('order-custom-reference', 'OrderCustomReferenceWidget') ignore missing with {
+        class: 'box',
+        data: {
+            orderCustomReference: data.cart.orderCustomReference | default,
+        },
+    } only %}
+        {% block title %}
+            <h6 class="{{ classTitle }}">{{ data.title }}</h6>
+        {% endblock %}
+    {% endembed %}
+
     <div class="box">
         <h4>{{ 'checkout.step.summary.payment' | trans }}</h4>
         <hr>
