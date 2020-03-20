@@ -45,7 +45,7 @@
     </transfer>
 
     <transfer name="FilterFieldCheckResponse">
-        <property name="isSuccessful" type="boolean"/>
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 
     <transfer name="Order">
