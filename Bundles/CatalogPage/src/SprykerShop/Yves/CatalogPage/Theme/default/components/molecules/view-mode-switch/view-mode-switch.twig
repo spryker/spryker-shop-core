@@ -4,28 +4,32 @@
     name: 'view-mode-switch',
 } %}
 
-{% set gridHref = path('change-view-mode', { mode: 'grid', 'referer-url': app.request.requestUri }) %}
-{% set listHref = path('change-view-mode', { mode: 'list', 'referer-url': app.request.requestUri }) %}
+{% define data = {
+    requestUri: app.request.requestUri,
+} %}
+
+{% set gridHref = path('change-view-mode', { mode: 'grid', 'referer-url': data.requestUri }) %}
+{% set listHref = path('change-view-mode', { mode: 'list', 'referer-url': data.requestUri }) %}
 
 {% block body %}
     <ul class="menu menu--inline">
         <li class="menu__item">
-            <a href="{{gridHref}}">
+            <a href="{{ gridHref }}">
                 {% include atom('icon') with {
                     data: {
-                        name: 'th-large'
-                    }
+                        name: 'th-large',
+                    },
                 } only %}
                 {{ 'catalog.view.mode.grid' | trans }}
             </a>
         </li>
         <li class="menu__separator"></li>
         <li class="menu__item">
-            <a href="{{listHref}}">
+            <a href="{{ listHref }}">
                 {% include atom('icon') with {
                     data: {
-                        name: 'th-list'
-                    }
+                        name: 'th-list',
+                    },
                 } only %}
                 {{ 'catalog.view.mode.list' | trans }}
             </a>

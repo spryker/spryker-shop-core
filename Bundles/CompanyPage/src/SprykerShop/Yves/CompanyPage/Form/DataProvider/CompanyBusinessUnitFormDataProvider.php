@@ -92,8 +92,10 @@ class CompanyBusinessUnitFormDataProvider
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer
      */
-    protected function prepareCompanyUnitAddressCriteriaFilterTransfer(?int $idCompany = null, ?int $idCompanyBusinessUnit = null): CompanyUnitAddressCriteriaFilterTransfer
-    {
+    protected function prepareCompanyUnitAddressCriteriaFilterTransfer(
+        ?int $idCompany = null,
+        ?int $idCompanyBusinessUnit = null
+    ): CompanyUnitAddressCriteriaFilterTransfer {
         $companyUnitAddressCriteriaFilter = new CompanyUnitAddressCriteriaFilterTransfer();
 
         if ($idCompany) {

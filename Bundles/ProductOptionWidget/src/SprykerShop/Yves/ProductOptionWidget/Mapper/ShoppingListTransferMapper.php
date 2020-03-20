@@ -89,8 +89,10 @@ class ShoppingListTransferMapper implements ShoppingListTransferMapperInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    protected function populateProductOptionsPerShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer, array $productOptionValueIds): ShoppingListItemTransfer
-    {
+    protected function populateProductOptionsPerShoppingListItem(
+        ShoppingListItemTransfer $shoppingListItemTransfer,
+        array $productOptionValueIds
+    ): ShoppingListItemTransfer {
         $productOptionTransfers = $this->createProductOptionTransfers($productOptionValueIds);
         $shoppingListItemTransfer->setProductOptions($productOptionTransfers);
 
