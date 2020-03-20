@@ -15,7 +15,7 @@ use Spryker\Yves\Kernel\Widget\AbstractWidget;
 /**
  * @method \SprykerShop\Yves\CompanyBusinessUnitWidget\CompanyBusinessUnitWidgetFactory getFactory()
  */
-class CompanyUserNameWidget extends AbstractWidget
+class CustomerNameWidget extends AbstractWidget
 {
     protected const PARAMETER_ORDER = 'order';
     protected const PARAMETER_IS_VISIBLE = 'isVisible';
@@ -36,7 +36,7 @@ class CompanyUserNameWidget extends AbstractWidget
      */
     public static function getName(): string
     {
-        return 'CompanyUserNameWidget';
+        return 'CustomerNameWidget';
     }
 
     /**

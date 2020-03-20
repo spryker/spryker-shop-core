@@ -12,11 +12,11 @@
     filterFields: [],
 } %}
 
-{% set companyUserNameWidget = data.orders.count and data.filterFields ?
-    findWidget('CompanyUserNameWidget', [(data.orders | first), data.filterFields])
+{% set customerNameWidget = data.orders.count and data.filterFields ?
+    findWidget('CustomerNameWidget', [(data.orders | first), data.filterFields])
     : null %}
 
-{% set isCompanyUserColumnsVisible = companyUserNameWidget ? companyUserNameWidget.isVisible : false %}
+{% set isCompanyUserColumnsVisible = customerNameWidget ? customerNameWidget.isVisible : false %}
 
 {% block body %}
     <table class="table table--expand">
@@ -73,7 +73,7 @@
                 <tr>
                     <td>{{ order.orderReference }}</td>
                     <td>{{ date(order.createdAt) | formatDateTime }}</td>
-                    {% widget 'CompanyUserNameWidget' args [order, data.filterFields, isCompanyUserColumnsVisible] only %}
+                    {% widget 'CustomerNameWidget' args [order, data.filterFields, isCompanyUserColumnsVisible] only %}
                         {% block content %}
                             <td>{{ data.order.firstName ~ ' ' ~ data.order.lastName }}</td>
                             <td>{{ data.order.email }}</td>
