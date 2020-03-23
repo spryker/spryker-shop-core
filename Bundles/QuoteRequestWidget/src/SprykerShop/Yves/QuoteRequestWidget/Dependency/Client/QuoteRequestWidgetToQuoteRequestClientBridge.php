@@ -82,8 +82,8 @@ class QuoteRequestWidgetToQuoteRequestClientBridge implements QuoteRequestWidget
      *
      * @return bool
      */
-    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool
+    public function isEditableQuoteRequestVersion(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->quoteRequestClient->isQuoteInQuoteRequestProcess($quoteTransfer);
+        return $this->quoteRequestClient->isEditableQuoteRequestVersion($quoteTransfer);
     }
 }

@@ -65,7 +65,9 @@ interface QuoteRequestPageToQuoteRequestClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer
      */
-    public function getQuoteRequestVersionCollectionByFilter(QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer): QuoteRequestVersionCollectionTransfer;
+    public function getQuoteRequestVersionCollectionByFilter(
+        QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer
+    ): QuoteRequestVersionCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
@@ -114,12 +116,12 @@ interface QuoteRequestPageToQuoteRequestClientInterface
      *
      * @return bool
      */
-    public function isQuoteInQuoteRequestProcess(QuoteTransfer $quoteTransfer): bool;
+    public function isEditableQuoteRequestVersion(QuoteTransfer $quoteTransfer): bool;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isQuoteRequestForQuoteWithCustomShipmentPrice(QuoteTransfer $quoteTransfer): bool;
+    public function isEditableQuoteShipmentSourcePrice(QuoteTransfer $quoteTransfer): bool;
 }

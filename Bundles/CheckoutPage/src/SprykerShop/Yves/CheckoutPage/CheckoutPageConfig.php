@@ -22,6 +22,8 @@ class CheckoutPageConfig extends AbstractBundleConfig
     public const PAYMENT_METHOD_NAME_NO_PAYMENT = 'Nopayment';
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function cleanCartAfterOrderCreation()

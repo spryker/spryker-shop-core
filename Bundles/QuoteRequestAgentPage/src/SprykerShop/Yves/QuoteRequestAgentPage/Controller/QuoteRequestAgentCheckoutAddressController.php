@@ -105,7 +105,7 @@ class QuoteRequestAgentCheckoutAddressController extends QuoteRequestAgentAbstra
             ->handleRequest($request);
 
         if ($quoteRequestAgentEditAddressConfirmForm->isSubmitted()) {
-            $this->prepareImpersonationRedirect($quoteRequestAgentEditAddressConfirmForm->getData(), $quoteTransfer);
+            return $this->prepareImpersonationRedirect($quoteRequestAgentEditAddressConfirmForm->getData(), $quoteTransfer);
         }
 
         return [

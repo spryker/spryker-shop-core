@@ -41,8 +41,9 @@ class MerchantProductOfferWidgetToMerchantProductOfferStorageClientBridge implem
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOfferStorageCollection(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ProductOfferStorageCollectionTransfer
-    {
+    public function getProductOfferStorageCollection(
+        ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
+    ): ProductOfferStorageCollectionTransfer {
         return $this->merchantProductOfferStorageClient->getProductOfferStorageCollection($productOfferStorageCriteriaTransfer);
     }
 }

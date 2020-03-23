@@ -26,6 +26,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
     protected const ROUTE_QUOTE_REQUEST_CANCEL = 'quote-request/cancel';
     protected const ROUTE_QUOTE_REQUEST_DETAILS = 'quote-request/details';
     protected const ROUTE_QUOTE_REQUEST_CONVERT_TO_CART = 'quote-request/convert-to-cart';
+    protected const ROUTE_QUOTE_REQUEST_SAVE = 'quote-request/save';
 
     protected const PARAM_QUOTE_REQUEST_REFERENCE = 'quoteRequestReference';
 
@@ -57,6 +58,7 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $routeCollection = $this->addQuoteRequestEditAddressConfirmRoute($routeCollection);
         $routeCollection = $this->addQuoteRequestEditShipmentRoute($routeCollection);
         $routeCollection = $this->addQuoteRequestEditShipmentConfirmRoute($routeCollection);
+        $routeCollection = $this->addCheckoutSaveRoute($routeCollection);
 
         return $routeCollection;
     }
@@ -279,6 +281,19 @@ class QuoteRequestPageRouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/quote-request/edit-shipment-confirm/{quoteRequestReference}', 'QuoteRequestPage', 'QuoteRequestEditShipment', 'confirmAction');
         $route = $route->setRequirement(static::PARAM_QUOTE_REQUEST_REFERENCE, static::QUOTE_REQUEST_REFERENCE_REGEX);
         $routeCollection->add(static::ROUTE_QUOTE_REQUEST_EDIT_SHIPMENT_CONFIRM, $route);
+
+        return $routeCollection;
+    }
+
+    /**
+     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+     *
+     * @return \Spryker\Yves\Router\Route\RouteCollection
+     */
+    protected function addCheckoutSaveRoute(RouteCollection $routeCollection): RouteCollection
+    {
+        $route = $this->buildRoute('/quote-request/save', 'QuoteRequestPage', 'QuoteRequestSave', 'saveAction');
+        $routeCollection->add(static::ROUTE_QUOTE_REQUEST_SAVE, $route);
 
         return $routeCollection;
     }

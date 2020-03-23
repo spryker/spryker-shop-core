@@ -35,7 +35,7 @@ class CheckoutPageFactory extends AbstractFactory
     public function createCheckoutProcess()
     {
         return $this->createStepFactory()->createStepEngine(
-            $this->createStepFactory()->createStepCollection()
+            $this->createStepFactory()->createStepResolver()->resolveSteps()
         );
     }
 
@@ -256,14 +256,6 @@ class CheckoutPageFactory extends AbstractFactory
     protected function getSubFormFilterPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_SUB_FORM_FILTERS);
-    }
-
-    /**
-     * @return \SprykerShop\Yves\CheckoutPageExtension\Dependency\Plugin\CheckoutShipmentStepRedirectStrategyPluginInterface[]
-     */
-    public function getCheckoutShipmentStepRedirectStrategyPlugins(): array
-    {
-        return $this->getProvidedDependency(CheckoutPageDependencyProvider::PLUGINS_CHECKOUT_SHIPMENT_STEP_REDIRECT_STRATEGY);
     }
 
     /**

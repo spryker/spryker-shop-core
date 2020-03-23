@@ -74,7 +74,7 @@
                 {% set dismissButtonClasses = 'button button--alert' %}
 
                 {% block backButton %}
-                    <a href="{{ data.backUrl }}" class="{{ backButtonClasses }}">
+                    <a href="{{ path('shopping-list') }}" class="{{ backButtonClasses }}">
                         {% block backButtonIcon %}
                             {% include atom('icon') with {
                                 modifiers: ['small'],
@@ -83,7 +83,7 @@
                                 },
                             } only %}
                         {% endblock %}
-                        {{- "general.cancel.button" | trans -}}
+                        {{- 'shopping_list.dismiss_confirmation.shopping_lists' | trans -}}
                     </a>
                 {% endblock %}
 

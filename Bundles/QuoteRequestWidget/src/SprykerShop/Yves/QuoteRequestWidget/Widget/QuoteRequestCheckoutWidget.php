@@ -24,7 +24,7 @@ class QuoteRequestCheckoutWidget extends AbstractWidget
      */
     public function __construct(QuoteTransfer $quoteTransfer, string $backUrl)
     {
-        $this->addIsQuoteRequestReferenceSetParameter($quoteTransfer);
+        $this->addIsVisibleParameter($quoteTransfer);
         $this->addBackUrlParameter($backUrl);
     }
 
@@ -49,11 +49,11 @@ class QuoteRequestCheckoutWidget extends AbstractWidget
      *
      * @return void
      */
-    protected function addIsQuoteRequestReferenceSetParameter(QuoteTransfer $quoteTransfer): void
+    protected function addIsVisibleParameter(QuoteTransfer $quoteTransfer): void
     {
         $this->addParameter(
             static::PARAMETER_IS_VISIBLE,
-            $this->getFactory()->getQuoteRequestClient()->isQuoteInQuoteRequestProcess($quoteTransfer)
+            $this->getFactory()->getQuoteRequestClient()->isEditableQuoteRequestVersion($quoteTransfer)
         );
     }
 

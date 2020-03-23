@@ -45,6 +45,7 @@
         <property name="availableAttributes" type="array" singular="availableAttribute"/>
         <property name="sku" type="string"/>
         <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
+        <property name="addToCartUrl" type="string"/>
     </transfer>
 
     <transfer name="CommentThread">
