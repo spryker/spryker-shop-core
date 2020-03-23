@@ -1,0 +1,14 @@
+{% extends template('widget') %}
+
+{% define data = {
+    quote: _widget.quote,
+    orderCustomReferenceForm: _widget.orderCustomReferenceForm,
+} %}
+
+{% block body %}
+    {% include molecule('order-custom-reference-form', 'OrderCustomReferenceWidget') with {
+        data: {
+            form: data.orderCustomReferenceForm,
+        },
+    } only %}
+{% endblock %}

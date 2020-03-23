@@ -15,4 +15,6 @@
         $transition: $prop $duration $ease, $transition;
     }
     transition: $transition;
+
+    @content;
 }

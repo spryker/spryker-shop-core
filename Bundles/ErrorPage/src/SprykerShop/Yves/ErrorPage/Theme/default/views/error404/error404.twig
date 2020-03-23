@@ -1,0 +1,12 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+    error: _view.error,
+} %}
+
+{% block content %}
+    <div class="box">
+        <h1>{{ 'error.404' | trans | upper }}</h1>
+        <p>{{ data.error }}</p>
+    </div>
+{% endblock %}

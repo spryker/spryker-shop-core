@@ -1,0 +1,33 @@
+{% extends model('component') %}
+
+{% define data = {
+    form: required,
+} %}
+
+{% define config = {
+    name: 'order-custom-reference-form',
+} %}
+
+{% block body %}
+    {% set classTitle = '' %}
+    {% set classButton = 'button' %}
+
+    {% block title %}
+        <h5 class="{{ classTitle }}">{{ 'order_custom_reference.title' | trans }}</h5>
+    {% endblock %}
+
+    {% block form %}
+        {% include molecule('form') with {
+            data: {
+                form: data.form,
+                submit: {
+                    enable: true,
+                    text: 'order_custom_reference.save' | trans,
+                },
+                options: {
+                    action: path('order-custom-reference/save'),
+                },
+            },
+        } only %}
+    {% endblock %}
+{% endblock %}

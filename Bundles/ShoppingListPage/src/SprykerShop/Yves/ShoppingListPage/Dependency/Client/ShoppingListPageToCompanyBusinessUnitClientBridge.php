@@ -30,8 +30,9 @@ class ShoppingListPageToCompanyBusinessUnitClientBridge implements ShoppingListP
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
-    public function getCompanyBusinessUnitCollection(CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer): CompanyBusinessUnitCollectionTransfer
-    {
+    public function getCompanyBusinessUnitCollection(
+        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
+    ): CompanyBusinessUnitCollectionTransfer {
         return $this->companyBusinessUnitClient->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
     }
 }
