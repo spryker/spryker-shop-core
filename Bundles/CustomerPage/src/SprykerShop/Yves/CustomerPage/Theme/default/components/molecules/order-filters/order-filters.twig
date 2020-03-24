@@ -1,0 +1,80 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'order-filters',
+} %}
+
+{% define data = {
+    orderSearchForm: required,
+    jsPrefix: required,
+} %}
+
+{% block extraClass %}
+    spacing-y spacing-y--inner
+{% endblock %}
+
+{% block body %}
+    {% set row1Class = 'form__fields grid grid--bottom' %}
+    {% set searchTypeClass = 'form__field col col--sm-12 col--lg-3' %}
+    {% set searchTextClass = 'form__field col col--sm-12 col--lg-9' %}
+
+    {% block row1 %}
+        <div class="{{ row1Class }}">
+            <div class="{{ searchTypeClass }}">
+                {{ form_row(data.orderSearchForm.searchType) }}
+            </div>
+            <div class="{{ searchTextClass }}">
+                {{ form_row(data.orderSearchForm.searchText) }}
+            </div>
+        </div>
+    {% endblock %}
+
+    {% set row2Class = 'form__fields grid grid--bottom' %}
+    {% set dateFromClass = 'form__field col col--sm-12 col--lg-3' %}
+    {% set dateToClass = 'form__field col col--sm-12 col--lg-3' %}
+
+    {% block row2 %}
+        <div class="{{ row2Class }}">
+            <div class="{{ dateFromClass }}">
+                {{ form_row(data.orderSearchForm.dateFrom, {
+                    attr: {
+                        class: data.jsPrefix ~ data.orderSearchForm.dateFrom.vars.name ~ '-target',
+                    }})
+                }}
+            </div>
+            <div class="{{ dateToClass }}">
+                {{ form_row(data.orderSearchForm.dateTo, {
+                    attr: {
+                        class: data.jsPrefix ~ data.orderSearchForm.dateTo.vars.name ~ '-target',
+                    }})
+                }}
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block separator1 %}
+        <hr class="box__separator">
+    {% endblock %}
+
+    {% set row3Class = 'form__fields grid grid--middle grid--justify' %}
+    {% set orderItemsVisibleClass = 'form__field col' %}
+    {% set actionWrapperClass = 'form__field col text-right' %}
+    {% set actionClass = 'button button--success' %}
+
+    {% block row3 %}
+        <div class="{{ row3Class }}">
+            <div class="{{ orderItemsVisibleClass }}">
+                {{ form_row(data.orderSearchForm.isOrderItemsVisible) }}
+            </div>
+            <div class="{{ actionWrapperClass }}">
+                <button type="submit" name="buttonSubmit" class="{{ actionClass }}">
+                    {{ 'customer.order_history.apply' | trans }}
+                </button>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block separator2 %}
+        <hr class="box__separator">
+    {% endblock %}
+{% endblock %}
