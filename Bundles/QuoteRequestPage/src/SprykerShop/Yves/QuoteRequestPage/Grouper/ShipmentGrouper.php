@@ -8,8 +8,9 @@
 namespace SprykerShop\Yves\QuoteRequestPage\Grouper;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use SprykerShop\Yves\QuoteRequestPage\Checker\QuoteCheckerInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToShipmentServiceInterface;
+use SprykerShop\Yves\QuoteRequestPage\Extractor\ItemExtractorInterface;
 
 class ShipmentGrouper implements ShipmentGrouperInterface
 {
@@ -19,11 +20,28 @@ class ShipmentGrouper implements ShipmentGrouperInterface
     protected $shipmentService;
 
     /**
-     * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToShipmentServiceInterface $shipmentService
+     * @var \SprykerShop\Yves\QuoteRequestPage\Extractor\ItemExtractorInterface
      */
-    public function __construct(QuoteRequestPageToShipmentServiceInterface $shipmentService)
-    {
+    protected $itemExtractor;
+
+    /**
+     * @var \SprykerShop\Yves\QuoteRequestPage\Checker\QuoteCheckerInterface
+     */
+    protected $quoteChecker;
+
+    /**
+     * @param \SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToShipmentServiceInterface $shipmentService
+     * @param \SprykerShop\Yves\QuoteRequestPage\Extractor\ItemExtractorInterface $itemExtractor
+     * @param \SprykerShop\Yves\QuoteRequestPage\Checker\QuoteCheckerInterface $quoteChecker
+     */
+    public function __construct(
+        QuoteRequestPageToShipmentServiceInterface $shipmentService,
+        ItemExtractorInterface $itemExtractor,
+        QuoteCheckerInterface $quoteChecker
+    ) {
         $this->shipmentService = $shipmentService;
+        $this->itemExtractor = $itemExtractor;
+        $this->quoteChecker = $quoteChecker;
     }
 
     /**
@@ -33,30 +51,12 @@ class ShipmentGrouper implements ShipmentGrouperInterface
      */
     public function groupItemsByShippingAddress(QuoteRequestTransfer $quoteRequestTransfer): array
     {
-        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
-
-        if ($this->hasItemsWithEmptyShippingAddress($quoteTransfer)) {
+        if ($this->quoteChecker->isQuoteLevelShipmentUsed($quoteRequestTransfer)) {
             return [];
         }
 
         return $this->shipmentService
-            ->groupItemsByShipment($quoteTransfer->getItems())
+            ->groupItemsByShipment($this->itemExtractor->extractItemsWithShipment($quoteRequestTransfer))
             ->getArrayCopy();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function hasItemsWithEmptyShippingAddress(QuoteTransfer $quoteTransfer): bool
-    {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getShipment() || !$itemTransfer->getShipment()->getShippingAddress()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

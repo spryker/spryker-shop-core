@@ -99,6 +99,8 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
             ->createShipmentGrouper()
             ->groupItemsByShippingAddress($quoteRequestTransfer);
 
+        $itemExtractor = $this->getFactory()->createItemExtractor();
+
         return [
             'quoteRequest' => $quoteRequestTransfer,
             'quoteRequestVersionReferences' => $this->getQuoteRequestVersionReferences($quoteRequestVersionTransfers),
@@ -107,6 +109,8 @@ class QuoteRequestViewController extends QuoteRequestAbstractController
             'isQuoteRequestReady' => $quoteRequestClient->isQuoteRequestReady($quoteRequestTransfer),
             'isQuoteRequestEditable' => $quoteRequestClient->isQuoteRequestEditable($quoteRequestTransfer),
             'shipmentGroups' => $shipmentGroupTransfers,
+            'itemsWithShipment' => $itemExtractor->extractItemsWithShipment($quoteRequestTransfer),
+            'itemsWithoutShipment' => $itemExtractor->extractItemsWithoutShipment($quoteRequestTransfer),
         ];
     }
 

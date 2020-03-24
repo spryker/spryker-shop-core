@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
+use SprykerShop\Yves\QuoteRequestPage\Checker\QuoteChecker;
+use SprykerShop\Yves\QuoteRequestPage\Checker\QuoteCheckerInterface;
 use SprykerShop\Yves\QuoteRequestPage\CheckoutStep\EntryStep;
 use SprykerShop\Yves\QuoteRequestPage\CheckoutStep\SaveRequestForQuoteStep;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToCartClientInterface;
@@ -21,6 +23,8 @@ use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteC
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Client\QuoteRequestPageToQuoteRequestClientInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToShipmentServiceInterface;
 use SprykerShop\Yves\QuoteRequestPage\Dependency\Service\QuoteRequestPageToUtilDateTimeServiceInterface;
+use SprykerShop\Yves\QuoteRequestPage\Extractor\ItemExtractor;
+use SprykerShop\Yves\QuoteRequestPage\Extractor\ItemExtractorInterface;
 use SprykerShop\Yves\QuoteRequestPage\Form\DataProvider\QuoteRequestFormDataProvider;
 use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandler;
 use SprykerShop\Yves\QuoteRequestPage\Form\Handler\QuoteRequestHandlerInterface;
@@ -101,8 +105,26 @@ class QuoteRequestPageFactory extends AbstractFactory
     public function createShipmentGrouper(): ShipmentGrouperInterface
     {
         return new ShipmentGrouper(
-            $this->getShipmentService()
+            $this->getShipmentService(),
+            $this->createItemExtractor(),
+            $this->createQuoteChecker()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestPage\Extractor\ItemExtractorInterface
+     */
+    public function createItemExtractor(): ItemExtractorInterface
+    {
+        return new ItemExtractor($this->createQuoteChecker());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestPage\Checker\QuoteCheckerInterface
+     */
+    public function createQuoteChecker(): QuoteCheckerInterface
+    {
+        return new QuoteChecker();
     }
 
     /**

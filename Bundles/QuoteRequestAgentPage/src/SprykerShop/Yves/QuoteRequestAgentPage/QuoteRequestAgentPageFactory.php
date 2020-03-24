@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Checker\QuoteChecker;
+use SprykerShop\Yves\QuoteRequestAgentPage\Checker\QuoteCheckerInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\CheckoutStep\EntryStep;
 use SprykerShop\Yves\QuoteRequestAgentPage\CheckoutStep\SaveRequestForQuoteStep;
 use SprykerShop\Yves\QuoteRequestAgentPage\Converter\QuoteRequestConverter;
@@ -27,6 +29,8 @@ use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPa
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Client\QuoteRequestAgentPageToStoreClientInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToShipmentServiceInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Dependency\Service\QuoteRequestAgentPageToUtilDateTimeServiceInterface;
+use SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ItemExtractor;
+use SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ItemExtractorInterface;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\DataProvider\QuoteRequestAgentFormDataProvider;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandler;
 use SprykerShop\Yves\QuoteRequestAgentPage\Form\Handler\QuoteRequestAgentCreateHandlerInterface;
@@ -159,8 +163,26 @@ class QuoteRequestAgentPageFactory extends AbstractFactory
     public function createShipmentGrouper(): ShipmentGrouperInterface
     {
         return new ShipmentGrouper(
-            $this->getShipmentService()
+            $this->getShipmentService(),
+            $this->createItemExtractor(),
+            $this->createQuoteChecker()
         );
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Extractor\ItemExtractorInterface
+     */
+    public function createItemExtractor(): ItemExtractorInterface
+    {
+        return new ItemExtractor($this->createQuoteChecker());
+    }
+
+    /**
+     * @return \SprykerShop\Yves\QuoteRequestAgentPage\Checker\QuoteCheckerInterface
+     */
+    public function createQuoteChecker(): QuoteCheckerInterface
+    {
+        return new QuoteChecker();
     }
 
     /**

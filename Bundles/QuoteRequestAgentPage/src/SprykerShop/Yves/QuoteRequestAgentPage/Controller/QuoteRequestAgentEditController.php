@@ -129,8 +129,12 @@ class QuoteRequestAgentEditController extends QuoteRequestAgentAbstractControlle
 
         $quoteRequestForm = $this->assertQuoteRequestVersion($quoteRequestForm);
 
+        $itemExtractor = $this->getFactory()->createItemExtractor();
+
         return [
             'quoteRequestForm' => $quoteRequestForm->createView(),
+            'itemsWithShipment' => $itemExtractor->extractItemsWithShipment($quoteRequestTransfer),
+            'itemsWithoutShipment' => $itemExtractor->extractItemsWithoutShipment($quoteRequestTransfer),
         ];
     }
 
