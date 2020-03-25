@@ -83,6 +83,7 @@
     <transfer name="Totals">
         <property name="grandTotal" type="int"/>
         <property name="priceToPay" type="int"/>
+        <property name="shipmentTotal" type="int"/>
     </transfer>
 
     <transfer name="Customer">
