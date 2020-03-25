@@ -45,6 +45,7 @@ class CheckoutAddressCollectionForm extends AbstractType
     public const OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES = 'can_deliver_to_multiple_shipping_addresses';
     public const OPTION_IS_CUSTOMER_LOGGED_IN = 'is_customer_logged_in';
     public const OPTION_BUNDLE_ITEMS = 'bundleItems';
+    public const OPTION_PLUGIN_PRE_GROUP_ITEMS_BY_SHIPMENT = 'OPTION_PLUGIN_PRE_GROUP_ITEMS_BY_SHIPMENT';
 
     public const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
     public const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
@@ -92,6 +93,7 @@ class CheckoutAddressCollectionForm extends AbstractType
             ->setRequired(static::OPTION_COUNTRY_CHOICES)
             ->setRequired(static::OPTION_CAN_DELIVER_TO_MULTIPLE_SHIPPING_ADDRESSES)
             ->setRequired(static::OPTION_IS_CUSTOMER_LOGGED_IN)
+            ->setRequired(static::OPTION_PLUGIN_PRE_GROUP_ITEMS_BY_SHIPMENT)
             ->setRequired(static::OPTION_BUNDLE_ITEMS);
     }
 
@@ -144,8 +146,8 @@ class CheckoutAddressCollectionForm extends AbstractType
 
         $builder->add(static::FIELD_SHIPPING_ADDRESS, CheckoutAddressForm::class, $fieldOptions);
 
-        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($shipmentService) {
-            $this->hydrateShippingAddressSubFormDataFromItemLevelShippingAddresses($event, $shipmentService);
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($shipmentService, $options) {
+            $this->hydrateShippingAddressSubFormDataFromItemLevelShippingAddresses($event, $shipmentService, $options);
         });
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($options) {
@@ -181,18 +183,22 @@ class CheckoutAddressCollectionForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormEvent $event
      * @param \SprykerShop\Yves\CustomerPage\Dependency\Service\CustomerPageToShipmentServiceInterface $shipmentService
+     * @param array $options
      *
      * @return void
      */
     protected function hydrateShippingAddressSubFormDataFromItemLevelShippingAddresses(
         FormEvent $event,
-        CustomerPageToShipmentServiceInterface $shipmentService
+        CustomerPageToShipmentServiceInterface $shipmentService,
+        array $options
     ): void {
         $quoteTransfer = $event->getData();
 
         if (!($quoteTransfer instanceof QuoteTransfer)) {
             return;
         }
+
+        $quoteTransfer = $this->executePreGroupItemsByShipmentPlugins($quoteTransfer, $options[static::OPTION_PLUGIN_PRE_GROUP_ITEMS_BY_SHIPMENT]);
 
         $shipmentGroupCollection = $this->mergeShipmentGroupsByShipmentHash(
             $shipmentService->groupItemsByShipment($quoteTransfer->getItems()),
@@ -218,6 +224,21 @@ class CheckoutAddressCollectionForm extends AbstractType
         }
 
         $shippingAddressForm->setData(clone $shipmentGroupTransfer->getShipment()->getShippingAddress());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \SprykerShop\Yves\CustomerPageExtension\Dependency\Plugin\CheckoutAddressStepPreGroupItemsByShipmentPluginInterface[] $preGroupItemsByShipmentPlugins
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executePreGroupItemsByShipmentPlugins(QuoteTransfer $quoteTransfer, array $preGroupItemsByShipmentPlugins): QuoteTransfer
+    {
+        foreach ($preGroupItemsByShipmentPlugins as $preGroupItemsByShipmentPlugin) {
+            $quoteTransfer = $preGroupItemsByShipmentPlugin->preGroupItemsByShipment($quoteTransfer);
+        }
+
+        return $quoteTransfer;
     }
 
     /**
